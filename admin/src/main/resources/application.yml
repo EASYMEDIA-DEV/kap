@@ -1,0 +1,67 @@
+spring:
+  config:
+    import:
+      - classpath:/application-domain.yml
+      - classpath:/application-rules.yml
+      - classpath:/application-db.yml
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+      static-path-pattern: /static/**
+    pathmatch:
+      matching-strategy: ant_path_matcher
+    resources:
+      static-location: classpath:/static/
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 40MB
+      max-request-size: 42MB  # 파일 뿐만 아니라 제목, 내용등도 같이 전송되기때문에 file size보단 크게 설정
+  #OBJECTMAPPER CAMELCASE
+  jackson:
+    property-naming-strategy: LOWER_CAMEL_CASE
+  web:
+    resources:
+      add-mappings: true
+logging:
+  level:
+    root: info
+    jdbc:
+      connection: off
+      sqlonly: off
+      sqltiming: debug
+      audit: off
+      resultset: off
+      resultsettable: off
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(%-60(%logger{0}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
+    #console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr([%10t]){faint} %clr(%-60(%logger{39}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
+    #console: "%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\\(%L\\) : %m%n"
+
+
+---
+spring.config.activate.on-profile: dev, stg, prod
+logging:
+  level:
+    com.kpa: debug
+---
+spring.config.activate.on-profile: stg, prod
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%10t] %-60(%logger{39}.%M\\(%L\\)) : %m%n%wEx"
+---
+spring.config.activate.on-profile: dev
+spring :
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+    thymeleaf:
+      cache: false
+logging:
+  file:
+    path: C:\\logs\\api
+  level:
+    com.kpa: debug

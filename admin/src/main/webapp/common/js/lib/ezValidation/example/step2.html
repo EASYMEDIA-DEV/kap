@@ -1,0 +1,41 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		모든 태그들의 빈값을 기본적으로 검사한다.
+		비필수 처리가 필요한 경우 클래스명 "notRequired"를 추가해준다.
+		라디오 버튼과 체크박스 버튼은 같은 이름을 가진 객체 하나에만 비필수 처리를 해주면 된다.
+		-->
+		<form name="frm" action="">
+			<input type="hidden" name="" title="히든값" class="notRequired" />
+			<input type="text" name="name" title="이름" />
+			
+			<p>
+				<input type="radio" name="radio" />라디오1
+				<input type="radio" name="radio" />라디오2
+			</p>
+			<p>
+				<input type="checkbox" name="check" />체크박스1_1
+				<input type="checkbox" name="check" />체크박스1_2
+				<input type="checkbox" name="check" />체크박스1_3
+			</p>
+			<p>
+				<input type="checkbox" name="check2" class="notRequired" />체크박스2_1
+				<input type="checkbox" name="check2" />체크박스2_2
+				<input type="checkbox" name="check2" />체크박스2_3
+			</p>
+			<input type="submit" value="전송" />
+		</form>
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<script>
+			/* 			
+			비필수 클래스명의 경우 기본값은 notRequired 이지만 변경이 필요할 경우 아래와 같이 클래스명을 필요에 따라 변경해주면 된다.
+			*/			
+			$('form[name=frm]').validation({
+				notRequiredClass : "notRequired"
+			});
+			</script>
+		</textarea>	
+	

@@ -1,0 +1,54 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		경고문구의 생성은 기본적으로 태그의 속성인 title 값을 가져와서 구성되어진다.
+		입력태그 종류(text, password, textarea 등)는 title값 + "값을 입력해주세요." 으로 생성되어지고
+		선택태그 종류(select)는 title값 + "값을 선택해주세요."으로 생성되어진다.
+		-->
+		<form name="frm" action="">
+			
+			<input type="text" name="name" title="이름" />
+			
+			<p>
+				<select name="" id="" title="셀렉트">
+					<option value="">[선택]</option>
+					<option value="1">셀렉트1</option>
+					<option value="2">셀렉트2</option>
+				</select>
+			</p>
+			
+			<p>
+				&lt;textarea name="" id="" title="textarea"&gt;&lt;/textarea&gt;
+			</p>
+			<input type="submit" value="전송" />
+		</form>
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<!-- 		
+			생성되어지는 경고문구의 기본값을 변경하고자 한다면 아래의 형식에서 문구를 변경하면 된다.
+			$('form[name=frm]').validation({
+				msg : {
+					empty : {
+						text : "...",
+						password : "...",
+						passwordChk : "...",
+						select : "...",
+						textarea : "..."
+					}
+				}
+			});
+			 -->
+			
+			<script>
+			$('form[name=frm]').validation({
+				msg : {
+					empty : {
+						text : "입력 하시오."
+					}
+				}
+			});
+			</script>
+		</textarea>	
+	

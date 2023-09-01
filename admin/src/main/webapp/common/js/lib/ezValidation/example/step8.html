@@ -1,0 +1,56 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		최종 제출시 확인 창을 띄워준다. 기본값은 "진행하시겠습니까?"	
+		-->
+		<form name="frm" action="">
+			<p>이름 : <input type="text" name="name" title="이름" /></p>
+			<input type="submit" value="전송" />
+		</form>
+		
+		<form name="frm2" action="">
+			<p>이름 : <input type="text" name="name" title="이름" /></p>
+			<input type="submit" value="전송" />
+		</form>
+		
+		<form name="frm3" action="updateTest.do">
+			<p>이름 : <input type="text" name="name" title="이름" /></p>
+			<input type="submit" value="전송" />
+		</form>
+		
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+		<!-- 			
+		기본은 창을 띄워준다. 창을 띄우지 않으려면 문구란을 빈값으로 재정의해준다.
+		아래 형식은 1.3.6 버전부터 적용된다.
+			
+		frm3 예제의 경우는 action 값에 특정 문자가 존재하는 경우 메세지 값을 변경하는 방법이다.
+		배열 형식으로 여러개 설정하여 사용할 수 있다.
+		-->
+			<script>
+			$('form[name=frm]').validation();
+			$('form[name=frm2]').validation({
+				msg : {
+					confirm : {
+						init : '',
+					}
+				}		
+			});
+			$('form[name=frm3]').validation({
+				msg : {
+					confirm : {
+						custom : [{
+							action : 'update',
+							message : '수정하시겠습니까?'
+						},{
+							action : 'delete',
+							message : '삭제하시겠습니까?'
+						}]
+					}
+				}
+			});
+			</script>
+		</textarea>	
+	

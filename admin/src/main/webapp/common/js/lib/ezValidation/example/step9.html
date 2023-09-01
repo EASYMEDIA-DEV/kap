@@ -1,0 +1,50 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		벨리데이션 검사시 특정 위치에 임의의 기능을 수행하여야 할 경우에 사용할 수 있다
+		예를 들면 중복검사 기능이 있을 경우	
+		-->
+		<form name="frm" action="">
+			<p>
+			아이디 : <input type="text" name="id" id="id" title="아이디" data-overrap-check="false" />
+			<input type="button" id="overcheck" value="중복검사" />
+			</p>
+			
+			<input type="submit" value="전송" />
+		</form>
+		
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+		<!-- 			
+		$('form[name=frm]').validation({
+			customfunc : function(obj, tagid, okval, msg){
+				// obj : 객체
+				// tagid : 객체의 id
+				// okval : validation 통과 여부값
+				// msg : validation 메세지
+			}		
+		});
+		-->
+			<script>
+			$('form[name=frm]').validation({
+				customfunc : function(obj, tagid, okval, msg){
+					if(tagid == "id" && obj.val() != ""){
+						if(!obj.data('overrapCheck')){
+							alert("아이디 중복검사를 진행해주세요.");
+							obj.focus();
+							return false;
+						}
+					}
+				}		
+			});
+			
+			$('#overcheck').click(function(){
+				// DB서버와 비동기 통신을 하여 중복확인 후 overrapCheck 값 변경
+				alert("중복검사 완료");
+				$('#id').data('overrapCheck',true);
+			});
+			</script>
+		</textarea>	
+	

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+
+    <description>JSTL 1.1 Java method library</description>
+    <display-name>JSTL Method</display-name>
+    <tlib-version>1.1</tlib-version>
+    <short-name>kl</short-name>
+
+	<!-- 첫번째 문자열이 빈값이면 두번째 문자열을 리턴한다. -->
+	<function>
+        <description>nvl</description>
+        <name>nvl</name>
+        <function-class>com.kap.common.utility.COStringUtil</function-class>
+        <function-signature>java.lang.String nvl(java.lang.String, java.lang.String)</function-signature>
+        <example>${kl:nvl(value, value)}</example>
+    </function>
+
+    <!-- decode -->
+	<function>
+        <description>decode</description>
+        <name>decode</name>
+        <function-class>com.kap.common.utility.COStringUtil</function-class>
+        <function-signature>java.lang.String decode(java.lang.String, java.lang.String, java.lang.String, java.lang.String)</function-signature>
+        <example>${kl:decode(value, value, value, value)}</example>
+    </function>
+
+    <!-- 문자열 ... 표현-->
+	<function>
+        <description>tldCutString</description>
+        <name>tldCutString</name>
+        <function-class>com.kap.common.utility.COStringUtil</function-class>
+        <function-signature>java.lang.String tldCutString(java.lang.String, java.lang.String, java.lang.String)</function-signature>
+        <example>${kl:tldCutString(value, value, value)}</example>
+    </function>
+
+    <!-- 날짜의 패턴 변경 -->
+    <function>
+        <description>convertDate</description>
+        <name>convertDate</name>
+        <function-class>com.kap.common.utility.COStringUtil</function-class>
+        <function-signature>java.lang.String convertDate(java.lang.String, java.lang.String, java.lang.String, java.lang.String)</function-signature>
+        <example>${kl:convertDate(value, value, value, value)}</example>
+    </function>
+    
+</taglib>

@@ -1,0 +1,40 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		비동기(ajax) 전송시
+		벨리데이션 검사가 끝난 후 폼 객체를 변수로 받을 수 있다.
+		-->
+		<form name="frm" action="">
+			<input type="text" name="name" title="이름" />
+			
+			<input type="submit" value="전송" />
+		</form>
+		
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<script>
+			$('form[name=frm]').validation({
+				async : {
+					use : true, // default false
+					func : function(formObj){
+						alert(formObj.serialize());
+						
+						$.ajax({
+							type : 'get',
+							url : './ajaxtest.html',
+							data : formObj.serialize(),
+							dataType : 'html',
+							success : function(e){
+								alert(e);
+							}
+						})
+					}
+				}
+			});
+			
+			
+			</script>
+		</textarea>	
+	

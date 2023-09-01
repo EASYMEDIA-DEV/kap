@@ -1,0 +1,33 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		Validation 검사 전/후에 필요에따라 before, after 함수를 실행할 수 있다.
+		after 함수는 반드시 return 값을 true 또는  false를 반환하여야 한다.
+		true : 전송 단계로 진행
+		false : 전송 전 진행 중단
+		-->
+		<form name="frm" action="">
+			<input type="text" name="name" title="이름" />
+			
+			<input type="submit" value="전송" />
+		</form>
+		
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<script>
+			$('form[name=frm]').validation({
+				before : function(){
+					alert("검사 전");	
+				},
+				after : function(){
+					alert("검사 후");
+					return true;
+				}
+			});
+			
+			
+			</script>
+		</textarea>	
+	

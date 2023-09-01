@@ -1,0 +1,28 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		클래스명으로 comma를 추가하면 콤마 기능이 활성화 되어서 숫자 입력시에 3자리마다 콤마가 자동생성된다.
+		숫자만 입력가능하게 된다.
+		-->
+		<form name="frm" action="">
+			<p>
+			금액 : <input type="text" name="money" class="comma" title="금액" />			
+			</p>
+			
+			<a href="" class="submit">전송</a>
+		</form>
+		
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<script>
+			$('form[name=frm]').validation({
+				comma : {
+					use : true, // or false, default true
+					className : 'comma'
+				}	
+			});			
+			</script>
+		</textarea>	
+	

@@ -1,0 +1,56 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		정의되어있는 타입(클래스명)은 아이디(idChk), 패스워드(passChk), 이메일(emailChk), 숫자(numberChk), 문자 길이(LengthChk)
+		, 핸드폰 번호(mobileChk), 일반전화 번호(phoneChk), 영문(englishChk), 한글(koreaChk) 등이 정의되어 있다.
+		문자 길이를 제외하고는 모두 정규식을 사용하여 검사한다.
+		
+		클래스를 추가하여 사용할 수 있다.		
+		-->
+		<form name="frm" action="">
+			
+			<input type="text" name="id" title="아이디" class="idChk" />
+			<input type="password" name="pass" title="비밀번호" class="passChk" />
+			<input type="text" name="email" title="이메일" class="emailChk" />
+			<input type="text" name="number" title="숫자" class="numberChk" />
+			<input type="text" name="mobile" title="휴대폰번호" class="mobileChk" />
+			<input type="text" name="phone" title="일반전화" class="phoneChk" />
+			<input type="text" name="english" title="영문" class="englishChk" />
+			<input type="text" name="korean" title="한글" class="koreanChk" />
+			<input type="text" name="url" title="url" class="urlChk" />
+			
+			<input type="submit" value="전송" />
+		</form>
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<!-- 		
+			정의된 기본 문구. 변경이 필요할 경우 재정의 해주면 된다.
+			
+			$('form[name=frm]').validation({
+				msg : {
+					idChk : "아이디 입력값이 올바르지 않습니다.\n(알파벳 소문자,숫자 6 ~ 15자로 입력합니다.)",
+					passChk : "패스워드 입력값이 올바르지 않습니다.\n비밀번호는 영문 대소문자, 숫자, 특수문자(!@#$%^&*+=)를 조합하여 8 ~ 16자로 입력합니다.",
+					passEqualChk : "입력한 패스워드와 일치하여야 합니다.",
+					emailChk : "이메일 입력값이 올바르지 않습니다.",
+					numberChk : "숫자만 입력가능합니다.",
+					lengthLimitChk : "길이가 조건에 맞지 않습니다.",
+					mobileNumChk : "핸드폰번호는 010-1234-5678 형식으로 입력되어야 합니다.",
+					phoneNumChk : "연락처는 02(010)-1234-5678 또는 15XX-XXXX 형식으로 입력되어야 합니다.",
+					englishChk : "영문만 입력하실 수 있습니다.",
+					koreanChk : "한글만 입력하실 수 있습니다.",
+					urlChk : "URL 형식이 올바르지 않습니다.",
+				}
+			});
+			 -->
+			
+			<script>
+			$('form[name=frm]').validation({
+				msg : {
+					idChk : "아이디를 다시 입력하세요."
+				}
+			});
+			</script>
+		</textarea>	
+	

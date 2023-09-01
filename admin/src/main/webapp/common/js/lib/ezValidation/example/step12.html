@@ -1,0 +1,45 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		아이디, 패스워드, 이메일, 숫자 등 클래스명으로 검사하는 기본으로 동작하지만 개별적으로 사용해야 할때가 있다.
+		이때도 플러그인에 정의된 함수, 정규식, 메세지를 그대로 가져와서 사용할 수 있다.
+		아래 예제는 전송시 이메일 형식을 검사하지만 이메일 중복 검사시에도 이메일 형식 검사가 필요하다.
+		-->
+		<form name="frm" action="">
+			<p>이메일 : <input type="text" name="email" class="emailChk" title="이메일" /></p>
+			<p><input type="button" value="이메일검사" id="emailChk"/></p>
+			
+			<input type="submit" value="전송" />
+		</form>
+		
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<script>
+			$('form[name=frm]').validation();
+			
+			$('#emailChk').click(function(){
+				
+				var result = false
+				  , obj = $('input[name=email]');
+				
+				if(obj.val() != ''){
+					// 정규화 검사 함수
+					// parameter : 검사 객체, 정규식
+					// return : true or false
+					result = Feel.Validation.method.RegExrCheck(obj, Feel.RegExr.Email);
+				
+					if(!result){
+						alert(Feel.Msg.Email);
+						obj.focus();
+					}else{
+						alert("OK!");
+					}
+				}else{
+					alert("이메일을 입력해주세요.");
+				}
+			});
+			</script>
+		</textarea>	
+	

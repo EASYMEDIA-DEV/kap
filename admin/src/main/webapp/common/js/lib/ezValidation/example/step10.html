@@ -1,0 +1,26 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		폼 전송시 기본 전송 버튼은 input[submit], input[image]를 이용해야 하지만 대부분 a링크에 함수를 적용하여 전송하는 경우가 많다.
+		그래서 submit 액션이 없는 태그를 이용하여 폼 전송을 할 경우 'submitBtnClass' 옵션에 class를 기술하면
+		해당 class를 가지고 있는 태그 클릭시 submit 이벤트를 발생시킬 수 있다.
+		-->
+		<form name="frm" action="">
+			<p>
+			아이디 : <input type="text" name="id" id="id" title="아이디" />			
+			</p>
+			
+			<a href="" class="submit">전송</a>
+		</form>
+		
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<script>
+			$('form[name=frm]').validation({
+				submitBtnClass : 'submit'		
+			});			
+			</script>
+		</textarea>	
+	

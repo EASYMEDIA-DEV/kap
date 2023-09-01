@@ -1,0 +1,28 @@
+spring.config.activate.on-profile: dev, stg, prod
+#MybatisConfig.java에서 사용할 설정
+mybatis-config:
+  type-handlers-package: com.kap.core.dto.*
+  mapper-location: classpath*:mappers/**/*.xml
+  config-location: classpath:mybatis.xml
+
+---
+spring.config.activate.on-profile: dev
+spring:
+  db:
+    datasource:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://192.168.0.12:3306/kolon_grp?serverTimezone=UTC&useUnicode=true&charcterEncoding=utf8&useSSL=false
+      username: kolon_grp
+      password: dnfntk1##
+---
+spring.config.activate.on-profile: stg
+spring:
+  db:
+    datasource:
+      jndi-name: hcsDS
+---
+spring.config.activate.on-profile: prod
+spring:
+  db:
+    datasource:
+      jndi-name: hcsDS

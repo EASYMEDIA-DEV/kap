@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.COAAdmMapper">
+	<!--
+		쿼리명 : COAAdmMapper.selectAdmList
+		설  명 : 관리자 목록을 조회한다.
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2022.04.08    신혜정       최초생성
+    -->
+	<select id="selectAdmList" parameterType="COAAdmDTO" resultType="com.kap.core.dto.EmfMap">
+		select /* COAAdmMapper.selectAdmList */
+			  adm_seq
+			, auth_cd
+			, dept_nm
+			, type_cd
+			, (select cd_nm from co_code_mst where cd_id='ADMIN_TYPE_CD' and cd=a.type_cd) as type_cd_nm
+			, id
+			, name
+			, use_yn
+			, last_lgn_dtm
+		from
+			co_adm_mst a
+		<include refid="selectAdmListwhereSql" />
+		order by
+			reg_dtm asc
+		<if test="excelYn != 'Y'.toString() ">
+
+		</if>
+	</select>
+
+	<!--
+		쿼리명 : COAAdmMapper.getAdmList
+		설  명 : 관리자 목록을 조회한다.
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2022.04.08    신혜정       최초생성
+    -->
+	<select id="getAdmListCnt" parameterType="COAAdmDTO" resultType="java.lang.Integer">
+		select /* COAAdmMapper.getAdmListCnt */
+			count(*)
+		from
+			co_adm_mst a
+		<include refid="selectAdmListwhereSql" />
+	</select>
+
+	<!--
+		쿼리명 : selectAdmListwhereSql
+		설  명 : 관리자 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2019.07.08    신혜정       최초생성
+    -->
+	<sql id="selectAdmListwhereSql">
+		<where>
+			<if test="strtDt != null and strtDt != ''.toString() ">
+				and last_lgn_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+			</if>
+			<if test="endDt != null and endDt != ''.toString() ">
+				and last_lgn_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+			</if>
+			<if test="authCdList != null and authCdList.size() > 0">
+				and (
+				<foreach collection="authCdList" item="authCdList" index="index" open="" close="" separator=" or ">
+					auth_cd = #{authCdList}
+				</foreach>
+				)
+			</if>
+			<if test="useYnList != null and useYnList.size() > 0">
+				and (
+				<foreach collection="useYnList" item="useYnList" index="index" open="" close="" separator=" or ">
+					use_yn = #{useYnList}
+				</foreach>
+				)
+			</if>
+			<if test="q != null and q != ''.toString() ">
+				<choose>
+					<when test="f == 1">
+						and id like concat('%', #{q}, '%')
+					</when>
+					<when test="f == 2">
+						and name like concat('%', #{q}, '%')
+					</when>
+					<when test="f == 3 ">
+						and dept_nm like concat('%', #{q}, '%')
+					</when>
+					<otherwise>
+						and (
+							id like concat('%', #{q}, '%')
+							or name like concat('%', #{q}, '%')
+							or dept_nm like concat('%', #{q}, '%')
+						)
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+
+</mapper>
+
+

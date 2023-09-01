@@ -1,0 +1,32 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+	<!-- 			
+		비밀번호 확인 및 비밀번호 변경시	
+	-->
+		<form name="frm" action="">
+			
+			<p>비밀번호 : <input type="password" name="password" title="비밀번호" class="passChk" /></p>
+			<p>비밀번호 확인 : <input type="password" name="" title="비밀번호 확인" class="passEqual" /></p>
+			
+			<input type="submit" value="전송" />
+		</form>
+		
+		<form name="frm2" action="">
+			
+			<p>기본 비밀번호 : <input type="password" name="password" title="비밀번호" class="passChkSub" /></p>
+			<p>변경할 비밀번호 : <input type="password" name="password" title="변경 비밀번호" class="passChk" /></p>
+			<p>비밀번호 확인 : <input type="password" name="" title="비밀번호 확인" class="passEqual" /></p>
+			
+			<input type="submit" value="전송" />
+		</form>
+		
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<script>
+			$('form[name=frm]').validation();
+			$('form[name=frm2]').validation();
+			</script>
+		</textarea>	
+	

@@ -1,0 +1,20 @@
+		<h4>HTML</h4>
+		<textarea id="HtmlTextarea" style="width:100%;">
+		<!-- 			
+		form 태그의 submit 이벤트가 발생시 벨리데이션이 동작을 한다.
+		submit 이벤트를 발생시키는 태그는 <input type="submit">, <input type="image">, <button></button> 
+		button 태그는 type 속성이 없을 시 submit 이벤트가 발생한다.
+		-->
+		<form name="frm" action="">
+			<input type="text" name="name" title="이름" />
+			<input type="submit" value="전송" />
+		</form>
+		</textarea>
+	
+		<h4>JAVASCRIPT</h4>
+		<textarea id="JsTextarea" style="width:100%;">
+			<script>
+			$('form[name=frm]').validation();
+			</script>
+		</textarea>	
+	

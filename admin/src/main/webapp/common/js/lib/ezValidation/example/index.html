@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Insert title here</title>
+	
+	<link rel="stylesheet" href="/app/vendor/bootstrap/dist/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/common/js/lib/codemirror-5.41.0/lib/codemirror.css">
+	
+	
+	<script type="text/javascript" src="/common/js/lib/jquery/jquery.1.12.4.js"></script>
+	<script type="text/javascript" src="/common/js/lib/ezValidation/jquery.ez.validation-1.3.6.js"></script>
+	
+	<script type="text/javascript" src="/common/js/lib/codemirror-5.41.0/lib/codemirror.js"></script>
+	<script type="text/javascript" src="/common/js/lib/codemirror-5.41.0/mode/xml/xml.js"></script>
+	<script type="text/javascript" src="/common/js/lib/codemirror-5.41.0/addon/selection/active-line.js"></script>
+	<script type="text/javascript" src="/common/js/lib/codemirror-5.41.0/addon/edit/matchbrackets.js"></script>	
+	
+	<script>
+	
+		$(document).ready(function(){
+			var HtmlTextarea
+			  , JsTextarea;
+			
+			$('.step').click(function(e){
+				e.preventDefault()
+				var href= $(this).attr('href');
+				
+				$.ajax({
+					type : 'post',
+					url : href,
+					success : function(e){
+						$('#contents').html(e);
+						$('#testZone').show();
+						$('#result .resultHtml').html('');
+						$('#result .resultJs').html('');
+						
+						if($('#HtmlTextarea').length > 0 && $('#JsTextarea').length > 0){
+							HtmlTextarea = CodeMirror.fromTextArea(document.getElementById("HtmlTextarea"), {
+						    	lineNumbers: true,
+						    	styleActiveLine: true,
+						    	matchBrackets: true
+						  	});
+							
+							JsTextarea = CodeMirror.fromTextArea(document.getElementById("JsTextarea"), {
+								lineNumbers: true,
+								styleActiveLine: true,
+								matchBrackets: true
+							});
+						}
+					}
+				});	
+			});
+			
+			$('#resultBtn').click(function(){
+				
+				$('#result .resultHtml').html(HtmlTextarea.getValue());
+				
+				$('#result .resultJs').html(JsTextarea.getValue());
+			})
+		})
+		
+	</script>
+	
+	<style type="text/css">
+		html, body { height: 100%; }
+		h1 {margin-bottom:20px; padding-left: 15px;}
+		.CodeMirror  {border: 1px solid #ccc;}
+	</style>
+	</head>
+<body>
+
+	<div style="height:100%;">
+		<h1>jquery.ez.validation-1.3.6 사용 예제</h1>
+		
+		<div style="float:left; margin-right: 10px; height:100%;">
+			<ul>
+				<li><a href="./step1.html" class="step">Step 1. 기본 사용법</a></li>
+				<li><a href="./step2.html" class="step">Step 2. 빈 값 검사 및 비필수 처리</a></li>			
+				<li><a href="./step3.html" class="step">Step 3. 경고문구의 생성(1)</a></li>
+				<li><a href="./step4.html" class="step">Step 4. 경고문구의 생성(2)</a></li>
+				<li><a href="./step5.html" class="step">Step 5. Validation Type 사용(1)</a></li>
+				<li><a href="./step6.html" class="step">Step 6. Validation Type 사용(2)</a></li>
+				<li><a href="./step7.html" class="step">Step 7. Validation Type 사용(3)</a></li>
+				<li><a href="./step8.html" class="step">Step 8. Confirm 사용 (1.3.6 버전용)</a></li>
+				<li><a href="./step9.html" class="step">Step 9. 사용자 정의 함수</a></li>
+				<li><a href="./step10.html" class="step">Step 10. a링크로 전송시</a></li>
+				<li><a href="./step11.html" class="step">Step 11. 콤마(Comma) 기능 사용</a></li>
+				<li><a href="./step12.html" class="step">Step 12. 정규화 함수 및 메세지 사용</a></li>
+				<li><a href="./step13.html" class="step">Step 13. 비동기 전송</a></li>
+				<li><a href="./step14.html" class="step">Step 14. Validation 검사 전/후 실행 함수</a></li>
+			</ul>
+		</div>
+		
+		<div>
+			<div id="contents">
+				
+			</div>
+	
+			<div id="testZone" style="display:none; overflow:hidden;">
+				<button type="button" class="btn btn-danger" id="resultBtn" style="margin: 10px 0">테스트</button>
+				<span style="color:#777"> ※ HTML, JAVASCRIPT 내용 수정시에는 테스트 버튼을 한번 클릭하여야 변경된 내용으로 확인 가능합니다.</span>
+				
+				<div id="result" style="border: 1px solid #ccc; padding: 10px; ">
+					<div class="resultHtml">
+					</div>
+					<div class="resultJs">
+					</div>
+				</div>
+			</div>
+		</div>
+			
+
+	</div>
+	
+</body>
+</html>

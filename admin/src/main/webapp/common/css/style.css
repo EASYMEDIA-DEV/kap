@@ -1,0 +1,1746 @@
+@charset "UTF-8";
+/* ------------------------------------------------------------------- 지속가능경영 - Start ------------------------------------------------------------------- */
+/* culture & sports */
+.his_wrap {position: relative; margin: 48px 0 80px; overflow: hidden;}
+.his_wrap .his_tit {font-size: 16px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif ; line-height: 1.63;letter-spacing: -0.4px; color: #000;}
+.his_wrap .his_swiper {margin-top: 30px;}
+.his_wrap .his_swiper .swiper-slide {position: relative; padding: 18px 28px 0 0; width: 178px; border-top: 1px solid #9d9da6;}
+.his_wrap .his_swiper .swiper-slide::before {content: ""; display: block; position: absolute; top: -3px; left: 0; width: 5px; height: 5px; background: #0a0a0d; border-radius: 50%;}
+.his_wrap .his_swiper .swiper-slide .year {margin-bottom: 2px; font-size: 16px; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif; line-height: 1.63; letter-spacing: -0.6px; color: #0a0a0d;}
+.his_wrap .his_swiper .swiper-slide .detail_txt {font-size: 14px; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif;  line-height: 1.57; letter-spacing: -0.4px; color: #606167;}
+.his_wrap .his_swiper .ctrl_area {position: absolute; top: 0; right: 20px;}
+.his_wrap .his_swiper .ctrl_area .swiper-button-prev {top: 24px; left: auto; right: 32px; width: 24px; height: 24px; background: url("../images/icon-btn-arrow-left.svg");}
+.his_wrap .his_swiper .ctrl_area .swiper-button-next {top: 24px; left: auto; right: 0px; width: 24px; height: 24px; background: url("../images/icon-btn-arrow-right.svg");}
+
+/* 피해신고 */
+.report_step .step_indent_div {padding-left: 20px;}
+.report_step .step {position: relative;}
+.report_step .step + .step {padding-top: 24px;}
+.report_step .step:before {content: ''; position: absolute; left: 4px; top: 0; width: 1px; height: 100%; background-color: #c7c7c7;}
+.report_step .step:first-child:before {top: 9px;}
+.report_step .step:last-child:before {height: 40px;}
+.report_step .tit {position: relative; padding-left: 25px;}
+.report_step .tit:before {content: ''; position: absolute; left: 0; top: 9px; display: block; width: 9px; height: 9px; background-color: #c7c7c7; border-radius: 50%;}
+.report_step .step:last-child .tit:before {background-color: #293148;}
+.report_step .dot_txt {margin-top: 8px; color: #666; font-family: "Pretendard_Regular", "맑은 고딕", "Malgun Gothic", sans-serif; letter-spacing:-0.6px;}
+.report_step .dot_txt:before {background-color: #c7c7c7;}
+
+/* 윤리경영 */
+.report_sec .list_w{display:flex;}
+.report_sec .list{position:relative; top:80px; padding:40px; margin-left:30px; width:calc((100% - 60px) / 3); width:-webkit-calc((100% - 60px) / 3); background:#f8f9fa; border-radius:14px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.report_sec .list:nth-child(1){margin-left:0; background:url("../images/icon-sustainability-report-check-01.jpg") no-repeat center center/cover}
+.report_sec .list:nth-child(2){background:url("../images/icon-sustainability-report-check-02.jpg") no-repeat center center/cover}
+.report_sec .list:nth-child(3){background:url("../images/icon-sustainability-report-check-03.jpg") no-repeat center center/cover}
+.report_sec .list .page_sub_title_Bold {color:#fff;}
+.report_sec .list .small_link_txt {margin-top: 224px; display: inline-block; color: #fff;}
+.report_sec .list .small_link_txt .icon_small_link {display: inline-block; width: 12px; height: 15px; background: url(../images/icon-link-txt-arrow-small-white.svg) no-repeat right top; background-size: 12px 12px;}
+.report_sec .list .color_btn{position:absolute; bottom:40px; left:40px;}
+.report_sec .btn_wrap{position:relative; top:80px; margin-top:32px; text-align:center; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.report_sec.active .list{top:0; opacity:1;}
+.report_sec.active .list:nth-child(2){transition-delay:0.1s;}
+.report_sec.active .list:nth-child(3){transition-delay:0.2s;}
+.report_sec.active .btn_wrap{top:0; opacity:1; transition-delay:0.3s;}
+
+/* 지속가능경영정책 */
+.sign_area{display:flex; margin-top:120px;}
+.sign_area > div{width:50%;}
+.sign_area > div .tit{margin-bottom:20px; font-size: 16px; line-height:26px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif;}
+.sign_area > div > *{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.sign_area.active > div > *{top:0; opacity:1;}
+.sign_area.active > div > *:nth-child(2){transition-delay:0.1s;}
+
+/* 주요안전보건관리활동 */
+.img_txt_wrap.no_img_wrap .txt_box {padding: 0;}
+
+/* 이니셔티브 및 대외평가 */
+.initiative_inner .half_txt_div > div {transition: width 1s ease, margin 1s ease;}
+.initiative_inner .half_txt_div .left {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.initiative_inner .half_txt_div .left.active {transform: translateY(0); opacity: 1;}
+.initiative_inner .half_txt_div .left .page_caption_txt {margin-top: 16px;}
+.initiative_inner .half_txt_div .right {min-width: 790px;}
+.initiative_inner .half_txt_div .txt_wrap .img {margin-bottom: 40px;}
+.initiative_inner .half_txt_div .txt_wrap .page_body_txt_Regular {margin-top: 16px;}
+.initiative_inner .img_txt_wrap {display: flex; transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.initiative_inner .img_txt_wrap.active {transform: translateY(0); opacity: 1;}
+.initiative_inner .img_txt_wrap + .img_txt_wrap {margin-top: 80px;}
+.initiative_inner .eval_div .img_txt_wrap {justify-content: space-between;}
+.initiative_inner .eval_div .img {margin-bottom: 30px;}
+.initiative_inner .eval_div .page_body_txt_Regular {margin-top: 0;}
+.initiative_inner .eval_area {margin-left: 120px;}
+.initiative_inner .eval_area .eval_p {display: flex; align-items: center; justify-content: center; width: 175px; height: 100%; border-left: 1px solid #f7f7f7;}
+.initiative_inner .eval_area .eval_p.col_div {flex-direction: column;}
+.initiative_inner .eval_area .eval_p.col_div .desc_txt {margin-top: 8px;}
+.initiative_inner .eval_area .eval_p.col_div .black_txt.txt_medium {font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif;}
+
+/* 정책 및 원칙 */
+.invest_detail_sec.more_sec {background: url("../images/bg-esg-behavior.jpg") no-repeat center center/cover;} 
+.invest_detail_sec.more_sec .detail_txt {font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif; color: #fff; font-size: 32px; line-height:1.37}
+.invest_detail_sec .detail_txt {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;} 
+.invest_detail_sec.active .detail_txt {transform: translateY(0px); opacity: 1;} 
+.invest_detail_sec.behavior {background: url("../images/bg-esg-behavior.jpg") no-repeat center center/cover;} 
+.invest_detail_sec.behavior .detail_txt {font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif; color: #fff; font-size: 32px; line-height:1.37}
+.invest_detail_sec.cooperative {background: url("../images/bg-esg-cooperative-program.jpg") no-repeat center center/cover;} 
+.invest_detail_sec.cooperative .detail_txt {font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif; color: #fff; font-size: 32px; line-height:1.37}
+
+/* 사회공헌 개요 */
+.social_contribution_sec .list{display:flex; position:relative; top:80px; padding:40px 0; border-bottom:1px solid rgba(0,0,0,0.05); opacity:0; transition:top 1s ease, opacity 1s ease;}
+.social_contribution_sec .list .img_box{position:relative; top:80px; width:585px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.social_contribution_sec .list .img_box .img_resize_w{overflow:hidden; padding-top:56.5%; width:100%; border-radius:14px;}
+.social_contribution_sec .list .img_box .img_resize_w img{position:absolute;}
+.social_contribution_sec .list .txt_box{position:relative; padding-top:20px; margin-left:60px; width:555px;}
+.social_contribution_sec .list .txt_box .heading_title_Bold{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.social_contribution_sec .list .txt_box .page_body_txt_Regular{position:relative; top:80px; margin-top:24px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.social_contribution_sec .list .txt_box .btn{position:absolute; bottom:-60px; left:0; opacity:0; transition:bottom 1s ease, opacity 1s ease;}
+.social_contribution_sec .list.active{top:0; opacity:1;}
+.social_contribution_sec .list.active .img_box{top:0; opacity:1;}
+.social_contribution_sec .list.active .txt_box .heading_title_Bold{top:0; opacity:1; transition-delay:0.1s;}
+.social_contribution_sec .list.active .txt_box .page_body_txt_Regular{top:0; opacity:1; transition-delay:0.2s;}
+.social_contribution_sec .list.active .txt_box .btn{bottom:20px; opacity:1; transition-delay:0.3s;}
+
+
+/* 지속가능경영 보고서 */
+.report_wrap {position: relative; padding-bottom: 120px; border-bottom: 1px solid rgba(0, 0, 0, 0.1); transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.report_wrap.active {transform: translateY(0); opacity: 1;}
+.report_wrap .report_download {display: flex; margin: 0 auto; width: 790px;}
+.report_wrap .report_download .img {margin-right: 60px; width: 380px; height: 484px; overflow: hidden; box-shadow: 20px 20px 40px 0 rgba(0, 0, 0, 0.1);}
+.report_wrap .report_download .img img {width: 100%;}
+.report_wrap .report_download .txt_area {position: relative; padding: 20px 0;}
+.report_wrap .report_download .txt_area .btn_box {position: absolute; bottom: 20px;}
+.report_wrap .report_download .txt_area .btn_box a:first-child {margin-right: 4px;}
+.report_list_wrap {position: relative; transform: translateY(80px); margin-top: 80px; opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.report_list_wrap.active {transform: translateY(0); opacity: 1;}
+.report_list_wrap .swiper-wrapper {margin-bottom: 60px;}
+.report_list_wrap .ctrl_area {position: relative; bottom: 0; left: 0; width: 100%; height: 4px;}
+.report_list_wrap .ctrl_area .swiper-scrollbar {position: absolute; bottom: 0; width: 85.42%; height: 4px; background: rgba(0, 0, 0, 0.05); overflow: hidden;}
+.report_list_wrap .ctrl_area .swiper-scrollbar .swiper-scrollbar-drag {background: #666;}
+.report_list_wrap .ctrl_area .btn_wrap {position: absolute; right: 0; bottom: -20px; width: 98px; height: 44px;}
+.report_list_wrap .ctrl_area .btn_wrap .swiper-button-prev {display: block; left: 0; width: 44px; height: 44px; background: url(../images/btn-promotional-video-left.svg) center / cover;}
+.report_list_wrap .ctrl_area .btn_wrap .swiper-button-next {display: block; right: 0; width: 44px; height: 44px; background: url(../images/btn-promotional-video-right.svg) center / cover;}
+.report_list_wrap .ctrl_area .btn_wrap .swiper-button-disabled {opacity: 1;}
+.report_list_wrap .report_swiper .swiper-slide {position: relative; padding: 40px 80px; width: 380px; text-align: center; border-radius: 14px; border: 1px solid rgba(0, 0, 0, 0.1); transition: border 0.4s ease;}
+.report_list_wrap .report_swiper .swiper-slide:hover {border: 1px solid #293148;}
+.report_list_wrap .report_swiper .swiper-slide .year {position: relative; left: -40px; text-align: left;}
+.report_list_wrap .report_swiper .swiper-slide .img {margin: 30px auto 30px; padding-top: 128%;}
+.report_list_wrap .report_swiper .swiper-slide .img img {position: absolute; width: 100%;}
+.report_list_wrap .report_swiper .swiper-slide .btn_box {display: flex; justify-content: center;}
+.report_list_wrap .report_swiper .swiper-slide .btn_box a {width: 113px; margin-left: 8px;}
+.report_list_wrap .report_swiper .swiper-slide .btn_box a:first-child {margin-left: 0;}
+/* ------------------------------------------------------------------- 지속가능경영 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+/* ------------------------------------------------------------------- 공통 - Start ------------------------------------------------------------------- */
+.total_srch_input_box{margin:0 auto 80px; width:790px;}
+.total_srch_input_box .form_search{width:100%;}
+.total_srch_input_box .form_search input{padding-left:32px; height:64px; font-size:20px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif; border-radius:32px;}
+.total_srch_input_box .form_search input::placeholder{font-size:20px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif;}
+.total_srch_list .list_w{display:flex; padding:40px 0 80px; width:100%; border-top:1px solid #000;}
+.total_srch_list .list_w:last-child{border-bottom:1px solid #000;}
+.total_srch_list .list_w .left{width:410px;}
+.total_srch_list .list_w .left .btn{margin-top:24px;}
+.total_srch_list .list_w .left .prev_btn{margin-bottom:24px;}
+.total_srch_list .list_w .left .prev_btn > a{display:inline-block; width:26px; height:26px; background:url("../images/btn-kolon-news-view-prev.svg") no-repeat center center;}
+.total_srch_list .list_w .right{width:calc(100% - 410px); width:-webkit-calc(100% - 410px);}
+.total_srch_list .list_w .right .srch_list{display:block; padding:20px 26px 19px 20px; transition:background 0.4s ease; background:#fff; border-top:1px solid rgba(0, 0, 0, 0.05); }
+.total_srch_list .list_w .right .srch_list:hover{background:#f7f7f7}
+.total_srch_list .list_w .right .srch_list .menu_w{display:flex;}
+.total_srch_list .list_w .right .srch_list .menu_w .menu{position:relative; padding-right:14px; margin-right:8px;}
+.total_srch_list .list_w .right .srch_list .menu_w .menu:last-child{padding-right:0; margin-right:0;}
+.total_srch_list .list_w .right .srch_list .menu_w .menu:after{display:block; content:""; position:absolute; right:0; top:50%; transform:translateY(-50%); width:6px; height:10px; background:url("../images/icon-total-search-menu-arrow.svg") no-repeat center center;}
+.total_srch_list .list_w .right .srch_list .menu_w .menu:last-child:after{display:none;}
+.total_srch_list .list_w .right .srch_list .page_body_txt_SBold span, .total_srch_list .list_w .right .srch_list .page_body_txt_Regular span{color:#2765ff}
+.total_srch_list .list_w .right .srch_list .page_body_txt_Regular{margin-top:4px;}
+.total_srch_list .list_w .right .product_srch_list{margin-top:40px;}
+.total_srch_list .list_w .right .product_srch_list:first-child{margin-top:0;}
+.total_srch_list .list_w .right .product_srch_list .heading_title_Bold2{margin-bottom:30px;}
+.total_srch_list .list_w .right .product_srch_list .info_box_wrap{margin-bottom:30px;}
+.total_srch_list .list_w .right .product_srch_list .info_box_wrap .info_box{padding:30px; height:auto;}
+.total_srch_list .list_w .right .product_srch_list .info_box_wrap .info_box .name{margin:4px 0 32px;}
+.total_srch_list .list_w .right .product_srch_list .docu_list{padding:18px 70px 18px 17px}
+.total_srch_list .list_w .right .no_srch_area{padding-top:0;}
+.total_srch_list .list_w .right .no_srch_area .no_srch_div{padding-top:54px; background:url(../images/icon-no-data.svg) no-repeat center top 4px;}
+.total_srch_list .list_w .right .no_srch_area .no_srch_div .tit{color:#666; font-size:16px; line-height:26px; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif;}
+/* ------------------------------------------------------------------- 공통 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+/* ------------------------------------------------------------------- 회사정보 - Start ------------------------------------------------------------------- */
+/* KII 뉴스 목록 */
+.news_list_w{display:flex; flex-wrap: wrap;}
+.news_list_w .news_list{display:flex; position:relative; top:80px; margin-top:40px; width:calc((100%  - 30px) / 2); width:-webkit-calc((100%  - /*30px*/ 60px) / 2); opacity:0; transition:top 1s ease, opacity 1s ease;}
+.news_list_w .news_list:nth-child(1), .news_list_w .news_list:nth-child(2){margin-top:0;}
+.news_list_w .news_list:nth-child(2n){margin-left: /*30px;*/ 60px}
+.news_list_w .news_list .img_box{overflow:hidden; width:277px; height:277px; border-radius:14px;}
+.news_list_w .news_list .img_box img {transition: transform 0.4s ease;}
+.news_list_w .news_list:hover .img_box img {transform: translate(-50%, -50%) scale(1.1);}
+.news_list_w .news_list .txt_box{position:relative; margin-left:30px; width:calc(100% - 307px); width:-webkit-calc(100% - 307px);}
+.news_list_w .news_list .txt_box .type{margin-top:8px; font-size:14px; line-height:20px; color:#171717; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif;}
+.news_list_w .news_list .txt_box .title{margin-top: 30px; font-size:22px; line-height:32px; color:#000; font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif; word-break: keep-all;}
+.news_list_w .news_list .txt_box .cate {display: block;}
+.news_list_w .news_list .txt_box .tag_div{overflow:hidden; position:absolute; bottom:30px; left:0;}
+.news_list_w .news_list .txt_box .tag_div .tag{float:left; margin-right:5px; font-size:14px; line-height:24px; color:#666; font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif;}
+.news_list_w .news_list .txt_box .tag_div .tag:last-child{margin-right:0;}
+.news_list_w.active .news_list{top:0; opacity:1;}
+.news_list_w.active .news_list:nth-child(2){transition-delay: 0.1s;}
+.news_list_w.active .news_list:nth-child(3){transition-delay: 0.2s;}
+.news_list_w.active .news_list:nth-child(4){transition-delay: 0.3s;}
+.recommend_news_w{display:flex; margin-top:40px;}
+.recommend_news_w .news{overflow:hidden; position:relative; margin-right:30px; width:calc((100% - 90px) / 4); width:-webkit-calc((100% - 90px) / 4); border-radius:14px;}
+.recommend_news_w .news:after{display:block; content:""; position:absolute; bottom:0; left:0; width:100%; height:60%; background:linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1)); background:-webkit-linear-gradient(top bottom, rgba(0,0,0,0), rgba(0,0,0,1)); opacity:0.14}
+.recommend_news_w .news:last-child{margin-right:0;}
+.recommend_news_w .news .img_resize_w{position:relative; padding-top:100%; width:100%;}
+.recommend_news_w .news .img_resize_w img{position:absolute;}
+.recommend_news_w .news .txt_box{position:absolute; bottom:20px; left:20px; color:#fff; z-index:1;}
+.recommend_news_w .news .txt_box .type{margin-top:10px; font-size:14px; line-height:20px; letter-spacing: -0.4px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif;}
+.recommend_news_w .news .txt_box .title{font-size:16px; line-height:22px; letter-spacing: -0.4px; font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif;}
+
+.new_search_div{text-align:center;}
+.new_search_div .tit{margin-bottom:16px; font-size:28px; font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif; line-height:44px;}
+.new_search_div + .form_board_w{margin-top:80px;}
+
+.board_select_box {display: flex; justify-content: space-between; margin-bottom: 20px;}
+.board_select_box .left {font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif; font-size: 16px; color: #999;}
+.board_select_box .left span {font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif;}
+
+/* KII 뉴스 상세 */
+.view_con{display:flex; flex-wrap:wrap; justify-content: flex-end; margin-top: 30px; padding-bottom:160px; width: 100%; border-bottom:1px solid rgba(0,0,0,0.05)}
+.view_con .tit_con{position:relative; left:0; top: 0; width:100%; transition:width 0.8s ease;}
+.view_con .tit_con .change_width{position: relative; padding-bottom: 50px; width: 50%;}
+.view_con .tit_con .prev_btn{display:inline-block; width:26px; height:26px; background:url("../images/btn-kolon-news-view-prev.svg") no-repeat center center;}
+.view_con .tit_con .tit{margin-top:24px; font-size:56px; line-height:74px; font-family: "Manrope_ExtraBold", "Pretendard_ExtraBold", sans-serif; letter-spacing: -0.4px; transform: scale(1); transform-origin: left top; transition: transform 0.5s ease;}
+.view_con .tit_con.on .tit{font-size:40px; line-height:54px; font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif; transform: scale(0.65);}
+.view_con .tit_con.on .tit br{display:none;}
+.view_con .tit_con .info_div{position: absolute; left: 0; bottom: 0; display:flex; align-items: center; margin-top:24px;}
+.view_con .tit_con .info_div .type{position:relative; padding-right:10px; margin-right:10px; font-size:14px; line-height:26px; letter-spacing: -0.6px; color:#999;}
+.view_con .tit_con .info_div .type:before{display:block; content:""; position:absolute; right:0; top:7px; width:1px; height:12px; background:#e8eaed;}
+.view_con .tit_con .info_div .date{font-size:14px; line-height:22px; letter-spacing: -0.4px; color:#999;}
+.view_con .txt_con{position:relative; margin-top:120px; width: 790px; z-index:1;}
+.view_con .txt_con .txt_box{font-size:16px; line-height:26px; text-align: left; letter-spacing: -0.6px; color:#666; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif; word-break: break-all;}
+.view_con .txt_con .txt_box *{word-break: break-all;}
+.view_con .txt_con .txt_box .img{overflow:hidden; margin-bottom:40px; border-radius:20px;}
+.view_con .txt_con .txt_box .img img{max-width:100%; width:100%;}
+.view_con .txt_con .flex_box{justify-content: space-between; margin-top:50px;}
+.view_con .txt_con .flex_box .left{overflow:hidden;}
+.view_con .txt_con .flex_box .left .tag{float:left; margin-right:7px; color:#000; font-size:14px; line-height:24px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif;}
+.view_con .txt_con .flex_box .left .tag:last-child{margin-right:0;}
+.view_con .txt_con .flex_box .right .link_area{position:relative;}
+.view_con .txt_con .flex_box .right .link_area .link_btn{width:24px; height:24px; background:url("../images/icon-view-link.svg") no-repeat center center;}
+.view_con .txt_con .flex_box .right .link_area .link_popup{display:none; position:absolute; top:40px; right:0; padding:20px 45px 20px 20px; width:280px; border:1px solid #c7c7c7; border-radius:14px; background:#fff;}
+.view_con .txt_con .flex_box .right .link_area .link_popup .btn_close{position:absolute; top:14px; right:14px; width:16px; height:16px; background:url("../images/btn-close-x-small.svg") no-repeat center center;}
+.view_con.no_border_b{padding-bottom:0; border-bottom:0;}
+
+/* 기업 개요 */
+.overview_sec {position: relative; width: 100%; height: 100vh;}
+.overview_sec .full_box {position: absolute; left: 0; top: 0; width: 100%; height: 100vh;}
+.overview_sec .sub_tit_div {width: 100%; height: 100%;}
+.overview_sec .sub_tit_div .sub_tit {position: absolute; left: 0; top: 100px; width: 100%; height: 100vh; opacity: 0;}
+.overview_sec .sub_tit_div .sub_tit .txt_box {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: calc(100% - 48px); text-align: center;}
+.overview_sec .sub_tit_div .sub_tit .page_body_txt_Bold {margin-top: 40px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif;}
+.overview_sec .img_txt_div {opacity: 0;}
+.overview_sec .fixed_img_div {position: fixed; left: 0; top: 0; width: 100%; height: 100%;}
+.overview_sec .img_txt_div {position: absolute; left: 0; top: 0; width: 100%; height: 100%;}
+.overview_sec .img_txt_div .img {width: 100vw; height: 100vh; transform: scale(1.3); transform-origin: 50% 50%;}
+.overview_sec .img_txt_div .img img {width: 100%; height: 100%; object-fit: cover;}
+.overview_sec .img_txt_div .sub_txt {position: absolute; left: 52%; top: 100%;}
+.overview_sec .img_txt_div.sec02 .sub_txt {left: 21%;}
+.overview_sec .img_txt_div .sub_txt p {color: #fff;}
+.overview_sec .img_txt_div .sub_txt .page_body_txt_Bold {margin-top: 36px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif;}
+.overview_sec .img_txt_div.sec02 .sub_txt .page_body_txt_Bold {margin-top: 32px;}
+
+/* 그룹 개요 */
+.group_outline_sec{position:relative; margin-top:160px; padding:160px 0 200px;}
+.group_outline_sec .bg_area{position:absolute; top:0; left:0; width:100%; height:100%; /* background:url("../images/img-kolon-intro-vision.jpg") no-repeat center center/cover */ background:#000;}
+.group_outline_sec .inner{position:relative; z-index:1;}
+.group_outline_sec .heading_title_Bold{position:absolute; top:0; left:0;}
+.group_outline_sec .heading_title_Bold span{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.group_outline_sec .inner .txt_box{display:flex;}
+.group_outline_sec .inner .txt_box > div{padding-left:15px; width:50%;}
+.group_outline_sec .inner .txt_box .right .heading_title_Medium{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.group_outline_sec .inner .txt_box .right .page_body_txt_Regular{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.group_outline_sec .inner .txt_box .right .heading_title_Medium + .page_body_txt_Regular{margin-top:16px;}
+.group_outline_sec .inner .map_img{position:relative; top:80px; margin-top:100px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.group_outline_sec .inner .map_img img{max-width:100%;}
+.group_outline_sec .inner .btn_wrap{position:relative; top:80px; margin:24px 0 160px; text-align: center; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.group_outline_sec .inner .img{overflow:hidden; position:relative; top:80px; margin-top:100px; border-radius:14px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.group_outline_sec .inner .img:after{display:block; content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:#293148; opacity:0.08;}
+.group_outline_sec .inner .img > img{max-width:100%;}
+.group_outline_sec .inner .page_sub_title_Bold{position:relative; top:80px; margin-top:50px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.group_outline_sec .inner .page_sub_title_Bold + .page_body_txt_Regular{margin-top:8px;}
+.group_outline_sec .heading_title_Bold.active span{top:0; opacity:1;}
+.group_outline_sec .inner .txt_box.active .right .heading_title_Medium{top:0; opacity:1;}
+.group_outline_sec .inner .txt_box.active .right .page_body_txt_Regular{top:0; opacity:1; transition-delay: 0.1s;}
+.group_outline_sec .inner .txt_box.active .right .img{top:0; opacity:1; transition-delay: 0.2s;}
+.group_outline_sec .inner .txt_box.active .right .page_sub_title_Bold{top:0; opacity:1; transition-delay: 0.3s;}
+.group_outline_sec .inner .txt_box.active .right .page_sub_title_Bold + .page_body_txt_Regular{transition-delay: 0.4s;}
+.group_outline_sec .inner .map_img.active{top:0; opacity:1;}
+.group_outline_sec .inner .btn_wrap.active{top:0; opacity:1;}
+
+/* CI 소개 */
+.right_wide_wrap .download_btn_wrap {margin-top: 24px;}
+.right_wide_wrap .download_btn_wrap .download_btn {display: block; padding: 5px 31px 9px; width: 160px;}
+.right_wide_wrap .download_btn_wrap .download_btn:nth-child(2) {margin-top: 8px;}
+.right_wide_wrap .txt_box.desc_box {margin-top: 40px; padding: 0;}
+.right_wide_wrap .txt_box .right {padding-left: 0;}
+.right_wide_wrap.img_txt_wrap .txt_box .right {padding-right: 20px;}
+.right_wide_wrap .txt_box .right > img{max-width:100%;}
+.right_wide_wrap .txt_box .right .symbol_img {margin-bottom: 40px;}
+.right_wide_wrap .txt_box .right .img_wrap + .img_wrap {margin-top: 120px;}
+/* .right_wide_wrap .txt_box .right .img_resize_w {width: 380px;} */
+.right_wide_wrap .txt_box .right > p {word-break: keep-all;}
+.right_wide_wrap .txt_box .right .txt2 {margin-top: 24px;}
+.right_wide_wrap .txt_box .right .img_box.main_color .color_box {width: 380px; height: 308px; }
+.right_wide_wrap .txt_box .right .img_box.main_color .color_box .color_desc {padding: 20px 243px 20px 20px;}
+.right_wide_wrap .txt_box .right .img_box.main_color .color_box .color {padding: 20px 0 0 30px; height: 180px; font-family: "Manrope_ExtraBold", "Pretendard_ExtraBold", sans-serif; font-size: 16px; color: #fff; border-radius: 7px 7px 0 0; background: #eb1e2d;}
+.right_wide_wrap .txt_box .right .img_box.main_color .color_box {border-radius: 7px;}
+.right_wide_wrap .txt_box .right .img_box.main_color .color_box:first-child {margin-right: 30px;}
+.right_wide_wrap .txt_box .right .img_box.main_color .color_box:first-child .color {background: #0078c3;}
+.right_wide_wrap .txt_box .right .img_box.sub_color {flex-wrap: wrap;}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box {margin-right: 30px; margin-bottom: 40px; width: 175px; height: 308px; border-radius: 7px;}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box:nth-child(4) {margin-right: 0;}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box .color {padding: 20px 0 0 30px; height: 180px; border-radius: 7px 7px 0 0;}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box:first-child .color {background: #000;}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box:nth-child(2) .color {background: #bebebe}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box:nth-child(3) .color {background: #00afe6}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box:nth-child(4) .color{background: #f5911e}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box:nth-child(5) .color{background: linear-gradient(-45deg, #ccb042, #e8d48d, #d7bf66);}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box:nth-child(6) .color{background: linear-gradient(-45deg, #b6b7bb, #d1d2d4, #bebfc1)}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_box:nth-last-child(-n+3) {margin-bottom: 0;}
+.right_wide_wrap .txt_box .right .img_box.sub_color .color_desc {padding: 20px 46px 20px 20px;}
+/* .right_wide_wrap .tab_fn_area {margin-top: 80px;} */
+.tab_con_area .prohibition_box {margin-right: 30px; margin-bottom: 40px; width: 243px;}
+.tab_con_area .prohibition_box:nth-last-child(-n+3) {margin-bottom: 0;}
+.tab_con_area .prohibition_box:nth-child(3n) {margin-right: 0;}
+.tab_con_area .prohibition_box .img {width: 243px; height: 120px; border-radius: 7px; overflow: hidden;}
+.tab_con_area .prohibition_box .img img {width: 100%;}
+.tab_con_area .prohibition_box .txt {margin-top: 8px; word-break: keep-all;}
+
+/* ceo 인사말 */
+.quotes_p {position: relative; top: 80px; opacity: 0; transition: top 1s ease, opacity 1s ease;}
+.quotes_p.active {top: 0; opacity: 1;}
+/* .quotes_p:before {content: '“'; position: absolute; left: -5px; top: -30px; font-size: 92px; line-height: 54px; letter-spacing: -0.92px; color: #c7c7c7;} */
+.ceo_inner {margin-top: 120px;}
+.ceo_inner .con_txt {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease; display: flex;}
+.ceo_inner .con_txt.active {transform: translateY(0); opacity: 1;}
+.ceo_inner .con_txt .txt_div {width: 565px; margin-right: 50px;}
+.ceo_inner .con_txt .txt_div:last-child {margin-right: 0;}
+
+.overview_txt_w .page_sub_title_Bold{margin-top:16px;}
+.overview_txt_w .overview_txt{margin-top:32px;}
+.overview_txt_w .overview_txt .page_body_txt_Regular:not(:first-child){margin-top:8px;}
+.overview_txt_w .overview_txt .page_sub_title_Bold + .page_body_txt_Regular{margin-top:4px;}
+.overview_srch_history_area{margin-top:160px; padding:160px 0; background:#000;}
+.overview_srch_history_area .half_txt_div > .left .heading_title_Bold{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.overview_srch_history_area .half_txt_div > .left .heading_title_Bold.active{top:0; opacity:1}
+.overview_srch_history_area .half_txt_div > .right{position:relative;}
+.overview_srch_history_area .half_txt_div > .right:after{display:block; content:""; position:absolute; top:11px; left:171px; width:1px; height:0; background:#333; transition:height 1s linear;}
+.overview_srch_history_area .half_txt_div > .right.active:after{height:528px;}
+.overview_srch_history_area .history{display:flex; position:relative; /* top:80px; */ z-index:1; margin-bottom:60px; padding-left:135px; /* opacity:0; transition:top 1s ease, opacity 1s ease; */}
+.overview_srch_history_area .history:last-child{margin-bottom:0;}
+.overview_srch_history_area .history .left{position:absolute; top:50%; left:0; transform:translateY(-50%);}
+.overview_srch_history_area .history .right .row{display:flex; align-items: center; position:relative;}
+.overview_srch_history_area .history:first-child .right .dot{position:relative; left:0; margin-right:14px; width:13px; height:13px; border:3px solid #fff; border-radius:50%;}
+.overview_srch_history_area .history:first-child .right .dot:after{top:10px; left:3px;}
+.overview_srch_history_area .history .right .dot{position:relative; left:2px; margin-right:22px; width:9px; height:9px; border-radius:50%; background:#333;}
+.overview_srch_history_area .history .right .dot:after{display:block; content:""; position:absolute; top:8px; left:4px; width:1px; height:0; background:#333; transition:height 1s ease;}
+.overview_srch_history_area .history:last-child .right .dot:after{display:none;}
+.overview_srch_history_area .history .page_sub_title_Bold{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.overview_srch_history_area .history .right .year{position:relative; top:80px; margin-right:14px; color:#fff; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.overview_srch_history_area .history .right .tit{position:relative; top:80px; color:#fff; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.overview_srch_history_area .half_txt_div > .right.active .history .year{top:0; opacity:0.7;}
+.overview_srch_history_area .half_txt_div > .right.active .history .tit{top:0; opacity:0.5;}
+.overview_srch_history_area .half_txt_div > .right.active .history .page_sub_title_Bold{top:0; opacity:1;}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(2) .year{transition-delay:0.1s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(2) .tit{transition-delay:0.1s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(3) .year{transition-delay:0.2s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(3) .tit{transition-delay:0.2s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(4) .year{transition-delay:0.3s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(4) .tit{transition-delay:0.3s}
+.overview_srch_history_area .history:nth-child(4) .page_sub_title_Bold{transition-delay:0.3s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(5) .year{transition-delay:0.4s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(5) .tit{transition-delay:0.4s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(6) .year{transition-delay:0.5s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(6) .tit{transition-delay:0.5s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(7) .year{transition-delay:0.6s}
+.overview_srch_history_area .half_txt_div > .right.active .history:nth-child(7) .tit{transition-delay:0.6s}
+.overview_srch_history_area .history:nth-child(7) .page_sub_title_Bold{transition-delay:0.6s}
+.r_and_d_area .sub_con_tit_area{margin-bottom:80px;}
+.r_and_d_area .sub_con_tit_area .heading_title_Bold{margin-bottom:24px;}
+.r_and_d_area .sub_con_tit_area > div > *{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.r_and_d_area .sub_con_tit_area.active > div > *{top:0; opacity:1;}
+.r_and_d_area .sub_con_tit_area.active > div > *:nth-child(2){transition-delay:0.1s}
+.r_and_d_area .img_txt_wrap.map + .img_txt_wrap.map{margin-top:80px;}
+.r_and_d_area .half_txt_div > div{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.r_and_d_area .half_txt_div.active > div{top:0; opacity:1;}
+.r_and_d_area .half_txt_div.active > div:nth-child(2){transition-delay:0.1s;}
+.r_and_d_area .half_txt_div .grag_bg_img{display:flex; justify-content: center; align-items: center; margin-top:20px; padding:50px; background:#f8f9fa; border-radius:14px;}
+.r_and_d_area .half_txt_div .grag_bg_img img{max-width:100%;}
+
+/* Contact us */
+.directions_wrap {transform: translateY(80px); opacity: 0; transition: 1s ease;}
+.directions_wrap.active {transform: translateY(0); opacity: 1;}
+.tb_txt_area {position: relative; width: 100%;}
+.tb_txt_area + .tb_txt_area {margin-top: 40px;}
+.tb_txt_area .map_area {overflow: hidden; width: 1200px; height: 600px; border-radius: 14px;}
+.tb_txt_area .map_area #map{height:100%;}
+.tb_txt_area .form_table td > p + p {margin-top: 10px;}
+.tb_txt_area .form_table td > p .line {margin-right: 8px; padding: 1px 8px; border-radius: 12px; border: solid 1px #c7c7c7;}
+.location_wrap {margin-top: 40px;}
+.location_wrap .location_box .img {margin-bottom: 40px; width: 1200px; height: 400px; background: #666; border-radius: 14px;}
+.location_wrap .location_box .txt {margin-bottom: 80px; width: 585px; word-break: keep-all;}
+.location_wrap .tb_txt_area tr {vertical-align: top;}
+.location_wrap .tb_txt_area tr td:last-child {border-left: 1px solid rgba(0, 0, 0, 0.05);}
+
+/* 주요 성과 및 수상내역 */
+/* .outcome_inner {position: relative; margin-top: 120px; top: 80px; opacity: 0; transition: all 1s ease;} */
+.outcome_inner { margin-top: 120px;}
+.outcome_inner.active {top: 0; opacity: 1;}
+.outcome_wrap {position: relative; }
+.tb_func_area{position:relative;}
+.tb_func_area .tit {height: 90px; padding-top: 26px;}
+.tb_func_area .tb_left_area{position:absolute; top: 0px; left:0;}
+.tb_func_area .tb_left_area > p:not(:last-child){margin-bottom:8px;}
+.tb_func_area .tb_con_area{margin-left:410px;}
+.tb_area{position:relative; padding-top: 90px; width:100%; height: 90px;}
+.tb_area .tb_tab_wrap{position:absolute; width: 790px; height: 90px; background: #fff; top: 0; z-index:10; border-bottom: 2px solid #000;}
+.tb_area .tb_tab_wrap.fixed{position:fixed; top: 0px;}
+.tb_tab_wrap .tab {display: flex; align-items: center; padding: 0 20px; width:auto; height: 90px;}
+.tb_tab_wrap .tab span {font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif; font-size: 20px; line-height: 32px; color: #c7c7c7; transition: color .3s ease;}
+.tb_tab_wrap .tab.on span {color: #000;}
+/* .his_year_wrap .his_year_con {border-top: 2px solid #000;} */
+.his_year_wrap .his_year_box {display: flex; width: 100%; border-top: 1px solid rgba(0, 0, 0, 0.05);}
+.his_year_wrap .his_year_con:last-child {border-bottom: 1px solid rgba(0, 0, 0, 0.05)}
+.his_year_wrap .page_body_txt_Medium {padding: 24px 20px; width: 16%;font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif; font-size: 20px; line-height: 32px;vertical-align: top; border-right: 0;} 
+.his_year_wrap .his_con_wrap {display: flex; width: 84%; padding-bottom: 24px;font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif; font-size: 16px; vertical-align: top; color: #000; border-right: 0; } 
+.his_year_wrap .his_con_wrap span {padding: 24px 20px; width: 14%; vertical-align: top; line-height: 32px;}
+.his_year_wrap .his_con_wrap > ul {width: 100%; }
+.his_year_wrap .his_con_wrap > ul > li {display: flex; justify-content: space-between; }
+.his_year_wrap .his_con_wrap.no_pd {padding-bottom: 0;}
+.his_year_wrap .his_con_wrap .his_con  {padding-top: 24px; width: 86%;}
+.his_year_wrap .his_con_wrap .his_con  ul + ul {margin-top: 24px;}
+.his_year_wrap .his_con_wrap .his_con > ul li + li {margin-top: 8px;}
+.his_year_wrap .his_con_wrap .tab_tb_tit {font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif; color: #000; font-size: 20px; line-height:1.6;} 
+.his_year_wrap .his_con_wrap .tab_tb_txt {margin-top: 8px; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif; color: #666; font-size: 16px; line-height:1.62;}
+
+/* 사업장 */
+.business_place_img{position:relative; top:80px; width:100vw; height:640px; text-align: center; background:#000; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.business_place_img.active{top:0; opacity:1;}
+.business_place_img .img{position:relative; width:100%; height:100%;}
+.business_place_img .img img{position:absolute; left:50%; top:50%; transform:translate(-50%, -50%);}
+.business_place_area{margin-top:120px;}
+.business_place_area .list{display:flex; justify-content: space-between; align-items: flex-start; margin-bottom:160px;}
+.business_place_area .list:last-child{margin-bottom:0;}
+.business_place_area .list_w{margin-bottom:160px;}
+.business_place_area .list .left{width:380px;}
+.business_place_area .list .left .plus_btn{margin-top:18px;}
+.business_place_area .list .left .page_body_txt_Medium{margin-top:40px; color:#666}
+.business_place_area .list .left > *{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.business_place_area .list.active .left > *{top:0; opacity:1;}
+.business_place_area .list.active .left > *:nth-child(2){transition-delay:0.1s;}
+.business_place_area .list.active .left > *:nth-child(3){transition-delay:0.2s;}
+.business_place_area .list .right{width:585px;}
+.business_place_area .list .right > *{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.business_place_area .list.active .right > *{top:0; opacity:1;}
+.business_place_area .list.active .right > *:nth-child(2){transition-delay:0.1s;}
+.business_place_area .list.active .right > *:nth-child(3){transition-delay:0.2s;}
+.business_place_area .list .right .img{overflow:hidden; width:100%; border-radius:14px;}
+.business_place_area .list .right .txt_div{margin:40px 0; padding:0 20px;}
+.business_place_area .list .right .txt_div .page_body_txt_Regular:not(:first-child){margin-top:16px;}
+.business_place_area.global .list .left{width:250px;}
+.business_place_area.global .list .right{width:790px;}
+.business_history{display:flex; margin-bottom:14px;}
+.business_history:last-child{margin-bottom:0;}
+.business_history .year{width:97px}
+.business_history .history:not(:first-child){margin-top:14px;}
+.business_history .history{font-family: "Manrope_Regular", "Microsoft Yahei", "Pretendard_Regular", sans-serif; color: #666;}
+
+/* Contact us */
+.contact_wrap .txt_box + .txt_box {margin-top: 160px;}
+.contact_wrap .contact_info {margin-bottom: 80px;}
+.contact_wrap .contact_info:last-child {margin-bottom: 0px;}
+.contact_wrap .contact_info .sub_tit span {margin-left: 4px;} 
+.contact_wrap .info_box_wrap {margin-top: 24px;}
+.info_box_wrap {display: flex; flex-wrap: wrap;}
+.info_box_wrap .info_box {position: relative; width: -webkit-calc((100% - 30px) / 2); width: calc((100% - 30px) / 2); min-height: 228px; margin-top: 24px; margin-right: 30px; padding: 40px; border-radius: 14px; background: #f7f7f7;}
+.info_box_wrap .info_box:nth-child(-n+2) {margin-top: 0;}
+.info_box_wrap .info_box:nth-child(2n) {margin-right: 0;}
+.info_box_wrap .info_box .name {margin: 6px 0 32px; font-size: 24px;}
+.info_box_wrap .info_box .contact p:nth-child(2) {margin-top: 2px;}
+.info_box_wrap.black_ver .info_box{background-color: #171717;}
+.info_box_wrap.black_ver .info_box .name {color: #fff; font-size: 24px;}
+.info_box_wrap.black_ver .info_box .contact {color: #fff;}
+.info_box_wrap.black_ver .info_box .contact a {color: #fff;}
+.info_box_wrap.black_ver .page_caption_txt {color: #fff;}
+
+/* 인더스토리 */
+.industries_area {background: #000;}
+.industries_area .indu_txt_area {position:relative; text-align: center; height:100vh; background: #fff;}
+.industries_area .indu_txt_area .txt{position:absolute; top:50%; left:0; width:100%; transform:translateY(-50%);}
+.industries_area .indu_txt_area .txt span{position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.industries_area .indu_txt_area .txt.active span{top:0; opacity:1;}
+.industries_area .indu_area {position: relative;}
+.industries_area .indu_area{height:auto; background: #000;}
+.industries_area .indu_area .inner{position:relative; top:30%}
+.industries_area .indu_area .title_area {position: absolute; top: 0; text-align: left; z-index: 1;}
+.industries_area .indu_area .title_area .tit {transform: translateY(80px); margin-bottom: 30px; color: #fff; opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.industries_area .indu_area .title_area .txt {transform: translateY(80px); color: #fff; opacity: 0; transition: transform 1s ease, opacity 1s ease; transition-delay: 0.1s;}
+.industries_area .indu_area .title_area.active .tit {position: relative; transform: translateY(0); opacity: 1;}
+.industries_area .indu_area .title_area.active .txt {position: relative; transform: translateY(0); opacity: 1;}
+.industries_area .indu_area .fixed_img {position: relative; width: 100%; height: auto;}
+.industries_area .indu_area .fixed_img img{width: 100%; /*  height: 100vh; object-fit: cover; */}
+.industries_area .indu_area .fixed_img .map_img2 {position: absolute; top: 0; left: 0;}
+.product_popup {display: none; position: fixed; left: 0; top: 0; width: 100%; height: 100%; z-index: 200;}
+.product_popup .pop_dim {position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: rgba(0, 0, 0, 0.4); opacity: 0;}
+/* .product_popup .pop_wrap:after{display:block; content:""; position:absolute; bottom:0; left:0; width:calc(100% - 32px); width:-webkit-calc(100% - 32px); height:60px; background:linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff); border-radius:0 0 0 20px;} */
+.product_popup .pop_wrap {position: absolute; top: 0; right: -50%; width: 585px; height: 100%; padding: 60px 0 60px 60px; background: #fff; transition: right 0.6s ease;}
+.product_popup .pop_wrap.on {right: 0;}
+.product_popup .pop_wrap.pc {top: 0 !important;}
+.product_popup .pop_wrap .btn_close {position: absolute; top: 60px; left: -48px; width: 24px; height: 24px; background: url(../images/btn-layer-popup-close-x.svg) no-repeat center center;}
+
+.product_popup .pop_wrap .pop_cont {overflow: hidden; height: 100%;}
+.product_popup .pop_wrap .pop_cont .for_padding {padding: 0 12px 0 0; height: 100%;}
+.product_popup .pop_wrap .pop_cont .for_padding .scroll_area { overflow-y: auto;  padding: 0 20px 0 0; height: 100%;}
+.product_popup .pop_wrap .pop_cont .for_padding .scroll_area::-webkit-scrollbar {width: 4px;}
+.product_popup .pop_wrap .pop_cont .for_padding .scroll_area::-webkit-scrollbar-thumb {border-radius: 3px; -webkit-box-shadow: inset 0 0 0 rgba(0, 0, 0, 0); box-shadow: inset 0 0 0 rgba(0, 0, 0, 0); background-color: #c7c7c7;}
+.product_popup .pop_wrap .pop_cont .for_padding .scroll_area .btn_list {position: relative;  bottom: 0; left: 50%; transform: translate(-50%, 0);}
+.product_popup .product {padding-bottom: 60px; margin-bottom: 60px;border-bottom: 1px solid rgba(0, 0, 0, 0.05)}
+.product_popup .product:last-child {margin-bottom: 0; padding-bottom: 0; border-bottom: none;}
+.product_popup .product .heading_title_Bold {margin-bottom: 16px;}
+.product_popup .product .info_con .info {display: flex;}
+.product_popup .product .page_body_txt_Regular {margin-top: 32px;}
+.product_popup .product .info_con .info .left {position: relative; margin-right: 8px; padding-right: 8px; word-break: keep-all;}
+.product_popup .product .info_con .info .left::after {content: ""; display: block; position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 1px; height: 14px; background: #c7c7c7;}
+
+/* R&D 개요 */
+.sub_con_tit_area.txt_center {margin: 240px 0; text-align: center;}
+.sub_con_tit_area.txt_center > p {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.sub_con_tit_area.txt_center.active > p {transform: translateY(0); opacity: 1;}
+.sub_con_tit_area.txt_center.active > p:nth-child(2) {transition-delay: 0.1s;}
+.sub_con_tit_area.txt_center .page_body_txt_Regular {margin-top: 24px;}
+
+/* 홍보영상 */
+.detail_con {position: relative; transform: translateY(80px); padding-bottom: 160px; border-bottom: 1px solid rgba(0, 0, 0, 0.05); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.detail_con.active {transform: translateY(0); opacity: 1;}
+.detail_con .img {overflow: hidden; border-radius: 14px;}
+.detail_con .txt_area {margin-top: 40px; padding: 0 20px;}
+.detail_con .txt_area .txt {margin: 24px 0 60px}
+.video_list_wrap {position: relative; transform: translateY(80px); margin-top: 80px; opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.video_list_wrap.active {transform: translateY(0); opacity: 1;}
+.video_list_wrap .tit_area {margin: 0 0 30px;}
+.video_list_wrap .tit_area .num {margin-top: 40px; font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif; font-size: 16px; color: #999;}
+.video_list_wrap .tit_area .num p {display: inline-block;}
+.video_list_wrap .tit_area .num p span {font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif;}
+.video_list_wrap .swiper-wrapper {margin-bottom: 60px;}
+.video_list_wrap .ctrl_area {position: relative; bottom: 0; left: 0; width: 100%; height: 4px;}
+
+.video_list_wrap .ctrl_area .swiper-scrollbar {position: absolute; bottom: 0; width: 85.43%; height: 4px; background: rgba(0, 0, 0, 0.05); overflow: hidden;}
+.video_list_wrap .ctrl_area .swiper-scrollbar .swiper-scrollbar-drag {width: auto; background: #666;}
+
+.video_list_wrap .ctrl_area .btn_wrap {position: absolute; right: 0; bottom: -20px; width: 98px; height: 44px;}
+.video_list_wrap .ctrl_area .btn_wrap .swiper-button-prev {display: block; left: 0; width: 44px; height: 44px; background: url(../images/btn-promotional-video-left.svg) center / cover;}
+.video_list_wrap .ctrl_area .btn_wrap .swiper-button-next {display: block; right: 0; width: 44px; height: 44px; background: url(../images/btn-promotional-video-right.svg) center / cover;}
+.video_list_wrap .ctrl_area .btn_wrap .swiper-button-disabled {opacity: 1;;}
+.video_list_wrap .video_swiper .swiper-slide {width: 380px;}
+.video_list_wrap .video_swiper .swiper-slide .img_resize_w {padding-top: 56.3%; width: 100%; border-radius: 14px; overflow: hidden;}
+.video_list_wrap .video_swiper .swiper-slide .img_resize_w img {transform: translate(-50%,-50%) scale(1); transition: transform 0.4s ease;}
+.video_list_wrap .video_swiper .swiper-slide:hover .img_resize_w img {transform: translate(-50%, -50%) scale(1.1);}
+.video_list_wrap .video_swiper .swiper-slide .img_resize_w img {position: absolute;}
+.video_list_wrap .video_swiper .swiper-slide .dim {content: ""; display: block; position: absolute; top: 0; left: 0; width: 100%; padding-top: 56.3%; background: #0078c3; opacity: 0; border-radius: 14px; transition: opacity 0.4s ease;}
+.video_list_wrap .video_swiper .swiper-slide.on .dim {opacity: 0.65;}
+.video_list_wrap .video_swiper .swiper-slide .txt_area {padding: 24px 20px 0;}
+.video_list_wrap .video_swiper .swiper-slide .txt_area .tit {margin-bottom: 30px; font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif; color: #171717; font-size: 28px; line-height: 38px; word-break: break-all;}
+.news_more {display: none;}
+
+
+/* 연혁 */
+.comp_his_inner {margin-top: 160px;}
+.comp_his_con{position:relative;}
+.comp_his_con .txt_box {display: flex; position: relative; margin-top: 240px;}
+.comp_his_con .txt_box > div {width: 50%;}
+.comp_his_con .txt_box .tit_area {display: inline-block; text-align: center; transform: translate(0,  80px); width: 100%; opacity: 0; transition: opacity 1s ease, transform 1s ease; }
+.comp_his_con .txt_box .tit_area .year {font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif; color: #666; font-size: 20px; line-height: 32px; text-align: left;}
+.comp_his_con .txt_box .tit_area .tit {margin-top: 12px; color: #000; font-size: 40px; line-height: 54px; text-align: left;}
+.comp_his_con .txt_box.active .tit_area {transform: translate(0, 0); opacity: 1;}
+.comp_his_con .left {position: absolute; top: 0;}
+.comp_his_con .left.on {position: fixed;}
+.comp_his_con .left .txt_area {margin-top: 40px; transform: translateY(80px); width: 410px; opacity: 0; word-break: keep-all; transition: transform 1s ease, opacity 1s ease; transition-delay: 0.1s;}
+.comp_his_con .txt_box.active .txt_area {transform: translateY(0px); opacity: 1;}
+.comp_his_con .left .txt_area .tit {margin: 12px 0 40px; }
+.comp_his_con .left .txt_area .txt { font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif; color: #666; font-size: 20px; line-height: 32px; word-break: keep-all;}
+.comp_his_con .right {margin-left: 50%; padding-left: 0; transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease; transition-delay: 0.2s;}
+.comp_his_con .txt_box.active .right {padding-left: 0; transform: translateY(0px); opacity: 1;}
+.comp_his_con .right .img_resize_w {padding-top: 66.67%; width: 100%; overflow: hidden; border-radius: 14px;}
+.comp_his_con .right .img_resize_w img {position: absolute;}
+.comp_his_con .right .info_txt {margin-top: 40px; padding: 0 20px; word-break: keep-all;}
+.comp_his_con .right .info_txt > p + p {margin-top: 16px;}
+.comp_his_con .right .his_detail {display: flex; position: relative;}
+.comp_his_con .right .his_detail::after {content: ""; display: block; position: absolute; top: 25px; left: 6px; width: 1px; height: calc(100% ); background: #c7c7c7;}
+.comp_his_con .right .his_detail:first-child::after {top: 29px;}
+.comp_his_con .right .his_detail:last-child:after {display: none;}
+.comp_his_con .right .detail_wrap {margin-top: 80px;}
+.comp_his_con .right .detail_wrap .dot {display: inline-block; position: relative; left: 2px; margin-top: 16px; width: 9px; height: 9px; background: #000; border: solid 3px #000; border-radius: 50%;}
+.comp_his_con .right .detail_wrap .dot.wht {left: 0; width: 13px; height: 13px; background: transparent;}
+.comp_his_con .right .detail_wrap .his_info {padding-left: 40px;}
+.comp_his_con .right .detail_wrap .date_box {margin: 20px 0 60px;}
+.comp_his_con .right .detail_wrap .his_detail:last-child .date_box:last-child {margin: 20px 0 0;}
+.comp_his_con .right .detail_wrap .date_box > p + p {margin-top: 8px;}
+.comp_his_con .right .detail_wrap .date_box > p .date {display: inline-block; width: 50px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif; color: #000; font-size: 16px; line-height: 26px;}
+
+/* 경영철학 */
+.full_right_txt_sec .mgt_list_div {margin-top: 80px;}
+.full_right_txt_sec .mgt_list_div .txt_list {margin-top: 80px; width: 48%;}
+.mgt_list_div .txt_list:nth-child(2n) {margin-left: 3.8%;}
+.sub_tit_con {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.sub_tit_con.active {transform: translateY(0); opacity: 1;}
+.sub_tit_con .page_body_txt_Medium {padding-top: 16px;}
+.mgt_fix_area.sub_con_section {margin-top: 240px; margin-bottom: 160px;}
+.mgt_fix_area .sub_tit_con {padding-bottom: 40px;}
+.mgt_fix_area .overview_txt_w {width: 380px;}
+.mgt_fix_area .overview_txt_w .overview_txt .page_body_txt_Regular:not(:first-child) {margin-top: 16px;}
+.mgt_fix_area .fixed_con_area .txt_con_area .con_list .page_body_txt_Medium {margin-top: 16px;}
+.mgt_black_bg {padding: 160px 0 200px; background-color: #000;}
+.mgt_black_bg .full_right_txt_sec .mgt_list_div {padding-left: 615px;}
+.mgt_black_bg .full_right_txt_sec .mgt_list_div .txt_list {width: 180px;}
+.mgt_black_bg .mgt_list_div .txt_list:nth-child(2n) {margin-left: 100px;}
+.mgt_black_bg .txt_list .heading_title_Bold2 {font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif;}
+.mgt_black_bg .txt_list .page_sub_title_Bold {margin-top: 8px; font-size:16px; line-height:26px; letter-spacing: -0.4px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif;}
+.mgt_black_bg .txt_list .page_body_txt_Regular {margin-top: 24px; opacity: 0.7;}
+.mgt_black_bg .txt_list .page_body_txt_Regular p + p {margin-top: 8px;}
+
+/* CI 소개 */
+.ci_inner .right_wide_wrap .txt_box .right .txt1 {font-family: "Manrope_Medium", "Pretendard_Medium", "Microsoft Yahei", sans-serif;}
+.ci_inner .right_wide_wrap .txt_box .right .img_wrap .heading_title_Bold2 {font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif;}
+.ci_inner .right_wide_wrap .txt_box .right .img_box .ci_img {position: relative; padding-top: calc(26.3% / 2); width: calc((100% / 2) - 15px); border: 0;}
+.ci_inner .right_wide_wrap .txt_box .right .img_box .ci_img img {position: absolute; width: 100%;}
+/* ------------------------------------------------------------------- 회사정보 - End ------------------------------------------------------------------- */
+
+
+
+
+/* ------------------------------------------------------------------- 제품정보 - Start -------------------------------------------------------------------- */
+.product_inner {margin: 0 auto; width: 1200px;}
+
+.product_thr_dep_area {position: fixed; left: 50%; bottom: 32px; transform: translateX(-50%); /* padding: 0 24px; */ height: 50px; border-radius: 25px; z-index: 10; background-color: #171717; opacity: 1; transition: bottom .3s ease, opacity .3s ease; overflow: hidden;} /* 제품정보 three depth menu */
+.product_thr_dep_area:before {content: ''; display: block; position: absolute; left: 0; top: 0; width: 32px; height: 100%; background:linear-gradient(to left, rgba(23,23,23,0), rgba(23,23,23,1)); z-index: 2;}
+.product_thr_dep_area:after {content: ''; display: block; position: absolute; right: 0; top: 0; width: 32px; height: 100%; background:linear-gradient(to right, rgba(23,23,23,0), rgba(23,23,23,1)); z-index: 2;}
+.product_thr_dep_area.hide {bottom: 132px; opacity: 0; z-index: -1;}
+.product_thr_dep_area .thr_dep:first-child {margin-left: 24px;}
+.product_thr_dep_area .thr_dep {display: flex; align-items: center; margin-left: 24px; width: auto; height: 50px; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif; color: rgba(255,255,255,0.6); font-size: 14px;}
+.product_thr_dep_area .thr_dep:last-child {margin-right: 24px;}
+.product_thr_dep_area .thr_dep.on {color: rgba(255,255,255,1);}
+.product_thr_dep_area.start:before{display:none;}
+.product_thr_dep_area.end:after{display:none;}
+
+.product_fixed_tit {/* position: absolute; left: 0; top: 0; */ z-index: 2; position: relative;}
+.product_fixed_tit .txt_wrapper {position: relative; margin-top: 0;}
+.product_fixed_tit .txt_wrapper .heading_title_ExBold {/* position: absolute; left: 0; top: 0; */} 
+/* .product_fixed_tit.product_fuel_cell .txt_wrapper .page_body_txt_Regular {padding-top: 238px;} */
+.product_fixed_tit .txt_wrapper .page_body_txt_Regular {margin-top: 50px; /* padding-top: 140px; */}
+
+.product_motion_area {position: relative; /*padding-top: 420px;*/ width: 100%; /* height: 100vh; */ height: calc(100vh + 420px); z-index: 1; word-break: break-all;}
+/* .product_motion_area.product_fuel_cell {padding-top: 531px;} */
+.product_motion_area .for_black_bg_wrap {display: flex; align-items: center; justify-content: flex-end; position: relative; left: 0; top: 0; width: 100%; height: 100vh; background-color: #000;}
+.product_motion_area .for_black_bg_wrap .change_img_area {width: 100%; height: 100vh; overflow: hidden;}
+.product_motion_area .for_black_bg_wrap .change_img_area .img_con_area {position: relative; top: 100%; width: 100%; height: 100%; overflow: hidden;}
+.product_motion_area .for_black_bg_wrap .change_img_area .img_con_area .img_list {position: absolute; left: 0; top: 0; width: 100%; height: 100%; border-radius: 14px; background-size: cover; background-position: center center; background-repeat: no-repeat;}
+.product_motion_area .for_black_bg_wrap .change_img_area .img_con_area .img_list:nth-child(n+2) {top: 100%;}
+.product_motion_area:not(.in_case_flow) + .product_info_inner {/* margin-top: calc(390px + 100vh); */ margin-top: 100vh; padding-top: 160px;} /* 흐르는 텍스트 없을 경우 */
+.product_motion_area:not(.in_case_flow) + .product_info_inner .sub_con_tit_area {position: relative; top: 80px; opacity: 0; margin-bottom: 40px; transition: top 1s ease, opacity 1s ease;}
+
+.product_motion_area:not(.visible_tit) + .product_info_inner .sub_con_tit_area {top: 0px; opacity: 1;}
+
+.flow_txt_con_area {position: relative; margin-top: 30vh; margin-bottom: calc(50vh + 110px); margin-bottom: calc(50vh + 110px); z-index: 2;}
+.flow_txt_con_area .inner {padding-left: 20%;}
+.flow_txt_con_area .con_list {margin-top: 260px;}
+.flow_txt_con_area .con_list:first-child {margin-top: 0;}
+.flow_txt_con_area .con_list .feature_title {max-width: 380px; font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif; color: #fff; font-size: 40px; line-height: 1.35; opacity: 0.1;}
+.flow_txt_con_area .con_list .feature_txt {margin-top: 16px; width: 230px; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif; color: #fff; font-size: 16px; line-height: 1.6; opacity: 0.07;}
+
+.product_motion_area.product_tire_cord .change_img_area {background-image: url(/common/en/images/img-product-tire-cord-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 타이어코오드 */
+.product_motion_area.product_tire_cord .change_img_area .img_con_area .img_list:nth-child(1) {background-image: url(/common/en/images/img-product-tire-cord-change-01.jpg);}
+.product_motion_area.product_tire_cord .change_img_area .img_con_area .img_list:nth-child(2) {background-image: url(/common/en/images/img-product-tire-cord-change-02.jpg);}
+.product_motion_area.product_tire_cord .change_img_area .img_con_area .img_list:nth-child(3) {background-image: url(/common/en/images/img-product-tire-cord-change-03.jpg);}
+.product_motion_area.product_tire_cord .change_img_area .img_con_area .img_list:nth-child(4) {background-image: url(/common/en/images/img-product-tire-cord-change-04.jpg);}
+.product_motion_area.product_airbag .change_img_area {background-image: url(/common/en/images/img-product-airbag-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 에어백 */
+.product_motion_area.product_indu_fabric .change_img_area {background-image: url(/common/en/images/img-product-indu-fabric-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 산업용사 */
+.product_motion_area.product_indu_fabric .change_img_area .img_con_area .img_list:nth-child(1) {background-image: url(/common/en/images/img-product-indu-fabric-change-01.jpg);}
+.product_motion_area.product_indu_fabric .change_img_area .img_con_area .img_list:nth-child(2) {background-image: url(/common/en/images/img-product-indu-fabric-change-02.jpg);}
+.product_motion_area.product_fuel_cell .change_img_area {background-image: url(/common/en/images/img-product-fuel-cell-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 연료전지 */
+.product_motion_area.product_chamude .change_img_area {background-image: url(/common/en/images/img-product-product-chamude-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* Chamude */
+.product_motion_area.product_spb .change_img_area {background-image: url(/common/en/images/img-product-product-spb-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* SPB */
+.product_motion_area.product_pem .change_img_area {background-image: url(/common/en/images/img-product-product-pem-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* PEM */
+.product_motion_area.product_pem .change_img_area .img_con_area .img_list:nth-child(1) {background-image: url(/common/en/images/img-product-pem-change-01.jpg);}
+.product_motion_area.product_pem .change_img_area .img_con_area .img_list:nth-child(2) {background-image: url(/common/en/images/img-product-pem-change-02.jpg);}
+.product_motion_area.product_pem .change_img_area .img_con_area .img_list:nth-child(3) {background-image: url(/common/en/images/img-product-pem-change-03.jpg);}
+
+.product_motion_area.product_mea .change_img_area {background-image: url(/common/en/images/img-product-product-mea-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* MEA */
+.product_motion_area.product_mea .change_img_area .img_con_area .img_list:nth-child(1) {background-image: url(/common/en/images/img-product-pem-change-01.jpg);}
+.product_motion_area.product_mea .change_img_area .img_con_area .img_list:nth-child(2) {background-image: url(/common/en/images/img-product-pem-change-02.jpg);}
+.product_motion_area.product_mea .change_img_area .img_con_area .img_list:nth-child(3) {background-image: url(/common/en/images/img-product-pem-change-03.jpg);}
+
+.product_motion_area.product_mea .change_img_area .img_con_area .img_list:nth-child(1) {background-image: url(/common/en/images/img-product-pem-change-01.jpg);}
+.product_motion_area.product_vent .change_img_area {background-image: url(/common/en/images/img-product-product-vent-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* VENT */
+.product_motion_area.product_aramid .change_img_area {background-image: url(/common/en/images/img-product-product-aramid-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 아라미드 */
+.product_motion_area.product_polyester_film .change_img_area {background-image: url(/common/en/images/img-product-polyester-film-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 폴리에스터 필름 */
+.product_motion_area.product_polyester_film .change_img_area .img_con_area .img_list:nth-child(1) {background-image: url(/common/en/images/img-product-polyester-film-change-01.jpg);}
+.product_motion_area.product_polyester_film .change_img_area .img_con_area .img_list:nth-child(2) {background-image: url(/common/en/images/img-product-polyester-film-change-02.jpg);}
+.product_motion_area.product_polyester_film .change_img_area .img_con_area .img_list:nth-child(3) {background-image: url(/common/en/images/img-product-polyester-film-change-03.jpg);}
+
+.product_motion_area.product_nylon_film .change_img_area {background-image: url(/common/en/images/img-product-nylon-film-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 나일론 필름 */
+.product_motion_area.product_barrier_film .change_img_area {background-image: url(/common/en/images/img-product-barrier-film-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 배리어 필름 */
+.product_motion_area.product_metalizing_film .change_img_area {background-image: url(/common/en/images/img-product-metalizing-film-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 증착 필름 */
+.product_motion_area.product_prism_film .change_img_area {background-image: url(/common/en/images/img-product-prism-film-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 프리즘 필름 */
+.product_motion_area.product_dry_film .change_img_area {background-image: url(/common/en/images/img-product-dry-film-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 드라이 필름 */
+.product_motion_area.product_panel_material .change_img_area {background-image: url(/common/en/images/img-product-panel-material-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 패널재료 */
+.product_motion_area.product_cpi .change_img_area {background-image: url(/common/en/images/img-product-cpi-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* CPI */
+.product_motion_area.product_petroleum_resin .change_img_area {background-image: url(/common/en/images/img-product-petroleum-resin-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 석유수지 */
+.product_motion_area.product_petroleum_resin .change_img_area .img_con_area .img_list:nth-child(1) {background-image: url(/common/en/images/img-product-petroleum-resin-change-01.jpg);}
+.product_motion_area.product_petroleum_resin .change_img_area .img_con_area .img_list:nth-child(2) {background-image: url(/common/en/images/img-product-petroleum-resin-change-02.jpg);}
+.product_motion_area.product_petroleum_resin .change_img_area .img_con_area .img_list:nth-child(3) {background-image: url(/common/en/images/img-product-petroleum-resin-change-03.jpg);}
+.product_motion_area.product_petroleum_resin .change_img_area .img_con_area .img_list:nth-child(4) {background-image: url(/common/en/images/img-product-petroleum-resin-change-04.jpg);}
+.product_info_inner.petroleum_resin .product_info_list_w .info_list .info_tit {margin-bottom: 0;}
+.petroleum_resin .right .product_box_wrap {display: flex; flex-wrap: wrap; justify-content: space-between;}
+.petroleum_resin .right .product_box {position: relative; padding: 40px; margin-top: 29px; width: 278px; height: 278px; border: 1px solid rgba(0, 0, 0, 0.1); border-radius: 14px; transition: border 0.4s ease;}
+.petroleum_resin .right .product_box:hover {border: 1px solid #000;}
+.petroleum_resin .right .product_box:nth-child(2n) {margin-left: 29px;}
+.petroleum_resin .right .product_box:nth-child(-n+2) {margin-top: 0;}
+.petroleum_resin .right .product_box .txt {margin-top: 16px;}
+.petroleum_resin .right .product_box .download_btn2 {display: block; position: absolute; bottom: 40px; width: calc(100% - 80px); font-family: "Pretendard_Regular", "Manrope_Regular", sans-serif; font-size: 16px; line-height: 26px; text-align: left; color: #999; word-break: keep-all; background:url("../images/icon-btn-download-blk.svg") no-repeat right center; background-size: 24px;}
+.petroleum_resin .right .docu_list_w.wide_list {width: 100%;}
+.product_motion_area.product_phenolic_resin .change_img_area {background-image: url(/common/en/images/img-product-phenolic-resin-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 페놀수지 */
+.product_motion_area.product_epoxy_resin .change_img_area {background-image: url(/common/en/images/img-product-epoxy-resin-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* 에폭시수지 */
+.product_motion_area.product_pet_resin .change_img_area {background-image: url(/common/en/images/img-product-pet-resin-change-outline.jpg); background-size: cover; background-position: center center; background-repeat: no-repeat;}/* pet수지 */
+.contact_wrap .txt_box.border_t {margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(0, 0, 0, 0.05);}
+.product_tb_area th .page_caption_txt {margin-top: 4px;}
+.product_tb_area td:first-child {color: #000; text-align: left; }
+.product_tb_area td:not(:first-child) {color: #333; text-align: right;}
+
+.product_bot_black_bg {/* margin-top: 160px; */ padding: 120px 0 200px; background-color: #000;}
+.product_bot_black_bg .heading_title_Bold {color: #fff;}
+
+
+.product_info_inner {position: relative; margin-bottom: 160px; z-index: 1;}
+.product_info_inner .right_wide_wrap {}
+.product_info_inner .right_wide_wrap .txt_box.has_border_t {margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(0,0,0,.05);}
+.product_info_inner .product_info_list_w.flex_box {flex-wrap: wrap; justify-content: space-between;}
+.product_info_inner .product_info_list_w.flex_box .info_list:nth-child(-n+2) {margin-top: 0;}
+.product_info_inner .product_info_list_w.flex_box .info_list {width: -webkit-calc((100% - 30px) / 2); width: calc((100% - 30px) / 2);}
+.product_info_inner .product_info_list_w .info_list {margin-top: 48px;}
+.product_info_inner .product_info_list_w .info_list:first-child {margin-top: 0;}
+.product_info_inner .product_info_list_w .info_list .info_tit {margin-bottom: 16px; font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif; font-size: 20px; color: #000; line-height: 1.6;}
+.product_info_inner .product_info_list_w .info_list .info_txt {margin-bottom: 8px; font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif; font-size: 16px; color: #666; line-height: 1.62; word-break: keep-all;}
+.product_info_inner .product_info_list_w .info_list .info_tit.mg_bot {margin-bottom: 2px;}
+.product_info_inner .product_info_list_w .info_list .page_caption_txt {font-size: 14px; color: #999; line-height: 1.57}
+.product_info_inner .product_info_list_w .info_list .info_txt:last-child {margin-bottom: 0;}
+.product_info_inner .product_info_list_w .info_list .info_txt .indent_list .txt_list {position: relative; margin-top: 12px; padding-left: 20px;}
+.product_info_inner .product_info_list_w .info_list .info_txt .indent_list .txt_list span {position: absolute; left: 0; top: 0;}
+.product_info_inner .product_info_list_w .info_list .info_txt .indent_list .txt_list:first-child {margin-top: 0;}
+.product_info_inner .product_info_list_w .info_list .pro_divide_info {display: flex;}
+.product_info_inner .product_info_list_w .info_list .pro_divide_info .divide_img {margin-right: 30px; width: calc((100% - 30px) / 2);}
+.product_info_inner .product_info_list_w .info_list .pro_divide_info .divide_img img {width: 100%;}
+.product_info_inner .product_info_list_w .info_list .pro_divide_info .divide_txt {width: calc((100% - 30px) / 2);}
+.product_info_inner .sub_inner_con .half_txt_div .left {position: relative; top: 80px; opacity: 0; transition: top 1s ease, opacity 1s ease; transition-delay: 0.1s;}
+.product_info_inner .sub_inner_con .half_txt_div .right {position: relative; top: 80px; opacity: 0; transition: top 1s ease, opacity 1s ease; transition-delay: 0.2s;}
+.product_info_inner .sub_inner_con .sub_con_tit_area {margin-bottom: 40px;}
+.product_info_inner .sub_inner_con.active .sub_con_tit_area {top: 0; opacity: 1;}
+.product_info_inner .sub_inner_con.active .half_txt_div .left {top: 0; opacity: 1;}
+.product_info_inner .sub_inner_con.active .half_txt_div .right {top: 0; opacity: 1;}
+
+
+/* 사업개요 */
+.business_overview_inner .heading_title_Bold {margin-bottom: 24px;}
+.business_overview_inner .heading_title_ExBold2 {text-align: center; transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.business_overview_inner .heading_title_ExBold2.active {transform: translateY(0); opacity: 1;}
+.business_overview_inner .sub_con_section {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.business_overview_inner .sub_con_section.active {transform: translateY(0); opacity: 1;}
+.business_overview_inner .link_wrap {margin-top: 60px; display: flex;}
+.business_overview_inner .link_wrap .link_div:not(:nth-child(-n+1)) {margin-top: 18px;}
+.business_overview_inner .link_wrap .right {margin-top: 0; margin-left: 48px;}
+.business_overview_inner .detail_link_txt {position: relative; padding-right: 26px; color: #c7c7c7; transition: color 0.3s ease;}
+.business_overview_inner .detail_link_txt:after {content: ""; position: absolute; right: 0; bottom: -4px; width: 18px; height: 18px; transform: translate(-10px, -50%); background: url(/common/en/images/icon-btn-arrow-right.svg) no-repeat; background-size: 18px 18px; opacity: 0;}
+.business_overview_inner .detail_link_txt:hover {color: #000;}
+.business_overview_inner .detail_link_txt:hover:after {transform: translate(0, -50%); opacity: 1; transition: transform 0.3s ease, opacity 0.3s ease;}
+.business_overview_inner .img_txt_wrap .img_box {transform: translateY(0); opacity: 1;}
+.business_overview_inner .img_txt_wrap .img_box .img_resize_w {padding-top: 66.7%;}
+.business_overview_inner .img_txt_wrap .img_box.active img {transform: translate(-50%, -50%) scale(1);}
+
+/* fnc */
+.full_right_txt_sec.mg_bot {margin-bottom: 120px;}
+.fnc_inner .anchor_con_area.mg_left {margin-left: 204px;}
+.fnc_inner .anchor_btn_area > p:first-child {white-space: nowrap;}
+.fnc_inner .anchor_con_area .anchor_con:not(:first-child) {margin-top: 160px;}
+.fnc_inner .anchor_con_area .anchor_con:nth-child(2) {margin-top: 170px;}
+.fnc_inner .anchor_con_area .anchor_con .page_body_txt_Regular {margin-top: 2px;}
+.fnc_inner .img_txt_wrap .img_box .img_resize_w {padding-top: 40.2%;}
+.fnc_inner .img_txt_wrap .img_box.active img {transform: translate(-50%, -50%) scale(1);}
+.fnc_inner .img_txt_wrap .txt_box.active .left .tit {transition-delay: 0s;}
+.fnc_inner .img_txt_wrap .txt_box.active .right > * {transition-delay: 0s;}
+
+.fnc_inner .link_txt {word-break: break-all; background: url(/common/en/images/icon-link-txt-arrow.svg) no-repeat right 0 top 14px;}
+.fnc_detail_sec {padding: 138px 0; text-align: center; background:url(/common/en/images/img-prod-fnc-banner.jpg) no-repeat 50% 50%; background-size: cover;}
+.fnc_detail_sec .heading_title_Bold2 {position:relative; top:80px; opacity:0; transition:top 1s ease, opacity 1s ease; font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif;}
+.fnc_detail_sec .btn_wrap {position:relative; top:80px; margin-top:40px; opacity:0; transition:top 1s ease, opacity 1s ease;}
+.fnc_detail_sec.active .heading_title_Bold2 {top:0; opacity:1;}
+.fnc_detail_sec.active .btn_wrap {top:0; opacity:1; transition-delay: 0.1s;}
+/* ------------------------------------------------------------------- 제품정보 - End ---------------------------------------------------------------------- */
+
+
+
+
+/* ------------------------------------------------------------------- 투자정보 - Start ------------------------------------------------------------------- */
+/* 재무정보 */
+.financial_inner .form_table {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.financial_inner .form_table.active {transform: translateY(0); opacity: 1;}
+.financial_inner .form_table tbody td:not(:first-child) {color: #333;}
+.financial_inner .form_table tbody td.pd_left {padding: 18px 20px 18px 28px;}
+
+/* 주가정보, 공시정보 */
+.invest_img_sec{padding:291px 0; text-align:center;}
+.invest_img_sec .heading_title_Bold2{position:relative; top:80px; opacity:0; transition: top 1s ease, opacity 1s ease; font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif;}
+.invest_img_sec .btn_wrap{position:relative; top:80px; margin-top:40px; opacity:0; transition: top 1s ease, opacity 1s ease;}
+.invest_img_sec.active .heading_title_Bold2{top:0; opacity:1;}
+.invest_img_sec.active .btn_wrap{top:0; opacity:1; transition-delay: 0.1s;}
+.invest_img_sec.stock{background:url("../images/bg-invest-stock.jpg") no-repeat center center/cover;}
+.invest_img_sec.official{background:url("../images/bg-invest-official.jpg") no-repeat center center/cover;}
+
+
+/* 주주현황 */
+.invest_detail_sec{margin-top:200px; padding:138px 0; text-align: center; background:url("../images/bg-invest.jpg") no-repeat center center/cover}
+.invest_detail_sec .heading_title_Medium{position:relative; top:80px; opacity:0; transition: top 1s ease, opacity 1s ease;}
+.invest_detail_sec .btn_wrap{position:relative; top:80px; margin-top:40px; opacity:0; transition: top 1s ease, opacity 1s ease;}
+.invest_detail_sec.active .heading_title_Medium{top:0; opacity:1;}
+.invest_detail_sec.active .btn_wrap{top:0; opacity:1; transition-delay: 0.1s;}
+.invest_detail_sec.ir{padding:117px 0; text-align:left; background:url("../images/bg-ir.jpg") no-repeat center center/cover}
+.invest_detail_sec.ir .contanct_div{margin-top:40px;}
+.invest_detail_sec.ir .contanct_div .page_sub_title_Bold:not(:first-child){margin-top:8px;}
+
+/* 이사회 현황 */
+.board_inner .scroll_motion {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.board_inner .scroll_motion.active {transform: translateY(0); opacity: 1;}
+.board_inner .sub_sec_tit_area.mg_bot {margin-bottom: 40px; align-items: flex-end;}
+.board_inner .txt_div {display: flex; flex-wrap: wrap;}
+.board_inner .txt_div > div {width: calc((100% - 80px) / 3); height: auto; min-height: 502px;}
+.board_inner .half_txt_div .left .heading_title_Bold {word-break: break-all;}
+.board_inner .half_txt_div .left .btn_div {margin-top: 24px; white-space: nowrap;}
+.board_inner .half_txt_div .right .tit {margin-top: 40px;}
+.gray_bg_card {margin-bottom: 40px; margin-left: 40px; padding: 40px; height: 100%; border-radius: 14px; background:#f7f7f7;}
+.gray_bg_card:nth-child(3n+1) {margin-left: 0;}
+.gray_bg_card .position {margin-bottom: 20px;}
+.gray_bg_card .name {margin-bottom: 8px;}
+.gray_bg_card .duty {line-height: normal; font-family: "Pretendard_Medium", "Manrope_Medium", sans-serif;}
+.gray_bg_card .info_table {margin-top: 60px;}
+.gray_bg_card .info_table.long_info {margin-top: 53px;}
+.gray_bg_card .info_table .row {display: flex;}
+.gray_bg_card .info_table .row + .row {margin-top: 8px;}
+.gray_bg_card .info_table .row p {line-height: normal; font-family: "Pretendard_Medium", "Manrope_Medium", sans-serif;}
+.gray_bg_card .info_table .row .tit {width: 42px; color: #000;}
+.gray_bg_card .info_table .row .txt {width: calc(100% - 42px); width: -webkit-calc(100% - 42px);}
+.gray_bg_card .info_table .row .txt span {display: inline-block; width: 100%; font-family: "Pretendard_Medium", "Manrope_Medium", "Microsoft Yahei", sans-serif;}
+.gray_bg_card .info_table .row .txt span + span {margin-top: 8px;}
+.step_div {margin-top: 24px;}
+.step_div.mg_bot {margin-bottom: 32px;}
+.step_div .num_txt {padding-left: 15px; line-height: 22px; font-size: 14px; line-height: 1.57;}
+.step_div .num_txt + .num_txt {margin-top: 12px;}
+.board_inner .form_table tbody td:nth-last-child(2) {color: #333;}
+.board_inner .form_table tbody td:last-child {color: #333;}
+
+/* 주주현황, 주주총회 */
+.stockholder_inner .sub_con_section {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease;}
+.stockholder_inner .sub_con_section.active {transform: translateY(0); opacity: 1;}
+.stockholder_inner .invest_detail_sec p {transform: translateY(80px); opacity: 0; transition: transform 1s ease, opacity 1s ease; font-family: "Pretendard_Medium", "Manrope_Medium", sans-serif;}
+.stockholder_inner .invest_detail_sec.active p {transform: translateY(0); opacity: 1;}
+.stockholder_inner .half_txt_div .right .tit:not(:first-child) {margin-top: 30px;}
+.table_caption_wrap {margin-top: 16px;}
+.table_caption_wrap p {color: #999;}
+.table_caption_wrap .dot_txt:before {background: #999;}
+
+/* 전자공고, ir자료실 */
+.row_view .view_con {margin-top: 70px; padding-bottom: 0; flex-wrap: nowrap; justify-content: flex-start;}
+.row_view .view_con .tit_con {width: 380px;}
+.row_view .view_con .tit_con .heading_title_Bold {margin-top: 24px; word-break: break-all;}
+.row_view .view_con .txt_con {margin: 50px 0 0 30px;}
+.row_view .view_con .txt_con .txt_box {margin-bottom: 80px;}
+.row_view .view_con .tit_con .info_div {position: relative;}
+/* ------------------------------------------------------------------- 투자정보 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+/* ------------------------------------------------------------------- 기타 - Start ------------------------------------------------------------------- */
+.etc_page{position:relative; width:100%; height:100vh; background:url("../images/bg-etc.jpg") no-repeat center center/cover;}
+.etc_page .logo{position:absolute; top:21px; left:50px; z-index:1; width:198px; height:17px; background:url("../images/logo-kolon-industries-white.svg") no-repeat center center;}
+.etc_page .no_srch_area{position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); padding-top:0; width:640px; border-bottom:0; z-index:1;}
+.etc_page .no_srch_area .no_srch_div{padding-top:94px; background:url("../images/icon-page-error.svg") no-repeat center top;}
+.etc_page .no_srch_area .page_body_txt_Medium{margin-top:16px; opacity: 0.7;}
+.etc_page .no_srch_area .btn_wrap{margin-top:60px;}
+.etc_page .form_table{margin-top:60px; border-top:2px solid #fff;}
+.etc_page .form_table tbody th{color:#fff; border-right:1px solid rgba(255,255,255,0.1); border-bottom:1px solid rgba(255,255,255,0.1)}
+.etc_page .form_table td{border-bottom:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.7); font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif;}
+
+.brower_box_w{display:flex; justify-content: center; align-items: center; margin:40px auto 0; width:580px;}
+.brower_box{padding-top:40px; margin-right:20px; width:180px; height:180px; text-align:center; background:#f7f7f7; border-radius:14px;}
+.brower_box:last-child{margin-right:0;}
+.brower_box .icon.edge{display:inline-block; width:60px; height:60px; background:url("../images/icon-edge.png") no-repeat center center;}
+.brower_box .icon.chrome{display:inline-block; width:60px; height:60px; background:url("../images/icon-chrome.svg") no-repeat center center;}
+.brower_box .icon.firefox{display:inline-block; width:58px; height:60px; background:url("../images/icon-firefox.png") no-repeat center center;}
+.brower_box .txt{margin-top:16px; width:100%;}
+.brower_box .txt .link_txt{position:relative; padding-right:15px; font-size:16px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif; background:url("../images/icon-link-txt-arrow-small-on.svg") no-repeat right 1px top 6px;}
+.brower_box .txt .link_txt:after{display:none; content:""; position:absolute; bottom:3px; left:0; width:100%; height:1px; background:#000;}
+.brower_box .txt .link_txt:hover:after{display:block;}
+/* ------------------------------------------------------------------- 기타 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+/* ------------------------------------------------------------------- 푸터 - Start ------------------------------------------------------------------- */
+.util_num{display:inline-block; width:51px;}
+.footer_select_w{display:flex; margin-top:12px;}
+.footer_select{width:380px;}
+.footer_select.form_select .form_select_arr select{color:#666;}
+.footer_select_w .btn{margin-left:8px; padding:6px 5px; width:80px; height: 40px; text-decoration: none; text-align: center; border-radius:7px; background:#f7f7f7;}
+.footer_select_w .btn:hover{text-decoration: none;}
+.footer_select_w .btn span{font-size:14px; line-height:20px; text-decoration: none; letter-spacing: -0.4px; color: #000; font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif;}
+.ver_txt {margin-top: 24px;}
+
+/* ------------------------------------------------------------------- 푸터 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+/* ------------------------------------------------------------------- 채용정보 - Start ------------------------------------------------------------------- */
+.recruit_way.icon_ver .way_list .divide_left {margin-right: 108px; padding-left: 47px;}
+.recruit_way.step_ver .way_list {align-items: flex-start;}
+.recruit_way.step_ver .way_list .divide_left {margin-right: 60px; width: 230px;}
+.recruit_way.step_ver .way_list .divide_right {width: -webkit-calc(100% - 290px); width: calc(100% - 290px);}
+.recruit_way.step_ver .way_list .txt_w .txt_inner_list .sub_tit {margin-top: 0;}
+.recruit_way .way_list {display: flex; align-items: center; margin-top: 80px; padding-top: 40px; border-top: 1px solid rgba(41, 49, 72, 0.16);}
+.recruit_way .way_list:first-child {margin-top: 0; padding-top: 0; border-top: 0;}
+.recruit_way .way_list .step_w {display: flex;}
+.recruit_way .way_list .step_w .step_number {margin-right: 30px; width: 66px;}
+.recruit_way .way_list .step_w > * {line-height: 32px;}
+.recruit_way .way_list .txt_w .txt_inner_list {margin-top: 24px;}
+.recruit_way .way_list .txt_w .txt_inner_list:first-child {margin-top: 0;}
+.recruit_way .way_list .txt_w .txt_inner_list .sub_tit {margin: 16px 0; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif; font-size: 16px; color: #000;}
+.recruit_way .way_list .txt_w .txt_inner_list .paragraph .txt {font-family: "Manrope_Regular", "Pretendard_Regular", sans-serif; font-size: 16px; color: #666; line-height: 1.625;}
+.recruit_way .way_list .txt_w .txt_inner_list .paragraph .txt:nth-child(n+2) {margin-top: 8px;}
+
+.gray_full_bg {margin-top: 160px; padding: 160px 0; background-color: #f8f9fa;}
+/* ------------------------------------------------------------------- 채용정보 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+
+
+
+/* 반응형 */
+@media screen and (max-width:1680px) {
+  .flow_txt_con_area .inner {padding-left: 0;}
+}
+
+@media screen and (max-width:1280px) {
+  /* ------------------------------------------------------------------- 회사정보 - Start ------------------------------------------------------------------- */
+  /* KII뉴스 목록 */
+  .news_list_w .news_list{align-items: center;}
+  .news_list_w .news_list .img_box{width:200px; height:200px; border-radius:14px;}
+  .news_list_w .news_list .txt_box{position:relative; margin-left:30px; width:calc(100% - 230px); width:-webkit-calc(100% - 230px);}
+  .news_list_w .news_list .txt_box .title{margin-top:0;}
+  .news_list_w .news_list .txt_box .tag_div{overflow:hidden; position:static; margin-top:20px;}
+  .news_list_w .news_list .txt_box .tag_div .tag{float:left; margin-right:5px; font-size:14px; line-height:24px; color:#666; font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif;}
+  .news_list_w .news_list .txt_box .tag_div .tag:last-child{margin-right:0;}
+
+  /* KII뉴스 상세 */
+  /* .view_con .tit_con.on .change_width {width: 30%;} */
+  .view_con .txt_con {width:65%;}
+
+  /* 해외사업장 */
+  .business_place_img.global{height:auto;}
+  .business_place_img.global .img img{position:relative; left:auto; right:auto; transform:translate(0,0); width:100%; height:auto;}
+
+  /* 경영철학 */
+  .mgt_black_bg .full_right_txt_sec .mgt_list_div {padding-left: 50%;}
+
+  /* Contact us */
+  .info_box_wrap .info_box {height: auto;}
+
+  /*  CI 소개 */
+  .ci_inner .right_wide_wrap .txt_box .right .img_box .ci_img {margin-right: 20px; width: calc((100% - 20px) / 2); height: auto;} 
+  .ci_inner .right_wide_wrap .txt_box .right .img_box .ci_img:nth-child(2n) {margin-right: 0;}
+
+  /* 인더스토리 */
+  .industries_area .indu_txt_area .txt span {font-size: 36px;}
+  .industries_area .indu_area .title_area .tit {font-size: 36px;}
+  .industries_area .indu_area .title_area .txt {font-size: 14px;}
+
+  /* SNS */
+  .video_list_wrap .video_swiper .swiper-slide {width: calc((100% / 2) - 20px)}
+
+  .video_list_wrap .ctrl_area .swiper-scrollbar {width: 84%;}
+  /* ------------------------------------------------------------------- 회사정보 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+  /* ------------------------------------------------------------------- 제품정보 - Start ------------------------------------------------------------------- */
+  .petroleum_resin .right .product_box {width: -webkit-calc((100% - 29px) / 2); width: calc((100% - 29px) / 2);}
+
+  
+  .fnc_inner .img_txt_wrap .txt_box {padding: 0 8px;}
+
+  /* ------------------------------------------------------------------- 제품정보 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+  /* ------------------------------------------------------------------- 지속가능경영 - Start ------------------------------------------------------------------- */
+  /* 이니셔티브 및 대외평가 */
+  .initiative_inner .half_txt_div {flex-direction: column;}
+  .initiative_inner .half_txt_div > div {width: 100%;}
+  .initiative_inner .half_txt_div .right {margin: 30px 0 0; min-width: auto;}
+
+  /* 지속가능경영 보고서 */
+  .report_list_wrap .report_swiper .swiper-slide {padding: 40px;}
+  .report_list_wrap .report_swiper .swiper-slide .year {left: 0;}
+  .report_list_wrap .report_swiper .swiper-slide .btn_box a {width: 50%;}
+  .report_list_wrap .ctrl_area .swiper-scrollbar {width: 84%;}
+  
+  /* ------------------------------------------------------------------- 지속가능경영 - End ------------------------------------------------------------------- */
+}
+
+
+@media screen and (max-width:1024px) {
+  /* ------------------------------------------------------------------- 공통 - Start ------------------------------------------------------------------- */
+  .total_srch_input_box{width:100%;}
+  .total_srch_list .list_w{flex-wrap:wrap}
+  .total_srch_list .list_w .left{display:flex; align-items: center; justify-content: space-between; width:100%;}
+  .total_srch_list .list_w .left .btn{margin-top:0; margin-left:20px;}
+  .total_srch_list .list_w .left .prev_btn{display:none; margin-bottom:0;}
+  .total_srch_list .list_w .right{width:100%;}
+  .total_srch_list .list_w .right .srch_list_w{margin-top:40px;}
+  .total_srch_list .list_w .right .product_srch_list{margin-top:40px;}
+  .total_srch_list .list_w .right .product_srch_list:first-child{margin-top:40px;}
+  .total_srch_list .list_w .right .product_srch_list .info_box_wrap .info_box{margin-right:0; margin-bottom:30px; width:100%;}
+  .total_srch_list .list_w .right .product_srch_list .info_box_wrap .info_box:last-child{margin-bottom:0;}
+  /* ------------------------------------------------------------------- 공통 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+
+  /* ------------------------------------------------------------------- 회사정보 - Start ------------------------------------------------------------------- */
+  /* KII뉴스 목록 */
+  .news_list_w .news_list{width:100%;}
+  .news_list_w .news_list:nth-child(2n){margin-left:0;}
+  .news_list_w .news_list:nth-child(2){margin-top:40px;}
+
+  /* KII뉴스 상세 */
+  .view_con .tit_con .change_width {padding-bottom: 0; width: 100%;}
+  .view_con .tit_con .info_div {position: static;}
+  .view_con .tit_con .change_width {width: 100%;}
+  .view_con .txt_con{width:100%;}
+
+  /* 기업개요 */
+  .overview_sec .sub_tit_div .sub_tit .page_body_txt_Bold {margin-top: 24px;}
+  .overview_sec .img_txt_div .sub_txt {left: 50%; transform: translate(-50%, -50%) !important; width: calc(100% - 48px); text-align: center;}
+  .overview_sec .img_txt_div .sub_txt .page_body_txt_Bold {margin-top: 24px;}
+  .overview_sec .img_txt_div.sec02 .sub_txt .page_body_txt_Bold {margin-top: 24px;}
+  .overview_sec .img_txt_div.sec02 .sub_txt {left: 50%;}
+  
+  /* 경영철학 */
+  .mgt_black_bg .full_right_txt_sec .mgt_list_div {padding-left: 0;}
+  .mgt_black_bg .full_right_txt_sec .mgt_list_div .txt_list {width: 50%;}
+  .mgt_black_bg .mgt_list_div .txt_list:nth-child(2n) {margin-left: 0;}
+  .mgt_black_bg .txt_list .page_sub_title_Bold {margin-top: 4px;}
+  .mgt_black_bg .txt_list .page_body_txt_Regular {margin-top: 0;}
+  .mgt_black_bg .txt_list .page_body_txt_Regular p + p {margin-top: 6px;}
+  .mgt_fix_area .overview_txt .only_pc {display: none;}
+
+  /* R&D 개요 */
+  .sub_con_tit_area.txt_center {margin: 120px 0;}
+  .r_and_d_area .half_txt_div .right{margin-top:48px}
+  .overview_srch_history_area .half_txt_div > .right:after{left:141px;}
+
+  /* 사업장 */
+  .business_place_area .list{flex-wrap: wrap;}
+  .business_place_area .list .left{margin-bottom:40px; width:100%;}
+  .business_place_area .list .left .plus_btn{margin-top:18px;}
+  .business_place_area .list .right{width:100%}
+  .business_place_area .list .right .img img{width:100%;}
+  .business_place_area .list.active .right > *{transition-delay: 0.3s;}
+  .business_place_area .list.active .right > *:nth-child(2){transition-delay:0.4s;}
+  .business_place_area .list.active .right > *:nth-child(3){transition-delay:0.5s;}
+
+  /* 연혁 */
+  .comp_his_con .left .txt_area {width: 90%;}
+
+  /* 인더스토리 */
+  .industries_area .indu_area .title_area .tit {font-size: 28px;}
+  .industries_area .indu_area .title_area .txt {font-size: 12px;}
+  .product_popup .pop_wrap { right: -80%;}
+
+  /* SNS */
+  .video_list_wrap .video_swiper .swiper-slide .txt_area .tit {font-size: 24px; word-break: break-all;}
+
+  /* 주요성과 및 수상 */
+  .tb_func_area .tb_con_area {margin-left: 240px;}
+  .his_year_wrap .page_body_txt_Medium {width: 16%;}
+  .his_year_wrap .his_con_wrap span { width: 18%;}
+  .his_year_wrap .his_con_wrap .his_con {width: 82%;}
+  /* ------------------------------------------------------------------- 회사정보 - End ------------------------------------------------------------------- */
+
+
+
+
+  /* ------------------------------------------------------------------- 제품정보 - Start ------------------------------------------------------------------- */
+  /* 사업개요 */
+  .business_overview_inner .half_txt_div .right {margin-top: 0;}
+  .business_overview_inner .heading_title_ExBold2 {margin-bottom: 40px; text-align: left;}
+  .business_overview_inner .sub_inner_con {margin-top: 0;}
+  .business_overview_inner .img_txt_order {flex-direction: column-reverse;}
+  .business_overview_inner .half_txt_div .left .heading_title_Bold {margin-top: 12px;}
+  .business_overview_inner .txt_box .page_body_txt_Regular br {display: none;}
+  .business_overview_inner .link_wrap {margin-top: 40px;}
+
+
+  /* fnc */
+  .fnc_inner .img_txt_wrap .txt_box {padding: 0; flex-direction: column;}
+  .fnc_inner .img_txt_wrap .txt_box > div {width: 100%;}
+  .fnc_inner .img_txt_wrap .txt_box .right {margin-top: 6px; padding-left: 0;}
+  .fnc_inner .anchor_con_area .anchor_con:not(:first-child) {margin-top: 70px;}
+  .fnc_inner .anchor_con_area .anchor_con .page_body_txt_Regular {margin-top: 0;}
+  /* ------------------------------------------------------------------- 제품정보 - End ------------------------------------------------------------------- */
+  
+
+
+
+
+  /* ------------------------------------------------------------------- 지속가능경영 - Start ------------------------------------------------------------------- */
+  /* 지속가능경영정책 */
+  .sign_area{display:block;}
+  .sign_area > div{width:100%;}
+
+  /* 이니셔티브 및 대외평가 */
+  .initiative_inner .half_txt_div .right {margin: 0;}
+  .initiative_inner .img_txt_wrap + .img_txt_wrap {margin-top: 40px;}
+  .initiative_inner .left .heading_title_Bold {margin-bottom: 20px;}
+  .initiative_inner .left.left_div .heading_title_Bold {margin-bottom: 4px;}
+  .initiative_inner .left.left_div .page_caption_txt {margin: 0 0 20px;}
+  .initiative_inner .half_txt_div .txt_wrap .img {margin-bottom: 0; height: 50px;}
+  .initiative_inner .half_txt_div .txt_wrap .img .only_pc {display: none;}
+  .initiative_inner .half_txt_div .txt_wrap .img .only_mobile {display: block;}
+  .initiative_inner .half_txt_div .txt_wrap .img img {width: auto; height: 100%;}
+  .initiative_inner .half_txt_div .txt_wrap .page_sub_title_Bold {margin-top: 12px;}
+  .initiative_inner .half_txt_div .txt_wrap .page_body_txt_Regular {margin-top: 12px;}
+  .initiative_inner .eval_div .img_txt_wrap {flex-direction: column; justify-content: flex-start;}
+  .initiative_inner .eval_div .img_txt_wrap .txt_wrap .img {height: 40px;}
+  .initiative_inner .eval_div .img_txt_wrap:nth-child(2) .txt_wrap .img {height: 24px;}
+  .initiative_inner .eval_div .img_txt_wrap:nth-child(3) .txt_wrap .img {height: 32px;}
+  .initiative_inner .eval_area {margin: 6px 0 0;}
+  .initiative_inner .eval_area .eval_p {width: auto; justify-content: flex-end; border-left: none;}
+  .initiative_inner .eval_area .eval_p.col_div {align-items: flex-end;}
+  .initiative_inner .eval_area .eval_p.col_div .desc_txt {margin-top: 0;}
+
+  /* 윤리경영 */
+  .report_sec .list_w{flex-wrap:wrap;}
+  .report_sec .list{margin-left:0; margin-top:20px; padding:30px; width:100%; min-height:200px;}
+  .report_sec .list:first-child{margin-top:0;}
+  .report_sec .list .icon{position:absolute; top:30px; right:30px;}
+  .report_sec .list .small_link_txt {margin-top: 102px;}
+  .report_sec .list .color_btn{bottom:30px; left:auto; right:30px;}
+
+  /* 사회공헌 개요 */
+  .social_contribution_sec{margin-top:50px;}
+  .social_contribution_sec .list{display:block;}
+  .social_contribution_sec .list .img_box{left:-8px; width:calc(100% + 16px); width:-webkit-calc(100% + 16px);}
+  .social_contribution_sec .list .txt_box{margin-left:0; margin-top:24px; padding-top:0; width:100%;}
+  .social_contribution_sec .list .txt_box .btn{position:relative; bottom:auto; top:80px; margin-top:40px;}
+  .social_contribution_sec .list.active .txt_box .btn{top:0;}
+  /* ------------------------------------------------------------------- 지속가능경영 - End ------------------------------------------------------------------- */
+
+
+
+
+
+  /* ------------------------------------------------------------------- 투자정보 - Start ------------------------------------------------------------------- */
+  /* 전자공고, ir자료실 */
+  .row_view .view_con {flex-wrap: wrap;}
+  .row_view .view_con .tit_con {width: 100%;}
+
+  /* 이사회 현황 */
+  .board_inner .txt_div > div {width: calc((100% - 40px) / 2);}
+  .board_inner .half_txt_div .left {display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap;}
+  .board_inner .half_txt_div .left .heading_title_Bold {margin-bottom: 0;}
+  .board_inner .half_txt_div .left .btn_div {margin-top: 0;}
+
+  .board_inner .half_txt_div .right {margin-top: 20px;}
+  .board_inner .sub_sec_tit_area.mg_bot {align-items: center;}
+  .gray_bg_card:nth-child(3n+1) {margin-left: 40px;}
+  .gray_bg_card:nth-child(2n+1) {margin-left: 0px;}
+  .board_inner .right .sub_tit br {display: none;}
+  /* ------------------------------------------------------------------- 투자정보 - End ------------------------------------------------------------------- */
+
+}
+
+@media screen and (max-width: 768px){
+  /* ------------------------------------------------------------------- 회사정보 - Start ------------------------------------------------------------------- */
+  /* KII뉴스 목록 */
+  .news_list_w{display:block;}
+  .news_list_w .news_list{position:relative; left:-8px; flex-wrap:wrap; margin-top:50px; width:calc(100% + 16px); width:-webkit-calc(100% + 16px);}
+  .news_list_w .news_list:nth-child(2){margin-top:50px;}
+  .news_list_w .news_list .img_box{padding-top:100%; width:100%; height:auto; border-radius:10px;}
+  .news_list_w .news_list .img_box img{position:absolute;}
+  .news_list_w .news_list .txt_box{margin:12px 8px 0; width:100%;}
+  .news_list_w .news_list .txt_box .title{font-size:22px; line-height:32px;}
+  .news_list_w .news_list .txt_box .type{margin-top:4px; font-size:14px; line-height:20px;}
+  .news_list_w .news_list .txt_box .tag_div{margin-top:12px;}
+  .news_list_w .news_list .txt_box .tag_div .tag{font-size:12px; line-height:18px; letter-spacing: -0.4px;}
+  .new_search_div.no_mg_top {margin-top: 0;}
+  .new_search_div .tit{margin-bottom:12px; text-align:left; font-size:22px; line-height:32px; letter-spacing: -0.4px;}
+  .new_search_div + .form_board_w{margin-top:38px;}
+  .recommend_news_w .news{border-radius:10px;}
+
+  .form_board_w .board_select_box {margin-bottom: 14px;}
+  .board_select_box {margin-bottom: 8px;}
+  .board_select_box .left{font-size:12px;}
+
+  /* KII뉴스 상세 */
+  .view_con{margin-top:40px; padding-bottom:50px;}
+  .view_con .tit_con .prev_btn{display:none;}
+  .view_con .tit_con .tit{margin-top:0; font-size:30px; line-height:42px; letter-spacing:-0.4px;}
+  .view_con .tit_con.on .tit{margin-top:0; font-size:30px; line-height:42px; letter-spacing:-0.4px;}
+  .view_con .tit_con .info_div{margin-top:6px;}
+  .view_con .tit_con .info_div .type{font-size:12px; line-height:18px; letter-spacing:-0.4px;}
+  .view_con .tit_con .info_div .type:before{top:4px; height:10px;}
+  .view_con .tit_con .info_div .date{font-size:12px; line-height:18px; letter-spacing:-0.4px;}
+  .view_con .txt_con{margin-top:50px; width:100%; font-size:14px; line-height:22px; letter-spacing:-0.4px;}
+  .view_con .txt_con .txt_box .img{position:relative; left:-8px; margin-bottom:20px; width:calc(100% + 16px); width:-webkit-calc(100% + 16px); border-radius:10px;}
+  .view_con .txt_con .flex_box{margin-top:16px;}
+  .view_con .txt_con .flex_box .right{margin-left:16px;}
+
+  .right_wide_wrap .txt_box .right > img{width:100%;}
+  
+  /* ceo */
+  .ceo_inner {margin-top: 50px;}
+  /* .quotes_p {padding-top: 36px;} */
+  .quotes_p:before {left: 0; top: 0; font-size: 46px;}
+  .ceo_inner .sub_inner_sec {margin-top: 20px;}
+  .ceo_inner .con_txt {flex-direction: column;}
+  .ceo_inner .con_txt .txt_div {margin-right: 0; width: 100%;}
+  .ceo_inner .con_txt .txt_div + .txt_div {margin-top: 20px;}
+
+  /* 경영철학 */  
+  .sub_tit_con .page_body_txt_Medium {padding-top: 6px; font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif ;}
+  .full_right_txt_sec .mgt_list_div {margin-top: 0;}
+  .full_right_txt_sec .mgt_list_div .txt_list {margin-top: 20px; margin-left: 0;}
+  .full_right_txt_sec .mgt_list_div.txt_div .txt_list:nth-child(-n+2) {margin-top: 20px;}
+  .full_right_txt_sec .mgt_list_div.txt_div .txt_list {width: 100%;}
+  .full_right_txt_sec .mgt_list_div.txt_div .txt_list .page_sub_title_Bold {margin-bottom: 6px;}
+  .mgt_list_div .txt_list:nth-child(2n) {padding-left: 0;}
+  .mgt_fix_area.sub_con_section {margin-top: 0; margin-bottom: 70px;}
+  .mgt_fix_area .sub_tit_con {padding-bottom: 20px;}
+  .mgt_fix_area .overview_txt_w {width: 100%;}
+  .mgt_fix_area .fixed_con_area .txt_con_area .con_list {padding-bottom: 70px;}
+  .mgt_fix_area .fixed_con_area .txt_con_area .con_list .page_body_txt_Medium {margin-top: 6px;}
+  .mgt_fix_area .overview_txt_w .overview_txt .page_body_txt_Regular:not(:first-child) {margin-top: 6px;}
+  .mgt_black_bg {padding: 70px 0;}
+
+  /* 기업개요 */
+  .overview_sec .sub_tit_div .sub_tit .page_body_txt_Bold {margin-top: 24px;}
+  .overview_sec .img_txt_div .sub_txt {left: 50%; width: calc(100% - 48px); text-align: center; transform: translate(-50%, -50%);}
+  .overview_sec .img_txt_div .sub_txt .page_body_txt_Bold {margin-top: 24px;}
+  .overview_sec .img_txt_div.sec02 .sub_txt {left: 50%;}
+  .overview_sec .img_txt_div.sec02 .sub_txt .page_body_txt_Bold {margin-top: 24px;}
+
+   /* 그룹 개요 */
+  .group_outline_sec .inner .img{border-radius:10px;}
+
+  /* 연혁 */
+  .comp_his_inner {margin-top: 40px;}
+  .comp_his_con .txt_box {display: block; margin-top: 40px; padding-top: 0;}
+  .comp_his_con .txt_box > div {width: 100%;}
+  /* .comp_his_con .txt_box .tit_area {padding: 0; width: 100%; transform: translate(-100%, 0%); min-height: 64px;} */
+  .comp_his_con .txt_box .tit_area .year {color: #000; font-size: 16px; line-height: 24px;}
+  .comp_his_con .txt_box .tit_area .tit {margin-top: 6px; font-family: "Manrope_ExtraBold", "Pretendard_ExtraBold", sans-serif; font-size: 24px; line-height: 34px;}
+  .comp_his_con .txt_box .tit_area.on {transform: translate(-50%, calc(-50% + 80px));}
+  .comp_his_con .txt_box .tit_area.on .year {color: #000; font-size: 16px; line-height: 24px;}
+  .comp_his_con .txt_box .tit_area.on .tit {padding-top: 30px; font-family: "Manrope_ExtraBold", "Pretendard_ExtraBold", sans-serif; font-size: 24px; line-height: 34px;}
+  .comp_his_con .left {position: relative;}
+  .comp_his_con .left.on {position: relative;}
+  .comp_his_con .left .txt_area {margin-top: 20px; padding-top: 0; width: 100%;}
+  .comp_his_con .left .txt_area .tit {margin: 12px 0 40px;}
+  .comp_his_con .left .txt_area .txt {font-size: 16px; line-height: 24px;}
+  .comp_his_con .right {margin-top: 20px; margin-left: 0;}
+  .comp_his_con .right .img_resize_w {position:relative; left:-8px; width: calc(100% + 16px); width:-webkit-calc(100% + 16px); border-radius:10px;}
+  .comp_his_con .right .img_resize_w img {width: 100%;}
+  .comp_his_con .right .info_txt {margin-top: 20px; padding: 0 8px;}
+  .comp_his_con .right .info_txt > p + p {margin-top: 16px;}
+  .comp_his_con .right .his_detail::after { top: 14px; left: 5px;}
+  .comp_his_con .right .his_detail:first-child::after {top: 18px;}
+  .comp_his_con .right .detail_wrap {margin-top: 40px;}
+  .comp_his_con .right .detail_wrap .dot { left: 2px; margin-top: 7px; width: 7px; height: 7px;}
+  .comp_his_con .right .detail_wrap .dot.wht {width: 11px; height: 11px;}
+  .comp_his_con .right .detail_wrap .his_info {padding-left: 18px;}
+  .comp_his_con .right .detail_wrap .his_info > p {font-family: "Manrope_SemiBold", "Pretendard_SemiBold", sans-serif;}
+  .comp_his_con .right .detail_wrap .date_box {margin: 6px 0 30px;}
+  .comp_his_con .right .detail_wrap .his_detail:last-child .date_box:last-child {margin: 8px 0 0;}
+  .comp_his_con .right .detail_wrap .date_box > p .date {width: 46px; font-size: 14px; line-height: 24px;}
+  .comp_his_con .right .detail_wrap .date_box > p + p {margin-top: 8px;}
+
+  /* R&D 개요 */
+  .sub_con_tit_area.txt_center {margin: 50px 0 70px; text-align: left;}
+  .sub_con_tit_area.txt_center .page_body_txt_Regular {margin-top: 6px;}
+  .right_img_fix_area .sub_con_tit_area .sub_tit {padding-bottom: 20px;}
+  .overview_txt_w .page_sub_title_Bold{margin-top:6px;}
+  .overview_txt_w .overview_txt{margin-top:20px;}
+  .overview_txt_w .overview_txt .page_body_txt_Regular:not(:first-child){margin-top:6px;}
+  .r_and_d_area .sub_con_tit_area{margin-bottom:0;}
+  .r_and_d_area .sub_con_tit_area .heading_title_Bold{margin-bottom:20px;}
+  .r_and_d_area .sub_con_tit_area .page_body_txt_Regular br{display:none;}
+  .r_and_d_area .half_txt_div > div{margin-top:30px;}
+  .r_and_d_area .half_txt_div .right{margin-top:30px;}
+  .overview_srch_history_area{margin-top:70px; padding:70px 0;}
+  .overview_srch_history_area .half_txt_div > .right:after{left:106px;}
+  .overview_srch_history_area .half_txt_div > .right.active:after{height:calc(100% - 20px); height:-webkit-calc(100% - 20px);}
+  .overview_srch_history_area .history{padding-left:100px; margin-bottom:20px;}
+  .overview_srch_history_area .history .left .page_sub_title_Bold {font-size: 14px;}
+  .overview_srch_history_area .history .right .dot{margin-right:16px;}
+  .overview_srch_history_area .history .right .year{margin-right:0; width:41px; font-size:14px; line-height:22px; letter-spacing: -0.6px;}
+  .overview_srch_history_area .history .right .tit{width:calc(100% - 66px); width:-webkit-calc(100% - 66px);}
+  .r_and_d_area .img_txt_wrap.map{margin-top:30px;}
+  .r_and_d_area .img_txt_wrap.map + .img_txt_wrap.map{margin-top:30px;}
+  .r_and_d_area .half_txt_div .grag_bg_img{padding:0; border-radius:10px;}
+
+  /* Contact us */
+  .contact_wrap .txt_box + .txt_box {margin-top: 70px;}
+  .contact_wrap .contact_info {margin-bottom: 50px;}
+  .contact_wrap .info_box_wrap.black_ver {margin-top: 0;}
+  .info_box_wrap .info_box {margin-right: 0; margin-top: 20px; padding: 24px; width: 100%; min-height: auto; border-radius: 10px;}
+  .info_box_wrap .info_box:nth-child(-n+2) {margin-top: 20px;}
+  .info_box_wrap .info_box:first-child {margin-top: 0;}
+  .info_box_wrap .info_box .name {margin: 6px 0 20px; font-size: 18px;}
+  .info_box_wrap .info_box .contact p:nth-child(2) {margin-top: 0;}
+  .info_box_wrap.black_ver .info_box .name {margin: 6px 0 32px; font-size: 18px;}
+
+
+  /* 사업장 */
+  .business_place_img{height:auto;}
+  .business_place_img .img map{display:none;}
+  .business_place_img .img img{position:relative; left:auto; top:auto; transform:translate(0,0); width:100%;}
+  .business_place_area{margin-top:50px;}
+  .business_overview_inner .detail_link_txt {position: relative; padding-right: 26px; color: #000;}
+  .business_overview_inner .detail_link_txt:after {content: ""; position: absolute; right: 0px; bottom: -4px; width: 14px; height: 14px; transform: translate(-4px, -50%); background: url(/common/en/images/icon-btn-arrow-right-gray.svg) no-repeat; background-size: 14px 14px; opacity: 1;}
+  .business_overview_inner .detail_link_txt:hover::after {transform: translate(-4px, -50%);}
+  .business_place_area .list{margin-bottom:70px;}
+  .business_place_area .list_w{margin-bottom:70px;}
+  .business_place_area .list .left{position:relative; margin-bottom:20px;}
+  .business_place_area.global .list .left{margin-bottom:12px;}
+  .business_place_area .list .left .btn{position:absolute; right:0;}
+  .business_place_area .list .left .btn .plus_btn{margin-top:0; padding:1px 12px 4px; min-height:30px;}
+  .business_place_area .list .left .btn .plus_btn span{padding-right:14px;}
+  .business_place_area .list .left .btn .plus_btn span:before{width:10px; height:1px;}
+  .business_place_area .list .left .btn .plus_btn span:after{right:5px; width:1px; height:10px;}
+  .business_place_area .list .left .page_body_txt_Medium{margin-top:20px;}
+  .business_place_area .list .right .img{position:realtive; left:-8px; width: calc(100% + 16px); width:-webkit-calc(100% + 16px); border-radius:10px;}
+  .business_place_area .list .right .txt_div{margin:20px 0; padding:0;}
+  .business_place_area .list .right .txt_div .page_body_txt_Regular:not(:first-child){margin-top:6px;}
+  .business_place_area .list .right .txt_div .page_body_txt_Regular a {color: #666;}
+  .business_history{margin-bottom:12px;}
+  .business_history .year{width:52px}
+  .business_history .history_w{width:calc(100% - 52px); width:-webkit-calc(100% - 52px);}
+  .business_history .history:not(:first-child){margin-top:12px;}
+
+
+
+  /* 인더스토리 */
+  .industries_area .indu_txt_area .txt span {font-size: 24px;}
+  .industries_area .indu_area .title_area {top: 50px}
+  .product_popup .pop_wrap {top: 100%; right: 0; width: 100%; padding: 30px 0 0 24px; transition: top 0.4s ease;}
+  /* .product_popup .pop_wrap.on {top: 20vh;} */
+  .product_popup .pop_wrap.mob {right: 0 !important; top: 100% !important;}
+  .product_popup .pop_wrap .btn_close {top: -36px; right: 12px; left: auto;}
+  .product_popup .pop_wrap .pop_cont .for_padding {padding: 0 12px 30px 0;}
+  .product_popup .pop_wrap .pop_cont .for_padding .scroll_area {padding: 0 20px 0 0;}
+  .product_popup .product {margin-bottom: 20px; padding-bottom: 30px;}
+  .product_popup .product .heading_title_Bold {margin-bottom: 6px;}
+  .product_popup .product .page_body_txt_Regular {margin-top: 20px;}
+  .product_popup .product .info_con .info .left > p {font-size: 14px; line-height: 24px;}
+  .product_popup .product .info_con .info .left {margin-right: 6px; padding-right: 6px;}
+  .product_popup:first-child .product:nth-child(4) .info_con .info .left {word-break: break-all;}
+  .product_popup .product .info_con .info .left::after {top: 8px; height: 10px; transform: translate(0);}
+  .product_popup .product .info_con .info .right {word-break: break-all;}
+
+  /* 주요성과 및 수상 */
+  .outcome_inner { margin-top: 50px;}
+  .tb_func_area .tb_left_area {position: relative;}
+  .tb_func_area .tit {height: auto; padding-top: 0;}
+  .tb_func_area .tb_left_area > p:not(:last-child){margin-bottom:8px;}
+  .tb_func_area .tb_con_area{margin-left:0px;}
+  .tb_area{padding-top: 56px; height: 56px;}
+  .tb_area .tb_tab_wrap{width: 100%; height: 56px;}
+  .tb_area .tb_tab_wrap.fixed{position:fixed; top: 0px; width: calc(100% - 48px);}
+  .tb_tab_wrap .tab { padding: 0 20px 0 0px;height: 56px;}
+  .tb_tab_wrap .tab span {font-size: 16px; line-height: 24px;}
+  .his_year_wrap .his_year_box {display: block; width: 100%;}
+  .his_year_wrap .page_body_txt_Medium {display: block; padding: 12px 0px; width: 100%; font-size: 16px; line-height: 24px;} 
+  .his_year_wrap .his_con_wrap {display: block; width: 100%; padding-bottom: 0;} 
+  .his_year_wrap .his_con_wrap span {display: block; margin-bottom: 6px; padding: 0; width: 100%; font-size: 14px; line-height: 22px;}
+  .his_year_wrap .his_con_wrap > ul {width: 100%; }
+  .his_year_wrap .his_con_wrap > ul > li {display: block;}
+  .his_year_wrap .his_con_wrap .his_con  {padding-top: 0; width: 100%;}
+  .his_year_wrap .his_con_wrap .his_con  ul:last-child {margin-bottom: 12px;}
+  .his_year_wrap .his_con_wrap .his_con  ul + ul {margin-top: 6px;}
+  .his_year_wrap .his_con_wrap .his_con > ul li + li {margin-top: 4px;}
+  .his_year_wrap .his_con_wrap .tab_tb_tit { font-size: 16px; line-height: 24px;} 
+  .his_year_wrap .his_con_wrap .tab_tb_txt {margin-top: 4px; font-size: 14px; line-height: 22px;}
+
+
+  /* 홍보영상 */
+  .detail_con {padding-bottom: 70px;}
+  .detail_con .img {position: relative; left: -8px; margin-bottom: 12px; width: calc(100% + 16px);width: -webkit-calc(100% + 16px); border-radius: 10px;}
+  .detail_con .txt_area {margin-top: 20px; padding: 0px;}
+  .detail_con .txt_area .txt {margin: 16px 0 20px}
+  .detail_con .txt_area .date {font-size: 14px;}
+  .video_list_wrap {margin-top: 50px;}
+  .video_list_wrap .tit_area {margin: 0 0 20px;}
+  .video_list_wrap .tit_area .num {margin-top: 20px; font-size: 14px;}
+  .video_list_wrap .swiper-wrapper {margin-bottom: 0px;}
+  .video_list_wrap .ctrl_area {display: none !important;}
+  .video_list_wrap .video_swiper {position: relative; left: -8px; width: calc(100% + 16px); width: -webkit-calc(100% + 16px);}
+  .video_list_wrap .video_swiper .swiper-wrapper {display: block; transform: translate(0) !important;}
+  .video_list_wrap .video_swiper .swiper-slide .img_resize_w {border-radius: 10px;}
+  .video_list_wrap .video_swiper .swiper-slide .txt_area {padding: 12px 8px 50px;}
+  .video_list_wrap .video_swiper .swiper-slide:last-child .txt_area {padding: 12px 8px 30px;}
+  .video_list_wrap .video_swiper .swiper-slide .txt_area .tit {margin-bottom: 20px; font-size: 20px; line-height: 32px; color: #000;}
+  .news_more {display: block; margin-top: 0;}
+
+  /* CI 소개 */
+  .ci_inner .right_wide_wrap .txt_box.desc_box {margin-top: 50px;}
+  .ci_inner .right_wide_wrap .txt_box .left {display: flex; justify-content: space-between;}
+  .ci_inner .right_wide_wrap .txt_box .left .download_btn_wrap .download_btn {padding: 0 12px; width: auto; min-height: 30px;} 
+  .ci_inner .right_wide_wrap .txt_box .left .download_btn_wrap .download_btn span {padding-right: 17px; font-size: 12px; background-size: 12px;} 
+  .ci_inner .right_wide_wrap .txt_box .right {margin-top: 20px; padding-right: 0;}
+  .ci_inner .right_wide_wrap .txt_box .right .txt2 {margin-top: 16px;}
+  .ci_inner .right_wide_wrap .txt_box .right .img_wrap {margin-top: 0;}
+  .ci_inner .right_wide_wrap .txt_box .right .img_wrap + .img_wrap {margin-top: 50px;}
+  .ci_inner .right_wide_wrap .txt_box .right .img_wrap .sub_tit {font-family: "Manrope_Medium", "Pretendard_Medium", sans-serif; font-size: 22px;}
+  .ci_inner .right_wide_wrap .txt_box .right .img_box {margin-top: 20px;}
+  .ci_inner .right_wide_wrap .txt_box .right .img_box .ci_img {margin-right: 16px; margin-bottom: 20px; width: calc((100% - 16px) / 2);}
+  .ci_inner .right_wide_wrap .download_btn_wrap {margin-top: 0;}
+  .ci_inner .right_wide_wrap .txt_box .right .symbol_img {position: relative; left: -8px;margin-bottom: 20px;width: calc(100% + 16px); width: -webkit-calc(100% + 16px); overflow: hidden;}
+  .ci_inner .right_wide_wrap .txt_box .right .symbol_img img {width: 100%;}
+
+  /* 인더스토리 */
+  .industries_area .indu_area .title_area .tit {margin-bottom: 8px; font-size: 24px;}
+  .industries_area .indu_area .title_area .txt {width: 200px; font-size: 14px; color: rgba(255, 255, 255, 0.7);}
+  /* ------------------------------------------------------------------- 회사정보 - End ------------------------------------------------------------------- */
+
+
+
+
+  /* ------------------------------------------------------------------- 제품정보 - End ------------------------------------------------------------------- */
+  /* 사업개요 */
+  .business_overview_inner .heading_title_ExBold2 {margin-bottom: 20px;}
+  .business_overview_inner .link_wrap {margin-top: 20px;}
+  .business_overview_inner .link_wrap > div {width: 50%;}
+  .business_overview_inner .link_wrap .right {margin:0 0 0 20px;}
+  .business_overview_inner .link_wrap .color_btn span {word-break: keep-all;}
+  .business_overview_inner .link_wrap .link_div:not(:nth-child(-n+1)) {margin-top: 8px;}
+  .business_overview_inner .right .color_btn {margin-top: 0;}
+
+  
+  .product_thr_dep_area {bottom: 16px; width: calc(100% - 48px);}
+  .product_thr_dep_area .thr_dep {margin-left: 12px; font-size: 12px;}
+  .product_thr_dep_area .thr_dep:first-child {margin-left: 20px;}
+  .product_thr_dep_area .thr_dep:last-child {margin-right: 20px;}
+
+  .product_fixed_tit {position: relative;}
+  .product_fixed_tit .txt_wrapper .heading_title_ExBold {position: relative; font-size: 30px !important;}
+  .product_fixed_tit .txt_wrapper .page_body_txt_Regular {margin-top: 12px; padding-top: 0 !important;}
+
+  .product_motion_area {padding-top: 0; overflow: hidden;}
+  .product_motion_area .for_black_bg_wrap {height: 100%;}
+  .product_motion_area .for_black_bg_wrap .change_img_area {height: 100%;}
+  .product_motion_area .for_black_bg_wrap .change_img_area .img_con_area {display: none; top: 0;}
+  .product_motion_area .for_black_bg_wrap .change_img_area .img_con_area .img_list:nth-child(n+2) {top: 0;}
+  .product_motion_area:not(.in_case_flow) + .product_info_inner {margin-top: 0; padding-top: 70px;} /* 흐르는 텍스트 없을 경우 */
+  .product_motion_area:not(.in_case_flow) + .product_info_inner .sub_con_tit_area {margin-bottom: 20px;}
+  .product_motion_area.product_fuel_cell {padding-top: 0;}
+
+  .flow_txt_con_area {margin-top: 0; margin-bottom: 0; padding: 200px 0; background-color: #000;}
+  .flow_txt_con_area .con_list {display: flex; flex-wrap: wrap;}
+  .flow_txt_con_area .con_list .mobile_img {order: 1; margin-top: 42px; width: 100%; border-radius: 10px; overflow: hidden;}
+  .flow_txt_con_area .con_list .mobile_img img {width: 100%;}
+  .flow_txt_con_area .con_list .feature_title {max-width: unset; font-size: 22px; line-height: 1.45;}
+  .flow_txt_con_area .con_list .feature_txt {width: 100%; font-size: 14px; line-height: 1.57;}
+
+  .product_info_inner {margin: 70px auto;}
+  .product_info_inner .right_wide_wrap .txt_box.has_border_t {margin-top: 50px; padding-top: 20px;}
+  .product_info_inner .right_wide_wrap .txt_box .right {margin-top: 0;}
+  .product_info_inner .product_info_list_w.flex_box .info_list {margin-top: 20px; width: 100%;}  
+  .product_info_inner .product_info_list_w.flex_box .info_list:nth-child(-n+2) {margin-top: 20px;}
+  .product_info_inner .product_info_list_w.flex_box .info_list:first-child {margin-top: 0;}
+  .product_info_inner .product_info_list_w .info_list {margin-top: 20px;}
+  .product_info_inner .product_info_list_w .info_list .info_tit {margin-bottom: 6px; font-size: 16px;}
+  .product_info_inner .product_info_list_w .info_list .info_tit:last-child {margin-bottom: 0;}
+  .product_info_inner .product_info_list_w .info_list .info_txt {font-size: 14px;}
+  .product_info_inner .product_info_list_w .info_list .info_txt br {display: none;}
+  .product_info_inner .product_info_list_w .info_list .pro_divide_info {display: block; margin-top:40px;}
+  .product_info_inner .product_info_list_w .info_list .pro_divide_info .divide_txt{width:100%;}
+  .product_info_inner .product_info_list_w .info_list:first-child .pro_divide_info {margin-top:0;}
+  .product_info_inner .product_info_list_w .info_list .pro_divide_info .divide_img {position: relative; left: -8px; margin-bottom: 12px; padding-top: 50%; width: -webkit-calc(100% + 16px); width: calc(100% + 16px); border-radius: 10px; overflow: hidden;}
+  .product_info_inner .product_info_list_w .info_list .pro_divide_info .divide_img img {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 100%;}
+  .product_info_inner .product_info_list_w.item_list {display: flex; flex-wrap: wrap; justify-content: space-between;}
+  .product_info_inner .product_info_list_w.item_list .info_list {width: 50%;}
+  .product_info_inner .product_info_list_w.item_list .info_list:nth-child(2n+1) {padding-right: 15px;}
+  .product_info_inner .product_info_list_w.item_list .info_list:nth-child(-n+2) {margin-top: 0;}
+  /* .product_info_inner .product_info_list_w .info_list */
+  .product_info_inner .half_txt_div .left .heading_title_Bold {margin-bottom: 0;}
+  .product_info_inner .half_txt_div .img.rounded {position: relative; left: -8px; margin-bottom: 12px; padding-top: 50%; width: -webkit-calc(100% + 16px); width: calc(100% + 16px); border-radius: 10px;}
+  .product_info_inner .half_txt_div .img.rounded img {position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 100%;}
+  .product_info_inner .sub_inner_con .sub_con_tit_area {margin-bottom: 20px;}
+  .product_info_inner .sub_inner_con .half_txt_div .right {margin-left: 0; /* margin-top: 12px; */ margin-top: 0;}
+
+  .petroleum_resin .right .product_box {margin-top: 15px; padding: 30px; width: 100%; height: 208px; border-radius: 10px;}
+  .petroleum_resin .right .product_box:nth-child(2n) {margin-left: 0;}
+  .petroleum_resin .right .product_box:nth-child(-n+2) {margin-top: 15px;}
+  .petroleum_resin .right .product_box:first-child {margin-top: 0;}
+  .petroleum_resin .right .product_box .txt {margin-top: 8px;}
+  .petroleum_resin .right .product_box .download_btn2 {left: 30px; bottom: 30px; width: calc(100% - 60px); font-size: 14px; background-size: 18px;}
+
+  .product_bot_black_bg {padding-top: 50px; padding-bottom: 70px;}
+  .product_bot_black_bg .contact_wrap .txt_box + .txt_box {margin-top: 70px;}
+
+  /* fnc */
+  .fnc_inner .link_txt {background-size: 10px 10px; background-position: right 0 top 7px;}
+  .fnc_detail_sec {padding: 44px 0;}
+  .fnc_detail_sec .btn_wrap {margin-top: 12px;}
+  /* ------------------------------------------------------------------- 제품정보 - End ------------------------------------------------------------------- */
+
+
+
+
+  /* ------------------------------------------------------------------- 지속가능경영 - Start ------------------------------------------------------------------- */
+  /* 지속가능경영정책 */
+  .sign_area{margin-top: 40px;}
+  .sign_area > div .tit{margin-bottom:10px; font-size: 14px; line-height:24px; letter-spacing: -0.4px;}
+  .sign_area .sign_img img{width:119px;}
+
+  /* 이니셔티브 및 대외평가 */
+  .initiative_inner .eval_area .eval_p .heading_title_Bold {font-size: 30px; font-family: "Manrope_ExtraBold", "Pretendard_ExtraBold", sans-serif;}
+
+  /* 윤리경영 */
+  .report_sec .list_w{position:relative; left:-8px; width: calc(100% + 16px); width:-webkit-calc(100% + 16px);}
+  .report_sec .list{border-radius:10px;}  
+  .report_sec .list:nth-child(1){background:url("../images/icon-sustainability-report-check-01-mo.jpg") no-repeat center center/cover}
+  .report_sec .list:nth-child(2){background:url("../images/icon-sustainability-report-check-02-mo.jpg") no-repeat center center/cover}
+  .report_sec .list:nth-child(3){background:url("../images/icon-sustainability-report-check-03-mo.jpg") no-repeat center center/cover}
+  .report_sec .list .color_btn{padding:0 12px; min-height:30px;}
+  .report_sec .list .color_btn span{font-size:12px; line-height:16px; letter-spacing: -0.4px;}
+  .report_sec .btn_wrap{margin-top:30px;}
+  .report_sec .list .small_link_txt .icon_small_link {height: 12px;}
+
+  /* 사회공헌 개요 */
+  .social_contribution_sec .list{padding:40px 0;}
+  .social_contribution_sec .list:first-child{padding:0 0 40px 0;}
+  .social_contribution_sec .list .txt_box{margin-top:12px;}
+  .social_contribution_sec .list .txt_box .page_body_txt_Regular{margin-top:6px;}
+  .social_contribution_sec .list .txt_box .btn{margin-top:20px;}  
+  .social_contribution_sec .list .img_box .img_resize_w{border-radius:10px;}
+
+  /* 정책 및 원칙 */
+  .invest_detail_sec.behavior, .invest_detail_sec.cooperative {margin-top: 70px; padding: 44px 0;}
+  .invest_detail_sec.behavior .detail_txt, .invest_detail_sec.cooperative .detail_txt {font-size: 16px; font-family: "Manrope_Bold", "Pretendard_Bold", sans-serif;}
+  .invest_detail_sec.behavior .btn_wrap, .invest_detail_sec.cooperative .btn_wrap {margin-top: 12px;}
+
+  /* 지속가능경영 보고서 */
+  .report_wrap {padding-bottom: 40px;}
+  .report_wrap .report_download {display: block; width: 100%;}
+  .report_wrap .report_download .img {position: relative; left: -8px; width: calc(100% + 16px);width: -webkit-calc(100% + 16px); margin-right: 0px; height: auto;}
+  .report_wrap .report_download .txt_area {padding: 20px 0 0;}
+  .report_wrap .report_download .txt_area .heading_title_Bold2 {font-family: "Manrope_SemiBold", "Pretendard_SemiBold", "맑은 고딕", "Malgun Gothic", sans-serif;}
+  .report_wrap .report_download .txt_area .btn_box {position: relative; bottom: auto; margin-top: 40px;}
+  .report_list_wrap {position: relative; left: -8px; margin-top: 40px; width: calc(100% + 16px);width: -webkit-calc(100% + 16px);}
+  .report_list_wrap .swiper-wrapper {margin-bottom: 40px;}
+  .report_list_wrap .ctrl_area .swiper-scrollbar {width: 100%; height: 2px;}
+  .report_list_wrap .ctrl_area .btn_wrap {display: none;}
+  .report_list_wrap .report_swiper .swiper-slide {padding: 0; width: auto; border: 0;}
+  .report_list_wrap .report_swiper .swiper-slide:hover {border: 0;}
+  .report_list_wrap .report_swiper .swiper-slide .year {left: 0px;}
+  .report_list_wrap .report_swiper .swiper-slide .img {margin: 12px auto 20px;}
+  .report_list_wrap .report_swiper .swiper-slide .img img {position: absolute; width: 100%;}
+  .report_list_wrap .report_swiper .swiper-slide .btn_box {padding: 0 13px;}
+  .report_list_wrap .report_swiper .swiper-slide .btn_box a {width: 50%; margin-left: 8px;}
+  .report_list_wrap .report_swiper .swiper-slide .btn_box a:first-child {margin-left: 0;}
+
+  /* 기후변화 */
+  .climate_inner .sub_inner_con {margin-top: 50px;}
+  /* ------------------------------------------------------------------- 지속가능경영 - End ------------------------------------------------------------------- */
+
+
+
+
+
+  /* ------------------------------------------------------------------- 기타 - Start ------------------------------------------------------------------- */
+  .etc_page{background:#000;}
+  .etc_page .logo{top:22px; left:24px; width:198px; height:17px; background:url("../images/logo-kolon-industries-white.svg") no-repeat center center;}
+  .etc_page .no_srch_area{position:relative; top:auto; left:auto; transform:translate(0, 0); padding-top:130px; margin:0 auto; width:calc(100% - 48px); width:-webkit-calc(100% - 48px);}
+  .etc_page .no_srch_area .no_srch_div{padding-top:54px; text-align:left; background:url("../images/icon-page-error-mo.svg") no-repeat left top;}
+  .etc_page .no_srch_area .no_srch_div .heading_title_Bold{font-size:30px; line-height:42px; font-family: "Manrope_ExtraBold", "Pretendard_ExtraBold", sans-serif;}
+  .etc_page .no_srch_area .page_body_txt_Medium{margin-top:8px;}
+  .etc_page .no_srch_area .btn_wrap{margin-top:40px; text-align:left;}
+  .etc_page .form_table{margin-top:40px;}
+  /* ------------------------------------------------------------------- 기타 - End ------------------------------------------------------------------- */
+
+
+
+  /* ------------------------------------------------------------------- 투자정보 - Start ------------------------------------------------------------------- */
+  /* 전자공고, ir자료실 */
+  .row_view .view_con{margin-top:40px;}
+  .row_view .view_con .tit_con .heading_title_Bold {margin-top: 0;}
+  .row_view .view_con .tit_con .info_div{margin-top:12px;}
+  .row_view .view_con .txt_con {margin:20px 0 0 0;}
+  .row_view .view_con .txt_con .txt_box {margin-bottom: 40px;  font-size:14px; line-height:22px; letter-spacing: -0.6px;}
+
+  /* 재무정보 */
+  .financial_inner .form_table tbody td.pd_left {padding: 12px 12px 12px 20px;}
+
+  /* 주가정보, 공시정보 */
+  .invest_img_sec{padding:124px 0;}
+  .invest_img_sec .btn_wrap{margin-top:20px;}
+
+  /* 주주현황 */
+  .invest_detail_sec{margin-top:70px; padding:119px 24px;}
+  .invest_detail_sec .btn_wrap{margin-top:20px;}
+  .invest_detail_sec.ir{margin-top:70px; padding:119px 0; background:url("../images/bg-ir-mo.jpg") no-repeat center center/cover}
+  .invest_detail_sec.ir .contanct_div{margin-top:20px;}
+  .invest_detail_sec.ir .contanct_div .page_sub_title_Bold:not(:first-child){margin-top:6px;}
+
+  /* 주주총회, 배당정보 */
+  .stockholder_inner .half_txt_div .right .tit{margin-top: 20px;}
+  .stockholder_inner .table_info_wrap .sub_noti_area {margin-top: 10px;}
+
+  /* 이사회 현황 */
+  .board_inner .sub_sec_tit_area.mg_bot {margin-bottom: 20px;}
+  .board_inner .btn_div a {padding: 0 12px; min-height: 30px;}
+  .board_inner .btn_div a span {padding-right: 18px; font-size: 12px; background-size: 12px; white-space: nowrap;}
+  .board_inner .half_txt_div .left .heading_title_Bold {padding-right: 6px;}
+  .board_inner .half_txt_div .right .tit{margin-top:20px;}
+  .board_inner .txt_div > div {padding:30px; width: 100%; min-height:auto;}
+  .gray_bg_card{margin-left:0; margin-bottom:20px; border-radius:10px;}
+  .gray_bg_card:nth-child(3n+1) {margin-left: 0px;}
+  .gray_bg_card:nth-child(2n+1) {margin-left: 0px;}
+  .gray_bg_card .position{margin-bottom:16px;}
+  .gray_bg_card .name{margin-bottom:6px;}
+  .gray_bg_card .info_table{margin-top:20px;}
+  .gray_bg_card .info_table.long_info{margin-top:21px;}
+  .gray_bg_card .info_table .row .tit {width: 36px;}
+  .gray_bg_card .info_table .row .txt span + span{margin-top:6px;}
+  .step_div {margin-top: 16px;}
+  .step_div.mg_bot {margin-bottom: 20px;}
+  .step_div .num_txt + .num_txt {margin-top: 8px;}
+  /* ------------------------------------------------------------------- 투자정보 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+  /* ------------------------------------------------------------------- 채용정보 - Start ------------------------------------------------------------------- */
+  .recruit_way .way_list{flex-wrap:wrap; margin-top:50px; padding-top:20px;}
+  .recruit_way.step_ver .way_list .divide_left{margin-right:0; width:100%;}
+  .recruit_way.step_ver .way_list .divide_right{width:100%;}
+  .recruit_way.icon_ver .way_list .divide_left {padding-left: 0;}
+  .recruit_way .way_list .txt_w .txt_inner_list{margin-top:20px;}
+  .recruit_way .way_list .txt_w .txt_inner_list:first-child{margin-top:12px;}
+  .recruit_way .way_list .txt_w .txt_inner_list .sub_tit{margin:6px 0}
+  .recruit_way .way_list .txt_w .txt_inner_list .paragraph .txt{font-size:14px; line-height:1.57; letter-spacing: -0.6px;;}
+  .recruit_way .way_list .txt_w .txt_inner_list .paragraph .txt:nth-child(n+2){margin-top:6px;}
+  .recruit_way .way_list .step_w {margin-bottom: 8px;}
+  .recruit_way .way_list .step_w .step_number{width:auto; margin-right:6px;}
+  .recruit_way .way_list .step_w > * {line-height: 1.5;}
+
+  .gray_full_bg{margin-top:70px; padding:70px 0;}
+  /* ------------------------------------------------------------------- 채용정보 - End ------------------------------------------------------------------- */
+
+
+
+
+
+
+  /* ------------------------------------------------------------------- 공통 - Start ------------------------------------------------------------------- */
+  .total_srch_input_box{margin:0 auto 40px;}
+  .total_srch_input_box .form_search{width:calc(100% + 16px); width:-webkit-calc(100% + 16px);}
+  .total_srch_input_box .form_search input{padding-left:20px; height:48px; font-size:16px; line-height:26px;}
+  .total_srch_input_box .form_search input::placeholder{font-size:16px; line-height:26px;}
+  .total_srch_list .list_w{padding:16px 0 50px;}
+  .total_srch_list .list_w:last-child{padding:16px 0 60px;}
+  .total_srch_list .list_w .left .btn{margin-top:0; margin-left:20px;}
+  .total_srch_list .list_w .left .btn .color_btn{padding:0 12px; min-height:30px;}
+  .total_srch_list .list_w .left .btn .color_btn span{font-size:12px; line-height:16px;}
+  .total_srch_list .list_w .right .srch_list_w{margin-top:24px;}
+  .total_srch_list .list_w .right .srch_list{padding:19px 0;}
+  .total_srch_list .list_w .right .product_srch_list{margin-top:24px;}
+  .total_srch_list .list_w .right .product_srch_list:first-child{margin-top:24px;}
+  .total_srch_list .list_w .right .product_srch_list .heading_title_Bold2{margin-bottom:10px;}
+  .total_srch_list .list_w .right .product_srch_list .info_box_wrap{margin-bottom:10px;}
+  .total_srch_list .list_w .right .product_srch_list .info_box_wrap .info_box:first-child{margin:0;}
+  .total_srch_list .list_w .right .product_srch_list .info_box_wrap .info_box{margin:10px 0 0; padding:24px;}
+  .total_srch_list .list_w .right .product_srch_list .info_box_wrap .info_box .name{margin:6px 0 32px;}
+  .total_srch_list .list_w .right .no_srch_area{margin-top:24px;}
+  .total_srch_list .list_w .right .no_srch_area .no_srch_div{padding-top:42px; background:url(../images/icon-no-data-mo.svg) no-repeat center top}
+  .total_srch_list .list_w .right .no_srch_area .no_srch_div .tit{font-size:14px; line-height:22px; letter-spacing: -0.6px;}
+  
+  /* ------------------------------------------------------------------- 공통 - End ------------------------------------------------------------------- */
+
+
+  /* ------------------------------------------------------------------- 푸터 - Start ------------------------------------------------------------------- */
+  .footer_select_w{margin-top:6px;}
+  .footer_select{width:calc(100% - 86px); width:-webkit-calc(100% - 86px);}
+  .footer_select.form_select .form_select_arr select{font-size:12px;}
+  .footer_select.form_select .form_select_arr:after{right:9px;}
+  .footer_select_w .btn{margin-left:6px; padding:9px 5px;}
+  .ver_txt {margin-top: 12px;}
+  .anchor_func_area .anchor_con_area .anchor_con .page_body_txt_Regular.refer_txt {margin-top: 16px;}
+  .anchor_func_area .anchor_con_area .anchor_con .page_body_txt_Regular.detail_txt {margin-top: 8px;}
+
+  /* ------------------------------------------------------------------- 푸터 - End ------------------------------------------------------------------- */
+}
+
+@media screen and (max-width: 379px) {
+  /* 이사회 현황 */
+  .board_inner .half_txt_div .left .btn_div.mg_top {margin-top: 12px;}
+}
+@media screen and (max-width: 312px) {
+  /* 이사회 현황 */
+  .board_inner .sub_sec_tit_area.mg_bot {flex-direction: column; align-items: flex-start;}
+  .board_inner .btn_div {margin-top: 12px;}
+  .board_inner .btn_div.mg_top {margin-top: 12px;}
+  .board_inner .half_txt_div .left {flex-direction: column; align-items: flex-start;}
+  .board_inner .half_txt_div .left .btn_div {margin-top: 12px;}
+
+   /* 사업개요 */
+   .business_overview_inner .link_wrap .right {margin: 0 0 0 10px;}
+}
