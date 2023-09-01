@@ -1,6 +1,7 @@
 package com.kap.core.validation;
 
 import com.kap.core.annotation.CMId;
+import com.kap.core.annotation.CMName;
 import org.springframework.beans.factory.annotation.Value;
 
 import javax.validation.ConstraintValidator;
@@ -25,7 +26,7 @@ import javax.validation.ConstraintValidatorContext;
  * </pre>
  */
 
-public class NameValidationCheck extends BaseValidationCheck implements ConstraintValidator<CMId, Object> {
+public class NameValidationCheck extends BaseValidationCheck implements ConstraintValidator<CMName, Object> {
 
     @Value("${pattern.korean}")     // TODO 이름의 형식이 어떤걸지 몰라 한글로 표시
     String pattern;
