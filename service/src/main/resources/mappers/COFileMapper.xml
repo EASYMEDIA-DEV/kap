@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kap.service.dao.COFileMapper">
+	<!--
+         쿼리명 : COFileMapper.selectFileInfs
+         설  명 : 파일에 대한 목록을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<select id="selectFileInfs" parameterType="java.lang.Integer" resultType="COFileDTO">
+		select 	/* COFileMapper.selectFileInfs */
+				a.file_seq
+				, b.file_ord
+				, b.phy_path
+				, b.orgn_file_nm
+				, b.save_file_nm
+				, b.file_extn
+				, b.file_dsc
+				, b.file_size
+				, b.web_path
+				, a.use_yn
+		from 	co_file_mst a
+		inner
+		join 	co_file_dtl b
+		on 		a.file_seq = b.file_seq
+		where 	a.file_seq = #{fileSeq}
+		and 	a.use_yn = 'Y'
+		and 	b.use_yn = 'Y'
+		order
+		by 		b.file_seq
+	</select>
+
+	<!--
+         쿼리명 : COFileMapper.selectFileInf
+         설  명 : 파일에 대한 상세정보를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<select id="selectFileInf" parameterType="COFileDTO" resultType="COFileDTO">
+		select 	/* COFileMapper.selectFileInf */
+				file_seq
+			 	, file_ord
+			 	, phy_path
+			 	, orgn_file_nm
+			 	, save_file_nm
+			 	, file_extn
+			 	, file_dsc
+			 	, file_size
+			 	, web_path
+		from 	co_file_dtl
+		where 	file_seq = #{fileSeq}
+		and 	file_ord = #{fileOrd}
+		and 	use_yn = 'Y'
+	</select>
+
+	<!--
+         쿼리명 : COFileMapper.insertFileMaster
+         설  명 : 파일 마스터를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<insert id="insertFileMaster" parameterType="COFileDTO" useGeneratedKeys="true" keyProperty="fileSeq" keyColumn="FILE_SEQ">
+		insert 	/* COFileMapper.insertFileMaster */
+		into co_file_mst (
+			use_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		) values (
+			'Y'
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+         쿼리명 : COFileMapper.insertFileDetail
+         설  명 : 파일 상세를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<insert id="insertFileDetail" parameterType="COFileDTO" useGeneratedKeys="true" keyProperty="fileSeq" keyColumn="FILE_SEQ">
+		insert 	/* COFileMapper.insertFileDetail */
+		into co_file_dtl (
+			file_seq
+			, file_ord
+			, phy_path
+			, orgn_file_nm
+			, save_file_nm
+			, file_extn
+			, file_dsc
+			, file_size
+			, web_path
+			, use_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		) values (
+			#{fileSeq}
+            , #{fileOrd}
+			, #{phyPath}
+			, #{orgnFileNm}
+			, #{saveFileNm}
+			, #{fileExtn}
+			, #{fileDsc}
+			, #{fileSize}
+			, #{webPath}
+			, 'Y'
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+         쿼리명 : COFileMapper.insertTmpFileMaster
+         설  명 : 파일 마스터를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<insert id="insertTmpFileMaster" parameterType="COFileDTO" useGeneratedKeys="true" keyProperty="fileSeq" keyColumn="FILE_SEQ">
+		insert 	/* COFileMapper.insertTmpFileMaster */
+		into co_tmp_file_mst (
+							   use_yn
+							 , reg_id
+							 , reg_ip
+							 , reg_dtm
+							 , mod_id
+							 , mod_ip
+							 , mod_dtm
+		) values (
+					 'Y'
+				 , #{regId}
+				 , #{regIp}
+				 , now()
+				 , #{regId}
+				 , #{regIp}
+				 , now()
+				 )
+	</insert>
+
+	<!--
+         쿼리명 : COFileMapper.insertTmpFileDetail
+         설  명 : 파일 상세를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<insert id="insertTmpFileDetail" parameterType="COFileDTO" useGeneratedKeys="true" keyProperty="fileSeq" keyColumn="FILE_SEQ">
+		insert 	/* COFileMapper.insertTmpFileDetail */
+		into co_tmp_file_dtl (
+							   file_seq
+							 , file_ord
+							 , phy_path
+							 , orgn_file_nm
+							 , save_file_nm
+							 , file_extn
+							 , file_dsc
+							 , file_size
+							 , web_path
+							 , use_yn
+							 , reg_id
+							 , reg_ip
+							 , reg_dtm
+							 , mod_id
+							 , mod_ip
+							 , mod_dtm
+		) values (
+					 #{fileSeq}
+				 , #{fileOrd}
+				 , #{phyPath}
+				 , #{orgnFileNm}
+				 , #{saveFileNm}
+				 , #{fileExtn}
+				 , #{fileDsc}
+				 , #{fileSize}
+				 , #{webPath}
+				 , ifnull(#{useYn}, 'Y')
+				 , #{regId}
+				 , #{regIp}
+				 , now()
+				 , #{regId}
+				 , #{regIp}
+				 , now()
+				 )
+	</insert>
+
+	<!--
+         쿼리명 : COFileMapper.deleteFileInf
+         설  명 : 하나의 파일을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<update id="deleteFileInf" parameterType="COFileDTO">
+		update 	/* COFileMapper.deleteFileInf */
+				co_file_dtl
+		set		use_yn = 'N'
+		  		, mod_id = #{regId}
+		  		, mod_ip = #{regIp}
+		  		, mod_dtm = now()
+		where 	file_seq = #{fileSeq}
+		and		file_ord = #{fileOrd}
+	</update>
+
+	<!--
+         쿼리명 : COFileMapper.deleteFileInf
+         설  명 : 여러 개의 파일을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<delete id="deleteFileInfs" parameterType="COFileDTO">
+		update 	/* COFileMapper.deleteFileInfs */
+				co_file_dtl a
+		    	, (<foreach collection="fileOrdArr" item="fileOrdArr" index="index" open="" close="" separator="UNION ALL">
+					select 	#{fileSeq} as file_seq
+							, #{fileOrdArr} as file_ord
+					from 	dual
+					</foreach>
+				) b
+		set 	use_yn = 'N'
+				, mod_id = #{regId}
+				, mod_ip = #{regIp}
+				, mod_dtm = now()
+		where 	a.file_seq = b.file_seq
+		and 	a.file_ord = b.file_ord
+	</delete>
+
+	<!--
+         쿼리명 : COFileMapper.deleteAllFileInf
+         설  명 : 전체 파일을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<update id="deleteAllFileInf" parameterType="COFileDTO">
+		update 	/* COFileMapper.deleteAllFileInf */
+		    	co_file_mst
+		set 	use_yn = 'N'
+				, mod_id = #{regId}
+				, mod_ip = #{regIp}
+				, mod_dtm = now()
+		where 	file_seq = #{fileSeq}
+	</update>
+
+	<!--
+         쿼리명 : COFileMapper.getParntFileCnt
+         설  명 : 파일 마스터에 데이터가 있는지 확인한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<select id="getParntFileCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select 	/* COFileMapper.getParntFileCnt */
+				count(*)
+		from 	co_file_mst
+		where	file_seq = #{fileSeq}
+	</select>
+
+	<!--
+         쿼리명 : COFileMapper.getMaxFileSeq
+         설  명 : 파일 구분자에 대한 최대값을 구한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<select id="getMaxFileSeq" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select 	/* COFileMapper.getMaxFileSeq */
+				ifnull(max(file_ord), -1) + 1 as file_ord
+		from	co_file_dtl
+		where	file_seq = #{fileSeq}
+	</select>
+
+	<!--
+         쿼리명 : COFileMapper.getTotFileCnt
+         설  명 : 파일 구분자에 대한 파일갯수를 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<select id="getTotFileCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select 	/* COFileMapper.getTotFileCnt */
+				count(*)
+		from 	co_file_dtl
+		where 	file_seq = #{fileSeq}
+		and 	use_yn = 'Y'
+	</select>
+
+	<!--
+         쿼리명 : COFileMapper.updateFileAlts
+         설  명 : 대체 텍스트를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<update id="updateFileAlts" parameterType="COFileDTO">
+		update 	/* COFileMapper.updateFileAlts */
+				co_file_dtl a
+				, (
+				<foreach collection="fileInfList" item="fileInf" index="index" open="" close="" separator="UNION ALL">
+					select 	#{fileSeq} as file_seq
+							, #{fileInf.fileOrd} as file_ord
+							, #{fileInf.fileDsc} as file_dsc
+					from 	dual
+				</foreach>
+				) B
+		set		a.file_dsc = b.file_dsc
+		where 	a.file_seq = b.file_seq
+		and 	a.file_ord = b.file_ord
+	</update>
+
+	<!--
+         쿼리명 : COFileMapper.updateFileAlt
+         설  명 : 대체 텍스트를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<update id="updateFileAlt" parameterType="java.util.List">
+		update 	/* COFileMapper.updateFileAlt */
+				co_file_dtl a
+				, (
+				<foreach collection="list" item="item" index="index" open="" close="" separator="UNION ALL">
+					select	#{item.fileSeq} as file_seq
+							, #{item.fileOrd} as file_ord
+							, #{item.fileDsc} as file_dsc
+					from 	dual
+				</foreach>
+				) b
+		set		a.file_dsc = b.file_dsc
+		where 	a.file_seq = b.file_seq
+		and 	a.file_ord = b.file_ord
+	</update>
+
+	<!--
+         쿼리명 : COFileMapper.deleteFile
+         설  명 : 대체 텍스트를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<update id="deleteFile" parameterType="java.util.List">
+		update 	/* COFileMapper.deleteFile */
+				co_file_dtl a
+				, (
+				<foreach collection="list" item="item" index="index" open="" close="" separator="union all">
+					select 	#{item.fileSeq} as file_seq
+							, #{item.fileOrd} as file_ord
+					from 	dual
+				</foreach>
+				) b
+		set		a.use_yn = 'N'
+		where 	a.file_seq = b.file_seq
+		and 	a.file_ord = b.file_ord
+	</update>
+
+	<!--
+         쿼리명 : COFileMapper.insertFileDetailList
+         설  명 : 파일 상세를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2021.04.26   허진영       최초생성
+    -->
+	<insert id="insertFileDetailList" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="fileSeq" keyColumn="FILE_SEQ">
+		insert /* COFileMapper.insertFileDetailList */
+		into co_file_dtl (
+			file_seq
+			, file_ord
+			, phy_path
+			, orgn_file_nm
+			, save_file_nm
+			, file_extn
+			, file_dsc
+			, file_size
+			, web_path
+			, use_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		<foreach collection="list" item="list" index="index" open="" close="" separator=",">
+		(
+			  #{list.fileSeq}
+			, #{list.fileOrd}
+			, #{list.phyPath}
+			, #{list.orgnFileNm}
+			, #{list.saveFileNm}
+			, #{list.fileExtn}
+			, #{list.fileDsc}
+			, #{list.fileSize}
+			, #{list.webPath}
+			, 'Y'
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+		)
+		</foreach>
+	</insert>
+
+	<!--
+         쿼리명 : COFileMapper.deleteFileMst
+         설  명 : 파일 마스터 테이블의(MST) 파일을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.26   손태주       최초생성
+    -->
+	<update id="deleteFileMst" parameterType="java.lang.Integer">
+		update 	/* COFileMapper.deleteFileMst */
+				co_file_mst
+		set		use_yn = 'N'
+		  		, mod_dtm = now()
+		where 	file_seq = #{fileSeq}
+	</update>
+
+	<!--
+         쿼리명 : COFileMapper.deleteFileDtl
+         설  명 : 파일 상세 테이블의(DTL) 파일을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.26   손태주       최초생성
+    -->
+	<update id="deleteFileDtl" parameterType="java.lang.Integer">
+		update 	/* COFileMapper.deleteFileDtl */
+				co_file_dtl
+		set		use_yn = 'N'
+			  , mod_dtm = now()
+		where 	file_seq = #{fileSeq}
+	</update>
+
+</mapper>

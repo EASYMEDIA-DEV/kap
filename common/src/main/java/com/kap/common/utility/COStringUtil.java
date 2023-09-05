@@ -315,4 +315,17 @@ public class COStringUtil {
         }
         return simpledateformat.format(date);
     }
+
+    /**
+     * HTML 태그를 제거한다.
+     *
+     * @return String
+     */
+    public static String removeHtmlTag(String str)
+    {
+        if( str != null && !"".equals(str))
+            return str.replaceAll("\\<.*?\\>", "");
+        else
+            return "";
+    }
 }

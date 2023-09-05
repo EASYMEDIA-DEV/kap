@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.COEMenuRoleMapper">
+    <!--
+        쿼리명 : /* COEMenuRoleMapper.selectMenuRoleLogList */
+        설  명 : 메뉴권한변경 목록을 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2022.04.08    신혜정       최초생성
+    -->
+    <select id="selectMenuRoleLogList" parameterType="COEMenuRoleDTO" resultType="COEMenuRoleDTO">
+        select               /* COEMenuRoleMapper.selectMenuRoleLogList */
+              mst.mod_seq
+            , mst.adm_id
+            , mst.adm_nm
+            , mst.adm_dept as adm_dept_nm
+            , mst.trgt_adm_id
+            , mst.trgt_adm_nm
+            , mst.trgt_adm_dept as trgt_adm_dept_nm
+            , (select max(a.mod_seq) from co_adm_mod_mst a where a.mod_seq != mst.mod_seq and a.trgt_adm_id = mst.trgt_adm_id and a.mod_seq <![CDATA[<]]> mst.mod_seq) as bfre_mod_seq
+            , mst.reg_dtm
+        from
+            co_adm_mod_mst mst
+        <include refid="selectMenuRoleLogListWhereSql" />
+        order by
+            mst.mod_dtm desc
+        <if test="excelYn != 'Y'.toString() ">
+            limit   #{firstIndex}, #{recordCountPerPage}
+        </if>
+    </select>
+
+    <!--
+        쿼리명 : COEMenuRoleMapper.getMenuRoleLogListCnt
+        설  명 : 메뉴권한변경 목록 갯수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2022.04.08    신혜정       최초생성
+    -->
+    <select id="getMenuRoleLogListCnt" parameterType="EmfMap" resultType="java.lang.Integer">
+        select       /* COEMenuRoleMapper.getMenuRoleLogListCnt */
+            count(*)
+        from
+             co_adm_mod_mst mst
+        <include refid="selectMenuRoleLogListWhereSql" />
+    </select>
+
+    <!--
+        쿼리명 : selectMenuRoleLogListWhereSql
+        설  명 : 메뉴권한변경 목록 검색 조건 SQL
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2022.04.08    신혜정       최초생성
+    -->
+    <sql id="selectMenuRoleLogListWhereSql">
+        <where>
+            and (select max(a.mod_seq) from co_adm_mod_mst a where a.mod_seq != mst.mod_seq and a.trgt_adm_id = mst.trgt_adm_id and a.mod_seq  <![CDATA[<]]>  mst.mod_seq ) is not null
+            <if test="strtDt != null and strtDt != ''.toString() ">
+                and mst.reg_dtm <![CDATA[>=]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+            </if>
+            <if test="endDt != null and endDt != ''.toString() ">
+                and mst.reg_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        and mst.adm_id like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        and mst.adm_nm like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 3">
+                        and mst.adm_dept like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 4">
+                        and mst.trgt_adm_id like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 5">
+                        and mst.trgt_adm_nm like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 6">
+                        and mst.trgt_adm_dept like concat('%', #{q}, '%')
+                    </when>
+                    <otherwise>
+                        and
+                        (
+                            mst.adm_id like concat('%', #{q}, '%')
+                        or
+                            mst.adm_nm like concat('%', #{q}, '%')
+                        or
+                            mst.adm_dept like concat('%', #{q}, '%')
+                        or
+                            mst.trgt_adm_id like concat('%', #{q}, '%')
+                        or
+                            mst.trgt_adm_nm like concat('%', #{q}, '%')
+                        or
+                            mst.trgt_adm_dept like concat('%', #{q}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+
+    <!--
+      쿼리명 : COEMenuRoleMapper.selectModDtl
+      설  명 : 수정 상세를 조회한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2022.04.15   신혜정       최초생성
+ -->
+    <select id="selectModDtl" parameterType="COEMenuRoleDTO" resultType="COEMenuRoleDTO">
+        select /* COEMenuRoleMapper.selectModDtl */
+               adm_id
+             , adm_nm
+             , adm_dept as adm_dept_nm
+             , mod_dtm
+             , trgt_adm_id
+             , trgt_adm_nm
+             , trgt_adm_dept as trgt_adm_dept_nm
+             , reg_dtm
+        from
+             co_adm_mod_mst
+        where
+            mod_seq = #{detailsKey}
+    </select>
+
+    <!--
+      쿼리명 : COEMenuRoleMapper.selectModMenuList
+      설  명 : 수정 메뉴 리스트를 조회한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2022.04.15   신혜정       최초생성
+ -->
+    <select id="selectModMenuList" parameterType="COEMenuRoleDTO" resultType="java.lang.String">
+        select /* COEMenuRoleMapper.selectModMenuList */
+               group_concat(mm.menu_nm  order by mm.lft_val separator ' > ')  as menu_nm
+             , mm.menu_seq
+             , group_concat(mm.rht_val order by mm.rht_val desc) as rht_val
+        from co_menu_mst mm
+           <choose>
+               <when test="type == 'bfre'">
+                   , co_adm_mod_dtl md
+                where
+                   md.mod_seq = #{bfreModSeq}
+               </when>
+               <otherwise>
+                   , (
+                       select menu_seq
+                       from co_adm_mod_dtl
+                       where (mod_seq = #{detailsKey} or mod_seq = #{bfreModSeq})
+                            and menu_seq not in (
+                                select a.menu_seq
+                                from co_adm_mod_dtl a join co_adm_mod_dtl b on a.menu_seq = b.menu_seq
+                                where a.mod_seq = #{detailsKey}
+                                and b.mod_seq = #{bfreModSeq}
+                            )
+                       )md
+                where 1=1
+               </otherwise>
+           </choose>
+            and mm.lft_val <![CDATA[ <= ]]> (select lft_val from co_menu_mst where menu_seq = md.menu_seq)
+            and mm.rht_val <![CDATA[ >= ]]> (select rht_val from co_menu_mst where menu_seq = md.menu_seq)
+            and dpth <![CDATA[ >= ]]>  (select dpth - 3 from co_menu_mst where menu_seq = md.menu_seq)
+            and mm.menu_seq != 1
+        group by md.menu_seq
+        having count(rht_val) <![CDATA[ > ]]> 1
+        order by rht_val
+    </select>
+</mapper>

@@ -1,0 +1,606 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.COFCodeMapper">
+
+	<!--
+         쿼리명 : COFCodeMapper.getCodeList
+         설  명 : 코드 목록을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<select id="getCodeList" parameterType="COCodeDTO" resultType="COCodeDTO">
+		SElect /* COFCodeMapper.getCodeList */
+			  cd_seq
+			, parnt_seq
+			, pstn
+			, lft_val
+			, rht_val
+			, dpth
+			, cd_id
+			, cd
+			, cd_nm
+		    , en_cd_nm
+		    , cn_cd_nm
+			, use_yn
+			, (select count(*) from co_code_mst where parnt_seq = a.cd_seq) as childcnt
+		from
+			co_code_mst a
+		where 1=1
+			and lft_val <![CDATA[>]]> (select lft_val from co_code_mst where cd_seq = #{cdSeq})
+		   	and rht_val <![CDATA[<]]> (select rht_val from co_code_mst where cd_seq = #{cdSeq})
+		order by
+			lft_val
+	</select>
+
+	<!--
+         쿼리명 : COFCodeMapper.selectCodeDtl
+         설  명 : 코드 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<select id="selectCodeDtl" parameterType="COCodeDTO" resultType="COCodeDTO">
+		select /* COFCodeMapper.selectcodedtl */
+			  cd_seq
+			, parnt_seq
+			, pstn
+			, lft_val
+			, rht_val
+			, dpth
+			, cd_id
+			, cd
+			, cd_nm
+			, en_cd_nm
+			, cn_cd_nm
+			, use_yn
+		from
+			co_code_mst
+		where
+			cd_seq = #{cdSeq}
+	</select>
+	
+	<!--
+         쿼리명 : COFCodeMapper.insertCode
+         설  명 : 코드를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<insert id="insertCode" parameterType="COCodeDTO">
+		insert /* COFCodeMapper.insertcode */ into co_code_mst
+			( parnt_seq
+			, pstn
+			, lft_val
+			, rht_val
+			, dpth
+			, cd_id
+			, cd
+			, cd_nm
+			, en_cd_nm
+			, cn_cd_nm
+			, use_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+			)
+		values
+			( #{parntSeq}
+			, #{pstn}
+			, IFNULL(#{rhtVal}, 1)
+			, IFNULL(#{rhtVal} + 1, 2)
+			, #{dpth}
+		<choose>
+			<when test="dpth == 1">
+				, #{cdId}
+			</when>
+			<otherwise>
+				, (select cd_id from co_code_mst a where cd_seq = #{parntSeq} limit 1)
+			</otherwise>
+		</choose>
+			, #{cd}
+			, #{cdNm}
+		    , #{enCdNm}
+		    , #{cnCdNm}
+			, #{useYn}
+			, #{regId}
+			, #{regIp}
+			, NOW()
+			, #{regId}
+			, #{regIp}
+			, NOW()
+			)
+	</insert>
+
+	<!--
+         쿼리명 : COFCodeMapper.updateCodeNm
+         설  명 : 코드명을 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="updateCodeNm" parameterType="COCodeDTO">
+		update /* COFCodeMapper.updatecodenm */ co_code_mst
+		set
+			  cd_nm = #{cdNm}
+		    , mod_id = #{regId}
+			, mod_ip = #{regIp}
+			, mod_dtm = NOW()
+		where
+			cd_seq = #{cdSeq}
+	</update>
+
+	<!--
+         쿼리명 : COFCodeMapper.updateCodeInf
+         설  명 : 코드 정보를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="updateCodeInf" parameterType="COCodeDTO">
+		<selectKey keyProperty="dpth,lftVal,rhtVal" resultType="hashmap" order="BEFORE">
+			select
+				(select dpth from co_code_mst where cd_seq = #{cdSeq}) as dpth
+				, lft_val AS lftVal
+				, rht_val AS rhtVal
+			FROM
+				co_code_mst
+			where  lft_vaL <![CDATA[<=]]> (select lft_val from co_code_mst where cd_seq = #{cdSeq})
+				and rht_val <![CDATA[>=]]> (select rht_val from co_code_mst where cd_seq = #{cdSeq})
+				and dpth = 1
+		</selectKey>
+		update /* COFCodeMapper.updateCodeInf */ co_code_mst
+		set
+		<choose>
+			<when test="dpth == 1">
+				  cd_id = #{cdId}
+				, use_yn = 'y'
+			</when>
+			<otherwise>
+				cd = #{cd}
+				, use_yn = #{useYn}
+				, en_cd_nm = #{enCdNm}
+				, cn_cd_nm = #{cnCdNm}
+			</otherwise>
+		</choose>
+		    , mod_id = #{regId}
+			, mod_ip = #{regIp}
+			, mod_dtm = now()
+		WHERE 1=1
+			and cd_seq = #{cdSeq}
+		<choose>
+			<when test="dpth == 1">
+				and (cd_id is null or cd_id = '')
+				and not exists((select * from (select cd_seq from co_code_mst where cd_id = #{cdId}) a))
+			</when>
+			<when test="cd != null and cd != '' and type == 'insert'.toString()">
+				and not exists((select * from (select cd_seq from co_code_mst where lft_val <![CDATA[>]]> #{lftVal} and rht_val <![CDATA[<]]> #{rhtVal} and cd = #{cd}) a))
+			</when>
+		</choose>
+	</update>
+
+	<!--
+         쿼리명 : COFCodeMapper.updateCdId
+         설  명 : 코드 정보를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="updateCdId" parameterType="COCodeDTO">
+		update /* COFCodeMapper.updateCdId */ co_code_mst
+		set
+			  cd_id = #{cdId}
+		    , mod_id = #{regId}
+			, mod_ip = #{regIp}
+			, mod_dtm = now()
+		where 1=1
+			and lft_val <![CDATA[>]]> (select * from (select lft_val from co_code_mst where cd_seq = #{cdSeq}) a)
+	    	and rht_val <![CDATA[<]]> (select * from (select rht_val from co_code_mst where cd_seq = #{cdSeq}) a)
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.getRhtVal
+         설  명 : 해당 메뉴의 오른쪽 값을 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<select id="getRhtVal" parameterType="COCodeDTO" resultType="java.lang.Integer">
+		select /* COFCodeMapper.getRhtVal */
+			rht_val
+		from
+			co_code_mst
+		where
+			cd_seq = #{parntSeq}
+	</select>
+
+	<!--
+         쿼리명 : COFCodeMapper.getDpth
+         설  명 : 해당 메뉴의 깊이를 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<select id="getDpth" parameterType="COCodeDTO" resultType="java.lang.Integer">
+		select /* COFCodeMapper.getDpth */
+			dpth + 1 AS dpth
+		from
+			co_code_mst
+		where
+			cd_seq = #{parntSeq}
+	</select>
+
+	<!--
+         쿼리명 : COFCodeMapper.setLftVal
+         설  명 : 해당 메뉴의 왼쪽 값을 지정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setLftVal" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setLftVal */ co_code_mst
+		set
+			lft_val = lft_val + 2
+		where
+			lft_val <![CDATA[>]]> #{rhtVal}
+	</update>
+
+	<!--
+         쿼리명 : COFCodeMapper.setRhtVal
+         설  명 : 해당 메뉴의 오른쪽 값을 지정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setRhtVal" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setRhtVal */ co_code_mst
+		set
+			rht_val = rht_val + 2
+		where
+			rht_val <![CDATA[>=]]> #{rhtVal}
+	</update>
+
+	<!--
+         쿼리명 : COFCodeMapper.getMaxPosition
+         설  명 : 최상위 포지션을 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<select id="getMaxPosition" parameterType="COCodeDTO" resultType="java.lang.Integer">
+		select /* COFCodeMapper.getMaxPosition */
+			count(*)
+		from
+			co_code_mst
+		where
+			parnt_seq = #{refSeq}
+	</select>
+
+	<!--
+         쿼리명 : COFCodeMapper.getMoveNodeIds
+         설  명 : 하위 트리들을 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<select id="getMoveNodeIds" parameterType="COCodeDTO" resultType="COCodeDTO">
+		select /* COFCodeMapper.getMoveNodeIds */
+			cd_seq
+		from
+			co_code_mst
+		where 1=1
+			and lft_val <![CDATA[>=]]> #{lftVal}
+		   	and rht_val <![CDATA[<=]]> #{rhtVal}
+	</select>
+
+	<!--
+         쿼리명 : COFCodeMapper.getRefInd
+         설  명 : 하위트리갯수를 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<select id="getRefInd" parameterType="COCodeDTO" resultType="java.lang.Integer">
+		select /* COFCodeMapper.getRefInd */
+			lft_val
+		from
+			co_code_mst
+		where 1=1
+			and parnt_seq = #{refSeq}
+			and pstn - #{self} = #{pstn}
+		order by
+			pstn
+		limit 1
+	</select>
+
+	<!--
+         쿼리명 : COFCodeMapper.getMoveExits
+         설  명 : 메뉴 자식의 갯수를 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<select id="getMoveExits" parameterType="COCodeDTO" resultType="java.lang.Integer">
+		select /* COFCodeMapper.getMoveExits */
+			cd_seq
+		from
+			co_code_mst
+		where 1=1
+			and lft_val <![CDATA[>=]]> #{lftVal}
+		   	and rht_val <![CDATA[<=]]> #{rhtVal}
+		   	and cd_seq = #{refSeq}
+	</select>
+
+	<!--
+         쿼리명 : COFCodeMapper.getMoveExits2
+         설  명 : 움직일 노드 갯수 확인한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<select id="getMoveExits2" parameterType="COCodeDTO" resultType="java.lang.Integer">
+	 	select /* COFCodeMapper.getMoveExits2 */
+			count(*)
+		from
+			co_code_mst
+		where 1=1
+			and parnt_seq = #{refSeq}
+			and pstn - #{self} = #{pstn}
+	</select>
+
+		<!--
+         쿼리명 : COFCodeMapper.setCodeMove1
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove1" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove1 */ co_code_mst
+		set
+			pstn = pstn - 1
+		where 1=1
+			and parnt_seq = #{nodeParntSeq}
+			and pstn <![CDATA[>]]> #{nodePstn}
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove2
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove2" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove2 */ co_code_mst
+		set
+			lft_val = lft_val - #{ndif}
+		where 1=1
+			and lft_val <![CDATA[>]]> #{nodeRhtVal}
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove3
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove3" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove3 */ co_code_mst
+		set
+			rht_val = rht_val - #{ndif}
+		where 1=1
+			and rht_val <![CDATA[>]]> #{nodeLftVal}
+			and cd_seq not in
+		<foreach collection="nodeIds" item="nodeId" index="index" separator=", " open="(" close=")">
+            #{nodeId}
+        </foreach>
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove4
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove4" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove4 */ co_code_mst
+		set
+			pstn = pstn + 1
+		where 1=1
+			and parnt_seq = #{refSeq}
+			and pstn <![CDATA[>=]]> #{pstn}
+			and cd_seq not in
+		<foreach collection="nodeIds" item="nodeId" index="index" separator=", " open="(" close=")">
+            #{nodeId}
+        </foreach>
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove5
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove5" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove5 */ co_code_mst
+		set
+			pstn = pstn + 1
+		where 1=1
+			and parnt_seq = #{refSeq}
+			and pstn <![CDATA[>=]]> #{pstn}
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove6
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove6" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove6 */ co_code_mst
+		set
+			lft_val = lft_val + #{ndif}
+		where 1=1
+			and lft_val <![CDATA[>=]]> #{refInd}
+			and cd_seq not in
+		<foreach collection="nodeIds" item="nodeId" index="index" separator=", " open="(" close=")">
+            #{nodeId}
+        </foreach>
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove7
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove7" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove7 */ co_code_mst
+		set
+			rht_val = rht_val + #{ndif}
+		where 1=1
+			and rht_val <![CDATA[>=]]> #{refInd}
+			and cd_seq not in
+		<foreach collection="nodeIds" item="nodeId" index="index" separator=", " open="(" close=")">
+            #{nodeId}
+        </foreach>
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove8
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove8" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove8 */ co_code_mst
+		set
+			lft_val = lft_val + #{ndif}
+		where 1=1
+			and lft_val <![CDATA[>=]]> #{refInd}
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove9
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove9" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove9 */ co_code_mst
+		set
+			rht_val = rht_val + #{ndif}
+		where 1=1
+			and rht_val <![CDATA[>=]]> #{refInd}
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove10
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove10" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove10 */ co_code_mst
+		set
+			parnt_seq = #{refSeq}
+			, pstn = #{pstn}
+		where 1=1
+			and cd_seq = #{cdSeq}
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.setCodeMove11
+         설  명 : 코드를 이동한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<update id="setCodeMove11" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setCodeMove11 */ co_code_mst
+		set
+			lft_val = lft_val - #{idif}
+			, rht_val = rht_val - #{idif}
+			, dpth = dpth - #{ldif}
+		where 1=1
+			and cd_seq in
+		<foreach collection="nodeIds" item="nodeId" index="index" separator=", " open="(" close=")">
+            #{nodeId}
+        </foreach>
+	</update>
+	
+	<!--
+         쿼리명 : COFCodeMapper.deleteCode
+         설  명 : 코드를 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+	<delete id="deleteCode" parameterType="COCodeDTO">
+		delete /* COFCodeMapper.deleteCode */
+		from
+			co_code_mst
+		where 1=1
+			and lft_val <![CDATA[>=]]> #{lftVal}
+		   	and rht_val <![CDATA[<=]]> #{rhtVal}
+    </delete>
+    
+    <!--
+         쿼리명 : COFCodeMapper.setDeleteUpdateLftVal
+         설  명 : 메뉴의 하위노드 왼쪽키값 변경
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+    <update id="setDeleteUpdateLftVal" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setDeleteUpdateLftVal */ co_code_mst
+		set
+			lft_val = lft_val - (#{rhtVal} - #{lftVal} + 1)
+		where
+			lft_val <![CDATA[>]]> #{rhtVal}
+	</update>
+
+	<!--
+         쿼리명 : COFCodeMapper.setDeleteUpdateRhtVal
+         설  명 : 메뉴의 하위노드 오른쪽키값 변경
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.21   허진영       최초생성
+    -->
+    <update id="setDeleteUpdateRhtVal" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setDeleteUpdateRhtVal */ co_code_mst
+		set
+			rht_val = rht_val - (#{rhtVal} - #{lftVal} + 1)
+		where
+			rht_val <![CDATA[>]]> #{lftVal}
+	</update>
+
+	<!--
+         쿼리명 : COFCodeMapper.setDeleteUpdatePstn
+         설  명 : 메뉴의 하위노드 오른쪽키값 변경
+          수정일     수정자      수정내용
+        ==========   ======   ==============
+        2020.10.21   허진영      최초생성
+    -->
+	<update id="setDeleteUpdatePstn" parameterType="COCodeDTO">
+		update /* COFCodeMapper.setDeleteUpdatePstn */ co_code_mst
+		set
+			pstn = pstn -1
+		where 1=1
+			and parnt_seq = #{parntSeq}
+		    and pstn <![CDATA[>]]> #{pstn}
+	</update>
+
+</mapper>

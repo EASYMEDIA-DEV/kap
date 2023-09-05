@@ -22,6 +22,7 @@
         <typeHandler javaType="java.sql.Timestamp"              handler="org.apache.ibatis.type.StringTypeHandler" />
         <typeHandler javaType="java.sql.Time"                   handler="org.apache.ibatis.type.StringTypeHandler" />
         <typeHandler javaType="java.sql.Date"                   handler="org.apache.ibatis.type.StringTypeHandler" />
+        <typeHandler javaType="java.util.Date"                  handler="org.apache.ibatis.type.StringTypeHandler" />
         <typeHandler javaType="java.time.LocalDateTime"         handler="org.apache.ibatis.type.StringTypeHandler" />
         <typeHandler javaType="java.lang.String"                handler="org.apache.ibatis.type.ClobTypeHandler"	jdbcType="CLOB" />
     </typeHandlers>

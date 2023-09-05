@@ -2,11 +2,9 @@
 <!doctype html>
 <html lang="ko">
 <head>
-	<spring:eval var="siteName" expression="@environment.getProperty('app.site.name')" />
-	<spring:eval var="userDomain" expression="@environment.getProperty('app.user-domain')" />
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>${siteName}</title>
+	<title></title>
 	<link rel="shortcut icon" href="/common/images/favicon.ico" />
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,target-densitydpi=medium-dpi" />
 	<meta name="keywords" content="각 페이지마다 유니크한 KOLON Group keywords"/>
@@ -25,7 +23,6 @@
 <body>
 <div id="wrap">
 	<div class="etc_page">
-		<p class="logo"></p>
 		<div class="no_srch_area">
 			<div class="no_srch_div">
 				<h1 class="heading_title_Bold white_txt">서비스 이용에 불편을 드려 죄송합니다</h1>

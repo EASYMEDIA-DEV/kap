@@ -8,7 +8,7 @@
         ==========   ========   ==============
         2022.04.08    신혜정       최초생성
     -->
-	<select id="selectAdmList" parameterType="COAAdmDTO" resultType="com.kap.core.dto.EmfMap">
+	<select id="selectAdmList" parameterType="COAAdmDTO" resultType="COAAdmDTO">
 		select /* COAAdmMapper.selectAdmList */
 			  adm_seq
 			, auth_cd
@@ -23,9 +23,9 @@
 			co_adm_mst a
 		<include refid="selectAdmListwhereSql" />
 		order by
-			reg_dtm asc
+			reg_dtm desc
 		<if test="excelYn != 'Y'.toString() ">
-
+			limit #{firstIndex}, #{recordCountPerPage}
 		</if>
 	</select>
 
@@ -96,6 +96,602 @@
 		</where>
 	</sql>
 
+	<!--
+      쿼리명 : COAAdmMapper.selectAdmDtl
+      설  명 : 관리자 상세를 조회한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2022.04.08   신혜정       최초생성
+ -->
+	<select id="selectAdmDtl" parameterType="COAAdmDTO" resultType="COAAdmDTO">
+		select /* COAAdmMapper.selectAdmDtl */
+			   adm_seq
+			 , id
+			 , auth_cd
+			 , dept_nm
+			 , type_cd
+			 , name
+			 , email
+			 , allw_ip
+		     , lgn_crtfn_yn
+			 , use_yn
+		from
+			co_adm_mst a
+		where
+			adm_seq = #{detailsKey}
+	</select>
+
+	<!--
+         쿼리명 : COAAdmMapper.insertAdm
+         설  명 : 관리자를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<insert id="insertAdm" parameterType="COAAdmDTO" >
+		<selectKey keyProperty="admSeq" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert /* COAAdmMapper.insertAdm */ into co_adm_mst
+		(
+			  auth_cd
+			, dept_nm
+			, type_cd
+			, id
+			, pwd
+			, name
+			, email
+			, allw_ip
+			, pwd_chng_dtm
+			, lgn_fail_cnt
+			, tmp_pwd_yn
+			, lgn_crtfn_yn
+			, use_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		(
+			  #{authCd}
+			, #{deptNm}
+			, 'cms'
+			, #{id}
+			, #{pwd}
+			, #{name}
+			, #{email}
+			, #{allwIp}
+			, now()
+			, 0
+			, 'N'
+			, #{lgnCrtfnYn}
+			, #{useYn}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+         쿼리명 : COAAdmMapper.updateAdm
+         설  명 : 관리자를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<update id="updateAdm" parameterType="COAAdmDTO">
+		update /* COAAdmMapper.updateAdm */ co_adm_mst
+		set
+			  email = #{email}
+			, dept_nm = #{deptNm}
+		<choose>
+			<when test="isAdmMng == 'Y'.toString() ">
+				, auth_cd = #{authCd}
+				, type_cd = #{typeCd}
+				, name = #{name}
+				, allw_ip = #{allwIp}
+		  		, lgn_crtfn_yn = #{lgnCrtfnYn}
+				, use_yn = #{useYn}
+			</when>
+			<when test="pwd != null and pwd != ''.toString() ">
+				, pwd = #{pwd}
+				, pwd_chng_dtm = now()
+				, lgn_fail_cnt = 0
+				, tmp_pwd_yn = 'N'
+			</when>
+		</choose>
+		, mod_id = #{regId}
+		, mod_ip = #{regIp}
+		, mod_dtm = NOW()
+		where
+			adm_seq = #{detailsKey}
+	</update>
+
+	<!--
+         쿼리명 : COAAdmMapper.deleteAdm
+         설  명 : 관리자를 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<delete id="deleteAdm" parameterType="COAAdmDTO">
+		delete /* COAAdmMapper.deleteAdm */
+		from
+			co_adm_mst
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					adm_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					adm_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+
+	<!--
+         쿼리명 : COAAdmMapper.insertAdmMenu
+         설  명 : 관리자 메뉴를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<insert id="insertAdmMenu" parameterType="COAAdmDTO">
+		insert /* COAAdmMapper.insertAdmMenu */ into co_adm_menu_dtl
+		(
+			  adm_seq
+			, menu_seq
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		(
+			  #{detailsKey}
+			, #{menuSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+        쿼리명 : COAAdmMapper.deleteAdmMenu
+        설  명 : 관리자 메뉴를 삭제한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.08   신혜정       최초생성
+   -->
+	<delete id="deleteAdmMenu" parameterType="COAAdmDTO">
+		delete /* COAAdmMapper.deleteAdmMenu */
+		from
+		co_adm_menu_dtl
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					adm_seq IN
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					adm_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+
+	<!--
+         쿼리명 : COAAdmMapper.getAdmMenuInf
+         설  명 : 변경전 관리자 메뉴를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<select id="getAdmMenuInf" parameterType="COAAdmDTO" resultType="java.lang.String">
+		select /* COAAdmMapper.getadmmenuinf */
+			group_concat(menu_seq order by (select lft_val from co_menu_mst where menu_seq = a.menu_seq) separator ',') as menu_seq
+		from
+			co_adm_menu_dtl a
+		where
+			adm_seq = #{detailsKey}
+	</select>
+
+	<!--
+         쿼리명 : COAAdmMapper.insertAdmModMst
+         설  명 : 관리자 수정 마스터를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<insert id="insertAdmModMst" parameterType="COAAdmDTO">
+		<selectKey keyProperty="modSeq" resultType="java.lang.Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert /* COAAdmMapper.insertAdmModMst */ into co_adm_mod_mst
+		(
+			  adm_id
+			, adm_nm
+			, adm_dept
+			, trgt_adm_id
+			, trgt_adm_nm
+			, trgt_adm_dept
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		(
+			  #{regId}
+			, #{regName}
+			, #{regDeptNm}
+			, #{id}
+			, #{name}
+			, #{deptNm}
+			, #{regId}
+			, #{regIp}
+			, NOW()
+			, #{regId}
+			, #{regIp}
+			, NOW()
+		)
+	</insert>
+
+	<!--
+        쿼리명 : COAAdmMapper.insertAdmModDtl
+        설  명 : 관리자 수정 상세를 등록한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.08   신혜정       최초생성
+   -->
+	<insert id="insertAdmModDtl" parameterType="COAAdmDTO">
+		insert /* COAAdmMapper.insertAdmModDtl */ into co_adm_mod_dtl
+		(
+			  mod_seq
+			, menu_seq
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		(
+			  #{modSeq}
+			, #{menuSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+        쿼리명 : COAAdmMapper.selectDelAdmModMst
+        설  명 : 삭제할 관리자 수정 마스터를 가져온다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.20   신혜정       최초생성
+   -->
+	<select id="selectDelAdmModMst" parameterType="COAAdmDTO" resultType="COAAdmDTO">
+		select /* COAAdmMapper.selectDelAdmModMst */
+			mod_seq
+		from
+			co_adm_mod_mst
+		where
+			trgt_adm_id in (
+				select id
+				from co_adm_mst
+				<where>
+					<choose>
+						<when test="delValueList != null and delValueList.size() > 0">
+							adm_seq IN
+							<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+								#{delValueList}
+							</foreach>
+						</when>
+						<otherwise>
+							adm_seq = #{detailsKey}
+						</otherwise>
+					</choose>
+				</where>
+			)
+	</select>
+
+	<!--
+        쿼리명 : COAAdmMapper.deleteAdmModMst
+        설  명 : 관리자 수정 마스터를 삭제한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.20   신혜정       최초생성
+   -->
+	<delete id="deleteAdmModMst" parameterType="COAAdmDTO">
+		delete /* COAAdmMapper.deleteAdmModMst */
+		from
+			co_adm_mod_mst
+		where mod_seq = #{modSeq}
+	</delete>
+
+	<!--
+        쿼리명 : COAAdmMapper.deleteAdmModDtl
+        설  명 : 관리자 수정 상세를 삭제한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.20   신혜정       최초생성
+   -->
+	<delete id="deleteAdmModDtl" parameterType="COAAdmDTO">
+		delete /* COAAdmMapper.deleteAdmModDtl */
+		from
+			co_adm_mod_dtl
+		where mod_seq = #{modSeq}
+	</delete>
+
+	<!--
+        쿼리명 : COAAdmMapper.getIdOverlapCheck
+        설  명 : 아이디 중복여부를 가져온다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.08   신혜정       최초생성
+   -->
+	<select id="getIdOverlapCheck" parameterType="COAAdmDTO" resultType="java.lang.Integer">
+		select /* COAAdmMapper.getIdOverlapCheck */
+			count(*)
+		from
+			co_adm_mst
+		where
+			id = #{id}
+	</select>
+
+	<!--
+         쿼리명 : COAAdmMapper.getEmailOverlapCheck
+         설  명 : 이메일 중복여부를 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<select id="getEmailOverlapCheck" parameterType="COAAdmDTO" resultType="java.lang.Integer">
+		select /* COAAdmMapper.getEmailOverlapCheck */
+			count(*)
+		from
+			co_adm_mst
+		where
+			email = #{email}
+	</select>
+
+	<!--
+         쿼리명 : COAAdmMapper.updatePwdInit
+         설  명 : 비밀번호를 초기화한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<update id="updatePwdInit" parameterType="COAAdmDTO">
+		<selectKey keyProperty="email" resultType="java.lang.String" order="AFTER">
+			select email from co_adm_mst where adm_seq = #{detailsKey}
+		</selectKey>
+		update /* COAAdmMapper.updatepwdinit */ co_adm_mst
+		set
+			  pwd = #{newEncPwd}
+			, pwd_chng_dtm = now()
+			, lgn_fail_cnt = 0
+			, tmp_pwd_yn = 'Y'
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		where
+			adm_seq = #{detailsKey}
+	</update>
+
+	<!--
+        쿼리명 : COAAdmMapper.getAdmSessionId
+        설  명 : 관리자 로그인 세션을 조회한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.08   신혜정       최초생성
+   -->
+	<select id="getAdmSessionId" parameterType="java.lang.String" resultType="java.lang.String">
+		select /* COAAdmMapper.getAdmSessionId */
+			lgn_ssn_id
+		from
+			co_adm_mst
+		where
+			id = #{sessionId}
+	</select>
+
+	<!--
+         쿼리명 : COAAdmMapper.getPwdCheck
+         설  명 : 비밀번호 사용가능 여부를 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<select id="getPwdCheck" parameterType="COAAdmDTO" resultType="java.lang.Integer">
+		select /* COAAdmMapper.getPwdCheck */
+			count(*)
+		from
+			co_adm_pwd_dtl
+		where
+			adm_seq = #{admSeq}
+		and pwd in (#{pwd})
+	</select>
+
+	<!--
+        쿼리명 : COAAdmMapper.selectPwdList
+        설  명 : 관리자 비밀번호 변경이력 조회한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.08   신혜정       최초생성
+   -->
+	<select id="selectPwdList" parameterType="COAAdmDTO" resultType="COAAdmDTO">
+		select /* COAAdmMapper.selectPwdList */
+			pwd_seq
+		from
+			co_adm_pwd_dtl
+		where
+			adm_seq = #{admSeq}
+	</select>
+
+	<!--
+        쿼리명 : COAAdmMapper.deletePwd
+        설  명 : 관리자 비밀번호 변경 삭제한다
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.08   신혜정       최초생성
+   -->
+	<delete id="deletePwd" parameterType="COAAdmDTO" >
+		select /* COAAdmMapper.deletePwd */
+			pwd_seq
+		from
+			co_adm_pwd_dtl
+		where
+			adm_seq = #{admSeq}
+		and
+		    pwd_seq = #{pwdSeq}
+	</delete>
+
+	<!--
+         쿼리명 : COAAdmMapper.updatePwd
+         설  명 : 관리자를 비밀번호 이력 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2022.04.08   신혜정       최초생성
+    -->
+	<update id="updatePwd" parameterType="COAAdmDTO">
+		update /* COAAdmMapper.updatePwd */ co_adm_mst
+		set
+			  ord = ord-1
+			, mod_id = #{regId}
+			, mod_ip = #{regIp}
+			, mod_dtm = NOW()
+		where
+			adm_seq = #{detailsKey}
+		<where>
+			<choose>
+				<when test="pwdList != null and pwdList.size() > 0">
+					pwd_seq IN
+					<foreach collection="pwdList" item="pwdList" index="index" separator=", " open="(" close=")">
+						#{pwdList}
+					</foreach>
+				</when>
+				<otherwise>
+					pwd_seq = #{pwdSeq}
+				</otherwise>
+			</choose>
+		</where>
+	</update>
+
+
+	<!--
+        쿼리명 : COAAdmMapper.insertPwd
+        설  명 : 관리자 비밀번호 이력를 등록한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2022.04.08   신혜정       최초생성
+   -->
+	<insert id="insertPwd" parameterType="COAAdmDTO">
+		insert /* COAAdmMapper.insertPwd */ into co_adm_pwd_dtl
+		(
+			  adm_seq
+			, pwd
+			, ord
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		(
+			  #{admSeq}
+			, #{pwd}
+			, #{ord}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+        쿼리명 : COAAdmMapper.getEthicList
+        설  명 : 신고하기 기존 대상자 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2022.04.05    박주석       최초생성
+    -->
+	<select id="getEthicList" resultType="EmfMap">
+		select /* COSampleMapper.getEthicList */
+			seq
+			 , reg_id
+		from
+			contactus_mngr a
+		where reg_return = 'procYes' and ifnull(reg_id, '') != ''
+	</select>
+
+	<!--
+        쿼리명 : COAAdmMapper.setEthicPwd
+        설  명 : 신고하기 기존 대상자 비밀번호 변경
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2022.04.05    박주석       최초생성
+    -->
+	<update id="setEthicPwd" parameterType="EmfMap">
+		update /*COAAdmMapper.setEthicPwd*/ contactus_mngr
+		set reg_pw = #{regPw}
+		where seq = #{seq}
+	</update>
+
+	<!--
+		쿼리명 : COAAdmMapper.getSeqAdmList
+		설  명 : 관리자 시퀀스로 ID 조회한다.
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2022.04.08    신혜정       최초생성
+    -->
+	<select id="getSeqAdmList" parameterType="COAAdmDTO" resultType="COAAdmDTO">
+		select /* COAAdmMapper.getSeqAdmList */
+		  id
+		from
+		co_adm_mst a
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					adm_seq IN
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					adm_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</select>
 </mapper>
 
 

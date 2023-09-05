@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<e:DomainDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:e="http://exerd.tomato.com/model" UUID="DDefinition_-a_AAHg0Eeygwpfib29KMg" productId="com.tomato.db.mysql" version="3.3.14.20211117-1015">
+  <domain UUID="Domain_-a_AAXg0Eeygwpfib29KMg" name="일시" suggestedDataType="DATETIME"/>
+  <domain UUID="Domain_-a_AAng0Eeygwpfib29KMg" name="순번" suggestedDataType="INT"/>
+  <domain UUID="Domain_-a_AA3g0Eeygwpfib29KMg" name="코드" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_-a_ABHg0Eeygwpfib29KMg" name="제목" suggestedDataType="VARCHAR(500)"/>
+  <domain UUID="Domain_-a_ABXg0Eeygwpfib29KMg" name="일자" suggestedDataType="VARCHAR(10)"/>
+  <domain UUID="Domain_-a_ABng0Eeygwpfib29KMg" name="내용" suggestedDataType="LONGTEXT"/>
+  <domain UUID="Domain_-a_AB3g0Eeygwpfib29KMg" name="파일ID" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_-a_ACHg0Eeygwpfib29KMg" name="여부" suggestedDataType="CHAR(1)"/>
+  <domain UUID="Domain_-a_ACXg0Eeygwpfib29KMg" name="ID" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_-a_ACng0Eeygwpfib29KMg" name="IP" suggestedDataType="VARCHAR(15)"/>
+  <domain UUID="Domain_-a_AC3g0Eeygwpfib29KMg" name="명" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_-a_nEHg0Eeygwpfib29KMg" name="정렬" suggestedDataType="INT"/>
+  <domain UUID="Domain_-a_nEXg0Eeygwpfib29KMg" name="URL" suggestedDataType="VARCHAR(1000)"/>
+  <domain UUID="Domain_-a_nEng0Eeygwpfib29KMg" name="키워드" suggestedDataType="VARCHAR(1000)"/>
+  <domain UUID="Domain_-a_nE3g0Eeygwpfib29KMg" name="내용 (short)" suggestedDataType="VARCHAR(2000)"/>
+  <domain UUID="Domain_-a_nFHg0Eeygwpfib29KMg" name="비밀번호" suggestedDataType="VARCHAR(500)"/>
+  <domain UUID="Domain_-a_nFXg0Eeygwpfib29KMg" name="휴대폰번호" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_-a_nFng0Eeygwpfib29KMg" name="카운트" suggestedDataType="INT"/>
+  <domain UUID="Domain_-a_nF3g0Eeygwpfib29KMg" name="이름" suggestedDataType="VARCHAR(50)"/>
+  <domain UUID="Domain_-a_nGHg0Eeygwpfib29KMg" name="이메일" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_-a_nGXg0Eeygwpfib29KMg" name="세션ID" suggestedDataType="VARCHAR(100)"/>
+</e:DomainDefinition>

@@ -2,8 +2,11 @@ package com.kap.service;
 
 import com.kap.core.dto.COAAdmDTO;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
 /**
- * <pre> 
+ * <pre>
  * 관리자 관리를 위한 Service
  * </pre>
  *
@@ -27,4 +30,68 @@ public interface COAAdmService {
 	 */
 	public COAAdmDTO selectAdmList(COAAdmDTO pCOAAdmDTO) throws Exception;
 
+	/**
+	 * 관리자 상세를 조회한다.
+	 */
+	public COAAdmDTO selectAdmDtl(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 관리자를 등록한다.
+	 */
+	public int insertAdm(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 관리자를 수정한다.
+	 */
+	public int updateAdm(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 관리자를 수정한다. (내 정보변경)
+	 */
+	public int updatePrsnData(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 관리자를 삭제한다.
+	 */
+	public int deleteAdm(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 아이디 중복여부를 가져온다.
+	 */
+	public int getIdOverlapCheck(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 이메일 중복여부를 가져온다
+	 */
+	public int getEmailOverlapCheck(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 비밀번호를 초기화한다.
+	 */
+	public int updatePwdInit(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 관리자 로그인 세션을 조회한다.
+	 */
+	public String getAdmSessionId(String adminId) throws Exception;
+
+	/**
+	 * 엑셀 생성
+	 */
+	public void excelDownload(COAAdmDTO pCOAAdmDTO, HttpServletResponse response) throws Exception;
+
+	/**
+	 * 비밀번호 사용 가능여부를 가져온다
+	 */
+	public List<String> getPwdCheck(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 신고하기 기존 대상자 비밀번호 변경
+	 */
+	public int setEthicList() throws Exception;
+
+	/**
+	 * 관리자 시퀀스로 ID 조회한다.
+	 */
+	public List<COAAdmDTO> getSeqAdmList(COAAdmDTO pCOAAdmDTO) throws Exception;
 }

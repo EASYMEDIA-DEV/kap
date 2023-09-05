@@ -4,16 +4,21 @@ mybatis-config:
   type-handlers-package: com.kap.core.dto.*
   mapper-location: classpath*:mappers/**/*.xml
   config-location: classpath:mybatis.xml
-
+  transaction-package-nm: execution(* egovframework.com..*Impl.*(..)) or execution(* com.kap..*Impl.*(..))
 ---
 spring.config.activate.on-profile: dev
 spring:
   db:
     datasource:
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://192.168.0.12:3306/kolon_grp?serverTimezone=UTC&useUnicode=true&charcterEncoding=utf8&useSSL=false
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      jdbc-url: jdbc:log4jdbc:mysql://192.168.0.12:3306/kolon_grp?serverTimezone=UTC&useUnicode=true&charcterEncoding=utf8&useSSL=false
       username: kolon_grp
       password: dnfntk1##
+  hikari:
+    maximum-pool-size: 20
+    minimum-idle: 1
+    connection-timeout: 5000
+    connection-test-query: SELECT 1 FROM DUAL
 ---
 spring.config.activate.on-profile: stg
 spring:

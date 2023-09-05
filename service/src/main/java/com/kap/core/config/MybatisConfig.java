@@ -14,6 +14,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -60,9 +62,6 @@ public class MybatisConfig {
     @Bean(name = "SqlSessionFactory")
     public SqlSessionFactory SqlSessionFactory(@Qualifier("dataSource") DataSource DataSource, ApplicationContext applicationContext) throws Exception {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        log.error("mybatisLocation : {}", mybatisLocation);
-        log.error("mapperLocation : {}", mapperLocation);
-        log.error("DataSource : {}", DataSource);
         sqlSessionFactoryBean.setDataSource(DataSource);
         sqlSessionFactoryBean.setConfigLocation(applicationContext.getResources(mybatisLocation)[0]);
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources(mapperLocation));
@@ -73,5 +72,10 @@ public class MybatisConfig {
     @Bean(name = "SessionTemplate")
     public SqlSessionTemplate SqlSessionTemplate(@Qualifier("SqlSessionFactory") SqlSessionFactory firstSqlSessionFactory) {
         return new SqlSessionTemplate(firstSqlSessionFactory);
+    }
+
+    @Bean(name = "transactionManager")
+    public PlatformTransactionManager transactionManager(@Qualifier("dataSource") DataSource b2bDataSource) {
+        return new DataSourceTransactionManager(b2bDataSource);
     }
 }

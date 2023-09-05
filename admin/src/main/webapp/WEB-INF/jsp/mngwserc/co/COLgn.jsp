@@ -35,7 +35,9 @@
 			                	</div>
 			              	</div>
               				<div class="card-heading">
-			                	<div class="card-title text-center mt-xl"><img src="/common/images/logo.gif" alt="로고" title="로고" /></div>
+			                	<div class="card-title text-center mt-xl">
+									<!--img src="/common/images/logo.gif" alt="로고" title="로고" /-->
+								</div>
 			              	</div>
               				<div class="card-body">
 				                <div class="mda-form-group float-label mda-input-group">

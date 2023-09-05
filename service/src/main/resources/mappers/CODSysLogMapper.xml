@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kap.service.dao.CODSysLogMapper">
+
+    <!--
+         쿼리명 : CODSysLogMapper.selectSysLogList
+         설  명 : 시스템 로그 조회
+       	  수정일	     수정자     수정내용
+        ==========   ======   =============
+        2022.02.17   손태주     최초생성
+    -->
+    <select id="selectSysLogList" parameterType="COSystemLogDTO" resultType="COSystemLogDTO">
+        select        /* CODSysLogMapper.selectSysLogList */
+              sys.reg_id
+            , sys.reg_ip
+            , sys.reg_dtm
+            , sys.trgt_menu_nm
+            , sys.prcs_cd
+            , adm.name as reg_name
+            , adm.dept_nm
+            , (select b.cd_nm from co_code_mst b where b.cd_id='SYSTEM_LOG' and b.cd=sys.prcs_cd) as prcs_cd_nm
+            , sys.rsn
+        from
+            co_sys_log sys join co_adm_mst adm on sys.reg_id = adm.id
+        <include refid="selectSysLogListWhereSql" />
+        order by
+            sys.reg_dtm desc
+        <if test="excelYn != 'Y'.toString() ">
+            limit   #{firstIndex}, #{recordCountPerPage}
+        </if>
+    </select>
+
+    <!--
+         쿼리명 : CODSysLogMapper.getSysLogListCnt
+         설  명 : 시스템 로그 수 조회
+       	  수정일	     수정자     수정내용
+        ==========   ======   =============
+        2022.02.17   손태주     최초생성
+    -->
+    <select id="getSysLogListCnt" parameterType="COSystemLogDTO" resultType="java.lang.Integer">
+        select         /* CODSysLogMapper.getSysLogListCnt */
+            count(*)
+        from
+            co_sys_log sys join co_adm_mst adm on sys.reg_id = adm.id
+        <include refid="selectSysLogListWhereSql" />
+    </select>
+
+    <!--
+         쿼리명 : selectSysLogListWhereSql
+         설  명 : 시스템 로그 검색 조건 SQL
+       	  수정일	     수정자     수정내용
+        ==========   ======   =============
+        2022.02.17   손태주     최초생성
+    -->
+    <sql id="selectSysLogListWhereSql">
+        <where>
+            <choose>
+                <when test="prcsCdList == null">
+                    and sys.prcs_cd in ('S', 'C', 'U', 'D','DL')
+                </when>
+                <otherwise>
+                    and sys.prcs_cd in
+                    <foreach collection="prcsCdList"  item="prcsCdList" open="(" close=")" separator="," >
+                        #{prcsCdList}
+                    </foreach>
+                </otherwise>
+            </choose>
+            <if test="strtDt != null and strtDt != ''.toString() ">
+                and sys.reg_dtm <![CDATA[>=]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+            </if>
+            <if test="endDt != null and endDt != ''.toString() ">
+                and sys.reg_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1 ">
+                        and sys.reg_id like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2 ">
+                        and adm.name like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 3 ">
+                        and adm.dept_nm like concat('%', #{q}, '%')
+                    </when>
+                    <otherwise>
+                        and
+                        (
+                            sys.reg_id like concat('%', #{q}, '%')
+                            or adm.name like concat('%', #{q}, '%')
+                            or adm.dept_nm like concat('%', #{q}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+            and trgt_menu_nm is not null
+        </where>
+    </sql>
+
+</mapper>

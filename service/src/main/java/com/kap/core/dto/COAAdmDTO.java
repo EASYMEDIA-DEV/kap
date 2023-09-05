@@ -25,6 +25,8 @@ import java.util.List;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class COAAdmDTO extends BaseDTO  {
     //관리자순번
     private Integer admSeq;

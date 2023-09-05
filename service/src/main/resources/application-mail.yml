@@ -1,0 +1,39 @@
+---
+spring.config.activate.on-profile: dev
+spring:
+  #메일 설정
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dev@easymedia.net
+    password: dnfntk1##
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
+---
+spring.config.activate.on-profile: stg
+spring:
+  #메일 설정
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dev@easymedia.net
+    password: dnfntk1##
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
+---
+spring.config.activate.on-profile: prod
+spring:
+  #메일 설정
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username:
+    password:
+    properties.mail.smtp:
+      auth: true
+      starttls.enable: true
+      ssl.trust: smtp.gmail.com
