@@ -1,4 +1,4 @@
-package com.kap.mngwserc.config;
+package com.kap.front.config;
 
 import org.apache.catalina.Context;
 import org.apache.tomcat.util.scan.StandardJarScanFilter;

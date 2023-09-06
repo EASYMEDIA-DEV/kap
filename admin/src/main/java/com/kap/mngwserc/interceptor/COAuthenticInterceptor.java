@@ -39,7 +39,7 @@ public class COAuthenticInterceptor implements HandlerInterceptor{
 
         //로그인 요청 헤더 체크
         String accept   = COWebUtil.removeCRLF(request.getHeader("accept"));
-        if (!COUserDetailsHelperService.isAuthenticated())
+        if (!COUserDetailsHelperService.isAuthenticated() && !appLogin)
         {
             if (accept != null && accept.indexOf("application/json") > -1)
             {

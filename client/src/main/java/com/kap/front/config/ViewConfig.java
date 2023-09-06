@@ -1,4 +1,4 @@
-package com.kap.mngwserc.config;
+package com.kap.front.config;
 
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.impl.CODummyUserDetailsServiceImpl;

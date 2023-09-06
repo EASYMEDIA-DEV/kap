@@ -72,17 +72,6 @@ logging:
     #console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr([%10t]){faint} %clr(%-60(%logger{39}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
     #console: "%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\\(%L\\) : %m%n"
 ---
-spring.config.activate.on-profile: dev, stg, prod
-
----
-spring.config.activate.on-profile: stg, prod
-logging:
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%10t] %-60(%logger{39}.%M\\(%L\\)) : %m%n%wEx"
-
-app:
-  is-login: false
----
 spring.config.activate.on-profile: dev
 spring :
   devtools:
@@ -93,5 +82,12 @@ spring :
     thymeleaf:
       cache: false
 
+app:
+  is-login: true
+---
+spring.config.activate.on-profile: stg, prod
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%10t] %-60(%logger{39}.%M\\(%L\\)) : %m%n%wEx"
 app:
   is-login: false

@@ -1,2 +1,2 @@
 rootProject.name = 'kap'
-include 'admin', 'common', 'service'
+include 'admin', 'common', 'service', 'client', 'error'

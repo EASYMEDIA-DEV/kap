@@ -5,6 +5,27 @@ mybatis-config:
   mapper-location: classpath*:mappers/**/*.xml
   config-location: classpath:mybatis.xml
   transaction-package-nm: execution(* egovframework.com..*Impl.*(..)) or execution(* com.kap..*Impl.*(..))
+
+logging:
+  level:
+    root: info
+    jdbc:
+      connection: off
+      sqlonly: off
+      sqltiming: debug
+      audit: off
+      resultset: off
+      resultsettable: off
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(%-60(%logger{0}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
+    #console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr([%10t]){faint} %clr(%-60(%logger{39}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
+    #console: "%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\\(%L\\) : %m%n"
+
+log4jdbc:
+  dump:
+    sql:
+      maxlinelength: 0
+
 ---
 spring.config.activate.on-profile: dev
 spring:
@@ -14,11 +35,6 @@ spring:
       jdbc-url: jdbc:log4jdbc:mysql://192.168.0.12:3306/kolon_grp?serverTimezone=UTC&useUnicode=true&charcterEncoding=utf8&useSSL=false
       username: kolon_grp
       password: dnfntk1##
-  hikari:
-    maximum-pool-size: 20
-    minimum-idle: 1
-    connection-timeout: 5000
-    connection-test-query: SELECT 1 FROM DUAL
 ---
 spring.config.activate.on-profile: stg
 spring:

@@ -2,45 +2,40 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-    <definition name="layouts-admin" template="/WEB-INF/jsp/layout/layout.jsp">
+    <definition name="layouts" template="/WEB-INF/jsp/layout/layout.jsp">
         <put-attribute name="header" value="/WEB-INF/jsp/layout/header.jsp" />
         <put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp" />
     </definition>
-    <definition name="*.admin" extends="layouts-admin">
-        <put-attribute name="content" value="/WEB-INF/jsp/{1}.jsp" />
+    <definition name="*/*.front" extends="layouts">
+        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}.jsp" />
+    </definition>
+    <definition name="*/*/*.front" extends="layouts">
+        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}.jsp" />
     </definition>
 
-    <definition name="*/*.admin" extends="layouts-admin">
-        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}.jsp" />
+    <definition name="*/*/*/*.front" extends="layouts">
+        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}/{4}.jsp" />
     </definition>
 
-    <definition name="*/*/*.admin" extends="layouts-admin">
-        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+    <definition name="*/*/*/*/*.front" extends="layouts">
+        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}/{4}/{5}.jsp" />
     </definition>
 
-    <definition name="*/*/*/*.admin" extends="layouts-admin">
-        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
+    <definition name="*/*/*/*/*/*.front" extends="layouts">
+        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
     </definition>
 
-    <definition name="*/*/*/*/*.admin" extends="layouts-admin">
-        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}.jsp" />
-    </definition>
-
-    <definition name="*/*/*/*/*/*.admin" extends="layouts-admin">
-        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
-    </definition>
-
-    <definition name="layouts-admin-error" template="/WEB-INF/jsp/layout/layout.jsp">
+    <definition name="layouts-error" template="/WEB-INF/jsp/layout/layout.jsp">
         <put-attribute name="header" value="" />
         <put-attribute name="footer" value="" />
     </definition>
-    <definition name="*.error" extends="layouts-admin-error">
-        <put-attribute name="content" value="/WEB-INF/jsp/{1}.jsp" />
+    <definition name="*.error" extends="layouts-error">
+        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}.jsp" />
     </definition>
-    <definition name="*/*.error" extends="layouts-admin-error">
-        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}.jsp" />
+    <definition name="*/*.error" extends="layouts-error">
+        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}.jsp" />
     </definition>
-    <definition name="*/*/*.error" extends="layouts-admin-error">
-        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+    <definition name="*/*/*.error" extends="layouts-error">
+        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}.jsp" />
     </definition>
 </tiles-definitions>

@@ -1,5 +1,8 @@
 package com.kap.core.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -10,8 +13,12 @@ import java.util.List;
 @MappedSuperclass
 @Getter @Setter
 @ToString(exclude = "delValueList")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(title = "최상위 부모 DTO")
 public class BaseDTO {
     //순번
+    @Schema(title = "공통 순번", description = "", example = "1")
     private String detailsKey;
     //검색어
     private String q;
