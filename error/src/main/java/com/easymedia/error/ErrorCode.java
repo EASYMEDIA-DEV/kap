@@ -33,7 +33,6 @@ public enum ErrorCode {
     ACCESS_DENIED(HttpStatus.FORBIDDEN.value(), "F007", "권한이 없습니다."),//"접근이 거부되었습니다."
     EXPIRED_TIME(HttpStatus.FORBIDDEN.value(), "F008", "기간이 만료 되었습니다."),
     CANNOT_READ(HttpStatus.FORBIDDEN.value(), "F009", "조회할 수 없습니다."),
-    CANNOT_REFUND(HttpStatus.FORBIDDEN.value(), "F013", "취소할 수 없는 예약 건입니다.</br>고객센터에 문의 바랍니다."),
     ACCESS_DENIED_CSRF(HttpStatus.FORBIDDEN.value(), "F010", "권한이 없습니다."),//"접근이 거부되었습니다."
 
     // Invalid:I
@@ -60,15 +59,8 @@ public enum ErrorCode {
     FILE_COPY_FAIL(HttpStatus.BAD_REQUEST.value(), "FL004", "파일 복사를 실패 하였습니다."),
     FILE_EXCEED_MAX_SIZE(HttpStatus.BAD_REQUEST.value(), "FL005", "파일 크기가 50MB를 초과하였습니다."),
 
-    // Interface
-    API_ERROR(HttpStatus.BAD_REQUEST.value(), "ERA001", "API ERROR"),
-    HPOINT_ERROR(HttpStatus.BAD_REQUEST.value(), "HP001", "HPoint ERROR"),
-    INICIS_ERROR(HttpStatus.BAD_REQUEST.value(), "INI001", "Inicis ERROR"),
-
-    ERA_NOT_INVOICED(HttpStatus.BAD_REQUEST.value(), "ERA002", "ERA NOT INVOICED"),
-
-    // 메일, 알림톡 발송 오류
-    SEND_MSG_FAIL(HttpStatus.BAD_REQUEST.value(), "SM001", "메일, 알림톡 발송 실패하였습니다."),
+    // 메일 발송 오류
+    SEND_MSG_FAIL(HttpStatus.BAD_REQUEST.value(), "SM001", "메일 발송 실패하였습니다."),
 
     //로그인
     LGN_NOT_USE_YN(HttpStatus.CONFLICT.value(), "LGN001", "사용할 수 없습니다."),

@@ -32,8 +32,8 @@ spring:
   db:
     datasource:
       driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      jdbc-url: jdbc:log4jdbc:mysql://192.168.0.12:3306/kolon_grp?serverTimezone=UTC&useUnicode=true&charcterEncoding=utf8&useSSL=false
-      username: kolon_grp
+      jdbc-url: jdbc:log4jdbc:mysql://192.168.0.12:3306/kap?serverTimezone=UTC&useUnicode=true&charcterEncoding=utf8&useSSL=false
+      username: kap
       password: dnfntk1##
 ---
 spring.config.activate.on-profile: stg
