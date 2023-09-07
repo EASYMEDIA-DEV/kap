@@ -40,10 +40,10 @@ spring.config.activate.on-profile: stg
 spring:
   db:
     datasource:
-      jndi-name: hcsDS
+      jndi-name: kapDS
 ---
 spring.config.activate.on-profile: prod
 spring:
   db:
     datasource:
-      jndi-name: hcsDS
+      jndi-name: kapDS
