@@ -7,8 +7,8 @@ import com.kap.service.dao.COBMenuMapper;
 import com.nhncorp.lucy.security.xss.XssPreventer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -410,9 +410,9 @@ public class COBMenuServiceImpl implements COBMenuService {
 
 					tmpObject.put("children", rtnArray);
 
-					if (rtnArray.length() > 0)
+					if (rtnArray.size() > 0)
 					{
-						i = Integer.parseInt(((JSONObject) rtnArray.get(rtnArray.length() - 1)).get("i").toString());
+						i = Integer.parseInt(((JSONObject) rtnArray.get(rtnArray.size() - 1)).get("i").toString());
 					}
 					rtnArray = null;
 				}
@@ -439,7 +439,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 	                }
 		        }
 		        tmpObject.put("attr", jsonAttr);
-				tmpArray.put(tmpObject);
+				tmpArray.add(tmpObject);
 		        tmpObject = null;
 		        jsonAttr = null;
 			}

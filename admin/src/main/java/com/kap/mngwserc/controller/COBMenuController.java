@@ -6,8 +6,8 @@ import com.kap.service.COBMenuService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -258,7 +258,7 @@ public class COBMenuController {
                 jSONObject.put("attr", jsonAttr);
                 jsonAttr = null;
                 i++;
-                jSONArray.put(jSONObject);
+                jSONArray.add(jSONObject);
                 jSONObject = null;
             }
 
@@ -316,7 +316,7 @@ public class COBMenuController {
 
                 jsonAttr = null;
                 i++;
-                jSONArray.put(jSONObject);
+                jSONArray.add(jSONObject);
                 jSONObject = null;
             }
 

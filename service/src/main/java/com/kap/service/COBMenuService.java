@@ -1,7 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.COMenuDTO;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.json.simple.JSONArray;
 
 import java.util.List;
 

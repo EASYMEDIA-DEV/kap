@@ -54,8 +54,10 @@ subprojects {
     dependencies {
 
         implementation 'org.springframework.boot:spring-boot-starter-aop'
+        implementation 'org.springframework.boot:spring-boot-starter-webflux'
         implementation 'org.apache.commons:commons-collections4:4.0'
         implementation 'com.integralblue:log4jdbc-spring-boot-starter:2.0.0'
+        implementation 'com.googlecode.json-simple:json-simple:1.1.1'
 
         compileOnly 'org.projectlombok:lombok'
 
