@@ -41,7 +41,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 @Slf4j
-@Profile({"dev"})
+@Profile({"stg", "dev"})
 //JAVA 파일 SCAN 위치
 @MapperScan(basePackages= {"com.kap.service.dao"}, sqlSessionFactoryRef = "SqlSessionFactory", sqlSessionTemplateRef = "SessionTemplate")
 //트랜젝션 사용

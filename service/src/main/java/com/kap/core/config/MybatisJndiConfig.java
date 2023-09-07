@@ -38,7 +38,7 @@ import javax.sql.DataSource;
  */
 @Configuration
 //JAVA 파일 SCAN 위치
-@Profile({"stg", "prod"})
+@Profile({"prod"})
 @MapperScan(basePackages= {"com.kap.service.dao"}, sqlSessionFactoryRef = "SqlSessionFactory", sqlSessionTemplateRef = "SessionTemplate")
 public class MybatisJndiConfig {
     @Value("${mybatis-config.config-location}")

@@ -40,7 +40,10 @@ spring.config.activate.on-profile: stg
 spring:
   db:
     datasource:
-      jndi-name: kapDS
+      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+      jdbc-url: jdbc:log4jdbc:mysql://192.168.0.12:3306/kap?serverTimezone=UTC&useUnicode=true&charcterEncoding=utf8&useSSL=false
+      username: kap
+      password: dnfntk1##
 ---
 spring.config.activate.on-profile: prod
 spring:
