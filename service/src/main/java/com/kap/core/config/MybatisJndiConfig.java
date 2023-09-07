@@ -1,7 +1,5 @@
 package com.kap.core.config;
 
-import jdk.nashorn.internal.objects.annotations.Property;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -13,11 +11,10 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 
@@ -26,7 +23,7 @@ import javax.sql.DataSource;
  * 마이바티스 Config 설정
  * </pre>
  *
- * @ClassName		    : MybatisConfig.java
+ * @ClassName		    : ApiMybatisJndiConfig.java
  * @Description		: 마이바티스 Config 설정
  * @author 박주석
  * @since 2022.01.10
@@ -40,25 +37,29 @@ import javax.sql.DataSource;
  * </pre>
  */
 @Configuration
-@Slf4j
-@Profile({"dev"})
 //JAVA 파일 SCAN 위치
+@Profile({"stg", "prod"})
 @MapperScan(basePackages= {"com.kap.service.dao"}, sqlSessionFactoryRef = "SqlSessionFactory", sqlSessionTemplateRef = "SessionTemplate")
-//트랜젝션 사용
-@EnableTransactionManagement
-public class MybatisConfig {
-
+public class MybatisJndiConfig {
     @Value("${mybatis-config.config-location}")
     private String mybatisLocation;
 
     @Value("${mybatis-config.mapper-location}")
     private String mapperLocation;
 
+    @Value("${spring.db.datasource.jndi-name}")
+    private String jndiName;
+
+    /**
+     * dataSource 생성
+     * @return
+     */
     //DATABASE
     @Bean(name = "dataSource")
-    @ConfigurationProperties(prefix = "spring.db.datasource")
     public DataSource DataSource() {
-        return DataSourceBuilder.create().build();
+        JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
+        DataSource dataSource = dataSourceLookup.getDataSource(jndiName);
+        return dataSource;
     }
 
     @Bean(name = "SqlSessionFactory")
