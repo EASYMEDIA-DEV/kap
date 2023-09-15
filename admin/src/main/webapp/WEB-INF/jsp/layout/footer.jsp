@@ -194,6 +194,8 @@
 			</div>
         </div>
 		<!-- require -->
+		<script type="text/javascript" src="/common/ckeditor/ckeditor.js"></script>
+		<script type="text/javascript" src="/common/ckeditor/plugins/preview/plugin.js"></script>
 		<script type="text/javascript" src="/common/js/lib/require.js" data-main="/common/js/site"></script>
 	</body>
 </html>

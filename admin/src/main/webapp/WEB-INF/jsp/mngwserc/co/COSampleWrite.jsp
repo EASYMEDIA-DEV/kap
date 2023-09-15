@@ -17,7 +17,7 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnData.detailsKey}" />
             <!-- 첨부파일 순번 -->
             <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDto.fileSeq}" />
-            <input type="hidden" class="notRequired" id="cntn" name="cntn"/>
+            <%--<input type="hidden" class="notRequired" id="cntn" name="cntn"/>--%>
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-2 control-label">제목<span class="star"> *</span></label>
@@ -129,14 +129,17 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-2 control-label">내용</label>
-                    <div class="col-sm-10 tt">
-                        <!--
-                             1. class명이 dextEditor인 div안에 에디터 삽입
-                             2. div의 id와 textarea의 name값이 일치해야 form전송시 해당 데이터로 넘어간다-->
-                        <div class="dextEditor youtube" id="cntn_y" ></div>
-                        <textarea class="notRequired" name="cntn_y" title="내용" style="display:none;">${rtnDto.cntn}</textarea>
-                        <textarea class="col-sm-10" name="cntn_t" title="내용" rows="10">${rtnDto.cntn}</textarea>
+                    <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
+                    <div class="col-sm-11">
+                        <textarea class="form-control notRequired ckeditorRequired" id="cntn" name="cntn" title="내용" data-type="${pageGb}">${info.cntn}</textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="last-child mb0">
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">자바스크립트</label>
+                    <div class="col-sm-10 col-md-11">
+                        <textarea class="form-control notRequired" id="jsCntn" name="jsCntn" title="자바스크립트" rows="10">${info.jsCntn}</textarea>
                     </div>
                 </div>
             </fieldset>

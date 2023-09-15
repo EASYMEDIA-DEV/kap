@@ -10,3 +10,4 @@
 /service/build/
 /service/out/
 /service/out/production/classes/
+/service/src/main/java/com/kap/service/impl/COGCntsServiceImpl.java
