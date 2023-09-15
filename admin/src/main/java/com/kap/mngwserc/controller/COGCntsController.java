@@ -151,7 +151,7 @@ public class COGCntsController {
             cogCntsDTO.setModId(coaAdmDTO.getId());
             cogCntsDTO.setModIp(coaAdmDTO.getLoginIp());
             System.err.println("cogCntsDTO:::"+cogCntsDTO);
-            //cogCntsDTO.setRespCnt(cogCntsService.updateCnts(cogCntsDTO));
+            cogCntsDTO.setRespCnt(cogCntsService.updateCnts(cogCntsDTO));
         }
         catch (Exception e)
         {

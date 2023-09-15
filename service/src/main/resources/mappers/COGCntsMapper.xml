@@ -174,8 +174,10 @@
 		UPDATE  /*COGCntsMapper.updateCnts*/
 			CO_CNTS_MST
 		SET
-		   MOD_ID = #{regId}
-		  , MOD_IP = #{regIp}
+		  , CNTS = #{cnts}
+		  , JS_CNTS = #{jsCnts}
+		  , MOD_ID = #{modeId}
+		  , MOD_IP = #{modIp}
 		  , MOD_DTM = NOW()
 		WHERE
 		    MENU_SEQ = #{menuSeq}
