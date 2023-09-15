@@ -143,15 +143,14 @@ public class COGCntsController {
      * CMS를 수정한다.
      */
     @PostMapping(value="/update")
-    public COGCntsDTO updateCnts(COGCntsDTO cogCntsDTO, COAAdmDTO pCOAAdmDTO) throws Exception
+    public String updateCnts(COGCntsDTO cogCntsDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap) throws Exception
     {
         try
         {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             cogCntsDTO.setModId(coaAdmDTO.getId());
             cogCntsDTO.setModIp(coaAdmDTO.getLoginIp());
-            System.err.println("cogCntsDTO:::"+cogCntsDTO);
-            cogCntsDTO.setRespCnt(cogCntsService.updateCnts(cogCntsDTO));
+            modelMap.addAttribute("respCnt", cogCntsService.updateCnts(cogCntsDTO));
         }
         catch (Exception e)
         {
@@ -161,7 +160,7 @@ public class COGCntsController {
             }
             throw new Exception(e.getMessage());
         }
-        return cogCntsDTO;
+        return "jsonView";
     }
     
     /**

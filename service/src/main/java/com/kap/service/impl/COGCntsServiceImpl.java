@@ -91,7 +91,6 @@ public class COGCntsServiceImpl implements COGCntsService {
 	 */
 	public int updateCnts(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
-
 		return cOGCntsMapper.updateCnts(pCOGCntsDTO);
 	}
 

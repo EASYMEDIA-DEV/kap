@@ -174,9 +174,9 @@
 		UPDATE  /*COGCntsMapper.updateCnts*/
 			CO_CNTS_MST
 		SET
-		  , CNTS = #{cnts}
+		   CNTS = #{cnts}
 		  , JS_CNTS = #{jsCnts}
-		  , MOD_ID = #{modeId}
+		  , MOD_ID = #{modId}
 		  , MOD_IP = #{modIp}
 		  , MOD_DTM = NOW()
 		WHERE
