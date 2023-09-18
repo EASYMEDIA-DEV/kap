@@ -30,7 +30,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/"+langCd+"/content/"+menuSeq+"/select", $formObj, "POST", "html");
+        }, "/mngwserc/"+langCd+"/contentsid/"+menuSeq+"/select", $formObj, "POST", "html");
     }
 
     // set model

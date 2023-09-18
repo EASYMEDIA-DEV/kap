@@ -268,7 +268,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 								if (menuType == "cms")
 								{
-									var replaceStr = "/contentsid/" + rtnData.menuSeq + "/index.do";
+									var replaceStr = "/contentsid/" + rtnData.menuSeq + "/list";
 
 									jQuery("#userUrl").val(rtnData.userUrl.replace(replaceStr, ""));
 									jQuery("#spanSuffix").text(replaceStr);
@@ -548,7 +548,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					if (jQuery("input[name='menuType']:checked").val() == "cms")
 					{
-						admUrl += "/contentsid/" + jQuery("#menuSeq").val() + "/index.do";
+						admUrl += "/contentsid/" + jQuery("#menuSeq").val() + "/list";
 					}
 					jQuery("#admUrl").val(admUrl);
 
@@ -761,7 +761,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						if (menuSeq && menuType == "cms")
 						{
-							jQuery("#spanSuffix").text("/contentsid/" + menuSeq + "/index.do");
+							jQuery("#spanSuffix").text("/contentsid/" + menuSeq + "/list");
 						}
 						else
 						{

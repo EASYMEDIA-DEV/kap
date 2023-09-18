@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/{langCd}/content/{menuSeq}")
+@RequestMapping(value="/mngwserc/{langCd}/contentsid/{menuSeq}")
 public class COGCntsController {
 
     //CMS 서비스
