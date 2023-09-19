@@ -65,6 +65,7 @@ public class COLgnServiceImpl  implements COLgnService {
 		ThreadContext.put("trgtMenuNm", "로그인");
 
 		COAAdmDTO rtnCOAAdmDTO = cOLgnMapper.getLoginInfo(cOLoginDTO);
+
     	if (rtnCOAAdmDTO != null)
     	{
     		// 차단여부 확인

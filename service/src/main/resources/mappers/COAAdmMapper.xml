@@ -179,14 +179,14 @@
 	</insert>
 
 	<!--
-         쿼리명 : COAAdmMapper.updateAdm
+         쿼리명 : COAAdmMapper.
          설  명 : 관리자를 수정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2022.04.08   신혜정       최초생성
     -->
 	<update id="updateAdm" parameterType="COAAdmDTO">
-		update /* COAAdmMapper.updateAdm */ co_adm_mst
+		update /* COAAdmMapper. */ co_adm_mst
 		set
 			  email = #{email}
 			, dept_nm = #{deptNm}

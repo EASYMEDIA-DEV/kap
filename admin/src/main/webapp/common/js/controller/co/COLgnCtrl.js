@@ -18,7 +18,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		// 정상
 		if (code == "0000")
 		{
-			if(data.lgnCrtfnYn == "N"){
+			if(data.lgnCrtfnYn == "N" || data.lgnCrtfnPassYn == "Y"){
 				// 이메일 인증 없이 로그인 처리
 				location.replace(data.rdctUrl);
 			}
