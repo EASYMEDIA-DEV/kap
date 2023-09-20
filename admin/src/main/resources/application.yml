@@ -26,11 +26,36 @@ spring:
     resources:
       add-mappings: true
 
+---
+spring:
+  mail:
+    username: dev@easymedia.net
+    password: dnfntk1##
+    port: 587
+    host: smtp.gmail.com
+
+#spring :
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username : dev@easymedia.net
+#    password : dnfntk1##
+#    properties :
+#      mail :
+#        smtp :
+#          auth : true
+#          timeout : 5000
+#          starttls :
+#              enable : true
+
+---
+
 #강제 로그인 여부
 app:
-  is-login: true
+  is-login: false
   #발신자 이메일
   from-mail: dev@easymedia.net
+
   #사용자 도메인1
   user-domain: https://127.0.0.1:9014
   #관리자 도메인
@@ -49,6 +74,8 @@ app:
     max-size: 41943040
     #템플릿 경로
     template-file-path: /data/apps/tomcat_10111_kolon_web_admin/WEB-INF/template
+    #메일 템플릿 경로
+    mail-tmpl-file-path : D:\EGOVFRAME\project\KAP\admin\src\main\webapp\WEB-INF\template\
 
 log4jdbc:
   dump:
@@ -72,7 +99,7 @@ logging:
     #console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr([%10t]){faint} %clr(%-60(%logger{39}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
     #console: "%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\\(%L\\) : %m%n"
 ---
-spring.config.activate.on-profile: dev
+
 spring :
   devtools:
     livereload:
@@ -81,9 +108,11 @@ spring :
       enabled: true
     thymeleaf:
       cache: false
-
+  config:
+    activate:
+      on-profile: dev
 app:
-  is-login: true
+  is-login: false
 ---
 spring.config.activate.on-profile: stg, prod
 logging:

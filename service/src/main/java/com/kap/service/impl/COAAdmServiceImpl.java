@@ -123,13 +123,18 @@ public class COAAdmServiceImpl implements COAAdmService {
 	 */
 	public int updateAdm(COAAdmDTO pCOAAdmDTO) throws Exception
 	{
-		// 관리자 수정정보 Set
-		int respCnt = cOAAdmMapper.updateAdm(pCOAAdmDTO);
-		if(respCnt > 0){
+		int respCnt = 0;
+
+		try{
+			// 관리자 수정정보 Set
+			respCnt = cOAAdmMapper.updateAdm(pCOAAdmDTO);
+
+			setAdmMenu(pCOAAdmDTO, true);
+			setAdmId(pCOAAdmDTO);
+
+		}catch (Exception e){
 			throw new Exception("1111");
 		}
-		setAdmMenu(pCOAAdmDTO, true);
-		setAdmId(pCOAAdmDTO);
 
 		return respCnt;
 	}

@@ -34,12 +34,18 @@ public class COMailServiceImpl  implements COMailService {
 	//발신자 이메일
 	@Value("${app.from-mail}")
 	private String fromMail;
+
 	//사용자 도메인
 	@Value("${app.user-domain}")
 	private String userDomain;
 	//관리자 도메인
 	@Value("${app.admin-domain}")
 	private String adminDomain;
+
+	//관리자 도메인
+	@Value("${app.file.mail-tmpl-file-path}")
+	private String mailTmplFilePath;
+
 
     /**
      * 메일 발송 처리
@@ -59,6 +65,7 @@ public class COMailServiceImpl  implements COMailService {
 			{
 				messageHelper.setTo(toUsers);
 				messageHelper.setFrom(fromMail);
+
 				messageHelper.setText(getTemplate(cOMailDTO, templateFile), true);
 				
 				// 첨부파일
@@ -89,23 +96,31 @@ public class COMailServiceImpl  implements COMailService {
 	public String getTemplate(COMailDTO cOMailDTO, String templateFile) throws Exception
 	{
 		String body = "";
-        
+
 		if (!"".equals(templateFile))
 		{
-        	VelocityContext vc = new VelocityContext();
-    		vc.put("userDomain", userDomain);
-        	vc.put("adminDomain", adminDomain);
-			for (Field field : cOMailDTO.getClass().getDeclaredFields()){
-				field.setAccessible(true);
-				Object value = field.get(cOMailDTO);
-				vc.put(field.getName(), value);
+			try {
+				templateFile = mailTmplFilePath + templateFile;
+				VelocityContext vc = new VelocityContext();
+				vc.put("userDomain", userDomain);
+				vc.put("adminDomain", adminDomain);
+				for (Field field : cOMailDTO.getClass().getDeclaredFields()) {
+					field.setAccessible(true);
+					Object value = field.get(cOMailDTO);
+					vc.put(field.getName(), value);
+				}
+				StringWriter sw = new StringWriter();
+				sw.getBuffer().setLength(0);
+				//templateFile = "/" + templateFile;
+				templateFile = "template/email/COAAdmPwdInit.html";
+
+				Template template = velocityEngine.getTemplate(templateFile.replace("/", File.separator), "UTF-8");
+
+				template.merge(vc, sw);
+				body = sw.toString();
+			}catch (Exception e){
+				System.out.println("@@@@ e = " + e);
 			}
-        	StringWriter sw = new StringWriter();
-        	sw.getBuffer().setLength(0);
-        	templateFile = "/" + templateFile;
-        	Template template = velocityEngine.getTemplate(templateFile.replace("/", File.separator), "UTF-8");
-        	template.merge(vc, sw);
-            body = sw.toString();
 		}
 		else
 		{

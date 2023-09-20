@@ -138,14 +138,14 @@
 			            	</a>
 			            	<ul class="dropdown-menu dropdown-menu-right">
 				                <li>
-				                	<a href="./profile"><em class="ion-home icon-fw"></em>Profile (${sessionScope.admLgnMap.name}님)</a>
+				                	<a href="./profile"><em class="ion-home icon-fw"></em>Profile (${sessionScope.loginMap.name}님)</a>
 				                </li>
 				                <li>
 				                	<a href="./logout"><em class="ion-log-out icon-fw"></em>Logout</a>
 				                </li>
 				                <li class="divider" role="presentation"></li>
 				                <li>
-				                	<a style="pointer-events: none"><em class="ion-location icon-fw"></em>${sessionScope.admLgnMap.loginIp}</a>
+				                	<a style="pointer-events: none"><em class="ion-location icon-fw"></em>${sessionScope.loginMap.loginIp}</a>
 				                </li>
 							</ul>
 			            </li>

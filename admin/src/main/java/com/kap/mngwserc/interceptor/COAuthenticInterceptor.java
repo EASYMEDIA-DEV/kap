@@ -1,5 +1,6 @@
 package com.kap.mngwserc.interceptor;
 
+import com.easymedia.error.exception.EntityNotFoundException;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.COWebUtil;
@@ -43,11 +44,15 @@ public class COAuthenticInterceptor implements HandlerInterceptor{
         {
             if (accept != null && accept.indexOf("application/json") > -1)
             {
-                throw new UnauthorizedException("로그인 세션이 유효하지 않습니다.");
+                //throw new UnauthorizedException("로그인 세션이 유효하지 않습니다.");
+                response.sendRedirect("/mngwsercgateway/login");
             }
             else
             {
-                throw new UnauthorizedException("로그인 세션이 유효하지 않습니다.");
+                //throw new UnauthorizedException("로그인 세션이 유효하지 않습니다.");
+                //throw new EntityNotFoundException("화면을");
+
+                response.sendRedirect("/mngwsercgateway/login");
             }
         }
         //로그인 정보 체크
