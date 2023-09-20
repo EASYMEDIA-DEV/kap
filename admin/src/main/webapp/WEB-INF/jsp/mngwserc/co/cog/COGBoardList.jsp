@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/co/COGCntsListCtrl">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/co/cog/COGBoardListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
         <form class="form-horizontal" name="frmSearch" method="post" action="">
             <!-- 현재 페이징 번호 -->
@@ -12,6 +12,8 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
+            <input type="hidden" id="langCd" name="langCd" value="${langCd}" />
+            <input type="hidden" id="typeCd" name="typeCd" value="${rtnData.typeCd}" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간" />
@@ -44,11 +46,11 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="useYnList" value="Y" <c:if test="${fn:contains(rtnData.useYnList, 'Y')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="mainYnList" value="Y" <c:if test="${fn:contains(rtnData.mainYnList, 'Y')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> Y
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="useYnList" value="N" <c:if test="${fn:contains(rtnData.useYnList, 'N')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="mainYnList" value="N" <c:if test="${fn:contains(rtnData.mainYnList, 'N')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> N
                         </label>
                     </div>

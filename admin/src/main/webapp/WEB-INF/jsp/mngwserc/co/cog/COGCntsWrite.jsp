@@ -10,7 +10,7 @@
 
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COGCntsWriteCtrl">
+    <div class="card-body" data-controller="controller/co/cog/COGCntsWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle}</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
