@@ -2,8 +2,8 @@ package com.kap.service.impl.sm;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.SMCPopDTO;
-import com.kap.service.SMPopService;
-import com.kap.service.dao.sm.SMPopMapper;
+import com.kap.service.SMCPopService;
+import com.kap.service.dao.sm.SMCPopMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 팝업 관리를 위한 ServiceImpl
  * </pre>
  *
- * @ClassName		: SMPopServiceImpl.java
+ * @ClassName		: SMCPopServiceImpl.java
  * @Description		: 팝업 관리를 위한 ServiceImpl
  * @author 구은희
  * @since 2023.09.21
@@ -30,10 +30,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SMPopServiceImpl implements SMPopService {
+public class SMCPopServiceImpl implements SMCPopService {
 
     //Mapper
-    private final SMPopMapper popMapper;
+    private final SMCPopMapper popMapper;
 
     /**
      * 팝업 목록을 조회한다.

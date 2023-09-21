@@ -1,12 +1,9 @@
 package com.kap.mngwserc.controller.sm;
 
-import com.kap.core.annotation.MapData;
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COSmpleSrchDTO;
-import com.kap.core.dto.EmfMap;
 import com.kap.core.dto.SMCPopDTO;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.SMPopService;
+import com.kap.service.SMCPopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 
 /**
  * <pre>
@@ -42,7 +38,7 @@ import java.util.ArrayList;
 public class SMCMnPopController {
 
     /** 서비스 **/
-    public final SMPopService smPopService;
+    public final SMCPopService smPopService;
 
     /**
      * 팝업 목록 페이지로 이동한다.

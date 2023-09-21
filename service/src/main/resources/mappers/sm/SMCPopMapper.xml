@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kap.service.dao.sm.SMPopMapper">
+<mapper namespace="com.kap.service.dao.sm.SMCPopMapper">
     <!--
-         쿼리명 : SMPopMapper.selectMnPopList
+         쿼리명 : SMCPopMapper.selectMnPopList
          설  명 : 팝업 목록을 조회한다.
        	  수정일	 수정자     수정내용
         ==========   ======   =============
         2023.09.21.14   구은희     최초생성
     -->
     <select id="selectMnPopList" parameterType="SMCPopDTO">
-        SELECT /* SMPopMapper.selectMnPopList */
+        SELECT /* SMCPopMapper.selectMnPopList */
             SEQ
              , TITL
              , DATE_FORMAT(STRT_DTM, '%Y-%m-%d %H:%i:%s') AS STRT_DTM
@@ -42,14 +42,14 @@
 
 
     <!--
-         쿼리명 : SMPopMapper.selectMnPopDtl
+         쿼리명 : SMCPopMapper.selectMnPopDtl
          설  명 : 팝업 상세를 조회한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.09.21    구은희       최초생성
     -->
     <select id="selectMnPopDtl" parameterType="SMCPopDTO">
-        SELECT /* SMPopMapper.selectMnPopDtl */
+        SELECT /* SMCPopMapper.selectMnPopDtl */
             SEQ
              , TITL
              , DATE_FORMAT(STRT_DTM, '%Y-%m-%d %H:%i:%s') AS STRT_DTM
@@ -77,14 +77,14 @@
     </select>
 
     <!--
-         쿼리명 : SMPopMapper.selectPopNewRow
+         쿼리명 : SMCPopMapper.selectPopNewRow
          설  명 : 팝업 정렬을 위한 row를 조회한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.09.21    구은희       최초생성
     -->
     <select id="selectPopNewRow" parameterType="SMCPopDTO">
-        SELECT /* SMPopMapper.selectPopNewRow */
+        SELECT /* SMCPopMapper.selectPopNewRow */
             SEQ,
             ORD,
             DVC_CD
@@ -114,7 +114,7 @@
 
 
     <!--
-         쿼리명 : SMPopMapper.insertMnPop
+         쿼리명 : SMCPopMapper.insertMnPop
          설  명 : 팝업을 등록한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
@@ -124,7 +124,7 @@
         <selectKey keyProperty="ord" resultType="java.lang.Integer" order="BEFORE">
             SELECT IFNULL(MAX(ORD), 0) + 1 FROM SM_POPUP_MST
         </selectKey>
-        INSERT /* SMPopMapper.insertMnPop */ INTO SM_POPUP_MST
+        INSERT /* SMCPopMapper.insertMnPop */ INTO SM_POPUP_MST
         (
         LANG_CD
         , DVC_CD
@@ -187,14 +187,14 @@
     </insert>
 
     <!--
-         쿼리명 : SMPopMapper.deleteMnPop
+         쿼리명 : SMCPopMapper.deleteMnPop
          설  명 : 팝업을 삭제한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.09.21    구은희       최초생성
     -->
     <delete id="deleteMnPop" parameterType="SMCPopDTO">
-        DELETE /* SMPopMapper.deleteMnPop */
+        DELETE /* SMCPopMapper.deleteMnPop */
         FROM
         SM_POPUP_MST
         <where>
@@ -214,14 +214,14 @@
     </delete>
 
     <!--
-         쿼리명 : SMPopMapper.updateMnPop
+         쿼리명 : SMCPopMapper.updateMnPop
          설  명 : 팝업을 수정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.09.21    구은희       최초생성
     -->
     <update id="updateMnPop" parameterType="SMCPopDTO">
-        UPDATE /* SMPopMapper.updateMnPop */ SM_POPUP_MST
+        UPDATE /* SMCPopMapper.updateMnPop */ SM_POPUP_MST
         SET
         TITL = #{titl}
         <choose>
@@ -262,14 +262,14 @@
     </update>
 
     <!--
-         쿼리명 : SMPopMapper.updateUseYn
+         쿼리명 : SMCPopMapper.updateUseYn
          설  명 : 팝업 노출 여부를 수정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.09.21    구은희       최초생성
     -->
     <update id="updateUseYn" parameterType="SMCPopDTO">
-        UPDATE /* SMPopMapper.updateUseYn */ SM_POPUP_MST
+        UPDATE /* SMCPopMapper.updateUseYn */ SM_POPUP_MST
         SET
         USE_YN = 'N'
         , MOD_ID = #{modId}
@@ -292,14 +292,14 @@
     </update>
 
     <!--
-        쿼리명 : SMPopMapper.updateOrder
+        쿼리명 : SMCPopMapper.updateOrder
         설  명 : 팝업 정렬을 수정한다.
          수정일      수정자       수정내용
        ==========   ========   ==============
        2023.09.21    구은희       최초생성
    -->
     <update id="updateOrder" parameterType="SMCPopDTO">
-        UPDATE /* SMPopMapper.updateOrder */ SM_POPUP_MST
+        UPDATE /* SMCPopMapper.updateOrder */ SM_POPUP_MST
         SET
             ORD = #{ord}
           , MOD_ID = #{modId}
@@ -311,14 +311,14 @@
     </update>
 
     <!--
-         쿼리명 : SMPopMapper.selectUseMnPopCnt
+         쿼리명 : SMCPopMapper.selectUseMnPopCnt
          설  명 : 노출 중인 팝업 개수를 조회한다.
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.09.21    구은희       최초생성
     -->
     <select id="selectUseMnPopCnt" parameterType="SMCPopDTO" resultType="java.lang.Integer">
-        SELECT /* SMPopMapper.selectUseMnPopCnt*/
+        SELECT /* SMCPopMapper.selectUseMnPopCnt*/
         COUNT(SEQ)
         FROM
         SM_POPUP_MST
