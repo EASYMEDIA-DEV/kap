@@ -1,136 +1,140 @@
-define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
+define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, ezVald, CodeMirror) {
 
     "use strict";
 
     // set controller name
     var exports = {
-        controller: "controller/sm/smc/SMCPopWriteCtrl"
+        controller : "controller/sm/smc/SMCPopWriteCtrl"
     };
+
+    var $formObj = jQuery("#frmData");
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
-    var callbackAjaxInsert = function(data) {
-        if (parseInt(data.respCnt, 10) > 0) {
+
+    var callbackAjaxInsert = function(data){
+        if (parseInt(data.actCnt, 10) > 0)
+        {
             alert(msgCtrl.getMsg("success.ins"));
             location.href = "./list";
-        } else {
-            alert(msgCtrl.getMsg("fail.act"));
+        }
+        else
+        {
+            if(data.excessCntYn == "Y"){
+                alert(msgCtrl.getMsg("fail.sm.smb.insert"));
+            }else{
+                alert(msgCtrl.getMsg("fail.act"));
+            }
         }
     };
 
-    var callbackAjaxUpdate = function(data) {
-        if (parseInt(data.respCnt, 10) > 0) {
+    var callbackAjaxUpdate = function(data){
+        if (parseInt(data.actCnt, 10) > 0)
+        {
             alert(msgCtrl.getMsg("success.upd"));
             location.href = "./list";
-        } else {
+        }
+        else
+        {
+            if(data.excessCntYn == "Y"){
+                alert(msgCtrl.getMsg("fail.sm.smb.insert"));
+            }else{
+                alert(msgCtrl.getMsg("fail.act"));
+            }
+        }
+    };
+
+    /*var callbackAjaxDelete = function(data){
+
+        if (parseInt(data.actCnt, 10) > 0)
+        {
+            alert(msgCtrl.getMsg("success.del.target.none"));
+            location.href = "./list";
+        }
+        else
+        {
             alert(msgCtrl.getMsg("fail.act"));
         }
-    };
-
-    var callbackAjaxDelete = function(data) {
-        alert(msgCtrl.getMsg("success.del.target.board"));
-        location.href = "./list";
-    };
-
-    var tab = function(tabName){
-        if(tabName == 'html'){
-            coEditorCtrl.eventGetEditors()
-            $("#img1").attr("style", "display:none");
-            $("#img2").attr("style", "display:none");
-            $("#wnppYn").attr("style", "display:none");
-            $("#url").attr("style", "display:none");
-            $("#htmlTab").attr("style", "display:block");
-
-            $("#img1").find(".dropzone").addClass("notRequired");
-            $("#img2").find(".dropzone").addClass("notRequired");
-
-            $('#htmlTab').find("textarea[name='cntn']").removeClass("notRequired");
-        }else {
-            $("#img1").attr("style", "display:block");
-            $("#img2").attr("style", "display:block");
-            $("#wnppYn").attr("style", "display:block");
-            $("#url").attr("style", "display:block");
-            $("#htmlTab").attr("style", "display:none");
+    };*/
 
 
-            $("#img1").find(".dropzone").removeClass("notRequired");
-            $("#img2").find(".dropzone").removeClass("notRequired");
-
-            $('#htmlTab').find("textarea[name='cntn']").addClass("notRequired");
-        }
-    }
-
-    var $formObj = jQuery("#frmData");
-
+    // set model
     ctrl.model = {
         id : {
             // do something...
             odtmYn : {
                 event : {
-                    click : function(){
+                    change : function(){
                         var trgtObj = jQuery(this).closest("fieldset");
-                        cmmCtrl.setPeriod(this, "", "", false);
 
-                        if($('#odtmYn').is(':checked')){
-                            $("#postStrtDtm").val('');
-                            $("#postStrtDtm").attr("disabled", true); //설정
-                            $("#postStrtDtm").addClass("notRequired");
-
-                            $("#postEndDtm").val('');
-                            $("#postEndDtm").attr("disabled", true); //설정
-                            $("#postEndDtm").addClass("notRequired");
-                        }else {
-                            $("#postStrtDtm").attr("disabled", false); //설정
-                            $("#postStrtDtm").removeClass("notRequired");
-
-                            $("#postEndDtm").attr("disabled", false); //설정
-                            $("#postEndDtm").removeClass("notRequired");
+                        if (jQuery(this).is(":checked"))
+                        {
+                            jQuery(trgtObj).find(".datetimepicker_strtDtm, .datetimepicker_endDtm").addClass("notRequired").prop("disabled", true);
                         }
+                        else
+                        {
+                            jQuery(trgtObj).find(".datetimepicker_strtDtm, .datetimepicker_endDtm").removeClass("notRequired").prop("disabled", false);
+                        }
+
+                        jQuery(trgtObj).find(".datetimepicker_strtDtm").datetimepicker("setOptions", { /* maxDate : false */ });
+                        jQuery(trgtObj).find(".datetimepicker_strtDtm").datetimepicker("reset").val("");
+
+                        jQuery(trgtObj).find(".datetimepicker_endDtm").datetimepicker("setOptions", { minDate : false });
+                        jQuery(trgtObj).find(".datetimepicker_endDtm").datetimepicker("reset").val("");
                     }
                 }
-            },
-            btnOneDelete : {
-                event : {
-                    click : function(){
-                        var $formObj = jQuery("#frmData");
-
+            }/*,
+            btn_delete : {
+                event: {
+                    click: function () {
                         if (confirm(msgCtrl.getMsg("confirm.del"))) {
-                            cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+
+                            jQuery.ajax({
+                                type: "post",
+                                url: "./delete",
+                                data : {
+                                    seq : $("#detailsKey").val(),
+                                    dvcCd: $("#gubun").val()
+                                },
+                                success: function (result) {
+                                    alert('삭제되었습니다!');
+                                }
+                            });
+                            //location.replace("./list.do");
                         }
                     }
                 }
-            },
-            btnList : {
-                event : {
-                    click : function() {
-                        if (confirm(msgCtrl.getMsg("confirm.list"))) {
-                            var strPam = jQuery("#frmData").find("input[name='strPam']").val();
-                            location.href="./list?" + strPam;
-                        }
-                    }
-                }
-            }
+            }*/
         },
         classname : {
+            // do something...
             typeCd : {
                 event : {
-                    click : function() {
-                        tab($(this).val());
+                    change : function(){
+                        //var gubun = jQuery(this).val();
+                        var typeCd =  $("input[name='typeCd']:checked").val();
+                        if (typeCd == "image")
+                        {
+                            //링크 및 새창 항목이 나와야 한다.
+                            ctrl.obj.find(".linkUrlContainer").show();
+                            ctrl.obj.find(".linkUrlContainer").find("input[type=text]").val("");
+                            jQuery("#imageArea").show().find(".dropzone").removeClass("notRequired");
+                            jQuery('#htmlArea').hide().find("textarea").removeClass("ckeditorRequired");
+                        }
+                        else if (typeCd == "html")
+                        {
+                            ctrl.obj.find(".linkUrlContainer").hide();
+                            ctrl.obj.find(".linkUrlContainer").find("input[type=text]").val("");
+                            //링크 및 새창 항목이 나오지 말아야 한다.왜? html 태그니까.
+                            jQuery("#imageArea").hide().find(".dropzone").addClass("notRequired");
+                            jQuery('#htmlArea').show().find("textarea").addClass("ckeditorRequired");
+                        }
                     }
                 }
             }
         },
-        immediately : function() {
-            // 유효성 검사
-            var $formObj = jQuery("#frmData");
-
-            if($formObj.find("input[name='detailsKey']").val() != null){
-                tab($formObj.find(".typeCd:checked").val())
-            }else{
-                tab('html')
-            }
-
+        immediately : function(){
             /* File Dropzone Setting */
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
@@ -142,57 +146,68 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 })
             });
 
+            /* Editor Setting */
+            jQuery("textarea[id^='cnts']").each(function(){
+                cmmCtrl.setEditor({
+                    editor : jQuery(this).attr("id"),
+                    height : 400,
+                });
+            });
+
+            $("#btn_delete").click(function () {
+                if (confirm(msgCtrl.getMsg("confirm.del"))) {
+                    cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+                }
+
+            });
+
+            // 유효성 검사
             $formObj.validation({
-                msg : {
-                    empty : {
-                        names :{
-                            postStrtDtm : "게시시간을 선택하세요.",
-                            postEndDtm : "게시시간을 선택하세요.",
-                        },
-                    },
-                    confirm : {
-                        custom : [{
-                            action : "insert",
-                            message : msgCtrl.getMsg("confirm.ins")
-                        },{
-                            action : "update",
-                            message : msgCtrl.getMsg("confirm.upd")
-                        }]
-                    }
-                },
-                after : function(){
-                    // URL 유효성 체크
-                    var url = jQuery("input[name='url']");
-                    if(url.val() != null && url.val() != undefined && url.val() != "") {
-                        if (!cmmCtrl.checkUrl(url)) {
+                after : function() {
+                    var isValid = true, editorChk = true;
+
+                    $formObj.find(".ckeditorRequired").each(function() {
+                        jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
+                        jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
+                        jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
+                        jQuery(this).val(jQuery(this).val().split("\'").join("~!singlecomma!~"));
+                        jQuery(this).val(jQuery(this).val().split("\"").join("~!doublecomma!~"));
+
+                        var editorVal = jQuery(this).val().length;
+
+                        if (editorVal < 1)
+                        {
+                            editorChk = false;
+
+                            alert(msgCtrl.getMsg("fail.noCntn"));
+
+                            CKEDITOR.instances[jQuery(this).prop("id")].focus();
+
+                            // 에디터 최상단으로 스크롤 이동
+                            jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
+
                             return false;
                         }
+                    });
+
+                    if (!editorChk)
+                    {
+                        isValid = false;
                     }
-                    // 파일 등록 여부 확인
-                    var isProcess = cmmCtrl.chkDropzone( $formObj );
-                    return isProcess;
-                },
-                before : function() {
-                    //에디터 내용 바인딩
-                    if ($("input[name='typeCd']:checked").val() == 'html'){
-                        getDext5WebEditorContentsValue();
-                    }
-                },
+
+                    return isValid;
+                }
+                ,
                 async : {
                     use : true,
-                    func : function (){
-                        if (!$formObj.find("input[name='detailsKey']").val()) {
-                            if($formObj.find("input[name='typeCd']:checked").val() == 'img'){
-                                cmmCtrl.fileFrmAjax(callbackAjaxInsert, "./insert", $formObj, "json");
-                            }else{
-                                cmmCtrl.frmAjax(callbackAjaxInsert, "./insert", $formObj);
-                            }
-                        } else {
-                            if($formObj.find("input[name='typeCd']:checked").val() == 'img'){
-                                cmmCtrl.fileFrmAjax(callbackAjaxUpdate, "./update", $formObj, "json");
-                            }else{
-                                cmmCtrl.frmAjax(callbackAjaxUpdate, "./update", $formObj);
-                            }
+                    func : function(){
+                        if (!$formObj.find("input[name='detailsKey']").val())
+                        {
+                            cmmCtrl.frmAjax(callbackAjaxInsert, "./insert", $formObj);
+                        }
+                        else
+                        {
+                            cmmCtrl.frmAjax(callbackAjaxUpdate, "./update", $formObj);
                         }
                     }
                 }
@@ -200,8 +215,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         }
     };
 
-
+    // execute model
     ctrl.exec();
 
     return ctrl;
 });
+
