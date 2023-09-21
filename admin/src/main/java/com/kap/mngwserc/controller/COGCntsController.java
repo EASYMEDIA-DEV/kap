@@ -45,7 +45,7 @@ public class COGCntsController {
      * CMS 목록 페이지
      */
     @GetMapping(value="/list")
-    public String getCntsistPage(COGCntsDTO cogCntsDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public String getCntsListPage(COGCntsDTO cogCntsDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
     {
         try
         {
@@ -62,7 +62,7 @@ public class COGCntsController {
             throw new Exception(e.getMessage());
         }
 
-        return "mngwserc/co/COGCntsList.admin";
+        return "mngwserc/co/cog/COGCntsList.admin";
     }
 
     /**
@@ -84,7 +84,7 @@ public class COGCntsController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/co/COGCntsListAjax";
+        return "mngwserc/co/cog/COGCntsListAjax";
     }
 
     /**
@@ -110,7 +110,7 @@ public class COGCntsController {
             throw new Exception(e.getMessage());
         }
 
-        return "mngwserc/co/COGCntsWrite.admin";
+        return "mngwserc/co/cog/COGCntsWrite.admin";
     }
 
     /**

@@ -36,11 +36,16 @@ public interface COGCntsMapper {
 	public List<COGCntsDTO> selectCntsList(COGCntsDTO pCOGCntsDTO) throws Exception;
 
 	/**
-	 * 현재 카테고리의 CMS SEQ 값을 가져온다.
+	 * 현재 카테고리의 CMS 시퀀스 값을 가져온다.
 	 */
 	public String selectSeqNum(String tableNm) throws Exception;
 
 	/**
+	 * CMS 시퀀스 값을 상승시킨다.
+	 */
+	public int updateCntsSeq(String tableNm) throws Exception;
+
+	 /**
 	 * CMS를 수정한다.
 	 */
 	public int updateUseCnts(COGCntsDTO pCOGCntsDTO) throws Exception;
@@ -61,11 +66,5 @@ public interface COGCntsMapper {
 	 * CMS를 삭제한다.
 	 */
 	public int deleteCnts(COGCntsDTO pCOGCntsDTO) throws Exception;
-
-
-
-	// CMS 시퀀스 값을 상승시킨다.
-	public int updateCntsSeq(String tableNm) throws Exception;
-
 
 }

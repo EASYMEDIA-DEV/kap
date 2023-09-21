@@ -43,9 +43,7 @@ public class COGCntsServiceImpl implements COGCntsService {
 	/**
 	 * CMS 목록을 조회한다.
 	 */
-	public COGCntsDTO selectCntsList(COGCntsDTO pCOGCntsDTO) throws Exception
-	{
-
+	public COGCntsDTO selectCntsList(COGCntsDTO pCOGCntsDTO) throws Exception {
 		COPaginationUtil page = new COPaginationUtil();
 
 		page.setCurrentPageNo(pCOGCntsDTO.getPageIndex());
@@ -81,7 +79,6 @@ public class COGCntsServiceImpl implements COGCntsService {
 		String detailsKey = cOGCntsMapper.selectSeqNum(pCOGCntsDTO.getTableNm());
 		cOGCntsMapper.updateCntsSeq(tableNm);
 		pCOGCntsDTO.setDetailsKey(detailsKey);
-		cOGCntsMapper.updateUseCnts(pCOGCntsDTO);
 
 		return cOGCntsMapper.insertCnts(pCOGCntsDTO);
 	}
