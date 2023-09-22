@@ -63,17 +63,10 @@ define(["ezCtrl"], function(ezCtrl) {
                         console.log("TEST");
                         var btn = $(this),
                             td = btn.parents("td"),
-                            key = td.data("key"),
+                            key = td.data("detailsKey"),
                             sort = td.data("value"),
                             index = btn.parent().index(),
                             sortType = btn.attr('name') === 'sortUp' ? 'UP' : 'DOWN';
-
-                        console.log("td:" + td + "," +
-                            "key:" + key + "," +
-                            "sort:" + sort + "," +
-                            "index:" + index + "," +
-                            "sortType:" + sortType
-                        )
 
                         if(sortType != null) {
 
@@ -103,50 +96,11 @@ define(["ezCtrl"], function(ezCtrl) {
                                 dataType: "json",
                                 data: ajaxData,
                                 success: function(r) {
-                                    alert('노출 순서가 변경되었습니다!');
+                                    alert('노출 순서가 변경되었습니다.');
 
                                     cmmCtrl.setFormData($formObj);
-                                    search(1);
-                                    /*console.log("rewRow값:::" + JSON.stringify(r.newRow));
-
-                                    console.log(r.rtnData.list[0]);
-
-                                    var trLength = sortType == 'DOWN' ? btn.parents("tr").prev().length : btn.parents("tr").next().length,
-                                        insertNewTr = trLength == 0 ? true : false;
-
-                                    alert("insertNewTr::::::::::::" + insertNewTr);
-                                    if(insertNewTr) {
-                                        var tr = btn.parents("tr"),
-                                            newTr = r.newRow;
-
-                                        var trHTML = "<tr><td class='text-center'><label class='checkbox-inline c-checkbox'>";
-                                        trHTML += "<input type='checkbox' value='" + newTr.seq + "'class='checkbox_single notRequired' />";
-                                        trHTML += "<span class='ion-checkmark-round'></span></label></td>";
-                                        trHTML += "<td class='text-center'>" + tr.children()[1].textContent + "</td>";
-
-                                        newTr.titlStr = newTr.titl;
-                                        if(newTr.titl.length > 35) {
-                                            newTr.titlStr = newTr.titl.substring(0, 35) + '...';
-                                        }
-
-                                        //var aStr = "commonCtrl.setViewPage(\"detailsKey\", \"" + newTr.popSeq+"\",\"./write\")";
-                                        trHTML+= "<td><a href='javascript: onclick='./write'>" + newTr.titlStr + "</a></td>";
-                                        trHTML+= "<td>"+(newTr.useYn=='Y'?'노출':'미노출')+"</td>"; trHTML+="<td>"+ (newTr.odtmYn == 'Y' ? '항시노출' : (newTr.strtDtm).substr(0,16)+"~"+(newTr.endDtm).substr(0,16)) + "</td>";
-                                        trHTML+= "<td>"+(newTr.regDtm).substr(0,16)+"</td>";
-                                        trHTML+= "<td data-key'" + newTr.seq +"' data-value='" + sort +"'>";
-                                        trHTML+= "<button type='button' class='btn btn-default btn-xs sortUp' name='sortUp'><i class='ion-arrow-up-b'></i></button>";
-                                        trHTML+= "<button type='button' class='btn btn-default btn-xs ml-sm sortDown' name='sortDown'><i class='ion-arrow-down-b'></i></button></td></tr>";
-                                        alert(trHTML);
-                                        tr.after(trHtml);
-                                        //tr.next().find('#sortUp').bind('click', ctrl.sort);
-                                        //tr.next().find('#sortDown').bind('click', ctrl.sort);
-
-                                        tr.remove();
-
-                                    } else {
-
-                                    }*/
-                                }
+                                    search($("pageIndex").val());
+                                 }
                             })
                         }
                     }
@@ -157,8 +111,7 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         var frmDataObj    = $(this).closest("form");
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-                        alert('미노출 처리할 행 개수:::::' + delActCnt);
-                        if(confirm("미노출 처리하겠습니끼?"))
+                        if(confirm("미노출 처리하겠습니까?"))
                         {
                             //삭제 전송
                             cmmCtrl.frmAjax(function(respObj){
@@ -178,22 +131,13 @@ define(["ezCtrl"], function(ezCtrl) {
             }
         },
         classname : {
-            pageSet : {
-                event : {
-                    click : function() {
-                        if( $(this).attr("value") != "null" ){
-                            search($(this).attr("value"));
-                        }
-                    }
-                }
-            },
             //상세보기
             listView : {
                 event : {
                     click : function() {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
-                        $formObj.find("input[name=detailsKey]").val(detailsKey);
+                        $formObj.find("input[name=seq]").val(detailsKey);
                         location.href = "./write?" + $formObj.serialize();
                     }
                 }

@@ -15,8 +15,8 @@
              , DATE_FORMAT(STRT_DTM, '%Y-%m-%d %H:%i:%s') AS STRT_DTM
              , DATE_FORMAT(END_DTM, '%Y-%m-%d %H:%i:%s') AS END_DTM
              , ODTM_YN
-             , PC_IMG_FILE_ID
-             , MBL_IMG_FILE_ID
+             , FILE_SEQ
+             , IMG_FILE_ID
              , LINK_URL
              , NEW_WNDW_YN
              , USE_YN
@@ -28,7 +28,6 @@
              , MOD_DTM
              , CNTS
              , ORD
-             , MBL_CNTN
              , TYPE_CD
         FROM sm_popup_mst
         <include refid="selectPopListwhereSql" />
@@ -51,12 +50,12 @@
     <select id="selectMnPopDtl" parameterType="SMCPopDTO">
         SELECT /* SMCPopMapper.selectMnPopDtl */
             SEQ
+             , DVC_CD
              , TITL
              , DATE_FORMAT(STRT_DTM, '%Y-%m-%d %H:%i:%s') AS STRT_DTM
              , DATE_FORMAT(END_DTM, '%Y-%m-%d %H:%i:%s') AS END_DTM
              , ODTM_YN
-             , PC_IMG_FILE_ID
-             , MBL_IMG_FILE_ID
+             , IMG_FILE_ID
              , LINK_URL
              , NEW_WNDW_YN
              , USE_YN
@@ -67,13 +66,13 @@
              , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
              , MOD_DTM
              , CNTS
-             , MBL_CNTN
              , TYPE_CD
+             , FILE_SEQ
         FROM
             SM_POPUP_MST A
         WHERE 1=1
-          AND SEQ = #{seq}
-          AND DVC_CD = #{dvcCd}
+            AND SEQ = #{seq}
+            AND DVC_CD = #{dvcCd}
     </select>
 
     <!--
@@ -108,6 +107,7 @@
                 <if test="sortType == 'DOWN'">
                     AND ORD <![CDATA[<]]> #{ord}
                 </if>
+                    AND DVC_CD = #{dvcCd}
             )
             AND DVC_CD = #{dvcCd}
     </select>
@@ -131,10 +131,9 @@
         , STRT_DTM
         , END_DTM
         , TITL
-        , PC_IMG_FILE_ID
-        , MBL_IMG_FILE_ID
+        , FILE_SEQ
+        , IMG_FILE_ID
         , CNTS
-        , MBL_CNTN
         , LINK_URL
         , NEW_WNDW_YN
         , ODTM_YN
@@ -160,20 +159,9 @@
             </otherwise>
         </choose>
         , #{titl}
-        <choose>
-            <when test="dvcCd eq 'pc'.toString()">
-                , #{pcImgFileId}
-                , NULL
-                , #{cnts}
-                , NULL
-            </when>
-            <when test="dvcCd eq 'mobile'.toString()">
-                , NULL
-                , #{mblImgFileId}
-                , NULL
-                , #{mblCntn}
-            </when>
-        </choose>
+        , #{fileSeq}
+        , #{imgFileId}
+        , #{cnts}
         , #{linkUrl}
         , #{newWndwYn}
         , #{odtmYn}
@@ -231,29 +219,18 @@
             </when>
             <otherwise>
                 , STRT_DTM = STR_TO_DATE(#{strtDtm}, '%Y-%m-%d %H:%i:%s')
-                , END_DTM = STR_TO_DATE(#{strtDtm}, '%Y-%m-%d %H:%i:%s')
+                , END_DTM = STR_TO_DATE(#{endDtm}, '%Y-%m-%d %H:%i:%s')
             </otherwise>
         </choose>
         , ODTM_YN = #{odtmYn}
-        <choose>
-            <when test="dvcCd eq 'pc'.toString()">
-                , PC_IMG_FILE_ID = #{pcImgFileId}
-                , MBL_IMG_FILE_ID = NULL
-                , CNTS = #{cnts}
-                , MBL_CNTN = NULL
-            </when>
-            <when test="dvcCd eq 'mobile'.toString()">
-                , PC_IMG_FILE_ID = NULL
-                , MBL_IMG_FILE_ID = #{mblImgFileId}
-                , CNTN = NULL
-                , MBL_CNTN = #{mblCntn}
-            </when>
-        </choose>
+        , FILE_SEQ = #{fileSeq}
+        , IMG_FILE_ID = #{imgFileId}
+        , CNTS = #{cnts}
         , LINK_URL = #{linkUrl}
         , NEW_WNDW_YN = #{newWndwYn}
         , USE_YN = #{useYn}
-        , MOD_ID = #{regId}
-        , MOD_IP = #{regIp}
+        , MOD_ID = #{modId}
+        , MOD_IP = #{modIp}
         , MOD_DTM = NOW()
         , TYPE_CD = #{typeCd}
         WHERE 1=1

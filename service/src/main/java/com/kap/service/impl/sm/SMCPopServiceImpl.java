@@ -2,12 +2,15 @@ package com.kap.service.impl.sm;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.SMCPopDTO;
+import com.kap.service.COFileService;
 import com.kap.service.SMCPopService;
 import com.kap.service.dao.sm.SMCPopMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
 
 /**
  * <pre>
@@ -24,16 +27,19 @@ import org.springframework.transaction.annotation.Transactional;
  * <pre>
  * 		since			author				  description
  *    ==========    ==============    =============================
- *    2023.09.07		구은희				   최초 생성
+ *    2023.09.21		구은희				   최초 생성
  * </pre>
  */
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class SMCPopServiceImpl implements SMCPopService {
 
-    //Mapper
-    private final SMCPopMapper popMapper;
+    // DAO
+    private final SMCPopMapper smcPopMapper;
+    //파일 서비스
+    private final COFileService cOFileService;
 
     /**
      * 팝업 목록을 조회한다.
@@ -50,9 +56,9 @@ public class SMCPopServiceImpl implements SMCPopService {
         smcPopDTO.setFirstIndex( page.getFirstRecordIndex() );
         smcPopDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
 
-        smcPopDTO.setList( popMapper.selectMnPopList(smcPopDTO) );
-        smcPopDTO.setTotalCount( popMapper.selectUseMnPopCnt(smcPopDTO) );
-        smcPopDTO.setList(popMapper.selectMnPopList(smcPopDTO));
+        smcPopDTO.setList( smcPopMapper.selectMnPopList(smcPopDTO) );
+        smcPopDTO.setTotalCount( smcPopMapper.selectUseMnPopCnt(smcPopDTO) );
+        smcPopDTO.setList(smcPopMapper.selectMnPopList(smcPopDTO));
         return smcPopDTO;
     }
 
@@ -61,7 +67,7 @@ public class SMCPopServiceImpl implements SMCPopService {
      */
     @Override
     public SMCPopDTO selectMnPopDtl(SMCPopDTO smcPopDTO) throws Exception {
-        return popMapper.selectMnPopDtl(smcPopDTO);
+        return smcPopMapper.selectMnPopDtl(smcPopDTO);
     }
 
     /**
@@ -69,7 +75,12 @@ public class SMCPopServiceImpl implements SMCPopService {
      */
     @Override
     public int updateMnPop(SMCPopDTO smcPopDTO) throws Exception {
-        return popMapper.updateMnPop(smcPopDTO);
+        //파일 처리
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(smcPopDTO.getFileList());
+        //파일 처리
+        smcPopDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+
+        return smcPopMapper.updateMnPop(smcPopDTO);
     }
 
     /**
@@ -77,7 +88,7 @@ public class SMCPopServiceImpl implements SMCPopService {
      */
     @Override
     public int updateUseYn(SMCPopDTO smcPopDTO) throws Exception {
-        return popMapper.updateUseYn(smcPopDTO);
+        return smcPopMapper.updateUseYn(smcPopDTO);
     }
 
     /**
@@ -85,19 +96,20 @@ public class SMCPopServiceImpl implements SMCPopService {
      */
     @Override
     public void updateOrder(SMCPopDTO smcPopDTO) throws Exception {
-        SMCPopDTO newRow = popMapper.selectPopNewRow(smcPopDTO); //선택한 행 밑에 값들
+        SMCPopDTO newRow = smcPopMapper.selectPopNewRow(smcPopDTO);
+
         if(newRow != null){
 
             int newRowOrd = newRow.getOrd();
             int orginOrd = smcPopDTO.getOrd();
 
             smcPopDTO.setOrd(newRowOrd);
-            popMapper.updateOrder(smcPopDTO);
+            smcPopMapper.updateOrder(smcPopDTO);
 
             newRow.setModIp(smcPopDTO.getModIp());
             newRow.setModId(smcPopDTO.getModId());
             newRow.setOrd(orginOrd);
-            popMapper.updateOrder(newRow);
+            smcPopMapper.updateOrder(newRow);
         }
     }
 
@@ -106,14 +118,17 @@ public class SMCPopServiceImpl implements SMCPopService {
      */
     @Override
     public int selectUseMnPopCnt(SMCPopDTO smcPopDTO) throws Exception {
-        return popMapper.selectUseMnPopCnt(smcPopDTO);
+        return smcPopMapper.selectUseMnPopCnt(smcPopDTO);
     }
 
     /**
      * 팝업을 등록한다.
      */
     public int insertMnPop(SMCPopDTO smcPopDTO) throws Exception {
-        return popMapper.insertMnPop(smcPopDTO);
+        //파일 처리
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(smcPopDTO.getFileList());
+        smcPopDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+        return smcPopMapper.insertMnPop(smcPopDTO);
     }
 
     /**
@@ -121,14 +136,14 @@ public class SMCPopServiceImpl implements SMCPopService {
      */
     @Transactional
     public int deleteMnPop(SMCPopDTO smcPopDTO) throws Exception {
-        return popMapper.deleteMnPop(smcPopDTO);
+        return smcPopMapper.deleteMnPop(smcPopDTO);
     }
 
     /**
      * 정렬할 팝업을 조회한다.
      */
     public SMCPopDTO selectPopNewRow(SMCPopDTO smcPopDTO) throws Exception {
-        return popMapper.selectPopNewRow(smcPopDTO);
+        return smcPopMapper.selectPopNewRow(smcPopDTO);
     }
 
 }

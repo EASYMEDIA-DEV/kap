@@ -71,40 +71,80 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none"</c:if>>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">PC 이미지<span class="star"> *</span></label>
-                    <div class="col-sm-11">
-                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
-                            <div class="dz-default dz-message">
-                                <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
+            <c:choose>
+                <c:when test="${rtnDto.dvcCd eq 'pc'}">
+                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none"</c:if>>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">PC 이미지<span class="star"> *</span></label>
+                            <div class="col-sm-11">
+                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                                    <div class="dz-default dz-message">
+                                        <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
+                                    </div>
+                                </div>
+                                <p class="text-bold mt">
+                                    ※ 1920 X 1080, ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
+                                </p>
                             </div>
                         </div>
-                        <p class="text-bold mt">
-                            ※ 1920 X 1080, ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
-                        </p>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset id="htmlArea" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:none"</c:if>>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">PC HTML<span class="star"> *</span></label>
-                    <div class="col-sm-11">
-                        <textarea class="form-control notRequired ckeditorRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnDto.cnts}</textarea>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset class="linkUrlContainer" style="display:${ not empty rtnDto and rtnDto.typeCd eq 'html' ? 'none;' : ''}">
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">링크 URL</label>
-                    <div class="col-sm-9">
-                        <input type="text" class="form-control input-sm notRequired" id="linkUrl" name="linkUrl" value="${rtnDto.linkUrl}" maxlength="1000" title="링크 URL" placeholder="링크 URL 입력하세요." />
-                    </div>
+                    </fieldset>
+                    <fieldset id="htmlArea" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:none"</c:if>>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">PC HTML<span class="star"> *</span></label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control notRequired ckeditorRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnDto.cnts}</textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="linkUrlContainer" style="display:${ not empty rtnDto and rtnDto.typeCd eq 'html' ? 'none;' : ''}">
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">링크 URL</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control input-sm notRequired" id="linkUrl" name="linkUrl" value="${rtnDto.linkUrl}" maxlength="1000" title="링크 URL" placeholder="링크 URL 입력하세요." />
+                            </div>
+                        </div>
+                    </fieldset>
+                </c:when>
+                <c:when test="${rtnDto.dvcCd eq 'mobile' or rtnInfo.dvcCd eq null}">
+                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none"</c:if>>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">모바일 이미지<span class="star"> *</span></label>
+                            <div class="col-sm-11">
+                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                                    <div class="dz-default dz-message">
+                                        <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
+                                    </div>
+                                </div>
+                                <p class="text-bold mt">
+                                    ※ 1920 X 1080, ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset id="htmlArea" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:none"</c:if>>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">모바일 HTML<span class="star"> *</span></label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control notRequired ckeditorRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnDto.cnts}</textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="linkUrlContainer" style="display:${ not empty rtnDto and rtnDto.typeCd eq 'html' ? 'none;' : ''}">
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">링크 URL</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control input-sm notRequired" id="linkUrl" name="linkUrl" value="${rtnDto.linkUrl}" maxlength="1000" title="링크 URL" placeholder="링크 URL 입력하세요." />
+                            </div>
 
-                </div>
-            </fieldset>
+                        </div>
+                    </fieldset>
+                </c:when>
+            </c:choose>
+
             <fieldset class="last-child">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">노출 여부</label>

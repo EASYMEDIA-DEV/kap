@@ -88,7 +88,7 @@ public class SMCMnPopController {
     }
 
     /**
-     * 팝업 등록 페이지로 이동한다.
+     * 팝업 상세 페이지로 이동한다.
      */
     @RequestMapping(value="/write")
     public String getPopWritePage(SMCPopDTO smcPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
@@ -235,7 +235,6 @@ public class SMCMnPopController {
 
         try
         {
-            System.err.println("/sort 컨트롤러로 넘어옴:::::::::::::::::");
             modelMap.addAttribute("rtnData", smPopService.selectMnPopList(smcPopDTO));
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             smcPopDTO.setModId(coaAdmDTO.getId());
@@ -246,7 +245,7 @@ public class SMCMnPopController {
 
         }
         catch (Exception e)
-        {System.err.println("e 메시지::" + e);
+        {
             if (log.isErrorEnabled())
             {
                 log.debug(e.getMessage());

@@ -9,10 +9,10 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- *  메인팝업 관리
+ *  메인 팝업 관리
  *
- * @author 신지혁
- * @since 2022.04.08
+ * @author 구은희
+ * @since 2023.09.21
  * @version 1.0
  * @see
  *
@@ -21,7 +21,7 @@ import java.util.List;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2022.04.08  신지혁         최초 생성
+ *   2023.09.21  구은희         최초 생성
  * </pre>
  */
 @Getter
@@ -29,6 +29,7 @@ import java.util.List;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
 public class SMCPopDTO extends BaseDTO {
+
     // 팝업 순번
     private Integer seq;
     // pc/mobile 구분값
@@ -44,10 +45,10 @@ public class SMCPopDTO extends BaseDTO {
     private String srchCntn;
     // 타입코드
     private String typeCd;
-    // pc이미지 파일 id
-    private String PcImgFileId;
-    // 모바일파일 순번
-    private String MblImgFileId;
+    // 첨부파일 id
+    private String atchFileId;
+    // 이미지 파일 id
+    private String imgFileId;
     // 링크
     private String linkUrl;
     // 상시여부
@@ -70,8 +71,9 @@ public class SMCPopDTO extends BaseDTO {
     private String modId;
     // 수정일자
     private String modDtm;
-    // 모바일 cntn
-    private String mblCntn;
+
+    //파일 순번
+    private Integer fileSeq;
 
     // 조회
     private List<SMCPopDTO> list;

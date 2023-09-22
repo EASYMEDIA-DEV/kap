@@ -14,6 +14,7 @@
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
             <input type="hidden" id="gubun" name="gubun" value="pc" />
+            <input type="hidden" id="seq" name="seq" value="" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="최종접속일" />
@@ -115,8 +116,8 @@
                                 <span class="ion-checkmark-round"></span>
                             </label>
                         </th>
-                        <th class="text-center">번호</th>
-                        <%--<th class="text-center">구분</th>--%>
+                        <th class="text-center">선택</th>
+                        <th class="text-center">구분</th>
                         <th class="text-center">제목</th>
                         <th class="text-center">게시 기간</th>
                         <th class="text-center">최초 등록자</th>
