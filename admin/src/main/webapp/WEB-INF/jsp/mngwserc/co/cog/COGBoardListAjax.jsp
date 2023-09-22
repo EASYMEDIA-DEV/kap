@@ -10,9 +10,7 @@
                     </label>
                 </td>
                 <td>${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td><a href="javascript:" class="listView"  data-details-key="${list.seq}"></a></td>
-                <td>${ list.name}</td>
-                <td>${ list.titl}</td>
+                <td><a href="javascript:" class="listView"  data-details-key="${list.seq}">${list.titl}</a></td>
                 <td>${ list.mainYn eq 'Y' ? '노출' : '미노출' }</td>
                 <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
                 <td>${ list.regName }(${ list.regId })</td>

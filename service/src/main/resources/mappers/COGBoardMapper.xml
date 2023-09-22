@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.COGBoardMapper">
+    <!--
+     쿼리명 : COGBoardMapper.selectBoardList
+     설  명 : 게시판 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.09.18  임서화     최초 생성
+    -->
+    <select id="selectBoardList" parameterType="COGBoardDTO" resultType="COGBoardDTO">
+        SELECT /* COGBoardMapper.selectBoardList */
+            SEQ
+            , LANG_CD
+            , TITL
+            , CNTS
+            , TYPE_CD
+            , YEAR
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'BOARD_TYPE_CD' AND CD = A.TYPE_CD) AS TYPE_NM
+            , FILE_SEQ
+            , READ_CNT
+            , POST_STRT_DTM
+            , POST_END_DTM
+            , ODTM_YN
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
+            , MOD_IP
+            , MOD_DTM
+            , MAIN_YN
+        FROM
+         CO_BOARD_MST A
+        WHERE 1=1
+         AND LANG_CD = #{langCd}
+         AND TYPE_CD = #{typeCd}
+            <if test="strtDt != null and strtDt != ''">
+                <choose>
+                    <when test="srchDate == 1">
+                        AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 2">
+                        AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+
+                    </when>
+                </choose>
+            </if>
+            <if test="endDt != null and endDt != ''">
+                <choose>
+                    <when test="srchDate == 1">
+                        AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+
+                    </when>
+                    <when test="srchDate == 2">
+                        AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                    </when>
+                </choose>
+            </if>
+            <if test="mainYnList != null and mainYnList.size() > 0">
+                AND (
+                <foreach collection="mainYnList" item="mainYn" index="index" open="" close="" separator=" OR ">
+                    MAIN_YN = #{mainYn}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 0">
+                        AND TITL LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 1">
+                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID), '(', REG_ID,')') LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID), '(', MOD_ID,')') LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 3">
+                        AND YEAR LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <otherwise>
+                        AND (
+                        (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) LIKE CONCAT('%', #{q}, '%')
+                        OR TITL LIKE CONCAT('%', #{q}, '%')
+                        OR CNTS LIKE CONCAT('%', #{q}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+            ORDER BY
+             REG_DTM DESC
+    </select>
+
+    <!--
+    쿼리명 : COGBoardMapper.getBoardListCnt
+    설  명 : 게시물 목록을 갯수를 카운팅한다.
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.09.08    임서화       최초생성
+    -->
+    <select id="getBoardListTotCnt" parameterType="COGBoardDTO" resultType="java.lang.Integer">
+        SELECT /* COGCntsMapper.getBoardListCnt */
+            count(*)
+        FROM
+            CO_BOARD_MST
+        WHERE
+            TYPE_CD = #{typeCd}
+    </select>
+
+    <select id="selectBoardDtl" parameterType="COGBoardDTO" resultType="COGBoardDTO">
+        SELECT /* COGBoardMapper.selectBoardDtl */
+            SEQ
+             , LANG_CD
+             , TITL
+             , CNTS
+             , TYPE_CD
+             , YEAR
+             , FILE_SEQ
+             , READ_CNT
+             , POST_STRT_DTM
+             , POST_END_DTM
+             , ODTM_YN
+             , REG_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+             , REG_IP
+             , REG_DTM
+             , MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
+             , MOD_IP
+             , MOD_DTM
+             , THUMB_FILE_ID
+             , MAIN_YN
+        FROM
+            CO_BOARD_MST A
+        WHERE
+            SEQ = #{detailsKey}
+    </select>
+
+    <!--
+		 쿼리명 : COGBoardMapper.selectSeqNum
+		 설  명 : 테이블의 SEQ 값을 조회한다.
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.08   임서화     최초생성
+	-->
+    <select id="selectSeqNum" parameterType="COGBoardDTO" resultType="java.lang.String">
+        SELECT /* COSeqMapper.selectSeqNum */
+            NEXT_ID
+        FROM CO_SEQ_MST
+        WHERE TABLE_NM = #{tableNm}
+    </select>
+
+    <!--
+        쿼리명 : COGBoardMapper.updateBoardSeq
+        설  명 : 테이블의 SEQ 값을 증가시킨다.
+         수정일	 수정자     수정내용
+        ==========   ======   =============
+        2023.09.08   임서화     최초생성
+    -->
+    <update id="updateBoardSeq" parameterType="COGBoardDTO">
+        UPDATE CO_SEQ_MST /*COGCntsMapper.updateBoardSeq*/
+        SET
+            NEXT_ID = (SELECT
+                           *
+                       FROM
+                           (SELECT
+                                NEXT_ID + '1'
+                            FROM
+                                CO_SEQ_MST
+                            WHERE
+                                TABLE_NM = #{tableNm}) tmp)
+        WHERE
+            TABLE_NM = #{tableNm}
+    </update>
+
+    <insert id="insertBoard" parameterType="COGBoardDTO">
+        INSERT /* COGBoardMapper.insertBoard */ INTO CO_BOARD_MST
+            (
+            SEQ
+            , LANG_CD
+            , TITL
+            , CNTS
+            , TYPE_CD
+            , YEAR
+            , FILE_SEQ
+            , READ_CNT
+            , POST_STRT_DTM
+            , POST_END_DTM
+            , ODTM_YN
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , MOD_IP
+            , MOD_DTM
+            , MAIN_YN
+            )
+            VALUES
+            (
+            #{detailsKey}
+            , #{langCd}
+            , #{titl}
+            , #{cnts}
+            , #{typeCd}
+            , #{year}
+            , #{fileSeq}
+            , 0
+            , #{postStrtDtm}
+            , #{postEndDtm}
+            , #{odtmYn}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            , #{modId}
+            , #{modIp}
+            , NOW()
+            , #{mainYn}
+            )
+    </insert>
+    <!--
+    쿼리명 : COGBoardMapper.updateBoard
+    설  명 : 게시판 내용을 수정한다.
+     수정일	 수정자     수정내용
+    ==========   ======   =============
+    2023.09.08   임서화     최초생성
+	-->
+    <update id="updateBoard" parameterType="COGBoardDTO">
+        UPDATE  /*COGBoardDTO.updateBoard*/
+            CO_BOARD_MST
+        SET
+            TITL = #{titl}
+            , CNTS = #{cnts}
+            , FILE_SEQ = #{fileSeq}
+            , POST_STRT_DTM = #{postStrtDtm}
+            , POST_END_DTM = #{postEndDtm}
+            , ODTM_YN = #{odtmYn}
+            , MOD_ID = #{modId}
+            , MOD_IP = #{modIp}
+            , MOD_DTM = NOW()
+            , MAIN_YN = #{mainYn}
+        WHERE
+            SEQ = #{detailsKey}
+        AND TYPE_CD = #{typeCd}
+    </update>
+    <!--
+         쿼리명 : COGBoardMapper.deleteBoard
+         설  명 : 게시물을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.08   임서화       최초생성
+        -->
+    <delete id="deleteBoard" parameterType="COGBoardDTO">
+        DELETE /* COGBoardDTO.deleteBoard */
+        FROM
+        CO_BOARD_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    TYPE_CD = #{typeCd}
+                    AND SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    TYPE_CD = #{typeCd}
+                    AND	SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+</mapper>
+
+
