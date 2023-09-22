@@ -13,12 +13,12 @@
         , CONVERT(CHAR(16), END_DTM, 120) AS END_DTM
         , ODTM_YN
         <choose>
-            <when test="gubun eq 'pc'.toString()">
+            <when test="dvcCd eq 'pc'.toString()">
                 , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
                 WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
                 ELSE NULL END) AS GB
             </when>
-            <when test="gubun eq 'mobile'.toString()">
+            <when test="dvcCd eq 'mobile'.toString()">
                 , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
                 WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
                 ELSE NULL END) AS GB
@@ -37,7 +37,7 @@
         SM_MAIN_VSL_MST A
         <where>
             AND LANG_CD = #{langCd}
-            AND DVC_CD = #{gubun}
+            AND DVC_CD = #{dvcCd}
             <if test="strtDt != null and strtDt != ''">
                 <choose>
                     <when test="srchDate == 1">
@@ -67,7 +67,7 @@
             <if test="gbArr.size() > 0">
                 <foreach collection="gbArr" item="gb" index="index" open="and (" close=")" separator=" OR ">
                     <choose>
-                        <when test="gubun eq 'pc'.toString()">
+                        <when test="dvcCd eq 'pc'.toString()">
                             <choose>
                                 <when test="gb eq 'image'.toString()">
                                     EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0)
@@ -77,7 +77,7 @@
                                 </when>
                             </choose>
                         </when>
-                        <when test="gubun eq 'mobile'.toString()">
+                        <when test="dvcCd eq 'mobile'.toString()">
                             <choose>
                                 <when test="gb eq 'image'.toString()">
                                     EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0)
@@ -171,7 +171,7 @@
             SM_MAIN_VSL_MST A
         WHERE 1=1
           AND SEQ = #{detailsKey}
-          AND DVC_CD = #{gubun}
+          AND DVC_CD = #{dvcCd}
     </select>
 
     <!--
@@ -207,7 +207,7 @@
         VALUES
         ( #{detailsKey}
         , #{langCd}
-        , #{gubun}
+        , #{dvcCd}
         , #{titl}
         <choose>
             <when test="odtmYn == 'Y'.toString()">
@@ -222,11 +222,11 @@
         , #{odtmYn}
         , #{positionOrd}
         <choose>
-            <when test="gubun eq 'pc'.toString()">
+            <when test="dvcCd eq 'pc'.toString()">
                 , #{pcAtchFileId}
                 , NULL
             </when>
-            <when test="gubun eq 'mobile'.toString()">
+            <when test="dvcCd eq 'mobile'.toString()">
                 , NULL
                 , #{mblImgFileId}
             </when>
@@ -265,11 +265,11 @@
         , ODTM_YN = #{odtmYn}
         , POSITION_ORD = #{positionOrd}
         <choose>
-            <when test="gubun eq 'pc'.toString()">
+            <when test="dvcCd eq 'pc'.toString()">
                 , PC_ATCH_FILE_ID = #{pcAtchFileId}
                 , MBL_IMG_FILE_ID = NULL
             </when>
-            <when test="gubun eq 'mobile'.toString()">
+            <when test="dvcCd eq 'mobile'.toString()">
                 , PC_ATCH_FILE_ID = NULL
                 , MBL_IMG_FILE_ID = #{mblImgFileId}
             </when>
@@ -286,7 +286,7 @@
         , MOD_DTM = GETDATE()
         WHERE 1=1
         AND SEQ = #{detailsKey}
-        AND DVC_CD = #{gubun}
+        AND DVC_CD = #{dvcCd}
     </update>
 
     <!--
@@ -308,7 +308,7 @@
                     SEQ = #{detailsKey}
                 </otherwise>
             </choose>
-            AND DVC_CD = #{gubun}
+            AND DVC_CD = #{dvcCd}
         </where>
     </delete>
 
@@ -335,7 +335,7 @@
                 </otherwise>
             </choose>
         </where>
-        AND DVC_CD = #{gubun}
+        AND DVC_CD = #{dvcCd}
     </update>
 
     <!--
@@ -350,7 +350,7 @@
           , MOD_DTM = GETDATE()
         WHERE 1=1
           AND SEQ = #{detailsKey}
-          AND DVC_CD = #{gubun}
+          AND DVC_CD = #{dvcCd}
     </update>
 
     <!--
@@ -362,7 +362,7 @@
         FROM SM_MAIN_VSL_MST
         WHERE 1=1
         AND LANG_CD = #{langCd}
-        AND DVC_CD = #{gubun}
+        AND DVC_CD = #{dvcCd}
         AND USE_YN = 'Y'
         AND POSITION_ORD = #{positionOrd}
         <if test="detailsKey != null and detailsKey != '' ">
@@ -377,24 +377,24 @@
         SELECT /* SMBMnVslMapper.selectNowMnVsl */ TOP(1)
         POSITION_ORD
         <choose>
-            <when test="gubun eq 'pc'.toString()">
+            <when test="dvcCd eq 'pc'.toString()">
                 , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
                 WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
                 ELSE NULL END) AS BEFORE_GB
             </when>
-            <when test="gubun eq 'mobile'.toString()">
+            <when test="dvcCd eq 'mobile'.toString()">
                 , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
                 WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
                 ELSE NULL END) AS BEFORE_GB
             </when>
         </choose>
         <choose>
-            <when test="gubun eq 'pc'.toString()">
+            <when test="dvcCd eq 'pc'.toString()">
                 , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = #{pcAtchFileId} AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
                 WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = #{pcAtchFileId} AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
                 ELSE NULL END) AS NOW_GB
             </when>
-            <when test="gubun eq 'mobile'.toString()">
+            <when test="dvcCd eq 'mobile'.toString()">
                 , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = #{mblImgFileId} AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
                 WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = #{mblImgFileId} AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
                 ELSE NULL END) AS NOW_GB
@@ -403,7 +403,7 @@
         FROM SM_MAIN_VSL_MST A
         WHERE 1=1
         AND LANG_CD = #{langCd}
-        AND DVC_CD = #{gubun}
+        AND DVC_CD = #{dvcCd}
         AND USE_YN = 'Y'
         AND POSITION_ORD = #{positionOrd}
         ORDER BY MOD_DTM DESC
