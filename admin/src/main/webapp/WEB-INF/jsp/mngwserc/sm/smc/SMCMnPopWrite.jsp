@@ -15,7 +15,8 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.seq}" />
-
+            <!-- 첨부파일 순번 -->
+            <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDto.fileSeq}" />
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">게시기간(일시)</label>
@@ -38,7 +39,7 @@
                                     </button>
                                 </span>
                             </div>
-                            <div class="form-group" style="padding-bottom:7px">
+                            <div class="form-group" style="padding-bottom:7px;">
                                 <label class="checkbox-inline c-checkbox">
                                     <input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="Y" title="상시여부" <c:if test="${rtnDto.odtmYn eq 'Y'}">checked</c:if> />
                                     <span class="ion-checkmark-round"></span> 상시여부
@@ -72,14 +73,14 @@
                 </div>
             </fieldset>
             <c:choose>
-                <c:when test="${rtnDto.dvcCd eq 'pc'}">
-                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none"</c:if>>
+                <c:when test="${rtnDto.dvcCd eq 'pc' or rtnInfo.dvcCd eq null}">
+                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:block;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">PC 이미지<span class="star"> *</span></label>
-                            <div class="col-sm-11">
+                            <div class="col-sm-10 col-md-11">
                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                                <div class="dropzone" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
                                     </div>
@@ -90,15 +91,15 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset id="htmlArea" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:none"</c:if>>
+                    <fieldset id="htmlArea" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:none;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">PC HTML<span class="star"> *</span></label>
                             <div class="col-sm-11">
-                                <textarea class="form-control notRequired ckeditorRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnDto.cnts}</textarea>
+                                <textarea class="form-control notRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnDto.cnts}</textarea>
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="linkUrlContainer" style="display:${ not empty rtnDto and rtnDto.typeCd eq 'html' ? 'none;' : ''}">
+                    <fieldset class="linkUrlContainer" style="display:${ not empty rtnDto and rtnDto.typeCd eq 'html' ? 'none;' : 'block;'}">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">링크 URL</label>
                             <div class="col-sm-9">
@@ -108,7 +109,7 @@
                     </fieldset>
                 </c:when>
                 <c:when test="${rtnDto.dvcCd eq 'mobile' or rtnInfo.dvcCd eq null}">
-                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none"</c:if>>
+                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">모바일 이미지<span class="star"> *</span></label>
                             <div class="col-sm-11">
@@ -125,7 +126,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset id="htmlArea" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:none"</c:if>>
+                    <fieldset id="htmlArea" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:none;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">모바일 HTML<span class="star"> *</span></label>
                             <div class="col-sm-11">
@@ -133,7 +134,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="linkUrlContainer" style="display:${ not empty rtnDto and rtnDto.typeCd eq 'html' ? 'none;' : ''}">
+                    <fieldset class="linkUrlContainer" style="display:${ not empty rtnDto and rtnDto.typeCd eq 'html' ? 'none;' : 'block;'}">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">링크 URL</label>
                             <div class="col-sm-9">

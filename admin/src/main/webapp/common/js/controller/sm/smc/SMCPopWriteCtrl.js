@@ -189,14 +189,28 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 ,
                 async : {
                     use : true,
-                    func : function(){
-                        if (!$formObj.find("input[name='detailsKey']").val())
+                    func : function (){
+                        var actionUrl = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update" );
+                        var actionMsg = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
+                        if($formObj.find(".dropzone.dz-started").size() > 0)
                         {
-                            cmmCtrl.frmAjax(callbackAjaxInsert, "./insert", $formObj);
+                            cmmCtrl.fileFrmAjax(function(data){
+                                //콜백함수. 페이지 이동
+                                if(data.respCnt > 0){
+                                    alert(actionMsg);
+                                    location.replace("./list");
+                                }
+                            }, actionUrl, $formObj, "json");
                         }
                         else
                         {
-                            cmmCtrl.frmAjax(callbackAjaxUpdate, "./update", $formObj);
+                            cmmCtrl.frmAjax(function(data){
+                                if(data.respCnt > 0){
+                                    alert(actionMsg);
+                                    location.replace("./list");
+                                }
+                                actionUrl = "./list";
+                            }, actionUrl, $formObj, "post", "json")
                         }
                     }
                 }

@@ -131,6 +131,15 @@ define(["ezCtrl"], function(ezCtrl) {
             }
         },
         classname : {
+            pageSet : {
+                event : {
+                    click : function() {
+                        if( $(this).attr("value") != "null" ){
+                            search($(this).attr("value"));
+                        }
+                    }
+                }
+            },
             //상세보기
             listView : {
                 event : {

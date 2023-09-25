@@ -119,8 +119,8 @@ public class SMCMnPopController {
         try
         {
             smcPopDTO.setDvcCd(gubun);
-            int actCnt = smPopService.insertMnPop(smcPopDTO);
-            modelMap.addAttribute("actCnt", actCnt);
+            int respCnt = smPopService.insertMnPop(smcPopDTO);
+            modelMap.addAttribute("respCnt", respCnt);
         }
         catch (Exception e)
         {
@@ -178,7 +178,7 @@ public class SMCMnPopController {
 
             smcPopDTO.setDvcCd(gubun);
             smcPopDTO.setSeq(Integer.valueOf(smcPopDTO.getDetailsKey()));
-            modelMap.addAttribute("actCnt", smPopService.updateMnPop(smcPopDTO));
+            modelMap.addAttribute("respCnt", smPopService.updateMnPop(smcPopDTO));
         }
         catch (Exception e)
         {
