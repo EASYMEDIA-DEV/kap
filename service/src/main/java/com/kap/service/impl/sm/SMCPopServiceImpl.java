@@ -41,6 +41,7 @@ public class SMCPopServiceImpl implements SMCPopService {
     //파일 서비스
     private final COFileService cOFileService;
 
+    String tableNm = "MN_POP_SEQ";
     /**
      * 팝업 목록을 조회한다.
      */
@@ -128,6 +129,12 @@ public class SMCPopServiceImpl implements SMCPopService {
         //파일 처리
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(smcPopDTO.getFileList());
         smcPopDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+
+        smcPopDTO.setTableNm(tableNm);
+        String detailsKey = smcPopMapper.selectSeqNum(smcPopDTO.getTableNm());
+        smcPopDTO.setDetailsKey(detailsKey);
+        smcPopMapper.updatePopSeq(tableNm);
+
         return smcPopMapper.insertMnPop(smcPopDTO);
     }
 

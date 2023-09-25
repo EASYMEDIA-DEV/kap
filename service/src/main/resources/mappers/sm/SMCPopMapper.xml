@@ -38,8 +38,6 @@
         </if>
     </select>
 
-
-
     <!--
          쿼리명 : SMCPopMapper.selectMnPopDtl
          설  명 : 팝업 상세를 조회한다.
@@ -92,24 +90,25 @@
         WHERE
             ORD = (
             SELECT
-                <if test="sortType == 'UP'">
+                <if test='sortType == "UP"'>
                     MIN(ORD)
                 </if>
-                <if test="sortType == 'DOWN'">
+                <if test='sortType == "DOWN"'>
                     MAX(ORD)
                 </if>
 
                 FROM sm_popup_mst
                 WHERE 1=1
-                <if test="sortType == 'UP'">
+                <if test='sortType == "UP"'>
                     AND ORD <![CDATA[>]]> #{ord}
                 </if>
-                <if test="sortType == 'DOWN'">
+                <if test='sortType == "DOWN"'>
                     AND ORD <![CDATA[<]]> #{ord}
                 </if>
                     AND DVC_CD = #{dvcCd}
             )
             AND DVC_CD = #{dvcCd}
+            LIMIT 1
     </select>
 
 
@@ -126,7 +125,8 @@
         </selectKey>
         INSERT /* SMCPopMapper.insertMnPop */ INTO SM_POPUP_MST
         (
-        LANG_CD
+         SEQ
+        , LANG_CD
         , DVC_CD
         , STRT_DTM
         , END_DTM
@@ -146,7 +146,8 @@
         )
         VALUES
         (
-         #{langCd}
+        #{detailsKey}
+        , #{langCd}
         , #{dvcCd}
         <choose>
             <when test="odtmYn == 'Y'.toString()">
@@ -173,6 +174,43 @@
         , #{typeCd}
         )
     </insert>
+
+    <!--
+		 쿼리명 : SMCPopMapper.selectSeqNum
+		 설  명 : 테이블의 SEQ 값을 조회한다.
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.25   구은희     최초생성
+	-->
+    <select id="selectSeqNum" parameterType="SMCPopDTO" resultType="java.lang.String">
+        SELECT /* COSeqMapper.selectSeqNum */
+            NEXT_ID
+        FROM CO_SEQ_MST
+        WHERE TABLE_NM = #{tableNm}
+    </select>
+
+    <!--
+		쿼리명 : SMCPopMapper.updatePopSeq
+		설  명 : 테이블의 SEQ 값을 증가시킨다.
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.25   구은희     최초생성
+	-->
+    <update id="updatePopSeq" parameterType="SMCPopDTO">
+        UPDATE CO_SEQ_MST /*COGCntsMapper.updateCntsSeq*/
+        SET
+            NEXT_ID = (SELECT
+                           *
+                       FROM
+                           (SELECT
+                                NEXT_ID + '1'
+                            FROM
+                                CO_SEQ_MST
+                            WHERE
+                                TABLE_NM = #{tableNm}) tmp)
+        WHERE
+            TABLE_NM = #{tableNm}
+    </update>
 
     <!--
          쿼리명 : SMCPopMapper.deleteMnPop

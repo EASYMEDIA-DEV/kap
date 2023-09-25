@@ -89,6 +89,8 @@ public class SMCPopDTO extends BaseDTO {
     // 노출정렬 UP/DOWN
     private String sortType;
 
+    //테이블 이름
+    private String tableNm;
     // 엑셀 다운로드 여부
     private String excelYn;
 }

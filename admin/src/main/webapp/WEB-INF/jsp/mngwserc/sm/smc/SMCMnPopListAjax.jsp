@@ -23,7 +23,7 @@
                 <td class="text-center" data-mod-id="${list.modId}">${list.modId}</td>
                 <td class="text-center" data-list-dtm="${list.modDtm}">${list.modDtm}</td>
                 <td class="text-center" data-use-yn="${list.useYn}">${ kl:decode(list.useYn, 'Y', '노출', '미노출') }</td>
-                <td class="text-center" data-details-key="${list.seq}" data-value="${list.ord}">
+                <td class="text-center" data-key="${list.seq}" data-value="${list.ord}">
                     <button type="button" class="btn btn-default btn-xs sortUp" name="sortUp" id="btnSort"><i class="ion-arrow-up-b"></i></button>
                     <button type="button" class="btn btn-default btn-xs ml-sm sortDown" name="sortDown" id="btnSort"><i class="ion-arrow-down-b"></i></button>
                 </td>
@@ -32,7 +32,7 @@
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
-            <td colspan="10" class="text-center">
+            <td colspan="11" class="text-center">
                 검색결과가 없습니다.<br>
                 (등록된 데이터가 없습니다.)
             </td>

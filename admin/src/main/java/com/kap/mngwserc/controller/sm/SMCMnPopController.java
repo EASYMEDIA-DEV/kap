@@ -241,6 +241,7 @@ public class SMCMnPopController {
             smcPopDTO.setModId(coaAdmDTO.getId());
             smcPopDTO.setModIp(coaAdmDTO.getLoginIp());
             smcPopDTO.setDvcCd(gubun);
+
             smPopService.updateOrder(smcPopDTO);
             mav.setViewName("jsonView");
 

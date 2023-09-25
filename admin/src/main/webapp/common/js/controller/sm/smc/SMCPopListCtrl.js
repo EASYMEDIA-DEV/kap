@@ -60,10 +60,10 @@ define(["ezCtrl"], function(ezCtrl) {
             btnSort : {
                 event : {
                     click : function () {
-                        console.log("TEST");
+
                         var btn = $(this),
                             td = btn.parents("td"),
-                            key = td.data("detailsKey"),
+                            key = td.data("key"),
                             sort = td.data("value"),
                             index = btn.parent().index(),
                             sortType = btn.attr('name') === 'sortUp' ? 'UP' : 'DOWN';
@@ -87,7 +87,9 @@ define(["ezCtrl"], function(ezCtrl) {
                             console.log(JSON.stringify(ajaxData, null, 2));
 
                             $("#frmSearch").serializeArray().forEach(function(field) {
-                                ajaxData[field.name] = field.value;
+                                if (field.name != 'seq') {
+                                    ajaxData[field.name] = field.value;
+                                }
                             });
 
                             $.ajax({
