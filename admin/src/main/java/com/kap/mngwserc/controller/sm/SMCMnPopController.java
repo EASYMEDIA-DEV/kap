@@ -96,6 +96,7 @@ public class SMCMnPopController {
         try
         {
             smcPopDTO.setDvcCd(gubun);
+            modelMap.addAttribute("gubun", smcPopDTO.getDvcCd());
             modelMap.addAttribute("rtnInfo", smPopService.selectMnPopDtl(smcPopDTO));
         }
         catch (Exception e)

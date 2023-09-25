@@ -73,14 +73,14 @@
                 </div>
             </fieldset>
             <c:choose>
-                <c:when test="${rtnDto.dvcCd eq 'pc' or rtnInfo.dvcCd eq null}">
+                <c:when test="${gubun eq 'pc'}">
                     <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:block;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">PC 이미지<span class="star"> *</span></label>
                             <div class="col-sm-10 col-md-11">
                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                <div class="dropzone" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                                <div class="dropzone" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="PC 이미지">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
                                     </div>
@@ -108,14 +108,14 @@
                         </div>
                     </fieldset>
                 </c:when>
-                <c:when test="${rtnDto.dvcCd eq 'mobile' or rtnInfo.dvcCd eq null}">
-                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none;"</c:if>>
+                <c:when test="${gubun eq 'mobile' or gubun eq null}">
+                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:block;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">모바일 이미지<span class="star"> *</span></label>
-                            <div class="col-sm-11">
+                            <div class="col-sm-10 col-md-11">
                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                                <div class="dropzone" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="모바일 이미지">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
                                     </div>
@@ -130,7 +130,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">모바일 HTML<span class="star"> *</span></label>
                             <div class="col-sm-11">
-                                <textarea class="form-control notRequired ckeditorRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnDto.cnts}</textarea>
+                                <textarea class="form-control notRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnDto.cnts}</textarea>
                             </div>
                         </div>
                     </fieldset>
