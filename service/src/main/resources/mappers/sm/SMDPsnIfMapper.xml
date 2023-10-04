@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.sm.SMDPsnIfMapper">
+    <!--
+         쿼리명 : SMDPsnIfMapper.selectPsnIfList
+         설  명 : 개인정보처리방침 목록을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.26   구은희       최초생성
+    -->
+    <select id="selectPsnIfList" parameterType="SMDPsnIfDTO">
+        SELECT /* SMDPsnIfMapper.selectPsnIfList */
+            SEQ
+            , LANG_CD
+            , TITL
+            , CNTS
+            , USE_YN
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
+            , MOD_IP
+            , MOD_DTM
+        FROM
+        CO_PRSN_MST A
+        <include refid="selectPsnIfListwhereSql" />
+        ORDER BY
+            REG_DTM DESC
+        <if test="excelYn != 'Y'.toString() ">
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
+    </select>
+
+    <!--
+         쿼리명 : SMDPsnIfMapper.selectPsnIfCnt
+         설  명 : 개인정보처리방침 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.09.26    구은희       최초생성
+    -->
+    <select id="selectPsnIfCnt" parameterType="SMDPsnIfDTO" resultType="java.lang.Integer">
+        SELECT /* SMDPsnIfMapper.selectPsnIfCnt*/
+        COUNT(SEQ)
+        FROM
+        CO_PRSN_MST
+        <include refid="selectPsnIfListwhereSql" />
+    </select>
+
+    <!--
+         쿼리명 : SMDPsnIfMapper.selectPsnIfDtl
+         설  명 : 개인정보처리방침 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.26   구은희       최초생성
+    -->
+    <select id="selectPsnIfDtl" parameterType="SMDPsnIfDTO">
+        SELECT /* SMDPsnIfMapper.selectPsnIfDtl */
+            SEQ
+             , LANG_CD
+             , TITL
+             , CNTS
+             , USE_YN
+             , REG_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+             , REG_IP
+             , REG_DTM
+             , MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
+             , MOD_IP
+             , MOD_DTM
+        FROM
+            CO_PRSN_MST A
+        WHERE 1=1
+          AND SEQ = #{seq}
+    </select>
+
+    <!--
+		 쿼리명 : SMDPsnIfMapper.selectSeqNum
+		 설  명 : 테이블의 SEQ 값을 조회한다.
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.26   구은희     최초생성
+	-->
+    <select id="selectSeqNum" parameterType="SMDPsnIfDTO" resultType="java.lang.String">
+        SELECT /* SMDPsnIfMapper.selectSeqNum */
+            NEXT_ID
+        FROM CO_SEQ_MST
+        WHERE TABLE_NM = #{tableNm}
+    </select>
+
+    <!--
+		쿼리명 : SMDPsnIfMapper.updatePsnIfSeq
+		설  명 : 테이블의 SEQ 값을 증가시킨다.
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.26   구은희     최초생성
+	-->
+    <update id="updatePsnIfSeq" parameterType="SMDPsnIfDTO">
+        UPDATE CO_SEQ_MST /*SMDPsnIfMapper.updatePsnIfSeq*/
+        SET
+            NEXT_ID = (SELECT
+                           *
+                       FROM
+                           (SELECT
+                                NEXT_ID + '1'
+                            FROM
+                                CO_SEQ_MST
+                            WHERE
+                                TABLE_NM = #{tableNm}) tmp)
+        WHERE
+            TABLE_NM = #{tableNm}
+    </update>
+
+    <!--
+         쿼리명 : SMDPsnIfMapper.insertPsnIf
+         설  명 : 개인정보처리방침을 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.26   구은희       최초생성
+    -->
+    <insert id="insertPsnIf" parameterType="SMDPsnIfDTO">
+        INSERT /* SMDPsnIfMapper.insertPsnIf */ INTO CO_PRSN_MST
+        (
+            SEQ
+        , LANG_CD
+        , TITL
+        , CNTS
+        , USE_YN
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        )
+        VALUES
+            (
+            #{detailsKey}
+            , #{langCd}
+            , #{titl}
+            , #{cnts}
+            , #{useYn}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : SMDPsnIfMapper.updatePsnIf
+         설  명 : 개인정보처리방침을 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.26   구은희       최초생성
+    -->
+    <update id="updatePsnIf" parameterType="SMDPsnIfDTO">
+        UPDATE /* SMDPsnIfMapper.updatePsnIf */ CO_PRSN_MST
+        SET
+            TITL = #{titl}
+          , CNTS = #{cnts}
+          , USE_YN = #{useYn}
+          , MOD_ID = #{modId}
+          , MOD_IP = #{modIp}
+          , MOD_DTM = NOW()
+        WHERE 1=1
+          AND SEQ = #{detailsKey}
+    </update>
+
+    <!--
+         쿼리명 : SMDPsnIfMapper.deletePsnIf
+         설  명 : 개인정보처리방침을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.26   구은희       최초생성
+    -->
+    <delete id="deletePsnIf" parameterType="SMDPsnIfDTO">
+        DELETE /* SMDPsnIfMapper.deletePsnIf */
+        FROM
+        CO_PRSN_MST
+        <where>
+            <choose>
+                <when test="delValueList != null">
+                    SEQ IN
+                    <foreach collection="delValueList" item="item" index="index" separator=", " open="(" close=")">
+                        #{item}
+                    </foreach>
+                </when>
+                <otherwise>
+                    SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+		쿼리명 : selectPsnIfListwhereSql
+		설  명 : 개인정보처리방침 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.09.26    구은희       최초생성
+    -->
+    <sql id="selectPsnIfListwhereSql">
+        <where>
+            <if test="langCd != null and langCd != ''.toString() ">
+                and lang_cd = #{langCd}
+            </if>
+            <if test="strtDtm != null and strtDtm != ''.toString() ">
+                and reg_dtm <![CDATA[ > ]]> str_to_date(#{strtDtm}, '%Y-%m-%d')
+            </if>
+            <if test="endDtm !=  null and endDtm != ''.toString() ">
+                and reg_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDtm}, '%Y-%m-%d'), interval 1 day)
+            </if>
+            <if test="useYnList != null and useYnList.size() > 0">
+                and (
+                <foreach collection="useYnList" item="useYnList" index="index" open="" close="" separator=" or ">
+                    use_yn = #{useYnList}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        and titl like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        and reg_id like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 3 ">
+                        and mod_id like concat('%', #{q}, '%')
+                    </when>
+                    <otherwise>
+                        and (
+                        titl like concat('%', #{q}, '%')
+                        or reg_id like concat('%', #{q}, '%')
+                        or mod_id like concat('%', #{q}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+</mapper>

@@ -57,7 +57,7 @@ public class SMCMnPopController {
     /**
      * 팝업 목록을 조회한다.
      */
-    @PostMapping(value = "/select")
+    @RequestMapping(value = "/select")
     public String selectPopListPageAjax(SMCPopDTO smcPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
     {
         try
@@ -120,6 +120,10 @@ public class SMCMnPopController {
         try
         {
             smcPopDTO.setDvcCd(gubun);
+            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            smcPopDTO.setRegId(coaAdmDTO.getId());
+            smcPopDTO.setRegIp(coaAdmDTO.getLoginIp());
+
             int respCnt = smPopService.insertMnPop(smcPopDTO);
             modelMap.addAttribute("respCnt", respCnt);
         }

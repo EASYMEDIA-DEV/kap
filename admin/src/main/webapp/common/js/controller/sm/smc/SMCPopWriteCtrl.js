@@ -157,10 +157,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                     $formObj.find(".ckeditorRequired").each(function() {
                         jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-                        jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
-                        jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
-                        jQuery(this).val(jQuery(this).val().split("\'").join("~!singlecomma!~"));
-                        jQuery(this).val(jQuery(this).val().split("\"").join("~!doublecomma!~"));
 
                         var editorVal = jQuery(this).val().length;
 
