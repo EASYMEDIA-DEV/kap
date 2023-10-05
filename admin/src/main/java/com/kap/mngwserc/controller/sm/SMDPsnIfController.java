@@ -168,7 +168,8 @@ public class SMDPsnIfController {
         }
 
         return "jsonView";
-    }/**
+    }
+    /**
      * 게시물을 삭제한다.
      */
     @RequestMapping(value="/delete")

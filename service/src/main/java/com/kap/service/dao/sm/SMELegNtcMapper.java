@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @ClassName		: SMELegNtcMapper.java
  * @Description		: 법적고지 관리를 위한 DAO
- * @author 허진영
+ * @author 구은희
  * @since 2023.09.26
  * @version 1.0
  * @see
@@ -27,16 +27,16 @@ import java.util.List;
 public interface SMELegNtcMapper {
 
     /**
-     * 법적고지 목록을 조회
+     * 목록을 조회
      */public List<SMELegNtcDTO> selectLegNtcList(SMELegNtcDTO smeLegNtcDTO) throws Exception;
 
     /**
-     * 법적고지 개수를 조회
+     * 목록 개수를 조회
      */
     public int selectLegNtcCnt(SMELegNtcDTO smeLegNtcDTO) throws Exception;
 
     /**
-     * 법적고지 상세를 조회
+     * 상세를 조회
      */
     public SMELegNtcDTO selectLegNtcDtl(SMELegNtcDTO smeLegNtcDTO) throws Exception;
 
@@ -51,17 +51,17 @@ public interface SMELegNtcMapper {
     public int updateLegNtcSeq(String tableNm) throws Exception;
 
     /**
-     * 법적고지 등록
+     * 등록
      */
     public int insertLegNtc(SMELegNtcDTO smeLegNtcDTO) throws Exception;
 
     /**
-     * 법적고지 수정
+     * 수정
      */
     public int updateLegNtc(SMELegNtcDTO smeLegNtcDTO) throws Exception;
 
     /**
-     * 법적고지 삭제
+     * 삭제
      */
     public int deleteLegNtc(SMELegNtcDTO smeLegNtcDTO) throws Exception;
 

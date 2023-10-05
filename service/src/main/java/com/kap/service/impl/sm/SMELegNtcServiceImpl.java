@@ -36,7 +36,9 @@ public class SMELegNtcServiceImpl implements SMELegNtcService {
     // DAO
     private final SMELegNtcMapper smeLegNtcMapper;
     String tableNm = "LEG_NTC_SEQ";
-
+    /**
+     * 목록을 조회한다.
+     */
     public SMELegNtcDTO selectLegNtcList(SMELegNtcDTO smeLegNtcDTO) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
 
@@ -53,15 +55,21 @@ public class SMELegNtcServiceImpl implements SMELegNtcService {
         smeLegNtcDTO.setList(smeLegNtcMapper.selectLegNtcList(smeLegNtcDTO));
         return smeLegNtcDTO;
     }
-
+    /**
+     * 목록의 개수를 조회한다..
+     */
     public int selectLegNtcCnt(SMELegNtcDTO smeLegNtcDTO) throws Exception {
         return smeLegNtcMapper.selectLegNtcCnt(smeLegNtcDTO);
     }
-
+    /**
+     * 상세를 조회한다.
+     */
     public SMELegNtcDTO selectLegNtcDtl(SMELegNtcDTO smeLegNtcDTO) throws Exception {
         return smeLegNtcMapper.selectLegNtcDtl(smeLegNtcDTO);
     }
-
+    /**
+     * 게시물을 등록한다.
+     */
     public int insertLegNtc(SMELegNtcDTO smeLegNtcDTO) throws Exception {
 
         smeLegNtcDTO.setTableNm(tableNm);
@@ -71,10 +79,15 @@ public class SMELegNtcServiceImpl implements SMELegNtcService {
 
         return smeLegNtcMapper.insertLegNtc(smeLegNtcDTO);
     }
-
+    /**
+     * 게시물을 수정한다.
+     */
     public int updateLegNtc(SMELegNtcDTO smeLegNtcDTO) throws Exception {
         return smeLegNtcMapper.updateLegNtc(smeLegNtcDTO);
     }
+    /**
+     * 게시물을 삭제한다.
+     */
     @Transactional
     public int deleteLegNtc(SMELegNtcDTO smeLegNtcDTO) throws Exception {
         return smeLegNtcMapper.deleteLegNtc(smeLegNtcDTO);

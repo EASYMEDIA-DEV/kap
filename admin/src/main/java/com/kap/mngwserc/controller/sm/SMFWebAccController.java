@@ -1,9 +1,9 @@
 package com.kap.mngwserc.controller.sm;
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.SMELegNtcDTO;
+import com.kap.core.dto.SMFWebAccDTO;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.SMELegNtcService;
+import com.kap.service.SMFWebAccService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,40 +17,40 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <pre>
- * 법적고지 관리를 위한 Controller
+ * 웹접근성 관리를 위한 Controller
  * </pre>
  *
- * @ClassName		: SMELegNtcController.java
- * @Description		: 법적고지 관리를 위한 Controller
+ * @ClassName		: SMFWebAccController.java
+ * @Description		: 웹접근성 관리를 위한 Controller
  * @author 구은희
- * @since 2023.10.04
+ * @since 2023.10.05
  * @version 1.0
  * @see
  * @Modification Information
  * <pre>
  * 		since			author				  description
  *    ==========    ==============    =============================
- *    2023.10.04		구은희				   최초 생성
+ *    2023.10.05		구은희				   최초 생성
  * </pre>
  */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/{langCd}/sm/sme/legNtc")
-public class SMELegNtcController {
+@RequestMapping(value="/mngwserc/{langCd}/sm/smf/webAcc")
+public class SMFWebAccController {
 
-    private final SMELegNtcService smeLegNtcService;
+    private final SMFWebAccService smfWebAccService;
 
     /**
      * 목록 페이지
      */
     @GetMapping(value="/list")
-    public String getLegNtcListPage(SMELegNtcDTO smeLegNtcDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public String getWebAccListPage(SMFWebAccDTO smfWebAccDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
     {
         try
         {
             modelMap.addAttribute("langCd", langCd);
-            modelMap.addAttribute("rtnData", smeLegNtcService.selectLegNtcList(smeLegNtcDTO));
+            modelMap.addAttribute("rtnData", smfWebAccService.selectWebAccList(smfWebAccDTO));
         }
         catch (Exception e)
         {
@@ -61,26 +61,26 @@ public class SMELegNtcController {
             throw new Exception(e.getMessage());
         }
 
-        return "mngwserc/sm/smd/SMDPsnIfList.admin";
+        return "mngwserc/sm/smf/SMFWebAccList.admin";
     }
 
     /**
      * 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
-    public String selectLegNtcListPageAjax(SMELegNtcDTO smeLegNtcDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String selectWebAccListPageAjax(SMFWebAccDTO smfWebAccDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            if(!"".equals(smeLegNtcDTO.getStrtDt())){
-                smeLegNtcDTO.setStrtDtm(smeLegNtcDTO.getStrtDt());
+            if(!"".equals(smfWebAccDTO.getStrtDt())){
+                smfWebAccDTO.setStrtDtm(smfWebAccDTO.getStrtDt());
             }
 
-            if(!"".equals(smeLegNtcDTO.getEndDt())){
-                smeLegNtcDTO.setEndDtm(smeLegNtcDTO.getEndDt());
+            if(!"".equals(smfWebAccDTO.getEndDt())){
+                smfWebAccDTO.setEndDtm(smfWebAccDTO.getEndDt());
             }
 
-            modelMap.addAttribute("rtnData", smeLegNtcService.selectLegNtcList(smeLegNtcDTO));
+            modelMap.addAttribute("rtnData", smfWebAccService.selectWebAccList(smfWebAccDTO));
         }
         catch (Exception e)
         {
@@ -90,18 +90,18 @@ public class SMELegNtcController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/sm/smd/SMDPsnIfListAjax";
+        return "mngwserc/sm/smf/SMFWebAccListAjax";
     }
 
     /**
      * 상세 페이지로 이동한다.
      */
     @RequestMapping(value="/write")
-    public String getLegNtcfWritePage(SMELegNtcDTO smeLegNtcDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getWebAccfWritePage(SMFWebAccDTO smfWebAccDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            modelMap.addAttribute("rtnInfo", smeLegNtcService.selectLegNtcDtl(smeLegNtcDTO));
+            modelMap.addAttribute("rtnInfo", smfWebAccService.selectWebAccDtl(smfWebAccDTO));
         }
         catch (Exception e)
         {
@@ -112,22 +112,22 @@ public class SMELegNtcController {
             throw new Exception(e.getMessage());
         }
 
-        return "mngwserc/sm/smd/SMDPsnIfWrite.admin";
+        return "mngwserc/sm/smf/SMFWebAccWrite.admin";
     }
 
     /**
      * 게시물을 등록한다.
      */
     @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String insertLegNtc(SMELegNtcDTO smeLegNtcDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String insertWebAcc(SMFWebAccDTO smfWebAccDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smeLegNtcDTO.setRegId(coaAdmDTO.getId());
-            smeLegNtcDTO.setRegIp(coaAdmDTO.getLoginIp());
+            smfWebAccDTO.setRegId(coaAdmDTO.getId());
+            smfWebAccDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            int respCnt = smeLegNtcService.insertLegNtc(smeLegNtcDTO);
+            int respCnt = smfWebAccService.insertWebAcc(smfWebAccDTO);
             modelMap.addAttribute("respCnt", respCnt);
         }
         catch (Exception e)
@@ -147,16 +147,16 @@ public class SMELegNtcController {
      *
      */
     @RequestMapping(value="/update")
-    public String updateLegNtc(SMELegNtcDTO smeLegNtcDTO, ModelMap modelMap) throws Exception
+    public String updateWebAcc(SMFWebAccDTO smfWebAccDTO, ModelMap modelMap) throws Exception
     {
         try
         {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smeLegNtcDTO.setModId(coaAdmDTO.getId());
-            smeLegNtcDTO.setModIp(coaAdmDTO.getLoginIp());
+            smfWebAccDTO.setModId(coaAdmDTO.getId());
+            smfWebAccDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            smeLegNtcDTO.setSeq(Integer.valueOf(smeLegNtcDTO.getDetailsKey()));
-            modelMap.addAttribute("respCnt", smeLegNtcService.updateLegNtc(smeLegNtcDTO));
+            smfWebAccDTO.setSeq(Integer.valueOf(smfWebAccDTO.getDetailsKey()));
+            modelMap.addAttribute("respCnt", smfWebAccService.updateWebAcc(smfWebAccDTO));
         }
         catch (Exception e)
         {
@@ -173,14 +173,14 @@ public class SMELegNtcController {
      * 게시물을 삭제한다.
      */
     @RequestMapping(value="/delete")
-    public String deleteLegNtc(SMELegNtcDTO smeLegNtcDTO, ModelMap modelMap) throws Exception
+    public String deleteWebAcc(SMFWebAccDTO smfWebAccDTO, ModelMap modelMap) throws Exception
     {
         try
         {
-            if(!"".equals(smeLegNtcDTO.getDetailsKey())){
-                smeLegNtcDTO.setSeq(Integer.valueOf(smeLegNtcDTO.getDetailsKey()));
+            if(!"".equals(smfWebAccDTO.getDetailsKey())){
+                smfWebAccDTO.setSeq(Integer.valueOf(smfWebAccDTO.getDetailsKey()));
             }
-            int respCnt = smeLegNtcService.deleteLegNtc(smeLegNtcDTO);
+            int respCnt = smfWebAccService.deleteWebAcc(smfWebAccDTO);
             modelMap.addAttribute("respCnt", respCnt);
         }
         catch (Exception e)

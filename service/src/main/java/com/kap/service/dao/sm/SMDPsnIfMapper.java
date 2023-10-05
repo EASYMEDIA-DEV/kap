@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @ClassName		: SMDPsnIfMapper.java
  * @Description		: 개인정보처리방침 관리를 위한 DAO
- * @author 허진영
+ * @author 구은희
  * @since 2023.09.26
  * @version 1.0
  * @see
@@ -27,16 +27,16 @@ import java.util.List;
 public interface SMDPsnIfMapper {
 
     /**
-     * 개인정보처리방침 목록을 조회
+     * 목록을 조회
      */public List<SMDPsnIfDTO> selectPsnIfList(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
 
     /**
-     * 개인정보처리방침 개수를 조회
+     * 목록 개수를 조회
      */
     public int selectPsnIfCnt(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
 
     /**
-     * 개인정보처리방침 상세를 조회
+     * 상세를 조회
      */
     public SMDPsnIfDTO selectPsnIfDtl(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
 
@@ -51,17 +51,17 @@ public interface SMDPsnIfMapper {
     public int updatePsnIfSeq(String tableNm) throws Exception;
 
     /**
-     * 개인정보처리방침 등록
+     * 등록
      */
     public int insertPsnIf(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
 
     /**
-     * 개인정보처리방침 수정
+     * 수정
      */
     public int updatePsnIf(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
 
     /**
-     * 개인정보처리방침 삭제
+     * 삭제
      */
     public int deletePsnIf(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
 
