@@ -34,7 +34,7 @@
         ORDER BY
             ORD DESC
         <if test="excelYn != 'Y'.toString() ">
-            limit #{firstIndex}, #{recordCountPerPage}
+            LIMIT #{firstIndex}, #{recordCountPerPage}
         </if>
     </select>
 
@@ -327,7 +327,7 @@
 
     <!--
          쿼리명 : SMCPopMapper.selectUseMnPopCnt
-         설  명 : 노출 중인 팝업 개수를 조회한다.
+         설  명 : 팝업 개수를 조회한다.
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.09.21    구은희       최초생성
