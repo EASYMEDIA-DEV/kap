@@ -24,7 +24,7 @@
             , MOD_IP
             , MOD_DTM
         FROM
-        CO_PRSN_MST A
+        SM_PRSN_MST A
         <include refid="selectPsnIfListwhereSql" />
         ORDER BY
             REG_DTM DESC
@@ -44,7 +44,7 @@
         SELECT /* SMDPsnIfMapper.selectPsnIfCnt*/
         COUNT(SEQ)
         FROM
-        CO_PRSN_MST
+        SM_PRSN_MST
         <include refid="selectPsnIfListwhereSql" />
     </select>
 
@@ -71,7 +71,7 @@
              , MOD_IP
              , MOD_DTM
         FROM
-            CO_PRSN_MST A
+            SM_PRSN_MST A
         WHERE 1=1
           AND SEQ = #{seq}
     </select>
@@ -121,7 +121,7 @@
         2023.09.26   구은희       최초생성
     -->
     <insert id="insertPsnIf" parameterType="SMDPsnIfDTO">
-        INSERT /* SMDPsnIfMapper.insertPsnIf */ INTO CO_PRSN_MST
+        INSERT /* SMDPsnIfMapper.insertPsnIf */ INTO SM_PRSN_MST
         (
             SEQ
         , LANG_CD
@@ -153,7 +153,7 @@
         2023.09.26   구은희       최초생성
     -->
     <update id="updatePsnIf" parameterType="SMDPsnIfDTO">
-        UPDATE /* SMDPsnIfMapper.updatePsnIf */ CO_PRSN_MST
+        UPDATE /* SMDPsnIfMapper.updatePsnIf */ SM_PRSN_MST
         SET
             TITL = #{titl}
           , CNTS = #{cnts}
@@ -175,7 +175,7 @@
     <delete id="deletePsnIf" parameterType="SMDPsnIfDTO">
         DELETE /* SMDPsnIfMapper.deletePsnIf */
         FROM
-        CO_PRSN_MST
+        SM_PRSN_MST
         <where>
             <choose>
                 <when test="delValueList != null">
