@@ -22,7 +22,7 @@
 				<div class="p-lg">
 					<fieldset>
 						<div class="form-group text-sm">
-							<label class="col-sm-2 control-label">권한<span class="star"> *</span></label>
+							<label class="col-sm-2 control-label">권한1<span class="star"> *</span></label>
 							<div class="col-sm-10">
 								<select class="form-control input-sm wd-sm" id="authCd" name="authCd" title="권한">
 									<option value="">선택</option>

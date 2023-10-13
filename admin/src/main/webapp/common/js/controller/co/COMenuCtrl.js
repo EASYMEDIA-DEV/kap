@@ -115,7 +115,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						{
 							return false;
 						}
-				}
+					}
 			}
 		}
 	};
@@ -616,7 +616,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			{
 				if (jQuery("#authCd").val() == "99")
 				{
+					jQuery("#divCategoris").jstree("uncheck_all");
 					jQuery("#divCategoris").find(".jstree-checkbox").prop("disabled", true);
+				}else{
+					jQuery("#divCategoris").find(".jstree-checkbox").prop("disabled", false);
 				}
 
 				jQuery("#authCd").on("change", function(){

@@ -152,7 +152,13 @@ public class COAAdmController {
 
             // 정의된 코드id값들의 상세 코드 맵 반환
             modelMap.addAttribute("rtnData", cOAAdmDTO);
+            //modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+            // 코드 set
+            cdDtlList.add("ADMIN_AUTH_CD");
+            // 정의된 코드id값들의 상세 코드 맵 반환
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
 
             if(!"".equals(cOAAdmDTO.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", cOAAdmService.selectAdmDtl(cOAAdmDTO));
