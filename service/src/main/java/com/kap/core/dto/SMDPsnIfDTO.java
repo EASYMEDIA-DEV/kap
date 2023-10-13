@@ -9,10 +9,10 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- *  개인정보 처리방침 DTO
+ *  개인정보처리방침 관리
  *
- * @author 손태주
- * @since 2022.04.12
+ * @author 구은희
+ * @since 2023.09.26
  * @version 1.0
  * @see
  *
@@ -21,7 +21,7 @@ import java.util.List;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2022.04.12  손태주         최초 생성
+ *   2023.09.26  구은희         최초 생성
  * </pre>
  */
 
@@ -30,21 +30,47 @@ import java.util.List;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
 public class SMDPsnIfDTO extends BaseDTO {
-    // 정보처리 순번
-    private Integer psnifSeq;
-    // 다국어 언어 코드
-    private String lnggCd;
+    // 순번
+    private Integer seq;
+    // 다국어
+    private String langCd;
     // 제목
     private String titl;
     // 내용
     @SaxFilter
-    private String cntn;
+    private String cnts;
     // 노출여부
-    private String expsYn;
+    private String useYn;
+    // 등록자
+    private String regId;
+    // 등록ip
+    private String regIP;
+
+    // 등록일자
+    private String regDtm;
+    // 수정자Id
+    private String modId;
+    // 수정ip
+    private String modIP;
+    // 수정일자
+    private String modDtm;
 
     // 조회
     private List<SMDPsnIfDTO> list;
-
     // 검색 조건
     private List<String> expsYnList;
+    // 노출여부 구분(=사용여부 구분)
+    private List<String> useYnList;
+    // 검색 등록 시작일
+    private String strtDtm;
+    // 검색 등록 종료일
+    private String endDtm;
+
+    //삭제할 데이터
+    private List<String> delValueList;
+
+    //테이블 이름
+    private String tableNm;
+    // 엑셀 여부
+    private String excelYn;
 }

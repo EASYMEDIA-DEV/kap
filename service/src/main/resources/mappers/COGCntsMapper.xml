@@ -43,43 +43,6 @@
 	</select>
 
 	<!--
-		 쿼리명 : COGCntsMapper.selectSeqNum
-		 설  명 : 테이블의 SEQ 값을 조회한다.
-			 수정일	 수정자     수정내용
-		==========   ======   =============
-		2023.09.08   임서화     최초생성
-	-->
-		<select id="selectSeqNum" parameterType="COGCntsDTO" resultType="java.lang.String">
-			SELECT /* COSeqMapper.selectSeqNum */
-				NEXT_ID
-			FROM CO_SEQ_MST
-			WHERE TABLE_NM = #{tableNm}
-		</select>
-
-	<!--
-		쿼리명 : COGCntsMapper.updatecntsSeq
-		설  명 : 테이블의 SEQ 값을 증가시킨다.
-		 수정일	 수정자     수정내용
-		==========   ======   =============
-		2023.09.08   임서화     최초생성
-	-->
-	<update id="updateCntsSeq" parameterType="COGCntsDTO">
-			UPDATE CO_SEQ_MST /*COGCntsMapper.updateCntsSeq*/
-			SET
-				NEXT_ID = (SELECT
-							   *
-						   FROM
-							   (SELECT
-									NEXT_ID + '1'
-								FROM
-									CO_SEQ_MST
-								WHERE
-									TABLE_NM = #{tableNm}) tmp)
-			WHERE
-				TABLE_NM = #{tableNm}
-		</update>
-
-	<!--
 		쿼리명 : COGCntsMapper.updateUseCnts
 		설  명 : CMS의 배포 여부를 변경한다.
 		 수정일	 수정자     수정내용
@@ -123,7 +86,7 @@
 			, MOD_DTM
 			)
 			VALUES
-			( #{detailsKey}
+			( #{seq}
 			, #{menuSeq}
 			, #{ver}
 			, #{cnts}

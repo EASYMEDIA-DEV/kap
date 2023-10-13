@@ -2,7 +2,7 @@ package com.kap.mngwserc.controller;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COGCntsDTO;
-import com.kap.core.dto.COSeqDTO;
+import com.kap.core.dto.COSeqGnrDTO;
 import com.kap.service.COGCntsService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
@@ -117,7 +117,7 @@ public class COGCntsController {
      * CMS 등록 페이지
      */
     @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String CntsInsertPage(COGCntsDTO cogCntsDTO, ModelMap modelMap, @PathVariable int menuSeq, COSeqDTO coSeqDTO) throws Exception
+    public String CntsInsertPage(COGCntsDTO cogCntsDTO, ModelMap modelMap, @PathVariable int menuSeq, COSeqGnrDTO cOSeqGnrDTO) throws Exception
     {
         try
         {

@@ -129,7 +129,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
                         if($formObj.find(".dropzone").size() > 0)
                         {
-                            cmmCtrl.fileFrmAjax(function(data){
+                           cmmCtrl.fileFrmAjax(function(data){
                                 //콜백함수. 페이지 이동
                                 if(data.respCnt > 0){
                                     alert(actionMsg);

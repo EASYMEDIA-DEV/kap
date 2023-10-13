@@ -8,10 +8,10 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- *  메인 비쥬얼 DTO
+ *  메인 비주얼 DTO
  *
- * @author 손태주
- * @since 2022.04.18
+ * @author 장두석
+ * @since 2023.09.21
  * @version 1.0
  * @see
  *
@@ -20,7 +20,7 @@ import java.util.List;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2022.04.18  손태주         최초 생성
+ *   2023.09.21  장두석         최초 생성
  * </pre>
  */
 
@@ -29,32 +29,83 @@ import java.util.List;
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
 public class SMBMainVslDTO extends BaseDTO {
-    // 비주얼 순번
-    private Integer vslSeq;
-    // 다국어 언어 코드
-    private String lnggCd;
+    // 순번 (primary key)
+    private Integer seq;
+    // 언어 코드
+    private String langCd;
+    // 디바이스 코드
+    private String dvcCd;
+
+    private String gubun;
     // 제목
     private String titl;
-    // PC 파일 순번
-    private Integer pcFileSeq;
-    // MO 파일 순번
-    private Integer mblFileSeq;
-    // 상시여부
-    private String odtmYn;
-    // 게시 시작일시
+    private String strtDtm;
+    private String endDtm;
+
+    // 게시 시작 일시
     private String postStrtDtm;
-    // 게시 종료일시
+    // url
+    private String linkUrl;
+    // 게시 종료 일시
     private String postEndDtm;
-    // 링크
+    // 상시 여부
+    private String odtmYn;
+    // 메인 카피
+    private String mnCopy;
+    // 메인 컬러 코드
+    private String mnHexCd;
+    // 서브 카피
+    private String subCopy;
+    // 서브 컬러 코드
+    private String subHexCd;
+    // PC 이미지/영상 파일 순번
+    private Integer pcAtchFileSeq;
+    private Integer fileSeq;
+    // 모바일 이미지/영상 파일 순번
+    private Integer mblAtchFileSeq;
+    // 링크 URL
     private String url;
-    // 새 창여부
-    private String wnppYn;
-    // 노출여부
-    private String expsYn;
+    // 새창 여부
+    private String newWndwYn;
+    // 정렬
+    private Integer ord;
+    // 노출 여부
+    private String mainYn;
+    // 배너 배치 위치 (상:10, 중:20, 하:30)
+    private String positionOrd;
+
+    private String admId;
+    private String admIp;
+    private String regNm;
+    private String regId;
+    private String regIp;
+    private String modNm;
+    private String modId;
+
+    // 이미지 파일 확장자
+    private String imageExtns;
+    // 영상 파일 확장자
+    private String videoExtns;
+
+    // pc 업로드 이미지/영상 파일
+//    private List<String> pcAtchAddFile;
+//    private List<String> pcAtchAddFileAlt;
+
+    // 모바일 업로드 이미지/영상 파일
+//    private List<String> mblAtchAddFile;
+//    private List<String> mblAtchAddFileAlt;
+
+    // 현재 업로드 파일 확장자
+    private String nowGb;
+    // 기존 비주얼 파일 확장자
+    private String beforeGb;
 
     // 조회
     private List<SMBMainVslDTO> list;
 
     // 검색 조건
-    private List<String> expsYnList;
+    private List<String> mainYnList;
+
+    // 선택 항목
+    private List<String> seqList;
 }

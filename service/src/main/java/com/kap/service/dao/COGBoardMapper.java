@@ -50,14 +50,4 @@ public interface COGBoardMapper {
      */
     public int deleteBoard(COGBoardDTO cOGBoardDTO) throws Exception;
 
-    /**
-     * 현재 카테고리의 Board 시퀀스 값을 가져온다.
-     */
-    public String selectSeqNum(String tableNm) throws Exception;
-    
-    /**
-     * Board 시퀀스 값을 상승시킨다.
-     */
-    public int updateBoardSeq(String tableNm) throws Exception;
-
 }

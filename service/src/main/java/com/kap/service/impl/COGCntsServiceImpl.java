@@ -2,7 +2,9 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COGCntsDTO;
+import com.kap.core.utility.COSeqGnrUtil;
 import com.kap.service.COGCntsService;
+import com.kap.service.COSeqGnrService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.dao.COGCntsMapper;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @Modification Information
  * <pre>
  * 		since			author				  description
- *    ==========    ==============    =============================
+ *    ====                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         ======    ==============    =============================
  *    2023.09.07		임서화				   최초 생성
  * </pre>
  */
@@ -35,11 +37,12 @@ public class COGCntsServiceImpl implements COGCntsService {
 
 	//DAO
 	private final COGCntsMapper cOGCntsMapper;
+	private final COSeqGnrService cOSeqGnrService;
 
 	//로그인 상태값 시스템 등록
 	private final COSystemLogService cOSystemLogService;
 	String tableNm = "CMS_SEQ";
-
+	COSeqGnrUtil cOSeqGnrUtil;
 	/**
 	 * CMS 목록을 조회한다.
 	 */
@@ -74,11 +77,7 @@ public class COGCntsServiceImpl implements COGCntsService {
 	 */
 	public int insertCnts(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
-
-		pCOGCntsDTO.setTableNm(tableNm); // cms 시퀀스 번호
-		String detailsKey = cOGCntsMapper.selectSeqNum(pCOGCntsDTO.getTableNm());
-		cOGCntsMapper.updateCntsSeq(tableNm);
-		pCOGCntsDTO.setDetailsKey(detailsKey);
+		pCOGCntsDTO.setSeq(cOSeqGnrService.selectSeq(tableNm));
 
 		return cOGCntsMapper.insertCnts(pCOGCntsDTO);
 	}

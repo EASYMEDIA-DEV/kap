@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: EM_NB126
-  Date: 2022-02-24
-  Time: 오후 1:47
-  To change this template use File | Settings | File Templates.
---%>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
 

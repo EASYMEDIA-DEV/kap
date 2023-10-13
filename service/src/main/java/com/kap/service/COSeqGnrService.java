@@ -1,7 +1,5 @@
 package com.kap.service;
 
-import com.kap.core.dto.COSeqDTO;
-
 /**
  *
  * seq 값을 사용하는 공통 서비스를 정의하기 위한 서비스 인터페이스
@@ -19,9 +17,9 @@ import com.kap.core.dto.COSeqDTO;
  *
  * </pre>
  */
-public interface COSeqService {
+public interface COSeqGnrService {
 	/**
      * 시퀀스 값을 조회한다.
      */
-    public COSeqDTO selectSeqNum(String cOSeqDTO) throws Exception;
+    public int selectSeq(String tableNm) throws Exception;
 }

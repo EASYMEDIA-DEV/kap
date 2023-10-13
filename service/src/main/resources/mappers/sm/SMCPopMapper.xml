@@ -15,8 +15,8 @@
              , DATE_FORMAT(STRT_DTM, '%Y-%m-%d %H:%i:%s') AS STRT_DTM
              , DATE_FORMAT(END_DTM, '%Y-%m-%d %H:%i:%s') AS END_DTM
              , ODTM_YN
-             , PC_IMG_FILE_ID
-             , MBL_IMG_FILE_ID
+             , FILE_SEQ
+             , IMG_FILE_ID
              , LINK_URL
              , NEW_WNDW_YN
              , USE_YN
@@ -28,18 +28,15 @@
              , MOD_DTM
              , CNTS
              , ORD
-             , MBL_CNTN
              , TYPE_CD
         FROM sm_popup_mst
         <include refid="selectPopListwhereSql" />
         ORDER BY
             ORD DESC
         <if test="excelYn != 'Y'.toString() ">
-            limit #{firstIndex}, #{recordCountPerPage}
+            LIMIT #{firstIndex}, #{recordCountPerPage}
         </if>
     </select>
-
-
 
     <!--
          쿼리명 : SMCPopMapper.selectMnPopDtl
@@ -51,12 +48,12 @@
     <select id="selectMnPopDtl" parameterType="SMCPopDTO">
         SELECT /* SMCPopMapper.selectMnPopDtl */
             SEQ
+             , DVC_CD
              , TITL
              , DATE_FORMAT(STRT_DTM, '%Y-%m-%d %H:%i:%s') AS STRT_DTM
              , DATE_FORMAT(END_DTM, '%Y-%m-%d %H:%i:%s') AS END_DTM
              , ODTM_YN
-             , PC_IMG_FILE_ID
-             , MBL_IMG_FILE_ID
+             , IMG_FILE_ID
              , LINK_URL
              , NEW_WNDW_YN
              , USE_YN
@@ -67,13 +64,13 @@
              , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
              , MOD_DTM
              , CNTS
-             , MBL_CNTN
              , TYPE_CD
+             , FILE_SEQ
         FROM
             SM_POPUP_MST A
         WHERE 1=1
-          AND SEQ = #{seq}
-          AND DVC_CD = #{dvcCd}
+            AND SEQ = #{seq}
+            AND DVC_CD = #{dvcCd}
     </select>
 
     <!--
@@ -93,23 +90,25 @@
         WHERE
             ORD = (
             SELECT
-                <if test="sortType == 'UP'">
+                <if test='sortType == "UP"'>
                     MIN(ORD)
                 </if>
-                <if test="sortType == 'DOWN'">
+                <if test='sortType == "DOWN"'>
                     MAX(ORD)
                 </if>
 
                 FROM sm_popup_mst
                 WHERE 1=1
-                <if test="sortType == 'UP'">
+                <if test='sortType == "UP"'>
                     AND ORD <![CDATA[>]]> #{ord}
                 </if>
-                <if test="sortType == 'DOWN'">
+                <if test='sortType == "DOWN"'>
                     AND ORD <![CDATA[<]]> #{ord}
                 </if>
+                    AND DVC_CD = #{dvcCd}
             )
             AND DVC_CD = #{dvcCd}
+            LIMIT 1
     </select>
 
 
@@ -126,15 +125,15 @@
         </selectKey>
         INSERT /* SMCPopMapper.insertMnPop */ INTO SM_POPUP_MST
         (
-        LANG_CD
+         SEQ
+        , LANG_CD
         , DVC_CD
         , STRT_DTM
         , END_DTM
         , TITL
-        , PC_IMG_FILE_ID
-        , MBL_IMG_FILE_ID
+        , FILE_SEQ
+        , IMG_FILE_ID
         , CNTS
-        , MBL_CNTN
         , LINK_URL
         , NEW_WNDW_YN
         , ODTM_YN
@@ -147,7 +146,8 @@
         )
         VALUES
         (
-         #{langCd}
+        #{detailsKey}
+        , #{langCd}
         , #{dvcCd}
         <choose>
             <when test="odtmYn == 'Y'.toString()">
@@ -160,20 +160,9 @@
             </otherwise>
         </choose>
         , #{titl}
-        <choose>
-            <when test="dvcCd eq 'pc'.toString()">
-                , #{pcImgFileId}
-                , NULL
-                , #{cnts}
-                , NULL
-            </when>
-            <when test="dvcCd eq 'mobile'.toString()">
-                , NULL
-                , #{mblImgFileId}
-                , NULL
-                , #{mblCntn}
-            </when>
-        </choose>
+        , #{fileSeq}
+        , #{imgFileId}
+        , #{cnts}
         , #{linkUrl}
         , #{newWndwYn}
         , #{odtmYn}
@@ -185,6 +174,43 @@
         , #{typeCd}
         )
     </insert>
+
+    <!--
+		 쿼리명 : SMCPopMapper.selectSeqNum
+		 설  명 : 테이블의 SEQ 값을 조회한다.
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.25   구은희     최초생성
+	-->
+    <select id="selectSeqNum" parameterType="SMCPopDTO" resultType="java.lang.String">
+        SELECT /* COSeqMapper.selectSeqNum */
+            NEXT_ID
+        FROM CO_SEQ_MST
+        WHERE TABLE_NM = #{tableNm}
+    </select>
+
+    <!--
+		쿼리명 : SMCPopMapper.updatePopSeq
+		설  명 : 테이블의 SEQ 값을 증가시킨다.
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.25   구은희     최초생성
+	-->
+    <update id="updatePopSeq" parameterType="SMCPopDTO">
+        UPDATE CO_SEQ_MST /*COGCntsMapper.updateCntsSeq*/
+        SET
+            NEXT_ID = (SELECT
+                           *
+                       FROM
+                           (SELECT
+                                NEXT_ID + '1'
+                            FROM
+                                CO_SEQ_MST
+                            WHERE
+                                TABLE_NM = #{tableNm}) tmp)
+        WHERE
+            TABLE_NM = #{tableNm}
+    </update>
 
     <!--
          쿼리명 : SMCPopMapper.deleteMnPop
@@ -231,29 +257,18 @@
             </when>
             <otherwise>
                 , STRT_DTM = STR_TO_DATE(#{strtDtm}, '%Y-%m-%d %H:%i:%s')
-                , END_DTM = STR_TO_DATE(#{strtDtm}, '%Y-%m-%d %H:%i:%s')
+                , END_DTM = STR_TO_DATE(#{endDtm}, '%Y-%m-%d %H:%i:%s')
             </otherwise>
         </choose>
         , ODTM_YN = #{odtmYn}
-        <choose>
-            <when test="dvcCd eq 'pc'.toString()">
-                , PC_IMG_FILE_ID = #{pcImgFileId}
-                , MBL_IMG_FILE_ID = NULL
-                , CNTS = #{cnts}
-                , MBL_CNTN = NULL
-            </when>
-            <when test="dvcCd eq 'mobile'.toString()">
-                , PC_IMG_FILE_ID = NULL
-                , MBL_IMG_FILE_ID = #{mblImgFileId}
-                , CNTN = NULL
-                , MBL_CNTN = #{mblCntn}
-            </when>
-        </choose>
+        , FILE_SEQ = #{fileSeq}
+        , IMG_FILE_ID = #{imgFileId}
+        , CNTS = #{cnts}
         , LINK_URL = #{linkUrl}
         , NEW_WNDW_YN = #{newWndwYn}
         , USE_YN = #{useYn}
-        , MOD_ID = #{regId}
-        , MOD_IP = #{regIp}
+        , MOD_ID = #{modId}
+        , MOD_IP = #{modIp}
         , MOD_DTM = NOW()
         , TYPE_CD = #{typeCd}
         WHERE 1=1
@@ -312,7 +327,7 @@
 
     <!--
          쿼리명 : SMCPopMapper.selectUseMnPopCnt
-         설  명 : 노출 중인 팝업 개수를 조회한다.
+         설  명 : 팝업 개수를 조회한다.
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.09.21    구은희       최초생성
