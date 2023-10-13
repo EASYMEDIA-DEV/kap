@@ -112,7 +112,11 @@ public class COMailServiceImpl  implements COMailService {
 				StringWriter sw = new StringWriter();
 				sw.getBuffer().setLength(0);
 				//templateFile = "/" + templateFile;
-				templateFile = "template/email/COAAdmPwdInit.html";
+				//templateFile = "template/email/COAAdmPwdInit.html";
+
+
+				templateFile = "COAAdmPwdInit.html";
+				velocityEngine.setProperty("file.resource.loader.path", mailTmplFilePath+"email/");
 
 				Template template = velocityEngine.getTemplate(templateFile.replace("/", File.separator), "UTF-8");
 

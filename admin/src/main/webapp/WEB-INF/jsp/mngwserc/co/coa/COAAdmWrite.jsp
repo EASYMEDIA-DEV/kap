@@ -9,7 +9,7 @@
 			<input type="hidden" class="notRequired" id="mChecked" name="mChecked" value="" />
 			<input type="hidden" class="notRequired" id="mUndetermined" name="mUndetermined" value="" />
 			<input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			<input type="hidden" class="notRequired" id="authCd" name="authCd" value="${empty rtnDto.authCd ? '1' : rtnDto.authCd}">
+
 			<input type="hidden" class="notRequired" id="typeCd" name="typeCd" value="${rtnDto.typeCd }">
 			<input type="hidden" class="notRequired" id="lgnSsnId" value="${rtnData.lgnSsnId}">
 
@@ -20,6 +20,20 @@
 			</div>
 			<div class="col-sm-8 p0">
 				<div class="p-lg">
+					<fieldset>
+						<div class="form-group text-sm">
+							<label class="col-sm-2 control-label">권한1<span class="star"> *</span></label>
+							<div class="col-sm-10">
+								<select class="form-control input-sm wd-sm" id="authCd" name="authCd" title="권한">
+									<option value="">선택</option>
+									<c:forEach var="cdList" items="${cdDtlList.ADMIN_AUTH_CD}" varStatus="status">
+										<option value="${cdList.cd}" <c:if test="${rtnDto.authCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+									</c:forEach>
+								</select>
+								<strong class="help-block mt-sm mb0">※ 최고 관리자는 메뉴 선택에 상관없이 모든 메뉴를 관리할 수 있습니다.</strong>
+							</div>
+						</div>
+					</fieldset>
 					<fieldset>
 						<div class="form-group text-sm">
 							<label class="col-sm-2 control-label">이름<span class="star text-danger"> *</span></label>
