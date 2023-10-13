@@ -40,6 +40,16 @@ public interface SMCPopMapper {
      */
     public SMCPopDTO selectMnPopDtl(SMCPopDTO smcPopDTO) throws Exception;
     /**
+     * 현재 카테고리의 CMS 시퀀스 값을 가져온다.
+     */
+    public String selectSeqNum(String tableNm) throws Exception;
+
+    /**
+     * 팝업 시퀀스 값을 상승시킨다.
+     */
+    public int updatePopSeq(String tableNm) throws Exception;
+
+    /**
      * 팝업을 수정
      */
     public int updateMnPop(SMCPopDTO smcPopDTO) throws Exception;

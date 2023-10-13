@@ -9,10 +9,10 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- *  개인정보처리방침 관리
+ *  웹접근성 관리
  *
  * @author 구은희
- * @since 2023.09.26
+ * @since 2023.10.05
  * @version 1.0
  * @see
  *
@@ -21,7 +21,7 @@ import java.util.List;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2023.09.26  구은희         최초 생성
+ *   2023.10.05  구은희         최초 생성
  * </pre>
  */
 
@@ -29,7 +29,7 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
-public class SMDPsnIfDTO extends BaseDTO {
+public class SMFWebAccDTO extends BaseDTO {
     // 순번
     private Integer seq;
     // 다국어
@@ -56,7 +56,7 @@ public class SMDPsnIfDTO extends BaseDTO {
     private String modDtm;
 
     // 조회
-    private List<SMDPsnIfDTO> list;
+    private List<SMFWebAccDTO> list;
     // 검색 조건
     private List<String> expsYnList;
     // 노출여부 구분(=사용여부 구분)

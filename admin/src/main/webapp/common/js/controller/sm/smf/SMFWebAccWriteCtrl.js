@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
     // set controller name
     var exports = {
-        controller : "controller/sm/smd/SMDPsnIfWriteCtrl"
+        controller : "controller/sm/smf/SMFWebAccWriteCtrl"
     };
 
     var $formObj = jQuery("#frmData");

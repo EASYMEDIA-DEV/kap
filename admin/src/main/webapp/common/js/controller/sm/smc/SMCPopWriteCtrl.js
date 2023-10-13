@@ -45,9 +45,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         }
     };
 
-    /*var callbackAjaxDelete = function(data){
+    var callbackAjaxDelete = function(data){
 
-        if (parseInt(data.actCnt, 10) > 0)
+        if (parseInt(data.respCnt, 10) > 0)
         {
             alert(msgCtrl.getMsg("success.del.target.none"));
             location.href = "./list";
@@ -56,7 +56,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         {
             alert(msgCtrl.getMsg("fail.act"));
         }
-    };*/
+    };
 
 
     // set model
@@ -84,28 +84,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         jQuery(trgtObj).find(".datetimepicker_endDtm").datetimepicker("reset").val("");
                     }
                 }
-            }/*,
-            btn_delete : {
-                event: {
-                    click: function () {
-                        if (confirm(msgCtrl.getMsg("confirm.del"))) {
-
-                            jQuery.ajax({
-                                type: "post",
-                                url: "./delete",
-                                data : {
-                                    seq : $("#detailsKey").val(),
-                                    dvcCd: $("#gubun").val()
-                                },
-                                success: function (result) {
-                                    alert('삭제되었습니다!');
-                                }
-                            });
-                            //location.replace("./list.do");
-                        }
-                    }
-                }
-            }*/
+            }
         },
         classname : {
             // do something...
@@ -116,7 +95,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var typeCd =  $("input[name='typeCd']:checked").val();
                         if (typeCd == "image")
                         {
-                            //링크 및 새창 항목이 나와야 한다.
+
                             ctrl.obj.find(".linkUrlContainer").show();
                             ctrl.obj.find(".linkUrlContainer").find("input[type=text]").val("");
                             jQuery("#imageArea").show().find(".dropzone").removeClass("notRequired");
@@ -126,7 +105,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         {
                             ctrl.obj.find(".linkUrlContainer").hide();
                             ctrl.obj.find(".linkUrlContainer").find("input[type=text]").val("");
-                            //링크 및 새창 항목이 나오지 말아야 한다.왜? html 태그니까.
+
                             jQuery("#imageArea").hide().find(".dropzone").addClass("notRequired");
                             jQuery('#htmlArea').show().find("textarea").addClass("ckeditorRequired");
                         }
@@ -166,12 +145,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 after : function() {
                     var isValid = true, editorChk = true;
 
+                    jQuery(".dropzone").not(".notRequired").each(function(i){
+                        if (jQuery(this).children(".dz-preview").length == 0)
+                        {
+                            alert(jQuery(this).data("titl") + "를 등록해주세요.");
+                            jQuery(this)[0].scrollIntoView();
+                            isValid = false;
+                            return false;
+                        }
+                    });
+
                     $formObj.find(".ckeditorRequired").each(function() {
                         jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-                        jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
-                        jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
-                        jQuery(this).val(jQuery(this).val().split("\'").join("~!singlecomma!~"));
-                        jQuery(this).val(jQuery(this).val().split("\"").join("~!doublecomma!~"));
 
                         var editorVal = jQuery(this).val().length;
 
@@ -200,14 +185,28 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 ,
                 async : {
                     use : true,
-                    func : function(){
-                        if (!$formObj.find("input[name='detailsKey']").val())
+                    func : function (){
+                        var actionUrl = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update" );
+                        var actionMsg = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
+                        if($formObj.find(".dropzone.dz-started").size() > 0)
                         {
-                            cmmCtrl.frmAjax(callbackAjaxInsert, "./insert", $formObj);
+                            cmmCtrl.fileFrmAjax(function(data){
+                                //콜백함수. 페이지 이동
+                                if(data.respCnt > 0){
+                                    alert(actionMsg);
+                                    location.replace("./list");
+                                }
+                            }, actionUrl, $formObj, "json");
                         }
                         else
                         {
-                            cmmCtrl.frmAjax(callbackAjaxUpdate, "./update", $formObj);
+                            cmmCtrl.frmAjax(function(data){
+                                if(data.respCnt > 0){
+                                    alert(actionMsg);
+                                    location.replace("./list");
+                                }
+                                actionUrl = "./list";
+                            }, actionUrl, $formObj, "post", "json")
                         }
                     }
                 }

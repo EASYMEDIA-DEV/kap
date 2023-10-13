@@ -57,7 +57,7 @@ public class SMCMnPopController {
     /**
      * 팝업 목록을 조회한다.
      */
-    @PostMapping(value = "/select")
+    @RequestMapping(value = "/select")
     public String selectPopListPageAjax(SMCPopDTO smcPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
     {
         try
@@ -88,7 +88,7 @@ public class SMCMnPopController {
     }
 
     /**
-     * 팝업 등록 페이지로 이동한다.
+     * 팝업 상세 페이지로 이동한다.
      */
     @RequestMapping(value="/write")
     public String getPopWritePage(SMCPopDTO smcPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
@@ -96,6 +96,7 @@ public class SMCMnPopController {
         try
         {
             smcPopDTO.setDvcCd(gubun);
+            modelMap.addAttribute("gubun", smcPopDTO.getDvcCd());
             modelMap.addAttribute("rtnInfo", smPopService.selectMnPopDtl(smcPopDTO));
         }
         catch (Exception e)
@@ -119,8 +120,12 @@ public class SMCMnPopController {
         try
         {
             smcPopDTO.setDvcCd(gubun);
-            int actCnt = smPopService.insertMnPop(smcPopDTO);
-            modelMap.addAttribute("actCnt", actCnt);
+            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            smcPopDTO.setRegId(coaAdmDTO.getId());
+            smcPopDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+            int respCnt = smPopService.insertMnPop(smcPopDTO);
+            modelMap.addAttribute("respCnt", respCnt);
         }
         catch (Exception e)
         {
@@ -178,7 +183,7 @@ public class SMCMnPopController {
 
             smcPopDTO.setDvcCd(gubun);
             smcPopDTO.setSeq(Integer.valueOf(smcPopDTO.getDetailsKey()));
-            modelMap.addAttribute("actCnt", smPopService.updateMnPop(smcPopDTO));
+            modelMap.addAttribute("respCnt", smPopService.updateMnPop(smcPopDTO));
         }
         catch (Exception e)
         {
@@ -235,18 +240,18 @@ public class SMCMnPopController {
 
         try
         {
-            System.err.println("/sort 컨트롤러로 넘어옴:::::::::::::::::");
             modelMap.addAttribute("rtnData", smPopService.selectMnPopList(smcPopDTO));
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             smcPopDTO.setModId(coaAdmDTO.getId());
             smcPopDTO.setModIp(coaAdmDTO.getLoginIp());
             smcPopDTO.setDvcCd(gubun);
+
             smPopService.updateOrder(smcPopDTO);
             mav.setViewName("jsonView");
 
         }
         catch (Exception e)
-        {System.err.println("e 메시지::" + e);
+        {
             if (log.isErrorEnabled())
             {
                 log.debug(e.getMessage());

@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/sm/smc/SMCPopListCtrl">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/sm/smd/SMDPsnIfListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
         <form class="form-horizontal" id="frmSearch" name="frmSearch" method="post" action="" data-del-type="account">
             <!-- 현재 페이징 번호 -->
@@ -13,7 +13,6 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
-            <input type="hidden" id="gubun" name="gubun" value="pc" />
             <input type="hidden" id="seq" name="seq" value="" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
@@ -21,25 +20,7 @@
                 <jsp:param name="periodType" value="notSelect" />
             </jsp:include>
             <!--기간 검색 종료-->
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">구분</label>
-                    <div class="col-sm-5">
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxAll" />
-                            <span class="ion-checkmark-round"></span> 전체
-                        </label>
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="typeCdList" value="image" <c:if test="${fn:contains(rtnData.typeCd, 'Y')}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> 이미지
-                        </label>
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="typeCdList" value="html" <c:if test="${fn:contains(rtnData.typeCd, 'N')}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> HTML
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
+
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">노출여부</label>
@@ -100,7 +81,6 @@
                 </div>
                 <div class="pull-right">
                     <%--<button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">다중순서변경</button>--%>
-                    <button type="button" class="btn btn-primary btn-sm mb-sm" id="btnUseYn">미노출</button>
                     <button type="button" class="btn btn-danger btn-sm mb-sm" id="btn_delete">선택삭제</button>
                     <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>
@@ -117,15 +97,12 @@
                             </label>
                         </th>
                         <th class="text-center">선택</th>
-                        <th class="text-center">구분</th>
                         <th class="text-center">제목</th>
-                        <th class="text-center">게시 기간</th>
                         <th class="text-center">최초 등록자</th>
                         <th class="text-center">최초 등록일</th>
                         <th class="text-center">최종 수정자</th>
                         <th class="text-center">최종 수정일</th>
                         <th class="text-center">노출 여부</th>
-                        <th class="text-center">노출 순서</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

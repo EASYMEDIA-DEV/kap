@@ -4,7 +4,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // set controller name
     var exports = {
-        controller : "controller/sm/smd/SMDPsnIfListCtrl"
+        controller: "controller/sm/smd/SMDPsnIfListCtrl"
     };
 
     // get controller object
@@ -12,28 +12,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-
-    //목록 조회
-    var search = function(page){
-        //data로 치환해주어야한다.
-        //cmmCtrl.setFormData($formObj);
-
-        if(page != undefined){
-            $formObj.find("#pageIndex").val(page);
-        }
-        cmmCtrl.listFrmAjax(function(respObj) {
-            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
-            //CALLBACK 처리
-            ctrl.obj.find("#listContainer").html(respObj);
-
-            //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
-
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "./list", $formObj, "POST", "html");
-    }
+    var $excelObj = ctrl.obj.parent().find(".excel-down");
 
     // set model
     ctrl.model = {
@@ -45,33 +24,83 @@ define(["ezCtrl"], function(ezCtrl) {
                         search(1);
                     }
                 }
+            },
+            listRowSize : {
+                event : {
+                    change : function(){
+                        search(1);
+                    }
+                }
+            },
+            btn_delete : {
+                event: {
+                    click: function () {
+                        var frmDataObj    = $(this).closest("form");
+                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
+                        if(confirm("삭제 처리하겠습니끼?"))
+                        {
+                            //삭제 전송
+                            cmmCtrl.frmAjax(function(respObj){
+                                if(respObj != undefined && respObj.respCnt > 0){
+                                    var msg = "삭제되었습니다.";
+
+                                    alert(msg);
+                                    $formObj.find("#btnSearch").click();
+                                }
+                                else{
+                                    alert(msgCtrl.getMsg("fail.act"));
+                                }
+                            }, "./delete", frmDataObj, "POST", "json");
+                        }
+
+                    }
+                }
+            },
+            btnUseYn : {
+                event : {
+                    click : function() {
+                        var frmDataObj    = $(this).closest("form");
+                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
+                        if(confirm("미노출 처리하겠습니까?"))
+                        {
+                            //삭제 전송
+                            cmmCtrl.frmAjax(function(respObj){
+                                if(respObj != undefined && respObj.respCnt > 0){
+                                    var msg = "미노출 처리가 완료되었습니다.";
+
+                                    alert(msg);
+                                    $formObj.find("#btnSearch").click();
+                                }
+                                else{
+                                    alert(msgCtrl.getMsg("fail.act"));
+                                }
+                            }, "./use-yn-update", frmDataObj, "POST", "json");
+                        }
+                    }
+                }
             }
         },
         classname : {
-            // 페이징 처리
             pageSet : {
                 event : {
                     click : function() {
-                        //페이징 이동
                         if( $(this).attr("value") != "null" ){
-                            $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
-                            search();
+                            search($(this).attr("value"));
                         }
                     }
                 }
             },
-            // 상세보기
+            //상세보기
             listView : {
                 event : {
                     click : function() {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
-                        $formObj.find("input[name=detailsKey]").val(detailsKey);
+                        $formObj.find("input[name=seq]").val(detailsKey);
                         location.href = "./write?" + $formObj.serialize();
                     }
                 }
             },
-            // 페이징 목록 갯수
             listRowSizeContainer : {
                 event : {
                     change : function(){
@@ -83,12 +112,33 @@ define(["ezCtrl"], function(ezCtrl) {
             }
         },
         immediately : function() {
-            // 리스트 조회
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
-            search();
+
+            search($formObj.find("input[name=pageIndex]").val());
         }
     };
+
+    //목록 조회
+    var search = function(page){
+        //data로 치환해주어야한다.
+        //cmmCtrl.setFormData($formObj);
+        if(page != undefined){
+            $formObj.find("#pageIndex").val(page);
+        }
+        cmmCtrl.listFrmAjax(function(respObj) {
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+            //CALLBACK 처리
+            ctrl.obj.find("#listContainer").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+
+            //총 건수
+            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
+        }, "./select", $formObj, "GET", "html");
+    }
 
     ctrl.exec();
 

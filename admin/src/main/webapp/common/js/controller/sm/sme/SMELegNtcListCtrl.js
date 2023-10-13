@@ -4,12 +4,11 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // set controller name
     var exports = {
-        controller: "controller/sm/smc/SMCPopListCtrl"
+        controller: "controller/sm/sme/SMELegNtcListCtrl"
     };
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
-
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
@@ -54,57 +53,6 @@ define(["ezCtrl"], function(ezCtrl) {
                             }, "./delete", frmDataObj, "POST", "json");
                         }
 
-                    }
-                }
-            },
-            btnSort : {
-                event : {
-                    click : function () {
-
-                        var btn = $(this),
-                            td = btn.parents("td"),
-                            key = td.data("key"),
-                            sort = td.data("value"),
-                            index = btn.parent().index(),
-                            sortType = btn.attr('name') === 'sortUp' ? 'UP' : 'DOWN';
-
-                        if(sortType != null) {
-
-                            //if(sortType == 'UP' && $("pageIndex").val() == '1' && btn.parents('tr').prev().length == 0) {
-                            if(sortType == 'UP' && btn.parents('tr').prev().length == 0) {
-                                return false;
-                                //} else if (sortType == 'DOWN' && $("pageIndex").val() == $(".pagination").children().length && btn.parents('tr').next().length == 0) {
-                            } else if (sortType == 'DOWN' && btn.parents('tr').next().length == 0) {
-                                return false;
-                            }
-
-                            var ajaxData = {
-                                seq : key,
-                                ord : sort,
-                                sortType : sortType
-                            }
-
-                            console.log(JSON.stringify(ajaxData, null, 2));
-
-                            $("#frmSearch").serializeArray().forEach(function(field) {
-                                if (field.name != 'seq') {
-                                    ajaxData[field.name] = field.value;
-                                }
-                            });
-
-                            $.ajax({
-                                type: "post",
-                                url: "./sort",
-                                dataType: "json",
-                                data: ajaxData,
-                                success: function(r) {
-                                    alert('노출 순서가 변경되었습니다.');
-
-                                    cmmCtrl.setFormData($formObj);
-                                    search($("pageIndex").val());
-                                 }
-                            })
-                        }
                     }
                 }
             },
@@ -189,7 +137,7 @@ define(["ezCtrl"], function(ezCtrl) {
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "./select", $formObj, "POST", "html");
+        }, "./select", $formObj, "GET", "html");
     }
 
     ctrl.exec();
