@@ -12,7 +12,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-    console.log($formObj);
     var langCd = $("#langCd").val();
     var menuSeq = $("#typeCd").val();
     //목록 조회

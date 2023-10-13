@@ -1,412 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kap.service.dao.SMBMnVslMapper">
-
-    <!--
-        메인 비주얼 목록 조회
-    -->
-    <select id="selectMnVslList" parameterType="SMBMainVslDTO" resultType="SMBMainVslDTO">
-        SELECT /* SMBMnVslMapper.selectMnVslList */
-        SEQ
-        , TITL
-        , CONVERT(CHAR(16), STRT_DTM, 120) AS STRT_DTM
-        , CONVERT(CHAR(16), END_DTM, 120) AS END_DTM
-        , ODTM_YN
-        <choose>
-            <when test="gubun eq 'pc'.toString()">
-                , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
-                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
-                ELSE NULL END) AS GB
-            </when>
-            <when test="gubun eq 'mobile'.toString()">
-                , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
-                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
-                ELSE NULL END) AS GB
-            </when>
-        </choose>
-        , ORD
-        , USE_YN
-        , REG_ID
-        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
-        , REG_DTM
-        , MOD_ID
-        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
-        , MOD_DTM
-        , POSITION_ORD
-        FROM
-        SM_MAIN_VSL_MST A
-        <where>
-            AND LANG_CD = #{langCd}
-            AND DVC_CD = #{gubun}
-            <if test="strtDt != null and strtDt != ''">
-                <choose>
-                    <when test="srchDate == 1">
-                        AND REG_DTM <![CDATA[>=]]> CONVERT(DATETIME, #{strtDt})
-                    </when>
-                    <when test="srchDate == 2">
-                        AND MOD_DTM <![CDATA[>=]]> CONVERT(DATETIME, #{strtDt})
-                    </when>
-                    <when test="srchDate == 3">
-                        AND (END_DTM <![CDATA[>=]]> CONVERT(DATETIME, #{strtDt}) OR ODTM_YN = 'Y')
-                    </when>
-                </choose>
-            </if>
-            <if test="endDt != null and endDt != ''">
-                <choose>
-                    <when test="srchDate == 1">
-                        AND REG_DTM <![CDATA[<]]> DATEADD(DAY, 1, CONVERT(DATETIME, #{endDt}))
-                    </when>
-                    <when test="srchDate == 2">
-                        AND MOD_DTM <![CDATA[<]]> DATEADD(DAY, 1, CONVERT(DATETIME, #{endDt}))
-                    </when>
-                    <when test="srchDate == 3">
-                        AND (STRT_DTM <![CDATA[<=]]> DATEADD(DAY, 1, CONVERT(DATETIME, #{endDt})) OR ODTM_YN = 'Y')
-                    </when>
-                </choose>
-            </if>
-            <if test="gbArr.size() > 0">
-                <foreach collection="gbArr" item="gb" index="index" open="and (" close=")" separator=" OR ">
-                    <choose>
-                        <when test="gubun eq 'pc'.toString()">
-                            <choose>
-                                <when test="gb eq 'image'.toString()">
-                                    EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0)
-                                </when>
-                                <when test="gb eq 'video'.toString()">
-                                    EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0)
-                                </when>
-                            </choose>
-                        </when>
-                        <when test="gubun eq 'mobile'.toString()">
-                            <choose>
-                                <when test="gb eq 'image'.toString()">
-                                    EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0)
-                                </when>
-                                <when test="gb eq 'video'.toString()">
-                                    EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0)
-                                </when>
-                            </choose>
-                        </when>
-                    </choose>
-
-                </foreach>
-            </if>
-            <if test="positionOrdArr.size() > 0">
-                <foreach collection="positionOrdArr" item="positionOrd" index="index" open="and (" close=")" separator=" OR ">
-                    POSITION_ORD = #{positionOrd}
-                </foreach>
-            </if>
-            <if test="useYn != null and useYn != ''">
-                <choose>
-                    <when test="useYn instanceof String">
-                        AND USE_YN = #{useYn}
-                    </when>
-                    <otherwise>
-                        <foreach collection="useYn" item="cd" index="index" open="and (" close=")" separator=" OR ">
-                            USE_YN = #{cd}
-                        </foreach>
-                    </otherwise>
-                </choose>
-            </if>
-            <if test="q != null and q != ''">
-                <choose>
-                    <when test="f == 1">
-                        AND CHARINDEX(#{q}, TITL) <![CDATA[>]]> 0
-                    </when>
-                    <when test="f == 2">
-                        AND (
-                        CHARINDEX(#{q}, REG_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND CHARINDEX(#{q}, NAME) <![CDATA[>]]> 0)
-                        )
-                    </when>
-                    <when test="f == 3">
-                        AND (
-                        CHARINDEX(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND CHARINDEX(#{q}, NAME) <![CDATA[>]]> 0)
-                        )
-                    </when>
-                    <otherwise>
-                        AND(
-                        CHARINDEX(#{q}, TITL) <![CDATA[>]]> 0 OR
-                        CHARINDEX(#{q}, REG_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND CHARINDEX(#{q}, NAME) <![CDATA[>]]> 0) OR
-                        CHARINDEX(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND CHARINDEX(#{q}, NAME) <![CDATA[>]]> 0)
-                        )
-                    </otherwise>
-                </choose>
-            </if>
-        </where>
-        ORDER BY
-        ORD DESC
-    </select>
-
-    <!--
-        메인 비주얼 상세 조회
-    -->
-    <select id="selectMnVslDtl" parameterType="SMBMainVslDTO" resultType="SMBMainVslDTO">
-        SELECT /* SMBMnVslMapper.selectMnVslDtl */
-            SEQ
-             , TITL
-             , CONVERT(CHAR(16), STRT_DTM, 120) AS STRT_DTM
-             , CONVERT(CHAR(16), END_DTM, 120) AS END_DTM
-             , ODTM_YN
-             , POSITION_ORD
-             , PC_ATCH_FILE_ID
-             , MBL_IMG_FILE_ID
-             , MN_COPY
-             , MN_HEX_CD
-             , SUB_COPY
-             , SUB_HEX_CD
-             , LINK_URL
-             , NEW_WNDW_YN
-             , USE_YN
-             , REG_ID
-             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
-             , REG_DTM
-             , MOD_ID
-             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
-             , MOD_DTM
-        FROM
-            SM_MAIN_VSL_MST A
-        WHERE 1=1
-          AND SEQ = #{detailsKey}
-          AND DVC_CD = #{gubun}
-    </select>
-
-    <!--
-        메인 비주얼 등록
-    -->
-    <insert id="insertMnVsl" parameterType="SMBMainVslDTO">
-        <selectKey keyProperty="ord" resultType="java.lang.Integer" order="BEFORE">
-            SELECT ISNULL(MAX(ORD), 0) + 1 FROM SM_MAIN_VSL_MST
-        </selectKey>
-        INSERT /* SMBMnVslMapper.insertMnVsl */ INTO SM_MAIN_VSL_MST
-        ( SEQ
-        , LANG_CD
-        , DVC_CD
-        , TITL
-        , STRT_DTM
-        , END_DTM
-        , ODTM_YN
-        , POSITION_ORD
-        , PC_ATCH_FILE_ID
-        , MBL_IMG_FILE_ID
-        , MN_COPY
-        , MN_HEX_CD
-        , SUB_COPY
-        , SUB_HEX_CD
-        , LINK_URL
-        , NEW_WNDW_YN
-        , ORD
-        , USE_YN
-        , REG_ID
-        , REG_IP
-        , REG_DTM
-        )
-        VALUES
-        ( #{detailsKey}
-        , #{langCd}
-        , #{gubun}
-        , #{titl}
-        <choose>
-            <when test="odtmYn == 'Y'.toString()">
-                , NULL
-                , NULL
-            </when>
-            <otherwise>
-                , CONVERT(DATETIME, #{strtDtm})
-                , CONVERT(DATETIME, #{endDtm})
-            </otherwise>
-        </choose>
-        , #{odtmYn}
-        , #{positionOrd}
-        <choose>
-            <when test="gubun eq 'pc'.toString()">
-                , #{pcAtchFileId}
-                , NULL
-            </when>
-            <when test="gubun eq 'mobile'.toString()">
-                , NULL
-                , #{mblImgFileId}
-            </when>
-        </choose>
-        , #{mnCopy}
-        , #{mnHexCd}
-        , #{subCopy}
-        , #{subHexCd}
-        , #{linkUrl}
-        , #{newWndwYn}
-        , #{ord}
-        , #{useYn}
-        , #{admId}
-        , #{admIp}
-        , GETDATE()
-        )
-    </insert>
-
-    <!--
-        메인 비주얼 수정
-    -->
-    <update id="updateMnVsl" parameterType="SMBMainVslDTO">
-        UPDATE /* SMBMnVslMapper.updateMnVsl */ SM_MAIN_VSL_MST
-        SET
-        TITL = #{titl}
-        <choose>
-            <when test="odtmYn == 'Y'.toString()">
-                , STRT_DTM = NULL
-                , END_DTM = NULL
-            </when>
-            <otherwise>
-                , STRT_DTM = CONVERT(DATETIME, #{strtDtm})
-                , END_DTM = CONVERT(DATETIME, #{endDtm})
-            </otherwise>
-        </choose>
-        , ODTM_YN = #{odtmYn}
-        , POSITION_ORD = #{positionOrd}
-        <choose>
-            <when test="gubun eq 'pc'.toString()">
-                , PC_ATCH_FILE_ID = #{pcAtchFileId}
-                , MBL_IMG_FILE_ID = NULL
-            </when>
-            <when test="gubun eq 'mobile'.toString()">
-                , PC_ATCH_FILE_ID = NULL
-                , MBL_IMG_FILE_ID = #{mblImgFileId}
-            </when>
-        </choose>
-        , MN_COPY = #{mnCopy}
-        , MN_HEX_CD = #{mnHexCd}
-        , SUB_COPY = #{subCopy}
-        , SUB_HEX_CD = #{subHexCd}
-        , LINK_URL = #{linkUrl}
-        , NEW_WNDW_YN = #{newWndwYn}
-        , USE_YN = #{useYn}
-        , MOD_ID = #{admId}
-        , MOD_IP = #{admIp}
-        , MOD_DTM = GETDATE()
-        WHERE 1=1
-        AND SEQ = #{detailsKey}
-        AND DVC_CD = #{gubun}
-    </update>
-
-    <!--
-        메인 비주얼 삭제
-    -->
-    <delete id="deleteMnVsl" parameterType="SMBMainVslDTO">
-        DELETE /* SMBMnVslMapper.deleteMnVsl */
-        FROM
-        SM_MAIN_VSL_MST
-        <where>
-            <choose>
-                <when test="models != null">
-                    SEQ IN
-                    <foreach collection="modelsList" item="item" index="index" separator=", " open="(" close=")">
-                        #{item.detailsKey}
-                    </foreach>
-                </when>
-                <otherwise>
-                    SEQ = #{detailsKey}
-                </otherwise>
-            </choose>
-            AND DVC_CD = #{gubun}
-        </where>
-    </delete>
-
-    <!--
-        메인 비주얼 사용 여부 수정
-    -->
-    <update id="updateUseYn" parameterType="SMBMainVslDTO">
-        UPDATE /* SMBMnVslMapper.updateUseYn */ SM_MAIN_VSL_MST
-        SET
-        USE_YN = 'N'
-        , MOD_ID = #{admId}
-        , MOD_IP = #{admIp}
-        , MOD_DTM = GETDATE()
-        <where>
-            <choose>
-                <when test="models != null">
-                    SEQ IN
-                    <foreach collection="modelsList" item="item" index="index" separator=", " open="(" close=")">
-                        #{item.detailsKey}
-                    </foreach>
-                </when>
-                <otherwise>
-                    SEQ = #{detailsKey}
-                </otherwise>
-            </choose>
-        </where>
-        AND DVC_CD = #{gubun}
-    </update>
-
-    <!--
-        메인 비주얼 정렬 수정
-    -->
-    <update id="updateOrder" parameterType="SMBMainVslDTO">
-        UPDATE /* SMBMnVslMapper.updateOrder */ SM_MAIN_VSL_MST
-        SET
-            ORD = #{ord}
-          , MOD_ID = #{admId}
-          , MOD_IP = #{admIp}
-          , MOD_DTM = GETDATE()
-        WHERE 1=1
-          AND SEQ = #{detailsKey}
-          AND DVC_CD = #{gubun}
-    </update>
-
-    <!--
-        노출=Y 메인 비주얼 개수
-    -->
-    <select id="selectMnVslCnt" parameterType="SMBMainVslDTO"  resultType="java.lang.Integer">
-        SELECT /* SMBMnVslMapper.selectMnVslCnt */
-        COUNT(SEQ)
-        FROM SM_MAIN_VSL_MST
-        WHERE 1=1
-        AND LANG_CD = #{langCd}
-        AND DVC_CD = #{gubun}
-        AND USE_YN = 'Y'
-        AND POSITION_ORD = #{positionOrd}
-        <if test="detailsKey != null and detailsKey != '' ">
-            AND SEQ <![CDATA[<>]]> #{detailsKey}
-        </if>
-    </select>
-
-    <!--
-        기존에 노출 중인 메인 비주얼
-    -->
-    <select id="selectNowMnVsl" parameterType="SMBMainVslDTO"  resultType="SMBMainVslDTO">
-        SELECT /* SMBMnVslMapper.selectNowMnVsl */ TOP(1)
-        POSITION_ORD
-        <choose>
-            <when test="gubun eq 'pc'.toString()">
-                , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
-                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.PC_ATCH_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
-                ELSE NULL END) AS BEFORE_GB
-            </when>
-            <when test="gubun eq 'mobile'.toString()">
-                , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
-                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = A.MBL_IMG_FILE_ID AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
-                ELSE NULL END) AS BEFORE_GB
-            </when>
-        </choose>
-        <choose>
-            <when test="gubun eq 'pc'.toString()">
-                , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = #{pcAtchFileId} AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
-                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = #{pcAtchFileId} AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
-                ELSE NULL END) AS NOW_GB
-            </when>
-            <when test="gubun eq 'mobile'.toString()">
-                , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = #{mblImgFileId} AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'
-                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ATCH_FILE_ID = #{mblImgFileId} AND ISNULL(USE_YN, 'Y') = 'Y' AND CHARINDEX(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'
-                ELSE NULL END) AS NOW_GB
-            </when>
-        </choose>
-        FROM SM_MAIN_VSL_MST A
-        WHERE 1=1
-        AND LANG_CD = #{langCd}
-        AND DVC_CD = #{gubun}
-        AND USE_YN = 'Y'
-        AND POSITION_ORD = #{positionOrd}
-        ORDER BY MOD_DTM DESC
-    </select>
-
-</mapper>
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"><mapper namespace="com.kap.service.dao.SMBMnVslMapper">    <!--        메인 비주얼 목록 조회    -->    <select id="selectMnVslList" parameterType="SMBMainVslDTO" resultType="SMBMainVslDTO">        SELECT /* SMBMnVslMapper.selectMnVslList */            SEQ,            TITL,            DATE_FORMAT(STRT_DTM, '%Y-%m-%d %H:%i:%s') AS STRT_DTM,            DATE_FORMAT(END_DTM, '%Y-%m-%d %H:%i:%s') AS END_DTM,            ODTM_YN,            MAIN_YN,            REG_ID,            (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM,            REG_DTM,            MOD_ID,            MOD_DTM,            ORD,            DVC_CD        FROM            SM_MAIN_VSL_MST A        WHERE 1=1            AND DVC_CD = #{gubun}            AND LANG_CD = #{langCd}            <if test="strtDtm != null and strtDtm != ''">                <choose>                    <when test="srchDate == 1">                        AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')                    </when>                    <when test="srchDate == 2">                        AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')                    </when>                </choose>            </if>            <if test="endDtm != null and endDtm != ''">                <choose>                    <when test="srchDate == 1">                        AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)                    </when>                    <when test="srchDate == 2">                        AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)                    </when>                </choose>            </if>            <if test="mainYnList != null and mainYnList.size() > 0">                AND (                <foreach collection="mainYnList" item="mainYn" index="index" open="" close="" separator=" OR ">                    MAIN_YN = #{mainYn}                </foreach>                )            </if>            <if test="q != null and q != ''">                <choose>                    <when test="f == 0">                        AND TITL LIKE CONCAT('%', #{q}, '%')                    </when>                    <when test="f == 1">                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID), '(', REG_ID,')') LIKE CONCAT('%', #{q}, '%')                    </when>                    <when test="f == 2">                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID), '(', MOD_ID,')') LIKE CONCAT('%', #{q}, '%')                    </when>                    <when test="f == 3">                        AND YEAR LIKE CONCAT('%', #{q}, '%')                    </when>                    <otherwise>                        AND (                        (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) LIKE CONCAT('%', #{q}, '%')                        OR TITL LIKE CONCAT('%', #{q}, '%')                        OR CNTS LIKE CONCAT('%', #{q}, '%')                        )                    </otherwise>                </choose>            </if>            ORDER BY            REG_DTM DESC    </select>    <select id="selectMnVsldTotCnt" parameterType="SMBMainVslDTO" resultType="java.lang.Integer">        SELECT  count(*)        FROM SM_MAIN_VSL_MST        WHERE DVC_CD = #{gubun}    </select>    <!--        메인 비주얼 상세 조회    -->    <select id="selectMnVslDtl" parameterType="SMBMainVslDTO" resultType="SMBMainVslDTO">        SELECT /* SMBMnVslMapper.selectMnVslDtl */            SEQ             , TITL             , STRT_DTM             , END_DTM             , ODTM_YN             , POSITION_ORD             , PC_ATCH_FILE_SEQ             , MBL_ATCH_FILE_SEQ             , MN_COPY             , MN_HEX_CD             , SUB_COPY             , SUB_HEX_CD             , LINK_URL             , NEW_WNDW_YN             , MAIN_YN             , REG_ID             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM             , REG_DTM             , MOD_ID             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM             , MOD_DTM        FROM            SM_MAIN_VSL_MST A        WHERE 1=1          AND SEQ = #{detailsKey}          AND DVC_CD = #{gubun}    </select>    <!--        메인 비주얼 등록    -->    <insert id="insertMnVsl" parameterType="SMBMainVslDTO">        <selectKey keyProperty="ord" resultType="java.lang.Integer" order="BEFORE">            SELECT NULLIF(MAX(ORD), 0) + 1 FROM SM_MAIN_VSL_MST        </selectKey>        INSERT /* SMBMnVslMapper.insertMnVsl */ INTO SM_MAIN_VSL_MST        ( SEQ        , LANG_CD        , DVC_CD        , TITL        , STRT_DTM        , END_DTM        , ODTM_YN        , POSITION_ORD        , PC_ATCH_FILE_SEQ        , MBL_ATCH_FILE_SEQ        , MN_COPY        , MN_HEX_CD        , SUB_COPY        , SUB_HEX_CD        , LINK_URL        , NEW_WNDW_YN        , ORD        , MAIN_YN        , REG_ID        , REG_IP        , REG_DTM        )        VALUES        ( #{seq}        , #{langCd}        , #{gubun}        , #{titl}        <choose>            <when test="odtmYn == 'Y'.toString()">                , NULL                , NULL            </when>            <otherwise>                , #{strtDtm}                , #{endDtm}            </otherwise>        </choose>        , #{odtmYn}        , #{positionOrd}        <choose>            <when test="gubun eq 'pc'.toString()">                , #{pcAtchFileSeq}                , NULL            </when>            <when test="gubun eq 'mobile'.toString()">                , NULL                , #{mblAtchFileSeq}            </when>        </choose>        , #{mnCopy}        , #{mnHexCd}        , #{subCopy}        , #{subHexCd}        , #{linkUrl}        , #{newWndwYn}        , #{ord}        , #{mainYn}        , #{regId}        , #{regIp}        , NOW()        )    </insert>    <!--        메인 비주얼 수정    -->    <update id="updateMnVsl" parameterType="SMBMainVslDTO">        UPDATE /* SMBMnVslMapper.updateMnVsl */ SM_MAIN_VSL_MST        SET        TITL = #{titl}        <choose>            <when test="odtmYn == 'Y'.toString()">                , STRT_DTM = NULL                , END_DTM = NULL            </when>            <otherwise>                , STRT_DTM = #{strtDtm}                , END_DTM = #{endDtm}            </otherwise>        </choose>        , ODTM_YN = #{odtmYn}        , POSITION_ORD = #{positionOrd}        <choose>            <when test="gubun eq 'pc'.toString()">                , PC_ATCH_FILE_SEQ = #{pcAtchFileSeq}                , MBL_ATCH_FILE_SEQ = NULL            </when>            <when test="gubun eq 'mobile'.toString()">                , PC_ATCH_FILE_SEQ = NULL                , MBL_ATCH_FILE_SEQ = #{mblAtchFileSeq}            </when>        </choose>        , MN_COPY = #{mnCopy}        , MN_HEX_CD = #{mnHexCd}        , SUB_COPY = #{subCopy}        , SUB_HEX_CD = #{subHexCd}        , LINK_URL = #{linkUrl}        , NEW_WNDW_YN = #{newWndwYn}        , MAIN_YN = #{mainYn}        , MOD_ID = #{regId}        , MOD_IP = #{regIp}        , MOD_DTM = NOW()        WHERE 1=1        AND SEQ = #{detailsKey}        AND DVC_CD = #{gubun}    </update>    <!--        메인 비주얼 삭제    -->    <delete id="deleteMnVsl" parameterType="SMBMainVslDTO">        DELETE /* SMBMnVslMapper.deleteMnVsl */        FROM        SM_MAIN_VSL_MST        <where>            <choose>                <when test="delValueList != null and delValueList.size() > 0">                    SEQ IN                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">                        #{delValueList}                    </foreach>                </when>                <otherwise>                    SEQ = #{detailsKey}                </otherwise>            </choose>            AND DVC_CD = #{gubun}        </where>    </delete>    <!--        메인 비주얼 사용 여부 수정    -->    <update id="updatemainYn" parameterType="SMBMainVslDTO">        UPDATE /* SMBMnVslMapper.updatemainYn */ SM_MAIN_VSL_MST        SET        MAIN_YN = 'N'        , MOD_ID = #{regId}        , MOD_IP = #{regIp}        , MOD_DTM = NOW()         where         DVC_CD = #{gubun}    </update>    <!--        메인 비주얼 정렬 수정    -->    <update id="updateOrder" parameterType="SMBMainVslDTO">        UPDATE /* SMBMnVslMapper.updateOrder */ SM_MAIN_VSL_MST        SET            ORD = #{ord}          , MOD_ID = #{regId}          , MOD_IP = #{regIp}          , MOD_DTM = NOW()        WHERE 1=1          AND SEQ = #{detailsKey}          AND DVC_CD = #{gubun}    </update>    <!--        노출=Y 메인 비주얼 개수    -->    <select id="selectMnVslCnt" parameterType="SMBMainVslDTO"  resultType="java.lang.Integer">        SELECT /* SMBMnVslMapper.selectMnVslCnt */        COUNT(SEQ)        FROM SM_MAIN_VSL_MST        WHERE 1=1        AND LANG_CD = #{langCd}        AND DVC_CD = #{gubun}        AND MAIN_YN = 'Y'        AND POSITION_ORD = #{positionOrd}        <if test="detailsKey != null and detailsKey != '' ">            AND SEQ <![CDATA[<>]]> #{detailsKey}        </if>    </select>    <!--        기존에 노출 중인 메인 비주얼    -->    <select id="selectNowMnVsl" parameterType="SMBMainVslDTO"  resultType="SMBMainVslDTO">        SELECT /* SMBMnVslMapper.selectNowMnVsl */        <choose>            <when test="gubun eq 'pc'.toString()">                (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ORGN_FILE_NM = A.PC_ATCH_FILE_SEQ AND IFNULL(MAIN_YN, 'Y') = 'Y' AND instr(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ORGN_FILE_NM = A.PC_ATCH_FILE_SEQ AND IFNULL(MAIN_YN, 'Y') = 'Y' AND instr(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'                ELSE NULL END) AS BEFORE_GB            </when>            <when test="gubun eq 'mobile'.toString()">                (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ORGN_FILE_NM = A.MBL_ATCH_FILE_SEQ AND IFNULL(MAIN_YN, 'Y') = 'Y' AND instr(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ORGN_FILE_NM = A.MBL_ATCH_FILE_SEQ AND IFNULL(MAIN_YN, 'Y') = 'Y' AND instr(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'                ELSE NULL END) AS BEFORE_GB            </when>        </choose>        <choose>            <when test="gubun eq 'pc'.toString()">                , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ORGN_FILE_NM = #{pcAtchFileSeq} AND IFNULL(MAIN_YN, 'Y') = 'Y' AND instr(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ORGN_FILE_NM = #{pcAtchFileSeq} AND IFNULL(MAIN_YN, 'Y') = 'Y' AND instr(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'                ELSE NULL END) AS NOW_GB            </when>            <when test="gubun eq 'mobile'.toString()">                , (CASE WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ORGN_FILE_NM = #{mblAtchFileSeq} AND IFNULL(MAIN_YN, 'Y') = 'Y' AND instr(FILE_EXTN, #{imageExtns}) <![CDATA[>]]> 0) THEN 'image'                WHEN EXISTS(SELECT 'x' FROM CO_FILE_DTL WHERE ORGN_FILE_NM = #{mblAtchFileSeq} AND IFNULL(MAIN_YN, 'Y') = 'Y' AND instr(FILE_EXTN, #{videoExtns}) <![CDATA[>]]> 0) THEN 'video'                ELSE NULL END) AS NOW_GB            </when>        </choose>        FROM SM_MAIN_VSL_MST A        WHERE 1=1        AND LANG_CD = #{langCd}        AND DVC_CD = #{gubun}        AND MAIN_YN = 'Y'        AND POSITION_ORD = #{positionOrd}        ORDER BY MOD_DTM DESC        LIMIT 1    </select></mapper>

@@ -30,15 +30,22 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 public class SMBMainVslDTO extends BaseDTO {
     // 순번 (primary key)
-    private Integer vslSeq;
+    private Integer seq;
     // 언어 코드
     private String langCd;
     // 디바이스 코드
     private String dvcCd;
+
+    private String gubun;
     // 제목
     private String titl;
+    private String strtDtm;
+    private String endDtm;
+
     // 게시 시작 일시
     private String postStrtDtm;
+    // url
+    private String linkUrl;
     // 게시 종료 일시
     private String postEndDtm;
     // 상시 여부
@@ -52,9 +59,10 @@ public class SMBMainVslDTO extends BaseDTO {
     // 서브 컬러 코드
     private String subHexCd;
     // PC 이미지/영상 파일 순번
-    private int pcAtchFileSeq;
+    private Integer pcAtchFileSeq;
+    private Integer fileSeq;
     // 모바일 이미지/영상 파일 순번
-    private int mblAtchFileSeq;
+    private Integer mblAtchFileSeq;
     // 링크 URL
     private String url;
     // 새창 여부
@@ -62,9 +70,17 @@ public class SMBMainVslDTO extends BaseDTO {
     // 정렬
     private Integer ord;
     // 노출 여부
-    private String useYn;
+    private String mainYn;
     // 배너 배치 위치 (상:10, 중:20, 하:30)
     private String positionOrd;
+
+    private String admId;
+    private String admIp;
+    private String regNm;
+    private String regId;
+    private String regIp;
+    private String modNm;
+    private String modId;
 
     // 이미지 파일 확장자
     private String imageExtns;
@@ -88,7 +104,7 @@ public class SMBMainVslDTO extends BaseDTO {
     private List<SMBMainVslDTO> list;
 
     // 검색 조건
-    private List<String> expsYnList;
+    private List<String> mainYnList;
 
     // 선택 항목
     private List<String> seqList;

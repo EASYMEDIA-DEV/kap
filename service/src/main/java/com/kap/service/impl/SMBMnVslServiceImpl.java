@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.SMBMainVslDTO;
 import com.kap.core.utility.COSeqGnrUtil;
 import com.kap.service.COFileService;
+import com.kap.service.COSeqGnrService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.SMBMnVslService;
 import com.kap.service.dao.SMBMnVslMapper;
@@ -20,9 +21,11 @@ import java.util.HashMap;
 public class SMBMnVslServiceImpl implements SMBMnVslService {
 
     // DAO
-    private COFileService cOFileService;
+    private final COFileService cOFileService;
 
-    private SMBMnVslMapper sMBMnVslMapper;
+    private final COSeqGnrService cOSeqGnrService;
+
+    private final SMBMnVslMapper sMBMnVslMapper;
 
     // 로그인 상태값 시스템 등록
     private final COSystemLogService cOSystemLogService;
@@ -37,7 +40,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
     // SEQ Gnr
     String tableNm = "MAIN_VSL_SEQ";
 
-    COSeqGnrUtil cOSeqGnrUtil;
+    private final COSeqGnrUtil cOSeqGnrUtil;
 
     /**
      * 메인 비주얼 목록 조회
@@ -51,17 +54,11 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
 
         page.setPageSize(pSMBMainVslDTO.getPageRowSize());
 
-        pSMBMainVslDTO.setFirstIndex( page.getFirstRecordIndex() );
-        pSMBMainVslDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+        pSMBMainVslDTO.setFirstIndex(page.getFirstRecordIndex());
+        pSMBMainVslDTO.setRecordCountPerPage(page.getRecordCountPerPage());
 
-        pSMBMainVslDTO.setImageExtns(imageExtns);
-        pSMBMainVslDTO.setVideoExtns(videoExtns);
-
-        pSMBMainVslDTO.setList( sMBMnVslMapper.selectMnVslList(pSMBMainVslDTO) );
-        pSMBMainVslDTO.setTotalCount( sMBMnVslMapper.selectMnVslCnt(pSMBMainVslDTO) );
-
-//        emfMap.put("gbArr", emfMap.getList("gb"));
-//        emfMap.put("positionOrdArr", emfMap.getList("positionOrd"));   //2023-01-10 메인 배너 3개 띄우기 위한 수정 (jds)
+        pSMBMainVslDTO.setTotalCount(sMBMnVslMapper.selectMnVsldTotCnt(pSMBMainVslDTO));
+        pSMBMainVslDTO.setList(sMBMnVslMapper.selectMnVslList(pSMBMainVslDTO));
 
         return pSMBMainVslDTO;
     }
@@ -77,7 +74,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         {
             info = sMBMnVslMapper.selectMnVslDtl(pSMBMainVslDTO);
 
-            if (info != null)
+            /*if (info != null)
             {
                 int pcAtchFileSeq = info.getPcAtchFileSeq();
 
@@ -92,7 +89,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
                 {
                     info.setFileList(cOFileService.getFileInfs(mblAtchFileSeq));
                 }
-            }
+            }*/
         }
 
         return info;
@@ -103,36 +100,32 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
      */
     public int insertMnVsl(SMBMainVslDTO pSMBMainVslDTO) throws Exception
     {
-
         HashMap<String, Integer> fileSeqMap;
 
         // PC 이미지/영상
         if(pSMBMainVslDTO.getDvcCd().equals("pc")) {
             fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
             pSMBMainVslDTO.setPcAtchFileSeq(fileSeqMap.get("fileSeq"));
-//            cOFileService.copyFileInfs(file, "pcAtchFileSeq", pSMBMainVslDTO.getPcAtchAddFile(), pSMBMainVslDTO.getPcAtchAddFileAlt());
         }
 
         // 모바일 이미지/영상
         if(pSMBMainVslDTO.getDvcCd().equals("mobile")) {
             fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
             pSMBMainVslDTO.setMblAtchFileSeq(fileSeqMap.get("fileSeq"));
-//            cOFileService.copyFileInfs(file, "mblAtchFileSeq", pSMBMainVslDTO.getMblAtchAddFile(), pSMBMainVslDTO.getMblAtchAddFileAlt());
         }
 
         // 기존 노출중인 메인 비주얼과 현재 업로드하는 메인 비주얼의 첨부파일 확장자가 같은지 확인
-        if("Y".equals(pSMBMainVslDTO.getUseYn())) {
+        if("Y".equals(pSMBMainVslDTO.getMainYn())) {
             pSMBMainVslDTO.setImageExtns(imageExtns);
             pSMBMainVslDTO.setVideoExtns(videoExtns);
             SMBMainVslDTO checkMnVsl = sMBMnVslMapper.selectNowMnVsl(pSMBMainVslDTO);
-
             if(checkMnVsl != null) {
                 String beforeMnVslExtn = checkMnVsl.getBeforeGb();
                 String nowMnVslExtn = checkMnVsl.getNowGb();
                 if(beforeMnVslExtn.equals(nowMnVslExtn)) {
                     // 2023-06-05 메인 비주얼 배너 업로드 개수 5개 제한 복원
                     if(this.selectMnVslCnt(pSMBMainVslDTO) < 5 ) {
-                        pSMBMainVslDTO.setVslSeq(cOSeqGnrUtil.getSeq(tableNm));
+                        pSMBMainVslDTO.setSeq(cOSeqGnrService.selectSeq(tableNm));
                         pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.insertMnVsl(pSMBMainVslDTO));
                     }else {
                         pSMBMainVslDTO.setRespCd("error");
@@ -147,7 +140,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
             else {
                 // 메인 비주얼 배너 업로드 개수 5개 제한
                 if(this.selectMnVslCnt(pSMBMainVslDTO) < 5 ) {
-                    pSMBMainVslDTO.setVslSeq(cOSeqGnrUtil.getSeq(tableNm));
+                    pSMBMainVslDTO.setSeq(cOSeqGnrService.selectSeq(tableNm));
                     pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.insertMnVsl(pSMBMainVslDTO));
                 }else {
                     pSMBMainVslDTO.setRespCd("error");
@@ -158,14 +151,13 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         else {
             // 메인 비주얼 배너 업로드 개수 5개 제한
             if(this.selectMnVslCnt(pSMBMainVslDTO) < 5 ) {
-                pSMBMainVslDTO.setVslSeq(cOSeqGnrUtil.getSeq(tableNm));
+                pSMBMainVslDTO.setSeq(cOSeqGnrUtil.getSeq(tableNm));
                 pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.insertMnVsl(pSMBMainVslDTO));
             }else {
                 pSMBMainVslDTO.setRespCd("error");
                 pSMBMainVslDTO.setRespMsg("CNTOVER");
             }
         }
-
         return pSMBMainVslDTO.getRespCnt();
     }
 
@@ -180,18 +172,15 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         if(pSMBMainVslDTO.getDvcCd().equals("pc")) {
             fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
             pSMBMainVslDTO.setPcAtchFileSeq(fileSeqMap.get("fileSeq"));
-//            cOFileService.copyFileInfs(emfMap, "pcAtchFileSeq", emfMap.getList("pcAtchAddFile"), emfMap.getList("pcAtchAddFileAlt"), emfMap.getString("pcAtchDelFile"));
         }
 
         // 모바일 이미지/영상
         if(pSMBMainVslDTO.getDvcCd().equals("mobile")) {
             fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
             pSMBMainVslDTO.setMblAtchFileSeq(fileSeqMap.get("fileSeq"));
-//            cOFileService.copyFileInfs(emfMap, "mblAtchFileSeq", emfMap.getList("mblAtchAddFile"), emfMap.getList("mblAtchAddFileAlt"), emfMap.getString("mblAtchDelFile"));
         }
-
         // 기존 노출중인 메인 비주얼과 현재 업로드하는 메인 비주얼의 첨부파일 확장자가 같은지 확인
-        if("Y".equals(pSMBMainVslDTO.getUseYn())) {
+        if("Y".equals(pSMBMainVslDTO.getMainYn())) {
             pSMBMainVslDTO.setImageExtns(imageExtns);
             pSMBMainVslDTO.setVideoExtns(videoExtns);
             SMBMainVslDTO checkMnVsl = sMBMnVslMapper.selectNowMnVsl(pSMBMainVslDTO);
@@ -204,13 +193,13 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
                     if(this.selectMnVslCnt(pSMBMainVslDTO) < 5 ) {
                         pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.updateMnVsl(pSMBMainVslDTO));
                     }else {
-                        pSMBMainVslDTO.setRespCd("error");
-                        pSMBMainVslDTO.setRespMsg("CNTOVER");
+                        pSMBMainVslDTO.setRespCd("-1");
+                        pSMBMainVslDTO.setRespMsg("업로드 개수를 확인해주세요.");
                     }
                 }
                 else {
-                    pSMBMainVslDTO.setRespCd("error");
-                    pSMBMainVslDTO.setRespMsg("FILE_MISS_MATCH");
+                    pSMBMainVslDTO.setRespCd("-1");
+                    pSMBMainVslDTO.setRespMsg("파일 확장자가 일치하지 않습니다.");
                 }
             }
             else {
@@ -218,21 +207,20 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
                 if(this.selectMnVslCnt(pSMBMainVslDTO) < 5 ) {
                     pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.updateMnVsl(pSMBMainVslDTO));
                 }else {
-                    pSMBMainVslDTO.setRespCd("error");
-                    pSMBMainVslDTO.setRespMsg("CNTOVER");
+                    pSMBMainVslDTO.setRespCd("-1");
+                    pSMBMainVslDTO.setRespMsg("업로드 개수를 확인해주세요.");
                 }
             }
         }
         else {
             // 2023-06-05 메인 비주얼 배너 업로드 개수 5개 제한 복원
-            if("N".equals(pSMBMainVslDTO.getUseYn()) || this.selectMnVslCnt(pSMBMainVslDTO) < 5 ) {
+            if("N".equals(pSMBMainVslDTO.getMainYn()) || this.selectMnVslCnt(pSMBMainVslDTO) < 5 ) {
                 pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.updateMnVsl(pSMBMainVslDTO));
             }else {
-                pSMBMainVslDTO.setRespCd("error");
-                pSMBMainVslDTO.setRespMsg("CNTOVER");
+                pSMBMainVslDTO.setRespCd("-1");
+                pSMBMainVslDTO.setRespMsg("업로드 개수를 확인해주세요.");
             }
         }
-
         return pSMBMainVslDTO.getRespCnt();
     }
 

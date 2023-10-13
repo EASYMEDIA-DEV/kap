@@ -2,8 +2,10 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COGBoardDTO;
+import com.kap.core.utility.COSeqGnrUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COGBoardService;
+import com.kap.service.COSeqGnrService;
 import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.COGBoardMapper;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,8 @@ public class COGBoardServiceImpl implements COGBoardService {
 
     //Mapper
     private final COGBoardMapper cOGBoardMapper;
+
+    private final COSeqGnrService cOSeqGnrService;
     //파일 서비스
     private final COFileService cOFileService;
     // DAO
@@ -45,6 +49,7 @@ public class COGBoardServiceImpl implements COGBoardService {
     private String fileUploadPath;
 
     String tableNm = "BOARD_SEQ";
+    COSeqGnrUtil cOSeqGnrUtil;
 
     /**
      * 게시판 조회
@@ -72,11 +77,7 @@ public class COGBoardServiceImpl implements COGBoardService {
         //파일 처리
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCOGBoardDTO.getFileList());
         pCOGBoardDTO.setFileSeq(fileSeqMap.get("fileSeq"));
-
-        pCOGBoardDTO.setTableNm(tableNm); // 게시판 시퀀스 번호
-        String detailsKey = cOGBoardMapper.selectSeqNum(pCOGBoardDTO.getTableNm());
-        pCOGBoardDTO.setDetailsKey(detailsKey);
-        cOGBoardMapper.updateBoardSeq(tableNm);
+        pCOGBoardDTO.setSeq(cOSeqGnrService.selectSeq(tableNm));
 
         return cOGBoardMapper.insertBoard(pCOGBoardDTO);
     }
@@ -100,6 +101,7 @@ public class COGBoardServiceImpl implements COGBoardService {
 
         return cOGBoardMapper.updateBoard(pCOGBoardDTO);
     }
+
     /**
      * 게시판 삭제
      */

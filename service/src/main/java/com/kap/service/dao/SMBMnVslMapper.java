@@ -22,6 +22,9 @@ public interface SMBMnVslMapper {
      * 메인 비주얼 등록
      */
     public int insertMnVsl(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
+    public int insertBoard(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
+
+    public int selectMnVsldTotCnt(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 
     /**
      * 메인 비주얼 수정
