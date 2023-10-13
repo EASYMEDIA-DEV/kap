@@ -29,6 +29,7 @@ import java.util.List;
  *	     since		  author	            description
  *    ==========    ==========    ==============================
  * 	  2020.10.19	  허진영	             최초 생성
+ * 	  2023.10.13	  임서화		    cms url을 관리자와 사용자 분리
  * </pre>
  */
 @Slf4j
@@ -67,7 +68,6 @@ public class COBMenuServiceImpl implements COBMenuService {
 		cOMenuDTO.setDpth(cOBMenuMapper.getDpth(cOMenuDTO));
 		cOBMenuMapper.setLftVal(cOMenuDTO);
 		cOBMenuMapper.setRhtVal(cOMenuDTO);
-
 		// 신규 메뉴 등록 시 관리자 메뉴 권한 관리 테이블에서 신규메뉴의 부모 seq 삭제
 		cOBMenuMapper.deleteAdmMenu(cOMenuDTO);
 
@@ -89,7 +89,15 @@ public class COBMenuServiceImpl implements COBMenuService {
 	 */
 	public int updateMenuInf(COMenuDTO cOMenuDTO) throws Exception
 	{
-		cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
+		String menuType = cOMenuDTO.getMenuType();
+
+		if(!menuType.equals("cms")){
+			cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
+		}else{
+			if(!"".equals(cOMenuDTO.getUserUrl())){
+				cOMenuDTO.setUserUrl(cOMenuDTO.getUserUrl()+"/content.do");
+			}
+		}
 		return cOBMenuMapper.updateMenuInf(cOMenuDTO);
 	}
 

@@ -38,7 +38,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value={"/mngwserc/co/cob/coba", "/mngwserc/{lnggCd}/co/cob/cobb"})
+@RequestMapping(value={"/mngwserc/co/cob/coba", "/mngwserc/{langCd}/co/cob/cobb"})
 public class COBMenuController {
 
 	//서비스
