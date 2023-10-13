@@ -19,8 +19,10 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
 
 /**
  * <pre>
@@ -252,7 +254,17 @@ public class COLgnController {
 		private String httpFrontUrl;
 		//사이트 관리자 URL
 		@Value("${app.admin-domain}")
-		private String httpAdmtUrl; 
+		private String httpAdmtUrl;
+
+		//관리자 이메일 템플릿 경로
+		@Value("${app.file.mail-tmpl-file-path}")
+		private String mailTmplFilePath;
+
+		//서버 유무(개발,운영)
+		//spring.config.activate.on-profile
+		@Value("${spring.config.activate.on-profile}")
+		private String serverProfile;
+
 
 		/**
 		 * 로그인을 처리한다.
@@ -265,8 +277,9 @@ public class COLgnController {
 			{
 				rtnCOLoginDTO = cOLgnService.actionLogin(cOLoginDTO, request);
 				COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
-				
-				if("0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
+
+				if(serverProfile.equals("real") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
+
 					//이메일 발송
 					COMailDTO cOMailDTO = new COMailDTO();
 					cOMailDTO.setSubject("["+siteName+"] 인증번호 안내");
@@ -285,11 +298,12 @@ public class COLgnController {
 					//인증요청일시
 					String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
 					cOMailDTO.setField2(field2);
-					cOMailService.sendMail(cOMailDTO, "/email/COAAdmLgnEmail.html");
+					cOMailService.sendMail(cOMailDTO, mailTmplFilePath+"/COAAdmLgnEmail.html");
 					RequestContextHolder.getRequestAttributes().setAttribute("tmpEmailAuthNum", authNum, RequestAttributes.SCOPE_SESSION);
 				}else{
 					// 로그인 세션 생성
 					RequestContextHolder.getRequestAttributes().setAttribute("loginMap", lgnCOAAdmDTO, RequestAttributes.SCOPE_SESSION);
+					rtnCOLoginDTO.setLgnCrtfnPassYn("Y");
 				}
 			}
 			catch (Exception e)

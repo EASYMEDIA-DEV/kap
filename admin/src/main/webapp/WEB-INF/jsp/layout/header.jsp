@@ -26,6 +26,7 @@
 		<link rel="stylesheet" href="/bootstrap/vendor/loaders.css/loaders.css" />
     	<link rel="stylesheet" href="/bootstrap/css/app.css" />
     	<link rel="stylesheet" href="/common/js/lib/datetimepicker/jquery.datetimepicker.css" />
+		<link rel="stylesheet" href="/common/ckeditor/plugins/codemirror/css/codemirror.min.css" />
     	<script type="text/javascript" src="/common/js/lib/jquery/jquery.1.12.4.js"></script>
     	<script type="text/javascript" src="/bootstrap/vendor/bootstrap/dist/js/bootstrap.js"></script>
 		<script type="text/javascript" src="/bootstrap/vendor/bootstrap/dist/js/bootstrap-submenu.js"></script>
@@ -42,12 +43,7 @@
 		<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js?${sysDate}"></script>
 		<!--메시지 공통-->
 		<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js?${sysDate}"></script>
-		<!-- DEXT5 에디터-->
-		<script type="text/javascript" src="/common/dext5editor/js/dext5editor.js"></script>
-		<script type="text/javascript" src="/common/js/controller/co/COEditor.js"></script>
-		<script src="/common/js/vue.js"></script>
-		<script src="/common/js/vue_page.js"></script>
-  	</head>
+	</head>
 	<c:set var="sidebarShowheader"  value="${kl:decode(cookie.sidebarShowheader.value,  '', 'checked', cookie.sidebarShowheader.value)}" />
 	<c:set var="sidebarShowtoolbar" value="${kl:decode(cookie.sidebarShowtoolbar.value, '', 'checked', cookie.sidebarShowtoolbar.value)}" />
 	<c:set var="sidebarOffcanvas"   value="${kl:decode(cookie.sidebarOffcanvas.value,   '', '',        cookie.sidebarOffcanvas.value)}" />
@@ -142,14 +138,14 @@
 			            	</a>
 			            	<ul class="dropdown-menu dropdown-menu-right">
 				                <li>
-				                	<a href="./profile"><em class="ion-home icon-fw"></em>Profile (${sessionScope.admLgnMap.name}님)</a>
+				                	<a href="./profile"><em class="ion-home icon-fw"></em>Profile (${sessionScope.loginMap.name}님)</a>
 				                </li>
 				                <li>
 				                	<a href="./logout"><em class="ion-log-out icon-fw"></em>Logout</a>
 				                </li>
 				                <li class="divider" role="presentation"></li>
 				                <li>
-				                	<a style="pointer-events: none"><em class="ion-location icon-fw"></em>${sessionScope.admLgnMap.loginIp}</a>
+				                	<a style="pointer-events: none"><em class="ion-location icon-fw"></em>${sessionScope.loginMap.loginIp}</a>
 				                </li>
 							</ul>
 			            </li>

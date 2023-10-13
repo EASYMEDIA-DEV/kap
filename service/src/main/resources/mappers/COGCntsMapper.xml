@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.COGCntsMapper">
+
+	<!--
+		쿼리명 : COGCntsMapper.getCntsListCnt
+		설  명 : CMS 목록을 갯수를 카운팅한다.
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.09.08    임서화       최초생성
+    -->
+	<select id="getCntsListCnt" parameterType="COGCntsDTO" resultType="java.lang.Integer">
+		SELECT /* COGCntsMapper.getCntsListCnt */
+			count(*)
+		FROM
+			CO_CNTS_MST
+		WHERE
+			MENU_SEQ = #{menuSeq}
+	</select>
+
+	<!--
+		 쿼리명 : COGCntsMapper.selectCntsList
+		 설  명 : CMS 목록을 조회한다.
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.08   임서화     최초생성
+	-->
+	<select id="selectCntsList" parameterType="COGCntsDTO" resultType="COGCntsDTO">
+		select /* COGCntsMapper.selectCntsList */
+			menu_seq
+		    , SEQ
+			, VER
+			, CNTS
+			, JS_CNTS
+			, PRCS_CD
+			, REG_ID
+		    , (SELECT NAME FROM CO_ADM_MST WHERE ID = #{regId}) AS REG_NM
+			, REG_DTM
+		from
+			CO_CNTS_MST
+		order by
+		reg_dtm desc
+	</select>
+
+	<!--
+		쿼리명 : COGCntsMapper.updateUseCnts
+		설  명 : CMS의 배포 여부를 변경한다.
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.08   임서화     최초생성
+	-->
+	<update id="updateUseCnts" parameterType="COGCntsDTO">
+		UPDATE  /*COGCntsMapper.updateUseCnts*/
+			CO_CNTS_MST
+		SET PRCS_CD = '20'
+		  , MOD_ID = #{modId}
+		  , MOD_IP = #{modIp}
+		  , MOD_DTM = NOW()
+		WHERE PRCS_CD = '10'
+		  AND MENU_SEQ	= #{menuSeq}
+	</update>
+
+	<!--
+		쿼리명 : COGCntsMapper.insertCnts
+		설  명 : CMS를 등록한다.
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.08   임서화     최초생성
+	-->
+	<insert id="insertCnts" parameterType="COGCntsDTO">
+		<selectKey keyProperty="ver" resultType="Integer" order="BEFORE">
+			SELECT IFNULL(MAX(ver)+1,1) FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
+		</selectKey>
+		INSERT /* COGCntsDAO.insertCnts */ INTO CO_CNTS_MST
+			( SEQ
+			, MENU_SEQ
+			, VER
+			, CNTS
+			, JS_CNTS
+			, PRCS_CD
+			, REG_ID
+			, REG_IP
+			, REG_DTM
+			, MOD_ID
+			, MOD_IP
+			, MOD_DTM
+			)
+			VALUES
+			( #{seq}
+			, #{menuSeq}
+			, #{ver}
+			, #{cnts}
+			, #{jsCnts}
+			, '10'
+			, #{regId}
+			, #{regIp}
+			, NOW()
+			, ''
+			, ''
+			, null
+			)
+	</insert>
+
+	<!--
+	  쿼리명 : COGCntsMapper.selectCntsDtl
+	  설  명 : CMS 컨텐츠의 상세를 조회한다.
+	   수정일     수정자       수정내용
+	 ==========   ======    ==============
+	 2023.09.08   임서화       최초생성
+	-->
+	<select id="selectCntsDtl" parameterType="COGCntsDTO" resultType="COGCntsDTO">
+		SELECT /* COGCntsMapper.selectCntsDtl */
+			SEQ
+			 , MENU_SEQ
+			 , CNTS
+			 , JS_CNTS
+			 , PRCS_CD
+			 , REG_ID
+			 , REG_DTM
+			 , MOD_ID
+			 , MOD_DTM
+		FROM
+			CO_CNTS_MST
+		WHERE
+			MENU_SEQ = #{menuSeq}
+		AND	SEQ = #{detailsKey}
+	</select>
+
+	<!--
+    쿼리명 : COGCntsMapper.updateCnts
+    설  명 : CMS 컨텐츠의 내용을 수정한다.
+     수정일	 수정자     수정내용
+    ==========   ======   =============
+    2023.09.08   임서화     최초생성
+	-->
+	<update id="updateCnts" parameterType="COGCntsDTO">
+		UPDATE  /*COGCntsMapper.updateCnts*/
+			CO_CNTS_MST
+		SET
+		   CNTS = #{cnts}
+		  , JS_CNTS = #{jsCnts}
+		  , MOD_ID = #{modId}
+		  , MOD_IP = #{modIp}
+		  , MOD_DTM = NOW()
+		WHERE
+		    MENU_SEQ = #{menuSeq}
+		AND	SEQ = #{detailsKey}
+	</update>
+
+
+	<!--
+         쿼리명 : COGCntsMapper.deleteCnts
+         설  명 : 콘텐츠를 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.08   임서화       최초생성
+    -->
+	<delete id="deleteCnts" parameterType="COGCntsDTO">
+		DELETE /* COGCntsMapper.deleteCnts */
+		FROM
+		CO_CNTS_MST
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					MENU_SEQ = #{menuSeq}
+					AND SEQ IN
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					MENU_SEQ = #{menuSeq}
+					AND	SEQ = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+
+</mapper>
+
+

@@ -36,4 +36,7 @@ public class COLoginDTO extends BaseDTO {
     private String emailAuthNum;
     //이메일2차인증여부
     private String lgnCrtfnYn;
+
+    //2차이메일 패스여부
+    private String lgnCrtfnPassYn;
 }
