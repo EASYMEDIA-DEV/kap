@@ -79,6 +79,8 @@ app:
     #template-file-path: /data/apps/tomcat_10111_kolon_web_admin/WEB-INF/template 나중에 바꿔야됨
     #template-file-path: D:\EGOVFRAME\project\KAP\admin\src\main\webapp\WEB-INF\template\email\
     template-file-path: /home/app/kap/admin/webapps/WEB-INF/template/email/
+    mail-tmpl-file-path: /home/app/kap/admin/webapps/WEB-INF/template/email/
+
 
 log4jdbc:
   dump:
