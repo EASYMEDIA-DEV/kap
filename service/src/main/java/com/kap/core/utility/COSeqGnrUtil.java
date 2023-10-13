@@ -13,16 +13,20 @@ public class COSeqGnrUtil {
 
     public int getSeq(String seqCode) throws Exception {
         int seq = 0;
-
-        if(!seqCode.isEmpty()) {
-            seq = cOSeqGnrMapper.getSeq(seqCode);
-            if(seq > 0) {
-                cOSeqGnrMapper.updateSeq(seqCode);
+        System.err.println("seqCode:::"+seqCode);
+        try {
+            if(!seqCode.isEmpty()) {
+                seq = cOSeqGnrMapper.selectSeq(seqCode);
+                if(seq > 0) {
+                    cOSeqGnrMapper.updateSeq(seqCode);
+                }
+                else {
+                    cOSeqGnrMapper.insertSeq(seqCode);
+                    return seq;
+                }
             }
-            else {
-                cOSeqGnrMapper.insertSeq(seqCode);
-                return seq;
-            }
+        }catch (Exception e){
+            System.err.println("e:::"+e);
         }
 
         return seq;

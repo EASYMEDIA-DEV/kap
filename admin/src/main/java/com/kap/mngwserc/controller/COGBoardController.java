@@ -3,7 +3,6 @@ package com.kap.mngwserc.controller;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COGBoardDTO;
-import com.kap.core.dto.COSeqDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COGBoardService;
 import com.kap.service.COUserDetailsHelperService;
@@ -129,7 +128,7 @@ public class COGBoardController {
      * 게시판 등록 페이지
      */
     @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String boardInsertPage(COGBoardDTO cogBoardDTO, ModelMap modelMap, @PathVariable int typeCd, COSeqDTO coSeqDTO, COFileDTO coFileDTO) throws Exception
+    public String boardInsertPage(COGBoardDTO cogBoardDTO, ModelMap modelMap, @PathVariable int typeCd) throws Exception
     {
         try
         {

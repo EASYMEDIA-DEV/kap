@@ -25,13 +25,11 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
-public class COSeqDTO extends BaseDTO {
+public class COSeqGnrDTO extends BaseDTO {
     // 시퀀스 값
     private int netxId;
     
     // 테이블 이름
     private String TableNm;
 
-    // 시퀀스 값 검색
-    public int getNetxId;
 }

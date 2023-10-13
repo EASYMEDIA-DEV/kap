@@ -4,7 +4,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // set controller name
     var exports = {
-        controller : "controller/sm/smb/SMBMainVslListCtrl"
+        controller : "controller/sm/smb/SMBMnVslListCtrl"
     };
 
     // get controller object
@@ -12,6 +12,8 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
+    var langCd = $("#langCd").val();
+    var gubun = $("#gubun").val();
 
     //목록 조회
     var search = function(page){
@@ -32,7 +34,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "./list", $formObj, "POST", "html");
+        }, "/mngwserc/"+langCd+"/sm/smb/"+gubun+"/select", $formObj, "POST", "html");
     }
 
     // set model
