@@ -21,5 +21,5 @@ public interface COSeqGnrService {
 	/**
      * 시퀀스 값을 조회한다.
      */
-    public int selectSeq(String tableNm) throws Exception;
+    public Integer selectSeq(String tableNm) throws Exception;
 }

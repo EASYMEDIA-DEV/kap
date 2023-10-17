@@ -82,7 +82,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function() {
-            console.log("/mngwserc/"+langCd+"/co/cog/board/"+menuSeq+"/select");
             //리스트 조회
             search();
         }

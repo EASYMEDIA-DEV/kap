@@ -2,7 +2,6 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COGBoardDTO;
-import com.kap.core.utility.COSeqGnrUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COGBoardService;
 import com.kap.service.COSeqGnrService;
@@ -49,7 +48,6 @@ public class COGBoardServiceImpl implements COGBoardService {
     private String fileUploadPath;
 
     String tableNm = "BOARD_SEQ";
-    COSeqGnrUtil cOSeqGnrUtil;
 
     /**
      * 게시판 조회
