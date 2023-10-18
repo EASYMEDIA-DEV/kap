@@ -1,4 +1,4 @@
-spring.config.activate.on-profile: dev, stg, prod
+spring.config.activate.on-profile: local, dev, stg, prod
 #MybatisConfig.java에서 사용할 설정
 mybatis-config:
   type-handlers-package: com.kap.core.dto.*
@@ -27,7 +27,7 @@ log4jdbc:
       maxlinelength: 0
 
 ---
-spring.config.activate.on-profile: dev
+spring.config.activate.on-profile: local, dev
 spring:
   db:
     datasource:

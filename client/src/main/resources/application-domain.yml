@@ -1,4 +1,4 @@
-spring.config.activate.on-profile: dev
+spring.config.activate.on-profile: local, dev
 domain:
   host: 127.0.0.1
   port: 9013

@@ -72,14 +72,6 @@ app:
     videoExtns: mp4,webm,wmv,avi,mkv
     #파일 업로드 크기
     max-size: 41943040
-    #템플릿 경로
-    #template-file-path: /data/apps/tomcat_10111_kolon_web_admin/WEB-INF/template
-
-    #템플릿 경로
-    #template-file-path: /data/apps/tomcat_10111_kolon_web_admin/WEB-INF/template 나중에 바꿔야됨
-    #template-file-path: D:\EGOVFRAME\project\KAP\admin\src\main\webapp\WEB-INF\template\email\
-    template-file-path: /home/app/kap/admin/webapps/WEB-INF/template/email/
-    mail-tmpl-file-path: /home/app/kap/admin/webapps/WEB-INF/template/email/
 
 
 log4jdbc:
@@ -115,7 +107,7 @@ spring :
       cache: false
   config:
     activate:
-      on-profile: dev
+      on-profile: local, dev
 app:
   is-login: false
 ---
