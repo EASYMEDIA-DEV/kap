@@ -1,5 +1,5 @@
 ---
-spring.config.activate.on-profile: dev
+spring.config.activate.on-profile: local, dev
 spring:
   #메일 설정
   mail:

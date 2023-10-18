@@ -30,12 +30,15 @@ public class COSeqGnrServiceImpl implements COSeqGnrService {
 	private final COSeqGnrMapper cOSeqGnrMapper;
 
 	@Override
-	public int selectSeq(String tableNm) throws Exception {
-		int seq = cOSeqGnrMapper.selectSeq(tableNm);
-			if(seq > 0 ){
+	public Integer selectSeq(String tableNm) throws Exception {
+		Integer seqCnt = cOSeqGnrMapper.selectCountSeq(tableNm);
+		int seq;
+			if(seqCnt > 0 ){
+				seq = cOSeqGnrMapper.selectSeq(tableNm);
 				cOSeqGnrMapper.updateSeq(tableNm);
-			}else if(seq == 0){
-				seq = cOSeqGnrMapper.insertSeq(tableNm);
+			}else{
+				cOSeqGnrMapper.insertSeq(tableNm);
+				seq = cOSeqGnrMapper.selectSeq(tableNm);
 			}
 		return seq;
 	}

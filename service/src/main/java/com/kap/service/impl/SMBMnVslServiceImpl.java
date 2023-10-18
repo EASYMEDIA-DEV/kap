@@ -2,7 +2,6 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.SMBMainVslDTO;
-import com.kap.core.utility.COSeqGnrUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COSeqGnrService;
 import com.kap.service.COSystemLogService;
@@ -39,8 +38,6 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
 
     // SEQ Gnr
     String tableNm = "MAIN_VSL_SEQ";
-
-    private final COSeqGnrUtil cOSeqGnrUtil;
 
     /**
      * 메인 비주얼 목록 조회
@@ -151,7 +148,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         else {
             // 메인 비주얼 배너 업로드 개수 5개 제한
             if(this.selectMnVslCnt(pSMBMainVslDTO) < 5 ) {
-                pSMBMainVslDTO.setSeq(cOSeqGnrUtil.getSeq(tableNm));
+                pSMBMainVslDTO.setSeq(cOSeqGnrService.selectSeq(tableNm));
                 pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.insertMnVsl(pSMBMainVslDTO));
             }else {
                 pSMBMainVslDTO.setRespCd("error");

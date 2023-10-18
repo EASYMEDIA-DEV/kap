@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.um.UMAFtpUploadMapper">
+    <!--
+     쿼리명 : UMAFtpUploadMapper.selectUploadFileList
+     설  명 : 게시판 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.09.18  임서화     최초 생성
+    -->
+    <select id="selectUploadFileList" parameterType="UMAFtpUploadDTO" resultType="UMAFtpUploadDTO">
+        SELECT /* UMAFtpUploadMapper.selectUploadFileList */
+            SEQ
+            , FILE_SEQ
+            , 0 FILE_ORD
+            , LANG_CD
+            , URL
+            ,  (SELECT ORGN_FILE_NM FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS ORGN_FILE_NM
+            ,  (SELECT WEB_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS WEB_PATH
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+        FROM
+            UM_UPLOAD_MST A
+        WHERE 1=1
+        <if test="strtDt != null and strtDt != ''">
+            <choose>
+                <when test="srchDate == 2">
+                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt},'%Y-%m-%d')
+                </when>
+            </choose>
+        </if>
+        <if test="endDt != null and endDt != ''">
+            <choose>
+                <when test="srchDate == 2">
+                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+            </choose>
+        </if>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 0">
+                        AND TITL LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 1">
+                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID), '(', REG_ID,')') LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID), '(', MOD_ID,')') LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 3">
+                        AND YEAR LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <otherwise>
+                        AND (
+                        (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) LIKE CONCAT('%', #{q}, '%')
+                        OR ORGN_FILE_NM LIKE CONCAT('%', #{q}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+            ORDER BY
+             REG_DTM DESC
+    </select>
+
+    <!--
+    쿼리명 : UMAFtpUploadMapper.getFtpUploadListTotCnt
+    설  명 : 게시물 목록을 갯수를 카운팅한다.
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.09.08    임서화       최초생성
+    -->
+    <select id="getFtpUploadListTotCnt" parameterType="UMAFtpUploadDTO" resultType="java.lang.Integer">
+        SELECT /* UMAFtpUploadMapper.getFtpUploadListTotCnt */
+            count(*)
+        FROM
+            UM_UPLOAD_MST
+    </select>
+
+    <!--<select id="selectUploadFileList" parameterType="UMAFtpUploadDTO" resultType="UMAFtpUploadDTO">
+        SELECT /* UMAFtpUploadMapper.selectUploadFileList */
+            SEQ
+             , FILE_SEQ
+             , LANG_CD
+             , URL
+             , REG_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+             , REG_IP
+             , REG_DTM
+        FROM
+            UM_UPLOAD_MST A
+        WHERE
+            SEQ = #{detailsKey}
+    </select>-->
+
+    <insert id="insertUploadFile" parameterType="UMAFtpUploadDTO">
+        INSERT /* UMAFtpUploadMapper.insertUploadFile */ INTO UM_UPLOAD_MST
+            (
+            SEQ
+            , FILE_SEQ
+            , LANG_CD
+            , URL
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+            )
+            VALUES
+            (
+            #{seq}
+            , #{fileSeq}
+            , #{langCd}
+            , #{url}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+    <!--
+         쿼리명 : UMAFtpUploadMapper.deleteUploadFile
+         설  명 : 게시물을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.08   임서화       최초생성
+        -->
+    <delete id="deleteUploadFile" parameterType="UMAFtpUploadDTO">
+        DELETE /* UMAFtpUploadDTO.deleteUploadFile */
+        FROM
+        UM_UPLOAD_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    AND	SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+</mapper>
+
+

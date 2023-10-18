@@ -38,6 +38,8 @@
 			, REG_DTM
 		from
 			CO_CNTS_MST
+		where
+		    MENU_SEQ = #{menuSeq}
 		order by
 		reg_dtm desc
 	</select>

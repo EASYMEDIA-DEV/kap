@@ -3,20 +3,30 @@
 
 <mapper namespace="com.kap.service.dao.COSeqGnrMapper">
 
+
+    <select id="selectCountSeq" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT /* COSeqGnrMapper.selectSeq */
+            COUNT(NEXT_ID) AS NEXT_ID
+        FROM
+            CO_SEQ_MST
+        WHERE
+            TABLE_NM = #{tableNm}
+    </select>
+
     <select id="selectSeq" parameterType="java.lang.String" resultType="java.lang.Integer">
         SELECT /* COSeqGnrMapper.selectSeq */
             NEXT_ID
         FROM
             CO_SEQ_MST
         WHERE
-            TABLE_NM = #{seqCode}
+            TABLE_NM = #{tableNm}
     </select>
 
     <insert id="insertSeq" parameterType="java.lang.String">
             INSERT INTO /* COSeqGnrMapper.insertSeq */ CO_SEQ_MST
                 (TABLE_NM, NEXT_ID)
             VALUES
-                (#{seqCode}, 1)
+                (#{tableNm}, 1)
     </insert>
 
     <update id="updateSeq" parameterType="java.lang.String">
@@ -24,7 +34,7 @@
             SET
                 NEXT_ID = NEXT_ID + 1
             WHERE
-                TABLE_NM = #{seqCode}
+                TABLE_NM = #{tableNm}
     </update>
 
 </mapper>

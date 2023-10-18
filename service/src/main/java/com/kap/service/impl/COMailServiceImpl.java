@@ -26,7 +26,7 @@ import java.lang.reflect.Field;
 public class COMailServiceImpl  implements COMailService {
 
 	//메일 서비스
- 	private final JavaMailSender mailSender;
+	private final JavaMailSender mailSender;
 
 	//벨로시티
 	private final VelocityEngine velocityEngine;
@@ -47,17 +47,17 @@ public class COMailServiceImpl  implements COMailService {
 	private String mailTmplFilePath;
 
 
-    /**
-     * 메일 발송 처리
-     */
-    public int sendMail(COMailDTO cOMailDTO, String templateFile) throws Exception
-    {		
+	/**
+	 * 메일 발송 처리
+	 */
+	public int sendMail(COMailDTO cOMailDTO, String templateFile) throws Exception
+	{
 		MimeMessage message = mailSender.createMimeMessage();
 		int toUserSize = 0;
 		try
 		{
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-			
+
 			messageHelper.setSubject(cOMailDTO.getSubject());
 
 			String toUsers = cOMailDTO.getEmails();
@@ -67,10 +67,10 @@ public class COMailServiceImpl  implements COMailService {
 				messageHelper.setFrom(fromMail);
 
 				messageHelper.setText(getTemplate(cOMailDTO, templateFile), true);
-				
+
 				// 첨부파일
 				String filePath = "", fileName = "", realFileNm = "";
-				
+
 				if (!"".equals(filePath) && !"".equals(fileName) && !"".equals(realFileNm))
 				{
 					messageHelper.addAttachment(MimeUtility.encodeText(realFileNm, "UTF-8", "B"), new FileDataSource(filePath + File.separator + fileName));
@@ -83,14 +83,14 @@ public class COMailServiceImpl  implements COMailService {
 				log.debug("toUser Size : 0");
 			}
 		}
-		catch (MessagingException me) 
+		catch (MessagingException me)
 		{
 			log.debug(me.getMessage());
 		}
 		return toUserSize;
 	}
-    
-    /**
+
+	/**
 	 * 템플릿 문자열 파싱
 	 */
 	public String getTemplate(COMailDTO cOMailDTO, String templateFile) throws Exception
@@ -112,7 +112,11 @@ public class COMailServiceImpl  implements COMailService {
 				StringWriter sw = new StringWriter();
 				sw.getBuffer().setLength(0);
 				//templateFile = "/" + templateFile;
-				templateFile = "template/email/COAAdmPwdInit.html";
+				//templateFile = "template/email/COAAdmPwdInit.html";
+
+
+				templateFile = "COAAdmPwdInit.html";
+				velocityEngine.setProperty("file.resource.loader.path", mailTmplFilePath+"email/");
 
 				Template template = velocityEngine.getTemplate(templateFile.replace("/", File.separator), "UTF-8");
 
@@ -128,5 +132,5 @@ public class COMailServiceImpl  implements COMailService {
 		}
 
 		return body;
-    }
+	}
 }

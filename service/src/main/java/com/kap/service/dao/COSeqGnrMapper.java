@@ -22,14 +22,16 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface COSeqGnrMapper {
-
     // 해당 테이블 SEQ 값 조회
-    public int selectSeq(String tableNm) throws Exception;
+
+    public Integer selectCountSeq(String tableNm) throws Exception;
+
+    public Integer selectSeq(String tableNm) throws Exception;
 
     // 해당 테이블 SEQ 등록
-    public int insertSeq(String tableNm) throws Exception;
+    public Integer insertSeq(String tableNm) throws Exception;
 
     // 해당 테이블 SEQ 값 업데이트
-    public int updateSeq(String tableNm) throws Exception;
+    public Integer updateSeq(String tableNm) throws Exception;
 
 }

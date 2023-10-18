@@ -2,7 +2,6 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COGCntsDTO;
-import com.kap.core.utility.COSeqGnrUtil;
 import com.kap.service.COGCntsService;
 import com.kap.service.COSeqGnrService;
 import com.kap.service.COSystemLogService;
@@ -42,7 +41,6 @@ public class COGCntsServiceImpl implements COGCntsService {
 	//로그인 상태값 시스템 등록
 	private final COSystemLogService cOSystemLogService;
 	String tableNm = "CMS_SEQ";
-	COSeqGnrUtil cOSeqGnrUtil;
 	/**
 	 * CMS 목록을 조회한다.
 	 */

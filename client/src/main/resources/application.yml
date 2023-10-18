@@ -47,8 +47,7 @@ app:
     videoExtns: mp4,webm,wmv,avi,mkv
     #파일 업로드 크기
     max-size: 41943040
-    #템플릿 경로
-    template-file-path: /data/apps/tomcat_10111_kolon_web_admin/WEB-INF/template
+
 
 log4jdbc:
   dump:
@@ -72,7 +71,7 @@ logging:
     #console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr([%10t]){faint} %clr(%-60(%logger{39}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
     #console: "%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\\(%L\\) : %m%n"
 ---
-spring.config.activate.on-profile: dev, stg, prod
+spring.config.activate.on-profile: local, dev, stg, prod
 
 ---
 spring.config.activate.on-profile: stg, prod
@@ -83,7 +82,7 @@ logging:
 app:
   is-login: false
 ---
-spring.config.activate.on-profile: dev
+spring.config.activate.on-profile: local, dev
 spring :
   devtools:
     livereload:

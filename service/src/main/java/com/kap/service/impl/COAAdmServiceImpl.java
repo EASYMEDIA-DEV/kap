@@ -126,6 +126,20 @@ public class COAAdmServiceImpl implements COAAdmService {
 		int respCnt = 0;
 
 		try{
+
+			COAAdmDTO tempAdmDTO  = cOAAdmMapper.selectAdmDtl(pCOAAdmDTO);
+			// 권한을 변경하였는지 확인
+			tempAdmDTO.setBfreAuthCd(tempAdmDTO.getAuthCd());
+			tempAdmDTO.setModAuthCd(pCOAAdmDTO.getAuthCd());
+
+			if (!tempAdmDTO.getBfreAuthCd().equals(tempAdmDTO.getModAuthCd()))
+			{
+				//
+				//권한변경 관련하여 로그를 찍을때 사용할것
+			}
+
+			System.out.println("@@@ pCOAAdmDTO =" + pCOAAdmDTO ) ;
+
 			// 관리자 수정정보 Set
 			respCnt = cOAAdmMapper.updateAdm(pCOAAdmDTO);
 
