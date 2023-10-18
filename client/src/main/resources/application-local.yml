@@ -1,0 +1,16 @@
+
+
+#강제 로그인 여부
+app:
+  file:
+    #파일 업로드 물리 경로
+    upload-path: D:/project/kap_git/upload
+    #파일 업로드 가능 확장자
+    fileExtns: jpg,jpeg,gif,png,bmp,mp4,webm,wmv,avi,mkv,pdf,ppt,pptx,xls,xlsx,doc,docx,dox,hwp,txt,zip
+    imageExtns: jpg,jpeg,gif,png,bmp
+    videoExtns: mp4,webm,wmv,avi,mkv
+    #파일 업로드 크기
+    max-size: 41943040
+    #템플릿 경로
+    template-file-path: D:\EGOVFRAME\project\KAP\admin\src\main\webapp\WEB-INF\template\email\
+    mail-tmpl-file-path: D:\EGOVFRAME\project\KAP\admin\src\main\webapp\WEB-INF\template\email\
