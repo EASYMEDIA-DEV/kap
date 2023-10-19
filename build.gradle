@@ -11,7 +11,15 @@ buildscript {
     }
 }
 
+ext.profile = (!project.hasProperty('profile') || !profile) ? 'dev' : profile
 
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources", "src/main/resources-${profile}"
+        }
+    }
+}
 
 allprojects {
     apply plugin: 'java-library'
