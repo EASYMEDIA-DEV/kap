@@ -220,7 +220,6 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                                 jQuery("#admUrl").val(rtnData.admUrl);
                                 /*2023-10-13 cms url, 관리자 사용자 분리*/
                                 if (menuType == "cms") {
-                                    console.log(menuType);
                                     /*var replaceStr = "/contentsid/" + rtnData.menuSeq + "/index.do";
                                     jQuery("#userUrl").val(rtnData.userUrl.replace(replaceStr, ""));
                                     jQuery("#spanSuffix").text(replaceStr);*/
@@ -469,6 +468,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                                 admUrl = userUrl;
                             }
                         }
+                        jQuery("#admUrl").val(admUrl);
                     }
 
                     return true;

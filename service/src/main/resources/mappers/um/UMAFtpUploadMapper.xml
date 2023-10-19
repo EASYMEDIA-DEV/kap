@@ -17,6 +17,7 @@
             , URL
             ,  (SELECT ORGN_FILE_NM FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS ORGN_FILE_NM
             ,  (SELECT WEB_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS WEB_PATH
+            ,  (SELECT PHY_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS PHY_PATH
             , REG_ID
             , REG_IP
             , REG_DTM
@@ -76,22 +77,6 @@
         FROM
             UM_UPLOAD_MST
     </select>
-
-    <!--<select id="selectUploadFileList" parameterType="UMAFtpUploadDTO" resultType="UMAFtpUploadDTO">
-        SELECT /* UMAFtpUploadMapper.selectUploadFileList */
-            SEQ
-             , FILE_SEQ
-             , LANG_CD
-             , URL
-             , REG_ID
-             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
-             , REG_IP
-             , REG_DTM
-        FROM
-            UM_UPLOAD_MST A
-        WHERE
-            SEQ = #{detailsKey}
-    </select>-->
 
     <insert id="insertUploadFile" parameterType="UMAFtpUploadDTO">
         INSERT /* UMAFtpUploadMapper.insertUploadFile */ INTO UM_UPLOAD_MST
