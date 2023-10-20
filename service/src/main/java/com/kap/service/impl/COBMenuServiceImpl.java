@@ -98,6 +98,12 @@ public class COBMenuServiceImpl implements COBMenuService {
 				cOMenuDTO.setUserUrl(cOMenuDTO.getUserUrl()+"/content.do");
 			}
 		}
+
+		COMenuDTO parentDrive = cOBMenuMapper.getNodeDriveData(cOMenuDTO);
+		System.out.println("===================================================\n" + parentDrive.toString());
+		cOMenuDTO.setNodeLftVal(parentDrive.getLftVal());
+		cOMenuDTO.setNodeRhtVal(parentDrive.getRhtVal());
+
 		return cOBMenuMapper.updateMenuInf(cOMenuDTO);
 	}
 
