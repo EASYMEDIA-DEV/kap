@@ -11,8 +11,8 @@
                     </label>
                 </td>
                 <td>${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td> <img src="https://127.0.0.1:9012/mngwserc/file/view?fileSeq=${list.fileSeq}&fileOrd=${list.fileOrd}"/></td>
-                <td>https://127.0.0.1:9012/mngwserc/file/view?fileSeq=${list.fileSeq}&fileOrd=${list.fileOrd}</td>
+                <td> <img src=${list.phyPath}/></td>
+                <td>https://127.0.0.1:9012/${list.phyPath}</td>
                 <td>${list.orgnFileNm}</td>
                 <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
                 <td>${ list.regName }(${ list.regId })</td>
