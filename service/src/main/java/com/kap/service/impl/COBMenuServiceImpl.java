@@ -100,7 +100,6 @@ public class COBMenuServiceImpl implements COBMenuService {
 		}
 
 		COMenuDTO parentDrive = cOBMenuMapper.getNodeDriveData(cOMenuDTO);
-		System.out.println("===================================================\n" + parentDrive.toString());
 		cOMenuDTO.setNodeLftVal(parentDrive.getLftVal());
 		cOMenuDTO.setNodeRhtVal(parentDrive.getRhtVal());
 
