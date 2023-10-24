@@ -196,4 +196,9 @@ public interface COBUserMenuMapper {
 	 * 신규 메뉴 등록 시 관리자 메뉴 권한 관리 테이블에서 신규메뉴의 부모 seq 삭제
 	 */
 	public void deleteAdmMenu(COMenuDTO cOMenuDTO) throws Exception;
+
+	/**
+	 * 사용자 탑노드 조회.
+	 */
+	public Integer selectUserTopNode(COMenuDTO cOMenuDTO) throws Exception;
 }
