@@ -100,6 +100,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
 
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
         }
+
         //드라이브 조회
         //현재 메뉴 위치 찾기
         String requestURI = request.getRequestURI();
@@ -109,6 +110,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
 
         for (int i = 0, size = menuList.size(); i < size; i++)
         {
+
             admUrl = "";
             if(!"".equals(COStringUtil.nullConvert(menuList.get(i).getAdmUrl())))
             {
@@ -133,9 +135,9 @@ public class COMenuInterceptor implements HandlerInterceptor{
         }
 
         //대시보드 예외처리
-        if(request.getRequestURI().indexOf("/mngwserc/dashboard") > -1){
-            pageNo = 1;
-        }
+        /*if(request.getRequestURI().indexOf("/mngwserc/dashboard") > -1){
+            //pageNo = 1;
+        }*/
 
 
         // 메뉴 접근 권한

@@ -171,8 +171,8 @@
 	          		<div class="pull-right pt-lg text-muted hidden">
 	          			<em class="ion-close-round"></em>
 	          		</div>
-	          		<%--<a href="${firstUrl}" class="sidebar-header-logo">--%>
-					<a href="/mngwserc/dashboard" class="sidebar-header-logo">
+	          		<a href="${firstUrl}" class="sidebar-header-logo">
+					<%--<a href="/mngwserc/dashboard" class="sidebar-header-logo">--%>
 	          			<span class="sidebar-header-logo-text">${siteName}</span>
 	          		</a>
 	        	</div>

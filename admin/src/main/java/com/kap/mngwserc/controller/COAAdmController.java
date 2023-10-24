@@ -51,7 +51,6 @@ public class COAAdmController {
     //이메일 발송
     private final COMailService cOMailService;
 
-
     /**
      * 관리자 목록 페이지
      */
