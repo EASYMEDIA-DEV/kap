@@ -38,8 +38,6 @@
 			</foreach>
 		</if>-->
 
-		/*and adm_url not like '%/mngwserc/kr/dashboard%'*/
-
 		/* 관리자 수정에선 로그관리 메뉴는 미노출*/
 		<if test= "isAdmUdt == 'Y'.toString()">
 			and (!(lft_val <![CDATA[ > ]]> 6 and rht_val <![CDATA[ < ]]> 15))

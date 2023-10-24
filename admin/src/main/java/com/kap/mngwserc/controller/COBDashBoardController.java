@@ -49,8 +49,8 @@ public class COBDashBoardController {
 	/**
 	 * 대시보드 목록 페이지
 	 */
-	@GetMapping(value="/dashboard")
-	public String getAdmListPage(ModelMap modelMap, COAAdmDTO cOAAdmDTO) throws Exception
+	@GetMapping(value="/co/coz/dashboard")
+	public String getDashBoard(ModelMap modelMap, COAAdmDTO cOAAdmDTO) throws Exception
 	{
 		try
 		{
@@ -73,7 +73,7 @@ public class COBDashBoardController {
 			throw new Exception(e.getMessage());
 		}
 
-		return "mngwserc/co/CODashBoard.dashboard";
+		return "mngwserc/co/CODashBoard.admin";
 	}
 
 }
