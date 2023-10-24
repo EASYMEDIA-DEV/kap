@@ -6,9 +6,7 @@ import com.nhncorp.lucy.security.xss.XssSaxFilter;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.*;
 
 /**
  * <pre>
@@ -328,4 +326,5 @@ public class COStringUtil {
         else
             return "";
     }
+
 }

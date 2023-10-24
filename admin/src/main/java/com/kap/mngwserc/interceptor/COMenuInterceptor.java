@@ -89,11 +89,15 @@ public class COMenuInterceptor implements HandlerInterceptor{
         //메뉴 목록을 조회한다.
         if (RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION) != null && isMenuList)
         {
+
             menuList = (List<COMenuDTO>) RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION);
+
         }
         else
         {
+
             menuList = cOLgnService.getMenuList(lngCOAAdmDTO);
+
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
         }
         //드라이브 조회
@@ -102,6 +106,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
         int pageNo = -1, lftVal=0, rhtVal=0;
         String firstUrl = "", admUrl = "", pageTitle = "";
         //URL체크시 REST방식이라서 마지막 서브폴더는 잘라야 한다.
+
         for (int i = 0, size = menuList.size(); i < size; i++)
         {
             admUrl = "";
@@ -118,6 +123,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
                 lftVal    = menuList.get(i).getLftVal();
                 rhtVal    = menuList.get(i).getRhtVal();
             }
+
             if (admUrl != null && !"".equals(admUrl) && requestURI.indexOf(admUrl) > -1)
             {
                 pageNo    = menuList.get(i).getMenuSeq();
@@ -125,6 +131,13 @@ public class COMenuInterceptor implements HandlerInterceptor{
                 break;
             }
         }
+
+        //대시보드 예외처리
+        if(request.getRequestURI().indexOf("/mngwserc/dashboard") > -1){
+            pageNo = 1;
+        }
+
+
         // 메뉴 접근 권한
         if (pageNo == -1 && !appLogin)
         {
@@ -142,6 +155,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
             }
         }
         request.setAttribute("firstUrl", firstUrl);
+
         request.setAttribute("pageNo", pageNo);
         request.setAttribute("pageTitle", pageTitle);
         // 페이지 인디케이트
@@ -151,6 +165,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
         for (int i = menuList.size() - 1; i >= 0; i--)
         {
             menuSeq = menuList.get(i).getMenuSeq();
+
             if (pageNo == menuSeq)
             {
                 parntSeq = menuList.get(i).getParntSeq();

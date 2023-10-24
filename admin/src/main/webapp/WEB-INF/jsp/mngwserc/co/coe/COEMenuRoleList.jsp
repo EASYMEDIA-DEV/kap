@@ -30,10 +30,10 @@
                                     <option value="">전체</option>
                                     <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>변경자아이디</option>
                                     <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>변경자이름</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>변경자부서</option>
+                                    <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>변경자소속</option>
                                     <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>대상아이디</option>
                                     <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>대상이름</option>
-                                    <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>대상부서</option>
+                                    <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>대상소속</option>
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">
@@ -74,10 +74,10 @@
                         <th>번호</th>
                         <th>변경자 아이디</th>
                         <th>변경자 이름</th>
-                        <th>변경자 부서</th>
+                        <th>변경자 소속</th>
                         <th>대상 아이디</th>
                         <th>대상 이름</th>
-                        <th>대상 부서</th>
+                        <th>대상 소속</th>
                         <th>처리일자</th>
                     </tr>
                     </thead>

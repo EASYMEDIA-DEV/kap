@@ -5,7 +5,7 @@
 	        	<footer class="sticky-footer">
 			      	<div class="container">
 			        	<div class="text-center">
-			          		<small>COPYRIGHT 2002 KAP. ALL RIGHTS RESERVED.</small>
+							<small>COPYRIGHT 2002 KAP. ALL RIGHTS RESERVED.</small>
 			        	</div>
 			      	</div>
 		    	</footer>
@@ -196,6 +196,9 @@
 		<!-- require -->
 		<script type="text/javascript" src="/common/ckeditor/ckeditor.js"></script>
 		<script type="text/javascript" src="/common/ckeditor/plugins/preview/plugin.js"></script>
+		<script type="text/javascript" src="/common/kendo/js/kendo.all.min.js"></script>
+		<script type="text/javascript" src="/common/kendo/js/kendo.timezones.min.js"></script>
+
 		<script type="text/javascript" src="/common/js/lib/require.js" data-main="/common/js/site"></script>
 	</body>
 </html>

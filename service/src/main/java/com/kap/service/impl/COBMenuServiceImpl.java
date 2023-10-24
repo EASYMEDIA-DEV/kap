@@ -10,7 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -46,8 +49,10 @@ public class COBMenuServiceImpl implements COBMenuService {
 	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO) throws Exception
 	{
 		if(!"Y".equals(cOMenuDTO.getIsMenu())){
+
 			cOMenuDTO.setUserMenuList( cOBMenuMapper.getUserMenuList(cOMenuDTO) );
 		}
+
 		return cOBMenuMapper.getMenuList(cOMenuDTO);
 	}
 
@@ -98,6 +103,11 @@ public class COBMenuServiceImpl implements COBMenuService {
 				cOMenuDTO.setUserUrl(cOMenuDTO.getUserUrl()+"/content.do");
 			}
 		}
+
+		COMenuDTO parentDrive = cOBMenuMapper.getNodeDriveData(cOMenuDTO);
+		cOMenuDTO.setNodeLftVal(parentDrive.getLftVal());
+		cOMenuDTO.setNodeRhtVal(parentDrive.getRhtVal());
+
 		return cOBMenuMapper.updateMenuInf(cOMenuDTO);
 	}
 

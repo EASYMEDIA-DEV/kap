@@ -39,6 +39,11 @@ public class COSystemLogDTO extends BaseDTO {
     private String prcsCd;
     //처리코드명
     private String prcsCdNm;
+
+    //부서코드
+    private String deptCd;
+    //부서코드명
+    private String deptCdNm;
     //부서코드명
     private String deptNm;
     //에러코드

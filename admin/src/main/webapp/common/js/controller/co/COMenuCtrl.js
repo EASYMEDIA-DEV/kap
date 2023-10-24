@@ -7,6 +7,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
         controller: "controller/co/COMenuCtrl"
     };
     var currentPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"));
+
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
     // create object function
@@ -267,6 +268,28 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
 
             /* 메뉴 생성 */
             trgtObj.bind("create.jstree", function (event, data) {
+
+                if('New node' == data.rslt.name || '' == data.rslt.name){
+
+                    //최상위생성일때
+                    if((data.rslt.parent == -1)){
+                        alert('삭제하시겠습니까?');
+
+                        jQuery.jstree.rollback(data.rlbk);
+
+                        return true;
+                    //하위생성일때
+                    }else{
+                        alert('메뉴생성을 취소하시겠습니까?');
+
+                        jQuery.jstree.rollback(data.rlbk);
+
+                        return true;
+                    }
+
+
+                }
+
                 if (confirm(msgCtrl.getMsg("confirm.cre.target.menu"))) {
                     var dataRsltParent = data.rslt.parent;
                     var parntSeq;
@@ -483,8 +506,12 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                             dataType: "json",
                             success: function (r) {
                                 if (r.actCnt > 0) {
-                                    alert(msgCtrl.getMsg("success.aplCom"));
+                                    alert(msgCtrl.getMsg("success.sve"));
                                     window.location.reload();
+                                }
+                                else if (jQuery("input[name='menuType']:checked").val() == "menu")
+                                {
+                                    alert(msgCtrl.getMsg("fail.co.cod.admin.userRoot"));
                                 }
                             },
                             error: function (xhr, ajaxSettings, thrownError) {
@@ -524,6 +551,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
 
             if (ctrl.ctgrInfo.topNode == 1) {
                 if (jQuery("#authCd").val() == "99") {
+                    jQuery("#divCategoris").jstree("uncheck_all");
                     jQuery("#divCategoris").find(".jstree-checkbox").prop("disabled", true);
                 }
 
