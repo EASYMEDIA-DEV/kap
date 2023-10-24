@@ -22,14 +22,15 @@ import java.util.List;
  *	     since		  author	            description
  *    ==========    ==========    ==============================
  * 	  2020.10.19	  허진영	             최초 생성
+ *    2023.10.19	 	 임서화				사용자 메뉴 분리
  * </pre>
  */
-public interface COBMenuService {
+public interface COBUserMenuService {
 
 	/**
 	 * 메뉴 목록을 조회한다.
 	 */
-	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO) throws Exception;
+	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO, HttpServletRequest request) throws Exception;
 
 	/**
 	 * 메뉴의 상세정보를 조회한다.

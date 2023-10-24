@@ -44,5 +44,5 @@
         <function-signature>java.lang.String convertDate(java.lang.String, java.lang.String, java.lang.String, java.lang.String)</function-signature>
         <example>${kl:convertDate(value, value, value, value)}</example>
     </function>
-    
+
 </taglib>

@@ -12,7 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.List;
@@ -38,7 +41,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value={"/mngwserc/co/cob/coba", "/mngwserc/{langCd}/co/cob/cobb"})
+@RequestMapping(value={"/mngwserc/co/cob/coba"})
 public class COBMenuController {
 
 	//서비스
@@ -48,13 +51,16 @@ public class COBMenuController {
 	 * 메뉴 목록을 조회한다.
 	 */
 	@RequestMapping(value="/select", method=RequestMethod.POST)
-	public void getMenuList(COMenuDTO cOMenuDTO, HttpServletResponse response) throws Exception
+	public void getMenuList(COMenuDTO cOMenuDTO, HttpServletResponse response, HttpServletRequest request) throws Exception
 	{
 		response.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		try
         {
+			int driveMenuSeq = (Integer) RequestContextHolder.getRequestAttributes().getAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION);
+
 			cOMenuDTO.setIsChkd("N");
+
             List<COMenuDTO> menuList = cOBMenuService.getMenuList(cOMenuDTO);
             int startNum = 0, paramSeq = cOMenuDTO.getMenuSeq();
 			JSONArray jSONArray = cOBMenuService.getJsonData(menuList, startNum, paramSeq);

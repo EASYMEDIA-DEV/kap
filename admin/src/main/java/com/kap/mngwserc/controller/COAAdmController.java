@@ -1,9 +1,7 @@
 package com.kap.mngwserc.controller;
 
 import com.kap.common.utility.CODateUtil;
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COMailDTO;
-import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.*;
 import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -154,11 +153,17 @@ public class COAAdmController {
             modelMap.addAttribute("rtnData", cOAAdmDTO);
             //modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-            // 코드 set
+            // 코드 set 관리자 권한
             cdDtlList.add("ADMIN_AUTH_CD");
+
+            // 코드 set 관리자 계정생성제한 아이디 목록
+            cdDtlList.add("ADMIN_ID_LIMIT");
+
+            // 코드 set 부서목록
+            cdDtlList.add("ADMIN_DEPT_CD");
+
             // 정의된 코드id값들의 상세 코드 맵 반환
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-
 
             if(!"".equals(cOAAdmDTO.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", cOAAdmService.selectAdmDtl(cOAAdmDTO));
@@ -187,6 +192,14 @@ public class COAAdmController {
             COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             lgnCOAAdmDTO.setDetailsKey(lgnCOAAdmDTO.getAdmSeq().toString());
             modelMap.addAttribute("rtnData", cOAAdmService.selectAdmDtl(lgnCOAAdmDTO));
+
+
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+
+            // 코드 set
+            cdDtlList.add("ADMIN_DEPT_CD");
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
         }
         catch (Exception e)
         {
@@ -221,6 +234,33 @@ public class COAAdmController {
         }
         return "jsonView";
     }
+
+    /**
+     * 관리자 권한 변경 로그를 가져온다.
+     */
+    @GetMapping(value="/co/coa/log-list.ajax")
+    public String getAuthLogList(COAAdmDTO pCOAAdmDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            List<COAAdmDTO> temp =  cOAAdmService.getAuthLogList(pCOAAdmDTO);
+
+            modelMap.addAttribute("rtnList", cOAAdmService.getAuthLogList(pCOAAdmDTO));
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+
+
 
 
     /**
@@ -266,6 +306,7 @@ public class COAAdmController {
                 COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
                 pCOAAdmDTO.setRegId( coaAdmDTO.getId() );
                 pCOAAdmDTO.setRegName( coaAdmDTO.getName() );
+                pCOAAdmDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
                 pCOAAdmDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
                 pCOAAdmDTO.setRegIp( coaAdmDTO.getLoginIp() );
                 pCOAAdmDTO.setModId( coaAdmDTO.getId() );
@@ -293,8 +334,10 @@ public class COAAdmController {
             try
             {
                 COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+
                 pCOAAdmDTO.setRegId( coaAdmDTO.getId() );
                 pCOAAdmDTO.setRegName( coaAdmDTO.getName() );
+                pCOAAdmDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
                 pCOAAdmDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
                 pCOAAdmDTO.setRegIp( coaAdmDTO.getLoginIp() );
                 pCOAAdmDTO.setModId( coaAdmDTO.getId() );
@@ -348,7 +391,7 @@ public class COAAdmController {
          * 관리자 메뉴 목록을 조회한다.
          */
         @PostMapping(value="/co/coa/menu-list")
-        public String getMenuList(COMenuDTO cOMenuDTO, HttpServletRequest request) throws Exception
+        public String getMenuList(COMenuDTO cOMenuDTO) throws Exception
         {
             JSONArray jSONArray = null;
             try
@@ -406,7 +449,9 @@ public class COAAdmController {
             try
             {
                 existCnt = cOAAdmService.getIdOverlapCheck(pCOAAdmDTO);
+
                 pCOAAdmDTO.setUseYn( ( (existCnt == 0) ? "Y" : "N") );
+
             }
             catch (Exception e)
             {

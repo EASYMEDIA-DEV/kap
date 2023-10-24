@@ -62,8 +62,9 @@ public class COCAssLogServiceImpl implements COCAssLogService {
 
         pCODSysLogDTO.setFirstIndex(page.getFirstRecordIndex());
         pCODSysLogDTO.setRecordCountPerPage(page.getRecordCountPerPage());
-
+        System.out.println("@@ pCODSysLogDTO = " + pCODSysLogDTO);
         pCODSysLogDTO.setList(cOCAssLogMapper.selectAssLogList(pCODSysLogDTO));
+        System.out.println("@@ pCODSysLogDTO2 = " + pCODSysLogDTO);
         pCODSysLogDTO.setTotalCount(cOCAssLogMapper.getAssLogListCnt(pCODSysLogDTO));
 
         return pCODSysLogDTO;
@@ -119,7 +120,7 @@ public class COCAssLogServiceImpl implements COCAssLogService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(3);
-        cell.setCellValue("부서");
+        cell.setCellValue("소속");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(4);
@@ -156,7 +157,8 @@ public class COCAssLogServiceImpl implements COCAssLogService {
 
             //부서
             cell = row.createCell(3);
-            cell.setCellValue(list.get(i).getDeptNm());
+            //cell.setCellValue(list.get(i).getDeptNm());
+            cell.setCellValue(list.get(i).getDeptCdNm());
             cell.setCellStyle(style_body);
 
             //처리구분
@@ -185,7 +187,7 @@ public class COCAssLogServiceImpl implements COCAssLogService {
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("코오롱그룹_접속로그관리_", "UTF-8") + timeStamp +".xlsx");
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_접속로그관리_", "UTF-8") + timeStamp +".xlsx");
 
         // Excel File Output
         workbook.write(response.getOutputStream());

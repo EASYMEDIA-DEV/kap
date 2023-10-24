@@ -21,10 +21,11 @@ import java.util.List;
  *	     since		  author	            description
  *    ==========    ==========    ==============================
  * 	  2020.10.19	  허진영	             최초 생성
+* 	  2023.10.19	 	 임서화				사용자 메뉴 분리
  * </pre>
  */
 @Mapper
-public interface COBMenuMapper {
+public interface COBUserMenuMapper {
 
 	/**
 	 * 메뉴 목록을 조회한다.
@@ -195,9 +196,4 @@ public interface COBMenuMapper {
 	 * 신규 메뉴 등록 시 관리자 메뉴 권한 관리 테이블에서 신규메뉴의 부모 seq 삭제
 	 */
 	public void deleteAdmMenu(COMenuDTO cOMenuDTO) throws Exception;
-
-	/**
-	 * 선택된 메뉴가 속한 최상위 드라이브 메뉴 정보
-	 */
-	public COMenuDTO getNodeDriveData(COMenuDTO cOMenuDTO) throws Exception;
 }

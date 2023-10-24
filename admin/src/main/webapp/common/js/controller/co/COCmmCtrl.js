@@ -1299,6 +1299,129 @@ var cmmCtrl = (function(){
 		$formObj.find("#"+pagingFormId).html(template);
 	}
 
+	/* Grid Record Count */
+	var fn_grid_record_count = function()
+	{
+		return 10;
+	};
+
+	/* Grid Paging Object */
+	var fn_grid_paging_object = function()
+	{
+		var rtnObj = {
+			pageSizes : [10, 30, 50],
+			buttonCount : 5,
+			info : true,
+			messages : {
+				first : "첫 페이지",
+				previous : "이전 페이지",
+				next : "다음 페이지",
+				last : "마지막 페이지",
+				of : "from {0}",
+				itemsPerPage : "건씩 보기",
+				page : "페이지 선택",
+				empty : "데이터 없음",
+				display : "총 {2}건 중 {0}-{1} 건"
+			}
+		};
+
+		return rtnObj;
+	};
+
+	/* Grid Pagination */
+	var fn_grid_pagination = function(data)
+	{
+		jQuery("#pageIndex").val(data.page);
+
+		var paramArr = jQuery("#frmSearch").data("strPam").split("&").map(function(value){
+			return value.indexOf("pageIndex=") < 0 ? value : "pageIndex=" + data.page;
+		});
+
+		history.replaceState("", "", location.pathname + "?" + paramArr.join("&"));
+	};
+
+	/* Grid Request Start */
+	var fn_grid_request_start = function(gridObj)
+	{
+		if (gridObj)
+		{
+			gridObj.data("kendoGrid").thead.find(".checkbox_all").prop("checked", false);
+		}
+	};
+
+	/* Grid Request End */
+	var fn_grid_request_end = function(gridObj)
+	{
+		if (gridObj && gridObj.data("kendoGrid").tbody)
+		{
+			gridObj.data("kendoGrid").tbody.closest(".k-auto-scrollable").scrollTop(0);
+		}
+	};
+
+	/* Grid Message Object */
+	var fn_grid_no_data_message = function()
+	{
+		var rtnObj = {
+			template : "<div style=\"position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);\">검색 결과가 없습니다.<br />(등록된 데이터가 없습니다.)</div>"
+		};
+
+		return rtnObj;
+	};
+
+	/* 체크박스 선택 삭제 */
+	var fn_grid_remove_row = function(gridObj)
+	{
+		var trgtObj = gridObj.data("kendoGrid");
+		var rowsObj = trgtObj.tbody.find("input[name='detailsKey']:checked");
+
+		if (rowsObj.length == 0)
+		{
+			alert(msgCtrl.getMsg("fail.target"));
+		}
+		else
+		{
+			if (confirm(msgCtrl.getMsg("confirm.del")))
+			{
+				var dataSource = trgtObj.dataSource;
+
+				jQuery(rowsObj).each(function(){
+					dataSource.remove(dataSource.get(jQuery(this).val()));
+				});
+
+				trgtObj.saveChanges();
+
+				alert(msgCtrl.getMsg("success.del"));
+			}
+		}
+	};
+
+	/* 노출 미노출 선택 */
+	var fn_grid_update = function(gridObj)
+	{
+		var trgtObj = gridObj.data("kendoGrid");
+		var rowsObj = trgtObj.tbody.find("input[name='detailsKey']:checked");
+
+		if (rowsObj.length == 0)
+		{
+			alert(msgCtrl.getMsg("fail.target"));
+		}
+		else
+		{
+			if (confirm(msgCtrl.getMsg("confirm.del")))
+			{
+				var dataSource = trgtObj.dataSource;
+
+				jQuery(rowsObj).each(function(){
+					dataSource.remove(dataSource.get(jQuery(this).val()));
+				});
+
+				trgtObj.saveChanges();
+
+				alert(msgCtrl.getMsg("success.del"));
+			}
+		}
+	};
+
     return {
     	nvl : fn_replace_null,
         bscAjax : fn_ajax,
@@ -1322,7 +1445,15 @@ var cmmCtrl = (function(){
 		setFormData: fn_list_frm_set_data,
 		pad: fn_pad,
 		checkUrl: fn_check_url,
-		initCalendar: fn_init_calendar
+		initCalendar: fn_init_calendar,
+
+		gridRecordCount : fn_grid_record_count,
+		gridPagingObject : fn_grid_paging_object,
+		gridPagination: fn_grid_pagination,
+		gridNoDataMessage : fn_grid_no_data_message,
+		gridRequestStart : fn_grid_request_start,
+		gridRequestEnd : fn_grid_request_end,
+		gridRemoveRow : fn_grid_remove_row
 
     }
 }());

@@ -30,6 +30,15 @@
         <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
     </definition>
 
+    <definition name="layouts-dashboard" template="/WEB-INF/jsp/layout/layout.jsp">
+        <put-attribute name="header" value="" />
+        <put-attribute name="footer" value="" />
+    </definition>
+
+    <definition name="*/*/*.dashboard" extends="layouts-dashboard">
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
+    </definition>
+
     <definition name="layouts-error" template="/WEB-INF/jsp/layout/layout.jsp">
         <put-attribute name="header" value="" />
         <put-attribute name="footer" value="" />

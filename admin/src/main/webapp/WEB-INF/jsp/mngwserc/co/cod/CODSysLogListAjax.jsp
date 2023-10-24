@@ -6,7 +6,7 @@
         <td>${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td>${ list.regId }</td>
         <td>${ list.regName}</td>
-        <td>${ list.deptNm}</td>
+        <td>${ list.deptCdNm}</td>
         <td>${ list.trgtMenuNm }</td>
         <td>${ list.prcsCdNm }</td>
         <td>${ empty list.rsn ? '-' : list.rsn }</td>
