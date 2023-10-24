@@ -44,9 +44,15 @@
 						</fieldset>
 						<fieldset>
 							<div class="form-group text-sm">
-								<label class="col-sm-1 control-label">부서명<span class="star text-danger"> *</span></label>
+								<label class="col-sm-1 control-label">소속<span class="star text-danger"> *</span></label>
 								<div class="col-sm-11">
-									<input type="text" class="form-control input-sm " id="deptNm" name="deptNm" value="${info.deptNm}" title="부서명" placeholder="부서명을 입력하세요." maxlength="20" />
+									<select class="form-control input-sm wd-sm" name="deptCd" title="소속">
+										<option value="">선택</option>
+										<c:forEach var="cdList" items="${cdDtlList.ADMIN_DEPT_CD}" varStatus="status">
+											<option value="${cdList.cd}" <c:if test="${info.deptCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+										</c:forEach>
+									</select>
+									<%--<input type="text" class="form-control input-sm " id="deptNm" name="deptNm" value="${info.deptNm}" title="부서명" placeholder="부서명을 입력하세요." maxlength="20" />--%>
 								</div>
 							</div>
 						</fieldset>

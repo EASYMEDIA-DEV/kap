@@ -30,9 +30,10 @@
 		where 1=1
 		and lft_val <![CDATA[>]]> (select lft_val from co_menu_mst where menu_seq = #{menuSeq})
 		and rht_val <![CDATA[<]]> (select rht_val from co_menu_mst where menu_seq = #{menuSeq})
-		<foreach collection="userMenuList" item="menuList" index="index" separator=" AND " open="and (" close=")">
+
+		<!--<foreach collection="userMenuList" item="menuList" index="index" separator=" AND " open="and (" close=")">
 			!(lft_val <![CDATA[ > ]]> #{menuList.lftVal} and rht_val <![CDATA[ < ]]> #{menuList.rhtVal})
-		</foreach>
+		</foreach>-->
 		order by
 		lft_val
 	</select>

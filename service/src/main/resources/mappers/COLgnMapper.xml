@@ -43,6 +43,7 @@
 			  adm_seq
 			, auth_cd
 			, (select cd_nm from co_code_mst where cd_id = 'ADMIN_AUTH_CD' and cd = a.auth_cd) as auth_nm
+		    , dept_cd
 			, dept_nm
 			, type_cd
 			, (select cd_nm from co_code_mst where cd_id = 'ADMIN_TYPE_CD' and cd = a.type_cd) as type_nm

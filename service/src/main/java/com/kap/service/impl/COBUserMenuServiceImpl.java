@@ -10,7 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -43,11 +46,24 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 	/**
 	 * 메뉴 목록을 조회한다.
 	 */
-	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO) throws Exception
+	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO, HttpServletRequest request) throws Exception
 	{
 		if(!"Y".equals(cOMenuDTO.getIsMenu())){
 			cOMenuDTO.setUserMenuList( cOBUserMenuMapper.getUserMenuList(cOMenuDTO) );
 		}
+
+		if(request.getRequestURI().indexOf("mngwserc/kr") > -1){
+			cOMenuDTO.setIsMenu("N");
+			List<COMenuDTO> tempList = cOBUserMenuMapper.getUserMenuList(cOMenuDTO);
+
+			int menuSeq = 1;
+			for(COMenuDTO menuDTO : tempList){
+				menuSeq = menuDTO.getMenuSeq();
+			}
+			cOMenuDTO.setMenuSeq(menuSeq);
+
+		}
+
 		return cOBUserMenuMapper.getMenuList(cOMenuDTO);
 	}
 

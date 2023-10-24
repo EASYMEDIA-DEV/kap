@@ -7,6 +7,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
         controller: "controller/co/COMenuCtrl"
     };
     var currentPath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf("/"));
+
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
     // create object function

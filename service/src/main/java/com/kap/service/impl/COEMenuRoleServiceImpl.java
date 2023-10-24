@@ -86,6 +86,9 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
 
             // 변경 메뉴 목록 조회
             pCOMenuRoleDTO.setType("chng");
+
+            System.out.println(" @@@@ = " + cOEMenuRoleMapper.selectModMenuList(pCOMenuRoleDTO));
+
             info.setChngMenuList(cOEMenuRoleMapper.selectModMenuList(pCOMenuRoleDTO));
         }
 
@@ -143,7 +146,7 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(3);
-        cell.setCellValue("변경자 부서");
+        cell.setCellValue("변경자 소속");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(4);
@@ -155,7 +158,7 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(6);
-        cell.setCellValue("대상 부서");
+        cell.setCellValue("대상 소속");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(7);

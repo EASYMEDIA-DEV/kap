@@ -1,6 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.EmfMap;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -94,4 +95,12 @@ public interface COAAdmService {
 	 * 관리자 시퀀스로 ID 조회한다.
 	 */
 	public List<COAAdmDTO> getSeqAdmList(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 관리자 권한 변경 로그를 가져온다.
+	 * @throws 비지니스 로직이나 DAO 처리 중 에러가 발생할 경우 Exception을 Throw 한다.
+	 */
+	public List<COAAdmDTO> getAuthLogList(COAAdmDTO pCOAAdmDTO) throws Exception;
+
 }
+

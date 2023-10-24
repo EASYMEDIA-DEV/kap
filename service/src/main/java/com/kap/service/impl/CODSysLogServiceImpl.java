@@ -117,7 +117,7 @@ public class CODSysLogServiceImpl  implements CODSysLogService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(3);
-        cell.setCellValue("부서");
+        cell.setCellValue("소속");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(4);
@@ -162,7 +162,8 @@ public class CODSysLogServiceImpl  implements CODSysLogService {
 
             //부서
             cell = row.createCell(3);
-            cell.setCellValue(list.get(i).getDeptNm());
+            cell.setCellValue(list.get(i).getDeptCdNm());
+            /*cell.setCellValue(list.get(i).getDeptNm());*/
             cell.setCellStyle(style_body);
 
             //메뉴

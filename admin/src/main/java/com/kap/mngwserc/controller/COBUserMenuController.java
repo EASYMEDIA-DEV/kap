@@ -23,7 +23,7 @@ import java.util.List;
  * <pre> 
  * 사용자 메뉴 관리를 위한 Controller
  * </pre>
- * 
+ *
  * @ClassName		: CODUserMenuController.java
  * @Description		: 사용자 메뉴 관리를 위한 Controller
  * @author 허진영
@@ -46,7 +46,7 @@ public class COBUserMenuController {
 
 	//서비스
 	private final COBUserMenuService cOBUserMenuService;
-	
+
 	/**
 	 * 사용자 메뉴 관리 페이지
 	 */
@@ -54,23 +54,23 @@ public class COBUserMenuController {
 	public String getUserMenuPage(COMenuDTO cOMenuDTO, ModelMap modelMap, @PathVariable String lnggCd) throws Exception
 	{
 		try
-    	{
+		{
 			cOMenuDTO.setLnggCd(lnggCd);
-    		modelMap.addAttribute("rtnData", cOMenuDTO);
-    	}
-    	catch (Exception e)
+			modelMap.addAttribute("rtnData", cOMenuDTO);
+		}
+		catch (Exception e)
 		{
 			if (log.isErrorEnabled())
 			{
 				log.debug(e.getMessage());
-            }
+			}
 			throw new Exception(e.getMessage());
 		}
-		
+
 		return "mngwserc/co/cob/COBUserMenuWrite.admin";
 	}
 
-	@RequestMapping(value="/select", method=RequestMethod.POST)
+	@RequestMapping(value="/{lnggCd}/co/cob/cobb/select", method=RequestMethod.POST)
 	public void getMenuList(COMenuDTO cOMenuDTO, HttpServletResponse response, HttpServletRequest request) throws Exception
 	{
 		response.setContentType("text/html;charset=UTF-8");
@@ -78,7 +78,7 @@ public class COBUserMenuController {
 		try
 		{
 			cOMenuDTO.setIsChkd("N");
-			List<COMenuDTO> menuList = cOBUserMenuService.getMenuList(cOMenuDTO);
+			List<COMenuDTO> menuList = cOBUserMenuService.getMenuList(cOMenuDTO, request);
 			int startNum = 0, paramSeq = cOMenuDTO.getMenuSeq();
 			JSONArray jSONArray = cOBUserMenuService.getJsonData(menuList, startNum, paramSeq);
 			out.print(jSONArray);
@@ -100,7 +100,7 @@ public class COBUserMenuController {
 	/**
 	 * 메뉴 상세정보를 조회한다.
 	 */
-	@RequestMapping(value="/details", method=RequestMethod.POST)
+	@RequestMapping(value="/{lnggCd}/co/cob/cobb/details", method=RequestMethod.POST)
 	public String selectMenuDtl(COMenuDTO cOMenuDTO, ModelMap modelMap) throws Exception
 	{
 		try
@@ -121,7 +121,7 @@ public class COBUserMenuController {
 	/**
 	 * 메뉴를 등록한다.
 	 */
-	@RequestMapping(value="/insert", method=RequestMethod.POST)
+	@RequestMapping(value="/{lnggCd}/co/cob/cobb/insert", method=RequestMethod.POST)
 	public String insertMenu(COMenuDTO cOMenuDTO, ModelMap modelMap) throws Exception
 	{
 		try
@@ -147,7 +147,7 @@ public class COBUserMenuController {
 	/**
 	 * 메뉴명을 수정한다.
 	 */
-	@RequestMapping(value ="/name-update", method=RequestMethod.POST)
+	@RequestMapping(value ="/{lnggCd}/co/cob/cobb/name-update", method=RequestMethod.POST)
 	public String updateMenuNm(COMenuDTO cOMenuDTO, ModelMap modelMap) throws Exception
 	{
 		try
@@ -173,7 +173,7 @@ public class COBUserMenuController {
 	/**
 	 * 메뉴 정보를 수정한다.
 	 */
-	@RequestMapping(value="/info-update", method=RequestMethod.POST)
+	@RequestMapping(value="/{lnggCd}/co/cob/cobb/info-update", method=RequestMethod.POST)
 	public String updateMenuInf(COMenuDTO cOMenuDTO, ModelMap modelMap) throws Exception
 	{
 		try
@@ -199,7 +199,7 @@ public class COBUserMenuController {
 	/**
 	 * 메뉴를 이동한다.
 	 */
-	@RequestMapping(value="/pstn-update", method=RequestMethod.POST)
+	@RequestMapping(value="/{lnggCd}/co/cob/cobb/pstn-update", method=RequestMethod.POST)
 	public String updateMenuPstn(COMenuDTO cOMenuDTO, ModelMap modelMap) throws Exception
 	{
 		try
@@ -225,7 +225,7 @@ public class COBUserMenuController {
 	/**
 	 * 메뉴를 삭제한다.
 	 */
-	@RequestMapping(value ="/delete", method=RequestMethod.POST)
+	@RequestMapping(value ="/{lnggCd}/co/cob/cobb/delete", method=RequestMethod.POST)
 	public String deleteMenu(COMenuDTO cOMenuDTO, ModelMap modelMap) throws Exception
 	{
 		try
@@ -251,7 +251,7 @@ public class COBUserMenuController {
 	/**
 	 * 상위부모를 다 가져온다.
 	 */
-	@RequestMapping(value="/parnt-data", method=RequestMethod.GET)
+	@RequestMapping(value="/{lnggCd}/co/cob/cobb/parnt-data", method=RequestMethod.GET)
 	public void getParntData(COMenuDTO cOMenuDTO, ModelMap modelMap, HttpServletResponse response) throws Exception
 	{
 		response.setContentType("text/html;charset=UTF-8");
@@ -305,7 +305,7 @@ public class COBUserMenuController {
 	/**
 	 * 하위노드를 다 가져온다.
 	 */
-	@RequestMapping(value="/child-data", method=RequestMethod.GET)
+	@RequestMapping(value="/{lnggCd}/co/cob/cobb/child-data", method=RequestMethod.GET)
 	public void getChildData(COMenuDTO cOMenuDTO, ModelMap modelMap, HttpServletResponse response) throws Exception
 	{
 		response.setContentType("text/html;charset=UTF-8");
