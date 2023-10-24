@@ -3,7 +3,6 @@ package com.kap.service;
 import com.kap.core.dto.COMenuDTO;
 import org.json.simple.JSONArray;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -30,7 +29,7 @@ public interface COBUserMenuService {
 	/**
 	 * 메뉴 목록을 조회한다.
 	 */
-	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO, HttpServletRequest request) throws Exception;
+	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO) throws Exception;
 
 	/**
 	 * 메뉴의 상세정보를 조회한다.
