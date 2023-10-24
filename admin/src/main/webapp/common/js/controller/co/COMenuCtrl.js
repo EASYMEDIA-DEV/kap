@@ -509,6 +509,10 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                                     alert(msgCtrl.getMsg("success.sve"));
                                     window.location.reload();
                                 }
+                                else if (jQuery("input[name='menuType']:checked").val() == "menu")
+                                {
+                                    alert(msgCtrl.getMsg("fail.co.cod.admin.userRoot"));
+                                }
                             },
                             error: function (xhr, ajaxSettings, thrownError) {
                                 if (xhr.status == 401) {
