@@ -318,6 +318,7 @@ var cmmCtrl = (function(){
     /* Set Period */
     var fn_set_period = function(obj, periodGubun, trgtPeriod, isStrtFocus)
 	{
+
 		var isVaild = false;
 		var today = new Date($("body").data("curtDt"));
 		if (periodGubun && typeof trgtPeriod === "number")
@@ -403,11 +404,18 @@ var cmmCtrl = (function(){
 	    	}
 		}
 		
-		var formObj   = obj ? jQuery(obj).closest("form") : jQuery("#frmSearch");
+		var formObj= obj ? jQuery(obj).closest("form") : jQuery("#frmSearch");
+
 		var strtDtObj = formObj.find(".datetimepicker_strtDt");
 		var strtDtObj2 = formObj.find(".datetimepicker_strtDtm");
 		var endDtObj  = formObj.find(".datetimepicker_endDt");
 		var endDtObj2  = formObj.find(".datetimepicker_endDtm");
+
+		strtDtObj = $(obj).closest("fieldset").find(".datetimepicker_strtDt");
+		strtDtObj2 = $(obj).closest("fieldset").find(".datetimepicker_strtDtm");
+		endDtObj = $(obj).closest("fieldset").find(".datetimepicker_endDt");
+		endDtObj2 = $(obj).closest("fieldset").find(".datetimepicker_endDtm");
+
 		if (isVaild)
     	{
 			strtDtObj.datetimepicker("setOptions", { maxDate : new Date(today), value : trgtDay });
@@ -420,6 +428,7 @@ var cmmCtrl = (function(){
 			if(isStrtFocus == undefined || (isStrtFocus)){
 				strtDtObj.focus();
 			}
+
 			strtDtObj.datetimepicker("setOptions", { value : today, defaultDate: new Date($("body").data("curtDt")) , maxDate : new Date('2050-12-31'), minDate: new Date('1950-01-01') });
 			strtDtObj2.datetimepicker("setOptions", { defaultDate: new Date($("body").data("curtDt")), defaultTime: "00:00" });
 			strtDtObj.datetimepicker("reset").val("");
@@ -429,6 +438,7 @@ var cmmCtrl = (function(){
 			endDtObj2.datetimepicker("setOptions", { defaultDate: new Date($("body").data("curtDt")), defaultTime: "00:00" });
 			endDtObj.datetimepicker("reset").val("");
 			endDtObj2.datetimepicker("reset").val("");
+
 		}
 
     };
