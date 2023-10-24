@@ -3,7 +3,7 @@
 <mapper namespace="com.kap.service.dao.COBUserMenuMapper">
 
 	<!--
-         쿼리명 : COBMenuMapper.getMenuList
+         쿼리명 : COBUserMenuMapper.getMenuList
          설  명 : 메뉴 목록을 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
@@ -11,7 +11,7 @@
         2023.10.19	 임서화		사용자 메뉴 분리
     -->
 	<select id="getMenuList" parameterType="COMenuDTO" resultType="COMenuDTO">
-		select /* COBMenuMapper.getMenuList */
+		select /* COBUserMenuMapper.getMenuList */
 		menu_seq
 		, parnt_seq
 		, pstn
@@ -24,28 +24,38 @@
 		, user_url
 		, use_yn
 		, (select count(*) from co_menu_mst where parnt_seq = a.menu_seq) as childcnt
-
+		<if test="isChkd == 'Y'.toString()">
+			, (select menu_seq from co_adm_menu_dtl where adm_seq = #{admSeq} and menu_seq = a.menu_seq) as checktype
+		</if>
 		from
 		co_menu_mst a
 		where 1=1
 		and lft_val <![CDATA[>]]> (select lft_val from co_menu_mst where menu_seq = #{menuSeq})
 		and rht_val <![CDATA[<]]> (select rht_val from co_menu_mst where menu_seq = #{menuSeq})
-		<foreach collection="userMenuList" item="menuList" index="index" separator=" AND " open="and (" close=")">
-			!(lft_val <![CDATA[ > ]]> #{menuList.lftVal} and rht_val <![CDATA[ < ]]> #{menuList.rhtVal})
-		</foreach>
+		/* 사용자 메뉴 관리는 가져오지 말아야 한다. */
+		<if test="isMenu != 'Y'.toString() and userMenuList != null">
+			<foreach collection="userMenuList" item="menuList" index="index" separator=" AND " open="and (" close=")">
+				!(lft_val <![CDATA[ > ]]> #{menuList.lftVal} and rht_val <![CDATA[ < ]]> #{menuList.rhtVal})
+			</foreach>
+		</if>
+
+		/* 관리자 수정에선 로그관리 메뉴는 미노출*/
+		<if test= "isAdmUdt == 'Y'.toString()">
+			and (!(lft_val <![CDATA[ > ]]> 6 and rht_val <![CDATA[ < ]]> 15))
+		</if>
 		order by
 		lft_val
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.getUserMenuList
+         쿼리명 : COBUserMenuMapper.getUserMenuList
          설  명 : 사용자 메뉴 TYPE을 조회한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getUserMenuList" parameterType="COMenuDTO" resultType="COMenuDTO">
-		select /* COBMenuMapper.getUserMenuList */
+		select /* COBUserMenuMapper.getUserMenuList */
 			menu_seq
 			 , parnt_seq
 			 , pstn
@@ -65,14 +75,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.selectMenuDtl
+         쿼리명 : COBUserMenuMapper.selectMenuDtl
          설  명 : 메뉴 상세를 조회한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="selectMenuDtl" parameterType="COMenuDTO" resultType="COMenuDTO">
-		select /* COBMenuMapper.selectMenuDtl */
+		select /* COBUserMenuMapper.selectMenuDtl */
 			menu_seq
 			 , parnt_seq
 			 , pstn
@@ -96,14 +106,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.insertMenu
+         쿼리명 : COBUserMenuMapper.insertMenu
          설  명 : 메뉴를 등록한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<insert id="insertMenu" parameterType="COMenuDTO">
-		insert /* COBMenuMapper.insertMenu */ into co_menu_mst
+		insert /* COBUserMenuMapper.insertMenu */ into co_menu_mst
 		(
 			parnt_seq
 		, pstn
@@ -154,14 +164,14 @@
 	</insert>
 
 	<!--
-         쿼리명 : COBMenuMapper.updateMenuNm
+         쿼리명 : COBUserMenuMapper.updateMenuNm
          설  명 : 메뉴명을 수정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="updateMenuNm" parameterType="COMenuDTO">
-		update /* COBMenuMapper.updateMenuNm */ co_menu_mst
+		update /* COBUserMenuMapper.updateMenuNm */ co_menu_mst
 		set
 			menu_nm = #{menuNm}
 		  , mod_id = #{regId}
@@ -172,14 +182,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.updateMenuInf
+         쿼리명 : COBUserMenuMapper.updateMenuInf
          설  명 : 메뉴의 정보를 수정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="updateMenuInf" parameterType ="COMenuDTO">
-		update /* COBMenuMapper.updateMenuInf */ co_menu_mst
+		update /* COBUserMenuMapper.updateMenuInf */ co_menu_mst
 		set
 			menu_type = #{menuType}
 		  , sub_menu_nm = #{subMenuNm}
@@ -198,14 +208,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.getRhtVal
+         쿼리명 : COBUserMenuMapper.getRhtVal
          설  명 : 해당 메뉴의 오른쪽 값을 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getRhtVal" parameterType="COMenuDTO" resultType="java.lang.Integer">
-		select /* COBMenuMapper.getRhtVal */
+		select /* COBUserMenuMapper.getRhtVal */
 			rht_val
 		from
 			co_menu_mst
@@ -214,14 +224,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.getDpth
+         쿼리명 : COBUserMenuMapper.getDpth
          설  명 : 해당 메뉴의 깊이를 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getDpth" parameterType="COMenuDTO" resultType="java.lang.Integer">
-		select /* COBMenuMapper.getdpth */
+		select /* COBUserMenuMapper.getdpth */
 			dpth + 1 as dpth
 		from
 			co_menu_mst
@@ -230,14 +240,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.setLftVal
+         쿼리명 : COBUserMenuMapper.setLftVal
          설  명 : 해당 메뉴의 왼쪽 값을 지정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setLftVal" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setLftVal */ co_menu_mst
+		update /* COBUserMenuMapper.setLftVal */ co_menu_mst
 		set
 			lft_val = lft_val + 2
 		where
@@ -245,14 +255,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setRhtVal
+         쿼리명 : COBUserMenuMapper.setRhtVal
          설  명 : 해당 메뉴의 오른쪽 값을 지정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setRhtVal" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setRhtVal */ co_menu_mst
+		update /* COBUserMenuMapper.setRhtVal */ co_menu_mst
 		set
 			rht_val = rht_val + 2
 		where
@@ -260,14 +270,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.getMaxPosition
+         쿼리명 : COBUserMenuMapper.getMaxPosition
          설  명 : 최상위 포지션을 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getMaxPosition" parameterType="COMenuDTO" resultType="java.lang.Integer">
-		select /* COBMenuMapper.getMaxPosition */
+		select /* COBUserMenuMapper.getMaxPosition */
 			count(*)
 		from
 			co_menu_mst
@@ -276,14 +286,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.getMoveNodeIds
+         쿼리명 : COBUserMenuMapper.getMoveNodeIds
          설  명 : 하위 트리들을 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getMoveNodeIds" parameterType="COMenuDTO" resultType="COMenuDTO">
-		select /* COBMenuMapper.getMoveNodeIds */
+		select /* COBUserMenuMapper.getMoveNodeIds */
 			menu_seq
 		from
 			co_menu_mst
@@ -293,14 +303,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.getRefInd
+         쿼리명 : COBUserMenuMapper.getRefInd
          설  명 : 하위트리갯수를 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getRefInd" parameterType="COMenuDTO" resultType="java.lang.Integer">
-		select /* COBMenuMapper.getRefInd */
+		select /* COBUserMenuMapper.getRefInd */
 			lft_val
 		from
 			co_menu_mst
@@ -313,14 +323,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.getMoveExits
+         쿼리명 : COBUserMenuMapper.getMoveExits
          설  명 : 메뉴 자식의 갯수를 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getMoveExits" parameterType="COMenuDTO" resultType="java.lang.Integer">
-		select /* COBMenuMapper.getMoveExits */
+		select /* COBUserMenuMapper.getMoveExits */
 			menu_seq
 		from
 			co_menu_mst
@@ -331,14 +341,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.getMoveExits2
+         쿼리명 : COBUserMenuMapper.getMoveExits2
          설  명 : 움직일 노드 갯수 확인한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getMoveExits2" parameterType="COMenuDTO" resultType="java.lang.Integer">
-		select /* COBMenuMapper.getMoveExits2 */
+		select /* COBUserMenuMapper.getMoveExits2 */
 			count(*)
 		from
 			co_menu_mst
@@ -348,14 +358,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove1
+         쿼리명 : COBUserMenuMapper.setMenuMove1
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove1" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove1 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove1 */ co_menu_mst
 		set
 			pstn = pstn - 1
 		where 1=1
@@ -364,28 +374,28 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove2
+         쿼리명 : COBUserMenuMapper.setMenuMove2
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove2" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove2 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove2 */ co_menu_mst
 		set
 			lft_val = lft_val - #{ndif}
 		where lft_val <![CDATA[ > ]]> #{nodeRhtVal}
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove3
+         쿼리명 : COBUserMenuMapper.setMenuMove3
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove3" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove3 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove3 */ co_menu_mst
 		set
 		rht_val = rht_val - #{ndif}
 		where rht_val <![CDATA[ > ]]> #{nodeLftVal}
@@ -396,14 +406,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove4
+         쿼리명 : COBUserMenuMapper.setMenuMove4
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove4" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove4 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove4 */ co_menu_mst
 		set
 		pstn = pstn + 1
 		where parnt_seq = #{refSeq}
@@ -415,14 +425,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove5
+         쿼리명 : COBUserMenuMapper.setMenuMove5
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove5" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove5 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove5 */ co_menu_mst
 		set
 			pstn = pstn + 1
 		where parnt_seq = #{refSeq}
@@ -430,14 +440,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove6
+         쿼리명 : COBUserMenuMapper.setMenuMove6
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove6" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove6 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove6 */ co_menu_mst
 		set
 		lft_val = lft_val + #{ndif}
 		where 1=1
@@ -449,14 +459,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove7
+         쿼리명 : COBUserMenuMapper.setMenuMove7
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove7" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove7 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove7 */ co_menu_mst
 		set
 		rht_val = rht_val + #{ndif}
 		where rht_val <![CDATA[ >= ]]> #{refInd}
@@ -467,42 +477,42 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove8
+         쿼리명 : COBUserMenuMapper.setMenuMove8
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove8" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove8 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove8 */ co_menu_mst
 		set
 			lft_val = lft_val + #{ndif}
 		where lft_val <![CDATA[ >= ]]> #{refInd}
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove9
+         쿼리명 : COBUserMenuMapper.setMenuMove9
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove9" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove9 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove9 */ co_menu_mst
 		set
 			rht_val = rht_val + #{ndif}
 		where rht_val <![CDATA[ >= ]]> #{refInd}
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove10
+         쿼리명 : COBUserMenuMapper.setMenuMove10
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove10" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove10 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove10 */ co_menu_mst
 		set
 			parnt_seq = #{refSeq}
 		  , pstn = #{pstn}
@@ -510,14 +520,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setMenuMove11
+         쿼리명 : COBUserMenuMapper.setMenuMove11
          설  명 : 메뉴를 이동한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setMenuMove11" parameterType="COMenuDTO">
-		update /* COBMenuMapper.setMenuMove11 */ co_menu_mst
+		update /* COBUserMenuMapper.setMenuMove11 */ co_menu_mst
 		set
 		lft_val = lft_val - #{idif}
 		, rht_val = rht_val - #{idif}
@@ -529,14 +539,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.deleteMenu
+         쿼리명 : COBUserMenuMapper.deleteMenu
          설  명 : 메뉴를 삭제한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<delete id="deleteMenu" parameterType="COMenuDTO">
-		delete /* COBMenuMapper.deleteMenu */
+		delete /* COBUserMenuMapper.deleteMenu */
 		from
 			co_menu_mst
 		where   lft_val <![CDATA[ >= ]]> #{lftVal}
@@ -544,14 +554,14 @@
 	</delete>
 
 	<!--
-         쿼리명 : COBMenuMapper.setDeleteUpdateLftVal
+         쿼리명 : COBUserMenuMapper.setDeleteUpdateLftVal
          설  명 : 메뉴의 하위노드 왼쪽키값 변경
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setDeleteUpdateLftVal" parameterType ="COMenuDTO">
-		update /* COBMenuMapper.setDeleteUpdateLftVal */ co_menu_mst
+		update /* COBUserMenuMapper.setDeleteUpdateLftVal */ co_menu_mst
 		set
 			lft_val = lft_val - (#{rhtVal} - #{lftVal} + 1)
 		where
@@ -559,14 +569,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setDeleteUpdateRhtVal
+         쿼리명 : COBUserMenuMapper.setDeleteUpdateRhtVal
          설  명 : 메뉴의 하위노드 오른쪽키값 변경
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<update id="setDeleteUpdateRhtVal" parameterType ="COMenuDTO">
-		update /* COBMenuMapper.setDeleteUpdateRhtVal */ co_menu_mst
+		update /* COBUserMenuMapper.setDeleteUpdateRhtVal */ co_menu_mst
 		set
 			rht_val = rht_val - (#{rhtVal} - #{lftVal} + 1)
 		where
@@ -574,14 +584,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.setDeleteUpdatepstn
+         쿼리명 : COBUserMenuMapper.setDeleteUpdatepstn
          설  명 : 메뉴의 하위노드 오른쪽키값 변경
           수정일     수정자      수정내용
         ==========   ======   ==============
         2020.10.19   허진영      최초생성
     -->
 	<update id="setDeleteUpdatePstn" parameterType ="COMenuDTO">
-		update /* COBMenuMapper.setDeleteUpdatePstn */ co_menu_mst
+		update /* COBUserMenuMapper.setDeleteUpdatePstn */ co_menu_mst
 		set
 			pstn = pstn - 1
 		where  parnt_seq = #{parntSeq}
@@ -589,14 +599,14 @@
 	</update>
 
 	<!--
-         쿼리명 : COBMenuMapper.getParntData
+         쿼리명 : COBUserMenuMapper.getParntData
          설  명 : 상위부모를 다 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getParntData" parameterType="COMenuDTO" resultType="COMenuDTO">
-		select /* COBMenuMapper.getParntData */
+		select /* COBUserMenuMapper.getParntData */
 			menu_seq
 			 , parnt_seq
 			 , menu_nm
@@ -610,14 +620,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.getChildData
+         쿼리명 : COBUserMenuMapper.getChildData
          설  명 : 하위노드를 다 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getChildData" parameterType="COMenuDTO" resultType="COMenuDTO">
-		select /* COBMenuMapper.getChildData */
+		select /* COBUserMenuMapper.getChildData */
 			menu_seq
 			 , parnt_seq
 			 , menu_nm
@@ -642,14 +652,14 @@
 	</select>
 
 	<!--
-         쿼리명 : COBMenuMapper.getChildNodeData
+         쿼리명 : COBUserMenuMapper.getChildNodeData
          설  명 : 부모키 기준으로 첫번째 하위노드를 조회한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
     -->
 	<select id="getChildNodeData" parameterType="COMenuDTO" resultType="COMenuDTO">
-		select /*COBMenuMapper.getChildNodeData*/
+		select /*COBUserMenuMapper.getChildNodeData*/
 			menu_seq
 			 ,parnt_seq
 			 ,pstn
@@ -671,8 +681,25 @@
        2022.04.08   신혜정       최초생성
    -->
 	<delete id="deleteAdmMenu" parameterType="COMenuDTO">
-		delete /* COBMenuMapper.deleteAdmMenu */
+		delete /* COBUserMenuMapper.deleteAdmMenu */
 		from co_adm_menu_dtl
 		where menu_seq = #{parntSeq}
 	</delete>
+
+	<!--
+        쿼리명 : COBUserMenuMapper.selectUserTopNode
+        설  명 : 사용자 메뉴 최상위를 조회한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2023.10.23   임서화       최초생성
+   -->
+	<select id="selectUserTopNode" parameterType="COMenuDTO" resultType="java.lang.Integer">
+		select /* COBUserMenuMapper.selectUserTopNode */
+			menu_seq
+		from
+			co_menu_mst
+		where
+			menu_type = 'menu'
+		order by lft_val
+	</select>
 </mapper>

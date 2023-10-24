@@ -41,7 +41,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc")
+@RequestMapping(value="/mngwserc/{langCd}/co/cob/cobb")
 public class COBUserMenuController {
 
 	//서비스
@@ -50,12 +50,12 @@ public class COBUserMenuController {
 	/**
 	 * 사용자 메뉴 관리 페이지
 	 */
-	@RequestMapping(value="/{lnggCd}/co/cob/cobb/user", method=RequestMethod.GET)
-	public String getUserMenuPage(COMenuDTO cOMenuDTO, ModelMap modelMap, @PathVariable String lnggCd) throws Exception
+	@RequestMapping(value="/user", method=RequestMethod.GET)
+	public String getUserMenuPage(COMenuDTO cOMenuDTO, ModelMap modelMap, @PathVariable String langCd) throws Exception
 	{
 		try
     	{
-			cOMenuDTO.setLnggCd(lnggCd);
+			cOMenuDTO.setLnggCd(langCd);
     		modelMap.addAttribute("rtnData", cOMenuDTO);
     	}
     	catch (Exception e)
@@ -173,7 +173,7 @@ public class COBUserMenuController {
 	/**
 	 * 메뉴 정보를 수정한다.
 	 */
-	@RequestMapping(value="/info-update", method=RequestMethod.POST)
+	@RequestMapping(value="/info-update", method=RequestMethod.GET)
 	public String updateMenuInf(COMenuDTO cOMenuDTO, ModelMap modelMap) throws Exception
 	{
 		try

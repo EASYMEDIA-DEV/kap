@@ -48,6 +48,7 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 		if(!"Y".equals(cOMenuDTO.getIsMenu())){
 			cOMenuDTO.setUserMenuList( cOBUserMenuMapper.getUserMenuList(cOMenuDTO) );
 		}
+		cOMenuDTO.setMenuSeq(cOBUserMenuMapper.selectUserTopNode(cOMenuDTO));
 		return cOBUserMenuMapper.getMenuList(cOMenuDTO);
 	}
 

@@ -107,7 +107,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 	public int updateMenuPstn(COMenuDTO cOMenuDTO) throws Exception
 	{
 		boolean sqlFlag1 = false, sqlFlag2 = false, sqlFlag3 = false, sqlFlag4 = false, sqlFlag5 = false, sqlFlag6 = false;
-		
+
 		String node_ids = "";
 
 		int node_parntSeq = 0;
@@ -116,7 +116,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 		int node_rhtVal = 0;
 		int node_dpth = 0;
 
-		int refNode_parntSeq = 0;
+        int refNode_parntSeq = 0;
 		int refNode_pstn = 0;
 		int refNode_lftVal = 0;
 		int refNode_rhtVal = 0;
@@ -173,19 +173,19 @@ public class COBMenuServiceImpl implements COBMenuService {
 
 			List<COMenuDTO> moveNodeIds = cOBMenuMapper.getMoveNodeIds(nodeIdsMenuDto);
 
-			for (int q = 0; q < moveNodeIds.size(); q++)
-			{
-				COMenuDTO moveNodeIdMenuDto = moveNodeIds.get(q);
+            for (int q = 0; q < moveNodeIds.size(); q++)
+            {
+                COMenuDTO moveNodeIdMenuDto = moveNodeIds.get(q);
 
-				if ("".equals(node_ids))
-				{
-					node_ids = COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
-				}
-				else
-				{
-					node_ids = node_ids + "," + COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
-				}
-			}
+                if ("".equals(node_ids))
+                {
+                    node_ids = COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
+                }
+                else
+                {
+                    node_ids = node_ids + "," + COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
+                }
+            }
 
 			ndif = node_rhtVal - node_lftVal + 1;
 		}
@@ -302,40 +302,40 @@ public class COBMenuServiceImpl implements COBMenuService {
 				sqlMenuDto4.setIdif( idif );
 				sqlMenuDto4.setLdif( ldif );
 				sqlMenuDto4.setNodeIds( node_ids.split(",") );
-				
+
 				sqlFlag6 = true;
 			}
 		}
-		
+
 		if (sqlFlag1)
 		{
 			actCnt += cOBMenuMapper.setMenuMove1(sqlMenuDto1);
 			actCnt += cOBMenuMapper.setMenuMove2(sqlMenuDto1);
 			actCnt += cOBMenuMapper.setMenuMove3(sqlMenuDto1);
 		}
-		
+
 		if (sqlFlag2)
 		{
 			actCnt += cOBMenuMapper.setMenuMove4(sqlMenuDto2);
 		}
-		
+
 		if (sqlFlag3)
 		{
 			actCnt += cOBMenuMapper.setMenuMove5(sqlMenuDto2);
 		}
-		
+
 		if (sqlFlag4)
 		{
 			actCnt += cOBMenuMapper.setMenuMove6(sqlMenuDto3);
 			actCnt += cOBMenuMapper.setMenuMove7(sqlMenuDto3);
 		}
-		
+
 		if (sqlFlag5)
 		{
 			actCnt += cOBMenuMapper.setMenuMove8(sqlMenuDto3);
 			actCnt += cOBMenuMapper.setMenuMove9(sqlMenuDto3);
 		}
-		
+
 		if (sqlFlag6)
 		{
 			actCnt += cOBMenuMapper.setMenuMove10(sqlMenuDto4);
@@ -351,13 +351,13 @@ public class COBMenuServiceImpl implements COBMenuService {
 	public int deleteMenu(COMenuDTO cOMenuDTO) throws Exception
 	{
 		COMenuDTO infoDto = cOBMenuMapper.selectMenuDtl(cOMenuDTO);
-		
+
 		int actCnt = 0;
 
 		if (infoDto != null)
 		{
 			actCnt = cOBMenuMapper.deleteMenu(infoDto);
-			
+
 			cOBMenuMapper.setDeleteUpdateLftVal(infoDto);
 			cOBMenuMapper.setDeleteUpdateRhtVal(infoDto);
 			cOBMenuMapper.setDeleteUpdatePstn(infoDto);
