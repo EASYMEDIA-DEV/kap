@@ -134,11 +134,23 @@ public class COAAdmServiceImpl implements COAAdmService {
 
 			if (!tempAdmDTO.getBfreAuthCd().equals(tempAdmDTO.getModAuthCd()))
 			{
-				//
-				//권한변경 관련하여 로그를 찍을때 사용할것
-			}
 
-			System.out.println("@@@ pCOAAdmDTO =" + pCOAAdmDTO ) ;
+				COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+				tempAdmDTO.setRegId( coaAdmDTO.getId() );
+				tempAdmDTO.setRegIp( coaAdmDTO.getLoginIp() );
+
+
+				//권한변경 관련하여 로그를 찍을때 사용할것
+				System.out.println("@@@@ tempAdmDTO= " + tempAdmDTO);
+				System.out.println("@@@@ getAdmSeq= " + tempAdmDTO.getAdmSeq());
+				System.out.println("@@@@ getBfreAuthCd= " + tempAdmDTO.getBfreAuthCd());
+				System.out.println("@@@@ getModAuthCd= " + tempAdmDTO.getModAuthCd());
+				System.out.println("@@@@ getRegId= " + tempAdmDTO.getRegId());
+				System.out.println("@@@@ getRegIp= " + tempAdmDTO.getRegIp());
+
+
+				cOAAdmMapper.insertAuthModLog(tempAdmDTO);
+			}
 
 			// 관리자 수정정보 Set
 			respCnt = cOAAdmMapper.updateAdm(pCOAAdmDTO);
@@ -454,7 +466,7 @@ public class COAAdmServiceImpl implements COAAdmService {
 
 		//컨텐츠 타입 및 파일명 지정
 		response.setContentType("ms-vnd/excel");
-		response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("코오롱그룹_관리자관리_", "UTF-8") + timeStamp +".xlsx");
+		response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_관리자관리_", "UTF-8") + timeStamp +".xlsx");
 
 		// Excel File Output
 		workbook.write(response.getOutputStream());
@@ -515,4 +527,12 @@ public class COAAdmServiceImpl implements COAAdmService {
 			RequestContextHolder.getRequestAttributes().setAttribute("COAAdmId", admId, RequestAttributes.SCOPE_SESSION);
 		}
 	}
+
+	/**
+	 * 관리자 권한 변경 로그를 가져온다.
+	 */
+	public List<COAAdmDTO> getAuthLogList(COAAdmDTO pCOAAdmDTO) throws Exception{
+		return cOAAdmMapper.getAuthLogList(pCOAAdmDTO);
+	}
+
 }

@@ -6,7 +6,7 @@
         <td>${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td>${ list.regId }</td>
         <td>${ list.regName }</td>
-        <td>${ list.deptNm }</td>
+        <td>${ list.deptCdNm }</td>
         <td class="${list.prcsCd eq 'LI' ? 'text-primary': list.prcsCd eq 'LO' ? '':'text-danger'}">
             ${ list.prcsCd eq 'LI' ? list.prcsCdNm += " 성공" : list.prcsCdNm }
         </td>

@@ -36,6 +36,8 @@ public class UMAFtpUploadDTO extends BaseDTO {
     private String langCd;
     private String orgnFileNm;
     private String webPath;
+    private String phyPath;
+
     //내용
     @NotNull
     @SaxFilter
@@ -48,8 +50,6 @@ public class UMAFtpUploadDTO extends BaseDTO {
     //파일 순번
     private Integer fileSeq;
     private Integer fileOrd;
-
-
     private String atchFileId;
 
     //검색 리스트

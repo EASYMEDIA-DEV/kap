@@ -134,4 +134,17 @@ public interface COAAdmMapper {
 	 * 관리자 시퀀스로 ID 조회한다.
 	 */
 	public List<COAAdmDTO> getSeqAdmList(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+
+
+	/**
+	 * 관리자 권한 변경 로그를 가져온다.
+	 */
+	public List<COAAdmDTO> getAuthLogList(COAAdmDTO pCOAAdmDTO) throws Exception;
+
+	/**
+	 * 관리자 권한 변경 로그를 등록한다.
+	 */
+	public int insertAuthModLog(COAAdmDTO pCOAAdmDTO) throws Exception;
+
 }

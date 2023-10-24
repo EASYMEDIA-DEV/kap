@@ -25,6 +25,8 @@
     	<link rel="stylesheet" href="/bootstrap/vendor/jquery.bootgrid/dist/jquery.bootgrid.css" />
 		<link rel="stylesheet" href="/bootstrap/vendor/loaders.css/loaders.css" />
     	<link rel="stylesheet" href="/bootstrap/css/app.css" />
+		<link rel="stylesheet" href="/common/kendo/css/kendo.common.min.css" />
+		<link rel="stylesheet" href="/common/kendo/css/kendo.bootstrap.min.css" />
     	<link rel="stylesheet" href="/common/js/lib/datetimepicker/jquery.datetimepicker.css" />
 		<link rel="stylesheet" href="/common/ckeditor/plugins/codemirror/css/codemirror.min.css" />
     	<script type="text/javascript" src="/common/js/lib/jquery/jquery.1.12.4.js"></script>
@@ -170,6 +172,7 @@
 	          			<em class="ion-close-round"></em>
 	          		</div>
 	          		<a href="${firstUrl}" class="sidebar-header-logo">
+					<%--<a href="/mngwserc/dashboard" class="sidebar-header-logo">--%>
 	          			<span class="sidebar-header-logo-text">${siteName}</span>
 	          		</a>
 	        	</div>

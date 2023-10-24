@@ -13,10 +13,12 @@
               mst.mod_seq
             , mst.adm_id
             , mst.adm_nm
-            , mst.adm_dept as adm_dept_nm
+            , mst.adm_dept as adm_dept
+            , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=mst.adm_dept) as adm_dept_nm
             , mst.trgt_adm_id
             , mst.trgt_adm_nm
-            , mst.trgt_adm_dept as trgt_adm_dept_nm
+            , mst.trgt_adm_dept as trgt_adm_dept
+        , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=mst.trgt_adm_dept) as trgt_adm_dept_nm
             , (select max(a.mod_seq) from co_adm_mod_mst a where a.mod_seq != mst.mod_seq and a.trgt_adm_id = mst.trgt_adm_id and a.mod_seq <![CDATA[<]]> mst.mod_seq) as bfre_mod_seq
             , mst.reg_dtm
         from
@@ -131,12 +133,26 @@
        수정일     수정자       수정내용
      ==========   ======    ==============
      2022.04.15   신혜정       최초생성
+     2023.10.23   김학규       수정
  -->
-    <select id="selectModMenuList" parameterType="COEMenuRoleDTO" resultType="java.lang.String">
+    <select id="selectModMenuList" parameterType="COEMenuRoleDTO" resultType="COEMenuRoleDTO">
         select /* COEMenuRoleMapper.selectModMenuList */
                group_concat(mm.menu_nm  order by mm.lft_val separator ' > ')  as menu_nm
              , mm.menu_seq
              , group_concat(mm.rht_val order by mm.rht_val desc) as rht_val
+        /*, (CASE WHEN mm.menu_seq = md.menu_seq
+        THEN 'N'
+        ELSE 'Y'
+        END) AS DEL_YN*/ /* Y : 삭제, N:추가*/
+        , (CASE WHEN ((SELECT
+                                    COUNT(MENU_SEQ) AS CNT
+                                FROM co_adm_menu_dtl
+                                WHERE 1=1 AND ADM_SEQ = (SELECT ADM_SEQ FROM co_adm_mst WHERE ID =
+                                                                                                                                                (SELECT MAX(b.trgt_adm_id) from co_adm_mod_dtl a, co_adm_mod_mst b WHERE b.mod_seq = 239 AND a.mod_seq= b.mod_seq))
+                                                                                                                                                AND MENU_SEQ = md.menu_seq) > 0)
+            THEN 'N'
+            ELSE 'Y'
+            END) AS DEL_YN /* Y : 삭제, N:추가*/
         from co_menu_mst mm
            <choose>
                <when test="type == 'bfre'">

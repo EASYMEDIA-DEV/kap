@@ -2,18 +2,15 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COMenuDTO;
-import com.kap.service.COBMenuService;
-import com.kap.service.dao.COBMenuMapper;
+import com.kap.service.COBUserMenuService;
+import com.kap.service.dao.COBUserMenuMapper;
 import com.nhncorp.lucy.security.xss.XssPreventer;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -38,10 +35,10 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class COBMenuServiceImpl implements COBMenuService {
+public class COBUserMenuServiceImpl implements COBUserMenuService {
 
 	//DAO
-	private final COBMenuMapper cOBMenuMapper;
+	private final COBUserMenuMapper cOBUserMenuMapper;
 
 	/**
 	 * 메뉴 목록을 조회한다.
@@ -49,11 +46,10 @@ public class COBMenuServiceImpl implements COBMenuService {
 	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO) throws Exception
 	{
 		if(!"Y".equals(cOMenuDTO.getIsMenu())){
-
-			cOMenuDTO.setUserMenuList( cOBMenuMapper.getUserMenuList(cOMenuDTO) );
+			cOMenuDTO.setUserMenuList( cOBUserMenuMapper.getUserMenuList(cOMenuDTO) );
 		}
-
-		return cOBMenuMapper.getMenuList(cOMenuDTO);
+		cOMenuDTO.setMenuSeq(cOBUserMenuMapper.selectUserTopNode(cOMenuDTO));
+		return cOBUserMenuMapper.getMenuList(cOMenuDTO);
 	}
 
 	/**
@@ -61,7 +57,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 	 */
 	public COMenuDTO selectMenuDtl(COMenuDTO cOMenuDTO) throws Exception
 	{
-		return cOBMenuMapper.selectMenuDtl(cOMenuDTO);
+		return cOBUserMenuMapper.selectMenuDtl(cOMenuDTO);
 	}
 
 	/**
@@ -69,14 +65,14 @@ public class COBMenuServiceImpl implements COBMenuService {
 	 */
 	public int insertMenu(COMenuDTO cOMenuDTO) throws Exception
 	{
-		cOMenuDTO.setRhtVal(cOBMenuMapper.getRhtVal(cOMenuDTO));
-		cOMenuDTO.setDpth(cOBMenuMapper.getDpth(cOMenuDTO));
-		cOBMenuMapper.setLftVal(cOMenuDTO);
-		cOBMenuMapper.setRhtVal(cOMenuDTO);
+		cOMenuDTO.setRhtVal(cOBUserMenuMapper.getRhtVal(cOMenuDTO));
+		cOMenuDTO.setDpth(cOBUserMenuMapper.getDpth(cOMenuDTO));
+		cOBUserMenuMapper.setLftVal(cOMenuDTO);
+		cOBUserMenuMapper.setRhtVal(cOMenuDTO);
 		// 신규 메뉴 등록 시 관리자 메뉴 권한 관리 테이블에서 신규메뉴의 부모 seq 삭제
-		cOBMenuMapper.deleteAdmMenu(cOMenuDTO);
+		cOBUserMenuMapper.deleteAdmMenu(cOMenuDTO);
 
-		return cOBMenuMapper.insertMenu(cOMenuDTO);
+		return cOBUserMenuMapper.insertMenu(cOMenuDTO);
 	}
 
 	/**
@@ -86,7 +82,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 	{
 		//메뉴명에 특수기호 변경
 		cOMenuDTO.setMenuNm( cOMenuDTO.getMenuNm().replaceAll("&amp;", "&") );
-		return cOBMenuMapper.updateMenuNm(cOMenuDTO);
+		return cOBUserMenuMapper.updateMenuNm(cOMenuDTO);
 	}
 
 	/**
@@ -103,12 +99,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 				cOMenuDTO.setUserUrl(cOMenuDTO.getUserUrl()+"/content.do");
 			}
 		}
-
-		COMenuDTO parentDrive = cOBMenuMapper.getNodeDriveData(cOMenuDTO);
-		cOMenuDTO.setNodeLftVal(parentDrive.getLftVal());
-		cOMenuDTO.setNodeRhtVal(parentDrive.getRhtVal());
-
-		return cOBMenuMapper.updateMenuInf(cOMenuDTO);
+		return cOBUserMenuMapper.updateMenuInf(cOMenuDTO);
 	}
 
 	/**
@@ -117,7 +108,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 	public int updateMenuPstn(COMenuDTO cOMenuDTO) throws Exception
 	{
 		boolean sqlFlag1 = false, sqlFlag2 = false, sqlFlag3 = false, sqlFlag4 = false, sqlFlag5 = false, sqlFlag6 = false;
-
+		
 		String node_ids = "";
 
 		int node_parntSeq = 0;
@@ -126,7 +117,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 		int node_rhtVal = 0;
 		int node_dpth = 0;
 
-        int refNode_parntSeq = 0;
+		int refNode_parntSeq = 0;
 		int refNode_pstn = 0;
 		int refNode_lftVal = 0;
 		int refNode_rhtVal = 0;
@@ -145,14 +136,14 @@ public class COBMenuServiceImpl implements COBMenuService {
 		int actCnt 	= 0;
 
 		// 현재 트리
-		COMenuDTO currentMenuDto = cOBMenuMapper.selectMenuDtl(cOMenuDTO);
+		COMenuDTO currentMenuDto = cOBUserMenuMapper.selectMenuDtl(cOMenuDTO);
 
 		// 임시 이동할 트리
 		COMenuDTO tmpMenuDto = new COMenuDTO();
 		tmpMenuDto.setMenuSeq( refSeq );
 
 		//참조 트리
-		COMenuDTO refMenuDto = cOBMenuMapper.selectMenuDtl(tmpMenuDto);
+		COMenuDTO refMenuDto = cOBUserMenuMapper.selectMenuDtl(tmpMenuDto);
 
 		node_parntSeq 		= currentMenuDto.getParntSeq();
 		node_pstn 			= currentMenuDto.getPstn();
@@ -170,7 +161,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 			exitMenuDto.setRhtVal( node_rhtVal );
 			exitMenuDto.setRefSeq( refSeq );
 
-			Integer exitMenuSeq = cOBMenuMapper.getMoveExits(exitMenuDto);
+			Integer exitMenuSeq = cOBUserMenuMapper.getMoveExits(exitMenuDto);
 
 			if (exitMenuSeq != null)
 			{
@@ -181,21 +172,21 @@ public class COBMenuServiceImpl implements COBMenuService {
 			nodeIdsMenuDto.setLftVal( node_lftVal );
 			nodeIdsMenuDto.setRhtVal( node_rhtVal );
 
-			List<COMenuDTO> moveNodeIds = cOBMenuMapper.getMoveNodeIds(nodeIdsMenuDto);
+			List<COMenuDTO> moveNodeIds = cOBUserMenuMapper.getMoveNodeIds(nodeIdsMenuDto);
 
-            for (int q = 0; q < moveNodeIds.size(); q++)
-            {
-                COMenuDTO moveNodeIdMenuDto = moveNodeIds.get(q);
+			for (int q = 0; q < moveNodeIds.size(); q++)
+			{
+				COMenuDTO moveNodeIdMenuDto = moveNodeIds.get(q);
 
-                if ("".equals(node_ids))
-                {
-                    node_ids = COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
-                }
-                else
-                {
-                    node_ids = node_ids + "," + COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
-                }
-            }
+				if ("".equals(node_ids))
+				{
+					node_ids = COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
+				}
+				else
+				{
+					node_ids = node_ids + "," + COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
+				}
+			}
 
 			ndif = node_rhtVal - node_lftVal + 1;
 		}
@@ -208,7 +199,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 		COMenuDTO maxMenuDto = new COMenuDTO();
 		maxMenuDto.setRefSeq( refSeq );
 
-		int maxPosition = cOBMenuMapper.getMaxPosition(maxMenuDto);
+		int maxPosition = cOBUserMenuMapper.getMaxPosition(maxMenuDto);
 
 		if (pstn >= maxPosition)
 		{
@@ -263,11 +254,11 @@ public class COBMenuServiceImpl implements COBMenuService {
 		moveExitsMenuDto.setPstn( pstn );
 		moveExitsMenuDto.setRefSeq( refSeq );
 
-		Integer moveExits2 = cOBMenuMapper.getMoveExits2(moveExitsMenuDto);
+		Integer moveExits2 = cOBUserMenuMapper.getMoveExits2(moveExitsMenuDto);
 
 		if (moveExits2 != 0)
 		{
-			ref_ind = cOBMenuMapper.getRefInd(moveExitsMenuDto);
+			ref_ind = cOBUserMenuMapper.getRefInd(moveExitsMenuDto);
 		}
 
 		if (node_lftVal > 0 && isCopy == 0 && node_lftVal < ref_ind)
@@ -312,44 +303,44 @@ public class COBMenuServiceImpl implements COBMenuService {
 				sqlMenuDto4.setIdif( idif );
 				sqlMenuDto4.setLdif( ldif );
 				sqlMenuDto4.setNodeIds( node_ids.split(",") );
-
+				
 				sqlFlag6 = true;
 			}
 		}
-
+		
 		if (sqlFlag1)
 		{
-			actCnt += cOBMenuMapper.setMenuMove1(sqlMenuDto1);
-			actCnt += cOBMenuMapper.setMenuMove2(sqlMenuDto1);
-			actCnt += cOBMenuMapper.setMenuMove3(sqlMenuDto1);
+			actCnt += cOBUserMenuMapper.setMenuMove1(sqlMenuDto1);
+			actCnt += cOBUserMenuMapper.setMenuMove2(sqlMenuDto1);
+			actCnt += cOBUserMenuMapper.setMenuMove3(sqlMenuDto1);
 		}
-
+		
 		if (sqlFlag2)
 		{
-			actCnt += cOBMenuMapper.setMenuMove4(sqlMenuDto2);
+			actCnt += cOBUserMenuMapper.setMenuMove4(sqlMenuDto2);
 		}
-
+		
 		if (sqlFlag3)
 		{
-			actCnt += cOBMenuMapper.setMenuMove5(sqlMenuDto2);
+			actCnt += cOBUserMenuMapper.setMenuMove5(sqlMenuDto2);
 		}
-
+		
 		if (sqlFlag4)
 		{
-			actCnt += cOBMenuMapper.setMenuMove6(sqlMenuDto3);
-			actCnt += cOBMenuMapper.setMenuMove7(sqlMenuDto3);
+			actCnt += cOBUserMenuMapper.setMenuMove6(sqlMenuDto3);
+			actCnt += cOBUserMenuMapper.setMenuMove7(sqlMenuDto3);
 		}
-
+		
 		if (sqlFlag5)
 		{
-			actCnt += cOBMenuMapper.setMenuMove8(sqlMenuDto3);
-			actCnt += cOBMenuMapper.setMenuMove9(sqlMenuDto3);
+			actCnt += cOBUserMenuMapper.setMenuMove8(sqlMenuDto3);
+			actCnt += cOBUserMenuMapper.setMenuMove9(sqlMenuDto3);
 		}
-
+		
 		if (sqlFlag6)
 		{
-			actCnt += cOBMenuMapper.setMenuMove10(sqlMenuDto4);
-			actCnt += cOBMenuMapper.setMenuMove11(sqlMenuDto4);
+			actCnt += cOBUserMenuMapper.setMenuMove10(sqlMenuDto4);
+			actCnt += cOBUserMenuMapper.setMenuMove11(sqlMenuDto4);
 		}
 
 		return actCnt;
@@ -360,17 +351,17 @@ public class COBMenuServiceImpl implements COBMenuService {
 	 */
 	public int deleteMenu(COMenuDTO cOMenuDTO) throws Exception
 	{
-		COMenuDTO infoDto = cOBMenuMapper.selectMenuDtl(cOMenuDTO);
-
+		COMenuDTO infoDto = cOBUserMenuMapper.selectMenuDtl(cOMenuDTO);
+		
 		int actCnt = 0;
 
 		if (infoDto != null)
 		{
-			actCnt = cOBMenuMapper.deleteMenu(infoDto);
-
-			cOBMenuMapper.setDeleteUpdateLftVal(infoDto);
-			cOBMenuMapper.setDeleteUpdateRhtVal(infoDto);
-			cOBMenuMapper.setDeleteUpdatePstn(infoDto);
+			actCnt = cOBUserMenuMapper.deleteMenu(infoDto);
+			
+			cOBUserMenuMapper.setDeleteUpdateLftVal(infoDto);
+			cOBUserMenuMapper.setDeleteUpdateRhtVal(infoDto);
+			cOBUserMenuMapper.setDeleteUpdatePstn(infoDto);
 		}
 
 		return actCnt;
@@ -381,7 +372,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 	 */
 	public List<COMenuDTO> getParntData(COMenuDTO cOMenuDTO) throws Exception
 	{
-		return cOBMenuMapper.getParntData(cOMenuDTO);
+		return cOBUserMenuMapper.getParntData(cOMenuDTO);
 	}
 
 	/**
@@ -389,7 +380,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 	 */
 	public List<COMenuDTO> getChildData(COMenuDTO cOMenuDTO) throws Exception
 	{
-		return cOBMenuMapper.getChildData(cOMenuDTO);
+		return cOBUserMenuMapper.getChildData(cOMenuDTO);
 	}
 
 	/**
@@ -408,6 +399,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 			menuDto 	= jsonList.get(i);
 			seq 		= menuDto.getMenuSeq();
 			parntSeq 	= menuDto.getParntSeq();
+
 
 			if (paramSeq == parntSeq)
 			{

@@ -16,7 +16,9 @@
           </a>
         </td>
         <td class="text-center">${ list.name}</td>
-        <td class="text-center">${ list.deptNm}</td>
+        <td class="text-center">${ list.deptCdNm}</td>
+        <td class="text-center">${ list.authCdNm}</td>
+
         <td class="text-center">${ kl:decode(list.useYn, 'Y', '활성', '비활성') }</td>
         <td class="text-center">${ empty list.lastLgnDtm ? '-' : kl:convertDate(list.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>
       </tr>
@@ -24,7 +26,7 @@
   </c:when>
   <c:otherwise>
     <tr data-total-count="0">
-      <td colspan="7" class="text-center">
+      <td colspan="8" class="text-center">
         검색결과가 없습니다.<br>
         (등록된 데이터가 없습니다.)
       </td>

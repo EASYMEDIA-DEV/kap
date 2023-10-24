@@ -53,13 +53,19 @@ public class COEMenuRoleDTO extends BaseDTO {
     //사유
     private String rsn;
 
+    //메뉴명
+    private String menuNm;
+
+    //삭제여부
+    private String delYn;
+
     //조회
     private List<COEMenuRoleDTO> list;
     private String type;
 
     // 상세
     //이전 메뉴 목록
-    private List<String> bfreMenuList;
+    private List<COEMenuRoleDTO> bfreMenuList;
     //변경 메뉴 목록
-    private List<String> chngMenuList;
+    private List<COEMenuRoleDTO> chngMenuList;
 }

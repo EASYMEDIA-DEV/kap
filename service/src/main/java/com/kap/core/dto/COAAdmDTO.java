@@ -34,6 +34,12 @@ public class COAAdmDTO extends BaseDTO  {
     private String authCd;
     //권한코드명
     private String authCdNm;
+
+    //부서코드
+    private String deptCd;
+    //부서코드
+    private String deptCdNm;
+
     //부서명
     private String deptNm;
     //구분코드
@@ -86,6 +92,13 @@ public class COAAdmDTO extends BaseDTO  {
     private String bfreAuthCd;
     //수정권한
     private String modAuthCd;
+
+    //이전권한명
+    private String bfreAuthCdNm;
+    //수정권한명
+    private String modAuthCdNm;
+
+
     //변경사유
     private String rsn;
     //엑셀여부
