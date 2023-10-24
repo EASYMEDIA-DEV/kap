@@ -55,10 +55,10 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
         "types": {
             "max_depth": 5,
             "max_children": 0,
-            "valid_children": ["drive", "folder", "notfolder", "cms", "etc"],
+            "valid_children": ["drive", "folder", "notfolder", "cms", "etc", "menu"],
             "types": {
                 "drive": {
-                    "valid_children": ["folder", "notfolder", "cms", "etc"],
+                    "valid_children": ["folder", "notfolder", "cms", "etc", "menu"],
                     "icon": {
                         "image": "/common/js/lib/jstree/root.png"
                     },
@@ -68,25 +68,31 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                     "remove": false
                 },
                 "folder": {
-                    "valid_children": ["folder", "notfolder", "cms", "etc"],
+                    "valid_children": ["folder", "notfolder", "cms", "etc", "menu"],
                     "icon": {
                         "image": "/common/js/lib/jstree/folder.png"
                     }
                 },
                 "notfolder": {
-                    "valid_children": ["folder", "notfolder", "cms", "etc"],
+                    "valid_children": ["folder", "notfolder", "cms", "etc", "menu"],
                     "icon": {
                         "image": "/common/js/lib/jstree/hold.png"
                     }
                 },
                 "cms": {
-                    "valid_children": ["folder", "notfolder", "cms", "etc"],
+                    "valid_children": ["folder", "notfolder", "cms", "etc", "menu"],
                     "icon": {
                         "image": "/common/js/lib/jstree/cms.png"
                     }
                 },
                 "etc": {
-                    "valid_children": ["folder", "notfolder", "cms", "etc"],
+                    "valid_children": ["folder", "notfolder", "cms", "etc", "menu"],
+                    "icon": {
+                        "image": "/common/js/lib/jstree/etc.png"
+                    }
+                },
+                "menu": {
+                    "valid_children": ["folder", "notfolder", "cms", "etc", "menu"],
                     "icon": {
                         "image": "/common/js/lib/jstree/etc.png"
                     }

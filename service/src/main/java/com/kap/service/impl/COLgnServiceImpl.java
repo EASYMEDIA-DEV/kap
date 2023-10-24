@@ -352,7 +352,7 @@ public class COLgnServiceImpl  implements COLgnService {
 	 */
     public List<COMenuDTO> getMenuList(COAAdmDTO cOAAdmDTO) throws Exception
     {
-		cOAAdmDTO.setUserMenuList( cOLgnMapper.getUserMenuList() );
+		/*cOAAdmDTO.setUserMenuList( cOLgnMapper.getUserMenuList() );*/
     	return cOLgnMapper.getMenuList(cOAAdmDTO);
     }
 }
