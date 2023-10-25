@@ -88,13 +88,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("reset").val("");
                     }
                 }
-            },
-            btnList : {
-                event : {
-                    click : function () {
-
-                    }
-                }
             }
         },
         classname : {

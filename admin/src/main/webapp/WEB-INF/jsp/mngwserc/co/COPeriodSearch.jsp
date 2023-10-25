@@ -26,7 +26,8 @@
 								<option value="1" <c:if test="${rtnData.srchDate eq '1'}">selected</c:if>>최종접속일</option>
 							</c:when>
 							<c:when test="${param.periodType eq 'csa'}">
-								<option value="2" <c:if test="${rtnData.srchDate eq '2'}">selected</c:if>>등록일</option>
+								<option value="1" <c:if test="${rtnData.srchDate eq '1'}">selected</c:if>>등록일</option>
+								<option value="2" <c:if test="${rtnData.srchDate eq '2'}">selected</c:if>>수정일</option>
 							</c:when>
 							<c:when test="${param.periodType eq 'mba'}">
 								<option value="1" <c:if test="${rtnData.srchDate eq '1'}">selected</c:if>>가입일</option>
