@@ -1,4 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<c:set var="date" value="<%=new java.util.Date()%>" />
+<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 
 <fieldset>
 	<div class="form-inline text-sm">
@@ -85,14 +87,14 @@
 				<c:choose>
 					<c:when test="${param.periodType eq 'smc'}">
 						<div class="input-group">
-							<input type="text" class="form-control input-sm datetimepicker_strtDt" id="dStrDt" data-name="dStrDt" value="" title="등록/수정시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" id="dStrDt" data-name="dStrDt" value="${today}" title="등록/수정시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 							<span class="input-group-btn" style="z-index:0;">
 								<button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
 									<em class="ion-calendar"></em>
 								</button>
 							</span>
 							<span class="input-group-addon bg-white b0">~</span>
-							<input type="text" class="form-control input-sm datetimepicker_endDt" id="dEndDt" data-name="dEndDt" value="" title="등록/수정종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_endDt" id="dEndDt" data-name="dEndDt" value="${today}" title="등록/수정종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 							<span class="input-group-btn" style="z-index:0;">
 								<button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
 									<em class="ion-calendar"></em>
@@ -102,14 +104,14 @@
 					</c:when>
 					<c:when test="${param.periodType ne 'smc' and param.useOdtmYn eq 'Y'}">
 						<div class="input-group">
-							<input type="text" class="form-control input-sm datetimepicker_strtDt" id="strtDt" data-name="strtDt" value="${rtnData.strtDt}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" id="strtDt" data-name="strtDt" value="${today}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 							<span class="input-group-btn" style="z-index:0;">
 								<button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
 									<em class="ion-calendar"></em>
 								</button>
 							</span>
 							<span class="input-group-addon bg-white b0">~</span>
-							<input type="text" class="form-control input-sm datetimepicker_endDt" id="endDt" data-name="endDt" value="${rtnData.endDt}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_endDt" id="endDt" data-name="endDt" value="${today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 							<span class="input-group-btn" style="z-index:0;">
 								<button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
 									<em class="ion-calendar"></em>
@@ -125,14 +127,14 @@
 					</c:when>
 					<c:otherwise>
 						<div class="input-group">
-							<input type="text" class="form-control input-sm datetimepicker_strtDt" id="strtDt" data-name="strtDt" value="${rtnData.strtDt}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" id="strtDt" data-name="strtDt" value="${today}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 							<span class="input-group-btn" style="z-index:0;">
 								<button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
 									<em class="ion-calendar"></em>
 								</button>
 							</span>
 							<span class="input-group-addon bg-white b0">~</span>
-							<input type="text" class="form-control input-sm datetimepicker_endDt" id="endDt" data-name="endDt" value="${rtnData.endDt}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_endDt" id="endDt" data-name="endDt" value="${today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 							<span class="input-group-btn" style="z-index:0;">
 								<button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
 									<em class="ion-calendar"></em>

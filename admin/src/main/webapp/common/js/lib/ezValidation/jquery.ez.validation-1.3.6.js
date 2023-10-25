@@ -727,9 +727,9 @@
 
 					message = tagTitle + josa + message;
 
-					if(typeof tagLengthValue != "undefined"){
+					/*if(typeof tagLengthValue != "undefined"){
 						message += " (최대 " + tagLengthValue + "자까지 입력 가능합니다.)";
-					}
+					}*/
 				}
 			}
 		};

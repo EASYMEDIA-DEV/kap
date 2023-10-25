@@ -104,6 +104,7 @@ var msgCtrl = (function(){
 		fail : {
 			act : "문제가 발생하여 진행이 중단됩니다. 잠시 후 다시 시도 바랍니다.",
 			target : "대상을 선택하세요.",
+			notUse : "미노출할 게시물을 선택해주세요.",
 			notFileRequired: "첨부파일을 등록해주세요.",
 			reason : "사유를 입력하세요.",
 			notValidUrl: "올바르지 않은 URL입니다. 'javascript:, /, http://, https://'부터 입력이 가능합니다.",
@@ -199,8 +200,14 @@ var msgCtrl = (function(){
 			sm : {
 				smc : {
 					target : "삭제할 게시물을 선택하세요.",
-					titl : "제목을 입력하세요.",
+					titl : "제목을 입력해주세요.",
 					cntn : "상세내용을 입력하세요.",
+					notMoveUp : "더 이상 올릴 수 없습니다.",
+					notMoveDown : "더 이상 내릴 수 없습니다.",
+					image: "이미지를 첨부해주세요.",
+					html: "HTML 내용을 작성해주세요.",
+					notuse: "선택한 게시물을 미노출로 변경하시겠습니까?"
+
 				},
 				smf : {
 					notRename : "명칭 변경하려는 사이트를 선택하세요.",

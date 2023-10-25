@@ -1107,6 +1107,25 @@ var cmmCtrl = (function(){
 			dropzone.removeClass("dz-started");
 		}
 	});
+
+	/***
+	 * 페이지 로드
+	 ***/
+	jQuery(document).ready(function(){
+		/* 목록 페이지 이동 */
+		jQuery("#btnList").on("click", function(e){
+			if (confirm(msgCtrl.getMsg("confirm.list")))
+			{
+				if (sessionStorage.getItem("pageIndex")) {
+					var pageIndex = sessionStorage.getItem("pageIndex");
+					location.href = "./list?" + jQuery(this).data("strPam") + "&pageIndex=" + pageIndex;
+
+				} else {
+					location.href = "./list?" + jQuery(this).data("strPam");
+				}
+			}
+		});
+	});
 	
 	// Back/forward cache(뒤로/앞으로 가기) 체크
 	window.onpageshow = function(event){

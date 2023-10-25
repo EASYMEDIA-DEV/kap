@@ -70,18 +70,29 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         if (jQuery(this).is(":checked"))
                         {
-                            jQuery(trgtObj).find(".datetimepicker_strtDtm, .datetimepicker_endDtm").addClass("notRequired").prop("disabled", true);
+                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").addClass("notRequired").prop("disabled", true);
+                            jQuery(".input-group").find("input").prop("disabled", true).val("");
+                            jQuery(".input-group").siblings("select").prop("disabled", true).find("option:eq(0)").prop("selected", true);
                         }
                         else
                         {
-                            jQuery(trgtObj).find(".datetimepicker_strtDtm, .datetimepicker_endDtm").removeClass("notRequired").prop("disabled", false);
+                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").removeClass("notRequired").prop("disabled", false);
+                            jQuery(".input-group").find("input").prop("disabled", false);
+                            jQuery(".input-group").siblings("select").prop("disabled", false);
                         }
 
-                        jQuery(trgtObj).find(".datetimepicker_strtDtm").datetimepicker("setOptions", { /* maxDate : false */ });
-                        jQuery(trgtObj).find(".datetimepicker_strtDtm").datetimepicker("reset").val("");
+                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("setOptions", { /* maxDate : false */ });
+                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("reset").val("");
 
-                        jQuery(trgtObj).find(".datetimepicker_endDtm").datetimepicker("setOptions", { minDate : false });
-                        jQuery(trgtObj).find(".datetimepicker_endDtm").datetimepicker("reset").val("");
+                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("setOptions", { minDate : false });
+                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("reset").val("");
+                    }
+                }
+            },
+            btnList : {
+                event : {
+                    click : function () {
+
                     }
                 }
             }
@@ -95,17 +106,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var typeCd =  $("input[name='typeCd']:checked").val();
                         if (typeCd == "image")
                         {
-
-                            ctrl.obj.find(".linkUrlContainer").show();
-                            ctrl.obj.find(".linkUrlContainer").find("input[type=text]").val("");
                             jQuery("#imageArea").show().find(".dropzone").removeClass("notRequired");
                             jQuery('#htmlArea').hide().find("textarea").removeClass("ckeditorRequired");
                         }
                         else if (typeCd == "html")
                         {
-                            ctrl.obj.find(".linkUrlContainer").hide();
-                            ctrl.obj.find(".linkUrlContainer").find("input[type=text]").val("");
-
                             jQuery("#imageArea").hide().find(".dropzone").addClass("notRequired");
                             jQuery('#htmlArea').show().find("textarea").addClass("ckeditorRequired");
                         }
@@ -114,13 +119,20 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             }
         },
         immediately : function(){
+
+            var odtmYn =  $("input[name='odtmYn']:checked").val();
+            if (odtmYn !== 'Y') {
+                $(".datetimepicker_strtDt").val(new Date().toLocaleDateString().replace(/\./g, '').replace(/\s/g, '-'));
+                $(".datetimepicker_endDt").val(new Date().toLocaleDateString().replace(/\./g, '').replace(/\s/g, '-'));
+            }
+
             /* File Dropzone Setting */
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
                 cmmCtrl.setDropzone(trgtObj, {
                     maxFileCnt  : trgtObj.data("maxFileCnt"),
                     maxFileSize : trgtObj.data("maxFileSize"),
-                    fileExtn    : trgtObj.data("fileExtn"),
+                    fileExtn    : trgtObj.data("imageExtns"),
                     fileFieldNm : trgtObj.data("fileFieldNm")
                 })
             });
@@ -145,16 +157,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 after : function() {
                     var isValid = true, editorChk = true;
 
-                    jQuery(".dropzone").not(".notRequired").each(function(i){
-                        if (jQuery(this).children(".dz-preview").length == 0)
-                        {
-                            alert(jQuery(this).data("titl") + "를 등록해주세요.");
-                            jQuery(this)[0].scrollIntoView();
-                            isValid = false;
-                            return false;
-                        }
-                    });
-
                     $formObj.find(".ckeditorRequired").each(function() {
                         jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
 
@@ -164,7 +166,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         {
                             editorChk = false;
 
-                            alert(msgCtrl.getMsg("fail.noCntn"));
+                            alert(msgCtrl.getMsg("fail.sm.smc.html"));
 
                             CKEDITOR.instances[jQuery(this).prop("id")].focus();
 
@@ -181,8 +183,30 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
 
                     return isValid;
-                }
-                ,
+                },
+                customfunc : function(obj, tagid, okval, msg){
+
+                    if (tagid == "ptupEndMi")
+                    {
+                        var ptupStrtDtm = jQuery("#strtDtm").val().replace(/-/gi, "");
+                        var ptupEndDtm = jQuery("#endDtm").val().replace(/-/gi, "");
+                        var ptupStrtHh = jQuery("#ptupStrtHh").val();
+                        var ptupStrtMi = jQuery("#ptupStrtMi").val();
+                        var ptupEndHh = jQuery("#ptupEndHh").val();
+                        var ptupEndMi = jQuery("#ptupEndMi").val();
+
+                        ptupStrtDtm = parseInt(ptupStrtDtm + ptupStrtHh + ptupStrtMi);
+                        ptupEndDtm = parseInt(ptupEndDtm + ptupEndHh + ptupEndMi);
+
+                        if (ptupStrtDtm > ptupEndDtm)
+                        {
+                            alert("시작일이 종료일보다 이후일 수 없습니다");
+                            jQuery(obj).focus();
+                            return false;
+                        }
+                    }
+
+                },
                 async : {
                     use : true,
                     func : function (){
@@ -208,6 +232,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 actionUrl = "./list";
                             }, actionUrl, $formObj, "post", "json")
                         }
+                    }
+                },
+                msg : {
+                    empty : {
+                        text : " 입력해주세요."
                     }
                 }
             });
