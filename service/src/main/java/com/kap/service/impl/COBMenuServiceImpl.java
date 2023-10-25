@@ -10,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -49,10 +46,8 @@ public class COBMenuServiceImpl implements COBMenuService {
 	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO) throws Exception
 	{
 		if(!"Y".equals(cOMenuDTO.getIsMenu())){
-
 			cOMenuDTO.setUserMenuList( cOBMenuMapper.getUserMenuList(cOMenuDTO) );
 		}
-
 		return cOBMenuMapper.getMenuList(cOMenuDTO);
 	}
 
@@ -126,7 +121,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 		int node_rhtVal = 0;
 		int node_dpth = 0;
 
-        int refNode_parntSeq = 0;
+		int refNode_parntSeq = 0;
 		int refNode_pstn = 0;
 		int refNode_lftVal = 0;
 		int refNode_rhtVal = 0;
@@ -183,19 +178,19 @@ public class COBMenuServiceImpl implements COBMenuService {
 
 			List<COMenuDTO> moveNodeIds = cOBMenuMapper.getMoveNodeIds(nodeIdsMenuDto);
 
-            for (int q = 0; q < moveNodeIds.size(); q++)
-            {
-                COMenuDTO moveNodeIdMenuDto = moveNodeIds.get(q);
+			for (int q = 0; q < moveNodeIds.size(); q++)
+			{
+				COMenuDTO moveNodeIdMenuDto = moveNodeIds.get(q);
 
-                if ("".equals(node_ids))
-                {
-                    node_ids = COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
-                }
-                else
-                {
-                    node_ids = node_ids + "," + COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
-                }
-            }
+				if ("".equals(node_ids))
+				{
+					node_ids = COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
+				}
+				else
+				{
+					node_ids = node_ids + "," + COStringUtil.nullConvert(moveNodeIdMenuDto.getMenuSeq());
+				}
+			}
 
 			ndif = node_rhtVal - node_lftVal + 1;
 		}
@@ -418,7 +413,8 @@ public class COBMenuServiceImpl implements COBMenuService {
 				tmpObject.put("data", XssPreventer.unescape(menuNm));
 				tmpObject.put("i", i);
 
-				if (menuDto.getChildcnt() > 0  && !"menu".equals(menuDto.getMenuType()))
+//				if (menuDto.getChildcnt() > 0  && !"menu".equals(menuDto.getMenuType()))
+				if (menuDto.getChildcnt() > 0)
 				{
 					tmpObject.put("state", "open");
 

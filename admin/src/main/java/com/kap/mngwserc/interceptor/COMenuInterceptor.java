@@ -7,7 +7,6 @@ import com.kap.core.dto.COMenuDTO;
 import com.kap.core.exceptionn.UnauthorizedException;
 import com.kap.service.COLgnService;
 import com.kap.service.COUserDetailsHelperService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -202,8 +201,24 @@ public class COMenuInterceptor implements HandlerInterceptor{
         }
         request.setAttribute("parntMenuList", parntMenuList);
         request.setAttribute("lnbMenuList", lnbMenuList);
+
+        // CMS 관리
+       /* String langCd = EgovStringUtil.getLangCd(driveSeq);
+
+        if (requestURI.contains("/mngwserc-" + langCd + "/content/" + pageNo + "/"))
+        {
+            request.setAttribute("cmsRoot", cOGCntnService.getCmsRootInf(driveSeq));
+        }
+
+        EgovSessionCookieUtil.setSessionAttribute(request, "langCd", langCd);*/
+
         //AOP용
         RequestContextHolder.getRequestAttributes().setAttribute("pageIndicator", pageIndicator, RequestAttributes.SCOPE_SESSION);
+
+
+        for (int i = 0, size = menuList.size(); i < size; i++) {
+            System.out.println("=================================== " + menuList.get(i).getMenuType() + " ================= " + menuList.get(i).getMenuNm());
+        }
 
         return true;
     }

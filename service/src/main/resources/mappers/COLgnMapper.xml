@@ -244,11 +244,11 @@
 				where 1=1
 				and lft_val <![CDATA[ > ]]> (select lft_val from co_menu_mst where menu_seq = #{driveMenuSeq})
 				and rht_val <![CDATA[ < ]]> (select rht_val from co_menu_mst where menu_seq = #{driveMenuSeq})
-				<if test="userMenuList != null">
+				<!--<if test="userMenuList != null">
 					<foreach collection="userMenuList" item="menuList" index="index" separator=" AND " open="and (" close=")">
 						!(lft_val <![CDATA[ > ]]> #{menuList.lftVal} and rht_val <![CDATA[ < ]]> #{menuList.rhtVal})
 					</foreach>
-				</if>
+				</if>-->
 				and use_yn = 'Y'
 				order by
 				lft_val
@@ -282,11 +282,11 @@
 					and a.lft_val <![CDATA[ > ]]>  (select lft_val from co_menu_mst where menu_seq = #{driveMenuSeq} )
 					and a.rht_val <![CDATA[ < ]]>  (select rht_val from co_menu_mst where menu_seq = #{driveMenuSeq} )
 					/*사용자 메뉴는 노출하면 안됨*/
-					<if test="userMenuList != null">
+					<!--<if test="userMenuList != null">
 						<foreach collection="userMenuList" item="menuList" index="index" separator=" AND " open="and (" close=")">
 							!(lft_val <![CDATA[ > ]]> #{menuList.lftVal} and rht_val <![CDATA[ < ]]> #{menuList.rhtVal})
 						</foreach>
-					</if>
+					</if>-->
 				) t2
 				where
 				        t2.lft_val between t1.lft_val and t1.rht_val
