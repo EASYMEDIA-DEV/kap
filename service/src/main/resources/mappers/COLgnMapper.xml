@@ -406,4 +406,25 @@
 		)
 	</insert>
 
+	<!--
+         쿼리명 : COLgnMapper.getCmsRootInf
+         설  명 : CMS Root 메뉴 정보를 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2099.99.99   &&&       최초생성
+    -->
+	<select id="getCmsRootInf" parameterType="COAAdmDTO" resultType="COMenuDTO">
+		SELECT /* COLgnMapper.getCmsRootInf */
+			MENU_SEQ
+			 , LFT_VAL
+			 , RHT_VAL
+		FROM
+			CO_MENU_MST
+		WHERE 1=1
+		  AND MENU_TYPE = 'menu'
+		  AND USE_YN = 'Y'
+		  AND LFT_VAL <![CDATA[>]]> (SELECT LFT_VAL FROM CO_MENU_MST WHERE MENU_SEQ = #{driveMenuSeq})
+		  AND RHT_VAL <![CDATA[<]]> (SELECT RHT_VAL FROM CO_MENU_MST WHERE MENU_SEQ = #{driveMenuSeq})
+	</select>
+
 </mapper>
