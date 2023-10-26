@@ -99,9 +99,6 @@ public class COMenuInterceptor implements HandlerInterceptor{
 
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
         }
-        for(COMenuDTO test : menuList) {
-            System.out.println("test.getAdmUrl() ==================================== " + test.getAdmUrl());
-        }
 
         //드라이브 조회
         //현재 메뉴 위치 찾기
@@ -115,9 +112,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
             admUrl = "";
             if(!"".equals(COStringUtil.nullConvert(menuList.get(i).getAdmUrl())))
             {
-                System.out.println("menuList.get(i).getAdmUrl() 확인확인 ==================================== " + menuList.get(i).getAdmUrl());
                 admUrl = menuList.get(i).getAdmUrl().substring(0, menuList.get(i).getAdmUrl().lastIndexOf("/")+1);
-                System.out.println("admUrl 확인확인 ==================================== " + admUrl);
             }
             if ("".equals(firstUrl) && !"".equals(admUrl) && !"".equals(menuList.get(i).getAdmUrl()))
             {
@@ -131,9 +126,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
 
             if (admUrl != null && !"".equals(admUrl) && requestURI.indexOf(admUrl) > -1)
             {
-                System.out.println("admUrl ==================================== " + admUrl);
                 pageNo    = menuList.get(i).getMenuSeq();
-                System.out.println("pageNo ==================================== " + pageNo);
                 pageTitle = menuList.get(i).getMenuNm();
                 break;
             }
@@ -161,7 +154,6 @@ public class COMenuInterceptor implements HandlerInterceptor{
                 throw new UnauthorizedException("잘못된 접근입니다.");
             }
         }
-        System.out.println("firstUrl ==================================== " + firstUrl);
         request.setAttribute("firstUrl", firstUrl);
 
         request.setAttribute("pageNo", pageNo);
@@ -214,20 +206,11 @@ public class COMenuInterceptor implements HandlerInterceptor{
 
         if (requestURI.contains("/mngwserc/" + langCd + "/contentsid/" + pageNo + "/"))
         {
-            System.out.println("userMenuList ========================= " + request.getRequestURI());
             request.setAttribute("cmsRoot", cOLgnService.getCmsRootInf(lngCOAAdmDTO));
         }
 
-        System.out.println("URI ========================= " + request.getRequestURI());
-        System.out.println("contains ========================= " + request.getRequestURI().contains("/kr/"));
-
         //AOP용
         RequestContextHolder.getRequestAttributes().setAttribute("pageIndicator", pageIndicator, RequestAttributes.SCOPE_SESSION);
-
-
-        for (int i = 0, size = menuList.size(); i < size; i++) {
-            System.out.println("=================================== " + menuList.get(i).getMenuType() + " ================= " + menuList.get(i).getMenuNm());
-        }
 
         return true;
     }
