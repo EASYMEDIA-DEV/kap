@@ -109,7 +109,6 @@ public class COMenuInterceptor implements HandlerInterceptor{
 
         for (int i = 0, size = menuList.size(); i < size; i++)
         {
-
             admUrl = "";
             if(!"".equals(COStringUtil.nullConvert(menuList.get(i).getAdmUrl())))
             {
@@ -203,22 +202,15 @@ public class COMenuInterceptor implements HandlerInterceptor{
         request.setAttribute("lnbMenuList", lnbMenuList);
 
         // CMS 관리
-       /* String langCd = EgovStringUtil.getLangCd(driveSeq);
+        String langCd = request.getRequestURI().contains("/kr/") ? "kr" : "en";
 
-        if (requestURI.contains("/mngwserc-" + langCd + "/content/" + pageNo + "/"))
+        if (requestURI.contains("/mngwserc/" + langCd + "/contentsid/" + pageNo + "/"))
         {
-            request.setAttribute("cmsRoot", cOGCntnService.getCmsRootInf(driveSeq));
+            request.setAttribute("cmsRoot", cOLgnService.getCmsRootInf(lngCOAAdmDTO));
         }
-
-        EgovSessionCookieUtil.setSessionAttribute(request, "langCd", langCd);*/
 
         //AOP용
         RequestContextHolder.getRequestAttributes().setAttribute("pageIndicator", pageIndicator, RequestAttributes.SCOPE_SESSION);
-
-
-        for (int i = 0, size = menuList.size(); i < size; i++) {
-            System.out.println("=================================== " + menuList.get(i).getMenuType() + " ================= " + menuList.get(i).getMenuNm());
-        }
 
         return true;
     }

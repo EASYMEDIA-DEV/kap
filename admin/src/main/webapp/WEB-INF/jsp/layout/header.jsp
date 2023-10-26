@@ -45,6 +45,62 @@
 		<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js?${sysDate}"></script>
 		<!--메시지 공통-->
 		<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js?${sysDate}"></script>
+		<%--메뉴 분류--%>
+		<script type="text/javascript">
+			//<![CDATA[
+			jQuery(document).ready(function(){
+				var trgtPstn = jQuery("#leftMenu${pageNo}").offset();
+
+				if (trgtPstn)
+				{
+					jQuery(".sidebar-content").animate({ scrollTop : trgtPstn.top - 70 }, 0);
+				}
+
+				jQuery("#topMenuArea .dropdown").each(function(q){
+					var trgtObj = jQuery(this);
+					console.log(trgtObj);
+					if (trgtObj.data("menuType") == "menu")
+					{
+						setRemoveFolder(trgtObj);
+
+						trgtObj.find("ul:first").children("li").each(function(q){
+							var menuType = jQuery(this).data("menuType");
+
+							if (menuType != "cms" && jQuery(this).find("li[data-menu-type='cms']").length == 0)
+							{
+								jQuery(this).remove();
+							}
+						});
+					}
+				});
+			});
+
+			function setRemoveFolder(trgtObj)
+			{
+				if (trgtObj.find("li").length > 0)
+				{
+					trgtObj.find("li").each(function(q){
+						setRemoveFolder(jQuery(this));
+
+						if (jQuery(this).find("li").length == 0)
+						{
+							jQuery(this).find("ul").remove();
+							jQuery(this).removeClass("dropdown-submenu");
+						}
+					});
+				}
+				else
+				{
+					var menuType = trgtObj.data("menuType");
+
+					if (menuType != "cms")
+					{
+						trgtObj.remove();
+					}
+				}
+			}
+			//]]>
+		</script>
 	</head>
 	<c:set var="sidebarShowheader"  value="${kl:decode(cookie.sidebarShowheader.value,  '', 'checked', cookie.sidebarShowheader.value)}" />
 	<c:set var="sidebarShowtoolbar" value="${kl:decode(cookie.sidebarShowtoolbar.value, '', 'checked', cookie.sidebarShowtoolbar.value)}" />
@@ -89,15 +145,15 @@
 						</c:if>
 						<c:choose>
 					       	<c:when test="${currentlevel eq 2}">
-					       		<li class="dropdown" data-menu-gb="${top.menuType}">
+					       		<li class="dropdown" data-menu-type="${top.menuType}">
 					       	</c:when>
 					       	<c:otherwise>
 					       		<c:choose>
 					       			<c:when test="${currentlevel lt nextlevel}">
-					       				<li class="dropdown-submenu" data-menu-gb="${top.menuType}">
+					       				<li class="dropdown-submenu" data-menu-type="${top.menuType}">
 					       			</c:when>
 					       			<c:otherwise>
-					       				<li data-menu-gb="${top.menuType}">
+					       				<li data-menu-type="${top.menuType}">
 					       			</c:otherwise>
 					       		</c:choose>
 					       	</c:otherwise>
@@ -105,10 +161,16 @@
 
 					   	<c:choose>
 					   		<c:when test="${currentlevel eq 2 and currentlevel le nextlevel}">
-					    		<a href="${kl:nvl(top.admUrl, 'javascript:')}" target="${top.wnppYn eq 'Y' ? '_blank' : '_self'}" class="dropdown-toggle"
-								   data-toggle="dropdown" role="button" aria-expanded="false" data-submenu="" <c:if test="${top.wnppYn eq 'Y'}"> rel="noopener noreferrer" </c:if>>
-					    			<h6>${top.menuNm}<c:if test="${currentlevel lt nextlevel}"><span class="caret"></span></c:if></h6>
-					    		</a>
+								<c:choose>
+									<c:when test="${cmsCount eq 0 && top.menuNm eq 'CMS 관리'}">
+									</c:when>
+									<c:otherwise>
+										<a href="${kl:nvl(top.admUrl, 'javascript:')}" target="${top.wnppYn eq 'Y' ? '_blank' : '_self'}" class="dropdown-toggle"
+										   data-toggle="dropdown" role="button" aria-expanded="false" data-submenu="" <c:if test="${top.wnppYn eq 'Y'}"> rel="noopener noreferrer" </c:if>>
+											<h6>${top.menuNm}<c:if test="${currentlevel lt nextlevel}"><span class="caret"></span></c:if></h6>
+										</a>
+									</c:otherwise>
+								</c:choose>
 					    	</c:when>
 					    	<c:otherwise>
 					    		<a href="${kl:nvl(top.admUrl, 'javascript:')}" target="${top.wnppYn eq 'Y' ? '_blank' : '_self'}" <c:if test="${top.wnppYn eq 'Y'}"> rel="noopener noreferrer" </c:if>><h7>${top.menuNm}</h7></a>
@@ -202,16 +264,26 @@
 								</c:if>
 
 								<c:if test="${status.index gt 0}">
+									<c:choose>
+										<c:when test="${not empty cmsRoot and left.menuType ne 'cms'}">
+											<c:set var="admUrl" value="javascript:" />
+											<c:set var="menuActiveYn" value="N" />
+										</c:when>
+										<c:otherwise>
+											<c:set var="admUrl" value="${kl:nvl(left.admUrl, 'javascript:')}" />
+											<c:set var="menuActiveYn" value="Y" />
+										</c:otherwise>
+									</c:choose>
 									<c:if test="${lnbMenuList[status.index-1].dpth lt currentlevel and currentlevel gt 2}">
 										<ul class="sidebar-subnav">
 									</c:if>
 									<li id="leftMenu${left.menuSeq}">
-									    <a href="${kl:nvl(left.admUrl, 'javascript:')}" target="${left.wnppYn eq 'Y' ? '_blank' : '_self'}" <c:if test="${left.wnppYn eq 'Y'}"> rel="noopener noreferrer" </c:if>>
+									    <a href="${kl:nvl(admUrl, 'javascript:')}" target="${left.wnppYn eq 'Y' ? '_blank' : '_self'}" <c:if test="${left.wnppYn eq 'Y'}"> rel="noopener noreferrer" </c:if>>
 									    	<c:if test="${currentlevel lt nextlevel}">
 												<span class="pull-right nav-caret"><em class="ion-ios-arrow-right"></em></span>
 											</c:if>
 											<span class="pull-right nav-label"></span>
-											<span class="highlight text-bold <c:if test="${pageNo eq left.menuSeq}">text-info</c:if>">
+											<span class="highlight ${menuActiveYn eq 'Y' ? 'text-bold ' : 'text-muted '} <c:if test="${pageNo eq left.menuSeq}">text-info</c:if>">
 												<c:if test="${currentlevel gt 2}">
 													<strong style="font-size:large;">&middot;</strong>&nbsp;
 												</c:if>
