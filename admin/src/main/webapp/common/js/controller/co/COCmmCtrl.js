@@ -14,30 +14,30 @@ var cmmCtrl = (function(){
 		}
 	};
 
-    /* Ajax Normal */
-    var fn_ajax = function(callbackAjax, url, dataType, loading, sync)
-    {
-        if (typeof dataType == "undefined") {
-            dataType = "json";
-        }
+	/* Ajax Normal */
+	var fn_ajax = function(callbackAjax, url, dataType, loading, sync)
+	{
+		if (typeof dataType == "undefined") {
+			dataType = "json";
+		}
 
-        if (typeof sync == "undefined") {
-            sync = true;
-        }
+		if (typeof sync == "undefined") {
+			sync = true;
+		}
 
-        jQuery.ajax({
-            url : url,
-            type : "post",
-            timeout: 30000,
-            dataType : dataType,
-            async: sync,
-            cache : false,
-            beforeSend : function(){
-                if (loading) {
-                    jQuery(".loadingbar").stop().fadeIn(200);
-                }
-            },
-            success : function(data, status, xhr){
+		jQuery.ajax({
+			url : url,
+			type : "post",
+			timeout: 30000,
+			dataType : dataType,
+			async: sync,
+			cache : false,
+			beforeSend : function(){
+				if (loading) {
+					jQuery(".loadingbar").stop().fadeIn(200);
+				}
+			},
+			success : function(data, status, xhr){
 				if(data.errors != null){
 					fn_ajax_error(data, status, xhr);
 				}
@@ -48,50 +48,50 @@ var cmmCtrl = (function(){
 						callbackAjax(data);
 					}
 				}
-            },
-            error : function(data, status, xhr){
-            	fn_ajax_error(data, status, xhr);
-            },
-            complete : function(){
-                if (loading) {
-                    jQuery(".loadingbar").stop().fadeOut(200);
-                }
-            }
-        });
-    };
+			},
+			error : function(data, status, xhr){
+				fn_ajax_error(data, status, xhr);
+			},
+			complete : function(){
+				if (loading) {
+					jQuery(".loadingbar").stop().fadeOut(200);
+				}
+			}
+		});
+	};
 
-    /* Ajax Form Data */
-    var fn_ajax_data = function(callbackAjax, url, formObj, formActionType, dataRespType, loading, sync)
-    {
+	/* Ajax Form Data */
+	var fn_ajax_data = function(callbackAjax, url, formObj, formActionType, dataRespType, loading, sync)
+	{
 		//폼 전송 타입
-    	if (typeof formActionType == "undefined") {
+		if (typeof formActionType == "undefined") {
 			formActionType = "POST";
-        }
+		}
 		//비동기 여부
-        if (typeof sync == "undefined") {
-            sync = true;
-        }
+		if (typeof sync == "undefined") {
+			sync = true;
+		}
 		//application header json
 		if (typeof dataRespType == "undefined") {
 			dataRespType = "json";
 		}
 		//데디터 배열 처리
-        if (formObj.data("submitFlag") != "Y") {
-        	jQuery.ajax({
-                url : url,
-                type : formActionType,
-                timeout: 30000,
-                data : formObj.serializeArray(),
-                dataType : dataRespType,
-                async: sync,
-                cache : false,
-                beforeSend : function(){
-                	formObj.data("submitFlag", "Y");
-                	if (loading) {
-                        jQuery(".loadingbar").stop().fadeIn(200);
-                    }
-                },
-                success : function(data, status, xhr){
+		if (formObj.data("submitFlag") != "Y") {
+			jQuery.ajax({
+				url : url,
+				type : formActionType,
+				timeout: 30000,
+				data : formObj.serializeArray(),
+				dataType : dataRespType,
+				async: sync,
+				cache : false,
+				beforeSend : function(){
+					formObj.data("submitFlag", "Y");
+					if (loading) {
+						jQuery(".loadingbar").stop().fadeIn(200);
+					}
+				},
+				success : function(data, status, xhr){
 					//비동기일때 errors 처리
 					if(data.errors != null){
 						if(typeof data.statusCode == "undefined"){
@@ -106,19 +106,19 @@ var cmmCtrl = (function(){
 							callbackAjax(data);
 						}
 					}
-                },
-                error : function(data, status, xhr){
-                	formObj.data("submitFlag", "N");
-                	fn_ajax_error(data, status, xhr);
-                },
-                complete : function(){
-                    if (loading) {
-                        jQuery(".loadingbar").stop().fadeOut(200);
-                    }
-                }
-            });
+				},
+				error : function(data, status, xhr){
+					formObj.data("submitFlag", "N");
+					fn_ajax_error(data, status, xhr);
+				},
+				complete : function(){
+					if (loading) {
+						jQuery(".loadingbar").stop().fadeOut(200);
+					}
+				}
+			});
 		}
-    };
+	};
 
 	//리스트 조회 data 가져오기
 	var fn_list_frm_set_data = function(formObj){
@@ -221,31 +221,31 @@ var cmmCtrl = (function(){
 		}
 	};
 
-    /* Ajax Param Data */
-    var fn_ajax_param_data = function(callbackAjax, url, paramData, dataType, loading, sync)
-    {
-    	if (typeof dataType == "undefined") {
-            dataType = "json";
-        }
+	/* Ajax Param Data */
+	var fn_ajax_param_data = function(callbackAjax, url, paramData, dataType, loading, sync)
+	{
+		if (typeof dataType == "undefined") {
+			dataType = "json";
+		}
 
-        if (typeof sync == "undefined") {
-            sync = true;
-        }
+		if (typeof sync == "undefined") {
+			sync = true;
+		}
 
-        jQuery.ajax({
-            url : url,
-            type : "post",
-            timeout: 300000,
-            data : paramData,
-            dataType : dataType,
-            async: sync,
-            cache : false,
-            beforeSend : function() {
-                if (loading) {
-                    jQuery(".loadingbar").stop().fadeIn(200);
-                }
-            },
-            success : function(data, status, xhr) {
+		jQuery.ajax({
+			url : url,
+			type : "post",
+			timeout: 300000,
+			data : paramData,
+			dataType : dataType,
+			async: sync,
+			cache : false,
+			beforeSend : function() {
+				if (loading) {
+					jQuery(".loadingbar").stop().fadeIn(200);
+				}
+			},
+			success : function(data, status, xhr) {
 				if(data.errors != null){
 					fn_ajax_error(data, status, xhr);
 				}
@@ -255,32 +255,32 @@ var cmmCtrl = (function(){
 						callbackAjax(data);
 					}
 				}
-            },
-            error : function(data, status, xhr) {
-            	fn_ajax_error(data, status, xhr);
-            },
-            complete : function() {
-                if (loading) {
-                    jQuery(".loadingbar").stop().fadeOut(200);
-                }
-            }
-        });
-    };
+			},
+			error : function(data, status, xhr) {
+				fn_ajax_error(data, status, xhr);
+			},
+			complete : function() {
+				if (loading) {
+					jQuery(".loadingbar").stop().fadeOut(200);
+				}
+			}
+		});
+	};
 
-    /* Ajax Error */
-    var fn_ajax_error = function(data, status, xhr)
-    {
-    	var loginFlag = true, statusCode = data.status;
-    	
-    	if (statusCode == 401 || statusCode == 403 || statusCode == 406)
-        {
-        	alert(msgCtrl.getMsg("fail.http.status.C" + statusCode));
-        
-        	if (statusCode != 403)
-        	{
-        		loginFlag = false;
-        	}
-        }
+	/* Ajax Error */
+	var fn_ajax_error = function(data, status, xhr)
+	{
+		var loginFlag = true, statusCode = data.status;
+
+		if (statusCode == 401 || statusCode == 403 || statusCode == 406)
+		{
+			alert(msgCtrl.getMsg("fail.http.status.C" + statusCode));
+
+			if (statusCode != 403)
+			{
+				loginFlag = false;
+			}
+		}
 		else if(status == "success" && data.respCd == "500"){
 			// Valid 실패
 			$.each(data.errors, function(index, resp){
@@ -304,19 +304,19 @@ var cmmCtrl = (function(){
 				return false;
 			});
 		}
-        else
-       	{
-       		alert(msgCtrl.getMsg("fail.act"));
-		}       
-        
-    	if (!loginFlag)
-    	{
-    		location.href = "/mngwsercgateway/login";
-    	}
-    };
+		else
+		{
+			alert(msgCtrl.getMsg("fail.act"));
+		}
 
-    /* Set Period */
-    var fn_set_period = function(obj, periodGubun, trgtPeriod, isStrtFocus)
+		if (!loginFlag)
+		{
+			location.href = "/mngwsercgateway/login";
+		}
+	};
+
+	/* Set Period */
+	var fn_set_period = function(obj, periodGubun, trgtPeriod, isStrtFocus)
 	{
 
 		var isVaild = false;
@@ -324,86 +324,86 @@ var cmmCtrl = (function(){
 		if (periodGubun && typeof trgtPeriod === "number")
 		{
 			var year  = today.getFullYear();
-	    	var month = today.getMonth() + 1;
-	    	var day   = today.getDate();
+			var month = today.getMonth() + 1;
+			var day   = today.getDate();
 
-	    	var trgtDay;
+			var trgtDay;
 
-	    	if (periodGubun == "y")
-		    {
-	    		var tempDay = new Date(year - trgtPeriod, month - 1, day);
+			if (periodGubun == "y")
+			{
+				var tempDay = new Date(year - trgtPeriod, month - 1, day);
 
-		    	var trgtYear  = tempDay.getFullYear();
-			    var trgtMonth = tempDay.getMonth() + 1;
-		    	var trgtDay   = tempDay.getDate();
+				var trgtYear  = tempDay.getFullYear();
+				var trgtMonth = tempDay.getMonth() + 1;
+				var trgtDay   = tempDay.getDate();
 
-		    	if (trgtMonth < 10)
-		    	{
-		    		trgtMonth = "0" + trgtMonth;
-		    	}
+				if (trgtMonth < 10)
+				{
+					trgtMonth = "0" + trgtMonth;
+				}
 
-		    	if (trgtDay < 10)
-		    	{
-	    			trgtDay = "0" + trgtDay;
-		    	}
+				if (trgtDay < 10)
+				{
+					trgtDay = "0" + trgtDay;
+				}
 
-		    	trgtDay = trgtYear + "-" + trgtMonth  + "-" + trgtDay;
-	    	}
-	    	else if (periodGubun == "m")
-	    	{
-	    		var tempDay = new Date(year, month - 1, 1);
+				trgtDay = trgtYear + "-" + trgtMonth  + "-" + trgtDay;
+			}
+			else if (periodGubun == "m")
+			{
+				var tempDay = new Date(year, month - 1, 1);
 
-	    		tempDay.setMonth(tempDay.getMonth() - (trgtPeriod - 1));
+				tempDay.setMonth(tempDay.getMonth() - (trgtPeriod - 1));
 				tempDay.setDate(tempDay.getDate() - 1);
 
 				var trgtYear  = tempDay.getFullYear();
-		    	var trgtMonth = tempDay.getMonth() + 1;
-		    	var trgtDay   = tempDay.getDate();
+				var trgtMonth = tempDay.getMonth() + 1;
+				var trgtDay   = tempDay.getDate();
 
-		    	if (trgtMonth < 10)
-		    	{
-		    		trgtMonth = "0" + trgtMonth;
-		    	}
+				if (trgtMonth < 10)
+				{
+					trgtMonth = "0" + trgtMonth;
+				}
 
-		    	if (day < trgtDay)
-		    	{
-		    		trgtDay = day;
-		    	}
+				if (day < trgtDay)
+				{
+					trgtDay = day;
+				}
 
-		    	if (trgtDay < 10)
-		    	{
-	    			trgtDay = "0" + trgtDay;
-		    	}
+				if (trgtDay < 10)
+				{
+					trgtDay = "0" + trgtDay;
+				}
 
-		    	trgtDay = trgtYear + "-" + trgtMonth  + "-" + trgtDay;
-	    	}
-	    	else if (periodGubun == "d")
-	    	{
-	    		var tempDay = new Date(year, month - 1, day - trgtPeriod);
+				trgtDay = trgtYear + "-" + trgtMonth  + "-" + trgtDay;
+			}
+			else if (periodGubun == "d")
+			{
+				var tempDay = new Date(year, month - 1, day - trgtPeriod);
 
-	    		var trgtYear  = tempDay.getFullYear();
-		    	var trgtMonth = tempDay.getMonth() + 1;
-		    	var trgtDay   = tempDay.getDate();
+				var trgtYear  = tempDay.getFullYear();
+				var trgtMonth = tempDay.getMonth() + 1;
+				var trgtDay   = tempDay.getDate();
 
-		    	if (trgtMonth < 10)
-		    	{
-		    		trgtMonth = "0" + trgtMonth;
-		    	}
+				if (trgtMonth < 10)
+				{
+					trgtMonth = "0" + trgtMonth;
+				}
 
-		    	if (trgtDay < 10)
-		    	{
-	    			trgtDay = "0" + trgtDay;
-		    	}
+				if (trgtDay < 10)
+				{
+					trgtDay = "0" + trgtDay;
+				}
 
-		    	trgtDay = trgtYear + "-" + trgtMonth  + "-" + trgtDay;
-	    	}
+				trgtDay = trgtYear + "-" + trgtMonth  + "-" + trgtDay;
+			}
 
-	    	if (trgtDay)
-	    	{
-	    		isVaild = true;
-	    	}
+			if (trgtDay)
+			{
+				isVaild = true;
+			}
 		}
-		
+
 		var formObj= obj ? jQuery(obj).closest("form") : jQuery("#frmSearch");
 
 		var strtDtObj = formObj.find(".datetimepicker_strtDt");
@@ -417,12 +417,12 @@ var cmmCtrl = (function(){
 		endDtObj2 = $(obj).closest("fieldset").find(".datetimepicker_endDtm");
 
 		if (isVaild)
-    	{
+		{
 			strtDtObj.datetimepicker("setOptions", { maxDate : new Date(today), value : trgtDay });
 			strtDtObj2.datetimepicker("setOptions", { maxDate : new Date(today), defaultTime : "00:00" });
 			endDtObj.datetimepicker("setOptions", {  maxDate : new Date('2050-12-31'), minDate : trgtDay, value : today });
 			endDtObj2.datetimepicker("setOptions", {  maxDate : new Date('2050-12-31'), minDate : trgtDay, defaultTime : "00:00" });
-    	}
+		}
 		else
 		{
 			if(isStrtFocus == undefined || (isStrtFocus)){
@@ -441,7 +441,7 @@ var cmmCtrl = (function(){
 
 		}
 
-    };
+	};
 
 	/* 달력 초기화 */
 	var fn_init_calendar = function(obj) {
@@ -457,81 +457,81 @@ var cmmCtrl = (function(){
 		});
 	}
 
-    /* Init Code */
-    var fn_init_code = function()
-    {
-    	$.each(jQuery(".selectbox_code"), function(index, obj){
-    		var slctVal = jQuery(obj).data("slctVal");
+	/* Init Code */
+	var fn_init_code = function()
+	{
+		$.each(jQuery(".selectbox_code"), function(index, obj){
+			var slctVal = jQuery(obj).data("slctVal");
 
-        	if (slctVal)
-        	{
-        		cmmCtrl.paramAjax(function(data){
-            		var rtnList = data.rtnList;
+			if (slctVal)
+			{
+				cmmCtrl.paramAjax(function(data){
+					var rtnList = data.rtnList;
 
-            		if (rtnList && rtnList.length > 0)
-        			{
-            			$.each(rtnList, function(index, data){
-            				jQuery(obj).val(data.cd).trigger("change");
+					if (rtnList && rtnList.length > 0)
+					{
+						$.each(rtnList, function(index, data){
+							jQuery(obj).val(data.cd).trigger("change");
 
-            				obj = jQuery(obj).next();
-            			});
-        			}
-            	}, "/mngwserc/co/coe/parnt-data.ajax", { cdId : jQuery(obj).data("cdId"), cd : slctVal });
-        	}
+							obj = jQuery(obj).next();
+						});
+					}
+				}, "/mngwserc/co/coe/parnt-data.ajax", { cdId : jQuery(obj).data("cdId"), cd : slctVal });
+			}
 		});
-    };
+	};
 
-    /* Set CKEditor */
-    var fn_set_editor = function(options)
-    {
-    	if (typeof options.editor == "undefined")
-        {
-            options.editor = "editor";
-        }
-    
-        if (typeof options.height == "undefined")
-        {
-            options.height = 500;
-        }
-        
-        if (typeof options.readOnly == "undefined")
-        {
-        	options.readOnly = false;
-        }
+	/* Set CKEditor */
+	var fn_set_editor = function(options)
+	{
+		if (typeof options.editor == "undefined")
+		{
+			options.editor = "editor";
+		}
 
-        var trgtObj = CKEDITOR.replace(options.editor, { height : options.height });
+		if (typeof options.height == "undefined")
+		{
+			options.height = 500;
+		}
 
-        trgtObj.on("instanceReady", function(){
-            // Output self-closing tags the HTML4 way, like <br>.
-            this.dataProcessor.writer.selfClosingEnd = "/>";
+		if (typeof options.readOnly == "undefined")
+		{
+			options.readOnly = false;
+		}
 
-            // Use line breaks for block elements, tables, and lists.
-            var dtd = CKEDITOR.dtd;
+		var trgtObj = CKEDITOR.replace(options.editor, { height : options.height });
 
-            for (var e in CKEDITOR.tools.extend({}, dtd.$nonBodyContent, dtd.$block, dtd.$listItem, dtd.$tableContent))
-            {
-                this.dataProcessor.writer.setRules(e, {
-                    indent: true,
-                    breakBeforeOpen: true,
-                    breakAfterOpen: true,
-                    breakBeforeClose: true,
-                    breakAfterClose: true
-                });
-            }
-            
-            this.setReadOnly(options.readOnly);
-        });
+		trgtObj.on("instanceReady", function(){
+			// Output self-closing tags the HTML4 way, like <br>.
+			this.dataProcessor.writer.selfClosingEnd = "/>";
 
-        trgtObj.on("mode", function(){
-            if (this.mode === "source")
-            {
-                jQuery(".cke_contents").find("textarea").addClass("notRequired");
-            }
-        });
-    };
+			// Use line breaks for block elements, tables, and lists.
+			var dtd = CKEDITOR.dtd;
 
-    /* Set Dropzone */
-    var fn_set_dropzone = function(tObj, tOption){
+			for (var e in CKEDITOR.tools.extend({}, dtd.$nonBodyContent, dtd.$block, dtd.$listItem, dtd.$tableContent))
+			{
+				this.dataProcessor.writer.setRules(e, {
+					indent: true,
+					breakBeforeOpen: true,
+					breakAfterOpen: true,
+					breakBeforeClose: true,
+					breakAfterClose: true
+				});
+			}
+
+			this.setReadOnly(options.readOnly);
+		});
+
+		trgtObj.on("mode", function(){
+			if (this.mode === "source")
+			{
+				jQuery(".cke_contents").find("textarea").addClass("notRequired");
+			}
+		});
+	};
+
+	/* Set Dropzone */
+	var fn_set_dropzone = function(tObj, tOption){
 		var _maxFileSize = 5, _maxFileCnt = 10, _fileExtn = null, _fileFieldNm = null;
 		var _required = true;
 		if (tOption.maxFileSize)
@@ -555,19 +555,19 @@ var cmmCtrl = (function(){
 		}
 
 		$(tObj).dropzone({
-		    url : "/mngwserc/dropzone/upload",
-		    maxFilesize : _maxFileSize,
-		    maxThumbnailFilesize : _maxFileSize,
-		    filesizeBase : 1024,
+			url : "/mngwserc/dropzone/upload",
+			maxFilesize : _maxFileSize,
+			maxThumbnailFilesize : _maxFileSize,
+			filesizeBase : 1024,
 			thumbnailWidth : 140,
-		    maxFiles : _maxFileCnt,
-		    acceptedFiles : _fileExtn,
-		    addRemoveLinks: true,
+			maxFiles : _maxFileCnt,
+			acceptedFiles : _fileExtn,
+			addRemoveLinks: true,
 			dictRemoveFile: "삭제",
-		    dictFileTooBig : "errorMaxSize",					// 파일크기오류
-		    dictInvalidFileType : "errorAcceptedExtension",		// 파일확장자오류
-		    dictMaxFilesExceeded : "errorMaxCount",				// 파일개수오류
-		    init : function(){
+			dictFileTooBig : "errorMaxSize",					// 파일크기오류
+			dictInvalidFileType : "errorAcceptedExtension",		// 파일확장자오류
+			dictMaxFilesExceeded : "errorMaxCount",				// 파일개수오류
+			init : function(){
 				var $dropZone = this;
 				var fielFieldValue = $(tObj).closest("form").find("input[name="+_fileFieldNm+"]").val();
 				//첨부파일 키가 있으면 이미지 조회
@@ -659,7 +659,7 @@ var cmmCtrl = (function(){
 				//파일 등록
 				this.on("addedfiles", function(file) {
 					jQuery(tObj).closest("form").find("#btnOneDelete, button[type='submit']").prop("disabled", true);
-		    	});
+				});
 
 				//등록 성공
 				this.on("success", function(file, response) {
@@ -783,7 +783,7 @@ var cmmCtrl = (function(){
 		}
 		var frmData = formObj.serializeArray();
 		var fileIndex = 0;
-		formObj.find(".dropzone").each(function(){
+		formObj.find(".dropzone.attachFile").each(function(){
 			if($(this).get(0).dropzone.files != undefined && $(this).get(0).dropzone.files.length > 0){
 				$.each($(this).get(0).dropzone.files, function(idx, data){
 					//alt값  data에 넣어주기.
@@ -792,6 +792,40 @@ var cmmCtrl = (function(){
 						if (data.hasOwnProperty(i)) {
 							frmData.push({
 								name: "fileList["+(fileIndex)+"]." + i, value: data[i]
+							});
+						}
+					}
+					fileIndex = fileIndex + 1;
+				})
+			}
+		});
+		fileIndex = 0;
+		formObj.find(".dropzone.pcThumbFile").each(function(){
+			if($(this).get(0).dropzone.files != undefined && $(this).get(0).dropzone.files.length > 0){
+				$.each($(this).get(0).dropzone.files, function(idx, data){
+					//alt값  data에 넣어주기.
+					data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+					for (let i in data) {
+						if (data.hasOwnProperty(i)) {
+							frmData.push({
+								name: "pcThumbList["+(fileIndex)+"]." + i, value: data[i]
+							});
+						}
+					}
+					fileIndex = fileIndex + 1;
+				})
+			}
+		});
+		fileIndex = 0;
+		formObj.find(".dropzone.moThumbFile").each(function(){
+			if($(this).get(0).dropzone.files != undefined && $(this).get(0).dropzone.files.length > 0){
+				$.each($(this).get(0).dropzone.files, function(idx, data){
+					//alt값  data에 넣어주기.
+					data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+					for (let i in data) {
+						if (data.hasOwnProperty(i)) {
+							frmData.push({
+								name: "moThumbList["+(fileIndex)+"]." + i, value: data[i]
 							});
 						}
 					}
@@ -871,19 +905,19 @@ var cmmCtrl = (function(){
 	{
 		var o, d, p, n = 0, l = limit == null ? 4 : limit;
 
-	    for (var i = 0; i < str.length; i++)
-	    {
-	        var c = str.charCodeAt(i);
+		for (var i = 0; i < str.length; i++)
+		{
+			var c = str.charCodeAt(i);
 
-	        if (i > 0 && (p = o - c) > -2 && p < 2 && (n = p == d ? n + 1 : 0) > l - 3)
-	        {
-	        	return false;
-	        }
+			if (i > 0 && (p = o - c) > -2 && p < 2 && (n = p == d ? n + 1 : 0) > l - 3)
+			{
+				return false;
+			}
 
-	        d = p, o = c;
-	    }
+			d = p, o = c;
+		}
 
-	    return true;
+		return true;
 	};
 
 	//Vuew 페이지 리스트
@@ -953,13 +987,13 @@ var cmmCtrl = (function(){
 			},
 			template:
 				'<div class="text-center">' +
-					'<div class="col-sm-12">' +
-						'<ul class="pagination">' +
-							'<li class="prev"><a  @click=prevPage(prev) data-page="prev" class="button">&lt;</a></li>' +
-								'<li v-for="i in pageArray" :class="i == now ? \'active\' : \'\'"  aria-disabled="false"  aria-selected="false"><a href="javascript:" @click=pageSearch(i) :data-page="i">{{ i }}</a></li>' +
-							'<li class="next"><a @click=nextPage(next) data-page="next" class="button">&gt;</a></li>' +
-						'</ul>' +
-					'</div>' +
+				'<div class="col-sm-12">' +
+				'<ul class="pagination">' +
+				'<li class="prev"><a  @click=prevPage(prev) data-page="prev" class="button">&lt;</a></li>' +
+				'<li v-for="i in pageArray" :class="i == now ? \'active\' : \'\'"  aria-disabled="false"  aria-selected="false"><a href="javascript:" @click=pageSearch(i) :data-page="i">{{ i }}</a></li>' +
+				'<li class="next"><a @click=nextPage(next) data-page="next" class="button">&gt;</a></li>' +
+				'</ul>' +
+				'</div>' +
 				'</div>'
 		})
 	}
@@ -1126,19 +1160,19 @@ var cmmCtrl = (function(){
 			}
 		});
 	});
-	
+
 	// Back/forward cache(뒤로/앞으로 가기) 체크
 	window.onpageshow = function(event){
 		history.scrollRestoration = "manual";
-	    if (event.persisted)
-	    {
+		if (event.persisted)
+		{
 			location.reload();
 		}
 	};
 
 	/* 파라미터 추출 */
-    jQuery.extend({
-    	getXssVal : function(targetValue){
+	jQuery.extend({
+		getXssVal : function(targetValue){
 			var returnValue = targetValue;
 
 			if (returnValue)
@@ -1153,40 +1187,40 @@ var cmmCtrl = (function(){
 
 			return returnValue;
 		},
-        getURLParam : function(strParamName) {
-            var strHref   = window.location.href;
-            var cmpstring = strParamName + "=";
-            var bFound    = false;
-            var strReturn = "";
+		getURLParam : function(strParamName) {
+			var strHref   = window.location.href;
+			var cmpstring = strParamName + "=";
+			var bFound    = false;
+			var strReturn = "";
 
-            if (strHref.indexOf("?") > -1)
-            {
-                var aQueryString = strHref.substr(strHref.indexOf("?") + 1).split("&");
+			if (strHref.indexOf("?") > -1)
+			{
+				var aQueryString = strHref.substr(strHref.indexOf("?") + 1).split("&");
 
-                for (var iParam = 0, length = aQueryString.length; iParam < length; iParam++)
-                {
-                    if (aQueryString[iParam].substr(0, cmpstring.length) == cmpstring)
-                    {
-                        strReturn = aQueryString[iParam].split("=")[1];
-                        bFound = true;
-                        break;
-                    }
-                }
-            }
+				for (var iParam = 0, length = aQueryString.length; iParam < length; iParam++)
+				{
+					if (aQueryString[iParam].substr(0, cmpstring.length) == cmpstring)
+					{
+						strReturn = aQueryString[iParam].split("=")[1];
+						bFound = true;
+						break;
+					}
+				}
+			}
 
-            if (bFound == false)
-            {
-                return null;
-            }
+			if (bFound == false)
+			{
+				return null;
+			}
 
-            return strReturn;
-        },
-        getURLParams: function(){
-            return location.search
-        }
-    });
+			return strReturn;
+		},
+		getURLParams: function(){
+			return location.search
+		}
+	});
 
-    /* clearForm */
+	/* clearForm */
 	jQuery.fn.clearForm = function(){
 		return this.each(function(){
 			var type = this.type, tag = this.tagName.toLowerCase();
@@ -1194,64 +1228,64 @@ var cmmCtrl = (function(){
 			if (tag === "form")
 			{
 				return jQuery(":input", this).clearForm();
-		    }
+			}
 			if (type === "text" || type === "password" || type === "hidden" || tag === "textarea")
 			{
 				this.value = "";
-		    }
+			}
 			else if (type === "checkbox" || type === "radio")
 			{
 				this.checked = false;
-		    }
+			}
 			else if (tag === "select")
 			{
 				this.selectedIndex = 0;
-		    }
+			}
 		});
 	};
 
 	/* form strPam */
-    jQuery.fn.strPam = function(){
-    	var formObj = this, tmpObj = { }, strPam = "";
+	jQuery.fn.strPam = function(){
+		var formObj = this, tmpObj = { }, strPam = "";
 
-    	$.each(formObj.serializeArray(), function(){
-    		var $type = formObj.find("[name='" + this.name + "']").prop("type");
+		$.each(formObj.serializeArray(), function(){
+			var $type = formObj.find("[name='" + this.name + "']").prop("type");
 
-    		if (tmpObj[this.name])
-         	{
-    			if ($type == "checkbox")
-    			{
-    				tmpObj[this.name] = tmpObj[this.name] + "," + "|" + this.value + "|";
-    			}
-    			else
-    			{
-    				tmpObj[this.name] = tmpObj[this.name] + "," + this.value;
-    			}
-         	}
-         	else
-         	{
-         		if ($type == "checkbox")
-         		{
-         			tmpObj[this.name] = "|" + this.value + "|";
-         		}
-         		else
-         		{
-         			tmpObj[this.name] = this.value;
-         		}
-         	}
-    	});
+			if (tmpObj[this.name])
+			{
+				if ($type == "checkbox")
+				{
+					tmpObj[this.name] = tmpObj[this.name] + "," + "|" + this.value + "|";
+				}
+				else
+				{
+					tmpObj[this.name] = tmpObj[this.name] + "," + this.value;
+				}
+			}
+			else
+			{
+				if ($type == "checkbox")
+				{
+					tmpObj[this.name] = "|" + this.value + "|";
+				}
+				else
+				{
+					tmpObj[this.name] = this.value;
+				}
+			}
+		});
 
-    	$.each(Object.keys(tmpObj), function(){
-    		if (strPam)
-         	{
-         		strPam += "&";
-         	}
+		$.each(Object.keys(tmpObj), function(){
+			if (strPam)
+			{
+				strPam += "&";
+			}
 
-         	strPam += this + "=" + tmpObj[this];
-    	});
+			strPam += this + "=" + tmpObj[this];
+		});
 
-    	return strPam;
-    };
+		return strPam;
+	};
 
 	//페이징 처리
 	var fn_paging = function(totCnt, $formObj, listFormId, pagingFormId){
@@ -1441,22 +1475,22 @@ var cmmCtrl = (function(){
 		}
 	};
 
-    return {
-    	nvl : fn_replace_null,
-        bscAjax : fn_ajax,
-        frmAjax : fn_ajax_data,
+	return {
+		nvl : fn_replace_null,
+		bscAjax : fn_ajax,
+		frmAjax : fn_ajax_data,
 		listFrmAjax : fn_list_ajax_data,
-        paramAjax : fn_ajax_param_data,
-        errorAjax : fn_ajax_error,
-        setPeriod: fn_set_period,
-        initCode : fn_init_code,
-        setEditor: fn_set_editor,
-        setDropzone : fn_set_dropzone,
+		paramAjax : fn_ajax_param_data,
+		errorAjax : fn_ajax_error,
+		setPeriod: fn_set_period,
+		initCode : fn_init_code,
+		setEditor: fn_set_editor,
+		setDropzone : fn_set_dropzone,
 		chkDropzone : fn_chk_dropzone,
 		fileFrmAjax: fn_ajax_file_data,
-        setPopup : fn_set_popup,
-        checkMaxlength : fn_check_maxlength,
-        checkContString : check_cont_string,
+		setPopup : fn_set_popup,
+		checkMaxlength : fn_check_maxlength,
+		checkContString : check_cont_string,
 		vuePageList: fn_vue_page_list,
 		vueConvertDtm: fn_vue_convert_dtm,
 		vueContainer: fn_vue,
@@ -1474,5 +1508,5 @@ var cmmCtrl = (function(){
 		gridRequestEnd : fn_grid_request_end,
 		gridRemoveRow : fn_grid_remove_row
 
-    }
+	}
 }());

@@ -186,7 +186,9 @@ var msgCtrl = (function(){
 					revert : {
 						targetExcess : "되돌리기할 게시물을 1개만 선택해주세요.",
 						permission : "배포된 게시물은 되돌리기가 불가합니다."
-					}
+					},
+					cnts : "내용을 입력해주세요."
+
 				}
 			},
 			bm : {

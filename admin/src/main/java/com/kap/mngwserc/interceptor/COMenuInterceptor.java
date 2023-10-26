@@ -43,7 +43,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
         String[] paramValues = null;
         while (params.hasMoreElements())
         {
-            if (comma > 0) strPam += "&";
+            /*if (comma > 0) strPam += "&";*/
             paramName = (String) params.nextElement();
             paramValues =  request.getParameterValues(paramName);
             for(int q = 0; q < paramValues.length ; q++){

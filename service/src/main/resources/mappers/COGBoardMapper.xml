@@ -18,19 +18,23 @@
             , YEAR
             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'BOARD_TYPE_CD' AND CD = A.TYPE_CD) AS TYPE_NM
             , FILE_SEQ
+            , PC_THUMB_FILE_SEQ
+            , MO_THUMB_FILE_SEQ
             , READ_CNT
             , POST_STRT_DTM
             , POST_END_DTM
             , ODTM_YN
             , REG_ID
-            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
             , REG_IP
             , REG_DTM
             , MOD_ID
-            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
             , MOD_IP
             , MOD_DTM
             , MAIN_YN
+            , TOP_YN
+            , FAQ_TYPE
         FROM
          CO_BOARD_MST A
         WHERE 1=1
@@ -67,29 +71,34 @@
             </if>
             <if test="q != null and q != ''">
                 <choose>
-                    <when test="f == 0">
+                    <when test="f == 1">
                         AND TITL LIKE CONCAT('%', #{q}, '%')
                     </when>
-                    <when test="f == 1">
-                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID), '(', REG_ID,')') LIKE CONCAT('%', #{q}, '%')
-                    </when>
                     <when test="f == 2">
-                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID), '(', MOD_ID,')') LIKE CONCAT('%', #{q}, '%')
+                        AND (
+                            INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
                     </when>
                     <when test="f == 3">
-                        AND YEAR LIKE CONCAT('%', #{q}, '%')
+                        AND (
+                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
                     </when>
                     <otherwise>
                         AND (
-                        (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) LIKE CONCAT('%', #{q}, '%')
-                        OR TITL LIKE CONCAT('%', #{q}, '%')
-                        OR CNTS LIKE CONCAT('%', #{q}, '%')
+                            INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                            INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </otherwise>
                 </choose>
             </if>
             ORDER BY
-             REG_DTM DESC
+                (CASE WHEN TOP_YN = 'Y' THEN 1 ELSE 2 END), REG_DTM DESC;
     </select>
 
     <!--
@@ -117,20 +126,23 @@
              , TYPE_CD
              , YEAR
              , FILE_SEQ
+             , PC_THUMB_FILE_SEQ
+             , MO_THUMB_FILE_SEQ
              , READ_CNT
              , POST_STRT_DTM
              , POST_END_DTM
              , ODTM_YN
              , REG_ID
-             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
              , REG_IP
              , REG_DTM
              , MOD_ID
-             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
              , MOD_IP
              , MOD_DTM
-             , THUMB_FILE_ID
              , MAIN_YN
+             , TOP_YN
+             , FAQ_TYPE
         FROM
             CO_BOARD_MST A
         WHERE
@@ -147,6 +159,8 @@
             , TYPE_CD
             , YEAR
             , FILE_SEQ
+            , PC_THUMB_FILE_SEQ
+            , MO_THUMB_FILE_SEQ
             , READ_CNT
             , POST_STRT_DTM
             , POST_END_DTM
@@ -154,10 +168,9 @@
             , REG_ID
             , REG_IP
             , REG_DTM
-            , MOD_ID
-            , MOD_IP
-            , MOD_DTM
             , MAIN_YN
+            , TOP_YN
+            , FAQ_TYPE
             )
             VALUES
             (
@@ -168,6 +181,8 @@
             , #{typeCd}
             , #{year}
             , #{fileSeq}
+            , #{pcThumbFileSeq}
+            , #{moThumbFileSeq}
             , 0
             , #{postStrtDtm}
             , #{postEndDtm}
@@ -175,10 +190,9 @@
             , #{regId}
             , #{regIp}
             , NOW()
-            , #{modId}
-            , #{modIp}
-            , NOW()
             , #{mainYn}
+            , #{topYn}
+            , #{faqType}
             )
     </insert>
     <!--
@@ -195,6 +209,8 @@
             TITL = #{titl}
             , CNTS = #{cnts}
             , FILE_SEQ = #{fileSeq}
+            , PC_THUMB_FILE_SEQ = #{pcThumbFileSeq}
+            , MO_THUMB_FILE_SEQ = #{moThumbFileSeq}
             , POST_STRT_DTM = #{postStrtDtm}
             , POST_END_DTM = #{postEndDtm}
             , ODTM_YN = #{odtmYn}
@@ -202,6 +218,8 @@
             , MOD_IP = #{modIp}
             , MOD_DTM = NOW()
             , MAIN_YN = #{mainYn}
+            , TOP_YN = #{topYn}
+            , FAQ_TYPE = #{faqType}
         WHERE
             SEQ = #{detailsKey}
         AND TYPE_CD = #{typeCd}

@@ -134,7 +134,7 @@
                             <div class="col-sm-10 col-md-11">
                                 <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="5242880" />
-                                <div class="dropzone" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="PC 이미지">
+                                <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="PC 이미지">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                     </div>
@@ -161,7 +161,7 @@
                             <div class="col-sm-10 col-md-11">
                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="5242880" />
-                                <div class="dropzone" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="모바일 이미지">
+                                <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="모바일 이미지">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                     </div>

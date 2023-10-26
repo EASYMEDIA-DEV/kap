@@ -74,7 +74,13 @@ public class COGBoardServiceImpl implements COGBoardService {
     public int insertBoard(COGBoardDTO pCOGBoardDTO) throws Exception {
         //파일 처리
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCOGBoardDTO.getFileList());
+        HashMap<String, Integer> pcThumbFileSeqMap = cOFileService.setFileInfo(pCOGBoardDTO.getPcThumbList());
+        HashMap<String, Integer> moThumbFileSeqMap = cOFileService.setFileInfo(pCOGBoardDTO.getMoThumbList());
+
         pCOGBoardDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+        pCOGBoardDTO.setPcThumbFileSeq(pcThumbFileSeqMap.get("pcThumbFileSeq"));
+        pCOGBoardDTO.setMoThumbFileSeq(moThumbFileSeqMap.get("moThumbFileSeq"));
+
         pCOGBoardDTO.setSeq(cOSeqGnrService.selectSeq(tableNm));
 
         return cOGBoardMapper.insertBoard(pCOGBoardDTO);
@@ -94,8 +100,12 @@ public class COGBoardServiceImpl implements COGBoardService {
     public int updateBoard(COGBoardDTO pCOGBoardDTO) throws Exception{
         //파일 처리
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCOGBoardDTO.getFileList());
-        //파일 처리
+        HashMap<String, Integer> pcThumbFileSeqMap = cOFileService.setFileInfo(pCOGBoardDTO.getPcThumbList());
+        HashMap<String, Integer> moThumbFileSeqMap = cOFileService.setFileInfo(pCOGBoardDTO.getMoThumbList());
+
         pCOGBoardDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+        pCOGBoardDTO.setPcThumbFileSeq(pcThumbFileSeqMap.get("pcThumbFileSeq"));
+        pCOGBoardDTO.setMoThumbFileSeq(moThumbFileSeqMap.get("moThumbFileSeq"));
 
         return cOGBoardMapper.updateBoard(pCOGBoardDTO);
     }
