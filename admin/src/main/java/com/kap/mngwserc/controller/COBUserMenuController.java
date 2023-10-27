@@ -173,7 +173,7 @@ public class COBUserMenuController {
 	/**
 	 * 메뉴 정보를 수정한다.
 	 */
-	@RequestMapping(value="/info-update", method=RequestMethod.GET)
+	@RequestMapping(value="/info-update", method=RequestMethod.POST)
 	public String updateMenuInf(COMenuDTO cOMenuDTO, ModelMap modelMap) throws Exception
 	{
 		try

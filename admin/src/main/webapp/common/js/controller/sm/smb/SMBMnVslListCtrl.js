@@ -47,6 +47,70 @@ define(["ezCtrl"], function(ezCtrl) {
                         search(1);
                     }
                 }
+            },
+            btnSort : {
+                event : {
+                    click : function () {
+
+                        var btn = $(this),
+                            td = btn.parents("td"),
+                            key = td.data("key"),
+                            sort = td.data("value"),
+                            index = btn.parent().index(),
+                            sortType = btn.attr('name') === 'sortUp' ? 'UP' : 'DOWN';
+
+                        if(sortType != null) {
+
+                            //if(sortType == 'UP' && $("pageIndex").val() == '1' && btn.parents('tr').prev().length == 0) {
+                            if(sortType == 'UP' && btn.parents('tr').prev().length == 0) {
+                                return false;
+                                //} else if (sortType == 'DOWN' && $("pageIndex").val() == $(".pagination").children().length && btn.parents('tr').next().length == 0) {
+                            } else if (sortType == 'DOWN' && btn.parents('tr').next().length == 0) {
+                                return false;
+                            }
+
+                            var ajaxData = {
+                                seq : key,
+                                ord : sort,
+                                sortType : sortType
+                            }
+
+                            console.log(JSON.stringify(ajaxData, null, 2));
+
+                            $("#frmSearch").serializeArray().forEach(function(field) {
+                                console.log(field.name);
+                                if (field.name != 'seq') {
+                                    ajaxData[field.name] = field.value;
+                                }
+                            });
+
+                            $.ajax({
+                                type: "post",
+                                url: "./sort",
+                                dataType: "json",
+                                data: ajaxData,
+                                success: function(r) {
+                                    alert('노출 순서가 변경되었습니다.');
+
+                                    cmmCtrl.setFormData($formObj);
+                                    search($("pageIndex").val());
+                                }
+                            })
+                        }
+                    }
+                }
+            },
+            odtmYn : {
+                event : {
+                    click : function(){
+                        var odtmYn = $("#odtmYn").val();
+                        if(odtmYn == "Y"){
+                            $("#odtmYn").val("N");
+                        }else if(odtmYn == "N"){
+                            $("#odtmYn").val("Y");
+                        }
+                    }
+                }
             }
         },
         classname : {

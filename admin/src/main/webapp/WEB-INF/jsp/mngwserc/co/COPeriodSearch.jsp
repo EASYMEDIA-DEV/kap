@@ -118,7 +118,7 @@
 						</div>
 						<div class="form-group" style="padding-bottom:7px">
 							<label class="checkbox-inline c-checkbox mr-sm" style="margin-left: 30px !important; margin-right: 32px !important;">
-								<input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="Y" title="상시여부" <c:if test="${rtnData.odtmYn eq 'Y'}">checked</c:if> />
+								<input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="N" title="상시여부" <c:if test="${rtnData.odtmYn eq 'Y'}">checked</c:if> />
 								<span class="ion-checkmark-round"></span> 상시
 							</label>
 						</div>

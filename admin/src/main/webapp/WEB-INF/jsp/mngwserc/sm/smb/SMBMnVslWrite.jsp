@@ -8,6 +8,7 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.seq}" />
+            <input type="hidden" class="notRequired" id="gubun" name="gubun" value="${gubun}" />
             <!-- 첨부파일 순번 -->
             <c:choose>
                 <c:when test="${gubun eq 'pc'}">
@@ -24,7 +25,7 @@
                         <div class="form-inline">
                             <div class="input-group form-date-group mr-sm">
                                 <!--class명을 datetimepicker_strtDt -->
-                                <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt <c:if test="${rtnDto.odtmYn eq 'Y'}">notRequired</c:if>" name="strtDtm" value="${ kl:convertDate(rtnDto.postStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', null) }" title="시작일" readonly="readonly" <c:if test="${rtnDto.odtmYn eq 'Y'}">disabled</c:if> />
+                                <input type="text" class="form-control input-sm datetimepicker_strtDtm <c:if test="${rtnDto.odtmYn eq 'Y'}">notRequired</c:if>" name="strtDtm" value="${ kl:convertDate(rtnDto.strtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', null) }" title="시작일" readonly="readonly" <c:if test="${rtnDto.odtmYn eq 'Y'}">disabled</c:if> />
                                 <span class="input-group-btn" style="z-index:0;">
                                 <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                     <em class="ion-calendar"></em>
@@ -32,7 +33,7 @@
                             </span>
                                 <span class="input-group-addon bg-white b0">~</span>
                                 <!--class명을 datetimepicker_endDt -->
-                                <input type="text" class="form-control notRequired input-sm datetimepicker_endDt <c:if test="${rtnDto.odtmYn eq 'Y'}">notRequired</c:if>" name="endDtm" value="${ kl:convertDate(rtnDto.postEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', null) }" title="종료일" readonly="readonly" <c:if test="${rtnDto.odtmYn eq 'Y'}">disabled</c:if> />
+                                <input type="text" class="form-control input-sm datetimepicker_endDtm <c:if test="${rtnDto.odtmYn eq 'Y'}">notRequired</c:if>" name="endDtm" value="${ kl:convertDate(rtnDto.endDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', null) }" title="종료일" readonly="readonly" <c:if test="${rtnDto.odtmYn eq 'Y'}">disabled</c:if> />
                                 <span class="input-group-btn" style="z-index:0;">
                                 <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                     <em class="ion-calendar"></em>
@@ -44,7 +45,7 @@
                     <div class="form-group" style="padding-bottom:7px">
                         <label class="checkbox-inline c-checkbox">
                             <input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="${rtnDto.odtmYn}" title="상시여부" <c:if test="${rtnDto.odtmYn eq 'Y'}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> 상시여부
+                            <span class="ion-checkmark-round"></span> 상시
                         </label>
                     </div>
                 </div>
@@ -57,21 +58,6 @@
                     </div>
                 </div>
             </fieldset>
-            <!-- 2023-01-04 메인 배너 3개 띄우기 위한 수정 (jds) s -->
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">게시위치<span class="star"> *</span></label>
-                    <div class="col-sm-3">
-                        <select class="form-control input-sm" name="positionOrd" id="positionOrd" title="게시위치">
-                            <option value="">[선택]</option>
-                            <option value="10" <c:if test="${rtnDto.positionOrd eq '10'}">selected</c:if>>상</option>
-                            <option value="20" <c:if test="${rtnDto.positionOrd eq '20'}">selected</c:if>>중</option>
-                            <option value="30" <c:if test="${rtnDto.positionOrd eq '30'}">selected</c:if>>하</option>
-                        </select>
-                    </div>
-                </div>
-            </fieldset>
-            <!-- 2023-01-04 메인 배너 3개 띄우기 위한 수정 (jds) e -->
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">Main Copy</label>
@@ -98,45 +84,95 @@
                     </div>
                 </div>
             </fieldset>
-
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">구분<span class="star"> *</span></label>
+                    <div class="col-sm-11 category">
+                        <c:set var="category" value="${kl:nvl(rtnDto.category, 'image')}" />
+                        <label class="radio-inline c-radio">
+                            <input type="radio" name="category" value="image" <c:if test="${category eq 'image'}">checked</c:if> />
+                            <span class="ion-record"></span> 이미지
+                        </label>
+                        <label class="radio-inline c-radio">
+                            <input type="radio" name="category" value="video" <c:if test="${category eq 'video'}">checked</c:if> />
+                            <span class="ion-record"></span> 동영상
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
             <c:choose>
                 <c:when test="${gubun eq 'pc'}">
-                    <fieldset>
+                    <fieldset class="pcImage">
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">PC 첨부파일<span class="star"> *</span></label>
+                            <label class="col-sm-1 control-label">PC 이미지<span class="star"> *</span></label>
                             <div class="col-sm-10 col-md-11">
                                 <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
+                                <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="5242880" data-max-file-cnt="1" data-title="PC 첨부파일">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ 1920 X 1080, ${imageExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                    ※ 1920 X 1080, ${imageExtns} 파일만 등록 가능합니다. (5MB 이하, 최대 1개 파일 등록 가능)
                                 </p>
                             </div>
                         </div>
                     </fieldset>
+                    <fieldset  class="pcVideo" style="display: none">
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">동영상<span class="star"> *</span></label>
+                            <div class="col-sm-10 col-md-11">
+                                <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="mp4" data-max-file-size="20971520" data-max-file-cnt="1" data-title="PC 동영상">
+                                    <div class="dz-default dz-message">
+                                        <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
+                                    </div>
+                                </div>
+                                <p class="text-bold mt">
+                                    ※ 1920 X 1080, mp4 파일만 등록 가능합니다. (20MB 이하, 최대 1개 파일 등록 가능)
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
                 </c:when>
                 <c:when test="${gubun eq 'mobile'}">
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">mobile 첨부파일<span class="star"> *</span></label>
-                            <div class="col-sm-10 col-md-11">
-                                <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
-                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="mobile 첨부파일">
-                                    <div class="dz-default dz-message">
-                                        <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
+                       <fieldset class="mobileImg">
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">mobile 첨부파일<span class="star"> *</span></label>
+                                <div class="col-sm-10 col-md-11">
+                                    <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                    <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                    <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="5242880" data-max-file-cnt="1" data-title="mobile 첨부파일">
+                                        <div class="dz-default dz-message">
+                                            <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
+                                        </div>
                                     </div>
+                                    <p class="text-bold mt">
+                                        ※ 1920 X 1080, ${imageExtns} 파일만 등록 가능합니다. (5MB 이하, 최대 1개 파일 등록 가능)
+                                    </p>
                                 </div>
-                                <p class="text-bold mt">
-                                    ※ 1920 X 1080, ${imageExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
-                                </p>
                             </div>
-                        </div>
-                    </fieldset>
+                       </fieldset>
+                       <fieldset class="mobileVideo" style="display: none">
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">동영상<span class="star"> *</span></label>
+                                <div class="col-sm-10 col-md-11">
+                                    <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                    <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                    <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="mp4" data-max-file-size="20971520" data-max-file-cnt="1" data-title="mobile 첨부파일">
+                                        <div class="dz-default dz-message">
+                                            <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-bold mt">
+                                        ※ 1920 X 1080, mp4 파일만 등록 가능합니다. (20MB 이하, 최대 1개 파일 등록 가능)
+                                    </p>
+                                </div>
+                            </div>
+                       </fieldset>
                 </c:when>
             </c:choose>
 
