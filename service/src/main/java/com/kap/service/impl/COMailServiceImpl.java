@@ -52,6 +52,9 @@ public class COMailServiceImpl  implements COMailService {
 	 */
 	public int sendMail(COMailDTO cOMailDTO, String templateFile) throws Exception
 	{
+
+
+		System.out.println("@@@@ 경로 = " + templateFile);
 		MimeMessage message = mailSender.createMimeMessage();
 		int toUserSize = 0;
 		try
