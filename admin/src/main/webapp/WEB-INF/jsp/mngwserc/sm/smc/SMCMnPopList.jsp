@@ -17,8 +17,13 @@
             <input type="hidden" id="seq" name="seq" value="" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                <jsp:param name="srchText" value="최종접속일" />
+                <jsp:param name="srchText" value="게시기간" />
                 <jsp:param name="periodType" value="notSelect" />
+                <jsp:param name="useOdtmYn" value="Y" />
+            </jsp:include>
+            <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
+                <jsp:param name="srchText" value="등록/수정기간" />
+                <jsp:param name="periodType" value="smc" />
             </jsp:include>
             <!--기간 검색 종료-->
             <fieldset>
@@ -136,33 +141,5 @@
             </div>
             <!--리스트 종료 -->
         </form>
-    </div>
-</div>
-
-<!-- 사유 레이어 팝업(Modal) -->
-<div class="modal fade excel-down" tabindex="-1" role="dialog" >
-    <div class="modal-dialog modal-lg modal-center" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" >▣ 엑셀 다운로드
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group ">
-                    <p><em class="ion-play mr-sm"></em>사유입력</p>
-                    <div class="col-sm-12">
-                        <textarea maxlength="30" class="col-sm-12 pv" style="resize: vertical;" rows="10" placeholder="사유를 입력하세요." id="rsn" title="사유" oninput="cmmCtrl.checkMaxlength(this);"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer row">
-                <div class="text-center">
-                    <button type="button" class="btn btn-primary down mt">다운로드</button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>

@@ -77,12 +77,28 @@ public class SMCPopDTO extends BaseDTO {
 
     // 조회
     private List<SMCPopDTO> list;
-    // 검색 조건
-    private List<String> expsYnList;
     // image/html 구분
     private List<String> typeCdList;
     // 노출여부 구분(=사용여부 구분)
     private List<String> useYnList;
+    // 검색 등록/수정 기간 시작일
+    private String dStrDt;
+    // 검색 등록/수정 기간 종료일
+    private String dEndDt;
+
+    // 게시 기간 등록
+    // 게시 시작 날짜
+    private String ptupStrtDt;
+    // 게시 종료 날짜
+    private String ptupEndDt;
+    // 게시 시작 시간
+    private String ptupStrtHh;
+    // 게시 시작 분
+    private String ptupStrtMi;
+    // 게시 종료 시간
+    private String ptupEndHh;
+    // 게시 종료 분
+    private String ptupEndMi;
 
     //삭제할 데이터
     private List<String> delValueList;
