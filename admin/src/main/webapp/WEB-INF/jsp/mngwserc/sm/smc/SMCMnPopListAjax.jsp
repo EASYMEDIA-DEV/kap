@@ -17,10 +17,10 @@
                     </a>
                 </td>
                 <%-- <td class="text-center" data-strt-dtm="${list.strtDtm}">${ empty list.strtDtm ? '-' : kl:convertDate(list.strtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>--%>
-                <td class="text-center" >${ list.odtmYn == 'Y' ? "상시" : kl:convertDate(list.strtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') +=  '</br> ~ </br>' +=  kl:convertDate(list.endDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } </td>
+                <td class="text-center" >${ list.odtmYn == 'Y' ? "상시" : kl:convertDate(list.strtDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '-') +=  '</br> ~ </br>' +=  kl:convertDate(list.endDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } </td>
+                <td class="text-center" data-reg-id="${list.regId}">${list.regName}</td>
                 <td class="text-center" data-reg-dtm="${list.regDtm}">${list.regDtm}</td>
-                <td class="text-center" data-reg-id="${list.regId}">${list.regId}</td>
-                <td class="text-center" data-mod-id="${list.modId}">${list.modId}</td>
+                <td class="text-center" data-mod-id="${list.modId}">${list.modName}</td>
                 <td class="text-center" data-list-dtm="${list.modDtm}">${list.modDtm}</td>
                 <td class="text-center" data-use-yn="${list.useYn}">${ kl:decode(list.useYn, 'Y', '노출', '미노출') }</td>
                 <td class="text-center" data-key="${list.seq}" data-value="${list.ord}">

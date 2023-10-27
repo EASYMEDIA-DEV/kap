@@ -410,7 +410,8 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 				tmpObject.put("data", XssPreventer.unescape(menuNm));
 				tmpObject.put("i", i);
 
-				if (menuDto.getChildcnt() > 0  && !"menu".equals(menuDto.getMenuType()))
+//				if (menuDto.getChildcnt() > 0  && !"menu".equals(menuDto.getMenuType()))
+				if (menuDto.getChildcnt() > 0)
 				{
 					tmpObject.put("state", "open");
 
