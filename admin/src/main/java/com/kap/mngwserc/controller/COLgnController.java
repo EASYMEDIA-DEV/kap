@@ -265,6 +265,9 @@ public class COLgnController {
 		@Value("${spring.config.activate.on-profile}")
 		private String serverProfile;
 
+		@Value("${server-status}")
+		private String serverStatus;
+
 
 		/**
 		 * 로그인을 처리한다.
@@ -278,8 +281,8 @@ public class COLgnController {
 				rtnCOLoginDTO = cOLgnService.actionLogin(cOLoginDTO, request);
 				COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
 
-				if(serverProfile.equals("real") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
-
+				if(serverStatus.equals("dev") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
+					System.out.println("@@탄다");
 					//이메일 발송
 					COMailDTO cOMailDTO = new COMailDTO();
 					cOMailDTO.setSubject("["+siteName+"] 인증번호 안내");
