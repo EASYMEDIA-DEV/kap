@@ -1,10 +1,27 @@
-package com.kap.service.dao;
+package com.kap.service.dao.sm;
 
 import com.kap.core.dto.SMBMainVslDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-
+/**
+ * <pre>
+ * 메인 비주얼 관리를 위한 DAO
+ * </pre>
+ *
+ * @ClassName		: SMBMnVslMapper.java
+ * @Description		: 메인 비주얼 관리를 위한 DAO
+ * @author 임서화
+ * @since 2023.10.16
+ * @version 1.0
+ * @see
+ * @Modification Information
+ * <pre>
+ * 		since			author				  description
+ *    ==========    ==============    =============================
+ *    2023.10.16		임서화				   최초 생성
+ * </pre>
+ */
 @Mapper
 public interface SMBMnVslMapper {
 
@@ -22,8 +39,10 @@ public interface SMBMnVslMapper {
      * 메인 비주얼 등록
      */
     public int insertMnVsl(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
-    public int insertBoard(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 
+    /**
+     * 메인 비주얼 전체 카운트
+     */
     public int selectMnVsldTotCnt(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 
     /**
@@ -39,12 +58,12 @@ public interface SMBMnVslMapper {
     /**
      * 메인 비주얼 사용 여부 수정
      */
-    public int updateUseYn(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
+   /* public int updateUseYn(SMBMainVslDTO pSMBMainVslDTO) throws Exception;*/
 
     /**
      * 메인 비주얼 정렬 수정
      */
-    public int updateOrder(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
+    public void updateOrder(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 
 
     /**
@@ -57,4 +76,8 @@ public interface SMBMnVslMapper {
      */
     public SMBMainVslDTO selectNowMnVsl(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 
+    /**
+     * 정렬할 메인 비주얼을 조회
+     */
+    public SMBMainVslDTO selectMnNewRow(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 }

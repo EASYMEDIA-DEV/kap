@@ -39,8 +39,12 @@ public class SMBMainVslDTO extends BaseDTO {
     private String gubun;
     // 제목
     private String titl;
+    private String strtDt;
+    private String endDt;
     private String strtDtm;
     private String endDtm;
+    private String dStrDt;
+    private String dEndDt;
 
     // 게시 시작 일시
     private String postStrtDtm;
@@ -82,6 +86,9 @@ public class SMBMainVslDTO extends BaseDTO {
     private String modNm;
     private String modId;
 
+    // 이미지, 동영상 구분
+    private String category;
+
     // 이미지 파일 확장자
     private String imageExtns;
     // 영상 파일 확장자
@@ -95,16 +102,19 @@ public class SMBMainVslDTO extends BaseDTO {
 //    private List<String> mblAtchAddFile;
 //    private List<String> mblAtchAddFileAlt;
 
-    // 현재 업로드 파일 확장자
+ /*   // 현재 업로드 파일 확장자
     private String nowGb;
     // 기존 비주얼 파일 확장자
-    private String beforeGb;
+    private String beforeGb;*/
+    // 노출정렬 UP/DOWN
+    private String sortType;
 
     // 조회
     private List<SMBMainVslDTO> list;
 
     // 검색 조건
     private List<String> mainYnList;
+    private List<String> categoryList;
 
     // 선택 항목
     private List<String> seqList;

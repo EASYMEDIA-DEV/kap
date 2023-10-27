@@ -32,11 +32,11 @@ public interface SMBMnVslService {
     /**
      * 메인 비주얼 사용 여부 수정
      */
-    public int updateUseYn(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
+    /*public int updateUseYn(SMBMainVslDTO pSMBMainVslDTO) throws Exception;*/
 
     /**
      * 메인 비주얼 정렬 수정
      */
-    public int updateOrder(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
+    public void updateOrder(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 
 }

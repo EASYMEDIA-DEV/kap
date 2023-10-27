@@ -10,10 +10,27 @@
                     </label>
                 </td>
                 <td>${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td><a href="javascript:" class="listView"  data-details-key="${list.seq}">${list.titl}</a></td>
-                <td>${ list.mainYn eq 'Y' ? '노출' : '미노출' }</td>
-                <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
-                <td>${ list.regNm }(${ list.regId })</td>
+                <c:if test="${list.category eq 'image'}">
+                  <td>이미지</td>
+                </c:if>
+                <c:if test="${list.category eq 'video'}">
+                  <td>비디오</td>
+                </c:if>
+                <td>
+                    <a href="javascript:" class="listView"  data-details-key="${list.seq}">
+                            ${list.titl}
+                    </a>
+                </td>
+                <td class="text-center" >${ list.odtmYn == 'Y' ? "상시" : kl:convertDate(list.strtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') +=  '</br> ~ </br>' +=  kl:convertDate(list.endDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } </td>
+                <td class="text-center" >${ list.regNm }</td>
+                <td class="text-center" data-reg-dtm="${list.regDtm}">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                <td class="text-center" >${ list.modNm }</td>
+                <td class="text-center" data-list-dtm="${list.modDtm}">${ kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                <td class="text-center" data-use-yn="${list.mainYn}">${ list.mainYn eq 'Y' ? '노출' : '미노출' }</td>
+                <td class="text-center" data-key="${list.seq}" data-value="${list.ord}">
+                    <button type="button" class="btn btn-default btn-xs sortUp" name="sortUp" id="btnSort"><i class="ion-arrow-up-b"></i></button>
+                    <button type="button" class="btn btn-default btn-xs ml-sm sortDown" name="sortDown" id="btnSort"><i class="ion-arrow-down-b"></i></button>
+                </td>
             </tr>
         </c:forEach>
     </c:when>
