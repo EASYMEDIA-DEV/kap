@@ -53,8 +53,6 @@ public class COMailServiceImpl  implements COMailService {
 	public int sendMail(COMailDTO cOMailDTO, String templateFile) throws Exception
 	{
 
-
-		System.out.println("@@@@ 경로 = " + templateFile);
 		MimeMessage message = mailSender.createMimeMessage();
 		int toUserSize = 0;
 		try
@@ -118,7 +116,7 @@ public class COMailServiceImpl  implements COMailService {
 				//templateFile = "template/email/COAAdmPwdInit.html";
 
 
-				templateFile = "COAAdmPwdInit.html";
+				//templateFile = "COAAdmPwdInit.html";
 				velocityEngine.setProperty("file.resource.loader.path", mailTmplFilePath+"email/");
 
 				Template template = velocityEngine.getTemplate(templateFile.replace("/", File.separator), "UTF-8");
