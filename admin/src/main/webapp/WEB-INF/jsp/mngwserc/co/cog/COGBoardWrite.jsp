@@ -17,7 +17,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">구분<span class="star"> *</span></label>
                         <div class="col-sm-10">
-                            <select class="form-control" id="faqType" name="faqType" title="FAQ구분" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
+                            <select class="form-control input-sm" id="faqType" name="faqType" title="FAQ구분" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${cdDtlList.FAQ_TYPE_CD}" varStatus="status">
                                     <option value="${cdList.cd}" <c:if test="${rtnDto.faqType eq cdList.cd}">selected</c:if>>

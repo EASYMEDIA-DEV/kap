@@ -190,8 +190,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							jQuery("#cdId").val(rtnData.cdId);
 							jQuery("#cd").val(rtnData.cd);
 							jQuery("#pCdNm").html(rtnData.cdNm);
-							jQuery("#enCdNm").val(rtnData.enCdNm);
-							jQuery("#cnCdNm").val(rtnData.cnCdNm);
 							jQuery("input[name='useYn']:input[value='" + rtnData.useYn + "']").prop("checked", true);
 							
 							if (rtnData.dpth == 1)

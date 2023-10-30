@@ -200,12 +200,14 @@ var msgCtrl = (function(){
 				}
 			},
 			sm : {
+				sort : {
+					notMoveUp : "더 이상 올릴 수 없습니다.",
+					notMoveDown : "더 이상 내릴 수 없습니다.",
+				},
 				smc : {
 					target : "삭제할 게시물을 선택하세요.",
 					titl : "제목을 입력해주세요.",
 					cntn : "상세내용을 입력하세요.",
-					notMoveUp : "더 이상 올릴 수 없습니다.",
-					notMoveDown : "더 이상 내릴 수 없습니다.",
 					image: "이미지를 첨부해주세요.",
 					html: "HTML 내용을 작성해주세요.",
 					notuse: "선택한 게시물을 미노출로 변경하시겠습니까?"

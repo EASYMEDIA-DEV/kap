@@ -63,9 +63,11 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             //if(sortType == 'UP' && $("pageIndex").val() == '1' && btn.parents('tr').prev().length == 0) {
                             if(sortType == 'UP' && btn.parents('tr').prev().length == 0) {
+                                alert(msgCtrl.getMsg("fail.sm.sort.notMoveUp"));
                                 return false;
                                 //} else if (sortType == 'DOWN' && $("pageIndex").val() == $(".pagination").children().length && btn.parents('tr').next().length == 0) {
                             } else if (sortType == 'DOWN' && btn.parents('tr').next().length == 0) {
+                                alert(msgCtrl.getMsg("fail.sm.sort.notMoveDown"));
                                 return false;
                             }
 
