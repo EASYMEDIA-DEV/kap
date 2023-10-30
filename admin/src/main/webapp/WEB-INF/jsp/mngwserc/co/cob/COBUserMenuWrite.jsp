@@ -5,7 +5,7 @@
 		<form class="form-horizontal" id="frmData" name="frmData" method="post" action="" data-alert-type="pass">
 			<input type="hidden" class="notRequired" id="menuSeq" name="menuSeq" value="" />
 			<input type="hidden" class="notRequired" id="admUrl" name="admUrl" value="" />
-			<input type="hidden" class="notRequired" id="menuType" name="menuType" value="folder" />
+			<%--<input type="hidden" class="notRequired" id="menuType" name="menuType" value="folder" />--%>
 			<input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="col-sm-6 p0">
 				<div class="mb">

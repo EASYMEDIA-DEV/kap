@@ -58,7 +58,6 @@
 
 				jQuery("#topMenuArea .dropdown").each(function(q){
 					var trgtObj = jQuery(this);
-					console.log(trgtObj);
 					if (trgtObj.data("menuType") == "menu")
 					{
 						setRemoveFolder(trgtObj);
