@@ -20,9 +20,28 @@
                 <jsp:param name="periodType" value="csa" />
             </jsp:include>
             <!--기간 검색 종료-->
+            <c:if test="${typeCd eq '30'}">
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">구분</label>
+                        <div class="col-sm-11">
+                            <label class="checkbox-inline c-checkbox">
+                                <input type="checkbox" class="checkboxAll" />
+                                <span class="ion-checkmark-round"></span> 전체
+                            </label>
+                            <c:forEach var="cdList" items="${cdDtlList.FAQ_TYPE_CD}" varStatus="status">
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxSingle" data-name="faqTypeList" value="${cdList.cd}" />
+                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                </label>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </fieldset>
+            </c:if>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">사용여부</label>
+                    <label class="col-sm-1 control-label">노출여부</label>
                     <div class="col-sm-11">
                         <label class="checkbox-inline c-checkbox">
                             <input type="checkbox" class="checkboxAll" />
@@ -30,11 +49,11 @@
                         </label>
                         <label class="checkbox-inline c-checkbox">
                             <input type="checkbox" class="checkboxSingle" data-name="mainYnList" value="Y" <c:if test="${fn:contains(rtnData.mainYnList, 'Y')}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> Y
+                            <span class="ion-checkmark-round"></span> 노출
                         </label>
                         <label class="checkbox-inline c-checkbox">
                             <input type="checkbox" class="checkboxSingle" data-name="mainYnList" value="N" <c:if test="${fn:contains(rtnData.mainYnList, 'N')}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> N
+                            <span class="ion-checkmark-round"></span> 미노출
                         </label>
                     </div>
                 </div>
@@ -47,9 +66,9 @@
                             <div class="col-sm-3 pr0">
                                 <select class="form-control input-sm" data-name="f">
                                     <option value="">전체</option>
-                                    <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
-                                    <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>제목</option>
+                                    <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>제목</option>
+                                    <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>최초등록자</option>
+                                    <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>최종수정자</option>
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">
@@ -86,17 +105,23 @@
                 <table class="table table-hover table-striped" >
                     <thead>
                         <tr>
-                            <th>
+                            <th class="text-center">
                                 <label class="checkbox-inline c-checkbox">
                                     <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
                                     <span class="ion-checkmark-round"></span>
                                 </label>
                             </th>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>노출여부</th>
-                            <th>등록일</th>
-                            <th>작성자</th>
+                            <th class="text-center">번호</th>
+                            <c:if test="${typeCd eq '30'}">
+                                <th class="text-center">구분</th>
+                            </c:if>
+                            <th class="text-center">제목</th>
+                            <th class="text-center">조회수</th>
+                            <th class="text-center">최초 등록자</th>
+                            <th class="text-center">최초 등록일시</th>
+                            <th class="text-center">최종 수정자</th>
+                            <th class="text-center">최종 수정일시</th>
+                            <th class="text-center">노출여부</th>
                         </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

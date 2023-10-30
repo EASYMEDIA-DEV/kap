@@ -523,7 +523,9 @@
   </term>
   <term name="외부" description="바깥 부분, 조직이나 단체의 밖" physicalName="otsd" physicalDescription="outside"/>
   <term name="원본" description="원본" physicalName="orgn" physicalDescription="original"/>
-  <term name="뉴스" description="일반에게 잘 알려지지 아니한 새로운 소식." physicalName="news" physicalDescription="news"/>
+  <term name="뉴스" description="일반에게 잘 알려지지 아니한 새로운 소식." physicalName="news" physicalDescription="news">
+    <synonyms>소식</synonyms>
+  </term>
   <term name="계열사" description="경영주가 같거나 사업 계통이 같아서 서로 밀접한 관련이 있는 회사." physicalName="afflt" physicalDescription="affiliate"/>
   <term name="커뮤니케이션" description="사람들끼리 서로 생각, 느낌 따위의 정보를 주고받는 일. 말이나 글, 그 밖의 소리, 표정, 몸짓 따위로 이루어진다." physicalName="comm" physicalDescription="communication"/>
   <term name="IR" description="[경영] 투자가를 위한 홍보[설명회]" physicalName="ir" physicalDescription="ir"/>
@@ -535,5 +537,23 @@
   <term name="패밀리" description="[정보·통신 ] 같거나 유사한 논리적 컴퓨터 구조로 설계되어 서로 다른 컴퓨터 모델 간에 소프트웨어 호환성을 유지하는 일련의 컴퓨터 모델 그룹." physicalName="fmly" physicalDescription="family"/>
   <term name="쿼리" physicalName="qury" physicalDescription="query"/>
   <term name="새창" description="새로운 브라우저 창" physicalName="wnpp" physicalDescription="window popup"/>
+  <term name="메인" description="(같은 종류 중) 가장 큰" physicalName="mn" physicalDescription="main"/>
+  <term name="헥스" description="16진법" physicalName="hex" physicalDescription="hexadecimal"/>
+  <term name="상생" description="상생, 공존, 벙립" physicalName="cxstn" physicalDescription="coexistence">
+    <synonyms>공존</synonyms>
+  </term>
+  <term name="사업" description="사업" physicalName="bsn" physicalDescription="business"/>
+  <term name="약관" description="약관, 조약, 계약, 조항" physicalName="trms" physicalDescription="terms">
+    <synonyms>조약</synonyms>
+    <synonyms>계약</synonyms>
+    <synonyms>조항</synonyms>
+  </term>
+  <term name="자바스크립트" description="자바스크립트" physicalName="js" physicalDescription="javascript"/>
+  <term name="공유" description="공유" physicalName="pubc" physicalDescription="public"/>
+  <term name="재단" description="(법인)재단" physicalName="fndn" physicalDescription="foundation"/>
+  <term name="FAQ" description="자주묻는질문" physicalName="faq" physicalDescription="frequently asked questions">
+    <synonyms>자주묻는질문</synonyms>
+  </term>
+  <term name="QA" description="1:1문의" physicalName="qa" physicalDescription="question and answer"/>
   <tag name="태그"/>
 </tm:TermDictionary>

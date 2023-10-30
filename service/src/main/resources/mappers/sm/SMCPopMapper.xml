@@ -10,32 +10,33 @@
     -->
     <select id="selectMnPopList" parameterType="SMCPopDTO">
         SELECT /* SMCPopMapper.selectMnPopList */
-            SEQ
-             , TITL
-             , DATE_FORMAT(STRT_DTM, '%Y-%m-%d %H:%i:%s') AS STRT_DTM
-             , DATE_FORMAT(END_DTM, '%Y-%m-%d %H:%i:%s') AS END_DTM
-             , ODTM_YN
-             , FILE_SEQ
-             , IMG_FILE_ID
-             , LINK_URL
-             , NEW_WNDW_YN
-             , USE_YN
-             , REG_ID
-            /*, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM*/
-             , REG_DTM
-             , MOD_ID
-            /* , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM*/
-             , MOD_DTM
-             , CNTS
-             , ORD
-             , TYPE_CD
-        FROM sm_popup_mst
+        SEQ
+        , TITL
+        , DATE_FORMAT(STRT_DTM, '%Y-%m-%d %H:%i:%s') AS STRT_DTM
+        , DATE_FORMAT(END_DTM, '%Y-%m-%d %H:%i:%s') AS END_DTM
+        , #{srchDate} AS 'srchDate'
+        , #{dStrDt} AS 'dStrDt'
+        , #{dEndDt} AS 'dEndDt'
+        , ODTM_YN
+        , FILE_SEQ
+        , IMG_FILE_ID
+        , LINK_URL
+        , NEW_WNDW_YN
+        , USE_YN
+        , REG_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+        , REG_DTM
+        , MOD_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+        , MOD_DTM
+        , CNTS
+        , ORD
+        , TYPE_CD
+        FROM SM_POPUP_MST A
         <include refid="selectPopListwhereSql" />
         ORDER BY
-            ORD DESC
-        <if test="excelYn != 'Y'.toString() ">
+        ORD DESC
             LIMIT #{firstIndex}, #{recordCountPerPage}
-        </if>
     </select>
 
     <!--
@@ -58,7 +59,7 @@
              , NEW_WNDW_YN
              , USE_YN
              , REG_ID
-             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
              , REG_DTM
              , MOD_ID
              , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
@@ -69,8 +70,8 @@
         FROM
             SM_POPUP_MST A
         WHERE 1=1
-            AND SEQ = #{seq}
-            AND DVC_CD = #{dvcCd}
+          AND SEQ = #{seq}
+          AND DVC_CD = #{dvcCd}
     </select>
 
     <!--
@@ -90,14 +91,13 @@
         WHERE
             ORD = (
             SELECT
-                <if test='sortType == "UP"'>
-                    MIN(ORD)
-                </if>
-                <if test='sortType == "DOWN"'>
-                    MAX(ORD)
-                </if>
-
-                FROM sm_popup_mst
+            <if test='sortType == "UP"'>
+                MIN(ORD)
+            </if>
+            <if test='sortType == "DOWN"'>
+                MAX(ORD)
+            </if>
+               FROM sm_popup_mst
                 WHERE 1=1
                 <if test='sortType == "UP"'>
                     AND ORD <![CDATA[>]]> #{ord}
@@ -105,10 +105,10 @@
                 <if test='sortType == "DOWN"'>
                     AND ORD <![CDATA[<]]> #{ord}
                 </if>
-                    AND DVC_CD = #{dvcCd}
+                AND DVC_CD = #{dvcCd}
             )
-            AND DVC_CD = #{dvcCd}
-            LIMIT 1
+        AND DVC_CD = #{dvcCd}
+        LIMIT 1
     </select>
 
 
@@ -125,14 +125,13 @@
         </selectKey>
         INSERT /* SMCPopMapper.insertMnPop */ INTO SM_POPUP_MST
         (
-         SEQ
+        SEQ
         , LANG_CD
         , DVC_CD
         , STRT_DTM
         , END_DTM
         , TITL
         , FILE_SEQ
-        , IMG_FILE_ID
         , CNTS
         , LINK_URL
         , NEW_WNDW_YN
@@ -155,13 +154,12 @@
                 , NULL
             </when>
             <otherwise>
-                , STR_TO_DATE(#{strtDtm}, '%Y-%m-%d %H:%i:%s')
-                , STR_TO_DATE(#{endDtm}, '%Y-%m-%d %H:%i:%s')
+                , STR_TO_DATE(CONCAT(#{strtDtm}, ' ', #{ptupStrtHh}, ':', #{ptupStrtMi}), '%Y-%m-%d %H:%i')
+                , STR_TO_DATE(CONCAT(#{endDtm}, ' ', #{ptupEndHh}, ':', #{ptupEndMi}), '%Y-%m-%d %H:%i')
             </otherwise>
         </choose>
         , #{titl}
         , #{fileSeq}
-        , #{imgFileId}
         , #{cnts}
         , #{linkUrl}
         , #{newWndwYn}
@@ -255,14 +253,13 @@
                 , STRT_DTM = NULL
                 , END_DTM = NULL
             </when>
-            <otherwise>
-                , STRT_DTM = STR_TO_DATE(#{strtDtm}, '%Y-%m-%d %H:%i:%s')
-                , END_DTM = STR_TO_DATE(#{endDtm}, '%Y-%m-%d %H:%i:%s')
-            </otherwise>
+            <when test="strtDtm != '' and strtDtm != null and endDtm !='' and endDtm != null">
+                , STRT_DTM = STR_TO_DATE(CONCAT(#{strtDtm}, ' ', #{ptupStrtHh}, ':', #{ptupStrtMi}), '%Y-%m-%d %H:%i')
+                , END_DTM = STR_TO_DATE(CONCAT(#{endDtm}, ' ', #{ptupEndHh}, ':', #{ptupEndMi}), '%Y-%m-%d %H:%i')
+            </when>
         </choose>
         , ODTM_YN = #{odtmYn}
         , FILE_SEQ = #{fileSeq}
-        , IMG_FILE_ID = #{imgFileId}
         , CNTS = #{cnts}
         , LINK_URL = #{linkUrl}
         , NEW_WNDW_YN = #{newWndwYn}
@@ -336,7 +333,7 @@
         SELECT /* SMCPopMapper.selectUseMnPopCnt*/
         COUNT(SEQ)
         FROM
-        SM_POPUP_MST
+        SM_POPUP_MST A
         <include refid="selectPopListwhereSql" />
     </select>
 
@@ -350,47 +347,77 @@
     <sql id="selectPopListwhereSql">
         <where>
             <if test="langCd != null and langCd != ''.toString() ">
-                and lang_cd = #{langCd}
+                AND LANG_CD = #{langCd}
             </if>
             <if test="dvcCd != null and dvcCd != ''.toString() ">
-                and dvc_cd = #{dvcCd}
+                AND DVC_CD = #{dvcCd}
             </if>
             <if test="strtDtm != null and strtDtm != ''.toString() ">
-                and strt_dtm <![CDATA[ > ]]> str_to_date(#{strtDtm}, '%Y-%m-%d')
+                AND STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDtm}, '%Y-%m-%d')
             </if>
             <if test="endDtm !=  null and endDtm != ''.toString() ">
-                and end_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDtm}, '%Y-%m-%d'), interval 1 day)
+                AND END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDtm}, '%Y-%m-%d'), INTERVAL 1 DAY)
+            </if>
+            <if test="srchDate != null and srchDate != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        <if test="dStrDt != null and dStrDt != ''.toString() ">
+                            AND reg_dtm <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
+                            AND reg_dtm <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <when test="srchDate == 2">
+                        <if test="dEndDt != null and dEndDt != ''.toString() ">
+                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
+                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <otherwise>
+
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="odtmYn != null and odtmYn != ''.toString() ">
+                AND ODTM_YN = #{odtmYn}
             </if>
             <if test="useYnList != null and useYnList.size() > 0">
-                and (
+                AND (
                 <foreach collection="useYnList" item="useYnList" index="index" open="" close="" separator=" or ">
-                    use_yn = #{useYnList}
+                    USE_YN = #{useYnList}
                 </foreach>
                 )
             </if>
             <if test="typeCdList != null and typeCdList.size() > 0">
-                and (
+                AND (
                 <foreach collection="typeCdList" item="typeCdList" index="index" open="" close="" separator=" or ">
-                    type_cd = #{typeCdList}
+                    TYPE_CD = #{typeCdList}
                 </foreach>
                 )
             </if>
-            <if test="q != null and q != ''.toString() ">
+            <if test="q != null and q != ''">
                 <choose>
                     <when test="f == 1">
-                        and titl like concat('%', #{q}, '%')
+                        AND TITL LIKE CONCAT('%', #{q}, '%')
                     </when>
                     <when test="f == 2">
-                        and reg_id like concat('%', #{q}, '%')
+                        AND (
+                            INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
                     </when>
-                    <when test="f == 3 ">
-                        and mod_id like concat('%', #{q}, '%')
+                    <when test="f == 3">
+                        AND (
+                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
                     </when>
                     <otherwise>
-                        and (
-                        titl like concat('%', #{q}, '%')
-                        or reg_id like concat('%', #{q}, '%')
-                        or mod_id like concat('%', #{q}, '%')
+                        AND (
+                            INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                            INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </otherwise>
                 </choose>

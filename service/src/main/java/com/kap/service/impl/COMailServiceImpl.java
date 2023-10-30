@@ -52,6 +52,7 @@ public class COMailServiceImpl  implements COMailService {
 	 */
 	public int sendMail(COMailDTO cOMailDTO, String templateFile) throws Exception
 	{
+
 		MimeMessage message = mailSender.createMimeMessage();
 		int toUserSize = 0;
 		try
@@ -100,7 +101,7 @@ public class COMailServiceImpl  implements COMailService {
 		if (!"".equals(templateFile))
 		{
 			try {
-				templateFile = mailTmplFilePath + templateFile;
+				//templateFile = mailTmplFilePath + templateFile;
 				VelocityContext vc = new VelocityContext();
 				vc.put("userDomain", userDomain);
 				vc.put("adminDomain", adminDomain);
@@ -114,8 +115,6 @@ public class COMailServiceImpl  implements COMailService {
 				//templateFile = "/" + templateFile;
 				//templateFile = "template/email/COAAdmPwdInit.html";
 
-
-				templateFile = "COAAdmPwdInit.html";
 				velocityEngine.setProperty("file.resource.loader.path", mailTmplFilePath+"email/");
 
 				Template template = velocityEngine.getTemplate(templateFile.replace("/", File.separator), "UTF-8");

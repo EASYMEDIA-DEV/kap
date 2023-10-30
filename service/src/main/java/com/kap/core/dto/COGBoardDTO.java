@@ -71,6 +71,10 @@ public class COGBoardDTO extends BaseDTO {
 
     //파일 순번
     private Integer fileSeq;
+    //파일 순번 - pc썸네일
+    private Integer pcThumbFileSeq;
+    //파일 순번 - mobile썸네일
+    private Integer moThumbFileSeq;
 
     //상시여부
     private String odtmYn;
@@ -78,15 +82,28 @@ public class COGBoardDTO extends BaseDTO {
     //년도?
     private String year;
 
+    //조회수
+    private String readCnt;
 
-    private String atchFileId;
-    private String thumbFileId;
+    //중요공지 여부
+    private String topYn;
+
+    // FAQ 타입
+    private String faqType;
+
+    // FAQ 타입 이름
+    private String faqTypeNm;
+
+    //private String atchFileId;
+    //private String thumbFileId;
+
     //사용여부
     private String mainYn;
 
     //검색 리스트
     private List<String> authCdList;
     private List<String> mainYnList;
+    private List<String> faqTypeList;
 
     //테이블 이름
     private String tableNm;
@@ -94,4 +111,9 @@ public class COGBoardDTO extends BaseDTO {
 
     //조회 리스트
     private List<COGBoardDTO> list;
+    //전달받을 PC 썸네일 파일 리스트
+    private List<COFileDTO> pcThumbList;
+    //전달받을 MO 썸네일 파일 리스트
+    private List<COFileDTO> moThumbList;
+
 }

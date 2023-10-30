@@ -33,27 +33,56 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
+            odtmYn : {
+                event : {
+                    change : function(){
+                        var trgtObj = jQuery(this).closest("fieldset");
+
+                        if (jQuery(this).is(":checked"))
+                        {
+                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").addClass("notRequired").prop("disabled", true);
+                            jQuery(".input-group").find("input").prop("disabled", true).val("");
+                            jQuery(".input-group").siblings("select").prop("disabled", true).find("option:eq(0)").prop("selected", true);
+                        }
+                        else
+                        {
+                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").removeClass("notRequired").prop("disabled", false);
+                            jQuery(".input-group").find("input").prop("disabled", false);
+                            jQuery(".input-group").siblings("select").prop("disabled", false);
+                        }
+
+                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("setOptions", { /* maxDate : false */ });
+                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("reset").val("");
+
+                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("setOptions", { minDate : false });
+                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("reset").val("");
+                    }
+                }
+            },
             btn_delete : {
                 event: {
                     click: function () {
                         var frmDataObj    = $(this).closest("form");
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-                        if(confirm("삭제 처리하겠습니끼?"))
-                        {
-                            //삭제 전송
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    var msg = "삭제되었습니다.";
+                        if (delActCnt !== 0) {
+                            if(confirm("선택한 게시물을 " + msgCtrl.getMsg("confirm.del")))
+                            {
+                                //삭제 전송
+                                cmmCtrl.frmAjax(function(respObj){
+                                    if(respObj != undefined && respObj.respCnt > 0){
+                                        var msg = "삭제되었습니다.";
 
-                                    alert(msg);
-                                    $formObj.find("#btnSearch").click();
-                                }
-                                else{
-                                    alert(msgCtrl.getMsg("fail.act"));
-                                }
-                            }, "./delete", frmDataObj, "POST", "json");
+                                        alert(msg);
+                                        $formObj.find("#btnSearch").click();
+                                    }
+                                    else{
+                                        alert(msgCtrl.getMsg("fail.act"));
+                                    }
+                                }, "./delete", frmDataObj, "POST", "json");
+                            }
+                        } else {
+                            alert(msgCtrl.getMsg("fail.sm.smc.target"));
                         }
-
                     }
                 }
             },
@@ -72,9 +101,11 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             //if(sortType == 'UP' && $("pageIndex").val() == '1' && btn.parents('tr').prev().length == 0) {
                             if(sortType == 'UP' && btn.parents('tr').prev().length == 0) {
+                                alert(msgCtrl.getMsg("fail.sm.sort.notMoveUp"));
                                 return false;
                                 //} else if (sortType == 'DOWN' && $("pageIndex").val() == $(".pagination").children().length && btn.parents('tr').next().length == 0) {
                             } else if (sortType == 'DOWN' && btn.parents('tr').next().length == 0) {
+                                alert(msgCtrl.getMsg("fail.sm.sort.notMoveDown"));
                                 return false;
                             }
 
@@ -102,7 +133,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
                                     cmmCtrl.setFormData($formObj);
                                     search($("pageIndex").val());
-                                 }
+                                }
                             })
                         }
                     }
@@ -113,20 +144,24 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         var frmDataObj    = $(this).closest("form");
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-                        if(confirm("미노출 처리하겠습니까?"))
-                        {
-                            //삭제 전송
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    var msg = "미노출 처리가 완료되었습니다.";
+                        if (delActCnt != 0) {
+                            if(confirm(msgCtrl.getMsg("fail.sm.smc.notuse")))
+                            {
+                                //삭제 전송
+                                cmmCtrl.frmAjax(function(respObj){
+                                    if(respObj != undefined && respObj.respCnt > 0){
+                                        var msg = "미노출 처리가 완료되었습니다.";
 
-                                    alert(msg);
-                                    $formObj.find("#btnSearch").click();
-                                }
-                                else{
-                                    alert(msgCtrl.getMsg("fail.act"));
-                                }
-                            }, "./use-yn-update", frmDataObj, "POST", "json");
+                                        alert(msg);
+                                        $formObj.find("#btnSearch").click();
+                                    }
+                                    else{
+                                        alert(msgCtrl.getMsg("fail.act"));
+                                    }
+                                }, "./use-yn-update", frmDataObj, "POST", "json");
+                            }
+                        } else {
+                            alert(msgCtrl.getMsg("fail.notUse"));
                         }
                     }
                 }
@@ -168,6 +203,7 @@ define(["ezCtrl"], function(ezCtrl) {
             cmmCtrl.setFormData($formObj);
 
             search($formObj.find("input[name=pageIndex]").val());
+
         }
     };
 
@@ -191,6 +227,7 @@ define(["ezCtrl"], function(ezCtrl) {
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
         }, "./select", $formObj, "POST", "html");
     }
+
 
     ctrl.exec();
 

@@ -10,42 +10,39 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.seq}" />
             <!-- 첨부파일 순번 -->
             <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDto.fileSeq}" />
+            <input type="hidden" class="notRequired" id="pcThumbFileSeq" name="pcThumbFileSeq" value="${rtnDto.pcThumbFileSeq}" />
+            <input type="hidden" class="notRequired" id="moThumbFileSeq" name="moThumbFileSeq" value="${rtnDto.moThumbFileSeq}" />
+            <c:if test="${typeCd eq '30'}">
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">구분<span class="star"> *</span></label>
+                        <div class="col-sm-10">
+                            <select class="form-control input-sm" id="faqType" name="faqType" title="FAQ구분" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
+                                <option value="">선택</option>
+                                <c:forEach var="cdList" items="${cdDtlList.FAQ_TYPE_CD}" varStatus="status">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.faqType eq cdList.cd}">selected</c:if>>
+                                            ${cdList.cdNm}
+                                    </option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+            </c:if>
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="100" />
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="200" placeholder="제목을 입력하세요." />
                     </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <label class="col-sm-2 control-label">게시기간(일자)</label>
-                <div class="col-sm-4">
-                    <div class="form-inline">
-                        <div class="input-group form-date-group mr-sm">
-                            <!--class명을 datetimepicker_strtDt -->
-                            <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt <c:if test="${rtnDto.odtmYn eq 'Y'}">notRequired</c:if>" name="postStrtDtm" value="${ kl:convertDate(rtnDto.postStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', null) }" title="시작일" readonly="readonly" <c:if test="${rtnDto.odtmYn eq 'Y'}">disabled</c:if> />
-                            <span class="input-group-btn" style="z-index:0;">
-                                <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
-                                    <em class="ion-calendar"></em>
-                                </button>
-                            </span>
-                            <span class="input-group-addon bg-white b0">~</span>
-                            <!--class명을 datetimepicker_endDt -->
-                            <input type="text" class="form-control notRequired input-sm datetimepicker_endDt <c:if test="${rtnDto.odtmYn eq 'Y'}">notRequired</c:if>" name="postEndDtm" value="${ kl:convertDate(rtnDto.postEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', null) }" title="종료일" readonly="readonly" <c:if test="${rtnDto.odtmYn eq 'Y'}">disabled</c:if> />
-                            <span class="input-group-btn" style="z-index:0;">
-                                <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
-                                    <em class="ion-calendar"></em>
-                                </button>
-                            </span>
+                    <c:if test="${typeCd eq '10'}">
+                        <div class="col-sm-2">
+                            <label class="checkbox-inline c-checkbox">
+                                <input type="checkbox" class="notRequired" id="topYn" name="topYn" value="Y" title="중요공지여부" <c:if test="${rtnDto.topYn eq 'Y'}">checked</c:if> />
+                                <span class="ion-checkmark-round"></span> 중요공지 설정
+                            </label>
                         </div>
-                    </div>
-                </div>
-                <div class="form-group" style="padding-bottom:7px">
-                    <label class="checkbox-inline c-checkbox">
-                        <input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="${rtnDto.odtmYn}" title="상시여부" <c:if test="${rtnDto.odtmYn eq 'Y'}">checked</c:if> />
-                        <span class="ion-checkmark-round"></span> 상시여부
-                    </label>
+                    </c:if>
                 </div>
             </fieldset>
             <fieldset>
@@ -58,33 +55,69 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">PC 첨부파일<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">첨부파일</label>
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
                             <div class="dz-default dz-message">
-                                <span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
                         </div>
                         <p class="text-bold mt">
-                            ※ 1920 X 1080, ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
+                            ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
                         </p>
                     </div>
                 </div>
             </fieldset>
+            <c:if test="${typeCd eq '20'}">
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">PC 썸네일</br> 이미지</label>
+                        <div class="col-sm-10 col-md-11">
+                            <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                            <spring:eval var="atchUploadMaxSize" expression="5242880" />
+                            <div class="dropzone pcThumbFile" data-file-field-nm="pcThumbFileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="PC 썸네일 이미지">
+                                <div class="dz-default dz-message">
+                                    <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                </div>
+                            </div>
+                            <p class="text-bold mt">
+                                ※ ${imageExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">MO 썸네일</br> 이미지</label>
+                        <div class="col-sm-10 col-md-11">
+                            <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                            <spring:eval var="atchUploadMaxSize" expression="5242880" />
+                            <div class="dropzone moThumbFile" data-file-field-nm="moThumbFileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="MO 썸네일 이미지">
+                                <div class="dz-default dz-message">
+                                    <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                </div>
+                            </div>
+                            <p class="text-bold mt">
+                                ※ ${imageExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
+            </c:if>
             <fieldset class="last-child">
                 <div class="form-group text-sm">
-                    <label class="col-sm-2 control-label">사용여부</label>
-                    <div class="col-sm-10">
+                    <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
+                    <div class="col-sm-11">
                         <c:set var="mainYn" value="${kl:nvl(rtnDto.mainYn, 'Y')}" />
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="mainYn" value="Y" title="사용여부" <c:if test="${mainYn eq 'Y'}">checked</c:if> />
-                            <span class="ion-record"></span> 사용
+                            <input type="radio" name="mainYn" value="Y" title="노출여부" <c:if test="${mainYn eq 'Y'}">checked</c:if> />
+                            <span class="ion-record"></span> 노출
                         </label>
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="mainYn" value="N" title="사용여부" <c:if test="${mainYn eq 'N'}">checked</c:if> />
-                            <span class="ion-record"></span> 미사용
+                            <input type="radio" name="mainYn" value="N" title="노출여부" <c:if test="${mainYn eq 'N'}">checked</c:if> />
+                            <span class="ion-record"></span> 미노출
                         </label>
                     </div>
                 </div>
@@ -92,16 +125,16 @@
             <hr />
             <div class="clearfix">
                 <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
+                    <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
                 </div>
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnInfo}">
                             <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                            <button type="submit" class="btn btn-sm btn-success">수정</button>
+                            <button type="submit" class="btn btn-sm btn-success">저장</button>
                         </c:when>
                         <c:otherwise>
-                            <button type="submit" class="btn btn-sm btn-success">등록</button>
+                            <button type="submit" class="btn btn-sm btn-success">저장</button>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -113,7 +146,7 @@
                         <tbody>
                             <tr>
                                 <th>최초 작성자</th>
-                                <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
+                                <td>${ rtnDto.regName }</td>
                                 <th>최초 작성일</th>
                                 <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                             </tr>
@@ -121,8 +154,8 @@
                                 <th>최종 수정자</th>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
-                                            ${ rtnDto.modName }(${ rtnDto.modId })
+                                        <c:when test="${ not empty rtnDto.modName }">
+                                            ${ rtnDto.modName }
                                         </c:when>
                                         <c:otherwise>-</c:otherwise>
                                     </c:choose>
@@ -130,7 +163,7 @@
                                 <th>최종 수정일</th>
                                 <td>
                                     <c:choose>
-                                        <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
+                                        <c:when test="${ not empty rtnDto.modDtm }">
                                             ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
                                         </c:when>
                                         <c:otherwise>-</c:otherwise>

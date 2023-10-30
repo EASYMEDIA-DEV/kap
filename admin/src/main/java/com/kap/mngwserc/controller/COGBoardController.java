@@ -56,6 +56,7 @@ public class COGBoardController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("BOARD_TYPE_CD");
+            cdDtlList.add("FAQ_TYPE_CD");
 
             modelMap.addAttribute("langCd", langCd);
             modelMap.addAttribute("typeCd", typeCd);
@@ -80,11 +81,13 @@ public class COGBoardController {
      * 게시판 목록 조회
      */
     @PostMapping(value = "/select")
-    public String selectBoardListPageAjax(COGBoardDTO cogBoardDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String selectBoardListPageAjax(COGBoardDTO cogBoardDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable int typeCd, @PathVariable String langCd) throws Exception
     {
         try
         {
-            // 정의된 코드id값들의 상세 코드 맵 반환
+            cogBoardDTO.setLangCd(langCd);
+            cogBoardDTO.setTypeCd(typeCd);
+
             modelMap.addAttribute("rtnData", cOGBoardService.selectBoardList(cogBoardDTO));
         }
         catch (Exception e)
@@ -108,6 +111,15 @@ public class COGBoardController {
         {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             cogBoardDTO.setTypeCd(typeCd);
+            if(typeCd == 30) {
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                // 코드 set
+                cdDtlList.add("FAQ_TYPE_CD");
+
+                // 정의된 코드id값들의 상세 코드 맵 반환
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            }
             if(!"".equals(cogBoardDTO.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", cOGBoardService.selectBoardDtl(cogBoardDTO));
             }

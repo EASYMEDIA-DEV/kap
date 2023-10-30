@@ -103,7 +103,7 @@
 				nameChk : "한글, 영문만 입력하실 수 있습니다.",
 				ipChk : "IP형식이 맞지 않습니다.",
 				confirm : {
-					init : "진행하시겠습니까?"
+					init : "저장하시겠습니까?"
 				}
 			},
 			placeholder : true,
@@ -727,9 +727,9 @@
 
 					message = tagTitle + josa + message;
 
-					if(typeof tagLengthValue != "undefined"){
+					/*if(typeof tagLengthValue != "undefined"){
 						message += " (최대 " + tagLengthValue + "자까지 입력 가능합니다.)";
-					}
+					}*/
 				}
 			}
 		};

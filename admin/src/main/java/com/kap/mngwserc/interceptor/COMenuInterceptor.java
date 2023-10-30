@@ -7,7 +7,6 @@ import com.kap.core.dto.COMenuDTO;
 import com.kap.core.exceptionn.UnauthorizedException;
 import com.kap.service.COLgnService;
 import com.kap.service.COUserDetailsHelperService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,7 +43,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
         String[] paramValues = null;
         while (params.hasMoreElements())
         {
-            if (comma > 0) strPam += "&";
+            /*if (comma > 0) strPam += "&";*/
             paramName = (String) params.nextElement();
             paramValues =  request.getParameterValues(paramName);
             for(int q = 0; q < paramValues.length ; q++){
@@ -110,7 +109,6 @@ public class COMenuInterceptor implements HandlerInterceptor{
 
         for (int i = 0, size = menuList.size(); i < size; i++)
         {
-
             admUrl = "";
             if(!"".equals(COStringUtil.nullConvert(menuList.get(i).getAdmUrl())))
             {
@@ -202,6 +200,15 @@ public class COMenuInterceptor implements HandlerInterceptor{
         }
         request.setAttribute("parntMenuList", parntMenuList);
         request.setAttribute("lnbMenuList", lnbMenuList);
+
+        // CMS 관리
+        String langCd = request.getRequestURI().contains("/kr/") ? "kr" : "en";
+
+        if (requestURI.contains("/mngwserc/" + langCd + "/contentsid/" + pageNo + "/"))
+        {
+            request.setAttribute("cmsRoot", cOLgnService.getCmsRootInf(lngCOAAdmDTO));
+        }
+
         //AOP용
         RequestContextHolder.getRequestAttributes().setAttribute("pageIndicator", pageIndicator, RequestAttributes.SCOPE_SESSION);
 
