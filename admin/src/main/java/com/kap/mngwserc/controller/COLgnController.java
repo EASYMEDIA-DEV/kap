@@ -301,7 +301,7 @@ public class COLgnController {
 					//인증요청일시
 					String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
 					cOMailDTO.setField2(field2);
-					cOMailService.sendMail(cOMailDTO, mailTmplFilePath+"COAAdmLgnEmail.html");
+					cOMailService.sendMail(cOMailDTO, "COAAdmLgnEmail.html");
 
 
 					RequestContextHolder.getRequestAttributes().setAttribute("tmpEmailAuthNum", authNum, RequestAttributes.SCOPE_SESSION);
