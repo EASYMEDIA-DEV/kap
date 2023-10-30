@@ -44,10 +44,6 @@ public class COCodeDTO extends BaseDTO {
     private String cd;
     //코드명
     private String cdNm;
-    //영문코드명
-    private String enCdNm;
-    //중문코드명
-    private String cnCdNm;
     //사용여부
     private String useYn;
     //자식여부

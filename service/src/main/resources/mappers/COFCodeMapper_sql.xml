@@ -20,8 +20,6 @@
 			, cd_id
 			, cd
 			, cd_nm
-		    , en_cd_nm
-		    , cn_cd_nm
 			, use_yn
 			, (select count(*) from co_code_mst where parnt_seq = a.cd_seq) as childcnt
 		from
@@ -51,8 +49,6 @@
 			, cd_id
 			, cd
 			, cd_nm
-			, en_cd_nm
-			, cn_cd_nm
 			, use_yn
 		from
 			co_code_mst
@@ -77,8 +73,6 @@
 			, cd_id
 			, cd
 			, cd_nm
-			, en_cd_nm
-			, cn_cd_nm
 			, use_yn
 			, reg_id
 			, reg_ip
@@ -103,8 +97,6 @@
 		</choose>
 			, #{cd}
 			, #{cdNm}
-		    , #{enCdNm}
-		    , #{cnCdNm}
 			, #{useYn}
 			, #{regId}
 			, #{regIp}
@@ -162,8 +154,6 @@
 			<otherwise>
 				cd = #{cd}
 				, use_yn = #{useYn}
-				, en_cd_nm = #{enCdNm}
-				, cn_cd_nm = #{cnCdNm}
 			</otherwise>
 		</choose>
 		    , mod_id = #{regId}

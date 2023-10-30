@@ -59,9 +59,38 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             }
         },
         classname : {
+            category : {
+                event: {
+                    click : function(){
+                        var gubun = $("#gubun").val();
+                        var category = $('input[name=category]:checked').val();
+                        if(gubun == 'pc'){
+                            if(category == 'image'){
+                                $(".pcVideo").css("display", "none");
+                                $(".pcImage").css("display", "block");
+                            }else{
+                                $(".pcImage").css("display", "none");
+                                $(".pcVideo").css("display", "block");
+                            }
+                        }else if(gubun == 'mobile'){
+                            if(category == 'image'){
+                                $(".mobileVideo").css("display", "none");
+                                $(".mobileImg").css("display", "block");
+                            }else{
+                                $(".mobileImg").css("display", "none");
+                                $(".mobileVideo").css("display", "block");
+                            }
+                        }
 
+                    }
+                }
+            }
         },
         immediately : function() {
+
+            /* 이미지, 동영상 구분 */
+
+            $('input[name=category]:checked').val();
 
             var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
 
@@ -130,21 +159,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         if($formObj.find(".dropzone").size() > 0)
                         {
                             cmmCtrl.fileFrmAjax(function(data){
-                                console.log("data:"+data);
+                                console.log(data);
                                 //콜백함수. 페이지 이동
                                 if(data.respCnt > 0){
                                     alert(actionMsg);
                                     location.replace("./list");
                                 }else if(data.respCnt == '-1'){
-                                    alert(data.respCnt);
+                                    alert(data.SMBMainVslDTO.respMsg);
                                 }
                             }, actionUrl, $formObj, "json");
                         }
                         else
                         {
                             cmmCtrl.frmAjax(function(data){
+                                console.log(data);
                                 if(data.respCnt > 0){
-                                    console.log(data);
                                     alert(actionMsg);
                                     location.replace("./list");
                                 }else if(data.respCnt == '-1'){

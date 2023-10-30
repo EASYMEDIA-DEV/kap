@@ -20,7 +20,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 event : {
                     click : function() {
                         //삭제
-                        if(confirm(msgCtrl.getMsg("confirm.del"))){
+                        if(confirm("선택한 게시물을 " + msgCtrl.getMsg("confirm.del"))){
                             cmmCtrl.frmAjax(function(data){
                                 if(data.respCnt > 0){
                                     alert(msgCtrl.getMsg("success.del.target.none"));
@@ -31,7 +31,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
-            odtmYn : {
+            /*odtmYn : {
                 event : {
                     click : function() {
                         var odtmYn = $("#odtmYn").val();
@@ -55,8 +55,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $("#odtmYn").removeClass("notRequired");
                         }
                     }
-}
-            }
+}            }*/
+
         },
         classname : {
 
@@ -104,7 +104,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         {
                             editorChk = false;
 
-                            alert(msgCtrl.getMsg("fail.noCntn"));
+                            alert(msgCtrl.getMsg("fail.co.cog.cnts"));
 
                             CKEDITOR.instances[jQuery(this).prop("id")].focus();
 
@@ -147,6 +147,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 actionUrl = "./list";
                             }, actionUrl, $formObj, "post", "json")
                         }
+                    }
+                },
+                msg : {
+                    empty : {
+                        text : " 입력해주세요."
                     }
                 }
             });

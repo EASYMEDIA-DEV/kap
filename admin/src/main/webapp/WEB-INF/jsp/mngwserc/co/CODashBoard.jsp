@@ -42,22 +42,6 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="codeInfArea hidden">
-                        <div class="form-group text-sm">
-                            <label class="col-sm-2 control-label">코드명(영문)</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control input-sm notRequired" id="enCdNm" name="enCdNm" title="코드명(영문)" maxlength="20" oninput="this.value = this.value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g,'');"/>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="codeInfArea hidden">
-                        <div class="form-group text-sm">
-                            <label class="col-sm-2 control-label">코드명(중문)</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control input-sm notRequired" id="cnCdNm" name="cnCdNm" title="코드명(중문)" maxlength="20" oninput="this.value = this.value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/g,'');"/>
-                            </div>
-                        </div>
-                    </fieldset>
                     <fieldset class="last-child codeInfArea hidden">
                         <div class="form-group text-sm">
                             <label class="col-sm-2 control-label">노출 여부</label>

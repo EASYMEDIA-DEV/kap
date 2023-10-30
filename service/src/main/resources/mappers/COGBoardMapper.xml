@@ -18,78 +18,31 @@
             , YEAR
             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'BOARD_TYPE_CD' AND CD = A.TYPE_CD) AS TYPE_NM
             , FILE_SEQ
+            , PC_THUMB_FILE_SEQ
+            , MO_THUMB_FILE_SEQ
             , READ_CNT
             , POST_STRT_DTM
             , POST_END_DTM
             , ODTM_YN
             , REG_ID
-            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
             , REG_IP
             , REG_DTM
             , MOD_ID
-            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
             , MOD_IP
             , MOD_DTM
             , MAIN_YN
+            , TOP_YN
+            , FAQ_TYPE
+            , (SELECT CD_NM from CO_CODE_MST WHERE CD = A.FAQ_TYPE) AS FAQ_TYPE_NM
         FROM
-         CO_BOARD_MST A
+            CO_BOARD_MST A
         WHERE 1=1
-         AND LANG_CD = #{langCd}
-         AND TYPE_CD = #{typeCd}
-            <if test="strtDt != null and strtDt != ''">
-                <choose>
-                    <when test="srchDate == 1">
-                        AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
-                    </when>
-                    <when test="srchDate == 2">
-                        AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
-
-                    </when>
-                </choose>
-            </if>
-            <if test="endDt != null and endDt != ''">
-                <choose>
-                    <when test="srchDate == 1">
-                        AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-
-                    </when>
-                    <when test="srchDate == 2">
-                        AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-                    </when>
-                </choose>
-            </if>
-            <if test="mainYnList != null and mainYnList.size() > 0">
-                AND (
-                <foreach collection="mainYnList" item="mainYn" index="index" open="" close="" separator=" OR ">
-                    MAIN_YN = #{mainYn}
-                </foreach>
-                )
-            </if>
-            <if test="q != null and q != ''">
-                <choose>
-                    <when test="f == 0">
-                        AND TITL LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <when test="f == 1">
-                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID), '(', REG_ID,')') LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <when test="f == 2">
-                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID), '(', MOD_ID,')') LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <when test="f == 3">
-                        AND YEAR LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <otherwise>
-                        AND (
-                        (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) LIKE CONCAT('%', #{q}, '%')
-                        OR TITL LIKE CONCAT('%', #{q}, '%')
-                        OR CNTS LIKE CONCAT('%', #{q}, '%')
-                        )
-                    </otherwise>
-                </choose>
-            </if>
-            ORDER BY
-             REG_DTM DESC
+          AND LANG_CD = #{langCd}
+          AND TYPE_CD = #{typeCd}
+          <include refid="selectBoardListwhereSql" />
+        LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
@@ -101,11 +54,13 @@
     -->
     <select id="getBoardListTotCnt" parameterType="COGBoardDTO" resultType="java.lang.Integer">
         SELECT /* COGCntsMapper.getBoardListCnt */
-            count(*)
+            COUNT(*)
         FROM
-            CO_BOARD_MST
-        WHERE
-            TYPE_CD = #{typeCd}
+            CO_BOARD_MST A
+        WHERE 1 = 1
+            AND LANG_CD = #{langCd}
+            AND TYPE_CD = #{typeCd}
+            <include refid="selectBoardListwhereSql" />
     </select>
 
     <select id="selectBoardDtl" parameterType="COGBoardDTO" resultType="COGBoardDTO">
@@ -117,20 +72,23 @@
              , TYPE_CD
              , YEAR
              , FILE_SEQ
+             , PC_THUMB_FILE_SEQ
+             , MO_THUMB_FILE_SEQ
              , READ_CNT
              , POST_STRT_DTM
              , POST_END_DTM
              , ODTM_YN
              , REG_ID
-             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NM
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
              , REG_IP
              , REG_DTM
              , MOD_ID
-             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NM
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
              , MOD_IP
              , MOD_DTM
-             , THUMB_FILE_ID
              , MAIN_YN
+             , TOP_YN
+             , FAQ_TYPE
         FROM
             CO_BOARD_MST A
         WHERE
@@ -147,6 +105,8 @@
             , TYPE_CD
             , YEAR
             , FILE_SEQ
+            , PC_THUMB_FILE_SEQ
+            , MO_THUMB_FILE_SEQ
             , READ_CNT
             , POST_STRT_DTM
             , POST_END_DTM
@@ -154,10 +114,9 @@
             , REG_ID
             , REG_IP
             , REG_DTM
-            , MOD_ID
-            , MOD_IP
-            , MOD_DTM
             , MAIN_YN
+            , TOP_YN
+            , FAQ_TYPE
             )
             VALUES
             (
@@ -168,6 +127,8 @@
             , #{typeCd}
             , #{year}
             , #{fileSeq}
+            , #{pcThumbFileSeq}
+            , #{moThumbFileSeq}
             , 0
             , #{postStrtDtm}
             , #{postEndDtm}
@@ -175,10 +136,9 @@
             , #{regId}
             , #{regIp}
             , NOW()
-            , #{modId}
-            , #{modIp}
-            , NOW()
             , #{mainYn}
+            , #{topYn}
+            , #{faqType}
             )
     </insert>
     <!--
@@ -195,6 +155,8 @@
             TITL = #{titl}
             , CNTS = #{cnts}
             , FILE_SEQ = #{fileSeq}
+            , PC_THUMB_FILE_SEQ = #{pcThumbFileSeq}
+            , MO_THUMB_FILE_SEQ = #{moThumbFileSeq}
             , POST_STRT_DTM = #{postStrtDtm}
             , POST_END_DTM = #{postEndDtm}
             , ODTM_YN = #{odtmYn}
@@ -202,9 +164,11 @@
             , MOD_IP = #{modIp}
             , MOD_DTM = NOW()
             , MAIN_YN = #{mainYn}
-        WHERE
-            SEQ = #{detailsKey}
-        AND TYPE_CD = #{typeCd}
+            , TOP_YN = #{topYn}
+            , FAQ_TYPE = #{faqType}
+        WHERE 1 = 1
+            AND SEQ = #{detailsKey}
+            AND TYPE_CD = #{typeCd}
     </update>
     <!--
          쿼리명 : COGBoardMapper.deleteBoard
@@ -233,6 +197,82 @@
             </choose>
         </where>
     </delete>
+
+    <!--
+    쿼리명 : selectBoardListwhereSql
+    설  명 : 게시판 관리 where Sql
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.10.30    구은희       최초생성
+    -->
+    <sql id="selectBoardListwhereSql">
+        <if test="strtDt != null and strtDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+
+                </when>
+            </choose>
+        </if>
+        <if test="endDt != null and endDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+            </choose>
+        </if>
+        <if test="mainYnList != null and mainYnList.size() > 0">
+            AND (
+            <foreach collection="mainYnList" item="mainYn" index="index" open="" close="" separator=" OR ">
+                MAIN_YN = #{mainYn}
+            </foreach>
+            )
+        </if>
+        <if test="faqTypeList != null and faqTypeList.size() > 0">
+            AND (
+            <foreach collection="faqTypeList" item="faqType" index="index" open="" close="" separator=" OR ">
+                FAQ_TYPE = #{faqType}
+            </foreach>
+            )
+        </if>
+        <if test="q != null and q != ''">
+            <choose>
+                <when test="f == 1">
+                    AND TITL LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 2">
+                    AND (
+                    INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <when test="f == 3">
+                    AND (
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <otherwise>
+                    AND (
+                    INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY
+        (CASE WHEN TOP_YN = 'Y' THEN 1 ELSE 2 END), REG_DTM DESC
+    </sql>
 </mapper>
 
 

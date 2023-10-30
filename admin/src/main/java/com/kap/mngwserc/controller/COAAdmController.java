@@ -510,7 +510,7 @@ public class COAAdmController {
                     //인증요청일시
                     String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
                     cOMailDTO.setField2(field2);
-                    cOMailService.sendMail(cOMailDTO, "email/COAAdmPwdInit.html");
+                    cOMailService.sendMail(cOMailDTO, "COAAdmPwdInit.html");
                 }
             }
             catch (Exception e)

@@ -92,13 +92,24 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 	{
 		String menuType = cOMenuDTO.getMenuType();
 
-		if(!menuType.equals("cms")){
-			cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
-		}else{
-			if(!"".equals(cOMenuDTO.getUserUrl())){
-				cOMenuDTO.setUserUrl(cOMenuDTO.getUserUrl()+"/content.do");
-			}
+		String userUrl = cOMenuDTO.getUserUrl();
+		int trgtLen = cOMenuDTO.getUserUrl().length() - 1;
+
+		if (userUrl.lastIndexOf("/") == trgtLen) {
+			userUrl = userUrl.substring(0, trgtLen -1);
 		}
+//		if(menuType.equals("cms")){
+//			cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
+//		}else{
+			if(!"".equals(cOMenuDTO.getUserUrl())){
+				if(menuType.equals("cms")){
+					cOMenuDTO.setUserUrl(COStringUtil.nullConvert(userUrl + "/" + cOMenuDTO.getMenuSeq() + "/content.do"));
+				}
+				else {
+					cOMenuDTO.setUserUrl(userUrl+"/content.do");
+				}
+			}
+//		}
 		return cOBUserMenuMapper.updateMenuInf(cOMenuDTO);
 	}
 
@@ -410,7 +421,8 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 				tmpObject.put("data", XssPreventer.unescape(menuNm));
 				tmpObject.put("i", i);
 
-				if (menuDto.getChildcnt() > 0  && !"menu".equals(menuDto.getMenuType()))
+//				if (menuDto.getChildcnt() > 0  && !"menu".equals(menuDto.getMenuType()))
+				if (menuDto.getChildcnt() > 0)
 				{
 					tmpObject.put("state", "open");
 

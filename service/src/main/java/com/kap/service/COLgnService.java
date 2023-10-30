@@ -51,4 +51,9 @@ public interface COLgnService {
 	 * 비밀번호 이력 업데이트한다.
 	 */
 	public int setPwdHistory(COAAdmDTO cOAAdmDTO) throws Exception;
+
+	/**
+	 * CMS Root 메뉴 정보를 가져온다.
+	 */
+	public COMenuDTO getCmsRootInf(COAAdmDTO cOAAdmDTO) throws Exception;
 }

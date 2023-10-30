@@ -11,3 +11,11 @@
 /service/out/
 /service/out/production/classes/
 /service/src/main/java/com/kap/service/impl/COGCntsServiceImpl.java
+/client/out/production/resources/application-domain.yml
+/exerd/.project
+/.project
+/client/out/production/resources/keystore.p12
+/client/build/tmp/bootWar/MANIFEST.MF
+/error/build/tmp/bootWar/MANIFEST.MF
+/client/out/production/resources/tiles.xml
+/client/out/production/resources/application.yml

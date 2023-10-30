@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<e:DomainDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:e="http://exerd.tomato.com/model" UUID="DDefinition_-a_AAHg0Eeygwpfib29KMg" productId="com.tomato.db.mysql" version="3.3.14.20211117-1015">
-  <domain UUID="Domain_-a_AAXg0Eeygwpfib29KMg" name="ÀÏ½Ã" suggestedDataType="DATETIME"/>
-  <domain UUID="Domain_-a_AAng0Eeygwpfib29KMg" name="¼ø¹ø" suggestedDataType="INT"/>
-  <domain UUID="Domain_-a_AA3g0Eeygwpfib29KMg" name="ÄÚµå" suggestedDataType="VARCHAR(20)"/>
-  <domain UUID="Domain_-a_ABHg0Eeygwpfib29KMg" name="Á¦¸ñ" suggestedDataType="VARCHAR(500)"/>
-  <domain UUID="Domain_-a_ABXg0Eeygwpfib29KMg" name="ÀÏÀÚ" suggestedDataType="VARCHAR(10)"/>
-  <domain UUID="Domain_-a_ABng0Eeygwpfib29KMg" name="³»¿ë" suggestedDataType="LONGTEXT"/>
-  <domain UUID="Domain_-a_AB3g0Eeygwpfib29KMg" name="ÆÄÀÏID" suggestedDataType="VARCHAR(20)"/>
-  <domain UUID="Domain_-a_ACHg0Eeygwpfib29KMg" name="¿©ºÎ" suggestedDataType="CHAR(1)"/>
-  <domain UUID="Domain_-a_ACXg0Eeygwpfib29KMg" name="ID" suggestedDataType="VARCHAR(20)"/>
-  <domain UUID="Domain_-a_ACng0Eeygwpfib29KMg" name="IP" suggestedDataType="VARCHAR(15)"/>
-  <domain UUID="Domain_-a_AC3g0Eeygwpfib29KMg" name="¸í" suggestedDataType="VARCHAR(100)"/>
-  <domain UUID="Domain_-a_nEHg0Eeygwpfib29KMg" name="Á¤·Ä" suggestedDataType="INT"/>
-  <domain UUID="Domain_-a_nEXg0Eeygwpfib29KMg" name="URL" suggestedDataType="VARCHAR(1000)"/>
-  <domain UUID="Domain_-a_nEng0Eeygwpfib29KMg" name="Å°¿öµå" suggestedDataType="VARCHAR(1000)"/>
-  <domain UUID="Domain_-a_nE3g0Eeygwpfib29KMg" name="³»¿ë (short)" suggestedDataType="VARCHAR(2000)"/>
-  <domain UUID="Domain_-a_nFHg0Eeygwpfib29KMg" name="ºñ¹Ð¹øÈ£" suggestedDataType="VARCHAR(500)"/>
-  <domain UUID="Domain_-a_nFXg0Eeygwpfib29KMg" name="ÈÞ´ëÆù¹øÈ£" suggestedDataType="VARCHAR(20)"/>
-  <domain UUID="Domain_-a_nFng0Eeygwpfib29KMg" name="Ä«¿îÆ®" suggestedDataType="INT"/>
-  <domain UUID="Domain_-a_nF3g0Eeygwpfib29KMg" name="ÀÌ¸§" suggestedDataType="VARCHAR(50)"/>
-  <domain UUID="Domain_-a_nGHg0Eeygwpfib29KMg" name="ÀÌ¸ÞÀÏ" suggestedDataType="VARCHAR(100)"/>
-  <domain UUID="Domain_-a_nGXg0Eeygwpfib29KMg" name="¼¼¼ÇID" suggestedDataType="VARCHAR(100)"/>
+<e:DomainDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:e="http://exerd.tomato.com/model" UUID="DDefinition_TX2CwHbqEe604PqEcE9m-A" productId="com.tomato.db.mysql" version="3.3.14.20211117-1015">
+  <domain UUID="Domain_TX2CwXbqEe604PqEcE9m-A" name="ì¼ì‹œ" suggestedDataType="DATETIME"/>
+  <domain UUID="Domain_TX2CwnbqEe604PqEcE9m-A" name="ìˆœë²ˆ" suggestedDataType="INT"/>
+  <domain UUID="Domain_TX2Cw3bqEe604PqEcE9m-A" name="ì½”ë“œ" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_TX2CxHbqEe604PqEcE9m-A" name="ì œëª©" suggestedDataType="VARCHAR(500)"/>
+  <domain UUID="Domain_TX2CxXbqEe604PqEcE9m-A" name="ì¼ìž" suggestedDataType="VARCHAR(10)"/>
+  <domain UUID="Domain_TX2CxnbqEe604PqEcE9m-A" name="ë‚´ìš©" suggestedDataType="TEXT"/>
+  <domain UUID="Domain_TX2Cx3bqEe604PqEcE9m-A" name="íŒŒì¼ID" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_TX2CyHbqEe604PqEcE9m-A" name="ì—¬ë¶€" suggestedDataType="CHAR(1)"/>
+  <domain UUID="Domain_TX2CyXbqEe604PqEcE9m-A" name="ID" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_TX2CynbqEe604PqEcE9m-A" name="IP" suggestedDataType="VARCHAR(15)"/>
+  <domain UUID="Domain_TX2Cy3bqEe604PqEcE9m-A" name="ëª…" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_TX2CzHbqEe604PqEcE9m-A" name="ì •ë ¬" suggestedDataType="INT"/>
+  <domain UUID="Domain_TX2CzXbqEe604PqEcE9m-A" name="URL" suggestedDataType="VARCHAR(1000)"/>
+  <domain UUID="Domain_TX2CznbqEe604PqEcE9m-A" name="í‚¤ì›Œë“œ" suggestedDataType="VARCHAR(1000)"/>
+  <domain UUID="Domain_TX2Cz3bqEe604PqEcE9m-A" name="ë‚´ìš© (short)" suggestedDataType="VARCHAR(2000)"/>
+  <domain UUID="Domain_TX2C0HbqEe604PqEcE9m-A" name="ë¹„ë°€ë²ˆí˜¸" suggestedDataType="VARCHAR(500)"/>
+  <domain UUID="Domain_TX2C0XbqEe604PqEcE9m-A" name="íœ´ëŒ€í°ë²ˆí˜¸" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_TX2C0nbqEe604PqEcE9m-A" name="ì¹´ìš´íŠ¸" suggestedDataType="INT"/>
+  <domain UUID="Domain_TX2C03bqEe604PqEcE9m-A" name="ì´ë¦„" suggestedDataType="VARCHAR(50)"/>
+  <domain UUID="Domain_TX2C1HbqEe604PqEcE9m-A" name="ì´ë©”ì¼" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_TX2C1XbqEe604PqEcE9m-A" name="ì„¸ì…˜ID" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_TX2C1nbqEe604PqEcE9m-A" name="ì—°ë„" suggestedDataType="YEAR(4)"/>
+  <domain UUID="Domain_TX2C13bqEe604PqEcE9m-A" name="ìˆ˜" suggestedDataType="INT"/>
+  <domain UUID="Domain_TX2C2HbqEe604PqEcE9m-A" name="ì½”ë“œëª…" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_TX2p0HbqEe604PqEcE9m-A" name="ì „í™”ë²ˆí˜¸" suggestedDataType="VARCHAR(50)"/>
+  <domain UUID="Domain_TX2p0XbqEe604PqEcE9m-A" name="ì£¼ì†Œ" suggestedDataType="VARCHAR(200)"/>
+  <domain UUID="Domain_TX2p0nbqEe604PqEcE9m-A" name="ìš°íŽ¸ë²ˆí˜¸" suggestedDataType="VARCHAR(50)"/>
+  <domain UUID="Domain_TX2p03bqEe604PqEcE9m-A" name="ì¸ì¦ë²ˆí˜¸" suggestedDataType="VARCHAR(6)"/>
 </e:DomainDefinition>

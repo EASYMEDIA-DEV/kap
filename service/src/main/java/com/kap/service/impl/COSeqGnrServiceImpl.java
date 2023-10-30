@@ -34,8 +34,8 @@ public class COSeqGnrServiceImpl implements COSeqGnrService {
 		Integer seqCnt = cOSeqGnrMapper.selectCountSeq(tableNm);
 		int seq;
 			if(seqCnt > 0 ){
-				seq = cOSeqGnrMapper.selectSeq(tableNm);
 				cOSeqGnrMapper.updateSeq(tableNm);
+				seq = cOSeqGnrMapper.selectSeq(tableNm);
 			}else{
 				cOSeqGnrMapper.insertSeq(tableNm);
 				seq = cOSeqGnrMapper.selectSeq(tableNm);

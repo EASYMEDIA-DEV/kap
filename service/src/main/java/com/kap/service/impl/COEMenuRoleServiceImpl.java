@@ -87,8 +87,6 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
             // 변경 메뉴 목록 조회
             pCOMenuRoleDTO.setType("chng");
 
-            System.out.println(" @@@@ = " + cOEMenuRoleMapper.selectModMenuList(pCOMenuRoleDTO));
-
             info.setChngMenuList(cOEMenuRoleMapper.selectModMenuList(pCOMenuRoleDTO));
         }
 
