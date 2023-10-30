@@ -20,9 +20,28 @@
                 <jsp:param name="periodType" value="csa" />
             </jsp:include>
             <!--기간 검색 종료-->
+            <c:if test="${typeCd eq '30'}">
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">구분</label>
+                        <div class="col-sm-11">
+                            <label class="checkbox-inline c-checkbox">
+                                <input type="checkbox" class="checkboxAll" />
+                                <span class="ion-checkmark-round"></span> 전체
+                            </label>
+                            <c:forEach var="cdList" items="${cdDtlList.FAQ_TYPE_CD}" varStatus="status">
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxSingle" data-name="faqTypeList" value="${cdList.cd}" />
+                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                </label>
+                            </c:forEach>
+                        </div>
+                    </div>
+                </fieldset>
+            </c:if>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">사용여부</label>
+                    <label class="col-sm-1 control-label">노출여부</label>
                     <div class="col-sm-11">
                         <label class="checkbox-inline c-checkbox">
                             <input type="checkbox" class="checkboxAll" />

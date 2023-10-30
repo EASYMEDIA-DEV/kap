@@ -36,9 +36,7 @@
         <include refid="selectPopListwhereSql" />
         ORDER BY
         ORD DESC
-        <if test="excelYn != 'Y'.toString() ">
             LIMIT #{firstIndex}, #{recordCountPerPage}
-        </if>
     </select>
 
     <!--
@@ -134,7 +132,6 @@
         , END_DTM
         , TITL
         , FILE_SEQ
-        , IMG_FILE_ID
         , CNTS
         , LINK_URL
         , NEW_WNDW_YN
@@ -163,7 +160,6 @@
         </choose>
         , #{titl}
         , #{fileSeq}
-        , #{imgFileId}
         , #{cnts}
         , #{linkUrl}
         , #{newWndwYn}
@@ -264,7 +260,6 @@
         </choose>
         , ODTM_YN = #{odtmYn}
         , FILE_SEQ = #{fileSeq}
-        , IMG_FILE_ID = #{imgFileId}
         , CNTS = #{cnts}
         , LINK_URL = #{linkUrl}
         , NEW_WNDW_YN = #{newWndwYn}
@@ -352,29 +347,29 @@
     <sql id="selectPopListwhereSql">
         <where>
             <if test="langCd != null and langCd != ''.toString() ">
-                and lang_cd = #{langCd}
+                AND LANG_CD = #{langCd}
             </if>
             <if test="dvcCd != null and dvcCd != ''.toString() ">
-                and dvc_cd = #{dvcCd}
+                AND DVC_CD = #{dvcCd}
             </if>
             <if test="strtDtm != null and strtDtm != ''.toString() ">
-                and strt_dtm <![CDATA[ > ]]> str_to_date(#{strtDtm}, '%Y-%m-%d')
+                AND STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDtm}, '%Y-%m-%d')
             </if>
             <if test="endDtm !=  null and endDtm != ''.toString() ">
-                and end_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDtm}, '%Y-%m-%d'), interval 1 day)
+                AND END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDtm}, '%Y-%m-%d'), INTERVAL 1 DAY)
             </if>
             <if test="srchDate != null and srchDate != ''.toString() ">
                 <choose>
                     <when test="srchDate == 1">
                         <if test="dStrDt != null and dStrDt != ''.toString() ">
-                            and reg_dtm <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
-                            and reg_dtm <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), interval 1 day)
+                            AND reg_dtm <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
+                            AND reg_dtm <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                         </if>
                     </when>
                     <when test="srchDate == 2">
                         <if test="dEndDt != null and dEndDt != ''.toString() ">
-                            and mod_dtm <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
-                            and mod_dtm <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), interval 1 day)
+                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
+                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                         </if>
                     </when>
                     <otherwise>
@@ -383,19 +378,19 @@
                 </choose>
             </if>
             <if test="odtmYn != null and odtmYn != ''.toString() ">
-                and odtm_yn = #{odtmYn}
+                AND ODTM_YN = #{odtmYn}
             </if>
             <if test="useYnList != null and useYnList.size() > 0">
-                and (
+                AND (
                 <foreach collection="useYnList" item="useYnList" index="index" open="" close="" separator=" or ">
-                    use_yn = #{useYnList}
+                    USE_YN = #{useYnList}
                 </foreach>
                 )
             </if>
             <if test="typeCdList != null and typeCdList.size() > 0">
-                and (
+                AND (
                 <foreach collection="typeCdList" item="typeCdList" index="index" open="" close="" separator=" or ">
-                    type_cd = #{typeCdList}
+                    TYPE_CD = #{typeCdList}
                 </foreach>
                 )
             </if>

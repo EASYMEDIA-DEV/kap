@@ -10,7 +10,9 @@
                     </label>
                 </td>
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center">${ list.faqType}</td>
+                <c:if test="${list.typeCd eq '30'}">
+                    <td class="text-center">${  list.faqTypeNm  }</td>
+                </c:if>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.seq}">${list.titl}</a></td>
                 <td class="text-center">${ list.readCnt }</td>
                 <td class="text-center">${ list.regName }</td>

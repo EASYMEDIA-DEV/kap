@@ -56,6 +56,7 @@ public class COGBoardController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("BOARD_TYPE_CD");
+            cdDtlList.add("FAQ_TYPE_CD");
 
             modelMap.addAttribute("langCd", langCd);
             modelMap.addAttribute("typeCd", typeCd);
@@ -87,7 +88,6 @@ public class COGBoardController {
             cogBoardDTO.setLangCd(langCd);
             cogBoardDTO.setTypeCd(typeCd);
 
-            // 정의된 코드id값들의 상세 코드 맵 반환
             modelMap.addAttribute("rtnData", cOGBoardService.selectBoardList(cogBoardDTO));
         }
         catch (Exception e)

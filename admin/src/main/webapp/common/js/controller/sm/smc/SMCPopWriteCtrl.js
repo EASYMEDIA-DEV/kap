@@ -150,6 +150,16 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 after : function() {
                     var isValid = true, editorChk = true;
 
+                    jQuery(".dropzone").not(".notRequired").each(function(i){
+                        if (jQuery(this).children(".dz-preview").length == 0)
+                        {
+                            alert(jQuery(this).data("titl") + "를 첨부해주세요.");
+                            jQuery(this)[0].scrollIntoView();
+                            isValid = false;
+                            return false;
+                        }
+                    });
+
                     $formObj.find(".ckeditorRequired").each(function() {
                         jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
 

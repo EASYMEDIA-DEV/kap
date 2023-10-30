@@ -91,6 +91,9 @@ public class COGBoardDTO extends BaseDTO {
     // FAQ 타입
     private String faqType;
 
+    // FAQ 타입 이름
+    private String faqTypeNm;
+
     //private String atchFileId;
     //private String thumbFileId;
 
@@ -100,6 +103,7 @@ public class COGBoardDTO extends BaseDTO {
     //검색 리스트
     private List<String> authCdList;
     private List<String> mainYnList;
+    private List<String> faqTypeList;
 
     //테이블 이름
     private String tableNm;

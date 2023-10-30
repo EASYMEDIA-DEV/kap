@@ -35,70 +35,14 @@
             , MAIN_YN
             , TOP_YN
             , FAQ_TYPE
+            , (SELECT CD_NM from CO_CODE_MST WHERE CD = A.FAQ_TYPE) AS FAQ_TYPE_NM
         FROM
-         CO_BOARD_MST A
+            CO_BOARD_MST A
         WHERE 1=1
-         AND LANG_CD = #{langCd}
-         AND TYPE_CD = #{typeCd}
-            <if test="strtDt != null and strtDt != ''">
-                <choose>
-                    <when test="srchDate == 1">
-                        AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
-                    </when>
-                    <when test="srchDate == 2">
-                        AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
-
-                    </when>
-                </choose>
-            </if>
-            <if test="endDt != null and endDt != ''">
-                <choose>
-                    <when test="srchDate == 1">
-                        AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-
-                    </when>
-                    <when test="srchDate == 2">
-                        AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-                    </when>
-                </choose>
-            </if>
-            <if test="mainYnList != null and mainYnList.size() > 0">
-                AND (
-                <foreach collection="mainYnList" item="mainYn" index="index" open="" close="" separator=" OR ">
-                    MAIN_YN = #{mainYn}
-                </foreach>
-                )
-            </if>
-            <if test="q != null and q != ''">
-                <choose>
-                    <when test="f == 1">
-                        AND TITL LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <when test="f == 2">
-                        AND (
-                            INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
-                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
-                        )
-                    </when>
-                    <when test="f == 3">
-                        AND (
-                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
-                        )
-                    </when>
-                    <otherwise>
-                        AND (
-                            INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
-                            INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
-                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
-                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
-                        )
-                    </otherwise>
-                </choose>
-            </if>
-            ORDER BY
-                (CASE WHEN TOP_YN = 'Y' THEN 1 ELSE 2 END), REG_DTM DESC;
+          AND LANG_CD = #{langCd}
+          AND TYPE_CD = #{typeCd}
+          <include refid="selectBoardListwhereSql" />
+        LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
@@ -110,11 +54,13 @@
     -->
     <select id="getBoardListTotCnt" parameterType="COGBoardDTO" resultType="java.lang.Integer">
         SELECT /* COGCntsMapper.getBoardListCnt */
-            count(*)
+            COUNT(*)
         FROM
-            CO_BOARD_MST
-        WHERE
-            TYPE_CD = #{typeCd}
+            CO_BOARD_MST A
+        WHERE 1 = 1
+            AND LANG_CD = #{langCd}
+            AND TYPE_CD = #{typeCd}
+            <include refid="selectBoardListwhereSql" />
     </select>
 
     <select id="selectBoardDtl" parameterType="COGBoardDTO" resultType="COGBoardDTO">
@@ -220,9 +166,9 @@
             , MAIN_YN = #{mainYn}
             , TOP_YN = #{topYn}
             , FAQ_TYPE = #{faqType}
-        WHERE
-            SEQ = #{detailsKey}
-        AND TYPE_CD = #{typeCd}
+        WHERE 1 = 1
+            AND SEQ = #{detailsKey}
+            AND TYPE_CD = #{typeCd}
     </update>
     <!--
          쿼리명 : COGBoardMapper.deleteBoard
@@ -251,6 +197,82 @@
             </choose>
         </where>
     </delete>
+
+    <!--
+    쿼리명 : selectBoardListwhereSql
+    설  명 : 게시판 관리 where Sql
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.10.30    구은희       최초생성
+    -->
+    <sql id="selectBoardListwhereSql">
+        <if test="strtDt != null and strtDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+
+                </when>
+            </choose>
+        </if>
+        <if test="endDt != null and endDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+            </choose>
+        </if>
+        <if test="mainYnList != null and mainYnList.size() > 0">
+            AND (
+            <foreach collection="mainYnList" item="mainYn" index="index" open="" close="" separator=" OR ">
+                MAIN_YN = #{mainYn}
+            </foreach>
+            )
+        </if>
+        <if test="faqTypeList != null and faqTypeList.size() > 0">
+            AND (
+            <foreach collection="faqTypeList" item="faqType" index="index" open="" close="" separator=" OR ">
+                FAQ_TYPE = #{faqType}
+            </foreach>
+            )
+        </if>
+        <if test="q != null and q != ''">
+            <choose>
+                <when test="f == 1">
+                    AND TITL LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 2">
+                    AND (
+                    INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <when test="f == 3">
+                    AND (
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <otherwise>
+                    AND (
+                    INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY
+        (CASE WHEN TOP_YN = 'Y' THEN 1 ELSE 2 END), REG_DTM DESC
+    </sql>
 </mapper>
 
 
