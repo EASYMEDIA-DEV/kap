@@ -65,6 +65,7 @@ public class COLgnServiceImpl  implements COLgnService {
 		ThreadContext.put("trgtMenuNm", "로그인");
 
 		COAAdmDTO rtnCOAAdmDTO = cOLgnMapper.getLoginInfo(cOLoginDTO);
+
     	if (rtnCOAAdmDTO != null)
     	{
     		// 차단여부 확인
@@ -351,7 +352,15 @@ public class COLgnServiceImpl  implements COLgnService {
 	 */
     public List<COMenuDTO> getMenuList(COAAdmDTO cOAAdmDTO) throws Exception
     {
-		cOAAdmDTO.setUserMenuList( cOLgnMapper.getUserMenuList() );
+		/*cOAAdmDTO.setUserMenuList( cOLgnMapper.getUserMenuList() );*/
     	return cOLgnMapper.getMenuList(cOAAdmDTO);
     }
+
+	/**
+	 * CMS Root 메뉴 정보를 가져온다.
+	 */
+	public COMenuDTO getCmsRootInf(COAAdmDTO cOAAdmDTO) throws Exception
+	{
+		return cOLgnMapper.getCmsRootInf(cOAAdmDTO);
+	}
 }

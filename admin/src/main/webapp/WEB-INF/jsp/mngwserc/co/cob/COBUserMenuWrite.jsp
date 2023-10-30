@@ -9,7 +9,7 @@
 			<input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 			<div class="col-sm-6 p0">
 				<div class="mb">
-					<button type="button" class="btn btn-sm btn-inverse" id="btnRoot">최상위 생성</button>
+					<button type="button" class="btn btn-sm btn-inverse" id="btnRoot">드라이브 생성</button>
 					<button type="button" class="btn btn-sm btn-success" id="btnChild">하위 생성</button>
 					<button type="button" class="btn btn-sm btn-primary" id="btnRename">메뉴명 변경</button>
 					<button type="button" class="btn btn-sm btn-danger"  id="btnRemove">삭제</button>
@@ -38,6 +38,21 @@
 					</fieldset>
 					<fieldset>
 						<div class="form-group text-sm">
+							<label class="col-sm-2 control-label">메뉴 구분</label>
+							<div class="col-sm-10">
+								<label class="radio-inline c-radio">
+									<input type="radio" class="rboxmenuType" name="menuType" value="folder" title="메뉴 구분" />
+									<span class="ion-record"></span> 개발
+								</label>
+								<label class="radio-inline c-radio">
+									<input type="radio" class="rboxmenuType" name="menuType" value="cms" title="메뉴 구분" />
+									<span class="ion-record"></span> CMS
+								</label>
+							</div>
+						</div>
+					</fieldset>
+					<fieldset>
+						<div class="form-group text-sm">
 							<label class="col-sm-2 control-label">URL<span class="star text-danger"> *</span></label>
 							<div class="col-sm-10">
 								<div class="input-group">
@@ -50,7 +65,7 @@
 					</fieldset>
 					<fieldset>
 						<div class="form-group text-sm">
-							<label class="col-sm-2 control-label">새 창 여부<span class="star text-danger"> *</span></label>
+							<label class="col-sm-2 control-label">새 창 여부</label>
 							<div class="col-sm-10">
 								<label class="radio-inline c-radio">
 									<input type="radio" name="wnppYn" value="N" title="새 창 여부" />
@@ -65,7 +80,7 @@
 					</fieldset>
 					<fieldset id="gnbYnArea">
 						<div class="form-group text-sm">
-							<label class="col-sm-2 control-label">GNB 노출여부<span class="star text-danger"> *</span></label>
+							<label class="col-sm-2 control-label">GNB 노출여부</label>
 							<div class="col-sm-10">
 								<label class="radio-inline c-radio">
 									<input type="radio" class="notRequired" name="gnbYn" value="Y" title="GNB 노출 여부" />
@@ -80,7 +95,7 @@
 					</fieldset>
 					<fieldset>
 						<div class="form-group text-sm">
-							<label class="col-sm-2 control-label">사용자노출여부<span class="star text-danger"> *</span></label>
+							<label class="col-sm-2 control-label">노출여부</label>
 							<div class="col-sm-10">
 								<label class="radio-inline c-radio">
 									<input type="radio" name="useYn" value="Y" title="사용자 노출 여부" />
@@ -114,7 +129,7 @@
 
 					<div class="clearfix">
 						<div class="pull-right">
-							<button type="submit" class="btn btn-sm btn-success">적용</button>
+							<button type="submit" class="btn btn-sm btn-success">저장</button>
 						</div>
 					</div>
 				</div>

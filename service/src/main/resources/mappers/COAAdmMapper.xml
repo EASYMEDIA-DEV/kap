@@ -12,9 +12,11 @@
 		select /* COAAdmMapper.selectAdmList */
 			  adm_seq
 			, auth_cd
+		    , dept_cd
+			, (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) as dept_cd_nm
 			, dept_nm
 			, type_cd
-			, (select cd_nm from co_code_mst where cd_id='ADMIN_TYPE_CD' and cd=a.type_cd) as type_cd_nm
+			, (select cd_nm from co_code_mst where cd_id='ADMIN_AUTH_CD' and cd=a.auth_cd) as auth_cd_nm
 			, id
 			, name
 			, use_yn
@@ -82,13 +84,13 @@
 						and name like concat('%', #{q}, '%')
 					</when>
 					<when test="f == 3 ">
-						and dept_nm like concat('%', #{q}, '%')
+						and (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) like concat('%', #{q}, '%')
 					</when>
 					<otherwise>
 						and (
 							id like concat('%', #{q}, '%')
 							or name like concat('%', #{q}, '%')
-							or dept_nm like concat('%', #{q}, '%')
+							or (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) like concat('%', #{q}, '%')
 						)
 					</otherwise>
 				</choose>
@@ -108,7 +110,10 @@
 			   adm_seq
 			 , id
 			 , auth_cd
-			 , dept_nm
+			 , (select cd_nm from co_code_mst where cd_id='ADMIN_AUTH_CD' and cd=a.auth_cd) as auth_cd_nm
+		     , dept_cd
+			 , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) as dept_cd_nm
+			 , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) as dept_nm
 			 , type_cd
 			 , name
 			 , email
@@ -135,6 +140,7 @@
 		insert /* COAAdmMapper.insertAdm */ into co_adm_mst
 		(
 			  auth_cd
+			, dept_cd
 			, dept_nm
 			, type_cd
 			, id
@@ -156,7 +162,8 @@
 		)
 		values
 		(
-			  #{authCd}
+		  	#{authCd}
+		  	, #{deptCd}
 			, #{deptNm}
 			, 'cms'
 			, #{id}
@@ -179,16 +186,17 @@
 	</insert>
 
 	<!--
-         쿼리명 : COAAdmMapper.updateAdm
+         쿼리명 : COAAdmMapper.
          설  명 : 관리자를 수정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2022.04.08   신혜정       최초생성
     -->
 	<update id="updateAdm" parameterType="COAAdmDTO">
-		update /* COAAdmMapper.updateAdm */ co_adm_mst
+		update /* COAAdmMapper. */ co_adm_mst
 		set
 			  email = #{email}
+		  	, dept_cd = #{deptCd}
 			, dept_nm = #{deptNm}
 		<choose>
 			<when test="isAdmMng == 'Y'.toString() ">
@@ -343,10 +351,10 @@
 		(
 			  #{regId}
 			, #{regName}
-			, #{regDeptNm}
+			, #{regDeptCd}
 			, #{id}
 			, #{name}
-			, #{deptNm}
+			, #{deptCd}
 			, #{regId}
 			, #{regIp}
 			, NOW()
@@ -691,6 +699,65 @@
 				</otherwise>
 			</choose>
 		</where>
+	</select>
+
+
+
+
+
+
+
+
+
+	<!--
+         쿼리명 : insertAuthModLog
+         설  명 : 관리자 권한 변경 로그를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.10.19   김학규       최초생성
+    -->
+	<insert id="insertAuthModLog" parameterType="COAAdmDTO">
+		INSERT /* insertAuthModLog */ INTO CO_ADM_AUTH_LOG
+		( ADM_SEQ
+		, BFRE_AUTH_CD
+		, MOD_AUTH_CD
+		, REG_ID
+		, REG_IP
+		, REG_DTM
+		)
+		VALUES
+			( #{admSeq}
+			, #{bfreAuthCd}
+			, #{modAuthCd}
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+	</insert>
+
+	<!--
+         쿼리명 : getAuthLogList
+         설  명 : 관리자 권한 변경 로그를 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.10.19   김학규       최초생성
+    -->
+	<select id="getAuthLogList" parameterType="COAAdmDTO" resultType="COAAdmDTO">
+		SELECT /* getAuthLogList */
+			ADM_SEQ
+			 , BFRE_AUTH_CD
+			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADMIN_AUTH_CD' AND CD = A.BFRE_AUTH_CD) AS BFRE_AUTH_CD_NM
+			 , MOD_AUTH_CD
+			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADMIN_AUTH_CD' AND CD = A.MOD_AUTH_CD) AS MOD_AUTH_CD_NM
+			 , REG_ID
+			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+			 , REG_DTM
+		FROM
+			CO_ADM_AUTH_LOG A
+		WHERE
+			ADM_SEQ = #{detailsKey}
+		ORDER BY
+			REG_DTM DESC
 	</select>
 </mapper>
 

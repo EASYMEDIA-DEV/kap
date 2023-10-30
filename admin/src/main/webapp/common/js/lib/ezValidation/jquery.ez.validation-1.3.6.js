@@ -91,7 +91,7 @@
 				idChk : "6~12자 이내 영문, 영문&숫자 조합으로 입력하세요.",
 				passChk : "8~15자 이내 영문+특수문자+숫자 조합으로 입력하세요.",
 				passEqualChk : "비밀번호가 일치하지 않습니다.",
-				emailChk : "유효한 이메일주소가 아닙니다.",
+				emailChk : "이메일 주소를 확인해주세요.",
 				numberChk : "숫자만 입력가능합니다.",
 				lengthLimitChk : "길이가 조건에 맞지 않습니다.",
 				mobileNumChk : "휴대폰번호는 010-1234-5678 형식으로 입력되어야 합니다.",
@@ -103,7 +103,7 @@
 				nameChk : "한글, 영문만 입력하실 수 있습니다.",
 				ipChk : "IP형식이 맞지 않습니다.",
 				confirm : {
-					init : "진행하시겠습니까?"
+					init : "저장하시겠습니까?"
 				}
 			},
 			placeholder : true,
@@ -727,9 +727,9 @@
 
 					message = tagTitle + josa + message;
 
-					if(typeof tagLengthValue != "undefined"){
+					/*if(typeof tagLengthValue != "undefined"){
 						message += " (최대 " + tagLengthValue + "자까지 입력 가능합니다.)";
-					}
+					}*/
 				}
 			}
 		};

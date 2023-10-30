@@ -20,6 +20,27 @@
 					<jsp:param name="periodType" value="notSelect" />
 				</jsp:include>
 				<!--기간 검색 종료-->
+
+				<fieldset>
+					<div class="form-group text-sm">
+						<label class="col-sm-1 control-label">권한</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxAll" />
+								<span class="ion-checkmark-round"></span> 전체
+							</label>
+
+							<c:forEach var="cdList" items="${cdDtlList.ADMIN_AUTH_CD}" varStatus="status">
+								<label class="checkbox-inline c-checkbox">
+									<input type="checkbox" class="checkboxSingle" data-name="authCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.authCdList, cdList.cd)}">checked</c:if> />
+									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
+								</label>
+
+							</c:forEach>
+						</div>
+					</div>
+				</fieldset>
+
 				<fieldset>
 					<div class="form-group text-sm">
 						<label class="col-sm-1 control-label">계정상태</label>
@@ -49,7 +70,7 @@
 										<option value="">전체</option>
 										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
 										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
-										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>부서</option>
+										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>소속</option>
 									</select>
 								</div>
 								<div class="col-sm-9 pr0">
@@ -98,7 +119,8 @@
 								<th class="text-center">번호</th>
 								<th class="text-center">아이디</th>
 								<th class="text-center">이름</th>
-								<th class="text-center">부서</th>
+								<th class="text-center">소속</th>
+								<th class="text-center">권한</th>
 								<th class="text-center">계정상태</th>
 								<th class="text-center">최종접속일</th>
 							</tr>

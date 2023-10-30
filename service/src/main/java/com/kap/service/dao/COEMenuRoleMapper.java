@@ -44,7 +44,7 @@ public interface COEMenuRoleMapper {
     /**
      * 수정 메뉴 목록을 조회한다.
      */
-    public List<String> selectModMenuList(COEMenuRoleDTO pCOMenuRoleDTO) throws Exception;
+    public List<COEMenuRoleDTO> selectModMenuList(COEMenuRoleDTO pCOMenuRoleDTO) throws Exception;
 
 
 }

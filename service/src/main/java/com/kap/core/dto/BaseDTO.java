@@ -35,6 +35,8 @@ public class BaseDTO {
     //등록 이름
     private String regName;
     //등록 부서명
+    private String regDeptCd;
+    //등록 부서명
     private String regDeptNm;
     //등록 ip
     private String regIp;

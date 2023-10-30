@@ -3,7 +3,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8">
-		<title>코오롱그룹</title>
+		<title>KAP 관리자페이지</title>
 	</head>
 	<body>
 	<script>

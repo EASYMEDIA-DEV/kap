@@ -52,6 +52,10 @@
 				                        		<input type="radio" class="rboxmenuType" name="menuType" value="menu" title="메뉴 구분" />
 				                        		<span class="ion-record"></span> 사용자 메뉴 (드라이브당 한 개만 지정)
 				                      		</label>
+											<label class="radio-inline c-radio">
+												<input type="radio" class="rboxmenuType" name="menuType" value="cms" title="메뉴 구분" />
+												<span class="ion-record"></span> CMS
+											</label>
 										</div>
 									</div>
 								</fieldset>

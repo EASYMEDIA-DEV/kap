@@ -79,4 +79,8 @@ public interface COLgnMapper {
 	 * 기존 비밀번호를 삽입한다.
 	 */
 	public int insertPwdHistory(COAAdmDTO cOAAdmDTO) throws Exception;
+	/**
+	 * CMS Root 메뉴 정보를 가져온다.
+	 */
+	public COMenuDTO getCmsRootInf(COAAdmDTO cOAAdmDTO) throws Exception;
 }

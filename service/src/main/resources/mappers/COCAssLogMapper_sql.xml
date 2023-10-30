@@ -15,7 +15,9 @@
             , sys.reg_dtm
             , sys.prcs_cd
             , adm.name as reg_name
-            , adm.dept_nm
+            ,  adm. dept_cd
+            , (select d.cd_nm from co_code_mst d where d.cd_id='ADMIN_DEPT_CD' and d.cd=adm.dept_cd) as dept_cd_nm
+            /*, adm.dept_nm*/
             , (select b.cd_nm from co_code_mst b where b.cd_id='SYSTEM_LOG' and b.cd=sys.prcs_cd) as prcs_cd_nm
         from
              co_sys_log sys join co_adm_mst adm on sys.reg_id = adm.id
@@ -79,7 +81,7 @@
                         and adm.name like concat('%', #{q}, '%')
                     </when>
                     <when test="f == 3">
-                        and adm.dept_nm like concat('%', #{q}, '%')
+                        AND (SELECT D.cd_nm from co_code_mst D WHERE D.cd_id='ADMIN_DEPT_CD' AND D.cd=adm.dept_cd) LIKE concat('%', #{q}, '%')
                     </when>
                     <otherwise>
                         and (

@@ -86,6 +86,7 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
 
             // 변경 메뉴 목록 조회
             pCOMenuRoleDTO.setType("chng");
+
             info.setChngMenuList(cOEMenuRoleMapper.selectModMenuList(pCOMenuRoleDTO));
         }
 
@@ -143,7 +144,7 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(3);
-        cell.setCellValue("변경자 부서");
+        cell.setCellValue("변경자 소속");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(4);
@@ -155,7 +156,7 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(6);
-        cell.setCellValue("대상 부서");
+        cell.setCellValue("대상 소속");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(7);
@@ -218,7 +219,7 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("코오롱그룹_메뉴권한변경로그관리_", "UTF-8") + timeStamp +".xlsx");
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_메뉴권한변경로그관리_", "UTF-8") + timeStamp +".xlsx");
 
         // Excel File Output
         workbook.write(response.getOutputStream());

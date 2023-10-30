@@ -9,9 +9,19 @@
 			<input type="hidden" class="notRequired" id="mChecked" name="mChecked" value="" />
 			<input type="hidden" class="notRequired" id="mUndetermined" name="mUndetermined" value="" />
 			<input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			<input type="hidden" class="notRequired" id="authCd" name="authCd" value="${empty rtnDto.authCd ? '1' : rtnDto.authCd}">
+
 			<input type="hidden" class="notRequired" id="typeCd" name="typeCd" value="${rtnDto.typeCd }">
 			<input type="hidden" class="notRequired" id="lgnSsnId" value="${rtnData.lgnSsnId}">
+
+			<c:forEach var="cdList" items="${cdDtlList.ADMIN_ID_LIMIT}" varStatus="status">
+
+				<c:set var="limitId" value="${limitId += '&' += cdList.cdNm}"/>
+			</c:forEach>
+
+			<input type="hidden" class="notRequired" id="adminIdLimit" value="${limitId}">
+
+
+
 
 			<div class="col-sm-4 p0">
 				<div id="divCategoris" style="height:700px; overflow-y:auto;">
@@ -20,6 +30,38 @@
 			</div>
 			<div class="col-sm-8 p0">
 				<div class="p-lg">
+					<fieldset>
+						<div class="form-group text-sm">
+							<label class="col-sm-2 control-label">권한<span class="star"> *</span></label>
+							<div class="col-sm-10">
+								<%--<c:forEach var="cdList" items="${cdDtlList.ADMIN_AUTH_CD}" varStatus="status">
+									<c:if test="${rtnDto.authCd eq cdList.cd}">
+										<c:set var="authCdNm" value="${cdList.cdNm}"/>
+									</c:if>
+								</c:forEach>--%>
+
+								<select class="form-control input-sm wd-sm" name="authCd" id="authCd" title="권한" readonly="true">
+									<option value="">선택</option>
+									<c:forEach var="cdList" items="${cdDtlList.ADMIN_AUTH_CD}" varStatus="status">
+										<option value="${cdList.cd}" <c:if test="${rtnDto.authCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+									</c:forEach>
+								</select>
+
+
+								<%--<c:set var="actionVal" value="${empty rtnData.detailsKey ? 'insert' : 'update'}"/>
+								<c:if test="${actionVal eq 'insert'}">
+									<p class="form-control-static">일반관리자</p>
+									<input type="hidden" name="authCd" id="authCd" value="1" title="관리자 권한"/>
+								</c:if>
+								<c:if test="${actionVal ne 'insert'}">
+									<p class="form-control-static">${authCdNm}</p>
+									<input type="hidden" name="authCd" id="authCd" value="${rtnDto.authCd}" title="관리자 권한"/>
+								</c:if>--%>
+
+								<strong class="help-block mt-sm mb0">※ 최고 관리자는 메뉴 선택에 상관없이 모든 메뉴를 관리할 수 있습니다.</strong>
+							</div>
+						</div>
+					</fieldset>
 					<fieldset>
 						<div class="form-group text-sm">
 							<label class="col-sm-2 control-label">이름<span class="star text-danger"> *</span></label>
@@ -38,9 +80,19 @@
 					</fieldset>
 					<fieldset>
 						<div class="form-group text-sm">
-							<label class="col-sm-2 control-label">부서명<span class="star text-danger"> *</span></label>
+							<label class="col-sm-2 control-label">소속<span class="star text-danger"> *</span></label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control input-sm" id="deptNm" name="deptNm" value="${rtnDto.deptNm}" title="부서명" maxlength="20" placeholder="부서명을 입력하세요." oninput="this.value=this.value.replace(/[^ㄱ-힣a-zA-Z0-9]/gi,'');"/>
+								<%--<input type="text" class="form-control input-sm" id="deptNm" name="deptNm" value="${rtnDto.deptNm}" title="부서명" maxlength="20" placeholder="부서명을 입력하세요." oninput="this.value=this.value.replace(/[^ㄱ-힣a-zA-Z0-9]/gi,'');"/>--%>
+
+
+								<select class="form-control input-sm wd-sm" name="deptCd" title="소속">
+									<option value="">선택</option>
+									<c:forEach var="cdList" items="${cdDtlList.ADMIN_DEPT_CD}" varStatus="status">
+										<option value="${cdList.cd}" <c:if test="${rtnDto.deptCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+									</c:forEach>
+								</select>
+
+
 							</div>
 						</div>
 					</fieldset>
@@ -150,6 +202,12 @@
 					</fieldset>
 
 					<hr />
+
+					<div class="col-sm-12 p0 mt">
+						<div class="tableStyle1" id="gridArea">
+
+						</div>
+					</div>
 
 					<div class="clearfix">
 						<div class="pull-left">

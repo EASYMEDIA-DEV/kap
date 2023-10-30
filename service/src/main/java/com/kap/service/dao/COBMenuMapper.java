@@ -195,4 +195,9 @@ public interface COBMenuMapper {
 	 * 신규 메뉴 등록 시 관리자 메뉴 권한 관리 테이블에서 신규메뉴의 부모 seq 삭제
 	 */
 	public void deleteAdmMenu(COMenuDTO cOMenuDTO) throws Exception;
+
+	/**
+	 * 선택된 메뉴가 속한 최상위 드라이브 메뉴 정보
+	 */
+	public COMenuDTO getNodeDriveData(COMenuDTO cOMenuDTO) throws Exception;
 }

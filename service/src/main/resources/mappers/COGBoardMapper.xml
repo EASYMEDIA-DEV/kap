@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.COGBoardMapper">
+    <!--
+     쿼리명 : COGBoardMapper.selectBoardList
+     설  명 : 게시판 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.09.18  임서화     최초 생성
+    -->
+    <select id="selectBoardList" parameterType="COGBoardDTO" resultType="COGBoardDTO">
+        SELECT /* COGBoardMapper.selectBoardList */
+            SEQ
+            , LANG_CD
+            , TITL
+            , CNTS
+            , TYPE_CD
+            , YEAR
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'BOARD_TYPE_CD' AND CD = A.TYPE_CD) AS TYPE_NM
+            , FILE_SEQ
+            , PC_THUMB_FILE_SEQ
+            , MO_THUMB_FILE_SEQ
+            , READ_CNT
+            , POST_STRT_DTM
+            , POST_END_DTM
+            , ODTM_YN
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+            , MAIN_YN
+            , TOP_YN
+            , FAQ_TYPE
+            , (SELECT CD_NM from CO_CODE_MST WHERE CD = A.FAQ_TYPE) AS FAQ_TYPE_NM
+        FROM
+            CO_BOARD_MST A
+        WHERE 1=1
+          AND LANG_CD = #{langCd}
+          AND TYPE_CD = #{typeCd}
+          <include refid="selectBoardListwhereSql" />
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+    쿼리명 : COGBoardMapper.getBoardListCnt
+    설  명 : 게시물 목록을 갯수를 카운팅한다.
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.09.08    임서화       최초생성
+    -->
+    <select id="getBoardListTotCnt" parameterType="COGBoardDTO" resultType="java.lang.Integer">
+        SELECT /* COGCntsMapper.getBoardListCnt */
+            COUNT(*)
+        FROM
+            CO_BOARD_MST A
+        WHERE 1 = 1
+            AND LANG_CD = #{langCd}
+            AND TYPE_CD = #{typeCd}
+            <include refid="selectBoardListwhereSql" />
+    </select>
+
+    <select id="selectBoardDtl" parameterType="COGBoardDTO" resultType="COGBoardDTO">
+        SELECT /* COGBoardMapper.selectBoardDtl */
+            SEQ
+             , LANG_CD
+             , TITL
+             , CNTS
+             , TYPE_CD
+             , YEAR
+             , FILE_SEQ
+             , PC_THUMB_FILE_SEQ
+             , MO_THUMB_FILE_SEQ
+             , READ_CNT
+             , POST_STRT_DTM
+             , POST_END_DTM
+             , ODTM_YN
+             , REG_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+             , REG_IP
+             , REG_DTM
+             , MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+             , MOD_IP
+             , MOD_DTM
+             , MAIN_YN
+             , TOP_YN
+             , FAQ_TYPE
+        FROM
+            CO_BOARD_MST A
+        WHERE
+            SEQ = #{detailsKey}
+    </select>
+
+    <insert id="insertBoard" parameterType="COGBoardDTO">
+        INSERT /* COGBoardMapper.insertBoard */ INTO CO_BOARD_MST
+            (
+            SEQ
+            , LANG_CD
+            , TITL
+            , CNTS
+            , TYPE_CD
+            , YEAR
+            , FILE_SEQ
+            , PC_THUMB_FILE_SEQ
+            , MO_THUMB_FILE_SEQ
+            , READ_CNT
+            , POST_STRT_DTM
+            , POST_END_DTM
+            , ODTM_YN
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+            , MAIN_YN
+            , TOP_YN
+            , FAQ_TYPE
+            )
+            VALUES
+            (
+            #{seq}
+            , #{langCd}
+            , #{titl}
+            , #{cnts}
+            , #{typeCd}
+            , #{year}
+            , #{fileSeq}
+            , #{pcThumbFileSeq}
+            , #{moThumbFileSeq}
+            , 0
+            , #{postStrtDtm}
+            , #{postEndDtm}
+            , #{odtmYn}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            , #{mainYn}
+            , #{topYn}
+            , #{faqType}
+            )
+    </insert>
+    <!--
+    쿼리명 : COGBoardMapper.updateBoard
+    설  명 : 게시판 내용을 수정한다.
+     수정일	 수정자     수정내용
+    ==========   ======   =============
+    2023.09.08   임서화     최초생성
+	-->
+    <update id="updateBoard" parameterType="COGBoardDTO">
+        UPDATE  /*COGBoardDTO.updateBoard*/
+            CO_BOARD_MST
+        SET
+            TITL = #{titl}
+            , CNTS = #{cnts}
+            , FILE_SEQ = #{fileSeq}
+            , PC_THUMB_FILE_SEQ = #{pcThumbFileSeq}
+            , MO_THUMB_FILE_SEQ = #{moThumbFileSeq}
+            , POST_STRT_DTM = #{postStrtDtm}
+            , POST_END_DTM = #{postEndDtm}
+            , ODTM_YN = #{odtmYn}
+            , MOD_ID = #{modId}
+            , MOD_IP = #{modIp}
+            , MOD_DTM = NOW()
+            , MAIN_YN = #{mainYn}
+            , TOP_YN = #{topYn}
+            , FAQ_TYPE = #{faqType}
+        WHERE 1 = 1
+            AND SEQ = #{detailsKey}
+            AND TYPE_CD = #{typeCd}
+    </update>
+    <!--
+         쿼리명 : COGBoardMapper.deleteBoard
+         설  명 : 게시물을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.08   임서화       최초생성
+        -->
+    <delete id="deleteBoard" parameterType="COGBoardDTO">
+        DELETE /* COGBoardDTO.deleteBoard */
+        FROM
+        CO_BOARD_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    TYPE_CD = #{typeCd}
+                    AND SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    TYPE_CD = #{typeCd}
+                    AND	SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+    쿼리명 : selectBoardListwhereSql
+    설  명 : 게시판 관리 where Sql
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.10.30    구은희       최초생성
+    -->
+    <sql id="selectBoardListwhereSql">
+        <if test="strtDt != null and strtDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+
+                </when>
+            </choose>
+        </if>
+        <if test="endDt != null and endDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+            </choose>
+        </if>
+        <if test="mainYnList != null and mainYnList.size() > 0">
+            AND (
+            <foreach collection="mainYnList" item="mainYn" index="index" open="" close="" separator=" OR ">
+                MAIN_YN = #{mainYn}
+            </foreach>
+            )
+        </if>
+        <if test="faqTypeList != null and faqTypeList.size() > 0">
+            AND (
+            <foreach collection="faqTypeList" item="faqType" index="index" open="" close="" separator=" OR ">
+                FAQ_TYPE = #{faqType}
+            </foreach>
+            )
+        </if>
+        <if test="q != null and q != ''">
+            <choose>
+                <when test="f == 1">
+                    AND TITL LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 2">
+                    AND (
+                    INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <when test="f == 3">
+                    AND (
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <otherwise>
+                    AND (
+                    INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY
+        (CASE WHEN TOP_YN = 'Y' THEN 1 ELSE 2 END), REG_DTM DESC
+    </sql>
+</mapper>
+
+

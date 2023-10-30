@@ -32,11 +32,11 @@
 		and lft_val <![CDATA[>]]> (select lft_val from co_menu_mst where menu_seq = #{menuSeq})
 		and rht_val <![CDATA[<]]> (select rht_val from co_menu_mst where menu_seq = #{menuSeq})
 		/* 사용자 메뉴 관리는 가져오지 말아야 한다. */
-		<if test="isMenu != 'Y'.toString() and userMenuList != null">
+		<!--<if test="isMenu != 'Y'.toString() and userMenuList != null">
 			<foreach collection="userMenuList" item="menuList" index="index" separator=" AND " open="and (" close=")">
 				!(lft_val <![CDATA[ > ]]> #{menuList.lftVal} and rht_val <![CDATA[ < ]]> #{menuList.rhtVal})
 			</foreach>
-		</if>
+		</if>-->
 
 		/* 관리자 수정에선 로그관리 메뉴는 미노출*/
 		<if test= "isAdmUdt == 'Y'.toString()">
@@ -186,6 +186,7 @@
           수정일     수정자       수정내용
         ==========   ======    ==============
         2020.10.19   허진영       최초생성
+        2023.10.20   장두석       동일 드라이브 내에 menu 타입이 존재하는지 if 조건 추가
     -->
 	<update id="updateMenuInf" parameterType ="COMenuDTO">
 		update /* COBMenuMapper.updateMenuInf */ co_menu_mst
@@ -204,6 +205,9 @@
 		  , mod_dtm = NOW()
 		where
 			menu_seq = #{menuSeq}
+			<if test="menuType == 'menu'.toString()">
+				AND NOT EXISTS((SELECT * FROM (SELECT MENU_SEQ FROM CO_MENU_MST WHERE LFT_VAL <![CDATA[>]]> #{nodeLftVal} AND RHT_VAL <![CDATA[<]]> #{nodeRhtVal} AND MENU_TYPE = #{menuType} AND MENU_SEQ != #{menuSeq}) A))
+			</if>
 	</update>
 
 	<!--
@@ -684,4 +688,30 @@
 		from co_adm_menu_dtl
 		where menu_seq = #{parntSeq}
 	</delete>
+
+	<!--
+         쿼리명 : COBMenuMapper.getNodeDriveData
+         설  명 : 선택된 메뉴가 속한 최상위 드라이브 메뉴 정보
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.10.20   장두석       최초생성
+    -->
+	<select id="getNodeDriveData" parameterType="COMenuDTO" resultType="COMenuDTO">
+		select /*COBMenuMapper.getNodeDriveData*/
+			menu_seq
+			 ,parnt_seq
+			 ,pstn
+		     ,lft_val
+		     ,rht_val
+		     ,dpth
+		     ,menu_type
+			 ,menu_nm
+		from
+			co_menu_mst
+		where
+			lft_val <![CDATA[ < ]]> (SELECT lft_val FROM co_menu_mst WHERE menu_seq = #{menuSeq})
+			AND rht_val <![CDATA[ > ]]> (SELECT rht_val FROM co_menu_mst WHERE menu_seq = #{menuSeq})
+			AND menu_type = 'drive'
+	</select>
+
 </mapper>

@@ -29,6 +29,7 @@ import java.util.List;
  *	     since		  author	            description
  *    ==========    ==========    ==============================
  * 	  2020.10.19	  허진영	             최초 생성
+ * 	  2023.10.13	  임서화		    cms url을 관리자와 사용자 분리
  * </pre>
  */
 @Slf4j
@@ -67,7 +68,6 @@ public class COBMenuServiceImpl implements COBMenuService {
 		cOMenuDTO.setDpth(cOBMenuMapper.getDpth(cOMenuDTO));
 		cOBMenuMapper.setLftVal(cOMenuDTO);
 		cOBMenuMapper.setRhtVal(cOMenuDTO);
-
 		// 신규 메뉴 등록 시 관리자 메뉴 권한 관리 테이블에서 신규메뉴의 부모 seq 삭제
 		cOBMenuMapper.deleteAdmMenu(cOMenuDTO);
 
@@ -89,7 +89,20 @@ public class COBMenuServiceImpl implements COBMenuService {
 	 */
 	public int updateMenuInf(COMenuDTO cOMenuDTO) throws Exception
 	{
-		cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
+		String menuType = cOMenuDTO.getMenuType();
+
+		if(!menuType.equals("cms")){
+			cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
+		}else{
+			if(!"".equals(cOMenuDTO.getUserUrl())){
+				cOMenuDTO.setUserUrl(cOMenuDTO.getUserUrl()+"/content.do");
+			}
+		}
+
+		COMenuDTO parentDrive = cOBMenuMapper.getNodeDriveData(cOMenuDTO);
+		cOMenuDTO.setNodeLftVal(parentDrive.getLftVal());
+		cOMenuDTO.setNodeRhtVal(parentDrive.getRhtVal());
+
 		return cOBMenuMapper.updateMenuInf(cOMenuDTO);
 	}
 
@@ -99,7 +112,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 	public int updateMenuPstn(COMenuDTO cOMenuDTO) throws Exception
 	{
 		boolean sqlFlag1 = false, sqlFlag2 = false, sqlFlag3 = false, sqlFlag4 = false, sqlFlag5 = false, sqlFlag6 = false;
-		
+
 		String node_ids = "";
 
 		int node_parntSeq = 0;
@@ -294,40 +307,40 @@ public class COBMenuServiceImpl implements COBMenuService {
 				sqlMenuDto4.setIdif( idif );
 				sqlMenuDto4.setLdif( ldif );
 				sqlMenuDto4.setNodeIds( node_ids.split(",") );
-				
+
 				sqlFlag6 = true;
 			}
 		}
-		
+
 		if (sqlFlag1)
 		{
 			actCnt += cOBMenuMapper.setMenuMove1(sqlMenuDto1);
 			actCnt += cOBMenuMapper.setMenuMove2(sqlMenuDto1);
 			actCnt += cOBMenuMapper.setMenuMove3(sqlMenuDto1);
 		}
-		
+
 		if (sqlFlag2)
 		{
 			actCnt += cOBMenuMapper.setMenuMove4(sqlMenuDto2);
 		}
-		
+
 		if (sqlFlag3)
 		{
 			actCnt += cOBMenuMapper.setMenuMove5(sqlMenuDto2);
 		}
-		
+
 		if (sqlFlag4)
 		{
 			actCnt += cOBMenuMapper.setMenuMove6(sqlMenuDto3);
 			actCnt += cOBMenuMapper.setMenuMove7(sqlMenuDto3);
 		}
-		
+
 		if (sqlFlag5)
 		{
 			actCnt += cOBMenuMapper.setMenuMove8(sqlMenuDto3);
 			actCnt += cOBMenuMapper.setMenuMove9(sqlMenuDto3);
 		}
-		
+
 		if (sqlFlag6)
 		{
 			actCnt += cOBMenuMapper.setMenuMove10(sqlMenuDto4);
@@ -343,13 +356,13 @@ public class COBMenuServiceImpl implements COBMenuService {
 	public int deleteMenu(COMenuDTO cOMenuDTO) throws Exception
 	{
 		COMenuDTO infoDto = cOBMenuMapper.selectMenuDtl(cOMenuDTO);
-		
+
 		int actCnt = 0;
 
 		if (infoDto != null)
 		{
 			actCnt = cOBMenuMapper.deleteMenu(infoDto);
-			
+
 			cOBMenuMapper.setDeleteUpdateLftVal(infoDto);
 			cOBMenuMapper.setDeleteUpdateRhtVal(infoDto);
 			cOBMenuMapper.setDeleteUpdatePstn(infoDto);
@@ -400,7 +413,8 @@ public class COBMenuServiceImpl implements COBMenuService {
 				tmpObject.put("data", XssPreventer.unescape(menuNm));
 				tmpObject.put("i", i);
 
-				if (menuDto.getChildcnt() > 0  && !"menu".equals(menuDto.getMenuType()))
+//				if (menuDto.getChildcnt() > 0  && !"menu".equals(menuDto.getMenuType()))
+				if (menuDto.getChildcnt() > 0)
 				{
 					tmpObject.put("state", "open");
 

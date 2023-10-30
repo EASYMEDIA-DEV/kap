@@ -48,7 +48,7 @@
 									<option value="">전체</option>
 									<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
 									<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
-									<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>부서</option>
+									<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>소속</option>
 								</select>
 							</div>
 							<div class="col-sm-9 pr0">
@@ -89,7 +89,7 @@
 						<th>번호</th>
 						<th>아이디</th>
 						<th>이름</th>
-						<th>부서</th>
+						<th>소속</th>
 						<th>메뉴</th>
 						<th>처리구분</th>
 						<th>사유</th>

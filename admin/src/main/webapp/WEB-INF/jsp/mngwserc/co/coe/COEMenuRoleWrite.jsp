@@ -61,7 +61,7 @@
                             <td>${rtnData.trgtAdmNm}</td>
                         </tr>
                         <tr>
-                            <th scope="row" class="bg-gray-lighter">부서</th>
+                            <th scope="row" class="bg-gray-lighter">소속</th>
                             <td>${rtnData.trgtAdmDeptNm}</td>
                         </tr>
                         <tr>
@@ -69,7 +69,7 @@
                             <td>
                                 <div <c:if test="${fn:length(rtnData.bfreMenuList) > 10}">style="height: 200px; overflow-y: auto"</c:if>>
                                     <c:forEach var="list" items="${rtnData.bfreMenuList}">
-                                        ${list} <br/>
+                                        ${list.menuNm} <br/>
                                     </c:forEach>
                                 </div>
                             </td>
@@ -79,7 +79,20 @@
                             <td>
                                 <div <c:if test="${fn:length(rtnData.chngMenuList) > 10}">style="height: 200px; overflow-y: auto"</c:if>>
                                     <c:forEach var="list" items="${rtnData.chngMenuList}">
-                                        ${list} <br/>
+                                        <!-- Y : 삭제, N:추가-->
+                                        <c:set var="delYn" value=""/>
+                                        <c:if test="${list.delYn eq 'Y'}">
+                                            <c:set var="delYn" value="삭제"/>
+                                            <c:set var="trgtClass" value="text-danger text-bold" />
+                                        </c:if>
+                                        <c:if test="${list.delYn eq 'N'}">
+                                            <c:set var="delYn" value="추가"/>
+                                            <c:set var="trgtClass" value="text-primary text-bold" />
+                                        </c:if>
+                                        <p class="form-control-static ${trgtClass}">
+                                                ${list.menuNm} (${delYn})<br/>
+                                        </p>
+
                                     </c:forEach>
                                 </div>
                             </td>

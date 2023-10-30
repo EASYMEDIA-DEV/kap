@@ -117,7 +117,7 @@ public class CODSysLogServiceImpl  implements CODSysLogService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(3);
-        cell.setCellValue("부서");
+        cell.setCellValue("소속");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(4);
@@ -162,7 +162,8 @@ public class CODSysLogServiceImpl  implements CODSysLogService {
 
             //부서
             cell = row.createCell(3);
-            cell.setCellValue(list.get(i).getDeptNm());
+            cell.setCellValue(list.get(i).getDeptCdNm());
+            /*cell.setCellValue(list.get(i).getDeptNm());*/
             cell.setCellStyle(style_body);
 
             //메뉴
@@ -201,7 +202,7 @@ public class CODSysLogServiceImpl  implements CODSysLogService {
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("코오롱그룹_이용로그관리_", "UTF-8") + timeStamp +".xlsx");
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_이용로그관리_", "UTF-8") + timeStamp +".xlsx");
 
         // Excel File Output
         workbook.write(response.getOutputStream());
