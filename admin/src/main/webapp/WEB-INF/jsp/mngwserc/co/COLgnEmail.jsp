@@ -3,7 +3,9 @@
 <html lang="en">
   	<head>
 		<spring:eval var="siteName" expression="@environment.getProperty('app.site.name')" />
-		<spring:eval var="siteProfile" expression="@environment.getProperty('spring.config.activate.on-profile')" />
+		<%--<spring:eval var="siteProfile" expression="@environment.getProperty('spring.config.activate.on-profile')" />--%>
+		<spring:eval var="siteProfile" expression="@environment.getProperty('server-status')" />
+
     	<meta charset="utf-8" />
     	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     	<meta http-equiv="x-ua-compatible" content="IE=edge" />
