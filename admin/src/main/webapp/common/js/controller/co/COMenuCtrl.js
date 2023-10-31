@@ -218,6 +218,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                             var rtnData = data.rtnData;
                             if (typeof rtnData != "undefined") {
                                 var menuType = rtnData.menuType;
+                                var userUrl = rtnData.userUrl;
 
                                 jQuery("#menuSeq").val(rtnData.menuSeq);
                                 jQuery("#pMenuSeq").text(rtnData.menuSeq);
@@ -231,7 +232,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                                     jQuery("#userUrl").val(rtnData.userUrl.replace(replaceStr, ""));
                                     jQuery("#spanSuffix").text(replaceStr);*/
 
-                                    jQuery("#userUrl").val(rtnData.userUrl.replace("/content.do", ""));
+                                    jQuery("#userUrl").val(userUrl.substring(0, userUrl.replace("/content.do", "").lastIndexOf("/")));
                                     jQuery("#spanSuffix").text("/content.do")
                                 }else {
                                     jQuery("#spanSuffix").text("");
