@@ -282,7 +282,6 @@ public class COLgnController {
 				COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
 
 				if(serverStatus.equals("dev") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
-					System.out.println("@@탄다");
 					//이메일 발송
 					COMailDTO cOMailDTO = new COMailDTO();
 					cOMailDTO.setSubject("["+siteName+"] 인증번호 안내");
@@ -301,7 +300,7 @@ public class COLgnController {
 					//인증요청일시
 					String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
 					cOMailDTO.setField2(field2);
-					cOMailService.sendMail(cOMailDTO, "COAAdmLgnEmail.html");
+//					cOMailService.sendMail(cOMailDTO, "COAAdmLgnEmail.html");
 
 
 					RequestContextHolder.getRequestAttributes().setAttribute("tmpEmailAuthNum", authNum, RequestAttributes.SCOPE_SESSION);
