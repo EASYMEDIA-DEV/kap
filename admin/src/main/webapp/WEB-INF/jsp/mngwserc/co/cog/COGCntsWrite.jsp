@@ -63,7 +63,7 @@
                         <tbody>
                             <tr>
                                 <th>최초 작성자</th>
-                                <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
+                                <td>${ rtnDto.regName }${ rtnDto.regId }</td>
                                 <th>최초 작성일</th>
                                 <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                             </tr>
@@ -72,7 +72,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
-                                            ${ rtnDto.modName }(${ rtnDto.modId })
+                                            ${ rtnDto.modName }${ rtnDto.modId }
                                         </c:when>
                                         <c:otherwise>-</c:otherwise>
                                     </c:choose>
