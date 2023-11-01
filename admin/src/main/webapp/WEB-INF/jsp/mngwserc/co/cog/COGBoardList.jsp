@@ -29,11 +29,13 @@
                                 <input type="checkbox" class="checkboxAll" />
                                 <span class="ion-checkmark-round"></span> 전체
                             </label>
-                            <c:forEach var="cdList" items="${cdDtlList.FAQ_TYPE_CD}" varStatus="status">
-                                <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="faqTypeList" value="${cdList.cd}" />
-                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
-                                </label>
+                            <c:forEach var="cdList" items="${cdDtlList.BOARD_TYPE_CD}" varStatus="status">
+                                <c:if test="${fn:contains(cdList, 'FAQ0')}">
+                                    <label class="checkbox-inline c-checkbox">
+                                        <input type="checkbox" class="checkboxSingle" data-name="faqTypeList" value="${cdList.cd}" />
+                                        <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                    </label>
+                                </c:if>
                             </c:forEach>
                         </div>
                     </div>

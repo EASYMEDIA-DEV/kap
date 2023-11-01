@@ -362,8 +362,8 @@
                 <choose>
                     <when test="srchDate == 1">
                         <if test="dStrDt != null and dStrDt != ''.toString() ">
-                            AND reg_dtm <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
-                            AND reg_dtm <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                            AND REG_DTM <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
+                            AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                         </if>
                     </when>
                     <when test="srchDate == 2">

@@ -40,7 +40,7 @@
 									</c:if>
 								</c:forEach>--%>
 
-								<select class="form-control input-sm wd-sm" name="authCd" id="authCd" title="권한" readonly="true">
+								<select class="form-control input-sm wd-sm" name="authCd" id="authCd" title="권한">
 									<option value="">선택</option>
 									<c:forEach var="cdList" items="${cdDtlList.ADMIN_AUTH_CD}" varStatus="status">
 										<option value="${cdList.cd}" <c:if test="${rtnDto.authCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>

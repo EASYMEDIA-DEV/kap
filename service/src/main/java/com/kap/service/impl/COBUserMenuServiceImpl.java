@@ -96,7 +96,7 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 		int trgtLen = cOMenuDTO.getUserUrl().length() - 1;
 
 		if (userUrl.lastIndexOf("/") == trgtLen) {
-			userUrl = userUrl.substring(0, trgtLen -1);
+			userUrl = userUrl.substring(0, trgtLen);
 		}
 //		if(menuType.equals("cms")){
 //			cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
@@ -106,7 +106,8 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 					cOMenuDTO.setUserUrl(COStringUtil.nullConvert(userUrl + "/" + cOMenuDTO.getMenuSeq() + "/content.do"));
 				}
 				else {
-					cOMenuDTO.setUserUrl(userUrl+"/content.do");
+//					cOMenuDTO.setUserUrl(userUrl+"/content.do");
+					cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
 				}
 			}
 //		}
