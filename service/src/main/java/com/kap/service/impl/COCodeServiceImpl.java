@@ -56,4 +56,30 @@ public class COCodeServiceImpl implements COCodeService {
     	}
     	return rtnMap;
     }
+
+	/**
+	 * 공통코드를 조회한다.(뎁스선택)
+	 */
+	public HashMap<String, List<COCodeDTO>> getCmmCodeBindAll(ArrayList<String> cdIdList , String depth) throws Exception
+	{
+		HashMap codeMap = new HashMap();
+		codeMap.put("cdIdList",cdIdList);
+		codeMap.put("depth",depth);
+		List<COCodeDTO> codeList = cOCodeMapper.getCdIdOneList(codeMap);
+		COCodeDTO COCodeDTOdtl = null;
+		HashMap<String, List<COCodeDTO>> rtnMap = new HashMap<String, List<COCodeDTO>>();
+		if (codeList != null && codeList.size() > 0)
+		{
+			for (int i = 0, size = codeList.size(); i < size; i++)
+			{
+				COCodeDTOdtl = (COCodeDTO) codeList.get(i);
+				if (rtnMap.get(COCodeDTOdtl.getCdId()) == null)
+				{
+					rtnMap.put(COCodeDTOdtl.getCdId(), new ArrayList<COCodeDTO>());
+				}
+				rtnMap.get(COCodeDTOdtl.getCdId()).add(COCodeDTOdtl);
+			}
+		}
+		return rtnMap;
+	}
 }

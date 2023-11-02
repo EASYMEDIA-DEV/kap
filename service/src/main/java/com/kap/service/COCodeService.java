@@ -28,4 +28,10 @@ public interface COCodeService {
      * 공통코드를 조회한다.
      */
     public HashMap<String, List<COCodeDTO>> getCmmCodeBindAll(ArrayList<String> cdDtlList) throws Exception;
+
+    /**
+     * 공통코드를 조회한다.(뎁스선택)
+     */
+    public HashMap<String, List<COCodeDTO>> getCmmCodeBindAll(ArrayList<String> cdDtlList , String depth) throws Exception;
+
 }
