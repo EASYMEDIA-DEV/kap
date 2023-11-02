@@ -743,7 +743,7 @@
         2023.10.19   김학규       최초생성
     -->
 	<select id="getAuthLogList" parameterType="COAAdmDTO" resultType="COAAdmDTO">
-		SELECT /* getAuthLogList */
+		SELECT /* COAAdmMapper.getAuthLogList */
 			ADM_SEQ
 			 , BFRE_AUTH_CD
 			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADMIN_AUTH_CD' AND CD = A.BFRE_AUTH_CD) AS BFRE_AUTH_CD_NM
@@ -758,7 +758,28 @@
 			ADM_SEQ = #{detailsKey}
 		ORDER BY
 			REG_DTM DESC
+
+			limit #{firstIndex}, #{recordCountPerPage}
 	</select>
+
+	<!--
+		쿼리명 : getAuthLogListCnt
+		설  명 : 관리자 권한 변경 로그를 가져온다.
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.02    김학규       최초생성
+    -->
+	<select id="getAuthLogListCnt" parameterType="COAAdmDTO" resultType="java.lang.Integer">
+		select /* COAAdmMapper.getAuthLogList */
+		count(*)
+		FROM
+			CO_ADM_AUTH_LOG A
+		WHERE
+			ADM_SEQ = #{detailsKey}
+	</select>
+
+
+
 </mapper>
 
 

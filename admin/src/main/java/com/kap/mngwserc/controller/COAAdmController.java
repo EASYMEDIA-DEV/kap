@@ -107,6 +107,27 @@ public class COAAdmController {
     }
 
     /**
+     * 관리자 권한 변경 로그를 가져온다.
+     */
+    @PostMapping(value="/co/coa/log-list.ajax")
+    public String getAuthLogList(COAAdmDTO pCOAAdmDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", cOAAdmService.getAuthLogList(pCOAAdmDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/co/coa/COAAdmAuthListAjax";
+    }
+
+    /**
      * 관리자 목록 엑셀다운로드
      */
     @GetMapping(value = "/co/coa/excel-down")
@@ -237,7 +258,7 @@ public class COAAdmController {
     /**
      * 관리자 권한 변경 로그를 가져온다.
      */
-    @GetMapping(value="/co/coa/log-list.ajax")
+    /*@GetMapping(value="/co/coa/log-list.ajax")
     public String getAuthLogList(COAAdmDTO pCOAAdmDTO, ModelMap modelMap) throws Exception
     {
         try
@@ -256,9 +277,7 @@ public class COAAdmController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
-    }
-
-
+    }*/
 
 
 

@@ -531,8 +531,23 @@ public class COAAdmServiceImpl implements COAAdmService {
 	/**
 	 * 관리자 권한 변경 로그를 가져온다.
 	 */
-	public List<COAAdmDTO> getAuthLogList(COAAdmDTO pCOAAdmDTO) throws Exception{
-		return cOAAdmMapper.getAuthLogList(pCOAAdmDTO);
+	public COAAdmDTO getAuthLogList(COAAdmDTO pCOAAdmDTO) throws Exception{
+
+		COPaginationUtil page = new COPaginationUtil();
+
+		page.setCurrentPageNo(pCOAAdmDTO.getPageIndex());
+		page.setRecordCountPerPage(pCOAAdmDTO.getListRowSize());
+
+		page.setPageSize(pCOAAdmDTO.getPageRowSize());
+
+		pCOAAdmDTO.setFirstIndex( page.getFirstRecordIndex() );
+		pCOAAdmDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+		pCOAAdmDTO.setList( cOAAdmMapper.getAuthLogList(pCOAAdmDTO) );
+		pCOAAdmDTO.setTotalCount( cOAAdmMapper.getAuthLogListCnt(pCOAAdmDTO) );
+
+
+		return pCOAAdmDTO;
 	}
 
 }

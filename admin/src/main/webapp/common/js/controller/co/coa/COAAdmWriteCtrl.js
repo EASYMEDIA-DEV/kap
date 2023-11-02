@@ -13,6 +13,29 @@ define(["ezCtrl", "ezVald", "controller/co/COMenuCtrl"], function(ezCtrl, ezVald
 	// form Object
 	var $formObj = jQuery("#frmData");
 
+	var search = function (page){
+		//data로 치환해주어야한다.
+		//cmmCtrl.setFormData($formObj);
+
+		if(page != undefined){
+			$formObj.find("#pageIndex").val(page);
+		}
+
+		cmmCtrl.listFrmAjax(function(respObj) {
+			//CALLBACK 처리
+			ctrl.obj.find("#listContainer").html(respObj);
+			//전체 갯수
+			var totCnt = $(respObj).eq(0).data("totalCount");
+			//총 건수
+			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+			//페이징 처리
+			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
+		}, "./log-list.ajax", $formObj, "POST", "html");
+
+
+	}
+
+
 	// grid Object
 	var $gridObj = jQuery("#gridArea");
 
@@ -130,6 +153,19 @@ define(["ezCtrl", "ezVald", "controller/co/COMenuCtrl"], function(ezCtrl, ezVald
 		},
 		classname : {
 			// do something...
+
+			//페이징 처리
+			pageSet : {
+				event : {
+					click : function() {
+						//페이징 이동
+						if( $(this).attr("value") != "null" ){
+							$formObj.find("input[name=pageIndex]").val($(this).attr("value"));
+							search();
+						}
+					}
+				}
+			}
 		},
 		immediately : function(){
 			menuCtrl.jstreeInfo.types.types.folder.start_drag = false;
@@ -147,6 +183,8 @@ define(["ezCtrl", "ezVald", "controller/co/COMenuCtrl"], function(ezCtrl, ezVald
 				idLimitChk();
 			});
 
+			// 권한 변경목록 호출
+			search(1);
 
 
 			// 유효성 검사
@@ -230,80 +268,6 @@ define(["ezCtrl", "ezVald", "controller/co/COMenuCtrl"], function(ezCtrl, ezVald
 					$("#divCategoris").find(".jstree-checkbox").prop("disabled", true);
 				}, 100);
 			}
-
-
-			// 그리드 설정
-			var dataSource = new kendo.data.DataSource({
-				transport : {
-					read : {
-						url : "./log-list.ajax",
-						dataType : "json",
-					},
-					parameterMap : function(options, operation){
-						return [{ name : "detailsKey", value : jQuery("#detailsKey").val() }];
-					}
-				},
-				batch : true,										// true : 쿼리를 한 줄로, false : row 단위로
-				page : cmmCtrl.nvl($formObj.data("pageIndex"), 1), 	// 페이지 번호
-				pageSize : cmmCtrl.gridRecordCount(),				// 페이지 사이즈
-				serverPaging : false,								// 서버 사이드 페이징 활성화
-				serverSorting : false,								// 서버 사이드 정렬 활성화
-				schema : {
-					data : function(response) {
-						if (response.rtnList !== undefined)
-						{
-							console.log( response.rtnList);
-							return response.rtnList;
-						}
-						else
-						{
-							return response;
-						}
-					},
-					total : function(response) {
-						if (response.rtnList !== undefined)
-						{
-							return response.rtnList.length;
-						}
-						else
-						{
-							return 0;
-						}
-					}
-				},
-				requestStart : function(e){
-					cmmCtrl.gridRequestStart($gridObj);
-				},
-				requestEnd : function(e){
-					cmmCtrl.gridRequestEnd($gridObj);
-				},
-				error : function(e){
-					cmmCtrl.errorAjax(e.xhr);
-				}
-			});
-
-			$gridObj.kendoGrid({
-				dataSource : dataSource,
-				editable : false,
-				resizable : true,										// 컬럼 폭 조정
-				reorderable : true,										// 컬럼 헤더 이동
-				sortable : true,										// 데이터 정렬
-				height : "260px",										// 그리드 높이값
-				pageable : cmmCtrl.gridPagingObject(),
-				noRecords : cmmCtrl.gridNoDataMessage(),
-				columns : [{
-					field : "bfrAuthCdNm", title : "이전 권한", width : "200px", sortable : true, template : function(data){
-						return data.bfreAuthCd == "new" ? "최초등록" : data.bfreAuthCdNm;
-					}
-				}, {
-					field : "modAuthCdNm", title : "변경 권한", width : "200px", sortable : true
-				}, {
-					field : "regDtm", title : "변경일 / 변경자", width : "300px", sortable : true, template : function(data){
-
-						return data.regDtm  + " / " + data.regName + "(" + data.regId + ")";
-					}
-				}]
-			});
 
 
 		}//끝
