@@ -142,6 +142,12 @@ public interface COAAdmMapper {
 	 */
 	public List<COAAdmDTO> getAuthLogList(COAAdmDTO pCOAAdmDTO) throws Exception;
 
+
+	/**
+	 * 관리자 권한 변경 로그 갯수 조회
+	 */
+	public int getAuthLogListCnt(COAAdmDTO pCOAAdmDTO) throws Exception;
+
 	/**
 	 * 관리자 권한 변경 로그를 등록한다.
 	 */
