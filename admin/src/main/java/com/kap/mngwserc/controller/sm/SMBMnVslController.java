@@ -30,8 +30,8 @@ public class SMBMnVslController {
             sMBMainVslDTO.setDvcCd(gubun);
             sMBMainVslDTO.setLangCd(langCd);
             modelMap.addAttribute("langCd", langCd);
+            modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslList(sMBMainVslDTO));
             modelMap.addAttribute("gubun", gubun);
-            modelMap.addAttribute("rtnData", sMBMainVslDTO);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -68,6 +68,9 @@ public class SMBMnVslController {
     public String getMnVslWritePage(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("gubun") String gubun, @PathVariable("langCd") String langCd) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            sMBMainVslDTO.setDvcCd(gubun);
+            modelMap.addAttribute("gubun", sMBMainVslDTO.getDvcCd());
+
             if (!"".equals(sMBMainVslDTO.getDetailsKey()) && sMBMainVslDTO.getDetailsKey() != null) {
                 modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslDtl(sMBMainVslDTO));
             }

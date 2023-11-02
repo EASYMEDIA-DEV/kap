@@ -17,12 +17,13 @@
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="게시기간" />
-                <jsp:param name="periodType" value="notSelect" />
                 <jsp:param name="useOdtmYn" value="Y" />
+                <jsp:param name="startId" value="dStrDt" />
+                <jsp:param name="endId" value="dEndDt" />
             </jsp:include>
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="등록/수정기간" />
-                <jsp:param name="periodType" value="smc" />
+                <jsp:param name="srchOption" value="등록일,수정기간" />
             </jsp:include>
             <!--기간 검색 종료-->
             <fieldset>
@@ -110,22 +111,22 @@
                 <table class="table table-hover table-striped" >
                     <thead>
                     <tr>
-                        <th>
+                        <th class="text-center">
                             <label class="checkbox-inline c-checkbox">
                                 <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
                                 <span class="ion-checkmark-round"></span>
                             </label>
                         </th>
-                        <th>번호</th>
-                        <th>구분</th>
-                        <th>제목</th>
-                        <th>게시기간</th>
-                        <th>최초 등록자</th>
-                        <th>최초 등록일시</th>
-                        <th>최종 수정자</th>
-                        <th>최종 수정일시</th>
-                        <th>노출여부</th>
-                        <th>노출순서</th>
+                        <th class="text-center">번호</th>
+                        <th class="text-center">구분</th>
+                        <th class="text-center">제목</th>
+                        <th class="text-center">게시기간</th>
+                        <th class="text-center">최초 등록자</th>
+                        <th class="text-center">최초 등록일시</th>
+                        <th class="text-center">최종 수정자</th>
+                        <th class="text-center">최종 수정일시</th>
+                        <th class="text-center">노출여부</th>
+                        <th class="text-center">노출순서</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

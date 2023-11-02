@@ -48,6 +48,13 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
+            listRowSize : {
+                event : {
+                    change : function(){
+                        search(1);
+                    }
+                }
+            },
             btnSort : {
                 event : {
                     click : function () {
@@ -104,13 +111,27 @@ define(["ezCtrl"], function(ezCtrl) {
             },
             odtmYn : {
                 event : {
-                    click : function(){
-                        var odtmYn = $("#odtmYn").val();
-                        if(odtmYn == "Y"){
-                            $("#odtmYn").val("N");
-                        }else if(odtmYn == "N"){
-                            $("#odtmYn").val("Y");
+                    change : function(){
+                        var trgtObj = jQuery(this).closest("fieldset");
+
+                        if (jQuery(this).is(":checked"))
+                        {
+                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").addClass("notRequired").prop("disabled", true);
+                            jQuery(".input-group").find("input").prop("disabled", true).val("");
+                            jQuery(".input-group").siblings("select").prop("disabled", true).find("option:eq(0)").prop("selected", true);
                         }
+                        else
+                        {
+                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").removeClass("notRequired").prop("disabled", false);
+                            jQuery(".input-group").find("input").prop("disabled", false);
+                            jQuery(".input-group").siblings("select").prop("disabled", false);
+                        }
+
+                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("setOptions", { /* maxDate : false */ });
+                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("reset").val("");
+
+                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("setOptions", { minDate : false });
+                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("reset").val("");
                     }
                 }
             }
@@ -120,10 +141,8 @@ define(["ezCtrl"], function(ezCtrl) {
             pageSet : {
                 event : {
                     click : function() {
-                        //페이징 이동
                         if( $(this).attr("value") != "null" ){
-                            $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
-                            search();
+                            search($(this).attr("value"));
                         }
                     }
                 }
@@ -153,7 +172,8 @@ define(["ezCtrl"], function(ezCtrl) {
         immediately : function() {
             // 리스트 조회
             cmmCtrl.setFormData($formObj);
-            search();
+
+            search($formObj.find("input[name=pageIndex]").val());
         }
     };
 

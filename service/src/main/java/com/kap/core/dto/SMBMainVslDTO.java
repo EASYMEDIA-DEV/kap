@@ -47,11 +47,11 @@ public class SMBMainVslDTO extends BaseDTO {
     private String dEndDt;
 
     // 게시 시작 일시
-    private String postStrtDtm;
+    private String ptupStrtDt;
     // url
     private String linkUrl;
     // 게시 종료 일시
-    private String postEndDtm;
+    private String ptupEndDt;
     // 상시 여부
     private String odtmYn;
     // 메인 카피

@@ -19,34 +19,88 @@
                 </c:when>
             </c:choose>
             <fieldset>
-                <div class="form-group text-sm">
+                <div class="form-group form-inline">
                     <label class="col-sm-1 control-label">게시기간<span class="star"> *</span></label>
-                    <div class="col-sm-7">
-                        <div class="form-inline">
-                            <div class="input-group form-date-group mr-sm">
-                                <!--class명을 datetimepicker_strtDt -->
-                                <input type="text" class="form-control input-sm datetimepicker_strtDtm <c:if test="${rtnDto.odtmYn eq 'Y'}">notRequired</c:if>" name="strtDtm" value="${ kl:convertDate(rtnDto.strtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', null) }" title="시작일" readonly="readonly" <c:if test="${rtnDto.odtmYn eq 'Y'}">disabled</c:if> />
-                                <span class="input-group-btn" style="z-index:0;">
-                                <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
-                                    <em class="ion-calendar"></em>
-                                </button>
-                            </span>
-                                <span class="input-group-addon bg-white b0">~</span>
-                                <!--class명을 datetimepicker_endDt -->
-                                <input type="text" class="form-control input-sm datetimepicker_endDtm <c:if test="${rtnDto.odtmYn eq 'Y'}">notRequired</c:if>" name="endDtm" value="${ kl:convertDate(rtnDto.endDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', null) }" title="종료일" readonly="readonly" <c:if test="${rtnDto.odtmYn eq 'Y'}">disabled</c:if> />
-                                <span class="input-group-btn" style="z-index:0;">
-                                <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
-                                    <em class="ion-calendar"></em>
-                                </button>
-                            </span>
-                            </div>
+                    <div class="col-sm-9 ">
+                        <div class="input-group col-md-2" style="z-index:0;">
+                            <input type="text" class="form-control datetimepicker_strtDt ${kl:decode(rtnDto.odtmYn, 'Y', 'notRequired', '')}" id="strtDtm" name="strtDtm" value="${kl:convertDate(rtnDto.strtDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd', '')}" ${kl:decode(rtnDto.odtmYn, 'Y', 'disabled', '')} readonly="readonly" title="시작일" />
+                            <span class="input-group-btn" style="z-index:0;">
+					<button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+						<em class="ion-calendar"></em>
+					</button>
+				</span>
                         </div>
-                    </div>
-                    <div class="form-group" style="padding-bottom:7px">
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="${rtnDto.odtmYn}" title="상시여부" <c:if test="${rtnDto.odtmYn eq 'Y'}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> 상시
-                        </label>
+                        <select class="form-control" id="ptupStrtHh" name="ptupStrtHh" title="시작일(시)">
+                            <c:set var="ptupStrtHh" value="${kl:convertDate(rtnDto.strtDtm, 'yyyy-MM-dd HH:mm', 'HH', '')}" />
+                            <c:forEach var="strtHh" begin="0" end="23" step="1">
+                                <c:choose>
+                                    <c:when test="${strtHh lt 10}">
+                                        <option <c:if test="${ptupStrtHh eq strtHh}">selected</c:if>>0${strtHh}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option <c:if test="${ptupStrtHh eq strtHh}">selected</c:if>>${strtHh}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </select>
+                        &nbsp;시&nbsp;
+                        <select class="form-control" id="ptupStrtMi" name="ptupStrtMi" title="시작일(분)">
+                            <c:set var="ptupStrtMi" value="${kl:convertDate(rtnDto.strtDtm, 'yyyy-MM-dd HH:mm', 'mm', '')}" />
+                            <c:forEach var="strtMi" begin="0" end="50" step="10">
+                                <c:choose>
+                                    <c:when test="${strtMi lt 10}">
+                                        <option <c:if test="${ptupStrtMi eq strtMi}">selected</c:if>>0${strtMi}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option <c:if test="${ptupStrtMi eq strtMi}">selected</c:if>>${strtMi}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </select>
+                        &nbsp;분&nbsp;
+                        &nbsp;~&nbsp;
+                        <div class="input-group col-md-2" style="z-index:0;">
+                            <input type="text" class="form-control datetimepicker_endDt ${kl:decode(rtnDto.odtmYn, 'Y', 'notRequired', '')}" id="endDtm" name="endDtm" value="${kl:convertDate(rtnDto.endDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd', '')}" ${kl:decode(rtnDto.odtmYn, 'Y', 'disabled', '')} readonly="readonly" title="종료일" />
+                            <span class="input-group-btn" style="z-index:0;">
+					<button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+						<em class="ion-calendar"></em>
+					</button>
+				</span>
+                        </div>
+                        <select class="form-control" id="ptupEndHh" name="ptupEndHh" title="종료일(시)">
+                            <c:set var="ptupEndHh" value="${kl:convertDate(rtnDto.endDtm, 'yyyy-MM-dd HH:mm', 'HH', '')}" />
+                            <c:forEach var="endHh" begin="0" end="23" step="1">
+                                <c:choose>
+                                    <c:when test="${endHh lt 10}">
+                                        <option <c:if test="${ptupEndHh eq endHh}">selected</c:if>>0${endHh}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option <c:if test="${ptupEndHh eq endHh}">selected</c:if>>${endHh}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </select>
+                        &nbsp;시&nbsp;
+                        <select class="form-control" id="ptupEndMi" name="ptupEndMi" title="종료일(분)">
+                            <c:set var="ptupEndMi" value="${kl:convertDate(rtnDto.endDtm, 'yyyy-MM-dd HH:mm', 'mm', '')}" />
+                            <c:forEach var="endMi" begin="0" end="50" step="10">
+                                <c:choose>
+                                    <c:when test="${endMi lt 10}">
+                                        <option <c:if test="${ptupEndMi eq endMi}">selected</c:if>>0${endMi}</option>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <option <c:if test="${ptupEndMi eq endMi}">selected</c:if>>${endMi}</option>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>
+                        </select>
+                        &nbsp;분&nbsp;
+                        <div class="form-group" style="padding-bottom:7px">
+                            <label class="checkbox-inline c-checkbox">
+                                <input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="Y" title="상시여부" <c:if test="${rtnDto.odtmYn eq 'Y'}">checked</c:if> />
+                                <span class="ion-checkmark-round"></span> 상시
+                            </label>
+                        </div>
                     </div>
                 </div>
             </fieldset>
