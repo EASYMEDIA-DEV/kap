@@ -27,5 +27,5 @@
   <domain UUID="Domain_TX2p0HbqEe604PqEcE9m-A" name="전화번호" suggestedDataType="VARCHAR(50)"/>
   <domain UUID="Domain_TX2p0XbqEe604PqEcE9m-A" name="주소" suggestedDataType="VARCHAR(200)"/>
   <domain UUID="Domain_TX2p0nbqEe604PqEcE9m-A" name="우편번호" suggestedDataType="VARCHAR(50)"/>
-  <domain UUID="Domain_TX2p03bqEe604PqEcE9m-A" name="인증번호" suggestedDataType="VARCHAR(6)"/>
+  <domain UUID="Domain_TX2p03bqEe604PqEcE9m-A" name="인증번호" suggestedDataType="VARCHAR(6)"/>  
 </e:DomainDefinition>

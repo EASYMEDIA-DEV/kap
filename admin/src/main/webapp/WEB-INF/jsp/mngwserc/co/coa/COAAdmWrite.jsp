@@ -13,6 +13,12 @@
 			<input type="hidden" class="notRequired" id="typeCd" name="typeCd" value="${rtnDto.typeCd }">
 			<input type="hidden" class="notRequired" id="lgnSsnId" value="${rtnData.lgnSsnId}">
 
+			<!-- 현재 페이징 번호 -->
+			<input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+			<!-- 페이징 버튼 사이즈 -->
+			<input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
+			<input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+
 			<c:forEach var="cdList" items="${cdDtlList.ADMIN_ID_LIMIT}" varStatus="status">
 
 				<c:set var="limitId" value="${limitId += '&' += cdList.cdNm}"/>
@@ -40,7 +46,7 @@
 									</c:if>
 								</c:forEach>--%>
 
-								<select class="form-control input-sm wd-sm" name="authCd" id="authCd" title="권한" readonly="true">
+								<select class="form-control input-sm wd-sm" name="authCd" id="authCd" title="권한">
 									<option value="">선택</option>
 									<c:forEach var="cdList" items="${cdDtlList.ADMIN_AUTH_CD}" varStatus="status">
 										<option value="${cdList.cd}" <c:if test="${rtnDto.authCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
@@ -204,9 +210,24 @@
 					<hr />
 
 					<div class="col-sm-12 p0 mt">
-						<div class="tableStyle1" id="gridArea">
+						<%--<div class="tableStyle1" id="gridArea">
 
-						</div>
+						</div>--%>
+							<div class="table-responsive col-sm-12 p0 m0" id="vueList">
+								<table class="table table-hover table-striped" >
+									<thead>
+									<tr>
+										<th class="text-center">이전권한</th>
+										<th class="text-center">변경 권한</th>
+										<th class="text-center">변경일 / 변경자</th>
+									</tr>
+									</thead>
+									<!-- 리스트 목록 결과 -->
+									<tbody id="listContainer"/>
+								</table>
+								<!-- 페이징 버튼 -->
+								<div id="pagingContainer"/>
+							</div>
 					</div>
 
 					<div class="clearfix">

@@ -4,6 +4,7 @@ import com.kap.core.dto.COCodeDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -27,4 +28,10 @@ public interface COCodeMapper {
      * 공통코드를 조회한다.
      */
     public List<COCodeDTO> getCdIdAllList(ArrayList<String> cdList) throws Exception;
+
+    /**
+     * 공통코드를 조회한다.(뎁스선택)
+     */
+    public List<COCodeDTO> getCdIdOneList(HashMap cdMap) throws Exception;
+
 }

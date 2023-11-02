@@ -10,10 +10,11 @@
                     </label>
                 </td>
                 <td>${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td><a href="javascript:" class="listView"  data-details-key="${list.seq}">${pageTitle}${ list.ver}</a></td>
+                <%--<td><a href="javascript:" class="listView"  data-details-key="${list.seq}">${pageTitle}${list.ver}</a></td>--%>
+                <td><a href="javascript:" class="listView"  data-details-key="${list.seq}">${pageTitle}</a></td>
                 <td>${ list.prcsCd eq '10' ? '배포' : '만료' }</td>
                 <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
-                <td>${ list.regName }(${ list.regId })</td>
+                <td>${ list.regName }${ list.regId }</td>
             </tr>
         </c:forEach>
     </c:when>

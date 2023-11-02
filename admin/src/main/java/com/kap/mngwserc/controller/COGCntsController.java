@@ -126,6 +126,8 @@ public class COGCntsController {
 
             cogCntsDTO.setRegId(coaAdmDTO.getId());
             cogCntsDTO.setRegIp(coaAdmDTO.getLoginIp());
+            cogCntsDTO.setModId(coaAdmDTO.getId());
+            cogCntsDTO.setModIp(coaAdmDTO.getLoginIp());
             modelMap.addAttribute("respCnt", cogCntsService.insertCnts(cogCntsDTO));
         }
         catch (Exception e)
@@ -148,6 +150,9 @@ public class COGCntsController {
         try
         {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+
+            cogCntsDTO.setRegId(coaAdmDTO.getId());
+            cogCntsDTO.setRegIp(coaAdmDTO.getLoginIp());
             cogCntsDTO.setModId(coaAdmDTO.getId());
             cogCntsDTO.setModIp(coaAdmDTO.getLoginIp());
             modelMap.addAttribute("respCnt", cogCntsService.updateCnts(cogCntsDTO));

@@ -1,6 +1,7 @@
 package com.kap.service.impl;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.service.COGCntsService;
 import com.kap.service.COSeqGnrService;
@@ -75,7 +76,13 @@ public class COGCntsServiceImpl implements COGCntsService {
 	 */
 	public int insertCnts(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
+		String cnts = pCOGCntsDTO.getCnts();
+
+		cOGCntsMapper.updateUseCnts(pCOGCntsDTO);
+
 		pCOGCntsDTO.setSeq(cOSeqGnrService.selectSeq(tableNm));
+
+		pCOGCntsDTO.setCnts(COWebUtil.clearXSSMinimum(cnts));
 
 		return cOGCntsMapper.insertCnts(pCOGCntsDTO);
 	}
@@ -85,7 +92,18 @@ public class COGCntsServiceImpl implements COGCntsService {
 	 */
 	public int updateCnts(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
-		return cOGCntsMapper.updateCnts(pCOGCntsDTO);
+		COGCntsDTO info = cOGCntsMapper.selectCntsDtl(pCOGCntsDTO);
+		String cnts = pCOGCntsDTO.getCnts();
+
+		if (!info.getCnts().equals(pCOGCntsDTO.getCnts()))
+		{
+			return this.insertCnts(pCOGCntsDTO);
+		}
+		else
+		{
+			pCOGCntsDTO.setCnts(COWebUtil.clearXSSMinimum(cnts));
+			return cOGCntsMapper.updateCnts(pCOGCntsDTO);
+		}
 	}
 
 	/**

@@ -14,6 +14,10 @@
 /client/out/production/resources/application-domain.yml
 /exerd/.project
 /.project
+/client/build/
+/client/out/
+/error/build/
+/error/out/
 /client/out/production/resources/keystore.p12
 /client/build/tmp/bootWar/MANIFEST.MF
 /error/build/tmp/bootWar/MANIFEST.MF

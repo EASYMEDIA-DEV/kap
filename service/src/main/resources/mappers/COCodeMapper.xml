@@ -24,4 +24,27 @@
 			lft_val
 	</select>
 
+	<!--
+         쿼리명 : COCodeMapper.getCdIdOneList
+         설  명 : 상세 전체 코드 (뎁스선택)
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.01  박준희     최초 생성
+    -->
+	<select id="getCdIdOneList" parameterType="java.util.HashMap" resultType="COCodeDTO">
+		select /* COCodeMapper.getCdIdOneList */
+		cd_id
+		, cd
+		, cd_nm
+		from
+		co_code_mst
+		where 1=1
+		<foreach collection="cdIdList" item="value" index="index" separator=" OR " open="AND (" close=")">
+			CD_ID = #{value}
+		</foreach>
+		and dpth  = #{depth}
+		order by
+		lft_val
+	</select>
+
 </mapper>

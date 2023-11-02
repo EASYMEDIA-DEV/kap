@@ -448,7 +448,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var arrSelected = $("#" + ctrl.ctgrInfo.tree).jstree('get_selected');
 
 						// 선택한 코드값이 없거나 상위 코드가 아닐 경우 상단 코드 선택하라는 alert 띄움
-						if(arrSelected.size() == 0 || arrSelected.attr("level") != "1") {
+//						if(arrSelected.size() == 0 || arrSelected.attr("level") != "1") {
+						if(arrSelected.size() == 0) {
 							alert(msgCtrl.getMsg("fail.co.cof.notTopNode"));
 						} else{
 							$("#" + ctrl.ctgrInfo.tree).jstree("create", null, "last", { "attr" : { "rel" : ctrl.ctgrInfo.menuType } });
@@ -527,7 +528,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			});
 			
-			ctrl.setJstree({ "topNode" : "0", "d" : "2" });
+			ctrl.setJstree({ "topNode" : "0", "d" : "5" });
 		}
 	};
 
