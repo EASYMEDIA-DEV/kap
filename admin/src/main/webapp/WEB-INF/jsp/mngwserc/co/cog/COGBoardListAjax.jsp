@@ -17,8 +17,17 @@
                 <td class="text-center">${ list.readCnt }</td>
                 <td class="text-center">${ list.regName }</td>
                 <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
-                <td class="text-center"><c:if test="${not empty list.modDtm}">${ list.modName }(${ list.modId })</c:if></td>
-                <td class="text-center">${ kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                <td class="text-center"><%--<c:if test="${not empty list.modDtm}">${ list.modName }(${ list.modId })</c:if>--%>
+                    <c:choose>
+                        <c:when test="${not empty list.modDtm}">
+                            ${ list.modName }(${ list.modId })
+                        </c:when>
+                        <c:otherwise>
+                            -
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">${ kl:decode(list.modDtm, "", "-", kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
                 <td class="text-center">${ list.mainYn eq 'Y' ? '노출' : '미노출' }</td>
             </tr>
         </c:forEach>
