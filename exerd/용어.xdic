@@ -557,5 +557,6 @@
   <term name="QA" description="1:1문의" physicalName="qa" physicalDescription="question and answer"/>
   <term name="버전" description="어떤 소프트웨어가 몇번 개정되었는지를 나타내는 번호" physicalName="ver" physicalDescription="version"/>
   <term name="주관식" description="'서답형'을 일상적으로 이르는 말" physicalName="sbjct" physicalDescription="subjective"/>
+  <term name="연계" description="어떤 일이나 사람과 관련하여 관계를 맺음, 또는 그 관계" physicalName="cnnct" physicalDescription="connection"/>
   <tag name="태그"/>
 </tm:TermDictionary>
