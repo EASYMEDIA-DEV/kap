@@ -16,15 +16,18 @@
             <input type="hidden" id="gubun" name="gubun" value="pc" />
             <input type="hidden" id="seq" name="seq" value="" />
             <!--기간 검색 시작-->
+
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="게시기간" />
-                <jsp:param name="periodType" value="notSelect" />
                 <jsp:param name="useOdtmYn" value="Y" />
+                <jsp:param name="startId" value="dStrDt" />
+                <jsp:param name="endId" value="dEndDt" />
             </jsp:include>
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="등록/수정기간" />
-                <jsp:param name="periodType" value="smc" />
+                <jsp:param name="srchOption" value="등록일,수정기간" />
             </jsp:include>
+
             <!--기간 검색 종료-->
             <fieldset>
                 <div class="form-group text-sm">
