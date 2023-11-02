@@ -111,22 +111,22 @@
                 <table class="table table-hover table-striped" >
                     <thead>
                     <tr>
-                        <th>
+                        <th class="text-center">
                             <label class="checkbox-inline c-checkbox">
                                 <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
                                 <span class="ion-checkmark-round"></span>
                             </label>
                         </th>
-                        <th>번호</th>
-                        <th>구분</th>
-                        <th>제목</th>
-                        <th>게시기간</th>
-                        <th>최초 등록자</th>
-                        <th>최초 등록일시</th>
-                        <th>최종 수정자</th>
-                        <th>최종 수정일시</th>
-                        <th>노출여부</th>
-                        <th>노출순서</th>
+                        <th class="text-center">번호</th>
+                        <th class="text-center">구분</th>
+                        <th class="text-center">제목</th>
+                        <th class="text-center">게시기간</th>
+                        <th class="text-center">최초 등록자</th>
+                        <th class="text-center">최초 등록일시</th>
+                        <th class="text-center">최종 수정자</th>
+                        <th class="text-center">최종 수정일시</th>
+                        <th class="text-center">노출여부</th>
+                        <th class="text-center">노출순서</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->
