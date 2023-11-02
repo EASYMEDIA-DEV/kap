@@ -22,7 +22,7 @@
 		, adm_url
 		, user_url
 		, use_yn
-		, (select count(*) from co_menu_mst where parnt_seq = a.menu_seq) as childcnt
+		, (select count(*) from co_menu_mst where parnt_seq = a.menu_seq and a.menu_type != 'menu') as childcnt
 		<if test="isChkd == 'Y'.toString()">
 			, (select menu_seq from co_adm_menu_dtl where adm_seq = #{admSeq} and menu_seq = a.menu_seq) as checktype
 		</if>
@@ -32,11 +32,11 @@
 		and lft_val <![CDATA[>]]> (select lft_val from co_menu_mst where menu_seq = #{menuSeq})
 		and rht_val <![CDATA[<]]> (select rht_val from co_menu_mst where menu_seq = #{menuSeq})
 		/* 사용자 메뉴 관리는 가져오지 말아야 한다. */
-		<!--<if test="isMenu != 'Y'.toString() and userMenuList != null">
+		<if test="isMenu != 'Y'.toString() and userMenuList != null">
 			<foreach collection="userMenuList" item="menuList" index="index" separator=" AND " open="and (" close=")">
 				!(lft_val <![CDATA[ > ]]> #{menuList.lftVal} and rht_val <![CDATA[ < ]]> #{menuList.rhtVal})
 			</foreach>
-		</if>-->
+		</if>
 
 		/* 관리자 수정에선 로그관리 메뉴는 미노출*/
 		<if test= "isAdmUdt == 'Y'.toString()">
