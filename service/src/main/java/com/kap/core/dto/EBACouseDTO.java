@@ -98,7 +98,8 @@ public class EBACouseDTO extends BaseDTO  {
 
     //검색영역
 
-
+    //로그인세션ID
+    private String lgnSsnId;
 
 
     //사용여부

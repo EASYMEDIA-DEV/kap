@@ -1,10 +1,9 @@
 package com.kap.front.controller;
 
 import com.kap.core.annotation.MapData;
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COSmpleSrchDTO;
-import com.kap.core.dto.EmfMap;
+import com.kap.core.dto.*;
 import com.kap.service.COAAdmService;
+import com.kap.service.SMBMnVslService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mobile.device.Device;
@@ -12,6 +11,7 @@ import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,6 +45,8 @@ public class COASmpleController {
     /** 서비스 **/
     private final COAAdmService cOAAdmService;
 
+    private final SMBMnVslService sMBMnVslService;
+
     /**
      * 샘플 목록 페이지
      */
@@ -58,48 +60,22 @@ public class COASmpleController {
         return "co/coa/COAAdmList.front";
     }
 
-
     /**
-     * <pre>
-     * 코드 관리 API Controller
-     * </pre>
-     *
-     * @ClassName		: COFCodeRestController.java
-     * @Description		: 코드 관리 API Controller
-     * @author 허진영
-     * @since 2020.10.20
-     * @version 1.0
-     * @see
-     * @Modification Information
-     * <pre>
-     * 		since			author				   description
-     *   ===========    ==============    =============================
-     *   2020.10.20			허진영			 		최초생성
-     * </pre>
+     * 샘플 목록 페이지
      */
-    @RestController
-    @RequestMapping("/front")
-    public class COFCodeRestController {
-        /**
-         * 코드 조회
-         */
-        /**
-         * 샘플 VALID 목록 페이지
-         */
-        @GetMapping(value="/list/valid")
-        public COAAdmDTO getAdmListValidPage(@Valid COSmpleSrchDTO cOSmpleSrchDTO, ModelMap modelMap, @MapData EmfMap emfMap, Device device, HttpServletRequest request) throws Exception
-        {
-            log.error("cOAAdmDTO : {}", cOSmpleSrchDTO.toString());
-            log.error("device : {}_{}", device.isMobile(), device.isTablet());
-            Device tmpDevice = DeviceUtils.getCurrentDevice(request);
-            if (tmpDevice.isMobile()) {
-                log.info("Hello mobile user!");
-            } else if (tmpDevice.isTablet()) {
-                log.info("Hello tablet user!");
-            } else {
-                log.info("Hello desktop user!");
+    @GetMapping(value="/dtoTest")
+    public String getMnVslListPage(SMBMainVslFrontDTO sMBMainVslFrontDTO, ModelMap modelMap) throws Exception
+    {
+        try {
+            modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslList(sMBMainVslFrontDTO));
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
             }
-            return cOAAdmService.selectAdmList(COAAdmDTO.builder().build());
+            throw new Exception(e.getMessage());
         }
+
+        return "co/coa/COAdtoTestList.front";
     }
+
 }
