@@ -28,29 +28,26 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
-public class SMCPopDTO extends BaseDTO {
+public class SMCMnPopDTO extends BaseDTO {
 
     // 팝업 순번
-    private Integer seq;
+    private Integer popupSeq;
 
-    // pc/mobile 구분값
-    private String dvcCd;
-
-    // 다국어
-    private String langCd;
+    // pc/mbl 구분값
+    private String mdCd;
 
     // 제목
     private String titl;
     // 내용
 
     @SaxFilter
-    private String cnts;
+    private String cntn;
 
     // 검색 내용
     private String srchCntn;
 
-    // 타입코드
-    private String typeCd;
+    // IMG, HTML 타입코드
+    private String tagCd;
 
     // 첨부파일 id
     //private String atchFileId;
@@ -59,25 +56,25 @@ public class SMCPopDTO extends BaseDTO {
     //private String imgFileId;
 
     // 링크
-    private String linkUrl;
+    private String urlUrl;
 
     // 상시여부
     private String odtmYn;
 
     // 게시 시작일시
-    private String strtDtm;
+    private String expsStrtDtm;
 
     // 게시 종료일시
-    private String endDtm;
+    private String expsEndDtm;
 
     // 새창여부
-    private String newWndwYn;
+    private String wnppYn;
 
     // 노출여부
-    private String useYn;
+    private String expsYn;
 
     // 정렬값
-    private Integer ord;
+    private Integer expsOrd;
 
     // 등록자
     private String regId;
@@ -95,13 +92,13 @@ public class SMCPopDTO extends BaseDTO {
     private Integer fileSeq;
 
     // 조회
-    private List<SMCPopDTO> list;
+    private List<SMCMnPopDTO> list;
 
-    // image/html 구분
-    private List<String> typeCdList;
+    // IMG, HTML 구분
+    private List<String> tagCdList;
 
     // 노출여부 구분(=사용여부 구분)
-    private List<String> useYnList;
+    private List<String> expsYnList;
 
     // 검색 등록/수정 기간 시작일
     private String dStrDt;

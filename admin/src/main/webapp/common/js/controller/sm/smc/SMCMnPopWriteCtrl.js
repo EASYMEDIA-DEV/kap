@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
     // set controller name
     var exports = {
-        controller : "controller/sm/smc/SMCPopWriteCtrl"
+        controller : "controller/sm/smc/SMCMnPopWriteCtrl"
     };
 
     var $formObj = jQuery("#frmData");
@@ -92,19 +92,19 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         },
         classname : {
             // do something...
-            typeCd : {
+            tagCd : {
                 event : {
                     change : function(){
                         //var gubun = jQuery(this).val();
-                        var typeCd =  $("input[name='typeCd']:checked").val();
-                        if (typeCd == "image")
+                        var tagCd =  $("input[name='tagCd']:checked").val();
+                        if (tagCd == "img")
                         {
-                            jQuery("#imageArea").show().find(".dropzone").removeClass("notRequired");
+                            jQuery("#imgArea").show().find(".dropzone").removeClass("notRequired");
                             jQuery('#htmlArea').hide().find("textarea").removeClass("ckeditorRequired");
                         }
-                        else if (typeCd == "html")
+                        else if (tagCd == "html")
                         {
-                            jQuery("#imageArea").hide().find(".dropzone").addClass("notRequired");
+                            jQuery("#imgArea").hide().find(".dropzone").addClass("notRequired");
                             jQuery('#htmlArea').show().find("textarea").addClass("ckeditorRequired");
                         }
                     }
@@ -131,7 +131,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             });
 
             /* Editor Setting */
-            jQuery("textarea[id^='cnts']").each(function(){
+            jQuery("textarea[id^='cntn']").each(function(){
                 cmmCtrl.setEditor({
                     editor : jQuery(this).attr("id"),
                     height : 400,
@@ -191,8 +191,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                     if (tagid == "ptupEndMi")
                     {
-                        var ptupStrtDtm = jQuery("#strtDtm").val().replace(/-/gi, "");
-                        var ptupEndDtm = jQuery("#endDtm").val().replace(/-/gi, "");
+                        var ptupStrtDtm = jQuery("#expsStrtDtm").val().replace(/-/gi, "");
+                        var ptupEndDtm = jQuery("#expsEndDtm").val().replace(/-/gi, "");
                         var ptupStrtHh = jQuery("#ptupStrtHh").val();
                         var ptupStrtMi = jQuery("#ptupStrtMi").val();
                         var ptupEndHh = jQuery("#ptupEndHh").val();

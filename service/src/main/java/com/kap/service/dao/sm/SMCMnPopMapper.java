@@ -1,6 +1,6 @@
 package com.kap.service.dao.sm;
 
-import com.kap.core.dto.SMCPopDTO;
+import com.kap.core.dto.SMCMnPopDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 
@@ -11,7 +11,7 @@ import java.util.List;
  * 팝업 관리를 위한 DAO
  * </pre>
  *
- * @ClassName		: SMCPopMapper.java
+ * @ClassName		: SMCMnPopMapper.java
  * @Description		: 팝업 관리를 위한 DAO
  * @author 구은희
  * @since 2023.09.21
@@ -25,20 +25,20 @@ import java.util.List;
  * </pre>
  */
 @Mapper
-public interface SMCPopMapper {
+public interface SMCMnPopMapper {
 
     /**
      * 팝업 목록을 조회
      */
-    public List<SMCPopDTO> selectMnPopList(SMCPopDTO smcPopDTO) throws Exception;
+    public List<SMCMnPopDTO> selectMnPopList(SMCMnPopDTO smcMnPopDTO) throws Exception;
     /**
      * 팝업 개수를 조회
      */
-    public int selectUseMnPopCnt(SMCPopDTO smcPopDTO) throws Exception;
+    public int selectUseMnPopCnt(SMCMnPopDTO smcMnPopDTO) throws Exception;
     /**
      * 팝업 상세를 조회
      */
-    public SMCPopDTO selectMnPopDtl(SMCPopDTO smcPopDTO) throws Exception;
+    public SMCMnPopDTO selectMnPopDtl(SMCMnPopDTO smcMnPopDTO) throws Exception;
     /**
      * 현재 카테고리의 CMS 시퀀스 값을 가져온다.
      */
@@ -52,26 +52,26 @@ public interface SMCPopMapper {
     /**
      * 팝업을 수정
      */
-    public int updateMnPop(SMCPopDTO smcPopDTO) throws Exception;
+    public int updateMnPop(SMCMnPopDTO smcMnPopDTO) throws Exception;
     /**
      * 팝업 미노출 여부를 수정
      */
-    public int updateUseYn(SMCPopDTO smcPopDTO) throws Exception;
+    public int updateUseYn(SMCMnPopDTO smcMnPopDTO) throws Exception;
     /**
      * 팝업 정렬을 수정
      */
-    public void updateOrder(SMCPopDTO smcPopDTO) throws Exception;
+    public void updateOrder(SMCMnPopDTO smcMnPopDTO) throws Exception;
     /**
      * 팝업을 등록
      */
-    public int insertMnPop(SMCPopDTO smcPopDTO) throws Exception;
+    public int insertMnPop(SMCMnPopDTO smcMnPopDTO) throws Exception;
     /**
      * 팝업을 삭제
      */
-    public int deleteMnPop(SMCPopDTO smcPopDTO) throws Exception;
+    public int deleteMnPop(SMCMnPopDTO smcMnPopDTO) throws Exception;
     /**
      * 정렬할 팝업을 조회
      */
-    public SMCPopDTO selectPopNewRow(SMCPopDTO smcPopDTO) throws Exception;
+    public SMCMnPopDTO selectPopNewRow(SMCMnPopDTO smcMnPopDTO) throws Exception;
 
 }

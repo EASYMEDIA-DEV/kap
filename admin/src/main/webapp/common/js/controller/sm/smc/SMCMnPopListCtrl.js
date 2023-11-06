@@ -4,7 +4,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // set controller name
     var exports = {
-        controller: "controller/sm/smc/SMCPopListCtrl"
+        controller: "controller/sm/smc/SMCMnPopListCtrl"
     };
 
     // get controller object
@@ -13,7 +13,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-    var $excelObj = ctrl.obj.parent().find(".excel-down");
 
     // set model
     ctrl.model = {
@@ -110,8 +109,8 @@ define(["ezCtrl"], function(ezCtrl) {
                             }
 
                             var ajaxData = {
-                                seq : key,
-                                ord : sort,
+                                popupSeq : key,
+                                expsOrd : sort,
                                 sortType : sortType
                             }
 
@@ -139,7 +138,7 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-            btnUseYn : {
+            btnExpsYn : {
                 event : {
                     click : function() {
                         var frmDataObj    = $(this).closest("form");
@@ -183,7 +182,7 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
-                        $formObj.find("input[name=seq]").val(detailsKey);
+                        $formObj.find("input[name=popupSeq]").val(detailsKey);
                         location.href = "./write?" + $formObj.serialize();
                     }
                 }
