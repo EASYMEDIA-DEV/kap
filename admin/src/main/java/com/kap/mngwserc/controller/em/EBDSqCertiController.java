@@ -1,9 +1,9 @@
 package com.kap.mngwserc.controller.em;
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.SMCPopDTO;
+import com.kap.core.dto.SMCMnPopDTO;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.SMCPopService;
+import com.kap.service.SMCMnPopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -41,19 +41,14 @@ import javax.servlet.http.HttpServletRequest;
 public class EBDSqCertiController {
 
     /** 서비스 **/
-    public final SMCPopService smPopService;
+    public final SMCMnPopService smPopService;
 
     /**
      *  교육과정관리 목록으로 이동한다.
      */
     @GetMapping(value="/list")
-    public String getMnPopListPage(SMCPopDTO smcPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd, @PathVariable("gubun") String gubun) throws Exception
+    public String getMnPopListPage(ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd, @PathVariable("gubun") String gubun) throws Exception
     {
-        smcPopDTO.setDvcCd(gubun);
-        modelMap.addAttribute("langCd", langCd);
-        modelMap.addAttribute("rtnData", smPopService.selectMnPopList(smcPopDTO));
-        modelMap.addAttribute("gubun", gubun);
-
         return "mngwserc/em/ema/EMAEduCouseList.admin";
     }
 
@@ -61,22 +56,11 @@ public class EBDSqCertiController {
      * 교육과정관리 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
-    public String selectPopListPageAjax(SMCPopDTO smcPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String selectPopListPageAjax(ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
     {
         try
         {
-            smcPopDTO.setDvcCd(gubun);
 
-            if(!"".equals(smcPopDTO.getStrtDt())){
-                smcPopDTO.setStrtDtm(smcPopDTO.getStrtDt());
-            }
-
-            if(!"".equals(smcPopDTO.getEndDt())){
-                smcPopDTO.setEndDtm(smcPopDTO.getEndDt());
-            }
-
-            modelMap.addAttribute("rtnData", smPopService.selectMnPopList(smcPopDTO));
-            modelMap.addAttribute("gubun", gubun);
 
         }
         catch (Exception e)
@@ -116,13 +100,11 @@ public class EBDSqCertiController {
      * 팝업 상세 페이지로 이동한다.
      */
     @RequestMapping(value="/write")
-    public String getPopWritePage(SMCPopDTO smcPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String getPopWritePage(ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
     {
         try
         {
-            smcPopDTO.setDvcCd(gubun);
-            modelMap.addAttribute("gubun", smcPopDTO.getDvcCd());
-            modelMap.addAttribute("rtnInfo", smPopService.selectMnPopDtl(smcPopDTO));
+
         }
         catch (Exception e)
         {
@@ -140,17 +122,11 @@ public class EBDSqCertiController {
      * 팝업을 등록한다.
      */
     @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String insertMnPop(SMCPopDTO smcPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String insertMnPop(ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
     {
         try
         {
-            smcPopDTO.setDvcCd(gubun);
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smcPopDTO.setRegId(coaAdmDTO.getId());
-            smcPopDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            int respCnt = smPopService.insertMnPop(smcPopDTO);
-            modelMap.addAttribute("respCnt", respCnt);
         }
         catch (Exception e)
         {
@@ -168,17 +144,11 @@ public class EBDSqCertiController {
      * 팝업을 삭제한다.
      */
     @RequestMapping(value="/delete")
-    public String deleteMnPop(SMCPopDTO smcPopDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public String deleteMnPop(ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
     {
         try
         {
-            smcPopDTO.setDvcCd(gubun);
 
-            if(!"".equals(smcPopDTO.getDetailsKey())){
-                smcPopDTO.setSeq(Integer.valueOf(smcPopDTO.getDetailsKey()));
-            }
-            int respCnt = smPopService.deleteMnPop(smcPopDTO);
-            modelMap.addAttribute("respCnt", respCnt);
         }
         catch (Exception e)
         {
@@ -197,18 +167,12 @@ public class EBDSqCertiController {
      *
      */
     @RequestMapping(value="/update")
-    public String updateMnPop(SMCPopDTO smcPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public String updateMnPop(COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
     {
         try
         {
 
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smcPopDTO.setModId(coaAdmDTO.getId());
-            smcPopDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            smcPopDTO.setDvcCd(gubun);
-            smcPopDTO.setSeq(Integer.valueOf(smcPopDTO.getDetailsKey()));
-            modelMap.addAttribute("respCnt", smPopService.updateMnPop(smcPopDTO));
         }
         catch (Exception e)
         {
@@ -227,20 +191,11 @@ public class EBDSqCertiController {
      *
      */
     @RequestMapping(value="/use-yn-update")
-    public String updateUseYn(SMCPopDTO smcPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public String updateUseYn( COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smcPopDTO.setModId(coaAdmDTO.getId());
-            smcPopDTO.setModIp(coaAdmDTO.getLoginIp());
-            smcPopDTO.setDvcCd(gubun);
 
-            if(!"".equals(smcPopDTO.getDetailsKey())){
-                smcPopDTO.setSeq(Integer.valueOf(smcPopDTO.getDetailsKey()));
-            }
-            int respCnt = smPopService.updateUseYn(smcPopDTO);
-            modelMap.addAttribute("respCnt", respCnt);
         }
         catch (Exception e)
         {
@@ -259,20 +214,13 @@ public class EBDSqCertiController {
      *
      */
     @RequestMapping(value="/sort", method=RequestMethod.POST)
-    public ModelAndView updateOrder(SMCPopDTO smcPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public ModelAndView updateOrder(COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
     {
         ModelAndView mav = new ModelAndView();
 
         try
         {
-            modelMap.addAttribute("rtnData", smPopService.selectMnPopList(smcPopDTO));
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smcPopDTO.setModId(coaAdmDTO.getId());
-            smcPopDTO.setModIp(coaAdmDTO.getLoginIp());
-            smcPopDTO.setDvcCd(gubun);
 
-            smPopService.updateOrder(smcPopDTO);
-            mav.setViewName("jsonView");
 
         }
         catch (Exception e)

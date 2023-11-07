@@ -1,7 +1,4 @@
 spring:
-  profiles: local, dev
----
-spring:
   config:
     import:
       - classpath:/application-domain.yml
