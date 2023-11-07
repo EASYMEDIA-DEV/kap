@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/sm/smc/SMCPopListCtrl">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/sm/smc/SMCMnPopListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
         <form class="form-horizontal" id="frmSearch" name="frmSearch" method="post" action="" data-del-type="account">
             <!-- 현재 페이징 번호 -->
@@ -14,7 +14,7 @@
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
             <input type="hidden" id="gubun" name="gubun" value="pc" />
-            <input type="hidden" id="seq" name="seq" value="" />
+            <input type="hidden" id="popupSeq" name="popupSeq" value="" />
             <!--기간 검색 시작-->
 
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
@@ -38,11 +38,11 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="typeCdList" value="image" <c:if test="${fn:contains(rtnData.typeCd, 'Y')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="tagCdList" value="img" <c:if test="${fn:contains(rtnData.tagCd, 'Y')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 이미지
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="typeCdList" value="html" <c:if test="${fn:contains(rtnData.typeCd, 'N')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="tagCdList" value="html" <c:if test="${fn:contains(rtnData.tagCd, 'N')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> HTML
                         </label>
                     </div>
@@ -57,11 +57,11 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="useYnList" value="Y" <c:if test="${fn:contains(rtnData.useYn, 'Y')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="Y" <c:if test="${fn:contains(rtnData.expsYn, 'Y')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 노출
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="useYnList" value="N" <c:if test="${fn:contains(rtnData.useYn, 'N')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="N" <c:if test="${fn:contains(rtnData.expsYn, 'N')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 미노출
                         </label>
                     </div>
@@ -108,7 +108,7 @@
                 </div>
                 <div class="pull-right">
                     <%--<button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">다중순서변경</button>--%>
-                    <button type="button" class="btn btn-primary btn-sm mb-sm" id="btnUseYn">미노출</button>
+                    <button type="button" class="btn btn-primary btn-sm mb-sm" id="btnExpsYn">미노출</button>
                     <button type="button" class="btn btn-danger btn-sm mb-sm" id="btn_delete">선택삭제</button>
                     <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>
