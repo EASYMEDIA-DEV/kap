@@ -43,7 +43,43 @@
 
 				<fieldset>
 					<div class="form-group text-sm">
-						<label class="col-sm-1 control-label">계정상태</label>
+						<label class="col-sm-1 control-label">학습시간</label>
+						<div class="col-sm-4">
+							<div class="row">
+								<div class="col-sm-1 pr0">
+									학습일
+								</div>
+								<div class="col-sm-3 pr0">
+									<select class="form-control input-sm" data-name="f">
+										<option value="">전체</option>
+										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>1</option>
+										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>2</option>
+										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>3</option>
+									</select>
+								</div>
+
+								<div class="col-sm-1 pr0">
+									학습시간
+								</div>
+								<div class="col-sm-3 pr0">
+									<select class="form-control input-sm" data-name="f">
+										<option value="">전체</option>
+										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>1</option>
+										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>2</option>
+										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>3</option>
+									</select>
+								</div>
+
+
+
+							</div>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<div class="form-group text-sm">
+						<label class="col-sm-1 control-label">노출여부</label>
 						<div class="col-sm-5">
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxAll" />
@@ -51,11 +87,11 @@
 							</label>
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="Y" <c:if test="${fn:contains(rtnData.useYnList, 'Y')}">checked</c:if> />
-								<span class="ion-checkmark-round"></span> 활성
+								<span class="ion-checkmark-round"></span> 노출
 							</label>
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="N" <c:if test="${fn:contains(rtnData.useYnList, 'N')}">checked</c:if> />
-								<span class="ion-checkmark-round"></span> 비활성
+								<span class="ion-checkmark-round"></span> 미노출
 							</label>
 						</div>
 					</div>

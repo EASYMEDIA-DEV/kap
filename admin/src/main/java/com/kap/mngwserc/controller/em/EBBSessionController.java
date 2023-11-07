@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
  * </pre>
  *
  * @ClassName		: EBBSessionController.java
- * @Description		: 교육과정관리를 위한 Controller
+ * @Description		: 교육차수관리를 위한 Controller
  * @author 김학규
  * @since 2023.11.02
  * @version 1.0

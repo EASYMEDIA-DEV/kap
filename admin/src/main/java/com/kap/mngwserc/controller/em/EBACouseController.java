@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,12 +46,12 @@ public class EBACouseController {
      *  교육과정관리 목록으로 이동한다.
      */
     @GetMapping(value="/list")
-    public String getCouseList(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public String getCouseList(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-        modelMap.addAttribute("langCd", langCd);
+
         modelMap.addAttribute("rtnData", eBACouseService.selectCouseList(eBACouseDTO));
 
-        return "mngwserc/eb/eba/EMACouseList.admin";
+        return "mngwserc/eb/eba/EBACouseList.admin";
     }
 
     /**
@@ -88,7 +85,7 @@ public class EBACouseController {
         modelMap.addAttribute("langCd", langCd);
         modelMap.addAttribute("rtnData", eBACouseService.selectCouseDtl(eBACouseDTO));
 
-        return "mngwserc/eb/eba/EMACouseWrite.admin";
+        return "mngwserc/eb/eba/EBACouseWrite.admin";
     }
 
 
@@ -224,6 +221,17 @@ public class EBACouseController {
 
 
 
+    /**
+     * 교육과정 회차정보 조회
+     */
+    @PostMapping(value="/sessionList")
+    public String getSessionList(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    {
+        modelMap.addAttribute("langCd", langCd);
+        modelMap.addAttribute("rtnData", eBACouseService.selectCouseList(eBACouseDTO));
+
+        return "mngwserc/eb/eba/EBACouseSessionListAjax";
+    }
 
 
 
