@@ -118,4 +118,8 @@ public class SMBMainVslDTO extends BaseDTO {
 
     // 선택 항목
     private List<String> seqList;
+
+
+
+
 }

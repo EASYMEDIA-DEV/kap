@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -64,10 +66,13 @@ public class COASmpleController {
      * 샘플 목록 페이지
      */
     @GetMapping(value="/dtoTest")
-    public String getMnVslListPage(SMBMainVslFrontDTO sMBMainVslFrontDTO, ModelMap modelMap) throws Exception
+    public String getMnVslListPage(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap) throws Exception
     {
         try {
-            modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslList(sMBMainVslFrontDTO));
+
+            sMBMainVslDTO.setSiteGubun("front");
+
+            modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslList(sMBMainVslDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
