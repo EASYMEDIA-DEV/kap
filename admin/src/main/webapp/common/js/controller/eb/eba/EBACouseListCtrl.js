@@ -4,7 +4,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	// set controller name
 	var exports = {
-		controller : "controller/eb/eba/EMACouseListCtrl"
+		controller : "controller/eb/eba/EBACouseListCtrl"
 	};
 
 	// get controller object
@@ -33,7 +33,38 @@ define(["ezCtrl"], function(ezCtrl) {
 			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-		}, "/mngwserc/em/ema/select", $formObj, "POST", "html");
+		}, "/mngwserc/kr/eb/eba/select", $formObj, "POST", "html");
+
+	}
+
+
+	var callbackAjaxCdList  = function (cdList){
+
+		console.log(cdList);
+
+		var detailList = cdList.detailList;
+
+		ctrl.obj.find("#cdListContainer").html(cdList);
+
+		/*for(var i =0; i<detailList.length; i++){
+			var detail = detailList[i];
+
+			var cd = detail.cd;
+			var cdNm = detail.cdNm;
+
+			var tempHtml = "";
+
+			tempHtml = +"<label className=\"checkbox-inline c-checkbox\">";
+			tempHtml = +"<input type=\"checkbox\" className=\"checkboxSingle\" value=\""+cd+"\"  />";
+			tempHtml = +"<span className=\"ion-checkmark-round\"></span>"+cdNm+"</label>";
+
+		}*/
+
+
+		console.log(tempHtml);
+
+		$(".detailCdList").html(tempHtml);
+
 
 	}
 
@@ -52,6 +83,40 @@ define(["ezCtrl"], function(ezCtrl) {
 			},
 		},
 		classname : {
+
+			classType : {
+				event : {
+					click : function() {
+
+						$(".cdListContainer").css("display","none");
+						$(".cdListContainer").attr("disabled", true);
+						$(".cdListContainer").find("input:checkbox").prop("checked", false);
+
+						$(".classType input:checked").each(function(){
+							console.log($(this).val());
+
+							var checkVal = $(this).val();
+
+							console.log(checkVal);
+
+							$("."+checkVal).css("display","block");
+
+							$("."+checkVal).find("input:checkbox").attr("disabled", false);
+
+
+						});
+
+						if($(".classType input:checked").length == 0){
+							$(".cdListContainer").css("display","none");
+							$(".cdListContainer").attr("disabled", true);
+							$(".cdListContainer").find("input:checkbox").prop("checked", false);
+						}
+
+					}
+				}
+			},
+
+
 			//페이징 처리
 			pageSet : {
 				event : {

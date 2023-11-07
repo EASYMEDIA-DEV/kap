@@ -34,4 +34,15 @@ public interface COCodeService {
      */
     public HashMap<String, List<COCodeDTO>> getCmmCodeBindAll(ArrayList<String> cdDtlList , String depth) throws Exception;
 
+
+    /**
+     * 상세 코드 (뎁스선택 + 부모 키값 탐지)
+     */
+    public List<COCodeDTO> getCdIdList(COCodeDTO cOCodeDTO) throws Exception;
+
+    /**
+     * 선택한 코드의 부모값까지 조회
+     */
+    public List<COCodeDTO> getCdIdPrntList(COCodeDTO cOCodeDTO) throws Exception;
+
 }

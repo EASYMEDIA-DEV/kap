@@ -23,20 +23,78 @@
 
 				<fieldset>
 					<div class="form-group text-sm">
-						<label class="col-sm-1 control-label">권한</label>
+						<label class="col-sm-1 control-label">과정분류</label>
+						<div class="col-sm-11">
+							<label class="checkbox-inline c-checkbox classType">
+								<input type="checkbox" class="checkboxAll" />
+								<span class="ion-checkmark-round"></span> 전체
+							</label>
+
+							<c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
+								<label class="checkbox-inline c-checkbox classType">
+									<input type="checkbox" class="checkboxSingle" data-name="authCdList" name="cd" value="${cdList.cd}"/>
+									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
+								</label>
+
+							</c:forEach>
+						</div>
+
+						<!--과정분류 2뎁스 생성구간 시작-->
+						<label class="col-sm-1 control-label"></label>
+						<div class="col-sm-11 detailCdList">
+							<!-- 시작 -->
+							<div class="cdListContainer CLASS01" style="display:none;">
+								<c:forEach  var="cdList" items="${cdList1}" varStatus="status">
+									<label class="checkbox-inline c-checkbox">
+										<input type="checkbox" class="checkboxSingle" data-name="cdList" name="cd" value="${cdList.cd}"disabled="true"/>
+										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
+									</label>
+								</c:forEach>
+							</div>
+							<div  class="cdListContainer CLASS02" style="display:none;">
+								<c:forEach  var="cdList" items="${cdList2}" varStatus="status">
+									<label class="checkbox-inline c-checkbox">
+										<input type="checkbox" class="checkboxSingle" data-name="cdList" name="cd" value="${cdList.cd}" disabled="true"/>
+										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
+									</label>
+								</c:forEach>
+							</div>
+							<div class="cdListContainer CLASS03" style="display:none;">
+								<c:forEach  var="cdList" items="${cdList3}" varStatus="status">
+									<label class="checkbox-inline c-checkbox">
+										<input type="checkbox" class="checkboxSingle" data-name="cdList" name="cd" value="${cdList.cd}" disabled="true"/>
+										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
+									</label>
+								</c:forEach>
+							</div>
+							<!-- 끝 -->
+
+						</div>
+						<!--과정분류 2뎁스 생성구간 끝-->
+
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<div class="form-group text-sm">
+						<label class="col-sm-1 control-label">학습방식</label>
 						<div class="col-sm-5">
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxAll" />
 								<span class="ion-checkmark-round"></span> 전체
 							</label>
-
-							<c:forEach var="cdList" items="${cdDtlList.ADMIN_AUTH_CD}" varStatus="status">
-								<label class="checkbox-inline c-checkbox">
-									<input type="checkbox" class="checkboxSingle" data-name="authCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.authCdList, cdList.cd)}">checked</c:if> />
-									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
-								</label>
-
-							</c:forEach>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="Y" <c:if test="${fn:contains(rtnData.useYnList, 'Y')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 집체교육
+							</label>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="N" <c:if test="${fn:contains(rtnData.useYnList, 'N')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 온라인
+							</label>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="N" <c:if test="${fn:contains(rtnData.useYnList, 'N')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 블렌디드
+							</label>
 						</div>
 					</div>
 				</fieldset>
@@ -52,9 +110,10 @@
 								<div class="col-sm-3 pr0">
 									<select class="form-control input-sm" data-name="f">
 										<option value="">전체</option>
-										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>1</option>
-										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>2</option>
-										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>3</option>
+										<c:forEach begin="1" end="10" varStatus="status">
+											<option value="${status.count}" <c:if test="${rtnData.f eq '1'}">selected</c:if>>${status.count}일</option>
+										</c:forEach>
+
 									</select>
 								</div>
 
@@ -64,9 +123,9 @@
 								<div class="col-sm-3 pr0">
 									<select class="form-control input-sm" data-name="f">
 										<option value="">전체</option>
-										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>1</option>
-										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>2</option>
-										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>3</option>
+										<c:forEach begin="1" end="40" varStatus="status">
+											<option value="${status.count}" <c:if test="${rtnData.f eq '1'}">selected</c:if>>${status.count}시간</option>
+										</c:forEach>
 									</select>
 								</div>
 

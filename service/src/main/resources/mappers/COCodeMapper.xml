@@ -47,4 +47,54 @@
 		lft_val
 	</select>
 
+	<!--
+         쿼리명 : COCodeMapper.getCdIdList
+         설  명 : 코드 목록(선택한 코드부터 자식코드까지)
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.07  김학규     최초 생성
+    -->
+	<select id="getCdIdList" parameterType="COCodeDTO" resultType="COCodeDTO">
+		SELECT /* COCodeMapper.getCdIdList */
+
+		A.CD_ID
+		, A.CD
+		, A.CD_NM
+		, A.LFT_VAL
+		, A.RHT_VAL
+		, DPTH
+
+		FROM co_code_mst A,  (SELECT LFT_VAL, RHT_VAL FROM co_code_mst WHERE CD = #{cd}) B
+
+		WHERE 1=1
+		AND A.LFT_VAL <![CDATA[>=  ]]>  B.LFT_VAL AND A.RHT_VAL <![CDATA[<=  ]]> B.RHT_VAL
+		AND CD != #{cd}
+		AND DPTH > 0
+	</select>
+
+
+	<!--
+         쿼리명 : COCodeMapper.getCdIdList
+         설  명 : 코드 목록(선택한 코드부터 부모까지 목록)
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.07  김학규     최초 생성
+    -->
+	<select id="getCdIdPrntList" parameterType="COCodeDTO" resultType="COCodeDTO">
+		SELECT /* COCodeMapper.getCdIdPrntList */
+			A.CD_ID
+			, A.CD
+			, A.CD_NM
+			, A.LFT_VAL
+			, A.RHT_VAL
+			, DPTH
+		FROM co_code_mst A,  (SELECT LFT_VAL, RHT_VAL FROM co_code_mst WHERE CD = #{cd}) B
+
+		WHERE 1=1
+		AND A.LFT_VAL <![CDATA[ <= ]]>  B.LFT_VAL AND A.RHT_VAL >= B.RHT_VAL
+		AND DPTH <![CDATA[ > ]]>  0
+
+	</select>
+
+
 </mapper>

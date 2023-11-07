@@ -82,4 +82,23 @@ public class COCodeServiceImpl implements COCodeService {
 		}
 		return rtnMap;
 	}
+
+
+	/**
+	 * 코드 목록(선택한 코드부터 자식코드까지)
+	 */
+	public List<COCodeDTO> getCdIdList(COCodeDTO cOCodeDTO) throws Exception
+	{
+
+		return cOCodeMapper.getCdIdList(cOCodeDTO);
+	}
+
+
+	/**
+	 * 코드 목록(선택한 코드부터 부모까지 목록)
+	 */
+	public List<COCodeDTO> getCdIdPrntList(COCodeDTO cOCodeDTO) throws Exception
+	{
+		return cOCodeMapper.getCdIdPrntList(cOCodeDTO);
+	}
 }
