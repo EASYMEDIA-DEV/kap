@@ -731,5 +731,23 @@
   <term name="협약" description="협약" physicalName="agrmt" physicalDescription="agreement"/>
   <term name="선급" description="선급" physicalName="pmndv" physicalDescription="payment in advance"/>
   <term name="수수료" description="커니션,수수료" physicalName="cmssn" physicalDescription="commission"/>
+  <term name="상한선" description="상한선" physicalName="cllng" physicalDescription="celling"/>
+  <term name="투자" description="투자, 투자액" physicalName="nvstm" physicalDescription="investment"/>
+  <term name="검교정" description="검교정" physicalName="clbtn" physicalDescription="calibration"/>
+  <term name="연구소" description="연구소" physicalName="lbrty" physicalDescription="laboratory"/>
+  <term name="포상" description="포상" physicalName="prize" physicalDescription="prize"/>
+  <term name="훈격" description="훈격, 공훈" physicalName="mrts" physicalDescription="merits"/>
+  <term name="자료" description="자료" physicalName="matls" physicalDescription="material"/>
+  <term name="시상식" description="시상식" physicalName="wdcrm" physicalDescription="awards ceremony"/>
+  <term name="근속" description="근속" physicalName="yrssv" physicalDescription="years of service"/>
+  <term name="가장높은" description="가장 높은, 최고의,역대" physicalName="hghst" physicalDescription="highest">
+    <synonyms>최고의</synonyms>
+    <synonyms>역대</synonyms>
+  </term>
+  <term name="수상자" description="수상자" physicalName="winer" physicalDescription="winner"/>
+  <term name="학교" description="학교" physicalName="schl" physicalDescription="school"/>
+  <term name="학년" description="학년" physicalName="grd" physicalDescription="grade"/>
+  <term name="졸업" description="졸업" physicalName="grdtn" physicalDescription="graduation"/>
+  <term name="팀원" description="팀원" physicalName="tmmbr" physicalDescription="team member"/>
   <tag name="태그"/>
 </tm:TermDictionary>
