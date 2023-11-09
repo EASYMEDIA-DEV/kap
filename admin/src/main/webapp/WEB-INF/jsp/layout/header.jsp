@@ -41,6 +41,7 @@
     	<script type="text/javascript" src="/common/js/lib/datetimepicker/jquery.datetimepicker.js"></script>
     	<script type="text/javascript" src="/common/js/lib/xlsx.full.min.js"></script>
 		<script type="text/javascript" src="/common/js/app.js"></script>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<!--함수 공통-->
 		<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js?${sysDate}"></script>
 		<!--메시지 공통-->

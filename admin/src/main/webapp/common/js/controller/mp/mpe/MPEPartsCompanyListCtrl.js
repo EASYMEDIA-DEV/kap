@@ -4,7 +4,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // set controller name
     var exports = {
-        controller: "controller/sm/smd/SMDPsnIfListCtrl"
+        controller: "controller/mp/mpe/MPEPartsCompanyListCtrl"
     };
 
     // get controller object
@@ -56,7 +56,7 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-            btnUseYn : {
+            btnExpsYn : {
                 event : {
                     click : function() {
                         var frmDataObj    = $(this).closest("form");
@@ -78,6 +78,16 @@ define(["ezCtrl"], function(ezCtrl) {
                         }
                     }
                 }
+            },
+            //엑셀다운로드
+            btnExcelDown : {
+                event : {
+                    click: function () {
+                        //사유입력 레이어팝업 활성화
+                        $excelObj.find("#rsn").val('');
+                        $excelObj.modal("show");
+                    }
+                }
             }
         },
         classname : {
@@ -96,7 +106,7 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
-                        $formObj.find("input[name=seq]").val(detailsKey);
+                        $formObj.find("input[name=bsnmNo]").val(detailsKey);
                         location.href = "./write?" + $formObj.serialize();
                     }
                 }
@@ -116,6 +126,25 @@ define(["ezCtrl"], function(ezCtrl) {
             cmmCtrl.setFormData($formObj);
 
             search($formObj.find("input[name=pageIndex]").val());
+
+            $excelObj.find("button.down").on('click', function(){
+                var rsn = $excelObj.find("#rsn").val().trim();
+                var frmDataObj    = $formObj.closest("form");
+
+                frmDataObj.find("input[name='rsn']").remove();
+
+                if (rsn != "") {
+                    frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+
+                    //파라미터를 물고 가야함.
+                    location.href = "./excel-down?" + frmDataObj.serialize();
+
+                } else {
+                    alert(msgCtrl.getMsg("fail.reason"));
+                    return;
+                }
+
+            });
         }
     };
 
