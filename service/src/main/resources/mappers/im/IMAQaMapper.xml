@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.IMAQaMapper">
+    <!--
+     쿼리명 : IMAQaMapper.selectQaList
+     설  명 : 1:1 문의 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.01  장두석     최초 생성
+    -->
+    <select id="selectQaList" parameterType="IMAQaDTO" resultType="IMAQaDTO">
+        SELECT /* IMAQaMapper.selectQaList */
+            A.QA_SEQ
+            , CT.PARNT_CTGRY_CD
+            , CT.CTGRY_CD
+            , A.TITL
+            , MEM.NAME AS REG_NAME
+            , MEM.REG_ID
+            , MEM.EMAIL
+            , MEM.HP_NO
+            , A.REG_DTM
+            , (SELECT REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE RPLY.QA_SEQ = A.QA_SEQ) MOD_DTM
+            , A.RSUME_CD
+        FROM
+            BD_QA_MST A
+            JOIN CO_MEM_MST MEM ON A.REG_ID = MEM.ID
+            JOIN BD_QA_CTGRY_DTL CT ON A.QA_SEQ = CT.QA_SEQ
+        WHERE 1=1
+          <include refid="selectQaListwhereSql" />
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+    쿼리명 : IMAQaMapper.getQaListCnt
+    설  명 : 게시물 목록을 갯수를 카운팅한다.
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.01    장두석       최초생성
+    -->
+    <select id="getQaListTotCnt" parameterType="IMAQaDTO" resultType="java.lang.Integer">
+        SELECT /* COGCntsMapper.getQaListCnt */
+            COUNT(*)
+        FROM
+            BD_QA_MST A
+            JOIN CO_MEM_MST MEM ON A.REG_ID = MEM.ID
+            JOIN BD_QA_CTGRY_DTL CT ON A.QA_SEQ = CT.QA_SEQ
+        WHERE 1 = 1
+            <include refid="selectQaListwhereSql" />
+    </select>
+
+    <update id="updateQaRsume" parameterType="IMAQaDTO">
+        UPDATE  /*IMAQaMapper.updateQa*/
+            BD_QA_MST
+        SET
+            RSUME_CD = #{rsumeCd}
+        WHERE
+            QA_SEQ = #{detailsKey}
+    </update>
+
+    <select id="selectQaDtl" parameterType="IMAQaDTO" resultType="IMAQaDTO">
+        SELECT /* IMAQaMapper.selectQaDtl */
+            A.QA_SEQ
+            , A.RSUME_CD
+            , A.TITL
+            , A.CNTN
+            , A.FILE_SEQ
+            , A.REG_ID
+            , A.REG_DTM
+            , MEM.NAME AS REG_NAME
+            , MEM.EMAIL
+            , MEM.HP_NO
+            , CT.PARNT_CTGRY_CD
+            , CT.CTGRY_CD
+            , RPLY.QA_RPLY_SEQ
+            , RPLY.CNTN AS RPLY_CNTN
+            , RPLY.FILE_SEQ AS RPLY_FILE_SEQ
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = RPLY.REG_ID) AS MOD_NAME
+            , RPLY.REG_DTM AS MOD_DTM
+        FROM
+            BD_QA_MST A
+            JOIN CO_MEM_MST MEM ON A.REG_ID = MEM.ID
+            JOIN BD_QA_CTGRY_DTL CT ON A.QA_SEQ = CT.QA_SEQ
+            JOIN BD_QA_RPLY_DTL RPLY ON A.QA_SEQ = RPLY.QA_SEQ
+        WHERE
+            A.QA_SEQ = #{detailsKey}
+    </select>
+
+    <insert id="insertQa" parameterType="IMAQaDTO">
+        INSERT /* IMAQaMapper.insertQa */ INTO BD_QA_RPLY_DTL
+            (
+            QA_RPLY_SEQ
+            , QA_SEQ
+            , CNTN
+            , FILE_SEQ
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , MOD_IP
+            , MOD_DTM
+            )
+            VALUES
+            (
+            #{qaRplySeq}
+            , #{detailsKey}
+            , #{rplyCntn}
+            , #{rplyFileSeq}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+    쿼리명 : selectQaListwhereSql
+    설  명 : 1:1 문의 관리 where Sql
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.01    장두석       최초생성
+    -->
+    <sql id="selectQaListwhereSql">
+        <if test="strtDt != null and strtDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND A.REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+                <when test="srchDate == 2">
+                    AND (SELECT REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+            </choose>
+        </if>
+        <if test="endDt != null and endDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND A.REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+                <when test="srchDate == 2">
+                    AND (SELECT REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+            </choose>
+        </if>
+        <if test="inqFir != null and inqFir != ''">
+            AND CT.PARNT_CTGRY_CD = #{inqFir}
+        </if>
+        <if test="inqSec != null and inqSec != ''">
+            AND CT.CTGRY_CD = #{inqSec}
+        </if>
+        <if test="rsumeCdList != null and rsumeCdList.size() > 0">
+            AND (
+            <foreach collection="rsumeCdList" item="srcRsumeCd" index="index" open="" close="" separator=" OR ">
+                A.RSUME_CD = #{srcRsumeCd}
+            </foreach>
+            )
+        </if>
+        <if test="q != null and q != ''">
+            <choose>
+                <when test="f == 1">
+                    AND A.TITL LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 2">
+                    AND MEM.NAME LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 3">
+                    AND MEM.EMAIL LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 4">
+                    AND MEM.HP_NO LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <otherwise>
+                    AND (
+                    INSTR(#{q}, A.TITL) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, MEM.NAME) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, MEM.EMAIL) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, MEM.HP_NO) <![CDATA[>]]> 0 OR
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY
+            REG_DTM DESC
+    </sql>
+</mapper>
+
+
