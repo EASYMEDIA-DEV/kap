@@ -66,12 +66,12 @@ public class SMCMnPopController {
         {
             smcMnPopDTO.setMdCd(gubun);
 
-            if(!"".equals(smcMnPopDTO.getStrtDt())){
-                smcMnPopDTO.setExpsStrtDtm(smcMnPopDTO.getStrtDt());
+            if(!"".equals(smcMnPopDTO.getDStrDt())){
+                smcMnPopDTO.setExpsStrtDtm(smcMnPopDTO.getDStrDt());
             }
 
-            if(!"".equals(smcMnPopDTO.getEndDt())){
-                smcMnPopDTO.setExpsEndDtm(smcMnPopDTO.getEndDt());
+            if(!"".equals(smcMnPopDTO.getDEndDt())){
+                smcMnPopDTO.setExpsEndDtm(smcMnPopDTO.getDEndDt());
             }
 
             modelMap.addAttribute("rtnData", smcMnPopService.selectMnPopList(smcMnPopDTO));

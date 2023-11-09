@@ -19,7 +19,7 @@
 
 			<c:if test="${fn:length(param.srchOption) > 0 }">
 				<div class="form-group mr-sm">
-					<select class="form-control input-sm" data-name="srchDate">
+					<select class="form-control input-sm" data-srch-date="srchDate" id="srchDate" name="srchDate">
 						<c:forTokens var="item" items="${param.srchOption}" delims="," varStatus="status">
 							<option value="${status.count}" <c:if test="${rtnData.srchDate eq status.count}">selected</c:if>>${item}</option>
 						</c:forTokens>
