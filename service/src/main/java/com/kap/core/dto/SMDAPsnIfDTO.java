@@ -29,48 +29,56 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
-public class SMDPsnIfDTO extends BaseDTO {
-    // 순번
-    private Integer seq;
-    // 다국어
-    private String langCd;
+public class SMDAPsnIfDTO extends BaseDTO {
+
+    // 개인정보순번
+    private Integer psnifSeq;
+
     // 제목
     private String titl;
+
     // 내용
     @SaxFilter
-    private String cnts;
+    private String cntn;
+
     // 노출여부
-    private String useYn;
-    // 등록자
+    private String expsYn;
+
+    // 등록ID
     private String regId;
-    // 등록ip
+
+    // 등록IP
     private String regIP;
 
-    // 등록일자
+    // 등록일시
     private String regDtm;
-    // 수정자Id
+
+    // 수정ID
     private String modId;
-    // 수정ip
+
+    // 수정IP
     private String modIP;
-    // 수정일자
+
+    // 수정일시
     private String modDtm;
 
+    // 검색 등록/수정 기간 시작일
+    private String dStrDt;
+
+    // 검색 등록/수정 기간 종료일
+    private String dEndDt;
+
     // 조회
-    private List<SMDPsnIfDTO> list;
+    private List<SMDAPsnIfDTO> list;
+
     // 검색 조건
-    private List<String> expsYnList;
     // 노출여부 구분(=사용여부 구분)
-    private List<String> useYnList;
-    // 검색 등록 시작일
-    private String strtDtm;
-    // 검색 등록 종료일
-    private String endDtm;
+    private List<String> expsYnList;
 
     //삭제할 데이터
     private List<String> delValueList;
 
     //테이블 이름
     private String tableNm;
-    // 엑셀 여부
-    private String excelYn;
+
 }

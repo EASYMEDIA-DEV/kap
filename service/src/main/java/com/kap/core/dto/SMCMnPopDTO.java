@@ -30,42 +30,42 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class SMCMnPopDTO extends BaseDTO {
 
-    // 팝업 순번
+    // 팝업순번
     private Integer popupSeq;
 
-    // pc/mbl 구분값
+    // PC, MBL
     private String mdCd;
 
-    // 제목
-    private String titl;
-    // 내용
+    // 노출순서
+    private Integer expsOrd;
 
-    @SaxFilter
-    private String cntn;
+    // 노출시작일시
+    private String expsStrtDtm;
 
-    // 검색 내용
-    private String srchCntn;
-
-    // IMG, HTML 타입코드
-    private String tagCd;
-
-    // 첨부파일 id
-    //private String atchFileId;
-
-    // 이미지 파일 id
-    //private String imgFileId;
-
-    // 링크
-    private String urlUrl;
+    // 노출종료일시
+    private String expsEndDtm;
 
     // 상시여부
     private String odtmYn;
 
-    // 게시 시작일시
-    private String expsStrtDtm;
+    // 제목
+    private String titl;
 
-    // 게시 종료일시
-    private String expsEndDtm;
+    // IMG, HTML
+    private String tagCd;
+
+    // 파일순번
+    private Integer fileSeq;
+
+    // HTML
+    @SaxFilter
+    private String cntn;
+
+    // 링크URL
+    private String urlUrl;
+
+    // 검색 내용
+    private String srchCntn;
 
     // 새창여부
     private String wnppYn;
@@ -73,23 +73,24 @@ public class SMCMnPopDTO extends BaseDTO {
     // 노출여부
     private String expsYn;
 
-    // 정렬값
-    private Integer expsOrd;
-
-    // 등록자
+    // 등록ID
     private String regId;
 
-    // 등록일자
+    // 등록IP
+    private String regIp;
+
+    // 등록일시
     private String regDtm;
 
-    // 수정자Id
+    // 수정ID
     private String modId;
 
-    // 수정일자
+    // 수정IP
+    private String modIp;
+
+    // 수정일시
     private String modDtm;
 
-    //파일 순번
-    private Integer fileSeq;
 
     // 조회
     private List<SMCMnPopDTO> list;
