@@ -68,7 +68,7 @@ app:
     upload-path: D:/project/kap_git/upload
     #파일 업로드 가능 확장자
     fileExtns: jpg,jpeg,gif,png,bmp,mp4,webm,wmv,avi,mkv,pdf,ppt,pptx,xls,xlsx,doc,docx,dox,hwp,txt,zip
-    imageExtns: jpg,jpeg,gif,png
+    imageExtns: jpg,jpeg,png
     videoExtns: mp4,webm,wmv,avi,mkv
     #파일 업로드 크기
     max-size: 41943040
