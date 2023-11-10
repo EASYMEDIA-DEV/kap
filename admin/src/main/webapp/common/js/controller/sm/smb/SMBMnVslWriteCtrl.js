@@ -62,9 +62,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             category : {
                 event: {
                     click : function(){
-                        var gubun = $("#gubun").val();
+                        var mdCd = $("#mdCd").val();
                         var category = $('input[name=category]:checked').val();
-                        if(gubun == 'pc'){
+                        if(mdCd == 'pc'){
                             if(category == 'image'){
                                 $(".pcVideo").css("display", "none");
                                 $(".pcImage").css("display", "block");
@@ -72,7 +72,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 $(".pcImage").css("display", "none");
                                 $(".pcVideo").css("display", "block");
                             }
-                        }else if(gubun == 'mobile'){
+                        }else if(mdCd == 'mobile'){
                             if(category == 'image'){
                                 $(".mobileVideo").css("display", "none");
                                 $(".mobileImg").css("display", "block");

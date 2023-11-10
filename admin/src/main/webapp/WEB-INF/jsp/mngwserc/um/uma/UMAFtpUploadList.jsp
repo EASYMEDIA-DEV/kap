@@ -41,7 +41,7 @@
 				<input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 				<!-- 상세로 이동시 시퀀스 -->
 				<input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.seq}" />
-				<input type="hidden" id="langCd" name="langCd" value="${langCd}" />
+
 				<%--<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 					<jsp:param name="srchText" value="기간" />
 					<jsp:param name="periodType" value="csa" />

@@ -13,7 +13,7 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
-            <input type="hidden" id="gubun" name="gubun" value="pc" />
+            <input type="hidden" id="mdCd" name="mdCd" value="pc" />
             <input type="hidden" id="popupSeq" name="popupSeq" value="" />
             <!--기간 검색 시작-->
 

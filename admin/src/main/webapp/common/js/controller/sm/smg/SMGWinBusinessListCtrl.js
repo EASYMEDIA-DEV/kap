@@ -13,7 +13,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // form Object
     var $formObj = jQuery("#frmData");
     var $pageObj = jQuery("#frmSearch");
-    var langCd = $("#langCd").val();
     var idNum = 0;
     //목록 조회
     // set model

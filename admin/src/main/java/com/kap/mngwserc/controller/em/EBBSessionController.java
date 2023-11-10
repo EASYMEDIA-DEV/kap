@@ -1,7 +1,6 @@
 package com.kap.mngwserc.controller.em;
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -35,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/{langCd}/eb/ebb")
+@RequestMapping(value="/mngwserc/eb/ebb")
 public class EBBSessionController {
 
 
@@ -43,7 +42,7 @@ public class EBBSessionController {
      *  교육과정관리 목록으로 이동한다.
      */
     @GetMapping(value="/list")
-    public String getMnPopListPage(ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd, @PathVariable("gubun") String gubun) throws Exception
+    public String getMnPopListPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
 
 
@@ -54,7 +53,7 @@ public class EBBSessionController {
      * 교육과정관리 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
-    public String selectPopListPageAjax(ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String selectPopListPageAjax(ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
@@ -98,7 +97,7 @@ public class EBBSessionController {
      * 팝업 상세 페이지로 이동한다.
      */
     @RequestMapping(value="/write")
-    public String getPopWritePage(ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String getPopWritePage(ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
@@ -120,7 +119,7 @@ public class EBBSessionController {
      * 팝업을 등록한다.
      */
     @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String insertMnPop(ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String insertMnPop(ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
@@ -142,7 +141,7 @@ public class EBBSessionController {
      * 팝업을 삭제한다.
      */
     @RequestMapping(value="/delete")
-    public String deleteMnPop(ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public String deleteMnPop(ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
@@ -165,7 +164,7 @@ public class EBBSessionController {
      *
      */
     @RequestMapping(value="/update")
-    public String updateMnPop(COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public String updateMnPop(COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
@@ -189,7 +188,7 @@ public class EBBSessionController {
      *
      */
     @RequestMapping(value="/use-yn-update")
-    public String updateUseYn(COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public String updateUseYn(COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
@@ -212,7 +211,7 @@ public class EBBSessionController {
      *
      */
     @RequestMapping(value="/sort", method=RequestMethod.POST)
-    public ModelAndView updateOrder(COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public ModelAndView updateOrder(COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         ModelAndView mav = new ModelAndView();
 

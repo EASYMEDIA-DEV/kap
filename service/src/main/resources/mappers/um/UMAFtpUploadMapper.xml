@@ -13,7 +13,6 @@
             SEQ
             , FILE_SEQ
             , 0 FILE_ORD
-            , LANG_CD
             , URL
             ,  (SELECT ORGN_FILE_NM FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS ORGN_FILE_NM
             ,  (SELECT WEB_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS WEB_PATH
@@ -83,7 +82,6 @@
             (
             SEQ
             , FILE_SEQ
-            , LANG_CD
             , URL
             , REG_ID
             , REG_IP
@@ -93,7 +91,6 @@
             (
             #{seq}
             , #{fileSeq}
-            , #{langCd}
             , #{url}
             , #{regId}
             , #{regIp}

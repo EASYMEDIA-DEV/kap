@@ -202,9 +202,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
         request.setAttribute("lnbMenuList", lnbMenuList);
 
         // CMS 관리
-        String langCd = request.getRequestURI().contains("/kr/") ? "kr" : "en";
-
-        if (requestURI.contains("/mngwserc/" + langCd + "/contentsid/" + pageNo + "/"))
+        if (requestURI.contains("/mngwserc/contentsid/" + pageNo + "/"))
         {
             request.setAttribute("cmsRoot", cOLgnService.getCmsRootInf(lngCOAAdmDTO));
         }

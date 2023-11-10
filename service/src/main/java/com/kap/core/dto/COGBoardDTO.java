@@ -34,7 +34,6 @@ public class COGBoardDTO extends BaseDTO {
 
     //샘플 순번
     private Integer seq;
-    private String langCd;
     private Integer typeCd;
 
     //아이디
