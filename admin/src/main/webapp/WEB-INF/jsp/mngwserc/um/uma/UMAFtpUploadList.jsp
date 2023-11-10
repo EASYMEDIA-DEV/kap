@@ -42,7 +42,7 @@
 				<!-- 상세로 이동시 시퀀스 -->
 				<input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.seq}" />
 				<input type="hidden" id="langCd" name="langCd" value="${langCd}" />
-				<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
+				<%--<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 					<jsp:param name="srchText" value="기간" />
 					<jsp:param name="periodType" value="csa" />
 				</jsp:include>
@@ -66,7 +66,7 @@
 							<button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
 						</div>
 					</div>
-				</fieldset>
+				</fieldset>--%>
 				<hr class="mt0" />
 				<div class="clearfix">
 					<h6 class="pull-left mt0">
@@ -96,9 +96,8 @@
 									</label>
 								</th>
 								<th>번호</th>
-								<th>이미지</th>
-								<th>url</th>
 								<th>파일 이름</th>
+								<th>url</th>
 								<th>날짜</th>
 								<th>이름</th>
 							</tr>
