@@ -234,7 +234,7 @@ var cmmCtrl = (function(){
 
 		jQuery.ajax({
 			url : url,
-			type : "post",
+			type : "POST",
 			timeout: 300000,
 			data : paramData,
 			dataType : dataType,

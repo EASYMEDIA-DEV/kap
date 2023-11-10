@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 /**
  *  코드 객체
  *
@@ -66,4 +68,7 @@ public class COCodeDTO extends BaseDTO {
     private int refInd;
     private int idif;
     private int ldif;
+
+
+    private List<COCodeDTO> list;
 }

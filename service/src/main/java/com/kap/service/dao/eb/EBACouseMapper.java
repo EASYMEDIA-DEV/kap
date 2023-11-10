@@ -31,22 +31,32 @@ public interface EBACouseMapper {
 	/**
 	 * 교육과정 목록 갯수 조회
 	 */
-	//public int selectCouseListCnt(EBACouseDTO eBACouseDTO) throws Exception;
+	public int selectCouseListCnt(EBACouseDTO eBACouseDTO) throws Exception;
 
 	/**
 	 * 교육과정 목록을 조회한다.
 	 */
-	//public List<EBACouseDTO> selectCouseList(EBACouseDTO eBACouseDTO) throws Exception;
+	public List<EBACouseDTO> selectCouseList(EBACouseDTO eBACouseDTO) throws Exception;
 
 	/**
 	 * 교육과정 상세를 조회한다.
 	 */
-	//public EBACouseDTO selectCouseDtl(EBACouseDTO eBACouseDTO) throws Exception;
+	public EBACouseDTO selectCouseDtl(EBACouseDTO eBACouseDTO) throws Exception;
+
+	/**
+	 * 교육과정대상 상세를 조회한다.
+	 */
+	public List<EBACouseDTO> selectCouseTrgtList(EBACouseDTO eBACouseDTO) throws Exception;
+
 
 	/**
 	 * 교육과정을 등록한다.
 	 */
-	//public int insertCouse(EBACouseDTO eBACouseDTO) throws Exception;
+	public int insertCouse(EBACouseDTO eBACouseDTO) throws Exception;
+
+	public int insertCouseTrgt(EBACouseDTO eBACouseDTO) throws Exception;
+
+
 
 	/**
 	 * 교육과정을 수정한다.

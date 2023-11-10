@@ -36,7 +36,7 @@ public interface COCodeService {
 
 
     /**
-     * 상세 코드 (뎁스선택 + 부모 키값 탐지)
+     * 코드 목록(선택한 코드부터 자식코드까지)
      */
     public List<COCodeDTO> getCdIdList(COCodeDTO cOCodeDTO) throws Exception;
 

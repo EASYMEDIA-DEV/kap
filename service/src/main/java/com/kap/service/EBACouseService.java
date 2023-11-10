@@ -2,8 +2,10 @@ package com.kap.service;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.EBACouseDTO;
+import com.kap.core.dto.EmfMap;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,7 +36,7 @@ public interface EBACouseService {
 	/**
 	 * 교육과정 상세를 조회한다.
 	 */
-	public EBACouseDTO selectCouseDtl(EBACouseDTO eBACouseDTO) throws Exception;
+	public HashMap<String, Object> selectCouseDtl(EBACouseDTO eBACouseDTO) throws Exception;
 
 	/**
 	 * 교육과정을 등록한다.

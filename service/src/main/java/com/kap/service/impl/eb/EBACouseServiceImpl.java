@@ -24,6 +24,7 @@ import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,7 +42,7 @@ import java.util.List;
  * <pre>
  * 		since			author				  description
  *    ==========    ==============    =============================
- *    2022.04.14		신혜정				   최초 생성
+ *    2023.11.01		김학규				   최초 생성
  * </pre>
  */
 @Slf4j
@@ -52,13 +53,17 @@ public class EBACouseServiceImpl implements EBACouseService {
 	//DAO
 	private final EBACouseMapper eBACouseMapper;
 
+	private final COSeqGnrService cOSeqGnrService;
+
+	String tableNm = "EBA_SEQ";
+
 	/**
 	 * 교육과정 목록을 조회한다
 	 */
 	public EBACouseDTO selectCouseList(EBACouseDTO eBACouseDTO) throws Exception
 	{
 
-		/*COPaginationUtil page = new COPaginationUtil();
+		COPaginationUtil page = new COPaginationUtil();
 
 		page.setCurrentPageNo(eBACouseDTO.getPageIndex());
 		page.setRecordCountPerPage(eBACouseDTO.getListRowSize());
@@ -69,7 +74,7 @@ public class EBACouseServiceImpl implements EBACouseService {
 		eBACouseDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
 
 		eBACouseDTO.setList( eBACouseMapper.selectCouseList(eBACouseDTO) );
-		eBACouseDTO.setTotalCount( eBACouseMapper.selectCouseListCnt(eBACouseDTO) );*/
+		eBACouseDTO.setTotalCount( eBACouseMapper.selectCouseListCnt(eBACouseDTO) );
 
 		return eBACouseDTO;
 	}
@@ -77,13 +82,17 @@ public class EBACouseServiceImpl implements EBACouseService {
 	/**
 	 * 교육과정 상세를 조회한다.
 	 */
-	public EBACouseDTO selectCouseDtl(EBACouseDTO eBACouseDTO) throws Exception
+	public HashMap<String, Object> selectCouseDtl(EBACouseDTO eBACouseDTO) throws Exception
 	{
+		HashMap<String, Object> map = new HashMap();
 
-		//EBACouseDTO tempDto = eBACouseMapper.selectCouseDtl(eBACouseDTO);
+		map.put("rtnData", eBACouseMapper.selectCouseDtl(eBACouseDTO));
+
+		map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
 
 
-		return eBACouseDTO;
+
+		return map;
 	}
 
 
@@ -95,7 +104,27 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 		int respCnt = 0;
 
-		//respCnt = eBACouseMapper.insertCouse(eBACouseDTO);
+		eBACouseDTO.setEdctnSeq(cOSeqGnrService.selectSeq(tableNm));
+
+		//교육과정 등록
+		eBACouseMapper.insertCouse(eBACouseDTO);
+
+
+		String temp = eBACouseDTO.getTargetCd();
+
+		String[] tempArray =temp.split(",");
+
+		for(String a : tempArray){
+			eBACouseDTO.setTargetCd(a);
+			eBACouseMapper.insertCouseTrgt(eBACouseDTO);
+		}
+
+
+		eBACouseDTO.setEdctnSeq(respCnt);
+		//교육과정대상 등록
+
+
+
 
 		return respCnt;
 	}
@@ -153,6 +182,46 @@ public class EBACouseServiceImpl implements EBACouseService {
 		}
 
 		return actCnt;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/**
+	 * 전달받은 문자열과 리스트 형태의 문자열중 일치하는게 있으면 반환
+	 *
+	 * @return String
+	 */
+	public static String forEachChk(String str, List<EBACouseDTO> codeList) {
+		String rtnStr = "N";
+
+
+
+		System.out.println("codeList = " + codeList);
+
+        if (codeList != null && codeList.size() > 0) {
+            for (EBACouseDTO a : codeList) {
+
+                if (str.contains(a.getTargetCd())) {
+                    rtnStr = "Y";
+                    break;
+                } else {
+                    rtnStr = "N";
+                }
+            }
+        }
+
+		return rtnStr;
 	}
 
 

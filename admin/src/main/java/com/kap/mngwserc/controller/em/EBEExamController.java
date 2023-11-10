@@ -31,14 +31,14 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/{langCd}/eb/ebe")
+@RequestMapping(value="/mngwserc/eb/ebe")
 public class EBEExamController {
 
     /**
      *  교육과정관리 목록으로 이동한다.
      */
     @GetMapping(value="/list")
-    public String getMnPopListPage( ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd, @PathVariable("gubun") String gubun) throws Exception
+    public String getMnPopListPage( ModelMap modelMap, HttpServletRequest request) throws Exception
     {
 
         return "mngwserc/em/ema/EMAEduCouseList.admin";
@@ -48,7 +48,7 @@ public class EBEExamController {
      * 교육과정관리 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
-    public String selectPopListPageAjax(ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String selectPopListPageAjax(ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {

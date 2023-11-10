@@ -24,7 +24,7 @@
 				<fieldset>
 					<div class="form-group text-sm">
 						<label class="col-sm-1 control-label">과정분류</label>
-						<div class="col-sm-11">
+						<div class="col-sm-11"  style="margin-bottom: 15px;">
 							<label class="checkbox-inline c-checkbox classType">
 								<input type="checkbox" class="checkboxAll" />
 								<span class="ion-checkmark-round"></span> 전체
@@ -32,7 +32,7 @@
 
 							<c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
 								<label class="checkbox-inline c-checkbox classType">
-									<input type="checkbox" class="checkboxSingle" data-name="authCdList" name="cd" value="${cdList.cd}"/>
+									<input type="checkbox" class="checkboxSingle" data-name="authCdList" name="cd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 
@@ -43,7 +43,12 @@
 						<label class="col-sm-1 control-label"></label>
 						<div class="col-sm-11 detailCdList">
 							<!-- 시작 -->
-							<div class="cdListContainer CLASS01" style="display:none;">
+							<div class="cdListContainer CLASS01" style="display:none;margin-bottom: 15px;">
+								<div class="row">
+									<div class="col-sm-1 pr0 cdnm">
+
+									</div>
+								</div>
 								<c:forEach  var="cdList" items="${cdList1}" varStatus="status">
 									<label class="checkbox-inline c-checkbox">
 										<input type="checkbox" class="checkboxSingle" data-name="cdList" name="cd" value="${cdList.cd}"disabled="true"/>
@@ -51,7 +56,12 @@
 									</label>
 								</c:forEach>
 							</div>
-							<div  class="cdListContainer CLASS02" style="display:none;">
+							<div  class="cdListContainer CLASS02" style="display:none;margin-bottom: 15px;">
+								<div class="row">
+									<div class="col-sm-1 pr0 cdnm">
+
+									</div>
+								</div>
 								<c:forEach  var="cdList" items="${cdList2}" varStatus="status">
 									<label class="checkbox-inline c-checkbox">
 										<input type="checkbox" class="checkboxSingle" data-name="cdList" name="cd" value="${cdList.cd}" disabled="true"/>
@@ -60,6 +70,11 @@
 								</c:forEach>
 							</div>
 							<div class="cdListContainer CLASS03" style="display:none;">
+								<div class="row">
+									<div class="col-sm-1 pr0 cdnm">
+
+									</div>
+								</div>
 								<c:forEach  var="cdList" items="${cdList3}" varStatus="status">
 									<label class="checkbox-inline c-checkbox">
 										<input type="checkbox" class="checkboxSingle" data-name="cdList" name="cd" value="${cdList.cd}" disabled="true"/>
@@ -163,9 +178,9 @@
 								<div class="col-sm-3 pr0">
 									<select class="form-control input-sm" data-name="f">
 										<option value="">전체</option>
-										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
-										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
-										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>소속</option>
+										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>과정명</option>
+										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>최초등록자</option>
+										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>최종수정자</option>
 									</select>
 								</div>
 								<div class="col-sm-9 pr0">

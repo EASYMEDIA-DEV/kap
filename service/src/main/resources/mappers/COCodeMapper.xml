@@ -13,6 +13,7 @@
 			  cd_id
 			, cd
 			, cd_nm
+			, dpth
 		from
 			co_code_mst
 		where 1=1
@@ -91,7 +92,7 @@
 		FROM co_code_mst A,  (SELECT LFT_VAL, RHT_VAL FROM co_code_mst WHERE CD = #{cd}) B
 
 		WHERE 1=1
-		AND A.LFT_VAL <![CDATA[ <= ]]>  B.LFT_VAL AND A.RHT_VAL >= B.RHT_VAL
+		AND A.LFT_VAL <![CDATA[ <= ]]>  B.LFT_VAL AND A.RHT_VAL <![CDATA[ >=]]> B.RHT_VAL
 		AND DPTH <![CDATA[ > ]]>  0
 
 	</select>
