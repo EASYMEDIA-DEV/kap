@@ -248,7 +248,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
     public void updateOrder(SMBMainVslDTO pSMBMainVslDTO) throws Exception {
 
         SMBMainVslDTO newRow = sMBMnVslMapper.selectMnNewRow(pSMBMainVslDTO);
-        newRow.setGubun(newRow.getMdCd());
+        newRow.setMdCd(newRow.getMdCd());
 
         if(newRow != null){
 
