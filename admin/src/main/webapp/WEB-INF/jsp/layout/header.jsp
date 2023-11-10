@@ -41,6 +41,7 @@
     	<script type="text/javascript" src="/common/js/lib/datetimepicker/jquery.datetimepicker.js"></script>
     	<script type="text/javascript" src="/common/js/lib/xlsx.full.min.js"></script>
 		<script type="text/javascript" src="/common/js/app.js"></script>
+		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<!--함수 공통-->
 		<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js?${sysDate}"></script>
 		<!--메시지 공통-->
@@ -162,6 +163,11 @@
 					   		<c:when test="${currentlevel eq 2 and currentlevel le nextlevel}">
 								<c:choose>
 									<c:when test="${cmsCount eq 0 && top.menuNm eq 'CMS 관리'}">
+									</c:when>
+									<c:when test="${top.menuNm eq '1:1 문의' && top.admUrl eq '/mngwserc/im/ima/list'}">
+										<a href="${kl:nvl(top.admUrl, 'javascript:')}" target="${top.wnppYn eq 'Y' ? '_blank' : '_self'}" role="button" aria-expanded="false" data-submenu="" <c:if test="${top.wnppYn eq 'Y'}"> rel="noopener noreferrer" </c:if>>
+											<h6>${top.menuNm}<c:if test="${currentlevel lt nextlevel}"><span class="caret"></span></c:if></h6>
+										</a>
 									</c:when>
 									<c:otherwise>
 										<a href="${kl:nvl(top.admUrl, 'javascript:')}" target="${top.wnppYn eq 'Y' ? '_blank' : '_self'}" class="dropdown-toggle"

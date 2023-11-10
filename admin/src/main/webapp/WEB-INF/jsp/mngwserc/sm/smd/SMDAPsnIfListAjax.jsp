@@ -5,21 +5,21 @@
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
-                        <input type="checkbox" value="${list.seq}" name="delValueList" class="checkboxSingle notRequired" data-auth-cd="${list.seq}"/>
+                        <input type="checkbox" value="${list.psnifSeq}" name="delValueList" class="checkboxSingle notRequired" data-auth-cd="${list.psnifSeq}"/>
                         <span class="ion-checkmark-round"></span>
                     </label>
                 </td>
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
                 <td class="text-center">
-                    <a href="javascript:" class="listView" data-details-key="${list.seq}">
-                            ${ list.titl}
+                    <a href="javascript:" class="listView" data-details-key="${list.psnifSeq}">
+                            ${list.titl}
                     </a>
                 </td>
-                <td class="text-center" data-reg-dtm="${list.regDtm}">${list.regDtm}</td>
-                <td class="text-center" data-reg-id="${list.regId}">${list.regId}</td>
-                <td class="text-center" data-mod-id="${list.modId}">${list.modId}</td>
-                <td class="text-center" data-list-dtm="${list.modDtm}">${list.modDtm}</td>
-                <td class="text-center" data-use-yn="${list.useYn}">${ kl:decode(list.useYn, 'Y', '노출', '미노출') }</td>
+                <td class="text-center">${list.regName}</td>
+                <td class="text-center">${list.regDtm}</td>
+                <td class="text-center">${list.modName}</td>
+                <td class="text-center">${list.modDtm}</td>
+                <td class="text-center">${ kl:decode(list.expsYn, 'Y', '노출', '미노출') }</td>
             </tr>
         </c:forEach>
     </c:when>

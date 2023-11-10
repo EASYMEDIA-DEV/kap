@@ -1,9 +1,9 @@
 package com.kap.service.impl.sm;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.SMDPsnIfDTO;
-import com.kap.service.SMDPsnIfService;
-import com.kap.service.dao.sm.SMDPsnIfMapper;
+import com.kap.core.dto.SMDAPsnIfDTO;
+import com.kap.service.SMDAPsnIfService;
+import com.kap.service.dao.sm.SMDAPsnIfMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 개인정보처리방침 관리를 위한 ServiceImpl
  * </pre>
  *
- * @ClassName		: SMDPsnIfServiceImpl.java
+ * @ClassName		: SMDAPsnIfServiceImpl.java
  * @Description		: 개인정보처리방침 관리를 위한 ServiceImpl
  * @author 구은희
  * @since 2023.09.26
@@ -31,16 +31,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class SMDPsnIfServiceImpl implements SMDPsnIfService {
+public class SMDAPsnIfServiceImpl implements SMDAPsnIfService {
 
     // DAO
-    private final SMDPsnIfMapper smdPsnIfMapper;
+    private final SMDAPsnIfMapper smdPsnIfMapper;
     String tableNm = "PRSN_SEQ";
 
     /**
      * 목록을 조회한다.
      */
-    public SMDPsnIfDTO selectPsnIfList(SMDPsnIfDTO smdPsnIfDTO) throws Exception {
+    public SMDAPsnIfDTO selectPsnIfList(SMDAPsnIfDTO smdPsnIfDTO) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
 
         page.setCurrentPageNo(smdPsnIfDTO.getPageIndex());
@@ -59,19 +59,19 @@ public class SMDPsnIfServiceImpl implements SMDPsnIfService {
     /**
      * 목록의 개수를 조회한다.
      */
-    public int selectPsnIfCnt(SMDPsnIfDTO smdPsnIfDTO) throws Exception {
+    public int selectPsnIfCnt(SMDAPsnIfDTO smdPsnIfDTO) throws Exception {
         return smdPsnIfMapper.selectPsnIfCnt(smdPsnIfDTO);
     }
     /**
      * 상세를 조회한다.
      */
-    public SMDPsnIfDTO selectPsnIfDtl(SMDPsnIfDTO smdPsnIfDTO) throws Exception {
+    public SMDAPsnIfDTO selectPsnIfDtl(SMDAPsnIfDTO smdPsnIfDTO) throws Exception {
         return smdPsnIfMapper.selectPsnIfDtl(smdPsnIfDTO);
     }
     /**
      * 게시물을 등록한다.
      */
-    public int insertPsnIf(SMDPsnIfDTO smdPsnIfDTO) throws Exception {
+    public int insertPsnIf(SMDAPsnIfDTO smdPsnIfDTO) throws Exception {
 
         smdPsnIfDTO.setTableNm(tableNm);
         String detailsKey = smdPsnIfMapper.selectSeqNum(smdPsnIfDTO.getTableNm());
@@ -83,14 +83,14 @@ public class SMDPsnIfServiceImpl implements SMDPsnIfService {
     /**
      * 게시물을 수정한다.
      */
-    public int updatePsnIf(SMDPsnIfDTO smdPsnIfDTO) throws Exception {
+    public int updatePsnIf(SMDAPsnIfDTO smdPsnIfDTO) throws Exception {
         return smdPsnIfMapper.updatePsnIf(smdPsnIfDTO);
     }
     /**
      * 게시물을 삭제한다.
      */
     @Transactional
-    public int deletePsnIf(SMDPsnIfDTO smdPsnIfDTO) throws Exception {
+    public int deletePsnIf(SMDAPsnIfDTO smdPsnIfDTO) throws Exception {
         return smdPsnIfMapper.deletePsnIf(smdPsnIfDTO);
     }
 }

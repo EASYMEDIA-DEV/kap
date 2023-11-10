@@ -4,60 +4,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
     // set controller name
     var exports = {
-        controller : "controller/sm/smd/SMDPsnIfWriteCtrl"
+        controller : "controller/sm/smd/SMDBTmncsWriteCtrl"
     };
 
     var $formObj = jQuery("#frmData");
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
-
-
-    var callbackAjaxInsert = function(data){
-        if (parseInt(data.respCnt, 10) > 0)
-        {
-            alert(msgCtrl.getMsg("success.ins"));
-            location.href = "./list";
-        }
-        else
-        {
-            if(data.excessCntYn == "Y"){
-                alert(msgCtrl.getMsg("fail.sm.smb.insert"));
-            }else{
-                alert(msgCtrl.getMsg("fail.act"));
-            }
-        }
-    };
-
-    var callbackAjaxUpdate = function(data){
-        if (parseInt(data.respCnt, 10) > 0)
-        {
-            alert(msgCtrl.getMsg("success.upd"));
-            location.href = "./list";
-        }
-        else
-        {
-            if(data.excessCntYn == "Y"){
-                alert(msgCtrl.getMsg("fail.sm.smb.insert"));
-            }else{
-                alert(msgCtrl.getMsg("fail.act"));
-            }
-        }
-    };
-
-    var callbackAjaxDelete = function(data){
-
-        if (parseInt(data.respCnt, 10) > 0)
-        {
-            alert(msgCtrl.getMsg("success.del.target.none"));
-            location.href = "./list";
-        }
-        else
-        {
-            alert(msgCtrl.getMsg("fail.act"));
-        }
-    };
-
 
     // set model
     ctrl.model = {
@@ -70,7 +23,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         immediately : function(){
 
             /* Editor Setting */
-            jQuery("textarea[id^='cnts']").each(function(){
+            jQuery("textarea[id^='cntn']").each(function(){
                 cmmCtrl.setEditor({
                     editor : jQuery(this).attr("id"),
                     height : 400,
@@ -98,7 +51,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         {
                             editorChk = false;
 
-                            alert(msgCtrl.getMsg("fail.noCntn"));
+                            alert(msgCtrl.getMsg("fail.co.cog.cnts"));
 
                             CKEDITOR.instances[jQuery(this).prop("id")].focus();
 
@@ -126,10 +79,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         cmmCtrl.frmAjax(function(data){
                             if(data.respCnt > 0){
                                 alert(actionMsg);
-                                location.replace("./list");
+                                location.replace("./write");
                             }
-                            actionUrl = "./list";
+                            location.replace("./write");
                         }, actionUrl, $formObj, "post", "json")
+                    }
+                },
+                msg : {
+                    empty : {
+                        text : " 입력해주세요."
                     }
                 }
             });

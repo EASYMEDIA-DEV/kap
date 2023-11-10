@@ -10,7 +10,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -55,7 +54,7 @@ public class COBUserMenuController {
 	{
 		try
     	{
-    		modelMap.addAttribute("rtnData", cOMenuDTO);
+			modelMap.addAttribute("rtnData", cOMenuDTO);
     	}
     	catch (Exception e)
 		{

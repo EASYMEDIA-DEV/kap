@@ -32,8 +32,6 @@ public class SMGWinBusinessDTO extends BaseDTO {
 
     // 순번 (primary key)
     private Integer seq;
-    // 언어 코드
-    private String langCd;
     // 제목
     private String titl;
     private String cntn;

@@ -11,13 +11,13 @@
                     </label>
                 </td>
                 <td>${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td> <img src=${list.phyPath}/></td>
-                <td>https://127.0.0.1:9012/${list.phyPath}</td>
                 <td>${list.orgnFileNm}</td>
+                <td>https://127.0.0.1:9012/${list.phyPath}</td>
                 <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
-                <td>${ list.regName }(${ list.regId })</td>
+                <td>${ list.regName }</td>
             </tr>
         </c:forEach>
+
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">

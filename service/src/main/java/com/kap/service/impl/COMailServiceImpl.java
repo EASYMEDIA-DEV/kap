@@ -1,5 +1,6 @@
 package com.kap.service.impl;
 
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.service.COMailService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import javax.mail.internet.MimeUtility;
 import java.io.File;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -70,12 +72,27 @@ public class COMailServiceImpl  implements COMailService {
 				messageHelper.setText(getTemplate(cOMailDTO, templateFile), true);
 
 				// 첨부파일
+				List<COFileDTO> files = cOMailDTO.getFileList();
 				String filePath = "", fileName = "", realFileNm = "";
+
+				if(files.size() > 0) {
+					for(COFileDTO file : files) {
+						filePath = file.getPhyPath();
+						fileName = file.getSaveFileNm();
+						realFileNm = file.getOrgnFileNm();
+
+						if (!"".equals(filePath) && !"".equals(fileName) && !"".equals(realFileNm))
+						{
+							messageHelper.addAttachment(MimeUtility.encodeText(realFileNm, "UTF-8", "B"), new FileDataSource(filePath + File.separator + fileName));
+						}
+					}
+				}
+				/*String filePath = "", fileName = "", realFileNm = "";
 
 				if (!"".equals(filePath) && !"".equals(fileName) && !"".equals(realFileNm))
 				{
 					messageHelper.addAttachment(MimeUtility.encodeText(realFileNm, "UTF-8", "B"), new FileDataSource(filePath + File.separator + fileName));
-				}
+				}*/
 
 				mailSender.send(message);
 			}

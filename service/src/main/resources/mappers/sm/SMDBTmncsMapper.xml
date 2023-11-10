@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.sm.SMDBTmncsMapper">
+
+    <!--
+         쿼리명 : SMDBTmncsMapper.selectTmncsDtl
+         설  명 : 이용약관 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.06   구은희       최초생성
+    -->
+    <select id="selectTmncsDtl" parameterType="SMDBTmncsDTO">
+
+        SELECT /* SMDBTmncsMapper.selectTmncsDtl */
+            TMNCS_SEQ
+             , CNTN
+             , REG_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+             , REG_IP
+             , REG_DTM
+             , MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+             , MOD_IP
+             , MOD_DTM
+        FROM
+            SM_TMNCS_MST A
+        WHERE 1=1
+        ORDER BY
+            TMNCS_SEQ desc
+        LIMIT 1;
+    </select>
+
+    <!--
+		 쿼리명 : SMDBTmncsMapper.selectSeqNum
+		 설  명 : 테이블의 SEQ 값을 조회한다.
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.11.06   구은희     최초생성
+	-->
+    <select id="selectSeqNum" parameterType="SMDBTmncsDTO" resultType="java.lang.String">
+        SELECT /* SMDBTmncsMapper.selectSeqNum */
+            NEXT_ID
+        FROM CO_SEQ_MST
+        WHERE TABLE_NM = #{tableNm}
+    </select>
+
+    <!--
+		쿼리명 : SMDBTmncsMapper.updatePsnIfSeq
+		설  명 : 테이블의 SEQ 값을 증가시킨다.
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.11.06   구은희     최초생성
+	-->
+    <update id="updateTmncsSeq" parameterType="SMDBTmncsDTO">
+        UPDATE CO_SEQ_MST /*SMDBTmncsMapper.updateTmncsSeq*/
+        SET
+            NEXT_ID = (SELECT
+                           *
+                       FROM
+                           (SELECT
+                                NEXT_ID + '1'
+                            FROM
+                                CO_SEQ_MST
+                            WHERE
+                                TABLE_NM = #{tableNm}) tmp)
+        WHERE
+            TABLE_NM = #{tableNm}
+    </update>
+
+    <!--
+         쿼리명 : SMDBTmncsMapper.insertTmncs
+         설  명 : 이용약관을 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.06   구은희       최초생성
+    -->
+    <insert id="insertTmncs" parameterType="SMDBTmncsDTO">
+        INSERT /* SMDBTmncsMapper.insertTmncs */ INTO SM_TMNCS_MST
+        (
+         TMNCS_SEQ
+        , CNTN
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        )
+        VALUES
+            (
+            #{detailsKey}
+            , #{cntn}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : SMDBTmncsMapper.updateTmncs
+         설  명 : 이용약관을 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.06   구은희       최초생성
+    -->
+    <update id="updateTmncs" parameterType="SMDBTmncsDTO">
+        UPDATE /* SMDBTmncsMapper.updateTmncs */ SM_TMNCS_MST
+        SET
+          CNTN = #{cntn}
+          , MOD_ID = #{modId}
+          , MOD_IP = #{modIp}
+          , MOD_DTM = NOW()
+        WHERE 1=1
+          AND TMNCS_SEQ = #{detailsKey}
+    </update>
+</mapper>

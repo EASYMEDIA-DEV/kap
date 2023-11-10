@@ -31,12 +31,10 @@ import java.util.List;
 public class SMBMainVslDTO extends BaseDTO {
     // 순번 (primary key)
     private Integer seq;
-    // 언어 코드
-    private String langCd;
+    
     // 디바이스 코드
-    private String dvcCd;
+    private String mdCd;
 
-    private String gubun;
     // 제목
     private String titl;
     private String strtDt;

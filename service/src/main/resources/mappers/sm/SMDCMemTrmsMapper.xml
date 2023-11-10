@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.sm.SMDCMemTrmsMapper">
+
+    <!--
+         쿼리명 : SMDCMemTrmsMapper.selectMemTrmsDtl
+         설  명 : 회원약관 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.06   구은희       최초생성
+    -->
+    <select id="selectMemTrmsDtl" parameterType="SMDCMemTrmsDTO">
+
+        SELECT /* SMDCMemTrmsMapper.selectMemTrmsDtl */
+            MEM_TRMS_SEQ
+             , TMNCS_CNTN
+             , PSNIF_CNTN
+             , OFFER_CNTN
+             , REG_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+             , REG_IP
+             , REG_DTM
+             , MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+             , MOD_IP
+             , MOD_DTM
+        FROM
+            SM_MEM_TRMS_MST A
+        WHERE 1=1
+        ORDER BY
+            MEM_TRMS_SEQ DESC
+        LIMIT 1
+    </select>
+
+    <!--
+		 쿼리명 : SMDCMemTrmsMapper.selectSeqNum
+		 설  명 : 테이블의 SEQ 값을 조회한다.
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.11.06   구은희     최초생성
+	-->
+    <select id="selectSeqNum" parameterType="SMDCMemTrmsDTO" resultType="java.lang.String">
+        SELECT /* SMDCMemTrmsMapper.selectSeqNum */
+            NEXT_ID
+        FROM CO_SEQ_MST
+        WHERE TABLE_NM = #{tableNm}
+    </select>
+
+    <!--
+		쿼리명 : SMDCMemTrmsMapper.updateMemTrmsSeq
+		설  명 : 테이블의 SEQ 값을 증가시킨다.
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.11.06   구은희     최초생성
+	-->
+    <update id="updateMemTrmsSeq" parameterType="SMDCMemTrmsDTO">
+        UPDATE CO_SEQ_MST /*SMDCMemTrmsMapper.updateTmncsSeq*/
+        SET
+            NEXT_ID = (SELECT
+                           *
+                       FROM
+                           (SELECT
+                                NEXT_ID + '1'
+                            FROM
+                                CO_SEQ_MST
+                            WHERE
+                                TABLE_NM = #{tableNm}) tmp)
+        WHERE
+            TABLE_NM = #{tableNm}
+    </update>
+
+    <!--
+         쿼리명 : SMDCMemTrmsMapper.insertMemTrms
+         설  명 : 회원약관을 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.06   구은희       최초생성
+    -->
+    <insert id="insertMemTrms" parameterType="SMDCMemTrmsDTO">
+        INSERT /* SMDCMemTrmsMapper.insertMemTrms */ INTO SM_MEM_TRMS_MST
+        (
+            MEM_TRMS_SEQ
+            , TMNCS_CNTN
+            , PSNIF_CNTN
+            , OFFER_CNTN
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+        )
+        VALUES
+            (
+            #{detailsKey}
+            , #{tmncsCntn}
+            , #{psnifCntn}
+            , #{offerCntn}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : SMDCMemTrmsMapper.updateMemTrms
+         설  명 : 회원약관을 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.06   구은희       최초생성
+    -->
+    <update id="updateMemTrms" parameterType="SMDCMemTrmsDTO">
+        UPDATE /* SMDCMemTrmsMapper.updateMemTrms */ SM_MEM_TRMS_MST
+        SET
+            TMNCS_CNTN = #{tmncsCntn}
+          , PSNIF_CNTN = #{psnifCntn}
+          , OFFER_CNTN = #{offerCntn}
+          , MOD_ID = #{modId}
+          , MOD_IP = #{modIp}
+          , MOD_DTM = NOW()
+        WHERE 1=1
+          AND MEM_TRMS_SEQ = #{detailsKey}
+    </update>
+</mapper>

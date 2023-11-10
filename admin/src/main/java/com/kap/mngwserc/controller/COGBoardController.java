@@ -36,7 +36,7 @@ import java.util.ArrayList;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/{langCd}/co/cog/board/{typeCd}")
+@RequestMapping(value="/mngwserc/co/cog/board/{typeCd}")
 public class COGBoardController {
 
     //게시판 서비스
@@ -48,7 +48,7 @@ public class COGBoardController {
      * 게시판 목록 페이지
      */
     @GetMapping(value="/list")
-    public String getBoardListPage(COGBoardDTO cogBoardDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable int typeCd, @PathVariable String langCd) throws Exception
+    public String getBoardListPage(COGBoardDTO cogBoardDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable int typeCd) throws Exception
     {
         try
         {
@@ -57,7 +57,6 @@ public class COGBoardController {
             // 코드 set
             cdDtlList.add("BOARD_TYPE_CD");
 
-            modelMap.addAttribute("langCd", langCd);
             modelMap.addAttribute("typeCd", typeCd);
 
             // 정의된 코드id값들의 상세 코드 맵 반환
@@ -80,11 +79,10 @@ public class COGBoardController {
      * 게시판 목록 조회
      */
     @PostMapping(value = "/select")
-    public String selectBoardListPageAjax(COGBoardDTO cogBoardDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable int typeCd, @PathVariable String langCd) throws Exception
+    public String selectBoardListPageAjax(COGBoardDTO cogBoardDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable int typeCd) throws Exception
     {
         try
         {
-            cogBoardDTO.setLangCd(langCd);
             cogBoardDTO.setTypeCd(typeCd);
 
             modelMap.addAttribute("rtnData", cOGBoardService.selectBoardList(cogBoardDTO));

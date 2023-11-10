@@ -1,13 +1,13 @@
 package com.kap.service;
 
-import com.kap.core.dto.SMDPsnIfDTO;
+import com.kap.core.dto.SMDAPsnIfDTO;
 
 /**
  * <pre>
  * 개인정보처리방침 관리를 위한 Service
  * </pre>
  *
- * @ClassName		: SMDPsnIfService.java
+ * @ClassName		: SMDAPsnIfService.java
  * @Description		: 개인정보처리방침 관리를 위한 Service
  * @author 구은희
  * @since 2023.09.21
@@ -20,33 +20,33 @@ import com.kap.core.dto.SMDPsnIfDTO;
  *    2023.09.26		구은희				   최초 생성
  * </pre>
  */
-public interface SMDPsnIfService {
+public interface SMDAPsnIfService {
     /**
      * 개인정보처리방침 목록을 조회한다.
-     */public SMDPsnIfDTO selectPsnIfList(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
+     */public SMDAPsnIfDTO selectPsnIfList(SMDAPsnIfDTO smdPsnIfDTO) throws Exception;
 
     /**
      * 개인정보처리방침 개수를 조회한다.
      */
-    public int selectPsnIfCnt(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
+    public int selectPsnIfCnt(SMDAPsnIfDTO smdPsnIfDTO) throws Exception;
 
     /**
      * 개인정보처리방침 상세를 조회한다.
      */
-    public SMDPsnIfDTO selectPsnIfDtl(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
+    public SMDAPsnIfDTO selectPsnIfDtl(SMDAPsnIfDTO smdPsnIfDTO) throws Exception;
 
     /**
      * 개인정보처리방침을 등록한다.
      */
-    public int insertPsnIf(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
+    public int insertPsnIf(SMDAPsnIfDTO smdPsnIfDTO) throws Exception;
 
     /**
      * 개인정보처리방침을 수정한다.
      */
-    public int updatePsnIf(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
+    public int updatePsnIf(SMDAPsnIfDTO smdPsnIfDTO) throws Exception;
 
     /**
      * 개인정보처리방침을 삭제한다.
      */
-    public int deletePsnIf(SMDPsnIfDTO smdPsnIfDTO) throws Exception;
+    public int deletePsnIf(SMDAPsnIfDTO smdPsnIfDTO) throws Exception;
 }

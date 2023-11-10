@@ -12,7 +12,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-    var langCd = $("#langCd").val();
     var menuSeq = $("#typeCd").val();
     //목록 조회
     var search = function(page){
@@ -29,7 +28,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/"+langCd+"/co/cog/board/"+menuSeq+"/select", $formObj, "POST", "html");
+        }, "/mngwserc/co/cog/board/"+menuSeq+"/select", $formObj, "POST", "html");
     }
 
     // set model

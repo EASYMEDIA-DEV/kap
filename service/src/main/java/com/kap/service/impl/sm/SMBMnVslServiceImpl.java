@@ -100,13 +100,13 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         HashMap<String, Integer> fileSeqMap;
 
         // PC 이미지/영상
-        if(pSMBMainVslDTO.getDvcCd().equals("pc")) {
+        if(pSMBMainVslDTO.getMdCd().equals("pc")) {
             fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
             pSMBMainVslDTO.setPcAtchFileSeq(fileSeqMap.get("fileSeq"));
         }
 
         // 모바일 이미지/영상
-        if(pSMBMainVslDTO.getDvcCd().equals("mobile")) {
+        if(pSMBMainVslDTO.getMdCd().equals("mobile")) {
             fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
             pSMBMainVslDTO.setMblAtchFileSeq(fileSeqMap.get("fileSeq"));
         }
@@ -170,13 +170,13 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         HashMap<String, Integer> fileSeqMap;
 
         // PC 이미지/영상
-        if(pSMBMainVslDTO.getDvcCd().equals("pc")) {
+        if(pSMBMainVslDTO.getMdCd().equals("pc")) {
             fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
             pSMBMainVslDTO.setPcAtchFileSeq(fileSeqMap.get("fileSeq"));
         }
 
         // 모바일 이미지/영상
-        if(pSMBMainVslDTO.getDvcCd().equals("mobile")) {
+        if(pSMBMainVslDTO.getMdCd().equals("mobile")) {
             fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
             pSMBMainVslDTO.setMblAtchFileSeq(fileSeqMap.get("fileSeq"));
         }
@@ -248,7 +248,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
     public void updateOrder(SMBMainVslDTO pSMBMainVslDTO) throws Exception {
 
         SMBMainVslDTO newRow = sMBMnVslMapper.selectMnNewRow(pSMBMainVslDTO);
-        newRow.setGubun(newRow.getDvcCd());
+        newRow.setMdCd(newRow.getMdCd());
 
         if(newRow != null){
 

@@ -10,92 +10,81 @@
 
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/sm/smd/SMDPsnIfWriteCtrl">
+    <div class="card-body" data-controller="controller/sm/smd/SMDCMemTrmsWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle}</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.seq}" />
+            <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.memTrmsSeq}" />
+
             <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">콘텐츠명<span class="star"> *</span></label>
-                    <div class="col-sm-11">
-                        <p class="form-control-static">${pageTitle}</p>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
-                    <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="100" />
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
+                <h6 style="margin-left: 88px; font-size: 13px;"><em class="ion-play mr-sm"></em> 이용약관</h6>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control notRequired ckeditorRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnInfo.cnts}</textarea>
+                        <textarea class="form-control notRequired ckeditorRequired" id="tmncsCntn" name="tmncsCntn" title="내용" data-type="${pageGb}">${rtnDto.tmncsCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="last-child">
+            <fieldset>
+                <h6 style="margin-left: 88px; font-size: 13px;"><em class="ion-play mr-sm"></em> 개인정보 수집 및 이용동의</h6>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">노출 여부</label>
+                    <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="useYn" value="Y" title="노출 여부" <c:if test="${rtnDto.useYn eq 'Y' or rtnDto.useYn eq null}">checked</c:if>/>
-                            <span class="ion-record"></span> 노출
-                        </label>
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="useYn" value="N" title="노출 여부" <c:if test="${rtnDto.useYn eq 'N'}">checked</c:if>/>
-                            <span class="ion-record"></span> 미노출
-                        </label>
+                        <textarea class="form-control notRequired ckeditorRequired" id="psnifCntn" name="psnifCntn" title="내용" data-type="${pageGb}">${rtnDto.psnifCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
+            <fieldset>
+                <h6 style="margin-left: 88px; font-size: 13px;"><em class="ion-play mr-sm"></em> 제3자 정보 제공 동의</h6>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
+                    <div class="col-sm-11">
+                        <textarea class="form-control notRequired ckeditorRequired" id="offerCntn" name="offerCntn" title="내용" data-type="${pageGb}">${rtnDto.offerCntn}</textarea>
+                    </div>
+                </div>
+            </fieldset>
+            CFG_SEQ
+            SMS_SEND_YN
+            REG_ID
+            REG_IP
+            REG_DTM
+            MOD_ID
+            MOD_IP
+            MOD_DTM
             <hr />
             <div class="clearfix">
                 <div class="pull-left">
                     <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
                 </div>
                 <div class="pull-right">
-                    <c:choose>
-                        <c:when test="${ not empty rtnInfo}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                            <button type="submit" class="btn btn-sm btn-success" >수정</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button type="submit" class="btn btn-sm btn-success">등록</button>
-                        </c:otherwise>
-                    </c:choose>
+                    <button type="submit" class="btn btn-sm btn-success">저장</button>
                 </div>
             </div>
             <c:if test="${ not empty rtnInfo }">
-                <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                 <div class="table-responsive ">
                     <table class="table text-sm">
                         <tbody>
                         <tr>
-                            <th>최초 작성자</th>
-                            <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
-                            <th>최초 작성일</th>
+                            <th>최초 등록자</th>
+                            <td>${ rtnDto.regName }</td>
+                            <th>최초 등록일시</th>
                             <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                         </tr>
                         <tr>
                             <th>최종 수정자</th>
                             <td>
                                 <c:choose>
-                                    <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
-                                        ${ rtnDto.modName }(${ rtnDto.modId })
+                                    <c:when test="${ not empty rtnDto.modName }">
+                                        ${ rtnDto.modName }
                                     </c:when>
                                     <c:otherwise>-</c:otherwise>
                                 </c:choose>
                             </td>
-                            <th>최종 수정일</th>
+                            <th>최종 수정일시</th>
                             <td>
                                 <c:choose>
-                                    <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
+                                    <c:when test="${ not empty rtnDto.modDtm }">
                                         ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
                                     </c:when>
                                     <c:otherwise>-</c:otherwise>

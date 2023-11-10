@@ -127,7 +127,7 @@
                 </div>
             </fieldset>
             <c:choose>
-                <c:when test="${gubun eq 'pc'}">
+                <c:when test="${mdCd eq 'pc'}">
                     <fieldset id="imgArea" <c:if test="${rtnDto.tagCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:block;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">PC 이미지<span class="star"> *</span></label>
@@ -154,7 +154,7 @@
                         </div>
                     </fieldset>
                 </c:when>
-                <c:when test="${gubun eq 'mbl' or gubun eq null}">
+                <c:when test="${mdCd eq 'mbl' or mdCd eq null}">
                     <fieldset id="imgArea" <c:if test="${rtnDto.tagCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:block;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">모바일 이미지<span class="star"> *</span></label>

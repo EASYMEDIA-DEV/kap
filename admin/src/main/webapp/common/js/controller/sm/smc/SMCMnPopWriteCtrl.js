@@ -13,38 +13,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var ctrl = new ezCtrl.controller(exports.controller);
 
 
-    var callbackAjaxInsert = function(data){
-        if (parseInt(data.actCnt, 10) > 0)
-        {
-            alert(msgCtrl.getMsg("success.ins"));
-            location.href = "./list";
-        }
-        else
-        {
-            if(data.excessCntYn == "Y"){
-                alert(msgCtrl.getMsg("fail.sm.smb.insert"));
-            }else{
-                alert(msgCtrl.getMsg("fail.act"));
-            }
-        }
-    };
-
-    var callbackAjaxUpdate = function(data){
-        if (parseInt(data.actCnt, 10) > 0)
-        {
-            alert(msgCtrl.getMsg("success.upd"));
-            location.href = "./list";
-        }
-        else
-        {
-            if(data.excessCntYn == "Y"){
-                alert(msgCtrl.getMsg("fail.sm.smb.insert"));
-            }else{
-                alert(msgCtrl.getMsg("fail.act"));
-            }
-        }
-    };
-
     var callbackAjaxDelete = function(data){
 
         if (parseInt(data.respCnt, 10) > 0)
@@ -95,7 +63,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             tagCd : {
                 event : {
                     change : function(){
-                        //var gubun = jQuery(this).val();
+                        //var mdCd = jQuery(this).val();
                         var tagCd =  $("input[name='tagCd']:checked").val();
                         if (tagCd == "img")
                         {

@@ -467,14 +467,14 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                 after: function () {
                     var admUrl = "", userUrl = jQuery("#userUrl").val();
                     var spanSuffix = jQuery("#spanSuffix").text();
-                    var langCd = "kr";
+
                     // URL 유효성 체크
                     if (!cmmCtrl.checkUrl(jQuery("#userUrl"))) {
                         return false;
                     }
                     /*2023-10-13 cms url, 관리자 사용자 분리*/
                     if (jQuery("input[name='menuType']:checked").val() == "cms") {
-                        admUrl += "/mngwserc/"+langCd+"/contentsid/" + jQuery("#menuSeq").val() + "/list";
+                        admUrl += "/mngwserc/contentsid/" + jQuery("#menuSeq").val() + "/list";
                         jQuery("#admUrl").val(admUrl);
                     } else {
                         if (userUrl) {
