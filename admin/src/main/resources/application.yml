@@ -52,7 +52,7 @@ spring:
 
 #강제 로그인 여부
 app:
-  is-login: false
+  is-login: true
   #발신자 이메일
   from-mail: dev@easymedia.net
 
@@ -109,7 +109,7 @@ spring :
     activate:
       on-profile: local, dev
 app:
-  is-login: false
+  is-login: true
 ---
 spring.config.activate.on-profile: stg, prod
 logging:

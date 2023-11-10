@@ -23,3 +23,5 @@
 /error/build/tmp/bootWar/MANIFEST.MF
 /client/out/production/resources/tiles.xml
 /client/out/production/resources/application.yml
+/client/out/
+/client/build/

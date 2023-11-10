@@ -87,6 +87,7 @@ public class COAuthenticInterceptor implements HandlerInterceptor{
                 }
             }
             // 중복로그인 검사
+            log.error("appLogin : {}", appLogin);
             if(!appLogin)
             {
                 String lgnSsnId = cOAAdmService.getAdmSessionId(lgnCOAAdmDTO.getId());

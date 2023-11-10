@@ -231,7 +231,6 @@ var cmmCtrl = (function(){
 		if (typeof sync == "undefined") {
 			sync = true;
 		}
-
 		jQuery.ajax({
 			url : url,
 			type : "POST",
@@ -257,6 +256,58 @@ var cmmCtrl = (function(){
 				}
 			},
 			error : function(data, status, xhr) {
+				console.log(data)
+				fn_ajax_error(data, status, xhr);
+			},
+			complete : function() {
+				if (loading) {
+					jQuery(".loadingbar").stop().fadeOut(200);
+				}
+			}
+		});
+	};
+
+	/* Ajax Param Data */
+	var fn_json_ajax_data = function(callbackAjax, url, paramData, dataType, loading, sync)
+	{
+		if (typeof dataType == "undefined") {
+			dataType = "json";
+		}
+
+		if (typeof sync == "undefined") {
+			sync = false;
+		}
+		jQuery.ajax({
+			headers: {
+				'X-Requested-With': 'XMLHttpRequest',
+				'X-CSRF-TOKEN': $('meta[name=X-CSRF-TOKEN]').attr('content')
+			},
+			url : url,
+			type : "POST",
+			timeout: 300000,
+			data : JSON.stringify(paramData),
+			dataType : dataType,
+			async: sync,
+			contentType: "application/json; charset=utf-8",
+			beforeSend : function() {
+				if (loading) {
+					jQuery(".loadingbar").stop().fadeIn(200);
+				}
+			},
+			success : function(data, status, xhr) {
+				console.log(data);
+				if(data.errors != null){
+					fn_ajax_error(data, status, xhr);
+				}
+				else
+				{
+					if (callbackAjax) {
+						callbackAjax(data);
+					}
+				}
+			},
+			error : function(data, status, xhr) {
+				console.log(data)
 				fn_ajax_error(data, status, xhr);
 			},
 			complete : function() {
@@ -1506,7 +1557,10 @@ var cmmCtrl = (function(){
 		gridNoDataMessage : fn_grid_no_data_message,
 		gridRequestStart : fn_grid_request_start,
 		gridRequestEnd : fn_grid_request_end,
-		gridRemoveRow : fn_grid_remove_row
+		gridRemoveRow : fn_grid_remove_row,
+
+		//json형식의 데이터를 문자열로 변환 후 자바 컨트롤러에서 @RequestBody BaseDTO baseDto 로 받는다
+		jsonAjax : fn_json_ajax_data,
 
 	}
 }());

@@ -8264,6 +8264,10 @@ textarea.no-resize {
 	padding-bottom: 80px;
 }
 
+.star {
+	color: #f33123;
+}
+
 @-webkit-keyframes spinner-border {
   to {
     transform: rotate(360deg) /* rtl:ignore */;
@@ -8352,3 +8356,4 @@ textarea.no-resize {
 .pre-title {
 	white-space: pre-wrap;
 }
+
