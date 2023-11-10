@@ -750,5 +750,16 @@
   <term name="팀원" description="팀원" physicalName="tmmbr" physicalDescription="team member"/>
   <term name="경영" description="기업, 사업을 관리 및 운영" physicalName="mngmnt" physicalDescription="management"/>
   <term name="공시" description="밝혀진 사실 내용" physicalName="dsclsr" physicalDescription="disclosure"/>
+  <term name="양식" description="일정한 모양이나 형식" physicalName="sty" physicalDescription="style"/>
+  <term name="보안" description="안전을 유지함" physicalName="scrty" physicalDescription="security"/>
+  <term name="환경" description="주위의 상태" physicalName="envrnmt" physicalDescription="environment"/>
+  <term name="안전" description="안전" physicalName="sfty" physicalDescription="safety"/>
+  <term name="설비" description="설비" physicalName="fclty" physicalDescription="facility"/>
+  <term name="탄소" description="주기율표 제14족에 속하는 비금속 원소의 하나." physicalName="crbn" physicalDescription="carbon"/>
+  <term name="배출" description="안에서 밖으로 밀어 내보냄" physicalName="emsns" physicalDescription="emission"/>
+  <term name="계측" description="시간이나 물건의 양을" physicalName="msremnt" physicalDescription="measurement"/>
+  <term name="공급망" description="서비스 및 정보의 흐름이 이루어지는 연결망" physicalName="splychn" physicalDescription="supply chain"/>
+  <term name="안정화" description="바뀌어 달라지지 아니하고 일정한 상태를 유지해 감" physicalName="stblztn" physicalDescription="stabilization"/>
+  <term name="스마트" description="스마트" physicalName="smrt" physicalDescription="smart"/>
   <tag name="태그"/>
 </tm:TermDictionary>
