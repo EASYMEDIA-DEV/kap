@@ -34,7 +34,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/{langCd}/contentsid/{menuSeq}")
+@RequestMapping(value="/mngwserc/contentsid/{menuSeq}")
 public class COGCntsController {
 
     //CMS 서비스
@@ -45,11 +45,10 @@ public class COGCntsController {
      * CMS 목록 페이지
      */
     @GetMapping(value="/list")
-    public String getCntsListPage(COGCntsDTO cogCntsDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public String getCntsListPage(COGCntsDTO cogCntsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            modelMap.addAttribute("langCd", langCd);
             modelMap.addAttribute("rtnData", cogCntsDTO);
 
         }

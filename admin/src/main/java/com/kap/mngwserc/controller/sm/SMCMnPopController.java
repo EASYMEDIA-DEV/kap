@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/sm/smc/{gubun:pc|mbl}")
+@RequestMapping(value="/mngwserc/sm/smc/{mdCd:pc|mbl}")
 public class SMCMnPopController {
 
     /** 서비스 **/
@@ -47,11 +47,11 @@ public class SMCMnPopController {
      * 팝업 목록 페이지로 이동한다.
      */
     @GetMapping(value="/list")
-    public String getMnPopListPage(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String getMnPopListPage(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
-        smcMnPopDTO.setMdCd(gubun);
+        smcMnPopDTO.setMdCd(mdCd);
         modelMap.addAttribute("rtnData", smcMnPopService.selectMnPopList(smcMnPopDTO));
-        modelMap.addAttribute("gubun", gubun);
+        modelMap.addAttribute("mdCd", mdCd);
 
         return "mngwserc/sm/smc/SMCMnPopList.admin";
     }
@@ -60,11 +60,11 @@ public class SMCMnPopController {
      * 팝업 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
-    public String selectPopListPageAjax(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String selectPopListPageAjax(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
-            smcMnPopDTO.setMdCd(gubun);
+            smcMnPopDTO.setMdCd(mdCd);
 
             if(!"".equals(smcMnPopDTO.getDStrDt())){
                 smcMnPopDTO.setExpsStrtDtm(smcMnPopDTO.getDStrDt());
@@ -75,7 +75,7 @@ public class SMCMnPopController {
             }
 
             modelMap.addAttribute("rtnData", smcMnPopService.selectMnPopList(smcMnPopDTO));
-            modelMap.addAttribute("gubun", gubun);
+            modelMap.addAttribute("mdCd", mdCd);
 
         }
         catch (Exception e)
@@ -93,12 +93,12 @@ public class SMCMnPopController {
      * 팝업 상세 페이지로 이동한다.
      */
     @RequestMapping(value="/write")
-    public String getPopWritePage(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String getPopWritePage(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
-            smcMnPopDTO.setMdCd(gubun);
-            modelMap.addAttribute("gubun", smcMnPopDTO.getMdCd());
+            smcMnPopDTO.setMdCd(mdCd);
+            modelMap.addAttribute("mdCd", smcMnPopDTO.getMdCd());
             modelMap.addAttribute("rtnInfo", smcMnPopService.selectMnPopDtl(smcMnPopDTO));
         }
         catch (Exception e)
@@ -117,11 +117,11 @@ public class SMCMnPopController {
      * 팝업을 등록한다.
      */
     @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String insertMnPop(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("gubun") String gubun) throws Exception
+    public String insertMnPop(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
-            smcMnPopDTO.setMdCd(gubun);
+            smcMnPopDTO.setMdCd(mdCd);
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             smcMnPopDTO.setRegId(coaAdmDTO.getId());
             smcMnPopDTO.setRegIp(coaAdmDTO.getLoginIp());
@@ -145,11 +145,11 @@ public class SMCMnPopController {
      * 팝업을 삭제한다.
      */
     @RequestMapping(value="/delete")
-    public String deleteMnPop(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public String deleteMnPop(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
-            smcMnPopDTO.setMdCd(gubun);
+            smcMnPopDTO.setMdCd(mdCd);
 
             if(!"".equals(smcMnPopDTO.getDetailsKey())){
                 smcMnPopDTO.setPopupSeq(Integer.valueOf(smcMnPopDTO.getDetailsKey()));
@@ -174,7 +174,7 @@ public class SMCMnPopController {
      *
      */
     @RequestMapping(value="/update")
-    public String updateMnPop(SMCMnPopDTO smcMnPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public String updateMnPop(SMCMnPopDTO smcMnPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
@@ -183,7 +183,7 @@ public class SMCMnPopController {
             smcMnPopDTO.setModId(coaAdmDTO.getId());
             smcMnPopDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            smcMnPopDTO.setMdCd(gubun);
+            smcMnPopDTO.setMdCd(mdCd);
             smcMnPopDTO.setPopupSeq(Integer.valueOf(smcMnPopDTO.getDetailsKey()));
             modelMap.addAttribute("respCnt", smcMnPopService.updateMnPop(smcMnPopDTO));
         }
@@ -204,14 +204,14 @@ public class SMCMnPopController {
      *
      */
     @RequestMapping(value="/use-yn-update")
-    public String updateUseYn(SMCMnPopDTO smcMnPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public String updateUseYn(SMCMnPopDTO smcMnPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             smcMnPopDTO.setModId(coaAdmDTO.getId());
             smcMnPopDTO.setModIp(coaAdmDTO.getLoginIp());
-            smcMnPopDTO.setMdCd(gubun);
+            smcMnPopDTO.setMdCd(mdCd);
 
             if(!"".equals(smcMnPopDTO.getDetailsKey())){
                 smcMnPopDTO.setPopupSeq(Integer.valueOf(smcMnPopDTO.getDetailsKey()));
@@ -236,7 +236,7 @@ public class SMCMnPopController {
      *
      */
     @RequestMapping(value="/sort", method=RequestMethod.POST)
-    public ModelAndView updateOrder(SMCMnPopDTO smcMnPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("gubun") String gubun) throws Exception
+    public ModelAndView updateOrder(SMCMnPopDTO smcMnPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         ModelAndView mav = new ModelAndView();
 
@@ -246,7 +246,7 @@ public class SMCMnPopController {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             smcMnPopDTO.setModId(coaAdmDTO.getId());
             smcMnPopDTO.setModIp(coaAdmDTO.getLoginIp());
-            smcMnPopDTO.setMdCd(gubun);
+            smcMnPopDTO.setMdCd(mdCd);
 
             smcMnPopService.updateOrder(smcMnPopDTO);
             mav.setViewName("jsonView");

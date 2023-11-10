@@ -11,13 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,7 +39,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/{langCd}/eb/eba")
+@RequestMapping(value="/mngwserc/eb/eba")
 public class EBACouseController {
 
     /** 서비스 **/
@@ -109,9 +107,8 @@ public class EBACouseController {
      * 교육과정관리  상세를 조회한다.
      */
     @GetMapping(value="/write")
-    public String getCouseDtl(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public String getCouseDtl(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-        modelMap.addAttribute("langCd", langCd);
         modelMap.addAttribute("rtnData", eBACouseService.selectCouseDtl(eBACouseDTO));
 
         return "mngwserc/eb/eba/EBACouseWrite.admin";
@@ -122,7 +119,7 @@ public class EBACouseController {
      * 교육과정관리를 등록한다.
      */
     @GetMapping(value="/insert")
-    public EBACouseDTO getCouseInsert(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public EBACouseDTO getCouseInsert(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -153,7 +150,7 @@ public class EBACouseController {
      * 교육과정관리를 수정한다.
      */
     @GetMapping(value="/update")
-    public EBACouseDTO getCouseUpdate(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public EBACouseDTO getCouseUpdate(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -184,7 +181,7 @@ public class EBACouseController {
      * 교육과정관리를  삭제한다.
      */
     @GetMapping(value="/delete")
-    public EBACouseDTO getCouseDelete(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public EBACouseDTO getCouseDelete(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -216,7 +213,7 @@ public class EBACouseController {
      * 교육과정관리를 복사한다.
      */
     @GetMapping(value="/copy")
-    public EBACouseDTO getCouseCopy(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public EBACouseDTO getCouseCopy(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -253,9 +250,8 @@ public class EBACouseController {
      * 교육과정 회차정보 조회
      */
     @PostMapping(value="/sessionList")
-    public String getSessionList(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public String getSessionList(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-        modelMap.addAttribute("langCd", langCd);
         modelMap.addAttribute("rtnData", eBACouseService.selectCouseList(eBACouseDTO));
 
         return "mngwserc/eb/eba/EBACouseSessionListAjax";

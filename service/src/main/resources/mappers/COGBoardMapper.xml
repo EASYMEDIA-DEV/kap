@@ -11,7 +11,6 @@
     <select id="selectBoardList" parameterType="COGBoardDTO" resultType="COGBoardDTO">
         SELECT /* COGBoardMapper.selectBoardList */
             SEQ
-            , LANG_CD
             , TITL
             , CNTS
             , TYPE_CD
@@ -39,7 +38,6 @@
         FROM
             CO_BOARD_MST A
         WHERE 1=1
-          AND LANG_CD = #{langCd}
           AND TYPE_CD = #{typeCd}
           <include refid="selectBoardListwhereSql" />
         LIMIT #{firstIndex}, #{recordCountPerPage}
@@ -58,7 +56,6 @@
         FROM
             CO_BOARD_MST A
         WHERE 1 = 1
-            AND LANG_CD = #{langCd}
             AND TYPE_CD = #{typeCd}
             <include refid="selectBoardListwhereSql" />
     </select>
@@ -66,7 +63,6 @@
     <select id="selectBoardDtl" parameterType="COGBoardDTO" resultType="COGBoardDTO">
         SELECT /* COGBoardMapper.selectBoardDtl */
             SEQ
-             , LANG_CD
              , TITL
              , CNTS
              , TYPE_CD
@@ -99,7 +95,6 @@
         INSERT /* COGBoardMapper.insertBoard */ INTO CO_BOARD_MST
             (
             SEQ
-            , LANG_CD
             , TITL
             , CNTS
             , TYPE_CD
@@ -121,7 +116,6 @@
             VALUES
             (
             #{seq}
-            , #{langCd}
             , #{titl}
             , #{cnts}
             , #{typeCd}

@@ -67,9 +67,6 @@ public class IMAQaDTO extends BaseDTO {
     //QA답변 파일 순번
     private Integer rplyFileSeq;
 
-    //언어코드
-    private String langCd;
-
     //검색 리스트
     private String inqFir;
     private String inqSec;

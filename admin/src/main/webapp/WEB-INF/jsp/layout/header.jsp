@@ -164,7 +164,7 @@
 								<c:choose>
 									<c:when test="${cmsCount eq 0 && top.menuNm eq 'CMS 관리'}">
 									</c:when>
-									<c:when test="${top.menuNm eq '1:1 문의' && top.admUrl eq '/mngwserc/kr/im/ima/list'}">
+									<c:when test="${top.menuNm eq '1:1 문의' && top.admUrl eq '/mngwserc/im/ima/list'}">
 										<a href="${kl:nvl(top.admUrl, 'javascript:')}" target="${top.wnppYn eq 'Y' ? '_blank' : '_self'}" role="button" aria-expanded="false" data-submenu="" <c:if test="${top.wnppYn eq 'Y'}"> rel="noopener noreferrer" </c:if>>
 											<h6>${top.menuNm}<c:if test="${currentlevel lt nextlevel}"><span class="caret"></span></c:if></h6>
 										</a>

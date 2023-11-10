@@ -63,7 +63,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             tagCd : {
                 event : {
                     change : function(){
-                        //var gubun = jQuery(this).val();
+                        //var mdCd = jQuery(this).val();
                         var tagCd =  $("input[name='tagCd']:checked").val();
                         if (tagCd == "img")
                         {

@@ -33,7 +33,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/{langCd}/um/uma")
+@RequestMapping(value="/mngwserc/um/uma")
 public class UMAFtpUploadController {
 
     //FTP 업로드 서비스
@@ -43,11 +43,10 @@ public class UMAFtpUploadController {
      * FTP 업로드 목록 페이지
      */
     @GetMapping(value="/list")
-    public String getFtpListPage(UMAFtpUploadDTO uMAFtpUploadDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable String langCd) throws Exception
+    public String getFtpListPage(UMAFtpUploadDTO uMAFtpUploadDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            modelMap.addAttribute("langCd", langCd);
             // 정의된 코드id값들의 상세 코드 맵 반환
             modelMap.addAttribute("rtnData", uMAFtpUploadDTO);
         }

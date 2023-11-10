@@ -12,8 +12,7 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
-            <input type="hidden" id="langCd" name="langCd" value="${langCd}" />
-            <input type="hidden" id="gubun" name="gubun" value="${gubun}" />
+            <input type="hidden" id="mdCd" name="mdCd" value="${mdCd}" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="게시기간" />

@@ -8,13 +8,13 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.seq}" />
-            <input type="hidden" class="notRequired" id="gubun" name="gubun" value="${gubun}" />
+            <input type="hidden" class="notRequired" id="mdCd" name="mdCd" value="${mdCd}" />
             <!-- 첨부파일 순번 -->
             <c:choose>
-                <c:when test="${gubun eq 'pc'}">
+                <c:when test="${mdCd eq 'pc'}">
                     <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDto.pcAtchFileSeq}" />
                 </c:when>
-                <c:when test="${gubun eq 'mobile'}">
+                <c:when test="${mdCd eq 'mobile'}">
                     <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDto.mblAtchFileSeq}" />
                 </c:when>
             </c:choose>
@@ -155,7 +155,7 @@
                 </div>
             </fieldset>
             <c:choose>
-                <c:when test="${gubun eq 'pc'}">
+                <c:when test="${mdCd eq 'pc'}">
                     <fieldset class="pcImage">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">PC 이미지<span class="star"> *</span></label>
@@ -192,7 +192,7 @@
                     </fieldset>
                 </div>
                 </c:when>
-                <c:when test="${gubun eq 'mobile'}">
+                <c:when test="${mdCd eq 'mobile'}">
                        <fieldset class="mobileImg">
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">mobile 첨부파일<span class="star"> *</span></label>
