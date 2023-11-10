@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.mp.MPEPartsCompanyMapper">
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.selectPartsCompanyList
+         설  명 : 부품사 목록을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09   구은희       최초생성
+    -->
+    <select id="selectPartsCompanyList" parameterType="MPEPartsCompanyDTO">
+        SELECT /* MPEPartsCompanyMapper.selectPartsCompanyList */
+            BSNM_NO
+            , RPRSNT_NM
+            , CMPN_NM
+            , CMPN_CD
+            , CTGRY_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.CTGRY_CD) AS CTGRY_NM
+            , SIZE_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.SIZE_CD) AS SIZE_NM
+            , BSNM_NO
+            , BSC_ADDR
+            , DTL_ADDR
+            , SLS_PMT
+            , MPLE_CNT
+            , TEL_NO
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+            , #{srchDate} AS 'srchDate'
+            , #{dStrDt} AS 'dStrDt'
+            , #{dEndDt} AS 'dEndDt'
+        FROM CP_CMPN_MST A
+        <include refid="selectPartsComListwhereSql" />
+        ORDER BY
+            REG_DTM DESC
+        <if test="excelYn != 'Y'.toString() ">
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
+    </select>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.selectPartsCompanyCnt
+         설  명 : 부품사 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    구은희       최초생성
+    -->
+    <select id="selectPartsCompanyCnt" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
+        SELECT /* MPEPartsCompanyMapper.selectPartsCompanyCnt*/
+            COUNT(BSNM_NO)
+        FROM
+        CP_CMPN_MST A
+        <include refid="selectPartsComListwhereSql" />
+    </select>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.selectPartsCompanyDtl
+         설  명 : 부품사 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09   구은희       최초생성
+    -->
+    <select id="selectPartsCompanyDtl" parameterType="MPEPartsCompanyDTO">
+        SELECT /* MPEPartsCompanyMapper.selectPartsCompanyDtl */
+             A.BSNM_NO
+             , A.CMPN_NM
+             , A.RPRSNT_NM
+             , A.CMPN_NFRML_NM
+             , A.CMPN_CD
+             , A.CTGRY_CD
+             , A.SIZE_CD
+             , A.STBSM_DT
+             , A.TEL_NO
+             , A.ZIPCODE
+             , A.BSC_ADDR
+             , A.DTL_ADDR
+             , A.SLS_PMT
+             , A.SLS_YEAR
+             , A.MPLE_CNT
+             , A.MJR_PRDCT_1
+             , A.MJR_PRDCT_2
+             , A.MJR_PRDCT_3
+             , A.QLTY_5_STAR_CD
+             , A.QLTY_5_STAR_YEAR
+             , A.PAY_5_STAR_CD
+             , A.PAY_5_STAR_YEAR
+             , A.TCHLG_5_STAR_CD
+             , A.TCHLG_5_STAR_YEAR
+             , A.ADM_MEMO
+             , A.REG_ID
+             , A.REG_IP
+             , A.REG_DTM
+             , B.cbsn_seq
+             , B.nm
+             , B.score
+             , B.year
+             , B.crtfn_cmpn_nm
+        FROM cp_cmpn_mst A
+        JOIN cp_cmpn_cbsn_dtl B
+        ON A.bsnm_no = B.bsnm_no
+        WHERE 1=1
+          AND A.BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.checkBsnmNo
+         설  명 : 부품사의 사업자번호 등록여부를 확인한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09   구은희       최초생성
+    -->
+    <select id="checkBsnmNo" parameterType="MPEPartsCompanyDTO">
+        SELECT /* MPEPartsCompanyMapper.checkBsnmNo */
+            BSNM_NO
+             , CMPN_NM
+             , RPRSNT_NM
+        FROM CP_CMPN_MST
+        WHERE BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.insertPartsCompany
+         설  명 : 부품사를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09   구은희       최초생성
+    -->
+    <insert id="insertPartsCompany" parameterType="MPEPartsCompanyDTO">
+        INSERT /* MPEPartsCompanyMapper.insertPartsCompany */ INTO CP_CMPN_MST
+        (
+            BSNM_NO
+            , CMPN_NM
+            , RPRSNT_NM
+            , CMPN_NFRML_NM
+            , CMPN_CD
+            , CTGRY_CD
+            , SIZE_CD
+            , STBSM_DT
+            , TEL_NO
+            , ZIPCODE
+            , BSC_ADDR
+            , DTL_ADDR
+            , SLS_PMT
+            , SLS_YEAR
+            , MPLE_CNT
+            , MJR_PRDCT_1
+            , MJR_PRDCT_2
+            , MJR_PRDCT_3
+            , QLTY_5_STAR_CD
+            , QLTY_5_STAR_YEAR
+            , PAY_5_STAR_CD
+            , PAY_5_STAR_YEAR
+            , TCHLG_5_STAR_CD
+            , TCHLG_5_STAR_YEAR
+            , ADM_MEMO
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+        )
+        VALUES
+            (
+            #{bsnmNo}
+            , #{cmpnNm}
+            , #{rprsntNm}
+            , #{cmpnNfrmlNm}
+            , #{cmpnCd}
+            , #{ctgryCd}
+            , #{sizeCd}
+            , #{stbsmDt}
+            , #{telNo}
+            , #{zipcode}
+            , #{bscAddr}
+            , #{dtlAddr}
+            , #{slsPmt}
+            , #{slsYear}
+            , #{mpleCnt}
+            , #{mjrPrdct1}
+            , #{mjrPrdct2}
+            , #{mjrPrdct3}
+            , #{qlty5StarCd}
+            , #{qlty5StarYear}
+            , #{pay5StarCd}
+            , #{pay5StarYear}
+            , #{tchlg5StarCd}
+            , #{tchlg5StarYear}
+            , #{admMemo}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+		 쿼리명 : MPEPartsCompanyMapper.selectSeqNum
+		 설  명 : 테이블의 SEQ 값을 조회한다.
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.25   구은희     최초생성
+	-->
+    <select id="selectSeqNum" parameterType="MPEPartsCompanyDTO" resultType="java.lang.String">
+        SELECT /* MPEPartsCompanyMapper.selectSeqNum */
+            NEXT_ID
+        FROM CO_SEQ_MST
+        WHERE TABLE_NM = #{tableNm}
+    </select>
+
+    <!--
+		쿼리명 : MPEPartsCompanyMapper.updatePartsCompanySeq
+		설  명 : 테이블의 SEQ 값을 증가시킨다.
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.25   구은희     최초생성
+	-->
+    <update id="updatePartsCompanySeq" parameterType="MPEPartsCompanyDTO">
+        UPDATE CO_SEQ_MST /*MPEPartsCompanyMapper.updatePartsCompanySeq*/
+        SET
+            NEXT_ID = (SELECT
+                           *
+                       FROM
+                           (SELECT
+                                NEXT_ID + '1'
+                            FROM
+                                CO_SEQ_MST
+                            WHERE
+                                TABLE_NM = #{tableNm}) tmp)
+        WHERE
+            TABLE_NM = #{tableNm}
+    </update>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.insertPartsComSQInfo
+         설  명 : 부품사의 SQ 정보를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09   구은희       최초생성
+    -->
+    <insert id="insertPartsComSQInfo" parameterType="MPEPartsCompanyDTO">
+        INSERT /* MPEPartsCompanyMapper.insertPartsComSQInfo */ INTO CP_CMPN_CBSN_DTL
+        (
+            BSNM_NO
+            , CBSN_SEQ
+            , NM
+            , SCORE
+            , YEAR
+            , CRTFN_CMPN_NM
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+        )
+        VALUES
+        (
+            #{bsnmNo}
+            , #{cbsnSeq}
+            , #{nm}
+            , #{score}
+            , #{year}
+            , #{crtfnCmpnNm}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.updatePartsCompany
+         설  명 : 부품사를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09   구은희       최초생성
+    -->
+    <update id="updatePartsCompany" parameterType="MPEPartsCompanyDTO">
+        UPDATE /* MPEPartsCompanyMapper.updatePartsCompany */ CP_CMPN_MST
+        SET
+            BSNM_NO = #{bsnmNo}
+          , CMPN_NM = #{cmpnNm}
+          , RPRSNT_NM = #{rprsntNm}
+          , CMPN_NFRML_NM = #{cmpnNfrmlNm}
+          , CMPN_CD = #{cmpnCd}
+          , CTGRY_CD = #{ctgryCd}
+          , SIZE_CD = #{sizeCd}
+          , STBSM_DT = #{stbsmDt}
+          , TEL_NO = #{telNo}
+          , ZIPCODE = #{zipcode}
+          , BSC_ADDR = #{bscAddr}
+          , DTL_ADDR = #{dtlAddr}
+          , SLS_PMT = #{slsPmt}
+          , SLS_YEAR = #{slsYear}
+          , MPLE_CNT = #{mpleCnt}
+          , MJR_PRDCT_1 = #{mjrPrdct1}
+          , MJR_PRDCT_2 = #{mjrPrdct2}
+          , MJR_PRDCT_3 = #{mjrPrdct3}
+          , QLTY_5_STAR_CD = #{qlty5StarCd}
+          , QLTY_5_STAR_YEAR = #{qlty5StarYear}
+          , PAY_5_STAR_CD = #{pay5StarCd}
+          , PAY_5_STAR_YEAR = #{pay5StarYear}
+          , TCHLG_5_STAR_CD = #{tchlg5StarCd}
+          , TCHLG_5_STAR_YEAR = #{tchlg5StarYear}
+          , ADM_MEMO = #{admMemo}
+          , MOD_ID = #{modId}
+          , MOD_IP = #{modIp}
+          , MOD_DTM = NOW()
+        WHERE 1=1
+          AND BSNM_NO = #{bsnmNo}
+    </update>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.updatePartsComSQInfo
+         설  명 : 부품사의 SQ 정보를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09   구은희       최초생성
+    -->
+    <update id="updatePartsComSQInfo" parameterType="MPEPartsCompanyDTO">
+        UPDATE /* MPEPartsCompanyMapper.updatePartsComSQInfo */ CP_CMPN_CBSN_DTL
+        SET
+            BSNM_NO = #{bsnmNo}
+          , NM = #{nm}
+          , SCORE = #{score}
+          , YEAR = #{year}
+          , CRTFN_CMPN_NM = #{crtfnCmpnNm}
+          , MOD_ID = #{modId}
+          , MOD_IP = #{modIp}
+          , MOD_DTM = NOW()
+        WHERE 1=1
+          AND CBSN_SEQ = #{cbsnSeq}
+    </update>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.deletePartsCompany
+         설  명 : 부품사를 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.08   구은희       최초생성
+    -->
+    <delete id="deletePartsCompany" parameterType="MPEPartsCompanyDTO">
+        DELETE /* MPEPartsCompanyMapper.deletePartsCompany */
+        FROM
+        CP_CMPN_MST
+        <where>
+            <choose>
+                <when test="delValueList != null">
+                    BSNM_NO IN
+                    <foreach collection="delValueList" item="item" index="index" separator=", " open="(" close=")">
+                        #{item}
+                    </foreach>
+                </when>
+                <otherwise>
+                    BSNM_NO = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+		쿼리명 : selectPartsComListwhereSql
+		설  명 : 부품사 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    구은희       최초생성
+    -->
+    <sql id="selectPartsComListwhereSql">
+        <where>
+            <if test="srchDate != null and srchDate != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                            AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <when test="srchDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <otherwise>
+
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="ctgryCdList != null and ctgryCdList.size() > 0">
+                and (
+                <foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="" close="" separator=" or ">
+                    CTGRY_CD = #{ctgryCdList}
+                </foreach>
+                )
+            </if>
+            <if test="sizeCdList != null and sizeCdList.size() > 0">
+                and (
+                <foreach collection="sizeCdList" item="sizeCdList" index="index" open="" close="" separator=" or ">
+                    SIZE_CD = #{sizeCdList}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 1">
+                        AND RPRSNT_NM LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        AND CMPN_NM LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 3">
+                        AND BSC_ADDR LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 4">
+                        AND CMPN_CD LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 5">
+                        AND BSNM_NO LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 6">
+                        AND TEL_NO LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 7">
+                        AND (
+                        INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <when test="f == 8">
+                        AND (
+                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <otherwise>
+                        AND (
+                        INSTR(#{q}, RPRSNT_NM) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, CMPN_NM) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, BSC_ADDR) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, CMPN_CD) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, BSNM_NO) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, TEL_NO) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+</mapper>

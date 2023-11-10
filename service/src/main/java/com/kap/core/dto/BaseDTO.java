@@ -73,4 +73,6 @@ public class BaseDTO {
     private Integer recordCountPerPage;
     //전달받을 파일 리스트
     private List<COFileDTO> fileList;
+
+    private String siteGubun = ""; //admin , front
 }

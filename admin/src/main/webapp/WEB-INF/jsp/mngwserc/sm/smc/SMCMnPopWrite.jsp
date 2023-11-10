@@ -10,11 +10,11 @@
 
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/sm/smc/SMCPopWriteCtrl">
+    <div class="card-body" data-controller="controller/sm/smc/SMCMnPopWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle}</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.seq}" />
+            <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.popupSeq}" />
             <!-- 첨부파일 순번 -->
             <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDto.fileSeq}" />
             <fieldset>
@@ -22,7 +22,7 @@
                     <label class="col-sm-1 control-label">게시기간<span class="star"> *</span></label>
                     <div class="col-sm-9 ">
                         <div class="input-group col-md-2" style="z-index:0;">
-                            <input type="text" class="form-control datetimepicker_strtDt ${kl:decode(rtnDto.odtmYn, 'Y', 'notRequired', '')}" id="strtDtm" name="strtDtm" value="${kl:convertDate(rtnDto.strtDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd', '')}" ${kl:decode(rtnDto.odtmYn, 'Y', 'disabled', '')} readonly="readonly" title="시작일" />
+                            <input type="text" class="form-control datetimepicker_strtDt ${kl:decode(rtnDto.odtmYn, 'Y', 'notRequired', '')}" id="expsStrtDtm" name="expsStrtDtm" value="${kl:convertDate(rtnDto.expsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd', '')}" ${kl:decode(rtnDto.odtmYn, 'Y', 'disabled', '')} readonly="readonly" title="시작일" />
                             <span class="input-group-btn" style="z-index:0;">
 					<button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
 						<em class="ion-calendar"></em>
@@ -30,7 +30,7 @@
 				</span>
                         </div>
                         <select class="form-control" id="ptupStrtHh" name="ptupStrtHh" title="시작일(시)">
-                            <c:set var="ptupStrtHh" value="${kl:convertDate(rtnDto.strtDtm, 'yyyy-MM-dd HH:mm', 'HH', '')}" />
+                            <c:set var="ptupStrtHh" value="${kl:convertDate(rtnDto.expsStrtDtm, 'yyyy-MM-dd HH:mm', 'HH', '')}" />
                             <c:forEach var="strtHh" begin="0" end="23" step="1">
                                 <c:choose>
                                     <c:when test="${strtHh lt 10}">
@@ -44,7 +44,7 @@
                         </select>
                         &nbsp;시&nbsp;
                         <select class="form-control" id="ptupStrtMi" name="ptupStrtMi" title="시작일(분)">
-                            <c:set var="ptupStrtMi" value="${kl:convertDate(rtnDto.strtDtm, 'yyyy-MM-dd HH:mm', 'mm', '')}" />
+                            <c:set var="ptupStrtMi" value="${kl:convertDate(rtnDto.expsStrtDtm, 'yyyy-MM-dd HH:mm', 'mm', '')}" />
                             <c:forEach var="strtMi" begin="0" end="50" step="10">
                                 <c:choose>
                                     <c:when test="${strtMi lt 10}">
@@ -59,7 +59,7 @@
                         &nbsp;분&nbsp;
                         &nbsp;~&nbsp;
                         <div class="input-group col-md-2" style="z-index:0;">
-                            <input type="text" class="form-control datetimepicker_endDt ${kl:decode(rtnDto.odtmYn, 'Y', 'notRequired', '')}" id="endDtm" name="endDtm" value="${kl:convertDate(rtnDto.endDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd', '')}" ${kl:decode(rtnDto.odtmYn, 'Y', 'disabled', '')} readonly="readonly" title="종료일" />
+                            <input type="text" class="form-control datetimepicker_endDt ${kl:decode(rtnDto.odtmYn, 'Y', 'notRequired', '')}" id="expsEndDtm" name="expsEndDtm" value="${kl:convertDate(rtnDto.expsEndDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd', '')}" ${kl:decode(rtnDto.odtmYn, 'Y', 'disabled', '')} readonly="readonly" title="종료일" />
                             <span class="input-group-btn" style="z-index:0;">
 					<button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
 						<em class="ion-calendar"></em>
@@ -67,7 +67,7 @@
 				</span>
                         </div>
                         <select class="form-control" id="ptupEndHh" name="ptupEndHh" title="종료일(시)">
-                            <c:set var="ptupEndHh" value="${kl:convertDate(rtnDto.endDtm, 'yyyy-MM-dd HH:mm', 'HH', '')}" />
+                            <c:set var="ptupEndHh" value="${kl:convertDate(rtnDto.expsEndDtm, 'yyyy-MM-dd HH:mm', 'HH', '')}" />
                             <c:forEach var="endHh" begin="0" end="23" step="1">
                                 <c:choose>
                                     <c:when test="${endHh lt 10}">
@@ -81,7 +81,7 @@
                         </select>
                         &nbsp;시&nbsp;
                         <select class="form-control" id="ptupEndMi" name="ptupEndMi" title="종료일(분)">
-                            <c:set var="ptupEndMi" value="${kl:convertDate(rtnDto.endDtm, 'yyyy-MM-dd HH:mm', 'mm', '')}" />
+                            <c:set var="ptupEndMi" value="${kl:convertDate(rtnDto.expsEndDtm, 'yyyy-MM-dd HH:mm', 'mm', '')}" />
                             <c:forEach var="endMi" begin="0" end="50" step="10">
                                 <c:choose>
                                     <c:when test="${endMi lt 10}">
@@ -114,13 +114,13 @@
             <fieldset class="last-child">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">구분<span class="star"> *</span></label>
-                    <div class="col-sm-11 typeCd">
+                    <div class="col-sm-11 tagCd">
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="typeCd" value="image" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">checked</c:if> />
+                            <input type="radio" name="tagCd" value="img" <c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">checked</c:if> />
                             <span class="ion-record"></span> 이미지
                         </label>
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="typeCd" value="html" <c:if test="${rtnDto.typeCd eq 'html'}">checked</c:if> />
+                            <input type="radio" name="tagCd" value="html" <c:if test="${rtnDto.tagCd eq 'html'}">checked</c:if> />
                             <span class="ion-record"></span> HTML
                         </label>
                     </div>
@@ -128,38 +128,38 @@
             </fieldset>
             <c:choose>
                 <c:when test="${gubun eq 'pc'}">
-                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:block;"</c:if>>
+                    <fieldset id="imgArea" <c:if test="${rtnDto.tagCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:block;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">PC 이미지<span class="star"> *</span></label>
                             <div class="col-sm-10 col-md-11">
-                                <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                <spring:eval var="imgExtns" expression="@environment.getProperty('app.file.imgExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="5242880" />
-                                <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지">
+                                <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${imgExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ 1920 X 1080 / 파일 확장자(${imageExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
+                                    ※ 1920 X 1080 / 파일 확장자(${imgExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
                                 </p>
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset id="htmlArea" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:none;"</c:if>>
+                    <fieldset id="htmlArea" <c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:none;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">PC HTML<span class="star"> *</span></label>
                             <div class="col-sm-11">
-                                <textarea class="form-control notRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnDto.cnts}</textarea>
+                                <textarea class="form-control notRequired" id="cntn" name="cntn" title="내용" data-type="${pageGb}">${rtnDto.cntn}</textarea>
                             </div>
                         </div>
                     </fieldset>
                 </c:when>
-                <c:when test="${gubun eq 'mobile' or gubun eq null}">
-                    <fieldset id="imageArea" <c:if test="${rtnDto.typeCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:block;"</c:if>>
+                <c:when test="${gubun eq 'mbl' or gubun eq null}">
+                    <fieldset id="imgArea" <c:if test="${rtnDto.tagCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:block;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">모바일 이미지<span class="star"> *</span></label>
                             <div class="col-sm-10 col-md-11">
-                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imgExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="5242880" />
                                 <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지">
                                     <div class="dz-default dz-message">
@@ -167,35 +167,35 @@
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ 1920 X 1080 / 파일 확장자(${imageExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}"/>MB 이하) / 최대 개수 (1개)
+                                    ※ 1920 X 1080 / 파일 확장자(${imgExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}"/>MB 이하) / 최대 개수 (1개)
                                 </p>
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset id="htmlArea" <c:if test="${rtnDto.typeCd eq 'image' or rtnDto.typeCd eq null}">style="display:none;"</c:if>>
+                    <fieldset id="htmlArea" <c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:none;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">모바일 HTML<span class="star"> *</span></label>
                             <div class="col-sm-11">
-                                <textarea class="form-control notRequired" id="cnts" name="cnts" title="내용" data-type="${pageGb}">${rtnDto.cnts}</textarea>
+                                <textarea class="form-control notRequired" id="cntn" name="cntn" title="내용" data-type="${pageGb}">${rtnDto.cntn}</textarea>
                             </div>
                         </div>
                     </fieldset>
                 </c:when>
             </c:choose>
-            <fieldset class="linkUrlContainer">
+            <fieldset class="urlUrlContainer">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">링크 URL</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control input-sm notRequired" id="linkUrl" name="linkUrl" value="${rtnDto.linkUrl}" maxlength="1000" title="링크 URL" placeholder="링크 URL 입력하세요." />
+                        <input type="text" class="form-control input-sm notRequired" id="urlUrl" name="urlUrl" value="${rtnDto.urlUrl}" maxlength="1000" title="링크 URL" placeholder="링크 URL 입력하세요." />
                     </div>
                     <div class="col-sm-2">
-                        <c:set var="newWndwYn" value="${kl:nvl(rtnDto.newWndwYn, 'Y')}" />
+                        <c:set var="wnppYn" value="${kl:nvl(rtnDto.wnppYn, 'Y')}" />
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="newWndwYn" value="Y" <c:if test="${newWndwYn eq 'Y'}">checked</c:if> />
+                            <input type="radio" name="wnppYn" value="Y" <c:if test="${wnppYn eq 'Y'}">checked</c:if> />
                             <span class="ion-record"></span> 새 창
                         </label>
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="newWndwYn" value="N" <c:if test="${newWndwYn eq 'N'}">checked</c:if> />
+                            <input type="radio" name="wnppYn" value="N" <c:if test="${wnppYn eq 'N'}">checked</c:if> />
                             <span class="ion-record"></span> 현재 창
                         </label>
                     </div>
@@ -206,11 +206,11 @@
                     <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
                     <div class="col-sm-11">
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="useYn" value="Y" title="노출 여부" <c:if test="${rtnDto.useYn eq 'Y' or rtnDto.useYn eq null}">checked</c:if>/>
+                            <input type="radio" name="expsYn" value="Y" title="노출 여부" <c:if test="${rtnDto.expsYn eq 'Y' or rtnDto.expsYn eq null}">checked</c:if>/>
                             <span class="ion-record"></span> 노출
                         </label>
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="useYn" value="N" title="노출 여부" <c:if test="${rtnDto.useYn eq 'N'}">checked</c:if>/>
+                            <input type="radio" name="expsYn" value="N" title="노출 여부" <c:if test="${rtnDto.expsYn eq 'N'}">checked</c:if>/>
                             <span class="ion-record"></span> 미노출
                         </label>
                     </div>

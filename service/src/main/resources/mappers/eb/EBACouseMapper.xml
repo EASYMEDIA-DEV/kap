@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.eb.EBACouseMapper">
+	<!--
+		쿼리명 : EBACouseMapper.selectCouseList
+		설  명 : 교육과정 목록을 조회한다.
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.02    김학규       최초생성
+    -->
+	<!--<select id="selectCouseList" parameterType="EBACouseDTO" resultType="EBACouseDTO">
+		select /* EBACouseMapper.selectCouseList */
+			  *
+		from
+			co_adm_mst a
+		<include refid="selectAdmListwhereSql" />
+		order by
+			reg_dtm desc
+
+			limit #{firstIndex}, #{recordCountPerPage}
+	</select>-->
+
+	<!--
+		쿼리명 : EBACouseMapper.selectCouseListCnt
+		설  명 : 교육과정 목록을 조회한다. (카운트)
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.02    김학규       최초생성
+    -->
+	<!--<select id="selectCouseListCnt" parameterType="EBACouseDTO" resultType="java.lang.Integer">
+		select /* EBACouseMapper.selectCouseListCnt */
+			count(*)
+		from
+			co_adm_mst a
+		<include refid="selectCouseListwhereSql" />
+	</select>-->
+
+	<!--
+		쿼리명 : selectCouseListwhereSql
+		설  명 : 교육과정 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.02    김학규       최초생성
+    -->
+	<!--<sql id="selectCouseListwhereSql">
+		<where>
+			<if test="strtDt != null and strtDt != ''.toString() ">
+				and last_lgn_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+			</if>
+			<if test="endDt != null and endDt != ''.toString() ">
+				and last_lgn_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+			</if>
+			<if test="authCdList != null and authCdList.size() > 0">
+				and (
+				<foreach collection="authCdList" item="authCdList" index="index" open="" close="" separator=" or ">
+					auth_cd = #{authCdList}
+				</foreach>
+				)
+			</if>
+			<if test="useYnList != null and useYnList.size() > 0">
+				and (
+				<foreach collection="useYnList" item="useYnList" index="index" open="" close="" separator=" or ">
+					use_yn = #{useYnList}
+				</foreach>
+				)
+			</if>
+			<if test="q != null and q != ''.toString() ">
+				<choose>
+					<when test="f == 1">
+						and id like concat('%', #{q}, '%')
+					</when>
+					<when test="f == 2">
+						and name like concat('%', #{q}, '%')
+					</when>
+					<when test="f == 3 ">
+						and (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) like concat('%', #{q}, '%')
+					</when>
+					<otherwise>
+						and (
+							id like concat('%', #{q}, '%')
+							or name like concat('%', #{q}, '%')
+							or (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) like concat('%', #{q}, '%')
+						)
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>-->
+
+	<!--
+      쿼리명 : EBACouseMapper.selectCouseDtl
+      설  명 : 교육과정 상세를 조회한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.02   김학규       최초생성
+ -->
+	<!--<select id="selectCouseDtl" parameterType="EBACouseDTO" resultType="EBACouseDTO">
+		select /* EBACouseMapper.selectCouseDtl */
+			   adm_seq
+			 , id
+			 , auth_cd
+			 , (select cd_nm from co_code_mst where cd_id='ADMIN_AUTH_CD' and cd=a.auth_cd) as auth_cd_nm
+		     , dept_cd
+			 , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) as dept_cd_nm
+			 , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) as dept_nm
+			 , type_cd
+			 , name
+			 , email
+			 , allw_ip
+		     , lgn_crtfn_yn
+			 , use_yn
+		from
+			co_adm_mst a
+		where
+			adm_seq = #{detailsKey}
+	</select>-->
+
+	<!--
+         쿼리명 : EBACouseMapper.insertCouse
+         설  명 : 교육과정을 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.02   김학규       최초생성
+    -->
+	<!--<insert id="insertCouse" parameterType="EBACouseDTO" >
+		<selectKey keyProperty="couseSeq" resultType="Integer" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+		insert /* EBACouseMapper.insertCouse */ into co_adm_mst
+		(
+			  auth_cd
+			, dept_cd
+			, dept_nm
+			, type_cd
+			, id
+			, pwd
+			, name
+			, email
+			, allw_ip
+			, pwd_chng_dtm
+			, lgn_fail_cnt
+			, tmp_pwd_yn
+			, lgn_crtfn_yn
+			, use_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+			, last_lgn_dtm
+		)
+		values
+		(
+		  	#{authCd}
+		  	, #{deptCd}
+			, #{deptNm}
+			, 'cms'
+			, #{id}
+			, #{pwd}
+			, #{name}
+			, #{email}
+			, #{allwIp}
+			, now()
+			, 0
+			, 'N'
+			, #{lgnCrtfnYn}
+			, #{useYn}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+			, 0
+		)
+	</insert>-->
+
+	<!--
+         쿼리명 : EBACouseMapper.updateCouse
+         설  명 : 교육과정을 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.02   김학규       최초생성
+    -->
+	<!--<update id="updateCouse" parameterType="EBACouseDTO">
+		update /* EBACouseMapper.updateCouse */ co_adm_mst
+		set
+		  email = #{email}
+		, dept_cd = #{deptCd}
+		, dept_nm = #{deptNm}
+
+		, mod_id = #{regId}
+		, mod_ip = #{regIp}
+		, mod_dtm = NOW()
+		where
+			adm_seq = #{detailsKey}
+	</update>-->
+
+	<!--
+         쿼리명 : EBACouseMapper.deleteCouse
+         설  명 : 교육과정을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.02   김학규       최초생성
+    -->
+	<!--<delete id="deleteCouse" parameterType="EBACouseDTO">
+		delete /* EBACouseMapper.deleteCouse */
+		from
+			co_adm_mst
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					adm_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					adm_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>-->
+
+
+
+</mapper>
+
+

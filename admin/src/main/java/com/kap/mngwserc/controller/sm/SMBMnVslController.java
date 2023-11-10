@@ -128,19 +128,19 @@ public class SMBMnVslController {
      * 메인 비주얼 삭제
      */
     @PostMapping(value = "/delete")
-    public String deleteMnVsl(SMBMainVslDTO pSMBMainVslDTO, ModelMap modelMap, @PathVariable("gubun") String gubun, @PathVariable("langCd") String langCd) throws Exception {
+    public String deleteMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("gubun") String gubun, @PathVariable("langCd") String langCd) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            pSMBMainVslDTO.setRegId(coaAdmDTO.getId());
-            pSMBMainVslDTO.setRegIp(coaAdmDTO.getLoginIp());
-            pSMBMainVslDTO.setRegName(coaAdmDTO.getName());
-            pSMBMainVslDTO.setRegDeptNm(coaAdmDTO.getDeptNm());
-            pSMBMainVslDTO.setModId(coaAdmDTO.getId());
-            pSMBMainVslDTO.setModIp(coaAdmDTO.getLoginIp());
-            pSMBMainVslDTO.setDvcCd(gubun);
-            pSMBMainVslDTO.setLangCd(langCd);
+            sMBMainVslDTO.setRegId(coaAdmDTO.getId());
+            sMBMainVslDTO.setRegIp(coaAdmDTO.getLoginIp());
+            sMBMainVslDTO.setRegName(coaAdmDTO.getName());
+            sMBMainVslDTO.setRegDeptNm(coaAdmDTO.getDeptNm());
+            sMBMainVslDTO.setModId(coaAdmDTO.getId());
+            sMBMainVslDTO.setModIp(coaAdmDTO.getLoginIp());
+            sMBMainVslDTO.setDvcCd(gubun);
+            sMBMainVslDTO.setLangCd(langCd);
 
-            modelMap.addAttribute("respCnt", sMBMnVslService.deleteMnVsl(pSMBMainVslDTO));
+            modelMap.addAttribute("respCnt", sMBMnVslService.deleteMnVsl(sMBMainVslDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -182,18 +182,18 @@ public class SMBMnVslController {
      * 메인 비주얼 정렬 수정
      */
     @RequestMapping(value="/sort", method=RequestMethod.POST)
-    public ModelAndView updateOrder(SMBMainVslDTO pSMBMainVslDTO, ModelMap modelMap, @PathVariable("gubun") String gubun, @PathVariable("langCd") String langCd) throws Exception {
+    public ModelAndView updateOrder(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("gubun") String gubun, @PathVariable("langCd") String langCd) throws Exception {
 
         ModelAndView mav = new ModelAndView();
 
         try {
-            modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslList(pSMBMainVslDTO));
+            modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslList(sMBMainVslDTO));
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            pSMBMainVslDTO.setModId(coaAdmDTO.getId());
-            pSMBMainVslDTO.setModIp(coaAdmDTO.getLoginIp());
-            pSMBMainVslDTO.setDvcCd(gubun);
+            sMBMainVslDTO.setModId(coaAdmDTO.getId());
+            sMBMainVslDTO.setModIp(coaAdmDTO.getLoginIp());
+            sMBMainVslDTO.setDvcCd(gubun);
 
-            sMBMnVslService.updateOrder(pSMBMainVslDTO);
+            sMBMnVslService.updateOrder(sMBMainVslDTO);
             mav.setViewName("jsonView");
 
         } catch (Exception e) {

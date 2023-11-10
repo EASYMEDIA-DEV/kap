@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.sm.SMCMnPopMapper">
+    <!--
+         쿼리명 : SMCMnPopMapper.selectMnPopList
+         설  명 : 팝업 목록을 조회한다.
+       	  수정일	 수정자     수정내용
+        ==========   ======   =============
+        2023.09.21.14   구은희     최초생성
+    -->
+    <select id="selectMnPopList" parameterType="SMCMnPopDTO">
+        SELECT /* SMCMnPopMapper.selectMnPopList */
+        POPUP_SEQ
+        , MD_CD
+        , EXPS_ORD
+        , DATE_FORMAT(EXPS_STRT_DTM, '%Y-%m-%d %H:%i:%s') AS EXPS_STRT_DTM
+        , DATE_FORMAT(EXPS_END_DTM, '%Y-%m-%d %H:%i:%s') AS EXPS_END_DTM
+        , #{srchDate} AS 'srchDate'
+        , #{dStrDt} AS 'dStrDt'
+        , #{dEndDt} AS 'dEndDt'
+        , ODTM_YN
+        , TITL
+        , TAG_CD
+        , FILE_SEQ
+        , CNTN
+        , URL_URL
+        , WNPP_YN
+        , EXPS_YN
+        , REG_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+        , REG_DTM
+        , MOD_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+        , MOD_DTM
+        FROM SM_MAIN_POPUP_MST A
+        <include refid="selectPopListwhereSql" />
+        ORDER BY
+        EXPS_ORD DESC
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : SMCMnPopMapper.selectMnPopDtl
+         설  명 : 팝업 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.21    구은희       최초생성
+    -->
+    <select id="selectMnPopDtl" parameterType="SMCMnPopDTO">
+        SELECT /* SMCMnPopMapper.selectMnPopDtl */
+            POPUP_SEQ
+             , MD_CD
+             , DATE_FORMAT(EXPS_STRT_DTM, '%Y-%m-%d %H:%i:%s') AS EXPS_STRT_DTM
+             , DATE_FORMAT(EXPS_END_DTM, '%Y-%m-%d %H:%i:%s') AS EXPS_END_DTM
+             , ODTM_YN
+             , TITL
+             , TAG_CD
+             , FILE_SEQ
+             , CNTN
+             , URL_URL
+             , WNPP_YN
+             , EXPS_YN
+             , REG_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+             , REG_DTM
+             , MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+             , MOD_DTM
+        FROM
+            SM_MAIN_POPUP_MST A
+        WHERE 1=1
+          AND POPUP_SEQ = #{popupSeq}
+          AND MD_CD = #{mdCd}
+    </select>
+
+    <!--
+         쿼리명 : SMCMnPopMapper.selectPopNewRow
+         설  명 : 팝업 정렬을 위한 row를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.21    구은희       최초생성
+    -->
+    <select id="selectPopNewRow" parameterType="SMCMnPopDTO">
+        SELECT /* SMCMnPopMapper.selectPopNewRow */
+            POPUP_SEQ,
+            EXPS_ORD,
+            MD_CD
+        FROM
+            SM_MAIN_POPUP_MST
+        WHERE
+            EXPS_ORD = (
+            SELECT
+            <if test='sortType == "UP"'>
+                MIN(EXPS_ORD)
+            </if>
+            <if test='sortType == "DOWN"'>
+                MAX(EXPS_ORD)
+            </if>
+               FROM SM_MAIN_POPUP_MST
+                WHERE 1=1
+                <if test='sortType == "UP"'>
+                    AND EXPS_ORD <![CDATA[>]]> #{expsOrd}
+                </if>
+                <if test='sortType == "DOWN"'>
+                    AND EXPS_ORD <![CDATA[<]]> #{expsOrd}
+                </if>
+                AND MD_CD = #{mdCd}
+            )
+        AND MD_CD = #{mdCd}
+        LIMIT 1
+    </select>
+
+
+    <!--
+         쿼리명 : SMCMnPopMapper.insertMnPop
+         설  명 : 팝업을 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.21    구은희       최초생성
+    -->
+    <insert id="insertMnPop" parameterType="SMCMnPopDTO">
+        <selectKey keyProperty="expsOrd" resultType="java.lang.Integer" order="BEFORE">
+            SELECT IFNULL(MAX(EXPS_ORD), 0) + 1 FROM SM_MAIN_POPUP_MST
+        </selectKey>
+        INSERT /* SMCMnPopMapper.insertMnPop */ INTO SM_MAIN_POPUP_MST
+        (
+        POPUP_SEQ
+        , MD_CD
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , TITL
+        , TAG_CD
+        , FILE_SEQ
+        , CNTN
+        , URL_URL
+        , WNPP_YN
+        , ODTM_YN
+        , EXPS_ORD
+        , EXPS_YN
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        )
+        VALUES
+        (
+        #{detailsKey}
+        , #{mdCd}
+        <choose>
+            <when test="odtmYn == 'Y'.toString()">
+                , NULL
+                , NULL
+            </when>
+            <otherwise>
+                , STR_TO_DATE(CONCAT(#{expsStrtDtm}, ' ', #{ptupStrtHh}, ':', #{ptupStrtMi}), '%Y-%m-%d %H:%i')
+                , STR_TO_DATE(CONCAT(#{expsEndDtm}, ' ', #{ptupEndHh}, ':', #{ptupEndMi}), '%Y-%m-%d %H:%i')
+            </otherwise>
+        </choose>
+        , #{titl}
+        , #{tagCd}
+        , #{fileSeq}
+        , #{cntn}
+        , #{urlUrl}
+        , #{wnppYn}
+        , #{odtmYn}
+        , #{expsOrd}
+        , #{expsYn}
+        , #{regId}
+        , #{regIp}
+        , NOW()
+        )
+    </insert>
+
+    <!--
+		 쿼리명 : SMCMnPopMapper.selectSeqNum
+		 설  명 : 테이블의 POPUP_SEQ 값을 조회한다.
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.25   구은희     최초생성
+	-->
+    <select id="selectSeqNum" parameterType="SMCMnPopDTO" resultType="java.lang.String">
+        SELECT /* SMCMnPopMapper.selectSeqNum */
+            NEXT_ID
+        FROM CO_SEQ_MST
+        WHERE TABLE_NM = #{tableNm}
+    </select>
+
+    <!--
+		쿼리명 : SMCMnPopMapper.updatePopSeq
+		설  명 : 테이블의 POPUP_SEQ 값을 증가시킨다.
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.09.25   구은희     최초생성
+	-->
+    <update id="updatePopSeq" parameterType="SMCMnPopDTO">
+        UPDATE CO_SEQ_MST /*SMCMnPopMapper.updatePopSeq*/
+        SET
+            NEXT_ID = (SELECT
+                           *
+                       FROM
+                           (SELECT
+                                NEXT_ID + '1'
+                            FROM
+                                CO_SEQ_MST
+                            WHERE
+                                TABLE_NM = #{tableNm}) tmp)
+        WHERE
+            TABLE_NM = #{tableNm}
+    </update>
+
+    <!--
+         쿼리명 : SMCMnPopMapper.deleteMnPop
+         설  명 : 팝업을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.21    구은희       최초생성
+    -->
+    <delete id="deleteMnPop" parameterType="SMCMnPopDTO">
+        DELETE /* SMCMnPopMapper.deleteMnPop */
+        FROM
+        SM_MAIN_POPUP_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    POPUP_SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    POPUP_SEQ = #{popupSeq}
+                </otherwise>
+            </choose>
+            AND MD_CD = #{mdCd}
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : SMCMnPopMapper.updateMnPop
+         설  명 : 팝업을 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.21    구은희       최초생성
+    -->
+    <update id="updateMnPop" parameterType="SMCMnPopDTO">
+        UPDATE /* SMCMnPopMapper.updateMnPop */ SM_MAIN_POPUP_MST
+        SET
+        TITL = #{titl}
+        <choose>
+            <when test="odtmYn == 'Y'.toString()">
+                , EXPS_STRT_DTM = NULL
+                , EXPS_END_DTM = NULL
+            </when>
+            <when test="expsStrtDtm != '' and expsStrtDtm != null and expsEndDtm !='' and expsEndDtm != null">
+                , EXPS_STRT_DTM = STR_TO_DATE(CONCAT(#{expsStrtDtm}, ' ', #{ptupStrtHh}, ':', #{ptupStrtMi}), '%Y-%m-%d %H:%i')
+                , EXPS_END_DTM = STR_TO_DATE(CONCAT(#{expsEndDtm}, ' ', #{ptupEndHh}, ':', #{ptupEndMi}), '%Y-%m-%d %H:%i')
+            </when>
+        </choose>
+        , ODTM_YN = #{odtmYn}
+        , TAG_CD = #{tagCd}
+        , FILE_SEQ = #{fileSeq}
+        , CNTN = #{cntn}
+        , URL_URL = #{urlUrl}
+        , WNPP_YN = #{wnppYn}
+        , EXPS_YN = #{expsYn}
+        , MOD_ID = #{modId}
+        , MOD_IP = #{modIp}
+        , MOD_DTM = NOW()
+          WHERE 1=1
+        AND POPUP_SEQ = #{popupSeq}
+        AND MD_CD = #{mdCd}
+    </update>
+
+    <!--
+         쿼리명 : SMCMnPopMapper.updateUseYn
+         설  명 : 팝업 노출 여부를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.09.21    구은희       최초생성
+    -->
+    <update id="updateUseYn" parameterType="SMCMnPopDTO">
+        UPDATE /* SMCMnPopMapper.updateUseYn */ SM_MAIN_POPUP_MST
+        SET
+        EXPS_YN = 'N'
+        , MOD_ID = #{modId}
+        , MOD_IP = #{modIp}
+        , MOD_DTM = NOW()
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    POPUP_SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    POPUP_SEQ = #{popupSeq}
+                </otherwise>
+            </choose>
+            AND MD_CD = #{mdCd}
+        </where>
+    </update>
+
+    <!--
+        쿼리명 : SMCMnPopMapper.updateOrder
+        설  명 : 팝업 정렬을 수정한다.
+         수정일      수정자       수정내용
+       ==========   ========   ==============
+       2023.09.21    구은희       최초생성
+   -->
+    <update id="updateOrder" parameterType="SMCMnPopDTO">
+        UPDATE /* SMCMnPopMapper.updateOrder */ SM_MAIN_POPUP_MST
+        SET
+            EXPS_ORD = #{expsOrd}
+          , MOD_ID = #{modId}
+          , MOD_IP = #{modIp}
+          , MOD_DTM = NOW()
+        WHERE 1=1
+          AND POPUP_SEQ = #{popupSeq}
+          AND MD_CD = #{mdCd}
+    </update>
+
+    <!--
+         쿼리명 : SMCMnPopMapper.selectUseMnPopCnt
+         설  명 : 팝업 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.09.21    구은희       최초생성
+    -->
+    <select id="selectUseMnPopCnt" parameterType="SMCMnPopDTO" resultType="java.lang.Integer">
+        SELECT /* SMCMnPopMapper.selectUseMnPopCnt*/
+            COUNT(POPUP_SEQ)
+        FROM
+            SM_MAIN_POPUP_MST A
+            <include refid="selectPopListwhereSql" />
+    </select>
+
+    <!--
+		쿼리명 : selectPopListwhereSql
+		설  명 : 팝업 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.09.21    구은희       최초생성
+    -->
+    <sql id="selectPopListwhereSql">
+        <where>
+            <if test="mdCd != null and mdCd != ''.toString() ">
+                AND MD_CD = #{mdCd}
+            </if>
+            <if test="expsStrtDtm != null and expsStrtDtm != ''.toString() ">
+                AND EXPS_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{expsStrtDtm}, '%Y-%m-%d')
+            </if>
+            <if test="expsEndDtm !=  null and expsEndDtm != ''.toString() ">
+                AND EXPS_END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{expsEndDtm}, '%Y-%m-%d'), INTERVAL 1 DAY)
+            </if>
+            <if test="srchDate != null and srchDate != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                            AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <when test="srchDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <otherwise>
+
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="odtmYn != null and odtmYn != ''.toString() ">
+                AND ODTM_YN = #{odtmYn}
+            </if>
+            <if test="expsYnList != null and expsYnList.size() > 0">
+                AND (
+                <foreach collection="expsYnList" item="expsYnList" index="index" open="" close="" separator=" or ">
+                    EXPS_YN = #{expsYnList}
+                </foreach>
+                )
+            </if>
+            <if test="tagCdList != null and tagCdList.size() > 0">
+                AND (
+                <foreach collection="tagCdList" item="tagCdList" index="index" open="" close="" separator=" or ">
+                    TAG_CD = #{tagCdList}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 1">
+                        AND TITL LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        AND (
+                            INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <when test="f == 3">
+                        AND (
+                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <otherwise>
+                        AND (
+                            INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                            INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+</mapper>

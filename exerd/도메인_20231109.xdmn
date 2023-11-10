@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<e:DomainDefinition xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:e="http://exerd.tomato.com/model" UUID="DDefinition_dSK4QH7JEe6ccekQ2rWpCw" productId="com.tomato.db.mysql" version="3.3.14.20211117-1015">
+  <domain UUID="Domain_dSK4QX7JEe6ccekQ2rWpCw" name="일시" suggestedDataType="DATETIME"/>
+  <domain UUID="Domain_dSK4Qn7JEe6ccekQ2rWpCw" name="순번" suggestedDataType="INT"/>
+  <domain UUID="Domain_dSK4Q37JEe6ccekQ2rWpCw" name="코드" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_dSK4RH7JEe6ccekQ2rWpCw" name="제목" suggestedDataType="VARCHAR(500)"/>
+  <domain UUID="Domain_dSK4RX7JEe6ccekQ2rWpCw" name="일자" suggestedDataType="DATE"/>
+  <domain UUID="Domain_dSK4Rn7JEe6ccekQ2rWpCw" name="내용" suggestedDataType="TEXT"/>
+  <domain UUID="Domain_dSK4R37JEe6ccekQ2rWpCw" name="파일ID" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_dSK4SH7JEe6ccekQ2rWpCw" name="여부" suggestedDataType="CHAR(1)"/>
+  <domain UUID="Domain_dSK4SX7JEe6ccekQ2rWpCw" name="ID" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_dSK4Sn7JEe6ccekQ2rWpCw" name="IP" suggestedDataType="VARCHAR(15)"/>
+  <domain UUID="Domain_dSK4S37JEe6ccekQ2rWpCw" name="명" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_dSK4TH7JEe6ccekQ2rWpCw" name="정렬" suggestedDataType="INT"/>
+  <domain UUID="Domain_dSK4TX7JEe6ccekQ2rWpCw" name="URL" suggestedDataType="VARCHAR(1000)"/>
+  <domain UUID="Domain_dSK4Tn7JEe6ccekQ2rWpCw" name="키워드" suggestedDataType="VARCHAR(1000)"/>
+  <domain UUID="Domain_dSK4T37JEe6ccekQ2rWpCw" name="내용 (short)" suggestedDataType="VARCHAR(2000)"/>
+  <domain UUID="Domain_dSK4UH7JEe6ccekQ2rWpCw" name="비밀번호" suggestedDataType="VARCHAR(500)"/>
+  <domain UUID="Domain_dSK4UX7JEe6ccekQ2rWpCw" name="휴대폰번호" suggestedDataType="VARCHAR(20)"/>
+  <domain UUID="Domain_dSK4Un7JEe6ccekQ2rWpCw" name="카운트" suggestedDataType="INT"/>
+  <domain UUID="Domain_dSK4U37JEe6ccekQ2rWpCw" name="이름" suggestedDataType="VARCHAR(50)"/>
+  <domain UUID="Domain_dSK4VH7JEe6ccekQ2rWpCw" name="이메일" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_dSK4VX7JEe6ccekQ2rWpCw" name="세션ID" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_dSK4Vn7JEe6ccekQ2rWpCw" name="연도" suggestedDataType="YEAR(4)"/>
+  <domain UUID="Domain_dSK4V37JEe6ccekQ2rWpCw" name="수" suggestedDataType="INT"/>
+  <domain UUID="Domain_dSK4WH7JEe6ccekQ2rWpCw" name="코드명" suggestedDataType="VARCHAR(100)"/>
+  <domain UUID="Domain_dSK4WX7JEe6ccekQ2rWpCw" name="전화번호" suggestedDataType="VARCHAR(50)"/>
+  <domain UUID="Domain_dSK4Wn7JEe6ccekQ2rWpCw" name="주소" suggestedDataType="VARCHAR(200)"/>
+  <domain UUID="Domain_dSK4W37JEe6ccekQ2rWpCw" name="우편번호" suggestedDataType="VARCHAR(50)"/>
+  <domain UUID="Domain_dSK4XH7JEe6ccekQ2rWpCw" name="인증번호" suggestedDataType="VARCHAR(6)"/>
+  <domain UUID="Domain_dSK4XX7JEe6ccekQ2rWpCw" name="버전" suggestedDataType="VARCHAR(10)"/>
+  <domain UUID="Domain_dSK4Xn7JEe6ccekQ2rWpCw" name="생년월일" suggestedDataType="VARCHAR(10)"/>
+  <domain UUID="Domain_dSK4X37JEe6ccekQ2rWpCw" name="CI" suggestedDataType="VARCHAR(200)"/>
+  <domain UUID="Domain_dSK4YH7JEe6ccekQ2rWpCw" name="금액" suggestedDataType="NUMERIC"/>
+  <domain UUID="Domain_dSK4YX7JEe6ccekQ2rWpCw" name="율" suggestedDataType="NUMERIC(3)"/>
+  <domain UUID="Domain_dSK4Yn7JEe6ccekQ2rWpCw" name="소수" suggestedDataType="NUMERIC"/>
+  <domain UUID="Domain_dSK4Y37JEe6ccekQ2rWpCw" name="설명" suggestedDataType="VARCHAR(4000)"/>
+  <domain UUID="Domain_dSK4ZH7JEe6ccekQ2rWpCw" name="배점" suggestedDataType="NUMERIC(2)"/>
+  <domain UUID="Domain_dSK4ZX7JEe6ccekQ2rWpCw" name="점수" suggestedDataType="INT"/>
+</e:DomainDefinition>

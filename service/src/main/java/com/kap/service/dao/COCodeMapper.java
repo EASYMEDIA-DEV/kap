@@ -34,4 +34,15 @@ public interface COCodeMapper {
      */
     public List<COCodeDTO> getCdIdOneList(HashMap cdMap) throws Exception;
 
+    /**
+     * 코드 목록(선택한 코드부터 자식코드까지)
+     */
+    public List<COCodeDTO> getCdIdList(COCodeDTO cOCodeDTO) throws Exception;
+
+
+    /**
+     * 코드 목록(선택한 코드부터 부모까지 목록)
+     */
+    public List<COCodeDTO> getCdIdPrntList(COCodeDTO cOCodeDTO) throws Exception;
+
 }

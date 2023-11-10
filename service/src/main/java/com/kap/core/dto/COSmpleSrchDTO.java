@@ -2,10 +2,7 @@ package com.kap.core.dto;
 
 import com.kap.core.annotation.CMName;
 import com.kap.core.annotation.SaxFilter;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
@@ -13,6 +10,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
+@Builder
 public class COSmpleSrchDTO extends BaseDTO {
     // 내용
     @SaxFilter
@@ -26,4 +24,6 @@ public class COSmpleSrchDTO extends BaseDTO {
     @CMName
     private String name;
 
+    @Builder.Default
+    private boolean admin = true;
 }

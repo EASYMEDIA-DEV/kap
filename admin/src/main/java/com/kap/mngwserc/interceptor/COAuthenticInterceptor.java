@@ -54,63 +54,67 @@ public class COAuthenticInterceptor implements HandlerInterceptor{
 
                 response.sendRedirect("/mngwsercgateway/login");
             }
-        }
-        //로그인 정보 체크
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO)COUserDetailsHelperService.getAuthenticatedUser();
-        // IP 접근 제한
-        String allwIp = lgnCOAAdmDTO.getAllwIp();
-        if(!"".equals(COStringUtil.nullConvert(allwIp)))
-        {
-            String[] allwIpArr = allwIp.split(",");
-            String clientIp = CONetworkUtil.getMyIPaddress(request);
-            boolean isAllw = false;
-            for (int i = 0, len = allwIpArr.length; i < len; i++)
+            return false;
+
+        }else{
+            //로그인 정보 체크
+            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO)COUserDetailsHelperService.getAuthenticatedUser();
+            // IP 접근 제한
+            String allwIp = lgnCOAAdmDTO.getAllwIp();
+            if(!"".equals(COStringUtil.nullConvert(allwIp)))
             {
-                if (clientIp.equals(allwIpArr[i].trim()))
+                String[] allwIpArr = allwIp.split(",");
+                String clientIp = CONetworkUtil.getMyIPaddress(request);
+                boolean isAllw = false;
+                for (int i = 0, len = allwIpArr.length; i < len; i++)
                 {
-                    isAllw = true;
-                    break;
+                    if (clientIp.equals(allwIpArr[i].trim()))
+                    {
+                        isAllw = true;
+                        break;
+                    }
+                }
+                if (!isAllw)
+                {
+                    if (accept != null && accept.indexOf("application/json") > -1)
+                    {
+                        throw new UnauthorizedException("허용되지 않는 IP입니다.");
+                    }
+                    else
+                    {
+                        throw new UnauthorizedException("허용되지 않는 IP입니다.");
+                    }
                 }
             }
-            if (!isAllw)
+            // 중복로그인 검사
+            if(!appLogin)
             {
-                if (accept != null && accept.indexOf("application/json") > -1)
+                String lgnSsnId = cOAAdmService.getAdmSessionId(lgnCOAAdmDTO.getId());
+                if (!COStringUtil.nullConvert(lgnSsnId).equals(lgnCOAAdmDTO.getConSessionId()))
                 {
-                    throw new UnauthorizedException("허용되지 않는 IP입니다.");
-                }
-                else
-                {
-                    throw new UnauthorizedException("허용되지 않는 IP입니다.");
+                    if (accept != null && accept.indexOf("application/json") > -1)
+                    {
+                        throw new UnauthorizedException("로그인 세션이 유효하지 않습니다.");
+                    }
+                    else
+                    {
+                        throw new UnauthorizedException("로그인 세션이 유효하지 않습니다.");
+                    }
                 }
             }
-        }
-        // 중복로그인 검사
-        if(!appLogin)
-        {
-            String lgnSsnId = cOAAdmService.getAdmSessionId(lgnCOAAdmDTO.getId());
-            if (!COStringUtil.nullConvert(lgnSsnId).equals(lgnCOAAdmDTO.getConSessionId()))
-            {
-                if (accept != null && accept.indexOf("application/json") > -1)
-                {
-                    throw new UnauthorizedException("로그인 세션이 유효하지 않습니다.");
-                }
-                else
-                {
-                    throw new UnauthorizedException("로그인 세션이 유효하지 않습니다.");
-                }
+
+            // log4j2에 사용할 커스텀 map 생성
+            ThreadContext.put("regId", lgnCOAAdmDTO.getId());
+            ThreadContext.put("regIp", CONetworkUtil.getMyIPaddress(request));
+            try {
+                ThreadContext.put("trgtMenuNm", RequestContextHolder.getRequestAttributes().getAttribute("pageIndicator", RequestAttributes.SCOPE_SESSION).toString());
+            }catch (Exception e){
+                ThreadContext.put("trgtMenuNm", "");
             }
+            return true;
         }
 
-        // log4j2에 사용할 커스텀 map 생성
-        ThreadContext.put("regId", lgnCOAAdmDTO.getId());
-        ThreadContext.put("regIp", CONetworkUtil.getMyIPaddress(request));
-        try {
-            ThreadContext.put("trgtMenuNm", RequestContextHolder.getRequestAttributes().getAttribute("pageIndicator", RequestAttributes.SCOPE_SESSION).toString());
-        }catch (Exception e){
-            ThreadContext.put("trgtMenuNm", "");
-        }
 
-        return true;
     }
 
 }
