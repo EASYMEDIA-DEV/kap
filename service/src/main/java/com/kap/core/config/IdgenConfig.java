@@ -180,7 +180,7 @@ public class IdgenConfig {
                 .build();
     }
 
-    /** RPLY_SEQ
+    /** 교육 시험 마스터
      * @return
      */
     @Bean(destroyMethod = "destroy")
@@ -189,6 +189,32 @@ public class IdgenConfig {
                 .setBlockSize(1)
                 .setTable("co_seq_mst")
                 .setTableName("EXAM_MST_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 교육 시험 질문 상세
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl examQstnDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EXAM_QSTN_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 교육 시험 질문 보기 상세
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl examQstnExmplDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EXAM_EXMPL_SEQ")
                 .setCipers(13)
                 .build();
     }
