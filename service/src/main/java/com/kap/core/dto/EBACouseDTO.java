@@ -29,74 +29,89 @@ import java.util.List;
 @AllArgsConstructor
 public class EBACouseDTO extends BaseDTO  {
 
+    //교육순번
+    private Integer edctnSeq;
 
-    //관리자순번
-    private Integer CouseSeq;
+    //카테고리코드 소분류
+    private String ctgryCd;
 
-    //과정분류 코드
-    private String couseCtgCd1;
+    //카테고리코드 소분류명
+    private String ctgryCdNm;
 
-    //과정분류 코드
-    private String couseCtgCd2;
+    //카테고리코드 대분류
+    private String prntCd;
 
-    //과정명
-    private String couseNm;
-
-    //과정요약
-    private String couseSummary;
-
-
-    //과정 소개
-    private String couseIntro;
+    //카테고리코드 대분류명
+    private String prntCdNm;
 
 
-    //학습 목표
-    private String couseObject;
-
-    //학습 대상
-    private String couseTgTpyeSeq1;//회사  seq 형태로 연계되는 테이블에 1:다 구조로 입력
-    private String couseTgTpyeSeq2;//업종  seq 형태로 연계되는 테이블에 1:다 구조로 입력
-    private String couseTgTpyeSeq3;//직무  seq 형태로 연계되는 테이블에 1:다 구조로 입력
-    private String couseTgTpyeSeq4;//직급 seq 형태로 연계되는 테이블에 1:다 구조로 입력
-    private String couseTgTpyeSeq5;//기타
 
 
-    //학습방식
-    private String couseType;
+    //교육과정 명
+    private String nm;
 
-    //수료기준
+    //요약명
+    private String smmryNm;
 
-    //평가 유무
+    //소개내용
+    private String itrdcCntn;
 
-    //학습 시간-일
-    private String couseTimeDay;
+    //학습목표내용
+    private String stduyTrgtCntn;
 
-    //학습시간-시간
-    private String couseTimeHour;
+    //학습대상 코드
+    private String targetCd;
 
-    //학습 준비물
-    private String couseMaterials;
+    //학습대상 코드 - 기타
+    private String etcNm;
 
-    //협업기관
-    private String collaboAgency;
+    //학습방식코드
+    private String stduyMthdCd;
 
-    //학습 내용
-    private String couseContents;
+    //학습방식코드명
+    private String stduyMthdCdNm;
 
-    //연계학습 - 선수과목 seq 형태로 연계되는 테이블에 1:다 구조로 입력
-    private String cousePrevLink;
+    //수료기준코드
+    private String cmptnStndCd;
 
-    //연계학습 - 후속과목 seq 형태로 연계되는 테이블에 1:다 구조로 입력
-    private String couseNextLink;
+    //수료평가코드
+    private String cmptnJdgmtCd;
 
-    //썸네일 이미지
-    private String thumFileSeq;
+    //평가여부
+    private String jdgmtYn = "Y";
 
+    //학습일코드
+    private String stduyDdCd;
+
+    //학습일코드명
+    private String stduyDdCdNm;
+
+    //학습시간코드
+    private String stduyTimeCd;
+
+    //학습시간코드명
+    private String stduyTimeCdNm;
+
+    //학습준비물명
+    private String stduySuplsNm;
+
+    //협업기관명
+    private String cprtnInsttNm;
+
+    //학습내용
+    private String stduyCntn;
+
+    //썸네일파일순번
+    private Integer thnlFileSeq;
 
     //노출여부
-    private String useYn;
+    private String expsYn;
 
-    //검색영역
+
+
+
+
+
 
     //로그인세션ID
     private String lgnSsnId;
@@ -104,6 +119,7 @@ public class EBACouseDTO extends BaseDTO  {
 
     //사용여부
     private List<EBACouseDTO> list;
+
     private List<String> useYnList;
 
 }

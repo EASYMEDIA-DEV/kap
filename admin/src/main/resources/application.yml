@@ -52,7 +52,7 @@ spring:
 
 #강제 로그인 여부
 app:
-  is-login: false
+  is-login: true
   #발신자 이메일
   from-mail: dev@easymedia.net
 
@@ -68,7 +68,7 @@ app:
     upload-path: D:/project/kap_git/upload
     #파일 업로드 가능 확장자
     fileExtns: jpg,jpeg,gif,png,bmp,mp4,webm,wmv,avi,mkv,pdf,ppt,pptx,xls,xlsx,doc,docx,dox,hwp,txt,zip
-    imageExtns: jpg,jpeg,gif,png
+    imageExtns: jpg,jpeg,png
     videoExtns: mp4,webm,wmv,avi,mkv
     #파일 업로드 크기
     max-size: 41943040
@@ -109,7 +109,7 @@ spring :
     activate:
       on-profile: local, dev
 app:
-  is-login: false
+  is-login: true
 ---
 spring.config.activate.on-profile: stg, prod
 logging:

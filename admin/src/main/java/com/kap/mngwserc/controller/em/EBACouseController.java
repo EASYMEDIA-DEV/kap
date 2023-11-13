@@ -3,6 +3,7 @@ package com.kap.mngwserc.controller.em;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.EBACouseDTO;
+import com.kap.core.dto.EmfMap;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBACouseService;
@@ -10,12 +11,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -73,9 +73,6 @@ public class EBACouseController {
         cOCodeDTO.setCd("CLASS03");
         modelMap.addAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));
 
-        //cOCodeDTO.setCd("CLASS03003");
-        //List<COCodeDTO> tempList = cOCodeService.getCdIdPrntList(cOCodeDTO);
-
         return "mngwserc/eb/eba/EBACouseList.admin";
     }
 
@@ -109,16 +106,131 @@ public class EBACouseController {
     @GetMapping(value="/write")
     public String getCouseDtl(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-        modelMap.addAttribute("rtnData", eBACouseService.selectCouseDtl(eBACouseDTO));
+
+        HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
+
+        EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
+        List<EBACouseDTO> rtnTrgtData = (List<EBACouseDTO>) rtnMap.get("rtnTrgtData");
+
+        System.out.println("@@@@ rtnDto = " + rtnDto);
+
+        // 공통코드 배열 셋팅
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        //과정분류 공통코드 세팅
+        cdDtlList.add("CLASS_TYPE");
+        modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
+        //과정분류 - 소분류
+        COCodeDTO cOCodeDTO = new COCodeDTO();
+        cOCodeDTO.setCd("CLASS01");
+        modelMap.addAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
+
+        cOCodeDTO.setCd("CLASS02");
+        modelMap.addAttribute("cdList2", cOCodeService.getCdIdList(cOCodeDTO));
+
+        cOCodeDTO.setCd("CLASS03");
+        modelMap.addAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));
+
+        cdDtlList.add("STDUY_MTHD"); //학습방식
+        cdDtlList.add("CMPTN_STND");//수료 기준 - 출석
+        cdDtlList.add("CMPTN_JDGMT");//수료 기준 - 평가
+        cdDtlList.add("STDUY_DD");//학습시간 - 학습일
+        cdDtlList.add("STDUY_TIME");//학습시간 - 학습시간
+
+        cdDtlList.add("EDCTN_REL");//교욱과정 연계(선수, 후속)
+
+        modelMap.addAttribute("studyCdList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+
+        //과정의 대분류 코드를 호출한다
+        if(rtnDto != null && rtnDto.getNm() != null){
+            cOCodeDTO.setCd(rtnDto.getCtgryCd());
+            List<COCodeDTO> tempDTO = cOCodeService.getCdIdPrntList(cOCodeDTO);
+
+            String prntCd = "";
+            for(COCodeDTO a : tempDTO){
+                if(a.getDpth() == 2){
+                    prntCd = a.getCd();
+                    break;
+                }
+            }
+            rtnDto.setPrntCd(prntCd);
+
+
+            //임시로 넣은 더미데이터
+        }else{
+            rtnDto.setPrntCd("CLASS02");
+            rtnDto.setCtgryCd("CLASS02006");
+        }
+
+
+        modelMap.addAttribute("rtnData", rtnDto);
+        modelMap.addAttribute("rtnTrgtData", rtnTrgtData);
+
+        //학습대상 공통코드 호출
+        modelMap.addAttribute("edTarget", setEdTargetList("ED_TARGET"));
+
+        modelMap.addAttribute("rtnData", rtnDto);
+
 
         return "mngwserc/eb/eba/EBACouseWrite.admin";
+    }
+
+    /*
+    학습대상 공통코드 분류
+     */
+    private List<EmfMap> setEdTargetList(String arg){
+
+        List<EmfMap> targetList = new ArrayList<>();
+
+        try{
+
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            //과정분류 공통코드 세팅
+            // 코드 set
+            cdDtlList.add(arg);
+
+            HashMap<String, List<COCodeDTO>> temp =  cOCodeService.getCmmCodeBindAll(cdDtlList);
+
+            List<COCodeDTO> tempList = temp.get(arg);
+
+            for(COCodeDTO a : tempList){
+
+                if(a.getDpth() == 2){
+                    EmfMap targetMap = new EmfMap();
+
+                    List<EmfMap> dpth3List = new ArrayList<>();
+                    for(COCodeDTO b : tempList){
+                        if(b.getCd().contains(a.getCd())){
+                            EmfMap map = new EmfMap();
+
+                            map.put("cd", b.getCd());
+                            map.put("cdNm", b.getCdNm());
+                            map.put("dpth", b.getDpth());
+                            dpth3List.add(map);
+                            targetMap.put("edList", dpth3List);
+                        }
+                    }
+                    targetList.add(targetMap);
+                }
+
+
+            }
+
+
+        }catch (Exception e){
+
+        }
+
+
+        return targetList;
+
     }
 
 
     /**
      * 교육과정관리를 등록한다.
      */
-    @GetMapping(value="/insert")
+    @PostMapping(value="/insert")
     public EBACouseDTO getCouseInsert(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
@@ -139,6 +251,7 @@ public class EBACouseController {
             {
                 log.debug(e.getMessage());
             }
+            System.out.println("EE = " + e);
             throw new Exception(e.getMessage());
         }
 
@@ -260,20 +373,13 @@ public class EBACouseController {
     /**
      * 교육과정 분류 3뎁스 호출
      */
-    @RequestMapping(value = "/classTypeList")
-    public String setEthicUser(COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-
+    @PostMapping(value = "/classTypeList")
+    public String classTypeList(COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+        List<COCodeDTO> detailList = null;
         try
         {
 
-            cOCodeDTO.setCdId("CLASS_TYPE");
-            //cOCodeDTO.setCd("CLASS01");
-            cOCodeDTO.setDpth(3);
-            List<COCodeDTO> tempList2 = cOCodeService.getCdIdList(cOCodeDTO);
-
-            for(COCodeDTO a: tempList2){
-                System.out.println("@@@@ 포함 = " + a);
-            }
+            System.out.println("오나?");
 
             modelMap.addAttribute("detailList", cOCodeService.getCdIdList(cOCodeDTO));
         }
@@ -284,10 +390,8 @@ public class EBACouseController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/eb/eba/EBACouseCdListAjax";
+        return "jsonView";
     }
-
-
 
 
 

@@ -28,7 +28,7 @@ public class CODummyUserDetailsServiceImpl implements COUserDetailsService
 	{
 		COAAdmDTO cOLoginUserDTO = COAAdmDTO.builder().build();
 		cOLoginUserDTO.setAdmSeq(1);
-		cOLoginUserDTO.setId("devadmin");
+		cOLoginUserDTO.setId("hyumain1");
 		cOLoginUserDTO.setName("관리자");
 		cOLoginUserDTO.setAuthCd("99");
 		cOLoginUserDTO.setDeptNm("DEPT01");

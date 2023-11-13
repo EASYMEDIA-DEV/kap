@@ -8,17 +8,51 @@
         ==========   ========   ==============
         2023.11.02    김학규       최초생성
     -->
-	<!--<select id="selectCouseList" parameterType="EBACouseDTO" resultType="EBACouseDTO">
-		select /* EBACouseMapper.selectCouseList */
-			  *
-		from
-			co_adm_mst a
-		<include refid="selectAdmListwhereSql" />
+	<select id="selectCouseList" parameterType="EBACouseDTO" resultType="EBACouseDTO">
+		SELECT /* EBACouseMapper.selectCouseList */
+			edctn_seq
+			, nm
+			, parnt_seq
+			, (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
+			, ctgry_cd
+			, ctgry_cd_nm
+			, stduy_mthd_cd
+			, stduy_mthd_cd_nm
+			, stduy_dd_cd
+			, stduy_dd_cd_nm
+			, stduy_time_cd
+			, stduy_time_cd_nm
+			, reg_id
+			, reg_name
+			, reg_dtm
+			, mod_id
+			, exps_yn
+			FROM
+			(select
+				edctn_seq
+				, nm
+				, a.ctgry_cd
+				, (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
+				, (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
+				, stduy_mthd_cd
+				, (select cd_nm from co_code_mst where cd=a.stduy_mthd_cd) as stduy_mthd_cd_nm
+				, stduy_dd_cd
+				, (select cd_nm from co_code_mst where cd=a.stduy_dd_cd) as stduy_dd_cd_nm
+				, stduy_time_cd
+				, (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as stduy_time_cd_nm
+				, reg_id
+				, (select name from co_adm_mst where id = a.reg_id) as reg_name
+				, reg_dtm
+				, mod_id
+				, exps_yn
+				from
+			ed_edctn_prcs_mst a) aa
+		<!--<include refid="selectAdmListwhereSql" />-->
 		order by
 			reg_dtm desc
 
 			limit #{firstIndex}, #{recordCountPerPage}
-	</select>-->
+	</select>
 
 	<!--
 		쿼리명 : EBACouseMapper.selectCouseListCnt
@@ -27,13 +61,13 @@
         ==========   ========   ==============
         2023.11.02    김학규       최초생성
     -->
-	<!--<select id="selectCouseListCnt" parameterType="EBACouseDTO" resultType="java.lang.Integer">
+	<select id="selectCouseListCnt" parameterType="EBACouseDTO" resultType="java.lang.Integer">
 		select /* EBACouseMapper.selectCouseListCnt */
 			count(*)
 		from
-			co_adm_mst a
-		<include refid="selectCouseListwhereSql" />
-	</select>-->
+		ed_edctn_prcs_mst a
+		<!--<include refid="selectCouseListwhereSql" />-->
+	</select>
 
 	<!--
 		쿼리명 : selectCouseListwhereSql
@@ -93,27 +127,86 @@
        수정일     수정자       수정내용
      ==========   ======    ==============
      2023.11.02   김학규       최초생성
- -->
-	<!--<select id="selectCouseDtl" parameterType="EBACouseDTO" resultType="EBACouseDTO">
-		select /* EBACouseMapper.selectCouseDtl */
-			   adm_seq
-			 , id
-			 , auth_cd
-			 , (select cd_nm from co_code_mst where cd_id='ADMIN_AUTH_CD' and cd=a.auth_cd) as auth_cd_nm
-		     , dept_cd
-			 , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) as dept_cd_nm
-			 , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) as dept_nm
-			 , type_cd
-			 , name
-			 , email
-			 , allw_ip
-		     , lgn_crtfn_yn
-			 , use_yn
-		from
-			co_adm_mst a
+ 	-->
+	<select id="selectCouseDtl" parameterType="EBACouseDTO" resultType="EBACouseDTO">
+		SELECT /* EBACouseMapper.selectCouseDtl */
+			edctn_seq
+			 , nm
+		     , smmry_nm
+			 , itrdc_cntn
+			 , stduy_trgt_cntn
+			 , parnt_seq
+			 , (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
+			 , ctgry_cd
+			 , ctgry_cd_nm
+			 , stduy_mthd_cd
+			 , stduy_mthd_cd_nm
+			 , cmptn_stnd_cd
+		     , cmptn_jdgmt_cd
+		     , jdgmt_yn
+			 , stduy_dd_cd
+			 , stduy_dd_cd_nm
+			 , stduy_time_cd
+			 , stduy_time_cd_nm
+		     , stduy_supls_nm
+		     , cprtn_instt_nm
+		     , stduy_cntn
+		     , thnl_file_seq
+			 , reg_id
+			 , reg_name
+			 , reg_dtm
+			 , mod_id
+			 , exps_yn
+		FROM
+			(select
+				 edctn_seq
+				  , nm
+			      , smmry_nm
+				  , itrdc_cntn
+				  , stduy_trgt_cntn
+				  , a.ctgry_cd
+				  , (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
+				  , (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
+				  , stduy_mthd_cd
+				  , (select cd_nm from co_code_mst where cd=a.stduy_mthd_cd) as stduy_mthd_cd_nm
+				  , stduy_dd_cd
+				  , (select cd_nm from co_code_mst where cd=a.stduy_dd_cd) as stduy_dd_cd_nm
+				  , stduy_time_cd
+				  , (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as stduy_time_cd_nm
+			      , cmptn_stnd_cd
+				  , cmptn_jdgmt_cd
+				  , jdgmt_yn
+				  , stduy_supls_nm
+				  , cprtn_instt_nm
+				  , stduy_cntn
+				  , thnl_file_seq
+				  , reg_id
+				  , (select name from co_adm_mst where id = a.reg_id) as reg_name
+				  , reg_dtm
+				  , mod_id
+				  , exps_yn
+			 from
+				 ed_edctn_prcs_mst a) aa
 		where
-			adm_seq = #{detailsKey}
-	</select>-->
+			edctn_seq = #{detailsKey}
+	</select>
+
+	<!--
+      쿼리명 : EBACouseMapper.selectCouseDtl
+      설  명 : 교육과정대상 상세를 조회한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.02   김학규       최초생성
+ 	-->
+	<select id="selectCouseTrgtList" parameterType="EBACouseDTO" resultType="EBACouseDTO">
+		select
+		    edctn_seq
+			, cd as target_cd
+			, etc_nm
+		from ed_edctn_trgt_dtl
+		where
+			edctn_seq = #{detailsKey}
+	</select>
 
 	<!--
          쿼리명 : EBACouseMapper.insertCouse
@@ -122,59 +215,98 @@
         ==========   ======    ==============
         2023.11.02   김학규       최초생성
     -->
-	<!--<insert id="insertCouse" parameterType="EBACouseDTO" >
-		<selectKey keyProperty="couseSeq" resultType="Integer" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-		insert /* EBACouseMapper.insertCouse */ into co_adm_mst
+	<insert id="insertCouse" parameterType="EBACouseDTO">
+
+		insert /* EBACouseMapper.insertCouse */ into ed_edctn_prcs_mst
 		(
-			  auth_cd
-			, dept_cd
-			, dept_nm
-			, type_cd
-			, id
-			, pwd
-			, name
-			, email
-			, allw_ip
-			, pwd_chng_dtm
-			, lgn_fail_cnt
-			, tmp_pwd_yn
-			, lgn_crtfn_yn
-			, use_yn
+			edctn_seq
+			, ctgry_cd
+			, nm
+			, smmry_nm
+			, itrdc_cntn
+			, stduy_trgt_cntn
+			, stduy_mthd_cd
+			, cmptn_stnd_cd
+			, cmptn_jdgmt_cd
+			, jdgmt_yn
+			, stduy_dd_cd
+			, stduy_time_cd
+			, stduy_supls_nm
+			, cprtn_instt_nm
+			, stduy_cntn
+			, thnl_file_seq
+			, exps_yn
 			, reg_id
 			, reg_ip
 			, reg_dtm
 			, mod_id
 			, mod_ip
 			, mod_dtm
-			, last_lgn_dtm
 		)
 		values
 		(
-		  	#{authCd}
-		  	, #{deptCd}
-			, #{deptNm}
-			, 'cms'
-			, #{id}
-			, #{pwd}
-			, #{name}
-			, #{email}
-			, #{allwIp}
-			, now()
-			, 0
-			, 'N'
-			, #{lgnCrtfnYn}
-			, #{useYn}
-			, #{regId}
-			, #{regIp}
-			, now()
-			, #{regId}
-			, #{regIp}
-			, now()
-			, 0
+		  #{edctnSeq}
+		, #{ctgryCd}
+		, #{nm}
+		, #{smmryNm}
+		, #{itrdcCntn}
+		, #{stduyTrgtCntn}
+		, #{stduyMthdCd}
+		, #{cmptnStndCd}
+		, #{cmptnJdgmtCd}
+		, #{jdgmtYn}
+		, #{stduyDdCd}
+		, #{stduyTimeCd}
+		, #{stduySuplsNm}
+		, #{cprtnInsttNm}
+		, #{stduyCntn}
+		, #{thnlFileSeq}
+		, #{expsYn}
+		, #{regId}
+		, #{regIp}
+		, now()
+		, #{modId}
+		, #{modIp}
+		, now()
 		)
-	</insert>-->
+	</insert>
+
+	<!--
+         쿼리명 : EBACouseMapper.insertCouse
+         설  명 : 교육과정대상상세 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.08   김학규       최초생성
+    -->
+	<insert id="insertCouseTrgt" parameterType="EBACouseDTO" >
+
+		insert /* EBACouseMapper.insertCouse */ into ed_edctn_trgt_dtl
+		(
+			edctn_seq
+			, cd
+			, etc_nm
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+
+		)
+		values
+		(
+		 #{edctnSeq}
+		, #{targetCd}
+		, #{etcNm}
+		, #{regId}
+		, #{regIp}
+		,  now()
+		, #{modId}
+		, #{modIp}
+		,  now()
+		)
+	</insert>
+
 
 	<!--
          쿼리명 : EBACouseMapper.updateCouse

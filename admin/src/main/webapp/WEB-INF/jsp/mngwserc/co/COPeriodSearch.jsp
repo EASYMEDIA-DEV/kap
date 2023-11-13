@@ -1,7 +1,7 @@
+<%@ page import="java.util.Calendar" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<c:set var="date" value="<%=new java.util.Date()%>" />
+<c:set var="date" value="<%=new java.util.Date( )%>" />
 <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
-
 <c:set var="startId" value="strtDt" />
 <c:set var="endId" value="endDt" />
 
@@ -29,7 +29,7 @@
 
 			<div class="form-group mr-sm">
 				<div class="input-group">
-					<input type="text" class="form-control input-sm datetimepicker_strtDt" id="${startId}" data-name="${startId}" value="${today}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+					<input type="text" class="form-control input-sm datetimepicker_strtDt" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 					<span class="input-group-btn" style="z-index:0;">
 					<button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
 						<em class="ion-calendar"></em>

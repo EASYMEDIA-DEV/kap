@@ -4,6 +4,12 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        maven {
+            url "https://maven.egovframe.go.kr/maven/"
+            metadataSources {
+                artifact()
+            }
+        }
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -26,6 +32,12 @@ allprojects {
 
     repositories {
         mavenCentral()
+        maven {
+            url "https://maven.egovframe.go.kr/maven/"
+            metadataSources {
+                artifact()
+            }
+        }
     }
 
     configurations {
@@ -58,6 +70,8 @@ subprojects {
         implementation 'org.apache.commons:commons-collections4:4.1'
         implementation 'com.integralblue:log4jdbc-spring-boot-starter:2.0.0'
         implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+
+
 
         compileOnly 'org.projectlombok:lombok'
 
@@ -95,6 +109,10 @@ project(":admin") {
         implementation 'org.springframework.security:spring-security-taglibs'
         /* MOBILE */
         implementation 'org.springframework.mobile:spring-mobile-device:1.1.3.RELEASE'
+
+        //SWAGGER
+        implementation "org.springdoc:springdoc-openapi-ui:1.6.2"
+        implementation "org.springdoc:springdoc-openapi-security:1.6.2"
 
 
         implementation project(':common')
@@ -185,6 +203,14 @@ project(":service") {
         //implementation 'com.integralblue:log4jdbc-spring-boot-starter:2.0.0'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
         implementation 'javax.persistence:javax.persistence-api'
+
+        //전자정부표준프레임워크 idgen
+        implementation 'org.egovframe.rte:org.egovframe.rte.psl.dataaccess:4.0.0'
+        implementation 'org.egovframe.rte:org.egovframe.rte.fdl.idgnr:4.0.0'
+        implementation 'org.egovframe.rte:org.egovframe.rte.fdl.property:4.0.0'
+        implementation 'org.egovframe.rte:org.egovframe.rte.fdl.cmmn:4.0.0'
+        implementation 'org.egovframe.rte:org.egovframe.rte.ptl.mvc:4.0.0'
+
         implementation('com.navercorp.lucy:lucy-xss-servlet:2.0.1') {
             exclude group: "commons-logging", module: 'commons-logging'
         }

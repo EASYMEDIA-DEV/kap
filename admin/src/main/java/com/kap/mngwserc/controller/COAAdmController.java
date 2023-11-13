@@ -30,7 +30,9 @@ import java.util.List;
  * @see
  * @Modification Information
  * <pre>
- * 		since			author				  description
+ * 		since			author				  descripti
+ *
+ * 	on
  *    ==========    ==============    =============================
  *    2020.10.22		허진영				   최초 생성
  * </pre>
