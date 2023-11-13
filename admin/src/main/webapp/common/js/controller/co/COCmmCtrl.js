@@ -295,7 +295,6 @@ var cmmCtrl = (function(){
 				}
 			},
 			success : function(data, status, xhr) {
-				console.log(data);
 				if(data.errors != null){
 					fn_ajax_error(data, status, xhr);
 				}
@@ -307,7 +306,6 @@ var cmmCtrl = (function(){
 				}
 			},
 			error : function(data, status, xhr) {
-				console.log(data)
 				fn_ajax_error(data, status, xhr);
 			},
 			complete : function() {

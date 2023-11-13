@@ -240,6 +240,7 @@ var msgCtrl = (function(){
 				deleteCheck:"매칭된 게시물은 삭제 할 수 없습니다.",
 				deleteExamOptn: "응답내용은 최소 1개 이상 존재해야 하므로, 더 이상 삭제할 수 없습니다.",
 				notExmOptn: "정답을 선택해주세요.",
+				notScord100: "배점의 합은 100점을 넘을 수 없습니다.",
 			}
 		}
 	};
