@@ -26,7 +26,18 @@
 					</select>
 				</div>
 			</c:if>
-
+			<c:if test="${param.selPer eq 'select'}">
+				<div class="col-sm-1">
+					<div class="row">
+						<div class="col-sm-3 pr0">
+							<select class="form-control input-sm" data-name="date">
+								<option value="1" selected>가입일</option>
+								<option value="2" >수정일</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</c:if>
 			<div class="form-group mr-sm">
 				<div class="input-group">
 					<input type="text" class="form-control input-sm datetimepicker_strtDt" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
