@@ -45,6 +45,15 @@
         <example>${kl:convertDate(value, value, value, value)}</example>
     </function>
 
+    <!-- 날짜 더하기 -->
+    <function>
+        <description>addDay</description>
+        <name>addDay</name>
+        <function-class>com.kap.common.utility.CODateUtil</function-class>
+        <function-signature>java.lang.String addDay(java.lang.String, java.lang.String)</function-signature>
+        <example>${kl:addDay(value, value)}</example>
+    </function>
+
    <!-- 전달받은 문자열과 리스트 형태의 문자열중 일치하는게 있으면 반환 -->
     <function>
         <description>forEachChk</description>

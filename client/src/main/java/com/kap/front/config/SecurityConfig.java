@@ -56,22 +56,18 @@ public class SecurityConfig {
                     @Override
                     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
                         if (accessDeniedException instanceof MissingCsrfTokenException || accessDeniedException instanceof InvalidCsrfTokenException) {
-                            if(!appLogin)
-                            {
-                                String accept   = COWebUtil.removeCRLF(request.getHeader("accept"));
-                                System.out.println("ForbiddenException");
-                                if (accept != null && accept.indexOf("application/json") > -1){
-                                    if(COUserDetailsHelperService.isAuthenticated()){
-                                        //JSON이면
-                                        new Exception("CSRF");
-                                    }else{
-                                        // 세션이 끊긴 경우
-                                        response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-                                    }
-                                }
-                                else{
+                            String accept   = COWebUtil.removeCRLF(request.getHeader("accept"));
+                            if (accept != null && accept.indexOf("application/json") > -1){
+                                if(COUserDetailsHelperService.isAuthenticated()){
+                                    //JSON이면
                                     new Exception("CSRF");
+                                }else{
+                                    // 세션이 끊긴 경우
+                                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                                 }
+                            }
+                            else{
+                                new Exception("CSRF");
                             }
                         }
                     }
