@@ -327,4 +327,29 @@ public class COStringUtil {
             return "";
     }
 
+    /**
+     * 휴대폰 하이픈 처리
+     * @param str1
+     * @return
+     */
+    public static String hpNum(String str1)
+    {
+        String prefix = str1.substring(0, 3);
+        String middlePart = str1.substring(3,7);
+        String suffix = str1.substring(7, 11);
+        return prefix + "-" + middlePart + "-" + suffix;
+    }
+
+    /**
+     * 생일 하이픈 처리
+     * @param str1
+     * @return
+     */
+    public static String birthConvert(String str1)
+    {
+        String prefix = str1.substring(0, 4);
+        String middlePart = str1.substring(4,6);
+        String suffix = str1.substring(6);
+        return prefix + "-" + middlePart + "-" + suffix;
+    }
 }
