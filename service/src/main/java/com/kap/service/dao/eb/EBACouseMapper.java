@@ -54,14 +54,19 @@ public interface EBACouseMapper {
 	 */
 	public int insertCouse(EBACouseDTO eBACouseDTO) throws Exception;
 
+	/**
+	 * 교육과정대상을 등록한다.
+	 */
 	public int insertCouseTrgt(EBACouseDTO eBACouseDTO) throws Exception;
 
-
-
+	/**
+	 * 교육과정대상을 삭제한다.
+	 */
+	public int deleteCouseTrgt(EBACouseDTO eBACouseDTO) throws Exception;
 	/**
 	 * 교육과정을 수정한다.
 	 */
-	//public int updateCouse(EBACouseDTO eBACouseDTO) throws Exception;
+	public int updateCouse(EBACouseDTO eBACouseDTO) throws Exception;
 
 	/**
 	 * 교육과정을 삭제한다.

@@ -16,9 +16,11 @@
 				<input type="hidden" id="detailsKey" name="detailsKey" value="" />
 				<!--기간 검색 시작-->
 				<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-					<jsp:param name="srchText" value="최종접속일" />
-					<jsp:param name="periodType" value="notSelect" />
+					<jsp:param name="srchText" value="등록/수정기간" />
+					<jsp:param name="srchOption" value="등록일,수정일" />
 				</jsp:include>
+
+
 				<!--기간 검색 종료-->
 
 				<fieldset>
@@ -32,7 +34,7 @@
 
 							<c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
 								<label class="checkbox-inline c-checkbox classType">
-									<input type="checkbox" class="checkboxSingle" data-name="authCdList" name="cd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
+									<input type="checkbox" class="checkboxSingle" data-name="prntCdList" name="prntCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 
@@ -51,7 +53,7 @@
 								</div>
 								<c:forEach  var="cdList" items="${cdList1}" varStatus="status">
 									<label class="checkbox-inline c-checkbox">
-										<input type="checkbox" class="checkboxSingle" data-name="cdList" name="cd" value="${cdList.cd}"disabled="true"/>
+										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}"disabled="true"/>
 										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 									</label>
 								</c:forEach>
@@ -64,7 +66,7 @@
 								</div>
 								<c:forEach  var="cdList" items="${cdList2}" varStatus="status">
 									<label class="checkbox-inline c-checkbox">
-										<input type="checkbox" class="checkboxSingle" data-name="cdList" name="cd" value="${cdList.cd}" disabled="true"/>
+										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" disabled="true"/>
 										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 									</label>
 								</c:forEach>
@@ -77,7 +79,7 @@
 								</div>
 								<c:forEach  var="cdList" items="${cdList3}" varStatus="status">
 									<label class="checkbox-inline c-checkbox">
-										<input type="checkbox" class="checkboxSingle" data-name="cdList" name="cd" value="${cdList.cd}" disabled="true"/>
+										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" disabled="true"/>
 										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 									</label>
 								</c:forEach>
@@ -98,18 +100,14 @@
 								<input type="checkbox" class="checkboxAll" />
 								<span class="ion-checkmark-round"></span> 전체
 							</label>
-							<label class="checkbox-inline c-checkbox">
-								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="Y" <c:if test="${fn:contains(rtnData.useYnList, 'Y')}">checked</c:if> />
-								<span class="ion-checkmark-round"></span> 집체교육
-							</label>
-							<label class="checkbox-inline c-checkbox">
-								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="N" <c:if test="${fn:contains(rtnData.useYnList, 'N')}">checked</c:if> />
-								<span class="ion-checkmark-round"></span> 온라인
-							</label>
-							<label class="checkbox-inline c-checkbox">
-								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="N" <c:if test="${fn:contains(rtnData.useYnList, 'N')}">checked</c:if> />
-								<span class="ion-checkmark-round"></span> 블렌디드
-							</label>
+
+
+							<c:forEach var="cdList" items="${classTypeList.STDUY_MTHD}" varStatus="status">
+								<label class="checkbox-inline c-checkbox">
+									<input type="checkbox" class="checkboxSingle" data-name="stduyMthdCdList" value="${cdList.cd}" name="stduyMthdCd" <c:if test="${fn:contains(rtnData.stduyMthdCd, cdList.cd)}">checked</c:if> />
+									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
+								</label>
+							</c:forEach>
 						</div>
 					</div>
 				</fieldset>
@@ -123,10 +121,10 @@
 									학습일
 								</div>
 								<div class="col-sm-3 pr0">
-									<select class="form-control input-sm" data-name="f">
+									<select class="form-control input-sm" data-name="f" name="stduyDdCd">
 										<option value="">전체</option>
-										<c:forEach begin="1" end="10" varStatus="status">
-											<option value="${status.count}" <c:if test="${rtnData.f eq '1'}">selected</c:if>>${status.count}일</option>
+										<c:forEach var="cdList" items="${classTypeList.STDUY_DD}" varStatus="status">
+											<option value="${cdList.cd}" <c:if test="${rtnData.stduyDdCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
 										</c:forEach>
 
 									</select>
@@ -136,16 +134,13 @@
 									학습시간
 								</div>
 								<div class="col-sm-3 pr0">
-									<select class="form-control input-sm" data-name="f">
+									<select class="form-control input-sm" data-name="f" name="stduyTimeCd">
 										<option value="">전체</option>
-										<c:forEach begin="1" end="40" varStatus="status">
-											<option value="${status.count}" <c:if test="${rtnData.f eq '1'}">selected</c:if>>${status.count}시간</option>
+										<c:forEach var="cdList" items="${classTypeList.STDUY_TIME}" varStatus="status">
+											<option value="${cdList.cd}" <c:if test="${rtnData.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
 										</c:forEach>
 									</select>
 								</div>
-
-
-
 							</div>
 						</div>
 					</div>
@@ -160,11 +155,11 @@
 								<span class="ion-checkmark-round"></span> 전체
 							</label>
 							<label class="checkbox-inline c-checkbox">
-								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="Y" <c:if test="${fn:contains(rtnData.useYnList, 'Y')}">checked</c:if> />
+								<input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="Y" name="expsYn" <c:if test="${fn:contains(rtnData.expsYnList, 'Y')}">checked</c:if> />
 								<span class="ion-checkmark-round"></span> 노출
 							</label>
 							<label class="checkbox-inline c-checkbox">
-								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="N" <c:if test="${fn:contains(rtnData.useYnList, 'N')}">checked</c:if> />
+								<input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="N" name="expsYn" <c:if test="${fn:contains(rtnData.expsYnList, 'N')}">checked</c:if> />
 								<span class="ion-checkmark-round"></span> 미노출
 							</label>
 						</div>

@@ -3,17 +3,16 @@
 
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/eba/EBACouseWriteCtrl">
+    <div class="card-body" data-controller="controller/eb/eba/EBACouseWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.edctnSeq}" />
-            <!-- 첨부파일 순번 -->
-            <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDto.thnlFileSeq}" />
-
+            <input type="hidden" class="notRequired" id="edctnSeq" name="edctnSeq" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="prntCd" name="prntCd" value="${rtnDto.prntCd}" />
 
-
+            <!-- 첨부파일 순번 -->
+            <input type="hidden" class="notRequired" id="thnlFileSeq" name="thnlFileSeq" value="${rtnDto.thnlFileSeq}" />
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -150,7 +149,7 @@
                     </div>
                     <div class="col-sm-1">
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle jdgmtYn notRequired" value="N" name="jdgmtYn" <c:if test="${rtnDto.jdgmtYn eq 'Y'}">checked</c:if>/>
+                            <input type="checkbox" class="checkboxSingle jdgmtYn notRequired" value="N" name="jdgmtYn" <c:if test="${rtnDto.jdgmtYn eq 'N'}">checked</c:if>/>
                         <span class="ion-checkmark-round"></span> 평가없음
                         </label>
                     </div>
@@ -213,6 +212,8 @@
                 </div>
             </fieldset>
 
+
+
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">연계학습</label>
@@ -253,7 +254,7 @@
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="thnlFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="썸네일이미지">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>

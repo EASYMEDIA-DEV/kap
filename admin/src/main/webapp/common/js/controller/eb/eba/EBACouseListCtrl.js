@@ -46,23 +46,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
 		ctrl.obj.find("#cdListContainer").html(cdList);
 
-		/*for(var i =0; i<detailList.length; i++){
-			var detail = detailList[i];
-
-			var cd = detail.cd;
-			var cdNm = detail.cdNm;
-
-			var tempHtml = "";
-
-			tempHtml = +"<label className=\"checkbox-inline c-checkbox\">";
-			tempHtml = +"<input type=\"checkbox\" className=\"checkboxSingle\" value=\""+cd+"\"  />";
-			tempHtml = +"<span className=\"ion-checkmark-round\"></span>"+cdNm+"</label>";
-
-		}*/
-
-
-		console.log(tempHtml);
-
 		$(".detailCdList").html(tempHtml);
 
 

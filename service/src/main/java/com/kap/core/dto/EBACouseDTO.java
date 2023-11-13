@@ -120,6 +120,11 @@ public class EBACouseDTO extends BaseDTO  {
     //사용여부
     private List<EBACouseDTO> list;
 
-    private List<String> useYnList;
+    private List<String> ctgryCdList;
+
+    private List<String> stduyMthdCdList;
+
+
+    private List<String> expsYnList;
 
 }

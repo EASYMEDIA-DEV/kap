@@ -26,7 +26,9 @@
 			, reg_name
 			, reg_dtm
 			, mod_id
+			, mod_name
 			, exps_yn
+		, reg_dtm
 			FROM
 			(select
 				edctn_seq
@@ -44,10 +46,14 @@
 				, (select name from co_adm_mst where id = a.reg_id) as reg_name
 				, reg_dtm
 				, mod_id
+				, (select name from co_adm_mst where id = a.mod_id) as mod_name
 				, exps_yn
+			 	, mod_dtm
 				from
 			ed_edctn_prcs_mst a) aa
-		<!--<include refid="selectAdmListwhereSql" />-->
+
+		<include refid="selectCouseListwhereSql" />
+
 		order by
 			reg_dtm desc
 
@@ -66,7 +72,7 @@
 			count(*)
 		from
 		ed_edctn_prcs_mst a
-		<!--<include refid="selectCouseListwhereSql" />-->
+		<include refid="selectCouseListwhereSql" />
 	</select>
 
 	<!--
@@ -76,50 +82,87 @@
         ==========   ========   ==============
         2023.11.02    김학규       최초생성
     -->
-	<!--<sql id="selectCouseListwhereSql">
+	<sql id="selectCouseListwhereSql">
 		<where>
-			<if test="strtDt != null and strtDt != ''.toString() ">
-				and last_lgn_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+			<!--등록일/수정기간-->
+			<if test="strtDt != null and strtDt != ''">
+				<choose>
+					<when test="srchDate == 1">
+						AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						AND REG_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+					</when>
+					<when test="srchDate == 2">
+						AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						AND MOD_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+					</when>
+				</choose>
 			</if>
-			<if test="endDt != null and endDt != ''.toString() ">
-				and last_lgn_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
-			</if>
-			<if test="authCdList != null and authCdList.size() > 0">
+
+			<!--과정분류-->
+			<if test="ctgryCdList != null and ctgryCdList.size() > 0">
 				and (
-				<foreach collection="authCdList" item="authCdList" index="index" open="" close="" separator=" or ">
-					auth_cd = #{authCdList}
+				<foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="" close="" separator=" or ">
+					ctgry_cd = #{ctgryCdList}
 				</foreach>
 				)
 			</if>
-			<if test="useYnList != null and useYnList.size() > 0">
+			<!--학습방식 -->
+			<if test="stduyMthdCdList != null and stduyMthdCdList.size() > 0">
 				and (
-				<foreach collection="useYnList" item="useYnList" index="index" open="" close="" separator=" or ">
-					use_yn = #{useYnList}
+				<foreach collection="stduyMthdCdList" item="stduyMthdCdList" index="index" open="" close="" separator=" or ">
+					stduy_mthd_cd = #{stduyMthdCdList}
 				</foreach>
 				)
 			</if>
+
+			<!-- 학습일 -->
+			<if test="stduyDdCd != null and stduyDdCd != ''">
+				AND stduy_dd_cd = #{stduyDdCd}
+			</if>
+			<!-- 학습시간 -->
+			<if test="stduyTimeCd != null and stduyTimeCd != ''">
+				AND stduy_time_cd = #{stduyTimeCd}
+			</if>
+
+			<!--노출여부-->
+			<if test="expsYnList != null and expsYnList.size() > 0">
+				AND (
+				<foreach collection="expsYnList" item="expsYn" index="index" open="" close="" separator=" OR ">
+					EXPS_YN = #{expsYn}
+				</foreach>
+				)
+			</if>
+
 			<if test="q != null and q != ''.toString() ">
 				<choose>
-					<when test="f == 1">
-						and id like concat('%', #{q}, '%')
+					<when test="f == 1"><!-- 과정명 -->
+						and nm like concat('%', #{q}, '%')
 					</when>
-					<when test="f == 2">
-						and name like concat('%', #{q}, '%')
+					<when test="f == 2"><!--최초수정자-->
+						AND (
+						INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
 					</when>
-					<when test="f == 3 ">
-						and (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) like concat('%', #{q}, '%')
+					<when test="f == 3"><!--최종수정자-->
+						AND (
+						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
 					</when>
-					<otherwise>
-						and (
-							id like concat('%', #{q}, '%')
-							or name like concat('%', #{q}, '%')
-							or (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd=a.dept_cd) like concat('%', #{q}, '%')
+					<otherwise><!--전체수정자-->
+						AND (
+						INSTR(#{q}, nm) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
 						)
 					</otherwise>
 				</choose>
 			</if>
 		</where>
-	</sql>-->
+	</sql>
 
 	<!--
       쿼리명 : EBACouseMapper.selectCouseDtl
@@ -272,7 +315,40 @@
 	</insert>
 
 	<!--
-         쿼리명 : EBACouseMapper.insertCouse
+         쿼리명 : EBACouseMapper.updateCouse
+         설  명 : 교육과정을 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.02   김학규       최초생성
+    -->
+	<update id="updateCouse" parameterType="EBACouseDTO" >
+
+		UPDATE ed_edctn_prcs_mst SET /* EBACouseMapper.updateCouse */
+			ctgry_cd = #{ctgryCd}
+			, nm = #{nm}
+			, smmry_Nm = #{smmryNm}
+			, itrdc_Cntn = #{itrdcCntn}
+			, stduy_trgt_cntn = #{stduyTrgtCntn}
+			, stduy_mthd_cd = #{stduyMthdCd}
+			, cmptn_stnd_cd = #{cmptnStndCd}
+			, cmptn_Jdgmt_Cd = #{cmptnJdgmtCd}
+			, jdgmt_yn = #{jdgmtYn}
+			, stduy_dd_cd = #{stduyDdCd}
+			, stduy_time_cd = #{stduyTimeCd}
+			, stduy_supls_nm = #{stduySuplsNm}
+			, cprtn_instt_nm = #{cprtnInsttNm}
+			, stduy_cntn = #{stduyCntn}
+			, thnl_file_seq = #{thnlFileSeq}
+			, exps_yn = #{expsYn}
+			, mod_dtm = now()
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		where edctn_seq = #{detailsKey}
+	</update>
+
+	<!--
+         쿼리명 : EBACouseMapper.insertCouseTrgt
          설  명 : 교육과정대상상세 등록
           수정일     수정자       수정내용
         ==========   ======    ==============
@@ -306,6 +382,18 @@
 		,  now()
 		)
 	</insert>
+
+	<!--
+         쿼리명 : EBACouseMapper.deleteCouseTrgt
+         설  명 : 교육과정대상상세 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.08   김학규       최초생성
+    -->
+	<delete id="deleteCouseTrgt" parameterType="EBACouseDTO">
+		delete from ed_edctn_trgt_dtl where edctn_seq = #{detailsKey}
+	</delete>
+
 
 
 	<!--

@@ -1,9 +1,6 @@
 package com.kap.mngwserc.controller.em;
 
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.EBACouseDTO;
-import com.kap.core.dto.EmfMap;
+import com.kap.core.dto.*;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBACouseService;
@@ -60,6 +57,9 @@ public class EBACouseController {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("CLASS_TYPE");
+        cdDtlList.add("STDUY_MTHD"); //학습방식
+        cdDtlList.add("STDUY_DD");//학습시간 - 학습일
+        cdDtlList.add("STDUY_TIME");//학습시간 - 학습시간
 
         modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 
@@ -112,8 +112,6 @@ public class EBACouseController {
         EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
         List<EBACouseDTO> rtnTrgtData = (List<EBACouseDTO>) rtnMap.get("rtnTrgtData");
 
-        System.out.println("@@@@ rtnDto = " + rtnDto);
-
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
         //과정분류 공통코드 세팅
@@ -157,11 +155,7 @@ public class EBACouseController {
 
 
             //임시로 넣은 더미데이터
-        }else{
-            rtnDto.setPrntCd("CLASS02");
-            rtnDto.setCtgryCd("CLASS02006");
         }
-
 
         modelMap.addAttribute("rtnData", rtnDto);
         modelMap.addAttribute("rtnTrgtData", rtnTrgtData);
@@ -231,7 +225,7 @@ public class EBACouseController {
      * 교육과정관리를 등록한다.
      */
     @PostMapping(value="/insert")
-    public EBACouseDTO getCouseInsert(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getCouseInsert(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -243,7 +237,7 @@ public class EBACouseController {
             eBACouseDTO.setRegIp( coaAdmDTO.getLoginIp() );
             eBACouseDTO.setModId( coaAdmDTO.getId() );
             eBACouseDTO.setModIp( coaAdmDTO.getLoginIp() );
-            eBACouseDTO.setRespCnt( eBACouseService.insertCouse(eBACouseDTO) );
+            modelMap.addAttribute("respCnt", eBACouseService.updateCouse(eBACouseDTO));
         }
         catch (Exception e)
         {
@@ -256,14 +250,14 @@ public class EBACouseController {
         }
 
 
-        return eBACouseDTO;
+        return "jsonView";
     }
 
     /**
      * 교육과정관리를 수정한다.
      */
-    @GetMapping(value="/update")
-    public EBACouseDTO getCouseUpdate(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    @PostMapping(value="/update")
+    public String updateBoard(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -275,7 +269,7 @@ public class EBACouseController {
             eBACouseDTO.setRegIp( coaAdmDTO.getLoginIp() );
             eBACouseDTO.setModId( coaAdmDTO.getId() );
             eBACouseDTO.setModIp( coaAdmDTO.getLoginIp() );
-            eBACouseDTO.setRespCnt( eBACouseService.updateCouse(eBACouseDTO) );
+            modelMap.addAttribute("respCnt", eBACouseService.updateCouse(eBACouseDTO));
         }
         catch (Exception e)
         {
@@ -283,11 +277,13 @@ public class EBACouseController {
             {
                 log.debug(e.getMessage());
             }
+            System.out.println("EE = " + e);
+
             throw new Exception(e.getMessage());
         }
 
 
-        return eBACouseDTO;
+        return "jsonView";
     }
 
     /**
