@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.eb.EBDSqCertiReqMapper">
+	<!--
+		쿼리명 : EBDSqCertiReqMapper.selectList
+		설  명 : 목록 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="selectList" parameterType="EBDSqCertiSearchDTO" resultType="EBDSqCertiListDTO">
+		select /* EBDSqCertiReqMapper.selectExamList */
+		  sq_mst.issue_cd
+		, sq_mst.exam_appctn_seq
+		, (select cd_nm from co_code_mst where cd = sq_mst.issue_cd and cd_id = 'EBD_SQ') issue_nm
+		, ptcpt_mst.episd_year
+		, ptcpt_mst.episd_ord
+		, (select code_mst.cd_nm from ed_edctn_episd_mst episd_mst join co_code_mst  code_mst on code_mst.cd = episd_mst.cbsn_cd where edctn_seq = ptcpt_mst.edctn_seq and code_mst.cd_id = 'CLASS_TYPE') cbsn_nm
+		, cmpn_mst.cmpn_nm
+		, cmpn_mst.ctgry_cd
+		, (select cd_nm from co_code_mst where cd = cmpn_mst.ctgry_cd and cd_id = 'COMPANY_TYPE') ctgry_nm
+		, cmpn_mst.size_cd
+		, (select cd_nm from co_code_mst where cd = cmpn_mst.size_cd and cd_id = 'COMPANY_TYPE') size_nm
+		, cmpn_mst.bsnm_no
+		, mem_mst.id
+		, mem_mst.name
+		, ptcpt_mst.gpc_id
+		, mem_mst.hp_no
+		, mem_mst.email
+		, sq_mst.reg_dtm
+		, sq_mst.mod_dtm
+	    , sq_mst.mod_id
+		, (select name from co_adm_mst where id = sq_mst.mod_id) mod_name
+		from sq_exam_appctn_mst sq_mst join co_mem_mst mem_mst on mem_mst.mem_seq = sq_mst.mem_seq
+		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.mem_seq = mem_mst.mem_seq and exists(select 1 from sq_exam_appctn_ptcpt_mst sq_ptcpt_mst where  sq_ptcpt_mst.ptcpt_seq = ptcpt_mst.ptcpt_seq
+		and exists( select edctn_seq from ed_edctn_prcs_mst where ctgry_cd = 'CLASS01002' and edctn_seq = ptcpt_mst.edctn_seq ) )
+		left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = mem_mst.bsnm_no
+		<include refid="selectExamListWhereSql" />
+		order by
+		sq_mst.reg_dtm desc
+		limit #{firstIndex}, #{recordCountPerPage}
+	</select>
+	<!--
+		쿼리명 : EBDSqCertiReqMapper.getListCnt
+		설  명 : 목록 전체 갯수
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getListCnt" parameterType="EBDSqCertiSearchDTO" resultType="java.lang.Integer">
+		select /* EBDSqCertiReqMapper.getAdmListCnt */
+			count(*)
+		from sq_exam_appctn_mst sq_mst join co_mem_mst mem_mst on mem_mst.mem_seq = sq_mst.mem_seq
+		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.mem_seq = mem_mst.mem_seq and exists(select 1 from sq_exam_appctn_ptcpt_mst sq_ptcpt_mst where  sq_ptcpt_mst.ptcpt_seq = ptcpt_mst.ptcpt_seq
+		and exists( select edctn_seq from ed_edctn_prcs_mst where ctgry_cd = 'CLASS01002' and edctn_seq = ptcpt_mst.edctn_seq ) )
+		left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = mem_mst.bsnm_no
+		<include refid="selectExamListWhereSql" />
+	</select>
+	<!--
+		쿼리명 : selectExamListWhereSql
+		설  명 : 목록 조건
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2019.07.08    김학규       최초생성
+    -->
+	<sql id="selectExamListWhereSql">
+		<where>
+			<if test="strtDt != null and strtDt != ''.toString() ">
+				<choose>
+					<when test="srchDate == 1">
+						and sq_mst.reg_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+					</when>
+					<when test="srchDate == 2">
+						and sq_mst.mod_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+					</when>
+				</choose>
+			</if>
+			<if test="endDt != null and endDt != ''.toString() ">
+				<choose>
+					<when test="srchDate == 1">
+						and sq_mst.reg_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+					</when>
+					<when test="srchDate == 2">
+						and sq_mst.mod_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+					</when>
+				</choose>
+			</if>
+			<if test="ctgryCdList != null and ctgryCdList.size() > 0">
+				and
+				<foreach collection="ctgryCdList" item="list" index="index" open="(" close=")" separator=" or ">
+					cmpn_mst.ctgry_cd = #{list}
+				</foreach>
+			</if>
+			<if test="issueCdList != null and issueCdList.size() > 0">
+				and
+				<foreach collection="issueCdList" item="list" index="index" open="(" close=")" separator=" or ">
+					sq_mst.issue_cd = #{list}
+				</foreach>
+			</if>
+			<if test="q != null and q != ''.toString() ">
+				<choose>
+					<when test="f == 1">
+						and exists(select edctn_seq from ed_edctn_prcs_mst where edctn_seq = ptcpt_mst.edctn_seq and nm like concat('%', #{q}, '%') )
+					</when>
+					<when test="f == 2">
+						and exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and name like concat('%', #{q}, '%') )
+					</when>
+					<when test="f == 3 ">
+						and exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and hp_no like concat('%', #{q}, '%') )
+					</when>
+					<when test="f == 4 ">
+						and exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and email like concat('%', #{q}, '%') )
+					</when>
+					<when test="f == 5 ">
+						and exists(select bsnm_no from cp_cmpn_mst where bsnm_no = cmpn_mst.bsnm_no and cmpn_nm like concat('%', #{q}, '%') )
+					</when>
+					<when test="f == 6 ">
+						and exists(select bsnm_no from cp_cmpn_mst where bsnm_no = cmpn_mst.bsnm_no and bsnm_no like concat('%', #{q}, '%') )
+					</when>
+					<when test="f == 7 ">
+						and exists(select id from co_adm_mst where id = sq_mst.mod_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')) )
+					</when>
+					<otherwise>
+						and (
+							   exists(select edctn_seq from ed_edctn_prcs_mst where edctn_seq = ptcpt_mst.edctn_seq and nm like concat('%', #{q}, '%') )
+							or exists(select id from co_adm_mst where id = a.mod_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')))
+						)
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+
+</mapper>
+
+
