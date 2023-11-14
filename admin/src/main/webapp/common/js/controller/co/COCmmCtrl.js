@@ -1574,6 +1574,21 @@ var cmmCtrl = (function(){
 		});
 	}
 
+	//교육 평가지 매핑
+	//getExamLayerPop(function(data){data 객체를 받아서 처리});
+	var fn_exam_layer_pop = function(fnc){
+		$(".exgExamSrchLayer").one('show.bs.modal', function() {
+			// Add class for soft backdrop
+			$(".exgExamSrchLayer").find("#btnRefresh").click();
+			$(".exgExamSrchLayer").find("#btnSearch").click();
+		}).one('hidden.bs.modal', function() {
+			// Remove class for soft backdrop (if not will affect future modals)
+		}).one('choice', function(data, param) {
+			// Remove class for soft backdrop (if not will affect future modals)
+			fnc(param);
+		}).modal();
+	}
+
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1610,6 +1625,7 @@ var cmmCtrl = (function(){
 
 		//json형식의 데이터를 문자열로 변환 후 자바 컨트롤러에서 @RequestBody BaseDTO baseDto 로 받는다
 		jsonAjax : fn_json_ajax_data,
-
+		//교육 평가지 매핑
+		getExamLayerPop : fn_exam_layer_pop,
 	}
 }());

@@ -60,6 +60,7 @@ public class EXGExamController {
         try
         {
             modelMap.addAttribute("rtnData", eXGExamService.selectExamList(EXGExamMstSearchDTO));
+            modelMap.addAttribute("searchDto", EXGExamMstSearchDTO);
         }
         catch (Exception e)
         {

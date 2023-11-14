@@ -3,6 +3,7 @@ package com.kap.core.dto.ex.exg;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -41,4 +42,8 @@ public class EXGExamMstSearchDTO extends BaseDTO {
     private List<EXGExamMstSearchDTO> list;
     @Schema(title = "검색 사용 여부 리스트")
     private List<String> expsYnList;
+
+    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
+    @Hidden
+    private String srchExamLayer;
 }

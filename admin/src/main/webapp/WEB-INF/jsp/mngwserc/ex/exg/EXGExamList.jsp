@@ -62,7 +62,6 @@
 					</div>
 				</fieldset>
 
-
 				<hr class="mt0" />
 
 				<div class="clearfix">
