@@ -218,4 +218,42 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 설문 마스터
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl svMstIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SV_MST_SEQ")
+                .setCipers(13)
+                .build();
+    }
+    /** 설문 질문 상세
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl svQstnDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SV_QSTN_DTL_SEQ")
+                .setCipers(13)
+                .build();
+    }
+    /** 설문 질문 보기 상세
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl svQstnExmplDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SV_EXMPL_DTL_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
 }
