@@ -254,4 +254,29 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+    /** 메인 비주얼
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl mainVslIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("MAIN_VSL_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 상생 사업
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl winBusIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("WIN_BUS_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }
