@@ -56,25 +56,9 @@ public interface SMBMnVslMapper {
     public int deleteMnVsl(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 
     /**
-     * 메인 비주얼 사용 여부 수정
-     */
-   /* public int updateUseYn(SMBMainVslDTO pSMBMainVslDTO) throws Exception;*/
-
-    /**
      * 메인 비주얼 정렬 수정
      */
     public void updateOrder(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
-
-
-    /**
-     * 노출=Y 메인 비주얼 개수
-     */
-    public int selectMnVslCnt(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
-
-    /**
-     * 기존에 노출 중인 메인 비주얼
-     */
-    public SMBMainVslDTO selectNowMnVsl(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 
     /**
      * 정렬할 메인 비주얼을 조회

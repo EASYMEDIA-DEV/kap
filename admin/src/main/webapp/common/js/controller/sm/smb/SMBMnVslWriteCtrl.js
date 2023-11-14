@@ -37,21 +37,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var odtmYn = $("#odtmYn").val();
                         if(odtmYn == 'Y'){
                             $("#odtmYn").val('N');
-                            $("input[name=strtDtm]").attr("disabled", false);
-                            $("input[name=endDtm]").attr("disabled", false);
-                            $("input[name=strtDtm]").attr("readonly", false);
-                            $("input[name=endDtm]").attr("readonly", false);
-                            $("input[name=strtDtm]").removeClass("notRequired");
-                            $("input[name=endDtm]").removeClass("notRequired");
+                            $("input[name=expsStrtDtm]").attr("disabled", false);
+                            $("input[name=expsEndDtm]").attr("disabled", false);
+                            $("input[name=expsStrtDtm]").attr("readonly", false);
+                            $("input[name=expsEndDtm]").attr("readonly", false);
+                            $("input[name=expsStrtDtm]").removeClass("notRequired");
+                            $("input[name=expsEndDtm]").removeClass("notRequired");
                             $("#odtmYn").addClass("notRequired");
                         }else if(odtmYn == 'N' || odtmYn == ''){
                             $("#odtmYn").val('Y');
-                            $("input[name=strtDtm]").attr("disabled", true);
-                            $("input[name=endDtm]").attr("disabled", true);
-                            $("input[name=strtDtm]").attr("readonly", true);
-                            $("input[name=endDtm]").attr("readonly", true);
-                            $("input[name=strtDtm]").addClass("notRequired");
-                            $("input[name=endDtm]").addClass("notRequired");
+                            $("input[name=expsStrtDtm]").attr("disabled", true);
+                            $("input[name=expsEndDtm]").attr("disabled", true);
+                            $("input[name=expsStrtDtm]").attr("readonly", true);
+                            $("input[name=expsEndDtm]").attr("readonly", true);
+                            $("input[name=expsStrtDtm]").addClass("notRequired");
+                            $("input[name=expsEndDtm]").addClass("notRequired");
                             $("#odtmYn").removeClass("notRequired");
                         }
                     }
@@ -59,26 +59,30 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             }
         },
         classname : {
-            category : {
+            tagCd : {
                 event: {
                     click : function(){
                         var mdCd = $("#mdCd").val();
-                        var category = $('input[name=category]:checked').val();
+                        var tagCd = $('input[name=tagCd]:checked').val();
                         if(mdCd == 'pc'){
-                            if(category == 'image'){
+                            if(tagCd == 'image'){
                                 $(".pcVideo").css("display", "none");
                                 $(".pcImage").css("display", "block");
+                                $(".remove").click();
                             }else{
                                 $(".pcImage").css("display", "none");
                                 $(".pcVideo").css("display", "block");
+                                $(".remove").click();
                             }
                         }else if(mdCd == 'mobile'){
-                            if(category == 'image'){
+                            if(tagCd == 'image'){
                                 $(".mobileVideo").css("display", "none");
                                 $(".mobileImg").css("display", "block");
+                                $(".remove").click();
                             }else{
                                 $(".mobileImg").css("display", "none");
                                 $(".mobileVideo").css("display", "block");
+                                $(".remove").click();
                             }
                         }
 
@@ -90,20 +94,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
             /* 이미지, 동영상 구분 */
 
-            $('input[name=category]:checked').val();
-
-            var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
-
-            /* Editor Setting */
-            jQuery("textarea[id^='cnts']").each(function(){
-                cmmCtrl.setEditor({
-                    editor : jQuery(this).attr("id"),
-                    height : 400,
-                    readOnly : _readOnly
-                });
-            });
-
-            jQuery(".CodeMirror").find("textarea").addClass("notRequired");
+            $('input[name=tagCd]:checked').val();
 
             /* File Dropzone Setting */
             $formObj.find(".dropzone").each(function(){
@@ -154,12 +145,17 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 async : {
                     use : true,
                     func : function (){
+
+                        $(".attachFile").data("extn")
+                        var radioValue = $("input[name='tagCd']:checked").val();
+                        var fileType = $("input[name='type']").val();
+
+
                         var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
                         var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
                         if($formObj.find(".dropzone").size() > 0)
                         {
                             cmmCtrl.fileFrmAjax(function(data){
-                                console.log(data);
                                 //콜백함수. 페이지 이동
                                 if(data.respCnt > 0){
                                     alert(actionMsg);
