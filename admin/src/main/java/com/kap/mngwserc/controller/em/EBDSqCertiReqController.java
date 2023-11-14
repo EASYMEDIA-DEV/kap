@@ -94,6 +94,7 @@ public class EBDSqCertiReqController {
     {
         try
         {
+
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
