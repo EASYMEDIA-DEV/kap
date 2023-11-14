@@ -5,8 +5,8 @@
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center">미정</td>
-                <td class="text-center">미정</td>
+                <td class="text-center">${list.parntCtgryCdNm}</td>
+                <td class="text-center">${list.ctgryCdNm}</td>
                 <td class="text-center">${ list.titl}</td>
                 <td class="text-center">${ kl:convertDate(list.startInqrDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                 <td class="text-center">${ kl:convertDate(list.endInqrDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>

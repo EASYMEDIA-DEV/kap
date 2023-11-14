@@ -22,8 +22,14 @@ public class MPAInqrDto extends BaseDTO {
 
     private String inqrStts; //진행상태
 
+    private String parntCtgryCdNm ; //부모 카테고리
+
+    private String ctgryCdNm;   //카테고리
+
     private List<MPAInqrDto> list;
 
     private String lgnSsnId;
+
+
 
 }
