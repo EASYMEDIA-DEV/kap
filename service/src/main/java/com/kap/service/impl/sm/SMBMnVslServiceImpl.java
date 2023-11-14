@@ -97,7 +97,6 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
     public int insertMnVsl(SMBMainVslDTO pSMBMainVslDTO) throws Exception
     {
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
-
         String tagCd = pSMBMainVslDTO.getTagCd();
         if(tagCd.equals("mp4")){
             pSMBMainVslDTO.setFileSeq(fileSeqMap.get("videoFileSeq"));
@@ -117,13 +116,13 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
 
         String tagCd = pSMBMainVslDTO.getTagCd();
-        if(tagCd.equals("mp4")){
+        if (tagCd.equals("mp4")) {
             pSMBMainVslDTO.setFileSeq(fileSeqMap.get("videoFileSeq"));
-        }else{
+        } else {
             pSMBMainVslDTO.setFileSeq(fileSeqMap.get("imgFileSeq"));
         }
-
         pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.updateMnVsl(pSMBMainVslDTO));
+
         return pSMBMainVslDTO.getRespCnt();
     }
 

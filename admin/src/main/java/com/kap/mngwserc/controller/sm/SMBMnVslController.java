@@ -109,7 +109,6 @@ public class SMBMnVslController {
             sMBMainVslDTO.setMdCd(mdCd);
             sMBMainVslDTO.setRegId(coaAdmDTO.getId());
             sMBMainVslDTO.setRegIp(coaAdmDTO.getLoginIp());
-            System.err.println("sMBMainVslDTO111::"+sMBMainVslDTO);
             modelMap.addAttribute("respCnt", sMBMnVslService.insertMnVsl(sMBMainVslDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {

@@ -150,41 +150,41 @@
             </fieldset>
             <c:choose>
             <c:when test="${mdCd eq 'pc'}">
-                <fieldset class="pcImage">
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">첨부파일</label>
-                        <div class="col-sm-10 col-md-11">
-                            <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
-                            <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                            <div class="dropzone attachFile notRequired" data-file-field-nm="imgFileSeq" data-file-extn="${imageExtns}" data-max-file-size="5242880" data-max-file-cnt="1" data-title="PC 첨부파일">
-                                <div class="dz-default dz-message">
-                                    <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                                </div>
+            <fieldset class="pcImage">
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">첨부파일</label>
+                    <div class="col-sm-10 col-md-11">
+                        <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="imgFileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                            <div class="dz-default dz-message">
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
-                            <p class="text-bold mt">
-                                ※ OOO X OOO / 파일 확장자(${imageExtns}) / 최대 용량(<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
-                            </p>
                         </div>
+                        <p class="text-bold mt">
+                            ※ OOO X OOO / 파일 확장자(${imageExtns}) / 최대 용량(<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                        </p>
                     </div>
-                </fieldset>
-                <fieldset class="pcVideo" style="display: none">
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">동영상</label>
-                        <div class="col-sm-10 col-md-11">
-                            <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                            <div class="dropzone attachFile notRequired" data-file-field-nm="videoFileSeq" data-file-extn="mp4" data-max-file-size="20971520" data-max-file-cnt="1" data-title="PC 첨부파일">
-                                <div class="dz-default dz-message">
-                                    <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                                </div>
-                            </div>
-                            <p class="text-bold mt">
-                                ※ OOO X OOO / 파일 확장자(${videoExtns}) / 최대 용량(<fmt:formatNumber value="${20971520 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
-                            </p>
-                        </div>
-                    </div>
-                </fieldset>
                 </div>
-                </c:when>
+            </fieldset>
+            <fieldset class="pcVideo" style="display: none">
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">첨부파일</label>
+                    <div class="col-sm-10 col-md-11">
+                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="videoFileSeq" data-file-extn="mp4" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                            <div class="dz-default dz-message">
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                            </div>
+                        </div>
+                        <p class="text-bold mt">
+                            ※ OOO X OOO / 파일 확장자(mp4) / 최대 용량(<fmt:formatNumber value="${20971520 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+           </div>
+          </c:when>
                 <c:when test="${mdCd eq 'mobile'}">
                     <fieldset class="mobileImg">
                         <div class="form-group text-sm">
@@ -192,7 +192,7 @@
                             <div class="col-sm-10 col-md-11">
                                 <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                <div class="dropzone attachFile notRequired" data-file-field-nm="imgFileSeq" data-file-extn="${imageExtns}" data-max-file-size="5242880" data-max-file-cnt="1" data-title="mobile 첨부파일">
+                                <div class="dropzone attachFile notRequired" data-file-field-nm="imgFileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                     </div>
@@ -205,16 +205,16 @@
                     </fieldset>
                     <fieldset class="mobileVideo" style="display: none">
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">동영상</label>
+                            <label class="col-sm-1 control-label">첨부파일</label>
                             <div class="col-sm-10 col-md-11">
                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                <div class="dropzone attachFile notRequired" data-file-field-nm="videoFileSeq" data-file-extn="mp4" data-max-file-size="20971520" data-max-file-cnt="1" data-title="mobile 첨부파일">
+                                <div class="dropzone attachFile notRequired" data-file-field-nm="videoFileSeq" data-file-extn="mp4" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ OOO X OOO / 파일 확장자(${videoExtns}) / 최대 용량(<fmt:formatNumber value="${20971520 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                                    ※ OOO X OOO / 파일 확장자(mp4) / 최대 용량(<fmt:formatNumber value="${20971520 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
                                 </p>
                             </div>
                         </div>
@@ -263,7 +263,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">최초 등록자</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static">${rtnDto.regNm} (${rtnDto.regId})</p>
+                            <p class="form-control-static">${rtnDto.regName} (${rtnDto.regId})</p>
                         </div>
                         <div class="col-sm-1"></div>
                         <label class="col-sm-1 control-label">최초 등록일</label>
@@ -280,7 +280,7 @@
                             <p class="form-control-static">
                                 <c:choose>
                                     <c:when test="${modFlag}">
-                                        ${rtnDto.modNm} (${rtnDto.modId})
+                                        ${rtnDto.modName} (${rtnDto.modId})
                                     </c:when>
                                     <c:otherwise>
                                         -
