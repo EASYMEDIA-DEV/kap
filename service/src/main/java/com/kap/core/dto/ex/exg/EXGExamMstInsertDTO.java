@@ -2,6 +2,8 @@ package com.kap.core.dto.ex.exg;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kap.core.dto.BaseDTO;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -28,7 +30,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "교육 시험 마스터")
-public class EXGExamMstInsertDTO {
+public class EXGExamMstInsertDTO extends BaseDTO {
     @Schema(title = "시험순번", example = "숫자")
     private Integer examSeq;
 
@@ -43,6 +45,18 @@ public class EXGExamMstInsertDTO {
     @Schema(title = "노출 여부")
     @NotNull
     private String expsYn;
+
+    @Schema(title = "질문 모든 갯수")
+    @Hidden
+    private Integer qstnSize;
+
+    @Schema(title = "보기 모든 갯수")
+    @Hidden
+    private Integer exmplSize;
+
+    @Schema(title = "수정 가능 여부")
+    @Hidden
+    private boolean posbChg = true;
 
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;

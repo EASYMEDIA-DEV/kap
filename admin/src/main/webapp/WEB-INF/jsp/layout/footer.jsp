@@ -5,7 +5,7 @@
 	        	<footer class="sticky-footer">
 			      	<div class="container">
 			        	<div class="text-center">
-							<small>COPYRIGHT 2002 KAP. ALL RIGHTS RESERVED.</small>
+							<small>COPYRIGHT 2023 KAP. ALL RIGHTS RESERVED.</small>
 			        	</div>
 			      	</div>
 		    	</footer>

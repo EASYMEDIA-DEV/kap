@@ -9,12 +9,13 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.examSeq}" />
+            <input type="hidden" class="notRequired" id="posbChg" name="posbChg" value="${ kl:decode(rtnDto.posbChg, false, 'false', 'true') }" />
             <input type="hidden" class="notRequired" id="gubun" name="gubun" value="${gubun}" />
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="11" maxlength="100" title="제목" placeholder="제목 입력하세요." />
+                        <input type="text" class="form-control input-sm " id="titl" name="titl" value="${rtnDto.titl}" maxlength="100" title="제목" placeholder="제목 입력하세요." />
                     </div>
                 </div>
             </fieldset>
@@ -22,7 +23,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">시험개요<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control notRequired" id="smmryCntn" name="smmryCntn" title="시험개요" data-type="${pageGb}" >${rtnDto.smmryCntn}</textarea>
+                        <textarea class="form-control ckeditorRequired" id="smmryCntn" name="smmryCntn" title="시험개요" data-type="${pageGb}" >${rtnDto.smmryCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
@@ -54,69 +55,158 @@
             <h7 class="mt0"><em class="ion-android-arrow-dropright mr-sm"></em>${pageTitle} 문항</h7>
             <fieldset class="last-child mb0">
                 <div class="form-group text-sm examListContainer" data-controller="controller/ex/exg/EXGExamMakeCtrl" style="display:none;">
-                    <div class="col-sm-12 examList mt-sm pl0 pr0">
-                        <hr>
-                        <label class="col-sm-1 control-label examQstnNm">질문 </label>
-                        <div class="col-sm-11 pl0 pr0">
-                            <div class="col-sm-12">
-                                <div>
-                                    <label class="col-sm-2 control-label">문항유형<span class="star"> *</span></label>
-                                    <div class="col-sm-3">
-                                        <select class="form-control input-sm srvTypeCd" name="srvTypeCd">
-                                            <c:forEach var="cdList" items="${cdDtlList.EXG}" varStatus="status">
-                                                <option value="${cdList.cd}">
-                                                        ${cdList.cdNm}
-                                                </option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                    <div class="col-sm-2 pl0">
-                                        <button type="button" class="btn btn-sm btn-inverse btnExamWrite">문항추가</button>
-                                    </div>
-                                    <div class="col-sm-5 text-right">
-                                        <button type="button" class="btn btn-sm btn-danger btnExamDelete">문항삭제</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 mt-sm">
-                                <div>
-                                    <label class="col-sm-2 control-label">질문<span class="star"> *</span></label>
-                                    <div class="col-sm-10">
-                                        <input type="text" class="form-control input-sm" name="qstnNm" value="질문" maxlength="50" title="질문" placeholder="질문을 입력하세요." />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-12 mt-sm exmplContainer ">
-                                <label class="col-sm-2 control-label">응답<span class="star"> *</span></label>
-                                <div class="col-sm-10 exmplOptnContainer pl0 pr0">
-                                    <div class="col-sm-12 exmplOptnContainerList pl0 pr0 mb-sm">
-                                        <div class="col-sm-9 ">
-                                            <input type="text" class="form-control input-sm" value="응답" name="exmplNm" maxlength="50" title="응답내용" placeholder="응답내용을 입력하세요." />
+                    <c:choose>
+                        <c:when test="${ rtnDto.examSeq != null }">
+                            <c:forEach var="qstnList" items="${rtnDto.exExamQstnDtlList}" varStatus="qstnStatus">
+                                <div class="col-sm-12 examList mt-sm pl0 pr0">
+                                    <hr>
+                                    <label class="col-sm-1 control-label examQstnNm">질문 ${qstnList.qstnOrd+1}</label>
+                                    <input type="hidden" class="notRequired" name="qstnSeq" value="${qstnList.qstnSeq}" />
+                                    <div class="col-sm-11 pl0 pr0">
+                                        <div class="col-sm-12">
+                                            <div>
+                                                <label class="col-sm-2 control-label">문항유형<span class="star"> *</span></label>
+                                                <div class="col-sm-3">
+                                                    <select class="form-control input-sm srvTypeCd" name="srvTypeCd" ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }>
+                                                        <c:forEach var="cdList" items="${cdDtlList.EXG}" varStatus="status">
+                                                            <option value="${cdList.cd}" ${ kl:decode(qstnList.srvTypeCd, cdList.cd, 'selected', '') }>
+                                                                    ${cdList.cdNm}
+                                                            </option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-2 pl0">
+                                                    <button type="button" class="btn btn-sm btn-inverse btnExamWrite" ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }>문항추가</button>
+                                                </div>
+                                                <c:if test="${ qstnStatus.index != 0}">
+                                                    <div class="col-sm-5 text-right">
+                                                        <button type="button" class="btn btn-sm btn-danger btnExamDelete" ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }>문항삭제</button>
+                                                    </div>
+                                                </c:if>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-1">
-                                            <label class="checkbox c-checkbox checkbox-inline pl0" style="display:none;">
-                                                <input type="checkbox" name="checkbox"  class="notRequired" value="" title="선택" />
-                                                <span class="ion-checkmark-round"></span>
-                                            </label>
-                                            <label class="radio c-radio " >
-                                                <input type="radio" name="radio" class="notRequired"  value="Y"  title="선택" />
-                                                <span class="ion-record"></span>
-                                            </label>
+                                        <div class="col-sm-12 mt-sm">
+                                            <div>
+                                                <label class="col-sm-2 control-label">질문<span class="star"> *</span></label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control input-sm" name="qstnNm" value="${ qstnList.qstnNm }" maxlength="50" title="질문" placeholder="질문을 입력하세요." ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') } />
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                            <div class="pull-right">
-                                                <button type="button" class="btn btn-sm btn-inverse btnAddOptn"><em class="ion-android-add"></em></button>
-                                                <button type="button" class="btn btn-sm btn-danger btnDeleteOptn"><em class="ion-android-remove"></em></button>
+                                        <div class="col-sm-12 mt-sm exmplContainer ">
+                                            <c:if test="${  qstnList.exExamExmplDtlList != null && qstnList.exExamExmplDtlList.size() > 0 }">
+                                                <label class="col-sm-2 control-label">응답<span class="star"> *</span></label>
+                                                <div class="col-sm-10 exmplOptnContainer pl0 pr0">
+                                                    <c:forEach var="exmplList" items="${qstnList.exExamExmplDtlList}" varStatus="exmplStatus">
+                                                        <div class="col-sm-12 exmplOptnContainerList pl0 pr0 mb-sm">
+                                                            <div class="col-sm-9 ">
+                                                                <input type="text" class="form-control input-sm" value="${ exmplList.exmplNm }" name="exmplNm" maxlength="50" title="응답내용" placeholder="응답내용을 입력하세요." ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }/>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <c:choose>
+                                                                    <c:when test="${ qstnList.srvTypeCd eq 'EXG_B' }">
+                                                                        <label class="checkbox c-checkbox checkbox-inline pl0">
+                                                                            <input type="checkbox" name="checkbox"  class="notRequired" value="" title="선택"  ${ kl:decode(exmplList.canswYn, 'Y', 'checked', '') } ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }/>
+                                                                            <span class="ion-checkmark-round"></span>
+                                                                        </label>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <label class="radio c-radio " >
+                                                                            <input type="radio" class="notRequired" name="radio${qstnList.qstnOrd}"  value="Y"  title="선택" ${ kl:decode(exmplList.canswYn, 'Y', 'checked', '') } ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }/>
+                                                                            <span class="ion-record"></span>
+                                                                        </label>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <div class="pull-right">
+                                                                    <button type="button" class="btn btn-sm btn-inverse btnAddOptn" ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }><em class="ion-android-add"></em></button>
+                                                                    <button type="button" class="btn btn-sm btn-danger btnDeleteOptn" ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }><em class="ion-android-remove"></em></button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </c:forEach>
+                                                </div>
+                                            </c:if>
+                                        </div>
+                                        <div class="col-sm-12 mt0">
+                                            <div>
+                                                <label class="col-sm-2 control-label">배점<span class="star"> *</span></label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control input-sm numberChk" name="scord" value="${ qstnList.scord }" maxlength="2" title="배점" placeholder="배점 입력" ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') } />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-12 mt0">
-                                <div>
-                                    <label class="col-sm-2 control-label">배점<span class="star"> *</span></label>
-                                    <div class="col-sm-3">
-                                        <input type="text" class="form-control input-sm numberChk" name="scord" value="1" maxlength="2" title="배점" placeholder="배점 입력" />
+                            </c:forEach>
+                        </c:when>
+                    </c:choose>
+                    <div class="examHtmlTemplage">
+                        <div class="col-sm-12 examList mt-sm pl0 pr0">
+                            <hr>
+                            <label class="col-sm-1 control-label examQstnNm">질문 </label>
+                            <div class="col-sm-11 pl0 pr0">
+                                <div class="col-sm-12">
+                                    <div>
+                                        <label class="col-sm-2 control-label">문항유형<span class="star"> *</span></label>
+                                        <div class="col-sm-3">
+                                            <select class="form-control input-sm srvTypeCd" name="srvTypeCd">
+                                                <c:forEach var="cdList" items="${cdDtlList.EXG}" varStatus="status">
+                                                    <option value="${cdList.cd}">
+                                                            ${cdList.cdNm}
+                                                    </option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-2 pl0">
+                                            <button type="button" class="btn btn-sm btn-inverse btnExamWrite">문항추가</button>
+                                        </div>
+                                        <div class="col-sm-5 text-right">
+                                            <button type="button" class="btn btn-sm btn-danger btnExamDelete">문항삭제</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 mt-sm">
+                                    <div>
+                                        <label class="col-sm-2 control-label">질문<span class="star"> *</span></label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control input-sm" name="qstnNm" value="" maxlength="50" title="질문" placeholder="질문을 입력하세요." />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 mt-sm exmplContainer ">
+                                    <label class="col-sm-2 control-label">응답<span class="star"> *</span></label>
+                                    <div class="col-sm-10 exmplOptnContainer pl0 pr0">
+                                        <div class="col-sm-12 exmplOptnContainerList pl0 pr0 mb-sm">
+                                            <div class="col-sm-9 ">
+                                                <input type="text" class="form-control input-sm" value="" name="exmplNm" maxlength="50" title="응답내용" placeholder="응답내용을 입력하세요." />
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <label class="checkbox c-checkbox checkbox-inline pl0" style="display:none;">
+                                                    <input type="checkbox" name="checkbox"  class="notRequired" value="" title="선택" />
+                                                    <span class="ion-checkmark-round"></span>
+                                                </label>
+                                                <label class="radio c-radio " >
+                                                    <input type="radio" name="radio" class="notRequired"  value="Y"  title="선택" />
+                                                    <span class="ion-record"></span>
+                                                </label>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="pull-right">
+                                                    <button type="button" class="btn btn-sm btn-inverse btnAddOptn"><em class="ion-android-add"></em></button>
+                                                    <button type="button" class="btn btn-sm btn-danger btnDeleteOptn"><em class="ion-android-remove"></em></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 mt0">
+                                    <div>
+                                        <label class="col-sm-2 control-label">배점<span class="star"> *</span></label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control input-sm numberChk" name="scord" value="" maxlength="2" title="배점" placeholder="배점 입력" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +260,6 @@
                             </p>
                         </div>
                     </div>
-                    <hr />
                 </fieldset>
             </c:if>
             <hr />
