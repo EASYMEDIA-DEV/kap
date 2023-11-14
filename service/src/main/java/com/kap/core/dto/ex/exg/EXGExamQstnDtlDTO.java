@@ -2,6 +2,7 @@ package com.kap.core.dto.ex.exg;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -28,7 +29,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "교육 시험 질문 상세")
-public class EXGExamQstnDtlDTO {
+public class EXGExamQstnDtlDTO extends BaseDTO  {
     @Schema(title = "시험순번", example = "숫자")
     private Integer examSeq;
     @Schema(title = "질문순번", example = "숫자")

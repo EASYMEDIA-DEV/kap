@@ -96,13 +96,17 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             },
         },
         immediately : function(){
-            examInitHtml = ctrl.obj.html();
-            ctrl.obj.html("");
-            var writeHtml = ctrl.obj.append(examInitHtml);
-            writeHtml.find(".examQstnNm").text("질문 " + $(".examList").size());
-            writeHtml.find("input[type=radio]").attr("name", "radio" + (++examListSize));
-            writeHtml.find(".btnExamDelete").remove();
+            examInitHtml = ctrl.obj.find(".examHtmlTemplage").html();
+            ctrl.obj.find(".examHtmlTemplage").remove();
+            if($.trim($("input[name=detailsKey]").val()) == ""){
+                var writeHtml = ctrl.obj.append(examInitHtml);
+                writeHtml.find(".examQstnNm").text("질문 " + $(".examList").size());
+                writeHtml.find("input[type=radio]").attr("name", "radio" + (++examListSize));
+                writeHtml.find(".btnExamDelete").remove();
+            }
             ctrl.obj.show();
+
+            examListSize = $(".examList").size();
         }
     };
     // execute model

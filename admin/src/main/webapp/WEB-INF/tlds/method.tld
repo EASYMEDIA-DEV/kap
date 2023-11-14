@@ -63,4 +63,21 @@
         <example>${kl:forEachChk(value, list)}</example>
     </function>
 
+    <!-- 휴대폰 하이픈 추가-->
+    <function>
+        <description>hpNum</description>
+        <name>hpNum</name>
+        <function-class>com.kap.common.utility.COStringUtil</function-class>
+        <function-signature>java.lang.String hpNum(java.lang.String)</function-signature>
+        <example>${kl:hpNum(value)}</example>
+    </function>
+
+    <!-- 생일 하이픈 추가-->
+    <function>
+        <description>birthConvert</description>
+        <name>birthConvert</name>
+        <function-class>com.kap.common.utility.COStringUtil</function-class>
+        <function-signature>java.lang.String birthConvert(java.lang.String)</function-signature>
+        <example>${kl:hpNum(value)}</example>
+    </function>
 </taglib>
