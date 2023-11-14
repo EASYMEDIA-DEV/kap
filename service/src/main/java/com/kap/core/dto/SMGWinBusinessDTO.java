@@ -31,28 +31,23 @@ import java.util.List;
 public class SMGWinBusinessDTO extends BaseDTO {
 
     // 순번 (primary key)
-    private Integer seq;
-    // 제목
-    private String titl;
-    private String cntn;
-    // url
-    private String linkUrl;
-    // 링크 URL
-    private String urlLink;
+    private Integer cxstn_seq;
+    // 노출 순서
+    private Integer exps_ord;
+    // 사업명
+    private String bsn_nm;
+    // 설명
+    private String dsc;
+    // 링크 url
+    private String urlUrl;
+    // 파일 순번
+    private Integer fileSeq;
     // 정렬
     private Integer ord;
     // 노출 여부
-    private String mainYn;
-
-    private String admId;
-    private String admIp;
-    private String regNm;
-    private String regId;
-    private String regIp;
-    private String modNm;
-    private String modId;
-
-
+    private String expsYn;
+    // 노출 순서
+    private Integer expsOrd;
     // 노출정렬 UP/DOWN
     private String sortType;
 
