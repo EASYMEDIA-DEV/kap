@@ -154,7 +154,7 @@ public class IdgenConfig {
                 .build();
     }
 
-    /** QNA
+    /** 1:1 문의
      * @return
      */
     @Bean(destroyMethod = "destroy")
@@ -167,7 +167,7 @@ public class IdgenConfig {
                 .build();
     }
 
-    /** RPLY_SEQ
+    /** 1:1 문의 답변
      * @return
      */
     @Bean(destroyMethod = "destroy")

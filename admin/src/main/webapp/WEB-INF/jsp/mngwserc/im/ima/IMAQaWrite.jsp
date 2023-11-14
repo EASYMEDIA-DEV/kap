@@ -1,7 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
-<c:set var="rtnQaInfo" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/im/ima/IMAQaWriteCtrl">
         <h5 class="mt0">${pageTitle} 상세/수정</h5>
@@ -64,12 +63,12 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">내용</label>
-                    <div class="col-sm-11">
-                        <textarea class="form-control notRequired ckeditorRequired" readonly>${rtnQaInfo.cntn}</textarea>
+                    <div class="col-sm-11 col-md-9">
+                        <textarea class="form-control notRequired ckeditorRequired" readonly style="min-height: 200px; resize: vertical;">${rtnQaInfo.cntn}</textarea>
                     </div>
                 </div>
             </fieldset>
-            <fieldset>
+            <fieldset id="qaDrop">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">첨부파일</label>
                     <div class="col-sm-10 col-md-11">
@@ -84,19 +83,20 @@
         </form>
 
         <h6 class="mt-lg"><em class="ion-play mr-sm"></em>문의답변</h6>
-        <form class="form-horizontal" id="frmData" name="frmData" method="post" <c:if test="${rtnQaInfo.rsumeCd eq 'ACK'}">data-prcs-cd="20"</c:if>>
+        <form class="form-horizontal" id="frmData" name="frmData" method="post">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnQaInfo.qaSeq}" />
             <input type="hidden" class="notRequired" id="regName" name="regName" value="${rtnQaInfo.regName}" />
             <input type="hidden" class="notRequired" id="titl" name="titl" value="${rtnQaInfo.titl}" />
             <input type="hidden" class="notRequired" id="cntn" name="cntn" value="${rtnQaInfo.cntn}" />
-            <input type="hidden" class="notRequired" id="inqFir" name="inqFir" value="${rtnQaInfo.inqFir}" />
-            <input type="hidden" class="notRequired" id="inqSec" name="inqSec" value="${rtnQaInfo.inqSec}" />
+            <input type="hidden" class="notRequired" id="parntCtgryNm" name="parntCtgryNm" value="${rtnQaInfo.parntCtgryNm}" />
+            <input type="hidden" class="notRequired" id="ctgryNm" name="ctgryNm" value="${rtnQaInfo.ctgryNm}" />
+            <input type="hidden" class="notRequired" id="rsumeCd" name="rsumeCd" value="${rtnQaInfo.rsumeCd}" />
             <!-- 첨부파일 순번 -->
             <input type="hidden" class="notRequired" id="rplyFileSeq" name="rplyFileSeq" value="${rtnQaInfo.rplyFileSeq}" />
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">진행 상태<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">진행상태<span class="star"> *</span></label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control input-sm" value="${kl:decode(rtnQaInfo.rsumeCd, 'ACK', '답변완료', '접수완료')}" title="진행상태" readonly />
                     </div>
@@ -105,12 +105,12 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">답변내용<span class="star"> *</span></label>
-                    <div class="col-sm-11">
-                        <textarea class="form-control notRequired ckeditorRequired" id="rplyCntn" name="rplyCntn" title="답변내용" data-type="${pageGb}">${rtnQaInfo.rplyCntn}</textarea>
+                    <div class="col-sm-9">
+                        <textarea class="form-control notRequired ckeditorRequired" id="rplyCntn" name="rplyCntn" title="답변내용" data-type="${pageGb}" style="min-height: 200px; resize: vertical;" <c:if test="${rtnQaInfo.rsumeCd eq 'ACK'}">readonly</c:if>>${rtnQaInfo.rplyCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
-            <fieldset>
+            <fieldset id="rplyDrop">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">첨부파일</label>
                     <div class="col-sm-10 col-md-11">
@@ -121,16 +121,20 @@
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
                         </div>
+                        <c:if test="${rtnQaInfo.rsumeCd ne 'ACK'}">
                         <p class="text-bold mt">
                             ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
                         </p>
+                        </c:if>
                     </div>
                 </div>
             </fieldset>
+            <c:if test="${rtnQaInfo.rsumeCd ne 'ACK'}">
             <hr />
-            <div style="border:solid black 1px;">
+            <div>
                 <b>답변 등록 시 회원에게 답변 알림 메일이 발송됩니다. 알림 발송 후에는 내용을 수정 할 수 없으므로 주의 부탁드립니다.</b>
             </div>
+            </c:if>
             <hr />
             <div class="clearfix">
                 <div class="pull-left">

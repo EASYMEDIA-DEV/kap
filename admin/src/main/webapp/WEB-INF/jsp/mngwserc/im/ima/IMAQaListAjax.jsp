@@ -4,12 +4,12 @@
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center">${ list.parntCtgryCd }</td>
-                <td class="text-center">${ list.ctgryCd }</td>
-                <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.qaSeq}">${list.titl}</a></td>
+                <td class="text-center">${ list.parntCtgryNm }</td>
+                <td class="text-center">${ list.ctgryNm }</td>
+                <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.qaSeq}" data-rsume-cd="${list.rsumeCd}">${list.titl}</a></td>
                 <td class="text-center">${ list.regName }</td>
                 <td class="text-center">${ list.email }</td>
-                <td class="text-center">${ list.hpNo }</td>
+                <td class="text-center">${ list.hpNo.contains("-") ? list.hpNo : list.hpNo.replaceAll('(\\d{3})(\\d{4})(\\d{4})', '$1-$2-$3') }</td>
                 <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                 <td class="text-center">${ kl:decode(list.modDtm, "", "-", kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
                 <td class="text-center">

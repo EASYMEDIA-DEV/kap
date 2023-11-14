@@ -1,6 +1,8 @@
 package com.kap.service;
 
-import com.kap.core.dto.IMAQaDTO;
+import com.kap.core.dto.im.ima.IMAQaDTO;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 1:1 문의 service
@@ -28,7 +30,7 @@ public interface IMAQaService {
     /**
      * 1:1 문의 등록
      */
-    public int insertQa(IMAQaDTO pIMAQaDTO) throws Exception;
+    public int insertQa(IMAQaDTO pIMAQaDTO, HttpServletRequest request) throws Exception;
 
     /**
      * 1:1 문의 상세
