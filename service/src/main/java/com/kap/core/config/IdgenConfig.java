@@ -218,7 +218,6 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
-
     /** 설문 마스터
      * @return
      */
@@ -255,5 +254,4 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
-
 }
