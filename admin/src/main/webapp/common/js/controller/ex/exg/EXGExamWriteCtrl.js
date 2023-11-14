@@ -90,6 +90,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
             // 유효성 검사
             $formObj.validation({
+                before: function(){
+                    //에디터 데이터 textare 입력
+                    $formObj.find(".ckeditorRequired").each(function() {
+                        $(this).val(CKEDITOR.instances[$(this).attr("id")].getData());
+                    });
+                },
                 after : function() {
                     var isValid = true, editorChk = true, isInputType = false;
 

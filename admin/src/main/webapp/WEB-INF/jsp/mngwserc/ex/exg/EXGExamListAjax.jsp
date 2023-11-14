@@ -2,7 +2,7 @@
 <c:choose>
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <tr data-total-count="${rtnData.totalCount}">
+            <tr data-total-count="${rtnData.totalCount}" data-srch-exam-layer="${searchDto.srchExamLayer}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
                         <input type="checkbox" value="${list.examSeq}" name="delValueList" class="checkboxSingle notRequired" />
@@ -10,10 +10,17 @@
                     </label>
                 </td>
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center">
-                    <a href="javascript:" class="listView"  data-details-key="${list.examSeq}">
+                <td class="text-center srchListView">
+                    <c:choose>
+                        <c:when test="${ searchDto.srchExamLayer eq 'Y'}">
                             ${list.titl}
-                    </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="javascript:" class="listView"  data-details-key="${list.examSeq}">
+                                    ${list.titl}
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
                 <td class="text-center" >${ list.regName }</td>
                 <td class="text-center" data-reg-dtm="${list.regDtm}">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
