@@ -152,9 +152,15 @@ public class EBACouseController {
                 }
             }
             rtnDto.setPrntCd(prntCd);
+        }
 
+        //복사유무
+        if(eBACouseDTO.getCopyYn().equals("Y")){
 
-            //임시로 넣은 더미데이터
+            rtnDto.setCopyYn("Y");
+            rtnDto.setExpsYn("N");
+            rtnDto.setEdctnSeq(null);
+            rtnDto.setThnlFileSeq(null);
         }
 
         modelMap.addAttribute("rtnData", rtnDto);
@@ -162,9 +168,6 @@ public class EBACouseController {
 
         //학습대상 공통코드 호출
         modelMap.addAttribute("edTarget", setEdTargetList("ED_TARGET"));
-
-        modelMap.addAttribute("rtnData", rtnDto);
-
 
         return "mngwserc/eb/eba/EBACouseWrite.admin";
     }
@@ -237,7 +240,7 @@ public class EBACouseController {
             eBACouseDTO.setRegIp( coaAdmDTO.getLoginIp() );
             eBACouseDTO.setModId( coaAdmDTO.getId() );
             eBACouseDTO.setModIp( coaAdmDTO.getLoginIp() );
-            modelMap.addAttribute("respCnt", eBACouseService.updateCouse(eBACouseDTO));
+            modelMap.addAttribute("respCnt", eBACouseService.insertCouse(eBACouseDTO));
         }
         catch (Exception e)
         {
@@ -245,7 +248,7 @@ public class EBACouseController {
             {
                 log.debug(e.getMessage());
             }
-            System.out.println("EE = " + e);
+
             throw new Exception(e.getMessage());
         }
 
@@ -287,22 +290,42 @@ public class EBACouseController {
     }
 
     /**
-     * 교육과정관리를  삭제한다.
+     * 교육과정관리 삭제 전 차수 체크
      */
-    @GetMapping(value="/delete")
-    public EBACouseDTO getCouseDelete(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    @PostMapping(value="/deleteChk")
+    public String deleteChk(@RequestBody EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            eBACouseDTO.setRegId( coaAdmDTO.getId() );
-            eBACouseDTO.setRegName( coaAdmDTO.getName() );
-            eBACouseDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
-            eBACouseDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-            eBACouseDTO.setRegIp( coaAdmDTO.getLoginIp() );
-            eBACouseDTO.setModId( coaAdmDTO.getId() );
-            eBACouseDTO.setModIp( coaAdmDTO.getLoginIp() );
-            eBACouseDTO.setRespCnt( eBACouseService.deleteCouse(eBACouseDTO) );
+            System.out.println("eBACouseDTO" + eBACouseDTO);
+
+            //현재 등록된 교육과정에 종속된 교육차수 체크
+            eBACouseDTO.setRespCnt(eBACouseService.selectEpisdListChk(eBACouseDTO));
+            modelMap.addAttribute("respCnt", eBACouseDTO.getRespCnt());
+            System.out.println("문제 없음1");
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        System.out.println("문제 없음2");
+        return "jsonView";
+    }
+
+    /**
+     * 교육과정관리를  삭제한다.
+     */
+    @PostMapping(value="/delete")
+    public String getCouseDelete(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", eBACouseService.deleteCouse(eBACouseDTO));
         }
         catch (Exception e)
         {
@@ -314,7 +337,7 @@ public class EBACouseController {
         }
 
 
-        return eBACouseDTO;
+        return "jsonView";
     }
 
 
@@ -363,7 +386,7 @@ public class EBACouseController {
     {
         modelMap.addAttribute("rtnData", eBACouseService.selectCouseList(eBACouseDTO));
 
-        return "mngwserc/eb/eba/EBACouseSessionListAjax";
+        return "EBACouseEpisdListAjax";
     }
 
     /**

@@ -71,7 +71,7 @@
 		select /* EBACouseMapper.selectCouseListCnt */
 			count(*)
 		from
-		ed_edctn_prcs_mst a
+		ed_edctn_prcs_mst aa
 		<include refid="selectCouseListwhereSql" />
 	</select>
 
@@ -140,23 +140,23 @@
 					</when>
 					<when test="f == 2"><!--최초수정자-->
 						AND (
-						INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						INSTR(#{q}, aa.REG_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = aa.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
 						)
 					</when>
 					<when test="f == 3"><!--최종수정자-->
 						AND (
-						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						INSTR(#{q}, aa.MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = aa.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
 						)
 					</when>
 					<otherwise><!--전체수정자-->
 						AND (
 						INSTR(#{q}, nm) <![CDATA[>]]> 0 OR
 						INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = aa.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
 						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = aa.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
 						)
 					</otherwise>
 				</choose>
@@ -383,6 +383,28 @@
 		)
 	</insert>
 
+
+
+	<!--
+      쿼리명 : EBACouseMapper.selectCouseDtl
+      설  명 : 교육과정대상 상세를 조회한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.02   김학규       최초생성
+ 	-->
+	<select id="selectEpisdListChk" parameterType="EBACouseDTO" resultType="java.lang.Integer">
+		select
+			count(*)
+		from ed_edctn_episd_mst
+		where 1=1
+		AND edctn_seq IN
+		<foreach collection="edctnSeqList" item="edctnSeqList" index="index" separator=", " open="(" close=")">
+			#{edctnSeqList}
+		</foreach>
+	</select>
+
+
+
 	<!--
          쿼리명 : EBACouseMapper.deleteCouseTrgt
          설  명 : 교육과정대상상세 삭제
@@ -392,6 +414,21 @@
     -->
 	<delete id="deleteCouseTrgt" parameterType="EBACouseDTO">
 		delete from ed_edctn_trgt_dtl where edctn_seq = #{detailsKey}
+	</delete>
+
+	<!--
+         쿼리명 : EBACouseMapper.deleteCouse
+         설  명 : 교육과정대상상세 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.08   김학규       최초생성
+    -->
+	<delete id="deleteCouseDtl" parameterType="EBACouseDTO">
+		delete from ed_edctn_prcs_mst where 1=1
+		AND edctn_seq IN
+		<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+			#{delValueList}
+		</foreach>
 	</delete>
 
 

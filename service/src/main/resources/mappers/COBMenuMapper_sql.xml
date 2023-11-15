@@ -152,7 +152,7 @@
 			, #{wnppYn}
 			, #{seoKwrd}
 			, #{seoCntn}
-			, #{useYn}
+			, 'N'
 			, #{regId}
 			, #{regIp}
 			, now()

@@ -62,6 +62,11 @@ public interface EBACouseMapper {
 	/**
 	 * 교육과정대상을 삭제한다.
 	 */
+	public int selectEpisdListChk(EBACouseDTO eBACouseDTO) throws Exception;
+
+	/**
+	 * 교육과정대상을 삭제한다.
+	 */
 	public int deleteCouseTrgt(EBACouseDTO eBACouseDTO) throws Exception;
 	/**
 	 * 교육과정을 수정한다.
@@ -71,7 +76,7 @@ public interface EBACouseMapper {
 	/**
 	 * 교육과정을 삭제한다.
 	 */
-	//public int deleteCouse(EBACouseDTO eBACouseDTO) throws Exception;
+	public int deleteCouseDtl(EBACouseDTO eBACouseDTO) throws Exception;
 
 
 }

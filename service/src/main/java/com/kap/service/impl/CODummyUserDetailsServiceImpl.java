@@ -28,12 +28,13 @@ public class CODummyUserDetailsServiceImpl implements COUserDetailsService
 	{
 		COAAdmDTO cOLoginUserDTO = COAAdmDTO.builder().build();
 		cOLoginUserDTO.setAdmSeq(1);
-		cOLoginUserDTO.setId("hyumain1");
+		cOLoginUserDTO.setId("yooho30");
 		cOLoginUserDTO.setName("관리자");
 		cOLoginUserDTO.setAuthCd("99");
 		cOLoginUserDTO.setDeptNm("DEPT01");
-		cOLoginUserDTO.setEmail("dev@easymedia.net");
-		cOLoginUserDTO.setLastLgnDtm("2022-01-20 00:00:00");
+		cOLoginUserDTO.setDeptCd("DEV");
+		cOLoginUserDTO.setEmail("yooho30@easymedia.net");
+		cOLoginUserDTO.setLastLgnDtm("2023-11-14 00:00:00");
 		cOLoginUserDTO.setLoginIp("127.0.0.1");
 		cOLoginUserDTO.setConSessionId("11111");
 		RequestContextHolder.getRequestAttributes().setAttribute("loginMap", cOLoginUserDTO, RequestAttributes.SCOPE_SESSION);

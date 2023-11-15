@@ -1,12 +1,8 @@
 package com.kap.service;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.EBACouseDTO;
-import com.kap.core.dto.EmfMap;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * <pre>
@@ -49,6 +45,11 @@ public interface EBACouseService {
 	public int updateCouse(EBACouseDTO eBACouseDTO) throws Exception;
 
 	/**
+	 * 현재 등록된 교육과정에 종속된 교육차수 체크
+	 */
+	public int selectEpisdListChk(EBACouseDTO eBACouseDTO) throws Exception;
+
+	/**
 	 * 교육과정을 삭제한다.
 	 */
 	public int deleteCouse(EBACouseDTO eBACouseDTO) throws Exception;
@@ -58,6 +59,9 @@ public interface EBACouseService {
 	 * 교육과정을  복사한다.
 	 */
 	public int copyCouse(EBACouseDTO eBACouseDTO) throws Exception;
+
+
+
 
 }
 

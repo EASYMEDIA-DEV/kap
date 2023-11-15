@@ -14,6 +14,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,7 +66,9 @@ public class EBACouseServiceImpl implements EBACouseService {
 	@Value("${app.file.upload-path}")
 	private String fileUploadPath;
 
-	String tableNm = "EBA_SEQ";
+	/* 교육과정마스터 시퀀스 */
+	private final EgovIdGnrService edctnMstIdgen;
+
 
 	/**
 	 * 교육과정 목록을 조회한다
@@ -96,7 +99,16 @@ public class EBACouseServiceImpl implements EBACouseService {
 	{
 		HashMap<String, Object> map = new HashMap();
 
-		map.put("rtnData", eBACouseMapper.selectCouseDtl(eBACouseDTO));
+		EBACouseDTO ebaDto = eBACouseMapper.selectCouseDtl(eBACouseDTO);
+
+		if(eBACouseDTO.getCopyYn().equals("Y")){
+
+			//int tempSeq = setFile(ebaDto, "thnlFileSeq");
+
+		}
+
+
+		map.put("rtnData", ebaDto);
 
 		map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
 
@@ -119,7 +131,10 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 		eBACouseDTO.setThnlFileSeq(fileSeqMap.get("thnlFileSeq"));
 
-		eBACouseDTO.setEdctnSeq(cOSeqGnrService.selectSeq(tableNm));
+
+		int firstEdctnMstIdgen = edctnMstIdgen.getNextIntegerId();
+
+		eBACouseDTO.setEdctnSeq(firstEdctnMstIdgen);
 
 		//교육과정 등록
 		respCnt = eBACouseMapper.insertCouse(eBACouseDTO);
@@ -171,6 +186,20 @@ public class EBACouseServiceImpl implements EBACouseService {
 		return respCnt;
 	}
 
+
+
+	/**
+	 * 현재 등록된 교육과정에 종속된 교육차수 체크
+	 */
+	@Transactional
+	public int selectEpisdListChk(EBACouseDTO eBACouseDTO) throws Exception
+	{
+		int actCnt = eBACouseMapper.selectEpisdListChk(eBACouseDTO);
+
+		return actCnt;
+	}
+
+
 	/**
 	 * 교육과정을 삭제한다.
 	 */
@@ -178,7 +207,11 @@ public class EBACouseServiceImpl implements EBACouseService {
 	public int deleteCouse(EBACouseDTO eBACouseDTO) throws Exception
 	{
 		int actCnt = 0;
-		//actCnt = eBACouseMapper.deleteCouse(eBACouseDTO);
+
+
+		eBACouseMapper.deleteCouseTrgt(eBACouseDTO);
+
+		actCnt = eBACouseMapper.deleteCouseDtl(eBACouseDTO);
 
 		return actCnt;
 	}

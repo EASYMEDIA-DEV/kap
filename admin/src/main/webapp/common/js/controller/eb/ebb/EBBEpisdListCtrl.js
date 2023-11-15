@@ -4,7 +4,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	// set controller name
 	var exports = {
-		controller : "controller/eb/eba/EBACouseListCtrl"
+		controller : "controller/eb/ebb/EBBEpisdListCtrl"
 	};
 
 	// get controller object
