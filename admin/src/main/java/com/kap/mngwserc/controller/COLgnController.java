@@ -404,15 +404,6 @@ public class COLgnController {
 						cOLoginDTO.setRdctUrl( lgnCOAAdmDTO.getRdctUrl() );
 						RequestContextHolder.getRequestAttributes().setAttribute("loginMap", lgnCOAAdmDTO, RequestAttributes.SCOPE_SESSION);
 
-						//인증번호 로그 등록
-						COSystemLogDTO cOSystemLogDTO = new COSystemLogDTO();
-						cOSystemLogDTO.setAdmSeq(lgnCOAAdmDTO.getAdmSeq());
-						System.out.println("@@@@ authNum = " + authNum);
-						cOSystemLogDTO.setCrtfnNo(Integer.parseInt(authNum));
-
-						cOSystemLogService.logInsertCrtfnNo(cOSystemLogDTO);
-
-
 					}
 					else{
 						cOLoginDTO.setRespCd("9999");
