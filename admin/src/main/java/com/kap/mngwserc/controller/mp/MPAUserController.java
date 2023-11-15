@@ -105,10 +105,10 @@ public class MPAUserController {
     public String getAdmWritePage(MPAUserDto mpaUserDto ,
                                   ModelMap modelMap ) throws Exception
     {
-
         try
         {
             mpaUserDto.setMemCd("CO");
+
             // 로그인한 계정
             COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());

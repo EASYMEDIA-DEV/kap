@@ -121,4 +121,14 @@
         <function-signature>java.lang.String idMasking(java.lang.String)</function-signature>
         <example>${kl:idMasking(value)}</example>
     </function>
+
+    <!-- 사업자 번호 하이픈 추가-->
+    <function>
+        <description>bsnmNoConvert</description>
+        <name>bsnmNoConvert</name>
+        <function-class>com.kap.common.utility.COStringUtil</function-class>
+        <function-signature>java.lang.String bsnmNoConvert(java.lang.String)</function-signature>
+        <example>${kl:bsnmHypen(value)}</example>
+    </function>
+
 </taglib>

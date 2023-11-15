@@ -334,6 +334,9 @@ public class COStringUtil {
      */
     public static String hpNum(String str1)
     {
+        if(str1.isEmpty()) {
+            return "-";
+        }
         String prefix = str1.substring(0, 3);
         String middlePart = str1.substring(3,7);
         String suffix = str1.substring(7, 11);
@@ -347,9 +350,26 @@ public class COStringUtil {
      */
     public static String birthConvert(String str1)
     {
+        if(str1.isEmpty()) {
+            return "-";
+        }
         String prefix = str1.substring(0, 4);
         String middlePart = str1.substring(4,6);
         String suffix = str1.substring(6);
+        return prefix + "-" + middlePart + "-" + suffix;
+    }
+
+    /**
+     * 사업자 번호 하이픈 처리
+     */
+    public static String bsnmNoConvert(String str1)
+    {
+        if(str1.isEmpty()) {
+            return "-";
+        }
+        String prefix = str1.substring(0,3);
+        String middlePart = str1.substring(3,5);
+        String suffix = str1.substring(5);
         return prefix + "-" + middlePart + "-" + suffix;
     }
 }

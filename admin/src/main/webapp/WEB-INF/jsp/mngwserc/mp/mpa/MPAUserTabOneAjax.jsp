@@ -29,18 +29,6 @@
             <tr>
                 <th scope="row" class="bg-gray-lighter">주소 <span style="color: red">*</span></th>
                 <td>
-                    <div class="form-group text-sm">
-<%--                        <div class="col-sm-10">--%>
-<%--                            <label class="radio-inline c-radio">--%>
-<%--                                <input type="radio" name="wnppYn" value="N" title="국내 거주" />--%>
-<%--                                <span class="ion-record"></span> 국내 거주--%>
-<%--                            </label>--%>
-<%--                            <label class="radio-inline c-radio">--%>
-<%--                                <input type="radio" name="wnppYn" value="Y" title="국내 거주" />--%>
-<%--                                <span class="ion-record"></span> 국외 거주--%>
-<%--                            </label>--%>
-<%--                        </div>--%>
-                    </div>
                     <div class="col-sm-10">
                     <div class="form-group input-group">
                         <input type="text" class="form-control input-sm" id="zipcode" title="우편번호" name="zipcode" readonly  value="${rtnDtl.zipcode}"/>
