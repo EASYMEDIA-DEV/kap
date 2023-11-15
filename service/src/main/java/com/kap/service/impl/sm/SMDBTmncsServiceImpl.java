@@ -5,6 +5,7 @@ import com.kap.service.SMDBTmncsService;
 import com.kap.service.dao.sm.SMDBTmncsMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,7 +35,8 @@ public class SMDBTmncsServiceImpl implements SMDBTmncsService {
     // DAO
     private final SMDBTmncsMapper smdbTmncsMapper;
 
-    String tableNm = "TMNCS_SEQ";
+    /* 시퀀스 */
+    private final EgovIdGnrService trmsDtlIdgen;
 
     /**
      * 상세를 조회한다.
@@ -48,11 +50,7 @@ public class SMDBTmncsServiceImpl implements SMDBTmncsService {
      */
     public int insertTmncs(SMDBTmncsDTO smdbTmncsDTO) throws Exception {
 
-        smdbTmncsDTO.setTableNm(tableNm);
-        String detailsKey = smdbTmncsMapper.selectSeqNum(smdbTmncsDTO.getTableNm());
-        smdbTmncsDTO.setDetailsKey(detailsKey);
-        smdbTmncsMapper.updateTmncsSeq(tableNm);
-
+        smdbTmncsDTO.setTmncsSeq(trmsDtlIdgen.getNextIntegerId());
         return smdbTmncsMapper.insertTmncs(smdbTmncsDTO);
     }
     /**

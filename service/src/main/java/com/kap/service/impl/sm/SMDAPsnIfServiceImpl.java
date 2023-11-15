@@ -6,6 +6,7 @@ import com.kap.service.SMDAPsnIfService;
 import com.kap.service.dao.sm.SMDAPsnIfMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,7 +36,8 @@ public class SMDAPsnIfServiceImpl implements SMDAPsnIfService {
 
     // DAO
     private final SMDAPsnIfMapper smdPsnIfMapper;
-    String tableNm = "PRSN_SEQ";
+    /* 시퀀스 */
+    private final EgovIdGnrService prsnDtlIdgen;
 
     /**
      * 목록을 조회한다.
@@ -73,11 +75,7 @@ public class SMDAPsnIfServiceImpl implements SMDAPsnIfService {
      */
     public int insertPsnIf(SMDAPsnIfDTO smdPsnIfDTO) throws Exception {
 
-        smdPsnIfDTO.setTableNm(tableNm);
-        String detailsKey = smdPsnIfMapper.selectSeqNum(smdPsnIfDTO.getTableNm());
-        smdPsnIfDTO.setDetailsKey(detailsKey);
-        smdPsnIfMapper.updatePsnIfSeq(tableNm);
-
+        smdPsnIfDTO.setPsnifSeq(prsnDtlIdgen.getNextIntegerId());
         return smdPsnIfMapper.insertPsnIf(smdPsnIfDTO);
     }
     /**

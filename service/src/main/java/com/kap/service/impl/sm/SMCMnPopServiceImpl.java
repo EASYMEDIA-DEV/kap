@@ -7,6 +7,7 @@ import com.kap.service.SMCMnPopService;
 import com.kap.service.dao.sm.SMCMnPopMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,9 @@ public class SMCMnPopServiceImpl implements SMCMnPopService {
     //파일 서비스
     private final COFileService cOFileService;
 
-    String tableNm = "MN_POP_SEQ";
+    /* 시퀀스 */
+    private final EgovIdGnrService smcMnPopDtlIdgen;
+
     /**
      * 팝업 목록을 조회한다.
      */
@@ -129,11 +132,7 @@ public class SMCMnPopServiceImpl implements SMCMnPopService {
         //파일 처리
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(smcMnPopDTO.getFileList());
         smcMnPopDTO.setFileSeq(fileSeqMap.get("fileSeq"));
-
-        smcMnPopDTO.setTableNm(tableNm);
-        String detailsKey = smcMnPopMapper.selectSeqNum(smcMnPopDTO.getTableNm());
-        smcMnPopDTO.setDetailsKey(detailsKey);
-        smcMnPopMapper.updatePopSeq(tableNm);
+        smcMnPopDTO.setPopupSeq(smcMnPopDtlIdgen.getNextIntegerId());
 
         return smcMnPopMapper.insertMnPop(smcMnPopDTO);
     }

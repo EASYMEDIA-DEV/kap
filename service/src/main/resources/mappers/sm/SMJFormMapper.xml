@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.sm.SMJFormMapper">
+
+    <!--
+         쿼리명 : SMJFormMapper.selectFormDtl
+         설  명 : 양식관리 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.15   구은희       최초생성
+    -->
+    <select id="selectFormDtl" parameterType="SMJFormDTO">
+        SELECT /* SMJFormMapper.selectFormDtl */
+            STY_SEQ
+             , TYPE_CD
+             , TCHGD_FILE_SEQ
+             , MNGMNT_FILE_SEQ
+             , SCRTY_ENVRNMT_FILE_SEQ
+             , SFTY_FCLTY_FILE_SEQ
+             , CRBN_EMSNS_FILE_SEQ
+             , SMRT_FCTRY_APPCTN_FILE_SEQ
+             , SMRT_FCTRY_SCRTY_FILE_SEQ
+             , EXAM_MSREMNT_FILE_SEQ
+             , CLBTN_FILE_SEQ
+             , SPLYCHN_STBLZTN_FILE_SEQ
+             , REG_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+             , REG_DTM
+             , MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+             , MOD_DTM
+        FROM SM_STY_MST A
+        WHERE 1 = 1
+            AND TYPE_CD = #{typeCd}
+    </select>
+
+    <!--
+         쿼리명 : SMJFormMapper.updateFormDtl
+         설  명 : 양식 관리 파일을 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.15   구은희       최초생성
+    -->
+    <update id="updateFormDtl" parameterType="SMJFormDTO">
+        UPDATE /* SMJFormMapper.updateFormDtl */ SM_STY_MST
+        SET
+            TCHGD_FILE_SEQ = #{tchgdFileSeq}
+          , MNGMNT_FILE_SEQ = #{mngmntFileSeq}
+          , SCRTY_ENVRNMT_FILE_SEQ = #{scrtyEnvrnmtFileSeq}
+          , SFTY_FCLTY_FILE_SEQ = #{sftyFcltyFileSeq}
+          , CRBN_EMSNS_FILE_SEQ = #{crbnEmsnsFileSeq}
+          , SMRT_FCTRY_APPCTN_FILE_SEQ = #{smrtFctryAppctnFileSeq}
+          , SMRT_FCTRY_SCRTY_FILE_SEQ = #{smrtFctryScrtyFileSeq}
+          , EXAM_MSREMNT_FILE_SEQ = #{examMsremntFileSeq}
+          , CLBTN_FILE_SEQ = #{clbtnFileSeq}
+          , SPLYCHN_STBLZTN_FILE_SEQ = #{splychnStblztnFileSeq}
+          , MOD_ID = #{modId}
+          , MOD_IP = #{modIp}
+          , MOD_DTM = NOW()
+        WHERE 1=1
+          AND STY_SEQ = #{stySeq}
+        <if test="typeCd != null">
+            AND TYPE_CD = #{typeCd}
+        </if>
+    </update>
+</mapper>

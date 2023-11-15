@@ -5,6 +5,7 @@ import com.kap.service.SMDCMemTrmsService;
 import com.kap.service.dao.sm.SMDCMemTrmsMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,8 +35,8 @@ public class SMDCMemTrmsServiceImpl implements SMDCMemTrmsService {
     // DAO
     private final SMDCMemTrmsMapper smdcMemTrmsMapper;
 
-    String tableNm = "MEM_TRMS_SEQ";
-
+    /* 시퀀스 */
+    private final EgovIdGnrService memTrmsDtlIdgen;
     /**
      * 상세를 조회한다.
      */
@@ -47,13 +48,8 @@ public class SMDCMemTrmsServiceImpl implements SMDCMemTrmsService {
      * 게시물을 등록한다.
      */
     public int insertMemTrms(SMDCMemTrmsDTO smdcMemTrmsDTO) throws Exception {
-
-        smdcMemTrmsDTO.setTableNm(tableNm);
-        String detailsKey = smdcMemTrmsMapper.selectSeqNum(smdcMemTrmsDTO.getTableNm());
-        smdcMemTrmsDTO.setDetailsKey(detailsKey);
-        smdcMemTrmsMapper.updateMemTrmsSeq(tableNm);
-
-        return smdcMemTrmsMapper.insertMemTrms(smdcMemTrmsDTO);
+        smdcMemTrmsDTO.setMemTrmsSeq(memTrmsDtlIdgen.getNextIntegerId());
+       return smdcMemTrmsMapper.insertMemTrms(smdcMemTrmsDTO);
     }
     /**
      * 게시물을 수정한다.
