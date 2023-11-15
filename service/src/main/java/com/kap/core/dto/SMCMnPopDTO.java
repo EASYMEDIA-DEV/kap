@@ -1,6 +1,7 @@
 package com.kap.core.dto;
 
 import com.kap.core.annotation.SaxFilter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,110 +29,109 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = false)
+@Schema(title = "팝업 관리")
 public class SMCMnPopDTO extends BaseDTO {
 
-    // 팝업순번
+    @Schema(title = "팝업순번", example = "숫자")
     private Integer popupSeq;
 
-    // PC, MBL
+    @Schema(title = "매체 코드 구분", example = "PC, MBL")
     private String mdCd;
 
-    // 노출순서
+    @Schema(title = "노출순서", example = "")
     private Integer expsOrd;
 
-    // 노출시작일시
+    @Schema(title = "노출 시작 일시", example = "yyyy-MM-dd hh:mm:ss")
     private String expsStrtDtm;
 
-    // 노출종료일시
+    @Schema(title = "노출 종료 일시", example = "yyyy-MM-dd hh:mm:ss")
     private String expsEndDtm;
 
-    // 상시여부
+    @Schema(title = "상시여부", example = "Y, N")
     private String odtmYn;
 
-    // 제목
+    @Schema(title = "제목", example = "")
     private String titl;
 
-    // IMG, HTML
+    @Schema(title = "태그구분", example = "PC, MBL")
     private String tagCd;
 
-    // 파일순번
+    @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;
 
-    // HTML
+    @Schema(title = "HTML", example = "")
     @SaxFilter
     private String cntn;
 
-    // 링크URL
+    @Schema(title = "링크URL", example = "")
     private String urlUrl;
 
-    // 검색 내용
+    @Schema(title = "검색 내용", example = "")
     private String srchCntn;
 
-    // 새창여부
+    @Schema(title = "새창여부", example = "Y, N")
     private String wnppYn;
 
-    // 노출여부
+    @Schema(title = "노출여부", example = "Y, N")
     private String expsYn;
 
-    // 등록ID
+    @Schema(title = "등록ID", example = "")
     private String regId;
 
-    // 등록IP
+    @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
 
-    // 등록일시
+    @Schema(title = "등록일시", example = "yyyy-MM-dd hh:mm:ss")
     private String regDtm;
 
-    // 수정ID
+    @Schema(title = "수정ID", example = "")
     private String modId;
 
-    // 수정IP
+    @Schema(title = "수정IP", example = "127.0.0.1")
     private String modIp;
 
-    // 수정일시
+    @Schema(title = "수정일시", example = "yyyy-MM-dd hh:mm:ss")
     private String modDtm;
 
-
-    // 조회
+    // 검색
+    @Schema(title = "조회 리스트", example = "")
     private List<SMCMnPopDTO> list;
 
-    // IMG, HTML 구분
+    @Schema(title = "검색 태그 구분 목록")
     private List<String> tagCdList;
 
-    // 노출여부 구분(=사용여부 구분)
+    @Schema(title = "검색 노출여부 구분 목록")
     private List<String> expsYnList;
 
-    // 검색 등록/수정 기간 시작일
+    @Schema(title = "검색 등록/수정 기간 시작일자", example = "yyyy-MM-dd")
     private String dStrDt;
 
-    // 검색 등록/수정 기간 종료일
+    @Schema(title = "검색 등록/수정 기간 종료일자", example = "yyyy-MM-dd")
     private String dEndDt;
 
     // 게시 기간 등록
-    // 게시 시작 날짜
+    @Schema(title = "게시 시작 일자", example = "yyyy-MM-dd")
     private String ptupStrtDt;
 
-    // 게시 종료 날짜
+    @Schema(title = "게시 종료 일자", example = "yyyy-MM-dd")
     private String ptupEndDt;
 
-    // 게시 시작 시간
+    @Schema(title = "게시 시작 시간", example = "hh")
     private String ptupStrtHh;
 
-    // 게시 시작 분
+    @Schema(title = "게시 시작 분", example = "mm")
     private String ptupStrtMi;
 
-    // 게시 종료 시간
+    @Schema(title = "게시 종료 시간", example = "hh")
     private String ptupEndHh;
 
-    // 게시 종료 분
+    @Schema(title = "게시 종료 분", example = "mm")
     private String ptupEndMi;
 
-    //삭제할 데이터
+    @Schema(title = "삭제 리스트")
     private List<String> delValueList;
 
-    // 노출정렬 UP/DOWN
+    @Schema(title = "노출 정렬 타입", example = "UP, DOWN")
     private String sortType;
 
-    //테이블 이름
-    private String tableNm;
 }

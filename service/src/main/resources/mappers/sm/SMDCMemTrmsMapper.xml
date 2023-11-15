@@ -33,43 +33,6 @@
     </select>
 
     <!--
-		 쿼리명 : SMDCMemTrmsMapper.selectSeqNum
-		 설  명 : 테이블의 SEQ 값을 조회한다.
-			 수정일	 수정자     수정내용
-		==========   ======   =============
-		2023.11.06   구은희     최초생성
-	-->
-    <select id="selectSeqNum" parameterType="SMDCMemTrmsDTO" resultType="java.lang.String">
-        SELECT /* SMDCMemTrmsMapper.selectSeqNum */
-            NEXT_ID
-        FROM CO_SEQ_MST
-        WHERE TABLE_NM = #{tableNm}
-    </select>
-
-    <!--
-		쿼리명 : SMDCMemTrmsMapper.updateMemTrmsSeq
-		설  명 : 테이블의 SEQ 값을 증가시킨다.
-		 수정일	 수정자     수정내용
-		==========   ======   =============
-		2023.11.06   구은희     최초생성
-	-->
-    <update id="updateMemTrmsSeq" parameterType="SMDCMemTrmsDTO">
-        UPDATE CO_SEQ_MST /*SMDCMemTrmsMapper.updateTmncsSeq*/
-        SET
-            NEXT_ID = (SELECT
-                           *
-                       FROM
-                           (SELECT
-                                NEXT_ID + '1'
-                            FROM
-                                CO_SEQ_MST
-                            WHERE
-                                TABLE_NM = #{tableNm}) tmp)
-        WHERE
-            TABLE_NM = #{tableNm}
-    </update>
-
-    <!--
          쿼리명 : SMDCMemTrmsMapper.insertMemTrms
          설  명 : 회원약관을 등록한다.
           수정일     수정자       수정내용
@@ -89,7 +52,7 @@
         )
         VALUES
             (
-            #{detailsKey}
+            #{memTrmsSeq}
             , #{tmncsCntn}
             , #{psnifCntn}
             , #{offerCntn}

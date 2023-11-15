@@ -6,8 +6,12 @@ import com.kap.service.MPEPartsCompanyService;
 import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -35,8 +39,9 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
     // DAO
     private final MPEPartsCompanyMapper mpePartsCompanyMapper;
-
-    String tableNm = "PARTS_COM_SQ_SEQ";
+    
+    /* 시퀀스 */
+    private final EgovIdGnrService mpePartsCompanyDtlIdgen;
 
     /**
      * 부품사 목록을 조회한다.
@@ -71,8 +76,9 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
      * 상세를 조회한다.
      */
     public MPEPartsCompanyDTO selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+        mpePartsCompanyDTO.setList(mpePartsCompanyMapper.selectPartsCompanyDtl(mpePartsCompanyDTO));
 
-        return mpePartsCompanyMapper.selectPartsCompanyDtl(mpePartsCompanyDTO);
+        return mpePartsCompanyDTO;
     }
 
     /**
@@ -87,12 +93,45 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
      */
     public int insertPartsCompany(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
 
-        mpePartsCompanyDTO.setTableNm(tableNm);
-        String detailsKey = mpePartsCompanyMapper.selectSeqNum(mpePartsCompanyDTO.getTableNm());
-        mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(detailsKey));
-        mpePartsCompanyMapper.updatePartsCompanySeq(tableNm);
-        mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
+        if (mpePartsCompanyDTO.getCtgryCd().equals("COMPANY01002")) {
+            List<String> sqList1 = mpePartsCompanyDTO.getSqInfoList1();
+            List<String> sqList2 = mpePartsCompanyDTO.getSqInfoList2();
+            List<String> sqList3 = mpePartsCompanyDTO.getSqInfoList3();
 
+            List<List<String>> allSqLists = new ArrayList<>();
+            allSqLists.add(sqList1);
+            allSqLists.add(sqList2);
+            allSqLists.add(sqList3);
+
+            String nm = "";
+            int score = 0;
+            int year = 0;
+            String crtfnCmnNm = "";
+            int index = 1;
+
+            sqLoop:
+            for(List<String> sqList : allSqLists) {
+                for (int i = 1; i < sqList.size(); i++) {
+                    String info = sqList.get(i);
+                    if(info == null || info.isEmpty()) {
+                        continue sqLoop;
+                    }
+                }
+                nm = sqList.get(1);
+                year = Integer.parseInt(sqList.get(3));
+                score = Integer.parseInt(sqList.get(2));
+                crtfnCmnNm = sqList.get(4);
+
+                mpePartsCompanyDTO.setNm(nm);
+                mpePartsCompanyDTO.setYear(year);
+                mpePartsCompanyDTO.setScore(score);
+                mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmnNm);
+                mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
+
+                mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
+                index += 1;
+            }
+        }
         return mpePartsCompanyMapper.insertPartsCompany(mpePartsCompanyDTO);
     }
 
@@ -100,10 +139,50 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
      * 부품사를 수정한다.
      */
     public int updatePartsCompany(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
-       /* String detailsKey = mpePartsCompanyMapper.selectSeqNum(mpePartsCompanyDTO.getTableNm());
-        mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(detailsKey));
-        mpePartsCompanyMapper.updatePartsCompanySeq(tableNm);
-        // 수정 페이지에서 SQ 정보를 추가하면 이 부분은 insert가 진행되어야 함.*/
+
+        if (mpePartsCompanyDTO.getCtgryCd().equals("COMPANY01002")) {
+            List<String> sqList1 = mpePartsCompanyDTO.getSqInfoList1();
+            List<String> sqList2 = mpePartsCompanyDTO.getSqInfoList2();
+            List<String> sqList3 = mpePartsCompanyDTO.getSqInfoList3();
+
+            List<List<String>> allSqLists = new ArrayList<>();
+            allSqLists.add(sqList1);
+            allSqLists.add(sqList2);
+            allSqLists.add(sqList3);
+
+            String seq = "";
+            String nm = "";
+            int score = 0;
+            int year = 0;
+            String crtfnCmnNm = "";
+            int index = 1;
+
+            sqLoop:
+            for(List<String> sqList : allSqLists) {
+                for(String info : sqList) {
+                    if(info == null || info.isEmpty()) {
+                        continue sqLoop;
+                    }
+                }
+                seq = sqList.get(0);
+                nm = sqList.get(1);
+                year = Integer.parseInt(sqList.get(3));
+                score = Integer.parseInt(sqList.get(2));
+                crtfnCmnNm = sqList.get(4);
+
+                mpePartsCompanyDTO.setNm(nm);
+                mpePartsCompanyDTO.setYear(year);
+                mpePartsCompanyDTO.setScore(score);
+                mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmnNm);
+                mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
+                if (!seq.isEmpty()) {
+                    mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
+                } else {
+                    mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
+                }
+                index += 1;
+            }
+        }
         return mpePartsCompanyMapper.updatePartsCompany(mpePartsCompanyDTO);
     }
 

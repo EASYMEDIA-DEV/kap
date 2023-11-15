@@ -125,12 +125,20 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     // 인증주관사명
     private String crtfnCmpnNm;
 
+    // SQ 리스트
+    private List<String> sqInfoList;
+
+    // SQ 리스트1
+    private List<String> sqInfoList1;
+    // SQ 리스트2
+    private List<String> sqInfoList2;
+    // SQ 리스트3
+    private List<String> sqInfoList3;
+
+
     // 관리자메모
     @SaxFilter
     private String admMemo;
-
-    // SQ 정보 리스트
-    private List<String> SqInfoLi9st;
 
     // 등록ID
     private String regId;

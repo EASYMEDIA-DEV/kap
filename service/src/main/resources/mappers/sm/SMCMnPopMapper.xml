@@ -143,7 +143,7 @@
         )
         VALUES
         (
-        #{detailsKey}
+        #{popupSeq}
         , #{mdCd}
         <choose>
             <when test="odtmYn == 'Y'.toString()">
@@ -169,43 +169,6 @@
         , NOW()
         )
     </insert>
-
-    <!--
-		 쿼리명 : SMCMnPopMapper.selectSeqNum
-		 설  명 : 테이블의 POPUP_SEQ 값을 조회한다.
-			 수정일	 수정자     수정내용
-		==========   ======   =============
-		2023.09.25   구은희     최초생성
-	-->
-    <select id="selectSeqNum" parameterType="SMCMnPopDTO" resultType="java.lang.String">
-        SELECT /* SMCMnPopMapper.selectSeqNum */
-            NEXT_ID
-        FROM CO_SEQ_MST
-        WHERE TABLE_NM = #{tableNm}
-    </select>
-
-    <!--
-		쿼리명 : SMCMnPopMapper.updatePopSeq
-		설  명 : 테이블의 POPUP_SEQ 값을 증가시킨다.
-		 수정일	 수정자     수정내용
-		==========   ======   =============
-		2023.09.25   구은희     최초생성
-	-->
-    <update id="updatePopSeq" parameterType="SMCMnPopDTO">
-        UPDATE CO_SEQ_MST /*SMCMnPopMapper.updatePopSeq*/
-        SET
-            NEXT_ID = (SELECT
-                           *
-                       FROM
-                           (SELECT
-                                NEXT_ID + '1'
-                            FROM
-                                CO_SEQ_MST
-                            WHERE
-                                TABLE_NM = #{tableNm}) tmp)
-        WHERE
-            TABLE_NM = #{tableNm}
-    </update>
 
     <!--
          쿼리명 : SMCMnPopMapper.deleteMnPop
