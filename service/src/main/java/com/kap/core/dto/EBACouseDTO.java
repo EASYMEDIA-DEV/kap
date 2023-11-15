@@ -95,6 +95,7 @@ public class EBACouseDTO extends BaseDTO  {
 
     //평가여부
     @Schema(title = "평가여부", example = "평가없음:N / 평가함:N")
+    @Builder.Default
     private String jdgmtYn = "Y";
 
     @Schema(title = "학습일코드", example = "텍스트")
@@ -126,6 +127,7 @@ public class EBACouseDTO extends BaseDTO  {
     private String expsYn;
 
     @Schema(title = "복사여부", example = "Y/N")
+    @Builder.Default
     private String copyYn = "N";
 
 

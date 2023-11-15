@@ -136,6 +136,7 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 		eBACouseDTO.setEdctnSeq(firstEdctnMstIdgen);
 
+
 		//교육과정 등록
 		respCnt = eBACouseMapper.insertCouse(eBACouseDTO);
 
