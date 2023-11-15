@@ -20,7 +20,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 event : {
                     click : function() {
                         //삭제
-                        if(confirm(msgCtrl.getMsg("confirm.del"))){
+                        if(confirm("선택한 게시물을 " + msgCtrl.getMsg("confirm.del"))){
                             cmmCtrl.frmAjax(function(data){
                                 if(data.respCnt > 0){
                                     alert(msgCtrl.getMsg("success.del.target.none"));

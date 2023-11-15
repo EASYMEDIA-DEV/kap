@@ -156,7 +156,7 @@
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="imgFileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="imgFileSeq" data-file-extn="${imageExtns}" data-max-file-size="5242880" data-max-file-cnt="1" data-title="PC 첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
@@ -183,8 +183,7 @@
                     </div>
                 </div>
             </fieldset>
-           </div>
-          </c:when>
+            </c:when>
                 <c:when test="${mdCd eq 'mobile'}">
                     <fieldset class="mobileImg">
                         <div class="form-group text-sm">
@@ -192,7 +191,7 @@
                             <div class="col-sm-10 col-md-11">
                                 <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                <div class="dropzone attachFile notRequired" data-file-field-nm="imgFileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
+                                <div class="dropzone attachFile notRequired" data-file-field-nm="imgFileSeq" data-file-extn="${imageExtns}" data-max-file-size="5242880" data-max-file-cnt="1" data-title="PC 첨부파일">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                     </div>
@@ -257,6 +256,23 @@
                     </div>
                 </div>
             </fieldset>
+            <hr />
+            <div class="clearfix">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
+                </div>
+                <div class="pull-right">
+                    <c:choose>
+                        <c:when test="${ not empty rtnDto}">
+                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                            <button type="submit" class="btn btn-sm btn-success">수정</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button type="submit" class="btn btn-sm btn-success">등록</button>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
             <c:if test="${not empty rtnDto}">
                 <fieldset></fieldset>
                 <fieldset>
@@ -305,23 +321,6 @@
                     </div>
                 </fieldset>
             </c:if>
-            <hr />
-            <div class="clearfix">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
-                </div>
-                <div class="pull-right">
-                    <c:choose>
-                        <c:when test="${ not empty rtnDto}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                            <button type="submit" class="btn btn-sm btn-success">수정</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button type="submit" class="btn btn-sm btn-success">등록</button>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
         </form>
     </div>
 </div>
