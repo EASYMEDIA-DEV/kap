@@ -358,5 +358,44 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 교육과정관리 마스터
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl edctnMstIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EDCTN_MST_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 교육차수관리 마스터
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl edctnEpisdIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EDCTN_PISD_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 관리자 인증로그 시퀀스
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl admCrtfnNodgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("ADM_CRTFN_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
 
 }
