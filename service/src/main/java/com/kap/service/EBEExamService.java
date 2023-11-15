@@ -1,10 +1,9 @@
 package com.kap.service;
 
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
+import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 교육 시험 서비스
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *   2023.11.09  김학규         최초 생성
  * </pre>
  */
-public interface EXGExamService {
+public interface EBEExamService {
     /**
      * 리스트 조회
     */

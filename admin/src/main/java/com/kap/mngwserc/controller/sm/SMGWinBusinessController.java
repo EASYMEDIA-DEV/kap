@@ -8,26 +8,29 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 /**
  * <pre>
- * 상생 사업 관리를 위한 Controller
+ * 상생 사업 관리를 위한 ServiceImpl
  * </pre>
  *
  * @ClassName		: SMGWinBusinessController.java
  * @Description		: 상생 사업 관리를 위한 Controller
  * @author 임서화
- * @since 2023.10.25
+ * @since 2023.11.14
  * @version 1.0
  * @see
  * @Modification Information
  * <pre>
- * 		since			author					description
- *   ===========    ==============    =============================
- *    2023.10.25	 	임서화				    최초 생성
+ * 		since			author				  description
+ *    ==========    ==============    =============================
+ *    2023.11.14		임서화				   최초 생성
  * </pre>
  */
 @Slf4j
@@ -39,10 +42,10 @@ public class SMGWinBusinessController {
     private final SMGWinBusinessService sMGWinBusinessService;
 
     /**
-     * 상생 사업 목록 조회
+     * 메인 비주얼 목록 페이지
      */
-    @RequestMapping(value = "/list")
-    public String getWinBusinessListPage(SMGWinBusinessDTO sMGWinBusinessDTO, ModelMap modelMap) throws Exception {
+    @GetMapping(value = "/list")
+    public String getMnVslListPage(SMGWinBusinessDTO sMGWinBusinessDTO, ModelMap modelMap) throws Exception {
         try {
             modelMap.addAttribute("rtnData", sMGWinBusinessService.selectWinBusinessList(sMGWinBusinessDTO));
         } catch (Exception e) {
@@ -56,12 +59,50 @@ public class SMGWinBusinessController {
     }
 
     /**
-     * 상생 사업 등록
+     * 메인 비주얼 목록 조회
      */
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @PostMapping(value = "/select")
+    public String selectWinBusinessList(SMGWinBusinessDTO sMGWinBusinessDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception {
+        try {
+            modelMap.addAttribute("rtnData", sMGWinBusinessService.selectWinBusinessList(sMGWinBusinessDTO));
+            modelMap.addAttribute("mdCd", mdCd);
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "mngwserc/sm/smg/SMGWinBusinessListAjax";
+    }
+
+    /**
+     * 메인 비주얼 상세 페이지
+     */
+    @GetMapping(value = "/write")
+    public String getWinBusinessWritePage(SMGWinBusinessDTO sMGWinBusinessDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
+        try {
+            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+
+            if (!"".equals(sMGWinBusinessDTO.getDetailsKey()) && sMGWinBusinessDTO.getDetailsKey() != null) {
+                modelMap.addAttribute("rtnData", sMGWinBusinessService.selectWinBusinessDtl(sMGWinBusinessDTO));
+            }
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "mngwserc/sm/smg/SMGWinBusinessWrite.admin";
+    }
+
+    /**
+     * 메인 비주얼 등록
+     */
+    @PostMapping(value = "/insert")
     public String insertWinBusiness(SMGWinBusinessDTO sMGWinBusinessDTO, ModelMap modelMap) throws Exception {
         try {
-            System.err.println("dddddd");
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             sMGWinBusinessDTO.setRegId(coaAdmDTO.getId());
             sMGWinBusinessDTO.setRegIp(coaAdmDTO.getLoginIp());
@@ -76,7 +117,7 @@ public class SMGWinBusinessController {
         return "jsonView";
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @PostMapping(value = "/update")
     public String updateWinBusiness(SMGWinBusinessDTO sMGWinBusinessDTO, ModelMap modelMap) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
@@ -95,7 +136,7 @@ public class SMGWinBusinessController {
     }
 
     /**
-     * 상생 사업 삭제
+     * 메인 비주얼 삭제
      */
     @PostMapping(value = "/delete")
     public String deleteWinBusiness(SMGWinBusinessDTO sMGWinBusinessDTO, ModelMap modelMap) throws Exception {
@@ -120,9 +161,9 @@ public class SMGWinBusinessController {
     }
 
     /**
-     * 상생 사업 정렬 수정
+     * 메인 비주얼 정렬 수정
      */
-    @RequestMapping(value="/sort", method=RequestMethod.POST)
+    @PostMapping(value="/sort")
     public ModelAndView updateOrder(SMGWinBusinessDTO sMGWinBusinessDTO, ModelMap modelMap) throws Exception {
 
         ModelAndView mav = new ModelAndView();

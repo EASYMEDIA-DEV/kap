@@ -54,45 +54,35 @@ public class COMailServiceImpl  implements COMailService {
 	 */
 	public int sendMail(COMailDTO cOMailDTO, String templateFile) throws Exception
 	{
-
 		MimeMessage message = mailSender.createMimeMessage();
 		int toUserSize = 0;
+
 		try
 		{
 			MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
-
 			messageHelper.setSubject(cOMailDTO.getSubject());
-
 			String toUsers = cOMailDTO.getEmails();
 			if (!"".equals(toUsers) && toUsers != null)
 			{
 				messageHelper.setTo(toUsers);
 				messageHelper.setFrom(fromMail);
-
 				messageHelper.setText(getTemplate(cOMailDTO, templateFile), true);
 
 				// 첨부파일
-				List<COFileDTO> files = cOMailDTO.getFileList();
-				String filePath = "", fileName = "", realFileNm = "";
+				if(cOMailDTO.getFileList() != null && cOMailDTO.getFileList().size() > 0) {
+					List<COFileDTO> files = cOMailDTO.getFileList();
+					String filePath = "", fileName = "", realFileNm = "";
 
-				if(files.size() > 0) {
-					for(COFileDTO file : files) {
+					for (COFileDTO file : files) {
 						filePath = file.getPhyPath();
-						fileName = file.getSaveFileNm();
 						realFileNm = file.getOrgnFileNm();
 
-						if (!"".equals(filePath) && !"".equals(fileName) && !"".equals(realFileNm))
-						{
-							messageHelper.addAttachment(MimeUtility.encodeText(realFileNm, "UTF-8", "B"), new FileDataSource(filePath + File.separator + fileName));
+						if (!"".equals(filePath) && !"".equals(realFileNm)) {
+//							messageHelper.addAttachment(MimeUtility.encodeText(realFileNm, "UTF-8", "B"), new FileDataSource(filePath + File.separator + fileName));
+							messageHelper.addAttachment(MimeUtility.encodeText(realFileNm, "UTF-8", "B"), new FileDataSource(filePath));
 						}
 					}
 				}
-				/*String filePath = "", fileName = "", realFileNm = "";
-
-				if (!"".equals(filePath) && !"".equals(fileName) && !"".equals(realFileNm))
-				{
-					messageHelper.addAttachment(MimeUtility.encodeText(realFileNm, "UTF-8", "B"), new FileDataSource(filePath + File.separator + fileName));
-				}*/
 
 				mailSender.send(message);
 			}
@@ -122,6 +112,7 @@ public class COMailServiceImpl  implements COMailService {
 				VelocityContext vc = new VelocityContext();
 				vc.put("userDomain", userDomain);
 				vc.put("adminDomain", adminDomain);
+
 				for (Field field : cOMailDTO.getClass().getDeclaredFields()) {
 					field.setAccessible(true);
 					Object value = field.get(cOMailDTO);
@@ -131,11 +122,8 @@ public class COMailServiceImpl  implements COMailService {
 				sw.getBuffer().setLength(0);
 				//templateFile = "/" + templateFile;
 				//templateFile = "template/email/COAAdmPwdInit.html";
-
 				velocityEngine.setProperty("file.resource.loader.path", mailTmplFilePath+"email/");
-
 				Template template = velocityEngine.getTemplate(templateFile.replace("/", File.separator), "UTF-8");
-
 				template.merge(vc, sw);
 				body = sw.toString();
 			}catch (Exception e){

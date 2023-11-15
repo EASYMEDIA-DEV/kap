@@ -80,4 +80,45 @@
         <function-signature>java.lang.String birthConvert(java.lang.String)</function-signature>
         <example>${kl:hpNum(value)}</example>
     </function>
+
+    <!-- 이름 마스킹 -->
+    <function>
+        <description>nameMasking</description>
+        <name>nameMasking</name>
+        <function-class>com.kap.common.utility.MaskingUtil</function-class>
+        <function-signature>java.lang.String nameMasking(java.lang.String)</function-signature>
+        <example>${kl:nameMasking(value)}</example>
+    </function>
+    <!-- 휴대전화번호 마스킹 -->
+    <function>
+        <description>phoneMasking</description>
+        <name>phoneMasking</name>
+        <function-class>com.kap.common.utility.MaskingUtil</function-class>
+        <function-signature>java.lang.String phoneMasking(java.lang.String)</function-signature>
+        <example>${kl:phoneMasking(value)}</example>
+    </function>
+    <!-- 이메일 마스킹 -->
+    <function>
+        <description>emailMasking</description>
+        <name>emailMasking</name>
+        <function-class>com.kap.common.utility.MaskingUtil</function-class>
+        <function-signature>java.lang.String emailMasking(java.lang.String)</function-signature>
+        <example>${kl:emailMasking(value)}</example>
+    </function>
+    <!-- 생년월일 마스킹 -->
+    <function>
+        <description>birthMasking</description>
+        <name>birthMasking</name>
+        <function-class>com.kap.common.utility.MaskingUtil</function-class>
+        <function-signature>java.lang.String birthMasking(java.lang.String)</function-signature>
+        <example>${kl:birthMasking(value)}</example>
+    </function>
+    <!-- ID 마스킹 -->
+    <function>
+        <description>idMasking</description>
+        <name>idMasking</name>
+        <function-class>com.kap.common.utility.MaskingUtil</function-class>
+        <function-signature>java.lang.String idMasking(java.lang.String)</function-signature>
+        <example>${kl:idMasking(value)}</example>
+    </function>
 </taglib>

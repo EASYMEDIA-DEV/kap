@@ -10,55 +10,19 @@
     -->
     <select id="selectUploadFileList" parameterType="UMAFtpUploadDTO" resultType="UMAFtpUploadDTO">
         SELECT /* UMAFtpUploadMapper.selectUploadFileList */
-            SEQ
+            PUBC_SEQ
             , FILE_SEQ
             , 0 FILE_ORD
-            , URL
-            ,  (SELECT ORGN_FILE_NM FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS ORGN_FILE_NM
-            ,  (SELECT WEB_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS WEB_PATH
-            ,  (SELECT PHY_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS PHY_PATH
+            , (SELECT ORGN_FILE_NM FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS ORGN_FILE_NM
+            , (SELECT WEB_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS WEB_PATH
+            , (SELECT PHY_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.FILE_SEQ) AS PHY_PATH
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) REG_NAME
             , REG_ID
             , REG_IP
             , REG_DTM
         FROM
-            UM_UPLOAD_MST A
+            SM_FILE_PUBC_MST A
         WHERE 1=1
-        <if test="strtDt != null and strtDt != ''">
-            <choose>
-                <when test="srchDate == 2">
-                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt},'%Y-%m-%d')
-                </when>
-            </choose>
-        </if>
-        <if test="endDt != null and endDt != ''">
-            <choose>
-                <when test="srchDate == 2">
-                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-                </when>
-            </choose>
-        </if>
-            <if test="q != null and q != ''">
-                <choose>
-                    <when test="f == 0">
-                        AND TITL LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <when test="f == 1">
-                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID), '(', REG_ID,')') LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <when test="f == 2">
-                        AND CONCAT((SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID), '(', MOD_ID,')') LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <when test="f == 3">
-                        AND YEAR LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <otherwise>
-                        AND (
-                        (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) LIKE CONCAT('%', #{q}, '%')
-                        OR ORGN_FILE_NM LIKE CONCAT('%', #{q}, '%')
-                        )
-                    </otherwise>
-                </choose>
-            </if>
             ORDER BY
              REG_DTM DESC
     </select>
@@ -74,24 +38,22 @@
         SELECT /* UMAFtpUploadMapper.getFtpUploadListTotCnt */
             count(*)
         FROM
-            UM_UPLOAD_MST
+            um_upload_mst
     </select>
 
     <insert id="insertUploadFile" parameterType="UMAFtpUploadDTO">
-        INSERT /* UMAFtpUploadMapper.insertUploadFile */ INTO UM_UPLOAD_MST
+        INSERT /* UMAFtpUploadMapper.insertUploadFile */ INTO SM_FILE_PUBC_MST
             (
-            SEQ
+            PUBC_SEQ
             , FILE_SEQ
-            , URL
             , REG_ID
             , REG_IP
             , REG_DTM
             )
             VALUES
             (
-            #{seq}
+            #{pubcSeq}
             , #{fileSeq}
-            , #{url}
             , #{regId}
             , #{regIp}
             , NOW()
@@ -107,17 +69,17 @@
     <delete id="deleteUploadFile" parameterType="UMAFtpUploadDTO">
         DELETE /* UMAFtpUploadDTO.deleteUploadFile */
         FROM
-        UM_UPLOAD_MST
+        SM_FILE_PUBC_MST
         <where>
             <choose>
                 <when test="delValueList != null and delValueList.size() > 0">
-                    SEQ IN
+                    PUBC_SEQ IN
                     <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
                         #{delValueList}
                     </foreach>
                 </when>
                 <otherwise>
-                    AND	SEQ = #{detailsKey}
+                    AND	PUBC_SEQ = #{detailsKey}
                 </otherwise>
             </choose>
         </where>

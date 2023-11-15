@@ -1,22 +1,21 @@
-package com.kap.service.impl.ex.exg;
+package com.kap.service.impl.eb;
 
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COEgovSeqDTO;
 import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
+import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.EXGExamService;
-import com.kap.service.dao.ex.exg.EXGExamMapper;
+import com.kap.service.EBEExamService;
+import com.kap.service.dao.eb.EBEExamMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,9 +32,9 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EXGExamServiceImpl implements EXGExamService {
+public class EBEExamServiceImpl implements EBEExamService {
     //Mapper
-    private final EXGExamMapper eXGExamMapper;
+    private final EBEExamMapper eBEExamMapper;
 
     /* 교육평가마스터 시퀀스 */
     private final EgovIdGnrService examMstIdgen;
@@ -56,8 +55,8 @@ public class EXGExamServiceImpl implements EXGExamService {
         page.setPageSize(EXGExamMstSearchDTO.getPageRowSize());
         EXGExamMstSearchDTO.setFirstIndex( page.getFirstRecordIndex() );
         EXGExamMstSearchDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
-        EXGExamMstSearchDTO.setTotalCount( eXGExamMapper.getExamListCnt(EXGExamMstSearchDTO));
-        EXGExamMstSearchDTO.setList( eXGExamMapper.selectExamList(EXGExamMstSearchDTO) );
+        EXGExamMstSearchDTO.setTotalCount( eBEExamMapper.getExamListCnt(EXGExamMstSearchDTO));
+        EXGExamMstSearchDTO.setList( eBEExamMapper.selectExamList(EXGExamMstSearchDTO) );
         return EXGExamMstSearchDTO;
     }
     /**
@@ -65,24 +64,24 @@ public class EXGExamServiceImpl implements EXGExamService {
      */
     public int getExamEdctnEpisdCnt(EXGExamMstSearchDTO EXGExamMstSearchDTO) throws Exception
     {
-        return eXGExamMapper.getExamEdctnEpisdCnt(EXGExamMstSearchDTO);
+        return eBEExamMapper.getExamEdctnEpisdCnt(EXGExamMstSearchDTO);
     }
     /**
      * 리스트 삭제
      */
     public int deleteExamList(EXGExamMstSearchDTO eXGExamMstSearchDTO) throws Exception
     {
-        int respCnt = eXGExamMapper.getExamEdctnEpisdCnt(eXGExamMstSearchDTO);
+        int respCnt = eBEExamMapper.getExamEdctnEpisdCnt(eXGExamMstSearchDTO);
         if(respCnt == 0) {
             //삭제하려는 데이터가 교육회차마스터에 매핑되어있지 않음.
             //삭제 개수를 담아서 응답
-            respCnt = eXGExamMapper.deleteExamMst(eXGExamMstSearchDTO);
+            respCnt = eBEExamMapper.deleteExamMst(eXGExamMstSearchDTO);
             EXGExamQstnDtlDTO eXGExamQstnDtlDTO = new EXGExamQstnDtlDTO();
             eXGExamQstnDtlDTO.setDelValueList( eXGExamMstSearchDTO.getDelValueList() );
-            eXGExamMapper.deleteExamQstnDtl(eXGExamQstnDtlDTO);
+            eBEExamMapper.deleteExamQstnDtl(eXGExamQstnDtlDTO);
             EXGExamExmplDtlDTO eXGExamExmplDtlDTO = new EXGExamExmplDtlDTO();
             eXGExamExmplDtlDTO.setDelValueList( eXGExamMstSearchDTO.getDelValueList() );
-            eXGExamMapper.deleteExamExmplDtl( eXGExamExmplDtlDTO );
+            eBEExamMapper.deleteExamExmplDtl( eXGExamExmplDtlDTO );
         }else{
             //삭제하려는 데이터가 교육회차마스터에 평가지가 매핑되어있음.
             respCnt = -1;
@@ -106,11 +105,11 @@ public class EXGExamServiceImpl implements EXGExamService {
             //등록
             firstExamMstIdgen = examMstIdgen.getNextIntegerId();
             eXGExamMstInsertDTO.setExamSeq( firstExamMstIdgen );
-            respCnt = eXGExamMapper.insertExamMst( eXGExamMstInsertDTO );
+            respCnt = eBEExamMapper.insertExamMst( eXGExamMstInsertDTO );
         }else{
             //수정
             firstExamMstIdgen = Integer.parseInt( eXGExamMstInsertDTO.getDetailsKey() );
-            respCnt = eXGExamMapper.updateExamMst( eXGExamMstInsertDTO );
+            respCnt = eBEExamMapper.updateExamMst( eXGExamMstInsertDTO );
         }
         //응닶 cnt
         eXGExamMstInsertDTO.setRespCnt( respCnt );
@@ -123,12 +122,12 @@ public class EXGExamServiceImpl implements EXGExamService {
             COEgovSeqDTO COEgovSeqDTO = new COEgovSeqDTO();
             COEgovSeqDTO.setTableName("EXAM_QSTN_SEQ");
             COEgovSeqDTO.setNetxId(firstExamQstnDtlIdgen + eXGExamMstInsertDTO.getQstnSize());
-            eXGExamMapper.updateSequenceGgn( COEgovSeqDTO );
+            eBEExamMapper.updateSequenceGgn( COEgovSeqDTO );
 
             //보기 순번 생성
             COEgovSeqDTO.setTableName("EXAM_EXMPL_SEQ");
             COEgovSeqDTO.setNetxId(firstExamExplDtlIdgen + eXGExamMstInsertDTO.getExmplSize());
-            eXGExamMapper.updateSequenceGgn( COEgovSeqDTO );
+            eBEExamMapper.updateSequenceGgn( COEgovSeqDTO );
 
             for(int q = 0 ; q < eXGExamMstInsertDTO.getExExamQstnDtlList().size() ; q++){
                 EXGExamQstnDtlDTO eXGExamQstnDtlDTO = eXGExamMstInsertDTO.getExExamQstnDtlList().get(q);
@@ -155,11 +154,11 @@ public class EXGExamServiceImpl implements EXGExamService {
                         firstExamExplDtlIdgen = firstExamExplDtlIdgen + 1;
                     }
                     //보기 등록
-                    eXGExamMapper.insertExamExmplDtl( eXGExamQstnDtlDTO );
+                    eBEExamMapper.insertExamExmplDtl( eXGExamQstnDtlDTO );
                 }
             }
             //질문 등록
-            eXGExamMapper.insertExamQstnDtl( eXGExamMstInsertDTO );
+            eBEExamMapper.insertExamQstnDtl( eXGExamMstInsertDTO );
         }
         return respCnt;
     }
@@ -170,22 +169,22 @@ public class EXGExamServiceImpl implements EXGExamService {
     {
         EXGExamMstSearchDTO eXGExamMstSearchDTO = new EXGExamMstSearchDTO();
         eXGExamMstSearchDTO.setDetailsKey( eXGExamMstInsertDTO.getDetailsKey() );
-        int respCnt = eXGExamMapper.getExamEdctnEpisdCnt(eXGExamMstSearchDTO);
+        int respCnt = eBEExamMapper.getExamEdctnEpisdCnt(eXGExamMstSearchDTO);
         if(respCnt > 0)
         {
             //사용 여부만 수정
-            respCnt = eXGExamMapper.updateExamMstExpnYn( eXGExamMstInsertDTO );
+            respCnt = eBEExamMapper.updateExamMstExpnYn( eXGExamMstInsertDTO );
         }
         else
         {
             //질문 삭제
             EXGExamQstnDtlDTO eXGExamQstnDtlDTO = new EXGExamQstnDtlDTO();
             eXGExamQstnDtlDTO.setDetailsKey( eXGExamMstInsertDTO.getDetailsKey() );
-            eXGExamMapper.deleteExamQstnDtl( eXGExamQstnDtlDTO );
+            eBEExamMapper.deleteExamQstnDtl( eXGExamQstnDtlDTO );
             //보기 삭제
             EXGExamExmplDtlDTO eXGExamExmplDtlDTO = new EXGExamExmplDtlDTO();
             eXGExamExmplDtlDTO.setDetailsKey( eXGExamMstInsertDTO.getDetailsKey() );
-            eXGExamMapper.deleteExamExmplDtl( eXGExamExmplDtlDTO );
+            eBEExamMapper.deleteExamExmplDtl( eXGExamExmplDtlDTO );
 
             //내용 등록
             insertExamList(eXGExamMstInsertDTO, request);
@@ -197,9 +196,9 @@ public class EXGExamServiceImpl implements EXGExamService {
      */
     public EXGExamMstInsertDTO selectExamDtl(EXGExamMstSearchDTO eXGExamMstSearchDTO) throws Exception
     {
-        EXGExamMstInsertDTO eXGExamMstInsertDTO = eXGExamMapper.selectExamDtl(eXGExamMstSearchDTO);
-        List<EXGExamQstnDtlDTO> examQstnDtlList = eXGExamMapper.getExamQstnDtlList(eXGExamMstSearchDTO);
-        List<EXGExamExmplDtlDTO> examExmplDtlList = eXGExamMapper.getExamExmplDtlList(eXGExamMstSearchDTO);
+        EXGExamMstInsertDTO eXGExamMstInsertDTO = eBEExamMapper.selectExamDtl(eXGExamMstSearchDTO);
+        List<EXGExamQstnDtlDTO> examQstnDtlList = eBEExamMapper.getExamQstnDtlList(eXGExamMstSearchDTO);
+        List<EXGExamExmplDtlDTO> examExmplDtlList = eBEExamMapper.getExamExmplDtlList(eXGExamMstSearchDTO);
         for(EXGExamQstnDtlDTO eXGExamQstnDtlDTO : examQstnDtlList){
             eXGExamQstnDtlDTO.setExExamExmplDtlList( new ArrayList<EXGExamExmplDtlDTO>());
             for(EXGExamExmplDtlDTO eXGExamExmplDtlDTO : examExmplDtlList){
@@ -210,7 +209,7 @@ public class EXGExamServiceImpl implements EXGExamService {
         }
         eXGExamMstInsertDTO.setExExamQstnDtlList( examQstnDtlList );
         //교육 시험 매핑 여부
-        int edctnEpisdCnt = eXGExamMapper.getExamEdctnEpisdCnt( eXGExamMstSearchDTO );
+        int edctnEpisdCnt = eBEExamMapper.getExamEdctnEpisdCnt( eXGExamMstSearchDTO );
         eXGExamMstInsertDTO.setPosbChg( edctnEpisdCnt > 0 ? false : true );
         return eXGExamMstInsertDTO;
     }

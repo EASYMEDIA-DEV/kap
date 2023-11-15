@@ -28,7 +28,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/"+langCd+"/ex/exg/select", $formObj, "GET", "html");
+        }, "./select", $formObj, "GET", "html");
     }
 
     // set model

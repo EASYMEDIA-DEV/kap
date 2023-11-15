@@ -1,9 +1,9 @@
-package com.kap.service.dao.ex.exg;
+package com.kap.service.dao.eb;
 
+import com.kap.core.dto.COEgovSeqDTO;
 import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
-import com.kap.core.dto.COEgovSeqDTO;
 import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -28,7 +28,7 @@ import java.util.List;
  * </pre>
  */
 @Mapper
-public interface EXGExamMapper {
+public interface EBEExamMapper {
     /**
      * 리스트 조회
    */

@@ -71,7 +71,6 @@ public class UMAFtpUploadController {
         try
         {
             // 정의된 코드id값들의 상세 코드 맵 반환
-            modelMap.addAttribute("url",request.getScheme()+"://"+request.getServerName());
             modelMap.addAttribute("rtnData", uMAFtpUploadService.selectUploadFileList(uMAFtpUploadDTO));
         }
         catch (Exception e)

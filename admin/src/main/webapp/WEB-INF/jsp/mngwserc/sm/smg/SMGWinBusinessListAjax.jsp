@@ -10,12 +10,6 @@
                     </label>
                 </td>
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <c:if test="${list.tagCd eq 'image'}">
-                  <td class="text-center">이미지</td>
-                </c:if>
-                <c:if test="${list.tagCd eq 'video'}">
-                  <td class="text-center">비디오</td>
-                </c:if>
                 <td class="text-center">
                     <a href="javascript:" class="listView"  data-details-key="${list.vslSeq}">
                         ${list.titl}
