@@ -18,9 +18,9 @@
         <td class="text-center">${list.nm}</td><!--과정명-->
         <td class="text-center">${list.stduyMthdCdNm}</td><!--학습방식-->
         <td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td><!--학습시간-->
-        <td class="text-center">${list.regName}</td><!--최초 등록자-->
+        <td class="text-center">${list.regName}(${list.regId})</td><!--최초 등록자-->
         <td class="text-center">${list.regDtm}</td><!--최초등록일시-->
-        <td class="text-center">${list.modName}</td><!--최종수정자-->
+        <td class="text-center">${list.modName}(${list.modId})</td><!--최종수정자-->
         <td class="text-center">${ empty list.modDtm ? '-' : kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최종 수정일시-->
         <td class="text-center">${ kl:decode(list.expsYn, 'Y', '활성', '비활성') }</td><!--노출여부-->
       </tr>

@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
 	<div class="container-fluid">
-		<div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/eba/EBACouseListCtrl">
+		<div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/ebb/EBBEpisdListCtrl">
 			<h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
 			<form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
 				<!-- 현재 페이징 번호 -->
@@ -151,6 +151,77 @@
 
 				<fieldset>
 					<div class="form-group text-sm">
+						<label class="col-sm-1 control-label">모집방식</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxAll" />
+								<span class="ion-checkmark-round"></span> 전체
+							</label>
+
+							<c:forEach var="cdList" items="${classTypeList.RCRMT_MTHD}" varStatus="status">
+								<label class="checkbox-inline c-checkbox">
+									<input type="checkbox" class="checkboxSingle" data-name="rcrmtMthdCdList" value="${cdList.cd}" name="rcrmtMthdCd" <c:if test="${fn:contains(rtnData.rcrmtMthdCd, cdList.cd)}">checked</c:if> />
+									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
+								</label>
+							</c:forEach>
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<div class="form-group text-sm">
+						<label class="col-sm-1 control-label">접수상태</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxAll" />
+								<span class="ion-checkmark-round"></span> 전체
+							</label>
+
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="accsStatusList" value="1" name="accsStatus" <c:if test="${fn:contains(rtnData.accsStatus, '1')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 접수대기
+							</label>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="accsStatusList" value="2" name="accsStatus" <c:if test="${fn:contains(rtnData.accsStatus, '2')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 접수 중
+							</label>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="accsStatusList" value="3" name="accsStatus" <c:if test="${fn:contains(rtnData.accsStatus, '3')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 마감
+							</label>
+
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<div class="form-group text-sm">
+						<label class="col-sm-1 control-label">교육상태</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxAll" />
+								<span class="ion-checkmark-round"></span> 전체
+							</label>
+
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="edctnStatusList" value="1" name="edctnStatus" <c:if test="${fn:contains(rtnData.edctnStatus, '1')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 교육대기
+							</label>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="edctnStatusList" value="2" name="edctnStatus" <c:if test="${fn:contains(rtnData.edctnStatus, '2')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 교육 중
+							</label>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="edctnStatusList" value="3" name="edctnStatus" <c:if test="${fn:contains(rtnData.edctnStatus, '3')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 마감
+							</label>
+
+						</div>
+					</div>
+				</fieldset>
+
+				<fieldset>
+					<div class="form-group text-sm">
 						<label class="col-sm-1 control-label">노출여부</label>
 						<div class="col-sm-5">
 							<label class="checkbox-inline c-checkbox">
@@ -218,22 +289,46 @@
 					<table class="table table-hover table-striped" >
 						<thead>
 							<tr>
-								<th class="text-center">
+								<th class="text-center" rowspan="2">
 									<label class="checkbox-inline c-checkbox">
 										<input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
 										<span class="ion-checkmark-round"></span>
 									</label>
 								</th>
-								<th class="text-center">번호</th>
-								<th class="text-center">과정분류</th>
-								<th class="text-center">과정명</th>
-								<th class="text-center">학습방식</th>
-								<th class="text-center">학습시간</th>
-								<th class="text-center">최초 등록자</th>
-								<th class="text-center">최초 등록일시</th>
-								<th class="text-center">최종 수정자</th>
-								<th class="text-center">최종 수정일시</th>
-								<th class="text-center">노출여부</th>
+								<th class="text-center" rowspan="2">번호</th>
+								<th class="text-center" rowspan="2">과정분류</th>
+								<th class="text-center" rowspan="2">과정명</th>
+								<th class="text-center" rowspan="2">학습방식</th>
+								<th class="text-center" rowspan="2">학습시간</th>
+
+								<th class="text-center" rowspan="2">년도</th>
+								<th class="text-center" rowspan="2">회차</th>
+								<th class="text-center" rowspan="2">접수기간</th>
+								<th class="text-center" rowspan="2">접수상태</th>
+								<th class="text-center" rowspan="2">교육기간</th>
+								<th class="text-center" rowspan="2">교육상태</th>
+								<th class="text-center" colspan="2">강사</th>
+
+								<th class="text-center" rowspan="2">정원</th>
+								<th class="text-center" rowspan="2">신청자</th>
+								<th class="text-center" rowspan="2">모집 방식</th>
+								<th class="text-center" colspan="3">문의담당자</th>
+								<th class="text-center" rowspan="2">교육장소</th>
+
+
+								<th class="text-center" rowspan="2">최초 등록자</th>
+								<th class="text-center" rowspan="2">최초 등록일시</th>
+								<th class="text-center" rowspan="2">최종 수정자</th>
+								<th class="text-center" rowspan="2">최종 수정일시</th>
+								<th class="text-center" rowspan="2">노출여부</th>
+							</tr>
+							<tr>
+								<th class="text-center">이름</th>
+								<th class="text-center">소속</th>
+
+								<th class="text-center">이름</th>
+								<th class="text-center">이메일</th>
+								<th class="text-center">전화번호</th>
 							</tr>
 						</thead>
 						<!-- 리스트 목록 결과 -->

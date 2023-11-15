@@ -79,7 +79,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-		}, "/mngwserc/eb/eba/select", $formObj, "POST", "html");
+		}, "/mngwserc/eb/ebb/select", $formObj, "POST", "html");
 
 	}
 

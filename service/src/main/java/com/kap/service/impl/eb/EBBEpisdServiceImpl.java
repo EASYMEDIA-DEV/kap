@@ -8,6 +8,7 @@ import com.kap.service.COSeqGnrService;
 import com.kap.service.EBBEpisdService;
 import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.eb.EBACouseMapper;
+import com.kap.service.dao.eb.EBBEpisdMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -41,7 +42,7 @@ import java.util.HashMap;
 public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 	//DAO
-	private final EBACouseMapper eBACouseMapper;
+	private final EBBEpisdMapper eBBEpisdMapper;
 
 	//파일 서비스
 	private final COFileService cOFileService;
@@ -63,17 +64,17 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		COPaginationUtil page = new COPaginationUtil();
 
-		/*page.setCurrentPageNo(eBACouseDTO.getPageIndex());
-		page.setRecordCountPerPage(eBACouseDTO.getListRowSize());
+		page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
+		page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
 
-		page.setPageSize(eBACouseDTO.getPageRowSize());
+		page.setPageSize(eBBEpisdDTO.getPageRowSize());
 
-		eBACouseDTO.setFirstIndex( page.getFirstRecordIndex() );
-		eBACouseDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+		eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
+		eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
 
-		eBACouseDTO.setList( eBACouseMapper.selectCouseList(eBACouseDTO) );
-		eBACouseDTO.setTotalCount( eBACouseMapper.selectCouseListCnt(eBACouseDTO) );
-*/
+		eBBEpisdDTO.setList( eBBEpisdMapper.selectEpisdList(eBBEpisdDTO) );
+		eBBEpisdDTO.setTotalCount( eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO) );
+
 		return eBBEpisdDTO;
 	}
 
@@ -83,18 +84,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	public HashMap<String, Object> selectEpisdDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
 		HashMap<String, Object> map = new HashMap();
-		/*
-		EBACouseDTO ebaDto = eBACouseMapper.selectCouseDtl(eBACouseDTO);
 
-		if(eBACouseDTO.getCopyYn().equals("Y")){
+		EBBEpisdDTO ebbDto = eBBEpisdMapper.selectEpisdDtl(eBBEpisdDTO);
 
-		}
+		map.put("rtnData", ebbDto);
 
-
-		map.put("rtnData", ebaDto);
-
-		map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
-		*/
+		//map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
 
 
 		return map;
