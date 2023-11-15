@@ -39,7 +39,7 @@ public interface MPEPartsCompanyMapper {
     /**
      * 부품사 상세를 조회
      */
-    public MPEPartsCompanyDTO selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+    public List<MPEPartsCompanyDTO> selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
     /**
      * 부품사 사업자등록번호 등록여부를 확인
@@ -55,16 +55,6 @@ public interface MPEPartsCompanyMapper {
      * 부품사 SQ 정보 등록
      */
     public int insertPartsComSQInfo(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
-
-    /**
-     * 현재 카테고리의 CMS 시퀀스 값을 가져온다.
-     */
-    public String selectSeqNum(String tableNm) throws Exception;
-
-    /**
-     * 시퀀스 값을 상승시킨다.
-     */
-    public int updatePartsCompanySeq(String tableNm) throws Exception;
 
     /**
      * 부품사 수정

@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * <pre>
@@ -97,18 +95,16 @@ public class MPEPartsCompanyController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("COMPANY_TYPE");
+            cdDtlList.add("CO_YEAR_CD");
 
-            LocalDate currentDate = LocalDate.now();
-            List<Integer> yearList = new ArrayList<>();
-
-            for (int i = 0; i < 10; i++) {
-                int year = currentDate.getYear() - i;
-                yearList.add(year);
-            }
+            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            modelMap.addAttribute("yearList", yearList);
-            modelMap.addAttribute("rtnInfo", mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO));
+            if (originList.getList().size() != 0) {
+                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+            }
+            modelMap.addAttribute("sqInfoList", originList);
+
         }
         catch (Exception e)
         {
@@ -191,7 +187,7 @@ public class MPEPartsCompanyController {
             mpePartsCompanyDTO.setModId(coaAdmDTO.getId());
             mpePartsCompanyDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getDetailsKey());
+            mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getBsnmNo());
             modelMap.addAttribute("respCnt", mpePartsCompanyService.updatePartsCompany(mpePartsCompanyDTO));
         }
         catch (Exception e)
