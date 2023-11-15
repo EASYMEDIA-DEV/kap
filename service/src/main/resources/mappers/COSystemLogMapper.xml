@@ -99,7 +99,7 @@
         (
         adm_crtfn_seq
         , adm_seq
-        , crtfn_seq
+        , crtfn_no
         , reg_id
         , reg_ip
         , reg_dtm
@@ -108,7 +108,7 @@
             (
             #{admCrtfnSeq}
             , #{admSeq}
-            , #{crtfnSeq}
+            , #{crtfnNo}
             , #{regId}
             , #{regIp}
             , now()

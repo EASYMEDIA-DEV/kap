@@ -68,6 +68,12 @@ public class COSystemLogServiceImpl implements COSystemLogService {
             int firstIdgen = admCrtfnNodgen.getNextIntegerId();
             cOSystemLogDTO.setAdmCrtfnSeq(firstIdgen);
 
+            System.out.println("cOSystemLogDTO" + cOSystemLogDTO.getAdmCrtfnSeq());
+            System.out.println("cOSystemLogDTO" +cOSystemLogDTO.getAdmSeq());
+            System.out.println("cOSystemLogDTO" + cOSystemLogDTO.getCrtfnNo());
+            System.out.println("cOSystemLogDTO" +cOSystemLogDTO.getRegId());
+            System.out.println("cOSystemLogDTO" +cOSystemLogDTO.getRegIp());
+
             respCnt = cOSystemLogMapper.logInsertCrtfnNo(cOSystemLogDTO);
 
         }catch (Exception e){

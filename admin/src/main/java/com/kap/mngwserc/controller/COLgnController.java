@@ -283,8 +283,7 @@ public class COLgnController {
 				rtnCOLoginDTO = cOLgnService.actionLogin(cOLoginDTO, request);
 				COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
 
-				if(1 == 1){
-				//if(serverStatus.equals("real") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
+				if(serverStatus.equals("dev") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
 
 					//이메일 발송
 					COMailDTO cOMailDTO = new COMailDTO();
@@ -311,7 +310,7 @@ public class COLgnController {
 					cOSystemLogDTO.setAdmSeq(lgnCOAAdmDTO.getAdmSeq());
 
 					cOSystemLogDTO.setCrtfnNo(Integer.parseInt(authNum));
-					cOSystemLogDTO.setRegId("devadmin");
+					cOSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());
 					cOSystemLogDTO.setRegIp("127.0.0.1");
 
 					cOSystemLogService.logInsertCrtfnNo(cOSystemLogDTO);
