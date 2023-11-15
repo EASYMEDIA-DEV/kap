@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.sm.SMHSmsSendYnMapper">
+
+    <!--
+         쿼리명 : SMHSmsSendYnMapper.selectSmsSendYnDtl
+         설  명 : SMS 발송 관리 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.15   구은희       최초생성
+    -->
+    <select id="selectSmsSendYnDtl" parameterType="smhSmsSendYnDTO">
+        SELECT /* SMHSmsSendYnMapper.selectSmsSendYnDtl */
+            CFG_SEQ
+             , SMS_SEND_YN
+             , REG_ID
+             , REG_IP
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+             , REG_DTM
+             , MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+             , MOD_IP
+             , MOD_DTM
+        FROM SM_HMPGE_CTG_MST A
+    </select>
+
+    <!--
+         쿼리명 : SMHSmsSendYnMapper.updateSmsSendYn
+         설  명 : SMS 발송 여부를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.15   구은희       최초생성
+    -->
+    <update id="updateSmsSendYn" parameterType="smhSmsSendYnDTO">
+        UPDATE /* SMHSmsSendYnMapper.updateSmsSendYn */ SM_HMPGE_CTG_MST
+        SET
+            SMS_SEND_YN = #{smsSendYn}
+          , MOD_ID = #{modId}
+          , MOD_IP = #{modIp}
+          , MOD_DTM = NOW()
+        WHERE 1=1
+          AND CFG_SEQ = #{cfgSeq}
+    </update>
+</mapper>
