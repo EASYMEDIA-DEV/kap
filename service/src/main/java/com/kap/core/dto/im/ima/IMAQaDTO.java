@@ -1,10 +1,12 @@
-package com.kap.core.dto;
+package com.kap.core.dto.im.ima;
 
+import com.kap.core.dto.BaseDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -54,14 +56,17 @@ public class IMAQaDTO extends BaseDTO {
 
     //부모 카테고리 코드
     private String parntCtgryCd;
+    private String parntCtgryNm;
 
     //카테고리 코드
     private String ctgryCd;
+    private String ctgryNm;
 
     //깊이
     private int dpth;
 
     //QA답변 내용
+    @NotNull
     private String rplyCntn;
 
     //QA답변 파일 순번

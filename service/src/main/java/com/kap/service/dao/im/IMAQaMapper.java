@@ -1,6 +1,6 @@
 package com.kap.service.dao.im;
 
-import com.kap.core.dto.IMAQaDTO;
+import com.kap.core.dto.im.ima.IMAQaDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public interface IMAQaMapper {
     /**
      * 1:1 문의 진행상태 수정
      */
-    public IMAQaDTO updateQaRsume(IMAQaDTO iMAQaDTO) throws Exception;
+    public int updateQaRsume(IMAQaDTO iMAQaDTO) throws Exception;
     /**
      * 1:1 문의 상세
      */

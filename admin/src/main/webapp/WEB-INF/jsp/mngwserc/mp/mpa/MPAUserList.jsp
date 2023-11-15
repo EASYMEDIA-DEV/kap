@@ -14,7 +14,6 @@
             <input type="hidden" class="notRequired" id="lgnSsnId" value="${rtnData.lgnSsnId}">
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
-
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="등록/수정기간" />
@@ -34,8 +33,8 @@
                                     <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
                                     <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
                                     <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>휴대폰번호</option>
-                                    <option value="4" <c:if test="${rtnData.f eq '3'}">selected</c:if>>이메일</option>
-                                    <option value="5" <c:if test="${rtnData.f eq '3'}">selected</c:if>>최종수정자</option>
+                                    <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>이메일</option>
+                                    <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종수정자</option>
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">
@@ -66,6 +65,7 @@
                 </div>
                 <div class="pull-right">
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
+                    <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown2">ㅇㅇㅇㅇㅇㅇㅇ</button>
                 </div>
             </div>
             <!--VUE 영역 시작 -->

@@ -23,59 +23,38 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         },
         immediately : function() {
 
-            var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
-
-            /* Editor Setting */
-            jQuery("textarea[id^='cntn']").each(function(){
-                cmmCtrl.setEditor({
-                    editor : jQuery(this).attr("id"),
-                    height : 400,
-                    readOnly : _readOnly
-                });
-            });
-
             /* File Dropzone Setting */
-            $formObj.find(".dropzone").each(function(){
-                var trgtObj = $(this);
+            /*$formObj.find(".dropzone").each(function(){
+                console.log($formObj.find(".dropzone").length);
                 cmmCtrl.setDropzone(trgtObj, {
                     maxFileCnt  : trgtObj.data("maxFileCnt"),
                     maxFileSize : trgtObj.data("maxFileSize"),
                     fileExtn    : trgtObj.data("fileExtn"),
                     fileFieldNm : trgtObj.data("fileFieldNm")
                 })
+            });*/
+            $(".dropzone").each(function(){
+                cmmCtrl.setDropzone($(this), {
+                    maxFileCnt  : $(this).data("maxFileCnt"),
+                    maxFileSize : $(this).data("maxFileSize"),
+                    fileExtn    : $(this).data("fileExtn"),
+                    fileFieldNm : $(this).data("fileFieldNm")
+                })
             });
+
             // 유효성 검사
             $formObj.validation({
                 after : function() {
-                    var isValid = true, editorChk = true;
+                    var isValid = true;
 
-                    $formObj.find(".ckeditorRequired").each(function() {
-                        jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-                        jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
-                        jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
-                        jQuery(this).val(jQuery(this).val().split("\'").join("~!singlecomma!~"));
-                        jQuery(this).val(jQuery(this).val().split("\"").join("~!doublecomma!~"));
+                    var cntsVal = jQuery("#rplyCntn").val().length;
 
-                        var editorVal = jQuery(this).val().length;
+                    if (cntsVal < 1) {
+                    alert(msgCtrl.getMsg("fail.co.cog.cnts"));
 
-                        if (editorVal < 1)
-                        {
-                            editorChk = false;
+                    jQuery("#rplyCntn").focus();
 
-                            alert(msgCtrl.getMsg("fail.co.cog.cnts"));
-
-                            CKEDITOR.instances[jQuery(this).prop("id")].focus();
-
-                            // 에디터 최상단으로 스크롤 이동
-                            jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
-
-                            return false;
-                        }
-                    });
-
-                    if (!editorChk)
-                    {
-                        isValid = false;
+                    isValid = false;
                     }
 
                     return isValid;
@@ -113,6 +92,80 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             });
+
+            //답변 완료 시 dropzone 셋팅
+            $(document).ready(function () {
+                if ($("#rsumeCd").val() == "ACK") {
+                    /*$formObj.find(".dropzone").each(function () {
+                        var trgtObj = $(this);
+
+                        trgtObj.find('input[name="fileAlt"]').prop('readonly', true);
+
+                        $('.dz-remove').hide();
+                        $(".dz-default.dz-message").hide();
+                    });*/
+
+                    $(".dz-hidden-input").prop("disabled",true);
+                    $(".dropzone").removeClass("dz-clickable");
+                    $(".dz-default.dz-message").hide();
+
+                    var targetNode = document.body;
+
+                    // Mutation Observer 생성 및 콜백 함수 정의
+                    var observer = new MutationObserver(function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            // 노드가 추가되었을 때의 로직
+                            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                                // 추가된 노드 중에서 원하는 요소를 찾음
+                                mutation.addedNodes.forEach(function(addedNode) {
+                                    if ($(addedNode).hasClass('dz-preview')) {
+                                        // 새로운 드롭존 요소가 추가되었을 때의 동작 수행
+                                        $('.dz-preview').find('input[name="fileAlt"]').prop('readonly', true);
+
+                                        $('.dz-remove').hide();
+                                    }
+                                });
+                            }
+                        });
+                    });
+                    // 구성 옵션
+                    var config = { childList: true, subtree: true };
+                    // Mutation Observer를 대상 노드에 연결
+                    observer.observe(targetNode, config);
+                }
+                else if($("#rsumeCd").val() != "ACK") {
+                    $(".dz-hidden-input:first").prop("disabled",true);
+                    $("#qaDrop .dropzone").removeClass("dz-clickable");
+                    $("#qaDrop .dz-default.dz-message").hide();
+
+                    // var targetNode = document.body;
+                    var targetNode = document.getElementById("qaDrop");
+
+                    // Mutation Observer 생성 및 콜백 함수 정의
+                    var observer = new MutationObserver(function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            // 노드가 추가되었을 때의 로직
+                            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                                // 추가된 노드 중에서 원하는 요소를 찾음
+                                mutation.addedNodes.forEach(function(addedNode) {
+                                    if ($(addedNode).hasClass('dz-preview')) {
+                                        // 새로운 드롭존 요소가 추가되었을 때의 동작 수행
+                                        $('.dz-preview').find('input[name="fileAlt"]').prop('readonly', true);
+
+                                        $('.dz-remove').hide();
+                                    }
+                                });
+                            }
+                        });
+                    });
+                    // 구성 옵션
+                    var config = { childList: true, subtree: true };
+                    // Mutation Observer를 대상 노드에 연결
+                    observer.observe(targetNode, config);
+                }
+            });
+
+
         }
     };
     ctrl.exec();

@@ -1,7 +1,12 @@
-package com.kap.service.dao.ex.exg;
+package com.kap.service.dao.eb;
 
-import com.kap.core.dto.ex.exg.EXGExamMstDTO;
+import com.kap.core.dto.COEgovSeqDTO;
+import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
+import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
+import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
+import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
+import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -25,30 +30,15 @@ import java.util.List;
  * </pre>
  */
 @Mapper
-public interface EXGExamMapper {
+public interface EBDSqCertiReqMapper {
     /**
      * 리스트 조회
    */
-    public List<EXGExamMstDTO> selectExamList(EXGExamMstDTO eXGExamMstDTO);
+    public List<EBDSqCertiListDTO> selectList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
 
     /**
      * 리스트 갯수 조회
      */
-    public int getExamListCnt(EXGExamMstDTO eXGExamMstDTO);
-
-    /**
-     * 교육회차 매핑 여부
-     */
-    public int getExamEdctnEpisdCnt(EXGExamMstDTO eXGExamMstDTO);
-
-    /**
-     * 리스트 삭제
-     */
-    public int deleteExamList(EXGExamMstDTO eXGExamMstDTO);
-
-    /**
-     * 교육 시험 마스터 등록
-     */
-    public int insertExamMst(EXGExamMstInsertDTO eXGExamMstDTO);
+    public int getListCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
 
 }

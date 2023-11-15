@@ -69,10 +69,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         immediately : function(){
 
             /* Editor Setting */
+            var isSmmryCntn = false;
+            if($.trim($("input[name=posbChg]").val()) == "false"){
+                isSmmryCntn = true;
+            }
             jQuery("textarea[id^='smmryCntn']").each(function(){
                 cmmCtrl.setEditor({
                     editor : jQuery(this).attr("id"),
-                    height : 400,
+                    height : 300,
+                    readOnly : isSmmryCntn,
                 });
             });
 
@@ -85,6 +90,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
             // 유효성 검사
             $formObj.validation({
+                before: function(){
+                    //에디터 데이터 textare 입력
+                    $formObj.find(".ckeditorRequired").each(function() {
+                        $(this).val(CKEDITOR.instances[$(this).attr("id")].getData());
+                    });
+                },
                 after : function() {
                     var isValid = true, editorChk = true, isInputType = false;
 
@@ -116,7 +127,16 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             return false;
                         }
                     })
-
+                    //배점 검증
+                    var totScord = 0;
+                    $("input[name=scord]").each(function(index, data){
+                        totScord = totScord + Number($(this).val());
+                    })
+                    if(totScord > 100){
+                        alert(msgCtrl.getMsg("fail.ex.notScord100"));
+                        isValid = false;
+                        return false;
+                    }
                     $formObj.find(".ckeditorRequired").each(function() {
                         jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
                         var editorVal = jQuery(this).val().length;
@@ -148,19 +168,27 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var actionMsg = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
                         //데이터 json화(form전송 복잡해서...)
                         var exExamMst = {};
+                        exExamMst.detailsKey = ctrl.obj.find("#detailsKey").val();
                         exExamMst.titl = ctrl.obj.find("#titl").val();
                         exExamMst.smmryCntn = ctrl.obj.find("#smmryCntn").val();
                         exExamMst.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
                         exExamMst.exExamQstnDtlList = new Array();
+
+                        //질문 모든 갯수
+                        exExamMst.qstnSize = $(".examList").size();
+                        //보기 모든 갯수
+                        exExamMst.exmplSize = $(".exmplOptnContainerList").size();
                         $(".examListContainer").find(".examList").each(function(index, data){
                             var exExamQstnDt = {};
                             exExamQstnDt.srvTypeCd = $(this).find(".srvTypeCd").val();
                             exExamQstnDt.qstnNm = $(this).find("input[name=qstnNm]").val();
                             exExamQstnDt.scord = $(this).find("input[name=scord]").val();
                             exExamQstnDt.qstnOrd = index;
+                            exExamMst.qstnSize = exExamMst.qstnSize;
                             exExamQstnDt.exExamExmplDtlList = new Array();
                             $(this).find(".exmplOptnContainerList").each(function(exmplIndex, exmplData){
                                 var exExamExmplDtl = {};
+                                exExamMst.exmplSize = exExamMst.exmplSize + 1;
                                 exExamExmplDtl.exmplNm = $(this).find("input[name=exmplNm]").val();
                                 exExamExmplDtl.exmplOrd = exmplIndex;
                                 //설문유형
@@ -173,10 +201,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             })
                             exExamMst.exExamQstnDtlList.push(exExamQstnDt);
                         })
-                        console.log(exExamMst);
                         cmmCtrl.jsonAjax(function(data){
-                            console.log(data);
-                        }, "/mngwserc/kr/ex/exg/insert", exExamMst, "json")
+                            location.href = "./list";
+                        }, actionUrl, exExamMst, "text")
                     }
                 },
                 msg : {

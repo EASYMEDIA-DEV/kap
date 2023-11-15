@@ -14,15 +14,14 @@
 				<fieldset>
 					<div class="form-group text-sm">
 						<div class="col-sm-10 col-md-11">
-							<spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-							<spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-							<div class="dropzone" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
+							<spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+							<div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="5242880" data-max-file-cnt="1" data-title="파일 업로드">
 								<div class="dz-default dz-message">
-									<span><em class="ion-upload text-info icon-2x"></em><br />Drop files here to upload</span>
+									<span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
 								</div>
 							</div>
 							<p class="text-bold mt">
-								※ 1920 X 1080, ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+								※ 파일 확장자(${imageExtns}) / 최대 용량 (5MB) / 최대 개수 (1개)
 							</p>
 						</div>
 					</div>
@@ -39,38 +38,11 @@
 				<input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
 				<!-- CSRF KEY -->
 				<input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<!-- 상세로 이동시 시퀀스 -->
-				<input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.seq}" />
 
-				<%--<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-					<jsp:param name="srchText" value="기간" />
-					<jsp:param name="periodType" value="csa" />
-				</jsp:include>
-				<fieldset class="last-child">
-					<div class="form-group text-sm">
-						<label class="col-sm-1 control-label">검색키워드</label>
-						<div class="col-sm-4">
-							<div class="row">
-								<div class="col-sm-3 pr0">
-									<select class="form-control input-sm" data-name="f">
-										<option value="">전체</option>
-									</select>
-								</div>
-								<div class="col-sm-9 pr0">
-									<input type="text" class="form-control input-sm" id="q" data-name="q" value="${rtnData.q}" maxlength="50" />
-								</div>
-							</div>
-						</div>
-						<div class="pull-left ml-sm">
-							<button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-							<button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
-						</div>
-					</div>
-				</fieldset>--%>
 				<hr class="mt0" />
 				<div class="clearfix">
 					<h6 class="pull-left mt0">
-						<em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+						<em class="ion-play mr-sm"></em>${pageTitle} 이미지 목록
 					</h6>
 					<div class="pull-right ml-sm">
 						<select class="form-control input-sm listRowSizeContainer" >
@@ -96,10 +68,10 @@
 									</label>
 								</th>
 								<th>번호</th>
-								<th>파일 이름</th>
-								<th>url</th>
-								<th>날짜</th>
-								<th>이름</th>
+								<th>이미지 파일명</th>
+								<th>이미지 url</th>
+								<th>최초 등록자</th>
+								<th>최초 등록일시</th>
 							</tr>
 						</thead>
 						<!-- 리스트 목록 결과 -->

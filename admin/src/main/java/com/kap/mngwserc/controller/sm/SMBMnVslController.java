@@ -12,7 +12,24 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-
+/**
+ * <pre>
+ * 메인 비주얼 관리를 위한 ServiceImpl
+ * </pre>
+ *
+ * @ClassName		: SMGWinBusinessController.java
+ * @Description		: 메인 비주얼 관리를 위한 Controller
+ * @author 임서화
+ * @since 2023.11.14
+ * @version 1.0
+ * @see
+ * @Modification Information
+ * <pre>
+ * 		since			author				  description
+ *    ==========    ==============    =============================
+ *    2023.11.14		임서화				   최초 생성
+ * </pre>
+ */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -24,7 +41,7 @@ public class SMBMnVslController {
     /**
      * 메인 비주얼 목록 페이지
      */
-    @RequestMapping(value = "/list")
+    @GetMapping(value = "/list")
     public String getMnVslListPage(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
             sMBMainVslDTO.setMdCd(mdCd);
@@ -43,7 +60,7 @@ public class SMBMnVslController {
     /**
      * 메인 비주얼 목록 조회
      */
-    @RequestMapping(value = "/select")
+    @PostMapping(value = "/select")
     public String selectMnVslList(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
             sMBMainVslDTO.setMdCd(mdCd);
@@ -62,7 +79,7 @@ public class SMBMnVslController {
     /**
      * 메인 비주얼 상세 페이지
      */
-    @RequestMapping(value = "/write")
+    @GetMapping(value = "/write")
     public String getMnVslWritePage(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
@@ -85,7 +102,7 @@ public class SMBMnVslController {
     /**
      * 메인 비주얼 등록
      */
-    @RequestMapping(value = "/insert", method = RequestMethod.POST)
+    @PostMapping(value = "/insert")
     public String insertMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
@@ -103,7 +120,7 @@ public class SMBMnVslController {
         return "jsonView";
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @PostMapping(value = "/update")
     public String updateMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
@@ -149,35 +166,9 @@ public class SMBMnVslController {
     }
 
     /**
-     * 메인 비주얼 사용 여부 수정
-     */
-    /*@PostMapping(value = "/use-yn-update")
-    public String updateUseYn(SMBMainVslDTO pSMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
-        try {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            pSMBMainVslDTO.setRegId(coaAdmDTO.getId());
-            pSMBMainVslDTO.setRegIp(coaAdmDTO.getLoginIp());
-            pSMBMainVslDTO.setRegName(coaAdmDTO.getName());
-            pSMBMainVslDTO.setRegDeptNm(coaAdmDTO.getDeptNm());
-            pSMBMainVslDTO.setModId(coaAdmDTO.getId());
-            pSMBMainVslDTO.setModIp(coaAdmDTO.getLoginIp());
-            pSMBMainVslDTO.setMdCd(mdCd);
-
-            modelMap.addAttribute("respCnt", sMBMnVslService.updateUseYn(pSMBMainVslDTO));
-        } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-
-        return "jsonView";
-    }*/
-
-    /**
      * 메인 비주얼 정렬 수정
      */
-    @RequestMapping(value="/sort", method=RequestMethod.POST)
+    @PostMapping(value="/sort")
     public ModelAndView updateOrder(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
 
         ModelAndView mav = new ModelAndView();

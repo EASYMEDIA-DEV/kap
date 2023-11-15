@@ -34,11 +34,11 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="categoryList" value="image" <c:if test="${fn:contains(rtnData.category, 'Y')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="tagCdList" value="image" <c:if test="${fn:contains(rtnData.tagCd, 'Y')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 이미지
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="categoryList" value="video" <c:if test="${fn:contains(rtnData.category, 'N')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="tagCdList" value="video" <c:if test="${fn:contains(rtnData.tagCd, 'N')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 동영상
                         </label>
                     </div>
@@ -53,11 +53,11 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="mainYnList" value="Y" <c:if test="${fn:contains(rtnData.mainYn, 'Y')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="mainYnList" value="Y" <c:if test="${fn:contains(rtnData.expsYn, 'Y')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 노출
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="mainYnList" value="N" <c:if test="${fn:contains(rtnData.mainYn, 'N')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="mainYnList" value="N" <c:if test="${fn:contains(rtnData.expsYn, 'N')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 미노출
                         </label>
                     </div>
@@ -71,9 +71,9 @@
                             <div class="col-sm-3 pr0">
                                 <select class="form-control input-sm" data-name="f">
                                     <option value="">전체</option>
-                                    <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
-                                    <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>제목</option>
+                                    <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>제목</option>
+                                    <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>최초 등록자</option>
+                                    <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>최종 등록자</option>
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">

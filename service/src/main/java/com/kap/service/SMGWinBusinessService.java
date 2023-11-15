@@ -26,6 +26,11 @@ public interface SMGWinBusinessService {
     public SMGWinBusinessDTO selectWinBusinessList(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception;
 
     /**
+     * 상생사업 상세
+     */
+    public SMGWinBusinessDTO selectWinBusinessDtl(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception;
+
+    /**
      * 상생사업 관리 등록
      */
     public int insertWinBusiness(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception;

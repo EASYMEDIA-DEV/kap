@@ -1,12 +1,10 @@
 package com.kap.core.dto;
 
-import com.kap.core.annotation.SaxFilter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -30,32 +28,22 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 public class UMAFtpUploadDTO extends BaseDTO {
 
-    //샘플 순번
+    // 이미지 순번
+    private Integer pubcSeq;
     private Integer seq;
+    // 이미지 다운 url
     private String url;
+    // 이미지 원본 이름
     private String orgnFileNm;
+    // Web Path
     private String webPath;
+    // Phy Path
     private String phyPath;
 
-    //내용
-    @NotNull
-    @SaxFilter
-    private String cnts;
-
-    private String f;
-    private String q;
-
-
-    //파일 순번
+    // 파일 순번
     private Integer fileSeq;
+    // 파일 정렬
     private Integer fileOrd;
-    private String atchFileId;
-
-    //검색 리스트
-
-    //테이블 이름
-    private String tableNm;
-    private String srchDate;
 
     //조회 리스트
     private List<UMAFtpUploadDTO> list;

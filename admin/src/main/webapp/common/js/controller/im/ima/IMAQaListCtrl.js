@@ -28,7 +28,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/im/ima/select", $formObj, "POST", "html");
+        }, "/mngwserc/im/ima/select", $formObj, "GET", "html");
     }
 
     // set model
@@ -84,7 +84,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
+                        var rsumeCd = $(this).data("rsumeCd");
                         $formObj.find("input[name=detailsKey]").val(detailsKey);
+                        $formObj.find("input[name=rsumeCd]").val(rsumeCd);
                         location.href = "./write?" + $formObj.serialize();
                     }
                 }
@@ -102,7 +104,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         },
         immediately : function() {
             //리스트 조회
-            // search();
+            search();
         }
     };
 

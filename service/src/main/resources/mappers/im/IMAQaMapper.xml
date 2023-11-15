@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kap.service.dao.IMAQaMapper">
+<mapper namespace="com.kap.service.dao.im.IMAQaMapper">
     <!--
      쿼리명 : IMAQaMapper.selectQaList
      설  명 : 1:1 문의 리스트
@@ -12,7 +12,9 @@
         SELECT /* IMAQaMapper.selectQaList */
             A.QA_SEQ
             , CT.PARNT_CTGRY_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.PARNT_CTGRY_CD) PARNT_CTGRY_NM
             , CT.CTGRY_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.CTGRY_CD) CTGRY_NM
             , A.TITL
             , MEM.NAME AS REG_NAME
             , MEM.REG_ID
@@ -53,6 +55,10 @@
             BD_QA_MST
         SET
             RSUME_CD = #{rsumeCd}
+        <if test="rsumeCd !='' and rsumeCd == 'SYNACK' ">
+            , INIT_CHK_ADM_SEQ = (SELECT ADM_SEQ FROM CO_ADM_MST WHERE REG_ID = #{regId})
+            , INIT_CHK_DTM = NOW()
+        </if>
         WHERE
             QA_SEQ = #{detailsKey}
     </update>
@@ -70,17 +76,23 @@
             , MEM.EMAIL
             , MEM.HP_NO
             , CT.PARNT_CTGRY_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.PARNT_CTGRY_CD) PARNT_CTGRY_NM
             , CT.CTGRY_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.CTGRY_CD) CTGRY_NM
+            <if test="rsumeCd != null and 'ACK'.toString().equals(rsumeCd)">
             , RPLY.QA_RPLY_SEQ
             , RPLY.CNTN AS RPLY_CNTN
             , RPLY.FILE_SEQ AS RPLY_FILE_SEQ
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = RPLY.REG_ID) AS MOD_NAME
             , RPLY.REG_DTM AS MOD_DTM
+            </if>
         FROM
             BD_QA_MST A
             JOIN CO_MEM_MST MEM ON A.REG_ID = MEM.ID
             JOIN BD_QA_CTGRY_DTL CT ON A.QA_SEQ = CT.QA_SEQ
+            <if test="rsumeCd != null and 'ACK'.toString().equals(rsumeCd)">
             JOIN BD_QA_RPLY_DTL RPLY ON A.QA_SEQ = RPLY.QA_SEQ
+            </if>
         WHERE
             A.QA_SEQ = #{detailsKey}
     </select>
@@ -128,7 +140,7 @@
                     AND A.REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
                 </when>
                 <when test="srchDate == 2">
-                    AND (SELECT REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                    AND (SELECT RPLY.REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
                 </when>
             </choose>
         </if>
@@ -138,7 +150,7 @@
                     AND A.REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                 </when>
                 <when test="srchDate == 2">
-                    AND (SELECT REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                    AND (SELECT RPLY.REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                 </when>
             </choose>
         </if>
@@ -180,7 +192,7 @@
             </choose>
         </if>
         ORDER BY
-            REG_DTM DESC
+            A.REG_DTM DESC
     </sql>
 </mapper>
 

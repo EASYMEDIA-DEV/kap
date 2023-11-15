@@ -154,7 +154,7 @@ public class IdgenConfig {
                 .build();
     }
 
-    /** QNA
+    /** 1:1 문의
      * @return
      */
     @Bean(destroyMethod = "destroy")
@@ -167,7 +167,7 @@ public class IdgenConfig {
                 .build();
     }
 
-    /** RPLY_SEQ
+    /** 1:1 문의 답변
      * @return
      */
     @Bean(destroyMethod = "destroy")
@@ -215,6 +215,80 @@ public class IdgenConfig {
                 .setBlockSize(1)
                 .setTable("co_seq_mst")
                 .setTableName("EXAM_EXMPL_SEQ")
+                .setCipers(13)
+                .build();
+    }
+    /** 설문 마스터
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl svMstIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SV_MST_SEQ")
+                .setCipers(13)
+                .build();
+    }
+    /** 설문 질문 상세
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl svQstnDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SV_QSTN_DTL_SEQ")
+                .setCipers(13)
+                .build();
+    }
+    /** 설문 질문 보기 상세
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl svQstnExmplDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SV_EXMPL_DTL_SEQ")
+                .setCipers(13)
+                .build();
+    }
+    /** 메인 비주얼
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl mainVslIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("MAIN_VSL_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 상생 사업
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl winBusIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("WIN_BUS_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 이미지 업로드
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl ftpIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("FTP_SEQ")
                 .setCipers(13)
                 .build();
     }

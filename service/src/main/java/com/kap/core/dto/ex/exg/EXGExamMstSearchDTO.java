@@ -3,6 +3,7 @@ package com.kap.core.dto.ex.exg;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -28,7 +29,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "교육 시험 마스터")
-public class EXGExamMstDTO extends BaseDTO {
+public class EXGExamMstSearchDTO extends BaseDTO {
     @Schema(title = "시험순번", example = "숫자")
     private Integer examSeq;
     @Schema(title = "제목")
@@ -38,10 +39,11 @@ public class EXGExamMstDTO extends BaseDTO {
     @Schema(title = "노출 여부")
     private String expsYn;
     @Schema(title = "조회 리스트")
-    private List<EXGExamMstDTO> list;
+    private List<EXGExamMstSearchDTO> list;
     @Schema(title = "검색 사용 여부 리스트")
     private List<String> expsYnList;
 
-    @Schema(title = "교육 시험 질문 리스트")
-    private List<EXGExamQstnDtlDTO> exExamQstnDtlList;
+    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
+    @Hidden
+    private String srchExamLayer;
 }

@@ -1,7 +1,7 @@
 package com.kap.mngwserc.controller.im;
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.IMAQaDTO;
+import com.kap.core.dto.im.ima.IMAQaDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.IMAQaService;
@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 /**
@@ -38,9 +39,10 @@ import java.util.ArrayList;
 @RequestMapping(value="/mngwserc/im/ima")
 public class IMAQaController {
 
-    //1:1 문의 서비스
+    /** 1:1 문의 서비스 **/
     private final IMAQaService iMAQaService;
-    //코드 서비스
+
+    /** 코드 서비스 **/
     private final COCodeService cOCodeService;
 
     /**
@@ -75,7 +77,7 @@ public class IMAQaController {
     /**
      * 1:1 문의 목록 조회
      */
-    @PostMapping(value = "/select")
+    @GetMapping(value = "/select")
     public String selectQaListPageAjax(IMAQaDTO iMAQaDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
@@ -96,12 +98,14 @@ public class IMAQaController {
     /**
      * 1:1 문의 상세 페이지
      */
-    @RequestMapping(value="/write")
-    public String getQaWritePage(IMAQaDTO iMAQaDTO, ModelMap modelMap, COAAdmDTO cOAAdmDTO) throws Exception
+    @GetMapping(value="/write")
+    public String getQaWritePage(IMAQaDTO iMAQaDTO, ModelMap modelMap) throws Exception
     {
         try
         {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+
+            iMAQaDTO.setRegId(coaAdmDTO.getId());
 
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -128,28 +132,48 @@ public class IMAQaController {
     }
 
     /**
-     * 1:1 문의 등록 페이지
+     * @ClassName		: IMAQaRestController.java
+     * @Description		: 1:1 문의 관리를 위한 REST Controller
+     * @author 장두석
+     * @since 2023.11.01
+     * @version 1.0
+     * @see
+     * @Modification Information
+     * <pre>
+     * 		since			author				  description
+     *    ==========    ==============    =============================
+     *    2023.11.01		장두석				   최초 생성
+     * </pre>
      */
-    @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String boardInsertPage(IMAQaDTO iMAQaDTO, ModelMap modelMap) throws Exception
-    {
-        try
-        {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping(value="/mngwserc/im/ima")
+    public class IMAQaRestController {
 
-            iMAQaDTO.setRegId(coaAdmDTO.getId());
-            iMAQaDTO.setRegIp(coaAdmDTO.getLoginIp());
-            modelMap.addAttribute("respCnt", iMAQaService.insertQa(iMAQaDTO));
-        }
-        catch (Exception e)
+        /** 1:1 문의 서비스 **/
+        private final IMAQaService iMAQaService;
+
+        /**
+         * 1:1 문의 등록
+         */
+        @PostMapping(value="/insert")
+        public IMAQaDTO qaInsertPage(@Valid IMAQaDTO iMAQaDTO, HttpServletRequest request) throws Exception
         {
-            if (log.isDebugEnabled())
+            try
             {
-                log.debug(e.getMessage());
+                iMAQaDTO.setRespCnt(iMAQaService.insertQa(iMAQaDTO, request));
             }
-            throw new Exception(e.getMessage());
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return iMAQaDTO;
         }
-        return "jsonView";
+
     }
 
 }

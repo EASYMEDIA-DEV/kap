@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.eb.EBEExamMapper">
+	<!--
+		쿼리명 : EXGExamMapper.selectExamList
+		설  명 : 목록 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="selectExamList" parameterType="EXGExamMstSearchDTO" resultType="EXGExamMstSearchDTO">
+		select /* EXGExamMapper.selectExamList */
+		      exam_seq
+			, titl
+			, exps_yn
+			, reg_id
+		    , (select name from co_adm_mst where id = a.reg_id ) reg_name
+			, reg_dtm
+			, mod_id
+			, (select name from co_adm_mst where id = a.mod_id ) mod_name
+			, mod_dtm
+		from
+			ex_exam_mst a
+		<include refid="selectExamListWhereSql" />
+		order by
+			reg_dtm desc
+		limit #{firstIndex}, #{recordCountPerPage}
+	</select>
+	<!--
+		쿼리명 : EXGExamMapper.getExamListCnt
+		설  명 : 목록 전체 갯수
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getExamListCnt" parameterType="EXGExamMstSearchDTO" resultType="java.lang.Integer">
+		select /* EXGExamMapper.getAdmListCnt */
+			count(*)
+		from
+			ex_exam_mst a
+		<include refid="selectExamListWhereSql" />
+	</select>
+	<!--
+		쿼리명 : selectExamListWhereSql
+		설  명 : 목록 조건
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2019.07.08    김학규       최초생성
+    -->
+	<sql id="selectExamListWhereSql">
+		<where>
+			<if test="strtDt != null and strtDt != ''.toString() ">
+				<choose>
+					<when test="srchDate == 1">
+						AND reg_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+					</when>
+					<when test="srchDate == 2">
+						AND mod_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+					</when>
+				</choose>
+			</if>
+			<if test="endDt != null and endDt != ''.toString() ">
+				<choose>
+					<when test="srchDate == 1">
+						AND reg_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+					</when>
+					<when test="srchDate == 2">
+						AND mod_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+					</when>
+				</choose>
+			</if>
+			<if test="expsYnList != null and expsYnList.size() > 0">
+				and
+				<foreach collection="expsYnList" item="expsYnList" index="index" open="(" close=")" separator=" or ">
+					exps_yn = #{expsYnList}
+				</foreach>
+			</if>
+			<if test="q != null and q != ''.toString() ">
+				<choose>
+					<when test="f == 1">
+						and titl like concat('%', #{q}, '%')
+					</when>
+					<when test="f == 2">
+						and name like concat('%', #{q}, '%')
+					</when>
+					<when test="f == 3 ">
+						and exists(select id from co_adm_mst where id = a.reg_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')))
+					</when>
+					<when test="f == 4 ">
+						and exists(select id from co_adm_mst where id = a.mod_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')))
+					</when>
+					<otherwise>
+						and (
+							titl like concat('%', #{q}, '%')
+							or exists(select id from co_adm_mst where id = a.reg_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')))
+							or exists(select id from co_adm_mst where id = a.mod_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')))
+						)
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+	<!--
+         쿼리명 : EXGExamMapper.deleteExamMst
+         설  명 : 목록 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.10   김학규       최초생성
+    -->
+	<delete id="deleteExamMst" parameterType="EXGExamMstSearchDTO">
+		delete /* EXGExamMapper.deleteExamMst */
+		from
+		ex_exam_mst
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					exam_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					exam_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+	<!--
+         쿼리명 : EXGExamMapper.deleteExamQstnDtl
+         설  명 : 질문 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.10   김학규       최초생성
+    -->
+	<delete id="deleteExamQstnDtl" parameterType="EXGExamQstnDtlDTO">
+		delete /* EXGExamMapper.deleteExamQstnDtl */
+		from
+		ex_exam_qstn_dtl
+		where
+		<choose>
+			<when test="delValueList != null and delValueList.size() > 0">
+				exam_seq in
+				<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+					#{delValueList}
+				</foreach>
+			</when>
+			<otherwise>
+				exam_seq = #{detailsKey}
+			</otherwise>
+		</choose>
+		<if test="qstnSeq != null ">
+			and qstn_seq = #{qstnSeq}
+		</if>
+	</delete>
+	<!--
+         쿼리명 : EXGExamMapper.deleteExamExmplDtl
+         설  명 : 보기 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.10   김학규       최초생성
+    -->
+	<delete id="deleteExamExmplDtl" parameterType="EXGExamExmplDtlDTO">
+		delete /* EXGExamMapper.deleteExamExmplDtl */
+		from
+		ex_exam_exmpl_dtl
+		where
+		<choose>
+			<when test="delValueList != null and delValueList.size() > 0">
+				exam_seq in
+				<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+					#{delValueList}
+				</foreach>
+			</when>
+			<otherwise>
+				exam_seq = #{detailsKey}
+			</otherwise>
+		</choose>
+		<if test="qstnSeq != null ">
+			and qstn_seq = #{qstnSeq}
+		</if>
+		<if test="exmplSeq != null ">
+			and exmpl_seq = #{exmplSeq}
+		</if>
+	</delete>
+
+	<!--
+		쿼리명 : EXGExamMapper.getExamEdctnEpisdCnt
+		설  명 : 평가지 교육 매핑 여부
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getExamEdctnEpisdCnt" parameterType="EXGExamMstSearchDTO" resultType="java.lang.Integer">
+		select /* EXGExamMapper.getExamEdctnEpisdCnt */
+			count(*) recp_cnt
+		from ex_exam_mst exam_mst join ed_edctn_episd_mst episd_mst
+		on episd_mst.exam_seq = exam_mst.exam_seq
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					exam_mst.exam_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					exam_mst.exam_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+	<!--
+         쿼리명 : EXGExamMapper.insertExamMst
+         설  명 : 교육 시험 마스터 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<insert id="insertExamMst" parameterType="EXGExamMstInsertDTO">
+		insert /* EXGExamMapper.insertExamMst */ into ex_exam_mst
+		(
+			  exam_seq
+			, titl
+			, smmry_cntn
+			, exps_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+			(
+			  #{examSeq}
+			, #{titl}
+			, #{smmryCntn}
+			, #{expsYn}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+	</insert>
+
+	<!--
+         쿼리명 : EXGExamMapper.insertExamQstnDtl
+         설  명 : 교육 시험 질문 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<insert id="insertExamQstnDtl" parameterType="EXGExamMstInsertDTO">
+		insert /* EXGExamMapper.insertExamQstnDtl */ into ex_exam_qstn_dtl
+		(
+			  exam_seq
+			, qstn_seq
+			, srv_type_cd
+			, qstn_nm
+			, qstn_ord
+			, scord
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		<foreach collection="exExamQstnDtlList" item="list" index="index" separator=" , " open="" close=";">
+			(
+			  #{list.examSeq}
+			, #{list.qstnSeq}
+			, #{list.srvTypeCd}
+			, #{list.qstnNm}
+			, #{list.qstnOrd}
+			, #{list.scord}
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+			)
+		</foreach>
+	</insert>
+
+	<!--
+         쿼리명 : EXGExamMapper.insertExamExmplDtl
+         설  명 : 교육 시험 보기 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<insert id="insertExamExmplDtl" parameterType="EXGExamQstnDtlDTO">
+		insert /* EXGExamMapper.insertExamExmplDtl */ into ex_exam_exmpl_dtl
+		(
+			  exam_seq
+			, qstn_seq
+			, exmpl_seq
+			, exmpl_nm
+			, exmpl_ord
+			, cansw_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		<foreach collection="exExamExmplDtlList" item="list" index="index" separator=" , " open="" close=";">
+			(
+			  #{list.examSeq}
+			, #{list.qstnSeq}
+			, #{list.exmplSeq}
+			, #{list.exmplNm}
+			, #{list.exmplOrd}
+			, #{list.canswYn}
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+			)
+		</foreach>
+	</insert>
+
+	<!--
+		쿼리명 : EXGExamMapper.selectExamDtl
+		설  명 : 교육 시험 마스터 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="selectExamDtl" parameterType="EXGExamMstSearchDTO" resultType="EXGExamMstInsertDTO">
+		select /* EXGExamMapper.selectExamDtl */
+			 exam_seq
+			,titl
+			,smmry_cntn
+			,exps_yn
+			,reg_id
+			,reg_dtm
+			,mod_id
+			,mod_dtm
+		from ex_exam_mst
+		where exam_seq = #{detailsKey}
+	</select>
+
+	<!--
+		쿼리명 : EXGExamMapper.getExamQstnDtlList
+		설  명 : 교육 시험 마스터 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getExamQstnDtlList" parameterType="EXGExamMstSearchDTO" resultType="EXGExamQstnDtlDTO">
+		select /* EXGExamMapper.getExamQstnDtlList */
+			  exam_seq
+			 ,qstn_seq
+			 ,srv_type_cd
+			 ,qstn_nm
+			 ,qstn_ord
+			 ,scord
+			 ,reg_id
+			 ,reg_dtm
+			 ,mod_id
+			 ,mod_dtm
+		from ex_exam_qstn_dtl
+		where exam_seq = #{detailsKey}
+		order by qstn_ord asc
+	</select>
+
+	<!--
+		쿼리명 : EXGExamMapper.getExamExmplDtlList
+		설  명 : 교육 시험 마스터 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getExamExmplDtlList" parameterType="EXGExamMstSearchDTO" resultType="EXGExamExmplDtlDTO">
+		select /* EXGExamMapper.getExamExmplDtlList */
+			  exam_seq
+			 ,qstn_seq
+			 ,exmpl_seq
+			 ,exmpl_nm
+			 ,exmpl_ord
+			 ,cansw_yn
+			 ,reg_id
+			 ,reg_dtm
+			 ,mod_id
+			 ,mod_dtm
+		from ex_exam_exmpl_dtl
+		where exam_seq = #{detailsKey}
+		order by qstn_seq asc, exmpl_ord asc
+	</select>
+
+	<!--
+		쿼리명 : EXGExamMapper.updateExamMstExpnYn
+		설  명 : 교육에 매핑된 평가지는 사용여부만 수정
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<update id="updateExamMstExpnYn" parameterType="EXGExamMstInsertDTO">
+		update /* EXGExamMapper.updateExamMstExpnYn */ ex_exam_mst
+			set
+			    exps_yn = #{expsYn}
+		where
+			exam_seq = #{detailsKey}
+	</update>
+
+	<!--
+		쿼리명 : EXGExamMapper.updateExamMst
+		설  명 : 평가지 수정
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<update id="updateExamMst" parameterType="EXGExamMstInsertDTO">
+		update /* EXGExamMapper.updateExamMst */ ex_exam_mst
+		set
+			 exps_yn = #{expsYn}
+		    ,titl = #{titl}
+		    ,smmry_cntn = #{smmryCntn}
+		    ,mod_id = #{modId}
+		    ,mod_ip = #{modIp}
+		    ,mod_dtm = now()
+		where
+			exam_seq = #{detailsKey}
+	</update>
+
+	<!--
+         쿼리명 : EXGExamMapper.updateExamQstnDtlSequence
+         설  명 : 교육 시험 질문 시퀀스 변경(For문을 돌려야해서 한번에 업데이트)
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<update id="updateSequenceGgn" parameterType="COEgovSeqDTO">
+		update /* EXGExamMapper.updateExamQstnDtlSequence */ co_seq_mst
+		set
+			NEXT_ID = #{netxId}
+		where
+			TABLE_NAME = #{tableName}
+	</update>
+
+</mapper>
+
+
