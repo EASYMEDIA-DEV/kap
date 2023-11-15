@@ -222,7 +222,7 @@ var cmmCtrl = (function(){
 	};
 
 	/* Ajax Param Data */
-	var fn_ajax_param_data = function(callbackAjax, url, paramData, dataType, loading, sync)
+	var fn_ajax_param_data = function(callbackAjax, url, paramData, dataType, loading, sync, type)
 	{
 		if (typeof dataType == "undefined") {
 			dataType = "json";
@@ -231,9 +231,13 @@ var cmmCtrl = (function(){
 		if (typeof sync == "undefined") {
 			sync = true;
 		}
+
+		if (typeof type == "undefined") {
+			type = "POST";
+		}
 		jQuery.ajax({
 			url : url,
-			type : "POST",
+			type : type,
 			timeout: 300000,
 			data : paramData,
 			dataType : dataType,

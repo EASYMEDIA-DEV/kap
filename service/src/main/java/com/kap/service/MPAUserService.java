@@ -69,5 +69,4 @@ public interface MPAUserService {
      * 문의 리스트 조회
      */
     MPAInqrDto selectInqrList(MPAInqrDto mpaUserDto) throws Exception;
-
 }

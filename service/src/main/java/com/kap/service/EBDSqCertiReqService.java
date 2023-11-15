@@ -1,7 +1,12 @@
 package com.kap.service;
 
+import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
+import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * SQ평가원 자격증 신청관리
@@ -19,4 +24,19 @@ public interface EBDSqCertiReqService {
      * 리스트 조회
     */
     public EBDSqCertiSearchDTO selectList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
+
+    /**
+     * 리스트 조회
+     */
+    public EBDEdctnEdisdDTO selectView(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
+
+    /**
+     * 선수과목 수료 목록 조회
+     */
+    public List<EBDPrePrcsDTO> getPrePrcsList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
+
+    /**
+     * 수정
+     */
+    public int update(COUserCmpnDto cOUserCmpnDto, EBDEdctnEdisdDTO eBDEdctnEdisdDTO, HttpServletRequest request) throws Exception;
 }

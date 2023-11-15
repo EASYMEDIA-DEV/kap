@@ -25,6 +25,7 @@
 		<link rel="stylesheet" href="/bootstrap/vendor/dropzone/dist/dropzone.css" />
     	<link rel="stylesheet" href="/bootstrap/vendor/jquery.bootgrid/dist/jquery.bootgrid.css" />
 		<link rel="stylesheet" href="/bootstrap/vendor/loaders.css/loaders.css" />
+		<link rel="stylesheet" href="/bootstrap/vendor/material-colors/dist/colors.css" />
     	<link rel="stylesheet" href="/bootstrap/css/app.css" />
 		<link rel="stylesheet" href="/common/kendo/css/kendo.common.min.css" />
 		<link rel="stylesheet" href="/common/kendo/css/kendo.bootstrap.min.css" />

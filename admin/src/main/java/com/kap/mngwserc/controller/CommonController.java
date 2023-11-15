@@ -1,17 +1,17 @@
 package com.kap.mngwserc.controller;
 
 import com.kap.common.utility.CODateUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.MPPwdInitDto;
-import com.kap.core.dto.TaxInfoResDto;
 import com.kap.service.COMailService;
 import com.kap.service.CommonService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
 @Controller
