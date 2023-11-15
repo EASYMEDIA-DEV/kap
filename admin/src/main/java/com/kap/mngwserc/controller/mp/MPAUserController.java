@@ -198,7 +198,7 @@ public class MPAUserController {
     }
 
     /**
-     * 일반 사용자 수정
+     * 사용자 수정
      */
     @PostMapping(value="/update")
     public String insertPartsCompany(MPAUserDto mpaUserDto ,

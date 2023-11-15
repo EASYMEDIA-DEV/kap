@@ -34,7 +34,7 @@ public interface CommonMapper {
 
     String selectSeqNum(String tableNm);
 
-    String updateSeq(String tableNm);
+    void updateSeq(String tableNm);
 
     int updatePwdInit(MPPwdInitDto mpPwdInitDto);
 

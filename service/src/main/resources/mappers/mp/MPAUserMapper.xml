@@ -321,7 +321,11 @@
 -->
     <update id="updateUserDtl" parameterType="MPAUserDto">
         update co_mem_mst
-            set zipcode =#{zipcode}
+            set work_bsnm_no =#{workBsnmNo}
+              , dept_cd =#{deptCd}
+              , dept_dtl_nm =#{deptDtlNm}
+              , zipcode =#{zipcode}
+              , pstn_cd =#{pstnCd}
               , bsc_addr =#{bscAddr}
               , dtl_addr =#{dtlAddr}
               , tel_no =#{telNo}

@@ -95,21 +95,13 @@ var exports = {
         btnPwdInit : {
                 event : {
                     click : function() {
-                        //if (confirm(msgCtrl.getMsg("confirm.co.coa.pwdInit")))
-                        //{
-                        $formObj.find("input[name='id']").val(jQuery(this).data("id"));
-                        cmmCtrl.frmAjax(function (data){
-                            if(parseInt(data.respCd, 0) > 0)
-                            {
+                        if (confirm(msgCtrl.getMsg("confirm.co.coa.pwdInit")))
+                        {
+                            $formObj.find("input[name='id']").val(jQuery(this).data("id"));
+                            cmmCtrl.frmAjax(function (data){
                                 alert(msgCtrl.getMsg("success.co.coa.pwdInit"));
-                            }
-                            else
-                            {
-                                alert(msgCtrl.getMsg("fail.act"));
-                            }
-                        }, "/mngwserc/co/coa/pwd-init", $formObj, "post", "json", true);
-
-                        //}
+                            }, "/mngwserc/comm/pwd-init", $formObj, "post", "json", true);
+                        }
                     }
                 }
             },
@@ -217,7 +209,7 @@ var exports = {
             async : {
                 use : true,
                 func : function (){
-                    var actionUrl = "/mngwserc/mp/mpa/as";
+                    var actionUrl = "/mngwserc/mp/mpa/update";
                     // var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
                     cmmCtrl.frmAjax(function(data){
                         if(data.respCnt >=1) {
