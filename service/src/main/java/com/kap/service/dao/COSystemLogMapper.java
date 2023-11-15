@@ -37,4 +37,10 @@ public interface COSystemLogMapper {
      * 시스템 쿼리 로그 등록
      */
     public int logInsertSysQuery(COSystemLogDTO cOSystemLogDTO);
+
+    /**
+     * 관리자 인증번호 로그 등록
+     */
+    public int logInsertCrtfnNo(COSystemLogDTO cOSystemLogDTO);
+
 }

@@ -10,7 +10,6 @@
             <!-- CSRF KEY -->
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="lgnSsnId" value="${rtnData.lgnSsnId}">
-
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
             <!-- 페이징 버튼 사이즈 -->
@@ -31,7 +30,7 @@
                     <tr>
                         <th scope="row" class="bg-gray-lighter">아이디</th>
                         <td>${rtnInfo.id}</td>
-                        <th scope="row" class="bg-gray-lighter">성명</th>
+                        <th scope="row" class="bg-gray-lighter">이름</th>
                         <td>${rtnInfo.name}</td>
                     </tr>
                     <tr>

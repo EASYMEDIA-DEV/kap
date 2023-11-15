@@ -17,7 +17,7 @@ import java.util.List;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2023.11.02  관리자 객체         최초 생성
+ *   2023.11.02  교육과정 객체         최초 생성
  * </pre>
  */
 @Getter
@@ -107,7 +107,8 @@ public class EBACouseDTO extends BaseDTO  {
     //노출여부
     private String expsYn;
 
-
+    //복사여부
+    private String copyYn = "N";
 
 
 
@@ -120,6 +121,23 @@ public class EBACouseDTO extends BaseDTO  {
     //사용여부
     private List<EBACouseDTO> list;
 
-    private List<String> useYnList;
+    private List<String> ctgryCdList;
+
+    private List<String> stduyMthdCdList;
+
+    private List<String> edctnSeqList;
+
+
+
+    private List<String> expsYnList;
+
+
+    private String sqnm;
+    private String sqscore;
+
+
+
+
+
 
 }

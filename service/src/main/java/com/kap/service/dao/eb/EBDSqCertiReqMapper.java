@@ -1,8 +1,7 @@
 package com.kap.service.dao.eb;
 
 import com.kap.core.dto.COEgovSeqDTO;
-import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
-import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
+import com.kap.core.dto.eb.ebd.*;
 import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
@@ -41,4 +40,18 @@ public interface EBDSqCertiReqMapper {
      */
     public int getListCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
 
+    /**
+     * 상세 조회
+     */
+    public EBDEdctnEdisdDTO selectView(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
+
+    /**
+     * 선수과목 수료 목록 조회
+     */
+    public List<EBDPrePrcsDTO> getPrePrcsList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
+
+    /**
+     * 수정
+     */
+    public int update(EBDEdctnEdisdDTO eBDEdctnEdisdDTO);
 }

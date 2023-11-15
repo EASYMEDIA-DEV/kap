@@ -17,69 +17,104 @@
              , reg_dtm
              , mod_dtm
              , mem_cd
+             , work_bsnm_no
              , mod_name
-          from ( select mem.mem_seq
-                      , mem.id
-                      , mem.name
-                      , mem.hp_no
-                      , mem.email
-                      , mem.reg_dtm
-                      , mem.mod_dtm
-                      , mem.mem_cd
-                      , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
-                             when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
+             , cmpn_nm
+             , size_cd_nm
+             , ctgry_cd_nm
+             , gndr
+             , tel_no
+             , zipcode
+             , bsc_addr
+             , dtl_addr
+             , ntfy_sms_rcv_yn
+             , ntfy_email_rcv_yn
+           from ( select mem.mem_seq
+                       , mem.id
+                       , mem.name
+                       , mem.hp_no
+                       , mem.email
+                       , mem.reg_dtm
+                       , mem.mod_dtm
+                       , mem.gndr
+                       , mem.mem_cd
+                       , mem.work_bsnm_no
+                       , mem.ntfy_sms_rcv_yn
+                       , mem.ntfy_email_rcv_yn
+                       , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
+                              when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
                                 else null end as mod_name
-                  from co_mem_mst mem
-                    inner join ( select mem_mod_seq
-                                      , mem_seq
-                                      , mod_cd
-                                      , reg_id
-                                    from co_mem_mod_log
-                                      where ( mem_mod_seq
-                                            , mem_seq)
-                                        in ( select max(mem_mod_seq)
-                                                  , mem_seq
-                                               from co_mem_mod_log
-                                                 group by mem_seq
-                                           )
-                                  ) mst
-                     on mem.mem_seq = mst.mem_seq ) as ma
-                <include refid="selectUserListWhereSql" />
-                        order by
-                            ma.reg_dtm desc
-                <if test="excelYn != 'Y'.toString() ">
+                      , cmpn_mst.cmpn_nm
+                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd ) as size_cd_nm
+                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
+                      , cmpn_mst.ctgry_cd
+                      , mem.tel_no
+                      , mem.zipcode
+                      , mem.bsc_addr
+                      , mem.dtl_addr
+                     from co_mem_mst mem
+                      inner join ( select mem_mod_seq
+                                        , mem_seq
+                                        , mod_cd
+                                        , reg_id
+                                      from co_mem_mod_log
+                                        where ( mem_mod_seq
+                                              , mem_seq)
+                                         in ( select max(mem_mod_seq)
+                                                   , mem_seq
+                                                 from co_mem_mod_log
+                                                   group by mem_seq ) ) mst
+                       on mem.mem_seq = mst.mem_seq
+                        left outer join co_mem_cmpn_rel cmpn_rel
+                          on mem.mem_seq = cmpn_rel.mem_seq
+                           and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                        left outer join cp_cmpn_mst cmpn_mst
+                          on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no) as ma
+                        <include refid="selectUserListWhereSql" />
+                            order by ma.reg_dtm desc
+                        <if test="excelYn != 'Y'.toString() ">
                             limit   #{firstIndex}, #{recordCountPerPage}
-                </if>
+                        </if>
     </select>
 
     <select id="selectUserListCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
         select count(*)
-          from ( select mem.mem_seq
-                      , mem.id
-                      , mem.name
-                      , mem.hp_no
-                      , mem.email
-                      , mem.reg_dtm
-                      , mem.mod_dtm
-                      , mem.mem_cd
-                      , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
-                             when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
-                            else null end as mod_name
+          from (select mem.mem_seq
+                     , mem.id
+                     , mem.name
+                     , mem.hp_no
+                     , mem.email
+                     , mem.reg_dtm
+                     , mem.mod_dtm
+                     , mem.mem_cd
+                     , mem.work_bsnm_no
+                     , mem.gndr
+                     , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
+                            when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
+                             else null end as mod_name
+                     , cmpn_mst.cmpn_nm
+                     , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd ) as size_cd_nm
+                     , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
+                     , cmpn_mst.ctgry_cd
                     from co_mem_mst mem
-                        inner join ( select mem_mod_seq
-                                          , mem_seq
-                                          , mod_cd
-                                          , reg_id
-                                       from co_mem_mod_log
-                                        where ( mem_mod_seq
-                                               , mem_seq)
-                                         in ( select max(mem_mod_seq)
-                                                   , mem_seq
-                                               from co_mem_mod_log
-                                                group by mem_seq )
-                                    ) mst
-                            on mem.mem_seq = mst.mem_seq ) as ma
-        <include refid="selectUserListWhereSql" />
+                     inner join ( select mem_mod_seq
+                                       , mem_seq
+                                       , mod_cd
+                                       , reg_id
+                                     from co_mem_mod_log
+                                       where ( mem_mod_seq
+                                             , mem_seq)
+                                        in ( select max(mem_mod_seq)
+                                                  , mem_seq
+                                                from co_mem_mod_log
+                                                 group by mem_seq ) ) mst
+                      on mem.mem_seq = mst.mem_seq
+                       left outer join co_mem_cmpn_rel cmpn_rel
+                        on mem.mem_seq = cmpn_rel.mem_seq
+                         and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                        left outer join cp_cmpn_mst cmpn_mst
+                          on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no ) as ma
+                        <include refid="selectUserListWhereSql" />
 	</select>
 
     <!--
@@ -108,7 +143,13 @@
                     and ma.mod_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                 </if>
             </if>
-
+            <if test="ctgryCdList != null and ctgryCdList.size() > 0">
+                and (
+                <foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="" close="" separator=" or ">
+                    ma.ctgry_cd = #{ctgryCdList}
+                </foreach>
+                )
+            </if>
             <if test="q != null and q != ''.toString() ">
                 <choose>
                     <when test="f == 1">
@@ -126,6 +167,12 @@
                     <when test="f == 5">
                         and (ma.mod_name like concat('%', #{q}, '%') )
                     </when>
+                    <when test="f == 6">
+                        and (ma.cmpn_nm like concat('%', #{q}, '%') )
+                    </when>
+                    <when test="f == 7">
+                        and (ma.work_bsnm_no like concat('%', #{q}, '%') )
+                    </when>
                     <otherwise>
                         and
                         (
@@ -138,6 +185,10 @@
                         ma.email like concat('%', #{q}, '%')
                         or
                         ma.mod_name like concat('%', #{q}, '%')
+                        or
+                        ma.cmpn_nm like concat('%', #{q}, '%')
+                        or
+                        ma.work_bsnm_no like concat('%', #{q}, '%')
                         )
                     </otherwise>
                 </choose>
@@ -163,6 +214,8 @@
              , mem.mod_dtm
              , mem.last_lgn_dtm
              , mem.mem_cd
+             , cmpn_mst.cmpn_nm
+             , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
              , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
                     when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
                     else null end as mod_name
@@ -180,6 +233,11 @@
                                                      group by mem_seq )
                     ) mst
                         on mem.mem_seq = mst.mem_seq
+                    left outer join co_mem_cmpn_rel cmpn_rel
+                                    on mem.mem_seq = cmpn_rel.mem_seq
+                                        and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                    left outer join cp_cmpn_mst cmpn_mst
+                                    on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
                 where mem.mem_seq = #{detailsKey}
     </select>
 
@@ -208,6 +266,12 @@
                  , mem.ntfy_email_rcv_chng_dtm
                  , mem.ntfy_email_rcv_yn
                  , mem.mem_cd
+                 , mem.work_bsnm_no
+                 , cmpn_mst.cmpn_nm
+                 , cmpn_mst.ctgry_cd
+                 , mem.dept_cd
+                 , mem.dept_dtl_nm
+                 , mem.pstn_cd
                  , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
                         when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
                         else null end as mod_name
@@ -225,6 +289,11 @@
                                                  group by mem_seq )
                                 ) mst
                         on mem.mem_seq = mst.mem_seq
+                     left outer join co_mem_cmpn_rel cmpn_rel
+                                     on mem.mem_seq = cmpn_rel.mem_seq
+                                         and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                     left outer join cp_cmpn_mst cmpn_mst
+                                     on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
                  where mem.mem_seq = #{detailsKey}
     </select>
 
@@ -252,7 +321,11 @@
 -->
     <update id="updateUserDtl" parameterType="MPAUserDto">
         update co_mem_mst
-            set zipcode =#{zipcode}
+            set work_bsnm_no =#{workBsnmNo}
+              , dept_cd =#{deptCd}
+              , dept_dtl_nm =#{deptDtlNm}
+              , zipcode =#{zipcode}
+              , pstn_cd =#{pstnCd}
               , bsc_addr =#{bscAddr}
               , dtl_addr =#{dtlAddr}
               , tel_no =#{telNo}
@@ -264,13 +337,6 @@
               , mod_dtm = now()
             where id =#{id}
     </update>
-
-    <select id="selectSeqNum" parameterType="MPAUserDto" resultType="java.lang.String">
-        SELECT /* SMDAPsnIfMapper.selectSeqNum */
-            NEXT_ID
-        FROM CO_SEQ_MST
-        WHERE TABLE_NM = #{tableNm}
-    </select>
 
     <!--
         쿼리명 : insertUserDtlHistory.insertUserDtlHistory
@@ -308,7 +374,7 @@
                       , dept_cd
                       , pstn_cd
                       , tel_no
-                      , bsnm_no
+                      , work_bsnm_no
                       , ntfy_sms_rcv_yn
                       , ntfy_email_rcv_yn
                       , #{regIp}
@@ -394,9 +460,9 @@
                     else null end as inqr_stts
             from bd_qa_mst qa_mst
              inner join bd_qa_ctgry_dtl ctgry_dtl
-              on qa_mst.qa_seq = ctgry_dtl
+              on qa_mst.qa_seq = ctgry_dtl.qa_seq
              left outer join bd_qa_rply_dtl rply_dtl
-              on inqr_mst.qa_seq  = rply_dtl.qa_seq
+               on ctgry_dtl.qa_seq  = rply_dtl.qa_seq
                where qa_mst.mem_seq =#{detailsKey}
                 order by qa_mst.qa_seq desc
                  limit   #{firstIndex}, #{recordCountPerPage}
@@ -413,9 +479,9 @@
         select count(*)
         from bd_qa_mst qa_mst
                  inner join bd_qa_ctgry_dtl ctgry_dtl
-                            on qa_mst.qa_seq = ctgry_dtl
+                    on qa_mst.qa_seq = ctgry_dtl.qa_seq
                  left outer join bd_qa_rply_dtl rply_dtl
-                                 on inqr_mst.qa_seq  = rply_dtl.qa_seq
+                   on ctgry_dtl.qa_seq  = rply_dtl.qa_seq
         where qa_mst.mem_seq =#{detailsKey}
     </select>
 

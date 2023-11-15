@@ -59,6 +59,16 @@ public class COSystemLogDTO extends BaseDTO {
     //쿼리 내용
     private String quryCntn;
 
+
+    //관리자 인증번호 순번
+    private int admCrtfnSeq;
+
+    //관리자 순번
+    private int admSeq;
+
+    //인증번호
+    private int crtfnNo;
+
     //조회
     private List<COSystemLogDTO> list;
 

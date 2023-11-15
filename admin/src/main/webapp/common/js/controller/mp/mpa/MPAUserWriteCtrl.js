@@ -21,6 +21,7 @@ var exports = {
         cmmCtrl.frmAjax(function(respObj) {
             ctrl.obj.find("#tab1").html(respObj);
         }, "/mngwserc/mp/mpa/dtl", $formObj, "POST", "html",'',false);
+
     }
 
     var tabTwo = function () {
@@ -92,21 +93,13 @@ var exports = {
         btnPwdInit : {
                 event : {
                     click : function() {
-                        //if (confirm(msgCtrl.getMsg("confirm.co.coa.pwdInit")))
-                        //{
+                        if (confirm(msgCtrl.getMsg("confirm.co.coa.pwdInit")))
+                        {
                         $formObj.find("input[name='id']").val(jQuery(this).data("id"));
                         cmmCtrl.frmAjax(function (data){
-                            if(parseInt(data.respCd, 0) > 0)
-                            {
                                 alert(msgCtrl.getMsg("success.co.coa.pwdInit"));
-                            }
-                            else
-                            {
-                                alert(msgCtrl.getMsg("fail.act"));
-                            }
-                        }, "/mngwserc/co/coa/pwd-init", $formObj, "post", "json", true);
-
-                        //}
+                        }, "/mngwserc/comm/pwd-init", $formObj, "post", "json", true);
+                        }
                     }
                 }
             },

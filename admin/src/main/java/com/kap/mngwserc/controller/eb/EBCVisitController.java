@@ -1,7 +1,9 @@
-package com.kap.mngwserc.controller.em;
+package com.kap.mngwserc.controller.eb;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.SMCMnPopDTO;
 import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.SMCMnPopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,13 +18,13 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <pre>
- * 교육차수관리를 위한 Controller
+ * 교육과정관리를 위한 Controller
  * </pre>
  *
- * @ClassName		: EBBSessionController.java
- * @Description		: 교육차수관리를 위한 Controller
+ * @ClassName		: EBACouseController.java
+ * @Description		: 교육과정관리를 위한 Controller
  * @author 김학규
- * @since 2023.11.02
+ * @since 2023.09.21
  * @version 1.0
  * @see
  * @Modification Information
@@ -35,9 +37,11 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/eb/ebb")
-public class EBBSessionController {
+@RequestMapping(value="/mngwserc/eb/ebc")
+public class EBCVisitController {
 
+    /** 서비스 **/
+    public final SMCMnPopService smPopService;
 
     /**
      *  교육과정관리 목록으로 이동한다.
@@ -45,9 +49,7 @@ public class EBBSessionController {
     @GetMapping(value="/list")
     public String getMnPopListPage(ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-
-
-        return "mngwserc/em/emb/EMBSessionList.admin";
+        return "mngwserc/em/ema/EMAEduCouseList.admin";
     }
 
     /**
@@ -59,7 +61,6 @@ public class EBBSessionController {
         try
         {
 
-
         }
         catch (Exception e)
         {
@@ -69,9 +70,8 @@ public class EBBSessionController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/eb/ebb/EBBSessionListAjax";
+        return "mngwserc/sm/smc/SMCMnPopListAjax";
     }
-
 
 }
 

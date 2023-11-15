@@ -36,4 +36,6 @@ public class EBDSqCertiSearchDTO extends BaseDTO {
     private List<String> issueCdList;
     @Schema(title = "리스트")
     private List<EBDSqCertiListDTO> list;
+    @Schema(title = "조회 회원 순번")
+    private Integer memSeq;
 }

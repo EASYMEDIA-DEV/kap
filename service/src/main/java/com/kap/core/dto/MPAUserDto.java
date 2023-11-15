@@ -34,21 +34,16 @@ public class MPAUserDto extends BaseDTO {
 
     private String memCd;                   //회원코드
 
-    @MaskRequired(type="ID")
     private String id;                      //아이디
 
-    @MaskRequired(type="NAME")
     private String name;                    //이름
 
-    @MaskRequired(type="BIRTH")
     private String birth;                   //생일
 
     private String gndr;                    //성별
 
-    @MaskRequired(type="PH")
     private String hpNo;                    //휴대번호
 
-    @MaskRequired(type="EMAIL")
     private String email;                   //이메일
 
     private String telNo;                   //전화번호
@@ -86,4 +81,23 @@ public class MPAUserDto extends BaseDTO {
     private String tableNm;
 
     private int modSeq;
+
+    private String pstnCd; //   //직급코드
+
+    private String deptCd; //   // 부서코드
+
+    private String deptDtlNm;  //부서상세명
+    private String cmpnNm;          //회사명
+
+    private String sizeCdNm;        //회사 사이즈
+
+    private String ctgryCdNm;       //구분
+
+    private String ctgryCd; //      //구분 코드
+
+    private String workBsnmNo;          //사업자 코드
+
+    private List<String> ctgryCdList; // 카테고리 구분
+
+
 }

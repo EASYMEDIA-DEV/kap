@@ -45,7 +45,7 @@ public interface MPAUserMapper {
 
     int insertUserDtlHistory(MPAUserDto mpaUserDto);
 
-    String selectSeqNum(MPAUserDto mpaUserDto);
+
 
     List<MPAAttctnDto> selectAttcntList(MPAAttctnDto mpaAttctnDto);
 

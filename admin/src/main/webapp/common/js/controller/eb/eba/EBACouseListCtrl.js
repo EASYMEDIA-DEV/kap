@@ -14,6 +14,52 @@ define(["ezCtrl"], function(ezCtrl) {
 	var $formObj = ctrl.obj.find("form").eq(0);
 	var $excelObj = ctrl.obj.parent().find(".excel-down");
 
+
+	//var 선택삭제
+	var delCallback = function(obj){
+
+		var frmDataObj    = $(obj).closest("form");
+		var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
+		var delType = frmDataObj.data("delType");
+		if (delActCnt > 0)
+		{
+			// 계정은 최고 관리자 및 본인 계정은 삭제 불가
+			if(confirm(msgCtrl.getMsg("confirm.del")))
+			{
+				//삭제 전송
+				cmmCtrl.frmAjax(function(respObj){
+					if(respObj != undefined && respObj.respCnt > 0){
+						var msg = msgCtrl.getMsg("success.del.target.none");
+						if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
+							msg = msgCtrl.getMsg("success.del.target." + delType);
+						}
+						alert(msg);
+						$formObj.find("#btnSearch").click();
+					}
+					else{
+						alert(msgCtrl.getMsg("fail.act"));
+					}
+				}, "./delete", frmDataObj, "POST", "json");
+			}
+
+		}
+		else
+		{
+			if(typeof delType!= "undefined")
+			{
+				alert(msgCtrl.getMsg("fail.del.target." + frmDataObj.data("delType")));
+			}
+			else
+			{
+				alert(msgCtrl.getMsg("fail.target"));
+			}
+
+			return;
+		}
+
+	}
+
+
 	// 목록 조회
 	var search = function (page){
 		//data로 치환해주어야한다.
@@ -46,23 +92,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
 		ctrl.obj.find("#cdListContainer").html(cdList);
 
-		/*for(var i =0; i<detailList.length; i++){
-			var detail = detailList[i];
-
-			var cd = detail.cd;
-			var cdNm = detail.cdNm;
-
-			var tempHtml = "";
-
-			tempHtml = +"<label className=\"checkbox-inline c-checkbox\">";
-			tempHtml = +"<input type=\"checkbox\" className=\"checkboxSingle\" value=\""+cd+"\"  />";
-			tempHtml = +"<span className=\"ion-checkmark-round\"></span>"+cdNm+"</label>";
-
-		}*/
-
-
-		console.log(tempHtml);
-
 		$(".detailCdList").html(tempHtml);
 
 
@@ -81,6 +110,60 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
+			btnCopy : {
+				event :{
+					click : function() {
+
+
+						var valList = jQuery("input[name='delValueList']:checked");
+
+						//여러개 체크 할 경우
+						if(valList.length>1){
+							alert("복사는 1개의 게시물만 가능합니다.");
+							return false;
+							//과정이 없는경우
+						}else if(valList.length == 0){
+							alert("복사할 과정을 선택해주세요.");
+							return false;
+						}
+						//복사
+						$("#copyYn").val("Y");
+						valList.closest("tr").find("td:eq(2) > a").trigger("click")
+					}
+				}
+			},
+			btnEdDelete : {
+				event : {
+					click : function() {
+
+						var $this = this;
+
+						var delList = new Array();
+						$("#listContainer").find("input:checkbox[name='delValueList']:checked").each(function(){
+							delList.push($(this).val());
+						})
+						var seqObj = {};
+						seqObj['edctnSeqList'] = delList;
+						cmmCtrl.jsonAjax(function(data){
+							var rtn = JSON.parse(data);
+							if(rtn.respCnt>0){
+								console.log('회차가 등록된 게시물이 존재하여 삭제 할 수 없습니다.');
+							}else{
+								console.log('등록된 회차 없음');
+								delCallback($this);
+							}
+
+
+						}, "./deleteChk", seqObj, "text");
+
+						//delCallback(this);
+
+
+					}
+				}
+			},
+
+
 		},
 		classname : {
 

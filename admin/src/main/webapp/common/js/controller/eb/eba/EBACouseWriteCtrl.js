@@ -78,7 +78,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						search(1);
 					}
 				}
-			},
+			}
 		},
 		classname : {
 

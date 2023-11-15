@@ -5,6 +5,7 @@ import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.*;
 import com.kap.service.*;
 import com.kap.service.dao.COAAdmMapper;
+import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.COLgnMapper;
 import com.kap.service.dao.eb.EBACouseMapper;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,8 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestAttributes;
@@ -55,7 +58,17 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 	private final COSeqGnrService cOSeqGnrService;
 
-	String tableNm = "EBA_SEQ";
+	//파일 서비스
+	private final COFileService cOFileService;
+	// DAO
+	private final COFileMapper cOFileMapper;
+	//파일 업로드 위치
+	@Value("${app.file.upload-path}")
+	private String fileUploadPath;
+
+	/* 교육과정마스터 시퀀스 */
+	private final EgovIdGnrService edctnMstIdgen;
+
 
 	/**
 	 * 교육과정 목록을 조회한다
@@ -86,7 +99,16 @@ public class EBACouseServiceImpl implements EBACouseService {
 	{
 		HashMap<String, Object> map = new HashMap();
 
-		map.put("rtnData", eBACouseMapper.selectCouseDtl(eBACouseDTO));
+		EBACouseDTO ebaDto = eBACouseMapper.selectCouseDtl(eBACouseDTO);
+
+		if(eBACouseDTO.getCopyYn().equals("Y")){
+
+			//int tempSeq = setFile(ebaDto, "thnlFileSeq");
+
+		}
+
+
+		map.put("rtnData", ebaDto);
 
 		map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
 
@@ -104,11 +126,18 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 		int respCnt = 0;
 
-		eBACouseDTO.setEdctnSeq(cOSeqGnrService.selectSeq(tableNm));
+		//파일 처리
+		HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBACouseDTO.getFileList());
+
+		eBACouseDTO.setThnlFileSeq(fileSeqMap.get("thnlFileSeq"));
+
+
+		int firstEdctnMstIdgen = edctnMstIdgen.getNextIntegerId();
+
+		eBACouseDTO.setEdctnSeq(firstEdctnMstIdgen);
 
 		//교육과정 등록
-		eBACouseMapper.insertCouse(eBACouseDTO);
-
+		respCnt = eBACouseMapper.insertCouse(eBACouseDTO);
 
 		String temp = eBACouseDTO.getTargetCd();
 
@@ -136,10 +165,40 @@ public class EBACouseServiceImpl implements EBACouseService {
 	{
 		int respCnt = 0;
 
-		//respCnt = eBACouseMapper.updateCouse(eBACouseDTO);
+		//파일 처리
+		HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBACouseDTO.getFileList());
+
+		eBACouseDTO.setThnlFileSeq(fileSeqMap.get("thnlFileSeq"));
+
+		respCnt = eBACouseMapper.updateCouse(eBACouseDTO);
+
+		eBACouseMapper.deleteCouseTrgt(eBACouseDTO);
+
+		String temp = eBACouseDTO.getTargetCd();
+
+		String[] tempArray =temp.split(",");
+
+		for(String a : tempArray){
+			eBACouseDTO.setTargetCd(a);
+			eBACouseMapper.insertCouseTrgt(eBACouseDTO);
+		}
 
 		return respCnt;
 	}
+
+
+
+	/**
+	 * 현재 등록된 교육과정에 종속된 교육차수 체크
+	 */
+	@Transactional
+	public int selectEpisdListChk(EBACouseDTO eBACouseDTO) throws Exception
+	{
+		int actCnt = eBACouseMapper.selectEpisdListChk(eBACouseDTO);
+
+		return actCnt;
+	}
+
 
 	/**
 	 * 교육과정을 삭제한다.
@@ -148,7 +207,11 @@ public class EBACouseServiceImpl implements EBACouseService {
 	public int deleteCouse(EBACouseDTO eBACouseDTO) throws Exception
 	{
 		int actCnt = 0;
-		//actCnt = eBACouseMapper.deleteCouse(eBACouseDTO);
+
+
+		eBACouseMapper.deleteCouseTrgt(eBACouseDTO);
+
+		actCnt = eBACouseMapper.deleteCouseDtl(eBACouseDTO);
 
 		return actCnt;
 	}

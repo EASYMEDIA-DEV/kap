@@ -1,12 +1,10 @@
 package com.kap.mngwserc.controller;
 
 import com.kap.common.utility.CODateUtil;
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COLoginDTO;
-import com.kap.core.dto.COMailDTO;
-import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.*;
 import com.kap.service.COLgnService;
 import com.kap.service.COMailService;
+import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +48,10 @@ public class COLgnController {
     private final COLgnService cOLgnService;
 	//이메일 발송
 	private final COMailService cOMailService;
+
+	//이메일 발송
+	private final COSystemLogService cOSystemLogService;
+
 	/**
 	 * ROOT 페이지
 	 */
@@ -281,8 +283,8 @@ public class COLgnController {
 				rtnCOLoginDTO = cOLgnService.actionLogin(cOLoginDTO, request);
 				COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
 
-				if(serverStatus.equals("real") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
-					System.out.println("@@탄다");
+				if(serverStatus.equals("dev") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
+
 					//이메일 발송
 					COMailDTO cOMailDTO = new COMailDTO();
 					cOMailDTO.setSubject("["+siteName+"] 인증번호 안내");
@@ -302,6 +304,16 @@ public class COLgnController {
 					String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
 					cOMailDTO.setField2(field2);
 					cOMailService.sendMail(cOMailDTO, "COAAdmLgnEmail.html");
+
+					//인증번호 로그 등록
+					COSystemLogDTO cOSystemLogDTO = new COSystemLogDTO();
+					cOSystemLogDTO.setAdmSeq(lgnCOAAdmDTO.getAdmSeq());
+
+					cOSystemLogDTO.setCrtfnNo(Integer.parseInt(authNum));
+					cOSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());
+					cOSystemLogDTO.setRegIp("127.0.0.1");
+
+					cOSystemLogService.logInsertCrtfnNo(cOSystemLogDTO);
 
 
 					RequestContextHolder.getRequestAttributes().setAttribute("tmpEmailAuthNum", authNum, RequestAttributes.SCOPE_SESSION);
@@ -391,6 +403,7 @@ public class COLgnController {
 						session.invalidate();
 						cOLoginDTO.setRdctUrl( lgnCOAAdmDTO.getRdctUrl() );
 						RequestContextHolder.getRequestAttributes().setAttribute("loginMap", lgnCOAAdmDTO, RequestAttributes.SCOPE_SESSION);
+
 					}
 					else{
 						cOLoginDTO.setRespCd("9999");
