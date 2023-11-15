@@ -1,4 +1,4 @@
-package com.kap.mngwserc.controller.em;
+package com.kap.mngwserc.controller.eb;
 
 import com.kap.core.dto.*;
 import com.kap.service.COCodeService;

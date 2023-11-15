@@ -1,6 +1,9 @@
-package com.kap.mngwserc.controller.em;
+package com.kap.mngwserc.controller.eb;
 
+import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.SMCMnPopDTO;
+import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.SMCMnPopService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -8,6 +11,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,17 +37,18 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/eb/ebf")
-public class EBFEduRoomController {
+@RequestMapping(value="/mngwserc/eb/ebc")
+public class EBCVisitController {
 
+    /** 서비스 **/
+    public final SMCMnPopService smPopService;
 
     /**
      *  교육과정관리 목록으로 이동한다.
      */
     @GetMapping(value="/list")
-    public String getMnPopListPage(SMCMnPopDTO SMCMnPopDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getMnPopListPage(ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-
         return "mngwserc/em/ema/EMAEduCouseList.admin";
     }
 
@@ -50,7 +56,7 @@ public class EBFEduRoomController {
      * 교육과정관리 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
-    public String selectPopListPageAjax(SMCMnPopDTO SMCMnPopDTO, ModelMap modelMap) throws Exception
+    public String selectPopListPageAjax(ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -66,7 +72,6 @@ public class EBFEduRoomController {
         }
         return "mngwserc/sm/smc/SMCMnPopListAjax";
     }
-
 
 }
 
