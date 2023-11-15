@@ -13,8 +13,8 @@
                 <td>${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td>${list.orgnFileNm}</td>
                 <td>https://127.0.0.1:9012/${list.phyPath}</td>
-                <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
                 <td>${ list.regName }</td>
+                <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
             </tr>
         </c:forEach>
 
