@@ -456,9 +456,9 @@
                     else null end as inqr_stts
             from bd_qa_mst qa_mst
              inner join bd_qa_ctgry_dtl ctgry_dtl
-              on qa_mst.qa_seq = ctgry_dtl
+              on qa_mst.qa_seq = ctgry_dtl.qa_seq
              left outer join bd_qa_rply_dtl rply_dtl
-              on inqr_mst.qa_seq  = rply_dtl.qa_seq
+               on ctgry_dtl.qa_seq  = rply_dtl.qa_seq
                where qa_mst.mem_seq =#{detailsKey}
                 order by qa_mst.qa_seq desc
                  limit   #{firstIndex}, #{recordCountPerPage}
@@ -475,9 +475,9 @@
         select count(*)
         from bd_qa_mst qa_mst
                  inner join bd_qa_ctgry_dtl ctgry_dtl
-                            on qa_mst.qa_seq = ctgry_dtl
+                    on qa_mst.qa_seq = ctgry_dtl.qa_seq
                  left outer join bd_qa_rply_dtl rply_dtl
-                                 on inqr_mst.qa_seq  = rply_dtl.qa_seq
+                   on ctgry_dtl.qa_seq  = rply_dtl.qa_seq
         where qa_mst.mem_seq =#{detailsKey}
     </select>
 
