@@ -131,9 +131,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			//폼 데이터 처리
 			//cmmCtrl.setFormData($formObj);
 
-
-			$(".classType").trigger("change");
-
 			var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
 
 			/* Editor Setting */

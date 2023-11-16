@@ -9,8 +9,11 @@
         2023.11.15    김학규       최초생성
     -->
 	<select id="selectEpisdList" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		SELECT /*EBACouseMapper.selectEpisdList*/
-				parnt_seq
+		SELECT /*EBBEpisdMapper.selectEpisdList*/
+				edctn_seq
+				, episd_year
+				, episd_ord
+				, parnt_seq
 				, (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
 				, ctgry_cd
 				, ctgry_cd_nm
@@ -26,24 +29,24 @@
 				, accs_strt_dtm
 				, accs_end_dtm
 				, case
-				when NOW() <![CDATA[<]]> accs_strt_dtm then '접수대기'
-				when NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm then '접수중'
-				when NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND 30 <![CDATA[>=]]> fxnum_cnt) then '마감'
-				END  AS accs_status_nm
+					when NOW() <![CDATA[<]]> accs_strt_dtm then '접수대기'
+					when NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm then '접수중'
+					when NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt <![CDATA[>=]]> fxnum_cnt) then '마감'
+					END  AS accs_status_nm
 				, edctn_strt_dtm
 				, edctn_end_dtm
 				, case
-				when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-				when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
-				when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
+					when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+					when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+					when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
 				END  AS edctn_status_nm
 				, (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
 				, (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
 				, case when isttr_cnt <![CDATA[<=]]>1 then ''
-				when isttr_cnt <![CDATA[>]]>  1 then isttr_cnt-1
-				END isttr_out_cnt
+					when isttr_cnt <![CDATA[>]]>  1 then isttr_cnt-1
+					END isttr_out_cnt
 				, fxnum_cnt
-				, 30 AS 'acc_cnt'
+				, accs_cnt
 				, rcrmt_mthd_cd
 				, rcrmt_mthd_cd_nm
 				, pic_nm
@@ -56,9 +59,11 @@
 				, reg_dtm
 				, mod_id
 				, mod_name
+		     	, mod_dtm
 				, exps_yn
 			FROM (SELECT
-				b.ctgry_cd
+				b.edctn_seq
+				, b.ctgry_cd
 				, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
 				, (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
 				, b.nm
@@ -78,6 +83,7 @@
 				, (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
 				, a.fxnum_cnt
 				, a.fxnum_impsb_yn
+				, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord) AS accs_cnt
 				, a.rcrmt_mthd_cd
 				, (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
 				, a.pic_nm
@@ -114,7 +120,8 @@
 		SELECT /*EBACouseMapper.selectEpisdListCnt*/
 			count(*)
 		FROM (SELECT
-		b.ctgry_cd
+		b.edctn_seq
+		, b.ctgry_cd
 		, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
 		, (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
 		, b.nm
@@ -134,6 +141,7 @@
 		, (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
 		, a.fxnum_cnt
 		, a.fxnum_impsb_yn
+		, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord) AS accs_cnt
 		, a.rcrmt_mthd_cd
 		, (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
 		, a.pic_nm
@@ -192,6 +200,15 @@
 				)
 			</if>
 
+			<!-- 학습일 -->
+			<if test="stduyDdCd != null and stduyDdCd != ''">
+				AND stduy_dd_cd = #{stduyDdCd}
+			</if>
+			<!-- 학습시간 -->
+			<if test="stduyTimeCd != null and stduyTimeCd != ''">
+				AND stduy_time_cd = #{stduyTimeCd}
+			</if>
+
 			<!-- 모집방식 -->
 			<if test="rcrmtMthdCdList != null and rcrmtMthdCdList.size() > 0">
 				and (
@@ -202,33 +219,46 @@
 			</if>
 
 			<!--접수상태-->
-			<!--<if test="accStatusList != null and accStatusList.size() > 0">
+			<if test="accsStatusList != null and accsStatusList.size() > 0">
 				and (
-				<foreach collection="accStatusList" item="accStatusList" index="index" open="" close="" separator=" or ">
-
+				<foreach collection="accsStatusList" item="accsStatusList" index="index" open="" close="" separator=" or ">
 					<choose>
-						<if test="accStatusList == 1">&lt;!&ndash;접수대기&ndash;&gt;
-							NOW() <![CDATA[<]]> accs_strt_dtm
-						</if>
-						<if test="accStatusList == 2">&lt;!&ndash;접수중&ndash;&gt;
-							NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm
-						</if>
-						<if test="accStatusList == 3">&lt;!&ndash;마감&ndash;&gt;
-							NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND 30 <![CDATA[>=]]> fxnum_cnt)
-						</if>
-					</choose>
+						<when test="accsStatusList != null">
+							<if test="accsStatusList == 1"><!--접수대기-->
+								NOW() <![CDATA[<]]> accs_strt_dtm
+							</if>
+							<if test="accsStatusList == 2"><!--접수중-->
+								NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm
+							</if>
+							<if test="accsStatusList == 3"><!--마감-->
+								(NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt <![CDATA[>=]]> fxnum_cnt))
+							</if>
+						</when>
 
+					</choose>
 				</foreach>
 				)
-			</if>-->
-
-			<!-- 학습일 -->
-			<if test="stduyDdCd != null and stduyDdCd != ''">
-				AND stduy_dd_cd = #{stduyDdCd}
 			</if>
-			<!-- 학습시간 -->
-			<if test="stduyTimeCd != null and stduyTimeCd != ''">
-				AND stduy_time_cd = #{stduyTimeCd}
+
+			<!--접수상태-->
+			<if test="edctnStatusList != null and edctnStatusList.size() > 0">
+				and (
+				<foreach collection="edctnStatusList" item="edctnStatusList" index="index" open="" close="" separator=" or ">
+					<choose>
+						<when test="edctnStatusList != null">
+							<if test="edctnStatusList == 1"><!--접수대기-->
+								NOW() <![CDATA[<]]> edctn_strt_dtm
+							</if>
+							<if test="edctnStatusList == 2"><!--접수중-->
+								NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm
+							</if>
+							<if test="edctnStatusList == 3"><!--마감-->
+								(NOW() <![CDATA[>]]> edctn_end_dtm)
+							</if>
+						</when>
+					</choose>
+				</foreach>
+				)
 			</if>
 
 			<!--노출여부-->
@@ -279,67 +309,104 @@
      2023.11.02   김학규       최초생성
  	-->
 	<select id="selectEpisdDtl" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		SELECT /* EBBEpisdMapper.selectEpisdDtl */
+		SELECT /*EBBEpisdMapper.selectEpisdList*/
 			edctn_seq
-			 , nm
-		     , smmry_nm
-			 , itrdc_cntn
-			 , stduy_trgt_cntn
+			 , episd_year
+			 , episd_ord
 			 , parnt_seq
 			 , (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
 			 , ctgry_cd
 			 , ctgry_cd_nm
+			 , nm
 			 , stduy_mthd_cd
 			 , stduy_mthd_cd_nm
-			 , cmptn_stnd_cd
-		     , cmptn_jdgmt_cd
-		     , jdgmt_yn
 			 , stduy_dd_cd
 			 , stduy_dd_cd_nm
 			 , stduy_time_cd
 			 , stduy_time_cd_nm
-		     , stduy_supls_nm
-		     , cprtn_instt_nm
-		     , stduy_cntn
-		     , thnl_file_seq
+			 , episd_year
+			 , episd_ord
+			 , accs_strt_dtm
+			 , accs_end_dtm
+			 , case
+				   when NOW() <![CDATA[<]]> accs_strt_dtm then '접수대기'
+				   when NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm then '접수중'
+				   when NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt <![CDATA[>=]]> fxnum_cnt) then '마감'
+			END  AS accs_status_nm
+			 , edctn_strt_dtm
+			 , edctn_end_dtm
+			 , edctn_ntctn_file_seq
+			 , case
+				   when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+				   when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+				   when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
+			END  AS edctn_status_nm
+			 , (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
+			 , (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
+			 , case when isttr_cnt <![CDATA[<=]]>1 then ''
+					when isttr_cnt <![CDATA[>]]>  1 then isttr_cnt-1
+			END isttr_out_cnt
+			 , fxnum_cnt
+			 , accs_cnt
+			 , rcrmt_mthd_cd
+			 , rcrmt_mthd_cd_nm
+			 , pic_nm
+			 , pic_email
+			 , pic_tel_no
+			 , place_seq
+			 , place_nm
 			 , reg_id
 			 , reg_name
 			 , reg_dtm
 			 , mod_id
+			 , mod_name
 			 , exps_yn
-		FROM
-			(select
-				 edctn_seq
-				  , nm
-			      , smmry_nm
-				  , itrdc_cntn
-				  , stduy_trgt_cntn
-				  , a.ctgry_cd
-				  , (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
-				  , (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
-				  , stduy_mthd_cd
-				  , (select cd_nm from co_code_mst where cd=a.stduy_mthd_cd) as stduy_mthd_cd_nm
-				  , stduy_dd_cd
-				  , (select cd_nm from co_code_mst where cd=a.stduy_dd_cd) as stduy_dd_cd_nm
-				  , stduy_time_cd
-				  , (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as stduy_time_cd_nm
-			      , cmptn_stnd_cd
-				  , cmptn_jdgmt_cd
-				  , jdgmt_yn
-				  , stduy_supls_nm
-				  , cprtn_instt_nm
-				  , stduy_cntn
-				  , thnl_file_seq
-				  , reg_id
-				  , (select name from co_adm_mst where id = a.reg_id) as reg_name
-				  , reg_dtm
-				  , mod_id
-				  , exps_yn
-			 from
-				 ed_edctn_prcs_mst a) aa
+		FROM (SELECT
+				  b.edctn_seq
+				   , b.ctgry_cd
+				   , (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
+				   , (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
+				   , b.nm
+				   , b.stduy_mthd_cd
+				   , (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
+				   , b.stduy_dd_cd
+				   , (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) as stduy_dd_cd_nm
+				   , b.stduy_time_cd
+				   , (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm
+				   , a.episd_year
+				   , a.episd_ord
+				   , a.accs_strt_dtm
+				   , a.accs_end_dtm
+				   , a.edctn_strt_dtm
+				   , a.edctn_end_dtm
+		           , a.edctn_ntctn_file_seq
+				   , (SELECT min(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS min_isttr_seq
+				   , (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
+				   , a.fxnum_cnt
+				   , a.fxnum_impsb_yn
+				   , (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord) AS accs_cnt
+				   , a.rcrmt_mthd_cd
+				   , (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
+				   , a.pic_nm
+				   , a.pic_email
+				   , a.pic_tel_no
+				   , a.place_seq
+				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
+				   , a.reg_id
+				   , (select name from co_adm_mst where id = a.reg_id) as reg_name
+				   , a.reg_dtm
+				   , a.mod_id
+				   , (select name from co_adm_mst where id = a.reg_id) as mod_name
+				   , a.mod_dtm
+				   , a.exps_yn
+			  FROM ed_edctn_episd_mst a
+					   LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq) AA
 		where
 			edctn_seq = #{detailsKey}
+			and episd_year = #{episdYear}
+		    and episd_ord = #{episdOrd}
 	</select>
+
 
 
 	<!--
@@ -349,6 +416,136 @@
         ==========   ======    ==============
         2023.11.02   김학규       최초생성
     -->
+	<insert id="insertEpisd" parameterType="EBBEpisdDTO">
+		insert into /*EBBEpisdMapper.insertEpisd*/ ed_edctn_episd_mst (
+			edctn_seq
+			, episd_year
+			, episd_ord
+			, cbsn_cd
+			, accs_strt_dtm
+			, accs_end_dtm
+			, edctn_strt_dtm
+			, edctn_end_dtm
+			, fxnum_cnt
+			, fxnum_impsb_yn
+			, rcrmt_mthd_cd
+			, pic_nm
+			, pic_email
+			, pic_tel_no
+			, edctn_ntctn_file_seq
+			, place_seq
+			, srv_seq
+			, exam_seq
+			, cmptn_auto_yn
+			, exps_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+			) VALUES(
+				#{edctnSeq}
+				, #{episdYear}
+				, #{episdOrd}
+				, #{cbsnCd}
+				, #{accsStrtDtm}
+				, #{accsEndDtm}
+				, #{edctnStrtDtm}
+				, #{edctnEndDtm}
+				, #{fxnumCnt}
+				, #{fxnumImpsbYn}
+				, #{rcrmtMthdCd}
+				, #{picNm}
+				, #{picEmail}
+				, #{picTelNo}
+				, #{edctnNtctnFileSeq}
+				, #{placeSeq}
+				, #{srvSeq}
+				, #{examSeq}
+				, #{cmptnAutoYn}
+				, #{expsYn}
+				, #{regId}
+				, #{regIp}
+				, #{regDtm}
+				, #{modId}
+				, #{modIp}
+				, #{modDtm}
+			)
+	</insert>
+
+	<!--
+             쿼리명 : EBBEpisdMapper.insertIsttrRel
+             설  명 : 교육차수 - 교육강사관계를 등록한다
+              수정일     수정자       수정내용
+            ==========   ======    ==============
+            2023.11.02   김학규       최초생성
+        -->
+	<insert id="insertIsttrRel" parameterType="EBBEpisdDTO">
+		insert into /*EBBEpisdMapper.insertEpisd*/ ed_edctn_isttr_rel (
+			edctn_seq
+			, episd_ord
+			, isttr_seq
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		) VALUES(
+			#{edctnSeq}
+			, #{episdOrd}
+			, #{isttrSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{modId}
+			, #{modIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+             쿼리명 : EBBEpisdMapper.insertLctrDtl
+             설  명 : 교육차수 - 교육강의 상세를 등록한다
+              수정일     수정자       수정내용
+            ==========   ======    ==============
+            2023.11.02   김학규       최초생성
+        -->
+	<insert id="insertLctrDtl" parameterType="EBBEpisdDTO">
+		insert into /*EBBEpisdMapper.insertLctrDtl*/ ed_edctn_lctr_dtl (
+			edctn_seq
+			, episd_ord
+			, lctr_seq
+			, nm
+			, url
+			, time
+			, thnl_file_seq
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		) VALUES(
+			#{edctnSeq}
+			, #{episdOrd}
+			, #{lctrSeq}
+			, #{nm}
+			, #{url}
+			, #{time}
+			, #{thnlFileSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{modId}
+			, #{modIp}
+			, now()
+		)
+	</insert>
+
+
+
 
 
 	<!--

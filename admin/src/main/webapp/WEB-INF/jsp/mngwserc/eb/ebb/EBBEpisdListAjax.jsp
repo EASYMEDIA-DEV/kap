@@ -10,16 +10,16 @@
           </label>
         </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-        <td class="text-center">
-          <a href="javascript:" class="listView" data-details-key="${list.edctnSeq}">
-              ${list.prntCdNm} > ${list.ctgryCdNm}
-          </a>
-        </td><!--과정분류-->
+        <td class="text-center">${list.prntCdNm} > ${list.ctgryCdNm}</td><!--과정분류-->
         <td class="text-center">${list.nm}</td><!--과정명-->
         <td class="text-center">${list.stduyMthdCdNm}</td><!--학습방식-->
         <td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td><!--학습시간-->
         <td class="text-center">${list.episdYear}</td><!--년도-->
-        <td class="text-center">${list.episdOrd}</td><!--회차-->
+        <td class="text-center">
+          <a href="javascript:" class="listView" data-details-key="${list.edctnSeq}" data-episd-year="${list.episdYear}" data-episd-ord="${list.episdOrd}">
+              ${list.episdOrd}회차
+          </a>
+        </td><!--회차-->
         <td class="text-center">${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--접수기간-->
         <td class="text-center">${list.accsStatusNm}</td><!--접수상태-->
         <td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--교육기간-->
@@ -27,7 +27,7 @@
         <td class="text-center">${list.isttrName} <c:if test="${list.isttrOutCnt ne ''}">외 ${list.isttrOutCnt}명 </c:if></td><!--이름-->
         <td class="text-center">${list.ffltnNm} <c:if test="${list.fxnumCnt ne ''}">외 ${list.fxnumCnt}</c:if></td> <!--소속-->
         <td class="text-center">${list.fxnumCnt}</td><!--정원-->
-        <td class="text-center">${list.accCnt}</td><!--신청자수-->
+        <td class="text-center">${list.accsCnt}</td><!--신청자수-->
         <td class="text-center">${list.rcrmtMthdCdNm}</td><!--모집 방식-->
         <td class="text-center">${list.picNm}</td><!--담당자 이름-->
         <td class="text-center">${list.picEmail}</td><!--담당자 이메일-->
