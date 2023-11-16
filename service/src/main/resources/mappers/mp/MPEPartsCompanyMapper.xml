@@ -240,8 +240,7 @@
     <update id="updatePartsCompany" parameterType="MPEPartsCompanyDTO">
         UPDATE /* MPEPartsCompanyMapper.updatePartsCompany */ CP_CMPN_MST
         SET
-            BSNM_NO = #{bsnmNo}
-          , CMPN_NM = #{cmpnNm}
+            CMPN_NM = #{cmpnNm}
           , RPRSNT_NM = #{rprsntNm}
           , CMPN_NFRML_NM = #{cmpnNfrmlNm}
           , CMPN_CD = #{cmpnCd}
