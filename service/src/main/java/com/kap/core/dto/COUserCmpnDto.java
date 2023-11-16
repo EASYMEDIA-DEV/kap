@@ -67,32 +67,46 @@ public class COUserCmpnDto {
     @Schema(title = "부품사 명")
     private String cmpnNm;
     @Schema(title = "부품사 구분 코드")
+    @CheckOriginData
     private String cmpnCtgryCd;
     @Schema(title = "부품사 규모 코드")
+    @CheckOriginData
     private String cmpnSizeCd;
     @Schema(title = "부품사 대표자 명")
+    @CheckOriginData
     private String cmpnRprsntNm;
     @Schema(title = "부품사 설립 일자")
+    @CheckOriginData
     private String cmpnStbsmDt;
     @Schema(title = "부품사 전화 번호")
+    @CheckOriginData
     private String cmpnTelNo;
     @Schema(title = "부품사 우편 번호")
+    @CheckOriginData
     private String cmpnZipcode;
     @Schema(title = "부품사 기본 주소")
+    @CheckOriginData
     private String cmpnBscAddr;
     @Schema(title = "부품사 상세 주소")
+    @CheckOriginData
     private String cmpnDtlAddr;
     @Schema(title = "부품사 매출 금액")
+    @CheckOriginData
     private Integer cmpnSlsPmt;
     @Schema(title = "부품사 매출 연도")
+    @CheckOriginData
     private Integer cmpnSlsYear;
     @Schema(title = "부품사 직원수")
+    @CheckOriginData
     private Integer cmpnMpleCnt;
     @Schema(title = "부품사 주요 상품 1")
+    @CheckOriginData
     private String cmpnMjrPrdct1;
     @Schema(title = "부품사 주요 상품 2")
+    @CheckOriginData
     private String cmpnMjrPrdct2;
     @Schema(title = "부품사 주요 상품 3")
+    @CheckOriginData
     private String cmpnMjrPrdct3;
 
     @Schema(title = "코드 리스트")

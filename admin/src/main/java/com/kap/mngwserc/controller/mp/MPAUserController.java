@@ -1,10 +1,13 @@
 package com.kap.mngwserc.controller.mp;
 
+import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.*;
+import com.kap.service.COMailService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +41,19 @@ import java.util.ArrayList;
 public class MPAUserController {
 
     private final MPAUserService mpaUserService;
+
+    @Value("${app.site.name}")
+    private String siteName;
+    //사이트 웹 소스 URL
+    @Value("${app.user-domain}")
+    private String httpFrontUrl;
+    //사이트 관리자 URL
+    @Value("${app.admin-domain}")
+    private String httpAdmtUrl;
+
+    //이메일 발송
+    private final COMailService cOMailService;
+
     String tableNm = "MEM_MOD_SEQ";
 
     /**
@@ -85,7 +101,7 @@ public class MPAUserController {
     }
 
     /**
-     * 미래차공모전 리스트 조회
+     * 문의 내역 리스트 조회
      */
     @PostMapping(value = "/select-tab-three")
     public String selectUserListPageTabThreeAjax(MPAInqrDto mpaInqrDto ,
@@ -247,5 +263,58 @@ public class MPAUserController {
             }
             throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     * 비밀번호 초기화
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    @PostMapping(value="/pwd-init")
+    public String updatePwdInit(@RequestParam("id") String id) throws Exception
+    {
+
+        MPPwdInitDto mpPwdInitDto = new MPPwdInitDto();
+        int actCnt = 0;
+        try
+        {
+
+            mpPwdInitDto.setId(id);
+            actCnt = mpaUserService.updatePwdInit(mpPwdInitDto);
+
+
+
+            if (actCnt > 0)
+            {
+                //이메일 발송
+                COMailDTO cOMailDTO = new COMailDTO();
+                cOMailDTO.setSubject("["+siteName+"] 임시비밀번호 발급 안내");
+                cOMailDTO.setSiteName(siteName);
+                cOMailDTO.setHttpFrontUrl(httpFrontUrl);
+                cOMailDTO.setHttpAdmUrl(httpAdmtUrl);
+                cOMailDTO.setEmails(mpPwdInitDto.getEmail());
+                cOMailDTO.setField1(mpPwdInitDto.getPwd());
+                //인증요청일시
+                String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
+                cOMailDTO.setField2(field2);
+                if(mpPwdInitDto.getMemCd().equals("CO")) {
+                    cOMailDTO.setField3("일반 사용자");
+                } else if(mpPwdInitDto.getMemCd().equals("CP")) {
+                    cOMailDTO.setField3("부품 사회원");
+                }
+                cOMailService.sendMail(cOMailDTO, "UserPwdInit.html");
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+
     }
 }

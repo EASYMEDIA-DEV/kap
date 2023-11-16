@@ -1,6 +1,7 @@
 package com.kap.service.dao.mp;
 
 import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.MPBEduDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -28,4 +29,17 @@ import java.util.List;
 @Mapper
 public interface MPBMemberPartsSocietyMapper {
 
+    /**
+     * 교육 사업 현황 리스트
+     * @param mpbEduDto
+     * @return
+     */
+    List<MPBEduDto> selectEduList(MPBEduDto mpbEduDto);
+
+    /**
+     * 교육 사업 현황 cnt
+     * @param mpbEduDto
+     * @return
+     */
+    int selectEduListCnt(MPBEduDto mpbEduDto);
 }

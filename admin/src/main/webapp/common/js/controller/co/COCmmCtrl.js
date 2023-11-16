@@ -1593,21 +1593,6 @@ var cmmCtrl = (function(){
 		}).modal();
 	}
 
-	//부품사 검색 매핑
-	//getPartsCompanyLayerPop(function(data){data 객체를 받아서 처리});
-	var fn_parts_layer_pop = function(fnc){
-		$(".mpePartsCompanySrchLayer").one('show.bs.modal', function() {
-			// Add class for soft backdrop
-			$(".mpePartsCompanySrchLayer").find("#btnRefresh").click();
-			$(".mpePartsCompanySrchLayer").find("#btnSearch").click();
-		}).one('hidden.bs.modal', function() {
-			// Remove class for soft backdrop (if not will affect future modals)
-		}).one('choice', function(data, param) {
-			// Remove class for soft backdrop (if not will affect future modals)
-			fnc(param);
-		}).modal();
-	}
-
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1646,6 +1631,5 @@ var cmmCtrl = (function(){
 		jsonAjax : fn_json_ajax_data,
 		//교육 평가지 매핑
 		getExamLayerPop : fn_exam_layer_pop,
-		getPartsCompanyLayerPop : fn_parts_layer_pop,
 	}
 }());

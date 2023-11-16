@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -389,11 +390,8 @@ public class EBACouseController {
         return "EBACouseEpisdListAjax";
     }
 
-    /**
-     * 교육과정 분류 3뎁스 호출
-     */
-    @PostMapping(value = "/classTypeList")
-    public String classTypeList(COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+
+    /*public String classTypeList(COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         List<COCodeDTO> detailList = null;
         try
         {
@@ -410,10 +408,38 @@ public class EBACouseController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }*/
+
+
+
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping(value="/mngwserc/eb/eba")
+    public class COFileRestController {
+
+        private final COCodeService cOCodeService;
+
+        /**
+         * 교육과정 분류 3뎁스 호출
+         */
+        @PostMapping(value = "/classTypeList")
+        public List<COCodeDTO> classTypeList(@RequestBody COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+            List<COCodeDTO> detailList = null;
+            try
+            {
+                detailList = cOCodeService.getCdIdList(cOCodeDTO);
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return detailList;
+        }
+
     }
-
-
-
 
 
 

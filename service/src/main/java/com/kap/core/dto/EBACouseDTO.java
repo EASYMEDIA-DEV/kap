@@ -94,7 +94,7 @@ public class EBACouseDTO extends BaseDTO  {
     private String cmptnJdgmtCd;
 
     //평가여부
-    @Schema(title = "평가여부", example = "평가없음:N / 평가함:N")
+    @Schema(title = "평가여부(화면에서는 평가없음)", example = "평가없음 : N / 평가함 : Y")
     @Builder.Default
     private String jdgmtYn = "Y";
 

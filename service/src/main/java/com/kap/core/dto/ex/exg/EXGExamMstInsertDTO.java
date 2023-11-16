@@ -56,6 +56,7 @@ public class EXGExamMstInsertDTO extends BaseDTO {
 
     @Schema(title = "수정 가능 여부")
     @Hidden
+    @Builder.Default
     private boolean posbChg = true;
 
     @Schema(title = "등록IP", example = "127.0.0.1")
