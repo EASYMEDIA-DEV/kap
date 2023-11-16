@@ -74,7 +74,7 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     private String dtlAddr;
 
     // 매출금액
-    private String slsPmt;
+    private Integer slsPmt;
 
     // 매출년도
     private Integer slsYear;
