@@ -38,5 +38,10 @@ public interface COCommMapper {
     /**
      * 신청자 정보 변경
      */
-    public int updateMem(COUserCmpnDto cOUserCmpnDto);
+    public int updateUserDtl(COUserCmpnDto cOUserCmpnDto);
+
+    /**
+     * 신청자 회사 정보 변경
+     */
+    public int updatePartsCompany(COUserCmpnDto cOUserCmpnDto);
 }

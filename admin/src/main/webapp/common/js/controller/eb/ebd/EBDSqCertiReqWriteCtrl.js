@@ -1,12 +1,12 @@
-define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, ezVald, CodeMirror) {
+define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     "use strict";
     // set controller name
     var exports = {
         controller : "controller/eb/ebd/EBDSqCertiReqWriteCtrl"
     };
-    var $formObj = jQuery("#frmData");
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
+    var $formObj = ctrl.obj.find("form").first();
     // set model
     ctrl.model = {
         id : {
@@ -21,7 +21,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }
                     }
                 }
-            }
+            },
+            issueCd : {
+                event : {
+                    change : function() {
+                        if($(this).val() == "EBD_SQ_C"){
+                            ctrl.obj.find(".rtrnRsnContainer").show();
+                        }else{
+                            ctrl.obj.find(".rtrnRsnContainer").hide();
+                        }
+                    }
+                }
+            },
         },
         immediately : function(){
             // 유효성 검사
@@ -43,16 +54,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 async : {
                     use : true,
                     func : function (){
-                        if(confirm(msgCtrl.getMsg("confirm.sve"))){
-                            cmmCtrl.frmAjax(function(data){
-
-                            }, "./update", $formObj, "post")
-                        }
-                    }
-                },
-                msg : {
-                    empty : {
-                        text : " 입력해주세요."
+                        cmmCtrl.frmAjax(function(data){
+                            location.href = "./list";
+                        }, "./update", $formObj, "post")
                     }
                 }
             });

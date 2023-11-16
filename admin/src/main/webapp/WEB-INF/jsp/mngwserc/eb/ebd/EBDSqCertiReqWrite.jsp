@@ -6,7 +6,7 @@
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 상세/수정</h6>
     </div>
     <div class="card-body" data-controller="controller/eb/ebd/EBDSqCertiReqWriteCtrl">
-        <form class="form-horizontal" id="frmData" name="frmData" method="post" >
+        <form class="form-horizontal" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.examAppctnSeq}" />
             <input type="hidden" class="notRequired" id="gubun" name="gubun" value="${gubun}" />
@@ -205,7 +205,7 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold">SQ평가원 구분<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm" name="examCd">
+                        <select class="form-control input-sm" name="examCd" ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_R', '', 'disabled') }>
                             <c:forEach var="cdList" items="${cdDtlList.EBD_SQ_TP}" varStatus="status">
                                 <option value="${cdList.cd}" ${ kl:decode(rtnDto.examCd, cdList.cd, 'selected', '') }>
                                         ${cdList.cdNm}
@@ -217,9 +217,9 @@
             </fieldset>
             <fieldset class="">
                 <div class="form-group text-sm ">
-                    <label class="col-sm-2 control-label text-bold">발급상태<span class="star"> *</span></label>
+                    <label class="col-sm-2 control-label text-bold ">발급상태<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm" name="issueCd">
+                        <select class="form-control input-sm issueCd" name="issueCd" ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_R', '', 'disabled') }>
                             <c:forEach var="cdList" items="${cdDtlList.EBD_SQ}" varStatus="status">
                                 <option value="${cdList.cd}" ${ kl:decode(rtnDto.issueCd, cdList.cd, 'selected', '') }>
                                         ${cdList.cdNm}
@@ -230,11 +230,11 @@
                     <div class="col-sm-4 ">※ 발급상태 설정 후 수정이 불가능하오니 주의바랍니다.</div>
                 </div>
             </fieldset>
-            <fieldset class="last-child">
+            <fieldset class="last-child rtrnRsnContainer" style="display:none;">
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold">반려사유<span class="star"> *</span></label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control input-sm" name="rtrnRsn" value="${ rtnDto.rtrnRsn }" maxlength="100" title="반려사유" placeholder="반려사유 입력"  />
+                        <input type="text" class="form-control input-sm" name="rtrnRsn" value="${ rtnDto.rtrnRsn }" maxlength="100" title="반려사유" placeholder="반려사유 입력"  ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_R', '', 'readonly') } />
                     </div>
                 </div>
             </fieldset>

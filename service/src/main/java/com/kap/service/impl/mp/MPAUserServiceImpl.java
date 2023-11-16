@@ -1,6 +1,7 @@
 package com.kap.service.impl.mp;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.*;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
@@ -9,14 +10,18 @@ import com.kap.service.dao.cm.CommonMapper;
 import com.kap.service.dao.mp.MPAUserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.egovframe.rte.fdl.cmmn.exception.FdlException;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
+import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -50,6 +55,9 @@ public class MPAUserServiceImpl implements MPAUserService {
     private final COSystemLogService cOSystemLogService;
 
     private final CommonMapper commonMapper;
+
+
+    private final EgovIdGnrService memModSeqIdgen;
 
 
     /**
@@ -107,10 +115,9 @@ public class MPAUserServiceImpl implements MPAUserService {
     /**
      * 회원 수정
      */
-    public int updateUserDtl(MPAUserDto mpaUserDto) {
-        mpaUserDto.setModSeq(Integer.parseInt(commonMapper.selectSeqNum(mpaUserDto.getTableNm())));
+    public int updateUserDtl(MPAUserDto mpaUserDto) throws Exception {
+        mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
-        commonMapper.updateSeq(mpaUserDto.getTableNm());
         return mpaUserMapper.updateUserDtl(mpaUserDto);
     }
 
@@ -156,6 +163,39 @@ public class MPAUserServiceImpl implements MPAUserService {
 
         mpaInqrDto.setList( mpaInprDtos );
         return mpaInqrDto;
+    }
+
+    /**
+     * 비밀번호 변경
+     * @param mpPwdInitDto
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public int updatePwdInit(MPPwdInitDto mpPwdInitDto) throws Exception {
+        // 특수문자 포함하도록 변경
+        String password = RandomStringUtils.random(8, 0, 0, true, true, null, new SecureRandom()) + RandomStringUtils.random(2, 35, 64, false, false, null, new SecureRandom());
+        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+
+        // & < > : ; ? ' " 공백은 치환 -> !
+        password = password.replaceAll("[\\s&<>:;?']", "!");
+
+
+        MPPwdInitDto mpPwdInitDtos = mpaUserMapper.selectMemDtl(mpPwdInitDto);
+        mpPwdInitDto.setPwd(password);
+        mpPwdInitDto.setEmail(mpPwdInitDtos.getEmail());
+        mpPwdInitDto.setMemCd(mpPwdInitDtos.getMemCd());
+        mpPwdInitDto.setRegId( coaAdmDTO.getId() );
+        mpPwdInitDto.setRegIp( coaAdmDTO.getLoginIp() );
+        mpPwdInitDto.setModId( coaAdmDTO.getId() );
+        mpPwdInitDto.setModIp( coaAdmDTO.getLoginIp() );
+
+
+        mpPwdInitDto.setNewEncPwd(COSeedCipherUtil.encryptPassword(password, mpPwdInitDto.getId()));
+
+
+
+        return mpaUserMapper.updatePwdInit(mpPwdInitDto);
     }
 
 
