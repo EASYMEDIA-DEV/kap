@@ -217,6 +217,25 @@
 		ptcpt_mst.reg_dtm desc
 	</select>
 
+	<!--
+         쿼리명 : EBDSqCertiReqMapper.updateIssue
+         설  명 : 신청서 상태 변경
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<update id="updateIssue" parameterType="EBDEdctnEdisdDTO">
+		update /* EBDSqCertiReqMapper.updateIssue */ sq_exam_appctn_mst
+		set
+			exam_cd = #{examCd}
+		  , issue_cd = #{issueCd}
+		  , rtrn_rsn = #{rtrnRsn}
+		  , mod_id = #{modId}
+		  , mod_ip = #{modIp}
+		  , mod_dtm = now()
+		WHERE exam_appctn_seq = #{detailsKey}
+	</update>
+
 </mapper>
 
 

@@ -27,5 +27,5 @@ public interface COCommService {
     /**
      * 신청자, 부품사 정보 조회
      */
-    public int updateMemCmpnDtl(COUserCmpnDto cOUserCmpnDto, HttpServletRequest request) throws Exception;
+    public int setMemCmpnDtl(COUserCmpnDto cOUserCmpnDto, HttpServletRequest request) throws Exception;
 }

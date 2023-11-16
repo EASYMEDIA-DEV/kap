@@ -1,11 +1,13 @@
 package com.kap.service.impl.eb;
 
+import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.service.COCommService;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBDSqCertiReqService;
 import com.kap.service.dao.eb.EBDSqCertiReqMapper;
 import lombok.RequiredArgsConstructor;
@@ -71,7 +73,15 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
      * 수정
      */
     public int update(COUserCmpnDto cOUserCmpnDto, EBDEdctnEdisdDTO eBDEdctnEdisdDTO, HttpServletRequest request) throws Exception{
-        int respCnt = cOCommService.updateMemCmpnDtl(cOUserCmpnDto, request);
+        //회원 회사 정보 변경
+        int respCnt = cOCommService.setMemCmpnDtl(cOUserCmpnDto, request);
+        //평가 신청 정보 변경
+        if(!"EBD_SQ_R".equals( eBDEdctnEdisdDTO.getIssueCd() )){
+            //발급 대기일경우만 수정
+            eBDEdctnEdisdDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
+            eBDEdctnEdisdDTO.setModIp(CONetworkUtil.getMyIPaddress(request));
+            eBDSqCertiReqMapper.updateIssue( eBDEdctnEdisdDTO );
+        }
         return respCnt;
     }
 }
