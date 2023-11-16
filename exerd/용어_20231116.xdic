@@ -1,0 +1,766 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tm:TermDictionary xmlns:tm="http://exerd.com/term-model" version="1.1">
+  <term name="0" description="숫자 0" physicalName="0" physicalDescription="0"/>
+  <term name="1" description="숫자 1" physicalName="1" physicalDescription="1"/>
+  <term name="2" description="숫자 2" physicalName="2" physicalDescription="2"/>
+  <term name="3" description="숫자 3" physicalName="3" physicalDescription="3"/>
+  <term name="4" description="숫자 4" physicalName="4" physicalDescription="4"/>
+  <term name="5" description="숫자 5" physicalName="5" physicalDescription="5"/>
+  <term name="6" description="숫자 6" physicalName="6" physicalDescription="6"/>
+  <term name="7" description="숫자 7" physicalName="7" physicalDescription="7"/>
+  <term name="8" description="숫자 8" physicalName="8" physicalDescription="8"/>
+  <term name="9" description="숫자 9" physicalName="9" physicalDescription="9"/>
+  <term name="순번" description="차례대로 돌아가는 번. 또는 그런 순서." physicalName="seq" physicalDescription="sequence"/>
+  <term name="관리자" description="퓨터인터넷IT용어대사전 데이터 베이스, 서버 등에서 시스템 전체의 조정과 보수를 담당하며, 네트워크 시스템의 운영상 최고 권한을 갖는 자." physicalName="adm" physicalDescription="administrator"/>
+  <term name="ID" description="신분증(identity 또는 identification의 약어)" physicalName="id" physicalDescription="identify"/>
+  <term name="부서" description="기관, 기업, 조직 따위에서 일이나 사업의 체계에 따라 나뉘어 있는, 사무의 각 부문." physicalName="dept" physicalDescription="department"/>
+  <term name="명" description="[같은 말] 이름(1. 다른 것과 구별하기 위하여 사물, 단체, 현상 따위에 붙여서 부르는 말)." physicalName="nm" physicalDescription="name"/>
+  <term name="직급" description="직무의 등급. 일의 종류나 난이도, 책임도 따위가 상당히 비슷한 직위를 한데 묶은 최하위의 구분이다." physicalName="pstn" physicalDescription="position">
+    <synonyms>위치</synonyms>
+  </term>
+  <term name="이메일" description="전자우편" physicalName="email" physicalDescription="email"/>
+  <term name="번호" description="번호(number)" physicalName="no" physicalDescription="number"/>
+  <term name="전화" description="말소리를 전파나 전류로 바꾸었다가 다시 말소리로 환원" physicalName="tel" physicalDescription="telephone"/>
+  <term name="여부" description="그러함과 그러하지 아니함." physicalName="yn" physicalDescription="yn"/>
+  <term name="사용" description="일정한 목적이나 기능에 맞게 씀." physicalName="use" physicalDescription="use"/>
+  <term name="이름" description="[같은 말] 이름(1. 다른 것과 구별하기 위하여 사물, 단체, 현상 따위에 붙여서 부르는 말)." physicalName="name" physicalDescription="name">
+    <synonyms>성명</synonyms>
+  </term>
+  <term name="비밀번호" description="은행이나 컴퓨터 시스템 따위에서, 보안을 위하여 미리 약정하여 쓰는 개인 고유의 문자열." physicalName="pwd" physicalDescription="password"/>
+  <term name="임시" description="미리 정하지 아니하고 그때그때 필요에 따라 정한 것." physicalName="tmp" physicalDescription="temporaily"/>
+  <term name="최종" description="맨 나중." physicalName="last" physicalDescription="last">
+    <synonyms>마지막</synonyms>
+  </term>
+  <term name="로그인" description="&lt;컴퓨터> 다중 사용자 시스템을 사용하기 위하여 컴퓨터에 사용자임을 알리는 일." physicalName="lgn" physicalDescription="login"/>
+  <term name="일시" description="날짜와 시간을 아울러 이르는 말." physicalName="dtm" physicalDescription="date and time"/>
+  <term name="일자" description="날짜" physicalName="dt" physicalDescription="date"/>
+  <term name="시간" description="시간" physicalName="time" physicalDescription="time"/>
+  <term name="허용" description="허락하여 너그럽게 받아들임." physicalName="allw" physicalDescription="allow"/>
+  <term name="권한" description="어떤 사람이나 기관의 권리나 권력이 미치는 범위." physicalName="auth" physicalDescription="authority"/>
+  <term name="역할" description="자기가 마땅히 하여야 할 맡은 바 직책이나 임무" physicalName="role" physicalDescription="role"/>
+  <term name="실패" description="일을 잘못하여 뜻한 대로 되지 아니하거나 그르침." physicalName="fail" physicalDescription="fail"/>
+  <term name="횟수" description="(올바른 순서로 수를) 세다" physicalName="cnt" physicalDescription="count">
+    <synonyms>수</synonyms>
+    <synonyms>수량</synonyms>
+  </term>
+  <term name="IP" description="정보 제공자" physicalName="ip" physicalDescription="information provider"/>
+  <term name="등록" description="등록" physicalName="reg" physicalDescription="register"/>
+  <term name="수정" description="수정" physicalName="mod" physicalDescription="modify"/>
+  <term name="휴대전화" description="손에 들거나 몸에 지니고 다니면서 걸고 받을 수 있는 소형 무선 전화기." physicalName="hp" physicalDescription="hadnphone"/>
+  <term name="세션" description="(특정한 활동을 위한) 시간" physicalName="ssn" physicalDescription="session"/>
+  <term name="접근" description="서로 맞대어 이음." physicalName="accs" physicalDescription="access">
+    <synonyms>접속</synonyms>
+    <synonyms>접수</synonyms>
+  </term>
+  <term name="부모" description="아버지와 어머니를 아울러 이르는 말." physicalName="parnt" physicalDescription="parents"/>
+  <term name="순서" description="순서 있게 구분하여 벌여 나가는 관계. 또는 그 구분에 따라 각각에게 돌아오는 기회." physicalName="ord" physicalDescription="order">
+    <synonyms>차례</synonyms>
+    <synonyms>정렬</synonyms>
+  </term>
+  <term name="왼쪽" description="북쪽을 향하였을 때의 서쪽과 같은 쪽." physicalName="lft" physicalDescription="left">
+    <synonyms>왼편</synonyms>
+    <synonyms>좌</synonyms>
+    <synonyms>좌측</synonyms>
+  </term>
+  <term name="오른쪽" description="북쪽을 향하였을 때의 동쪽과 같은 쪽." physicalName="rht" physicalDescription="right">
+    <synonyms>오른편</synonyms>
+    <synonyms>우편</synonyms>
+  </term>
+  <term name="뎊스" description="(위 표면에서 아래쪽 바닥까지의) 깊이" physicalName="dpth" physicalDescription="depth">
+    <synonyms>깊이</synonyms>
+  </term>
+  <term name="구분" description="일정한 기준에 따라 전체를 몇 개로 갈라 나눔." physicalName="type" physicalDescription="type">
+    <synonyms>타입</synonyms>
+    <synonyms>유형</synonyms>
+  </term>
+  <term name="메뉴" description="(화면의) 메뉴" physicalName="menu" physicalDescription="menu"/>
+  <term name="값" description="가치, 의의" physicalName="val" physicalDescription="value">
+    <synonyms>가치</synonyms>
+    <synonyms>의의</synonyms>
+    <synonyms>벨류</synonyms>
+  </term>
+  <term name="키" description="키" physicalName="key" physicalDescription="key">
+    <synonyms>열쇠</synonyms>
+  </term>
+  <term name="레벨" description="(특정한 시간적 상황에 존재하는 양의) 정도" physicalName="lvl" physicalDescription="level">
+    <synonyms>수준</synonyms>
+  </term>
+  <term name="코드" description="&lt;컴퓨터> 정보를 나타내기 위한 기호 체계. 데이터 코드, 기능 코드, 오류를 검사하기 위한 검사 코드" physicalName="cd" physicalDescription="code"/>
+  <term name="사용자" description="&lt;컴퓨터> 컴퓨터를 사용하는 사람." physicalName="user" physicalDescription="user"/>
+  <term name="링크" description="유니폼 리소스 로케이터(uniform/universal resource locator: 인터넷상의 파일 주소)" physicalName="url" physicalDescription="url">
+    <synonyms>URL</synonyms>
+  </term>
+  <term name="새창" description="(컴퓨터의) window" physicalName="wnpp" physicalDescription="window">
+    <synonyms>윈도우</synonyms>
+  </term>
+  <term name="SEO" description="Search Engine Optimisation (SEO)" physicalName="seo" physicalDescription="search engine optimisation (SEO)"/>
+  <term name="키워드" description="&lt;컴퓨터> 데이터를 검색할 때에, 특정한 내용이 들어 있는 정보를 찾기 위하여 사용하는 단어나 기호." physicalName="kwrd" physicalDescription="key word"/>
+  <term name="내용" description="말, 글, 그림, 연출 따위의 모든 표현 매체 속에 들어 있는 것. 또는 그런 것들로 전하고자 하는 것." physicalName="cntn" physicalDescription="content"/>
+  <term name="설명" description="(~이 어떠한지에 대한) 서술" physicalName="dsc" physicalDescription="description">
+    <synonyms>서술</synonyms>
+  </term>
+  <term name="GNB" description="웹사이트에서 항상 표시되어있는 메뉴. 바(Bar),탭(Tab),드롭다운 메뉴등의 형태로 제공되며, 메인 메뉴라고 불리기도 한다." physicalName="gnb" physicalDescription="global navigation bar">
+    <synonyms>메인메뉴</synonyms>
+    <synonyms>메인 메뉴</synonyms>
+  </term>
+  <term name="시스템" description="&lt;컴퓨터> 필요한 기능을 실현하기 위하여 관련 요소를 어떤 법칙에 따라 조합한 집합체." physicalName="stm" physicalDescription="system">
+    <synonyms>제도</synonyms>
+    <synonyms>체계</synonyms>
+    <synonyms>장치</synonyms>
+  </term>
+  <term name="로그" description="컴퓨터에 있는 로그 파일에 자동적으로 기록되게 할 수 있다." physicalName="log" physicalDescription="log"/>
+  <term name="작업" description="작업. 프로세서로 처리되는 일의 최소 단위." physicalName="task" physicalDescription="task">
+    <synonyms>과업</synonyms>
+    <synonyms>과제</synonyms>
+  </term>
+  <term name="서비스" description="개인적으로 남을 위하여 돕거나 시중을 듦. ‘봉사3’, ‘접대1’로 순화." physicalName="srvc" physicalDescription="service"/>
+  <term name="함수" description="&lt;수학> 두 개의 변수 x, y 사이에서, x가 일정한 범위 내에서 값이 변하는 데 따라서 y의 값이 종속적으로 정해질 때, x에 대하여 y를 이르는 말. y가 x의 함수라는 것은 y=f(x)로 표시한다." physicalName="fnc" physicalDescription="function"/>
+  <term name="목표" description="목표,대상" physicalName="trgt" physicalDescription="target">
+    <synonyms>타겟</synonyms>
+    <synonyms>대상</synonyms>
+  </term>
+  <term name="기관" description="[같은 말] 정보기관(정보의 수집, 처리, 선전, 통제 따위에 관한 일을 전문적으로 맡아 하는 기관)." physicalName="instt" physicalDescription="institution"/>
+  <term name="처리" description="일이 처리되는 경로나 공정. ‘경과4’(經過), ‘과정3(過程)’, ‘절차2(節次)’로 순화." physicalName="prcs" physicalDescription="process">
+    <synonyms>공정</synonyms>
+    <synonyms>경과</synonyms>
+    <synonyms>과정</synonyms>
+    <synonyms>절차</synonyms>
+    <synonyms>프로세스</synonyms>
+  </term>
+  <term name="에러" description="&lt;컴퓨터> [같은 말] 오류3(誤謬)(3. 연산 처리 장치의 잘못된 동작이나 소프트웨어의 잘못 때문)" physicalName="err" physicalDescription="error">
+    <synonyms>오류</synonyms>
+  </term>
+  <term name="응답" description="부름이나 물음에 응하여 답함." physicalName="rspn" physicalDescription="response">
+    <synonyms>반응</synonyms>
+  </term>
+  <term name="요청" description="필요한 어떤 일이나 행동을 청함. 또는 그런 청." physicalName="rqst" physicalDescription="request">
+    <synonyms>의뢰</synonyms>
+  </term>
+  <term name="파일" description="하나의 단위로서 처리되는 서로 관련 있는 레코드의 집합." physicalName="file" physicalDescription="file"/>
+  <term name="첨부" description="안건이나 문서 따위를 덧붙임." physicalName="atch" physicalDescription="attach">
+    <synonyms>부첨</synonyms>
+  </term>
+  <term name="물리" description="물질의 물리적 성질과 그것이 나타내는 모든 현상," physicalName="phy" physicalDescription="physics"/>
+  <term name="경로" description="MS-DOS 등의 파일 시스템에서, 특정한 파일을 지정(指定)하기 위한 순서." physicalName="path" physicalDescription="path"/>
+  <term name="실제" description="거짓이나 상상이 아니고 현실적으로" physicalName="real" physicalDescription="reality">
+    <synonyms>사실</synonyms>
+    <synonyms>실질</synonyms>
+    <synonyms>실제로</synonyms>
+  </term>
+  <term name="저장" description="물건이나 재화 따위를 모아서 간수함." physicalName="save" physicalDescription="save"/>
+  <term name="확장자" description="&lt;컴퓨터> 파일 종류를 구별하기 위하여 파일명의 마침표 뒤에 붙이는 문자." physicalName="extn" physicalDescription="extension"/>
+  <term name="크기" description="(양이나 정도가 상당함을 나타내는) 크기" physicalName="size" physicalDescription="size">
+    <synonyms>사이즈</synonyms>
+    <synonyms>치수</synonyms>
+    <synonyms>규모</synonyms>
+  </term>
+  <term name="웹" description="월드 와이드 웹(동영상이나, 음성 따위의 각종 멀티미디어를 이용하는 인터넷을 이르는 말)." physicalName="web" physicalDescription="web"/>
+  <term name="테이블" description="물건을 올려놓기 위하여 책상 모양으로 만든 가구를 통틀어 이르는 말" physicalName="table" physicalDescription="table">
+    <synonyms>식탁</synonyms>
+    <synonyms>책상</synonyms>
+    <synonyms>상</synonyms>
+  </term>
+  <term name="다음" description="어떤 차례의 바로 뒤." physicalName="next" physicalDescription="next"/>
+  <term name="상태" description="사물ㆍ현상이 놓여 있는 모양이나 형편." physicalName="stts" physicalDescription="situation">
+    <synonyms>상황</synonyms>
+  </term>
+  <term name="샘플" description="(물질의 성분 테스트를 위한) 샘플" physicalName="smpl" physicalDescription="sample"/>
+  <term name="제목" description="제목" physicalName="titl" physicalDescription="title"/>
+  <term name="시작" description="시작" physicalName="strt" physicalDescription="start"/>
+  <term name="종료" description="종료" physicalName="end" physicalDescription="end">
+    <synonyms>마감</synonyms>
+    <synonyms>끝</synonyms>
+  </term>
+  <term name="회사" description="회사" physicalName="cmpn" physicalDescription="company">
+    <synonyms>기업</synonyms>
+  </term>
+  <term name="공통" description="둘 또는 그 이상의 여럿 사이에 두루 통하고 관계됨." physicalName="co" physicalDescription="common"/>
+  <term name="인증" description="&lt;법률> 어떠한 문서나 행위가 정당한 절차로 이루어졌다는 것을 공적 기관이 증명함." physicalName="crtfn" physicalDescription="certification"/>
+  <term name="암호화" description="통신할 내용을 일정한 체계에 따라 암호로 바꿈." physicalName="ncdg" physicalDescription="encryption"/>
+  <term name="복호화" description="부호화된 데이터를 인간이 알기 쉬운 모양으로 하기 위하여 또는 다음 단계의 처리를 위하여 번역함" physicalName="dcdg" physicalDescription="decryption"/>
+  <term name="암복호화" description="암호화, 복호화" physicalName="ndcdg" physicalDescription="encryption and decryption"/>
+  <term name="난수" description="특정한 배열 순서나 규칙을 가지지 않는, 연속적인 임의의 수." physicalName="rndm" physicalDescription="random numbers"/>
+  <term name="만료" description="기한이 다 차서 끝남." physicalName="xprtn" physicalDescription="expiration"/>
+  <term name="가격" description="물건이 지니고 있는 가치를 돈으로 나타낸 것." physicalName="pmt" physicalDescription="payment">
+    <synonyms>금액</synonyms>
+    <synonyms>지불금</synonyms>
+  </term>
+  <term name="회원" description="어떤 회를 구성하는 사람들." physicalName="mem" physicalDescription="member"/>
+  <term name="아카데미" description="대학, 연구소 등 학문ㆍ예술의 중심이 되는 단체나 기관을 통틀어 이르는 말." physicalName="acdmy" physicalDescription="academy"/>
+  <term name="프로그램" description="진행 계획이나 순서. ‘계획1’, ‘계획표’, ‘차례1’, ‘차례표’로 순화." physicalName="prgrm" physicalDescription="program"/>
+  <term name="참조" description="참고로 비교하고 대조하여 봄." physicalName="rfnc" physicalDescription="reference">
+    <synonyms>참고</synonyms>
+  </term>
+  <term name="보유" description="1. 소유, 소지, 보유   2. 소유물, 소지품   3. (공을) 차지함" physicalName="pssn" physicalDescription="prossession">
+    <synonyms>소지</synonyms>
+    <synonyms>소유</synonyms>
+  </term>
+  <term name="참가" description="어떤 일에 끼어들어 관계함." physicalName="ptcpt" physicalDescription="participation">
+    <synonyms>참여</synonyms>
+  </term>
+  <term name="CI" description="서비스 연계를 위한 웹사이트간 공동 식별자로 88byte 암호화 된 정보." physicalName="ci" physicalDescription="connecting information"/>
+  <term name="DI" description="회원가입 또는 글쓰기 권한을 얻고자하는 웹사이트 내에서만 유일하게 이용자를 식별할 수 있는 64byte 정보." physicalName="di" physicalDescription="duplication information"/>
+  <term name="관계" description="두 사람, 집단 국가 사이의 관계" physicalName="rel" physicalDescription="relation"/>
+  <term name="설정" description="컴퓨터의 환경을 설정하다" physicalName="cfg" physicalDescription="config"/>
+  <term name="게시판" description="게시판" physicalName="brd" physicalDescription="board"/>
+  <term name="게시글" description="게시글" physicalName="artcl" physicalDescription="articles"/>
+  <term name="댓글" description="댓글" physicalName="cmnt" physicalDescription="comment"/>
+  <term name="공지" description="(공식적으로) 알리다[통고/통지하다" physicalName="ntfy" physicalDescription="notify"/>
+  <term name="카테고리" description="카테고리" physicalName="ctgry" physicalDescription="category"/>
+  <term name="공개" description="공개" physicalName="open" physicalDescription="open">
+    <synonyms>열다</synonyms>
+  </term>
+  <term name="페이지" description="페이지, 쪽, 면; (종이 앞뒤 페이지를 가리켜) 장" physicalName="page" physicalDescription="page">
+    <synonyms>쪽</synonyms>
+    <synonyms>면</synonyms>
+    <synonyms>장</synonyms>
+  </term>
+  <term name="열" description="(사람사물들이 옆으로 늘어서 있는) 열[줄]" physicalName="row" physicalDescription="row">
+    <synonyms>줄</synonyms>
+  </term>
+  <term name="리스트" description="리스트, 목록, 명단, (항목숫자들을 적어 놓은) 일람표" physicalName="list" physicalDescription="list">
+    <synonyms>목록</synonyms>
+    <synonyms>명단</synonyms>
+  </term>
+  <term name="길이" description="길이" physicalName="lngth" physicalDescription="length"/>
+  <term name="새" description="새, 새로운(전에는 없던 것이 최근에 생겼거나 만들어졌거나 도입되었거나 한)" physicalName="new" physicalDescription="new">
+    <synonyms>새로운</synonyms>
+    <synonyms>신규</synonyms>
+  </term>
+  <term name="처음" description="처음의, 초기의" physicalName="init" physicalDescription="inital">
+    <synonyms>초기</synonyms>
+  </term>
+  <term name="상단" description="상단" physicalName="top" physicalDescription="top"/>
+  <term name="하단" description="하단" physicalName="btm" physicalDescription="bottom"/>
+  <term name="배너" description="배너" physicalName="bnnr" physicalDescription="banner">
+    <synonyms>현수막</synonyms>
+    <synonyms>플래카드</synonyms>
+  </term>
+  <term name="서브" description="[명사] 후보[교체] 선수 , [동사] (경기 중에 선수를) 교체하다" physicalName="sub" physicalDescription="sub">
+    <synonyms>후보</synonyms>
+    <synonyms>교체</synonyms>
+  </term>
+  <term name="썸네일" description="[명사] 섬네일(페이지 전체의 레이아웃을 검토할 수 있게 페이지 전체를 작게 줄여 화면에 띄운 것)" physicalName="thnl" physicalDescription="thumbnail">
+    <synonyms>섬네일</synonyms>
+  </term>
+  <term name="조회" description="읽다, …의 작품을 읽다; 음독하다, 낭독하다, 읽어서 들려주다" physicalName="read" physicalDescription="read">
+    <synonyms>읽다</synonyms>
+  </term>
+  <term name="메세지" description="(글말로 된) 전갈[메시지/성명]" physicalName="msg" physicalDescription="message">
+    <synonyms>메시지</synonyms>
+    <synonyms>전갈</synonyms>
+  </term>
+  <term name="포인트" description="중요한 사항이나 핵심. ‘강조2’, ‘강조점’, ‘효과1’로 순화." physicalName="pnt" physicalDescription="point"/>
+  <term name="취소" description="발표한 의사를 거두어들이거나 예정된 일을 없애 버림. ‘무름’으로 순화." physicalName="cncl" physicalDescription="cancel"/>
+  <term name="전송" description="전하여 보냄" physicalName="send" physicalDescription="send"/>
+  <term name="사원" description="회사에서 근무하는 사람)" physicalName="emp" physicalDescription="employee">
+    <synonyms>임직원</synonyms>
+  </term>
+  <term name="인터페이스" description="특정 언어로 작업을 수행하는 소프트웨어에서 사용자를 위해 제공하는 작업 언어 환경" physicalName="if" physicalDescription="interface"/>
+  <term name="사이트" description="사이트" physicalName="site" physicalDescription="site"/>
+  <term name="변경" description="다르게 바꾸어 새롭게 고침" physicalName="chng" physicalDescription="change">
+    <synonyms>변동</synonyms>
+  </term>
+  <term name="주기" description="같은 현상이나 특징이 한 번 나타나고부터 다음번 되풀이되기까지의 기간" physicalName="cycl" physicalDescription="cycle"/>
+  <term name="나중" description="얼마의 시간이 지난 뒤" physicalName="aftr" physicalDescription="after">
+    <synonyms>이후</synonyms>
+  </term>
+  <term name="휴면" description="쉬면서 거의 아무런 활동도 하지 아니함" physicalName="drmnt" physicalDescription="dormant"/>
+  <term name="상시" description="임시가 아닌 관례대로의 보통 때. ‘늘’로 순화" physicalName="odtm" physicalDescription="ordinary times"/>
+  <term name="새창" description="새로운 브라우저 창" physicalName="wnpp" physicalDescription="window popup"/>
+  <term name="답변" description="물음에 대하여 밝혀 대답함. 또는 그런 대답" physicalName="rply" physicalDescription="reply">
+    <synonyms>회신</synonyms>
+  </term>
+  <term name="담당자" description="어떤 일을 맡아서 하는 사람." physicalName="pic" physicalDescription="the person in charge"/>
+  <term name="수신" description="우편이나 전보 따위의 통신을 받음. 또는 그런 일" physicalName="rcv" physicalDescription="receive"/>
+  <term name="설문" description="조사를 하거나 통계 자료 따위를 얻기 위하여 어떤 주제에 대하여 문제를 내어 물음. 또는 그 문제" physicalName="srv" physicalDescription="survey">
+    <synonyms>조사</synonyms>
+  </term>
+  <term name="대상" description="어떤 일의 상대 또는 목표나 목적이 되는 것." physicalName="trgt" physicalDescription="target"/>
+  <term name="질문" description="알고자 하는 바를 얻기 위해 물음" physicalName="qstn" physicalDescription="question">
+    <synonyms>문항</synonyms>
+  </term>
+  <term name="그룹" description="함께 행동하거나 공통점이 있어 한데 묶일 수 있는 사람들의 무리" physicalName="grp" physicalDescription="group"/>
+  <term name="항목" description="하나의 일을 구성하고 있는 낱낱의 부분이나 갈래" physicalName="item" physicalDescription="item"/>
+  <term name="보기" description="어떤 사실을 설명하거나 증명하기 위하여 내세워 보이는 대표적인 것" physicalName="exmpl" physicalDescription="example"/>
+  <term name="랜덤" description="무작위의" physicalName="rnd" physicalDescription="random"/>
+  <term name="비주얼" description="시각의, 눈에 보이는" physicalName="vsl" physicalDescription="visual"/>
+  <term name="색" description="빛을 흡수하고 반사하는 결과로 나타나는 사물의 밝고 어두움이나 빨강, 파랑, 노랑 따위의 물리적 현상. 또는 그것을 나타내는 물감 따위의 안료." physicalName="color" physicalDescription="color">
+    <synonyms>색상</synonyms>
+  </term>
+  <term name="카피" description="광고의 문안." physicalName="copy" physicalDescription="copy"/>
+  <term name="버튼" description="조작 단추." physicalName="btn" physicalDescription="button"/>
+  <term name="헤드" description="꼭대기의,처음의." physicalName="head" physicalDescription="head"/>
+  <term name="알림" description="알림" physicalName="ntctn" physicalDescription="notification"/>
+  <term name="SMS" description="문자메세지" physicalName="sms" physicalDescription="sms"/>
+  <term name="카카오톡" description="카카오톡" physicalName="kkot" physicalDescription="kakaotalk"/>
+  <term name="활성" description="사회나 조직 등의 기능이 활발함. 또는 그러한 기능을 활발하게 함." physicalName="actvty" physicalDescription="activity"/>
+  <term name="기본" description="사물이나 현상, 이론, 시설 따위의 기초와 근본." physicalName="bsc" physicalDescription="basic"/>
+  <term name="폰트" description="구문 활자(歐文活字)에서 크기와 서체가 같은 한 벌. 대문자ㆍ소문자ㆍ구두점ㆍ숫자 따위가 있다." physicalName="font" physicalDescription="font"/>
+  <term name="굵기" description="사물의 둘레, 너비, 부피 따위의 큰 정도." physicalName="bold" physicalDescription="bold"/>
+  <term name="모바일" description="'움직일 수 있는'이라는 뜻으로, 이동성을 가진 것들을 총칭한다. 보통 휴대전화를 의미한다" physicalName="mbl" physicalDescription="mobile"/>
+  <term name="PC" description="개인이 이용하도록 만들어진 소형 컴퓨터" physicalName="pc" physicalDescription="pc"/>
+  <term name="영상" description="영사막이나 브라운관, 모니터 따위에 비추어진 상." physicalName="mv" physicalDescription="movie"/>
+  <term name="온라인 문의" description="물음과 대답. 또는 서로 묻고 대답함." physicalName="qna" physicalDescription="qna"/>
+  <term name="유튜브" description="youtube" physicalName="ytb" physicalDescription="youtube"/>
+  <term name="게시" description="여러 사람에게 알리기 위하여 내붙이거나 내걸어 두루 보게 함. 또는 그런 물건" physicalName="post" physicalDescription="post"/>
+  <term name="차량" description="도로나 선로 위를 달리는 모든 차를 통틀어 이르는 말." physicalName="car" physicalDescription="car"/>
+  <term name="재고" description="창고 따위에 쌓여 있음." physicalName="stock" physicalDescription="stock"/>
+  <term name="관리" description="어떤 일의 사무를 맡아 처리함." physicalName="mng" physicalDescription="management"/>
+  <term name="견본" description="석공 등이 어떤 모양을 만들 때에 사용하기 위하여 일정한 모형을 새겨 만든 널빤지. ‘거푸집 널’로 순화." physicalName="tmplt" physicalDescription="template">
+    <synonyms>템플릿</synonyms>
+    <synonyms>형판</synonyms>
+  </term>
+  <term name="옵션" description="각종 기기에서 표준 장치 이외에 구입자의 기호에 따라 별도로 선택하여 부착할 수 있는 장치나 부품." physicalName="optn" physicalDescription="option"/>
+  <term name="상품" description="사고파는 물품." physicalName="prdct" physicalDescription="PRODUCT"/>
+  <term name="시" description="시간의 시" physicalName="hh" physicalDescription="hour"/>
+  <term name="분" description="시간의 분" physicalName="mm" physicalDescription="minute"/>
+  <term name="이미지" description="어떤 사람이나 사물로부터 받는 느낌. ‘심상4’, ‘영상1’, ‘인상6’으로 순화." physicalName="img" physicalDescription="image"/>
+  <term name="소개" description="잘 알려지지 아니하였거나, 모르는 사실이나 내용을 잘 알도록 하여 주는 설명." physicalName="itrdc" physicalDescription="introduce"/>
+  <term name="기타" description="그 밖의 또 다른 것." physicalName="etc" physicalDescription="etc"/>
+  <term name="비디오" description="텔레비전에서, 음성에 대하여 화상을 이르는 말." physicalName="vdo" physicalDescription="video"/>
+  <term name="고객" description="상점 따위에 물건을 사러 오는 손님." physicalName="cstmr" physicalDescription="customer"/>
+  <term name="최대" description="수나 양, 정도 따위가 가장 큼." physicalName="max" physicalDescription="max"/>
+  <term name="최소" description="수나 정도 따위가 가장 작음." physicalName="min" physicalDescription="min"/>
+  <term name="추가" description="나중에 더 보탬." physicalName="add" physicalDescription="addition"/>
+  <term name="가능" description="할 수 있거나 될 수 있음." physicalName="psbt" physicalDescription="possibility"/>
+  <term name="삭제" description="화면(畫面)에 표시된 문자를 지우는 일. 또는 파일 내에 저장된 기록을 제거" physicalName="del" physicalDescription="delete"/>
+  <term name="결제" description="증권 또는 대금을 주고받아 매매 당사자 사이의 거래 관계를 끝맺는 일." physicalName="pay" physicalDescription="payment">
+    <synonyms>납입</synonyms>
+  </term>
+  <term name="결과" description="어떤 원인으로 결말이 생김. 또는 그런 결말의 상태." physicalName="rslt" physicalDescription="result">
+    <synonyms>실적</synonyms>
+  </term>
+  <term name="거래" description="주고받음. 또는 사고팖." physicalName="dl" physicalDescription="deal"/>
+  <term name="PG" description="PG사" physicalName="pg" physicalDescription="pg"/>
+  <term name="수단" description="어떤 목적을 이루기 위한 방법. 또는 그 도구." physicalName="mns" physicalDescription="means"/>
+  <term name="매체" description="어떤 작용을 한쪽에서 다른 쪽으로 전달하는 물체. 또는 그런 수단." physicalName="md" physicalDescription="media"/>
+  <term name="판매" description="상품 따위를 팖." physicalName="sale" physicalDescription="sale"/>
+  <term name="할인" description="일정한 값에서 얼마를 뺌." physicalName="dscnt" physicalDescription="discount"/>
+  <term name="단품" description="한 가지 물품." physicalName="sngl" physicalDescription="single"/>
+  <term name="주문" description="어떤 상품을 만들거나 파는 사람에게 그 상품의 생산이나 수송, 또는 서비스의 제공을 요구하거나 청구함. 또는 그 요구나 청구." physicalName="order" physicalDescription="order"/>
+  <term name="상세" description="낱낱이 자세하다." physicalName="dtl" physicalDescription="detail"/>
+  <term name="사유" description="일의 까닭." physicalName="rsn" physicalDescription="reason"/>
+  <term name="예상" description="어떤 일을 직접 당하기 전에 미리 생각하여 둠. 또는 그런 내용" physicalName="expcttn" physicalDescription="expectation"/>
+  <term name="환불" description="이미 지불한 돈을 되돌려줌." physicalName="rfn" physicalDescription="refund"/>
+  <term name="승인" description="어떤 사실을 마땅하다고 받아들임. ‘인정함’으로 순화." physicalName="apprv" physicalDescription="approval"/>
+  <term name="입금" description="돈을 들여놓거나 넣어 줌. 또는 그 돈." physicalName="dpst" physicalDescription="deposit">
+    <synonyms>보증금</synonyms>
+  </term>
+  <term name="은행" description="어떤 때에 갑자기 필요하여지는 것이나 대체로 부족한 것 따위를 모아서 보관ㆍ등록하여 두었다가 필요한 사람의 이용 편의를 도모하는 조직." physicalName="bank" physicalDescription="bank"/>
+  <term name="현금영수증" description="현금 결제에 대하여 발행해 주는 영수증. 소비자가 현금과 함께 카드나 핸드폰 번호 따위를 제시하면 가맹점은 현금 영수증 발급 장치를 통해 현금 영수증을 발급해 주며 해당 현금 결제 내역은 국세청에 통보된다." physicalName="csrcpt" physicalDescription="cash receipt"/>
+  <term name="기간" description="어느 일정한 시기부터 다른 어느 일정한 시기까지의 사이." physicalName="term" physicalDescription="term"/>
+  <term name="종류" description="사물의 부문을 나누는 갈래." physicalName="kind" physicalDescription="kind"/>
+  <term name="판매자" description="상품 따위를 파는 사람. 또는 그 기관." physicalName="slr" physicalDescription="seller"/>
+  <term name="업체" description="사업이나 기업의 주체." physicalName="ent" physicalDescription="enterprise"/>
+  <term name="대표자" description="전체를 대표하는 사람." physicalName="rprsnt" physicalDescription="representative">
+    <synonyms>대표</synonyms>
+  </term>
+  <term name="소재지" description="1. (보통 정확한 경계나 국경과 상관없는) 지방, 지역" physicalName="rgns" physicalDescription="regions">
+    <synonyms>위치</synonyms>
+    <synonyms>지역</synonyms>
+  </term>
+  <term name="사업자" description="사업을 경영하는 사람.&#xD;&#xA;[법률정의] (약관의 규제에 관한 법률) 계약의 일방 당사자로서 타방 당사자에게 약관을 계약의 내용으로 할 것을 제안하는 자.&#xD;&#xA;(표시・광고의공정화에관한법률) 독점규제및공정거래에관한법률 제2조제1호의 규정에 의한 사업자.&#xD;&#xA;(전자상거래 등에서의 소비자보호에 관한 법률) 물품을 제조(가공 또는 포장을 포함한다. 이하 같다)・수입・판매하거나 용역을 제공하는 자.&#xD;&#xA;(소비자보호법) 물품을 제조(가공 및 포장을 포함한다. 이하 같다)・수입・판매하거나 용역을 제공하는 자.&#xD;&#xA;(환경범죄의단속에관한특별조치법) 배출시설 또는 불법배출시설을 설치・운영하는 자 또는 영업을 영위하는 자.&#xD;&#xA;(환경・교통・재해등에관한영향평가법) 제4조의 규정에 의한 영향평가대상사업의 사업계획을 수립하거나 그 사업을 시행하는 자.&#xD;&#xA;(집단에너지사업법) 제9조의 규정에 의하여 사업의 허가를 받은 자.&#xD;&#xA;(독점규제 및 공정거래에 관한 법률) 제조업, 서비스업, 기타 사업을 행하는 자" physicalName="bsnm" physicalDescription="businessman"/>
+  <term name="차단" description="1. 액체나 기체 따위의 흐름 또는 통로를 막거나 끊어서 통하지 못하게 함. 2. 다른 것과의 관계나 접촉을 막거나 끊음." physicalName="blck" physicalDescription="block">
+    <synonyms>블록</synonyms>
+  </term>
+  <term name="율" description="다른 수나 양에 대한 어떤 수나 양의 비" physicalName="rate" physicalDescription="rate">
+    <synonyms>비율</synonyms>
+    <synonyms>이율</synonyms>
+    <synonyms>금리</synonyms>
+  </term>
+  <term name="일" description="날을 세는 단위." physicalName="dd" physicalDescription="day">
+    <synonyms>날</synonyms>
+  </term>
+  <term name="자동" description="자동" physicalName="auto" physicalDescription="automatic"/>
+  <term name="이용약관" description="이용 약관" physicalName="tmncs" physicalDescription="terms and conditions"/>
+  <term name="동의" description="다른 사람의 행위를 승인하거나 시인함." physicalName="agmnt" physicalDescription="agreement"/>
+  <term name="개인정보" description="개인정보" physicalName="psnif" physicalDescription="personal information"/>
+  <term name="직업" description="생계를 유지하기 위하여 자신의 적성과 능력에 따라 일정한 기간 동안 계속하여 종사하는 일." physicalName="job" physicalDescription="job"/>
+  <term name="관심" description="어떤 것에 마음이 끌려 주의를 기울임. 또는 그런 마음이나 주의." physicalName="ntrst" physicalDescription="interest"/>
+  <term name="총" description="총, 전체의" physicalName="ttl" physicalDescription="total">
+    <synonyms>전체</synonyms>
+  </term>
+  <term name="배정" description="몫을 나누어 정함." physicalName="asign" physicalDescription="assign"/>
+  <term name="노출" description="겉으로 드러나거나 드러냄." physicalName="exps" physicalDescription="exposure"/>
+  <term name="다운로드" description="컴퓨터 통신망을 통하여 파일이나 자료를 받아 오는 것. 멀리 떨어져 있는 다른 컴퓨터나 비비에스(BBS)에서 필요한 파일이나 자료를 전송받는다." physicalName="dwld" physicalDescription="download"/>
+  <term name="수료증" description="일정한 학과를 다 배워 마쳤음을 증명하는 증서." physicalName="crtfct" physicalDescription="certificate">
+    <synonyms>이수증</synonyms>
+  </term>
+  <term name="유의사항" description="마음에 새겨 두고 조심해야 하는 사항." physicalName="prctns" physicalDescription="precautions">
+    <synonyms>주의사항</synonyms>
+  </term>
+  <term name="필수" description="꼭 있어야 하거나 하여야 함." physicalName="ncs" physicalDescription="necessariness"/>
+  <term name="발송" description="물건, 편지, 서류 따위를 우편이나 운송 수단을 이용하여 보냄." physicalName="send" physicalDescription="send"/>
+  <term name="임의" description="일정한 기준이나 원칙 없이 하고 싶은 대로 함." physicalName="vltns" physicalDescription="voluntariness"/>
+  <term name="치환" description="바꾸어 놓음." physicalName="rplc" physicalDescription="replace"/>
+  <term name="성별" description="남녀나 암수의 구별." physicalName="gndr" physicalDescription="gender"/>
+  <term name="생년월일" description="태어난 해와 달과 날." physicalName="birth" physicalDescription="birth date"/>
+  <term name="블랙리스트" description="감시가 필요한 위험인물들의 명단. 흔히 수사 기관 따위에서 위험인물의 동태를 파악하기 위하여 마련한다. ‘감시 대상 명단’, ‘요주의자 명단’으로 순화." physicalName="blcklst" physicalDescription="blacklist"/>
+  <term name="마케팅" description="제품을 생산자로부터 소비자에게 원활하게 이전하기 위한 기획 활동. 시장 조사, 상품화 계획, 선전, 판매 촉진 따위가 있다. ‘시장 거래’, ‘시장 관리’로 순화." physicalName="mkt" physicalDescription="marketing"/>
+  <term name="개요" description="간결하게 추려 낸 주요 내용." physicalName="smmry" physicalDescription="summary"/>
+  <term name="년도" description="일정한 기간 단위로서의 그해." physicalName="year" physicalDescription="year"/>
+  <term name="확인" description="틀림없이 그러한가를 알아보거나 인정함. 또는 그런 인정." physicalName="chk" physicalDescription="check">
+    <synonyms>점검</synonyms>
+  </term>
+  <term name="신청" description="단체나 기관에 어떠한 일이나 물건을 알려 청구함." physicalName="appctn" physicalDescription="application"/>
+  <term name="콘텐츠" description="내용" physicalName="cnts" physicalDescription="CONTENTS"/>
+  <term name="트위터" description="트위터(Twitter)는 140자 이내 단문으로 개인의 의견이나 생각을 공유하고 소통하는&#xD;&#xA;사이트다." physicalName="twt" physicalDescription="twitter"/>
+  <term name="코스" description="거쳐 가야 할 교과 과정이나 절차. ‘과정4’, ‘길1’로 순화." physicalName="crs" physicalDescription="course"/>
+  <term name="그래프" description="여러 가지 자료를 분석하여 그 변화를 한눈에 알아볼 수 있도록 나타내는 직선이나 곡선. &#xD;&#xA;2" physicalName="graph" physicalDescription="graph"/>
+  <term name="점수" description="1. 성적을 나타내는 숫자. 2. 물건의 가짓수. 3. 같은 말 : 끗수(끗의 수)." physicalName="score" physicalDescription="score"/>
+  <term name="문구" description="글의 구절." physicalName="words" physicalDescription="words"/>
+  <term name="비속어" description="격이 낮고 속된 말." physicalName="slng" physicalDescription="slang"/>
+  <term name="상담" description="문제를 들어 주고 적절한 조언 등을 해 주는 것" physicalName="cnsl" physicalDescription="counsel"/>
+  <term name="탈퇴" description="관계하고 있던 조직이나 단체 따위에서 관계를 끊고 물러남." physicalName="wthdrw" physicalDescription="withdraw"/>
+  <term name="대조" description="둘 이상인 대상의 내용을 맞대어 같고 다름을 검토함." physicalName="cmpr" physicalDescription="compare"/>
+  <term name="스케줄" description="컴퓨터로 진행해야 할 작업의 일정을 계획하고 수립." physicalName="schdl" physicalDescription="schedule">
+    <synonyms>예정</synonyms>
+  </term>
+  <term name="합계" description="한데 합하여 계산함. 또는 그런 수효." physicalName="total" physicalDescription="total"/>
+  <term name="최저" description="가장 낮음" physicalName="lwst" physicalDescription="lowest"/>
+  <term name="첫번째" description="1. 순서가 가장 먼저인 차례. 또는 그런 차례의. [명사] 2. 무엇보다도 앞서는 것." physicalName="first" physicalDescription="first"/>
+  <term name="두번째" description="1. 순서가 두 번째가 되는 차례. 또는 그런 차례의. &#xD;&#xA;[명사] 2. 맨 앞에서부터 세어 모두 두 개가 됨을 이르는 말." physicalName="scnd" physicalDescription="second"/>
+  <term name="개인화" description="개인에 속하게 되거나 관계있는 것으로 만들게 됨." physicalName="prsnz" physicalDescription="personalization"/>
+  <term name="브랜드" description="사업자가 자기 상품에 대하여, 경쟁 업체의 것과 구별하기 위하여 사용하는 기호ㆍ문자ㆍ도형 따위의 일정한 표지" physicalName="brand" physicalDescription="brand"/>
+  <term name="주소" description="사람이 살고 있는 곳이나 기관, 회사 따위가 자리 잡고 있는 곳을 행정 구역으로 나타낸 이름. ‘사는 곳’으로 순화." physicalName="addr" physicalDescription="address"/>
+  <term name="우편번호" description="우편물을 쉽게 분류하기 위하여 미래 창조 과학부에서 지역마다 매긴 번호. 우리나라에서는 이를 위한 제도가 1970년부터 실시되었다." physicalName="zipcode" physicalDescription="zip code"/>
+  <term name="언어" description="하이픈으로 연결된 2자리 숫자의 언어 및 국가 코드 쌍만 사용하는 BCP47 형식의 하위집합으로 응답에 사용하기를 원하는 언어입니다." physicalName="lngg" physicalDescription="language"/>
+  <term name="상위" description="1. (사람의) 조상, 선조   2. (동물의) 조상   3. (기계의) 원형" physicalName="ncstr" physicalDescription="ancestor"/>
+  <term name="포함" description="1. 포함하다   2. ~을 (~에) 포함시키다" physicalName="incld" physicalDescription="include"/>
+  <term name="청구" description="1. (공연 광고지의 중요) 위치   2. 청구서 발부   3. (한 회사의 특정 기간) 거래 총액" physicalName="bling" physicalDescription="billing">
+    <synonyms>청구서</synonyms>
+    <synonyms>거래</synonyms>
+  </term>
+  <term name="지불" description="1. (합의·계약 등의) 조건   2. (지불) 조건; 요구액, 가격, 비용   3. &lt;표현·말하는 방식>" physicalName="trms" physicalDescription="terms">
+    <synonyms>조건</synonyms>
+  </term>
+  <term name="파트너" description="1. (배우자동거 상대 같은) 동반자, 애인   2. (사업) 파트너, 동업자" physicalName="prtnr" physicalDescription="partner">
+    <synonyms>동업자</synonyms>
+    <synonyms>동반자</synonyms>
+  </term>
+  <term name="포스" description="매장" physicalName="pos" physicalDescription="point_of_sale">
+    <synonyms>POS</synonyms>
+  </term>
+  <term name="플랫폼" description="플랫" physicalName="pltfm" physicalDescription="platform"/>
+  <term name="도시" description="도시" physicalName="city" physicalDescription="city"/>
+  <term name="주" description="(미국오스트레일리아 등에서) 주(州)" physicalName="stprv" physicalDescription="state province"/>
+  <term name="난독화" description="(보통 일부러) 애매하게 만들다" physicalName="bfsct" physicalDescription="obfuscation"/>
+  <term name="종합" description="1. 종합적인, 전체의&#xD;&#xA;2. 전부, 종합적으로&#xD;&#xA;3. 대체로 (보아)" physicalName="vrll" physicalDescription="overall"/>
+  <term name="안락" description="1. 안락, 편안&#xD;&#xA;2. 위로, 위안&#xD;&#xA;3. 위안을 주는 사람" physicalName="cmft" physicalDescription="comfort"/>
+  <term name="품질" description="1. 질(質)&#xD;&#xA;2. 우수함, 고급, 양질&#xD;&#xA;3. (사람의) 자질" physicalName="qlty" physicalDescription="quality">
+    <synonyms>우수함</synonyms>
+    <synonyms>고급</synonyms>
+    <synonyms>양질</synonyms>
+  </term>
+  <term name="추천" description="1. 권고&#xD;&#xA;2. 추천&#xD;&#xA;3. 추천장" physicalName="rcmnd" physicalDescription="recommendation">
+    <synonyms>권고</synonyms>
+    <synonyms>추천장</synonyms>
+  </term>
+  <term name="순위" description="1. 계급, 계층, 등급, (사회적) 지위, 신분; 고위, 고관; 상류 사회&#xD;&#xA;2. 열, 줄, 정렬; 횡렬(橫列) ((보통 두 줄; cf. FILE )); 횡대로 줄지은 병사&#xD;&#xA;3. 사병, (장교 이외의) 군대 구성원; 군대; 하사관, 병졸" physicalName="rank" physicalDescription="rank"/>
+  <term name="24시" description="숙박 시설이 24시간 체크인을 제공" physicalName="hh24" physicalDescription="24"/>
+  <term name="체크인" description="호텔 따위에서 묵기 위한 절차로 신원과 투숙 기간 따위를 밝히고 기록함." physicalName="chkin" physicalDescription="check in"/>
+  <term name="체크아웃" description="호텔 따위에서 묵었던 날들의 숙박료를 계산하고 떠남." physicalName="chkot" physicalDescription="check out"/>
+  <term name="정책" description="지시, 명령" physicalName="stctn" physicalDescription="instructions"/>
+  <term name="특별" description="1. (보통과 달리) 특수한&#xD;&#xA;2. (다른 무엇보다 중요해서) 특별한&#xD;&#xA;3. (특정 목적을 위한) 특별한" physicalName="spcl" physicalDescription="special"/>
+  <term name="나이" description="나이" physicalName="age" physicalDescription="age"/>
+  <term name="의무" description="법에 정해진, 의무적인" physicalName="mndtr" physicalDescription="mandatory"/>
+  <term name="선택" description="선택적인, 선택" physicalName="optn" physicalDescription="optional"/>
+  <term name="유용한정보" description="이 숙박 시설로 여행을 계획할 때 유용할 수 있는 정보에 대한 설명" physicalName="kbyg" physicalDescription="know before you go"/>
+  <term name="특성" description="1. 속성(屬性)&#xD;&#xA;2. 특성(特性)&#xD;&#xA;3. 계수(計數)" physicalName="attbt" physicalDescription="attributes">
+    <synonyms>속성</synonyms>
+    <synonyms>계수</synonyms>
+  </term>
+  <term name="일반" description="1. (거의 모든 사람사물 등에 해당하는) 일반적인&#xD;&#xA;2. 보통의, 일반적인&#xD;&#xA;3. 대강의, 대체적인" physicalName="gnrl" physicalDescription="general">
+    <synonyms>보통</synonyms>
+    <synonyms>대강</synonyms>
+    <synonyms>대체</synonyms>
+  </term>
+  <term name="방법" description="1. 방법&#xD;&#xA;2. 체계성" physicalName="mthd" physicalDescription="method">
+    <synonyms>체계성</synonyms>
+  </term>
+  <term name="만료" description="1. 만료되다, 만기가 되다&#xD;&#xA;2. 끝나다&#xD;&#xA;3. 이승을 하직하다" physicalName="expir" physicalDescription="expires"/>
+  <term name="통화" description="1. 통화&#xD;&#xA;2. 통용" physicalName="crncy" physicalDescription="currerncy"/>
+  <term name="헤드라인" description="1. (신문 기사, 특히 제1면 머리기사의) 표제&#xD;&#xA;2. (뉴스 방송 서두에 요약해서 말하는) 주요 뉴스들&#xD;&#xA;3. (기사에) 표제를 달다" physicalName="hdlne" physicalDescription="headline"/>
+  <term name="통계" description="1. 통계, 통계표, 통계 자료&#xD;&#xA;2. 통계학" physicalName="sttst" physicalDescription="statistics"/>
+  <term name="테마" description="1. 주제,화제,테마,제목 2. 작문,(자국어를 타국어로) 번역 3. 주제,테마,주선율" physicalName="theme" physicalDescription="themes">
+    <synonyms>주제</synonyms>
+    <synonyms>화제</synonyms>
+  </term>
+  <term name="모든" description="1. 완전히, 모두&#xD;&#xA;2. 가장, 최고의" physicalName="all" physicalDescription="all">
+    <synonyms>모두</synonyms>
+  </term>
+  <term name="일부" description="물건값이나 빚 따위의 일정한 금액을 며칠에 나누어 날마다 내는 일. 또는 그런 돈. ‘날 붓기’로 순화." physicalName="part" physicalDescription="part"/>
+  <term name="다중" description="&lt;‘복수의’, ‘다수의’의 뜻을 나타냄>" physicalName="multi" physicalDescription="multi">
+    <synonyms>다수</synonyms>
+    <synonyms>다색</synonyms>
+  </term>
+  <term name="퍼센트" description="1. 퍼센트, 백분 ((기호 %; 略 p.c., per ct.))&#xD;&#xA;2. 백분율; 비율&#xD;&#xA;3. (몇 %) 이율의 공채" physicalName="prcnt" physicalDescription="percent">
+    <synonyms>백분율</synonyms>
+  </term>
+  <term name="범위" description="1. 일정하게 한정된 영역.&#xD;&#xA;2. 어떤 것이 미치는 한계. ‘테두리’로 순화.&#xD;&#xA;[유의어] 폭6, 범주5, 한도2" physicalName="scp" physicalDescription="scope">
+    <synonyms>영역</synonyms>
+    <synonyms>범주</synonyms>
+    <synonyms>한도</synonyms>
+  </term>
+  <term name="빈도" description="1. 빈도&#xD;&#xA;2. 빈발, 잦음&#xD;&#xA;3. (소리·전자파 등의) 진동수" physicalName="frqnc" physicalDescription="frequency">
+    <synonyms>진동</synonyms>
+  </term>
+  <term name="제공" description="[명사] 무엇을 내주거나 갖다 바침.&#xD;&#xA;[유의어] 공급2, 보급2, 이바지1" physicalName="offer" physicalDescription="offer">
+    <synonyms>공급</synonyms>
+    <synonyms>보급</synonyms>
+  </term>
+  <term name="국문" description="국문" physicalName="ko" physicalDescription="korean">
+    <synonyms>한글</synonyms>
+  </term>
+  <term name="영문" description="영문" physicalName="en" physicalDescription="english">
+    <synonyms>영어</synonyms>
+  </term>
+  <term name="픽셀" description="(텔레비전 화상 등을 구성하는 최소 단위의) 화소" physicalName="pxl" physicalDescription="pixel"/>
+  <term name="UTC" description="협정 세계시" physicalName="utc" physicalDescription="Coordinated Universal Time"/>
+  <term name="검색" description="(정보를) 검색하다" physicalName="srch" physicalDescription="search"/>
+  <term name="진행" description="재개하다, 다시 시작하다" physicalName="rsume" physicalDescription="resume">
+    <synonyms>재개</synonyms>
+  </term>
+  <term name="이전" description="이전" physicalName="bfre" physicalDescription="before">
+    <synonyms>사전</synonyms>
+  </term>
+  <term name="앱" description="어플리케이" physicalName="app" physicalDescription="application">
+    <synonyms>APP</synonyms>
+  </term>
+  <term name="전용" description="남과 공동으로 쓰지 아니하고 혼자서만 씀." physicalName="ptuse" physicalDescription="private use"/>
+  <term name="가입" description="조직이나 단체 따위에 들어감." physicalName="join" physicalDescription="join"/>
+  <term name="토큰" description="적절한 보안성을 가진 특정한 지불 계기 또는 일군의 계기가 추후 전송하고 수용할 수 있는 자동 판매 시스템이나 관리 시스템이 토큰 반송자에서 내린 명령이 들어 있는 정보 내용" physicalName="token" physicalDescription="token"/>
+  <term name="SNS" description="Social Network Service" physicalName="sns" physicalDescription="Social Network Service"/>
+  <term name="갱신" description="다시 채우다" physicalName="rfrsh" physicalDescription="refresh">
+    <synonyms>신선한</synonyms>
+    <synonyms>리플레</synonyms>
+  </term>
+  <term name="불가" description="가능하지 않음." physicalName="impsb" physicalDescription="impossibilité">
+    <synonyms>제한</synonyms>
+    <synonyms>제약</synonyms>
+  </term>
+  <term name="외부" description="바깥 부분, 조직이나 단체의 밖" physicalName="otsd" physicalDescription="outside"/>
+  <term name="원본" description="원본" physicalName="orgn" physicalDescription="original"/>
+  <term name="뉴스" description="일반에게 잘 알려지지 아니한 새로운 소식." physicalName="news" physicalDescription="news">
+    <synonyms>소식</synonyms>
+  </term>
+  <term name="계열사" description="경영주가 같거나 사업 계통이 같아서 서로 밀접한 관련이 있는 회사." physicalName="afflt" physicalDescription="affiliate"/>
+  <term name="커뮤니케이션" description="사람들끼리 서로 생각, 느낌 따위의 정보를 주고받는 일. 말이나 글, 그 밖의 소리, 표정, 몸짓 따위로 이루어진다." physicalName="comm" physicalDescription="communication"/>
+  <term name="IR" description="[경영] 투자가를 위한 홍보[설명회]" physicalName="ir" physicalDescription="ir"/>
+  <term name="애널리스트" description="[경제 ] 증권 회사나 경제 연구소 등에서 주식 종목 및 경제 시황 따위를 분석하는 전문가." physicalName="anlst" physicalDescription="analyst"/>
+  <term name="팝업" description="특정한 웹 페이지에 접속하였을 때 새롭게 생성되어 여러 가지 사항을 안내하는 창." physicalName="popup" physicalDescription="pop-up"/>
+  <term name="법적고지" description="기업들이 통상적으로 표시, 기재하는 문구로, 문서 또는 website 등에 기술된 내용 중에 일부 사실은 실질적은 내용이 여러 요인에 의해 변동 될 수 있음을 명시함으로써 법적 책임이 없음을 고지하는 문구" physicalName="drfls" physicalDescription="disclaimer regarding forward-looking statement"/>
+  <term name="태그" description="[정보·통신] 글쓴이가 그 글을 검색하기 위하여 감성, 정황, 글쓴이 의지 따위를 나타내는 단어를 입력해 둔, 일종의 키워드들의 집합." physicalName="tag" physicalDescription="tag"/>
+  <term name="중문" description="중국" physicalName="cn" physicalDescription="chinese"/>
+  <term name="패밀리" description="[정보·통신 ] 같거나 유사한 논리적 컴퓨터 구조로 설계되어 서로 다른 컴퓨터 모델 간에 소프트웨어 호환성을 유지하는 일련의 컴퓨터 모델 그룹." physicalName="fmly" physicalDescription="family"/>
+  <term name="쿼리" physicalName="qury" physicalDescription="query"/>
+  <term name="새창" description="새로운 브라우저 창" physicalName="wnpp" physicalDescription="window popup"/>
+  <term name="메인" description="(같은 종류 중) 가장 큰" physicalName="mn" physicalDescription="main"/>
+  <term name="헥스" description="16진법" physicalName="hex" physicalDescription="hexadecimal"/>
+  <term name="상생" description="상생, 공존, 벙립" physicalName="cxstn" physicalDescription="coexistence">
+    <synonyms>공존</synonyms>
+  </term>
+  <term name="사업" description="사업" physicalName="bsn" physicalDescription="business"/>
+  <term name="약관" description="약관, 조약, 계약, 조항" physicalName="trms" physicalDescription="terms">
+    <synonyms>조약</synonyms>
+    <synonyms>계약</synonyms>
+    <synonyms>조항</synonyms>
+  </term>
+  <term name="자바스크립트" description="자바스크립트" physicalName="js" physicalDescription="javascript"/>
+  <term name="공유" description="공유" physicalName="pubc" physicalDescription="public"/>
+  <term name="재단" description="(법인)재단" physicalName="fndn" physicalDescription="foundation"/>
+  <term name="FAQ" description="자주묻는질문" physicalName="faq" physicalDescription="frequently asked questions">
+    <synonyms>자주묻는질문</synonyms>
+  </term>
+  <term name="QA" description="1:1문의" physicalName="qa" physicalDescription="question and answer"/>
+  <term name="버전" description="어떤 소프트웨어가 몇번 개정되었는지를 나타내는 번호" physicalName="ver" physicalDescription="version"/>
+  <term name="주관식" description="'서답형'을 일상적으로 이르는 말" physicalName="sbjct" physicalDescription="subjective"/>
+  <term name="연계" description="어떤 일이나 사람과 관련하여 관계를 맺음, 또는 그 관계" physicalName="cnnct" physicalDescription="connection"/>
+  <term name="약식" description="비공식, 약식" physicalName="nfrml" physicalDescription="informality">
+    <synonyms>비공식</synonyms>
+  </term>
+  <term name="설립" description="설립" physicalName="stbsm" physicalDescription="establishment"/>
+  <term name="매출" description="매출" physicalName="sls" physicalDescription="sales"/>
+  <term name="직원" description="직원" physicalName="mple" physicalDescription="employee"/>
+  <term name="주요" description="주되고 중요함" physicalName="mjr" physicalDescription="major"/>
+  <term name="스타" description="장성이나 그 계급을 속되게 이르는말" physicalName="star" physicalDescription="star"/>
+  <term name="기술" description="기술, 기계, 장비" physicalName="tchlg" physicalDescription="technology">
+    <synonyms>기계</synonyms>
+    <synonyms>장비</synonyms>
+  </term>
+  <term name="SQ" description="SQ 인증" physicalName="sq" physicalDescription="supplier quality"/>
+  <term name="업종" description="직업이나 영업의 종류" physicalName="cbsn" physicalDescription="category of business"/>
+  <term name="문의" description="물어서 의논" physicalName="inqr" physicalDescription="inquiry"/>
+  <term name="열람" description="책이나 문서 따위를 죽 훑어보거나 조사하면서 봄." physicalName="rdng" physicalDescription="reading"/>
+  <term name="강사" description="(특정한 기술이나 운동을 가르치는) 강사[교사]" physicalName="isttr" physicalDescription="instructor"/>
+  <term name="소속" description="소속,가입" physicalName="ffltn" physicalDescription="affiliation">
+    <synonyms>가입</synonyms>
+  </term>
+  <term name="위원" description="위원" physicalName="cmssr" physicalDescription="commissioner"/>
+  <term name="재직" description="재직" physicalName="work" physicalDescription="work">
+    <synonyms>근무</synonyms>
+  </term>
+  <term name="입사" description="직장,고용,채용" physicalName="mplmn" physicalDescription="employment">
+    <synonyms>채용</synonyms>
+  </term>
+  <term name="퇴사" description="퇴사" physicalName="rsgnt" physicalDescription="resignation"/>
+  <term name="사진" description="사진" physicalName="photo" physicalDescription="photo"/>
+  <term name="경력" description="경력" physicalName="carer" physicalDescription="carrer"/>
+  <term name="메모" description="메모" physicalName="memo" physicalDescription="memo">
+    <synonyms>노트</synonyms>
+  </term>
+  <term name="뉴스레터" description="뉴스레터" physicalName="nwslt" physicalDescription="newsletter"/>
+  <term name="컨설팅" description="컨설팅" physicalName="cnstg" physicalDescription="consulting"/>
+  <term name="완성차" description="완성차" physicalName="atmbl" physicalDescription="automobile"/>
+  <term name="FAX" description="팩스" physicalName="fax" physicalDescription="fax">
+    <synonyms>팩스</synonyms>
+  </term>
+  <term name="동일" description="동일,같음" physicalName="same" physicalDescription="same"/>
+  <term name="개선" description="개선,호전,향상" physicalName="impvm" physicalDescription="improvement">
+    <synonyms>호전</synonyms>
+  </term>
+  <term name="판단" description="판단,심판,심사,감정,평가" physicalName="jdgmt" physicalDescription="judgment">
+    <synonyms>심판</synonyms>
+    <synonyms>심사</synonyms>
+    <synonyms>감정</synonyms>
+    <synonyms>평가</synonyms>
+  </term>
+  <term name="방문자" description="방문자" physicalName="vstr" physicalDescription="visitor"/>
+  <term name="면담자" description="면담자" physicalName="ntrvr" physicalDescription="interviewer"/>
+  <term name="방문" description="방문" physicalName="vst" physicalDescription="visit"/>
+  <term name="의견" description="의견" physicalName="opnn" physicalDescription="opinion"/>
+  <term name="지도" description="지도,가이드" physicalName="guide" physicalDescription="guide"/>
+  <term name="현황" description="현황" physicalName="pscnd" physicalDescription="present condition"/>
+  <term name="킥오프" description="시작, 개시(start)" physicalName="kickf" physicalDescription="kickoff"/>
+  <term name="불량" description="불량" physicalName="flty" physicalDescription="faulty"/>
+  <term name="레벨업" description="캐릭터의 성장도(Level)가 올라가는(Up) 것을 의미한다." physicalName="lvlup" physicalDescription="level up"/>
+  <term name="기술지도" description="기술지도" physicalName="tchgd" physicalDescription="technical guidance"/>
+  <term name="승용" description="승용" physicalName="rdng" physicalDescription="riding"/>
+  <term name="상용" description="상용" physicalName="cmbsn" physicalDescription="commercial business"/>
+  <term name="납품" description="납품" physicalName="dlvry" physicalDescription="delivery"/>
+  <term name="국내" description="국내" physicalName="dmstc" physicalDescription="domestic"/>
+  <term name="의존" description="의존,의지" physicalName="dpndn" physicalDescription="dependence">
+    <synonyms>의지</synonyms>
+  </term>
+  <term name="해외" description="해외,국외" physicalName="frgn" physicalDescription="foreign">
+    <synonyms>국외</synonyms>
+  </term>
+  <term name="자동차" description="자동차" physicalName="car" physicalDescription="car"/>
+  <term name="부품" description="부품" physicalName="part" physicalDescription="part"/>
+  <term name="제외" description="제외,이외" physicalName="xclud" physicalDescription="exculde">
+    <synonyms>이외</synonyms>
+  </term>
+  <term name="공장" description="공장" physicalName="fctry" physicalDescription="factory"/>
+  <term name="홈페이지" description="홈페이지" physicalName="hmpge" physicalDescription="home page"/>
+  <term name="근무지" description="근무지" physicalName="plcwk" physicalDescription="place of work"/>
+  <term name="착수" description="착수" physicalName="bgn" physicalDescription="begin"/>
+  <term name="완료" description="완료" physicalName="cmpltn" physicalDescription="completion"/>
+  <term name="요일" description="요일" physicalName="daywk" physicalDescription="day of the week"/>
+  <term name="연장" description="(길이,기간 등을 늘임)연장" physicalName="xtnsn" physicalDescription="extension"/>
+  <term name="월" description="월" physicalName="mnth" physicalDescription="month"/>
+  <term name="교육" description="교육" physicalName="edctn" physicalDescription="education"/>
+  <term name="요약" description="요약" physicalName="smmry" physicalDescription="summary"/>
+  <term name="학습" description="학습" physicalName="stduy" physicalDescription="study"/>
+  <term name="수료" description="수료" physicalName="cmptn" physicalDescription="completion"/>
+  <term name="표준" description="표준,기준" physicalName="stnd" physicalDescription="standrad">
+    <synonyms>기준</synonyms>
+  </term>
+  <term name="준비물" description="준비물" physicalName="supls" physicalDescription="supplies"/>
+  <term name="협업" description="협업" physicalName="cprtn" physicalDescription="cooperation"/>
+  <term name="회차" description="회차,차수" physicalName="episd" physicalDescription="episode">
+    <synonyms>차수</synonyms>
+  </term>
+  <term name="정해진인원" description="정원" physicalName="fxnum" physicalDescription="fixed number">
+    <synonyms>정원</synonyms>
+    <synonyms>제한인원</synonyms>
+  </term>
+  <term name="모집" description="모집" physicalName="rcrmt" physicalDescription="recruitment"/>
+  <term name="장소" description="장소" physicalName="place" physicalDescription="place"/>
+  <term name="강의" description="강의,강좌" physicalName="lctr" physicalDescription="lecture">
+    <synonyms>강좌</synonyms>
+  </term>
+  <term name="시험" description="지식·능력 등을 평가하는 일" physicalName="exam" physicalDescription="exam">
+    <synonyms>평가</synonyms>
+  </term>
+  <term name="득점" description="득점,스코어,배점" physicalName="scord" physicalDescription="scored">
+    <synonyms>배점</synonyms>
+  </term>
+  <term name="정답" description="정답" physicalName="cansw" physicalDescription="correct answer"/>
+  <term name="출석" description="출석,참석,참석율" physicalName="atndc" physicalDescription="attendance"/>
+  <term name="퇴실" description="퇴실" physicalName="lvgrm" physicalDescription="leaving the room"/>
+  <term name="객관식" description="객관식" physicalName="mtlcc" physicalDescription="multiple choice"/>
+  <term name="주관식" description="주관식" physicalName="srwqs" physicalDescription="short-answer question"/>
+  <term name="GPC" description="GPC" physicalName="gpc" physicalDescription="gpc"/>
+  <term name="예산" description="예산" physicalName="bdget" physicalDescription="budget"/>
+  <term name="지출" description="지출" physicalName="expns" physicalDescription="expense">
+    <synonyms>비용</synonyms>
+  </term>
+  <term name="발급" description="발급" physicalName="issue" physicalDescription="issue"/>
+  <term name="반려" description="반려" physicalName="rtrn" physicalDescription="return"/>
+  <term name="취득" description="취득,습득,인수,매입" physicalName="acqsn" physicalDescription="acquisition">
+    <synonyms>구입</synonyms>
+    <synonyms>매입</synonyms>
+  </term>
+  <term name="유효" description="유효" physicalName="valid" physicalDescription="valid"/>
+  <term name="분야" description="분야" physicalName="fld" physicalDescription="field"/>
+  <term name="주체" description="주체" physicalName="mngnt" physicalDescription="main agent"/>
+  <term name="희망" description="희망" physicalName="hope" physicalDescription="hope"/>
+  <term name="증명" description="신원 확인, 신분 증명; 식별" physicalName="idntfn" physicalDescription="identification"/>
+  <term name="양도" description="옮기다.이동.이동하다.이동" physicalName="trnsf" physicalDescription="transfer"/>
+  <term name="단계" description="1. (발달·진행상의) 단계[시기]&#xD;&#xA;2. (하나의 과정 등을 여러 부분으로 나눈) 단계 (=phase)&#xD;&#xA;3. (연극·공연 등을) 개최하다[무대에 올리다]" physicalName="stage" physicalDescription="stage"/>
+  <term name="제출" description="제출" physicalName="sbmsn" physicalDescription="submission"/>
+  <term name="지급" description="지급" physicalName="give" physicalDescription="give"/>
+  <term name="사업장" description="사업장" physicalName="pbsn" physicalDescription="a place of business"/>
+  <term name="지원" description="지원" physicalName="spprt" physicalDescription="support"/>
+  <term name="자부담" description="자부담" physicalName="phsw" physicalDescription="pay his way"/>
+  <term name="계획" description="계획" physicalName="plan" physicalDescription="plan"/>
+  <term name="설치" description="설치" physicalName="nsllt" physicalDescription="installaion"/>
+  <term name="계좌" description="계좌" physicalName="acnt" physicalDescription="account"/>
+  <term name="예금" description="예금" physicalName="dpsit" physicalDescription="deposit"/>
+  <term name="보고" description="브리핑,정보" physicalName="brfng" physicalDescription="brefing"/>
+  <term name="스마트화" description="스마트화,훈련" physicalName="smtfn" physicalDescription="smartification"/>
+  <term name="현재" description="현재" physicalName="prsnt" physicalDescription="present"/>
+  <term name="출연" description="출연" physicalName="aprnc" physicalDescription="appearance"/>
+  <term name="실시" description="실시" physicalName="implmn" physicalDescription="implementation"/>
+  <term name="정부" description="정부" physicalName="gvmnt" physicalDescription="govermment"/>
+  <term name="대기업" description="대기업" physicalName="mjcmn" physicalDescription="major company"/>
+  <term name="도입" description="도입" physicalName="ntdcn" physicalDescription="introduction"/>
+  <term name="부담" description="부담" physicalName="brdn" physicalDescription="burden"/>
+  <term name="협약" description="협약" physicalName="agrmt" physicalDescription="agreement"/>
+  <term name="선급" description="선급" physicalName="pmndv" physicalDescription="payment in advance"/>
+  <term name="수수료" description="커니션,수수료" physicalName="cmssn" physicalDescription="commission"/>
+  <term name="상한선" description="상한선" physicalName="cllng" physicalDescription="celling"/>
+  <term name="투자" description="투자, 투자액" physicalName="nvstm" physicalDescription="investment"/>
+  <term name="검교정" description="검교정" physicalName="clbtn" physicalDescription="calibration"/>
+  <term name="연구소" description="연구소" physicalName="lbrty" physicalDescription="laboratory"/>
+  <term name="포상" description="포상" physicalName="prize" physicalDescription="prize"/>
+  <term name="훈격" description="훈격, 공훈" physicalName="mrts" physicalDescription="merits"/>
+  <term name="자료" description="자료" physicalName="matls" physicalDescription="material"/>
+  <term name="시상식" description="시상식" physicalName="wdcrm" physicalDescription="awards ceremony"/>
+  <term name="근속" description="근속" physicalName="yrssv" physicalDescription="years of service"/>
+  <term name="가장높은" description="가장 높은, 최고의,역대" physicalName="hghst" physicalDescription="highest">
+    <synonyms>최고의</synonyms>
+    <synonyms>역대</synonyms>
+  </term>
+  <term name="수상자" description="수상자" physicalName="winer" physicalDescription="winner"/>
+  <term name="학교" description="학교" physicalName="schl" physicalDescription="school"/>
+  <term name="학년" description="학년" physicalName="grd" physicalDescription="grade"/>
+  <term name="졸업" description="졸업" physicalName="grdtn" physicalDescription="graduation"/>
+  <term name="팀원" description="팀원" physicalName="tmmbr" physicalDescription="team member"/>
+  <term name="경영" description="기업, 사업을 관리 및 운영" physicalName="mngmnt" physicalDescription="management"/>
+  <term name="공시" description="밝혀진 사실 내용" physicalName="dsclsr" physicalDescription="disclosure"/>
+  <term name="양식" description="일정한 모양이나 형식" physicalName="sty" physicalDescription="style"/>
+  <term name="보안" description="안전을 유지함" physicalName="scrty" physicalDescription="security"/>
+  <term name="환경" description="주위의 상태" physicalName="envrnmt" physicalDescription="environment"/>
+  <term name="안전" description="안전" physicalName="sfty" physicalDescription="safety"/>
+  <term name="설비" description="설비" physicalName="fclty" physicalDescription="facility"/>
+  <term name="탄소" description="주기율표 제14족에 속하는 비금속 원소의 하나." physicalName="crbn" physicalDescription="carbon"/>
+  <term name="배출" description="안에서 밖으로 밀어 내보냄" physicalName="emsns" physicalDescription="emission"/>
+  <term name="계측" description="시간이나 물건의 양을" physicalName="msremnt" physicalDescription="measurement"/>
+  <term name="공급망" description="서비스 및 정보의 흐름이 이루어지는 연결망" physicalName="splychn" physicalDescription="supply chain"/>
+  <term name="안정화" description="바뀌어 달라지지 아니하고 일정한 상태를 유지해 감" physicalName="stblztn" physicalDescription="stabilization"/>
+  <term name="스마트" description="스마트" physicalName="smrt" physicalDescription="smart"/>
+  <term name="척도" description="평가하거나 측정할 때 의거할 기준." physicalName="msr" physicalDescription="measure"/>
+  <tag name="태그"/>
+</tm:TermDictionary>
