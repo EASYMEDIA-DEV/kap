@@ -234,6 +234,10 @@ var msgCtrl = (function(){
 					al_011 : '휴대폰번호를 입력해주세요.' ,
 					al_012 : '이메일 중복확인을 해주세요.'
 				},
+				mpe : {
+					notSrchPartsCom: "부품사를 선택해주세요.",
+					notSrchPartsCom1: "부품사를 1개만 선택해주세요.",
+				}
 			},
 
 			ex :{
