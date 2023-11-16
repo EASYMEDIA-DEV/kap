@@ -14,9 +14,33 @@ var exports = {
     var $formObj = ctrl.obj.find("form").eq(0);
     var $excelObj = ctrl.obj.parent().find(".excel-down");
 
+    let popup;
+
+    /**
+     * popup 데이터 바인딩
+     * @param data
+     */
+    function popDataBinding(data) {
+        if(opener.document.querySelector(".memSeq")!=null) {
+            opener.document.querySelector(".memSeq").value = data.memSeq;
+        }
+        if(opener.document.querySelector(".id")!=null) {
+            opener.document.querySelector(".id").value = data.id;
+        }
+        if(opener.document.querySelector(".name")!=null) {
+            opener.document.querySelector(".name").value = data.name;
+        }
+        if(opener.document.querySelector(".email")!=null) {
+            opener.document.querySelector(".email").value = data.email;
+        }
+        if(opener.document.querySelector(".email")!=null) {
+            opener.document.querySelector(".email").value = data.email;
+        }
+
+    }
+
     // 목록 조회
     var search = function (page){
-
 
     //data로 치환해주어야한다.
     //cmmCtrl.setFormData($formObj);
@@ -91,6 +115,67 @@ var exports = {
                     $excelObj.modal("show");
                 }
             }
+        },
+        btnExcelDown2 : {
+                event : {
+                    click : function () {
+                    cmmCtrl.getUserPopOpen(popup);
+                    }
+                }
+        },
+        btnChoice : {
+                event : {
+                    click : function () {
+                        const form = $(this).closest('form')[0];
+                        const formData = new FormData(form);
+                        const jsonObject = {};
+                        const size2 = [];
+
+                        for (let pair of formData.entries()) {
+                            if (pair[0] === 'delValueList') {
+                                jsonObject[pair[0]] = pair[1];
+                                size2.push(pair[1]);
+                            }
+                        }
+                        if(size2.length >=2) {
+
+                            alert("오류");
+                            return false;
+                        }
+
+                        const jsonString = JSON.stringify(jsonObject);
+                        const str = jsonString;
+
+                        // memSeq 값을 추출하는 정규식
+                        const memSeqRegex = /memSeq=(\d+)/;
+                        const memSeqMatch = str.match(memSeqRegex);
+
+                        // id 값을 추출하는 정규식
+                        const idRegex = /id=([^,]+)/;
+                        const idMatch = str.match(idRegex);
+
+                        // name 값을 추출하는 정규식
+                        const nameRegex = /name=([^,]+)/;
+                        const nameMatch = str.match(nameRegex);
+
+                        // email 값을 추출하는 정규식
+                        const emailRegex = /email=([^,]+)/;
+                        const emailMatch = str.match(emailRegex);
+
+                        //데이터 생성
+                        const userObject = {
+                            memSeq: memSeqMatch ? memSeqMatch[1] : null,
+                            id: idMatch ? idMatch[1] : null,
+                            name: nameMatch ? nameMatch[1] : null,
+                            email: emailMatch ? emailMatch[1] : null,
+                        };
+
+                        popDataBinding(userObject)
+                        window.close();
+                        // cmmCtrl.getUserPopClick(popDataBinding,$(this).closest('form')[0]);
+
+                    }
+                }
         }
     },
     classname : {
@@ -164,6 +249,30 @@ var exports = {
     }
     },
     immediately : function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const memSeq = urlParams.get('popup');
+        $(document).find('#btnChoice').hide();
+        if(memSeq=='Y') {
+            const header = document.querySelector('header');
+            const aside = document.querySelector('aside');
+            $(document).find('#btnExcelDown').hide();
+            $(document).find('#btnChoice').show();
+
+            if (header && header.style.display !== 'none') {
+                header.style.display = 'none';
+            }
+            if (aside && aside.style.display !== 'none') {
+                aside.style.display = 'none';
+            }
+            const mainContainer = document.querySelector('.main-container');
+            if (mainContainer) {
+                mainContainer.classList.remove('main-container');
+            }
+        }
+
+        // console.log(memSeq);
+        // cmmCtrl.getUserPopChk("btnExcelDown");
+
         //리스트 조회
         //폼 데이터 처리
         cmmCtrl.setFormData($formObj);

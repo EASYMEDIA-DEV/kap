@@ -22,7 +22,7 @@
         <td class="text-center">${ list.ctgryCdNm}</td>
         <td class="text-center">${ list.sizeCdNm}</td>
         <td class="text-center">${ kl:bsnmNoConvert(list.workBsnmNo)}</td>
-        <td class="text-center">확인후작업</td>
+        <td class="text-center">TODO확인후작업</td>
         <td class="text-center">${kl:hpNum(kl:phoneMasking(list.hpNo))}</td>
         <td class="text-center">${kl:emailMasking(list.email)}</td>
         <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>

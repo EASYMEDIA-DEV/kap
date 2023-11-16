@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.eb.EBFEduRoomMapper">
+    <!--
+     쿼리명 : EBFEduRoomMapper.selectEduRoomList
+     설  명 : 교육장 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.15  장두석     최초 생성
+    -->
+    <select id="selectEduRoomList" parameterType="EBFEduRoomSearchDTO" resultType="EBFEduRoomSearchDTO">
+        SELECT /* EBFEduRoomMapper.selectEduRoomList */
+            PLACE_SEQ
+            , NM
+            , RGNS_CD
+            , ZIPCODE
+            , BSC_ADDR
+            , DTL_ADDR
+            , RPRSNT_TEL_NO
+            , REG_ID
+            , REG_DTM
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) REG_NAME
+            , MOD_ID
+            , MOD_DTM
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) MOD_NAME
+        FROM
+            ED_EDCTN_PLACE_MST A
+        WHERE 1=1
+          <include refid="selectEduRoomListwhereSql" />
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+    쿼리명 : EBFEduRoomMapper.getEduRoomListCnt
+    설  명 : 게시물 목록을 갯수를 카운팅한다.
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.15    장두석       최초생성
+    -->
+    <select id="getEduRoomListTotCnt" parameterType="EBFEduRoomSearchDTO" resultType="java.lang.Integer">
+        SELECT /* COGCntsMapper.getEduRoomListCnt */
+            COUNT(*)
+        FROM
+            ED_EDCTN_PLACE_MST A
+        WHERE 1 = 1
+            <include refid="selectEduRoomListwhereSql" />
+    </select>
+
+    <update id="updateEduRoomRsume" parameterType="EBFEduRoomSearchDTO">
+        UPDATE  /*EBFEduRoomMapper.updateEduRoom*/
+            ED_EDCTN_PLACE_MST
+        SET
+            RSUME_CD = #{rsumeCd}
+        <if test="rsumeCd !='' and rsumeCd == 'SYNACK' ">
+            , INIT_CHK_ADM_SEQ = (SELECT ADM_SEQ FROM CO_ADM_MST WHERE REG_ID = #{regId})
+            , INIT_CHK_DTM = NOW()
+        </if>
+        WHERE
+            QA_SEQ = #{detailsKey}
+    </update>
+
+    <select id="selectEduRoomDtl" parameterType="EBFEduRoomDetailDTO" resultType="EBFEduRoomDetailDTO">
+        SELECT /* EBFEduRoomMapper.selectEduRoomDtl */
+            PLACE_SEQ
+             , NM
+             , RGNS_CD
+             , ZIPCODE
+             , BSC_ADDR
+             , DTL_ADDR
+             , RPRSNT_TEL_NO
+             , REG_ID
+             , REG_DTM
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) REG_NAME
+             , MOD_ID
+             , MOD_DTM
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) MOD_NAME
+        FROM
+            ED_EDCTN_PLACE_MST A
+        WHERE
+            PLACE_SEQ = #{detailsKey}
+    </select>
+
+    <insert id="insertEduRoom" parameterType="EBFEduRoomWriteDTO">
+        INSERT /* EBFEduRoomMapper.insertEduRoom */ INTO ED_EDCTN_PLACE_MST
+            (
+            PLACE_SEQ
+            , NM
+            , RGNS_CD
+            , ZIPCODE
+            , BSC_ADDR
+            , DTL_ADDR
+            , RPRSNT_TEL_NO
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+            )
+            VALUES
+            (
+            #{placeSeq}
+            , #{nm}
+            , #{rgnsCd}
+            , #{zipcode}
+            , #{bscAddr}
+            , #{dtlAddr}
+            , #{rprsntTelNo}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <update id="updateEduRoom" parameterType="EBFEduRoomWriteDTO">
+        UPDATE /* EBFEduRoomMapper.updateEduRoom */
+            ED_EDCTN_PLACE_MST
+        SET
+            NM = #{nm}
+            , RGNS_CD = #{rgnsCd}
+            , ZIPCODE = #{zipcode}
+            , BSC_ADDR = #{bscAddr}
+            , DTL_ADDR = #{dtlAddr}
+            , RPRSNT_TEL_NO = #{rprsntTelNo}
+            , MOD_ID = #{modId}
+            , MOD_IP = #{modIp}
+            , MOD_DTM = NOW()
+        WHERE
+            PLACE_SEQ = #{detailsKey}
+    </update>
+
+    <delete id="deleteEduRoom" parameterType="EBFEduRoomSearchDTO">
+        DELETE FROM /* EBFEduRoomMapper.deleteEduRoom */
+            ED_EDCTN_PLACE_MST
+        WHERE
+        <foreach collection="delValueList" item="delSeq" index="index" open="" close="" separator=" OR ">
+            PLACE_SEQ = #{delSeq}
+        </foreach>
+    </delete>
+
+    <!--
+    쿼리명 : selectEduRoomListwhereSql
+    설  명 : 교육장 관리 where Sql
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.15    장두석       최초생성
+    -->
+    <sql id="selectEduRoomListwhereSql">
+        <if test="strtDt != null and strtDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+            </choose>
+        </if>
+        <if test="endDt != null and endDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+            </choose>
+        </if>
+        <if test="rgnsCdList != null and rgnsCdList.size() > 0">
+            AND (
+            <foreach collection="rgnsCdList" item="rgnsCd" index="index" open="" close="" separator=" OR ">
+                RGNS_CD = #{rgnsCd}
+            </foreach>
+            )
+        </if>
+        <if test="q != null and q != ''">
+            <choose>
+                <when test="f == 1">
+                    AND NM LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 2">
+                    AND (ZIPCODE LIKE CONCAT('%', #{q}, '%')
+                        OR BSC_ADDR LIKE CONCAT('%', #{q}, '%')
+                        OR DTL_ADDR LIKE CONCAT('%', #{q}, '%'))
+                </when>
+                <when test="f == 3">
+                    AND EXISTS(SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                </when>
+                <when test="f == 4">
+                    AND EXISTS(SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                </when>
+                <otherwise>
+                    AND (
+                    INSTR(#{q}, NM) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, ZIPCODE) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, BSC_ADDR) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, DTL_ADDR) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, REG_NAME) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, MOD_NAME) <![CDATA[>]]> 0 OR
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY
+            A.REG_DTM DESC
+    </sql>
+</mapper>
+
+

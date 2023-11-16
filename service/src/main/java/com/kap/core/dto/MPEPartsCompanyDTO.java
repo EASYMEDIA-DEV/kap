@@ -177,7 +177,7 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     //엑셀여부
     private String excelYn;
 
-    //테이블 이름
-    private String tableNm;
+    // 검색 레이어에서 호출 여부
+    private String srchPartsComLayer;
 
 }

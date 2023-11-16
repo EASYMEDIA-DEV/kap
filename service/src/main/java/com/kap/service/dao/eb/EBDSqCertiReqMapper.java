@@ -51,7 +51,7 @@ public interface EBDSqCertiReqMapper {
     public List<EBDPrePrcsDTO> getPrePrcsList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
 
     /**
-     * 수정
+     * 신청서 상태 변경
      */
-    public int update(EBDEdctnEdisdDTO eBDEdctnEdisdDTO);
+    public int updateIssue(EBDEdctnEdisdDTO eBDEdctnEdisdDTO);
 }
