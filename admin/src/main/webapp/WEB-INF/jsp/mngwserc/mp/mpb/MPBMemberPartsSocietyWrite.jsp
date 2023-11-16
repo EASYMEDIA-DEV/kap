@@ -56,7 +56,7 @@
             </div>
             <ul class="nav nav-tabs" id="myTabs">
                 <li class="active tabClick"><a data-toggle="tab" href="#dtl">회원 상세 정보</a></li>
-                <li class="tabClick"><a data-toggle="tab" href="#deu">교육 사업 현황</a></li>
+                <li class="tabClick"><a data-toggle="tab" href="#edu">교육 사업 현황</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#bus">컨설팅 사업 현황</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#san">상생 사업 현황</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#chat">1:1문의</a></li>
@@ -68,72 +68,76 @@
                     </div>
                 </div>
 
-<%--                <div id="pur" class="tab-pane fade">--%>
-<%--                    <div class="clearfix">--%>
-<%--                        <h6 class="pull-left mt0">--%>
-<%--                            미래차공모전 신청내역 (총 <span id="listContainerTotCnt">0</span> 건)--%>
-<%--                        </h6>--%>
-<%--                        <div class="pull-right ml-sm">--%>
-<%--                            <select class="form-control input-sm listRowSizeContainer" >--%>
-<%--                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">--%>
-<%--                                    <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />--%>
-<%--                                </jsp:include>--%>
-<%--                            </select>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                    <table class="table table-hover table-striped" >--%>
-<%--                        <thead>--%>
-<%--                        <tr>--%>
-<%--                            <th class="text-center">번호</th>--%>
-<%--                            <th class="text-center">사업년도</th>--%>
-<%--                            <th class="text-center">팀장명</th>--%>
-<%--                            <th class="text-center">참여구분</th>--%>
-<%--                            <th class="text-center">카테고리</th>--%>
-<%--                            <th class="text-center">시상부문</th>--%>
-<%--                            <th class="text-center">1차결과</th>--%>
-<%--                            <th class="text-center">최종결과</th>--%>
-<%--                            <th class="text-center">신청일</th>--%>
-<%--                        </tr>--%>
-<%--                        </thead>--%>
-<%--                        <!-- 리스트 목록 결과 -->--%>
-<%--                            <tbody id="listContainer"/>--%>
-<%--                    </table>--%>
-<%--                    <!-- 페이징 버튼 -->--%>
-<%--                    <div id="pagingContainer"></div>--%>
-<%--                </div>--%>
+                <div id="edu" class="tab-pane fade">
+                    <div class="clearfix">
+                        <h6 class="pull-left mt0">
+                            교육 사업 현황 (총 <span id="listContainerTotCnt">0</span> 건)
+                        </h6>
+                        <div class="pull-right ml-sm">
+                            <select class="form-control input-sm listRowSizeContainer" >
+                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                    <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                                </jsp:include>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-hover table-striped" >
+                        <thead>
+                        <tr>
+                            <th class="text-center">번호</th>
+                            <th class="text-center">사업년도</th>
+                            <th class="text-center">회차</th>
+                            <th class="text-center">교육상태</th>
+                            <th class="text-center">부품사명</th>
+                            <th class="text-center">구분</th>
+                            <th class="text-center">규모</th>
+                            <th class="text-center">사업자등록번호</th>
+                            <th class="text-center">지역</th>
+                            <th class="text-center">과정분류</th>
+                            <th class="text-center">과정명</th>
+                            <th class="text-center">학습방식</th>
+                            <th class="text-center">학습시간</th>
+                        </tr>
+                        </thead>
+                        <!-- 리스트 목록 결과 -->
+                            <tbody id="listContainer"/>
+                    </table>
+                    <!-- 페이징 버튼 -->
+                    <div id="pagingContainer"></div>
+                </div>
 
-<%--                <div id="chat" class="tab-pane fade">--%>
-<%--                    <div class="clearfix">--%>
-<%--                        <h6 class="pull-left mt0">--%>
-<%--                            1:1문의 목록 (총 <span id="listContainerInqrTotCnt">0</span> 건)--%>
-<%--                        </h6>--%>
-<%--                        <div class="pull-right ml-sm">--%>
-<%--                            <select class="form-control input-sm listRowSizeContainer" >--%>
-<%--                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">--%>
-<%--                                    <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />--%>
-<%--                                </jsp:include>--%>
-<%--                            </select>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
+                <div id="chat" class="tab-pane fade">
+                    <div class="clearfix">
+                        <h6 class="pull-left mt0">
+                            1:1문의 목록 (총 <span id="listContainerInqrTotCnt">0</span> 건)
+                        </h6>
+                        <div class="pull-right ml-sm">
+                            <select class="form-control input-sm listRowSizeContainer" >
+                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                    <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                                </jsp:include>
+                            </select>
+                        </div>
+                    </div>
 
-<%--                <table class="table table-hover table-striped" >--%>
-<%--                        <thead>--%>
-<%--                        <tr>--%>
-<%--                            <th class="text-center">번호</th>--%>
-<%--                            <th class="text-center">1차 문의유형</th>--%>
-<%--                            <th class="text-center">2차 문의유형</th>--%>
-<%--                            <th class="text-center">제목</th>--%>
-<%--                            <th class="text-center">문의등록일</th>--%>
-<%--                            <th class="text-center">답변등록일</th>--%>
-<%--                            <th class="text-center">진행상태</th>--%>
-<%--                        </tr>--%>
-<%--                        </thead>--%>
-<%--                        <!-- 리스트 목록 결과 -->--%>
-<%--                        <tbody id="listContainerInqr"/>--%>
-<%--                    </table>--%>
-<%--                    <!-- 페이징 버튼 -->--%>
-<%--                    <div id="pagingContainerInqr"></div>--%>
-<%--                </div>--%>
+                <table class="table table-hover table-striped" >
+                        <thead>
+                        <tr>
+                            <th class="text-center">번호</th>
+                            <th class="text-center">1차 문의유형</th>
+                            <th class="text-center">2차 문의유형</th>
+                            <th class="text-center">제목</th>
+                            <th class="text-center">문의등록일</th>
+                            <th class="text-center">답변등록일</th>
+                            <th class="text-center">진행상태</th>
+                        </tr>
+                        </thead>
+                        <!-- 리스트 목록 결과 -->
+                        <tbody id="listContainerInqr"/>
+                    </table>
+                    <!-- 페이징 버튼 -->
+                    <div id="pagingContainerInqr"></div>
+                </div>
             </div>
             <hr />
 

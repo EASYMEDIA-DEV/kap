@@ -88,10 +88,7 @@
                     </div>
                 </div>
             </fieldset>
-
-
             <hr class="mt0" />
-
             <div class="clearfix">
                 <h6 class="pull-left mt0">
                     <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
@@ -132,9 +129,6 @@
                         <th class="text-center">직원수</th>
                         <th class="text-center">전화번호</th>
                         <th class="text-center">최초 등록자</th>
-                        <th class="text-center">최초 등록일시</th>
-                        <th class="text-center">최종 수정자</th>
-                        <th class="text-center">최종 수정일시</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

@@ -59,6 +59,8 @@ public class EBDEdctnEdisdDTO {
     private String episdOrd;
     @Schema(title = "업종 코드")
     private String cbsnCd;
+    @Schema(title = "업종 코드 명")
+    private String cbsnCdNm;
     @Schema(title = "접수 시작 일시")
     private String accsStrtDtm;
     @Schema(title = "접수 종료 일시")
@@ -108,4 +110,6 @@ public class EBDEdctnEdisdDTO {
 
     @Schema(title = "회원 순번")
     private Integer memSeq;
+    @Schema(title = "취득 일시")
+    private String acqsnDtm;
 }

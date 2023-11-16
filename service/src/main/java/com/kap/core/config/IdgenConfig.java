@@ -425,4 +425,43 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 회차관리 마스터 시퀏스
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxEpisdSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CX_EPISD_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 회차관리 마스터 시퀏스
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxEpisdGiveSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CX_EPISD_GIVE_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 교육장
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl edctnPlaceSeqSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EDCTN_PLACE_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }

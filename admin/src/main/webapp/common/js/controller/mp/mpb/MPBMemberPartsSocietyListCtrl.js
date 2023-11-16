@@ -14,6 +14,7 @@ var exports = {
     var $formObj = ctrl.obj.find("form").eq(0);
     var $excelObj = ctrl.obj.parent().find(".excel-down");
 
+    let popup;
     // 목록 조회
     var search = function (page){
 
@@ -59,7 +60,14 @@ var exports = {
                     $excelObj.modal("show");
                 }
             }
-        }
+        },
+            btnExcelDown2 : {
+                event : {
+                    click : function () {
+                        cmmCtrl.getUserPopOpen(popup);
+                    }
+                }
+            },
     },
     classname : {
 
@@ -119,6 +127,7 @@ var exports = {
             }
         }
     },
+
     //페이징 목록 갯수
 
     listRowSizeContainer : {

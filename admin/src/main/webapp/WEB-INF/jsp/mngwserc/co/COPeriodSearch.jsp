@@ -39,6 +39,18 @@
 				</div>
 			</c:if>
 			<div class="form-group mr-sm">
+				<c:if test="${param.srchType eq 'wbea'}">
+					<select class="form-control input-sm" data-name="carbonDate">
+						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>접수기간</option>
+						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>사업기간</option>
+					</select>
+				</c:if>
+				<c:if test="${param.srchType eq 'wbeb'}">
+					<select class="form-control input-sm" data-name="carbonDate">
+						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>신청일</option>
+						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>사업기간</option>
+					</select>
+				</c:if>
 				<div class="input-group">
 					<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 					<span class="input-group-btn" style="z-index:0;">
