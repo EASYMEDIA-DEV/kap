@@ -44,10 +44,10 @@ public class EBFEduRoomSearchDTO extends BaseDTO {
     private String nm;
 
     @Schema(title = "지역 코드")
-    private List<String> rgnsCd;
+    private String rgnsCd;
 
     @Schema(title = "지역 명")
-    private List<String> rgnsNm;
+    private String rgnsName;
 
     @Schema(title = "우편 번호")
     private String zipcode;

@@ -13,6 +13,7 @@
             PLACE_SEQ
             , NM
             , RGNS_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ED_CITY_CODE' AND CD = A.RGNS_CD) RGNS_NAME
             , ZIPCODE
             , BSC_ADDR
             , DTL_ADDR

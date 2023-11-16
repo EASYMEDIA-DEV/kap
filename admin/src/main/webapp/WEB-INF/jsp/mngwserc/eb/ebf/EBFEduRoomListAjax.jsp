@@ -11,7 +11,7 @@
         </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td><%--번호--%>
         <td class="text-center"><a href="javascript:" class="listView" data-details-key="${list.placeSeq}">${list.nm}</a></td><!--교육장명-->
-        <td class="text-center">${list.rgnsNm}</td><!--지역-->
+        <td class="text-center">${list.rgnsName}</td><!--지역-->
         <td class="text-center">
           <c:if test="${not empty list.zipcode}">(${list.zipcode})</c:if> ${list.bscAddr}<c:if test="${not empty list.dtlAddr}">, ${list.dtlAddr}</c:if>
         </td><!--주소-->

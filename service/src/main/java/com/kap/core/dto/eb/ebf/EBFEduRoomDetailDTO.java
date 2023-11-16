@@ -46,7 +46,7 @@ public class EBFEduRoomDetailDTO {
     private String rgnsCd;
 
     @Schema(title = "지역 명")
-    private String rgnsNm;
+    private String rgnsName;
 
     @Schema(title = "우편 번호")
     private String zipcode;
