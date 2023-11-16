@@ -98,7 +98,7 @@ var exports = {
                         $formObj.find("input[name='id']").val(jQuery(this).data("id"));
                         cmmCtrl.frmAjax(function (data){
                                 alert(msgCtrl.getMsg("success.co.coa.pwdInit"));
-                        }, "/mngwserc/comm/pwd-init", $formObj, "post", "json", true);
+                        }, "/mngwserc/mp/mpa/pwd-init", $formObj, "post", "json", true);
                         }
                     }
                 }

@@ -1,9 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.MPAAttctnDto;
-import com.kap.core.dto.MPAInqrDto;
-import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.*;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -69,4 +66,12 @@ public interface MPAUserService {
      * 문의 리스트 조회
      */
     MPAInqrDto selectInqrList(MPAInqrDto mpaUserDto) throws Exception;
+
+    /**
+     * 비밀번호 변경
+     * @param mpPwdInitDto
+     * @return
+     * @throws Exception
+     */
+    int updatePwdInit(MPPwdInitDto mpPwdInitDto) throws Exception;
 }
