@@ -36,7 +36,7 @@ var exports = {
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/mp/mpa/select-tab-two", $formObj, "POST", "html",'',false);
+        }, "/mngwserc/mp/mpb/select-tab-two", $formObj, "POST", "html",'',false);
     }
 
     var tabThree = function () {
@@ -52,6 +52,24 @@ var exports = {
             cmmCtrl.listPaging(totCnt, $formObj, "listContainerInqr", "pagingContainerInqr");
         }, "/mngwserc/mp/mpa/select-tab-three", $formObj, "POST", "html",'',false);
     }
+    var tabFour = function () {
+
+    }
+
+    var tabFive = function () {
+        cmmCtrl.listFrmAjax(function(respObj) {
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+            //CALLBACK 처리
+            ctrl.obj.find("#listContainerInqr").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#listContainerInqrTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainerInqr", "pagingContainerInqr");
+        }, "/mngwserc/mp/mpb/select-tab-five", $formObj, "POST", "html",'',false);
+
+    }
     // 목록 조회
     var search = function (page){
 
@@ -59,16 +77,24 @@ var exports = {
             $formObj.find("#pageIndex").val(page);
         }
         tabOne();
-        // tabTwo();
+        tabTwo();
+        // tabFour();
+        tabFive();
         // tabThree();
     }
 
+
+
     var tabReload = function (type) {
 
-        if(type == 'pur') {
+        if(type == 'edu') {
             tabTwo();
-        } else if(type == 'chat' ) {
+        } else if(type == 'bus' ) {
             tabThree();
+        } else if(type == 'san' ) {
+            tabFour();
+        } else if(type == 'chat' ) {
+            tabFive();
         }
     }
     // set model

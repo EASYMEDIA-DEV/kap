@@ -1,7 +1,6 @@
 package com.kap.mngwserc.controller.mp;
 
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.*;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPAUserService;
@@ -147,6 +146,34 @@ public class MPBMemberPartsSocietyController {
         }
 
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyWrite.admin";
+    }
+
+    /**
+     * 교육 사업 현호아 리스트 조회
+     */
+    @PostMapping(value = "/select-tab-two")
+    public String selectEduListPageTabTwoAjax(MPBEduDto mpbEduDto ,
+                                              ModelMap modelMap ) throws Exception {
+
+        modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectEduList(mpbEduDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpbEduDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpb/MPBMemberPartsSocietyTabTwoAjax";
+    }
+
+    /**
+     * 문의 내역 리스트 조회
+     */
+    @PostMapping(value = "/select-tab-five")
+    public String selectUserListPageTabThreeAjax(MPAInqrDto mpaInqrDto ,
+                                                 ModelMap modelMap ) throws Exception {
+
+        modelMap.addAttribute("rtnData", mpaUserService.selectInqrList(mpaInqrDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpaInqrDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpb/MPBMemberPartsSocietyTabFiveAjax";
     }
 
     @GetMapping(value = "/excel-down")
