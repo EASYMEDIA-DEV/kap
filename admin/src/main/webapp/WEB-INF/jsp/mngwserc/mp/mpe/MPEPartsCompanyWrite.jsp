@@ -45,7 +45,7 @@
                                 <tr class="form-inline">
                                     <th>사업자등록번호<span class="star"> *</span></th>
                                     <td>
-                                        <input type="text" class="form-control input-sm" id="bsnmNo" name="bsnmNo" value="${rtnDto.bsnmNo}" title="사업자번호" placeholder="사업자등록번호를 입력해주세요." <c:if test="${not empty rtnDto.bsnmNo}">readonly</c:if> style="width: 220px;"/>
+                                        <input type="text" class="form-control input-sm" id="bsnmNo" name="bsnmNo" value="${rtnDto.bsnmNo}" title="사업자번호" placeholder="사업자등록번호를 입력해주세요." <c:if test="${not empty rtnDto.bsnmNo or not empty rtnInfo }">readonly</c:if> style="width: 220px;"/>
                                         <button type="button" class="btn btn-sm" id="checkBtn">인증</button> <span class="input-sm">※ 사업자등록번호 인증 시 부품사/대표자명이 자동으로 입력됩니다.</span>
 
                                     </td>
