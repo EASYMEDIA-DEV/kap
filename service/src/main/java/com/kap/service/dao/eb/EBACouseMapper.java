@@ -60,7 +60,7 @@ public interface EBACouseMapper {
 	public int insertCouseTrgt(EBACouseDTO eBACouseDTO) throws Exception;
 
 	/**
-	 * 교육과정대상을 삭제한다.
+	 * 교육과정대상을 삭제전 차수관리 사용여부 체크
 	 */
 	public int selectEpisdListChk(EBACouseDTO eBACouseDTO) throws Exception;
 

@@ -58,6 +58,8 @@ public class EBBEpisdController {
         cdDtlList.add("STDUY_MTHD"); //학습방식
         cdDtlList.add("STDUY_DD");//학습시간 - 학습일
         cdDtlList.add("STDUY_TIME");//학습시간 - 학습시간
+        cdDtlList.add("RCRMT_MTHD");//학습시간 - 학습시간
+
 
         modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 
@@ -78,11 +80,11 @@ public class EBBEpisdController {
      * 교육회차관리 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
-    public String selectPopListPageAjax(ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getEpisdPageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-
+            modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
 
         }
         catch (Exception e)

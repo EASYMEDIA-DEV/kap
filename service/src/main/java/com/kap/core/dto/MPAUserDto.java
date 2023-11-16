@@ -1,6 +1,5 @@
 package com.kap.core.dto;
 
-import com.kap.core.annotation.MaskRequired;
 import lombok.*;
 
 import java.util.List;
