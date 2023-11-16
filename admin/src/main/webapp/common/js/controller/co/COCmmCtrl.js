@@ -1534,6 +1534,7 @@ var cmmCtrl = (function(){
 			width: width, //생성자에 크기 값을 명시적으로 지정해야 합니다.
 			height: height,
 			oncomplete: function(data) {
+				console.log(data);
 				// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
 				// 각 주소의 노출 규칙에 따라 주소를 조합한다.
@@ -1593,6 +1594,37 @@ var cmmCtrl = (function(){
 		}).modal();
 	}
 
+	/**
+	 * 팝업 호출
+	 * 1.  cmmCtrl.getUserPopOpen(popup);
+	 */
+	var fn_user_pop_open = function(popup) {
+			if (popup && !popup.closed) {
+				popup.close();
+			}
+
+		popup = window.open("/mngwserc/mp/mpa/list?popup=Y", "member", "width=1600, height=600");
+			window.onbeforeunload = function() {
+			}
+			popup.onload = function() {
+				// 팝업이 로드된 후에 헤더와 사이드바 요소를 숨깁니다.
+				const header = popup.document.querySelector('header');
+				const aside = popup.document.querySelector('aside');
+				$(popup.document).find('#btnExcelDown').hide();
+				if (header && header.style.display !== 'none') {
+					header.style.display = 'none';
+				}
+				if (aside && aside.style.display !== 'none') {
+					aside.style.display = 'none';
+				}
+				const mainContainer = popup.document.querySelector('.main-container');
+				if (mainContainer) {
+					mainContainer.classList.remove('main-container');
+				}
+			};
+	}
+
+
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1626,6 +1658,10 @@ var cmmCtrl = (function(){
 		gridRequestEnd : fn_grid_request_end,
 		gridRemoveRow : fn_grid_remove_row,
 		searchPostCode : fn_postData,
+
+		//회원 팝업
+		getUserPopOpen : fn_user_pop_open,
+
 
 		//json형식의 데이터를 문자열로 변환 후 자바 컨트롤러에서 @RequestBody BaseDTO baseDto 로 받는다
 		jsonAjax : fn_json_ajax_data,
