@@ -398,4 +398,16 @@ public class IdgenConfig {
     }
 
 
+    /** 회원 변경 로그 시퀏스
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl memModSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("MEM_MOD_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }
