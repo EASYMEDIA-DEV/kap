@@ -11,13 +11,29 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	var ctrl = new ezCtrl.controller(exports.controller);
 
 	// form Object
-	//var $formObj = ctrl.obj.find("form").eq(0);
 	var $formObj = jQuery("#frmData");
 
 
+
+	//과정분류 조회
+	var selectCtgryCdList = function(arg){
+
+		if(arg === undefined){
+			arg = $("#ctgryCd").data("ctgrycd");
+		}
+
+		var cdMst= {};
+		cdMst.cd = $(arg).val();
+
+		cmmCtrl.jsonAjax(function(data){
+			callbackAjaxCtgryCdList(data);
+		}, './classTypeList', cdMst, "text");
+	}
+
+	//과정분류 2뎁스 세팅
 	var callbackAjaxCtgryCdList = function(data){
 
-		var detailList = data.detailList;
+		var detailList = JSON.parse(data);
 		var selectHtml = "<option value=''>전체</option>";
 
 		for(var i =0; i < detailList.length; i++){
@@ -28,31 +44,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			selectHtml += "<option value='"+cd+"' >"+cdNm+"</option>";
 		}
 
-
 		$("#ctgryCd option").remove();
 
 		$("#ctgryCd").append(selectHtml);
 
-
 		var ctgrycd = $("#ctgryCd").data("ctgrycd");
 
 		$("#ctgryCd").val(ctgrycd).prop("selected", true);//조회된 과정분류값 자동선택
-	}
-
-	//과정분류 2뎁스 세팅
-
-	//과정분류 조회
-	var selectCtgryCdList = function(arg){
-
-		if(arg === undefined){
-			arg = $("#ctgryCd").data("ctgrycd");
-		}
-
-		var form = document.createElement("form");
-
-		form.setAttribute("cd", $(arg).val());
-
-		cmmCtrl.frmAjax(callbackAjaxCtgryCdList, "./classTypeList", $formObj, "post", "json");
 	}
 
 	var setSelectBox = function(arg){

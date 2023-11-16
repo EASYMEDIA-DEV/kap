@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -131,12 +132,13 @@ public class COFileController {
      * </pre>
      */
     @RestController
+    @RequiredArgsConstructor
     public class COFileRestController {
        /**
          * 파일 임시 업로드 후 정보 조회한다.
        */
         @PostMapping(value="/mngwserc/dropzone/upload")
-        public List<COFileDTO> getUpdoadFileInfs(COFileDTO coFileDTO, HttpServletRequest request) throws Exception
+        public List<COFileDTO> getUpdoadFileInfs(@RequestBody COFileDTO coFileDTO, HttpServletRequest request) throws Exception
         {
             List<COFileDTO> rtnList = null;
             try
