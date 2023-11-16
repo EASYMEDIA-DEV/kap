@@ -71,4 +71,14 @@ public class EBDSqCertiListDTO {
     private String modName;
     @Schema(title = "최종수정일시")
     private String modDtm;
+    @Schema(title = "사용여부(사용,중지)")
+    private String useYn;
+    @Schema(title = "SQ 평가원 구분 코드")
+    private String examCd;
+    @Schema(title = "SQ 평가원 구분 코드명")
+    private String examCdNm;
+    @Schema(title = "취득일시")
+    private String acqsnDtm;
+    @Schema(title = "만료예정일")
+    private String validEndDt;
 }

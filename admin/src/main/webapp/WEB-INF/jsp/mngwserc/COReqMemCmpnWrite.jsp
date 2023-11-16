@@ -2,11 +2,11 @@
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div data-controller="controller/COReqMemCmpnWrite" data-mem-seq="${param.memSeq}">
     <input type="hidden" class="notRequired" name="memMemSeq" value="${param.memSeq}" />
-    <h7 class="mt0 text-bold"><em class="ion-android-arrow-dropright mr-sm"></em>신청자 정보</h7>
+    <h7 class="mt0 text-bold"><em class="ion-android-arrow-dropright mr-sm"></em>${param.memTitle} 정보</h7>
     <hr >
     <fieldset class="mt0">
         <div class="form-group text-sm ">
-            <label class="col-sm-1 control-label text-bold">신청자(아이디)</label>
+            <label class="col-sm-1 control-label text-bold">성명(아이디)</label>
             <div class="col-sm-5 memName">
             </div>
             <label class="col-sm-1 control-label text-bold">이메일<span class="star"> *</span></label>
@@ -45,7 +45,7 @@
             </div>
         </div>
     </fieldset>
-    <h7 class="mt0 text-bold cmpnContainer"><em class="ion-android-arrow-dropright mr-sm"></em>부품사 정보</h7>
+    <h7 class="mt0 text-bold cmpnContainer"><em class="ion-android-arrow-dropright mr-sm"></em>${param.cmpnTitle} 정보</h7>
     <hr class="cmpnContainer"/>
     <fieldset class="cmpnContainer">
         <div class="form-group text-sm">

@@ -2,6 +2,7 @@ package com.kap.service.dao.eb;
 
 import com.kap.core.dto.COEgovSeqDTO;
 import com.kap.core.dto.eb.ebd.*;
+import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
 import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
@@ -54,4 +55,14 @@ public interface EBDSqCertiReqMapper {
      * 신청서 상태 변경
      */
     public int updateIssue(EBDEdctnEdisdDTO eBDEdctnEdisdDTO);
+
+    /**
+     * 자격증 상세
+     */
+    public EBGExamAppctnMstDTO selectExamAppctnMst(EBDSqCertiSearchDTO eBDEdctnEdisdDTO);
+
+    /**
+     * 자격증 정보 변경
+     */
+    public int updateConfirmInfo(EBGExamAppctnMstDTO eBGExamAppctnMstDTO);
 }
