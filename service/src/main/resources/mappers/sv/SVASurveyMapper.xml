@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.sv.SVASurveyMapper">
+	<!--
+         쿼리명 : SVASurveyMapper.getSurveyTypeList
+         설  명 : 상세 전체 코드
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.06  박준희     최초 생성
+    -->
+	<select id="getSurveyTypeList" resultType="COCodeDTO">
+		SELECT /* SVASurveyMapper.getSurveyTypeList */
+			  cd_id
+			, cd
+			, cd_nm
+		FROM
+			co_code_mst
+		WHERE CD_ID = 'SURVEY_TYPE' AND USE_YN = 'Y' AND DPTH > 2
+		ORDER BY
+			lft_val
+	</select>
+
+
+	<!--
+          쿼리명 : SVASurveyMapper.selectSurveyList
+          설  명 : 목록을 조회한다.
+              수정일	 수정자     수정내용
+         ==========   ======   =============
+         2023.11.09   박준희     최초생성
+     -->
+	<select id="selectSurveyList" parameterType="SVASurveyMstSearchDTO">
+		SELECT /* SVASurveyMapper.selectSurveyList */
+		SRV_SEQ
+		,TYPE_CD
+		, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.TYPE_CD) AS TYPE_NM
+		,TITL
+		,RSPN_MM
+		,CNTN
+		,EXPS_YN
+		,REG_ID
+		, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+		,REG_IP
+		,REG_DTM
+		,MOD_ID
+		, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+		,MOD_IP
+		,MOD_DTM
+		FROM SV_MST A
+		<include refid="selectSurveyListwhereSql" />
+		ORDER BY
+		SRV_SEQ DESC
+		LIMIT #{firstIndex}, #{recordCountPerPage}
+
+	</select>
+
+	<!--
+         쿼리명 : SVASurveyMapper.selectSurveyListCnt
+         설  명 : 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    박준희       최초생성
+    -->
+	<select id="selectSurveyListCnt" parameterType="SVASurveyMstSearchDTO" resultType="java.lang.Integer">
+		SELECT /* SVASurveyMapper.selectSurveyListCnt*/
+		COUNT(SRV_SEQ)
+		FROM
+		SV_MST A
+		<include refid="selectSurveyListwhereSql" />
+	</select>
+
+	<!--
+        쿼리명 : selectSurveyListwhereSql
+        설  명 : where Sql
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    박준희       최초생성
+    -->
+	<sql id="selectSurveyListwhereSql">
+		<where>
+			<if test="srchDate != null and srchDate != ''.toString() ">
+				<choose>
+					<when test="srchDate == 1">
+						<if test="strtDt != null and strtDt != ''.toString() ">
+							AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+						</if>
+						<if test="endDt != null and endDt != ''.toString() ">
+						AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						</if>
+					</when>
+					<when test="srchDate == 2">
+						<if test="strtDt != null and strtDt != ''.toString() ">
+							AND MOD_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+						</if>
+						<if test="endDt != null and endDt != ''.toString() ">
+							AND MOD_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						</if>
+					</when>
+				</choose>
+			</if>
+			<if test="expsYnList != null and expsYnList.size() > 0">
+				AND (
+				<foreach collection="expsYnList" item="expsYnList" index="index" open="" close="" separator=" or ">
+					EXPS_YN = #{expsYnList}
+				</foreach>
+				)
+			</if>
+			<if test="typeCdList != null and typeCdList.size() > 0">
+				AND (
+				<foreach collection="typeCdList" item="typeCdList" index="index" open="" close="" separator=" or ">
+					type_cd = #{typeCdList}
+				</foreach>
+				)
+			</if>
+
+
+			<if test="q != null and q != ''">
+				<choose>
+					<when test="f == 1">
+						AND TITL LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 2">
+						AND (
+						INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
+					</when>
+					<when test="f == 3">
+						AND (
+						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
+					</when>
+					<otherwise>
+						AND (
+						INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+
+
+	<!--
+         쿼리명 : SVASurveyMapper.insertSurveyMst
+         설  명 : 교육 시험 마스터 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.15    박준희       최초생성
+    -->
+	<insert id="insertSurveyMst" parameterType="EXGExamMstInsertDTO">
+		insert /* SVASurveyMapper.insertSurveyMst */ into sv_mst
+		(
+		srv_seq
+		, type_cd
+		, titl
+		, rspn_mm
+		, cntn
+		, exps_yn
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm
+		)
+		values
+			(
+				#{srvSeq}
+			, #{typeCd}
+			, #{titl}
+			, #{rspnMm}
+			, #{cntn}
+			, #{expsYn}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+	</insert>
+
+
+	<!--
+         쿼리명 : SVASurveyMapper.insertSurveyQstnDtl
+         설  명 : 설문 보기 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.15    박준희       최초생성
+    -->
+	<insert id="insertSurveyQstnDtl" parameterType="sVASurveyMstInsertDTO">
+		insert /* SVASurveyMapper.insertSurveyQstnDtl */ into sv_qstn_dtl
+		(
+		qstn_seq
+		, srv_seq
+		, ctgry_cd
+		, srv_type_cd
+		, parnt_qstn_seq
+		, dpth
+		, qstn_nm
+		, ncs_yn
+		, qstn_ord
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm
+		)
+		values
+		<foreach collection="svSurveyQstnDtlList" item="list" index="index" separator=" , " open="" close=";">
+			(
+			#{list.qstnSeq}
+			, #{list.srvSeq}
+			, #{list.ctgryCd}
+			, #{list.srvTypeCd}
+			, #{list.parntQstnSeq}
+			, #{list.dpth}
+			, #{list.qstnNm}
+			, #{list.ncsYn}
+			, #{list.qstnOrd}
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+			)
+		</foreach>
+	</insert>
+
+
+	<!--
+         쿼리명 : SVASurveyMapper.insertSurveyQstnDtl
+         설  명 : 설문 보기 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.15    박준희       최초생성
+    -->
+	<insert id="insertSurveyExmplDtl" parameterType="SVASurveyQstnDtlDTO">
+		insert /* SVASurveyMapper.insertSurveyExmplDtl */ into sv_exmpl_dtl
+		(
+		exmpl_seq
+		, qstn_seq
+		, exmpl_nm
+		, exmpl_ord
+		, next_no
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm
+		)
+		values
+		<foreach collection="svSurveyExmplDtlList" item="list" index="index" separator=" , " open="" close=";">
+			(
+			#{list.exmplSeq}
+			, #{list.qstnSeq}
+			, #{list.exmplNm}
+			, #{list.exmplOrd}
+			, #{list.nextNo}
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+			, #{list.regId}
+			, #{list.regIp}
+			, now()
+			)
+		</foreach>
+	</insert>
+
+
+
+	<!--
+         쿼리명 : SVASurveyMapper.deleteSurveyMst
+         설  명 : 목록 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.15   박준희       최초생성
+    -->
+	<delete id="deleteSurveyMst" parameterType="SVASurveyMstSearchDTO">
+		delete /* SVASurveyMapper.deleteExamMst */
+			sv_mst , sv_qstn_dtl , sv_exmpl_dtl
+		    from sv_mst
+		    inner join sv_qstn_dtl on sv_mst.srv_seq = sv_qstn_dtl.srv_seq
+		    inner join sv_exmpl_dtl on sv_qstn_dtl.qstn_seq = sv_exmpl_dtl.qstn_seq
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					sv_mst.srv_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					sv_mst.srv_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+
+
+	<!--
+		쿼리명 : SVASurveyMapper.getSurveyEdctnEpisdCnt
+		설  명 : 평가지 설문 매핑 여부
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.15    박준희       최초생성
+    -->
+	<select id="getSurveyEdctnEpisdCnt" parameterType="SVASurveyMstSearchDTO" resultType="java.lang.Integer">
+		select /* SVASurveyMapper.getExamEdctnEpisdCnt */
+		count(*) recp_cnt
+		from sv_mst sv_mst join ed_edctn_episd_mst episd_mst
+		on episd_mst.srv_seq = sv_mst.srv_seq
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					sv_mst.srv_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					sv_mst.srv_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+
+	<!--
+		쿼리명 : SVASurveyMapper.getSurveyCnstgRsumeCnt
+		설  명 : 컨설팅 설문 매핑 여부
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.15    박준희       최초생성
+    -->
+	<select id="getSurveyCnstgRsumeCnt" parameterType="SVASurveyMstSearchDTO" resultType="java.lang.Integer">
+		select /* SVASurveyMapper.getSurveyCnstgRsumeCnt */
+		count(*) recp_cnt
+		from sv_mst sv_mst join cp_cnstg_rsume_mst cnstg_mst
+		on cnstg_mst.srv_seq = sv_mst.srv_seq
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					sv_mst.srv_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					sv_mst.srv_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
+	<!--
+		쿼리명 : SVASurveyMapper.selectSurveyDtl
+		설  명 : 설문 마스터 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.15    박준희       최초생성
+    -->
+	<select id="selectSurveyDtl" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyMstInsertDTO">
+		select /* SVASurveyMapper.selectSurveyDtl */
+		     srv_seq
+		     ,type_cd
+			 ,titl
+ 			 ,rspn_mm
+			 ,cntn
+			 ,exps_yn
+			 ,reg_id
+			 ,reg_dtm
+			 ,mod_id
+			 ,mod_dtm
+		from sv_mst
+		where srv_seq = #{detailsKey}
+	</select>
+
+	<!--
+    쿼리명 : SVASurveyMapper.selectSurveyQstnDtlList
+    설  명 : 설문 질문 조회
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.15    박준희       최초생성
+-->
+	<select id="selectSurveyQstnDtlList" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyQstnDtlDTO">
+
+		SELECT 		/* SVASurveyMapper.selectSurveyQstnDtlList */
+			cd_id
+			 , cd
+			 , cd_nm
+			 , qstn_seq
+			 , ctgry_cd
+			 , srv_type_cd
+			 , parnt_qstn_seq
+			 , dpth
+			 , qstn_nm
+			 , ncs_yn
+			 , qstn_ord
+			 , exmpl_cnt
+	  		 , qstn_grp_ord
+		FROM (
+				 SELECT
+					 cd_id
+					  , cd
+					  , cd_nm
+					  , b.qstn_seq
+					  , b.ctgry_cd
+					  , b.srv_type_cd
+					  , b.parnt_qstn_seq
+					  , b.dpth
+					  , b.qstn_nm
+					  , b.ncs_yn
+					  , b.qstn_ord
+					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
+					  , case when @grp collate utf8mb4_general_ci = b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
+					  , (@grp := ctgry_cd) as dum
+				 FROM
+					 co_code_mst a left join (select * from sv_qstn_dtl where srv_seq = #{detailsKey}) b on a.cd = b.ctgry_cd
+					, (select @rownum:=0, @grp:='') r
+				 WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2
+				 ORDER BY
+					 lft_val , qstn_ord
+			 ) T
+
+	</select>
+
+
+	<!--
+		쿼리명 : SVASurveyMapper.selectSurveyExmplDtlList
+		설  명 : 교육 시험 마스터 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.15    박준희       최초생성
+    -->
+	<select id="selectSurveyExmplDtlList" parameterType="SVASurveyQstnDtlDTO" resultType="SVASurveyExmplDtlDTO">
+		select /* SVASurveyMapper.selectSurveyExmplDtlList */
+			exmpl_seq
+			 ,qstn_seq
+			 ,exmpl_nm
+			 ,exmpl_ord
+			 ,next_no
+			 ,reg_id
+			 ,reg_dtm
+			 ,mod_id
+			 ,mod_dtm
+		from sv_exmpl_dtl
+		where qstn_seq = #{qstnSeq}
+		order by qstn_seq asc, exmpl_ord asc
+	</select>
+</mapper>
