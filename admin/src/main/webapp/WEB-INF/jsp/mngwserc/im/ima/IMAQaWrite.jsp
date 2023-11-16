@@ -106,7 +106,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">답변내용<span class="star"> *</span></label>
                     <div class="col-sm-9">
-                        <textarea class="form-control notRequired ckeditorRequired" id="rplyCntn" name="rplyCntn" title="답변내용" data-type="${pageGb}" style="min-height: 200px; resize: vertical;" <c:if test="${rtnQaInfo.rsumeCd eq 'ACK'}">readonly</c:if>>${rtnQaInfo.rplyCntn}</textarea>
+                        <textarea class="form-control notRequired ckeditorRequired" id="rplyCntn" name="rplyCntn" title="답변내용" data-type="${pageGb}" style="min-height: 200px; resize: vertical;" maxlength="500" <c:if test="${rtnQaInfo.rsumeCd eq 'ACK'}">readonly</c:if>>${rtnQaInfo.rplyCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
