@@ -43,7 +43,7 @@ import java.util.ArrayList;
 @RequestMapping(value="/mngwserc/wb/wbea")
 public class WBEACarbonListController {
 
-    /** 서비스 **/
+    /** 1서비스 **/
     public final WBEACarbonListService wBEACarbonListService;
     public final COCodeService cOCodeService;
 
