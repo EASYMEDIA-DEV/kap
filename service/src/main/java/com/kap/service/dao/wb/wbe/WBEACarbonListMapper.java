@@ -1,8 +1,8 @@
 package com.kap.service.dao.wb.wbe;
 
-import com.kap.core.dto.WBOrderMstDto;
-import com.kap.core.dto.WBRoundMstDTO;
-import com.kap.core.dto.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.WBOrderMstDto;
+import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 
 import java.util.List;
 

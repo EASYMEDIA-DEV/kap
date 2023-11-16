@@ -62,7 +62,7 @@
 								<div class="col-sm-3 pr0">
 									<select class="form-control input-sm" data-name="f">
 										<option value="">전체</option>
-										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>과정명</option>
+										<!--<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>과정명</option> 이가은 사원 요청(2023.11.16)-->
 										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>회원 이름</option>
 										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>회원 연락처</option>
 										<option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>회원 이메일</option>

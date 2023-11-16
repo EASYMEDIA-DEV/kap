@@ -2,8 +2,8 @@ package com.kap.mngwserc.controller.wb.wbe;
 
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.WBRoundMstDTO;
-import com.kap.core.dto.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBEACarbonListService;

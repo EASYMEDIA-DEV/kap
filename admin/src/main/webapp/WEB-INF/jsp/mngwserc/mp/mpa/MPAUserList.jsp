@@ -1,11 +1,12 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
-<div class="container-fluid">
+<div class="container-fluid ">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/mp/mpa/MPAUserListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
         <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="account">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+            <input type="hidden" id="popData" name="popData"  />
             <!-- 페이징 버튼 사이즈 -->
             <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
             <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
@@ -97,6 +98,9 @@
             </div>
             <!--리스트 종료 -->
         </form>
+        <div class="pull-right">
+            <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnChoice">선택</button>
+        </div>
     </div>
 </div>
 

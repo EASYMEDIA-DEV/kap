@@ -31,22 +31,28 @@ import java.util.List;
 public class EBBEpisdDTO extends BaseDTO  {
 
     @Schema(title = "교육순번", example = "숫자")
-    private int edctnSeq;
+    private Integer edctnSeq;
 
     @Schema(title = "회차정렬", example = "숫자")
-    private int episdOrd;
+    @Builder.Default
+    private Integer episdOrd = 1;
 
     @Schema(title = "회차년도", example = "yyyy")
-    private int episdYear;
+    private Integer episdYear;
 
     @Schema(title = "업종코드", example = "")
     private String cbsnCd;
 
     @Schema(title = "접수시작일시", example = "yyyy-mm-dd HH:mm:ss")
     private String accsStrtDtm;
+    @Schema(title = "접수시작시간", example = "HH:mm")
+    private String accsStrtHour;
 
     @Schema(title = "접수종료일시", example = "yyyy-mm-dd HH:mm:ss")
     private String accsEndDtm;
+    @Schema(title = "접수종료시간", example = "HH:mm")
+    private String accsEndHour;
+
 
     @Schema(title = "교육시작일시", example = "yyyy-mm-dd HH:mm:ss")
     private String edctnStrtDtm;
@@ -55,10 +61,11 @@ public class EBBEpisdDTO extends BaseDTO  {
     private String edctnEndDtm;
 
     @Schema(title = "정원수", example = "숫자")
-    private int fxnumCnt;
+    private Integer fxnumCnt;
 
-    @Schema(title = "정원제한여부", example = "Y/N")
-    private String fxnumImpsbYn;
+    @Schema(title = "정원제한여부", example = "제한없음 :Y / 제한있음 : N")
+    @Builder.Default
+    private String fxnumImpsbYn = "Y";
 
     @Schema(title = "모집방법코드", example = "숫자")
     private String rcrmtMthdCd;
@@ -72,11 +79,11 @@ public class EBBEpisdDTO extends BaseDTO  {
     @Schema(title = "담당자전화번호", example = "xxx-xxxx-xxxx")
     private String picTelNo;
 
-    @Schema(title = "교육설명내용", example = "텍스트")
-    private String edctnDscCntn;
+    @Schema(title = "교육안내문", example = "숫자")
+    private Integer edctnNtctnFileSeq;
 
     @Schema(title = "교육장소순번", example = "숫자")
-    private int placeSeq;
+    private Integer placeSeq;
 
     @Schema(title = "교육장소명", example = "")
     private String placeNm;
@@ -90,13 +97,18 @@ public class EBBEpisdDTO extends BaseDTO  {
     @Schema(title = "수료자동여부", example = "Y/N")
     private String cmptnAutoYn;
 
+
     @Schema(title = "사용여부", example = "Y/N")
     private String expsYn;
 
     @Schema(title = "카테고리 부모코드번호", example = "숫자")
     private String parntSeq;
 
-    @Schema(title = "카테고리 부모 ", example = "")
+
+    @Schema(title = "카테고리 부모 코드 ", example = "")
+    private String prntCd;
+
+    @Schema(title = "카테고리 부모 코드 명 ", example = "")
     private String prntCdNm;
 
     @Schema(title = "카테고리 코드", example = "")
@@ -117,7 +129,7 @@ public class EBBEpisdDTO extends BaseDTO  {
     @Schema(title = "학습일 코드", example = "")
     private String stduyDdCd;
 
-    @Schema(title = "회차정렬", example = "숫자")
+    @Schema(title = "학습일 명", example = "숫자")
     private String stduyDdCdNm;
 
     @Schema(title = "학습시간 코드", example = "")
@@ -148,12 +160,20 @@ public class EBBEpisdDTO extends BaseDTO  {
     private String isttrOutCnt;
 
     @Schema(title = "신청자수", example = "숫자")
-    private String accCnt;
+    private String accsCnt;
 
     @Schema(title = "모집방법코드명", example = "숫자")
     private String rcrmtMthdCdNm;
 
+    @Schema(title = "복사여부", example = "Y/N")
+    @Builder.Default
+    private String copyYn = "N";
 
+    @Schema(title = "회차번호 공통코드", example = "숫자")
+    private String roundCd;
+
+    @Schema(title = "회차번호 강의순번", example = "숫자")
+    private Integer lctrSeq;
 
 
 
@@ -178,7 +198,7 @@ public class EBBEpisdDTO extends BaseDTO  {
 
     private List<String> rcrmtMthdCdList;
 
-
+    private List<EBBLctrDTO> lctrList;
 
 
     private String sqnm;

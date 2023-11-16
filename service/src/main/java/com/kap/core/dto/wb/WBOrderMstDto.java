@@ -1,8 +1,9 @@
-package com.kap.core.dto;
+package com.kap.core.dto.wb;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -28,7 +29,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "상생사업관리 지급 상세")
-public class WBOrderMstDto extends BaseDTO{
+public class WBOrderMstDto extends BaseDTO {
 
 
     @Schema(title = "지급순번", example = "숫자")

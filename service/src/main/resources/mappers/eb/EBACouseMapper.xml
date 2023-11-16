@@ -27,6 +27,7 @@
 			, reg_dtm
 			, mod_id
 			, mod_name
+		    , mod_dtm
 			, exps_yn
 		, reg_dtm
 			FROM

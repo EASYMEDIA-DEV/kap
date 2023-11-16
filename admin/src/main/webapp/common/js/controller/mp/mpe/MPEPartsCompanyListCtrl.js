@@ -119,13 +119,37 @@ define(["ezCtrl"], function(ezCtrl) {
                         search(1);
                     }
                 }
+            },
+            //검색 레이어에서 선택시 호출
+            btnPartsCompanyLayerChoice:{
+                event : {
+                    click: function(){
+                        var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
+                        if( choiceCnt > 1){
+                            alert(msgCtrl.getMsg("fail.mp.mpe.notSrchPartsCom1"));
+                        } else if(choiceCnt == 0){
+                            alert(msgCtrl.getMsg("fail.mp.mpe.notSrchPartsCom"));
+                        }else{
+                            var clickObj = {};
+                            clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();
+                            var titl = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text());
+                            clickObj.titl = titl;
+                            ctrl.obj.trigger("choice", [clickObj])
+                            ctrl.obj.find(".close").click();
+                        }
+                    }
+                }
             }
         },
         immediately : function() {
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
 
-            search($formObj.find("input[name=pageIndex]").val());
+            //레이어 팝업에서 호출 할 수 있다.
+            if($formObj.find("input[name=srchPartsComLayer]").size() == 0){
+                search($formObj.find("input[name=pageIndex]").val());
+            }
+            //search($formObj.find("input[name=pageIndex]").val());
 
             $excelObj.find("button.down").on('click', function(){
                 var rsn = $excelObj.find("#rsn").val().trim();

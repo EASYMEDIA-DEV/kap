@@ -101,7 +101,7 @@ public class MPAUserController {
     }
 
     /**
-     * 미래차공모전 리스트 조회
+     * 문의 내역 리스트 조회
      */
     @PostMapping(value = "/select-tab-three")
     public String selectUserListPageTabThreeAjax(MPAInqrDto mpaInqrDto ,

@@ -1,8 +1,8 @@
 package com.kap.service;
 
 
-import com.kap.core.dto.WBRoundMstDTO;
-import com.kap.core.dto.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 
 import javax.servlet.http.HttpServletRequest;
 

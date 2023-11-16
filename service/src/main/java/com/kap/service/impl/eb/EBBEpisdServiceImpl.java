@@ -3,6 +3,7 @@ package com.kap.service.impl.eb;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.EBACouseDTO;
 import com.kap.core.dto.EBBEpisdDTO;
+import com.kap.core.dto.EBBLctrDTO;
 import com.kap.service.COFileService;
 import com.kap.service.COSeqGnrService;
 import com.kap.service.EBBEpisdService;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <pre>
@@ -55,6 +57,10 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	/* 교육차수마스터 시퀀스 */
 	private final EgovIdGnrService edctnEpisdIdgen;
 
+	/* 교육차수 - 교육강의상세 시퀀스 */
+	private final EgovIdGnrService edctnLctrIdgen;
+
+
 
 	/**
 	 *  교육차수 목록을 조회한다.
@@ -89,9 +95,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		map.put("rtnData", ebbDto);
 
-		//map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
-
-
 		return map;
 	}
 
@@ -105,33 +108,28 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		int respCnt = 0;
 
 		//파일 처리
-		/*HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBACouseDTO.getFileList());
+		HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBBEpisdDTO.getFileList());
 
-		eBACouseDTO.setThnlFileSeq(fileSeqMap.get("thnlFileSeq"));
+		eBBEpisdDTO.setEdctnNtctnFileSeq(fileSeqMap.get("edctnNtctnFileSeq"));
 
 
 		int firstEdctnMstIdgen = edctnEpisdIdgen.getNextIntegerId();
 
-		eBACouseDTO.setEdctnSeq(firstEdctnMstIdgen);
+		eBBEpisdDTO.setEdctnSeq(firstEdctnMstIdgen);
 
-		//교육과정 등록
-		respCnt = eBACouseMapper.insertCouse(eBACouseDTO);
+		//교육차수 등록
+		respCnt = eBBEpisdMapper.insertEpisd(eBBEpisdDTO);
 
-		String temp = eBACouseDTO.getTargetCd();
+		eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
 
-		String[] tempArray =temp.split(",");
+		//교육강의 상세 등록(온라인교육)
 
-		for(String a : tempArray){
-			eBACouseDTO.setTargetCd(a);
-			eBACouseMapper.insertCouseTrgt(eBACouseDTO);
+		List<EBBLctrDTO> lctrDtoList = eBBEpisdDTO.getLctrList();
+		for(EBBLctrDTO lctrDto : lctrDtoList){
+			int firstEdctnLctrIIdgen = edctnLctrIdgen.getNextIntegerId();
+			lctrDto.setLctrSeq(firstEdctnLctrIIdgen);
+			eBBEpisdMapper.insertLctrDtl(lctrDto);
 		}
-
-
-		eBACouseDTO.setEdctnSeq(respCnt);*/
-		//교육과정대상 등록
-
-
-
 
 		return respCnt;
 	}

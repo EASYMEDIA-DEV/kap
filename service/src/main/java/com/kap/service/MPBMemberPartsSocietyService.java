@@ -1,6 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.MPBEduDto;
 
 /**
  * <pre>
@@ -22,6 +23,14 @@ import com.kap.core.dto.MPAUserDto;
  */
 public interface MPBMemberPartsSocietyService {
 
+
+    /**
+     * 교육 사업 리스트 조회
+     * @param mpbEduDto
+     * @return
+     * @throws Exception
+     */
+    MPBEduDto selectEduList(MPBEduDto mpbEduDto) throws Exception;
 
 
 }

@@ -2,7 +2,7 @@
 <c:choose>
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <tr data-total-count="${rtnData.totalCount}">
+            <tr data-total-count="${rtnData.totalCount}" data-srch-exam-layer="${rtnData.srchPartsComLayer}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
                         <input type="checkbox" value="${list.bsnmNo}" name="delValueList" class="checkboxSingle notRequired" data-auth-cd="${list.bsnmNo}"/>
@@ -12,22 +12,26 @@
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
                 <td class="text-center">${list.rprsntNm}</td>
                 <td class="text-center">
-                    <a href="javascript:" class="listView" data-details-key="${list.bsnmNo}">
-                            ${list.cmpnNm}
-                    </a>
+                    <c:choose>
+                        <c:when test="${ rtnData.srchPartsComLayer eq 'Y'}">
+                            ${list.titl}
+                        </c:when>
+                        <c:otherwise>
+                            <a href="javascript:" class="listView" data-details-key="${list.bsnmNo}">
+                                    ${list.cmpnNm}
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </td>
                 <td class="text-center">${list.cmpnCd}</td>
                 <td class="text-center" data-ctgry-cd="${list.ctgryCd}">${list.ctgryNm}</td>
                 <td class="text-center" data-size-cd="${list.sizeCd}">${list.sizeNm}</td>
                 <td class="text-center">${list.bsnmNo}</td>
-                <td class="text-center">${list.bscAddr}</td>
+                <td class="text-center">${fn:substring(list.bscAddr,0,2)}</td>
                 <td class="text-center">${list.slsPmt}</td>
                 <td class="text-center">${list.mpleCnt}</td>
                 <td class="text-center">${list.telNo}</td>
                 <td class="text-center">${list.regName}</td>
-                <td class="text-center">${list.regDtm}</td>
-                <td class="text-center">${list.modName}</td>
-                <td class="text-center">${list.modDtm}</td>
             </tr>
         </c:forEach>
     </c:when>

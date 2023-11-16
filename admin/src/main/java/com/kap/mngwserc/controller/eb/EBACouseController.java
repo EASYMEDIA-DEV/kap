@@ -390,32 +390,10 @@ public class EBACouseController {
         return "EBACouseEpisdListAjax";
     }
 
-
-    /*public String classTypeList(COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        List<COCodeDTO> detailList = null;
-        try
-        {
-
-            System.out.println("오나?");
-
-            modelMap.addAttribute("detailList", cOCodeService.getCdIdList(cOCodeDTO));
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled()) {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-        return "jsonView";
-    }*/
-
-
-
     @RestController
     @RequiredArgsConstructor
     @RequestMapping(value="/mngwserc/eb/eba")
-    public class COFileRestController {
+    public class EBACouseRestController {
 
         private final COCodeService cOCodeService;
 
