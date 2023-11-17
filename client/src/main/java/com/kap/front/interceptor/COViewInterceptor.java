@@ -4,7 +4,10 @@ import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COMenuDTO;
 import com.kap.service.COBMenuService;
 import com.kap.service.COBUserMenuService;
+import com.kap.service.COCodeService;
+import com.kap.service.COCommService;
 import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
@@ -24,11 +27,19 @@ public class COViewInterceptor implements HandlerInterceptor{
     /* 메뉴 서비스 */
     @Autowired
     private COBUserMenuService cOBUserMenuService;
+    /* 코드 서비스 */
+    @Autowired
+    private  COCodeService cOCodeService;
+
+    /* 공통 서비스 */
+    @Autowired
+    private COCommService cOCommService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         // 메뉴 목록
         List<COMenuDTO> menuList = null;
+        int userMenuSeq = 612;
         //메뉴 목록을 조회한다.
         if (RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION) != null)
         {
@@ -37,11 +48,14 @@ public class COViewInterceptor implements HandlerInterceptor{
         else
         {
             COMenuDTO cOMenuDTO = new COMenuDTO();
-            cOMenuDTO.setMenuSeq(612);
+            cOMenuDTO.setMenuSeq(userMenuSeq);
             cOMenuDTO.setIsMenu("Y");
             menuList = cOBUserMenuService.getMenuList(cOMenuDTO);
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
         }
+        //menuLsit 계층으로 출력
+        JSONArray gnbMenuList = cOBUserMenuService.getJsonData(menuList, 0, userMenuSeq);
+        request.setAttribute("gnbMenuList", gnbMenuList);
         COMenuDTO pageMenuDto = null;
         String requestURI = request.getRequestURI();
         String userUrl = "", menuNm = "";
@@ -57,34 +71,6 @@ public class COViewInterceptor implements HandlerInterceptor{
             }
         }
         request.setAttribute("pageMenuDto", pageMenuDto);
-        //GNB 메뉴 조회
-        List<COMenuDTO> gnbMenuList = new ArrayList<COMenuDTO>();
-        String bfrGnbYn = "";
-        for (int i = 0, size = menuList.size(); i < size; i++)
-        {
-            // 상위 gnb 노출 여부 따라가기기 (그룹은 2depth 까지만 gnb에 노출)
-            if(menuList.get(i).getDpth() == 3 ){
-                bfrGnbYn = menuList.get(i).getGnbYn();
-            }else if((menuList.get(i).getDpth() == 4 ) && "Y".equals(bfrGnbYn)){
-                bfrGnbYn = menuList.get(i).getGnbYn();
-            }else if((menuList.get(i).getDpth() == 5 ) && "Y".equals(bfrGnbYn)){
-                bfrGnbYn = menuList.get(i).getGnbYn();
-            }
-            if("Y".equals(bfrGnbYn) &&  "Y".equals(menuList.get(i).getGnbYn())){
-
-                // 상위 메뉴 미노출여부 따라가기
-                if(i != 0 &&
-                        (menuList.get(i-1).getChildcnt() == 0 &&  menuList.get(i).getChildcnt() == 0) &&
-                        ((gnbMenuList.get(gnbMenuList.size()-1).getDpth() == menuList.get(i).getDpth() && gnbMenuList.get(gnbMenuList.size()-1).getParntSeq() != menuList.get(i).getParntSeq()) ||
-                                (menuList.get(i).getPstn() == 0 && menuList.get(i-1).getParntSeq() != menuList.get(i).getParntSeq())
-                        ))
-                {
-                    continue;
-                }
-                gnbMenuList.add(menuList.get(i));
-            }
-        }
-        request.setAttribute("gnbMenuList", gnbMenuList);
         // 페이지 인디케이트
         List<COMenuDTO> parntMenuList = new ArrayList<COMenuDTO>();
         int menuSeq = -1, parntSeq = -1;
@@ -108,11 +94,16 @@ public class COViewInterceptor implements HandlerInterceptor{
         //역순 정리
         Collections.reverse(parntMenuList);
         request.setAttribute("parntMenuList", parntMenuList);
-        return true;
-    }
 
-    private int setMenuChildList(COMenuDTO gnbMenu, List<COMenuDTO> menuList, int i) throws Exception{
-        return 0;
+
+        // 추천 키워드
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+        cdDtlList.add("FRONT_TOTAL_KEYWORD");
+        request.setAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+        //공지사항
+        request.setAttribute("headerNtfyList", cOCommService.getHeaderNtfyList());
+        return true;
     }
 
     @Override

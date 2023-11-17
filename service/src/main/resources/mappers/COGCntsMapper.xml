@@ -4,7 +4,7 @@
 
 	<!--
 		쿼리명 : COGCntsMapper.getCntsListCnt
-		설  명 : CMS 목록을 갯수를 카운팅한다.
+		설  명 : CMS 목록을 갯수 카운팅
 	      수정일      수정자       수정내용
         ==========   ========   ==============
         2023.09.08    임서화       최초생성
@@ -20,7 +20,7 @@
 
 	<!--
 		 쿼리명 : COGCntsMapper.selectCntsList
-		 설  명 : CMS 목록을 조회한다.
+		 설  명 : CMS 목록을 조회
 			 수정일	 수정자     수정내용
 		==========   ======   =============
 		2023.09.08   임서화     최초생성
@@ -34,24 +34,27 @@
 			, JS_CNTS
 			, PRCS_CD
 			, REG_ID
-		    , (SELECT NAME FROM CO_ADM_MST WHERE ID = #{regId}) AS REG_NM
+		    , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
 			, REG_DTM
+			, MOD_ID
+			, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+			, MOD_DTM
 		from
-			CO_CNTS_MST
+			CO_CNTS_MST A
 		where
 		    MENU_SEQ = #{menuSeq}
 		order by
-		reg_dtm desc
+			REG_DTM desc
 	</select>
 
 	<!--
 		쿼리명 : COGCntsMapper.updateUseCnts
-		설  명 : CMS의 배포 여부를 변경한다.
+		설  명 : CMS의 배포 여부 변경
 		 수정일	 수정자     수정내용
 		==========   ======   =============
 		2023.09.08   임서화     최초생성
 	-->
-	<update id="updateUseCnts" parameterType="COGCntsDTO">
+	<!--<update id="updateUseCnts" parameterType="COGCntsDTO">
 		UPDATE  /*COGCntsMapper.updateUseCnts*/
 			CO_CNTS_MST
 		SET PRCS_CD = '20'
@@ -60,11 +63,11 @@
 		  , MOD_DTM = NOW()
 		WHERE PRCS_CD = '10'
 		  AND MENU_SEQ	= #{menuSeq}
-	</update>
+	</update>-->
 
 	<!--
 		쿼리명 : COGCntsMapper.insertCnts
-		설  명 : CMS를 등록한다.
+		설  명 : CMS 등록
 		 수정일	 수정자     수정내용
 		==========   ======   =============
 		2023.09.08   임서화     최초생성
@@ -73,7 +76,7 @@
 		<selectKey keyProperty="ver" resultType="Integer" order="BEFORE">
 			SELECT IFNULL(MAX(ver)+1,1) FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
 		</selectKey>
-		INSERT /* COGCntsDAO.insertCnts */ INTO CO_CNTS_MST
+		INSERT /* COGCntsMapper.insertCnts */ INTO CO_CNTS_MST
 			( SEQ
 			, MENU_SEQ
 			, VER
@@ -83,9 +86,6 @@
 			, REG_ID
 			, REG_IP
 			, REG_DTM
-			, MOD_ID
-			, MOD_IP
-			, MOD_DTM
 			)
 			VALUES
 			( #{seq}
@@ -93,19 +93,16 @@
 			, #{ver}
 			, #{cnts}
 			, #{jsCnts}
-			, '10'
+			, '30'
 			, #{regId}
 			, #{regIp}
 			, NOW()
-			, ''
-			, ''
-			, null
 			)
 	</insert>
 
 	<!--
 	  쿼리명 : COGCntsMapper.selectCntsDtl
-	  설  명 : CMS 컨텐츠의 상세를 조회한다.
+	  설  명 : CMS 컨텐츠의 상세 조회
 	   수정일     수정자       수정내용
 	 ==========   ======    ==============
 	 2023.09.08   임서화       최초생성
@@ -114,15 +111,18 @@
 		SELECT /* COGCntsMapper.selectCntsDtl */
 			SEQ
 			 , MENU_SEQ
+		     , VER
 			 , CNTS
 			 , JS_CNTS
 			 , PRCS_CD
 			 , REG_ID
+			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
 			 , REG_DTM
 			 , MOD_ID
+			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
 			 , MOD_DTM
 		FROM
-			CO_CNTS_MST
+			CO_CNTS_MST A
 		WHERE
 			MENU_SEQ = #{menuSeq}
 		AND	SEQ = #{detailsKey}
@@ -130,7 +130,7 @@
 
 	<!--
     쿼리명 : COGCntsMapper.updateCnts
-    설  명 : CMS 컨텐츠의 내용을 수정한다.
+    설  명 : CMS 컨텐츠의 내용을 수정
      수정일	 수정자     수정내용
     ==========   ======   =============
     2023.09.08   임서화     최초생성
@@ -152,7 +152,7 @@
 
 	<!--
          쿼리명 : COGCntsMapper.deleteCnts
-         설  명 : 콘텐츠를 삭제한다.
+         설  명 : 컨텐츠 삭제
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.09.08   임서화       최초생성
@@ -177,6 +177,73 @@
 			</choose>
 		</where>
 	</delete>
+
+	<!--
+         쿼리명 : COGCntsMapper.updateCntsExpr
+         설  명 : 컨텐츠 만료
+          수정일     수정자       수정내용 
+        ==========   ======    ============== 
+        2023.11.17   장두석       최초생성
+    -->
+	<update id="updateCntsExpr" parameterType="COGCntsDTO">
+		UPDATE /* COGCntsMapper.updateCntsExpr */ CO_CNTS_MST
+		SET PRCS_CD = '20'
+		WHERE PRCS_CD = '10'
+		  AND MENU_SEQ = #{menuSeq}
+	</update>
+
+	<!--
+         쿼리명 : COGCntsMapper.updateCntsAprvl
+         설  명 : 컨텐츠 배포
+          수정일     수정자       수정내용 
+        ==========   ======    ============== 
+        2023.11.17   장두석       최초생성
+    -->
+	<update id="updateCntsAprvl" parameterType="COGCntsDTO">
+		UPDATE /* COGCntsMapper.updateCntsAprvl */ CO_CNTS_MST
+		SET PRCS_CD = '10'
+		WHERE MENU_SEQ = #{menuSeq}
+		  AND SEQ = #{detailsKey}
+	</update>
+
+	<!--
+         쿼리명 : COGCntsMapper.insertCntsCopy
+         설  명 : 컨텐츠 복사
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.17   장두석       최초생성
+    -->
+	<insert id="insertCntsCopy" parameterType="COGCntsDTO">
+		<selectKey keyProperty="ver" resultType="Integer" order="BEFORE">
+			SELECT IFNULL(MAX(VER)+1,1) FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
+		</selectKey>
+		INSERT /* COGCntsMapper.insertCntsCopy */ INTO CO_CNTS_MST
+		( SEQ
+		, MENU_SEQ
+		, VER
+		, CNTS
+		, JS_CNTS
+		, PRCS_CD
+		, REG_ID
+		, REG_IP
+		, REG_DTM
+		)
+		VALUES
+		( #{seq}
+		, #{menuSeq}
+		, #{ver}
+		, #{cnts}
+		, #{jsCnts}
+		, '30'
+		, #{regId}
+		, #{regIp}
+		, NOW()
+		)
+	</insert>
+
+	<select id="selectNewVer" resultType="Integer" parameterType="COGCntsDTO" >
+		SELECT IFNULL(MAX(VER)+1,1) VER FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
+	</select>
 
 </mapper>
 

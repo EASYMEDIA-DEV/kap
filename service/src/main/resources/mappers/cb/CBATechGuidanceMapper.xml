@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.cb.CBATechGuidanceMapper">
+    <!--
+         쿼리명 : CBATechGuidanceMapper.selectTechGuidanceList
+         설  명 :  컨설팅 기술 관리 목록 조회.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초생성
+    -->
+    <select id="selectTechGuidanceList" parameterType="CBATechGuidanceDTO" resultType="CBATechGuidanceDTO">
+        SELECT /* CBATechGuidanceMapper.selectTechGuidanceList */
+            CNSTG_SEQ,
+            BSN_YEAR,
+            /*RSUME_STTS_CD,*/
+            (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = A.BSNM_NO) AS CMPN_NM
+            CNSTG_CD,
+            APPCTN_DT,
+            CMPN_SIZE_CD,
+            BSNM_NO,
+            (SELECT SLS_PMT FROM CP_CMPN_MST WHERE BSNM_NO = A.BSNM_NO) AS SLS_PMT,
+            (SELECT MPLE_CNT FROM CP_CMPN_MST WHERE BSNM_NO = A.BSNM_NO) AS MPLE_CNT,
+            (SELECT BFRE_JDGMT_RSLT_CD FROM CP_CNSTG_RSUME_MST WHERE BSNM_NO = A.BSNM_NO) AS BFRE_JDGMT_RSLT_CD
+            (SELECT BFRE_JDGMT_RSLT_CD FROM CP_CNSTG_RSUME_MST WHERE BSNM_NO = A.BSNM_NO) AS BFRE_JDGMT_RSLT_CD
+
+        FROM CP_CNSTG_APPCTN_MST A
+        <include refid="selectTechGuidancewhereSql" />
+        ORDER BY
+         DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+    <!--
+         쿼리명 : CBATechGuidanceMapper.selectTechGuidanceTopCnt
+         설  명 :  컨설팅 기술 관리 목록 카운트.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초생성
+    -->
+    <select id="selectTechGuidanceTopCnt" parameterType="CBATechGuidanceDTO" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        FROM
+        CP_CNSTG_APPCTN_MST A
+        <include refid="selectTechGuidancewhereSql" />
+    </select>
+
+    <!--
+         쿼리명 : CBATechGuidanceMapper.selectTechGuidanceDtl
+         설  명 :  컨설팅 기술 관리 상세 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초생성
+    -->
+    <select id="selectTechGuidanceDtl" parameterType="CBATechGuidanceDTO" resultType="CBATechGuidanceDTO">
+        SELECT /* CBATechGuidanceMapper.selectTechGuidanceDtl */
+            *
+        FROM
+            CP_CNSTG_APPCTN_MST A
+        WHERE 1=1
+          AND CNSTG_SEQ = #{detailsKey}
+          AND MD_CD = #{mdCd}
+    </select>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.insertTechGuidance
+     설  명 :  컨설팅 기술 관리 등록
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <insert id="insertTechGuidance" parameterType="CBATechGuidanceDTO">
+        INSERT /* CBATechGuidanceMapper.insertTechGuidance */ INTO CP_CNSTG_APPCTN_MST
+        ( CNSTG_SEQ
+        , MD_CD
+        , TITL
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , ODTM_YN
+        , FILE_SEQ
+        , MN_COPY
+        , MN_HEX_CD
+        , SUB_COPY
+        , SUB_HEX_CD
+        , URL_URL
+        , WNPP_YN
+        , EXPS_ORD
+        , EXPS_YN
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        , TAG_CD
+        )
+        VALUES
+        ( #{vslSeq}
+        , #{mdCd}
+        , #{titl}
+        <choose>
+            <when test="odtmYn == 'Y'.toString()">
+                , NULL
+                , NULL
+            </when>
+            <otherwise>
+                , #{expsStrtDtm}
+                , #{expsEndDtm}
+            </otherwise>
+        </choose>
+        , #{odtmYn}
+        , #{fileSeq}
+        , #{mnCopy}
+        , #{mnHexCd}
+        , #{subCopy}
+        , #{subHexCd}
+        , #{urlUrl}
+        , #{wnppYn}
+        , #{expsOrd}
+        , #{expsYn}
+        , #{regId}
+        , #{regIp}
+        , NOW()
+        , #{tagCd}
+        )
+    </insert>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.updateTechGuidance
+     설  명 :  컨설팅 기술 관리 수정
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <update id="updateTechGuidance" parameterType="CBATechGuidanceDTO">
+        UPDATE /* CBATechGuidanceMapper.updateTechGuidance */ CP_CNSTG_APPCTN_MST
+        SET
+        TITL = #{titl}
+        <choose>
+            <when test="odtmYn == 'Y'.toString()">
+                , EXPS_STRT_DTM = NULL
+                , EXPS_END_DTM = NULL
+            </when>
+            <otherwise>
+                , EXPS_STRT_DTM = #{expsStrtDtm}
+                , EXPS_END_DTM = #{expsEndDtm}
+            </otherwise>
+        </choose>
+        , ODTM_YN = #{odtmYn}
+        , FILE_SEQ = #{fileSeq}
+        , MN_COPY = #{mnCopy}
+        , MN_HEX_CD = #{mnHexCd}
+        , SUB_COPY = #{subCopy}
+        , SUB_HEX_CD = #{subHexCd}
+        , URL_URL = #{urlUrl}
+        , WNPP_YN = #{wnppYn}
+        , EXPS_YN = #{expsYn}
+        , MOD_ID = #{regId}
+        , MOD_IP = #{regIp}
+        , MOD_DTM = NOW()
+        , TAG_CD = #{tagCd}
+        WHERE 1=1
+        AND CNSTG_SEQ = #{detailsKey}
+        AND MD_CD = #{mdCd}
+    </update>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.deleteTechGuidance
+     설  명 :  컨설팅 기술 관리 삭제
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <delete id="deleteTechGuidance" parameterType="CBATechGuidanceDTO">
+        DELETE /* CBATechGuidanceMapper.deleteTechGuidance */
+        FROM
+        CP_CNSTG_APPCTN_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    CNSTG_SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    CNSTG_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+            AND MD_CD = #{mdCd}
+        </where>
+    </delete>
+
+    <!--
+		쿼리명 : selectTechGuidancewhereSql
+		설  명 : 비주얼 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.14    임서화       최초생성
+    -->
+    <sql id="selectTechGuidancewhereSql">
+        <where>
+            <if test="siteGubun == 'front'">
+                AND EXPS_YN = 'Y'
+            </if>
+            <if test="mdCd != null and mdCd != ''.toString() ">
+                AND MD_CD = #{mdCd}
+            </if>
+            <if test="expsStrtDtm != null and expsStrtDtm != ''.toString() ">
+                AND EXPS_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{expsStrtDtm}, '%Y-%m-%d')
+            </if>
+            <if test="expsEndDtm !=  null and expsEndDtm != ''.toString() ">
+                AND EXPS_END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{expsEndDtm}, '%Y-%m-%d'), INTERVAL 1 DAY)
+            </if>
+            <if test="srchDate != null and srchDate != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        <if test="dStrDt != null and dStrDt != ''.toString() ">
+                            AND REG_DTM <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
+                            AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <when test="srchDate == 2">
+                        <if test="dEndDt != null and dEndDt != ''.toString() ">
+                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
+                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <otherwise>
+
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="odtmYn != null and odtmYn != ''.toString() ">
+                AND ODTM_YN = #{odtmYn}
+            </if>
+            <if test="mainYnList != null and mainYnList.size() > 0">
+                AND (
+                <foreach collection="mainYnList" item="mainYnList" index="index" open="" close="" separator=" or ">
+                    EXPS_YN = #{mainYnList}
+                </foreach>
+                )
+            </if>
+            <if test="tagCdList != null and tagCdList.size() > 0">
+                AND (
+                <foreach collection="tagCdList" item="TAG_CD" index="index" open="" close="" separator=" OR ">
+                    TAG_CD = #{tagCd}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 1">
+                        AND TITL LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        AND (
+                        INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <when test="f == 3">
+                        AND (
+                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <otherwise>
+                        AND (
+                        INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+</mapper>

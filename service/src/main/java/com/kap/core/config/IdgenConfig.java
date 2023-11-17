@@ -465,7 +465,7 @@ public class IdgenConfig {
                 .build();
     }
 
-    /** 교육장
+    /** 교육장 관리
      * @return
      */
     @Bean(destroyMethod = "destroy")
@@ -477,4 +477,18 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 콘텐츠 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cmsSeqSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CMS_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
 }

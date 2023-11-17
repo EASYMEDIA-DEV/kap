@@ -138,8 +138,9 @@ public class COFileController {
          * 파일 임시 업로드 후 정보 조회한다.
        */
         @PostMapping(value="/mngwserc/dropzone/upload")
-        public List<COFileDTO> getUpdoadFileInfs(@RequestBody COFileDTO coFileDTO, HttpServletRequest request) throws Exception
+        public List<COFileDTO> getUpdoadFileInfs(COFileDTO coFileDTO, HttpServletRequest request) throws Exception
         {
+            log.error("1111");
             List<COFileDTO> rtnList = null;
             try
             {

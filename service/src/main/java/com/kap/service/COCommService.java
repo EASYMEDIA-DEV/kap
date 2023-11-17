@@ -1,11 +1,11 @@
 package com.kap.service;
 
 
-import com.kap.core.dto.COSystemLogDTO;
+import com.kap.core.dto.COFrontHeaderNtfyDTO;
 import com.kap.core.dto.COUserCmpnDto;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * <pre> 
@@ -28,4 +28,9 @@ public interface COCommService {
      * 신청자, 부품사 정보 조회
      */
     public int setMemCmpnDtl(COUserCmpnDto cOUserCmpnDto, HttpServletRequest request) throws Exception;
+
+    /**
+     * 사용자 상단 공지사항
+     */
+    public List<COFrontHeaderNtfyDTO> getHeaderNtfyList() throws Exception;
 }

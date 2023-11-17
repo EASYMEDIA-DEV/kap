@@ -40,28 +40,6 @@ public class COGCntsDTO extends BaseDTO  {
     private String jsCnts;
     //상태 코드
     private String prcsCd;
-    //관리자 ID
-    private String admId;
-    //관리자 IP
-    private String admIp;
-    //등록자 ID
-    private String regId;
-    //등록자 ip
-    private String regIp;
-    //등록자 이름
-    private String regNm;
-    //등록일
-    private String regDtm;
-    //수정자 ID
-    private String modId;
-    //수정자 ip
-    private String modIp;
-    //수정일
-    private String modDtm;
-    //테이블 이름
-    private String tableNm;
-
-    //
 
     //조회
     private List<COGCntsDTO> list;

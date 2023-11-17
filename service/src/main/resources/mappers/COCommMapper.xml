@@ -90,4 +90,23 @@
         WHERE bsnm_no = #{cmpnBsnmNo}
     </update>
 
+    <!--
+    쿼리명 : COCommMapper.getHeaderNtfyList
+    설  명 : 사용자 상단 공지사항(3일전)
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.16    이옥정       최초생성
+    -->
+    <select id="getHeaderNtfyList" resultType="COFrontHeaderNtfyDTO">
+        select /* COCommMapper.getHeaderNtfyList */
+              ntfy_seq
+             , titl
+             , reg_dtm
+             , exps_strt_dtm
+        from bd_ntfy_mst
+        where exps_yn = 'Y' and exps_strt_dtm <![CDATA[ <= ]]> (now()) and exps_end_dtm <![CDATA[ >= ]]> (now())
+        order by reg_dtm desc
+        limit 0, 3
+    </select>
+
 </mapper>

@@ -2,23 +2,25 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
+import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.service.COGCntsService;
-import com.kap.service.COSeqGnrService;
 import com.kap.service.COSystemLogService;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.dao.COGCntsMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <pre>
- * CMS 관리를 위한 ServiceImpl
+ * 컨텐츠 관리를 위한 ServiceImpl
  * </pre>
  *
  * @ClassName		: COGCntsServiceImpl.java
- * @Description		: CMS 관리를 위한 ServiceImpl
+ * @Description		: 컨텐츠 관리를 위한 ServiceImpl
  * @author 임서화
  * @since 2023.09.07
  * @version 1.0
@@ -37,13 +39,16 @@ public class COGCntsServiceImpl implements COGCntsService {
 
 	//DAO
 	private final COGCntsMapper cOGCntsMapper;
-	private final COSeqGnrService cOSeqGnrService;
+
+	/** Sequence **/
+	/* 관리자 싴퀀스 */
+	private final EgovIdGnrService cmsSeqSeqIdgen;
 
 	//로그인 상태값 시스템 등록
 	private final COSystemLogService cOSystemLogService;
-	String tableNm = "CMS_SEQ";
+	String tableNm = "컨텐츠_SEQ";
 	/**
-	 * CMS 목록을 조회한다.
+	 * 컨텐츠 목록 조회
 	 */
 	public COGCntsDTO selectCntsList(COGCntsDTO pCOGCntsDTO) throws Exception {
 		COPaginationUtil page = new COPaginationUtil();
@@ -63,7 +68,7 @@ public class COGCntsServiceImpl implements COGCntsService {
 	}
 
 	/**
-	 * CMS 상세를 조회한다.
+	 * 컨텐츠 상세 조회
 	 */
 	public COGCntsDTO selectCntsDtl(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
@@ -72,15 +77,17 @@ public class COGCntsServiceImpl implements COGCntsService {
 
 
 	/**
-	 * CMS를 등록한다.
+	 * 컨텐츠 등록
 	 */
 	public int insertCnts(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
+		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+		pCOGCntsDTO.setRegId(coaAdmDTO.getId());
+		pCOGCntsDTO.setRegIp(coaAdmDTO.getLoginIp());
+
 		String cnts = pCOGCntsDTO.getCnts();
 
-		cOGCntsMapper.updateUseCnts(pCOGCntsDTO);
-
-		pCOGCntsDTO.setSeq(cOSeqGnrService.selectSeq(tableNm));
+		pCOGCntsDTO.setSeq(cmsSeqSeqIdgen.getNextIntegerId());
 
 		pCOGCntsDTO.setCnts(COWebUtil.clearXSSMinimum(cnts));
 
@@ -88,31 +95,77 @@ public class COGCntsServiceImpl implements COGCntsService {
 	}
 
 	/**
-	 * CMS를 수정한다.
+	 * 컨텐츠 수정
 	 */
 	public int updateCnts(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
-		COGCntsDTO info = cOGCntsMapper.selectCntsDtl(pCOGCntsDTO);
-		String cnts = pCOGCntsDTO.getCnts();
-
-		if (!info.getCnts().equals(pCOGCntsDTO.getCnts()))
+		if (!pCOGCntsDTO.getDetailsKey().isEmpty())
 		{
-			return this.insertCnts(pCOGCntsDTO);
+			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+			pCOGCntsDTO.setModId(coaAdmDTO.getId());
+			pCOGCntsDTO.setModIp(coaAdmDTO.getLoginIp());
+
+			String cnts = pCOGCntsDTO.getCnts();
+			pCOGCntsDTO.setCnts(COWebUtil.clearXSSMinimum(cnts));
+
+			return cOGCntsMapper.updateCnts(pCOGCntsDTO);
 		}
 		else
 		{
-			pCOGCntsDTO.setCnts(COWebUtil.clearXSSMinimum(cnts));
-			return cOGCntsMapper.updateCnts(pCOGCntsDTO);
+			return 0;
 		}
 	}
 
 	/**
-	 * CMS를 삭제한다.
+	 * 컨텐츠 삭제
 	 */
 	@Transactional
 	public int deleteCnts(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
 		return cOGCntsMapper.deleteCnts(pCOGCntsDTO);
+	}
+
+	/**
+	 * 컨텐츠 배포
+	 */
+	public void updateCntsAprvl(COGCntsDTO pCOGCntsDTO) throws Exception
+	{
+		// 컨텐츠 만료
+		cOGCntsMapper.updateCntsExpr(pCOGCntsDTO);
+
+		// 컨텐츠 배포
+		cOGCntsMapper.updateCntsAprvl(pCOGCntsDTO);
+	}
+
+	/**
+	 * 컨텐츠 복사
+	 */
+	public void insertCntsCopy(COGCntsDTO pCOGCntsDTO) throws Exception
+	{
+		COGCntsDTO selectCnts = cOGCntsMapper.selectCntsDtl(pCOGCntsDTO);
+
+		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+		selectCnts.setRegId(coaAdmDTO.getId());
+		selectCnts.setRegIp(coaAdmDTO.getLoginIp());
+
+		selectCnts.setSeq(cmsSeqSeqIdgen.getNextIntegerId());
+
+		cOGCntsMapper.insertCntsCopy(selectCnts);
+	}
+
+	/**
+	 * 컨텐츠 최신 버전 값 조회
+	 */
+	public COGCntsDTO selectNewVer(COGCntsDTO pCOGCntsDTO) throws Exception
+	{
+		if(pCOGCntsDTO.getMenuSeq() > 0) {
+			pCOGCntsDTO.setVer(cOGCntsMapper.selectNewVer(pCOGCntsDTO));
+			return pCOGCntsDTO;
+		}
+		else {
+			pCOGCntsDTO.setVer(-1);
+			return pCOGCntsDTO;
+		}
 	}
 
 }
