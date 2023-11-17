@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.mp.MPCLecturerMapper">
+    <!--
+         쿼리명 : MPCLecturerMapper.selectLecturerList
+         설  명 : 강사 목록을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.20   구은희       최초생성
+    -->
+    <select id="selectLecturerList" parameterType="MPCLecturerDTO">
+        SELECT /* MPCLecturerMapper.selectLecturerList */
+            ISTTR_SEQ
+            , NAME
+            , FFLTN_NM
+            , DEPT_NM
+            , PSTN_NM
+            , MNG_BSN_CD
+            , TEL_NO
+            , HP_NO
+            , EMAIL
+            , SPCL_CNTN
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+            , #{srchDate} AS 'srchDate'
+            , #{dStrDt} AS 'dStrDt'
+            , #{dEndDt} AS 'dEndDt'
+        FROM CP_ISTTR_MST A
+        <include refid="selectLecturerWhereSql" />
+        ORDER BY
+        REG_DTM DESC
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : MPCLecturerMapper.selectLecturerCnt
+         설  명 : 부품사 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    구은희       최초생성
+    -->
+    <select id="selectLecturerCnt" parameterType="MPCLecturerDTO" resultType="java.lang.Integer">
+        SELECT /* MPCLecturerMapper.selectLecturerCnt*/
+        COUNT(ISTTR_SEQ)
+        FROM
+        CP_ISTTR_MST A
+        <include refid="selectLecturerWhereSql" />
+    </select>
+
+    <!--
+         쿼리명 : MPCLecturerMapper.selectLecturerDtl
+         설  명 : 강사 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.20   구은희       최초생성
+    -->
+    <select id="selectLecturerDtl" parameterType="MPCLecturerDTO">
+        SELECT /* MPCLecturerMapper.selectLecturerDtl */
+            ISTTR_SEQ
+             , NAME
+             , FFLTN_NM
+             , DEPT_NM
+             , PSTN_NM
+             , MNG_BSN_CD
+             , TEL_NO
+             , HP_NO
+             , EMAIL
+             , SPCL_CNTN
+             , REG_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+             , REG_IP
+             , REG_DTM
+             , MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+             , MOD_IP
+             , MOD_DTM
+        FROM CP_ISTTR_MST A
+        WHERE 1=1
+          AND ISTTR_SEQ = #{isttrSeq}
+    </select>
+
+    <!--
+        쿼리명 : MPCLecturerMapper.selectDupEmail
+        설  명 : 강사 이메일 중복 체크
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.17    구은희       최초생성
+    -->
+    <select id="selectDupEmail" parameterType="MPCLecturerDTO" resultType="java.lang.Integer">
+        SELECT
+            COUNT(ISTTR_SEQ)
+        FROM CP_ISTTR_MST
+        WHERE EMAIL = #{email}
+    </select>
+
+    <!--
+         쿼리명 : MPCLecturerMapper.insertLecturer
+         설  명 : 강사를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.17   구은희       최초생성
+    -->
+    <insert id="insertLecturer" parameterType="MPCLecturerDTO">
+        INSERT /* MPCLecturerMapper.insertLecturer */ INTO CP_ISTTR_MST
+        (
+            ISTTR_SEQ
+            , NAME
+            , FFLTN_NM
+            , DEPT_NM
+            , PSTN_NM
+            , MNG_BSN_CD
+            , TEL_NO
+            , HP_NO
+            , EMAIL
+            , SPCL_CNTN
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+        )
+        VALUES
+            (
+            #{isttrSeq}
+            , #{name}
+            , #{ffltnNm}
+            , #{deptNm}
+            , #{pstnNm}
+            , #{mngBsnCd}
+            , #{telNo}
+            , #{hpNo}
+            , #{email}
+            , #{spclCntn}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : MPCLecturerMapper.updateLecturer
+         설  명 : 부품사를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.17   구은희       최초생성
+    -->
+    <update id="updateLecturer" parameterType="MPCLecturerDTO">
+        UPDATE /* MPCLecturerMapper.updateLecturer */ CP_ISTTR_MST
+        SET
+            NAME = #{name}
+            , FFLTN_NM = #{ffltnNm}
+            , DEPT_NM = #{deptNm}
+            , PSTN_NM = #{pstnNm}
+            , MNG_BSN_CD = #{mngBsnCd}
+            , TEL_NO = #{telNo}
+            , HP_NO = #{hpNo}
+            , EMAIL = #{email}
+            , SPCL_CNTN = #{spclCntn}
+            , MOD_ID = #{modId}
+            , MOD_IP = #{modIp}
+            , MOD_DTM = NOW()
+        WHERE 1=1
+          AND ISTTR_SEQ = #{isttrSeq}
+    </update>
+
+    <!--
+         쿼리명 : MPCLecturerMapper.deleteLecturer
+         설  명 : 강사를 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.17   구은희       최초생성
+    -->
+    <delete id="deleteLecturer" parameterType="MPCLecturerDTO">
+        DELETE /* MPCLecturerMapper.deleteLecturer */
+        FROM
+        CP_ISTTR_MST
+        <where>
+            <choose>
+                <when test="delValueList != null">
+                    ISTTR_SEQ IN
+                    <foreach collection="delValueList" item="item" index="index" separator=", " open="(" close=")">
+                        #{item}
+                    </foreach>
+                </when>
+                <otherwise>
+                    ISTTR_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+		쿼리명 : selectLecturerWhereSql
+		설  명 : 강사 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    구은희       최초생성
+    -->
+    <sql id="selectLecturerWhereSql">
+        <where>
+            <if test="srchDate != null and srchDate != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                            AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <when test="srchDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <otherwise>
+
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 1">
+                        AND NAME LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        AND FFLTN_NM LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 3">
+                        AND DEPT_NM LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 4">
+                        AND PSTN_NM LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 5">
+                        AND MNG_BSN_CD LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 6">
+                        AND HP_NO LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 7">
+                        AND EMAIL LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 8">
+                        AND (
+                        INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <when test="f == 8">
+                        AND (
+                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <otherwise>
+                        AND (
+                        INSTR(#{q}, NAME) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, FFLTN_NM) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, DEPT_NM) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, PSTN_NM) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, MNG_BSN_CD) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, HP_NO) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, EMAIL) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+</mapper>
