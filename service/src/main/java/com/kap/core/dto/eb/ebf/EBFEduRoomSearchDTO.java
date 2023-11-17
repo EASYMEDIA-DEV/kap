@@ -68,4 +68,8 @@ public class EBFEduRoomSearchDTO extends BaseDTO {
     @Schema(title = "지역 코드 검색 리스트")
     @Hidden
     private List<String> rgnsCdList;
+
+    @Schema(title = "검색 레이어에서 호출 여부")
+    @Hidden
+    private String srchEduRoomLayer;
 }

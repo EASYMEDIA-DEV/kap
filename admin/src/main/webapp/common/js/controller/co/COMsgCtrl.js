@@ -239,6 +239,12 @@ var msgCtrl = (function(){
 					notSrchPartsCom1: "부품사를 1개만 선택해주세요.",
 				}
 			},
+			eb : {
+				ebf : {
+					notSrchPlaceCom: "교육장을 선택해주세요.",
+					notSrchPlaceCom1: "교육장을 1개만 선택해주세요.",
+				}
+			},
 
 			ex :{
 				deleteCheck:"매칭된 게시물은 삭제 할 수 없습니다.",

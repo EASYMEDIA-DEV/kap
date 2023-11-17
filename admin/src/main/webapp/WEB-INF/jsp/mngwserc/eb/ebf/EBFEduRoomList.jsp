@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/ebf/EBFEduRoomListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
-        <form class="form-horizontal" name="frmSearch" method="post" action="">
+        <form class="form-horizontal" id="frmSearch" name="frmSearch" method="post" action="" data-del-type="account">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
             <!-- 페이징 버튼 사이즈 -->
@@ -52,7 +52,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">
-                                <input type="text" class="form-control input-sm" data-name="q" value="${rtnData.q}" maxlength="30" />
+                                <input type="text" class="form-control input-sm" id="q" data-name="q" value="${rtnData.q}" maxlength="30" />
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
             <hr class="mt0" />
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>${pageTitle} 목록(총 <span id="listContainerTotCnt">0</span>건)
+                    <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="eduRoomlistContainerTotCnt">0</span>건)
                 </h6>
                 <div class="pull-right ml-sm">
                     <select class="form-control input-sm listRowSizeContainer" >
@@ -81,7 +81,7 @@
                 </div>
             </div>
             <!--리스트 시작 -->
-            <div class="table-responsive col-sm-12 p0 m0">
+            <div class="table-responsive col-sm-12 p0 m0" id="vueList">
                 <table class="table table-hover table-striped" >
                     <thead>
                         <tr>
@@ -103,10 +103,10 @@
                         </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->
-                    <tbody id="listContainer"/>
+                    <tbody id="eduRoomListContainer"/>
                 </table>
                 <!-- 페이징 버튼 -->
-                <div id="pagingContainer"/>
+                <div id="eduRoomPagingContainer"/>
             </div>
             <!--리스트 종료 -->
         </form>

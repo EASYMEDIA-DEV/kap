@@ -21,14 +21,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         cmmCtrl.listFrmAjax(function(respObj) {
 
             //CALLBACK 처리
-            ctrl.obj.find("#listContainer").html(respObj);
+            ctrl.obj.find("#eduRoomListContainer").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
             //총 건수
-            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+            ctrl.obj.find("#eduRoomlistContainerTotCnt").text(totCnt);
             //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
+            cmmCtrl.listPaging(totCnt, $formObj, "eduRoomListContainer", "eduRoomPagingContainer");
         }, "/mngwserc/eb/ebf/select", $formObj, "GET", "html");
+    }
+
+    //레이어 구분, 규모 목록 조회
+    var codeSelect = function () {
+        cmmCtrl.frmAjax(function(respObj) {
+            ctrl.obj.find("#selectBoxArea").html(respObj);
+        }, "/mngwserc/eb/ebf/codeSelect", $formObj, "GET", "html",'',false);
     }
 
     // set model
@@ -80,11 +87,39 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         search(1);
                     }
                 }
+            },
+            //검색 레이어에서 선택시 호출
+            btnPartsCompanyLayerChoice:{
+                event : {
+                    click: function(){
+                        var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
+                        if( choiceCnt > 1){
+                            alert(msgCtrl.getMsg("fail.eb.ebf.notSrchPlaceCom1"));
+                        } else if(choiceCnt == 0){
+                            alert(msgCtrl.getMsg("fail.eb.ebf.notSrchPlaceCom"));
+                        }else{
+                            var clickObj = {};
+                            clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();
+                            var titl = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text());
+                            clickObj.titl = titl;
+                            ctrl.obj.trigger("choice", [clickObj])
+                            ctrl.obj.find(".close").click();
+                        }
+                    }
+                }
             }
         },
         immediately : function() {
             //리스트 조회
-            search();
+            // search();
+
+            //폼 데이터 처리
+            cmmCtrl.setFormData($formObj);
+            codeSelect();
+            //레이어 팝업에서 호출 할 수 있다.
+            if($formObj.find("input[name=srchPartsComLayer]").size() == 0){
+                search($formObj.find("input[name=pageIndex]").val());
+            }
         }
     };
 

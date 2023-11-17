@@ -75,6 +75,7 @@ public class EBFEduRoomController {
         try
         {
             modelMap.addAttribute("rtnData", eBFEduRoomService.selectEduRoomList(pEBFEduRoomSearchDTO));
+            modelMap.addAttribute("eduRoomDto", pEBFEduRoomSearchDTO);
         }
         catch (Exception e)
         {
@@ -114,6 +115,31 @@ public class EBFEduRoomController {
         }
 
         return "mngwserc/eb/ebf/EBFEduRoomWrite.admin";
+    }
+
+    /**
+     * 교육장 검색 레이어 지역구분 조회
+     */
+    @GetMapping(value = "/codeSelect")
+    public String selectPartsComSelectAjax(EBFEduRoomDetailDTO pEBFEduRoomDetailDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("ED_CITY_CODE");
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/eb/ebf/EBFEduRoomSelectAjax";
     }
 
     /**
