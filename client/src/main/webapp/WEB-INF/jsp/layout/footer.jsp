@@ -49,5 +49,7 @@
 		</div>
 		<div class="dimd"></div>
 		</div>
+		<!-- require -->
+		<script type="text/javascript" src="/common/js/lib/require.js" data-main="/common/js/site"></script>
 	</body>
 </html>

@@ -2,6 +2,7 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.annotation.CheckOriginData;
+import com.kap.core.dto.COFrontHeaderNtfyDTO;
 import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.MPEPartsCompanyDTO;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.util.List;
 
 /**
  * 공통 Service 구현
@@ -73,5 +75,12 @@ public class COCommServiceImpl implements COCommService {
             }
         }
         return rspCnt;
+    }
+
+    /**
+     * 사용자 상단 공지사항
+     */
+    public List<COFrontHeaderNtfyDTO> getHeaderNtfyList() throws Exception{
+        return cOCommMapper.getHeaderNtfyList();
     }
 }

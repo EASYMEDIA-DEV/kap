@@ -1,10 +1,10 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 레이어 팝업(Modal) -->
-<div class="modal fade mpePartsCompanySrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/mp/mpe/MPEPartsCompanyListCtrl">
+<div class="modal fade mpcLecturerSrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/mp/mpc/MPCLecturerListCtrl">
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1000px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >▣ 부품사 검색
+                <h5 class="modal-title" >▣ 강사 검색
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -26,7 +26,6 @@
                         <jsp:param name="srchText" value="등록/수정기간" />
                         <jsp:param name="srchOption" value="등록일,수정일" />
                     </jsp:include>
-                    <div id="selectBoxArea"></div>
                     <fieldset class="last-child">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">검색키워드</label>
@@ -35,12 +34,12 @@
                                     <div class="col-sm-3 pr0">
                                         <select class="form-control input-sm" data-name="f">
                                             <option value="">전체</option>
-                                            <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>대표자명</option>
+                                            <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>이름</option>
                                             <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>부품사명</option>
-                                            <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>지역</option>
-                                            <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>부품사코드</option>
-                                            <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>사업자등록번호</option>
-                                            <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>전화번호</option>
+                                            <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>부서</option>
+                                            <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>직급</option>
+                                            <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>휴대폰번호</option>
+                                            <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>이메일</option>
                                             <option value="7" <c:if test="${rtnData.f eq '7'}">selected</c:if>>최초 등록자</option>
                                             <option value="8" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최종 수정자</option>
                                         </select>
@@ -61,7 +60,7 @@
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>부품사 목록 (총 <span id="partsComListContainerTotCnt">0</span> 건)
+                            <em class="ion-play mr-sm"></em>강사 목록 (총 <span id="lecturerListContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
@@ -85,29 +84,28 @@
                                     </label>
                                 </th>
                                 <th class="text-center">번호</th>
-                                <th class="text-center">대표자명</th>
+                                <th class="text-center">이름</th>
                                 <th class="text-center">부품사명</th>
-                                <th class="text-center">부품사코드</th>
-                                <th class="text-center">구분</th>
-                                <th class="text-center">규모</th>
-                                <th class="text-center">사업자등록번호</th>
-                                <th class="text-center">지역</th>
-                                <th class="text-center">매출액(억원)</th>
-                                <th class="text-center">직원수</th>
-                                <th class="text-center">전화번호</th>
+                                <th class="text-center">부서</th>
+                                <th class="text-center">직급</th>
+                                <th class="text-center">휴대폰번호</th>
+                                <th class="text-center">이메일</th>
                                 <th class="text-center">최초 등록자</th>
+                                <th class="text-center">최초 등록일시</th>
+                                <th class="text-center">최종 수정자</th>
+                                <th class="text-center">최종 수정일시</th>
                             </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->
-                            <tbody id="partsComListContainer"/>
+                            <tbody id="lecturerListContainer"/>
                         </table>
                         <!-- 페이징 버튼 -->
-                        <div id="partsComPagingContainer"/>
+                        <div id="lecturerPagingContainer"/>
                     </div>
                 </div>
                 <div class="modal-footer row">
                     <div class="text-center">
-                        <button type="button" class="btn btn-success down mt btnPartsCompanyLayerChoice">선택</button>
+                        <button type="button" class="btn btn-success down mt btnLecturerLayerChoice">선택</button>
                     </div>
                 </div>
                 <!--리스트 종료 -->

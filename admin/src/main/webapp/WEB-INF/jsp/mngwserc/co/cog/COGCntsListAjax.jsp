@@ -23,7 +23,7 @@
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
-            <td colspan="8" class="text-center">
+            <td colspan="9" class="text-center">
                 등록된 데이터가 없습니다.
             </td>
         </tr>

@@ -131,4 +131,14 @@
         <example>${kl:bsnmHypen(value)}</example>
     </function>
 
+
+    <!-- 날짜 차이 -->
+    <function>
+        <description>getDaysDiff</description>
+        <name>getDaysDiff</name>
+        <function-class>com.kap.common.utility.CODateUtil</function-class>
+        <function-signature>int getDaysDiff(java.lang.String, java.lang.String)</function-signature>
+        <example>${kl:getDaysDiff(value, value)}</example>
+    </function>
+
 </taglib>

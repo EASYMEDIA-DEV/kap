@@ -306,6 +306,19 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 강사 관리 상세
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl mpcLecturerDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("LEC_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
     /** 부품사 관리 상세
      * @return
      */
