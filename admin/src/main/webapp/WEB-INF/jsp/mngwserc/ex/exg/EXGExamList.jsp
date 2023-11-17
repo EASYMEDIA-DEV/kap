@@ -66,7 +66,7 @@
 
 				<div class="clearfix">
 					<h6 class="pull-left mt0">
-						<em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+						<em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="ebeExamListContainerTotCnt">0</span> 건)
 					</h6>
 					<div class="pull-right ml-sm">
 						<select class="form-control input-sm listRowSizeContainer" >
@@ -101,10 +101,10 @@
 							</tr>
 						</thead>
 						<!-- 리스트 목록 결과 -->
-						<tbody id="listContainer"/>
+						<tbody id="ebeExamlistContainer"/>
 					</table>
 					<!-- 페이징 버튼 -->
-					<div id="pagingContainer"/>
+					<div id="ebeExamPagingContainer"/>
 				</div>
 				<!--리스트 종료 -->
 			</form>

@@ -124,6 +124,8 @@
             </fieldset>
             <!--회원, 회사 수정 시작(회원순번 넘김)-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/COReqMemCmpnWrite.jsp">
+                <jsp:param name="memTitle" value="신청자" />
+                <jsp:param name="cmpnTitle" value="부품사" />
                 <jsp:param name="memSeq" value="${ rtnDto.memSeq }" />
             </jsp:include>
             <!--회원, 회사 수정 종료-->
@@ -205,7 +207,7 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold">SQ평가원 구분<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm" name="examCd" ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_R', '', 'disabled') }>
+                        <select class="form-control input-sm" name="examCd" ${ kl:decode(rtnDto.examCd, 'EBD_SQ_R', '', 'disabled') }>
                             <c:forEach var="cdList" items="${cdDtlList.EBD_SQ_TP}" varStatus="status">
                                 <option value="${cdList.cd}" ${ kl:decode(rtnDto.examCd, cdList.cd, 'selected', '') }>
                                         ${cdList.cdNm}

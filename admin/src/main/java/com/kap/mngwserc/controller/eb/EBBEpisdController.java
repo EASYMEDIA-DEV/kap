@@ -1,18 +1,23 @@
 package com.kap.mngwserc.controller.eb;
 
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.EBACouseDTO;
 import com.kap.core.dto.EBBEpisdDTO;
+import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.EBBEpisdService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <pre>
@@ -96,6 +101,70 @@ public class EBBEpisdController {
             throw new Exception(e.getMessage());
         }
         return "mngwserc/eb/ebb/EBBEpisdListAjax";
+    }
+
+    /**
+     * 교육과정관리  상세를 조회한다.
+     */
+    @GetMapping(value="/write")
+    public String getCouseDtl(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+        EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
+
+        // 공통코드 배열 셋팅
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+        cdDtlList.add("ROUND_CD");//회차정보 공통코드
+        cdDtlList.add("RCRMT_MTHD"); //모집방식
+        cdDtlList.add("CMPTN_AUTO"); //수료 자동화 여부
+
+        //cdDtlList.add("STDUY_MTHD"); //학습방식
+        //cdDtlList.add("STDUY_DD");//학습시간 - 학습일
+        //cdDtlList.add("STDUY_TIME");//학습시간 - 학습시간
+        //cdDtlList.add("RCRMT_MTHD");//학습시간 - 학습시간
+
+
+        modelMap.addAttribute("episdCdList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
+
+        COCodeDTO cOCodeDTO = new COCodeDTO();
+        cOCodeDTO.setCd("ROUND_CD");
+        modelMap.addAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
+
+        modelMap.addAttribute("rtnData", rtnDto);
+
+
+
+        return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
+    }
+
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping(value="/mngwserc/eb/ebb")
+    public class EBBEpisdRestController {
+
+        private final COCodeService cOCodeService;
+
+        @Operation(summary = "교육차수 등록", tags = "교육차수 등록", description = "교육차수, 교육장소, 강사, 온라인 강의 목차")
+        @PostMapping(value="/insert")
+        public EBBEpisdDTO insertEpisd(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+            try
+            {
+                eBBEpisdService.insertEpisd(eBBEpisdDTO);
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return eBBEpisdDTO;
+        }
+
     }
 
 

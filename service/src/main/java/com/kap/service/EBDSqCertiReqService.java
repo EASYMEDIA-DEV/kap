@@ -4,6 +4,7 @@ import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
+import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -31,6 +32,11 @@ public interface EBDSqCertiReqService {
     public EBDEdctnEdisdDTO selectView(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
 
     /**
+     * 자격증 상세
+     */
+    public EBGExamAppctnMstDTO selectExamAppctnMst(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
+
+    /**
      * 선수과목 수료 목록 조회
      */
     public List<EBDPrePrcsDTO> getPrePrcsList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
@@ -39,4 +45,9 @@ public interface EBDSqCertiReqService {
      * 수정
      */
     public int update(COUserCmpnDto cOUserCmpnDto, EBDEdctnEdisdDTO eBDEdctnEdisdDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * 수정
+     */
+    public int updateConfirmInfo(COUserCmpnDto cOUserCmpnDto, EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception;
 }

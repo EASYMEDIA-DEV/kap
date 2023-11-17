@@ -34,6 +34,10 @@ public class EBDSqCertiSearchDTO extends BaseDTO {
     private List<String> ctgryCdList;
     @Schema(title = "발급 상태 리스트")
     private List<String> issueCdList;
+    @Schema(title = "발급 구분 리스트")
+    private List<String> examCdList;
+    @Schema(title = "자격증 상태 리스트")
+    private List<String> certiSttsList;
     @Schema(title = "리스트")
     private List<EBDSqCertiListDTO> list;
     @Schema(title = "조회 회원 순번")

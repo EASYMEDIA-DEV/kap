@@ -92,11 +92,11 @@ public class COFileUtil {
 				String mimeType = tika.detect(file.getInputStream());
 
 				if (mimeType.indexOf("image") > -1) {
-					folderType = "/upload/image";
+					folderType = "/temp/image";
 				} else if (mimeType.indexOf("video") > -1) {
-					folderType = "/upload/video";
+					folderType = "/temp/video";
 				} else {
-					folderType = "/upload/document";
+					folderType = "/temp/document";
 				}
 
 				String filePyhPath = uploadFilePath + folderType;

@@ -11,6 +11,7 @@
 <c:if test="${fn:length(param.endId) > 0 }">
 	<c:set var="endId" value="${param.endId}" />
 </c:if>
+<c:set var="srchDate" value="${ rtnData['srchDate'] == null ? param.srchDate : rtnData['srchDate'] }" />
 
 <fieldset>
 	<div class="form-inline text-sm">
@@ -21,7 +22,7 @@
 				<div class="form-group mr-sm">
 					<select class="form-control input-sm" data-srch-date="srchDate" id="srchDate" name="srchDate">
 						<c:forTokens var="item" items="${param.srchOption}" delims="," varStatus="status">
-							<option value="${status.count}" <c:if test="${rtnData.srchDate eq status.count}">selected</c:if>>${item}</option>
+							<option value="${status.count}" <c:if test="${srchDate eq status.count}">selected</c:if>>${item}</option>
 						</c:forTokens>
 					</select>
 				</div>

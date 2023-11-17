@@ -31,6 +31,11 @@
 		, sq_mst.mod_dtm
 	    , sq_mst.mod_id
 		, (select name from co_adm_mst where id = sq_mst.mod_id) mod_name
+		, sq_mst.use_yn
+		, sq_mst.exam_cd
+		, (select cd_nm from co_code_mst where cd = sq_mst.exam_cd and cd_id = 'EBD_SQ_TP') exam_cd_nm
+		, sq_mst.acqsn_dtm
+		, sq_mst.valid_end_dt
 		from sq_exam_appctn_mst sq_mst join co_mem_mst mem_mst on mem_mst.mem_seq = sq_mst.mem_seq
 		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.mem_seq = mem_mst.mem_seq and exists(select 1 from sq_exam_appctn_ptcpt_mst sq_ptcpt_mst where  sq_ptcpt_mst.ptcpt_seq = ptcpt_mst.ptcpt_seq
 		and exists( select edctn_seq from ed_edctn_prcs_mst where ctgry_cd = 'CLASS01002' and edctn_seq = ptcpt_mst.edctn_seq ) )
@@ -85,6 +90,26 @@
 					</when>
 				</choose>
 			</if>
+			<if test="certiSttsList != null and certiSttsList.size() > 0">
+				and
+				<foreach collection="certiSttsList" item="list" index="index" open="(" close=")" separator=" or ">
+					<choose>
+						<when test="list == 0">
+							<!-- 만료 -->
+							sq_mst.valid_end_dt <![CDATA[ < ]]> str_to_date(now(), '%Y-%m-%d')
+						</when>
+						<when test="list == 1">
+							<!-- 정상 -->
+							sq_mst.valid_strt_dt <![CDATA[ <= ]]> str_to_date(now(), '%Y-%m-%d')
+							and sq_mst.valid_end_dt <![CDATA[ >= ]]> str_to_date(now(), '%Y-%m-%d')
+						</when>
+						<otherwise>
+							<!-- 중지 -->
+							sq_mst.use_yn = 'N'
+						</otherwise>
+					</choose>
+				</foreach>
+			</if>
 			<if test="ctgryCdList != null and ctgryCdList.size() > 0">
 				and
 				<foreach collection="ctgryCdList" item="list" index="index" open="(" close=")" separator=" or ">
@@ -99,9 +124,6 @@
 			</if>
 			<if test="q != null and q != ''.toString() ">
 				<choose>
-					<when test="f == 1">
-						and exists(select edctn_seq from ed_edctn_prcs_mst where edctn_seq = ptcpt_mst.edctn_seq and nm like concat('%', #{q}, '%') )
-					</when>
 					<when test="f == 2">
 						and exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and name like concat('%', #{q}, '%') )
 					</when>
@@ -122,8 +144,12 @@
 					</when>
 					<otherwise>
 						and (
-							   exists(select edctn_seq from ed_edctn_prcs_mst where edctn_seq = ptcpt_mst.edctn_seq and nm like concat('%', #{q}, '%') )
-							or exists(select id from co_adm_mst where id = a.mod_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')))
+							   exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and name like concat('%', #{q}, '%') )
+							or exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and hp_no like concat('%', #{q}, '%') )
+							or exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and email like concat('%', #{q}, '%') )
+							or exists(select bsnm_no from cp_cmpn_mst where bsnm_no = cmpn_mst.bsnm_no and cmpn_nm like concat('%', #{q}, '%') )
+							or exists(select bsnm_no from cp_cmpn_mst where bsnm_no = cmpn_mst.bsnm_no and bsnm_no like concat('%', #{q}, '%') )
+							or exists(select id from co_adm_mst where id = sq_mst.mod_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')) )
 						)
 					</otherwise>
 				</choose>
@@ -133,7 +159,7 @@
 
 	<!--
 		쿼리명 : EBDSqCertiReqMapper.selectView
-		설  명 : SQ평가원 자격증 상세
+		설  명 : SQ평가원 자격증 신청 상세
 	      수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.09    김학규       최초생성
@@ -154,6 +180,7 @@
 			, edctn_episd_mst.episd_year
 			, edctn_episd_mst.episd_ord
 			, edctn_episd_mst.cbsn_cd
+			, (select code_mst.cd_nm from co_code_mst code_mst where code_mst.cd = edctn_episd_mst.cbsn_cd and code_mst.cd_id = 'CLASS_TYPE') cbsn_cd_nm
 			, edctn_episd_mst.accs_strt_dtm
 			, edctn_episd_mst.accs_end_dtm
 			, edctn_episd_mst.edctn_strt_dtm
@@ -178,6 +205,12 @@
 			, appctn_mst.mem_seq
 			, ptcpt_mst.cmptn_yn
 			, ptcpt_mst.cmptn_dtm
+
+
+			, appctn_mst.idntfn_photo_file_seq
+			, appctn_mst.acqsn_dtm
+			, appctn_mst.valid_strt_dt
+			, appctn_mst.valid_end_dt
 		FROM sq_exam_appctn_mst appctn_mst JOIN sq_exam_appctn_ptcpt_mst appctn_ptcpt_mst ON appctn_ptcpt_mst.exam_appctn_seq = appctn_mst.exam_appctn_seq
 		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.ptcpt_seq = appctn_ptcpt_mst.ptcpt_seq and exists(select 1 from sq_exam_appctn_ptcpt_mst sq_ptcpt_mst where  sq_ptcpt_mst.ptcpt_seq = ptcpt_mst.ptcpt_seq
 		and exists( select edctn_seq from ed_edctn_prcs_mst where ctgry_cd = 'CLASS01002' and edctn_seq = ptcpt_mst.edctn_seq ) )
@@ -185,6 +218,39 @@
 		JOIN ed_edctn_prcs_mst edctn_prcs_mst ON edctn_prcs_mst.edctn_seq = edctn_episd_mst.edctn_seq
 		WHERE
 		appctn_ptcpt_mst.exam_appctn_seq = #{detailsKey};
+	</select>
+
+	<!--
+		쿼리명 : EBDSqCertiReqMapper.selectExamAppctnMst
+		설  명 : SQ평가원 자격증 상세
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="selectExamAppctnMst" parameterType="EBDSqCertiSearchDTO" resultType="EBGExamAppctnMstDTO">
+		SELECT
+			   appctn_mst.exam_appctn_seq
+			 , appctn_mst.mem_seq
+			 , appctn_mst.exam_cd
+			 , appctn_mst.issue_cd
+			 , appctn_mst.rtrn_rsn
+			 , appctn_mst.acqsn_dtm
+			 , appctn_mst.rfrsh_dtm
+			 , appctn_mst.valid_strt_dt
+			 , appctn_mst.valid_end_dt
+			 , appctn_mst.idntfn_photo_file_seq
+			 , appctn_mst.jdgmt_no
+			 , appctn_mst.bsnm_no
+			 , appctn_mst.use_yn
+			 , appctn_mst.reg_id
+			 , appctn_mst.reg_dtm
+			 , appctn_mst.mod_id
+			 , appctn_mst.mod_dtm
+			 , appctn_mst.mem_seq
+		     , cmpn_mst.cmpn_nm
+		FROM sq_exam_appctn_mst appctn_mst left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = appctn_mst.bsnm_no
+		WHERE
+			appctn_mst.exam_appctn_seq = #{detailsKey} and appctn_mst.issue_cd = 'EBD_SQ_I'
 	</select>
 
 
@@ -229,10 +295,37 @@
 		set
 			exam_cd = #{examCd}
 		  , issue_cd = #{issueCd}
+		  <if test="issueCd eq 'EBD_SQ_C'">
 		  , rtrn_rsn = #{rtrnRsn}
+		  </if>
+		  <if test="issueCd eq 'EBD_SQ_I'">
+		  , acqsn_dtm = now()
+		  , rfrsh_dtm = now()
+		  , valid_strt_dt = now()
+		  , valid_end_dt =  date_add(now(), INTERVAL 3 YEAR)
+		  </if>
 		  , mod_id = #{modId}
 		  , mod_ip = #{modIp}
 		  , mod_dtm = now()
+		WHERE exam_appctn_seq = #{detailsKey}
+	</update>
+
+	<!--
+         쿼리명 : EBDSqCertiReqMapper.updateConfirmInfo
+         설  명 : 자격증 정보 수정
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<update id="updateConfirmInfo" parameterType="EBDEdctnEdisdDTO">
+		update /* EBDSqCertiReqMapper.updateConfirmInfo */ sq_exam_appctn_mst
+		set
+		  exam_cd = #{examCd}
+		, idntfn_photo_file_seq = #{idntfnPhotoFileSeq}
+		, bsnm_no = #{bsnmNo}
+		, mod_id = #{modId}
+		, mod_ip = #{modIp}
+		, mod_dtm = now()
 		WHERE exam_appctn_seq = #{detailsKey}
 	</update>
 

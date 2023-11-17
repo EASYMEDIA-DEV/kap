@@ -6,7 +6,9 @@ import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
+import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
 import com.kap.service.COCommService;
+import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBDSqCertiReqService;
 import com.kap.service.dao.eb.EBDSqCertiReqMapper;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -36,6 +39,9 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
 
     /** 공통 서비스 **/
     private final COCommService cOCommService;
+
+    /* 파일 서비스 */
+    private final COFileService cOFileService;
 
     /**
      * 리스트 조회
@@ -62,6 +68,13 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
     }
 
     /**
+     * 자격증 상세
+     */
+    public EBGExamAppctnMstDTO selectExamAppctnMst(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception{
+        return eBDSqCertiReqMapper.selectExamAppctnMst(eBDSqCertiSearchDTO);
+    }
+
+    /**
      * 선수과목 수료 목록 조회
      */
     public List<EBDPrePrcsDTO> getPrePrcsList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception
@@ -82,6 +95,20 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
             eBDEdctnEdisdDTO.setModIp(CONetworkUtil.getMyIPaddress(request));
             eBDSqCertiReqMapper.updateIssue( eBDEdctnEdisdDTO );
         }
+        return respCnt;
+    }
+
+    /**
+     * 자격증 정보 수정
+     */
+    public int updateConfirmInfo(COUserCmpnDto cOUserCmpnDto, EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception{
+        //회원 회사 정보 변경
+        int respCnt = cOCommService.setMemCmpnDtl(cOUserCmpnDto, request);
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBGExamAppctnMstDTO.getFileList());
+        eBGExamAppctnMstDTO.setIdntfnPhotoFileSeq( fileSeqMap.get("idntfnPhotoFileSeq") );
+        eBGExamAppctnMstDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
+        eBGExamAppctnMstDTO.setModIp(CONetworkUtil.getMyIPaddress(request));
+        eBDSqCertiReqMapper.updateConfirmInfo( eBGExamAppctnMstDTO );
         return respCnt;
     }
 }

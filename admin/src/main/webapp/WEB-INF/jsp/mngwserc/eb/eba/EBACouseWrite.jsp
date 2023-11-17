@@ -47,12 +47,12 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">과정명<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="nm" name="nm" value="${rtnDto.nm}" title="제목" maxlength="200" placeholder="과정명 입력" />
+                        <input type="text" class="form-control input-sm" id="nm" name="nm" value="${rtnDto.nm}" title="제목" maxlength="50" placeholder="과정명 입력" />
                     </div>
 
                     <label class="col-sm-1 control-label">과정요약<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="smmryNm" name="smmryNm" value="${rtnDto.smmryNm}" title="과정요약" maxlength="200" placeholder="과정요약 입력"/>
+                        <input type="text" class="form-control input-sm" id="smmryNm" name="smmryNm" value="${rtnDto.smmryNm}" title="과정요약" maxlength="50" placeholder="과정요약 입력"/>
                     </div>
 
                 </div>
@@ -62,7 +62,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">과정소개<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control input-sm" id="itrdcCntn" name="itrdcCntn" rows="10" maxlength="500" title="과정소개" placeholder="과정 소개를 입력하세요.">${rtnDto.itrdcCntn}</textarea>
+                        <textarea class="form-control input-sm" id="itrdcCntn" name="itrdcCntn" rows="10" maxlength="200" title="과정소개" placeholder="과정 소개를 입력하세요.">${rtnDto.itrdcCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
@@ -71,7 +71,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">학습 목표<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control input-sm" id="stduyTrgtCntn" name="stduyTrgtCntn" rows="10" maxlength="500" title="학습목표" placeholder="학습목표를 입력하세요.">${rtnDto.stduyTrgtCntn}</textarea>
+                        <textarea class="form-control input-sm" id="stduyTrgtCntn" name="stduyTrgtCntn" rows="10" maxlength="200" title="학습목표" placeholder="학습목표를 입력하세요.">${rtnDto.stduyTrgtCntn}</textarea>
 
                     </div>
                 </div>
@@ -206,14 +206,12 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">학습내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea maxlength="30" class="col-sm-12 pv notRequired ckeditorRequired" style="resize: vertical;" rows="10" placeholder="학습내용을 입력하세요" id="stduyCntn" name="stduyCntn" title="학습내용" oninput="cmmCtrl.checkMaxlength(this);">
+                        <textarea maxlength="500" class="col-sm-12 pv notRequired ckeditorRequired" style="resize: vertical;" rows="10" placeholder="학습내용을 입력하세요" id="stduyCntn" name="stduyCntn" title="학습내용" oninput="cmmCtrl.checkMaxlength(this);">
                             ${rtnDto.stduyCntn}
                         </textarea>
                     </div>
                 </div>
             </fieldset>
-
-
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -241,13 +239,9 @@
                             </div>
                             <button type="button" class="btn btn-sm btn-success">과정검색</button>
                         </div>
-
-
                     </div>
                 </div>
             </fieldset>
-
-
 
             <fieldset>
                 <div class="form-group text-sm">
