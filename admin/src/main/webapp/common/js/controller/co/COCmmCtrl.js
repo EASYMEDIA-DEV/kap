@@ -1608,6 +1608,23 @@ var cmmCtrl = (function(){
 		}).modal();
 	}
 
+	//교육과정 검색 매핑
+	//getPartsCompanyLayerPop(function(data){data 객체를 받아서 처리});
+	var fn_couse_srch_layer_pop = function(fnc){
+		$(".ebbEpisdCouseSrchLayer").one('show.bs.modal', function() {
+			// Add class for soft backdrop
+			$(".ebbEpisdCouseSrchLayer").find("#btnRefresh").click();
+			$(".ebbEpisdCouseSrchLayer").find("#btnSearch").click();
+		}).one('hidden.bs.modal', function() {
+			// Remove class for soft backdrop (if not will affect future modals)
+		}).one('choice', function(data, param) {
+			// Remove class for soft backdrop (if not will affect future modals)
+			fnc(param);
+		}).modal();
+	}
+
+
+
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1647,5 +1664,8 @@ var cmmCtrl = (function(){
 		//교육 평가지 매핑
 		getExamLayerPop : fn_exam_layer_pop,
 		getPartsCompanyLayerPop : fn_parts_layer_pop,
+
+		//교육과정검색 매핑
+		getCouseSrchLayerPop : fn_couse_srch_layer_pop
 	}
 }());

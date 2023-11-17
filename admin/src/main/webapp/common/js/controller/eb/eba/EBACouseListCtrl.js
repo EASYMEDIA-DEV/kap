@@ -79,7 +79,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-		}, "/mngwserc/eb/eba/select", $formObj, "POST", "html");
+		}, "/mngwserc/eb/eba/select", $formObj, "GET", "html");
 
 	}
 
@@ -234,6 +234,36 @@ define(["ezCtrl"], function(ezCtrl) {
 						//리스트 갯수 변경
 						$formObj.find("input[name=listRowSize]").val($(this).val());
 						search(1);
+					}
+				}
+			},
+			//검색 레이어에서 선택시 호출
+			btnCouseSrchLayerChoice:{
+				event : {
+					click: function(){
+						var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
+						if( choiceCnt > 1){
+							alert(msgCtrl.getMsg("fail.mp.mpe.notSrchPartsCom1"));
+						} else if(choiceCnt == 0){
+							alert(msgCtrl.getMsg("fail.mp.mpe.notSrchPartsCom"));
+						}else{
+							var clickObj = {};
+							clickObj.edctnSeq = ctrl.obj.find("input[name=delValueList]:checked").val();
+							var trObj = ctrl.obj.find("input[name=delValueList]:checked").parents("tr");
+
+							var ctgryCdNm= trObj.find("td").eq(2).text().trim();//과정분류
+							var nm= trObj.find("td").eq(3).text().trim();//과정명
+							var stduyMthd= trObj.find("td").eq(4).text().trim();//학습방식
+							var stduyDtm = trObj.find("td").eq(5).text().trim();//학습시간
+
+							clickObj.ctgryCdNm = ctgryCdNm;
+							clickObj.nm = nm;
+							clickObj.stduyMthd = stduyMthd;
+							clickObj.stduyDtm = stduyDtm;
+
+							ctrl.obj.trigger("choice", [clickObj])
+							ctrl.obj.find(".close").click();
+						}
 					}
 				}
 			}

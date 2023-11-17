@@ -11,9 +11,19 @@
         </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td class="text-center">
-          <a href="javascript:" class="listView" data-details-key="${list.edctnSeq}">
+
+          <c:choose>
+            <c:when test="${ eBACouseDTO.srchLayer eq 'Y'}">
               ${list.prntCdNm} > ${list.ctgryCdNm}
-          </a>
+            </c:when>
+            <c:otherwise>
+              <a href="javascript:" class="listView" data-details-key="${list.edctnSeq}">
+                  ${list.prntCdNm} > ${list.ctgryCdNm}
+              </a>
+            </c:otherwise>
+          </c:choose>
+
+
         </td><!--과정분류-->
         <td class="text-center">${list.nm}</td><!--과정명-->
         <td class="text-center">${list.stduyMthdCdNm}</td><!--학습방식-->

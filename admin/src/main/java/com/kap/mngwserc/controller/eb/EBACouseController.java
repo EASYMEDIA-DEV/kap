@@ -82,12 +82,13 @@ public class EBACouseController {
     /**
      * 교육과정관리 목록을 조회한다.
      */
-    @RequestMapping(value = "/select")
+    @GetMapping(value = "/select")
     public String getCouseListPageAjax(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
             modelMap.addAttribute("rtnData", eBACouseService.selectCouseList(eBACouseDTO));
+            modelMap.addAttribute("eBACouseDTO", eBACouseDTO);
         }
         catch (Exception e)
         {

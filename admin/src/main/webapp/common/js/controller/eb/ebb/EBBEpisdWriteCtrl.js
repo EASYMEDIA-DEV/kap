@@ -124,6 +124,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						search(1);
 					}
 				}
+			},
+			couseSearch : {
+				event : {
+					click : function(){
+						cmmCtrl.getCouseSrchLayerPop(function(data){
+							console.log(data);
+							$("#edctnSeq").val(data.edctnSeq);
+							$("p.ctgryCdNm").text(data.ctgryCdNm);
+							$("p.nm").text(data.nm);
+							$("p.stduyMthd").text(data.stduyMthd);
+							$("p.stduyDtm").text(data.stduyDtm);
+
+						});
+					}
+				}
 			}
 		},
 		immediately : function() {
