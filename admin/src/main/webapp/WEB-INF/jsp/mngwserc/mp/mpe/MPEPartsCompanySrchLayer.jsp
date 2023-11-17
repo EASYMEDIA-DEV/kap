@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<!-- 사유 레이어 팝업(Modal) -->
+<!-- 레이어 팝업(Modal) -->
 <div class="modal fade mpePartsCompanySrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/mp/mpe/MPEPartsCompanyListCtrl">
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1000px;">
         <div class="modal-content">
@@ -61,7 +61,7 @@
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="partsComListContainerTotCnt">0</span> 건)
+                            <em class="ion-play mr-sm"></em>부품사 목록 (총 <span id="partsComListContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
