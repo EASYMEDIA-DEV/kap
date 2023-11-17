@@ -1,9 +1,6 @@
 package com.kap.service.dao;
 
-import com.kap.core.dto.COUserCmpnDto;
-import com.kap.core.dto.MPAAttctnDto;
-import com.kap.core.dto.MPAInqrDto;
-import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.*;
 import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -44,4 +41,9 @@ public interface COCommMapper {
      * 신청자 회사 정보 변경
      */
     public int updatePartsCompany(COUserCmpnDto cOUserCmpnDto);
+
+    /**
+     * 사용자 상단 공지사항
+     */
+    public List<COFrontHeaderNtfyDTO> getHeaderNtfyList();
 }

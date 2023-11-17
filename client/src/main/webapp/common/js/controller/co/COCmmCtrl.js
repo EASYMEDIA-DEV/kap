@@ -754,7 +754,6 @@ var cmmCtrl = (function(){
 				//에러
 				this.on("error", function(file, code, response) {
 					//debugger
-					console.log(file, code, response)
 					jQuery(tObj).closest("form").data(code, true);
 					this.removeFile(file);
 

@@ -75,4 +75,5 @@ public interface COBUserMenuService {
 	 * 메뉴 목록 일괄처리를 위한 재귀함수
 	 */
 	public JSONArray getJsonData(List<COMenuDTO> jsonList, int startNum, int paramSeq) throws Exception;
+
 }

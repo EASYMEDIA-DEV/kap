@@ -446,6 +446,7 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 		        jsonAttr.put("parent_treeid", 	menuDto.getParntSeq());
 		        jsonAttr.put("dpth", 			menuDto.getDpth());
 		        jsonAttr.put("link", 			menuDto.getUserUrl());
+		        jsonAttr.put("gnbYn", 			menuDto.getGnbYn());
 		        jsonAttr.put("status", 			menuDto.getUseYn());
 
 		        if (!"".equals(COStringUtil.nullConvert(menuDto.getChecktype())))
@@ -470,4 +471,5 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 
 		return tmpArray;
 	}
+
 }

@@ -27,6 +27,7 @@
 		<if test="isChkd == 'Y'.toString()">
 			, (select menu_seq from co_adm_menu_dtl where adm_seq = #{admSeq} and menu_seq = a.menu_seq) as checktype
 		</if>
+		, gnb_yn
 		from
 		co_menu_mst a
 		where 1=1
