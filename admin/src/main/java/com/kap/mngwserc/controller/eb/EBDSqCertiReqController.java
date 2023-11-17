@@ -141,8 +141,6 @@ public class EBDSqCertiReqController {
         @PostMapping(value="/update")
         public BaseDTO updateSqCerti(@Valid  COUserCmpnDto cOUserCmpnDto,@Valid  EBDEdctnEdisdDTO eBDEdctnEdisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
         {
-            log.error("COUserCmpnDto : {}", cOUserCmpnDto.toString());
-            log.error("EBDEdctnEdisdDTO : {}", eBDEdctnEdisdDTO.toString());
             BaseDTO baseDTO = new BaseDTO();
             try
             {

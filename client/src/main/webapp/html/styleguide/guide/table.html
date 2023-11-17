@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>퍼블리싱 스타일 가이드</title>
+  <link rel="stylesheet" href="/common/css/fonts.css">
+  <link rel="stylesheet" href="/common/css/common.css">
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="../assets/styles/shCore.css"/>
+	<link rel="Stylesheet" href="../assets/styles/shCoreEclipse.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="../assets/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+	<script src="../assets/scripts/shCore.js"></script>
+	<script src="../assets/scripts/shBrushJScript.js"></script>
+	<script src="../assets/scripts/shBrushXml.js"></script>
+	<script src="../assets/scripts/shBrushCss.js"></script>
+  <script type="text/javascript">SyntaxHighlighter.all();</script>
+  <style>
+    .ex-box ~ .ex-box {margin-top: 20px;} 
+    .ex-box > p {margin-bottom: 10px;}
+    .exs ~ .exs {margin-top: 40px;}
+    .ex ~ .ex {margin-top: 40px;}
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <h1>KAP 가이드</h1>
+      <div class="btn-wrap">
+        <a href="/html/worklist.html">작업현황판  <i class="fas fa-angle-right"></i></a>
+      </div>
+    </header>
+    <div id="contents">
+      <aside>
+        <a href="/html/styleguide/guide-intro.html">기본 정책 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-markup.html">마크업 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-css.html">CSS 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-naming.html">네이밍 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="javascript:" class="active">스타일 가이드 <i class="fas fa-angle-right"></i></a>
+        <ul class="guide-list">
+          <li><a href="/html/styleguide/guide/form.html">FORM</a></li>
+          <li><a href="/html/styleguide/guide/typography.html">TYPOGRAPHY</a></li>
+          <li><a href="/html/styleguide/guide/button.html">BUTTON</a></li>
+          <li><a href="/html/styleguide/guide/popup.html">POPUP</a></li>
+          <li><a href="/html/styleguide/guide/accordion.html">ACCORDION</a></li>
+          <li><a href="/html/styleguide/guide/tab.html">TAB</a></li>
+          <li><a href="/html/styleguide/guide/table.html" class="active">TABLE</a></li>
+          <li><a href="/html/styleguide/guide/list.html">LIST</a></li>
+          <li><a href="/html/styleguide/guide/layout.html">LAYOUT</a></li>
+        </ul>
+      </aside>
+      <!-- 가이드 Start -->
+      <div class="content-area">
+        <h2>테이블 가이드</h2>
+        <br/>
+        <section>
+          <div class="ex-box">
+            <h3>Basic table</h3>
+            <p class="info">기본적인 테이블 스타일입니다. *타이틀 하위 테이블이 2개인 경우 테이블 간 간격은 40px입니다.</p>
+            <div class="ex">
+              <div class="table-sec">
+                <div class="table-box">
+                  <table class="basic-table">
+                    <caption>업체 기본정보</caption>
+                    <colgroup>
+                      <col style="width: 25%;">
+                      <col style="width: 75%;">
+                    </colgroup>
+                    <tbody>
+                      <tr>
+                        <th>업체명</th>
+                        <td>㈜만도</td>
+                      </tr>
+                      <tr>
+                        <th>업체구분</th>
+                        <td>2차</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="table-box">
+                  <table class="basic-table">
+                    <caption>업체 기본정보</caption>
+                    <colgroup>
+                      <col style="width: 25%;">
+                      <col style="width: 75%;">
+                    </colgroup>
+                    <tbody>
+                      <tr>
+                        <th>업체명</th>
+                        <td>㈜만도</td>
+                      </tr>
+                      <tr>
+                        <th>업체구분</th>
+                        <td>2차</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <div class="table-sec">
+                <div class="table-box">
+                  <table class="basic-table">
+                    <caption>업체 기본정보</caption>
+                    <colgroup>
+                      <col style="width: 25%;">
+                      <col style="width: 75%;">
+                    </colgroup>
+                    <tbody>
+                      <tr>
+                        <th>업체명</th>
+                        <td>㈜만도</td>
+                      </tr>
+                      <tr>
+                        <th>업체구분</th>
+                        <td>2차</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="table-box">
+                  <table class="basic-table">
+                    <caption>업체 기본정보</caption>
+                    <colgroup>
+                      <col style="width: 25%;">
+                      <col style="width: 75%;">
+                    </colgroup>
+                    <tbody>
+                      <tr>
+                        <th>업체명</th>
+                        <td>㈜만도</td>
+                      </tr>
+                      <tr>
+                        <th>업체구분</th>
+                        <td>2차</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .table-box ~ .table-box {margin-top: 40rem;}
+              .table-box .basic-table {border-top: 1px solid #ECEEEF;}
+              .table-box .basic-table tr th, .table-box .basic-table tr td {padding: 20rem 30rem; font-size: max(16rem, 14px); color: #06161E; line-height: 160%; letter-spacing: -.02em; border-right: 1px solid #ECEEEF; border-bottom: 1px solid #ECEEEF;}
+              .table-box .basic-table tr th {font-family: "Pretendard_Regular", sans-serif; background-color: #F5F6F7;}
+              .table-box .basic-table tr td {font-family: "Pretendard_Medium", sans-serif; background-color: #fff;}
+              
+              .table-box .basic-table .bdl {border-left: 1px solid #ECEEEF;}
+              .table-box .basic-table .txt-center {text-align: center;}
+
+              @media all and (max-width: 1023px) {
+                .table-box {overflow-x: auto;}
+                .table-box .basic-table {width: 130%;}
+                .table-box .basic-table tr th, .table-box .basic-table tr td {padding: 10px;}
+              }
+              @media all and (max-width: 599px) {
+                .table-box .basic-table {width: 150%;}
+              }
+            </script>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

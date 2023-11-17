@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap" class="member"><!-- 로그인, 회원가입 페이지 member 클래스 추가 -->
+      <header id="header"></header>
+
+			<!-- content 영역 start -->
+      <div class="cont-wrap">
+        <div class="inner">
+          <div class="sub-top-vis-area">
+            <div class="page-tit-area t-align-center">
+              <p class="page-tit f-large-title">
+                <span class="for-move">회원가입</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="apply-step-w">
+            <div class="for-move">
+              <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
+                <p class="step-num">1</p>
+                <p class="step-con">본인인증</p>
+              </div>
+              <div class="step-list ongoing">
+                <p class="step-num">2</p>
+                <p class="step-con">약관동의</p>
+              </div>
+              <div class="step-list">
+                <p class="step-num">3</p>
+                <p class="step-con">회원정보 입력</p>
+              </div>
+              <div class="step-list">
+                <p class="step-num">4</p>
+                <p class="step-con">가입완료</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="wht-con-box">
+            <!-- 약관 영역 -->
+            <div class="noti-txt-w">
+              <p class="bullet-noti-txt f-caption2">* 이용약관 및 개인정보 수집·이용·제공 동의 내용을 확인하였으며, 아래 내용에 동의합니다.</p>
+            </div>
+            
+            <div class="agree-terms-w">
+              <div class="all-check-area">
+                <div class="form-checkbox">
+                  <input type="checkbox" id="allAgreeChk" name="">
+                  <label for="allAgreeChk">전체 약관 동의</label>
+                </div>
+              </div>
+              <div class="agree-list-w accordion-st">
+                <div class="list-item active">
+                  <a class="acco-click-area" href="javascript:">
+                    <div class="form-checkbox">
+                      <input type="checkbox" id="agreeChk1" name="">
+                      <label for="agreeChk1">이용약관 동의 <span class="color-sky">(필수)</span></label>
+                    </div>
+                  </a>
+                  <div class="acco-hide-area">
+                    <div class="terms-con">
+                      이용약관 내용이 등록될 예정입니다.
+                    </div>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <a class="acco-click-area" href="javascript:">
+                    <div class="form-checkbox">
+                      <input type="checkbox" id="agreeChk2" name="">
+                      <label for="agreeChk2">개인정보처리방침 동의 <span class="color-sky">(필수)</span></label>
+                    </div>
+                  </a>
+                  <div class="acco-hide-area">
+                    <div class="terms-con">
+                      개인정보처리방침 내용이 등록될 예정입니다.
+                    </div>
+                  </div>
+                </div>
+                <div class="list-item">
+                  <a class="acco-click-area" href="javascript:">
+                    <div class="form-checkbox">
+                      <input type="checkbox" id="agreeChk3" name="">
+                      <label for="agreeChk3">제 3자 개인정보 제공 동의 <span class="color-gray">(선택)</span></label>
+                    </div>
+                  </a>
+                  <div class="acco-hide-area">
+                    <div class="terms-con">
+                      제 3자 개인정보 제공 동의 내용이 등록될 예정입니다.
+                    </div>
+                  </div>
+                </div>
+                <div class="list-item marketing"><!-- marketing -->
+                  <a class="acco-click-area" href="javascript:">
+                    <div class="form-checkbox">
+                      <input type="checkbox" id="agreeChk4" name="">
+                      <label for="agreeChk4">마케팅 정보 수신 동의 <span class="color-gray">(선택)</span></label>
+                    </div>
+                  </a>
+                  <div class="acco-hide-area">
+                    <div class="terms-con">
+                      마케팅 정보 수신 동의 내용이 등록될 예정입니다.
+                    </div>
+                  </div>
+                  <div class="included-chk-area">
+                    <div class="form-group">
+                      <div class="form-checkbox">
+                        <input type="checkbox" id="marketingChk1" name="">
+                        <label for="marketingChk1">이메일</label>
+                      </div>
+                      <div class="form-checkbox">
+                        <input type="checkbox" id="marketingChk2" name="">
+                        <label for="marketingChk2">SMS</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-bot-btn-sec">
+              <div class="btn-wrap">
+                <div class="btn-set">
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>이전</span></a>
+                </div>
+                <div class="btn-set">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>다음</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+				</div>
+      </div>
+			<!-- content 영역 end -->
+
+      <footer></footer>
+
+      <div class="scroll-gauge">
+        <div class="bar"></div>
+      </div>
+      
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

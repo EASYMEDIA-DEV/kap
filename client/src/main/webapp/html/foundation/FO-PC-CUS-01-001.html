@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <header id="header"></header>
+
+			<!-- content 영역 start -->
+      <div class="cont-wrap">
+        <!-- 
+          신청 페이지: apply-page 클래스 추가
+          그 외 페이지: basic-page 클래스 추가
+        -->
+        <div class="sub-top-vis-area basic-page">
+          <div class="page-tit-area">
+            <p class="page-tit f-xlarge-title"><span class="for-move">공지사항</span></p>
+          </div>
+          <div class="img-area">
+            <div class="img">
+              <img class="only-pc" src="/common/images/img-sub-top-visual-notice.jpg" alt="">
+              <img class="only-mobile" src="/common/images/img-sub-top-visual-notice-mobile.jpg" alt="">
+            </div>
+          </div>
+        </div>
+        
+        <div class="divide-con-area">
+          <div class="lnb-area">
+            <div class="for-motion">
+              <div class="lnb-list">
+                <a class="btn-two-depth" href="javascript:"><span>재단소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                <div class="three-depth-wrap">
+                  <a class="btn-three-depth" href="javascript:"><span>인사말</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>재단개요</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>재단연혁</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>재단조직</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>윤리경영</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>경영공시</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>홍보자료</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>오시는길</span></a>
+                </div>
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth active" href="javascript:"><span>고객센터</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                <div class="three-depth-wrap">
+                  <a class="btn-three-depth active" href="javascript:"><span>공지사항</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>재단소식</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>뉴스레터 구독</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>FAQ</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>1:1 문의</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-con-area">
+            <div class="cont-sec-w">
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="info-head">
+                    <p class="total f-body2">총 <span>1065</span>건</p>
+                    <div class="form-input srch-input">
+                      <input type="text" placeholder="검색어를 입력해 주세요.">
+                      <div class="input-btn-wrap">
+                        <button class="delete-btn" title="지우기" type="button"></button>
+                        <button class="srch-btn" title="검색"></button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="board-list">
+                    <div class="article-list-w txt-list">
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="info f-body1">중요</span>
+                        </div>
+                        <div class="txt-box">
+                          <!--
+                            @ N아이콘 사용 시, <span class="new-icon">
+                              작은 아이콘은 small 클래스 추가
+                          -->
+                          <p class="tit f-head"><span class="new-icon" aria-label="새로운 항목"></span>최대 한줄 말줄임 최대 한줄 말줄임 최대 한줄 말줄임 최대 한줄 말줄임 최대 한줄 말줄임 최대 한줄 말줄임</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="info f-body1">중요</span>
+                        </div>
+                        <div class="txt-box">
+                          <p class="tit f-head"><span class="new-icon" aria-label="새로운 항목"></span>제 2회 대학(원)생 미래 자동차산업 아이디어 공모전 1차 심사결과 안내</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="info f-body1">중요</span>
+                        </div>
+                        <div class="txt-box">
+                          <p class="tit f-head">KAP 10월 교육 자동차부품산업진흥재단 교육 신청 안내</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="info f-body1">중요</span>
+                        </div>
+                        <div class="txt-box">
+                          <p class="tit f-head">23년현대차그룹 대·중소 상생형 스마트공장 구축 지원사업 도입기업 모집 공고</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="num f-body2">1064</span>
+                        </div>
+                        <div class="txt-box">
+                          <p class="tit f-head">제 2회 대학(원)생 미래 자동차산업 아이디어 공모전 1차 심사결과 안내</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="num f-body2">1063</span>
+                        </div>
+                        <div class="txt-box">
+                          <p class="tit f-head">2023년 하반기 자문위원 채용 공고</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="num f-body2">1062</span>
+                        </div>
+                        <div class="txt-box">
+                          <p class="tit f-head">23년 추계 자동차부품산업 발전 전략 세미나 개최 안내</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="num f-body2">1061</span>
+                        </div>
+                        <div class="txt-box">
+                          <p class="tit f-head">KAP 사출 세미나 무상교육 2023 업종별 기술 및 품질 세미나 09月 사출 안내</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="num f-body2">1060</span>
+                        </div>
+                        <div class="txt-box">
+                          <p class="tit f-head">현대차그룹 해외수출전략 가이드 세미나 공지</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                      <a class="list-item" href="javascript:" title="새 페이지 이동">
+                        <div class="sub-info-wrap">
+                          <span class="num f-body2">1059</span>
+                        </div>
+                        <div class="txt-box">
+                          <p class="tit f-head">2023년 상생형스마트공장 구축지원사업 사업계획서 및 관련서류 안내</p>
+                          <p class="sub-txt f-body2"><span class="sub-item">2023.09.15</span><span class="sub-item">조회수 263</span></p>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div class="btn-wrap align-center">
+                    <a class="btn-solid small black-bg" href="javascript:"><span>더보기</span><span class="item-count">(10/1065)</span></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- content 영역 end -->
+
+      <footer></footer>
+
+      <div class="quick-menu">
+        <div class="menu-area">
+					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
+					<div class="btn-w">
+						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
+						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
+						<a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
+					</div>
+        </div>
+        <a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
+      </div>
+
+      <div class="scroll-gauge">
+        <div class="bar"></div>
+      </div>
+      
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

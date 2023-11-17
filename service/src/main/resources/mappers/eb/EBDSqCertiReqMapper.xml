@@ -326,7 +326,7 @@
 		, mod_id = #{modId}
 		, mod_ip = #{modIp}
 		, mod_dtm = now()
-		WHERE exam_appctn_seq = #{detailsKey}
+		WHERE exam_appctn_seq = #{examAppctnSeq}
 	</update>
 
 </mapper>

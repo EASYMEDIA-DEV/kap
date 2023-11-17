@@ -10,6 +10,7 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.examAppctnSeq}" />
             <input type="hidden" class="notRequired" id="gubun" name="gubun" value="${gubun}" />
+            <input type="hidden" class="notRequired" id="examAppctnSeq" name="examAppctnSeq" value="${rtnDto.examAppctnSeq}" />
 
 
             <!--회원, 회사 수정 시작(회원순번 넘김)-->
@@ -147,7 +148,7 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold ">자격증번호</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" name="jdgmtNo" value="${ rtnDto.jdgmtNo }" maxlength="50" title="자격증번호" placeholder="자격증번호"  />
+                        ${ rtnDto.jdgmtNo }
                     </div>
                 </div>
             </fieldset>
@@ -174,12 +175,10 @@
                     <label class="col-sm-2 control-label text-bold ">부품사명<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="input-group">
-                            <input type="hidden" class="notRequired" id="bsnm_no" name="bsnm_no" value="${rtnDto.bsnmNo}" />
-                            <input type="text" class="form-control input-sm " value="${ rtnDto.cmpnNm }" title="부품사명" readonly/>
-                            <span class="input-group-btn" style="z-index:0;">
-                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.getExamLayerPop(function(data){
-                                  console.log(data);
-                                 })">
+                            <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${rtnDto.bsnmNo}" />
+                            <input type="text" class="form-control input-sm notRequired" id="bsnmNoNm" value="${ rtnDto.cmpnNm }" title="부품사명" readonly/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-inverse btn-sm bsnmNoBtn">
                                     부품사 검색
                                 </button>
                             </span>
@@ -216,7 +215,6 @@
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnDto.examAppctnSeq}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
                             <button type="submit" class="btn btn-sm btn-success">수정</button>
                         </c:when>
                         <c:otherwise>
@@ -228,5 +226,4 @@
         </form>
     </div>
 </div>
-<!-- 교육 평가 매핑 -->
-<jsp:include page="/WEB-INF/jsp/mngwserc/ex/exg/EXGExamListSrchLayer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpe/MPEPartsCompanySrchLayer.jsp"></jsp:include>

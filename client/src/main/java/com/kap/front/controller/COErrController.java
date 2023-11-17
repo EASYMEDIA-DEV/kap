@@ -39,17 +39,17 @@ public class COErrController implements ErrorController
             //코드(404, 500등등)에 따른 화면 처리
             if(statusCode == HttpStatus.NOT_FOUND.value())
             {
-                return "COError";
+                return "front/COError";
             }
             else if(statusCode == HttpStatus.UNAUTHORIZED.value())
             {
-                return "COUnauthorized";
+                return "front/COUnauthorized";
             }
             else
             {
-                return "COError";
+                return "front/COError";
             }
         }
-        return "COError";
+        return "front/COError";
     }
 }

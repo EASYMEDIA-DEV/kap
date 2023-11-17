@@ -22,14 +22,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
-            issueCd : {
+            //부품사 찾기
+            bsnmNoBtn : {
                 event : {
-                    change : function() {
-                        if($(this).val() == "EBD_SQ_C"){
-                            ctrl.obj.find(".rtrnRsnContainer").show();
-                        }else{
-                            ctrl.obj.find(".rtrnRsnContainer").hide();
-                        }
+                    click : function() {
+                        cmmCtrl.getPartsCompanyLayerPop(function(data){
+                            $("#bsnmNo").val(data.seq);
+                            $("#bsnmNoNm").val(data.titl);
+                        });
                     }
                 }
             },

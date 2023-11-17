@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>퍼블리싱 스타일 가이드</title>
+  <link rel="stylesheet" href="/common/css/fonts.css">
+  <link rel="stylesheet" href="/common/css/common.css">
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="../assets/styles/shCore.css"/>
+	<link rel="Stylesheet" href="../assets/styles/shCoreEclipse.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="../assets/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+	<script src="../assets/scripts/shCore.js"></script>
+	<script src="../assets/scripts/shBrushJScript.js"></script>
+	<script src="../assets/scripts/shBrushXml.js"></script>
+	<script src="../assets/scripts/shBrushCss.js"></script>
+  <script type="text/javascript">SyntaxHighlighter.all();</script>
+  <style>
+    .ex-box ~ .ex-box {margin-top: 20px;} 
+    .ex-box > p {margin-bottom: 10px;}
+    .exs ~ .exs {margin-top: 40px;}
+    .ex ~ .ex {margin-top: 40px;}
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <h1>KAP 가이드</h1>
+      <div class="btn-wrap">
+        <a href="/html/worklist.html">작업현황판  <i class="fas fa-angle-right"></i></a>
+      </div>
+    </header>
+    <div id="contents">
+      <aside>
+        <a href="/html/styleguide/guide-intro.html">기본 정책 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-markup.html">마크업 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-css.html">CSS 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-naming.html">네이밍 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="javascript:" class="active">스타일 가이드 <i class="fas fa-angle-right"></i></a>
+        <ul class="guide-list">
+          <li><a href="/html/styleguide/guide/form.html">FORM</a></li>
+          <li><a href="/html/styleguide/guide/typography.html" class="active">TYPOGRAPHY</a></li>
+          <li><a href="/html/styleguide/guide/button.html">BUTTON</a></li>
+          <li><a href="/html/styleguide/guide/popup.html">POPUP</a></li>
+          <li><a href="/html/styleguide/guide/accordion.html">ACCORDION</a></li>
+          <li><a href="/html/styleguide/guide/tab.html">TAB</a></li>
+          <li><a href="/html/styleguide/guide/table.html">TABLE</a></li>
+          <li><a href="/html/styleguide/guide/list.html">LIST</a></li>
+          <li><a href="/html/styleguide/guide/layout.html">LAYOUT</a></li>
+        </ul>
+      </aside>
+      <!-- 가이드 Start -->
+      <div class="content-area">
+        <h2>타이포그래피 가이드</h2>
+        <p>KAP(자동차부품산업진흥재단) 웹사이트는 Pretendard를 사용합니다. </p>
+        <p>영문, 숫자의 경우 자간을 0em으로 사용합니다.</p>
+        <br/>
+        <section>
+          <div class="ex-box">
+            <h3>XLTitle</h3>
+            <div class="ex">
+              <p class="f-xlarge-title">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-xlarge-title">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-xlarge-title {font-size: max(72rem, 56px); font-family: "Pretendard_Bold", sans-serif; color: #06161E; line-height: 130%; letter-spacing: -.04em;}
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>LargeTitle</h3>
+            <div class="ex">
+              <p class="f-large-title">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-large-title">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-large-title {font-size: max(48rem, 36px); font-family: "Pretendard_Bold", sans-serif; color: #06161E; line-height: 140%; letter-spacing: -.03em;}
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>Title1</h3>
+            <div class="ex">
+              <p class="f-title1">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-title1">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-title1 {font-size: max(36rem, 28px); font-family: "Pretendard_Bold", sans-serif; color: #06161E; line-height: 145%; letter-spacing: -.03em;}
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>Title2</h3>
+            <div class="ex">
+              <p class="f-title2">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-title2">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-title2 {font-size: max(28rem, 24px); font-family: "Pretendard_Medium", sans-serif; color: #06161E; line-height: 150%; letter-spacing: -.03em;}
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>Title3</h3>
+            <div class="ex">
+              <p class="f-title3">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-title3">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-title3 {font-size: max(24rem, 18px); font-family: "Pretendard_Bold", sans-serif; color: #06161E; line-height: 150%; letter-spacing: -.02em;}
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>Headline</h3>
+            <div class="ex">
+              <p class="f-head">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-head">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>SubHeadline</h3>
+            <div class="ex">
+              <p class="f-sub-head">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-sub-head">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-sub-head {font-size: max(18rem, 16px); font-family: "Pretendard_Regular", sans-serif; color: #06161E; line-height: 155%; letter-spacing: -.02em;}
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>Body1</h3>
+            <div class="ex">
+              <p class="f-body1">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-body1">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-body1 {font-size: max(16rem, 14px); font-family: "Pretendard_Medium", sans-serif; color: #06161E; line-height: 160%; letter-spacing: -.02em;}
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>Body2</h3>
+            <div class="ex">
+              <p class="f-body2">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-body2">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-body2 {font-size: max(16rem, 14px); font-family: "Pretendard_Regular", sans-serif; color: #697278; line-height: 160%; letter-spacing: -.02em;}
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>Caption1</h3>
+            <div class="ex">
+              <p class="f-caption1">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-caption1">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-caption1 {font-size: max(14rem, 13px); font-family: "Pretendard_Medium", sans-serif; color: #697278; line-height: 170%; letter-spacing: -.02em;}
+            </script>
+          </div>
+          <div class="ex-box">
+            <h3>Caption2</h3>
+            <div class="ex">
+              <p class="f-caption2">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <p class="f-caption2">우리는 항상 고객이 기대한 그 이상을 서비스합니다</p>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .f-caption2 {font-size: max(14rem, 13px); font-family: "Pretendard_Regular", sans-serif; color: #B2B8BD; line-height: 170%; letter-spacing: -.02em;}
+            </script>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

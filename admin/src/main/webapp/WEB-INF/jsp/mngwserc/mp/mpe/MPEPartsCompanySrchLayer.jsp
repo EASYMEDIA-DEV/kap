@@ -10,17 +10,17 @@
                     </button>
                 </h5>
             </div>
-            <div class="modal-body">
-                <form>
-                    <!-- 현재 페이징 번호 -->
-                    <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
-                    <!-- 페이징 버튼 사이즈 -->
-                    <input type="hidden" id="pageRowSize" name="pageRowSize" value="10" />
-                    <input type="hidden" id="listRowSize" name="listRowSize" value="10" />
-                    <!-- CSRF KEY -->
-                    <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                    <!-- 검색 여부 -->
-                    <input type="hidden" id="srchPartsComLayer" name="srchPartsComLayer" value="Y" />
+            <form>
+                <!-- 현재 페이징 번호 -->
+                <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
+                <!-- 페이징 버튼 사이즈 -->
+                <input type="hidden" id="pageRowSize" name="pageRowSize" value="10" />
+                <input type="hidden" id="listRowSize" name="listRowSize" value="10" />
+                <!-- CSRF KEY -->
+                <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <!-- 검색 여부 -->
+                <input type="hidden" name="srchLayer" value="Y" />
+                <div class="modal-body">
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                         <jsp:param name="srchText" value="등록/수정기간" />
@@ -104,13 +104,13 @@
                         <!-- 페이징 버튼 -->
                         <div id="partsComPagingContainer"/>
                     </div>
-            </div>
-            <div class="modal-footer row">
-                <div class="text-center">
-                    <button type="button" class="btn btn-success down mt btnPartsCompanyLayerChoice">선택</button>
                 </div>
-            </div>
-            <!--리스트 종료 -->
+                <div class="modal-footer row">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-success down mt btnPartsCompanyLayerChoice">선택</button>
+                    </div>
+                </div>
+                <!--리스트 종료 -->
             </form>
         </div>
     </div>

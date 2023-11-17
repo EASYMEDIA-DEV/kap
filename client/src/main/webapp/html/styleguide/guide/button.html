@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>퍼블리싱 스타일 가이드</title>
+  <link rel="stylesheet" href="/common/css/fonts.css">
+  <link rel="stylesheet" href="/common/css/common.css">
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="../assets/styles/shCore.css"/>
+	<link rel="Stylesheet" href="../assets/styles/shCoreEclipse.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="../assets/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+	<script src="../assets/scripts/shCore.js"></script>
+	<script src="../assets/scripts/shBrushJScript.js"></script>
+	<script src="../assets/scripts/shBrushXml.js"></script>
+	<script src="../assets/scripts/shBrushCss.js"></script>
+  <script type="text/javascript">SyntaxHighlighter.all();</script>
+  <style>
+    .ex-box ~ .ex-box {margin-top: 20px;} 
+    .ex-box > p {margin-bottom: 10px;}
+    .exs ~ .exs {margin-top: 40px;}
+    .ex ~ .ex {margin-top: 40px;}
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <h1>KAP 가이드</h1>
+      <div class="btn-wrap">
+        <a href="/html/worklist.html">작업현황판  <i class="fas fa-angle-right"></i></a>
+      </div>
+    </header>
+    <div id="contents">
+      <aside>
+        <a href="/html/styleguide/guide-intro.html">기본 정책 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-markup.html">마크업 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-css.html">CSS 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-naming.html">네이밍 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="javascript:" class="active">스타일 가이드 <i class="fas fa-angle-right"></i></a>
+        <ul class="guide-list">
+          <li><a href="/html/styleguide/guide/form.html">FORM</a></li>
+          <li><a href="/html/styleguide/guide/typography.html">TYPOGRAPHY</a></li>
+          <li><a href="/html/styleguide/guide/button.html" class="active">BUTTON</a></li>
+          <li><a href="/html/styleguide/guide/popup.html">POPUP</a></li>
+          <li><a href="/html/styleguide/guide/accordion.html">ACCORDION</a></li>
+          <li><a href="/html/styleguide/guide/tab.html">TAB</a></li>
+          <li><a href="/html/styleguide/guide/table.html">TABLE</a></li>
+          <li><a href="/html/styleguide/guide/list.html">LIST</a></li>
+          <li><a href="/html/styleguide/guide/layout.html">LAYOUT</a></li>
+        </ul>
+      </aside>
+      <!-- 가이드 Start -->
+      <div class="content-area">
+        <h2>버튼 가이드</h2>
+        <br/>
+        <section>
+          <div class="ex-box">
+            <h3>info</h3>
+            <div class="exs">
+              <h4>basic (horizontal)</h4>
+              <p class="info">기본 btn-wrap은 space-between 형태입니다.</p>
+              <div class="ex">
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                </div>
+              </script>
+            </div>
+            <div class="exs">
+              <h4>transform (center, right, left)</h4>
+              <p class="info">기본 btn-group에 align-center, align-left, align-right 클래스를 추가해야합니다.</p>
+              <div class="ex">
+                <div class="btn-wrap align-center" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                </div>
+                <div class="btn-wrap align-left" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                </div>
+                <div class="btn-wrap align-right" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="btn-wrap align-center" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                </div>
+                <div class="btn-wrap align-left" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                </div>
+                <div class="btn-wrap align-right" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                </div>
+              </script>
+              <script type="syntaxhighlighter" class="brush: css;">
+                .align-left {justify-content: flex-start;}
+                .align-right {justify-content: flex-end;}
+                .align-center {justify-content: center;}
+              </script>
+            </div>
+            <div class="exs">
+              <h4>transform (layout)</h4>
+              <p class="info">btn-set 클래스로 감싸줘야합니다.</p>
+              <div class="ex">
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <div class="btn-set">
+                    <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                    <a class="btn-solid small gray-bg" href="javascript:"><span>이전</span></a>
+                  </div>
+                  <div class="btn-set">
+                    <a class="btn-solid small black-bg" href="javascript:"><span>다음</span></a>
+                  </div>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <div class="btn-set">
+                    <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                    <a class="btn-solid small gray-bg" href="javascript:"><span>이전</span></a>
+                  </div>
+                  <div class="btn-set">
+                    <a class="btn-solid small black-bg" href="javascript:"><span>다음</span></a>
+                  </div>
+                </div>
+              </script>
+              <script type="syntaxhighlighter" class="brush: css;">
+              </script>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="ex-box">
+            <h3>primary button</h3>
+            <p class="info">
+              강력한 시선의 환기 또는 해당 페이지의 키액션 등에 사용하는 버튼입니다.
+              <br/>버튼 크기는 small과 large가 있습니다. 일반적으로는 small 버튼을 사용하지만, 버튼의 크기가 강조되어야할 경우엔 large 버튼을 사용합니다.
+            </p>
+            <div class="exs">
+              <h4>solid small</h4>
+              <div class="ex">
+                <p>* 밝은 배경</p>
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small disabled" href="javascript:"><span>button</span></a>
+                </div>
+                <br/>
+                <p>* 어두운 배경</p>
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(64, 100, 112);">
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small white-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small disabled" href="javascript:"><span>button</span></a>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small disabled" href="javascript:"><span>button</span></a>
+                </div>
+                <br/>
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(64, 100, 112);">
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small white-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small disabled" href="javascript:"><span>button</span></a>
+                </div>
+              </script>
+            </div>
+            <div class="exs">
+              <h4>solid large</h4>
+              <div class="ex">
+                <p>* 밝은 배경</p>
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid large black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid large disabled" href="javascript:"><span>button</span></a>
+                </div>
+                <br/>
+                <p>* 어두운 배경</p>
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(64, 100, 112);">
+                  <a class="btn-solid large gray-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid large white-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid large disabled" href="javascript:"><span>button</span></a>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-solid large black-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid large disabled" href="javascript:"><span>button</span></a>
+                </div>
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(64, 100, 112);">
+                  <a class="btn-solid large gray-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid large white-bg" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid large disabled" href="javascript:"><span>button</span></a>
+                </div>
+              </script>
+            </div>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .btn-solid.small {min-height: 50rem;  padding: 12rem 28rem;}
+              .btn-solid.large {min-height: 68rem; padding: 16rem 40rem;}
+              .btn-solid.small span {font-size: max(16rem, 14px); line-height: 160%;}
+              .btn-solid.large span {font-size: max(24rem, 18px); line-height: 150%;}
+              .btn-solid {display: flex; justify-content: center; align-items: center; border-radius: 2rem;}
+              .btn-solid span {font-family: "Pretendard_Medium", sans-serif; letter-spacing: -.02em;}
+              .btn-solid.white-bg {background-color: #fff;}
+              .btn-solid.white-bg span {color: #06161E;}
+              .btn-solid.black-bg {background-color: #06161E;}
+              .btn-solid.black-bg span {color: #fff;}
+              .btn-solid.black-bg:hover {background-color: #000102;}
+              .btn-solid.gray-bg {background-color: #F5F6F7;}
+              .btn-solid.gray-bg span {color: #06161E;}
+              .btn-solid.gray-bg:hover {background-color: #ECEEEF;}
+              .btn-solid.disabled {background: #D9DDE0;}
+              .btn-solid.disabled span {color: #fff;}
+            </script>
+          </div>
+        </section>
+        <section>
+          <div class="ex-box">
+            <h3>secondary button</h3>
+            <p class="info">가장 기본이 되는 버튼입니다. 일반적인 상황에 사용합니다.</p>
+            <div class="exs">
+              <h4>combination</h4>
+              <div class="ex">
+                <p>* 밝은 배경</p>
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-text-icon black-circle" href="javascript:"><span>button</span></a>
+                  <a class="btn-text-icon black-arrow" href="javascript:" title="링크 이동"><span>button</span></a>
+                </div>
+                <br/>
+                <p>* 어두운 배경</p>
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(64, 100, 112);">
+                  <a class="btn-text-icon gray-circle" href="javascript:"><span>button</span></a>
+                  <a class="btn-text-icon white-circle" href="javascript:"><span>button</span></a>
+                  <a class="btn-text-icon gray-arrow" href="javascript:" title="링크 이동"><span>button</span></a>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <a class="btn-text-icon black-circle" href="javascript:"><span>button</span></a>
+                  <a class="btn-text-icon black-arrow" href="javascript:" title="링크 이동"><span>button</span></a>
+                </div>
+                <div class="btn-wrap" style="padding: 20px; background-color: rgb(64, 100, 112);">
+                  <a class="btn-text-icon gray-circle" href="javascript:"><span>button</span></a>
+                  <a class="btn-text-icon white-circle" href="javascript:"><span>button</span></a>
+                  <a class="btn-text-icon gray-arrow" href="javascript:" title="링크 이동"><span>button</span></a>
+                </div>
+              </script>
+              <script type="syntaxhighlighter" class="brush: css;">
+                .btn-text-icon {display: flex;}
+                .btn-text-icon span {display: flex; align-items: center; position: relative; font-size: max(16rem, 14px); font-family: "Pretendard_Medium", sans-serif; color: #06161E; line-height: 160%; letter-spacing: -.02em;}
+                .btn-text-icon span:after {content: ''; display: block; position:relative; left: 0; margin-left: 10rem;}
+                .btn-text-icon[class*='-circle'] span:after {width:32rem; height: 32rem; background: url() no-repeat center center / 16rem 12rem; border-radius: 50%; transition: .4s left ease;}
+                .btn-text-icon[class*='-circle']:hover span:after {left: 5rem;}
+
+                .btn-text-icon.black-circle span:after {background-color: #06161E; background-image: url("/common/images/icon-btn-circle-black.svg");}
+                .btn-text-icon.gray-circle span:after {background-color: #F5F6F7; background-image: url("/common/images/icon-btn-circle-gray.svg");}
+                .btn-text-icon.gray-circle span {color: #F5F6F7;}
+                .btn-text-icon.white-circle span:after {background-color: #fff; background-image: url("/common/images/icon-btn-circle-gray.svg");}
+                .btn-text-icon.white-circle span {color: #fff;}
+
+                .btn-text-icon.black-arrow span::after,
+                .btn-text-icon.gray-arrow span::after {width: 24rem; height: 24rem; margin-left: 0; background: url() no-repeat center center / 100%; transition: .2s left ease;}
+                .btn-text-icon.black-arrow:hover span::after,
+                .btn-text-icon.gray-arrow:hover span::after {left: 4rem;}
+                .btn-text-icon.black-arrow span::after {background-image: url(../images/icon-arrow-line-black.svg);}
+                .btn-text-icon.gray-arrow span::after {background-image: url(../images/icon-arrow-line-gray.svg);}
+                .btn-text-icon.gray-arrow span {color: #F5F6F7;}
+              </script>
+            </div>
+            <div class="exs">
+              <h4>delete</h4>
+              <div class="ex">
+                <div class="btn-wrap">
+                  <button class="btn-text-icon delete" href="javascript:"><span>삭제</span></button>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="btn-wrap">
+                  <button class="btn-text-icon delete" href="javascript:"><span>삭제</span></button>
+                </div>
+              </script>
+              <script type="syntaxhighlighter" class="brush: css;">
+                .btn-text-icon.delete span:after {margin-left: 0; width: 32rem; height: 32rem; background: url("/common/images/icon-close-small-gray.svg") no-repeat center top 1rem / 100%;}
+              </script>
+            </div>
+            <div class="exs">
+              <h4>download</h4>
+              <div class="ex">
+                <div class="btn-wrap">
+                  <a class="btn-text-icon download" href="javascript:" download=""><span>다운로드</span></a>
+                </div>
+                <div class="btn-wrap">
+                  <a class="btn-text-icon download-bg" href="javascript:" title="파일 다운로드" download=""><span>다운로드</span></a>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="btn-wrap">
+                  <a class="btn-text-icon download" href="javascript:" download=""><span>다운로드</span></a>
+                </div>
+                <div class="btn-wrap">
+                  <a class="btn-text-icon download-bg" href="javascript:" title="파일 다운로드" download=""><span>다운로드</span></a>
+                </div>
+              </script>
+              <script type="syntaxhighlighter" class="brush: css;">
+                /* 문구만 있는 다운로드 */
+                .btn-text-icon.download span {font-family: "Pretendard_Medium", sans-serif; font-size: max(16rem, 14px); color: #697278; line-height: 1.6; letter-spacing: -.02em;}
+                .btn-text-icon.download span:after {width:15rem; height: 13.5rem; background: #fff url("/common/images/icon-download.svg") no-repeat center center / 100%;}
+
+                /* 배경있는 다운로드 */
+                .btn-text-icon.download-bg {display: inline-block; width: 370rem; min-height: 48rem; padding: 11rem 24rem; background-color: #F5F6F7;}
+                .btn-text-icon.download-bg span {display: block; padding-right: 44rem; font-family: "Pretendard_Regular", sans-serif; font-size: max(16rem, 14px); color: #06161E; line-height: 1.6; letter-spacing: -.02em; word-wrap: break-word; word-break: break-all;}
+                .btn-text-icon.download-bg span:after {position: absolute; left: auto; right: 0; top: 0; margin-left: 0; width: 24rem; height: 24rem; background: url("/common/images/icon-download2.svg") center center no-repeat; background-size: 100%;}
+                .btn-text-icon.download-bg:hover span {text-decoration: underline;}
+              </script>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="ex-box">
+            <h3>icon button</h3>
+            <p class="info">해당 페이지 내부에서 슬라이드 이동 발생 시 사용되는 방향 버튼입니다.</p>
+            <div class="exs">
+              <h4>arrow large</h4>
+              <div class="ex">
+                <p>* 밝은 배경</p>
+                <div style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <div>
+                    <div class="swiper-button-next circle-arr"></div>
+                    <div class="swiper-button-prev circle-arr"></div>
+                  </div>
+                  <div class="btn-wrap">
+                    <a class="btn-icon line-arrow prev" href="javascript:"></a>
+                    <a class="btn-icon line-arrow next" href="javascript:"></a>
+                  </div>
+                  <div class="btn-wrap">
+                    <a class="btn-icon play" href="javascript:"></a>
+                    <a class="btn-icon stop" href="javascript:"></a>
+                  </div>
+                </div>
+                <p>* 어두운 배경</p>
+                <div style="padding: 20px; background-color: rgb(64, 100, 112);">
+                  <div>
+                    <div class="swiper-button-next circle-arr-gray"></div>
+                    <div class="swiper-button-prev circle-arr-gray"></div>
+                  </div>
+                  <div class="btn-wrap">
+                    <a class="btn-icon line-arrow-gray prev" href="javascript:"></a>
+                    <a class="btn-icon line-arrow-gray next" href="javascript:"></a>
+                  </div>
+                  <div class="btn-wrap">
+                    <a class="btn-icon play-gray" href="javascript:"></a>
+                    <a class="btn-icon stop-gray" href="javascript:"></a>
+                  </div>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div style="padding: 20px; background-color: rgb(224, 232, 235);">
+                  <div>
+                    <div class="swiper-button-next circle-arr"></div>
+                    <div class="swiper-button-prev circle-arr"></div>
+                  </div>
+                  <div class="btn-wrap">
+                    <a class="btn-icon line-arrow prev" href="javascript:"></a>
+                    <a class="btn-icon line-arrow next" href="javascript:"></a>
+                  </div>
+                  <div class="btn-wrap">
+                    <a class="btn-icon play" href="javascript:"></a>
+                    <a class="btn-icon stop" href="javascript:"></a>
+                  </div>
+                </div>
+                <div style="padding: 20px; background-color: rgb(64, 100, 112);">
+                  <div>
+                    <div class="swiper-button-next circle-arr-gray"></div>
+                    <div class="swiper-button-prev circle-arr-gray"></div>
+                  </div>
+                  <div class="btn-wrap">
+                    <a class="btn-icon line-arrow-gray prev" href="javascript:"></a>
+                    <a class="btn-icon line-arrow-gray next" href="javascript:"></a>
+                  </div>
+                  <div class="btn-wrap">
+                    <a class="btn-icon play-gray" href="javascript:"></a>
+                    <a class="btn-icon stop-gray" href="javascript:"></a>
+                  </div>
+                </div>
+              </script>
+              <script type="syntaxhighlighter" class="brush: css;">
+                /* swiper button */
+                .swiper-button-next.circle-arr {width: 48rem; height: 48rem; background: url("/common/images/icon-btn-swiper-next.svg") center center no-repeat; transition: background .2s;}
+                .swiper-button-next.circle-arr:hover {background-image: url("/common/images/icon-btn-swiper-next-hover.svg");}
+                .swiper-button-prev.circle-arr {width: 48rem; height: 48rem; background: url("/common/images/icon-btn-swiper-prev.svg") center center no-repeat; transition: background .2s;}
+                .swiper-button-prev.circle-arr:hover {background-image: url("/common/images/icon-btn-swiper-prev-hover.svg");}
+                .swiper-button-next.circle-arr.swiper-button-disabled,
+                .swiper-button-prev.circle-arr.swiper-button-disabled {opacity:.4;}
+
+                /* arrow button */
+                .btn-icon {display: inline-block; width: 32rem; height: 32rem; background: url() no-repeat center center / 100% auto;}
+                .btn-icon.line-arrow.next {background-image: url(../images/icon-arrow-next.svg);}
+                .btn-icon.line-arrow.prev {background-image: url(../images/icon-arrow-prev.svg);}
+                .btn-icon.line-arrow.next:hover {background-image: url(../images/icon-arrow-next-hover.svg);}
+                .btn-icon.line-arrow.prev:hover {background-image: url(../images/icon-arrow-prev-hover.svg);}
+
+                /* play button */
+                .btn-icon.play {background-image: url(../images/icon-play.svg);}
+                .btn-icon.play:hover {background-image: url(../images/icon-play-hover.svg);}
+                .btn-icon.stop {background-image: url(../images/icon-stop.svg);}
+                .btn-icon.stop:hover {background-image: url(../images/icon-stop-hover.svg);}
+              </script>
+            </div>
+          </div>
+        </section>
+        <section>
+          <div class="ex-box">
+            <h3>paging button</h3>
+            <div class="ex">
+              <div class="paging">
+                <a class="prev" href="javascript:"><img src="/common/images/icon-paging-prev.svg" alt="이전"></a>
+                <div class="numbers">
+                  <a class="active" href="javascript:" title="현재 페이지">1</a>
+                  <a href="javascript:">2</a>
+                  <a href="javascript:">3</a>
+                  <a href="javascript:">4</a>
+                  <a href="javascript:">5</a>
+                  <a href="javascript:">6</a>
+                  <a href="javascript:">7</a>
+                  <a href="javascript:">8</a>
+                  <a href="javascript:">9</a>
+                  <a href="javascript:">10</a>
+                </div>
+                <a class="next" href="javascript:"><img src="/common/images/icon-paging-next.svg" alt="다음"></a>
+              </div>
+            </div>
+            <script type="syntaxhighlighter" class="brush: xml;">
+              <div class="paging">
+                <a class="prev" href="javascript:"><img src="/common/images/icon-paging-prev.svg" alt="이전"></a>
+                <div class="numbers">
+                  <a class="active" href="javascript:" title="현재 페이지">1</a>
+                  <a href="javascript:">2</a>
+                  <a href="javascript:">3</a>
+                  <a href="javascript:">4</a>
+                  <a href="javascript:">5</a>
+                  <a href="javascript:">6</a>
+                  <a href="javascript:">7</a>
+                  <a href="javascript:">8</a>
+                  <a href="javascript:">9</a>
+                  <a href="javascript:">10</a>
+                </div>
+                <a class="next" href="javascript:"><img src="/common/images/icon-paging-next.svg" alt="다음"></a>
+              </div>
+            </script>
+            <script type="syntaxhighlighter" class="brush: css;">
+              .paging {display: flex; align-items: center;}
+              .paging a {width: 32rem; height: 32rem; line-height: 32rem; text-align: center;}
+              .paging .prev {margin-right: 26rem;}
+              .paging .next {margin-left: 26rem;}
+              .paging .prev img, .paging .next img {width: 100%; height: 100%; object-fit: contain;}
+              .paging .numbers {display: flex; align-items: center;}
+              .paging .numbers a {font-size: max(18rem, 16px); font-family: "Pretendard_Regular", sans-serif; color: #06161E; letter-spacing: -.02em; opacity: .4;}
+              .paging .numbers a ~ a {margin-left: 13rem;}
+              .paging .numbers a.active {color: #fff; border-radius: 100%; background-color: #06161E; opacity: 1;}
+              .paging .numbers a:hover {opacity: 1;}
+            </script>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

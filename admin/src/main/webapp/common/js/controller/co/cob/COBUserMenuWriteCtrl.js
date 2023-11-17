@@ -11,7 +11,6 @@ define(["ezCtrl", "controller/co/COMenuCtrl"], function(ezCtrl, menuCtrl) {
 	var ctrl = new ezCtrl.controller(exports.controller);
 	
 	// create object function
-			
 	// set model
 	ctrl.model = {
 		id : {

@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <header id="header"></header>
+
+			<!-- content 영역 start -->
+      <div class="cont-wrap">
+        <!-- 
+          신청 페이지: apply-page 클래스 추가
+          그 외 페이지: basic-page 클래스 추가
+        -->
+        <!-- 
+          교육 사업: edu-biz
+          컨실팅 사업: consult-biz
+          상생 사업: coexisting-biz
+        -->
+        <div class="sub-top-vis-area apply-page consult-biz">
+          <div class="page-tit-area">
+            <p class="page-tit f-xlarge-title"><span class="for-move">기술지도신청</span></p>
+            <div class="apply-step-w">
+              <div class="for-move">
+                <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
+                  <p class="step-num">1</p>
+                  <p class="step-con">기본정보</p>
+                </div>
+                <div class="step-list ongoing">
+                  <p class="step-num">2</p>
+                  <p class="step-con">정보입력</p>
+                </div>
+                <div class="step-list">
+                  <p class="step-num">3</p>
+                  <p class="step-con">신청완료</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="img-area">
+            <div class="gray-bg"></div>
+            <div class="graphic-item-w">
+              <div class="item"></div>
+              <div class="item"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divide-con-area">
+          <div class="lnb-area">
+            <div class="for-motion">
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>컨설팅사업 소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu active" href="javascript:"><span>기술지도</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>경영컨설팅</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+            </div>
+          </div>
+
+          <div class="right-con-area">
+            <div class="cont-sec-w">
+              <div class="cont-sec scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">상주기술지도 신청정보를 입력해주세요.</p>
+                    <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="data-enter-form">
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">거래처별 매출비중<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input w-longer">
+                                  <input type="text" placeholder="업체명" required>
+                                </div>
+                                <div class="form-input">
+                                  <input type="text" placeholder="매출비중(%)">
+                                </div>
+                                <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
+                                <div class="btn-wrap">
+                                  <button class="btn-solid small gray-bg btn-add-line" type="button"><span>업체 추가</span></button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">완성차 의존율<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input w-longer">
+                                  <input type="text" placeholder="업체명" value="현대에너지솔루션">
+                                </div>
+                                <div class="form-input">
+                                  <input type="text" placeholder="매출비중(%)" value="70%">
+                                </div>
+                              </div>
+                            </div>
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input w-longer">
+                                  <input type="text" placeholder="업체명" value="현대에너지솔루션">
+                                </div>
+                                <div class="form-input">
+                                  <input type="text" placeholder="매출비중(%)" value="70%">
+                                </div>
+                                <div class="btn-wrap btn-delete-line">
+                                  <button class="btn-text-icon delete" type="button"><span>삭제</span></button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input w-longer">
+                                  <input type="text" placeholder="업체명">
+                                </div>
+                                <div class="form-input">
+                                  <input type="text" placeholder="매출비중(%)">
+                                </div>
+                                <!-- <div class="btn-wrap btn-delete-line">
+                                  
+                                </div> -->
+                                <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
+                                <div class="btn-wrap">
+                                  <button class="btn-text-icon delete" type="button"><span>삭제</span></button>
+                                  <button class="btn-solid small gray-bg btn-add-line" type="button"><span>업체 추가</span></button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">품질담당 인원<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input">
+                                  <input type="number" placeholder="인원수 입력">
+                                  <p class="unit-txt">명</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">FAX<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input">
+                                  <input type="text" placeholder="FAX 입력">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">지도요청 공장주소<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="middle-line">
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="sameAsHQChk" name="">
+                                  <label for="sameAsHQChk">본사와 동일</label>
+                                </div>
+                              </div>
+                              <div class="middle-line">
+                                <div class="form-address">
+                                  <div class="form-group">
+                                    <div class="form-input">
+                                      <input type="text" placeholder="우편번호" value="12345" readonly>
+                                    </div>
+                                    <div class="form-input w-longer">
+                                      <input type="text" placeholder="주소" value="서울시 구로구 디저털로32길 20" readonly>
+                                    </div>
+                                    <div class="btn-wrap">
+                                      <button class="btn-solid small gray-bg" type="button"><span>우편번호 찾기</span></button>
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <div class="form-input w-longest">
+                                      <input type="text" placeholder="상세주소 입력" value="서울시 구로구 디저털로32길 20">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">소재지역<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-select">
+                                  <select id="" title="소재지 선택">
+                                    <option value="" selected>선택</option>
+                                    <option value="">시, 도 대분류 선택1</option>
+                                    <option value="">시, 도 대분류 선택2</option>
+                                    <option value="">시, 도 대분류 선택3</option>
+                                  </select>
+                                </div>
+                                <div class="form-select">
+                                  <select id="" title="소재지 선택">
+                                    <option value="" selected>선택</option>
+                                    <option value="">군, 구 중분류 선택1</option>
+                                    <option value="">군, 구 중분류 선택2</option>
+                                    <option value="">군, 구 중분류 선택3</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">대표자 승인여부<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="opt-group">
+                                <div class="form-radio">
+                                  <input type="radio" id="radio1" name="radio">
+                                  <label for="radio1">승인</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="radio2" name="radio">
+                                  <label for="radio2">미승인</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">신청동기<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="opt-group">
+                                <div class="form-radio">
+                                  <input type="radio" id="applyMotiveRadio1" name="applyMotiveRadioSet">
+                                  <label for="applyMotiveRadio1">자발적 신청</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="applyMotiveRadio2" name="applyMotiveRadioSet">
+                                  <label for="applyMotiveRadio2">1차업체 권유</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="applyMotiveRadio3" name="applyMotiveRadioSet">
+                                  <label for="applyMotiveRadio3">완성차 권유</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">업종<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <p class="data-title f-body1">금속분야</p>
+                              <div class="opt-group">
+                                <div class="form-radio">
+                                  <input type="radio" id="metalFieldRadio1" name="fieldRadioSet">
+                                  <label for="metalFieldRadio1">금속도금</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="metalFieldRadio2" name="fieldRadioSet">
+                                  <label for="metalFieldRadio2">단조</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="metalFieldRadio3" name="fieldRadioSet">
+                                  <label for="metalFieldRadio3">열처리</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="metalFieldRadio4" name="fieldRadioSet">
+                                  <label for="metalFieldRadio4">용접</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="metalFieldRadio5" name="fieldRadioSet">
+                                  <label for="metalFieldRadio5">절삭가공</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="metalFieldRadio6" name="fieldRadioSet">
+                                  <label for="metalFieldRadio6">주철주조</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="metalFieldRadio7" name="fieldRadioSet">
+                                  <label for="metalFieldRadio7">프레스</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="metalFieldRadio8" name="fieldRadioSet">
+                                  <label for="metalFieldRadio8">AL주조</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="data-line">
+                              <p class="data-title f-body1">비금속분야</p>
+                              <div class="opt-group">
+                                <div class="form-radio">
+                                  <input type="radio" id="nonMetalFieldRadio1" name="fieldRadioSet">
+                                  <label for="nonMetalFieldRadio1">고무</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="nonMetalFieldRadio2" name="fieldRadioSet">
+                                  <label for="nonMetalFieldRadio2">도장</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="nonMetalFieldRadio3" name="fieldRadioSet">
+                                  <label for="nonMetalFieldRadio3">사출</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="nonMetalFieldRadio4" name="fieldRadioSet">
+                                  <label for="nonMetalFieldRadio4">전기전자</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="nonMetalFieldRadio5" name="fieldRadioSet">
+                                  <label for="nonMetalFieldRadio5">IT</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="data-line">
+                              <p class="data-title f-body1">기타</p>
+                              <div class="etc-option-w">
+                                <div class="middle-line">
+                                  <div class="form-group">
+                                    <div class="form-radio">
+                                      <input type="radio" id="etcFieldRadio1" name="fieldRadioSet">
+                                      <label for="etcFieldRadio1">업종 직접 입력</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="middle-line">
+                                  <div class="form-group">
+                                    <div class="form-input w-longest">
+                                      <input type="text" placeholder="업종 입력" disabled>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">신청사항<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="opt-group">
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk1" name="">
+                                  <label for="requestChk1">전체</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk1" name="">
+                                  <label for="requestChk1">공정관리</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk2" name="">
+                                  <label for="requestChk2">레이아웃</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk3" name="">
+                                  <label for="requestChk3">설비관리</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk4" name="">
+                                  <label for="requestChk4">생산기술</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk5" name="">
+                                  <label for="requestChk5">품질관리</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk6" name="">
+                                  <label for="requestChk6">3정5행</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk7" name="">
+                                  <label for="requestChk7">작업조건관리</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk8" name="">
+                                  <label for="requestChk8">스마트공장</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk9" name="">
+                                  <label for="requestChk9">현장자동화</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="requestChk10" name="">
+                                  <label for="requestChk10">사이버보완</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">첨부파일<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="noti-txt-w">
+                                <p class="f-body2">상주기술지도 신청 시 회사소개서(자율 양식)와 개선활동 추진계획서가 필수로 첨부되어야 합니다.</p>
+                                <P class="bullet-noti-txt f-caption2">* 개선활동 추진계획서는 아래 [양식 다운로드] 후 양식에 맞게 작성 후 첨부 부탁드립니다.</P>
+                                <P class="bullet-noti-txt f-caption2">* 첨부 가능한 확장자(pdf, ppt, pptx, doc, docx, xls, xlsx, zip) / 최대 업로드 용량(50MB)</P>
+                              </div>
+                            </div>
+                            <div class="data-line">
+                              <p class="data-title f-body1">회사소개서</p>
+                              <div class="form-group">
+                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                  <p class="empty-txt">선택된 파일 없음</p>
+                                </div>
+                                <div class="file-btn-area">
+                                  <input type="file" id="searchFile">
+                                  <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="data-line">
+                              <div class="inner-line">
+                                <p class="data-title f-body1">개선활동 추진계획서</p>
+                                <div class="form-group">
+                                  <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                    <p class="empty-txt">선택된 파일 없음</p>
+                                    <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                    <div class="file-list">
+                                      <p class="file-name"><span class="name">(주)이지미디어개선활동개선활동개선활동개선활동개선활동개선활동활동개선활동개선활동활동개선활동개선활동</span><span class="unit">pdf</span></p>
+                                      <button class="btn-delete" title="파일 삭제하기" type="button"></button>
+                                    </div>
+                                  </div>
+                                  <div class="file-btn-area">
+                                    <input type="file" id="searchFile">
+                                    <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
+                                  </div>
+                                  <div class="btn-wrap btn-down-wrap">
+                                    <a class="btn-text-icon download" href="javascript:" download><span>양식 다운로드</span></a>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- <div class="inner-line">
+                                <div class="btn-wrap">
+                                  <a class="btn-text-icon download" href="javascript:" download><span>양식 다운로드</span></a>
+                                </div>
+                              </div> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">이용 약관<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="inner-line">
+                                <div class="gray-bg-sec narrow-pad">
+                                  <p class="f-body2">재단의 기술지도는 전액 무상으로 지원되는 사업으로서, 지도 활동을 통해 달성한 유·무형의 성과는 전적으로 지도업체에 귀속되나, 재단의 설립취지인 자동차부품산업 발전을 위해 그 성과를 활용(지도 우수기업 선정 및 정부 등 유공자 포상 추천, 동종업계 수평전개를 위한 개선사례 교육/발표/현장공개 등)할 수 있으며, 구체적인 내용은 재단과 지도업체의 협의를 통해 진행됩니다.</p>
+                                </div>
+                              </div>
+                              <div class="inner-line agree-line">
+                                <div class="form-group align-right">
+                                  <div class="form-checkbox">
+                                    <input type="checkbox" id="agreeChk" name="">
+                                    <label for="agreeChk">약관에 동의합니다.</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="page-bot-btn-sec scroll-motion">
+              <div class="btn-wrap for-motion">
+                <div class="btn-set">
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                </div>
+                <div class="btn-set">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>신청하기</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- content 영역 end -->
+
+      <footer></footer>
+
+      <div class="quick-menu">
+        <div class="menu-area">
+					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
+					<div class="btn-w">
+						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
+						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
+						<a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
+					</div>
+        </div>
+        <a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
+      </div>
+
+      <div class="scroll-gauge">
+        <div class="bar"></div>
+      </div>
+
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

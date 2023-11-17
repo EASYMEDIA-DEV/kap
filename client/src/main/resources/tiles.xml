@@ -7,22 +7,22 @@
         <put-attribute name="footer" value="/WEB-INF/jsp/layout/footer.jsp" />
     </definition>
     <definition name="*/*.front" extends="layouts">
-        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}.jsp" />
     </definition>
     <definition name="*/*/*.front" extends="layouts">
-        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
     </definition>
 
     <definition name="*/*/*/*.front" extends="layouts">
-        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}/{4}.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}.jsp" />
     </definition>
 
     <definition name="*/*/*/*/*.front" extends="layouts">
-        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}/{4}/{5}.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}.jsp" />
     </definition>
 
     <definition name="*/*/*/*/*/*.front" extends="layouts">
-        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}/{4}/{5}/{6}.jsp" />
     </definition>
 
     <definition name="layouts-error" template="/WEB-INF/jsp/layout/layout.jsp">
@@ -30,12 +30,12 @@
         <put-attribute name="footer" value="" />
     </definition>
     <definition name="*.error" extends="layouts-error">
-        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}.jsp" />
     </definition>
     <definition name="*/*.error" extends="layouts-error">
-        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}.jsp" />
     </definition>
     <definition name="*/*/*.error" extends="layouts-error">
-        <put-attribute name="content" value="/WEB-INF/jsp/front/{1}/{2}/{3}.jsp" />
+        <put-attribute name="content" value="/WEB-INF/jsp/{1}/{2}/{3}.jsp" />
     </definition>
 </tiles-definitions>

@@ -37,6 +37,7 @@ define(["ezCtrl"], function(ezCtrl) {
 						var listRowSize = $formObj.find("#listRowSize").val();
 						var pageRowSize = $formObj.find("#pageRowSize").val();
 						var csrfKey 	= $formObj.find("#csrfKey").val();
+						var srchLayer 	= $formObj.find("input[name=srchLayer]").val();
 						$formObj.clearForm();
 						//FORM 전송 필수 데이터 삽입
 						$formObj.find("#pageIndex").val( pageIndex );
@@ -44,6 +45,7 @@ define(["ezCtrl"], function(ezCtrl) {
 						$formObj.find(".listRowSizeContainer").val( listRowSize );
 						$formObj.find("#pageRowSize").val( pageRowSize );
 						$formObj.find("#csrfKey").val( csrfKey );
+						$formObj.find("input[name=srchLayer]").val( srchLayer );
 
 						//캘린더 초기화
 						cmmCtrl.setPeriod(this, "", "", false);

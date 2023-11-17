@@ -2,7 +2,7 @@
 <c:choose>
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <tr data-total-count="${rtnData.totalCount}" data-srch-exam-layer="${searchDto.srchExamLayer}">
+            <tr data-total-count="${rtnData.totalCount}" data-srch-exam-layer="${searchDto.srchLayer}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
                         <input type="checkbox" value="${list.examSeq}" name="delValueList" class="checkboxSingle notRequired" />
@@ -12,7 +12,7 @@
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center srchListView">
                     <c:choose>
-                        <c:when test="${ searchDto.srchExamLayer eq 'Y'}">
+                        <c:when test="${ searchDto.srchLayer eq 'Y'}">
                             ${list.titl}
                         </c:when>
                         <c:otherwise>

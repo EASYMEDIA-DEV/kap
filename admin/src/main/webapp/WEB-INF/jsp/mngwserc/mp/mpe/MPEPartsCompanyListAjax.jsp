@@ -2,7 +2,7 @@
 <c:choose>
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <tr data-total-count="${rtnData.totalCount}" data-srch-parts-com-layer="${partsComDto.srchPartsComLayer}">
+            <tr data-total-count="${rtnData.totalCount}" data-srch-parts-com-layer="${partsComDto.srchLayer}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
                         <input type="checkbox" value="${list.bsnmNo}" name="delValueList" class="checkboxSingle notRequired" data-auth-cd="${list.bsnmNo}"/>
@@ -13,7 +13,7 @@
                 <td class="text-center">${list.rprsntNm}</td>
                 <td class="text-center srchListView">
                     <c:choose>
-                        <c:when test="${ partsComDto.srchPartsComLayer eq 'Y'}">
+                        <c:when test="${ partsComDto.srchLayer eq 'Y'}">
                             ${list.cmpnNm}
                         </c:when>
                         <c:otherwise>

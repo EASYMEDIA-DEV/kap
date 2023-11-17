@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>퍼블리싱 스타일 가이드</title>
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="../assets/styles/shCore.css"/>
+	<link rel="Stylesheet" href="../assets/styles/shCoreEclipse.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="/common/css/fonts.css">
+  <link rel="stylesheet" href="/common/css/common.css">
+  <script src="../assets/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+	<script src="../assets/scripts/shCore.js"></script>
+	<script src="../assets/scripts/shBrushJScript.js"></script>
+	<script src="../assets/scripts/shBrushXml.js"></script>
+	<script src="../assets/scripts/shBrushCss.js"></script>
+  <script type="text/javascript">SyntaxHighlighter.all();</script>
+  <style>
+    .ex-box ~ .ex-box {margin-top: 20px;} 
+    .ex-box > p {margin-bottom: 10px;}
+    .exs ~ .exs {margin-top: 40px;}
+    .ex ~ .ex {margin-top: 40px;}
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <h1>KAP 가이드</h1>
+      <div class="btn-wrap">
+        <a href="/html/worklist.html">작업현황판  <i class="fas fa-angle-right"></i></a>
+      </div>
+    </header>
+    <div id="contents">
+      <aside>
+        <a href="/html/styleguide/guide-intro.html">기본 정책 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-markup.html">마크업 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-css.html">CSS 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-naming.html">네이밍 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="javascript:" class="active">스타일 가이드 <i class="fas fa-angle-right"></i></a>
+        <ul class="guide-list">
+          <li><a href="/html/styleguide/guide/form.html">FORM</a></li>
+          <li><a href="/html/styleguide/guide/typography.html">TYPOGRAPHY</a></li>
+          <li><a href="/html/styleguide/guide/button.html">BUTTON</a></li>
+          <li><a href="/html/styleguide/guide/popup.html">POPUP</a></li>
+          <li><a href="/html/styleguide/guide/accordion.html">ACCORDION</a></li>
+          <li><a href="/html/styleguide/guide/tab.html">TAB</a></li>
+          <li><a href="/html/styleguide/guide/table.html">TABLE</a></li>
+          <li><a href="/html/styleguide/guide/list.html">LIST</a></li>
+          <li><a href="/html/styleguide/guide/layout.html" class="active">LAYOUT</a></li>
+        </ul>
+      </aside>
+      <!-- 가이드 Start -->
+      <div class="content-area">
+        <h2>레이아웃 스타일 가이드</h2>
+        <br/>
+        <section>
+          <div class="ex-box">
+            <h3>application step</h3>
+            <p class="info">신청페이지에서 활용되는 스텝 컴포넌트입니다. 스텝이 완료되었을 때 체크 아이콘이 사용되고 컬러가 변경됩니다.</p>
+            <div class="exs">
+              <h4>basic</h4>
+              <div class="ex">
+                <div class="sub-top-vis-area apply-page consult-biz init-active" style="height: auto;">
+                  <div class="title-area">
+                    <div class="apply-step-w">
+                      <div class="for-move">
+                        <div class="step-list ongoing"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
+                          <p class="step-num">1</p>
+                          <p class="step-con">기본정보</p>
+                        </div>
+                        <div class="step-list">
+                          <p class="step-num">2</p>
+                          <p class="step-con">정보입력</p>
+                        </div>
+                        <div class="step-list">
+                          <p class="step-num">3</p>
+                          <p class="step-con">신청완료</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sub-top-vis-area apply-page consult-biz init-active" style="height: auto;">
+                  <div class="title-area">
+                    <div class="apply-step-w">
+                      <div class="for-move">
+                        <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
+                          <p class="step-num">1</p>
+                          <p class="step-con">기본정보</p>
+                        </div>
+                        <div class="step-list ongoing">
+                          <p class="step-num">2</p>
+                          <p class="step-con">정보입력</p>
+                        </div>
+                        <div class="step-list">
+                          <p class="step-num">3</p>
+                          <p class="step-con">신청완료</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="sub-top-vis-area apply-page consult-biz init-active" style="height: auto;">
+                  <div class="title-area">
+                    <div class="apply-step-w">
+                      <div class="for-move">
+                        <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
+                          <p class="step-num">1</p>
+                          <p class="step-con">기본정보</p>
+                        </div>
+                        <div class="step-list completed">
+                          <p class="step-num">2</p>
+                          <p class="step-con">정보입력</p>
+                        </div>
+                        <div class="step-list ongoing">
+                          <p class="step-num">3</p>
+                          <p class="step-con">신청완료</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+              </script>
+              <script type="syntaxhighlighter" class="brush: css;">
+              </script>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -19,8 +19,8 @@
 					<input type="hidden" id="listRowSize" name="listRowSize" value="10" />
 					<!-- CSRF KEY -->
 					<input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-					<!-- 검색 여부 -->
-					<input type="hidden" name="srchExamLayer" value="Y" />
+					<!-- 레이어 여부 -->
+					<input type="hidden" name="srchLayer" value="Y" />
 					<!--기간 검색 시작-->
 					<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 						<jsp:param name="srchText" value="등록/수정기간" />

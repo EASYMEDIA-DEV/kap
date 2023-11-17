@@ -178,6 +178,6 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     private String excelYn;
 
     // 검색 레이어에서 호출 여부
-    private String srchPartsComLayer;
+    private String srchLayer;
 
 }

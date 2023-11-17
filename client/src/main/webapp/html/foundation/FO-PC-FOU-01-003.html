@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <header id="header"></header>
+
+			<!-- content 영역 start -->
+      <div class="cont-wrap">
+        <!-- 
+          신청 페이지: apply-page 클래스 추가
+          그 외 페이지: basic-page 클래스 추가
+        -->
+        <div class="sub-top-vis-area basic-page">
+          <div class="page-tit-area">
+            <p class="page-tit f-xlarge-title"><span class="for-move">재단연혁</span></p>
+          </div>
+          <div class="img-area">
+            <div class="img">
+              <img class="only-pc" src="/common/images/img-sub-top-visual-foundation-history.jpg" alt="">
+              <img class="only-mobile" src="/common/images/img-sub-top-visual-foundation-history-mobile.jpg" alt="">
+            </div>
+          </div>
+        </div>
+        
+        <div class="divide-con-area">
+          <div class="lnb-area">
+            <div class="for-motion">
+              <div class="lnb-list">
+                <a class="btn-two-depth active" href="javascript:"><span>재단소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                <div class="three-depth-wrap">
+                  <a class="btn-three-depth" href="javascript:"><span>인사말</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>재단개요</span></a>
+                  <a class="btn-three-depth active" href="javascript:"><span>재단연혁</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>재단조직</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>윤리경영</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>경영공시</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>홍보자료</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>오시는길</span></a>
+                </div>
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth" href="javascript:"><span>고객센터</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                <div class="three-depth-wrap">
+                  <a class="btn-three-depth" href="javascript:"><span>공지사항</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>재단소식</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>뉴스레터 구독</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>FAQ</span></a>
+                  <a class="btn-three-depth" href="javascript:"><span>1:1 문의</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="right-con-area">
+            <div class="cont-sec-w">
+              <div class="history-area">
+                <div class="year-wrap">
+                  <div class="year-box scroll-motion">
+                    <div class="for-motion">
+                      <button class="on year-btn" type="button" data-year="currentYear"><span class="f-title1">2020 ~ <br/>현재</span></button>
+                      <button class="year-btn" type="button" data-year="2019"><span class="f-title1">2010 ~ <br/>2019</span></button>
+                      <button class="year-btn" type="button" data-year="2009"><span class="f-title1">2000 ~ <br/>2009</span></button>
+                    </div>
+                  </div>
+                </div>
+                <div class="history-wrap">
+                  <div class="history-item scroll-motion test" data-year="currentYear">
+                    <div class="for-motion">
+                      <p class="year f-title3">2023</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">7</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">제 9대 이사장 취임</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2022</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">6</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">대통령단체표창 수상</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">5</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">ESG 경영실무, 산업안전교육 실시</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2021</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">5</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">대통령단체표창 수상</p>
+                            <p class="txt f-sub-head">ESG 경영실무, 산업안전교육 실시</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2020</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">11</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">자발적 상생협력 단체부문 중소벤처기업부 장관상 수상</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">10</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">2차 부품사 상생협력 체감도조사 실시</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">5</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">상생형 스마트공장사업 2차년도 개시</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">3</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">상생형 스마트공장사업 1차년도 266사 지원 완료</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion test" data-year="2019">
+                    <div class="for-motion">
+                      <p class="year f-title3">2019</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">6</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">교육연수생 100,000명 돌파</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">3</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">상생형 스마트공장 사업개시</p>
+                            <p class="txt f-sub-head">방문교육사업 개시</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">2</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">제 7대 재단 이사장 취임</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2018</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">12</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">품질, 기술, 경영일반 교육 연수생 90,000명 돌파</p>
+                            <p class="txt f-sub-head">상주기술지도, 경영컨설팅 2,000사 돌파</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">11</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">자동차 미래기술 전망 세미나 개최</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">5</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">상생협력기급 1,290사 지원</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2017</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">5</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">국내 우수기업 벤치마킹 운영</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">3</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">업종별 생산관리자향상 교육과정 운영</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2016</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">10</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">산업혁신운동 4차년도 스마트공장 발대식</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">7</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">스마트캠퍼스 실무자, 경영자 교육과정 운영</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2014</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">1</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">온라인 사업신청/관리시스템 통합 구축</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2013</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">3</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">품질학교 9개 과정 , 기술학교 8개 과정, 경영일반 2개 과정 운영</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">2</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">품질, 기술, 경영일반 교육 연수생 40,000명 돌파</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2011</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">10</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">품질, 기술, 경영일반 교육 연수생 30,000명 돌파</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">9</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">기초기술 경영컨설팅 1,000사 돌파</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">3</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">품질교육 통합한 품질학교 도입</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion test" data-year="2009">
+                    <div class="for-motion">
+                      <p class="year f-title3">2008</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">6</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">기술학교/경영일반 교육 사업개시</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2007</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">11</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">품질, 기술, 경영일반 교육 연수생 10,000명 돌파</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">1</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">협력업체지원단 발촉, 협력사 경영컨설팅 사업 개시</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2006</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">11</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">품질교육 SQ평가원 양성 과정 사업개시</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2005</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">5</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">품질봉사단 품질교육 사업개시</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">1</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">업종별 기술세미나 사업개시</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2003</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">12</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">차사랑 커뮤니티 오픈</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">3</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">학술세미나 사업개시</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">1</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">기술봉사단, 상주기술지도 사업개시</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="history-item scroll-motion">
+                    <div class="for-motion">
+                      <p class="year f-title3">2002</p>
+                      <div class="info-box">
+                        <dl class="info">
+                          <dt class="date f-head">9</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">지정 기부금 단체(공익법인) 인가(재정경제부)</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">7</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">비영리 법인 설립인가(산업자원부)</p>
+                          </dd>
+                        </dl>
+                        <dl class="info">
+                          <dt class="date f-head">6</dt>
+                          <dd class="txts">
+                            <p class="txt f-sub-head">현대, 기아자동차 부품산업발전협의회 발족</p>
+                          </dd>
+                        </dl>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+				</div>
+			<!-- content 영역 end -->
+
+      <footer></footer>
+
+      <div class="quick-menu">
+        <div class="menu-area">
+					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
+					<div class="btn-w">
+						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
+						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
+            <a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
+					</div>
+        </div>
+        <a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
+      </div>
+
+      <div class="scroll-gauge">
+        <div class="bar"></div>
+      </div>
+
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

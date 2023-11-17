@@ -45,5 +45,5 @@ public class EXGExamMstSearchDTO extends BaseDTO {
 
     @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
     @Hidden
-    private String srchExamLayer;
+    private String srchLayer;
 }
