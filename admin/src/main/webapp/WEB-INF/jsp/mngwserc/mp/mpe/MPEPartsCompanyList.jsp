@@ -132,10 +132,10 @@
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->
-                    <tbody id="listContainer"/>
+                    <tbody id="partsComListContainer"/>
                 </table>
                 <!-- 페이징 버튼 -->
-                <div id="pagingContainer"/>
+                <div id="partsComPagingContainer"/>
             </div>
             <!--리스트 종료 -->
         </form>

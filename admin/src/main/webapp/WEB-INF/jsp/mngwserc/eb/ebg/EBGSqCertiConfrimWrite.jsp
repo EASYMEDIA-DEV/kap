@@ -172,12 +172,14 @@
             <fieldset class="">
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold ">부품사명<span class="star"> *</span></label>
-                    <div class="col-sm-10">
+                    <div class="col-sm-5">
                         <div class="input-group">
                             <input type="hidden" class="notRequired" id="bsnm_no" name="bsnm_no" value="${rtnDto.bsnmNo}" />
-                            <input type="text" class="form-control input-sm " value="${ rtnDto.cmpnNm }" title="부품사명" readonly onclick="cmmCtrl.initCalendar(this);"/>
+                            <input type="text" class="form-control input-sm " value="${ rtnDto.cmpnNm }" title="부품사명" readonly/>
                             <span class="input-group-btn" style="z-index:0;">
-                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.getExamLayerPop(function(data){
+                                  console.log(data);
+                                 })">
                                     부품사 검색
                                 </button>
                             </span>
@@ -226,3 +228,5 @@
         </form>
     </div>
 </div>
+<!-- 교육 평가 매핑 -->
+<jsp:include page="/WEB-INF/jsp/mngwserc/ex/exg/EXGExamListSrchLayer.jsp"></jsp:include>

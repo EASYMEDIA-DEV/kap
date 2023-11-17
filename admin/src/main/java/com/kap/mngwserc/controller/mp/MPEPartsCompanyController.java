@@ -65,12 +65,13 @@ public class MPEPartsCompanyController {
     /**
      * 부품사 목록을 조회한다.
      */
-    @RequestMapping(value = "/select")
+    @GetMapping(value = "/select")
     public String selectPartsComListPageAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
             modelMap.addAttribute("rtnData", mpePartsCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
+            modelMap.addAttribute("partsComDto", mpePartsCompanyDTO);
         }
         catch (Exception e)
         {
@@ -116,6 +117,31 @@ public class MPEPartsCompanyController {
         }
 
         return "mngwserc/mp/mpe/MPEPartsCompanyWrite.admin";
+    }
+
+    /**
+     * 부품사 검색 레이어 구분, 규모를 조회한다.
+     */
+    @GetMapping(value = "/codeSelect")
+    public String selectPartsComSelectAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("COMPANY_TYPE");
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/mp/mpe/MPEPartsCompanySelectAjax";
     }
 
     /**
