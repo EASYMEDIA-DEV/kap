@@ -20,15 +20,15 @@ define(["ezCtrl"], function(ezCtrl) {
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
-            ctrl.obj.find("#listContainer").html(respObj);
+            ctrl.obj.find("#ebeExamlistContainer").html(respObj);
 
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
-            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+            ctrl.obj.find("#ebeExamListContainerTotCnt").text(totCnt);
 
             //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "./select", $formObj, "GET", "html");
+            cmmCtrl.listPaging(totCnt, $formObj, "ebeExamlistContainer", "ebeExamPagingContainer");
+        }, "/mngwserc/eb/ebe/select", $formObj, "GET", "html");
     }
 
     // set model

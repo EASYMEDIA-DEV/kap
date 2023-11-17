@@ -2,6 +2,7 @@ package com.kap.core.dto.eb.ebg;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.COFileDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -29,10 +30,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "SQ평가원 신청 마스터 DTO")
-public class EBGExamAppctnMstDTO {
-    @Schema(title = "SQ평가원 신청순번")
-    @NotNull
-    private Integer detailsKey;
+public class EBGExamAppctnMstDTO extends BaseDTO {
     @Schema(title = "SQ평가원 신청순번")
     private Integer examAppctnSeq;
     @Schema(title = "회원순번")
