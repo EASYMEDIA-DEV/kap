@@ -20,50 +20,13 @@
                     <!-- CSRF KEY -->
                     <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <!-- 검색 여부 -->
-                    <input type="hidden" name="srchPartsComLayer" value="Y" />
+                    <input type="hidden" id="srchPartsComLayer" name="srchPartsComLayer" value="Y" />
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                         <jsp:param name="srchText" value="등록/수정기간" />
                         <jsp:param name="srchOption" value="등록일,수정일" />
                     </jsp:include>
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">구분</label>
-                            <div class="col-sm-5">
-                                <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxAll" />
-                                    <span class="ion-checkmark-round"></span> 전체
-                                </label>
-                                <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                    <c:if test="${fn:contains(cdList, 'COMPANY010')}">
-                                        <label class="checkbox-inline c-checkbox">
-                                            <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
-                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}
-                                        </label>
-                                    </c:if>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">규모</label>
-                            <div class="col-sm-6">
-                                <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxAll" />
-                                    <span class="ion-checkmark-round"></span> 전체
-                                </label>
-                                <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                    <c:if test="${fn:contains(cdList, 'COMPANY020')}">
-                                        <label class="checkbox-inline c-checkbox">
-                                            <input type="checkbox" class="checkboxSingle" data-name="sizeCdList" value="${cdList.cd}" />
-                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}
-                                        </label>
-                                    </c:if>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </fieldset>
+                    <div id="selectBoxArea"></div>
                     <fieldset class="last-child">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">검색키워드</label>
@@ -98,7 +61,7 @@
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+                            <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="partsComListContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
@@ -136,10 +99,10 @@
                             </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->
-                            <tbody id="listContainer"/>
+                            <tbody id="partsComListContainer"/>
                         </table>
                         <!-- 페이징 버튼 -->
-                        <div id="pagingContainer"/>
+                        <div id="partsComPagingContainer"/>
                     </div>
             </div>
             <div class="modal-footer row">

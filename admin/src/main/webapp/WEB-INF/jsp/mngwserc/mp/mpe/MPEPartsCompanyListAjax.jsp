@@ -2,7 +2,7 @@
 <c:choose>
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <tr data-total-count="${rtnData.totalCount}" data-srch-exam-layer="${rtnData.srchPartsComLayer}">
+            <tr data-total-count="${rtnData.totalCount}" data-srch-parts-com-layer="${partsComDto.srchPartsComLayer}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
                         <input type="checkbox" value="${list.bsnmNo}" name="delValueList" class="checkboxSingle notRequired" data-auth-cd="${list.bsnmNo}"/>
@@ -11,10 +11,10 @@
                 </td>
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
                 <td class="text-center">${list.rprsntNm}</td>
-                <td class="text-center">
+                <td class="text-center srchListView">
                     <c:choose>
-                        <c:when test="${ rtnData.srchPartsComLayer eq 'Y'}">
-                            ${list.titl}
+                        <c:when test="${ partsComDto.srchPartsComLayer eq 'Y'}">
+                            ${list.cmpnNm}
                         </c:when>
                         <c:otherwise>
                             <a href="javascript:" class="listView" data-details-key="${list.bsnmNo}">

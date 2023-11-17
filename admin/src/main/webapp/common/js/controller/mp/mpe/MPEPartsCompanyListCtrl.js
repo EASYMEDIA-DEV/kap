@@ -144,7 +144,7 @@ define(["ezCtrl"], function(ezCtrl) {
         immediately : function() {
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
-
+            codeSelect();
             //레이어 팝업에서 호출 할 수 있다.
             if($formObj.find("input[name=srchPartsComLayer]").size() == 0){
                 search($formObj.find("input[name=pageIndex]").val());
@@ -174,6 +174,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
     //목록 조회
     var search = function(page){
+
         //data로 치환해주어야한다.
         //cmmCtrl.setFormData($formObj);
         if(page != undefined){
@@ -182,15 +183,22 @@ define(["ezCtrl"], function(ezCtrl) {
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
-            ctrl.obj.find("#listContainer").html(respObj);
+            ctrl.obj.find("#partsComListContainer").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
 
             //총 건수
-            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+            ctrl.obj.find("#partsComListContainerTotCnt").text(totCnt);
             //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "./select", $formObj, "GET", "html");
+            cmmCtrl.listPaging(totCnt, $formObj, "partsComListContainer", "partsComPagingContainer");
+        }, "/mngwserc/mp/mpe/select", $formObj, "GET", "html");
+    }
+
+    //레이어 구분, 규모 목록 조회
+    var codeSelect = function () {
+        cmmCtrl.frmAjax(function(respObj) {
+            ctrl.obj.find("#selectBoxArea").html(respObj);
+        }, "/mngwserc/mp/mpe/codeSelect", $formObj, "GET", "html",'',false);
     }
 
     ctrl.exec();
