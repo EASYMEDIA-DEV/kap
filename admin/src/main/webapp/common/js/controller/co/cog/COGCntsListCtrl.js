@@ -32,6 +32,88 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         }, "/mngwserc/contentsid/"+menuSeq+"/select", $formObj, "POST", "html");
     }
 
+    var isChecked = function ()
+    {
+        var chkCnt = jQuery("input:checkbox[name='delValueList']:checked").length;
+
+        if (chkCnt < 1)
+        {
+            alert("컨텐츠를 선택해 주세요.");
+            return false;
+        }
+
+        if (chkCnt > 1)
+        {
+            alert("1개 이상 선택할 수 없습니다.");
+            return false;
+        }
+
+        return true;
+    };
+
+    var setProcess = function (option)
+    {
+        if (confirm(option.confirm))
+        {
+            var detailsKey = jQuery("input:checkbox[name='delValueList']:checked").val();
+
+            jQuery.ajax({
+                type : "post",
+                url : "./state-check",
+                data :
+                    {
+                        "detailsKey" : detailsKey
+                        , "_csrf": $("#csrfKey").val()
+                    },
+                dataType : "json",
+                success : function(r)
+                {
+                    var prcsCd = r.prcsCd;
+                    console.log(prcsCd);
+                    if (prcsCd && prcsCd == option.prcsCd)
+                    {
+                        jQuery.ajax({
+                            type : "post",
+                            url : "./aprvl-update",
+                            data :
+                                {
+                                    "detailsKey" : detailsKey
+                                    , "_csrf": $("#csrfKey").val()
+                                },
+                            dataType : "json",
+                            success : function(r)
+                            {
+                                var status = r.status;
+
+                                if (status == "Y")
+                                {
+                                    alert("처리되었습니다.");
+                                    location.reload();
+                                }
+                                else
+                                {
+                                    alert("잘못된 접근입니다.");
+                                }
+                            },
+                            error : function(xhr, ajaxSettings, thrownError)
+                            {
+                                alert("잠시후 다시 시도 바랍니다.");
+                            }
+                        });
+                    }
+                    else
+                    {
+                        alert(option.prcsMsg);
+                    }
+                },
+                error : function(xhr, ajaxSettings, thrownError)
+                {
+                    alert("잠시후 다시 시도 바랍니다.");
+                }
+            });
+        }
+    };
+
     // set model
     ctrl.model = {
         id : {
@@ -41,6 +123,65 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         //검색버튼 클릭시
                         search(1);
+                    }
+                }
+            },
+            //즉시배포 버튼
+            btn_immediately : {
+                event : {
+                    click : function() {
+                        if (isChecked())
+                        {
+                            setProcess({
+                                "confirm" : "해당 컨텐츠로 즉시배포하시겠습니까?",
+                                "prcsCd" : "30",
+                                "prcsMsg" : "작성중 컨텐츠가 아닙니다."
+                            });
+                        }
+                    }
+                }
+            },
+            //되돌리기 버튼
+            btn_back : {
+                event : {
+                    click : function() {
+                        if (isChecked())
+                        {
+                            setProcess({
+                                "confirm" : "해당 컨텐츠로 되돌리시겠습니까?",
+                                "prcsCd" : "20",
+                                "prcsMsg" : "만료 컨텐츠가 아닙니다."
+                            });
+                        }
+                    }
+                }
+            },
+            //복사 버튼
+            btn_copy : {
+                event : {
+                    click : function() {
+                        if (isChecked())
+                        {
+                            if (confirm("복사하시겠습니까?"))
+                            {
+                                var detailsKey = jQuery("input:checkbox[name='delValueList']:checked").val();
+
+                                jQuery.ajax({
+                                    type: "post",
+                                    url: "./copy",
+                                    data:
+                                        {
+                                            "detailsKey": detailsKey
+                                            , "_csrf": $("#csrfKey").val()
+                                        },
+                                    dataType: "json",
+                                    success: function (r) {
+                                        alert(r.msg);
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        }
                     }
                 }
             }

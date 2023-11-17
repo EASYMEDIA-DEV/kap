@@ -7,11 +7,11 @@ import java.util.List;
 
 /**
  * <pre>
- * CMS 관리를 위한 DAO
+ * 컨텐츠 관리 위한 DAO
  * </pre>
  *
  * @ClassName		: COGCntsMapper.java
- * @Description		: CMS 관리를 위한 DAO
+ * @Description		: 컨텐츠 관리 위한 DAO
  * @author 임서화
  * @since 2023.09.07
  * @version 1.0
@@ -26,35 +26,51 @@ import java.util.List;
 @Mapper
 public interface COGCntsMapper {
 	/**
-	 * CMS 목록 갯수 조회
+	 * 컨텐츠 목록 개수 조회
 	 */
 	public int getCntsListCnt(COGCntsDTO pCOGCntsDTO) throws Exception;
 
 	/**
-	 * CMS 목록을 조회한다.
+	 * 컨텐츠 목록을 조회
 	 */
 	public List<COGCntsDTO> selectCntsList(COGCntsDTO pCOGCntsDTO) throws Exception;
 
 	 /**
-	 * CMS를 수정한다.
+	 * 컨텐츠 배포여부 수정
 	 */
-	public int updateUseCnts(COGCntsDTO pCOGCntsDTO) throws Exception;
+	/*public int updateUseCnts(COGCntsDTO pCOGCntsDTO) throws Exception;*/
 
 	/**
-	 * CMS 상세를 조회한다.
+	 * 컨텐츠 상세 조회
 	 */
 	public COGCntsDTO selectCntsDtl(COGCntsDTO pCOGCntsDTO) throws Exception;
 	/**
-	 * CMS를 등록한다.
+	 * 컨텐츠 등록
 	 */
 	public int insertCnts(COGCntsDTO pCOGCntsDTO) throws Exception;
 	/**
-	 * CMS를 수정한다.
+	 * 컨텐츠 수정
 	 */
 	public int updateCnts(COGCntsDTO pCOGCntsDTO) throws Exception;
 	/**
-	 * CMS를 삭제한다.
+	 * 컨텐츠 삭제
 	 */
 	public int deleteCnts(COGCntsDTO pCOGCntsDTO) throws Exception;
+	/**
+	 * 컨텐츠 만료
+	 */
+	public int updateCntsExpr(COGCntsDTO pCOGCntsDTO) throws Exception;
+	/**
+	 * 컨텐츠 배포
+	 */
+	public int updateCntsAprvl(COGCntsDTO pCOGCntsDTO) throws Exception;
+	/**
+	 * 컨텐츠 복사
+	 */
+	public int insertCntsCopy(COGCntsDTO pCOGCntsDTO) throws Exception;
+	/**
+	 * 컨텐츠 최신 버전 값 조회
+	 */
+	public int selectNewVer(COGCntsDTO pCOGCntsDTO) throws Exception;
 
 }

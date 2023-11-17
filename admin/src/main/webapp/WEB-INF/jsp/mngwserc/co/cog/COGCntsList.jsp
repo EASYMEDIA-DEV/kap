@@ -2,7 +2,7 @@
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/co/cog/COGCntsListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
-        <form class="form-horizontal" name="frmSearch" method="post" action="">
+        <form class="form-horizontal" name="frmData" method="post" action="">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
             <!-- 페이징 버튼 사이즈 -->
@@ -28,26 +28,31 @@
                 </div>
                 <div class="pull-right mr-sm">
                     <button type="button" class="btn btn-inverse btn-sm" id="btnSearch" style="display:none">검색</button>
-                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete">선택삭제</button>
-                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>
+            </div>
+            <div class="pull-left mr-sm">
+                <button type="button" class="btn btn-primary btn-sm mb-sm" id="btn_immediately">즉시배포</button>
+                <button type="button" class="btn btn-warning btn-sm mb-sm" id="btn_back">되돌리기</button>
             </div>
             <!--리스트 시작 -->
             <div class="table-responsive col-sm-12 p0 m0">
                 <table class="table table-hover table-striped" >
                     <thead>
                         <tr>
-                            <th>
+                            <th class="text-center">
                                 <label class="checkbox-inline c-checkbox">
                                     <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
                                     <span class="ion-checkmark-round"></span>
                                 </label>
                             </th>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>노출여부</th>
-                            <th>등록일</th>
-                            <th>작성자</th>
+                            <th class="text-center">번호</th>
+                            <th class="text-center">제목</th>
+                            <th class="text-center">버전</th>
+                            <th class="text-center">상태</th>
+                            <th class="text-center">최초 등록자</th>
+                            <th class="text-center">최초 등록일시</th>
+                            <th class="text-center">최종 수정자</th>
+                            <th class="text-center">최종 수정일시</th>
                         </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->
@@ -57,6 +62,14 @@
                 <div id="pagingContainer"/>
             </div>
             <!--리스트 종료 -->
+
+            <div class="pull-left mr-sm">
+                <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete">선택삭제</button>
+                <button type="button" class="btn btn-default btn-sm mb-sm" id="btn_copy">복사</button>
+            </div>
+            <div class="pull-right mr-sm">
+                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
+            </div>
         </form>
     </div>
 </div>

@@ -2,7 +2,6 @@ package com.kap.mngwserc.controller;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COGCntsDTO;
-import com.kap.core.dto.COSeqGnrDTO;
 import com.kap.service.COGCntsService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * <pre>
@@ -38,18 +35,18 @@ import javax.servlet.http.HttpServletRequest;
 public class COGCntsController {
 
     //CMS 서비스
-    private final COGCntsService cogCntsService;
+    private final COGCntsService pCOGCntsService;
 
 
     /**
      * CMS 목록 페이지
      */
     @GetMapping(value="/list")
-    public String getCntsListPage(COGCntsDTO cogCntsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getCntsListPage(COGCntsDTO pCOGCntsDTO, ModelMap modelMap) throws Exception
     {
         try
         {
-            modelMap.addAttribute("rtnData", cogCntsDTO);
+            modelMap.addAttribute("rtnData", pCOGCntsDTO);
 
         }
         catch (Exception e)
@@ -68,12 +65,12 @@ public class COGCntsController {
      * CMS 목록 조회
      */
     @PostMapping(value = "/select")
-    public String selectCntsListPageAjax(COGCntsDTO cogCntsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String selectCntsListPageAjax(COGCntsDTO pCOGCntsDTO, ModelMap modelMap) throws Exception
     {
         try
         {
             // 정의된 코드id값들의 상세 코드 맵 반환
-            modelMap.addAttribute("rtnData", cogCntsService.selectCntsList(cogCntsDTO));
+            modelMap.addAttribute("rtnData", pCOGCntsService.selectCntsList(pCOGCntsDTO));
         }
         catch (Exception e)
         {
@@ -89,15 +86,18 @@ public class COGCntsController {
     /**
      * CMS 상세 페이지
      */
-    @RequestMapping(value="/write")
-    public String getCntsWritePage(COGCntsDTO cOGCntsDTO, ModelMap modelMap, COAAdmDTO cOAAdmDTO, @PathVariable int menuSeq) throws Exception
+    @GetMapping(value="/write")
+    public String getCntsWritePage(COGCntsDTO pCOGCntsDTO, ModelMap modelMap, @PathVariable int menuSeq) throws Exception
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cOGCntsDTO.setMenuSeq(menuSeq);
-            if(!"".equals(cOGCntsDTO.getDetailsKey())){
-                modelMap.addAttribute("rtnInfo", cogCntsService.selectCntsDtl(cOGCntsDTO));
+            pCOGCntsDTO.setMenuSeq(menuSeq);
+            
+            if(pCOGCntsDTO.getDetailsKey() != null && !pCOGCntsDTO.getDetailsKey().isEmpty()){
+                modelMap.addAttribute("rtnInfo", pCOGCntsService.selectCntsDtl(pCOGCntsDTO));
+            }
+            else {
+                modelMap.addAttribute("rtnInfo", pCOGCntsService.selectNewVer(pCOGCntsDTO));
             }
         }
         catch (Exception e)
@@ -113,21 +113,15 @@ public class COGCntsController {
     }
 
     /**
-     * CMS 등록 페이지
+     * 컨텐츠 등록
      */
-    @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String CntsInsertPage(COGCntsDTO cogCntsDTO, ModelMap modelMap, @PathVariable int menuSeq, COSeqGnrDTO cOSeqGnrDTO) throws Exception
+    @PostMapping(value="/insert")
+    public String CntsInsert(COGCntsDTO pCOGCntsDTO, ModelMap modelMap, @PathVariable int menuSeq) throws Exception
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cogCntsDTO.setMenuSeq(menuSeq);
-
-            cogCntsDTO.setRegId(coaAdmDTO.getId());
-            cogCntsDTO.setRegIp(coaAdmDTO.getLoginIp());
-            cogCntsDTO.setModId(coaAdmDTO.getId());
-            cogCntsDTO.setModIp(coaAdmDTO.getLoginIp());
-            modelMap.addAttribute("respCnt", cogCntsService.insertCnts(cogCntsDTO));
+            pCOGCntsDTO.setMenuSeq(menuSeq);
+            modelMap.addAttribute("respCnt", pCOGCntsService.insertCnts(pCOGCntsDTO));
         }
         catch (Exception e)
         {
@@ -141,20 +135,14 @@ public class COGCntsController {
     }
 
     /**
-     * CMS를 수정한다.
+     * 컨텐츠 수정
      */
     @PostMapping(value="/update")
-    public String updateCnts(COGCntsDTO cogCntsDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap) throws Exception
+    public String updateCnts(COGCntsDTO pCOGCntsDTO, ModelMap modelMap) throws Exception
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-
-            cogCntsDTO.setRegId(coaAdmDTO.getId());
-            cogCntsDTO.setRegIp(coaAdmDTO.getLoginIp());
-            cogCntsDTO.setModId(coaAdmDTO.getId());
-            cogCntsDTO.setModIp(coaAdmDTO.getLoginIp());
-            modelMap.addAttribute("respCnt", cogCntsService.updateCnts(cogCntsDTO));
+            modelMap.addAttribute("respCnt", pCOGCntsService.updateCnts(pCOGCntsDTO));
         }
         catch (Exception e)
         {
@@ -168,14 +156,108 @@ public class COGCntsController {
     }
     
     /**
-     * CMS를 삭제한다.
+     * 컨텐츠 삭제
      */
     @PostMapping(value="/delete")
-    public String deleteCnts(COGCntsDTO cogCntsDTO, ModelMap modelMap) throws Exception
+    public String deleteCnts(COGCntsDTO pCOGCntsDTO, ModelMap modelMap) throws Exception
     {
         try
         {
-            modelMap.addAttribute("respCnt", cogCntsService.deleteCnts(cogCntsDTO));
+            modelMap.addAttribute("respCnt", pCOGCntsService.deleteCnts(pCOGCntsDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * CMS 즉시 배포 시 게시글 상태 값 체크
+     */
+    @PostMapping(value="/state-check")
+    public String getPrcsCdAjax(COGCntsDTO pCOGCntsDTO, ModelMap modelMap, @PathVariable("menuSeq") int menuSeq) throws Exception
+    {
+        try
+        {
+            pCOGCntsDTO.setMenuSeq(menuSeq);
+
+            COGCntsDTO rtnData = pCOGCntsService.selectCntsDtl(pCOGCntsDTO);
+
+            String prcsCd = rtnData.getPrcsCd();
+
+            if(prcsCd != null && !"".equals(prcsCd))
+            {
+                modelMap.addAttribute("prcsCd", prcsCd);
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * 컨텐츠 배포
+     */
+    @PostMapping(value="/aprvl-update")
+    public String updateCntsAprvl(COGCntsDTO pCOGCntsDTO, ModelMap modelMap, @PathVariable("menuSeq") int menuSeq) throws Exception
+    {
+        try
+        {
+            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            pCOGCntsDTO.setModId(coaAdmDTO.getId());
+            pCOGCntsDTO.setModIp(coaAdmDTO.getLoginIp());
+
+            if ("99".equals(coaAdmDTO.getAuthCd()))
+            {
+                pCOGCntsDTO.setMenuSeq(menuSeq);
+
+                pCOGCntsService.updateCntsAprvl(pCOGCntsDTO);
+
+                modelMap.addAttribute("status", "Y");
+            }
+            else
+            {
+                modelMap.addAttribute("status", "N");
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * 컨텐츠 복사
+     */
+    @PostMapping(value="/copy")
+    public String insertCntsCopy(COGCntsDTO pCOGCntsDTO, ModelMap modelMap, @PathVariable("menuSeq") int menuSeq) throws Exception
+    {
+        try
+        {
+            pCOGCntsDTO.setMenuSeq(menuSeq);
+
+            pCOGCntsService.insertCntsCopy(pCOGCntsDTO);
+
+            modelMap.addAttribute("msg", "복사되었습니다.");
         }
         catch (Exception e)
         {
