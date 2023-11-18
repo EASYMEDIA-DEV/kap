@@ -87,19 +87,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
         });
 
-        // var cnt = 1;
-        // var subCnt = 1;
-        // $("."+surveyType).each(function(index){                         // 질문, 하위질문 번호를 구분하고 순서를 셋팅
-        //     if ($(this).find('input[name=dpth]').val() == '2'){
-        //         $("."+surveyType+"questionTxt:eq("+index+")").text("└질문"+eval(cnt-1)+"-"+subCnt);
-        //         subCnt = subCnt + 1;
-        //     }else{
-        //         $("."+surveyType+"questionTxt:eq("+index+")").text("질문"+cnt);
-        //         cnt = cnt+1;
-        //         subCnt = 1;
-        //     }
-        // });
-
         var parnt_qstn_ord = "0";
         var qstn_ord = "0";
         var totCnt = 0;
@@ -341,6 +328,24 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var surveyType = filedset.data("survey-type");
                         var sub_qstn_ord = "N";
                         var addAnswerCnt = 0;
+                        var msr_stnd_cd = $("select[name=msr_stnd_cd] option:selected").val();
+                        var msr_stnd_text = $("select[name=msr_stnd_cd] option:selected").text();
+                        var msr_yn = $("input[name=msr_yn]:checked").val();
+
+                        if ($(this).val()=='QST05' || $(this).val()=='QST06' || $(this).val()=='QST07'){
+                            if (msr_yn == 'N'){
+                                alert('척도 생성이 불가능합니다.');
+                                $(this).val('QST01').prop("selected",true);
+                                $(this).trigger("change");
+                                return;
+                            }
+                            if (msr_stnd_cd != $(this).val()){
+                                alert(msr_stnd_text+' 척도로만 생성 가능합니다');
+                                $(this).val(msr_stnd_cd).prop("selected",true);
+                                $(this).trigger("change");
+                                return;
+                            }
+                        }
 
                         if ($(this).val()=='QST02' || $(this).val()=='QST03' || $(this).val()=='QST04'){
                             $('input[name=parnt_qstn_ord]').each(function() {
@@ -527,6 +532,55 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
+            msrStndCd : {
+                event : {
+                    focus : function(){
+                        var filedset = $(this).closest('fieldset');
+                        filedset.find('input[name=preMsrStndCd]').val($(this).val());
+                    },
+                    change : function() {
+                        var filedset = $(this).closest('fieldset');
+                        var preMsrStndCd = filedset.find('input[name=preMsrStndCd]').val();
+                        var msr_stnd_cd = $("select[name=msr_stnd_cd] option:selected").val();
+
+                        if(!confirm("척도기준 변경 시 이미 생성된 다른 척도기준은 초기화 됩니다\n척도기준을 변경하시겠습니까?")){
+                            $(this).val(preMsrStndCd).prop("selected",true);
+                            return;
+                        }else{
+                            $('.questionType').each(function(){
+                                if ($(this).val()=='QST05' || $(this).val()=='QST06' || $(this).val()=='QST07'){
+                                    if($(this).val() != msr_stnd_cd){
+                                        $(this).val(msr_stnd_cd).prop("selected",true);
+                                        $(this).trigger("change");
+                                    }
+                                }
+                            })
+                        }
+                    }
+                }
+            },
+            msrYn : {
+                event : {
+                    change : function() {
+                        if($(this).is(":checked")){
+                            if(!confirm("척도기준 미사용으로 변경 시 이미 생성된 척도기준은 삭제 됩니다\n척도기준을 미사용으로 변경하시겠습니까?")){
+                                $(this).attr('checked',false);
+                                return;
+                            }else{
+                                $('.questionType').each(function(){
+                                    if ($(this).val()=='QST05' || $(this).val()=='QST06' || $(this).val()=='QST07'){
+                                        $(this).val('QST01').prop("selected",true);
+                                        $(this).trigger("change");
+                                    }
+                                });
+                            }
+                            $('select[name=msr_stnd_cd]').attr('disabled',true);
+                        }else{
+                            $('select[name=msr_stnd_cd]').attr('disabled',false);
+                        }
+                    }
+                }
+            },
         },
         immediately : function() {
 
@@ -541,6 +595,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 }
                 questionSet(typeCd);
             }
+
             /* Editor Setting */
             jQuery("textarea[id^='cntn']").each(function(){
                 cmmCtrl.setEditor({
