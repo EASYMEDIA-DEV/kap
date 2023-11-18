@@ -131,7 +131,7 @@
                                                         </label>
                                                     </c:forEach>
                                                 </select>
-                                                <button type="button" class="btn btn-sm btn-info addQuestion" >문항추가</button>
+                                                <button type="button" class="btn btn-sm btn-inverse addQuestion" >문항추가</button>
                                                 <button type="button" class="btn btn-sm btn-info addSubQuestion" <c:if test="${qstnList.dpth eq 2}">style="display:none;"</c:if>>하위문항추가</button>
                                                 <label class="checkbox-inline c-checkbox">
                                                     <input type="checkbox" class="notRequired" name="ncs_yn" value="Y" <c:if test="${qstnList.ncsYn eq 'Y'}">checked</c:if>  /><span class="ion-checkmark-round"></span> 필수응답
@@ -172,8 +172,8 @@
                                                         </c:choose>
                                                     </td>
                                                         <td>
-                                                        <button type="button" class="btn btn-sm btn-info addAnswer" <c:if test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">style="display:none;"</c:if>>+</button>
-                                                        <button type="button" class="btn btn-sm btn-info delAnswer" <c:if test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">style="display:none;"</c:if>>-</button>
+                                                        <button type="button" class="btn btn-sm btn-inverse addAnswer" <c:if test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">style="display:none;"</c:if>>+</button>
+                                                        <button type="button" class="btn btn-sm btn-danger delAnswer" <c:if test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">style="display:none;"</c:if>>-</button>
                                                     </td>
                                                 </tr>
                                                 </c:forEach>
@@ -186,8 +186,8 @@
                                                         <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
                                                     </td>
                                                     <td>
-                                                        <button type="button" class="btn btn-sm btn-info addAnswer" >+</button>
-                                                        <button type="button" class="btn btn-sm btn-info delAnswer" >-</button>
+                                                        <button type="button" class="btn btn-sm btn-inverse addAnswer" >+</button>
+                                                        <button type="button" class="btn btn-sm btn-danger delAnswer" >-</button>
                                                     </td>
                                                 </tr>
                                             </c:otherwise>
@@ -221,7 +221,7 @@
                                                         </label>
                                                     </c:forEach>
                                                 </select>
-                                                <button type="button" class="btn btn-sm btn-info addQuestion" >문항추가</button>
+                                                <button type="button" class="btn btn-sm btn-inverse addQuestion" >문항추가</button>
                                                 <button type="button" class="btn btn-sm btn-info addSubQuestion" >하위문항추가</button>
                                                 <label class="checkbox-inline c-checkbox">
                                                     <input type="checkbox" class="notRequired" name="ncs_yn" value="Y" /><span class="ion-checkmark-round"></span> 필수응답
@@ -243,8 +243,8 @@
                                                 <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-sm btn-info addAnswer" >+</button>
-                                                <button type="button" class="btn btn-sm btn-info delAnswer" >-</button>
+                                                <button type="button" class="btn btn-sm btn-inverse addAnswer" >+</button>
+                                                <button type="button" class="btn btn-sm btn-danger delAnswer" >-</button>
                                             </td>
                                         </tr>
                                     </table>
