@@ -3,10 +3,6 @@ package com.kap.service.impl.sv;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
-import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import com.kap.core.dto.sv.sva.SVASurveyExmplDtlDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
@@ -109,7 +105,6 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 		int edctnEpisdCnt = sVASurveyMapper.getSurveyEdctnEpisdCnt(sVASurveyDTO);
 		int cnstgRsumeCnt = sVASurveyMapper.getSurveyCnstgRsumeCnt(sVASurveyDTO);
 
-		System.out.println("sVASurveyDTO===" + sVASurveyDTO.getDelValueList());
 		respCnt = edctnEpisdCnt+cnstgRsumeCnt;
 		if(respCnt == 0) {
 			//삭제하려는 데이터가 교육회차마스터,컨설팅진행마스터에 매핑되어있지 않음.
@@ -137,7 +132,7 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 			sVASurveyMstInsertDTO.setSrvSeq( surveyMstIdgen );
 			respCnt = sVASurveyMapper.insertSurveyMst( sVASurveyMstInsertDTO );
 		}else{
-			//수정
+		//수정
 			surveyMstIdgen = Integer.parseInt( sVASurveyMstInsertDTO.getDetailsKey() );
 			respCnt = sVASurveyMapper.updateSurveyMst( sVASurveyMstInsertDTO );
 		}
@@ -192,13 +187,30 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 			sVASurveyMapper.insertSurveyQstnDtl( sVASurveyMstInsertDTO );
 		}
 
-		System.out.println("respCnt===" + respCnt);
 		return respCnt;
 	}
 
 	@Override
 	public int updateSurveyList(SVASurveyMstInsertDTO sVASurveyMstInsertDTO, HttpServletRequest request) throws Exception {
-		return 0;
+
+		SVASurveyMstSearchDTO sVASurveyMstSearchDTO = new SVASurveyMstSearchDTO();
+		sVASurveyMstSearchDTO.setDetailsKey( sVASurveyMstInsertDTO.getDetailsKey() );
+		int edctnEpisdCnt = sVASurveyMapper.getSurveyEdctnEpisdCnt(sVASurveyMstSearchDTO);
+		int cnstgRsumeCnt = sVASurveyMapper.getSurveyCnstgRsumeCnt(sVASurveyMstSearchDTO);
+		int respCnt = edctnEpisdCnt+cnstgRsumeCnt ;
+
+		if(respCnt > 0)
+		{
+			//사용 여부만 수정
+			respCnt = sVASurveyMapper.updateSurveyMstExpnYn( sVASurveyMstInsertDTO );
+		}
+		else
+		{
+			//질문 보기삭제
+			sVASurveyMapper.deleteSurveyQstnList(sVASurveyMstSearchDTO);
+			insertSurveyList(sVASurveyMstInsertDTO, request);
+		}
+		return respCnt;
 	}
 
 	@Override

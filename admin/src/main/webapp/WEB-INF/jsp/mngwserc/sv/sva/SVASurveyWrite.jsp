@@ -58,6 +58,23 @@
                     </div>
                 </div>
             </fieldset>
+            <fieldset>
+                <div class="form-group form-inline">
+                    <label class="col-sm-1 control-label">척도기준<span class="star"> *</span></label>
+                    <div class="col-sm-10">
+                        <select class="form-control input-sm wd-sm" name="msr_stnd_cd" id="msrStndCd" title="척도기준">
+                            <option value="QST05" <c:if test="${rtnDto.msrStndCd eq 'QST05'}">selected</c:if>>5점</option>
+                            <option value="QST06" <c:if test="${rtnDto.msrStndCd eq 'QST06'}">selected</c:if>>7점</option>
+                            <option value="QST07" <c:if test="${rtnDto.msrStndCd eq 'QST07'}">selected</c:if>>10점</option>
+                        </select>
+                        &nbsp;분&nbsp;
+                        <label class="checkbox-inline c-checkbox">
+                            <input type="checkbox" class="notRequired" name="msr_yn" value="N" <c:if test="${rtnDto.msrYn eq 'N'}">checked</c:if>  /><span class="ion-checkmark-round"></span> 척도 미사용
+                        </label>
+
+                    </div>
+                </div>
+            </fieldset>
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -89,10 +106,12 @@
                 <c:when test="${ rtnDto.srvSeq != null }">
                     <c:forEach var="qstnList" items="${rtnDto.svSurveyQstnDtlList}" varStatus="qstnStatus">
                         <c:if test="${cd ne qstnList.cd}">
-                            <h6 class="ml mb-xl ${fn:substring(qstnList.cd,0,3)}" style="display:none;"><em class="ion-android-checkbox-blank mr-sm"></em>${qstnList.cdNm}(총 <span id="${qstnList.cd}Cnt">1</span>개)</h6>
+                            <h6 class="ml mb-xl ${fn:substring(qstnList.cd,0,3)}" style="<c:if test="${fn:substring(qstnList.cd,0,3) ne rtnDto.typeCd}">display:none;</c:if>"><em class="ion-android-checkbox-blank mr-sm"></em>${qstnList.cdNm}(총 <span id="${qstnList.cd}Cnt">1</span>개)</h6>
                         </c:if>
                         <c:if test="${qstnList.cd ne 'CON01' && qstnList.cd ne 'CON02'}">
                             <c:set var="rowspan" value="${qstnList.exmplCnt+3}" />
+
+
 
                             <fieldset style="<c:if test="${qstnList.ctgryCd eq null}">display:none;</c:if>" class="surveyList ${qstnList.cd}" data-survey-type="${qstnList.cd}" >
                                 <input type="hidden" name="qstn_ord" value="0">
@@ -124,7 +143,7 @@
                                         </tr>
                                         <tr>
                                             <th>질문<span class="star"> *</span></th>
-                                            <td ><input type="text" class="form-control input-sm" name="qstn_nm" value="${qstnList.qstnNm}" maxlength="200" title="질문" placeholder="질문을 입력해주세요." /></td>
+                                            <td ><input type="text" class="form-control input-sm <c:if test="${qstnList.dpth eq 0}">notRequired</c:if>" name="qstn_nm" value="${qstnList.qstnNm}" maxlength="200" title="질문" placeholder="질문을 입력해주세요." /></td>
                                             <td></td>
                                         </tr>
                                         <c:choose>
@@ -143,7 +162,7 @@
                                                                 <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
-                                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
+                                                                <input type="text" class="form-control input-sm notRequired answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
                                                                 <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
@@ -152,9 +171,9 @@
                                                             </c:when>
                                                         </c:choose>
                                                     </td>
-                                                    <td>
-                                                        <button type="button" class="btn btn-sm btn-info addAnswer" >+</button>
-                                                        <button type="button" class="btn btn-sm btn-info delAnswer" >-</button>
+                                                        <td>
+                                                        <button type="button" class="btn btn-sm btn-info addAnswer" <c:if test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">style="display:none;"</c:if>>+</button>
+                                                        <button type="button" class="btn btn-sm btn-info delAnswer" <c:if test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">style="display:none;"</c:if>>-</button>
                                                     </td>
                                                 </tr>
                                                 </c:forEach>
@@ -163,7 +182,7 @@
                                                 <tr class="answerForm">
                                                     <th>응답<span class="star"> *</span></th>
                                                     <td class="form-inline">
-                                                        <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
+                                                        <input type="text" class="form-control input-sm <c:if test="${qstnList.dpth eq 0}">notRequired</c:if> answer" name="exmpl_nm" value="" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
                                                         <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
                                                     </td>
                                                     <td>

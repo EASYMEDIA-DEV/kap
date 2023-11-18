@@ -69,18 +69,36 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
     var questionSet = function(surveyType){
 
-        var cnt = 1;
-        var subCnt = 1;
-        $("."+surveyType).each(function(index){                         // 질문, 하위질문 번호를 구분하고 순서를 셋팅
-            if ($(this).find('input[name=dpth]').val() == '2'){
-                $("."+surveyType+"questionTxt:eq("+index+")").text("└질문"+eval(cnt-1)+"-"+subCnt);
-                subCnt = subCnt + 1;
-            }else{
-                $("."+surveyType+"questionTxt:eq("+index+")").text("질문"+cnt);
-                cnt = cnt+1;
-                subCnt = 1;
-            }
+
+        $(".surveyList").each(function(){
+            var surveyTypeData = $(this).data('survey-type');
+            var cnt = 1;
+            var subCnt = 1;
+            $("."+surveyTypeData).each(function(index){                         // 질문, 하위질문 번호를 구분하고 순서를 셋팅
+                if ($(this).find('input[name=dpth]').val() == '2'){
+                    $("."+surveyTypeData+"questionTxt:eq("+index+")").text("└질문"+eval(cnt-1)+"-"+subCnt);
+                    subCnt = subCnt + 1;
+                }else{
+                    $("."+surveyTypeData+"questionTxt:eq("+index+")").text("질문"+cnt);
+                    cnt = cnt+1;
+                    subCnt = 1;
+                }
+            });
+
         });
+
+        // var cnt = 1;
+        // var subCnt = 1;
+        // $("."+surveyType).each(function(index){                         // 질문, 하위질문 번호를 구분하고 순서를 셋팅
+        //     if ($(this).find('input[name=dpth]').val() == '2'){
+        //         $("."+surveyType+"questionTxt:eq("+index+")").text("└질문"+eval(cnt-1)+"-"+subCnt);
+        //         subCnt = subCnt + 1;
+        //     }else{
+        //         $("."+surveyType+"questionTxt:eq("+index+")").text("질문"+cnt);
+        //         cnt = cnt+1;
+        //         subCnt = 1;
+        //     }
+        // });
 
         var parnt_qstn_ord = "0";
         var qstn_ord = "0";
@@ -571,6 +589,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         svMst.rspnMm = $formObj.find("select[name=rspnMm] option:selected").val();
                         svMst.cntn = $formObj.find(".ckeditorRequired").val();
                         svMst.expsYn = $formObj.find("input[name=expsYn]:checked").val();
+                        svMst.msrStndCd = $formObj.find("select[name=msr_stnd_cd] option:selected").val();
+                        svMst.msrYn = $formObj.find("input[name=msr_yn]").is(":checked") ? "N" : "Y";
                         svMst.svSurveyQstnDtlList = new Array();
 
                         $(".surveyList").each(function(){
