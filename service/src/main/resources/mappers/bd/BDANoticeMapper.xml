@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.bd.BDANoticeMapper">
+    <!--
+     쿼리명 : BDANoticeMapper.selectNoticeList
+     설  명 : 공지사항 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.20  장두석     최초 생성
+    -->
+    <select id="selectNoticeList" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
+        SELECT /* BDANoticeMapper.selectNoticeList */
+            NTFY_SEQ
+            , TITL
+            , READ_CNT
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+            , EXPS_YN
+        FROM
+            BD_NTFY_MST A
+        WHERE 1=1
+          <include refid="selectNoticeListwhereSql" />
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+    쿼리명 : BDANoticeMapper.getNoticeListCnt
+    설  명 : 공지사항 목록 개수 카운
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.20    장두석       최초생성
+    -->
+    <select id="getNoticeListTotCnt" parameterType="BDANoticeDTO" resultType="java.lang.Integer">
+        SELECT /* BDANoticeMapper.getNoticeListCnt */
+            COUNT(*)
+        FROM
+            BD_NTFY_MST A
+        WHERE 1 = 1
+            <include refid="selectNoticeListwhereSql" />
+    </select>
+
+    <select id="selectNoticeDtl" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
+        SELECT /* BDANoticeMapper.selectNoticeDtl */
+            NTFY_SEQ
+            , NTFY_YN
+            , EXPS_STRT_DTM
+            , EXPS_END_DTM
+            , ODTM_YN
+            , TITL
+            , CNTN
+            , FILE_SEQ
+            , READ_CNT
+            , EXPS_YN
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+        FROM
+            BD_NTFY_MST A
+        WHERE
+            NTFY_SEQ = #{detailsKey}
+    </select>
+
+    <insert id="insertNotice" parameterType="BDANoticeDTO">
+        INSERT /* BDANoticeMapper.insertNotice */ INTO BD_NTFY_MST
+            (
+            NTFY_SEQ
+            , NTFY_YN
+            , EXPS_STRT_DTM
+            , EXPS_END_DTM
+            , ODTM_YN
+            , TITL
+            , CNTN
+            , FILE_SEQ
+            , READ_CNT
+            , EXPS_YN
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+            )
+            VALUES
+            (
+            #{ntfySeq}
+            , #{ntfyYn}
+            , #{expsStrtDtm}
+            , #{expsEndDtm}
+            , #{odtmYn}
+            , #{titl}
+            , #{cntn}
+            , #{fileSeq}
+            , 0
+            , #{expsYn}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+    쿼리명 : BDANoticeMapper.updateNotice
+    설  명 : 공지사항 수정
+     수정일	 수정자     수정내용
+    ==========   ======   =============
+    2023.11.20   장두석     최초생성
+	-->
+    <update id="updateNotice" parameterType="BDANoticeDTO">
+        UPDATE  /*BDANoticeDTO.updateNotice*/
+            BD_NTFY_MST
+        SET
+            NTFY_YN = #{ntfyYn}
+            , EXPS_STRT_DTM = #{expsStrtDtm}
+            , EXPS_END_DTM = #{expsEndDtm}
+            , ODTM_YN = #{odtmYn}
+            , TITL = #{titl}
+            , CNTN = #{cntn}
+            , FILE_SEQ = #{fileSeq}
+            , EXPS_YN = #{expsYn}
+            , MOD_ID = #{modId}
+            , MOD_IP = #{modIp}
+            , MOD_DTM = NOW()
+        WHERE 1 = 1
+            AND NTFY_SEQ = #{detailsKey}
+    </update>
+
+    <!--
+         쿼리명 : BDANoticeMapper.deleteNotice
+         설  명 : 공지사항 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.20   장두석       최초생성
+        -->
+    <delete id="deleteNotice" parameterType="BDANoticeDTO">
+        DELETE /* BDANoticeMapper.deleteNotice */
+        FROM
+        BD_NTFY_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    NTFY_SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    AND	NTFY_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+    쿼리명 : selectNoticeListwhereSql
+    설  명 : 공지사항 관리 where Sql
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.20    장두석       최초생성
+    -->
+    <sql id="selectNoticeListwhereSql">
+        <if test="strtDt != null and strtDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+            </choose>
+        </if>
+        <if test="endDt != null and endDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+            </choose>
+        </if>
+        <if test="expsYnList != null and expsYnList.size() > 0">
+            AND (
+            <foreach collection="expsYnList" item="expsYn" index="index" open="" close="" separator=" OR ">
+                MAIN_YN = #{expsYn}
+            </foreach>
+            )
+        </if>
+        <if test="q != null and q != ''">
+            <choose>
+                <when test="f == 1">
+                    AND TITL LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 2">
+                    AND (
+                    INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <when test="f == 3">
+                    AND (
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <otherwise>
+                    AND (
+                    INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY
+            REG_DTM DESC
+    </sql>
+</mapper>
+
+

@@ -188,6 +188,9 @@
 	<update id="updateCntsExpr" parameterType="COGCntsDTO">
 		UPDATE /* COGCntsMapper.updateCntsExpr */ CO_CNTS_MST
 		SET PRCS_CD = '20'
+			, MOD_ID = #{modId}
+			, MOD_IP = #{modIp}
+			, MOD_DTM = NOW()
 		WHERE PRCS_CD = '10'
 		  AND MENU_SEQ = #{menuSeq}
 	</update>
@@ -202,6 +205,9 @@
 	<update id="updateCntsAprvl" parameterType="COGCntsDTO">
 		UPDATE /* COGCntsMapper.updateCntsAprvl */ CO_CNTS_MST
 		SET PRCS_CD = '10'
+		  , MOD_ID = #{modId}
+		  , MOD_IP = #{modIp}
+		  , MOD_DTM = NOW()
 		WHERE MENU_SEQ = #{menuSeq}
 		  AND SEQ = #{detailsKey}
 	</update>

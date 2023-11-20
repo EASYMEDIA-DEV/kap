@@ -41,12 +41,12 @@ public class COGCntsServiceImpl implements COGCntsService {
 	private final COGCntsMapper cOGCntsMapper;
 
 	/** Sequence **/
-	/* 관리자 싴퀀스 */
+	/* 관리자 시퀀스 */
 	private final EgovIdGnrService cmsSeqIdgen;
 
 	//로그인 상태값 시스템 등록
 	private final COSystemLogService cOSystemLogService;
-	String tableNm = "컨텐츠_SEQ";
+
 	/**
 	 * 컨텐츠 목록 조회
 	 */
@@ -130,6 +130,11 @@ public class COGCntsServiceImpl implements COGCntsService {
 	 */
 	public void updateCntsAprvl(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
+		// 수정자 셋팅
+		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+		pCOGCntsDTO.setModId(coaAdmDTO.getId());
+		pCOGCntsDTO.setModIp(coaAdmDTO.getLoginIp());
+
 		// 컨텐츠 만료
 		cOGCntsMapper.updateCntsExpr(pCOGCntsDTO);
 
