@@ -6,4 +6,4 @@
      })">검색레이어</button>
 </div>
 <!-- 교육 평가 매핑 -->
-<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBEpisdCouseSrchLayer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/eba/EBACouseSrchLayer.jsp"></jsp:include>

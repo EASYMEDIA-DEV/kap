@@ -1638,6 +1638,21 @@ var cmmCtrl = (function(){
 		}).modal();
 	}
 
+	//교육차수 검색 매핑
+	//getEpisdSrchLayerPop(function(data){data 객체를 받아서 처리});
+	var fn_episd_srch_layer_pop = function(fnc){
+		$(".ebbEpisdMstSrchLayer").one('show.bs.modal', function() {
+			// Add class for soft backdrop
+			$(".ebbEpisdMstSrchLayer").find("#btnRefresh").click();
+			$(".ebbEpisdMstSrchLayer").find("#btnSearch").click();
+		}).one('hidden.bs.modal', function() {
+			// Remove class for soft backdrop (if not will affect future modals)
+		}).one('choice', function(data, param) {
+			// Remove class for soft backdrop (if not will affect future modals)
+			fnc(param);
+		}).modal();
+	}
+
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1679,6 +1694,8 @@ var cmmCtrl = (function(){
 		getPartsCompanyLayerPop : fn_parts_layer_pop,
 		getLecturerLayerPop : fn_lec_layer_pop,
 		//교육과정검색 매핑
-		getCouseSrchLayerPop : fn_couse_srch_layer_pop
+		getCouseSrchLayerPop : fn_couse_srch_layer_pop,
+		//교육차수검색 매핑
+		getEpisdSrchLayerPop : fn_episd_srch_layer_pop
 	}
 }());

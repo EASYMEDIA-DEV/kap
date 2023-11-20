@@ -129,12 +129,27 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				event : {
 					click : function(){
 						cmmCtrl.getCouseSrchLayerPop(function(data){
-							console.log(data);
 							$("#edctnSeq").val(data.edctnSeq);
 							$("p.ctgryCdNm").text(data.ctgryCdNm);
 							$("p.nm").text(data.nm);
 							$("p.stduyMthd").text(data.stduyMthd);
 							$("p.stduyDtm").text(data.stduyDtm);
+
+						});
+					}
+				}
+			},
+
+			episdSearch : {
+				event : {
+					click : function(){
+						cmmCtrl.getEpisdSrchLayerPop(function(data){
+							console.log(data);
+							/*$("#edctnSeq").val(data.edctnSeq);
+							$("p.ctgryCdNm").text(data.ctgryCdNm);
+							$("p.nm").text(data.nm);
+							$("p.stduyMthd").text(data.stduyMthd);
+							$("p.stduyDtm").text(data.stduyDtm);*/
 
 						});
 					}
