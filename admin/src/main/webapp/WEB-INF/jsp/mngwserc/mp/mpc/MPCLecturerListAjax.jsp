@@ -14,16 +14,15 @@
                 <td class="text-center srchListView">
                     <c:choose>
                         <c:when test="${ lecturerDto.srchLayer eq 'Y'}">
-                            ${list.name}
+                            ${list.ffltnNm}
                         </c:when>
                         <c:otherwise>
                             <a href="javascript:" class="listView" data-details-key="${list.isttrSeq}">
-                                    ${list.name}
+                               ${list.ffltnNm}
                             </a>
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td class="text-center">${list.ffltnNm}</td>
                 <td class="text-center">${list.deptNm}</td>
                 <td class="text-center">${list.pstnNm}</td>
                 <td class="text-center">${list.hpNo}</td>
