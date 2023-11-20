@@ -1722,7 +1722,9 @@ var cmmCtrl = (function(){
 		jsonAjax : fn_json_ajax_data,
 		//교육 평가지 매핑
 		getExamLayerPop : fn_exam_layer_pop,
+		//부품사 검색 매핑
 		getPartsCompanyLayerPop : fn_parts_layer_pop,
+		//강사 검색 매핑
 		getLecturerLayerPop : fn_lec_layer_pop,
 		//교육과정검색 매핑
 		getCouseSrchLayerPop : fn_couse_srch_layer_pop,

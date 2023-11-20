@@ -9,7 +9,7 @@
         ==========   ======    ==============
         2023.11.15   구은희       최초생성
     -->
-    <select id="selectSmsSendYnDtl" parameterType="smhSmsSendYnDTO">
+    <select id="selectSmsSendYnDtl" parameterType="SMHSmsSendYnDTO">
         SELECT /* SMHSmsSendYnMapper.selectSmsSendYnDtl */
             CFG_SEQ
              , SMS_SEND_YN
@@ -31,7 +31,7 @@
         ==========   ======    ==============
         2023.11.15   구은희       최초생성
     -->
-    <update id="updateSmsSendYn" parameterType="smhSmsSendYnDTO">
+    <update id="updateSmsSendYn" parameterType="SMHSmsSendYnDTO">
         UPDATE /* SMHSmsSendYnMapper.updateSmsSendYn */ SM_HMPGE_CTG_MST
         SET
             SMS_SEND_YN = #{smsSendYn}
