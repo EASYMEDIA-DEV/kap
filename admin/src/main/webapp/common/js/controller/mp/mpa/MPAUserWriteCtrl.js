@@ -17,6 +17,7 @@ var exports = {
 
     var dupEmailChk = true;
 
+    //사용자 상세 조회
     var tabOne = function () {
         cmmCtrl.frmAjax(function(respObj) {
             ctrl.obj.find("#tab1").html(respObj);
@@ -24,6 +25,9 @@ var exports = {
 
     }
 
+    /**
+     * 미래차공모전 리스트 조회
+     */
     var tabTwo = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
@@ -37,6 +41,9 @@ var exports = {
         }, "/mngwserc/mp/mpa/select-tab-two", $formObj, "POST", "html",'',false);
     }
 
+    /**
+     * 1대1 문의 조회
+     */
     var tabThree = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);

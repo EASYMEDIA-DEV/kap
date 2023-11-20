@@ -1,7 +1,9 @@
 package com.kap.service;
 
 import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.MPBBusDto;
 import com.kap.core.dto.MPBEduDto;
+import com.kap.core.dto.MPBSanDto;
 
 /**
  * <pre>
@@ -31,6 +33,16 @@ public interface MPBMemberPartsSocietyService {
      * @throws Exception
      */
     MPBEduDto selectEduList(MPBEduDto mpbEduDto) throws Exception;
+
+    /**
+     * 컨설팅 리스트 조회
+     */
+    MPBBusDto selectBusList(MPBBusDto mpbBusDto) throws Exception;
+
+    /**
+     * 상생 리스트 조회
+     */
+    MPBSanDto selectSanList(MPBSanDto mpbSanDto) throws Exception;
 
 
 }

@@ -21,7 +21,7 @@
             <tr>
                 <th scope="row" class="bg-gray-lighter">사업자등록번호 <span style="color: red">*</span></th>
                 <td> <input type="text" class="form-control input-sm" id="workBsnmNo" title="부품사명" name="workBsnmNo"   value="${rtnDtl.workBsnmNo}"/>
-                    <button type="button" class="btn btn-secondary" id="btnBsnmNo" >인증[TODO]</button> </td>
+                    <button type="button" class="btn btn-secondary" id="btnBsnmNo" >인증[TODO 양현우]</button> </td>
                 <th scope="row" class="bg-gray-lighter">구분 <span style="color: red">*</span></th>
                 <td>
                     <select class="form-control input-sm" name="ctgryCd" disabled>

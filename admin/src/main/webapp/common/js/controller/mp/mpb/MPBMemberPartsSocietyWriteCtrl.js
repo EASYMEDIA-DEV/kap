@@ -19,6 +19,7 @@ var exports = {
 
     var dupEmailChk = true;
 
+    //사용자 상세 조회
     var tabOne = function () {
         cmmCtrl.frmAjax(function(respObj) {
             ctrl.obj.find("#tab1").html(respObj);
@@ -26,6 +27,9 @@ var exports = {
 
     }
 
+    /**
+     * 교육 사업 조회
+     */
     var tabTwo = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
@@ -39,23 +43,61 @@ var exports = {
         }, "/mngwserc/mp/mpb/select-tab-two", $formObj, "POST", "html",'',false);
     }
 
+    /**
+     * 컨설티 사업 조회
+     */
     var tabThree = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
-            ctrl.obj.find("#listContainerInqr").html(respObj);
+            ctrl.obj.find("#listContainerBus").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
             //총 건수
-            ctrl.obj.find("#listContainerInqrTotCnt").text(totCnt);
+            ctrl.obj.find("#listContainerBusTotCnt").text(totCnt);
             //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "listContainerInqr", "pagingContainerInqr");
-        }, "/mngwserc/mp/mpa/select-tab-three", $formObj, "POST", "html",'',false);
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainerBus", "pagingContainerBus");
+        }, "/mngwserc/mp/mpb/select-tab-three", $formObj, "POST", "html",'',false);
     }
+
+    /**
+     * 상생 사업 조회 및 미래차공모전 조회
+     */
     var tabFour = function () {
 
+        //상생 사업
+        cmmCtrl.listFrmAjax(function(respObj) {
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+            //CALLBACK 처리
+            ctrl.obj.find("#listContainerSan").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#listContainerSanTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainerSan", "pagingContainerSan");
+        }, "/mngwserc/mp/mpb/select-tab-four", $formObj, "POST", "html",'',false);
+
+        //미래차 공모전
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#listContainerFuc").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            if(totCnt > 0) {
+                $(".futureCar").show();
+            }
+            //총 건수
+            ctrl.obj.find("#listContainerFucTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainerFuc", "pagingContainerFuc");
+        }, "/mngwserc/mp/mpa/select-tab-two", $formObj, "POST", "html",'',false);
+
     }
 
+    /**
+     * 1대1 문의 조회
+     */
     var tabFive = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
@@ -63,6 +105,7 @@ var exports = {
             ctrl.obj.find("#listContainerInqr").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
+
             //총 건수
             ctrl.obj.find("#listContainerInqrTotCnt").text(totCnt);
             //페이징 처리
@@ -78,9 +121,9 @@ var exports = {
         }
         tabOne();
         tabTwo();
-        // tabFour();
+        tabThree();
+        tabFour();
         tabFive();
-        // tabThree();
     }
 
 
@@ -169,7 +212,6 @@ var exports = {
         tabClick : {
             event : {
                 click : function (e){
-                    console.log(e.target.getAttribute('href').substr(1));
                     if(e.target.getAttribute('href').substr(1)!='dtl') {
                         $(".dtl-tab").hide();
                     } else {
@@ -218,6 +260,7 @@ var exports = {
     immediately : function() {
         //리스트 조회
         //폼 데이터 처리
+        $(".futureCar").hide();
         cmmCtrl.setFormData($formObj);
         search();
 

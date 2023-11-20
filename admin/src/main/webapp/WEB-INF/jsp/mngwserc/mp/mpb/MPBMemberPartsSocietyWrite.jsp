@@ -106,6 +106,114 @@
                     <div id="pagingContainer"></div>
                 </div>
 
+                <div id="bus" class="tab-pane fade">
+                    <div class="clearfix">
+                        <h6 class="pull-left mt0">
+                            컨설팅 사업 현황 (총 <span id="listContainerBusTotCnt">0</span> 건)
+                        </h6>
+                        <div class="pull-right ml-sm">
+                            <select class="form-control input-sm listRowSizeContainer" >
+                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                    <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                                </jsp:include>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-hover table-striped" >
+                        <thead>
+                        <tr>
+                            <th class="text-center">번호</th>
+                            <th class="text-center">사업년도</th>
+                            <th class="text-center">사업구분</th>
+                            <th class="text-center">진행상태</th>
+                            <th class="text-center">부품사명</th>
+                            <th class="text-center">구분</th>
+                            <th class="text-center">규모</th>
+                            <th class="text-center">사업자등록번호</th>
+                            <th class="text-center">신청분야</th>
+                            <th class="text-center">신청 소재지</th>
+                            <th class="text-center">담당위원</th>
+                            <th class="text-center">신청일</th>
+                        </tr>
+                        </thead>
+                        <!-- 리스트 목록 결과 -->
+                        <tbody id="listContainerBus"/>
+                    </table>
+                    <!-- 페이징 버튼 -->
+                    <div id="pagingContainerBus"></div>
+                </div>
+
+                <div id="san" class="tab-pane fade">
+                    <div class="clearfix">
+                        <h6 class="pull-left mt0">
+                            상생 사업 현황 (총 <span id="listContainerSanTotCnt">0</span> 건)
+                        </h6>
+                        <div class="pull-right ml-sm">
+                            <select class="form-control input-sm listRowSizeContainer" >
+                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                    <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                                </jsp:include>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-hover table-striped" >
+                        <thead>
+                        <tr>
+                            <th class="text-center">번호</th>
+                            <th class="text-center">사업년도</th>
+                            <th class="text-center">회차</th>
+                            <th class="text-center">사업구분</th>
+                            <th class="text-center">사업명</th>
+                            <th class="text-center">진행상태</th>
+                            <th class="text-center">부품사명</th>
+                            <th class="text-center">구분</th>
+                            <th class="text-center">규모</th>
+                            <th class="text-center">사업자등록번호</th>
+                            <th class="text-center">담당위원</th>
+                            <th class="text-center">신청일</th>
+                        </tr>
+                        </thead>
+                        <!-- 리스트 목록 결과 -->
+                        <tbody id="listContainerSan"/>
+                    </table>
+                    <!-- 페이징 버튼 -->
+                    <div id="pagingContainerSan"></div>
+
+                    <div class="futureCar">
+                        <div class="clearfix">
+                            <h6 class="pull-left mt0">
+                                미래차공모전 신청내역 (총 <span id="listContainerFucTotCnt">0</span> 건)
+                            </h6>
+                            <div class="pull-right ml-sm">
+                                <select class="form-control input-sm listRowSizeContainer" >
+                                    <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                        <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                                    </jsp:include>
+                                </select>
+                            </div>
+                        </div>
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">번호</th>
+                                <th class="text-center">사업년도</th>
+                                <th class="text-center">팀장명</th>
+                                <th class="text-center">참여구분</th>
+                                <th class="text-center">카테고리</th>
+                                <th class="text-center">시상부문</th>
+                                <th class="text-center">1차결과</th>
+                                <th class="text-center">최종결과</th>
+                                <th class="text-center">신청일</th>
+                            </tr>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="listContainerFuc"/>
+                        </table>
+                        <!-- 페이징 버튼 -->
+                        <div id="pagingContainerFuc"></div>
+                    </div>
+                </div>
+
                 <div id="chat" class="tab-pane fade">
                     <div class="clearfix">
                         <h6 class="pull-left mt0">

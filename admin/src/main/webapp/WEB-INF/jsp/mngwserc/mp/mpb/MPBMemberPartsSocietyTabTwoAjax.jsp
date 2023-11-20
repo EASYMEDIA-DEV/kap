@@ -12,7 +12,7 @@
                 <td class="text-center">${ list.ctgryCdCpNm}</td>
                 <td class="text-center">${ list.sizeCdNm}</td>
                 <td class="text-center">${ kl:bsnmNoConvert(list.workBsnmNo)}</td>
-                <td class="text-center">TODO물어보고수정</td>
+                <td class="text-center">TODO 양현우 물어보고수정</td>
                 <td class="text-center">${list.prntCdNm} > ${list.ctgryCdNm}</td>
                 <td class="text-center">${list.nm}</td>
                 <td class="text-center">${list.stduyMthdCdNm}</td>

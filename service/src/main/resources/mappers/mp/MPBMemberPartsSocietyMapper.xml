@@ -2,9 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kap.service.dao.mp.MPBMemberPartsSocietyMapper">
 
+    <!--
+쿼리명 : MPBMemberPartsSocietyMapper.selectEduList
+설  명 : 부품 사회원 교육 사업 리스트 조회
+  수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.13    양현우       최초생성
+-->
     <select id="selectEduList" parameterType="MPBEduDto" resultType="MPBEduDto">
         select parnt_seq
-             , prnt_cd_nm /*EBACouseMapper.selectEduList*/
+             , prnt_cd_nm /*MPBMemberPartsSocietyMapper.selectEduList*/
              , ctgry_cd
              , ctgry_cd_nm
              , nm
@@ -187,8 +194,15 @@
                      limit #{firstIndex}, #{recordCountPerPage}
     </select>
 
+    <!--
+쿼리명 : MPBMemberPartsSocietyMapper.selectEduListCnt
+설  명 : 부품 사회원 교육 사업 리스트 갯수 조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.13    양현우       최초생성
+-->
     <select id="selectEduListCnt" parameterType="MPBEduDto" resultType="java.lang.Integer">
-       select count(*) /*EBACouseMapper.selectEduList*/
+       select count(*) /*MPBMemberPartsSocietyMapper.selectEduList*/
        from ( select parnt_seq
                    , prnt_cd_nm
                   , ctgry_cd
@@ -371,6 +385,122 @@
                                , size_cd_nm
                                , work_bsnm_no ) as ccc
 
+    </select>
+
+    <!--
+쿼리명 : MPBMemberPartsSocietyMapper.selectBusList
+설  명 : 부품 사회원 컨설팅 사업 리스트  조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.20    양현우       최초생성
+-->
+    <select id="selectBusList" parameterType="MPBBusDto" resultType="MPBBusDto">
+        select m1.cnstg_seq  -- 순번  /*MPBMemberPartsSocietyMapper.selectBusList*/
+              ,m1.bsn_year -- 사업년도
+              , (select cd_nm from co_code_mst where  cd=m1.cnstg_cd  ) as cnstg_cd_nm -- 사업구분
+              , case when (select count(*) from cp_cnstg_rsume_mst where cnstg_seq = m1.cnstg_seq )=0 then '신청'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' then '사전심사선정'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT02' then '사전심사탈락'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT03' then '지원단이관'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT04' then '봉사단이관'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT05' then '사용자취소'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01'  then '지도승인'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT02'  then '지도불가'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_bgn_dt > now()  then '지도투입'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_bgn_dt > now() and now()> guide_pscnd_dt  then '지도투입'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND01' then '지도연기'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND02' then '제단취소'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND03' then '부품사취소'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND04' then '지도완료'
+                        end as status_nm -- 진행상태
+               , m2.cmpn_nm-- 부품사명
+               , (select cd_nm from co_code_mst where  cd=m2.ctgry_cd ) as ctgry_cd_nm -- 구분
+               , (select cd_nm from co_code_mst where  cd=m1.cmpn_size_cd ) as cmpn_size_cd_nm-- 규모
+               , m1.appctn_bsnm_no-- 사업자등록번호
+               , m1.appctn_fld_cd--  신청분야/업종
+               , m1.rgns_cd-- 신청 소재지
+               , m4.name-- 담당위원
+               , m1.appctn_dt-- 신청일
+             from cp_cnstg_appctn_mst m1
+              inner join cp_cmpn_mst m2
+                on m1.appctn_bsnm_no = m2.bsnm_no
+              left outer join cp_cnstg_rsume_mst m3
+               on m1.cnstg_seq = m3.cnstg_seq
+              left outer join co_mem_mst m4
+               on m3.cmssr_seq = m4.mem_seq
+                 where appctn_mem_seq=#{detailsKey}
+                  order by cnstg_seq desc
+                  limit #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+쿼리명 : MPBMemberPartsSocietyMapper.selectBusListCnt
+설  명 : 부품 사회원 컨설팅 사업 리스트  갯수 조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.20    양현우       최초생성
+-->
+    <select id="selectBusListCnt" parameterType="MPBBusDto" resultType="java.lang.Integer">
+        select count(*)   /*MPBMemberPartsSocietyMapper.selectBusListCnt */
+        from cp_cnstg_appctn_mst m1
+                 inner join cp_cmpn_mst m2
+                            on m1.appctn_bsnm_no = m2.bsnm_no
+                 left outer join cp_cnstg_rsume_mst m3
+                                 on m1.cnstg_seq = m3.cnstg_seq
+                 left outer join co_mem_mst m4
+                                 on m3.cmssr_seq = m4.mem_seq
+        where appctn_mem_seq=#{detailsKey}
+    </select>
+
+    <!--
+쿼리명 : MPBMemberPartsSocietyMapper.selectSanList
+설  명 : 부품 사회원 상생 사업 리스트  조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.20    양현우       최초생성
+-->
+    <select id="selectSanList" parameterType="MPBSanDto" resultType="MPBSanDto">
+        select m1.episd_seq as san_ctn_seq  /*MPBMemberPartsSocietyMapper.selectSanList */
+             , m1.year-- 사업년도
+             , m1.episd-- 회차
+             , m4.type_cd as type_cd_nm-- 사업구분 TODO 양현우 코드 정의후 수정
+             , (select cd_nm from co_code_mst where  cd=bsn_cd ) as bsn_cd_nm -- 사업명
+              -- 진행상태 TODO 양현우 아직
+             , m3.cmpn_nm -- 부품사명
+             , (select cd_nm from co_code_mst where  cd=m3.ctgry_cd ) as ctgry_cd_nm -- 구분
+             , (select cd_nm from co_code_mst where  cd=m3.size_cd ) as cmpn_size_cd_nm -- 규모
+             , m2.appctn_bsnm_no-- 사업자등록번호
+             , (select name from co_mem_mst where mem_seq=m2.pic_cmssr_seq) as name -- 담당위원
+             , m1.reg_dtm-- 신청일
+         from cx_episd_mst m1
+          inner join cx_appctn_mst m2
+           on m1.episd_seq = m2.episd_seq
+          inner join cp_cmpn_mst m3
+           on m2.appctn_bsnm_no  = m3.bsnm_no
+          inner join cx_episd_bsn_dtl m4
+           on m1.episd_seq  = m4.episd_seq
+            where m2.mem_seq =#{detailsKey}
+             order by m1.episd_seq desc
+              limit #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+쿼리명 : MPBMemberPartsSocietyMapper.selectSanListCnt
+설  명 : 부품 사회원 상생 사업 리스트  조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.20    양현우       최초생성
+-->
+    <select id="selectSanListCnt" parameterType="MPBBusDto" resultType="java.lang.Integer">
+        select count(*) /*MPBMemberPartsSocietyMapper.selectSanListCnt */
+        from cx_episd_mst m1
+                 inner join cx_appctn_mst m2
+                            on m1.episd_seq = m2.episd_seq
+                 inner join cp_cmpn_mst m3
+                            on m2.appctn_bsnm_no  = m3.bsnm_no
+                 inner join cx_episd_bsn_dtl m4
+                            on m1.episd_seq  = m4.episd_seq
+        where m2.mem_seq =#{detailsKey}
     </select>
 
 </mapper>
