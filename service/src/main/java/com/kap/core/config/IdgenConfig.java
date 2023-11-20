@@ -469,7 +469,7 @@ public class IdgenConfig {
      * @return
      */
     @Bean(destroyMethod = "destroy")
-    public EgovTableIdGnrServiceImpl edctnPlaceSeqSeqIdgen() {
+    public EgovTableIdGnrServiceImpl edctnPlaceSeqIdgen() {
         return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
                 .setBlockSize(1)
                 .setTable("co_seq_mst")
@@ -482,11 +482,24 @@ public class IdgenConfig {
      * @return
      */
     @Bean(destroyMethod = "destroy")
-    public EgovTableIdGnrServiceImpl cmsSeqSeqIdgen() {
+    public EgovTableIdGnrServiceImpl cmsSeqIdgen() {
         return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
                 .setBlockSize(1)
                 .setTable("co_seq_mst")
                 .setTableName("CMS_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 공지사항 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl ntfySeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("NTFY_SEQ")
                 .setCipers(13)
                 .build();
     }

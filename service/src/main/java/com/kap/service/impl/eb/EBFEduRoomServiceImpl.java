@@ -45,7 +45,7 @@ public class EBFEduRoomServiceImpl implements EBFEduRoomService {
 
     /** Sequence **/
     /* 관리자 시퀀스 */
-    private final EgovIdGnrService edctnPlaceSeqSeqIdgen;
+    private final EgovIdGnrService edctnPlaceSeqIdgen;
 
 
     /**
@@ -83,7 +83,7 @@ public class EBFEduRoomServiceImpl implements EBFEduRoomService {
         pEBFEduRoomWriteDTO.setRegId(coaAdmDTO.getId());
         pEBFEduRoomWriteDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-        pEBFEduRoomWriteDTO.setPlaceSeq(edctnPlaceSeqSeqIdgen.getNextIntegerId());
+        pEBFEduRoomWriteDTO.setPlaceSeq(edctnPlaceSeqIdgen.getNextIntegerId());
 
         return eBFEduRoomMapper.insertEduRoom(pEBFEduRoomWriteDTO);
     }

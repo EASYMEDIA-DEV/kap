@@ -42,7 +42,7 @@ public class COGCntsServiceImpl implements COGCntsService {
 
 	/** Sequence **/
 	/* 관리자 싴퀀스 */
-	private final EgovIdGnrService cmsSeqSeqIdgen;
+	private final EgovIdGnrService cmsSeqIdgen;
 
 	//로그인 상태값 시스템 등록
 	private final COSystemLogService cOSystemLogService;
@@ -87,7 +87,7 @@ public class COGCntsServiceImpl implements COGCntsService {
 
 		String cnts = pCOGCntsDTO.getCnts();
 
-		pCOGCntsDTO.setSeq(cmsSeqSeqIdgen.getNextIntegerId());
+		pCOGCntsDTO.setSeq(cmsSeqIdgen.getNextIntegerId());
 
 		pCOGCntsDTO.setCnts(COWebUtil.clearXSSMinimum(cnts));
 
@@ -148,7 +148,7 @@ public class COGCntsServiceImpl implements COGCntsService {
 		selectCnts.setRegId(coaAdmDTO.getId());
 		selectCnts.setRegIp(coaAdmDTO.getLoginIp());
 
-		selectCnts.setSeq(cmsSeqSeqIdgen.getNextIntegerId());
+		selectCnts.setSeq(cmsSeqIdgen.getNextIntegerId());
 
 		cOGCntsMapper.insertCntsCopy(selectCnts);
 	}

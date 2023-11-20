@@ -77,7 +77,7 @@
                             </tr>
                             <tr>
                                 <th>최종 수정자</th>
-                                <td>${ empty rtnDto.modName ? '-' : rtnDto.modName += '(' += list.modId += ')' }</td>
+                                <td>${ empty rtnDto.modName ? '-' : rtnDto.modName += '(' += rtnDto.modId += ')' }</td>
                                 <th>최종 수정일</th>
                                 <td>${ empty rtnDto.modDtm ? '-' : kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>
                             </tr>
