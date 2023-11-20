@@ -1,7 +1,5 @@
 package com.kap.service.dao.wb.wbl;
 
-import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
 import org.apache.ibatis.annotations.Mapper;

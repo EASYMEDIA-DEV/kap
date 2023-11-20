@@ -1,11 +1,8 @@
 package com.kap.mngwserc.controller.wb.wbl;
 
-import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
 import com.kap.service.COCodeService;
-import com.kap.service.SVASurveyService;
 import com.kap.service.WBLSurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

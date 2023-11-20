@@ -2,10 +2,6 @@ package com.kap.service.impl.wb.wbl;
 
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.sv.sva.SVASurveyExmplDtlDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
-import com.kap.core.dto.sv.sva.SVASurveyQstnDtlDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
 import com.kap.service.COUserDetailsHelperService;

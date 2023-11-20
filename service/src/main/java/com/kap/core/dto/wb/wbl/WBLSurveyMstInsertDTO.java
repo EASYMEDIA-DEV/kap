@@ -3,8 +3,6 @@ package com.kap.core.dto.wb.wbl;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.sv.sva.SVASurveyQstnDtlDTO;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
