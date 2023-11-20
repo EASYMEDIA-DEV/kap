@@ -1,6 +1,7 @@
 package com.kap.front.interceptor;
 
 import com.kap.common.utility.COStringUtil;
+import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COMenuDTO;
 import com.kap.service.COBMenuService;
 import com.kap.service.COBUserMenuService;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.List;
 
 @Slf4j
@@ -37,6 +39,20 @@ public class COViewInterceptor implements HandlerInterceptor{
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        //넘어온 파라미터 XSS 체크해서 넘기기
+        String strPam = "";
+        Enumeration<String> params = request.getParameterNames();
+        String paramName = "";
+        String[] paramValues = null;
+        while (params.hasMoreElements())
+        {
+            paramName = (String) params.nextElement();
+            paramValues =  request.getParameterValues(paramName);
+            for(int q = 0; q < paramValues.length ; q++){
+                strPam += COWebUtil.clearXSSMinimum(paramName)+"="+paramValues[q]+"&";
+            }
+        }
+        request.setAttribute("strPam", strPam);
         // 메뉴 목록
         List<COMenuDTO> menuList = null;
         int userMenuSeq = 612;
@@ -58,6 +74,7 @@ public class COViewInterceptor implements HandlerInterceptor{
         request.setAttribute("gnbMenuList", gnbMenuList);
         COMenuDTO pageMenuDto = null;
         String requestURI = request.getRequestURI();
+        log.error("requestURI : {}", requestURI);
         String userUrl = "", menuNm = "";
         for (int i = 0, size = menuList.size(); i < size; i++)
         {

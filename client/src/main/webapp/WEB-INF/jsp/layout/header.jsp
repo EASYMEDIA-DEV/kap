@@ -86,7 +86,7 @@
 					<div class="list headerNtfyButtonContainer">
 						<c:set var="curDate"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set>
 						<c:forEach var="ntfyList" items="${headerNtfyList}" varStatus="status">
-							<a href="javascript:" title="링크 이동">
+							<a href="/board/notice?detailsKey=${ntfyList.ntfySeq}" title="링크 이동">
 								<c:set var="daysDiff" value="${kl:getDaysDiff(curDate, kl:convertDate(ntfyList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyyMMdd', ''))}" />
 								<p class="tit f-body2">
 									<c:if test="${ daysDiff >= -3 }">
@@ -100,6 +100,7 @@
 					</div>
 				</div>
 				<script type="text/javascript">
+					//상단 공지 NEW 붙이기
 					$(document).ready(function(){
 						if($(".headerNtfyButtonContainer").find(".new-icon").size() > 0){
 							$(".headerNtfyButton").addClass("on");
@@ -136,173 +137,117 @@
 					<div class="menu-head">
 						<p class="menu-tit f-xlarge-title">전체 서비스</p>
 						<div class="log-menu">
-							<!-- <p class="log-tit f-title3">MY</p> --><!-- @ 로그인 전에 보이는 요소 -->
-							<p class="user-tit f-title1"><span>강문주</span>님 <br/>안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
-							<div class="pc btn-wrap">
-								<a class="btn-text-icon black-arrow" href="javascript:" title="링크 이동"><span>정보수정</span></a>
-								<a class="btn-text-icon black-arrow" href="javascript:" title="링크 이동"><span>로그아웃</span></a>
-							</div>
+                            <c:choose>
+                                <c:when test="${ not empty loginMap}">
+                                    <p class="user-tit f-title1"><span>${loginMap.name}</span>님 <br/>안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
+                                    <div class="pc btn-wrap">
+                                        <a class="btn-text-icon black-arrow" href="/my-page/member/certification" title="링크 이동"><span>정보수정</span></a>
+                                        <a class="btn-text-icon black-arrow" href="/my-page/logout" title="링크 이동"><span>로그아웃</span></a>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <p class="log-tit f-title3">MY</p>
+                                </c:otherwise>
+                            </c:choose>
 						</div>
-						<!-- @ 로그인 후에 보이는 요소 -->
-						<div class="loginfo-wrap">
-							<div class="loginfo-box">
-								<p class="info-tit f-title3">신청내역</p>
-								<div class="info-cont">
-									<ul class="counts">
-										<li class="count">
-											<span class="f-sub-head">교육사업</span>
-											<a class="f-title1" href="javascript:">5</a>
-										</li>
-										<li class="count">
-											<span class="f-sub-head">컨설팅사업</span>
-											<a class="f-title1" href="javascript:">21</a>
-										</li>
-										<li class="count">
-											<span class="f-sub-head">상생사업</span>
-											<a class="f-title1" href="javascript:">0</a>
-										</li>
-									</ul>
-									<div class="pc btn-wrap">
-										<div class="btn-set">
-											<a class="btn-solid small white-bg" href="javascript:"><span>증명서 발급</span></a>
-											<a class="btn-solid small white-bg" href="javascript:"><span>1:1 문의</span></a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="mob btn-wrap">
-								<div class="btn-set">
-									<a class="btn-solid small gray-bg" href="javascript:"><span>증명서 발급</span></a>
-									<a class="btn-solid small gray-bg" href="javascript:"><span>1:1 문의</span></a>
-								</div>
-							</div>
-							<p class="last-date f-caption2"><span>최근접속일</span><span class="date">2023.01.01 10:00</span></p>
-						</div>
-						<!-- // @ 로그인 후에 보이는 요소 -->
+                        <c:if test="${ not empty loginMap}">
+                            <div class="loginfo-wrap">
+                                <div class="loginfo-box">
+                                    <p class="info-tit f-title3">신청내역</p>
+                                    <div class="info-cont">
+                                        <ul class="counts">
+                                            <li class="count">
+                                                <span class="f-sub-head">교육사업</span>
+                                                <a class="f-title1" href="javascript:">5</a>
+                                            </li>
+                                            <li class="count">
+                                                <span class="f-sub-head">컨설팅사업</span>
+                                                <a class="f-title1" href="javascript:">21</a>
+                                            </li>
+                                            <li class="count">
+                                                <span class="f-sub-head">상생사업</span>
+                                                <a class="f-title1" href="javascript:">0</a>
+                                            </li>
+                                        </ul>
+                                        <div class="pc btn-wrap">
+                                            <div class="btn-set">
+                                                <a class="btn-solid small white-bg" href="javascript:"><span>증명서 발급</span></a>
+                                                <a class="btn-solid small white-bg" href="javascript:"><span>1:1 문의</span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mob btn-wrap">
+                                    <div class="btn-set">
+                                        <a class="btn-solid small gray-bg" href="javascript:"><span>증명서 발급</span></a>
+                                        <a class="btn-solid small gray-bg" href="javascript:"><span>1:1 문의</span></a>
+                                    </div>
+                                </div>
+                                <p class="last-date f-caption2"><span>최근접속일</span><span class="date">${ kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</span></p>
+                            </div>
+                        </c:if>
 					</div>
-					<ul class="gnb">
-						<li>
-							<div class="one-pack">
-								<a class="one-depth for-move" href="javascript:">교육사업</a>
-							</div>
-							<ul class="two-pack">
-								<li>
-									<div class="for-move">
-										<a class="two-depth" href="javascript:">교육사업</a>
-										<ul class="three-pack">
-											<li><a class="three-depth" href="javascript:">품질아카데미</a></li>
-											<li><a class="three-depth" href="javascript:">제조/경영혁신</a></li>
-											<li><a class="three-depth" href="javascript:">세미나</a></li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<div class="one-pack">
-								<a class="one-depth for-move" href="javascript:">컨설팅사업</a>
-							</div>
-							<ul class="two-pack">
-								<li>
-									<div class="for-move">
-										<a class="two-depth" href="javascript:">기술지도</a>
-									</div>
-								</li>
-								<li>
-									<div class="for-move">
-										<a class="two-depth" href="javascript:">경영컨설팅</a>
-									</div>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<div class="one-pack">
-								<a class="one-depth for-move" href="javascript:">상생사업</a>
-							</div>
-							<ul class="two-pack">
-								<li>
-									<div class="for-move">
-										<a class="two-depth" href="javascript:">경쟁력향상지원</a>
-										<ul class="three-pack">
-											<li><a class="three-depth" href="javascript:">미래차다각화</a></li>
-											<li><a class="three-depth" href="javascript:">사업재편지원</a></li>
-											<li><a class="three-depth" href="javascript:">보안솔루션구축</a></li>
-											<li><a class="three-depth" href="javascript:">안전설비구축</a></li>
-											<li><a class="three-depth" href="javascript:">탄소배출저감</a></li>
-											<li><a class="three-depth" href="javascript:">스마트공장</a></li>
-										</ul>
-									</div>
-								</li>
-								<li>
-									<div class="for-move">
-										<a class="two-depth" href="javascript:">자금지원</a>
-										<ul class="three-pack">
-											<li><a class="three-depth" href="javascript:">시험계측장비</a></li>
-											<li><a class="three-depth" href="javascript:">검교정</a></li>
-											<li><a class="three-depth" href="javascript:">공급망안정화기금</a></li>
-										</ul>
-									</div>
-								</li>
-								<li>
-									<div class="for-move">
-										<a class="two-depth" href="javascript:">포상지원</a>
-										<ul class="three-pack">
-											<li><a class="three-depth" href="javascript:">자동차부품산업대상</a></li>
-											<li><a class="three-depth" href="javascript:">미래차공모전</a></li>
-										</ul>
-									</div>
-								</li>
-								<li>
-									<div class="for-move">
-										<a class="two-depth" href="javascript:">설문조사</a>
-										<ul class="three-pack">
-											<li><a class="three-depth" href="javascript:">상생협력체감도조사</a></li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</li>
-						<li>
-							<div class="one-pack">
-								<a class="one-depth for-move" href="javascript:">재단정보</a>
-							</div>
-							<ul class="two-pack">
-								<li>
-									<div class="for-move">
-										<a class="two-depth" href="javascript:">재단소개</a>
-										<ul class="three-pack">
-											<li><a class="three-depth" href="javascript:">인사말</a></li>
-											<li><a class="three-depth" href="javascript:">재단개요</a></li>
-											<li><a class="three-depth" href="javascript:">재단연혁</a></li>
-											<li><a class="three-depth" href="javascript:">재단조직</a></li>
-											<li><a class="three-depth" href="javascript:">윤리경영</a></li>
-											<li><a class="three-depth" href="javascript:">경영공시</a></li>
-											<li><a class="three-depth" href="javascript:">홍보자료</a></li>
-											<li><a class="three-depth" href="javascript:">오시는길</a></li>
-										</ul>
-									</div>
-								</li>
-								<li>
-									<div class="for-move">
-										<a class="two-depth" href="javascript:">고객센터</a>
-										<ul class="three-pack">
-											<li><a class="three-depth" href="javascript:">공지사항</a></li>
-											<li><a class="three-depth" href="javascript:">재단소식</a></li>
-											<li><a class="three-depth" href="javascript:">뉴스레터</a></li>
-											<li><a class="three-depth" href="javascript:">FAQ</a></li>
-											<li><a class="three-depth" href="javascript:">1:1문의</a></li>
-										</ul>
-									</div>
-								</li>
-							</ul>
-						</li>
-					</ul>
+                    <c:if test="${ not empty gnbMenuList}">
+                        <ul class="gnb">
+                            <c:forEach var="menu" items="${gnbMenuList}" varStatus="status">
+                                <c:if test="${ menu.attr.gnbYn eq 'Y'}">
+                                    <li>
+                                        <div class="one-pack">
+                                            <a class="one-depth for-move" href="${ empty menu.attr.link ? 'javascript:' : menu.attr.link }">${ menu.data}</a>
+                                        </div>
+                                    <c:if test="${ menu.children != null && fn:length(menu.children) > 0 }">
+                                        <ul class="two-pack">
+                                            <c:forEach var="menu2" items="${menu.children}" varStatus="status2">
+                                                <c:if test="${ menu2.attr.gnbYn eq 'Y'}">
+                                                    <li>
+                                                        <div class="for-move">
+                                                            <a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
+                                                            <c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
+                                                                <ul class="three-pack">
+                                                                    <c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
+                                                                        <c:if test="${ menu2.attr.gnbYn eq 'Y'}">
+                                                                            <li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </ul>
+                                                            </c:if>
+                                                        </div>
+                                                    </li>
+                                                </c:if>
+                                            </c:forEach>
+                                        </ul>
+                                    </c:if>
+                                    </li>
+                                </c:if>
+                            </c:forEach>
+                        </ul>
+                    </c:if>
 					<div class="notice-wrap">
 						<div class="notice-rolling">
 							<ul>
-								<li class="current"><a class="f-body2" href="javascript:"><span class="new-icon small" aria-label="새로운 정보"></span>협력사 온라인 정보공유 소통 플랫폼 오픈 공지 협력사 온라인 정보공유 소통 플랫폼 오픈 공지</a></li>
-								<li class="next"><a class="f-body2" href="javascript:"><span class="new-icon small" aria-label="새로운 정보"></span>대구시, 자동차부품산업진흥재단 등과 미래자동차 산업 육성 협력 대구시, 자동차부품산업진흥재단 등과 미래자동차 산업 육성 협력</a></li>
-								<li class="prev"><a class="f-body2" href="javascript:">2023년 하반기 자문위원 채용 공고 2023년 하반기 자문위원 채용 공고</a></li>
+                                <c:forEach var="ntfyList" items="${headerNtfyList}" varStatus="status">
+                                    ${ status.index}
+                                    <c:choose>
+                                        <c:when test="${ status.index eq 0 }">
+                                            <c:set var="cls" value="current" />
+                                        </c:when>
+                                        <c:when test="${ status.index eq 1 }">
+                                            <c:set var="cls" value="next" />
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="cls" value="prev" />
+                                        </c:otherwise>
+                                    </c:choose>
+                                    <li class="${ cls }">
+                                        <c:set var="daysDiff" value="${kl:getDaysDiff(curDate, kl:convertDate(ntfyList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyyMMdd', ''))}" />
+                                        <a class="f-body2">
+                                            <c:if test="${ daysDiff >= -3 }">
+                                                <span class="new-icon small" aria-label="새로운 정보"></span>
+                                            </c:if>
+                                                ${ ntfyList.titl }
+                                        </a>
+                                    </li>
+                                </c:forEach>
 							</ul>
 						</div>
 					</div>
