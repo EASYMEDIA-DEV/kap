@@ -1,7 +1,8 @@
 package com.kap.front.config;
 
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.impl.CODummyUserDetailsServiceImpl;
+import com.kap.service.impl.COFrontDummyUserDetailsServiceImpl;
+import com.kap.service.impl.COFrontUserDetailsSessionServiceImpl;
 import com.kap.service.impl.COUserDetailsSessionServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -67,12 +68,12 @@ public class ViewConfig {
         if(appLogin)
         {
             //강제 로그인
-            helper.setEgovUserDetailsService(new CODummyUserDetailsServiceImpl());
+            helper.setEgovUserDetailsService(new COFrontDummyUserDetailsServiceImpl());
         }
         else
         {
             //세션 로그인
-            helper.setEgovUserDetailsService(new COUserDetailsSessionServiceImpl());
+            helper.setEgovUserDetailsService(new COFrontUserDetailsSessionServiceImpl());
         }
         return helper;
     }
