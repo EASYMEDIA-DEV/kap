@@ -151,6 +151,7 @@ public class EBACouseDTO extends BaseDTO  {
 
     private List<String> expsYnList;
 
+    private String srchLayer;
 
     private String sqnm;
     private String sqscore;

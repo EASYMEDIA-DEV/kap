@@ -46,6 +46,12 @@ public class SVASurveyMstInsertDTO extends BaseDTO {
     @Schema(title = "유형코드")
     private String typeCd;
 
+    @Schema(title = "척도코드")
+    private String msrStndCd;
+
+    @Schema(title = "척도사용여부")
+    private String msrYn;
+
     @Schema(title = "응답분", example = "숫자")
     private Integer rspnMm;
 

@@ -45,6 +45,8 @@
 		, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
 		,MOD_IP
 		,MOD_DTM
+		,MSR_STND_CD
+		,MSR_YN
 		FROM SV_MST A
 		<include refid="selectSurveyListwhereSql" />
 		ORDER BY
@@ -161,6 +163,8 @@
 		, rspn_mm
 		, cntn
 		, exps_yn
+		, msr_stnd_cd
+		, msr_yn
 		, reg_id
 		, reg_ip
 		, reg_dtm
@@ -176,6 +180,8 @@
 			, #{rspnMm}
 			, #{cntn}
 			, #{expsYn}
+			, #{msrStndCd}
+			, #{msrYn}
 			, #{regId}
 			, #{regIp}
 			, now()
@@ -185,6 +191,44 @@
 			)
 	</insert>
 
+	<!--
+	쿼리명 : SVASurveyMapper.updateSurveyMst
+	설  명 : 설문마스터 수정
+	  수정일      수정자       수정내용
+	==========   ========   ==============
+	2023.11.18    박준희       최초생성
+	-->
+	<update id="updateSurveyMst" parameterType="EXGExamMstInsertDTO">
+		update /* SVASurveyMapper.updateSurveyMst */ sv_mst
+		set
+			exps_yn = #{expsYn}
+		  ,titl = #{titl}
+		  ,rspn_mm = #{rspnMm}
+		  ,type_cd = #{typeCd}
+		  ,msr_stnd_cd = #{msrStndCd}
+		  ,msr_yn = #{msrYn}
+		  ,cntn = #{cntn}
+		  ,mod_id = #{modId}
+		  ,mod_ip = #{modIp}
+		  ,mod_dtm = now()
+		where
+			srv_seq = #{detailsKey}
+	</update>
+
+	<!--
+		쿼리명 : SVASurveyMapper.updateSurveyMstExpnYn
+		설  명 : 교육/컨설팅에 매핑된 설문은 사용여부만 수정
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.18    박준희       최초생성
+    -->
+	<update id="updateSurveyMstExpnYn" parameterType="SVASurveyMstInsertDTO">
+		update /* SVASurveyMapper.updateSurveyMstExpnYn */ sv_mst
+		set
+			exps_yn = #{expsYn}
+		where
+			srv_seq = #{detailsKey}
+	</update>
 
 	<!--
          쿼리명 : SVASurveyMapper.insertSurveyQstnDtl
@@ -305,6 +349,31 @@
 		</where>
 	</delete>
 
+	<!--
+     쿼리명 : SVASurveyMapper.deleteSurveyQstnList
+     설  명 : 질문,보기 목록 삭제
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.18   박준희       최초생성
+-->
+	<delete id="deleteSurveyQstnList" parameterType="SVASurveyMstSearchDTO">
+		delete /* SVASurveyMapper.deleteSurveyQstnList */
+		sv_qstn_dtl , sv_exmpl_dtl
+		from  sv_qstn_dtl inner join sv_exmpl_dtl on sv_qstn_dtl.qstn_seq = sv_exmpl_dtl.qstn_seq
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					sv_qstn_dtl.srv_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					sv_qstn_dtl.srv_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
 
 	<!--
 		쿼리명 : SVASurveyMapper.getSurveyEdctnEpisdCnt
@@ -376,6 +445,8 @@
  			 ,rspn_mm
 			 ,cntn
 			 ,exps_yn
+			 ,msr_stnd_cd
+			 ,msr_yn
 			 ,reg_id
 			 ,reg_dtm
 			 ,mod_id
@@ -401,7 +472,7 @@
 			 , ctgry_cd
 			 , srv_type_cd
 			 , parnt_qstn_seq
-			 , dpth
+			 , case when dpth is null then 0 else dpth end dpth
 			 , qstn_nm
 			 , ncs_yn
 			 , qstn_ord

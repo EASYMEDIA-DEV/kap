@@ -234,6 +234,27 @@ define(["ezCtrl"], function(ezCtrl) {
 			},
 			//페이징 목록 갯수
 
+			//검색 레이어에서 선택시 호출
+			btnPartsCompanyLayerChoice:{
+				event : {
+					click: function(){
+						var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
+						if( choiceCnt > 1){
+							alert(msgCtrl.getMsg("fail.mp.mpe.notSrchPartsCom1"));
+						} else if(choiceCnt == 0){
+							alert(msgCtrl.getMsg("fail.mp.mpe.notSrchPartsCom"));
+						}else{
+							var clickObj = {};
+							clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();
+							var titl = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text());
+							clickObj.titl = titl;
+							ctrl.obj.trigger("choice", [clickObj])
+							ctrl.obj.find(".close").click();
+						}
+					}
+				}
+			},
+
 			listRowSizeContainer : {
 				event : {
 					change : function(){

@@ -1,8 +1,6 @@
 package com.kap.service;
 
 import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 

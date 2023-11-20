@@ -1,6 +1,5 @@
 package com.kap.mngwserc.controller.sv;
 
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.service.COCodeService;
@@ -182,4 +181,25 @@ public class SVASurveyController<sVASurveyMstDTO> {
         return "jsonView";
     }
 
+    @Operation(summary = "설문 수정", tags = "설문", description = "설문 마스터, 질문 상세, 보기 상세 생성")
+    @PostMapping(value="/update")
+    public String updateSurveyList(@Valid @RequestBody SVASurveyMstInsertDTO sVASurveyMstTO, HttpServletRequest request , ModelMap modelMap) throws Exception
+//    public SVASurveyMstInsertDTO updateSurveyList(@Valid @RequestBody SVASurveyMstInsertDTO sVASurveyMstTO, HttpServletRequest request , ModelMap modelMap) throws Exception
+    {
+        try
+        {
+//            sVASurveyService.updateSurveyList(sVASurveyMstTO, request);
+            modelMap.addAttribute("respCnt", sVASurveyService.updateSurveyList(sVASurveyMstTO, request));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+//        return sVASurveyMstTO;
+        return "jsonView";
+    }
 }

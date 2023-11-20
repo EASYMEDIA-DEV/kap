@@ -1,6 +1,7 @@
 package com.kap.service.dao.sv;
 
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyExmplDtlDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
@@ -96,4 +97,15 @@ public interface SVASurveyMapper {
      */
     public List<SVASurveyExmplDtlDTO> selectSurveyExmplDtlList(SVASurveyQstnDtlDTO sVASurveyQstnDtlDTO);
 
+    /**
+     * 교육/컨설팅에 매핑된 설문지는 사용여부만 수정
+     */
+    public int updateSurveyMstExpnYn(SVASurveyMstInsertDTO sVASurveyMstInsertDTO);
+
+    /**
+     * 질문,보기 삭제
+     */
+    public int deleteSurveyQstnList(SVASurveyMstSearchDTO sVASurveyDTO);
+
+    
 }
