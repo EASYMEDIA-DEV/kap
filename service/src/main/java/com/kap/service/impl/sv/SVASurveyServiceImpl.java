@@ -126,6 +126,11 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 
 		int surveyMstIdgen = 0;
 
+		sVASurveyMstInsertDTO.setRegIp(regIp);
+		sVASurveyMstInsertDTO.setRegId(regId);
+		sVASurveyMstInsertDTO.setModIp(regIp);
+		sVASurveyMstInsertDTO.setModId(regId);
+
 		if(sVASurveyMstInsertDTO.getDetailsKey().trim().equals("")){
 			//등록
 			surveyMstIdgen = svMstIdgen.getNextIntegerId();
@@ -136,11 +141,6 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 			surveyMstIdgen = Integer.parseInt( sVASurveyMstInsertDTO.getDetailsKey() );
 			respCnt = sVASurveyMapper.updateSurveyMst( sVASurveyMstInsertDTO );
 		}
-
-		sVASurveyMstInsertDTO.setRegIp(regIp);
-		sVASurveyMstInsertDTO.setRegId(regId);
-		sVASurveyMstInsertDTO.setModIp(regIp);
-		sVASurveyMstInsertDTO.setModId(regId);
 
 		sVASurveyMstInsertDTO.setRespCnt( respCnt );
 

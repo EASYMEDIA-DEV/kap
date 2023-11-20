@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.wb.wbl.WBLSurveyMapper">
+
+
+	<!--
+          쿼리명 : WBLSurveyMapper.selectSurveyList
+          설  명 : 목록을 조회한다.
+              수정일	 수정자     수정내용
+         ==========   ======   =============
+         2023.11.20   박준희     최초생성
+     -->
+	<select id="selectSurveyList" parameterType="WBLSurveyMstSearchDTO">
+		SELECT /* WBLSurveyMapper.selectSurveyList */
+		cxstn_srv_seq
+		,year
+		,episd
+		,part_cmpn_nm_1
+		,part_cmpn_cd_1
+		,part_cmpn_nm_2
+		,part_cmpn_cd_2
+		,ptcpt_cd
+		,ptcpt_cmpltn_dtm
+		,reg_id
+		,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+		,reg_ip
+		,reg_dtm
+		,mod_id
+		,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+		,mod_ip
+		,mod_dtm
+		FROM cx_appctn_rsume_srv_mst A
+		<include refid="selectSurveyListwhereSql" />
+		ORDER BY
+		SRV_SEQ DESC
+		LIMIT #{firstIndex}, #{recordCountPerPage}
+
+	</select>
+
+	<!--
+         쿼리명 : WBLSurveyMapper.selectSurveyListCnt
+         설  명 : 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    박준희       최초생성
+    -->
+	<select id="selectSurveyListCnt" parameterType="WBLSurveyMstSearchDTO" resultType="java.lang.Integer">
+		SELECT /* WBLSurveyMapper.selectSurveyListCnt*/
+		COUNT(cxstn_srv_seq)
+		FROM
+		cx_appctn_rsume_srv_mst A
+		<include refid="selectSurveyListwhereSql" />
+	</select>
+
+	<!--
+        쿼리명 : selectSurveyListwhereSql
+        설  명 : where Sql
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    박준희       최초생성
+    -->
+	<sql id="selectSurveyListwhereSql">
+		<where>
+			<if test="srchDate != null and srchDate != ''.toString() ">
+				<choose>
+					<when test="srchDate == 1">
+						<if test="strtDt != null and strtDt != ''.toString() ">
+							AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+						</if>
+						<if test="endDt != null and endDt != ''.toString() ">
+						AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						</if>
+					</when>
+					<when test="srchDate == 2">
+						<if test="strtDt != null and strtDt != ''.toString() ">
+							AND MOD_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+						</if>
+						<if test="endDt != null and endDt != ''.toString() ">
+							AND MOD_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						</if>
+					</when>
+					<when test="srchDate == 3">
+						<if test="strtDt != null and strtDt != ''.toString() ">
+							AND ptcpt_cmpltn_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+						</if>
+						<if test="endDt != null and endDt != ''.toString() ">
+							AND ptcpt_cmpltn_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						</if>
+					</when>
+				</choose>
+			</if>
+			<if test="cmpltnYnList != null and cmpltnYnList.size() > 0">
+				AND (
+				<foreach collection="cmpltnYnList" item="cmpltnYnList" index="index" open="" close="" separator=" or ">
+					cmpltn_yn = #{cmpltnYnList}
+				</foreach>
+				)
+			</if>
+
+			<if test="year != null and year != ''">
+				AND year = #{year}
+			</if>
+
+			<if test="year != null and year != ''">
+				AND episd = #{episd}
+			</if>
+
+			<if test="q != null and q != ''">
+				<choose>
+					<when test="f == 1">
+						AND part_cmpn_nm_1 LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 2">
+						AND part_cmpn_cd_1 LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 3">
+						AND part_cmpn_nm_2 LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 4">
+						AND part_cmpn_cd_2 LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 5">
+						AND (
+						INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
+					</when>
+					<when test="f == 6">
+						AND (
+						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
+					</when>
+					<otherwise>
+						AND (
+						INSTR(#{q}, part_cmpn_nm_1) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, part_cmpn_cd_1) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, part_cmpn_nm_2) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, part_cmpn_cd_2) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
+
+
+	<!--
+         쿼리명 : WBLSurveyMapper.insertSurveyMst
+         설  명 : 상생협력체감도조사 마스터 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.20    박준희       최초생성
+    -->
+	<insert id="insertSurveyMst" parameterType="WBLSurveyMstInsertDTO">
+		insert /* WBLSurveyMapper.insertSurveyMst */ into cx_appctn_rsume_srv_mst
+		(
+		 cxstn_srv_seq
+		, year
+		, episd
+		, part_cmpn_nm_1
+		, part_cmpn_cd_1
+		, part_cmpn_nm_2
+		, part_cmpn_cd_2
+		, rprsnt_nm
+		, bsnm_reg_no
+		, pic_nm
+		, tel_no
+		, email
+		, srv_seq
+		, srv_rspn_seq
+		, crtfn_no
+		, ptcpt_cd
+		, cmpltn_yn
+		, ptcpt_cmpltn_dtm
+		, score
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm)
+		values (
+				#{cxstnSrvSeq}
+               ,#{year}
+			   ,#{episd}
+			   ,#{partCmpnNm1}
+			   ,#{partCmpnCd1}
+			   ,#{partCmpnNm2}
+			   ,#{partCmpnCd2}
+			   ,#{rprsntNm}
+			   ,#{bsnmRegNo}
+			   ,#{picNm}
+			   ,#{telNo}
+			   ,#{email}
+			   ,#{srvSeq}
+			   ,#{srvRspnSeq}
+			   ,#{crtfnNo}
+			   ,#{ptcptCd}
+			   ,#{cmpltnYn}
+			   ,#{ptcptCmpltnDtm}
+			   ,#{score}
+			   ,#{regId}
+			   ,#{regIp}
+			   ,now()
+			   ,#{modId}
+			   ,#{modIp}
+			   ,now()
+			   )
+	</insert>
+
+
+	<!--
+         쿼리명 : WBLSurveyMapper.deleteSurveyMst
+         설  명 : 목록 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.20   박준희       최초생성
+    -->
+	<delete id="deleteSurveyMst" parameterType="WBLSurveyMstSearchDTO">
+		delete /* WBLSurveyMapper.deleteSurveyMst */
+		from cx_appctn_rsume_srv_mst
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					cxstn_srv_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					cxstn_srv_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</delete>
+</mapper>

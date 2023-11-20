@@ -73,6 +73,11 @@ public class SVASurveyQstnDtlDTO extends BaseDTO  {
     @NotNull
     private Integer exmplCnt;
 
+    @Schema(title = "하위질문갯수", example = "")
+    @NotNull
+    private Integer qstnCnt;
+
+
     @Schema(title = "그룹별 순서", example = "")
     @NotNull
     private Integer qstnGrpOrd;
