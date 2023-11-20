@@ -205,7 +205,7 @@ public class EBBEpisdDTO extends BaseDTO  {
     private String sqscore;
 
 
-
+    private String srchLayer;
 
 
 

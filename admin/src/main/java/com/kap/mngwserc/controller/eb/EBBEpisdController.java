@@ -90,6 +90,8 @@ public class EBBEpisdController {
         try
         {
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
+            modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
+
 
         }
         catch (Exception e)

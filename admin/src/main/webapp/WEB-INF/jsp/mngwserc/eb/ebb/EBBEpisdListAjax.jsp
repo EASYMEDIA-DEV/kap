@@ -16,9 +16,16 @@
         <td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td><!--학습시간-->
         <td class="text-center">${list.episdYear}</td><!--년도-->
         <td class="text-center">
-          <a href="javascript:" class="listView" data-details-key="${list.edctnSeq}" data-episd-year="${list.episdYear}" data-episd-ord="${list.episdOrd}">
-              ${list.episdOrd}회차
-          </a>
+            <c:choose>
+              <c:when test="${ eBBEpisdDTO.srchLayer eq 'Y'}">
+                ${list.episdOrd}회차
+              </c:when>
+            <c:otherwise>
+              <a href="javascript:" class="listView" data-details-key="${list.edctnSeq}" data-episd-year="${list.episdYear}" data-episd-ord="${list.episdOrd}">
+                  ${list.episdOrd}회차
+              </a>
+            </c:otherwise>
+          </c:choose>
         </td><!--회차-->
         <td class="text-center">${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--접수기간-->
         <td class="text-center">${list.accsStatusNm}</td><!--접수상태-->
