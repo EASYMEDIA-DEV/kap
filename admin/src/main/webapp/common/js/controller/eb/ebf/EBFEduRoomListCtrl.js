@@ -89,7 +89,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 }
             },
             //검색 레이어에서 선택시 호출
-            btnPartsCompanyLayerChoice:{
+            btnEduPlaceLayerChoice:{
                 event : {
                     click: function(){
                         var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();

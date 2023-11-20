@@ -71,5 +71,5 @@ public class EBFEduRoomSearchDTO extends BaseDTO {
 
     @Schema(title = "검색 레이어에서 호출 여부")
     @Hidden
-    private String srchEduRoomLayer;
+    private String srchLayer;
 }

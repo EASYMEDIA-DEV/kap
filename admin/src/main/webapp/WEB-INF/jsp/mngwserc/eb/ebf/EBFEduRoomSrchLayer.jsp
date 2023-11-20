@@ -100,7 +100,7 @@
                 </div>
                 <div class="modal-footer row">
                     <div class="text-center">
-                        <button type="button" class="btn btn-success down mt btnPartsCompanyLayerChoice">선택</button>
+                        <button type="button" class="btn btn-success down mt btnEduPlaceLayerChoice">선택</button>
                     </div>
                 </div>
                 <!--리스트 종료 -->

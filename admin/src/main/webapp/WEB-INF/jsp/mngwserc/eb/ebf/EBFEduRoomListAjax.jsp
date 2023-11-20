@@ -2,7 +2,7 @@
 <c:choose>
   <c:when test="${ not empty rtnData.list}">
     <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-      <tr data-total-count="${rtnData.totalCount}" data-srch-edu-room-layer="${eduRoomDto.srchEduRoomLayer}">
+      <tr data-total-count="${rtnData.totalCount}" data-srch-edu-room-layer="${eduRoomDto.srchLayer}">
         <td class="text-center">
           <label class="checkbox-inline c-checkbox">
             <input type="checkbox" value="${list.placeSeq}" name="delValueList" class="checkboxSingle notRequired" data-place-seq="${list.placeSeq}"/><%--체크박스--%>
@@ -10,9 +10,9 @@
           </label>
         </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td><%--번호--%>
-        <td class="text-center">
+        <td class="text-center srchListView">
           <c:choose>
-            <c:when test="${ partsComDto.srchLayer eq 'Y'}">
+            <c:when test="${ rtnData.srchLayer eq 'Y'}">
               ${list.nm}
             </c:when>
             <c:otherwise>
