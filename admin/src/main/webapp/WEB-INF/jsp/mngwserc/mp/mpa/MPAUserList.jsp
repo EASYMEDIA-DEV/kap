@@ -66,7 +66,6 @@
                 </div>
                 <div class="pull-right">
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
-                    <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown2">ㅇㅇㅇㅇㅇㅇㅇ</button>
                 </div>
             </div>
             <!--VUE 영역 시작 -->
@@ -98,9 +97,6 @@
             </div>
             <!--리스트 종료 -->
         </form>
-        <div class="pull-right">
-            <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnChoice">선택</button>
-        </div>
     </div>
 </div>
 
