@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kap.service.dao.bd.BDBCompanyNewsMapper">
     <!--
-     쿼리명 : CompanyNewsMapper.selectCompanyNewsList
+     쿼리명 : BDBCompanyNewsMapper.selectCompanyNewsList
      설  명 : 재단소식 리스트
      수정일     수정자     수정내용
     ==========  ======  ==============
     2023.11.20  장두석     최초 생성
     -->
     <select id="selectCompanyNewsList" parameterType="BDBCompanyNewsDTO" resultType="BDBCompanyNewsDTO">
-        SELECT /* CompanyNewsMapper.selectCompanyNewsList */
+        SELECT /* BDBCompanyNewsMapper.selectCompanyNewsList */
             FNDN_NEWS_SEQ
             , TITL
             , READ_CNT
@@ -30,14 +30,14 @@
     </select>
 
     <!--
-    쿼리명 : CompanyNewsMapper.getCompanyNewsListCnt
+    쿼리명 : BDBCompanyNewsMapper.getCompanyNewsListCnt
     설  명 : 재단소식 목록 개수 카운
       수정일      수정자       수정내용
     ==========   ========   ==============
     2023.11.20    장두석       최초생성
     -->
     <select id="getCompanyNewsListTotCnt" parameterType="BDBCompanyNewsDTO" resultType="java.lang.Integer">
-        SELECT /* CompanyNewsMapper.getCompanyNewsListCnt */
+        SELECT /* BDBCompanyNewsMapper.getCompanyNewsListCnt */
             COUNT(*)
         FROM
             BD_FNDN_NEWS_MST A
@@ -46,14 +46,13 @@
     </select>
 
     <select id="selectCompanyNewsDtl" parameterType="BDBCompanyNewsDTO" resultType="BDBCompanyNewsDTO">
-        SELECT /* CompanyNewsMapper.selectCompanyNewsDtl */
+        SELECT /* BDBCompanyNewsMapper.selectCompanyNewsDtl */
             FNDN_NEWS_SEQ
             , TITL
             , CNTN
             , FILE_SEQ
             , PC_THNL_SEQ
             , MBL_THNL_SEQ
-            , READ_CNT
             , EXPS_YN
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
@@ -70,7 +69,7 @@
     </select>
 
     <insert id="insertCompanyNews" parameterType="BDBCompanyNewsDTO">
-        INSERT /* CompanyNewsMapper.insertCompanyNews */ INTO BD_FNDN_NEWS_MST
+        INSERT /* BDBCompanyNewsMapper.insertCompanyNews */ INTO BD_FNDN_NEWS_MST
             (
             FNDN_NEWS_SEQ
             , TITL
@@ -101,14 +100,14 @@
     </insert>
 
     <!--
-    쿼리명 : CompanyNewsMapper.updateCompanyNews
+    쿼리명 : BDBCompanyNewsMapper.updateCompanyNews
     설  명 : 재단소식 수정
      수정일	 수정자     수정내용
     ==========   ======   =============
     2023.11.20   장두석     최초생성
 	-->
     <update id="updateCompanyNews" parameterType="BDBCompanyNewsDTO">
-        UPDATE  /*BDBCompanyNewsDTO.updateCompanyNews*/
+        UPDATE  /* BDBCompanyNewsMapper.updateCompanyNews */
             BD_FNDN_NEWS_MST
         SET
             TITL = #{titl}
@@ -125,14 +124,14 @@
     </update>
 
     <!--
-         쿼리명 : CompanyNewsMapper.deleteCompanyNews
+         쿼리명 : BDBCompanyNewsMapper.deleteCompanyNews
          설  명 : 재단소식 삭제
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.20   장두석       최초생성
         -->
     <delete id="deleteCompanyNews" parameterType="BDBCompanyNewsDTO">
-        DELETE /* CompanyNewsMapper.deleteCompanyNews */
+        DELETE /* BDBCompanyNewsMapper.deleteCompanyNews */
         FROM
         BD_FNDN_NEWS_MST
         <where>

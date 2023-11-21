@@ -1,9 +1,8 @@
-package com.kap.core.dto.bd.bdb;
+package com.kap.core.dto.bd.bdc;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.COFileDTO;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -11,10 +10,10 @@ import lombok.*;
 import java.util.List;
 
 /**
- *  재단소식 마스터 DTO
+ *  FAQ 마스터 DTO
  *
  * @author 장두석
- * @since 2023.11.20
+ * @since 2023.11.21
  * @version 1.0
  * @see
  *
@@ -23,7 +22,7 @@ import java.util.List;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2023.11.20    장두석              최초 생성
+ *   2023.11.21    장두석              최초 생성
  * </pre>
  */
 @Getter
@@ -35,11 +34,14 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper=false)
-@Schema(title = "재단소식 마스터")
-public class BDBCompanyNewsDTO extends BaseDTO {
+@Schema(title = "FAQ 마스터")
+public class BDCFaqDTO extends BaseDTO {
 
-    @Schema(title = "재단소식 순번", example = "숫자")
-    private Integer fndnNewsSeq;
+    @Schema(title = "FAQ 순번", example = "숫자")
+    private Integer faqSeq;
+
+    @Schema(title = "FAQ 구분 코드")
+    private String ctgryCd;
 
     @Schema(title = "제목")
     private String titl;
@@ -50,18 +52,15 @@ public class BDBCompanyNewsDTO extends BaseDTO {
     @Schema(title = "파일순번")
     private Integer fileSeq;
 
-    @Schema(title = "PC 썸네일 이미지 순번")
-    private Integer pcThnlSeq;
-
-    @Schema(title = "Mobile 썸네일 이미지 순번")
-    private Integer mblThnlSeq;
+    @Schema(title = "조회수")
+    private Integer readCnt;
 
     @Schema(title = "노출여부")
     private String expsYn;
 
-    @Schema(title = "조회수")
-    private Integer readCnt;
 
+    @Schema(title = "FAQ 구분명")
+    private String ctgryName;
 
     @Schema(title = "노출여부 리스트")
     @Hidden
@@ -69,13 +68,9 @@ public class BDBCompanyNewsDTO extends BaseDTO {
 
     @Schema(title = "조회 리스트")
     @Hidden
-    private List<BDBCompanyNewsDTO> list;
+    private List<BDCFaqDTO> list;
 
-    @Schema(title = "PC 썸네일 리스트")
+    @Schema(title = "FAQ 구분 코드 리스트")
     @Hidden
-    private List<COFileDTO> pcThumbList;
-
-    @Schema(title = "모바일 썸네일 리스트")
-    @Hidden
-    private List<COFileDTO> moThumbList;
+    private List<String> ctgryCdList;
 }
