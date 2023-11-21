@@ -154,7 +154,7 @@
         ==========   ======    ==============
         2023.11.15    박준희       최초생성
     -->
-	<insert id="insertSurveyMst" parameterType="EXGExamMstInsertDTO">
+	<insert id="insertSurveyMst" parameterType="SVASurveyMstInsertDTO">
 		insert /* SVASurveyMapper.insertSurveyMst */ into sv_mst
 		(
 		srv_seq
@@ -198,7 +198,7 @@
 	==========   ========   ==============
 	2023.11.18    박준희       최초생성
 	-->
-	<update id="updateSurveyMst" parameterType="EXGExamMstInsertDTO">
+	<update id="updateSurveyMst" parameterType="SVASurveyMstInsertDTO">
 		update /* SVASurveyMapper.updateSurveyMst */ sv_mst
 		set
 			exps_yn = #{expsYn}
@@ -237,7 +237,7 @@
         ==========   ======    ==============
         2023.11.15    박준희       최초생성
     -->
-	<insert id="insertSurveyQstnDtl" parameterType="sVASurveyMstInsertDTO">
+	<insert id="insertSurveyQstnDtl" parameterType="SVASurveyMstInsertDTO">
 		insert /* SVASurveyMapper.insertSurveyQstnDtl */ into sv_qstn_dtl
 		(
 		qstn_seq
@@ -478,6 +478,7 @@
 			 , qstn_ord
 			 , exmpl_cnt
 	  		 , qstn_grp_ord
+			 , qstn_cnt
 		FROM (
 				 SELECT
 					 cd_id
@@ -494,6 +495,7 @@
 					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
 					  , case when @grp collate utf8mb4_general_ci = b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
 					  , (@grp := ctgry_cd) as dum
+					  , (select count(*) from sv_qstn_dtl c where c.srv_seq = #{detailsKey} and c.parnt_qstn_seq = b.qstn_seq  ) as qstn_cnt
 				 FROM
 					 co_code_mst a left join (select * from sv_qstn_dtl where srv_seq = #{detailsKey}) b on a.cd = b.ctgry_cd
 					, (select @rownum:=0, @grp:='') r

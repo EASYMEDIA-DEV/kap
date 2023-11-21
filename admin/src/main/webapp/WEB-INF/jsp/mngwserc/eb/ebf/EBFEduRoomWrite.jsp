@@ -4,7 +4,7 @@
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/eb/ebf/EBFEduRoomWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} ${ not empty rtnInfo ? '상세/수정' : '등록'}</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} ${ not empty rtnDto ? '상세/수정' : '등록'}</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.placeSeq}" />

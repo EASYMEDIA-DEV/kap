@@ -20,11 +20,34 @@
 				<div class="family-site">
 					<div class="form-group">
 						<div class="form-select">
-							<select id="" title="관련사이트 이동">
-								<option value="" selected>관련사이트</option>
-								<option value="">관련사이트1</option>
-								<option value="">관련사이트2</option>
+							<select title="관련사이트 이동" id="footerFamilySelect" onchange="setFooterFamilySelect()">
+								<option value="">관련사이트</option>
+								<option value="http://www.motie.go.kr">산업통상자원부</option>
+								<option value="http://www.mosf.go.kr">기획재정부</option>
+								<option value="http://www.kaica.or.kr">한국자동차산업협동조합</option>
+								<option value="http://www.kase.org">한국자동차공학회</option>
+								<option value="http://www.molit.or.kr">국토교통부</option>
+								<option value="http://www.smba.go.kr">중소기업청</option>
+								<option value="http://www.katech.re.kr">자동차부품연구원</option>
+								<option value="http://www.autopart.or.kr">부산자동차부품공업협동조합</option>
+								<option value="http://www.kama.or.kr">한국자동차공업협회</option>
+								<option value="http://www.hkasa.co.kr">현대기아협력회</option>
+								<option value="http://www.sbc.or.kr">중소기업진흥공단</option>
+								<option value="http://kari.hmc.co.kr">한국자동차산업엽구소</option>
+								<option value="http://www.hyundai-motor.co.kr">현대자동차</option>
+								<option value="http://www.kia.co.kr">기아자동차</option>
+								<option value="http://www.renaultsamsungm.com">르노삼성자동차</option>
+								<option value="http://www.mobis.co.kr">현대모비스</option>
+								<option value="http://www.gm-korea.co.kr">한국지엠</option>
+								<option value="http://www.smotor.com">쌍용자동차</option>
 							</select>
+							<script type="text/javascript">
+								function setFooterFamilySelect(){
+									if($.trim($("#footerFamilySelect").val()) != ""){
+										window.open($("#footerFamilySelect").val(), "_blank");
+									}
+								}
+							</script>
 						</div>
 					</div>
 				</div>

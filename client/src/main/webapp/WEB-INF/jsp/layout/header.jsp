@@ -147,6 +147,10 @@
                                 </c:when>
                                 <c:otherwise>
                                     <p class="log-tit f-title3">MY</p>
+									<div class="pc btn-wrap">
+										<a class="btn-text-icon black-arrow" href="/login" title="링크 이동"><span>로그인</span></a>
+										<a class="btn-text-icon black-arrow" href="/member/join" title="링크 이동"><span>회원가입</span></a>
+									</div>
                                 </c:otherwise>
                             </c:choose>
 						</div>

@@ -504,4 +504,29 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 재단소식 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl fndnNewsSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("FNDN_NEWS_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 상생협력체감도조사 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxAppctnRsumeSrvIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CX_APPCTN_RSUME_SRV_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }

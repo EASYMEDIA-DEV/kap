@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.mp.MPHNewsLetterMapper">
+    <!--
+         쿼리명 : MPHNewsLetterMapper.selectNewsLetterList
+         설  명 : 뉴스레터 신청자 목록을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.20   구은희       최초생성
+    -->
+    <select id="selectNewsLetterList" parameterType="MPHNewsLetterDTO">
+        SELECT /* MPHNewsLetterMapper.selectNewsLetterList */
+            EMAIL
+            , REG_DTM
+        FROM CO_NWSLT_MST A
+        <include refid="selectNewsLetterWhereSql" />
+        ORDER BY
+            REG_DTM DESC
+        <if test="excelYn != 'Y'.toString() ">
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
+    </select>
+
+    <!--
+         쿼리명 : MPHNewsLetterMapper.selectNewsLetterCnt
+         설  명 : 신청자 수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    구은희       최초생성
+    -->
+    <select id="selectNewsLetterCnt" parameterType="MPHNewsLetterDTO" resultType="java.lang.Integer">
+        SELECT /* MPHNewsLetterMapper.selectNewsLetterCnt*/
+        COUNT(EMAIL)
+        FROM
+        CO_NWSLT_MST A
+        <include refid="selectNewsLetterWhereSql" />
+    </select>
+
+    <!--
+		쿼리명 : selectNewsLetterWhereSql
+		설  명 : 뉴스레터 신청자 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    구은희       최초생성
+    -->
+    <sql id="selectNewsLetterWhereSql">
+        <where>
+            <if test="srchDate != null and srchDate != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                            AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                </choose>
+            </if>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 1">
+                        AND EMAIL LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </sql>
+</mapper>
