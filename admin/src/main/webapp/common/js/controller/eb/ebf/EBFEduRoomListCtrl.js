@@ -101,6 +101,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             var clickObj = {};
                             clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();
                             var titl = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text());
+                            var rgnsNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find("td").eq(3).text().trim();//지역
+                            var addr= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find("td").eq(4).text().trim();//주소
+                            var rprsntTelNo= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find("td").eq(5).text().trim();//대표번호
+
+                            clickObj.titl = titl;//교육장명
+                            clickObj.rgnsNm = rgnsNm;//지역
+                            clickObj.addr = addr;//주소
+                            clickObj.rprsntTelNo = rprsntTelNo;//대표번호
+
+
+
                             clickObj.titl = titl;
                             ctrl.obj.trigger("choice", [clickObj])
                             ctrl.obj.find(".close").click();

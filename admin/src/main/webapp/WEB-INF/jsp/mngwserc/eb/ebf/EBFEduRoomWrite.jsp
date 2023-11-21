@@ -82,20 +82,16 @@
                         <tbody>
                             <tr>
                                 <th>최초 등록자</th>
-                                <td>${ rtnDto.regName }</td>
+                                <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
                                 <th>최초 등록일시</th>
                                 <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                             </tr>
                             <c:if test="${ not empty rtnDto.modDtm }">
                             <tr>
                                 <th>최종 수정자</th>
-                                <td>
-                                    ${not empty rtnDto.modName ? rtnDto.modName : '-'}
-                                </td>
+                                <td>${not empty rtnDto.modName ? rtnDto.modName : '-'}</td>
                                 <th>최종 수정일시</th>
-                                <td>
-                                    ${not empty rtnDto.modDtm ? kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') : '-'}
-                                </td>
+                                <td>${not empty rtnDto.modDtm ? kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') : '-'}</td>
                             </tr>
                             </c:if>
                         </tbody>

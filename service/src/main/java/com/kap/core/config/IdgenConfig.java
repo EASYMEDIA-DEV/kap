@@ -555,4 +555,18 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** FAQ 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl faqSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("FAQ_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
 }

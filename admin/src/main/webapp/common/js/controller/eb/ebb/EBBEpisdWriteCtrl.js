@@ -101,6 +101,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					}
 				}
 			},
+			//과정 검색
 			couseSearch : {
 				event : {
 					click : function(){
@@ -122,7 +123,43 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						});
 					}
 				}
+			},
+
+			//교육장 검색
+			eduRoomSearch : {
+				event : {
+					click : function(){
+						cmmCtrl.getEduRoomLayerPop(function(data){
+							if(data.choiceCnt > 1){
+								alert(msgCtrl.getMsg("fail.eb.ebf.notSrchPlaceCom1"));
+							}else{
+
+								var placeSeq = data.seq;
+								var titl= data.titl;//교육장명
+								var rgnsNm= data.rgnsNm;//지역
+								var addr= data.addr;//주소
+								var rprsntTelNo= data.rprsntTelNo;//대표번호
+
+								$("tr.setPlace").find("td").eq(0).find("input[name='placeSeq']").val(placeSeq).prop("disabled", false);
+								$("tr.setPlace").find("td").eq(0).text(titl);
+								$("tr.setPlace").find("td").eq(1).text(rgnsNm);
+								$("tr.setPlace").find("td").eq(2).text(addr);
+								$("tr.setPlace").find("td").eq(3).text(rprsntTelNo);
+								$("tr.notPlace").css("display", "none");
+								$("tr.setPlace").css("display", "");
+
+							}
+
+
+						});
+					}
+				}
 			}
+			//설문 검색
+
+			//시험 검색
+
+			//강사 검색
 		},
 		immediately : function() {
 			//리스트 조회
@@ -200,14 +237,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 						var actForm = {};
 
-
-
 						var accsStrtDt = $("#accsStrtDt").val();
 						var accsStrtHour = $("#accsStrtHour").val();
-						if(accsStrtHour<10) accsStrtHour = "0"+accsStrtHour;
+
 						var accsEndDt = $("#accsEndDt").val();
 						var accsEndHour = $("#accsEndHour").val();
-						if(accsEndHour<10) accsEndHour = "0"+accsEndHour;
 
 						var edctnStrtDt = $("#edctnStrtDt").val();
 						var edctnStrtHour = $("#edctnStrtHour").val();
@@ -216,31 +250,40 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						var edctnEndHour = $("#edctnEndHour").val();
 
 						var accsStrtDtm = accsStrtDt+" "+accsStrtHour+":00:00";
-						var accsEndDtm = accsEndDt+" "+accsEndHour+":00:00";
-						var edctnStrtDtm = edctnStrtDt+" "+edctnEndHour+":59:59";
-						var edctnEndDtm = edctnStrtDt+" "+edctnEndHour+":59:59";
+						var accsEndDtm = accsEndDt+" "+accsEndHour+":59:59";
+
+						var edctnStrtDtm = edctnStrtDt+" "+edctnStrtHour+":00:00";
+						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":59:59";
 
 						actForm.edctnSeq = $("#edctnSeq").val();//교육순번
 						actForm.cbsnCd = $("#cbsnCd").val();//업종코드
 
 						actForm.episdYear =$("#episdYear").val();//연도
 						actForm.episdOrd =$("#episdOrd").val();//회차정렬
-						actForm.accsStrtDtm = edctnEndDtm;//접수시작일시
+
+						actForm.accsStrtDtm = accsStrtDtm;//접수시작일시
 						actForm.accsEndDtm = accsEndDtm;//접수종료일시
 						actForm.edctnStrtDtm = edctnStrtDtm;//교육시작일시
 						actForm.edctnEndDtm = edctnEndDtm;//교육종료일시
+
 						actForm.fxnumCnt = $("#fxnumCnt").val();//정원수
-						actForm.fxnumImpsbYn = $("#fxnumImpsbYn").val();//정원제한여부
+						actForm.fxnumImpsbYn = $("input[name='fxnumImpsbYn']:checked").val();//정원제한여부
 						actForm.rcrmtMthdCd = $("input[name='rcrmtMthdCd']:checked").val();//모집방법코드
 						actForm.picNm = $("#picNm").val();//담당자명
 						actForm.picEmail = $("#picEmail").val();//담당자이메일
 						actForm.picTelNo = $("#picTelNo").val()//담당자전화번호
 						actForm.placeSeq = $("#placeSeq").val();//교육장소순번
 						actForm.srvSeq = $("#srvSeq").val();//설문순번
-						actForm.examSeq = $("#examSeq").val();//시험순번
-						actForm.cmptnAutoYn = $("input[name='cmptnAutoYn']:checked").val();//수료자동여부
+						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
+						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
 
+
+						actForm.examSeq = $("#examSeq").val();//시험순번
+						actForm.cmptnAutoYn = $("input[name='expsYn']:checked").val();//수료자동여부
+						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
+						debugger;
 						cmmCtrl.jsonAjax(function(data){
+							alert("저장되었습니다.");
 							location.href = "./list";
 						}, actionUrl, actForm, "text")
 

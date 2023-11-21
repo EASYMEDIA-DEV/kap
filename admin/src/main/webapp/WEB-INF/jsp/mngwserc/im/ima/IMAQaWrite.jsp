@@ -154,14 +154,9 @@
                     <tbody>
                     <tr>
                         <th>최종 수정자</th>
-                        <td>
-                            ${rtnQaInfo.modName}
-                        </td>
+                        <td>${rtnQaInfo.modName}(${ rtnQaInfo.modId })</td>
                         <th>최종 수정일시</th>
-                        <td>
-                            <%--${ kl:convertDate(rtnQaInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }--%>
-                            ${rtnQaInfo.modDtm}
-                        </td>
+                        <td>${ kl:convertDate(rtnQaInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                     </tr>
                     </tbody>
                 </table>

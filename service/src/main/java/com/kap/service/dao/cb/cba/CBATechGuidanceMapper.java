@@ -1,8 +1,10 @@
-package com.kap.service.dao.cb;
+package com.kap.service.dao.cb.cba;
 
-import com.kap.core.dto.CBATechGuidanceDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 /**
  * <pre>
@@ -33,7 +35,7 @@ public interface CBATechGuidanceMapper {
     /**
      * 컨설팅 기술 지도 상세 조회
      */
-    public CBATechGuidanceDTO selectTechGuidanceDtl(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public CBATechGuidanceInsertDTO selectTechGuidanceDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
      * 컨설팅 기술 지도 등록
@@ -43,7 +45,7 @@ public interface CBATechGuidanceMapper {
     /**
      * 컨설팅 기술 지도 등록
      */
-    public int insertTechGuidance(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
      * 컨설팅 기술 지도 전체 카운트
@@ -53,11 +55,31 @@ public interface CBATechGuidanceMapper {
     /**
      * 컨설팅 기술 지도 수정
      */
-    public int updateTechGuidance(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public int updateTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
      * 컨설팅 기술 지도 삭제
      */
     public int deleteTechGuidance(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+
+    /**
+     * 신청자 정보 업데이트
+     */
+    public int updateTechMemberInfo(HashMap memberMap);
+
+    /**
+     * 부품사 정보 업데이트
+     */
+    public int updateTechCompanyInfo(HashMap companyMap);
+
+    /**
+     * 신청 부품사 정보 업데이트
+     */
+    public List<CBATechGuidanceDTO> selectPartsMember(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+
+    /**
+     * 신청 부품사 카운트
+     */
+    public int selectPartsMemberTopCnt(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
 
 }
