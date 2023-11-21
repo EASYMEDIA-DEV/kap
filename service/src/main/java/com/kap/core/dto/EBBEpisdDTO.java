@@ -63,7 +63,7 @@ public class EBBEpisdDTO extends BaseDTO  {
     @Schema(title = "정원수", example = "숫자")
     private Integer fxnumCnt;
 
-    @Schema(title = "정원제한여부", example = "제한없음 :Y / 제한있음 : N")
+    @Schema(title = "정원제한여부", example = "Y = 정원 제한함 / N = 정원 제한 안함(체크박스 체크)")
     @Builder.Default
     private String fxnumImpsbYn = "Y";
 
@@ -89,7 +89,13 @@ public class EBBEpisdDTO extends BaseDTO  {
     private String placeNm;
 
     @Schema(title = "설문순번", example = "숫자")
-    private String srvSeq;
+    private Integer srvSeq;
+
+    @Schema(title = "설문시작일", example = "날짜 yyyy-mm-dd HH:mm:ss")
+    private String srvStrtDtm;
+
+    @Schema(title = "설문종료일", example = "날짜 yyyy-mm-dd HH:mm:ss")
+    private String srvEndDtm;
 
     @Schema(title = "시험순번", example = "숫자")
     private String examSeq;

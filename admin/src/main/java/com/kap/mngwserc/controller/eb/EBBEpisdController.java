@@ -1,10 +1,12 @@
 package com.kap.mngwserc.controller.eb;
 
+import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.EBACouseDTO;
 import com.kap.core.dto.EBBEpisdDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.service.COCodeService;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBBEpisdService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -119,8 +121,12 @@ public class EBBEpisdController {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("ROUND_CD");//회차정보 공통코드
+        cdDtlList.add("CO_YEAR_CD");//연도 공통코드
+
         cdDtlList.add("RCRMT_MTHD"); //모집방식
         cdDtlList.add("CMPTN_AUTO"); //수료 자동화 여부
+        cdDtlList.add("CBSN_CD"); //업종코드
+        cdDtlList.add("SYSTEM_HOUR"); //시간 00~23
 
         //cdDtlList.add("STDUY_MTHD"); //학습방식
         //cdDtlList.add("STDUY_DD");//학습시간 - 학습일
@@ -141,6 +147,28 @@ public class EBBEpisdController {
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
     }
 
+    /*@Operation(summary = "교육차수 등록", tags = "교육차수 등록", description = "교육차수, 교육장소, 강사, 온라인 강의 목차")
+    @PostMapping(value="/insert")
+    public String insertEpisd(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap) throws Exception
+    {
+        int respCnt = 0;
+        try
+        {
+            System.out.println("eBBEpisdDTO = " + eBBEpisdDTO);
+            respCnt = eBBEpisdService.insertEpisd(eBBEpisdDTO);
+            modelMap.addAttribute("respCnt", respCnt);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }*/
+
     @RestController
     @RequiredArgsConstructor
     @RequestMapping(value="/mngwserc/eb/ebb")
@@ -154,6 +182,17 @@ public class EBBEpisdController {
         {
             try
             {
+                System.out.println("eBBEpisdDTO = " + eBBEpisdDTO);
+                COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+                eBBEpisdDTO.setRegId( coaAdmDTO.getId() );
+                eBBEpisdDTO.setRegName( coaAdmDTO.getName() );
+                eBBEpisdDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
+                eBBEpisdDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
+                eBBEpisdDTO.setRegIp( coaAdmDTO.getLoginIp() );
+                eBBEpisdDTO.setModId( coaAdmDTO.getId() );
+                eBBEpisdDTO.setModIp( coaAdmDTO.getLoginIp() );
+
+
                 eBBEpisdService.insertEpisd(eBBEpisdDTO);
             }
             catch (Exception e)
@@ -167,7 +206,33 @@ public class EBBEpisdController {
             return eBBEpisdDTO;
         }
 
+        @Operation(summary = "교육차수 중복체크", tags = "교육차수 중복체크", description = "")
+        @PostMapping(value="/selectChk")
+        public EBBEpisdDTO selectEpisdChk(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+            int actCnt = 0;
+            /*try
+            {*/
+
+                EBBEpisdDTO tempDto = eBBEpisdService.selectEpisdChk(eBBEpisdDTO);
+            System.out.println("@@@@ tempDto= " + tempDto);
+
+            /*}
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }*/
+            return tempDto;
+        }
+
     }
+
+
+
 
 
 }

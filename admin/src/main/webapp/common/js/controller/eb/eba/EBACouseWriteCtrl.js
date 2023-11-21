@@ -96,6 +96,43 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				}
 			},
 
+			couseSearch : {
+				event : {
+					click : function(relStatus){
+						//필수 : 0, 선수:1, 후속:2 // EDCTN_REL
+						var edctnRelStatus = $(this).data("rel-status");
+
+
+
+						cmmCtrl.getCouseSrchLayerPop(function(data){
+
+							//선택한 교육과정이 여러개 일경우
+							if(data.trObjList != null){
+								var trObjList= data.trObjList;
+								for(var i=0; i<trObjList.length;i++){
+									var relForm = $(".exmplContainer").clone(true);
+									 var rObj = trObjList[i];
+									relForm.find("span.nm").text(rObj.nm);
+									relForm.find("input.cloneHidden").prop("name", "edctnRel"+edctnRelStatus).val(rObj.edctnSeq);
+
+									$(".relForm"+edctnRelStatus).append(relForm.html());
+
+								}
+
+
+							//선택한 교육과정이 단건일경우
+							}else{
+								var relForm = $(".exmplContainer").clone(true);
+								relForm.find("span.nm").text(data.nm);
+								relForm.find("input.cloneHidden").prop("name", "edctnRel"+edctnRelStatus).val(data.edctnSeq);
+								$(".relForm"+edctnRelStatus).append(relForm.html());
+
+							}
+						});
+					}
+				}
+			},
+
 
 
 

@@ -63,4 +63,10 @@ public interface EBBEpisdMapper {
 	 */
 	public int deleteEpisdDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 교육차수 중복체크
+	 */
+	public EBBEpisdDTO selectEpisdChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
 }

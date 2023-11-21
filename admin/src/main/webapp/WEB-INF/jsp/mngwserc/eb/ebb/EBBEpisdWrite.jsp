@@ -11,6 +11,7 @@
             <input type="hidden" class="notRequired" id="edctnSeq" name="edctnSeq" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="edctnYear" name="edctnYear" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="edctnOrd" name="edctnOrd" value="${rtnDto.episdOrd}" />
+            <input type="hidden" class="notRequired" id="ctgryCd" name="ctgryCd" value="${rtnDto.ctgryCd}" />
 
             <input type="hidden" class="notRequired" id="prntCd" name="prntCd" value="${rtnDto.prntCd}" />
             <input type="hidden" class="notRequired" id="copyYn" name="copyYn" value="${rtnDto.copyYn}" />
@@ -28,7 +29,6 @@
                         <button type="button" class="btn btn-inverse btn-sm couseSearch">
                             과정검색
                         </button>
-                    </div>
                     </div>
                 </div>
             </fieldset>
@@ -93,15 +93,35 @@
                     </fieldset>
                     <fieldset>
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">회차<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-11">
-                                <select class="form-control input-sm wd-sm classType" name="episdOrd" id="episdOrd" title="회차">
+                            <label class="col-sm-1 control-label">연도<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-3">
+                                <select class="form-control input-sm wd-sm" name="episdYear" id="episdYear" title="회차">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${episdCdList.CO_YEAR_CD}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${rtnDto.episdYear eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <select class="form-control input-sm wd-sm" name="episdOrd" id="episdOrd" title="회차">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${episdCdList.ROUND_CD}" varStatus="status">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.episdOrd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                     </c:forEach>
                                 </select>
                             </div>
+
+                            <label class="col-sm-1 control-label">업종<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-4">
+                                <select class="form-control input-sm wd-sm" name="cbsnCd" id="cbsnCd" title="회차">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${episdCdList.CBSN_CD}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${rtnDto.cbsnCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
                         </div>
                     </fieldset>
 
@@ -119,21 +139,21 @@
                                         </span>
                                         <select class="form-control input-sm wd-sm classType" name="accsStrtHour" id="accsStrtHour" title="접수 시작시간">
                                             <option value="">선택</option>
-                                            <c:forEach varStatus="status" begin="1" end="23">
-                                                <option value="${status.count}">${status.count}시</option>
+                                            <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
+                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                             </c:forEach>
                                         </select>
                                         <span class="input-group-addon bg-white b0">~</span>
-                                        <input type="text" class="form-control notRequired input-sm datetimepicker_endDt" name="accsEndDtm" value="${ kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="종료일시" readonly="readonly"/>
+                                        <input type="text" class="form-control notRequired input-sm datetimepicker_endDt" name="accsEndDtm" id="accsEndDt" value="${ kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="종료일시" readonly="readonly"/>
                                         <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                        <select class="form-control input-sm wd-sm classType" name="accsStrtHour" id="accsEndHour" title="접수 종료시간">
+                                        <select class="form-control input-sm wd-sm classType" name="accsEndHour" id="accsEndHour" title="접수 종료시간">
                                             <option value="">선택</option>
-                                            <c:forEach varStatus="status" begin="1" end="23">
-                                                <option value="${status.count}">${status.count}시</option>
+                                            <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
+                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -147,29 +167,29 @@
                             <div class="col-sm-10">
                                 <div class="form-inline">
                                     <div class="input-group form-date-group mr-sm">
-                                        <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="accsStrtDt" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
+                                        <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="edctnStrtDt" id="edctnStrtDt" value="${ kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
                                         <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                        <select class="form-control input-sm wd-sm classType" name="accsStrtHour" id="accsStrtHour" title="접수 시작시간">
+                                        <select class="form-control input-sm wd-sm classType" name="edctnStrtHour" id="edctnStrtHour" title="교육 시작시간">
                                             <option value="">선택</option>
-                                            <c:forEach varStatus="status" begin="1" end="23">
-                                                <option value="${status.count}">${status.count}시</option>
+                                            <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
+                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                             </c:forEach>
                                         </select>
                                         <span class="input-group-addon bg-white b0">~</span>
-                                        <input type="text" class="form-control notRequired input-sm datetimepicker_endDt" name="accsEndDtm" value="${ kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="종료일시" readonly="readonly"/>
+                                        <input type="text" class="form-control notRequired input-sm datetimepicker_endDt" name="edctnEndDt" id="edctnEndDt" value="${ kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="종료일시" readonly="readonly"/>
                                         <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                        <select class="form-control input-sm wd-sm classType" name="accsStrtHour" id="accsEndHour" title="접수 종료시간">
+                                        <select class="form-control input-sm wd-sm classType" name="edctnEndHour" id="edctnEndHour" title="교육 종료시간">
                                             <option value="">선택</option>
-                                            <c:forEach varStatus="status" begin="1" end="23">
-                                                <option value="${status.count}">${status.count}시</option>
+                                            <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
+                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -220,7 +240,7 @@
                             </div>
                             <div class="col-sm-1">
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle notRequired" data-name="fxnumImpsbYn" value="${targetList.cd}" name="targetCd"  <c:if test="${rtnDto.fxnumImpsbYn eq 'N'}">checked</c:if> />
+                                    <input type="checkbox" class="checkboxSingle notRequired" data-name="fxnumImpsbYn" value="N"  id="fxnumImpsbYn" name="fxnumImpsbYn"  <c:if test="${rtnDto.fxnumImpsbYn eq 'N'}">checked</c:if> />
                                     <span class="ion-checkmark-round"></span> 제한없음
                                 </label>
                             </div>
@@ -395,14 +415,14 @@
                                             <td class="text-center">교육만족도조사 품질아카데미_1</td>
                                             <td class="text-center">
                                                 <div class="input-group form-date-group mr-sm">
-                                                    <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="accsStrtDt" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
+                                                    <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="srvStrtDtm" id="srvStrtDtm" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
                                                         </button>
                                                     </span>
                                                         <span class="input-group-addon bg-white b0">~</span>
-                                                        <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="accsStrtDt" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
+                                                        <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="srvEndDtm" id="srvEndDtm" value="${ kl:convertDate(rtnDto.srvEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>

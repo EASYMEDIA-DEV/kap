@@ -218,27 +218,101 @@
                     <label class="col-sm-1 control-label">연계학습</label>
                     <div class="col-sm-11">
 
+
+                        <div class="row" style="margin-bottom: 20px;">
+                            <label class="col-sm-1 control-label">필수과목</label>
+                            <div class="col-sm-10 relForm3">
+                                <c:forEach var="relList" items="${relList}" varStatus="status">
+                                    <c:if test="${relList.cnnctCd eq 'EDCTN_REL03'}">
+                                        <div class="row" style="margin-bottom: 20px;">
+                                            -${relList.cnnctNm}
+                                            <input type="hidden" class="notRequired cloneHidden" name="edctnRel3" value="${relList.cnnctEdctnSeq}">
+                                            <button type="button" class="btn btn-sm btn-danger btnDeleteOptn" onclick='$(this).closest(".row").remove();'><em class="ion-android-remove"></em></button>
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-success couseSearch" data-rel-status="3">과정검색</button>
+                        </div>
+
                         <div class="row" style="margin-bottom: 20px;">
                             <label class="col-sm-1 control-label">선수과목</label>
-                            <div class="col-sm-10">
-                                <div class="row" style="margin-bottom: 20px;">-자동차 품질경영시스템</div>
-                                <div class="row" style="margin-bottom: 20px;">-자동차 품질경영시스템</div>
+                            <div class="col-sm-10 relForm1">
+                                <c:forEach var="relList" items="${relList}" varStatus="status">
+                                    <c:if test="${relList.cnnctCd eq 'EDCTN_REL01'}">
+                                        <div class="row" style="margin-bottom: 20px;">
+                                            -${relList.cnnctNm}
+                                            <input type="hidden" class="notRequired cloneHidden" name="edctnRel1" value="${relList.cnnctEdctnSeq}">
+                                            <button type="button" class="btn btn-sm btn-danger btnDeleteOptn" onclick='$(this).closest(".row").remove();'><em class="ion-android-remove"></em></button>
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
                             </div>
-                            <button type="button" class="btn btn-sm btn-success">과정검색</button>
+                            <button type="button" class="btn btn-sm btn-success couseSearch" data-rel-status="1">과정검색</button>
                         </div>
 
                         <div class="row" style="margin-bottom: 20px;">
                             <label class="col-sm-1 control-label">후속과목</label>
-                            <div class="col-sm-10">
-                                <div class="row" style="margin-bottom: 20px;">
-                                    - [SQ인증] 업종별 기술 이해 <span class="star">[X]</span>
-                                    <input type="hidden" class="notRequired" name="EDCTN_REL" id="" value="">
-                                    <%--EDCTN_REL--%>
-                                </div>
-                                <div class="row" style="margin-bottom: 20px;">- 업종별 SQ 평가 대응 실무 [X]</div>
+                            <div class="col-sm-10 relForm2">
+                                <c:forEach var="relList" items="${relList}" varStatus="status">
+                                    <c:if test="${relList.cnnctCd eq 'EDCTN_REL02'}">
+                                        <div class="row" style="margin-bottom: 20px;">
+                                            -${relList.cnnctNm}
+                                            <input type="hidden" class="notRequired cloneHidden" name="edctnRel2" value="${relList.cnnctEdctnSeq}">
+                                            <button type="button" class="btn btn-sm btn-danger btnDeleteOptn" onclick='$(this).closest(".row").remove();'><em class="ion-android-remove"></em></button>
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
                             </div>
-                            <button type="button" class="btn btn-sm btn-success">과정검색</button>
+                            <button type="button" class="btn btn-sm btn-success couseSearch" data-rel-status="2">과정검색</button>
                         </div>
+
+
+                        <%--<div class="row" style="margin-bottom: 20px;">
+                            <label class="col-sm-1 control-label">필수과목</label>
+                            <div class="col-sm-10 relForm3">
+                                <c:forEach var="relList" items="${relList.EDCTN_REL03}" varStatus="status">
+                                    <div class="row" style="margin-bottom: 20px;">
+                                        -${relList.cnntNm}
+                                        <input type="hidden" class="notRequired cloneHidden" name="edctnRel1" value="${relList.cnnctCdSeq}">
+                                        <button type="button" class="btn btn-sm btn-danger btnDeleteOptn"><em class="ion-android-remove"></em></button>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-success" data-rel-status="1">과정검색</button>
+                        </div>--%>
+
+                        <%--<div class="row" style="margin-bottom: 20px;">
+                            <label class="col-sm-1 control-label">선수과목</label>
+                            <div class="col-sm-10 relForm1">
+                                <div class="row" style="margin-bottom: 20px;">-자동차 품질경영시스템</div>
+                                <div class="row" style="margin-bottom: 20px;">-자동차 품질경영시스템</div>
+                            </div>
+                            <button type="button" class="btn btn-sm btn-success" data-rel-status="1">과정검색</button>
+                        </div>--%>
+
+                        <%--<div class="row" style="margin-bottom: 20px;">
+                            <label class="col-sm-1 control-label">후속과목</label>
+                            <div class="col-sm-10 relForm2">
+                            </div>
+                            <button type="button" class="btn btn-inverse btn-sm couseSearch" data-rel-status="2">
+                                과정검색
+                            </button>
+                        </div>--%>
+
+
+                        <div class="exmplContainer relForm" style="display:none;">
+                            <div class="row" style="margin-bottom: 20px;">
+                            <span class="nm">
+
+                            </span>
+                            <input type="hidden" class="notRequired cloneHidden" name="" id="" value="">
+                            <button type="button" class="btn btn-sm btn-danger btnDeleteOptn"><em class="ion-android-remove"></em></button>
+                            </div>
+                        </div>
+
+
+
                     </div>
                 </div>
             </fieldset>
@@ -332,3 +406,5 @@
         </form>
     </div>
 </div>
+
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/eba/EBACouseSrchLayer.jsp"></jsp:include>

@@ -48,6 +48,10 @@ public interface EBACouseMapper {
 	 */
 	public List<EBACouseDTO> selectCouseTrgtList(EBACouseDTO eBACouseDTO) throws Exception;
 
+	/**
+	 * 교육과정연계 목록을 조회한다.
+	 */
+	public List<EBACouseDTO> selectEdctnRelList(EBACouseDTO eBACouseDTO) throws Exception;
 
 	/**
 	 * 교육과정을 등록한다.
@@ -77,6 +81,16 @@ public interface EBACouseMapper {
 	 * 교육과정을 삭제한다.
 	 */
 	public int deleteCouseDtl(EBACouseDTO eBACouseDTO) throws Exception;
+
+	/**
+	 * 교육과정연계상세를 등록한다.
+	 */
+	public int insertEdctnRel(EBACouseDTO eBACouseDTO) throws Exception;
+
+	/**
+	 * 교육과정연계상세를 삭제한다.
+	 */
+	public int deleteEdctnRel(EBACouseDTO eBACouseDTO) throws Exception;
 
 
 }

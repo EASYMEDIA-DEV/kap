@@ -112,24 +112,18 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		eBBEpisdDTO.setEdctnNtctnFileSeq(fileSeqMap.get("edctnNtctnFileSeq"));
 
-
-		int firstEdctnMstIdgen = edctnEpisdIdgen.getNextIntegerId();
-
-		eBBEpisdDTO.setEdctnSeq(firstEdctnMstIdgen);
-
 		//교육차수 등록
 		respCnt = eBBEpisdMapper.insertEpisd(eBBEpisdDTO);
 
-		eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
+		//eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
 
 		//교육강의 상세 등록(온라인교육)
-
-		List<EBBLctrDTO> lctrDtoList = eBBEpisdDTO.getLctrList();
+		/*List<EBBLctrDTO> lctrDtoList = eBBEpisdDTO.getLctrList();
 		for(EBBLctrDTO lctrDto : lctrDtoList){
 			int firstEdctnLctrIIdgen = edctnLctrIdgen.getNextIntegerId();
 			lctrDto.setLctrSeq(firstEdctnLctrIIdgen);
 			eBBEpisdMapper.insertLctrDtl(lctrDto);
-		}
+		}*/
 
 		return respCnt;
 	}
@@ -141,23 +135,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	{
 		int respCnt = 0;
 
-		//파일 처리
-		/*HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBACouseDTO.getFileList());
-
-		eBACouseDTO.setThnlFileSeq(fileSeqMap.get("thnlFileSeq"));
-
-		respCnt = eBACouseMapper.updateCouse(eBACouseDTO);
-
-		eBACouseMapper.deleteCouseTrgt(eBACouseDTO);
-
-		String temp = eBACouseDTO.getTargetCd();
-
-		String[] tempArray =temp.split(",");
-
-		for(String a : tempArray){
-			eBACouseDTO.setTargetCd(a);
-			eBACouseMapper.insertCouseTrgt(eBACouseDTO);
-		}*/
 
 		return respCnt;
 	}
@@ -175,6 +152,21 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		return actCnt;
 	}
+
+	/**
+	 * 교육차수 중복 체크
+	 */
+	@Transactional
+	public EBBEpisdDTO selectEpisdChk(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+		int actCnt = 0;
+		EBBEpisdDTO tempDto = new EBBEpisdDTO();
+		tempDto = eBBEpisdMapper.selectEpisdChk(eBBEpisdDTO);
+
+		return tempDto;
+	}
+
+
 
 
 

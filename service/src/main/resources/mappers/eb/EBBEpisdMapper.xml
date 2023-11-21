@@ -407,7 +407,21 @@
 		    and episd_ord = #{episdOrd}
 	</select>
 
-
+	<!--
+      쿼리명 : EBBEpisdMapper.selectEpisdChk
+      설  명 : 교육과정 상세를 조회한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.02   김학규       최초생성
+ 	-->
+	<select id="selectEpisdChk" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
+		select *
+		from ed_edctn_episd_mst
+		where
+		edctn_seq = #{edctnSeq}
+		and episd_year = #{episdYear}
+		and episd_ord = #{episdOrd}
+	</select>
 
 	<!--
          쿼리명 : EBBEpisdMapper.insertEpisd
@@ -435,6 +449,8 @@
 			, edctn_ntctn_file_seq
 			, place_seq
 			, srv_seq
+			, srv_strt_dtm
+			, srv_end_dtm
 			, exam_seq
 			, cmptn_auto_yn
 			, exps_yn
@@ -462,15 +478,17 @@
 				, #{edctnNtctnFileSeq}
 				, #{placeSeq}
 				, #{srvSeq}
+				, #{srvStrtDtm}
+				, #{srvEndDtm}
 				, #{examSeq}
 				, #{cmptnAutoYn}
 				, #{expsYn}
 				, #{regId}
 				, #{regIp}
-				, #{regDtm}
+				, now()
 				, #{modId}
 				, #{modIp}
-				, #{modDtm}
+				, now()
 			)
 	</insert>
 

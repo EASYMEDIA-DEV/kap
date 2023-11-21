@@ -242,24 +242,53 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click: function(){
 						var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
-						if( choiceCnt > 1){
-							alert(msgCtrl.getMsg("fail.mp.mpe.notSrchPartsCom1"));
-						} else if(choiceCnt == 0){
-							alert(msgCtrl.getMsg("fail.mp.mpe.notSrchPartsCom"));
+						if(choiceCnt == 0){
+							alert(msgCtrl.getMsg("fail.eb.eba.notSrchPartsCouse"));
 						}else{
 							var clickObj = {};
 							clickObj.edctnSeq = ctrl.obj.find("input[name=delValueList]:checked").val();
 							var trObj = ctrl.obj.find("input[name=delValueList]:checked").parents("tr");
 
-							var ctgryCdNm= trObj.find("td").eq(2).text().trim();//과정분류
-							var nm= trObj.find("td").eq(3).text().trim();//과정명
-							var stduyMthd= trObj.find("td").eq(4).text().trim();//학습방식
-							var stduyDtm = trObj.find("td").eq(5).text().trim();//학습시간
+							if(trObj.length >1){
+								var trObjList = new Array();
+								trObj.each(function(){
+									var tempObj = {};
+									var edctnSeq = $(this).find("td").eq(0).find("input[name=delValueList]:checked").val();
+									var ctgryCd= $(this).find("td").eq(2).data("ctgrycd");//과정분류코드
+									var ctgryCdNm= $(this).find("td").eq(2).text().trim();//과정분류
+									var nm= $(this).find("td").eq(3).text().trim();//과정명
+									var stduyMthd= $(this).find("td").eq(4).text().trim();//학습방식
+									var stduyDtm = $(this).find("td").eq(5).text().trim();//학습시간
 
-							clickObj.ctgryCdNm = ctgryCdNm;
-							clickObj.nm = nm;
-							clickObj.stduyMthd = stduyMthd;
-							clickObj.stduyDtm = stduyDtm;
+									tempObj.edctnSeq = edctnSeq;
+									tempObj.ctgryCd = ctgryCd;
+									tempObj.ctgryCdNm = ctgryCdNm;
+									tempObj.nm = nm;
+									tempObj.stduyMthd = stduyMthd;
+									tempObj.stduyDtm = stduyDtm;
+									tempObj.choiceCnt = choiceCnt;
+
+									trObjList.push(tempObj)
+
+								});
+								clickObj.trObjList = trObjList;
+
+							}else{
+								var edctnSeq =trObj.find("td").eq(0).find("input[name=delValueList]:checked").val();
+								var ctgryCd= trObj.find("td").eq(2).data("ctgrycd");//과정분류코드
+								var ctgryCdNm= trObj.find("td").eq(2).text().trim();//과정분류
+								var nm= trObj.find("td").eq(3).text().trim();//과정명
+								var stduyMthd= trObj.find("td").eq(4).text().trim();//학습방식
+								var stduyDtm = trObj.find("td").eq(5).text().trim();//학습시간
+
+								clickObj.edctnSeq = edctnSeq;
+								clickObj.ctgryCd = ctgryCd;
+								clickObj.ctgryCdNm = ctgryCdNm;
+								clickObj.nm = nm;
+								clickObj.stduyMthd = stduyMthd;
+								clickObj.stduyDtm = stduyDtm;
+								clickObj.choiceCnt = choiceCnt;
+							}
 
 							ctrl.obj.trigger("choice", [clickObj])
 							ctrl.obj.find(".close").click();
