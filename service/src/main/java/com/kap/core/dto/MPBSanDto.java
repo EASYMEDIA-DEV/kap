@@ -1,6 +1,5 @@
 package com.kap.core.dto;
 
-import com.sun.xml.internal.bind.v2.TODO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
