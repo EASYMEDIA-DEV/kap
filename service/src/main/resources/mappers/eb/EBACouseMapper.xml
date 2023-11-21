@@ -253,6 +253,28 @@
 	</select>
 
 	<!--
+      쿼리명 : EBACouseMapper.selectEdctnRelList
+      설  명 : 교육과정연계상세 목록을 조회한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.20   김학규       최초생성
+ 	-->
+	<select id="selectEdctnRelList" parameterType="EBACouseDTO" resultType="EBACouseDTO">
+		select
+			edctn_seq
+			 , cnnct_cd
+			 , cnnct_edctn_seq
+			 , (SELECT nm FROM ed_edctn_prcs_mst WHERE edctn_seq = a.cnnct_edctn_seq) AS cnnct_nm
+			 , (select cd_nm from co_code_mst WHERE cd = a.cnnct_cd) as cnnct_cd_nm
+
+		from ed_edctn_rel_dtl a
+		where
+			edctn_seq = #{edctnSeq}
+	</select>
+
+
+
+	<!--
          쿼리명 : EBACouseMapper.insertCouse
          설  명 : 교육과정을 등록한다.
           수정일     수정자       수정내용
@@ -419,7 +441,7 @@
 
 	<!--
          쿼리명 : EBACouseMapper.deleteCouse
-         설  명 : 교육과정대상상세 삭제
+         설  명 : 교육과정상세 삭제
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.08   김학규       최초생성
@@ -430,6 +452,55 @@
 		<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
 			#{delValueList}
 		</foreach>
+	</delete>
+
+
+
+	<!--
+         쿼리명 : EBACouseMapper.deleteCouseTrgt
+         설  명 : 교육과정연계 상세 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.08   김학규       최초생성
+    -->
+	<insert id="insertEdctnRel" parameterType="EBACouseDTO">
+		insert /* EBACouseMapper.insertCouse */ into ed_edctn_rel_dtl
+		(
+		edctn_seq
+		, cnnct_cd
+		, cnnct_edctn_seq
+
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm
+
+		)
+		values
+			(
+			#{edctnSeq}
+			, #{cnnctCd}
+			, #{cnnctEdctnSeq}
+			, #{regId}
+			, #{regIp}
+			,  now()
+			, #{modId}
+			, #{modIp}
+			,  now()
+			)
+	</insert>
+
+	<!--
+         쿼리명 : EBACouseMapper.deleteEdctnRel
+         설  명 : 교육과정연계 상세 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.08   김학규       최초생성
+    -->
+	<delete id="deleteEdctnRel" parameterType="EBACouseDTO">
+		delete from ed_edctn_rel_dtl where edctn_seq = #{detailsKey}
 	</delete>
 
 

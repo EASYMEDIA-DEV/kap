@@ -3,6 +3,7 @@ package com.kap.service;
 import com.kap.core.dto.EBACouseDTO;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <pre>
@@ -35,6 +36,12 @@ public interface EBACouseService {
 	public HashMap<String, Object> selectCouseDtl(EBACouseDTO eBACouseDTO) throws Exception;
 
 	/**
+	 * 교육과정연계상세목록을 조회한다.
+	 */
+	public List<EBACouseDTO> selectEdctnRelList(EBACouseDTO eBACouseDTO) throws Exception;
+
+
+	/**
 	 * 교육과정을 등록한다.
 	 */
 	public int insertCouse(EBACouseDTO eBACouseDTO) throws Exception;
@@ -58,7 +65,7 @@ public interface EBACouseService {
 	/**
 	 * 교육과정을  복사한다.
 	 */
-	public int copyCouse(EBACouseDTO eBACouseDTO) throws Exception;
+	//public int copyCouse(EBACouseDTO eBACouseDTO) throws Exception;
 
 
 

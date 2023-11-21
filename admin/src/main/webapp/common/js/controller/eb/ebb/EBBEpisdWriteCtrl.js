@@ -14,59 +14,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	//var $formObj = ctrl.obj.find("form").eq(0);
 	var $formObj = jQuery("#frmData");
 
-
-	var callbackAjaxCtgryCdList = function(data){
-
-		var detailList = data.detailList;
-		var selectHtml = "<option value=''>전체</option>";
-
-		for(var i =0; i < detailList.length; i++){
-
-			var cd = detailList[i].cd;
-			var cdNm = detailList[i].cdNm;
-
-			selectHtml += "<option value='"+cd+"' >"+cdNm+"</option>";
-		}
-
-
-		$("#ctgryCd option").remove();
-
-		$("#ctgryCd").append(selectHtml);
-
-
-		var ctgrycd = $("#ctgryCd").data("ctgrycd");
-
-		$("#ctgryCd").val(ctgrycd).prop("selected", true);//조회된 과정분류값 자동선택
-	}
-
-	//과정분류 2뎁스 세팅
-
-	//과정분류 조회
-	var selectCtgryCdList = function(arg){
-
-		if(arg === undefined){
-			arg = $("#ctgryCd").data("ctgrycd");
-		}
-
-		var form = document.createElement("form");
-
-		form.setAttribute("cd", $(arg).val());
-
-		cmmCtrl.frmAjax(callbackAjaxCtgryCdList, "./classTypeList", $formObj, "post", "json");
-	}
-
-	var setSelectBox = function(arg){
-
-		if($("input[name='jdgmtYn']").is(":checked")){
-			$("#cmptnJdgmt option:eq(0)").prop("selected", true);
-			$("#cmptnJdgmt").addClass("notRequired");
-		}else{
-			$("#cmptnJdgmt").removeClass("notRequired");
-		}
-
-	}
-
-
 	// set model
 	ctrl.model = {
 		id : {
@@ -78,28 +25,57 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						search(1);
 					}
 				}
+			},
+
+			episdOrd : {
+				event : {
+					click : function() {
+
+						var edctnSeq = $("#edctnSeq").val();
+						var episdYear = $("#episdYear").val();
+						var episdOrd = $("#episdOrd").val();
+
+						if(edctnSeq == ""){
+							alert("과정을 먼저 선택해주세요.");
+							return false;
+						}
+
+						if(episdYear == ""){
+							alert("연도를 먼저 입력해주세요.");
+							return false;
+						}
+
+						if(episdOrd == ""){
+							return false;
+						}
+
+						var seqObj = {};
+						seqObj['edctnSeq'] = edctnSeq;
+						seqObj['episdYear'] = episdYear;
+						seqObj['episdOrd'] = episdOrd;
+
+						console.log(seqObj);
+
+						cmmCtrl.jsonAjax(function(data){
+							if(data !=""){
+								var rtn = JSON.parse(data);
+								console.log(rtn);
+								if(rtn.edctnSeq>0){
+									alert("이미 등록된 회차입니다.");
+
+									$("#episdOrd").val("").prop("selected", true);
+								}
+							}
+
+						}, "./selectChk", seqObj, "text");
+
+
+					}
+				}
 			}
+
 		},
 		classname : {
-
-			classType : {
-				event : {
-					change : function() {
-						selectCtgryCdList(this);
-					}
-				}
-			},
-
-			jdgmtYn : {
-				event : {
-					change : function() {
-						setSelectBox(this);
-					}
-				}
-			},
-
-
-
 
 			//페이징 처리
 			pageSet : {
@@ -129,11 +105,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				event : {
 					click : function(){
 						cmmCtrl.getCouseSrchLayerPop(function(data){
-							$("#edctnSeq").val(data.edctnSeq);
-							$("p.ctgryCdNm").text(data.ctgryCdNm);
-							$("p.nm").text(data.nm);
-							$("p.stduyMthd").text(data.stduyMthd);
-							$("p.stduyDtm").text(data.stduyDtm);
+							if(data.choiceCnt > 1){
+								alert(msgCtrl.getMsg("fail.eb.eba.notSrchPlaceCouse1"));
+							}else{
+								$("#edctnSeq").val(data.edctnSeq);
+								$("#ctgryCd").val(data.ctgryCd);
+
+								$("p.ctgryCdNm").text(data.ctgryCdNm);
+
+								$("p.nm").text(data.nm);
+								$("p.stduyMthd").text(data.stduyMthd);
+								$("p.stduyDtm").text(data.stduyDtm);
+							}
+
 
 						});
 					}
@@ -143,7 +127,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 		immediately : function() {
 			//리스트 조회
 			//폼 데이터 처리
-			//cmmCtrl.setFormData($formObj);
+
+
+
 
 			var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
 
@@ -209,26 +195,55 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					func : function (){
 						var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
-						if($formObj.find(".dropzone").size() > 0)
-						{
-							cmmCtrl.fileFrmAjax(function(data){
-								//콜백함수. 페이지 이동
-								if(data.respCnt > 0){
-									alert(actionMsg);
-									location.replace("./list");
-								}
-							}, actionUrl, $formObj, "json");
-						}
-						else
-						{
-							cmmCtrl.frmAjax(function(data){
-								if(data.respCnt > 0){
-									alert(actionMsg);
-									location.replace("./list");
-								}
-								actionUrl = "./list";
-							}, actionUrl, $formObj, "post", "json")
-						}
+
+						$("#episdOrd").trigger("change");
+
+						var actForm = {};
+
+
+
+						var accsStrtDt = $("#accsStrtDt").val();
+						var accsStrtHour = $("#accsStrtHour").val();
+						if(accsStrtHour<10) accsStrtHour = "0"+accsStrtHour;
+						var accsEndDt = $("#accsEndDt").val();
+						var accsEndHour = $("#accsEndHour").val();
+						if(accsEndHour<10) accsEndHour = "0"+accsEndHour;
+
+						var edctnStrtDt = $("#edctnStrtDt").val();
+						var edctnStrtHour = $("#edctnStrtHour").val();
+
+						var edctnEndDt = $("#edctnEndDt").val();
+						var edctnEndHour = $("#edctnEndHour").val();
+
+						var accsStrtDtm = accsStrtDt+" "+accsStrtHour+":00:00";
+						var accsEndDtm = accsEndDt+" "+accsEndHour+":00:00";
+						var edctnStrtDtm = edctnStrtDt+" "+edctnEndHour+":59:59";
+						var edctnEndDtm = edctnStrtDt+" "+edctnEndHour+":59:59";
+
+						actForm.edctnSeq = $("#edctnSeq").val();//교육순번
+						actForm.cbsnCd = $("#cbsnCd").val();//업종코드
+
+						actForm.episdYear =$("#episdYear").val();//연도
+						actForm.episdOrd =$("#episdOrd").val();//회차정렬
+						actForm.accsStrtDtm = edctnEndDtm;//접수시작일시
+						actForm.accsEndDtm = accsEndDtm;//접수종료일시
+						actForm.edctnStrtDtm = edctnStrtDtm;//교육시작일시
+						actForm.edctnEndDtm = edctnEndDtm;//교육종료일시
+						actForm.fxnumCnt = $("#fxnumCnt").val();//정원수
+						actForm.fxnumImpsbYn = $("#fxnumImpsbYn").val();//정원제한여부
+						actForm.rcrmtMthdCd = $("input[name='rcrmtMthdCd']:checked").val();//모집방법코드
+						actForm.picNm = $("#picNm").val();//담당자명
+						actForm.picEmail = $("#picEmail").val();//담당자이메일
+						actForm.picTelNo = $("#picTelNo").val()//담당자전화번호
+						actForm.placeSeq = $("#placeSeq").val();//교육장소순번
+						actForm.srvSeq = $("#srvSeq").val();//설문순번
+						actForm.examSeq = $("#examSeq").val();//시험순번
+						actForm.cmptnAutoYn = $("input[name='cmptnAutoYn']:checked").val();//수료자동여부
+
+						cmmCtrl.jsonAjax(function(data){
+							location.href = "./list";
+						}, actionUrl, actForm, "text")
+
 					}
 				},
 				msg : {
@@ -237,9 +252,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					}
 				}
 			});
-
-
-
 
 
 

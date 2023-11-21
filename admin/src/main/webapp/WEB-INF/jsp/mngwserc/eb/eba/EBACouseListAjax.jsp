@@ -10,7 +10,7 @@
           </label>
         </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-        <td class="text-center">
+        <td class="text-center" data-ctgryCd="${list.ctgryCd}">
 
           <c:choose>
             <c:when test="${ eBACouseDTO.srchLayer eq 'Y'}">

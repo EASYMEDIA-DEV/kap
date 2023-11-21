@@ -62,6 +62,9 @@ public class EBACouseServiceImpl implements EBACouseService {
 	private final COFileService cOFileService;
 	// DAO
 	private final COFileMapper cOFileMapper;
+
+	public final COCodeService cOCodeService;
+
 	//파일 업로드 위치
 	@Value("${app.file.upload-path}")
 	private String fileUploadPath;
@@ -101,13 +104,6 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 		EBACouseDTO ebaDto = eBACouseMapper.selectCouseDtl(eBACouseDTO);
 
-		if(eBACouseDTO.getCopyYn().equals("Y")){
-
-			//int tempSeq = setFile(ebaDto, "thnlFileSeq");
-
-		}
-
-
 		map.put("rtnData", ebaDto);
 
 		map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
@@ -116,6 +112,21 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 		return map;
 	}
+
+	/**
+	 * 교육과정연계 상세를 조회한다.
+	 */
+	public List<EBACouseDTO> selectEdctnRelList(EBACouseDTO eBACouseDTO) throws Exception
+	{
+
+		List<EBACouseDTO> ebaList = null;
+
+		ebaList = eBACouseMapper.selectEdctnRelList(eBACouseDTO);
+
+		return ebaList;
+	}
+
+
 
 
 	/**
@@ -149,10 +160,12 @@ public class EBACouseServiceImpl implements EBACouseService {
 			eBACouseMapper.insertCouseTrgt(eBACouseDTO);
 		}
 
-
-		eBACouseDTO.setEdctnSeq(respCnt);
 		//교육과정대상 등록
+		eBACouseDTO.setEdctnSeq(respCnt);
 
+
+		//연계학습 등록
+		setEdctnRel(eBACouseDTO);
 
 
 
@@ -184,10 +197,62 @@ public class EBACouseServiceImpl implements EBACouseService {
 			eBACouseMapper.insertCouseTrgt(eBACouseDTO);
 		}
 
+		//연계학습 등록
+		setEdctnRel(eBACouseDTO);
+
+
 		return respCnt;
 	}
 
+	/**
+	 *  교육과정연계 상세를 세팅한다.
+	 */
+	private void setEdctnRel(EBACouseDTO eBACouseDTO){
 
+		try{
+			//삭제후 등록
+			eBACouseMapper.deleteEdctnRel(eBACouseDTO);
+
+			ArrayList<String> cdDtlList = new ArrayList<String>();
+
+			cdDtlList.add("EDCTN_REL");//교욱과정 연계(선수, 후속, 필수)
+			HashMap<String ,List<COCodeDTO>> tempObj  = cOCodeService.getCmmCodeBindAll(cdDtlList, "2");
+
+			List<COCodeDTO> tmpList = tempObj.get("EDCTN_REL");
+
+			//선수
+			if(eBACouseDTO.getEdctnRel1() != null && eBACouseDTO.getEdctnRel1().size()>0){
+				for(int edCtnRel : eBACouseDTO.getEdctnRel1()){
+					eBACouseDTO.setCnnctCd(tmpList.get(0).getCd());
+					eBACouseDTO.setCnnctEdctnSeq(edCtnRel);
+					eBACouseMapper.insertEdctnRel(eBACouseDTO);
+				}
+			}
+
+			//후속
+			if(eBACouseDTO.getEdctnRel2() != null && eBACouseDTO.getEdctnRel2().size()>0){
+				for(int edCtnRel : eBACouseDTO.getEdctnRel2()){
+
+					eBACouseDTO.setCnnctCd(tmpList.get(1).getCd());
+					eBACouseDTO.setCnnctEdctnSeq(edCtnRel);
+					eBACouseMapper.insertEdctnRel(eBACouseDTO);
+				}
+			}
+
+			//필수
+			if(eBACouseDTO.getEdctnRel3() != null && eBACouseDTO.getEdctnRel3().size()>0){
+				for(int edCtnRel : eBACouseDTO.getEdctnRel3()){
+					eBACouseDTO.setCnnctCd(tmpList.get(2).getCd());
+					eBACouseDTO.setCnnctEdctnSeq(edCtnRel);
+					eBACouseMapper.insertEdctnRel(eBACouseDTO);
+				}
+			}
+		}catch (Exception e){
+
+		}
+
+
+	}
 
 	/**
 	 * 현재 등록된 교육과정에 종속된 교육차수 체크
@@ -217,36 +282,6 @@ public class EBACouseServiceImpl implements EBACouseService {
 		return actCnt;
 	}
 
-	/**
-	 * 교육과정을 복사한다.
-	 */
-	public int copyCouse(EBACouseDTO eBACouseDTO){
-		int actCnt = 0;
-
-		try{
-
-
-			//복사하려는 교육과정 조회후
-			//EBACouseDTO tempDto = eBACouseMapper.selectCouseDtl(eBACouseDTO);
-
-
-
-			//dto에 복사후
-
-			//EBACouseDTO newDto = tempDto;
-
-			//newDto.setCouseNm(tempDto.getCouseNm()+" - 복사본");
-
-			//신규로 insert
-			//eBACouseMapper.insertCouse(newDto);
-
-
-		}catch (Exception e){
-
-		}
-
-		return actCnt;
-	}
 
 
 

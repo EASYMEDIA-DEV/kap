@@ -114,6 +114,9 @@ public class EBACouseController {
         EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
         List<EBACouseDTO> rtnTrgtData = (List<EBACouseDTO>) rtnMap.get("rtnTrgtData");
 
+        //교육과정연계 상세 조회
+        List<EBACouseDTO> relList = eBACouseService.selectEdctnRelList(rtnDto);
+
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
         //과정분류 공통코드 세팅
@@ -165,8 +168,13 @@ public class EBACouseController {
             rtnDto.setThnlFileSeq(null);
         }
 
+
+        System.out.println("@@@ relList = " + relList);
+
         modelMap.addAttribute("rtnData", rtnDto);
         modelMap.addAttribute("rtnTrgtData", rtnTrgtData);
+        modelMap.addAttribute("relList", relList);
+
 
         //학습대상 공통코드 호출
         modelMap.addAttribute("edTarget", setEdTargetList("ED_TARGET"));
@@ -264,8 +272,8 @@ public class EBACouseController {
     @PostMapping(value="/update")
     public String updateBoard(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-        try
-        {
+        /*try
+        {*/
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             eBACouseDTO.setRegId( coaAdmDTO.getId() );
             eBACouseDTO.setRegName( coaAdmDTO.getName() );
@@ -275,17 +283,16 @@ public class EBACouseController {
             eBACouseDTO.setModId( coaAdmDTO.getId() );
             eBACouseDTO.setModIp( coaAdmDTO.getLoginIp() );
             modelMap.addAttribute("respCnt", eBACouseService.updateCouse(eBACouseDTO));
-        }
+        /*}
         catch (Exception e)
         {
             if (log.isDebugEnabled())
             {
                 log.debug(e.getMessage());
             }
-            System.out.println("EE = " + e);
 
             throw new Exception(e.getMessage());
-        }
+        }*/
 
 
         return "jsonView";
@@ -359,7 +366,7 @@ public class EBACouseController {
             eBACouseDTO.setRegIp( coaAdmDTO.getLoginIp() );
             eBACouseDTO.setModId( coaAdmDTO.getId() );
             eBACouseDTO.setModIp( coaAdmDTO.getLoginIp() );
-            eBACouseDTO.setRespCnt( eBACouseService.copyCouse(eBACouseDTO) );
+            //eBACouseDTO.setRespCnt( eBACouseService.copyCouse(eBACouseDTO) );
         }
         catch (Exception e)
         {

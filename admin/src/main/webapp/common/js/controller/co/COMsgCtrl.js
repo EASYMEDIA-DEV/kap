@@ -246,6 +246,10 @@ var msgCtrl = (function(){
 				}
 			},
 			eb : {
+				eba : {
+					notSrchPartsCouse: "교육과정을 선택해주세요.",
+					notSrchPlaceCouse1: "교육과정을 1개만 선택해주세요.",
+				},
 				ebf : {
 					notSrchPlaceCom: "교육장을 선택해주세요.",
 					notSrchPlaceCom1: "교육장을 1개만 선택해주세요.",

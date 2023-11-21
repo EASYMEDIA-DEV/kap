@@ -94,7 +94,7 @@ public class EBACouseDTO extends BaseDTO  {
     private String cmptnJdgmtCd;
 
     //평가여부
-    @Schema(title = "평가여부(화면에서는 평가없음)", example = "평가없음 : N / 평가함 : Y")
+    @Schema(title = "평가여부(화면에서는 평가없음)", example = "Y = 평가 함 / N = 평가 안함(체크박스 체크)")
     @Builder.Default
     private String jdgmtYn = "Y";
 
@@ -130,12 +130,25 @@ public class EBACouseDTO extends BaseDTO  {
     @Builder.Default
     private String copyYn = "N";
 
+    @Schema(title = "연계코드", example = "공통코드")
+    private String cnnctCd;
+
+    @Schema(title = "연계코드 명", example = "공통코드")
+    private String cnnctCdNm;
+
+    @Schema(title = "연계교육순번", example = "숫자")
+    private Integer cnnctEdctnSeq;
+
+    @Schema(title = "연계교육명", example = "텍스트")
+    private String cnnctNm;
+
 
 
 
 
     //로그인세션ID
     private String lgnSsnId;
+
 
 
     //사용여부
@@ -146,6 +159,13 @@ public class EBACouseDTO extends BaseDTO  {
     private List<String> stduyMthdCdList;
 
     private List<String> edctnSeqList;
+
+    private List<Integer> edctnRel1;
+    private List<Integer> edctnRel2;
+    private List<Integer> edctnRel3;
+
+
+
 
 
 
