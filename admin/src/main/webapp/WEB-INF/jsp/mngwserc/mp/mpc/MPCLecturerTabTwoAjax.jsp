@@ -12,13 +12,15 @@
                 <td class="text-center">${list.hpNo}</td>
                 <td class="text-center">${list.hpNo}</td>
                 <td class="text-center">${list.hpNo}</td>
+                <td class="text-center">${list.hpNo}</td><td class="text-center">${list.hpNo}</td>
+                <td class="text-center">${list.hpNo}</td>
                 <td class="text-center">${list.hpNo}</td>
             </tr>
         </c:forEach>
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
-            <td colspan="7" class="text-center">
+            <td colspan="12" class="text-center">
                 검색결과가 없습니다.<br>
                 (등록된 데이터가 없습니다.)
             </td>

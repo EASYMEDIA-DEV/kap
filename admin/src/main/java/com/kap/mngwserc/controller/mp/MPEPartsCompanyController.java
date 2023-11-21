@@ -93,7 +93,20 @@ public class MPEPartsCompanyController {
     {
         try
         {
-            modelMap.addAttribute("rtnInfo", mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO));
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("COMPANY_TYPE");
+            cdDtlList.add("CO_YEAR_CD");
+
+            mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getBsnmNo());
+            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            if (originList.getList().size() != 0) {
+                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+            }
+            modelMap.addAttribute("sqInfoList", originList);
         }
         catch (Exception e)
         {
@@ -159,41 +172,6 @@ public class MPEPartsCompanyController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
-    }
-
-    /**
-     * 부품사 상세 페이지
-     */
-    @PostMapping(value="/dtl")
-    public String getPartsCompanyDtlAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception
-    {
-        try
-        {
-            // 공통코드 배열 셋팅
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            // 코드 set
-            cdDtlList.add("COMPANY_TYPE");
-            cdDtlList.add("CO_YEAR_CD");
-
-            mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getDetailsKey());
-            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
-
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            if (originList.getList().size() != 0) {
-                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
-            }
-            modelMap.addAttribute("sqInfoList", originList);
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-
-        return  "mngwserc/mp/mpe/MPEPartsCompanyTabOneAjax";
     }
 
     /**

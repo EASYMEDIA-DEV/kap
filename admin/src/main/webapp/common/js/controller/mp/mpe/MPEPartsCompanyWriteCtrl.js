@@ -14,13 +14,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
-    var tabOne = function () {
-        cmmCtrl.frmAjax(function(respObj) {
-            ctrl.obj.find("#tab1").html(respObj);
-        }, "/mngwserc/mp/mpe/dtl", $formObj, "POST", "html",'',false);
-
-    }
-
     var tabTwo = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
@@ -224,7 +217,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         immediately : function(){
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
-            tabOne();
             tabTwo();
 
             $("#btn_delete").click(function () {
@@ -246,6 +238,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 alert(actionMsg);
                                 location.replace("./list");
                             }
+                            location.replace("./list");
                             actionUrl = "./list";
                         }, actionUrl, $formObj, "post", "json")
                     }

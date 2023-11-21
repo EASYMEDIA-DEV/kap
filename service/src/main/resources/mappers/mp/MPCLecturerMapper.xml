@@ -15,7 +15,6 @@
             , FFLTN_NM
             , DEPT_NM
             , PSTN_NM
-            , MNG_BSN_CD
             , TEL_NO
             , HP_NO
             , EMAIL
@@ -68,6 +67,10 @@
              , DEPT_NM
              , PSTN_NM
              , MNG_BSN_CD
+             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT MNG_BSN_CD FROM CP_ISTTR_MST
+                WHERE ISTTR_SEQ = #{isttrSeq})) AS MNG_BSN_TWO_NAME
+             , (SELECT DISTINCT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'LEC_CD' AND CD = SUBSTRING(MNG_BSN_CD, 1, 5))
+            AS MNG_BSN_ONE_NAME
              , TEL_NO
              , HP_NO
              , EMAIL
@@ -96,7 +99,8 @@
         SELECT
             COUNT(ISTTR_SEQ)
         FROM CP_ISTTR_MST
-        WHERE EMAIL = #{email}
+        WHERE ISTTR_SEQ NOT IN(#{isttrSeq})
+          AND EMAIL = #{email}
     </select>
 
     <!--
@@ -114,7 +118,6 @@
             , FFLTN_NM
             , DEPT_NM
             , PSTN_NM
-            , MNG_BSN_CD
             , TEL_NO
             , HP_NO
             , EMAIL
@@ -130,7 +133,6 @@
             , #{ffltnNm}
             , #{deptNm}
             , #{pstnNm}
-            , #{mngBsnCd}
             , #{telNo}
             , #{hpNo}
             , #{email}
@@ -155,7 +157,6 @@
             , FFLTN_NM = #{ffltnNm}
             , DEPT_NM = #{deptNm}
             , PSTN_NM = #{pstnNm}
-            , MNG_BSN_CD = #{mngBsnCd}
             , TEL_NO = #{telNo}
             , HP_NO = #{hpNo}
             , EMAIL = #{email}
@@ -236,15 +237,12 @@
                         AND PSTN_NM LIKE CONCAT('%', #{q}, '%')
                     </when>
                     <when test="f == 5">
-                        AND MNG_BSN_CD LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                    <when test="f == 6">
                         AND HP_NO LIKE CONCAT('%', #{q}, '%')
                     </when>
-                    <when test="f == 7">
+                    <when test="f == 6">
                         AND EMAIL LIKE CONCAT('%', #{q}, '%')
                     </when>
-                    <when test="f == 8">
+                    <when test="f == 7">8
                         AND (
                         INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
                         EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
@@ -262,7 +260,6 @@
                         INSTR(#{q}, FFLTN_NM) <![CDATA[>]]> 0 OR
                         INSTR(#{q}, DEPT_NM) <![CDATA[>]]> 0 OR
                         INSTR(#{q}, PSTN_NM) <![CDATA[>]]> 0 OR
-                        INSTR(#{q}, MNG_BSN_CD) <![CDATA[>]]> 0 OR
                         INSTR(#{q}, HP_NO) <![CDATA[>]]> 0 OR
                         INSTR(#{q}, EMAIL) <![CDATA[>]]> 0 OR
                         INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
