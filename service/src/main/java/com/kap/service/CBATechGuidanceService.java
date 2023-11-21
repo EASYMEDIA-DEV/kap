@@ -1,6 +1,7 @@
 package com.kap.service;
 
-import com.kap.core.dto.CBATechGuidanceDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 
 /**
  * CBATechGuidanceService 서비스
@@ -28,12 +29,12 @@ public interface CBATechGuidanceService {
     /**
      * 컨설팅 기술 지도 상세
      */
-    public CBATechGuidanceDTO selectTechGuidanceDtl(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public CBATechGuidanceInsertDTO selectTechGuidanceDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
      * 컨설팅 기술 지도 관리 등록
      */
-    public int insertTechGuidance(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
      * 컨설팅 기술 지도 관리 삭제
@@ -43,6 +44,6 @@ public interface CBATechGuidanceService {
     /**
      * 컨설팅 기술 지도 관리 수정
      */
-    public int updateTechGuidance(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public int updateTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
 }

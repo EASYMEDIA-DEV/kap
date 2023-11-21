@@ -153,7 +153,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             idNum++;
                             var newNodeId = "dlvryRow" + idNum;
                             newNode.id = newNodeId;
-                            temp.after(newNode);
+                            $("#dlvryTempDiv").append(newNode);
+                            $("#"+newNodeId).children().find("input").val("");
                             $("#"+newNodeId).children(".closeLabel").css("display","block");
                         }else{
                             alert("최대 3개까지 추가할 수 있습니다.");
@@ -172,7 +173,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             idNum++;
                             var newNodeId = "dpndnRow" + idNum;
                             newNode.id = newNodeId;
-                            temp.after(newNode);
+                            $("#dpTempDiv").append(newNode);
+                            $("#"+newNodeId).children().find("input").val("");
                             $("#"+newNodeId).children(".closeLabel").css("display","block");
                         }else{
                             alert("최대 3개까지 추가할 수 있습니다.");
@@ -228,15 +230,36 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     click : function(){
                         var selectVal = $("select[name=ctgryCd]").val();
                         if(selectVal == "COMPANY01001"){
-                            /*$(".sqInfo").css("visibility", "hidden");
-                            $(".fiveStar").css("visibility", "block");*/
                             $(".sqInfo").hide();
                             $(".fiveStar").show();
                         }else{
-                            /*$(".sqInfo").css("visibility", "block");
-                            $(".fiveStar").css("visibility", "hidden");*/
                             $(".fiveStar").hide();
                             $(".sqInfo").show();
+                        }
+                    }
+                }
+            },
+            //부품사 찾기
+            bsnmNoBtn : {
+                event : {
+                    click : function() {
+                        cmmCtrl.getPartsCompanyMemberLayerPop(function(data){
+                            $("#bsnmNo").val(data.seq);
+                            $("#bsnmNoNm").val(data.titl);
+                        });
+                    }
+                }
+            },
+            cnstgCdRadio : {
+                event : {
+                    click : function(){
+                        var cnstgVal = $("input[name=cnstgCd]:checked").val();
+                        if(cnstgVal == "TEC_GUIDE_INDUS14"){
+                            $("input[name=etcNm]").removeClass("notRequired");
+                            $("input[name=etcNm]").attr("disabled", false);
+                        }else{
+                            $("input[name=etcNm]").addClass("notRequired");
+                            $("input[name=etcNm]").attr("disabled", true);
                         }
                     }
                 }
