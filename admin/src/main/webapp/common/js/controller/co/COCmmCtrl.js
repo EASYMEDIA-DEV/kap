@@ -1582,6 +1582,8 @@ var cmmCtrl = (function(){
 	//getExamLayerPop(function(data){data 객체를 받아서 처리});
 	var fn_exam_layer_pop = function(fnc){
 		$(".exgExamSrchLayer").one('show.bs.modal', function() {
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
 			// Add class for soft backdrop
 			$(".exgExamSrchLayer").find("#btnRefresh").click();
 			$(".exgExamSrchLayer").find("#btnSearch").click();
@@ -1597,6 +1599,8 @@ var cmmCtrl = (function(){
 	//getPartsCompanyLayerPop(function(data){data 객체를 받아서 처리});
 	var fn_parts_layer_pop = function(fnc){
 		$(".mpePartsCompanySrchLayer").one('show.bs.modal', function() {
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
 			// Add class for soft backdrop
 			$(".mpePartsCompanySrchLayer").find("#btnRefresh").click();
 			$(".mpePartsCompanySrchLayer").find("#btnSearch").click();
@@ -1612,6 +1616,8 @@ var cmmCtrl = (function(){
 	//getPartsCompanyLayerPop(function(data){data 객체를 받아서 처리});
 	var fn_lec_layer_pop = function(fnc){
 		$(".mpcLecturerSrchLayer").one('show.bs.modal', function() {
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
 			// Add class for soft backdrop
 			$(".mpcLecturerSrchLayer").find("#btnRefresh").click();
 			$(".mpcLecturerSrchLayer").find("#btnSearch").click();
@@ -1627,6 +1633,8 @@ var cmmCtrl = (function(){
 	//getCouseSrchLayerPop(function(data){data 객체를 받아서 처리});
 	var fn_couse_srch_layer_pop = function(fnc){
 		$(".ebbEpisdCouseSrchLayer").one('show.bs.modal', function() {
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
 			// Add class for soft backdrop
 			$(".ebbEpisdCouseSrchLayer").find("#btnRefresh").click();
 			$(".ebbEpisdCouseSrchLayer").find("#btnSearch").click();
@@ -1642,6 +1650,8 @@ var cmmCtrl = (function(){
 	//getEpisdSrchLayerPop(function(data){data 객체를 받아서 처리});
 	var fn_episd_srch_layer_pop = function(fnc){
 		$(".ebbEpisdMstSrchLayer").one('show.bs.modal', function() {
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
 			// Add class for soft backdrop
 			$(".ebbEpisdMstSrchLayer").find("#btnRefresh").click();
 			$(".ebbEpisdMstSrchLayer").find("#btnSearch").click();
@@ -1657,6 +1667,8 @@ var cmmCtrl = (function(){
 	//getUserSrchPop(function(data){data 객체를 받아서 처리});
 	var fn_user_srch_layer_pop = function(fnc){
 		$(".mpaUserSrchLayer").one('show.bs.modal', function() {
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
 			// Add class for soft backdrop
 			$(".mpaUserSrchLayer").find("#btnRefresh").click();
 			$(".mpaUserSrchLayer").find("#btnSearch").click();
@@ -1672,6 +1684,8 @@ var cmmCtrl = (function(){
 	//getPartsCompanyLayerPop(function(data){data 객체를 받아서 처리});
 	var fn_edu_room_layer_pop = function(fnc){
 		$(".ebfEduRoomSrchLayer").one('show.bs.modal', function() {
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
 			// Add class for soft backdrop
 			$(".ebfEduRoomSrchLayer").find("#btnRefresh").click();
 			$(".ebfEduRoomSrchLayer").find("#btnSearch").click();
