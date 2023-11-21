@@ -1,7 +1,8 @@
-package com.kap.mngwserc.controller.cb;
+package com.kap.mngwserc.controller.cb.cba;
 
-import com.kap.core.dto.CBATechGuidanceDTO;
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.service.CBATechGuidanceService;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
@@ -9,11 +10,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 /**
@@ -50,7 +50,7 @@ public class CBATechGuidanceController {
     @GetMapping(value = "/list")
     public String getTechGuidanceListPage(CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap) throws Exception {
         try {
-           // modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceDTO));
+            //modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -65,9 +65,10 @@ public class CBATechGuidanceController {
      * 컨설팅 사업 기술 지도 목록 조회
      */
     @PostMapping(value = "/select")
-    public String selectTechGuidanceList(CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+    @ResponseBody
+    public String selectTechGuidanceList(@Valid @RequestBody CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
-        //    modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceDTO));
+            //modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -82,11 +83,10 @@ public class CBATechGuidanceController {
      * 컨설팅 사업 기술 지도 상세 페이지
      */
     @GetMapping(value = "/write")
-    public String getTechGuidanceWritePage(CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap) throws Exception {
+    public String getTechGuidanceWritePage(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             ArrayList<String> cdDtlList = new ArrayList<String>();
-            ArrayList<String> cdAppCtnList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
             cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
@@ -96,8 +96,8 @@ public class CBATechGuidanceController {
             cdDtlList.add("COMPANY_TYPE"); // 스타등급
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-            if (!"".equals(cBATechGuidanceDTO.getDetailsKey()) && cBATechGuidanceDTO.getDetailsKey() != null) {
-                modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceDTO));
+            if (!"".equals(cBATechGuidanceInsertDTO.getDetailsKey()) && cBATechGuidanceInsertDTO.getDetailsKey() != null) {
+                modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
             }
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
@@ -106,22 +106,23 @@ public class CBATechGuidanceController {
             throw new Exception(e.getMessage());
         }
 
+
         return "mngwserc/cb/cba/CBATechGuidanceWrite.admin";
     }
 
     /**
      * 컨설팅 사업 기술 지도 등록
      */
-    @PostMapping(value = "/insert")
-    public String insertTechGuidance(CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap) throws Exception {
+    @RequestMapping(value = "/insert", method= RequestMethod.POST)
+    public String insertTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cBATechGuidanceDTO.setRegId(coaAdmDTO.getId());
-            cBATechGuidanceDTO.setRegIp(coaAdmDTO.getLoginIp());
+            cBATechGuidanceInsertDTO.setRegId(coaAdmDTO.getId());
+            cBATechGuidanceInsertDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            System.err.println("cBATechGuidanceDTO:::"+cBATechGuidanceDTO);
+            System.err.println("cBATechGuidanceDTO:::"+cBATechGuidanceInsertDTO);
 
-            modelMap.addAttribute("respCnt", cBATechGuidanceService.insertTechGuidance(cBATechGuidanceDTO));
+            modelMap.addAttribute("respCnt", cBATechGuidanceService.insertTechGuidance(cBATechGuidanceInsertDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -132,14 +133,14 @@ public class CBATechGuidanceController {
         return "jsonView";
     }
 
-    @PostMapping(value = "/update")
-    public String updateTechGuidance(CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap) throws Exception {
+    @RequestMapping(value = "/update", method= RequestMethod.POST)
+    public String updateTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cBATechGuidanceDTO.setRegId(coaAdmDTO.getId());
-            cBATechGuidanceDTO.setRegIp(coaAdmDTO.getLoginIp());
+            cBATechGuidanceInsertDTO.setRegId(coaAdmDTO.getId());
+            cBATechGuidanceInsertDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            modelMap.addAttribute("respCnt", cBATechGuidanceService.updateTechGuidance(cBATechGuidanceDTO));
+            modelMap.addAttribute("respCnt", cBATechGuidanceService.updateTechGuidance(cBATechGuidanceInsertDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -154,7 +155,8 @@ public class CBATechGuidanceController {
      * 컨설팅 사업 기술 지도 삭제
      */
     @PostMapping(value = "/delete")
-    public String deleteTechGuidance(CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap) throws Exception {
+    @ResponseBody
+    public String deleteTechGuidance(@Valid @RequestBody CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap) throws Exception {
         try {
             COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceDTO.setRegId(coaAdmDTO.getId());
@@ -174,5 +176,4 @@ public class CBATechGuidanceController {
 
         return "jsonView";
     }
-
 }

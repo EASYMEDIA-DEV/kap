@@ -7,7 +7,7 @@
                 <td class="text-center">${ list.parntCtgryNm }</td>
                 <td class="text-center">${ list.ctgryNm }</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.qaSeq}" data-rsume-cd="${list.rsumeCd}">${list.titl}</a></td>
-                <td class="text-center">${ list.regName }</td>
+                <td class="text-center">${ list.regName }(${ list.regId })</td>
                 <td class="text-center">${ list.email }</td>
                 <td class="text-center">${ list.hpNo.contains("-") ? list.hpNo : list.hpNo.replaceAll('(\\d{3})(\\d{4})(\\d{4})', '$1-$2-$3') }</td>
                 <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>

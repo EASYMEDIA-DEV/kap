@@ -21,9 +21,11 @@
                     <div class="col-sm-3">
                         <input type="text" class="form-control input-sm notRequired" readonly="readonly" name="name" title="신청자 정보">
                     </div>
-                    <div class="col-sm-1">
-                        <button type="button" class="btn btn-sm btn-info">회원검색</button>
-                    </div>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-inverse btn-sm bsnmNoBtn">
+                            회원 검색
+                        </button>
+                    </span>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control input-sm" name="email" value="${rtnDto.email}" maxlength="50" title="이메일"/>
@@ -34,7 +36,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm listRowSizeContainer">
+                        <select class="form-control input-sm listRowSizeContainer" name="deptCd">
                             <c:forEach var="memCd" items="${cdDtlList.MEM_CD}" varStatus="status">
                                 <c:if test="${fn:contains(memCd.cd,'CD02')  && memCd.cd ne 'MEM_CD02'}">
                                     <option>${memCd.cdNm}</option>
@@ -43,7 +45,7 @@
                         </select>
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control input-sm" name="deptDtlNm" value="${rtnDto.email}" maxlength="50" title="부서">
+                        <input type="text" class="form-control input-sm" name="deptDtlNm" value="${rtnDto.deptDtlNm}" maxlength="50" title="부서">
                     </div>
                     <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                     <div class="col-sm-4">
@@ -304,16 +306,16 @@
             <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">거래처별 매출비중<span class="star"> *</span></label>
-                        <div class="col-sm-4">
+                        <div class="col-sm-4" id="dlvryTempDiv">
                             <button type="button" class="btn btn-sm btn-info cmpnPlus">업체추가</button>
                             <div class="row tempRow" id="dlvryRow" style="border:solid; border-width:1px; margin-top: 10px;">
                                 <label class="col-sm-2 control-label" style="margin-top: 15px;">업체명</label>
                                 <label class="col-sm-3 control-label">
-                                    <input type="text" class="form-control input-sm"  name="dlvryCmpnNm" value="" style="margin-bottom: 10px; margin-top:10px" title="업체명"/>
+                                    <input type="text" class="form-control input-sm" data-name="dlvryCmpnNmList" name="dlvryCmpnNm" value="" style="margin-bottom: 10px; margin-top:10px" title="업체명"/>
                                 </label>
                                 <label class="col-sm-2 control-label" style="margin-top: 15px;">매출비중</label>
                                 <label class="col-sm-3 control-label">
-                                    <input type="number" class="form-control input-sm"  name="dlvryRate" value="" style="margin-bottom: 10px; margin-top:10px" title="매출비중"/>
+                                    <input type="number" class="form-control input-sm" data-name="dlvryRateList" name="dlvryRate" value="" style="margin-bottom: 10px; margin-top:10px" title="매출비중"/>
                                 </label>
                                 <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                 <label class="col-sm-1 control-label closeLabel" style="display: none">
@@ -326,16 +328,16 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">완성차 의존율<span class="star"> *</span></label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" id="dpTempDiv">
                         <button type="button" class="btn btn-sm btn-info dpndnPlus">업체추가</button>
                         <div class="row dpTempRow" id="dpndnRow" style="border:solid; border-width:1px; margin-top: 10px">
                             <label class="col-sm-2 control-label" style="margin-top: 15px;">업체명</label>
                             <label class="col-sm-3 control-label">
-                                <input type="text" class="form-control input-sm"  name="dpndnCmpnNm" value="" style="margin-bottom: 10px; margin-top:10px" title="업체명"/>
+                                <input type="text" class="form-control input-sm" data-name="dpndnCmpnNmList" name="dpndnCmpnNm" value="" style="margin-bottom: 10px; margin-top:10px" title="업체명"/>
                             </label>
                             <label class="col-sm-2 control-label" style="margin-top: 15px;">매출비중</label>
                             <label class="col-sm-3 control-label">
-                                <input type="number" class="form-control input-sm"  name="dpndnRate" value="" style="margin-bottom: 10px; margin-top:10px" title="매출비중"/>
+                                <input type="number" class="form-control input-sm" data-name="dpndnRateList" name="dpndnRate" value="" style="margin-bottom: 10px; margin-top:10px" title="매출비중"/>
                             </label>
                             <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                             <label class="col-sm-1 control-label closeLabel" style="display: none">
@@ -459,8 +461,16 @@
                         <div class="row">
                             <label class="col-sm-2 control-label">기타</label>
                         </div>
-                        <div class="col-sm-5 control-label" style="padding-left: 300px;">
-                            <input type="text" class="form-control input-sm notRequired"  name="cnstgCd" value="" title="업종"/>
+                        <div style="padding-left: 300px;">
+                            <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
+                                <c:if test="${!fn:contains(cdList.cd,'NON') && !fn:contains(cdList.cd,'META')}">
+                                    <label class="radio-inline c-radio">
+                                        <input type="radio" class="notRequired cnstgCdRadio" name="cnstgCd" value="${cdList.cd}" title="업종"/>
+                                        <span class="ion-record"></span> ${cdList.cdNm}
+                                    </label>
+                                </c:if>
+                            </c:forEach>
+                            <input type="text" class="form-control input-sm notRequired" name="etcNm" value="" style="width: 322px; margin-top: 10px;" title="업종" disabled/>
                         </div>
                     </div>
             </fieldset>
@@ -483,7 +493,7 @@
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="52428800" />
-                        <div class="dropzone pcThumbFile" data-file-field-nm="introFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="회사소개서 첨부파일">
+                        <div class="dropzone pcThumbFile" data-file-field-nm="impvmFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="회사소개서 첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
@@ -530,3 +540,4 @@
         </form>
     </div>
 </div>
+<jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>

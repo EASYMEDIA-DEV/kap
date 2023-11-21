@@ -27,8 +27,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     change : function() {
                         if($(this).val() == "EBD_SQ_C"){
                             ctrl.obj.find(".rtrnRsnContainer").show();
+                            ctrl.obj.find(".jdgmtNoContainer").hide();
                         }else{
                             ctrl.obj.find(".rtrnRsnContainer").hide();
+                            ctrl.obj.find(".jdgmtNoContainer").show();
                         }
                     }
                 }
@@ -38,10 +40,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             // 유효성 검사
             $formObj.validation({
                 before: function(){
+                    //검증 초기화
                     ctrl.obj.find("input[name=rtrnRsn]").removeClass("notRequired");
                     ctrl.obj.find("input[name=rtrnRsn]").addClass("notRequired");
+                    ctrl.obj.find("input[name=jdgmtNo]").removeClass("notRequired");
+                    ctrl.obj.find("input[name=jdgmtNo]").addClass("notRequired");
+                    //발급상태가 반려일때
+                    //반려사유 필수
                     if(ctrl.obj.find("select[name=issueCd]").val() =="EBD_SQ_C"){
                         ctrl.obj.find("input[name=rtrnRsn]").removeClass("notRequired");
+                    }
+                    //발급상태가 발급일때
+                    //자격증 번호 필수
+                    if(ctrl.obj.find("select[name=issueCd]").val() =="EBD_SQ_I"){
+                        ctrl.obj.find("input[name=jdgmtNo]").removeClass("notRequired");
                     }
                 },
                 after : function() {

@@ -26,7 +26,7 @@ CKEDITOR.editorConfig = function(config) {
 	config.entities_additional = "";
     config.extraAllowedContent = "section article";
     config.extraPlugins = "codemirror";
-    config.filebrowserImageUploadUrl = "/mngwserc/editor-image/upload.ajax";
+    config.filebrowserImageUploadUrl = "/mngwserc/editor-image/upload";
     config.fillEmptyBlocks = false;
     config.protectedSource.push(/<a[^>]*>[\s]*<\/a>/g);
 	config.protectedSource.push(/<span[^>]*>[\s]*<\/span>/g);

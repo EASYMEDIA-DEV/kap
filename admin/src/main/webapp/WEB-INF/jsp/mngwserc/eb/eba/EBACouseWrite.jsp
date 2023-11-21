@@ -139,21 +139,24 @@
                     </div>
 
                     <label class="col-sm-1 control-label">평가</label>
-                    <div class="col-sm-1">
+                    <div class="col-sm-4 ">
+                        <div class="pull-left">
+                            <select class="form-control input-sm wd-sm" name="cmptnJdgmtCd" id="cmptnJdgmtCd" title="평가">
+                                <option value="">선택</option>
+                                <c:forEach var="cdList" items="${studyCdList.CMPTN_JDGMT}" varStatus="status">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnJdgmtCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="pull-left ml-lg">
+                            <label class="checkbox-inline c-checkbox">
+                                <input type="checkbox" class="checkboxSingle jdgmtYn notRequired" value="N" name="jdgmtYn" <c:if test="${rtnDto.jdgmtYn eq 'N'}">checked</c:if>/>
+                                <span class="ion-checkmark-round"></span> 평가없음
+                            </label>
+                        </div>
 
-                        <select class="form-control input-sm wd-sm" name="cmptnJdgmtCd" id="cmptnJdgmtCd" title="평가">
-                            <option value="">선택</option>
-                            <c:forEach var="cdList" items="${studyCdList.CMPTN_JDGMT}" varStatus="status">
-                                <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnJdgmtCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
-                            </c:forEach>
-                        </select>
                     </div>
-                    <div class="col-sm-1">
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle jdgmtYn notRequired" value="N" name="jdgmtYn" <c:if test="${rtnDto.jdgmtYn eq 'N'}">checked</c:if>/>
-                        <span class="ion-checkmark-round"></span> 평가없음
-                        </label>
-                    </div>
+
 
 
                 </div>

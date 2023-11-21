@@ -1697,6 +1697,21 @@ var cmmCtrl = (function(){
 		}).modal();
 	}
 
+	//부품사 회원 검색 매핑
+	//getPartsCompanyMemberLayerPop(function(data){data 객체를 받아서 처리});
+	var fn_parts_member_layer_pop = function(fnc){
+		$(".mpbMemberPartsSocietySrchLayer").one('show.bs.modal', function() {
+			// Add class for soft backdrop
+			$(".mpbMemberPartsSocietySrchLayer").find("#btnRefresh").click();
+			$(".mpbMemberPartsSocietySrchLayer").find("#btnSearch").click();
+		}).one('hidden.bs.modal', function() {
+			// Remove class for soft backdrop (if not will affect future modals)
+		}).one('choice', function(data, param) {
+			// Remove class for soft backdrop (if not will affect future modals)
+			fnc(param);
+		}).modal();
+	}
+
 
 	return {
 		nvl : fn_replace_null,
@@ -1748,5 +1763,7 @@ var cmmCtrl = (function(){
 		getUserSrchPop:fn_user_srch_layer_pop,
 		//교육장 검색 매핑
 		getEduRoomLayerPop : fn_edu_room_layer_pop,
+		//부품사 회원 검색 매핑
+		getPartsCompanyMemberLayerPop : fn_parts_member_layer_pop
 	}
 }());

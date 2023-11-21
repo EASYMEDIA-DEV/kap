@@ -4,56 +4,20 @@
 <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/bd/bda/BDANoticeWriteCtrl">
+    <div class="card-body" data-controller="controller/bd/bdb/BDBCompanyNewsWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} ${ not empty rtnDto ? '상세/수정' : '등록'}</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.ntfySeq}" />
+            <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.fndnNewsSeq}" />
             <!-- 첨부파일 순번 -->
             <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDto.fileSeq}" />
+            <input type="hidden" class="notRequired" id="pcThnlSeq" name="pcThnlSeq" value="${rtnDto.pcThnlSeq}" />
+            <input type="hidden" class="notRequired" id="mblThnlSeq" name="mblThnlSeq" value="${rtnDto.mblThnlSeq}" />
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="50" placeholder="제목을 입력하세요." />
-                    </div>
-                    <div class="col-sm-2">
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="notRequired" id="ntfyYn" name="ntfyYn" value="Y" title="중요공지여부" <c:if test="${rtnDto.ntfyYn eq 'Y'}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> 중요공지 설정
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset id="ntfyYnDate" <c:if test="${rtnDto.ntfyYn ne 'Y'}">style="display: none"</c:if>>
-                <div class="form-inline text-sm">
-                    <label class="col-sm-1 control-label">중요공지<br />노출기간<span class="star"> *</span></label>
-                    <div class="col-sm-11">
-                        <div class="form-group mr-sm">
-                            <div class="input-group">
-                                <%--<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="expsStrtDtm" data-name="expsStrtDtm" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>--%>
-                                <input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="expsStrtDtm" name="expsStrtDtm" data-name="expsStrtDtm" value="${not empty rtnDto.expsStrtDtm ? kl:convertDate(rtnDto.expsStrtDtm, 'yyyyMMdd', 'yyyy-MM-dd', '') : today}" title="중요공지 시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                <span class="input-group-btn" style="z-index:0;">
-                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                        <em class="ion-calendar"></em>
-                                    </button>
-                                </span>
-                                <span class="input-group-addon bg-white b0">~</span>
-                                <%--<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="expsEndDtm" data-name="expsEndDtm" value="${today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>--%>
-                                <input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="expsEndDtm" name="expsEndDtm" data-name="expsEndDtm" value="${not empty rtnDto.expsEndDtm ? kl:convertDate(rtnDto.expsEndDtm, 'yyyyMMdd', 'yyyy-MM-dd', '') : today}" title="중요공지 종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                <span class="input-group-btn" style="z-index:0;">
-                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                        <em class="ion-calendar"></em>
-                                    </button>
-                                </span>
-                            </div>
-                            <div class="form-group" style="padding-bottom:7px">
-                                <label class="checkbox-inline c-checkbox mr-sm" style="margin-left: 30px !important; margin-right: 32px !important;">
-                                    <input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="Y" title="중요공지 상시여부" <c:if test="${rtnDto.odtmYn eq 'Y'}">checked</c:if> />
-                                    <span class="ion-checkmark-round"></span> 상시
-                                </label>
-                            </div>
-                        </div>
+                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="200" placeholder="제목을 입력하세요." />
                     </div>
                 </div>
             </fieldset>
@@ -78,6 +42,40 @@
                         </div>
                         <p class="text-bold mt">
                             ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">PC 썸네일</br> 이미지</label>
+                    <div class="col-sm-10 col-md-11">
+                        <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                        <spring:eval var="atchUploadMaxSize" expression="5242880" />
+                        <div class="dropzone pcThumbFile notRequired" data-file-field-nm="pcThnlSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="PC 썸네일 이미지">
+                            <div class="dz-default dz-message">
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                            </div>
+                        </div>
+                        <p class="text-bold mt">
+                            ※ ${imageExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">MO 썸네일</br> 이미지</label>
+                    <div class="col-sm-10 col-md-11">
+                        <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                        <spring:eval var="atchUploadMaxSize" expression="5242880" />
+                        <div class="dropzone moThumbFile notRequired" data-file-field-nm="mblThnlSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="MO 썸네일 이미지">
+                            <div class="dz-default dz-message">
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                            </div>
+                        </div>
+                        <p class="text-bold mt">
+                            ※ ${imageExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                         </p>
                     </div>
                 </div>
