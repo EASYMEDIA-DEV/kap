@@ -615,7 +615,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         if (editorVal < 1)
                         {
                             editorChk = false;
-                            alert(msgCtrl.getMsg("fail.sm.smc.html"));
+                            alert("설문내용을 입력해주세요.");
                             CKEDITOR.instances[jQuery(this).prop("id")].focus();
                             // 에디터 최상단으로 스크롤 이동
                             jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);

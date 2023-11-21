@@ -54,7 +54,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">설문개요<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control ckeditorRequired" id="cntn" name="cntn" title="설문개요">${rtnDto.cntn}</textarea>
+                        <textarea class="form-control notRequired ckeditorRequired" id="cntn" name="cntn" title="설문개요">${rtnDto.cntn}</textarea>
                     </div>
                 </div>
             </fieldset>

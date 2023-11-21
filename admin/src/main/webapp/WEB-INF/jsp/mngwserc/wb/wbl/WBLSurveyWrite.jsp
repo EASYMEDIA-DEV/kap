@@ -67,11 +67,11 @@
                 <div class="form-group form-inline">
                     <label class="col-sm-1 control-label">대표자명<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="rprsntNm" name="rprsntNm" value="" maxlength="200" title="대표자명" placeholder="대표자명 입력" style="width:100%"/>
+                        <input type="text" class="form-control input-sm nameChk" id="rprsntNm" name="rprsntNm" value="" maxlength="200" title="대표자명" placeholder="대표자명 입력" style="width:100%"/>
                     </div>
                     <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="bsnmRegNo" name="bsnmRegNo" value="" maxlength="200" title="사업자등록번호" placeholder="사업자등록번호 입력"  style="width:100%"/>
+                        <input type="text" class="form-control input-sm numberChk" id="bsnmRegNo" name="bsnmRegNo" value="" maxlength="10" title="사업자등록번호" placeholder="사업자등록번호 입력"  style="width:100%"/>
                     </div>
                 </div>
             </fieldset>
@@ -80,11 +80,11 @@
                 <div class="form-group form-inline">
                     <label class="col-sm-1 control-label">담당자명<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="picNm" name="picNm" value="" maxlength="200" title="담당자명" placeholder="담당자명 입력" style="width:100%"/>
+                        <input type="text" class="form-control input-sm nameChk" id="picNm" name="picNm" value="" maxlength="200" title="담당자명" placeholder="담당자명 입력" style="width:100%"/>
                     </div>
                     <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="telNo" name="telNo" value="" maxlength="200" title="전화번호" placeholder="전화번호 입력"  style="width:100%"/>
+                        <input type="text" class="form-control input-sm phoneChk" id="telNo" name="telNo" value="" maxlength="200" title="전화번호" placeholder="전화번호 입력"  style="width:100%"/>
                     </div>
                 </div>
             </fieldset>
@@ -93,7 +93,7 @@
                 <div class="form-group form-inline">
                     <label class="col-sm-1 control-label">이메일 주소<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="email" name="email" value="" maxlength="200" title="이메일 주소" placeholder="이메일 주소 입력" style="width:100%"/>
+                        <input type="text" class="form-control input-sm emailChk" id="email" name="email" value="" maxlength="200" title="이메일 주소" placeholder="이메일 주소 입력" style="width:100%"/>
                     </div>
                 </div>
             </fieldset>
