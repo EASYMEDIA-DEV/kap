@@ -58,25 +58,22 @@ public class COEditorController {
 	 *
 	 */
 	@RequestMapping(value="/mngwserc/editor-image/upload")
-	@ResponseBody
 	public String setEditorImageUpload(final MultipartHttpServletRequest multiRequest, ModelMap modelMap) throws Exception
 	{
 		try
 		{
+			log.error("multiRequest : {}", multiRequest.getFileMap());
 			int actCnt = 0;
 
 			List<COFileDTO> result = null;
 
 			Map<String, MultipartFile> files = multiRequest.getFileMap();
-
 			if (!files.isEmpty())
 			{
 				result = cOFileUtil.parseFileInf(files, "EDITOR_", 0, "EDITOR", "upload", 10485760);
-
 				if (result.size() > 0)
 				{
 					actCnt = result.size();
-
 					modelMap.addAttribute("url", result.get(0).getWebPath());
 					modelMap.addAttribute("fileName", result.get(0).getOrgnFileNm());
 				}

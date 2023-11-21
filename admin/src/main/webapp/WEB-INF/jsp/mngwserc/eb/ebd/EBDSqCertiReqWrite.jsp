@@ -240,6 +240,14 @@
                     </div>
                 </div>
             </fieldset>
+            <fieldset class="last-child jdgmtNoContainer" style="display:none;">
+                <div class="form-group text-sm ">
+                    <label class="col-sm-2 control-label text-bold">자격증 번호<span class="star"> *</span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm" name="jdgmtNo" value="${ rtnDto.jdgmtNo }" maxlength="20" title="자격증 번호" placeholder="자격증 번호 입력"  ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_R', '', 'readonly') } />
+                    </div>
+                </div>
+            </fieldset>
             <hr />
             <div class="clearfix">
                 <div class="pull-left">
@@ -248,8 +256,7 @@
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnDto.examAppctnSeq}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                            <button type="submit" class="btn btn-sm btn-success">수정</button>
+                            <button type="submit" class="btn btn-sm btn-success">저장</button>
                         </c:when>
                         <c:otherwise>
                             <button type="submit" class="btn btn-sm btn-success">등록</button>

@@ -112,4 +112,6 @@ public class EBDEdctnEdisdDTO {
     private Integer memSeq;
     @Schema(title = "취득 일시")
     private String acqsnDtm;
+    @Schema(title = "자격증 번호")
+    private String jdgmtNo;
 }

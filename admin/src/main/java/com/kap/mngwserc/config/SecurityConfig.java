@@ -57,6 +57,7 @@ public class SecurityConfig  {
                         , "/mngwserc/dropzone/upload"
                         , "/mngwserc/file/list"
                         , "/mngwserc/file/upload"
+                        , "/mngwserc/editor-image/upload"
                         , "/mngwserc/file/view")
                 .and()
                 .exceptionHandling()
@@ -65,7 +66,7 @@ public class SecurityConfig  {
                     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
                         if (accessDeniedException instanceof MissingCsrfTokenException || accessDeniedException instanceof InvalidCsrfTokenException) {
                             String accept   = COWebUtil.removeCRLF(request.getHeader("accept"));
-                            System.out.println("ForbiddenException");
+                            log.error("ForbiddenException : {}", request.getRequestURI());
                             if (accept != null && accept.indexOf("application/json") > -1){
                                 if(COUserDetailsHelperService.isAuthenticated()){
                                     //JSON이면

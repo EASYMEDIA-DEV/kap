@@ -7,16 +7,14 @@ import com.kap.core.dto.EmfMap;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.tika.Tika;
+import org.apache.tika.io.TikaInputStream;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.channels.FileChannel;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -80,30 +78,32 @@ public class COFileUtil {
 		Tika tika = new Tika();
 		Calendar cal = Calendar.getInstance();
 		String folderType = "";
-
+		String firstFolder = "temp";
+		if("EDITOR_".equals(KeyStr)){
+			firstFolder = "upload";
+		}
 		if(maxSize == 0){
 			maxSize = atchUploadMaxSize;
 		}
 		while (itr.hasNext()) {
 			Entry<String, MultipartFile> entry = itr.next();
 			file = entry.getValue();
-
-			if (file.getName().indexOf(formName) > -1) {
-				String mimeType = tika.detect(file.getInputStream());
+			if (file.getName().indexOf(formName) > -1)
+			{
+				TikaInputStream tikaInputStream = TikaInputStream.get(file.getInputStream());
+				String mimeType = tika.detect(tikaInputStream);
+				log.error("mimeType :{}", mimeType);
 
 				if (mimeType.indexOf("image") > -1) {
-					folderType = "/temp/image";
+					folderType = "/"+firstFolder+"/image";
 				} else if (mimeType.indexOf("video") > -1) {
-					folderType = "/temp/video";
+					folderType = "/"+firstFolder+"/video";
 				} else {
-					folderType = "/temp/document";
+					folderType = "/"+firstFolder+"/document";
 				}
-
 				String filePyhPath = uploadFilePath + folderType;
 				filePyhPath += File.separator + String.format("%02d", cal.get(Calendar.YEAR)) + File.separator + String.format("%02d", cal.get(Calendar.MONTH) + 1);
-
 				File saveFolder = new File(COWebUtil.filePathBlackList(filePyhPath));
-
 				if (!saveFolder.exists() || saveFolder.isFile()) {
 					if (saveFolder.mkdirs()) {
 						log.debug("[file.mkdirs] saveFolder : Creation Success ");
@@ -111,23 +111,14 @@ public class COFileUtil {
 						log.error("[file.mkdirs] saveFolder : Creation Fail ");
 					}
 				}
-
 				//--------------------------------------
 				// 원 파일명이 없는 경우 처리
 				// (첨부가 되지 않은 input file type)
 				//--------------------------------------
 				String orginFileName = file.getOriginalFilename();
-
 				long fileSize = file.getSize();
-
 				String status = "00";
 				String message = "";
-
-				System.out.println("file.getName()3 : " + file.getName());
-				System.out.println("orginFileName4 : " + orginFileName);
-				System.out.println("maxSize : " + maxSize);
-				System.out.println("fileSize : " + fileSize);
-
 				if ("".equals(orginFileName)) {
 					status = "99";
 					message = "첨부된 파일이 없습니다.";
@@ -139,7 +130,6 @@ public class COFileUtil {
 					message = "비어있는 파일은 등록할 수 없습니다.";
 				}
 				////------------------------------------
-
 				if("00".equals(status)){
 					String fileExtn = orginFileName.substring(orginFileName.lastIndexOf(".") + 1);
 
@@ -153,9 +143,6 @@ public class COFileUtil {
 						checkFileExtn = fileExtns.split(",");
 					}
 
-					System.out.println("checkFileExtn : " + checkFileExtn);
-					System.out.println("fileExtn : " + fileExtn);
-
 					if (checkFileExtn != null) {
 						isFileExtn = false;
 
@@ -166,7 +153,6 @@ public class COFileUtil {
 							}
 						}
 					}
-					System.out.println("isFileExtn : " + isFileExtn);
 					if (!isFileExtn) {
 						COFileDTO fileDto = new COFileDTO();
 						fileDto.setRespCd("99");
@@ -189,7 +175,7 @@ public class COFileUtil {
 						fileDto.setRespCd(status);
 						if (mimeType.indexOf("image") > -1)
 						{
-							BufferedImage bufferedImage = ImageIO.read(file.getInputStream());
+							BufferedImage bufferedImage = ImageIO.read(tikaInputStream);
 							int width = bufferedImage.getWidth();
 							int height = bufferedImage.getHeight();
 							fileDto.setWidth(width);
@@ -197,6 +183,9 @@ public class COFileUtil {
 						}
 						result.add(fileDto);
 						fileKey++;
+					}
+					if(tikaInputStream != null){
+						tikaInputStream.close();
 					}
 				}else{
 					COFileDTO fileDto = new COFileDTO();

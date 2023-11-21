@@ -303,6 +303,7 @@
 		  , rfrsh_dtm = now()
 		  , valid_strt_dt = now()
 		  , valid_end_dt =  date_add(now(), INTERVAL 3 YEAR)
+		  , jdgmt_no = #{jdgmtNo}
 		  </if>
 		  , mod_id = #{modId}
 		  , mod_ip = #{modIp}
