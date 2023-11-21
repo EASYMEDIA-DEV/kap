@@ -43,6 +43,7 @@ public class EBBEpisdDTO extends BaseDTO  {
     @Schema(title = "업종코드", example = "")
     private String cbsnCd;
 
+
     @Schema(title = "접수시작일시", example = "yyyy-mm-dd HH:mm:ss")
     private String accsStrtDtm;
     @Schema(title = "접수시작시간", example = "HH:mm")
@@ -180,8 +181,6 @@ public class EBBEpisdDTO extends BaseDTO  {
 
     @Schema(title = "회차번호 강의순번", example = "숫자")
     private Integer lctrSeq;
-
-
 
     //로그인세션ID
     private String lgnSsnId;

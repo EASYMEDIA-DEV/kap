@@ -17,6 +17,7 @@
 				, (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
 				, ctgry_cd
 				, ctgry_cd_nm
+		     	, cbsn_cd
 				, nm
 				, stduy_mthd_cd
 				, stduy_mthd_cd_nm
@@ -64,6 +65,7 @@
 			FROM (SELECT
 				b.edctn_seq
 				, b.ctgry_cd
+				, a.cbsn_cd
 				, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
 				, (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
 				, b.nm
@@ -317,6 +319,7 @@
 			 , (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
 			 , ctgry_cd
 			 , ctgry_cd_nm
+		     , cbsn_cd
 			 , nm
 			 , stduy_mthd_cd
 			 , stduy_mthd_cd_nm
@@ -354,16 +357,22 @@
 			 , pic_email
 			 , pic_tel_no
 			 , place_seq
+			 , srv_seq
+		     , srv_strt_dtm
+		     , srv_end_dtm
+			 , exam_seq
 			 , place_nm
 			 , reg_id
 			 , reg_name
 			 , reg_dtm
 			 , mod_id
 			 , mod_name
+		     , cmptn_auto_yn
 			 , exps_yn
 		FROM (SELECT
 				  b.edctn_seq
 				   , b.ctgry_cd
+		           , a.cbsn_cd
 				   , (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
 				   , (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
 				   , b.nm
@@ -391,6 +400,10 @@
 				   , a.pic_email
 				   , a.pic_tel_no
 				   , a.place_seq
+				   , a.srv_seq
+				   , a.srv_strt_dtm
+				   , a.srv_end_dtm
+				   , a.exam_seq
 				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
 				   , a.reg_id
 				   , (select name from co_adm_mst where id = a.reg_id) as reg_name
@@ -398,6 +411,7 @@
 				   , a.mod_id
 				   , (select name from co_adm_mst where id = a.reg_id) as mod_name
 				   , a.mod_dtm
+		           , a.cmptn_auto_yn
 				   , a.exps_yn
 			  FROM ed_edctn_episd_mst a
 					   LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq) AA

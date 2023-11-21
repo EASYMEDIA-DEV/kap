@@ -131,7 +131,7 @@
                             <div class="col-sm-10">
                                 <div class="form-inline">
                                     <div class="input-group form-date-group mr-sm">
-                                        <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="accsStrtDt" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
+                                        <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="accsStrtDt" id="accsStrtDt" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
                                         <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
@@ -140,7 +140,7 @@
                                         <select class="form-control input-sm wd-sm classType" name="accsStrtHour" id="accsStrtHour" title="접수 시작시간">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
-                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '')eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                             </c:forEach>
                                         </select>
                                         <span class="input-group-addon bg-white b0">~</span>
@@ -153,7 +153,7 @@
                                         <select class="form-control input-sm wd-sm classType" name="accsEndHour" id="accsEndHour" title="접수 종료시간">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
-                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -176,7 +176,7 @@
                                         <select class="form-control input-sm wd-sm classType" name="edctnStrtHour" id="edctnStrtHour" title="교육 시작시간">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
-                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                             </c:forEach>
                                         </select>
                                         <span class="input-group-addon bg-white b0">~</span>
@@ -189,7 +189,7 @@
                                         <select class="form-control input-sm wd-sm classType" name="edctnEndHour" id="edctnEndHour" title="교육 종료시간">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
-                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -363,7 +363,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">교육장소<span class="star text-danger"> *</span></label>
                             <div class="col-sm-11">
-                                <button type="button" class="btn btn-inverse btn-sm">
+                                <button type="button" class="btn btn-inverse btn-sm eduRoomSearch">
                                     교육장 검색
                                 </button>
                                 <table class="table table-hover table-striped">
@@ -373,16 +373,29 @@
                                         <th class="text-center">지역</th>
                                         <th class="text-center">주소</th>
                                         <th class="text-center">대표번호</th>
-                                        <th class="text-center"></th>
                                     </tr>
                                     </thead>
                                     <!-- 리스트 목록 결과 -->
-                                    <tbody id="listContainer3">
+                                    <tbody>
 
-                                    <tr data-total-count="0">
-                                        <td colspan="5" class="text-center">
+                                    <tr data-total-count="0" class="notPlace">
+                                        <td colspan="4" class="text-center">
                                             검색결과가 없습니다.<br>
                                             (등록된 데이터가 없습니다.)
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none;" class="setPlace">
+                                        <td class="text-center">
+                                            <input type="hidden" name="placeSeq" id="placeSeq" value="" disabled="true">
+                                        </td>
+                                        <td class="text-center">
+
+                                        </td>
+                                        <td class="text-center">
+
+                                        </td>
+                                        <td class="text-center">
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -415,14 +428,14 @@
                                             <td class="text-center">교육만족도조사 품질아카데미_1</td>
                                             <td class="text-center">
                                                 <div class="input-group form-date-group mr-sm">
-                                                    <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="srvStrtDtm" id="srvStrtDtm" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="srvStrtDtm" id="srvStrtDtm" value="${ kl:convertDate(rtnDto.srvStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="설문시작일시" readonly="readonly"/>
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
                                                         </button>
                                                     </span>
                                                         <span class="input-group-addon bg-white b0">~</span>
-                                                        <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="srvEndDtm" id="srvEndDtm" value="${ kl:convertDate(rtnDto.srvEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
+                                                        <input type="text" class="form-control input-sm datetimepicker_endDt" name="srvEndDtm" id="srvEndDtm" value="${ kl:convertDate(rtnDto.srvEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="설문종료일시" readonly="readonly"/>
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -481,13 +494,14 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">수료 자동화 여부<span class="star text-danger"> *</span></label>
                             <div class="col-sm-11">
+                                    <c:set var="cmptnAutoYn" value="${kl:nvl(rtnDto.cmptnAutoYn, 'Y')}" />
                                     <label class="radio-inline c-radio">
-                                        <input type="radio" name="cmptnAutoYn" value="Y" title="수료 자동화 여부" <c:if test="${rtnDto.cmptnAutoYn eq 'Y'}">checked</c:if>/>
+                                        <input type="radio" name="cmptnAutoYn" value="Y" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'Y'}">checked</c:if>/>
                                         <span class="ion-record"></span> 자동
                                     </label>
 
                                     <label class="radio-inline c-radio">
-                                        <input type="radio" name="cmptnAutoYn" value="N" title="수료 자동화 여부" <c:if test="${rtnDto.cmptnAutoYn eq 'N'}">checked</c:if>/>
+                                        <input type="radio" name="cmptnAutoYn" value="N" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'N'}">checked</c:if>/>
                                         <span class="ion-record"></span> 수동
                                     </label>
                             </div>
@@ -580,5 +594,5 @@
     </div>
 </div>
 
-
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/eba/EBACouseSrchLayer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebf/EBFEduRoomSrchLayer.jsp"></jsp:include>

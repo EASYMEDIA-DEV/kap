@@ -301,6 +301,7 @@
 			, cprtn_instt_nm
 			, stduy_cntn
 			, thnl_file_seq
+			, cmptn_auto_yn
 			, exps_yn
 			, reg_id
 			, reg_ip
@@ -327,6 +328,7 @@
 		, #{cprtnInsttNm}
 		, #{stduyCntn}
 		, #{thnlFileSeq}
+		, #{cmptnAutoYn}
 		, #{expsYn}
 		, #{regId}
 		, #{regIp}
