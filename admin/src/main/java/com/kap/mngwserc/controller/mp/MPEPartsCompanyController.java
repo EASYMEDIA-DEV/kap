@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -88,24 +89,11 @@ public class MPEPartsCompanyController {
      * 상세 페이지로 이동한다.
      */
     @RequestMapping(value="/write")
-    public String getPsnIfWritePage(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getPartsCompanyWritePage(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            // 공통코드 배열 셋팅
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            // 코드 set
-            cdDtlList.add("COMPANY_TYPE");
-            cdDtlList.add("CO_YEAR_CD");
-
-            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
-
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            if (originList.getList().size() != 0) {
-                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
-            }
-            modelMap.addAttribute("sqInfoList", originList);
-
+            modelMap.addAttribute("rtnInfo", mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO));
         }
         catch (Exception e)
         {
@@ -171,6 +159,51 @@ public class MPEPartsCompanyController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    /**
+     * 부품사 상세 페이지
+     */
+    @PostMapping(value="/dtl")
+    public String getPartsCompanyDtlAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("COMPANY_TYPE");
+            cdDtlList.add("CO_YEAR_CD");
+
+            mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getDetailsKey());
+            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            if (originList.getList().size() != 0) {
+                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+            }
+            modelMap.addAttribute("sqInfoList", originList);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return  "mngwserc/mp/mpe/MPEPartsCompanyTabOneAjax";
+    }
+
+    /**
+     *  교육 사업 현황 리스트 조회
+     */
+    @PostMapping(value = "/select-tab-two")
+    public String selectPartsPerformanceTabTwoAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
+
+        modelMap.addAttribute("rtnData", mpePartsCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
+        return "mngwserc/mp/mpe/MPEPartsCompanyTabTwoAjax";
     }
 
     /**

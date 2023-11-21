@@ -8,12 +8,84 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     };
 
     var $formObj = jQuery("#frmData");
-
-    // get controller object
-    var ctrl = new ezCtrl.controller(exports.controller);
     var width = 500; //팝업의 너비
     var height = 600; //팝업의 높이
     var valChk = 'N';
+    // get controller object
+    var ctrl = new ezCtrl.controller(exports.controller);
+
+    var tabOne = function () {
+        cmmCtrl.frmAjax(function(respObj) {
+            ctrl.obj.find("#tab1").html(respObj);
+        }, "/mngwserc/mp/mpe/dtl", $formObj, "POST", "html",'',false);
+
+    }
+
+    var tabTwo = function () {
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#eduListContainer").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "eduListContainer", "pagingContainer");
+        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
+
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#techListContainer").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "techListContainer", "pagingContainer");
+        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
+
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#consultListContainer").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "consultListContainer", "pagingContainer");
+        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
+
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#fundingListContainer").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "fundingListContainer", "pagingContainer");
+        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
+
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#kapTargetListContainer").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "kapTargetListContainer", "pagingContainer");
+        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
+
+    }
+
+    var tabReload = function (type) {
+
+        if(type === 'edu') {
+            tabTwo();
+        }
+    }
+
 
     var callbackAjaxDelete = function(data){
 
@@ -99,7 +171,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
-            bsnmNo : {
+            bsnmNoCheck : {
                 event : {
                     keyup : function(){
 
@@ -132,20 +204,28 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         this.value = tmp;
                     }
                 }
-            }
+            },
+            tabClick : {
+                event : {
+                    click : function (e){
+                        console.log(e.target.getAttribute('href').substr(1));
+                        if(e.target.getAttribute('href').substr(1)!='dtl') {
+                            $(".dtl-tab").hide();
+                        } else {
+                            $(".dtl-tab").show();
+                        }
+                    }
+                }
+            },
         },
         classname : {
             // do something...
         },
         immediately : function(){
-
-            /* Editor Setting */
-            jQuery("textarea[id^='cntn']").each(function(){
-                cmmCtrl.setEditor({
-                    editor : jQuery(this).attr("id"),
-                    height : 400,
-                });
-            });
+            //폼 데이터 처리
+            cmmCtrl.setFormData($formObj);
+            tabOne();
+            tabTwo();
 
             $("#btn_delete").click(function () {
                 if (confirm(msgCtrl.getMsg("confirm.del"))) {
@@ -155,37 +235,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
             // 유효성 검사
             $formObj.validation({
-                after : function() {
-                    var isValid = true, editorChk = true;
-
-                    $formObj.find(".ckeditorRequired").each(function() {
-                        jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-
-                        var editorVal = jQuery(this).val().length;
-
-                        if (editorVal < 1)
-                        {
-                            editorChk = false;
-
-                            alert(msgCtrl.getMsg("fail.co.cog.cnts"));
-
-                            CKEDITOR.instances[jQuery(this).prop("id")].focus();
-
-                            // 에디터 최상단으로 스크롤 이동
-                            jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
-
-                            return false;
-                        }
-                    });
-
-                    if (!editorChk)
-                    {
-                        isValid = false;
-                    }
-
-                    return isValid;
-                }
-                ,
                 async : {
                     use : true,
                     func : function (){
