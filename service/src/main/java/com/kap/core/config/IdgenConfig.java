@@ -439,7 +439,7 @@ public class IdgenConfig {
                 .build();
     }
 
-    /** 회차관리 마스터 시퀏스
+    /** 회차관리 마스터 시퀀스
      * @return
      */
     @Bean(destroyMethod = "destroy")
@@ -452,7 +452,7 @@ public class IdgenConfig {
                 .build();
     }
 
-    /** 회차관리 마스터 시퀏스
+    /** 지급차수 마스터 시퀏스
      * @return
      */
     @Bean(destroyMethod = "destroy")
@@ -487,6 +487,32 @@ public class IdgenConfig {
                 .setBlockSize(1)
                 .setTable("co_seq_mst")
                 .setTableName("CMS_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 상생신청 마스터 시퀀스
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxAppctnMstSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CX_APPCTN_MST_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 상생신청 상세 시퀀스
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxAppctnRsumeDtlSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CX_APPCTN_RSUME_DTL_SEQ")
                 .setCipers(13)
                 .build();
     }
