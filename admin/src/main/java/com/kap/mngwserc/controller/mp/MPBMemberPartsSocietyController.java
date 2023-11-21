@@ -53,7 +53,6 @@ public class MPBMemberPartsSocietyController {
     public String getPartUserListPage(MPAUserDto mpaUserDto ,
                                   ModelMap modelMap ) throws Exception {
         mpaUserDto.setMemCd("CP");
-        mpaUserDto.setExcelYn("N");
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("COMPANY_TYPE");
@@ -72,7 +71,6 @@ public class MPBMemberPartsSocietyController {
     public String selectPartUserListPageAjax(MPAUserDto mpaUserDto ,
                                          ModelMap modelMap ) throws Exception {
         mpaUserDto.setMemCd("CP");
-        mpaUserDto.setExcelYn("N");
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
         // 로그인한 계정
         COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();

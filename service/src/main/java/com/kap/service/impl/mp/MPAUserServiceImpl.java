@@ -20,6 +20,7 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
@@ -110,6 +111,17 @@ public class MPAUserServiceImpl implements MPAUserService {
      */
     public int selectDupEmail(MPAUserDto mpaUserDto) {
         return mpaUserMapper.selectDupEmail(mpaUserDto);
+    }
+
+    /**
+     * id 중복 검사
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public int selectDupId(MPAUserDto mpaUserDto) throws Exception {
+        return mpaUserMapper.selectDupId(mpaUserDto);
     }
 
     /**
@@ -205,7 +217,198 @@ public class MPAUserServiceImpl implements MPAUserService {
             excelCo(mpaUserDto, response);
         } else if(mpaUserDto.getMemCd().equals("CP")) {
             excelCp(mpaUserDto, response);
+        } else if(mpaUserDto.getMemCd().equals("CS")) {
+            excelCs(mpaUserDto, response);
         }
+
+    }
+
+    private void excelCs(MPAUserDto mpaUserDto, HttpServletResponse response) throws IOException {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFCellStyle style_header = workbook.createCellStyle();
+        XSSFCellStyle style_body = workbook.createCellStyle();
+        Sheet sheet = workbook.createSheet();
+
+        Row row = null;
+        Cell cell = null;
+        int rowNum = 0;
+
+        //Cell Alignment 지정
+        style_header.setAlignment(HorizontalAlignment.CENTER);
+        style_header.setVerticalAlignment(VerticalAlignment.CENTER);
+        style_body.setAlignment(HorizontalAlignment.CENTER);
+        style_body.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        // Border Color 지정
+        style_header.setBorderTop(BorderStyle.THIN);
+        style_header.setBorderLeft(BorderStyle.THIN);
+        style_header.setBorderRight(BorderStyle.THIN);
+        style_header.setBorderBottom(BorderStyle.THIN);
+        style_body.setBorderTop(BorderStyle.THIN);
+        style_body.setBorderLeft(BorderStyle.THIN);
+        style_body.setBorderRight(BorderStyle.THIN);
+        style_body.setBorderBottom(BorderStyle.THIN);
+
+        //BackGround Color 지정
+        style_header.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style_header.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        // Header
+        row = sheet.createRow(rowNum++);
+
+        cell = row.createCell(0);
+        cell.setCellValue("번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(1);
+        cell.setCellValue("아이디");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(2);
+        cell.setCellValue("이름");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(3);
+        cell.setCellValue("위원구분");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(4);
+        cell.setCellValue("업종/분야");
+        cell.setCellStyle(style_header);
+
+
+        cell = row.createCell(5);
+        cell.setCellValue("재직여부");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(6);
+        cell.setCellValue("휴대폰번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(7);
+        cell.setCellValue("이메일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(8);
+        cell.setCellValue("생년월일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(9);
+        cell.setCellValue("입사일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(10);
+        cell.setCellValue("퇴사일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(11);
+        cell.setCellValue("주요경력");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(12);
+        cell.setCellValue("등록일");
+        cell.setCellStyle(style_header);
+
+        // Body
+        List<MPAUserDto> list = mpaUserDto.getList();
+
+        for (int i=0; i<list.size(); i++) {
+            row = sheet.createRow(rowNum++);
+
+            //번호
+            cell = row.createCell(0);
+            cell.setCellValue(mpaUserDto.getTotalCount() - i);
+            cell.setCellStyle(style_body);
+
+            //아이디
+            cell = row.createCell(1);
+            cell.setCellValue(list.get(i).getId());
+            cell.setCellStyle(style_body);
+
+            //이름
+            cell = row.createCell(2);
+            cell.setCellValue(list.get(i).getName());
+            cell.setCellStyle(style_body);
+
+            //위원구분
+            cell = row.createCell(3);
+            cell.setCellValue(list.get(i).getCmssrTypeCdNm());
+            cell.setCellStyle(style_body);
+
+            //업종분야
+            cell = row.createCell(4);
+            cell.setCellValue(list.get(i).getCmssrCbsnCdNm());
+            cell.setCellStyle(style_body);
+
+            //재직여부
+            cell = row.createCell(5);
+            cell.setCellValue(list.get(i).getCmssrWorkCdNm());
+            cell.setCellStyle(style_body);
+
+            //휴대폰
+            cell = row.createCell(6);
+            cell.setCellValue(list.get(i).getHpNo().substring(0, 3)+"-"+list.get(i).getHpNo().substring(3, 7)+"-"+list.get(i).getHpNo().substring(7, 11));
+            cell.setCellStyle(style_body);
+
+            //이메일
+            cell = row.createCell(7);
+            cell.setCellValue(list.get(i).getEmail());
+            cell.setCellStyle(style_body);
+
+            //생일
+            cell = row.createCell(8);
+            cell.setCellValue(list.get(i).getBirth() == null ? "-" : list.get(i).getBirth().substring(0,4)+"-"+list.get(i).getBirth().substring(4,6)+"-"+list.get(i).getBirth().substring(6));
+            cell.setCellStyle(style_body);
+
+            //입사일
+            cell = row.createCell(9);
+            cell.setCellValue(list.get(i).getCmssrMplmnDt() == null ? "-" : list.get(i).getCmssrMplmnDt().split(" ")[0]);
+            cell.setCellStyle(style_body);
+
+            //퇴사일
+            cell = row.createCell(10);
+            cell.setCellValue(list.get(i).getCmssrRsgntDt() == null ? "-" : list.get(i).getCmssrRsgntDt().split(" ")[0]);
+            cell.setCellStyle(style_body);
+
+            //주요경력
+            cell = row.createCell(11);
+            cell.setCellValue("");
+            cell.setCellStyle(style_body);
+
+            //등록일
+            cell = row.createCell(7);
+            cell.setCellValue(list.get(i).getRegDtm() == null ? "-" : list.get(i).getRegDtm().substring(0, list.get(i).getRegDtm().lastIndexOf(":")));
+            cell.setCellStyle(style_body);
+
+        }
+
+        // 열 너비 설정
+       /* for(int i =0; i < 8; i++){
+            sheet.autoSizeColumn(i);
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
+        }*/
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
+
+        //컨텐츠 타입 및 파일명 지정
+        response.setContentType("ms-vnd/excel");
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_일반회원관리_", "UTF-8") + timeStamp +".xlsx");
+
+        // Excel File Output
+        workbook.write(response.getOutputStream());
+        workbook.close();
+
+        //다운로드 사유 입력
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
+        pCoSystemLogDTO.setTrgtMenuNm("회원/부품사 관리 > 일반회원관리");
+        pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPAUserServiceImpl");
+        pCoSystemLogDTO.setFncNm("selectUserList");
+        pCoSystemLogDTO.setPrcsCd("DL");
+        pCoSystemLogDTO.setRsn(mpaUserDto.getRsn());
+        pCoSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());
+        pCoSystemLogDTO.setRegIp(lgnCOAAdmDTO.getLoginIp());
+        cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
 
     }
 

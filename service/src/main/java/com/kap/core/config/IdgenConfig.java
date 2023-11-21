@@ -439,6 +439,19 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 회원 마스터  시퀏스
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl memSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("MEM_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
     /** 회차관리 마스터 시퀀스
      * @return
      */

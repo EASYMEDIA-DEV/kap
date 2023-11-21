@@ -29,6 +29,16 @@
              , dtl_addr
              , ntfy_sms_rcv_yn
              , ntfy_email_rcv_yn
+             , cmssr_type_cd
+             , cmssr_type_cd_nm
+             , cmssr_cbsn_cd
+             , cmssr_cbsn_cd_nm
+             , cmssr_work_cd
+             , cmssr_work_cd_nm
+             , cmt_mod_name
+             , birth
+             , cmssr_mplmn_dt
+             , cmssr_rsgnt_dt
            from ( select mem.mem_seq
                        , mem.id
                        , mem.name
@@ -52,6 +62,19 @@
                       , mem.zipcode
                       , mem.bsc_addr
                       , mem.dtl_addr
+                      , mem.cmssr_type_cd
+                      , (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd ) as cmssr_type_cd_nm
+                      , mem.cmssr_cbsn_cd
+                      , (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd ) as cmssr_cbsn_cd_nm
+                      , mem.cmssr_work_cd
+                      , (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd ) as cmssr_work_cd_nm
+                      , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
+                             when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
+                                else null end as cmt_mod_name
+                      , mem.birth
+                      , mem.cmssr_mplmn_dt
+                      , mem.cmssr_rsgnt_dt
+                      , mem.wthdrw_yn
                      from co_mem_mst mem
                       inner join ( select mem_mod_seq
                                         , mem_seq
@@ -96,6 +119,23 @@
                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd ) as size_cd_nm
                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
                      , cmpn_mst.ctgry_cd
+                     , mem.tel_no
+                     , mem.zipcode
+                     , mem.bsc_addr
+                     , mem.dtl_addr
+                     , mem.cmssr_type_cd
+                     , (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd ) as cmssr_type_cd_nm
+                     , mem.cmssr_cbsn_cd
+                     , (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd ) as cmssr_cbsn_cd_nm
+                     , mem.cmssr_work_cd
+                     , (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd ) as cmssr_work_cd_nm
+                     , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
+                            when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
+                                else null end as cmt_mod_name
+                     , mem.birth
+                     , mem.cmssr_mplmn_dt
+                     , mem.cmssr_rsgnt_dt
+                     , mem.wthdrw_yn
                     from co_mem_mst mem
                      inner join ( select mem_mod_seq
                                        , mem_seq
@@ -127,6 +167,7 @@
     <sql id="selectUserListWhereSql">
         <where>
                 and ma.mem_cd = #{memCd}
+                and ma.wthdrw_yn = #{wthdrwYn}
             <if test="date == 1">
                 <if test="strtDt != null and strtDt != ''.toString() ">
                     and ma.reg_dtm <![CDATA[>=]]> str_to_date(#{strtDt}, '%Y-%m-%d')
@@ -147,6 +188,20 @@
                 and (
                 <foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="" close="" separator=" or ">
                     ma.ctgry_cd = #{ctgryCdList}
+                </foreach>
+                )
+            </if>
+            <if test="cmssrTypeList != null and cmssrTypeList.size() > 0">
+                and (
+                <foreach collection="cmssrTypeList" item="cmssrTypeList" index="index" open="" close="" separator=" or ">
+                    ma.cmssr_type_cd = #{cmssrTypeList}
+                </foreach>
+                )
+            </if>
+            <if test="cmssrWorkList != null and cmssrWorkList.size() > 0">
+                and (
+                <foreach collection="cmssrWorkList" item="cmssrWorkList" index="index" open="" close="" separator=" or ">
+                    ma.cmssr_work_cd = #{cmssrWorkList}
                 </foreach>
                 )
             </if>
@@ -173,6 +228,10 @@
                     <when test="f == 7">
                         and (ma.work_bsnm_no like concat('%', #{q}, '%') )
                     </when>
+                    <when test="f == 8">
+                        and (ma.cmt_mod_name like concat('%', #{q}, '%') )
+                    </when>
+
                     <otherwise>
                         and
                         (
@@ -189,6 +248,8 @@
                         ma.cmpn_nm like concat('%', #{q}, '%')
                         or
                         ma.work_bsnm_no like concat('%', #{q}, '%')
+                        or
+                        ma.cmt_mod_name like concat('%', #{q}, '%')
                         )
                     </otherwise>
                 </choose>
@@ -307,8 +368,24 @@
     <select id="selectDupEmail" parameterType="MPAUserDto" resultType="java.lang.Integer">
         select count(*)
             from co_mem_mst
-              where mem_seq not in(#{detailsKey})
+              where 1=1
+        <if test="detailsKey != null and detailsKey != ''.toString() ">
+              and mem_seq not in(#{detailsKey})
+        </if>
                and email=#{email}
+    </select>
+
+    <!--
+쿼리명 : MPAUserMapper.selectDupId
+설  명 : id 중복 검사
+  수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.21    양현우       최초생성
+-->
+    <select id="selectDupId" parameterType="MPAUserDto" resultType="java.lang.Integer">
+        select count(*)
+        from co_mem_mst
+        where id =#{id}
     </select>
 
 

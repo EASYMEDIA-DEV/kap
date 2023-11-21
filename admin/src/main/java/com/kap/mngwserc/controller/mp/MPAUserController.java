@@ -148,7 +148,7 @@ public class MPAUserController {
     }
 
     /**
-     * 관리자 상세 페이지
+     * 이메일 중복 체크
      */
     @PostMapping(value="/dup-email")
     public String selectDupEmail(MPAUserDto mpaUserDto ,
@@ -156,13 +156,47 @@ public class MPAUserController {
     {
         try
         {
-            mpaUserDto.setMemCd("CO");
             // 로그인한 계정
             COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
 
             String chk;
             if(mpaUserService.selectDupEmail(mpaUserDto) >=1) {
+                chk = "N";
+            } else {
+                chk = "Y";
+            }
+            modelMap.addAttribute("dupChk", chk);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * id 중복 체크
+     */
+    @PostMapping(value="/dup-id")
+    public String selectDupId(MPAUserDto mpaUserDto ,
+                                 ModelMap modelMap ) throws Exception
+    {
+        try
+        {
+
+            // 로그인한 계정
+            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+
+            String chk;
+            if(mpaUserService.selectDupId(mpaUserDto) >=1) {
                 chk = "N";
             } else {
                 chk = "Y";

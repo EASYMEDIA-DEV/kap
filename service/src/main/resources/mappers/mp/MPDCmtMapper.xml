@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.mp.MPDCmtMapper">
+
+    <!--
+        쿼리명 : MPDCmtMapper.insertUserDtlHistory
+        설  명 : 사용자 수정  이력
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.10    양현우       최초생성
+        -->
+    <insert id="insertCmt" parameterType="MPAUserDto">
+        insert into co_mem_mst
+        (   mem_seq 				-- 회원순번
+        , mem_cd  				-- 회원코드
+        , id   					-- id
+        , name  					-- 이름
+        , pwd  					-- 비밀번호
+        , birth 					-- 생년월일
+        , hp_no 					-- 휴대번호
+        , email  					-- 이메일
+        , cmssr_type_cd 			-- 위원구분 코드
+        , cmssr_cbsn_cd 			-- 업종/분야
+        , cmssr_work_cd 			-- 재직코드
+        , cmssr_mplmn_dt 			-- 입사일
+        <if test="cmssrRsgntDt != ''.toString() ">
+        , cmssr_rsgnt_dt  		-- 퇴사일
+        </if>
+        , cmssr_photo_file_seq  	-- 파일순번
+        , cmssr_mjr_carer_cntn  	-- 경력 내용
+        , cmssr_mjr_carer_exps_yn -- 노출 여
+        , ntfy_sms_rcv_yn  		-- sms 여부
+        , ntfy_sms_rcv_chng_dtm
+        , ntfy_email_rcv_yn  		-- email 여부
+        , ntfy_email_rcv_chng_dtm
+        , wthdrw_yn   			-- 탈퇴여부
+        , lgn_fail_cnt
+        , reg_id 					-- 등록id
+        , reg_ip  				-- 등록ip
+        , reg_dtm  				-- 등록일
+        , mod_id  				-- 수정id
+        , mod_ip  				-- 수정ip
+        , mod_dtm	 				-- 수정일
+        )
+        values(
+                #{memSeq}
+              , #{memCd}
+              , #{id}
+              , #{name}
+              , #{encPwd}
+              , #{birth}
+              , #{hpNo}
+              , #{email}
+              , #{cmssrTypeCd}
+              , #{cmssrCbsnCd}
+              , #{cmssrWorkCd}
+              , #{cmssrMplmnDt}
+        <if test="cmssrRsgntDt != ''.toString() ">
+              , #{cmssrRsgntDt}
+        </if>
+              , #{cmssrPhotoFileSeq}
+              , #{cmssrMjrCarerCntn}
+              , #{cmssrMjrCarerExpsYn}
+              , 'N'
+              , now()
+              , 'N'
+              , now()
+              , 'N'
+              , '0'
+              , #{regId}
+              , #{regIp}
+              , now()
+              , #{regId}
+              , #{regIp}
+              , now()
+              )
+    </insert>
+
+
+    <!--
+     쿼리명 : MPDCmtMapper.deleteCmt
+     설  명 : 위원을 삭제한다.
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.21   양현우       최초생성
+-->
+    <delete id="deleteCmt" parameterType="MPAUserDto">
+        delete /* MPDCmtMapper.deleteCmt */
+        from co_mem_mst
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    mem_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    adm_seq = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+</mapper>

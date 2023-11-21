@@ -42,6 +42,8 @@ public interface MPAUserMapper {
 
     int selectDupEmail(MPAUserDto mpaUserDto);
 
+    int selectDupId(MPAUserDto mpaUserDto);
+
     int updateUserDtl(MPAUserDto mpaUserDto);
 
     int insertUserDtlHistory(MPAUserDto mpaUserDto);

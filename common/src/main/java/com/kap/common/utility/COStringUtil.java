@@ -339,7 +339,7 @@ public class COStringUtil {
         }
         String prefix = str1.substring(0, 3);
         String middlePart = str1.substring(3,7);
-        String suffix = str1.substring(7, 11);
+        String suffix = str1.substring(7);
         return prefix + "-" + middlePart + "-" + suffix;
     }
 

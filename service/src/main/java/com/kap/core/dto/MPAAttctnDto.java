@@ -18,6 +18,7 @@ package com.kap.core.dto;
  */
 
 import com.kap.core.dto.BaseDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.util.List;
@@ -31,21 +32,32 @@ import java.util.List;
 @AllArgsConstructor
 public class MPAAttctnDto extends BaseDTO {
 
+    @Schema(title = "회원순번", example = "1")
     private Integer memSeq; //회원순번
 
-    private Integer  year; //사업년도
+    @Schema(title = "사업년도", example = "2022")
+    private Integer  year;
 
-    private String name; //팀장명
+    @Schema(title = "팀장명", example = "홍길동")
+    private String name;
 
-    private String participationCategory; //참여구분
+    @Schema(title = "참여구분", example = "개인")
+    private String participationCategory;
 
-    private String ctgryCd; //카테고리
+    @Schema(title = "카테고리", example = "공존")
+    private String ctgryCd;
 
-    private String wdcrmCd; //시상부문
+    @Schema(title = "시상부문", example = "대상")
+    private String wdcrmCd;
 
-    private String episd;   //회차
-    private String appctnSttsCd; //1차결과
-    private String mngSttsCd; //최종결과
+    @Schema(title = "회차", example = "1")
+    private String episd;
+
+    @Schema(title = "1차결과", example = "탈락")
+    private String appctnSttsCd;
+
+    @Schema(title = "최종결과", example = "수상")
+    private String mngSttsCd;
 
     private List<MPAAttctnDto> list;
 
