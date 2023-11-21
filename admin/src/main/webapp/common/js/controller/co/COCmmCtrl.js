@@ -1778,7 +1778,7 @@ var cmmCtrl = (function(){
 		//교육장 검색 매핑
 		getEduRoomLayerPop : fn_edu_room_layer_pop,
 		//부품사 회원 검색 매핑
-		getPartsCompanyMemberLayerPop : fn_parts_member_layer_pop
+		getPartsCompanyMemberLayerPop : fn_parts_member_layer_pop,
 
 		//위원 검색 매핑
 		getCmtSrchPop : fn_cmt_srch_layer_pop
