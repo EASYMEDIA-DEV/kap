@@ -56,11 +56,17 @@
              , PAY_5_STAR_YEAR
              , TCHLG_5_STAR_CD
              , TCHLG_5_STAR_YEAR
-             , CBSN_SEQ
-             , SEQ_NM
-             , SCORE
-             , YEAR
-             , CRTFN_CMPN_NM
+--              , CBSN_SEQ
+--              , SEQ_NM
+--              , SCORE
+--              , YEAR
+--              , CRTFN_CMPN_NM
+             , mod_id
+             , dept_cd_nm
+             , dept_dtl_nm
+             , pstn_cd_nm
+             , reg_id
+             , cmssr_mjr_carer_cntn
            FROM ( SELECT MEM.MEM_SEQ
                        , MEM.ID
                        , MEM.NAME
@@ -119,6 +125,14 @@
                       , (SELECT SCORE FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS SCORE
                       , (SELECT YEAR FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS YEAR
                       , (SELECT CRTFN_CMPN_NM FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS CRTFN_CMPN_NM
+                     , mst.reg_id as mod_id
+                     , mem.dept_cd
+                     , (select cd_nm from co_code_mst where  cd=mem.dept_cd ) as dept_cd_nm
+                     , mem.dept_dtl_nm
+                     , mem.pstn_cd
+                     , (select cd_nm from co_code_mst where  cd=mem.pstn_cd ) as pstn_cd_nm
+                     , mem.reg_id
+                     , mem.cmssr_mjr_carer_cntn
                      FROM CO_MEM_MST MEM
                       INNER JOIN ( SELECT MEM_MOD_SEQ
                                         , MEM_SEQ
@@ -229,6 +243,13 @@
         </if>
     </select>
 
+    <!--
+쿼리명 : MPAUserMapper.selectUserListCnt
+설  명 : 사용자[일반,부품사,위원] 갯수을 조회한다.
+  수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.09    양현우       최초생성
+-->
     <select id="selectUserListCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
         select count(*)
           from (select mem.mem_seq
@@ -386,16 +407,15 @@
         </where>
     </sql>
 
-
     <!--
-      쿼리명 : MPAUserMapper.selectUserDtl
-      설  명 : 일반 사용자 상세을 조회한다.
-        수정일      수정자       수정내용
-      ==========   ========   ==============
-      2023.11.09    양현우       최초생성
-  -->
+        쿼리명 : MPAUserMapper.selectUserDtl
+        설  명 :  [일반 , 부품 , 위원 ] 사용자 상세을 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    양현우       최초생성
+    -->
     <select id="selectUserDtl" parameterType="MPAUserDto" resultType="MPAUserDto">
-        select mem.mem_seq
+        select mem.mem_seq /* MPAUserMapper.selectUserDtl */
              , mem.id
              , mem.name
              , mem.hp_no
@@ -404,87 +424,107 @@
              , mem.mod_dtm
              , mem.last_lgn_dtm
              , mem.mem_cd
+             , (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd ) as cmssr_type_cd_nm
+             , (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd ) as cmssr_cbsn_cd_nm
+             , (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd ) as cmssr_work_cd_nm
              , cmpn_mst.cmpn_nm
              , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
              , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
                     when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
                     else null end as mod_name
-                from co_mem_mst mem
-                    inner join ( select mem_mod_seq
-                                           , mem_seq
-                                           , mod_cd
-                                           , reg_id
-                                      from co_mem_mod_log
-                                      where ( mem_mod_seq
-                                                , mem_seq)
-                                                in ( select max(mem_mod_seq)
-                                                          , mem_seq
-                                                     from co_mem_mod_log
-                                                     group by mem_seq )
-                    ) mst
-                        on mem.mem_seq = mst.mem_seq
-                    left outer join co_mem_cmpn_rel cmpn_rel
-                                    on mem.mem_seq = cmpn_rel.mem_seq
-                                        and mem.work_bsnm_no = cmpn_rel.bsnm_no
-                    left outer join cp_cmpn_mst cmpn_mst
-                                    on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
-                where mem.mem_seq = #{detailsKey}
+        from co_mem_mst mem
+                 inner join ( select mem_mod_seq
+                                   , mem_seq
+                                   , mod_cd
+                                   , reg_id
+                              from co_mem_mod_log
+                              where ( mem_mod_seq
+                                        , mem_seq)
+                                        in ( select max(mem_mod_seq)
+                                                  , mem_seq
+                                             from co_mem_mod_log
+                                             group by mem_seq )
+        ) mst
+                            on mem.mem_seq = mst.mem_seq
+                 left outer join co_mem_cmpn_rel cmpn_rel
+                                 on mem.mem_seq = cmpn_rel.mem_seq
+                                     and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                 left outer join cp_cmpn_mst cmpn_mst
+                                 on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
+        where mem.mem_seq = #{detailsKey}
     </select>
 
+
+
     <!--
-        쿼리명 : MPAUserMapper.selectUserDtl
-        설  명 : 일반 사용자 상세을 조회한다.
+        쿼리명 : MPAUserMapper.selectUserDtlTab
+        설  명 : [일반 , 부품 , 위원 ] 사용자 상세을 조회한다.
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.10    양현우       최초생성
     -->
     <select id="selectUserDtlTab" parameterType="MPAUserDto" resultType="MPAUserDto">
-            select mem.mem_seq
-                 , mem.id
-                 , mem.name
-                 , mem.zipcode
-                 , mem.bsc_addr
-                 , mem.dtl_addr
-                 , mem.tel_no
-                 , mem.hp_no
-                 , mem.email
-                 , mem.birth
-                 , mem.gndr
-                 , mem.mod_dtm
-                 , mem.ntfy_sms_rcv_chng_dtm
-                 , mem.ntfy_sms_rcv_yn
-                 , mem.ntfy_email_rcv_chng_dtm
-                 , mem.ntfy_email_rcv_yn
-                 , mem.mem_cd
-                 , mem.work_bsnm_no
-                 , cmpn_mst.cmpn_nm
-                 , cmpn_mst.ctgry_cd
-                 , mem.dept_cd
-                 , mem.dept_dtl_nm
-                 , mem.pstn_cd
-                 , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
-                        when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
-                        else null end as mod_name
-            from co_mem_mst mem
-                     inner join ( select mem_mod_seq
-                                       , mem_seq
-                                       , mod_cd
-                                       , reg_id
-                                  from co_mem_mod_log
-                                  where ( mem_mod_seq
-                                            , mem_seq)
-                                            in ( select max(mem_mod_seq)
-                                                      , mem_seq
-                                                 from co_mem_mod_log
-                                                 group by mem_seq )
-                                ) mst
-                        on mem.mem_seq = mst.mem_seq
-                     left outer join co_mem_cmpn_rel cmpn_rel
-                                     on mem.mem_seq = cmpn_rel.mem_seq
-                                         and mem.work_bsnm_no = cmpn_rel.bsnm_no
-                     left outer join cp_cmpn_mst cmpn_mst
-                                     on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
-                 where mem.mem_seq = #{detailsKey}
+        select mem.mem_seq /* MPAUserMapper.selectUserDtlTab */
+             , mem.id
+             , mem.name
+             , mem.zipcode
+             , mem.bsc_addr
+             , mem.dtl_addr
+             , mem.tel_no
+             , mem.hp_no
+             , mem.email
+             , mem.birth
+             , mem.gndr
+             , mem.mod_dtm
+             , mem.ntfy_sms_rcv_chng_dtm
+             , mem.ntfy_sms_rcv_yn
+             , mem.ntfy_email_rcv_chng_dtm
+             , mem.ntfy_email_rcv_yn
+             , mem.mem_cd
+             , mem.cmssr_type_cd
+             , mem.cmssr_cbsn_cd
+             , mem.cmssr_work_cd
+             , mem.cmssr_mplmn_dt
+             , mem.cmssr_rsgnt_dt
+             , mem.cmssr_photo_file_seq
+             , mem.cmssr_mjr_carer_cntn
+             , mem.cmssr_mjr_carer_exps_yn
+             , mem.work_bsnm_no
+             , cmpn_mst.cmpn_nm
+             , cmpn_mst.ctgry_cd
+             , mem.dept_cd
+             , mem.dept_dtl_nm
+             , mem.pstn_cd
+             , mem.reg_dtm
+             , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
+             , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
+                    when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
+                    else null end as reg_name
+             , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
+                    when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
+                    else null end as mod_name
+             , mst.reg_id as mod_id
+             , mem.reg_id as reg_id
+        from co_mem_mst mem
+                 inner join ( select mem_mod_seq
+                                   , mem_seq
+                                   , mod_cd
+                                   , reg_id
+                              from co_mem_mod_log
+                              where ( mem_mod_seq
+                                        , mem_seq)
+                                        in ( select max(mem_mod_seq)
+                                                  , mem_seq
+                                             from co_mem_mod_log
+                                             group by mem_seq )
+        ) mst
+                            on mem.mem_seq = mst.mem_seq
+                 left outer join co_mem_cmpn_rel cmpn_rel
+                                 on mem.mem_seq = cmpn_rel.mem_seq
+                                     and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                 left outer join cp_cmpn_mst cmpn_mst
+                                 on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
+        where mem.mem_seq = #{detailsKey}
     </select>
 
     <!--
@@ -519,142 +559,148 @@
 
 
     <!--
-    쿼리명 : MPAUserMapper.updateUserDtl
-    설  명 : 사용자  수정
-      수정일      수정자       수정내용
-    ==========   ========   ==============
-    2023.11.10    양현우       최초생성
+   쿼리명 : MPAUserMapper.updateUserDtl
+   설  명 :  [일반 , 부품 , 위원 ] 사용자  수정
+     수정일      수정자       수정내용
+   ==========   ========   ==============
+   2023.11.10    양현우       최초생성
 -->
     <update id="updateUserDtl" parameterType="MPAUserDto">
-        update co_mem_mst
-            set work_bsnm_no =#{workBsnmNo}
-              , dept_cd =#{deptCd}
-              , dept_dtl_nm =#{deptDtlNm}
-              , zipcode =#{zipcode}
-              , pstn_cd =#{pstnCd}
-              , bsc_addr =#{bscAddr}
-              , dtl_addr =#{dtlAddr}
-              , tel_no =#{telNo}
-              , email =#{email}
-              , ntfy_sms_rcv_yn=#{ntfySmsRcvYn}
-              , ntfy_email_rcv_yn =#{ntfyEmailRcvYn}
-              , mod_id =#{regId}
-              , mod_ip =#{regIp}
-              , mod_dtm = now()
-            where id =#{id}
+        update co_mem_mst  /* MPAUserMapper.updateUserDtl */
+        set work_bsnm_no =#{workBsnmNo}
+        , dept_cd =#{deptCd}
+        , dept_dtl_nm =#{deptDtlNm}
+        , zipcode =#{zipcode}
+        , pstn_cd =#{pstnCd}
+        , bsc_addr =#{bscAddr}
+        , dtl_addr =#{dtlAddr}
+        , tel_no =#{telNo}
+        , email =#{email}
+        , hp_no =#{hpNo}
+        , ntfy_sms_rcv_yn=#{ntfySmsRcvYn}
+        , ntfy_email_rcv_yn =#{ntfyEmailRcvYn}
+        , cmssr_type_cd =#{cmssrTypeCd}
+        , cmssr_cbsn_cd =#{cmssrCbsnCd}
+        , cmssr_work_cd =#{cmssrWorkCd}
+        , birth =#{birth}
+        , cmssr_mplmn_dt =#{cmssrMplmnDt}
+        <if test="cmssrRsgntDt != ''.toString() ">
+            , cmssr_rsgnt_dt =#{cmssrRsgntDt}
+        </if>
+        , cmssr_mjr_carer_cntn =#{cmssrMjrCarerCntn}
+        , cmssr_mjr_carer_exps_yn =#{cmssrMjrCarerExpsYn}
+        , mod_id =#{regId}
+        , mod_ip =#{regIp}
+        , mod_dtm = now()
+        where id =#{id}
     </update>
 
     <!--
-        쿼리명 : insertUserDtlHistory.insertUserDtlHistory
-        설  명 : 사용자 수정  이력
-          수정일      수정자       수정내용
-        ==========   ========   ==============
-        2023.11.10    양현우       최초생성
-        -->
+    쿼리명 : insertUserDtlHistory.insertUserDtlHistory
+    설  명 :  [일반 , 부품 , 위원 ] 사용자 수정  이력
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.10    양현우       최초생성
+    -->
     <insert id="insertUserDtlHistory" parameterType="MPAUserDto">
-        insert into co_mem_mod_log
-                ( mem_mod_seq
-                , mem_seq
-                , mod_cd
-                , bfre_zipcode
-                , bfre_bsc_addr
-                , bfre_dtl_addr
-                , bfre_email
-                , bfre_dept_cd
-                , bfre_pstn_cd
-                , bfre_tel_no
-                , bfre_bsnm_reg_no
-                , bfre_sms_rcv_yn
-                , bfre_email_rcv_yn
-                , reg_ip
-                , reg_dtm
-                , reg_id
-                 )
-                select #{modSeq}
-                      , mem_seq
-                      , #{modCd}
-                      , zipcode
-                      , bsc_addr
-                      , dtl_addr
-                      , email
-                      , dept_cd
-                      , pstn_cd
-                      , tel_no
-                      , work_bsnm_no
-                      , ntfy_sms_rcv_yn
-                      , ntfy_email_rcv_yn
-                      , #{regIp}
-                      , now()
-                      , #{regId}
-                   from co_mem_mst
-                    where id =#{id}
+        insert into co_mem_mod_log /* MPAUserMapper.insertUserDtlHistory */
+        ( mem_mod_seq
+        , mem_seq
+        , mod_cd
+        , bfre_zipcode
+        , bfre_bsc_addr
+        , bfre_dtl_addr
+        , bfre_email
+        , bfre_dept_cd
+        , bfre_pstn_cd
+        , bfre_tel_no
+        , bfre_bsnm_reg_no
+        , bfre_sms_rcv_yn
+        , bfre_email_rcv_yn
+        , reg_ip
+        , reg_dtm
+        , reg_id
+        )
+        select #{modSeq}
+             , mem_seq
+             , #{modCd}
+             , zipcode
+             , bsc_addr
+             , dtl_addr
+             , email
+             , dept_cd
+             , pstn_cd
+             , tel_no
+             , work_bsnm_no
+             , ntfy_sms_rcv_yn
+             , ntfy_email_rcv_yn
+             , #{regIp}
+             , now()
+             , #{regId}
+        from co_mem_mst
+        where id =#{id}
     </insert>
 
 
     <!--
-    쿼리명 : MPAUserMapper.selectAttcntList
-    설  명 : 일반 사용자 미래차공모전 리스트 조회 (코드 따서 select 추가 해야 됨)
-      수정일      수정자       수정내용
-    ==========   ========   ==============
-    2023.11.13    양현우       최초생성
+   쿼리명 : MPAUserMapper.selectAttcntList
+   설  명 :  [일반 , 부품 ] 사용자 미래차공모전 리스트 조회 (TODO 양현우 코드 확인 후 수정 -> 추후 다시 확인 )
+     수정일      수정자       수정내용
+   ==========   ========   ==============
+   2023.11.13    양현우       최초생성
 -->
     <select id="selectAttcntList" parameterType="MPAAttctnDto" resultType="MPAAttctnDto">
-        select appctn_mst.mem_seq
+        select appctn_mst.mem_seq /* MPAUserMapper.selectAttcntList */
              , appctn_mst.reg_dtm
              , episd_mst.year
              , episd_mst.episd
              , rsume_dtl.appctn_stts_cd
              , rsume_dtl.mng_stts_cd
-             , car_dtl.ctgry_cd
-             , car_dtl.name
-             , car_dtl.wdcrm_cd
-             , case when (select count(*)
-                          from cx_appctn_rsume_prize_car_tmmbr_dtl
-                          where rsume_seq = rsume_dtl.rsume_seq
-                            and rsume_ord = rsume_dtl.rsume_ord ) >0 then '팀'
-                    else '개인' end as participation_category
-           from cx_appctn_mst appctn_mst
-            inner join cx_episd_mst episd_mst
-             on appctn_mst.episd_seq = episd_mst.episd_seq
-            inner join cx_appctn_rsume_dtl rsume_dtl
-             on appctn_mst.appctn_seq =rsume_dtl.appctn_seq
-            inner join cx_appctn_rsume_prize_car_dtl car_dtl
-             on rsume_dtl.rsume_seq = car_dtl.rsume_seq
-              and rsume_dtl.rsume_ord = car_dtl.rsume_ord
-               where appctn_mst.mem_seq=#{detailsKey}
-                   order by appctn_mst.appctn_seq desc
-                limit   #{firstIndex}, #{recordCountPerPage}
-    </select>
-
-    <!--
-쿼리명 : MPAUserMapper.selectAttcntList
-설  명 : 일반 사용자 미래차공모전 갯수 조회
-  수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.13    양현우       최초생성
--->
-    <select id="selectAttcntListCnt" parameterType="MPAAttctnDto" resultType="java.lang.Integer">
-        select count(*)
+             , ( select name from cx_appctn_rsume_prize_car_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 1) as name
+             , ( select ptcpt_type from cx_appctn_rsume_prize_car_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 1) as ptcpt_type
+             , ( select theme_cd from cx_appctn_rsume_prize_car_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 1) as theme_cd
+             , ( select wdcrm_cd from cx_appctn_rsume_prize_car_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 3) as wdcrm_cd
+             , ( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 1) as seoryu_cd
+             , ( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 2) as first_cd
+             , ( select mng_stts_cd from cx_appctn_rsume_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 3) as end_cd
         from cx_appctn_mst appctn_mst
                  inner join cx_episd_mst episd_mst
                             on appctn_mst.episd_seq = episd_mst.episd_seq
                  inner join cx_appctn_rsume_dtl rsume_dtl
                             on appctn_mst.appctn_seq =rsume_dtl.appctn_seq
-                 inner join cx_appctn_rsume_prize_car_dtl car_dtl
-                            on rsume_dtl.rsume_seq = car_dtl.rsume_seq
-                                and rsume_dtl.rsume_ord = car_dtl.rsume_ord
-        where appctn_mst.mem_seq=#{detailsKey}
+        where rsume_ord = 1
+          and appctn_mst.mem_seq=#{detailsKey}
+        order by appctn_mst.appctn_seq desc
+            limit   #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+
+    <!--
+쿼리명 : MPAUserMapper.selectAttcntList
+설  명 :  [일반 , 부품  ] 사용자 미래차공모전 갯수 조회
+  수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.13    양현우       최초생성
+-->
+    <select id="selectAttcntListCnt" parameterType="MPAAttctnDto" resultType="java.lang.Integer">
+        select count(*)  from cx_appctn_mst appctn_mst /* MPAUserMapper.selectAttcntListCnt */
+                                  inner join cx_episd_mst episd_mst
+                                             on appctn_mst.episd_seq = episd_mst.episd_seq
+                                  inner join cx_appctn_rsume_dtl rsume_dtl
+                                             on appctn_mst.appctn_seq =rsume_dtl.appctn_seq
+        where rsume_ord = 1
+          and appctn_mst.mem_seq=#{detailsKey}
     </select>
 
     <!--
 쿼리명 : MPAUserMapper.selectInqrList
 설  명 : 문의 내용 리스트 조회
-  수정일      수정자       수정내용
+ 수정일      수정자       수정내용
 ==========   ========   ==============
 2023.11.13    양현우       최초생성
 -->
     <select id="selectInqrList" parameterType="MPAInqrDto" resultType="MPAInqrDto">
-        select qa_mst.qa_seq
+        select qa_mst.qa_seq /* MPAUserMapper.selectInqrList */
              , qa_mst.reg_dtm as start_inqr_dtm
              , qa_mst.titl
              , rply_dtl.reg_dtm as end_inqr_dtm
@@ -664,14 +710,14 @@
                     when qa_mst.init_chk_dtm is not null and rply_dtl.cntn is null then '접수완료'
                     when qa_mst.init_chk_dtm is not null and rply_dtl.cntn is not null then '답변완료'
                     else null end as inqr_stts
-            from bd_qa_mst qa_mst
-             inner join bd_qa_ctgry_dtl ctgry_dtl
-              on qa_mst.qa_seq = ctgry_dtl.qa_seq
-             left outer join bd_qa_rply_dtl rply_dtl
-               on ctgry_dtl.qa_seq  = rply_dtl.qa_seq
-               where qa_mst.mem_seq =#{detailsKey}
-                order by qa_mst.qa_seq desc
-                 limit   #{firstIndex}, #{recordCountPerPage}
+        from bd_qa_mst qa_mst
+                 inner join bd_qa_ctgry_dtl ctgry_dtl
+                            on qa_mst.qa_seq = ctgry_dtl.qa_seq
+                 left outer join bd_qa_rply_dtl rply_dtl
+                                 on ctgry_dtl.qa_seq  = rply_dtl.qa_seq
+        where qa_mst.mem_seq =#{detailsKey}
+        order by qa_mst.qa_seq desc
+            limit   #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--

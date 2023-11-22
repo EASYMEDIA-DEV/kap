@@ -41,7 +41,7 @@
                     </tr>
                     <tr>
                         <th scope="row" class="bg-gray-lighter">휴대폰번호</th>
-                        <td>${ kl:hpNum(rtnInfo.hpNo)}</td>
+                        <td>${rtnInfo.hpNo}</td>
                         <th scope="row" class="bg-gray-lighter">이메일</th>
                         <td>${rtnInfo.email}</td>
                     </tr>
@@ -61,7 +61,6 @@
                 <li class="tabClick"><a data-toggle="tab" href="#san">상생 사업 현황</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#chat">1:1문의</a></li>
             </ul>
-
             <div class="tab-content">
                 <div id="dtl" class="tab-pane fade in active">
                     <div id="tab1">
@@ -89,10 +88,9 @@
                             <th class="text-center">회차</th>
                             <th class="text-center">교육상태</th>
                             <th class="text-center">부품사명</th>
+                            <th class="text-center">사업자등록번호</th>
                             <th class="text-center">구분</th>
                             <th class="text-center">규모</th>
-                            <th class="text-center">사업자등록번호</th>
-                            <th class="text-center">지역</th>
                             <th class="text-center">과정분류</th>
                             <th class="text-center">과정명</th>
                             <th class="text-center">학습방식</th>
@@ -100,7 +98,7 @@
                         </tr>
                         </thead>
                         <!-- 리스트 목록 결과 -->
-                            <tbody id="listContainer"/>
+                        <tbody id="listContainer"/>
                     </table>
                     <!-- 페이징 버튼 -->
                     <div id="pagingContainer"></div>
@@ -127,10 +125,10 @@
                             <th class="text-center">사업구분</th>
                             <th class="text-center">진행상태</th>
                             <th class="text-center">부품사명</th>
+                            <th class="text-center">사업자등록번호</th>
                             <th class="text-center">구분</th>
                             <th class="text-center">규모</th>
-                            <th class="text-center">사업자등록번호</th>
-                            <th class="text-center">신청분야</th>
+                            <th class="text-center">신청분야/업종</th>
                             <th class="text-center">신청 소재지</th>
                             <th class="text-center">담당위원</th>
                             <th class="text-center">신청일</th>
@@ -166,9 +164,9 @@
                             <th class="text-center">사업명</th>
                             <th class="text-center">진행상태</th>
                             <th class="text-center">부품사명</th>
+                            <th class="text-center">사업자등록번호</th>
                             <th class="text-center">구분</th>
                             <th class="text-center">규모</th>
-                            <th class="text-center">사업자등록번호</th>
                             <th class="text-center">담당위원</th>
                             <th class="text-center">신청일</th>
                         </tr>
@@ -199,8 +197,9 @@
                                 <th class="text-center">사업년도</th>
                                 <th class="text-center">팀장명</th>
                                 <th class="text-center">참여구분</th>
-                                <th class="text-center">카테고리</th>
+                                <th class="text-center">주제</th>
                                 <th class="text-center">시상부문</th>
+                                <th class="text-center">서류심사</th>
                                 <th class="text-center">1차결과</th>
                                 <th class="text-center">최종결과</th>
                                 <th class="text-center">신청일</th>
@@ -228,7 +227,7 @@
                         </div>
                     </div>
 
-                <table class="table table-hover table-striped" >
+                    <table class="table table-hover table-striped" >
                         <thead>
                         <tr>
                             <th class="text-center">번호</th>
@@ -247,6 +246,7 @@
                     <div id="pagingContainerInqr"></div>
                 </div>
             </div>
+
             <hr />
 
             <div class="clearfix">

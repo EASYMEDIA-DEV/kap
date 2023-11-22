@@ -78,40 +78,7 @@ public class MPBMemberPartsSocietyController {
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyListAjax";
     }
 
-    /**
-     * 부품사회원  상세 페이지
-     */
-    @PostMapping(value="/dtl")
-    public String getPartUserDtlAjax(MPAUserDto mpaUserDto ,
-                                 ModelMap modelMap ) throws Exception
-    {
-        try
-        {
-            mpaUserDto.setMemCd("CP");
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            // 코드 set
-            cdDtlList.add("COMPANY_TYPE");
-            cdDtlList.add("MEM_CD");
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
 
-            if(!"".equals(mpaUserDto.getDetailsKey())){
-                modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
-            }
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-
-        return  "mngwserc/mp/mpb/MPBMemberPartsSocietyTabOneAjax";
-    }
 
     /**
      * 관리자 상세 페이지
@@ -144,6 +111,40 @@ public class MPBMemberPartsSocietyController {
         }
 
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyWrite.admin";
+    }
+
+    /**
+     * 부품사회원  상세
+     */
+    @PostMapping(value="/select-tab-one")
+    public String getPartUserDtlAjax(MPAUserDto mpaUserDto ,
+                                     ModelMap modelMap ) throws Exception
+    {
+        try
+        {
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("COMPANY_TYPE");
+            cdDtlList.add("MEM_CD");
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            // 로그인한 계정
+            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+
+            if(!"".equals(mpaUserDto.getDetailsKey())){
+                modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return  "mngwserc/mp/mpb/MPBMemberPartsSocietyTabOneAjax";
     }
 
     /**

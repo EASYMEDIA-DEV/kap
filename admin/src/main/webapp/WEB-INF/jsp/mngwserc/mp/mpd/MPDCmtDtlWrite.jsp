@@ -3,8 +3,9 @@
 
 
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/mp/mpa/MPAUserWriteCtrl">
+    <div class="card-body" data-controller="controller/mp/mpd/MPDCmtDtlWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 상세/수정</h6>
+
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnData.detailsKey}" />
             <!-- CSRF KEY -->
@@ -16,7 +17,7 @@
             <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
             <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
 
-            <h6 class="mt-lg"> 회원 기본 정보 </h6>
+            <h6 class="mt-lg"> 위원 기본 정보 </h6>
 
             <div class="table-responsive col-sm-12 p0 m0">
                 <table class="table">
@@ -28,10 +29,10 @@
                     </colgroup>
                     <tbody>
                     <tr>
-                        <th scope="row" class="bg-gray-lighter">아이디</th>
-                        <td>${rtnInfo.id}</td>
                         <th scope="row" class="bg-gray-lighter">이름</th>
-                        <td>${rtnInfo.name}</td>
+                        <td>${rtnInfo.name} </td>
+                        <th scope="row" class="bg-gray-lighter">위원구분(업종/분야)</th>
+                        <td>${rtnInfo.cmssrTypeCdNm}(${rtnInfo.cmssrCbsnCdNm})</td>
                     </tr>
                     <tr>
                         <th scope="row" class="bg-gray-lighter">휴대폰번호</th>
@@ -40,19 +41,20 @@
                         <td>${rtnInfo.email}</td>
                     </tr>
                     <tr>
-                        <th scope="row" class="bg-gray-lighter">가입일</th>
+                        <th scope="row" class="bg-gray-lighter">최초 등록일시</th>
                         <td> ${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
-                        <th scope="row" class="bg-gray-lighter">최종접속일</th>
-                        <td>${ kl:convertDate(rtnInfo.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
+                        <th scope="row" class="bg-gray-lighter">재직여부</th>
+                        <td>${rtnInfo.cmssrWorkCdNm}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
             <ul class="nav nav-tabs" id="myTabs">
-                <li class="active tabClick"><a data-toggle="tab" href="#dtl">회원 상세 정보</a></li>
-                <li class="tabClick"><a data-toggle="tab" href="#pur">상생사업 신청내역</a></li>
-                <li class="tabClick"><a data-toggle="tab" href="#chat">1:1문의</a></li>
-                <span class="dtl-tab" style="margin-left:55%"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
+                <li class="active tabClick"><a data-toggle="tab" href="#dtl">위원 상세정보</a></li>
+                <li class="tabClick"><a data-toggle="tab" href="#cun">컨설팅 사업 현황</a></li>
+                <li class="tabClick"><a data-toggle="tab" href="#bus">상생 사업 현황</a></li>
+                <li class="tabClick"><a data-toggle="tab" href="#ken">근태 현황</a></li>
+                <span class="dtl-tab" style="margin-left:50%"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
             </ul>
 
             <div class="tab-content">
@@ -60,10 +62,10 @@
                     <div id="tab1">
                     </div>
                 </div>
-                <div id="pur" class="tab-pane fade">
+                <div id="cun" class="tab-pane fade">
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            미래차공모전 신청내역 (총 <span id="listContainerTotCnt">0</span> 건)
+                            컨설팅 사업 현황 (총 <span id="listContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
@@ -78,16 +80,19 @@
                         <tr>
                             <th class="text-center">번호</th>
                             <th class="text-center">사업년도</th>
-                            <th class="text-center">팀장명</th>
-                            <th class="text-center">참여구분</th>
-                            <th class="text-center">주제</th>
-                            <th class="text-center">시상부문</th>
-                            <th class="text-center">서류심사</th>
-                            <th class="text-center">1차결과</th>
-                            <th class="text-center">최종결과</th>
-                            <th class="text-center">신청일</th>
+                            <th class="text-center">사업구분</th>
+                            <th class="text-center">진행상태</th>
+                            <th class="text-center">부품사명</th>
+                            <th class="text-center">사업자등록번호</th>
+                            <th class="text-center">구분</th>
+                            <th class="text-center">규모</th>
+                            <th class="text-center">신청분야/업종</th>
+                            <th class="text-center">신청 소재지</th>
+                            <th class="text-center">개선율(%)</th>
+                            <th class="text-center">지도착수일</th>
+                            <th class="text-center">지도완료일</th>
                         </tr>
-                        </thead
+                        </thead>
                         <!-- 리스트 목록 결과 -->
                             <tbody id="listContainer"/>
                     </table>

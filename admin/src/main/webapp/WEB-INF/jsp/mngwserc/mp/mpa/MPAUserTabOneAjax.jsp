@@ -45,22 +45,24 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row" class="bg-gray-lighter">전화번호 </th>
+                <th scope="row" class="bg-gray-lighter">일반 전화번호 </th>
                 <td> <div class="form-group col-sm-10">
                         <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnDtl.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')"/>
                     </div>
                 </td>
-                <th scope="row" class="bg-gray-lighter">휴대번호 <span style="color: red">*</span></th>
-                <td> <div  class="form-group col-sm-10">
-                        <input type="text" class="form-control input-sm" title="휴대번호" id="hpNo" name="hpNo" value="${rtnDtl.hpNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')"/>
-                    </div>
+            </tr>
+            <tr>
+                <th scope="row" class="bg-gray-lighter">이메일  <span style="color: red">*</span></th>
+                <td> <div class="form-group col-sm-10">
+                    <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnDtl.email}" name="email" maxlength="50" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
+                    <button type="button" class="btn btn-secondary" id="dupEmail" >중복확인</button>
+                </div>
                 </td>
             </tr>
             <tr>
                 <th scope="row" class="bg-gray-lighter">생년월일 </th>
                 <td> <div class="col-sm-10">
                     ${ kl:birthConvert(rtnDtl.birth)}
-
                 </div>
                 </td>
                 <th scope="row" class="bg-gray-lighter">성별 <span style="color: red">*</span></th>
@@ -69,14 +71,7 @@
                 </div>
                 </td>
             </tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">이메일  <span style="color: red">*</span></th>
-                <td> <div class="form-group col-sm-10">
-                    <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnDtl.email}" name="email" maxlength="50" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
-                    <button type="button" class="btn btn-secondary" id="dupEmail" >중복확인</button>
-                    </div>
-                </td>
-            </tr>
+
             <tr>
                 <th scope="row" class="bg-gray-lighter">SMS 수신여부 <span style="color: red">*</span> </th>
                 <td>
@@ -124,7 +119,7 @@
             <tbody>
             <tr>
                 <th scope="row" class="bg-gray-lighter">최종 수정자 <span style="color: red">*</span></th>
-                <td>${rtnDtl.modName}</td>
+                <td>${rtnDtl.modName}(${rtnDtl.modId})</td>
                 <th scope="row" class="bg-gray-lighter">최종 수정일시 <span style="color: red">*</span></th>
                 <td>${ kl:convertDate(rtnDtl.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
             </tr>

@@ -21,7 +21,7 @@ var exports = {
     var tabOne = function () {
         cmmCtrl.frmAjax(function(respObj) {
             ctrl.obj.find("#tab1").html(respObj);
-        }, "/mngwserc/mp/mpa/dtl", $formObj, "POST", "html",'',false);
+        }, "/mngwserc/mp/mpa/select-tab-one", $formObj, "POST", "html",'',false);
 
     }
 
