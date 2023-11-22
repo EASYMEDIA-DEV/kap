@@ -24,13 +24,7 @@
                     <button type="button" class="btn btn-secondary" id="btnBsnmNo" >인증[TODO 양현우]</button> </td>
                 <th scope="row" class="bg-gray-lighter">구분 <span style="color: red">*</span></th>
                 <td>
-                    <select class="form-control input-sm" name="ctgryCd" disabled>
-                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                        <c:if test="${fn:contains(cdList, 'COMPANY010')}">
-                            <option value="${cdList.cd}"  ${rtnDtl.ctgryCd == cdList.cd ? 'selected' : ''} >${cdList.cdNm}</option>
-                        </c:if>
-                    </c:forEach>
-                    </select>
+                    ${rtnDtl.ctgryCdNm}
                 </td>
             </tr>
             <tr>
@@ -38,7 +32,7 @@
                 <td>
                     <select class="form-control input-sm" name="deptCd">
                         <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                            <c:if test="${fn:contains(cdList, 'MEM_CD010')}">
+                            <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
                                 <option value="${cdList.cd}"  ${rtnDtl.deptCd == cdList.cd ? 'selected' : ''}>${cdList.cdNm}</option>
                             </c:if>
                         </c:forEach>
@@ -49,7 +43,7 @@
                 <td>
                     <select class="form-control input-sm" name="pstnCd">
                         <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                            <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
+                            <c:if test="${fn:contains(cdList, 'MEM_CD010')}">
                                 <option value="${cdList.cd}"  ${rtnDtl.pstnCd == cdList.cd ? 'selected' : ''}>${cdList.cdNm}</option>
                             </c:if>
                         </c:forEach>
@@ -84,14 +78,9 @@
                 </td>
             </tr>
             <tr>
-                <th scope="row" class="bg-gray-lighter">전화번호 </th>
+                <th scope="row" class="bg-gray-lighter">일반 전화번호 </th>
                 <td> <div class="form-group col-sm-10">
-                        <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnDtl.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')"/>
-                    </div>
-                </td>
-                <th scope="row" class="bg-gray-lighter">휴대번호 <span style="color: red">*</span></th>
-                <td> <div  class="form-group col-sm-10">
-                        <input type="text" class="form-control input-sm" title="휴대번호" id="hpNo" name="hpNo" value="${rtnDtl.hpNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')"/>
+                        <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnDtl.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"/>
                     </div>
                 </td>
             </tr>
@@ -109,7 +98,7 @@
                     ${ kl:birthConvert(rtnDtl.birth)}
                 </div>
                 </td>
-                <th scope="row" class="bg-gray-lighter">성별 <span style="color: red">*</span></th>
+                <th scope="row" class="bg-gray-lighter">성별 </th>
                 <td> <div class="col-sm-10">
                     ${rtnDtl.gndr}
                 </div>

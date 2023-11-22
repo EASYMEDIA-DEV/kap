@@ -220,13 +220,12 @@ public class MPAUserController {
     /**
      * 일반사용자  상세 페이지
      */
-    @PostMapping(value="/dtl")
+    @PostMapping(value="/select-tab-one")
     public String getUserDtlAjax(MPAUserDto mpaUserDto ,
                              ModelMap modelMap ) throws Exception
     {
         try
         {
-            mpaUserDto.setMemCd("CO");
             // 로그인한 계정
             COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
@@ -336,6 +335,8 @@ public class MPAUserController {
                     cOMailDTO.setField3("일반 사용자");
                 } else if(mpPwdInitDto.getMemCd().equals("CP")) {
                     cOMailDTO.setField3("부품 사회원");
+                } else if(mpPwdInitDto.getMemCd().equals("CS")) {
+                    cOMailDTO.setField3("위원");
                 }
                 cOMailService.sendMail(cOMailDTO, "UserPwdInit.html");
             }

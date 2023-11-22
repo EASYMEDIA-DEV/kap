@@ -9,9 +9,9 @@
                 <td class="text-center">${ list.cnstgCdNm}</td>
                 <td class="text-center">${ list.statusNm}</td>
                 <td class="text-center">${ list.cmpnNm} </td>
+                <td class="text-center">${ kl:bsnmNoConvert(list.appctnBsnmNo)}</td>
                 <td class="text-center">${ list.ctgryCdNm}</td>
                 <td class="text-center">${ list.cmpnSizeCdNm}</td>
-                <td class="text-center">${ kl:bsnmNoConvert(list.appctnBsnmNo)}</td>
                 <td class="text-center">${ list.appctnFldCd}  TODO 양현우 코드?</td>
                 <td class="text-center">${list.rgnsCdNm}  TODO 양현우 코드?</td>
                 <td class="text-center">${list.name}</td>

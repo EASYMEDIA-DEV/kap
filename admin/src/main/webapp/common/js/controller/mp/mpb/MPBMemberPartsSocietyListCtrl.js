@@ -156,7 +156,7 @@ var exports = {
             frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
 
             //파라미터를 물고 가야함.
-            location.href = "/mngwserc/mp/mpa/excel-down?" + frmDataObj.serialize();
+            location.href = "/mngwserc/mp/mpb/excel-down?" + frmDataObj.serialize();
 
             } else {
             alert(msgCtrl.getMsg("fail.reason"));

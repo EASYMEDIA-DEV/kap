@@ -23,7 +23,7 @@ var exports = {
     var tabOne = function () {
         cmmCtrl.frmAjax(function(respObj) {
             ctrl.obj.find("#tab1").html(respObj);
-        }, "/mngwserc/mp/mpb/dtl", $formObj, "POST", "html",'',false);
+        }, "/mngwserc/mp/mpb/select-tab-one", $formObj, "POST", "html",'',false);
 
     }
 
@@ -152,10 +152,41 @@ var exports = {
                 }
             }
         },
+        telNo : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+        },
         searchPostCode : {
             event : {
                 click : function() {
-                    // searchPostCode();
                     cmmCtrl.searchPostCode(width,height,"zipcode","bscAddr","dtlAddr");
 
                 }
@@ -169,7 +200,7 @@ var exports = {
                             $formObj.find("input[name='id']").val(jQuery(this).data("id"));
                             cmmCtrl.frmAjax(function (data){
                                 alert(msgCtrl.getMsg("success.co.coa.pwdInit"));
-                            }, "/mngwserc/comm/pwd-init", $formObj, "post", "json", true);
+                            }, "/mngwserc/mp/mpa/pwd-init", $formObj, "post", "json", true);
                         }
                     }
                 }
@@ -272,6 +303,12 @@ var exports = {
                         alert(msgCtrl.getMsg("fail.mp.mpa.al_012"));
                         return false;
                     }
+                }
+
+                if($("#telNo").val().length < 11) {
+                    alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
+                    return false;
+
                 }
                 return true;
             },

@@ -93,15 +93,12 @@ public class MPDCmtController {
      * 업종/분야 조회
      */
     @PostMapping(value="/cmssrCbsnCd")
-    public String selectCmssrCbsnCd(MPAUserDto mpaUserDto ,
-                              ModelMap modelMap ) throws Exception
+    public String selectCmssrCbsnCd(ModelMap modelMap ) throws Exception
     {
         try
         {
 
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("MEM_CD");
@@ -151,7 +148,6 @@ public class MPDCmtController {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("MEM_CD");
-
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
         modelMap.addAttribute("imgType", imgType);
         return "mngwserc/mp/mpd/MPDCmtWrite.admin";
@@ -218,5 +214,59 @@ public class MPDCmtController {
         }
 
         return "jsonView";
+    }
+
+
+    /**
+     * 위원 상세 페이지
+     */
+    @RequestMapping(value="/dtl-write")
+    public String getCmtDtlPage(MPAUserDto mpaUserDto ,
+                                ModelMap modelMap) throws Exception
+    {
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        modelMap.addAttribute("rtnData", mpaUserDto);
+        if(!"".equals(mpaUserDto.getDetailsKey())){
+            modelMap.addAttribute("rtnInfo", mpaUserService.selectUserDtl(mpaUserDto));
+        }
+        return "mngwserc/mp/mpd/MPDCmtDtlWrite.admin";
+    }
+
+
+
+    /**
+     * 위원  상세
+     */
+    @PostMapping(value="/select-tab-one")
+    public String getUserDtlAjax(MPAUserDto mpaUserDto ,
+                                 ModelMap modelMap ) throws Exception
+    {
+        try
+        {
+            // 로그인한 계정
+            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("MEM_CD");
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            modelMap.addAttribute("imgType", imgType);
+
+            if(!"".equals(mpaUserDto.getDetailsKey())){
+                modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return  "mngwserc/mp/mpd/MPDCmtTabOneAjax";
     }
 }

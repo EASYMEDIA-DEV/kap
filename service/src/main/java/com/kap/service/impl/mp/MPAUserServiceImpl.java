@@ -3,6 +3,7 @@ package com.kap.service.impl.mp;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.*;
+import com.kap.service.COFileService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPAUserService;
@@ -15,7 +16,6 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.egovframe.rte.fdl.cmmn.exception.FdlException;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +25,7 @@ import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -56,6 +57,8 @@ public class MPAUserServiceImpl implements MPAUserService {
     private final COSystemLogService cOSystemLogService;
 
     private final CommonMapper commonMapper;
+
+    private final COFileService cOFileService;
 
 
     private final EgovIdGnrService memModSeqIdgen;
@@ -128,6 +131,11 @@ public class MPAUserServiceImpl implements MPAUserService {
      * 회원 수정
      */
     public int updateUserDtl(MPAUserDto mpaUserDto) throws Exception {
+        if(mpaUserDto.getFileList() != null && !mpaUserDto.getFileList().isEmpty()) {
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(mpaUserDto.getFileList());
+            mpaUserDto.setCmssrPhotoFileSeq(fileSeqMap.get("fileSeq"));
+        }
+
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
         return mpaUserMapper.updateUserDtl(mpaUserDto);
@@ -213,17 +221,18 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     @Override
     public void excelDownload(MPAUserDto mpaUserDto, HttpServletResponse response) throws Exception {
-        if (mpaUserDto.getMemCd().equals("CO")) {
+        if (mpaUserDto.getMemCd().equals("CO")) {   //일반
             excelCo(mpaUserDto, response);
-        } else if(mpaUserDto.getMemCd().equals("CP")) {
+        } else if(mpaUserDto.getMemCd().equals("CP")) { //부품
             excelCp(mpaUserDto, response);
-        } else if(mpaUserDto.getMemCd().equals("CS")) {
+        } else if(mpaUserDto.getMemCd().equals("CS")) { //위원
             excelCs(mpaUserDto, response);
         }
 
     }
 
     private void excelCs(MPAUserDto mpaUserDto, HttpServletResponse response) throws IOException {
+
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFCellStyle style_header = workbook.createCellStyle();
         XSSFCellStyle style_body = workbook.createCellStyle();
@@ -347,7 +356,7 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //휴대폰
             cell = row.createCell(6);
-            cell.setCellValue(list.get(i).getHpNo().substring(0, 3)+"-"+list.get(i).getHpNo().substring(3, 7)+"-"+list.get(i).getHpNo().substring(7, 11));
+            cell.setCellValue(list.get(i).getHpNo());
             cell.setCellStyle(style_body);
 
             //이메일
@@ -357,26 +366,26 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //생일
             cell = row.createCell(8);
-            cell.setCellValue(list.get(i).getBirth() == null ? "-" : list.get(i).getBirth().substring(0,4)+"-"+list.get(i).getBirth().substring(4,6)+"-"+list.get(i).getBirth().substring(6));
+            cell.setCellValue(list.get(i).getBirth());
             cell.setCellStyle(style_body);
 
             //입사일
             cell = row.createCell(9);
-            cell.setCellValue(list.get(i).getCmssrMplmnDt() == null ? "-" : list.get(i).getCmssrMplmnDt().split(" ")[0]);
+            cell.setCellValue(list.get(i).getCmssrMplmnDt());
             cell.setCellStyle(style_body);
 
             //퇴사일
             cell = row.createCell(10);
-            cell.setCellValue(list.get(i).getCmssrRsgntDt() == null ? "-" : list.get(i).getCmssrRsgntDt().split(" ")[0]);
+            cell.setCellValue(list.get(i).getCmssrRsgntDt());
             cell.setCellStyle(style_body);
 
             //주요경력
             cell = row.createCell(11);
-            cell.setCellValue("");
+            cell.setCellValue(list.get(i).getCmssrMjrCarerCntn());
             cell.setCellStyle(style_body);
 
             //등록일
-            cell = row.createCell(7);
+            cell = row.createCell(12);
             cell.setCellValue(list.get(i).getRegDtm() == null ? "-" : list.get(i).getRegDtm().substring(0, list.get(i).getRegDtm().lastIndexOf(":")));
             cell.setCellStyle(style_body);
 
@@ -458,25 +467,59 @@ public class MPAUserServiceImpl implements MPAUserService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(3);
-        cell.setCellValue("휴대폰번호");
+        cell.setCellValue("성별");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(4);
-        cell.setCellValue("이메일");
+        cell.setCellValue("생년월일");
         cell.setCellStyle(style_header);
 
 
         cell = row.createCell(5);
-        cell.setCellValue("가입일");
+        cell.setCellValue("이메일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(6);
-        cell.setCellValue("최종수정자");
+        cell.setCellValue("휴대폰번호");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(7);
-        cell.setCellValue("최종 수정일시");
+        cell.setCellValue("일반 전화번호");
         cell.setCellStyle(style_header);
+
+        cell = row.createCell(8);
+        cell.setCellValue("주소");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(9);
+        cell.setCellValue("우편번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(10);
+        cell.setCellValue("마케팅 활용동의");
+        cell.setCellStyle(style_header);
+        cell = row.createCell(11);
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(12);
+        cell.setCellValue("가입일");
+        cell.setCellStyle(style_header);
+
+
+        row = sheet.createRow(rowNum++);
+        for (int i = 0; i <= 12; i++) {
+            cell = row.createCell(i);
+            cell.setCellStyle(style_header);
+
+            if (i != 10 && i != 11) {
+                sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i)); //열시작, 열종료, 행시작, 행종료 (자바배열과 같이 0부터 시작)
+            } else if(i == 10){
+                cell.setCellValue("E-MAIL");
+            } else if(i == 11) {
+                cell.setCellValue("SMS");
+            }
+        }
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 10,11));
 
             // Body
         List<MPAUserDto> list = mpaUserDto.getList();
@@ -499,31 +542,58 @@ public class MPAUserServiceImpl implements MPAUserService {
             cell.setCellValue(list.get(i).getName());
             cell.setCellStyle(style_body);
 
-            //휴대폰
+            //성별
+            //TODO 양현우 성별 코드
             cell = row.createCell(3);
-            cell.setCellValue(list.get(i).getHpNo().substring(0, 3)+"-"+list.get(i).getHpNo().substring(3, 7)+"-"+list.get(i).getHpNo().substring(7, 11));
+            cell.setCellValue(list.get(i).getGndr());
+            cell.setCellStyle(style_body);
+
+            //생년월일
+            cell = row.createCell(4);
+            cell.setCellValue(list.get(i).getBirth());
             cell.setCellStyle(style_body);
 
             //이메일
-            cell = row.createCell(4);
+            cell = row.createCell(5);
             cell.setCellValue(list.get(i).getEmail());
             cell.setCellStyle(style_body);
 
+            //휴대폰
+            cell = row.createCell(6);
+            cell.setCellValue(list.get(i).getHpNo());
+            cell.setCellStyle(style_body);
+
+            //전화번호
+            cell = row.createCell(7);
+            cell.setCellValue(list.get(i).getTelNo());
+            cell.setCellStyle(style_body);
+            //주소
+            cell = row.createCell(8);
+            String bscAddr = list.get(i).getBscAddr() == null ? "-" : list.get(i).getBscAddr();
+            String dtlAddr = list.get(i).getDtlAddr() == null ? "-" : list.get(i).getDtlAddr();
+            cell.setCellValue(bscAddr + " " + dtlAddr);
+            cell.setCellStyle(style_body);
+
+            //우편번호
+            cell = row.createCell(9);
+            cell.setCellValue(list.get(i).getZipcode());
+            cell.setCellStyle(style_body);
+
+            //이메일 여부
+            cell = row.createCell(10);
+            System.out.println(list.get(i).getNtfyEmailRcvYn());
+            cell.setCellValue(list.get(i).getNtfyEmailRcvYn().toString().equals("Y") ? "O" : "X");
+            cell.setCellStyle(style_body);
+
+            //SMS 여부
+            cell = row.createCell(11);
+            cell.setCellValue(list.get(i).getNtfySmsRcvYn().toString().equals("Y") ? "O" : "X");
+            cell.setCellStyle(style_body);
+
             //가입일
-            cell = row.createCell(5);
+            cell = row.createCell(12);
             cell.setCellValue(list.get(i).getRegDtm() == null ? "-" : list.get(i).getRegDtm().substring(0, list.get(i).getRegDtm().lastIndexOf(":")));
             cell.setCellStyle(style_body);
-
-            //최종수정자
-            cell = row.createCell(6);
-            cell.setCellValue(list.get(i).getModName());
-            cell.setCellStyle(style_body);
-
-            //가입일
-            cell = row.createCell(7);
-            cell.setCellValue(list.get(i).getModDtm() == null ? "-" : list.get(i).getModDtm().substring(0, list.get(i).getModDtm().lastIndexOf(":")));
-            cell.setCellStyle(style_body);
-
         }
 
         // 열 너비 설정
@@ -556,7 +626,7 @@ public class MPAUserServiceImpl implements MPAUserService {
     }
 
     private void excelCp(MPAUserDto mpaUserDto, HttpServletResponse response) throws Exception {
-
+        log.info("asdasfdasdfasdfasdf");
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFCellStyle style_header = workbook.createCellStyle();
         XSSFCellStyle style_body = workbook.createCellStyle();
@@ -594,28 +664,28 @@ public class MPAUserServiceImpl implements MPAUserService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(1);
-        cell.setCellValue("회원번호");
-        cell.setCellStyle(style_header);
-
-        cell = row.createCell(2);
         cell.setCellValue("아이디");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(3);
+        cell = row.createCell(2);
         cell.setCellValue("이름");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(4);
+        cell = row.createCell(3);
         cell.setCellValue("성별");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(4);
+        cell.setCellValue("생년월일");
         cell.setCellStyle(style_header);
 
 
         cell = row.createCell(5);
-        cell.setCellValue("생년월일");
+        cell.setCellValue("부품사명");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(6);
-        cell.setCellValue("부품사명");
+        cell.setCellValue("사업자등록번호");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(7);
@@ -627,23 +697,19 @@ public class MPAUserServiceImpl implements MPAUserService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(9);
-        cell.setCellValue("구분");
-        cell.setCellStyle(style_header);
-
-        cell = row.createCell(10);
-        cell.setCellValue("사업자등록번호");
-        cell.setCellStyle(style_header);
-
-        cell = row.createCell(11);
-        cell.setCellValue("지역");
-        cell.setCellStyle(style_header);
-
-        cell = row.createCell(12);
         cell.setCellValue("휴대폰번호");
         cell.setCellStyle(style_header);
 
+        cell = row.createCell(10);
+        cell.setCellValue("일반 전화번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(11);
+        cell.setCellValue("부서");
+        cell.setCellStyle(style_header);
+
         cell = row.createCell(12);
-        cell.setCellValue("전화번호");
+        cell.setCellValue("직급");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(13);
@@ -681,8 +747,6 @@ public class MPAUserServiceImpl implements MPAUserService {
             } else if(i == 17) {
                 cell.setCellValue("SMS");
             }
-
-
         }
         sheet.addMergedRegion(new CellRangeAddress(0, 0, 16,17));
 
@@ -697,35 +761,35 @@ public class MPAUserServiceImpl implements MPAUserService {
             cell.setCellValue(mpaUserDto.getTotalCount() - i);
             cell.setCellStyle(style_body);
 
-            //회원번호
-            cell = row.createCell(1);
-            cell.setCellValue(list.get(i).getMemSeq());
-            cell.setCellStyle(style_body);
-
             //아이디
-            cell = row.createCell(2);
+            cell = row.createCell(1);
             cell.setCellValue(list.get(i).getId());
             cell.setCellStyle(style_body);
 
             //이름
-            cell = row.createCell(3);
+            cell = row.createCell(2);
             cell.setCellValue(list.get(i).getName());
             cell.setCellStyle(style_body);
 
             //성별
-            //TODO 성별 코드?
-            cell = row.createCell(4);
+            // TODO 양현우 성별 코드 ?
+            cell = row.createCell(3);
             cell.setCellValue(list.get(i).getGndr());
             cell.setCellStyle(style_body);
 
-            //생일
-            cell = row.createCell(5);
-            cell.setCellValue(list.get(i).getBirth()== null ? "-" : list.get(i).getBirth().substring(0, 4)+"."+list.get(i).getBirth().substring(4, 6)+"."+list.get(i).getBirth().substring(6));
+            //생년월일
+            cell = row.createCell(4);
+            cell.setCellValue(list.get(i).getBirth());
             cell.setCellStyle(style_body);
 
             //부품사명
-            cell = row.createCell(6);
+            cell = row.createCell(5);
             cell.setCellValue(list.get(i).getCmpnNm());
+            cell.setCellStyle(style_body);
+
+            //사업자등록번호
+            cell = row.createCell(6);
+            cell.setCellValue(list.get(i).getWorkBsnmNo().substring(0,3)+"-"+list.get(i).getWorkBsnmNo().substring(3,5)+"-"+list.get(i).getWorkBsnmNo().substring(5));
             cell.setCellStyle(style_body);
 
             //구분
@@ -738,25 +802,24 @@ public class MPAUserServiceImpl implements MPAUserService {
             cell.setCellValue(list.get(i).getSizeCdNm());
             cell.setCellStyle(style_body);
 
-            //사업자등록번호
+            //휴대폰번호
             cell = row.createCell(9);
-            cell.setCellValue(list.get(i).getWorkBsnmNo().substring(0,3)+"-"+list.get(i).getWorkBsnmNo().substring(3,5)+"-"+list.get(i).getWorkBsnmNo().substring(5));
+            cell.setCellValue(list.get(i).getHpNo());
             cell.setCellStyle(style_body);
 
-            //지역
+            //일반 전화번호
             cell = row.createCell(10);
-            cell.setCellValue("확인필요 TODO");
-            cell.setCellStyle(style_body);
-
-            //휴대폰
-            cell = row.createCell(11);
-            cell.setCellValue(list.get(i).getHpNo().substring(0, 3)+"-"+list.get(i).getHpNo().substring(3, 7)+"-"+list.get(i).getHpNo().substring(7, 11));
-            cell.setCellStyle(style_body);
-
-            //전화번호
-            //TODO : substring 지역번호 확인 후
-            cell = row.createCell(12);
             cell.setCellValue(list.get(i).getTelNo());
+            cell.setCellStyle(style_body);
+
+            //부서
+            cell = row.createCell(11);
+            cell.setCellValue(list.get(i).getDeptCdNm()+"("+list.get(i).getDeptDtlNm()+")");
+            cell.setCellStyle(style_body);
+
+            //직급
+            cell = row.createCell(12);
+            cell.setCellValue(list.get(i).getPstnCdNm());
             cell.setCellStyle(style_body);
 
             //이메일
@@ -784,7 +847,7 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //SMS 여부
             cell = row.createCell(17);
-            cell.setCellValue(list.get(i).getNtfySmsRcvYn().equals("Y") ? "O" : "X");
+            cell.setCellValue(list.get(i).getNtfySmsRcvYn().toString().equals("Y") ? "O" : "X");
             cell.setCellStyle(style_body);
 
             //가입일 여부

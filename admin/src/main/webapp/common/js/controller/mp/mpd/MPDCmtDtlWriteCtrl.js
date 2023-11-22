@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl)
 
 // set controller name
 var exports = {
-    controller : "controller/mp/mpd/MPDCmtWriteCtrl"
+    controller : "controller/mp/mpd/MPDCmtDtlWriteCtrl"
     };
 
     // get controller object
@@ -12,10 +12,7 @@ var exports = {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-    var $excelObj = ctrl.obj.parent().find(".excel-down");
 
-
-    let dupIdChk = false;
     let dupEmailChk = false;
     let cmssrCd ;
 
@@ -25,18 +22,69 @@ var exports = {
             cmssrCd = respObj.cdDtlList;
         }, "/mngwserc/mp/mpd/cmssrCbsnCd", $formObj, "POST", "json",'',false);
     }
+
+    function datepickerLoad() {
+        // 게시기간(일자) Start -----
+        $.each(jQuery(".datetimepicker_strtDt"), function(i, obj){
+            jQuery(obj).datetimepicker({
+                timepicker : false,
+                format : "Y-m-d",
+                defaultDate : new Date(jQuery("body").data("curtDt")),
+                defaultTime : "00:00",
+                scrollInput : false,
+                scrollMonth : false,
+                scrollTime : false,
+                todayButton: false,
+                onSelectDate : function(selectedDate, selectedObj) {
+                    var strtDt   = selectedDate;
+                    var endDtObj = selectedObj.closest("fieldset").find(".datetimepicker_endDt");
+                    var endDt	 = new Date(endDtObj.val());
+
+                    if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
+                    {
+                        endDtObj.val(selectedObj.val());
+                    }
+
+                    endDtObj.datetimepicker("setOptions", { minDate : strtDt, value : endDtObj.val() });
+
+                    selectedObj.blur();
+                }
+            });
+        });
+
+    }
+
+    //위원 상세 조회
+    var tabOne = function () {
+        cmmCtrl.frmAjax(function(respObj) {
+            ctrl.obj.find("#tab1").html(respObj);
+        }, "/mngwserc/mp/mpd/select-tab-one", $formObj, "POST", "html",'',false);
+    }
+
+    function cmssrCdInit(values) {
+        $(".cmssrCdDiv").show();
+        $("#cmssrCbsnCd").empty();
+        $("#cmssrCbsnCd").append("<option value=''>선택</option>");
+        cmssrCd.MEM_CD.forEach(item => {
+            if (item.cd.includes($("#cmssrTypeCd").val()) && item.dpth == 4 && $("#cmssrTypeCd").val() != '') {
+                var selectValue = $("#cmssrCbsnCdSe").val() == item.cd;
+                if(!values) {
+                    selectValue = false ;
+                }
+                if(selectValue) {
+                    $("#cmssrCbsnCd").append("<option selected value="+item.cd+">"+item.cdNm+"</option>");
+                } else {
+                    $("#cmssrCbsnCd").append("<option value="+item.cd+">"+item.cdNm+"</option>");
+
+                }
+            } else if($("#cmssrTypeCd").val() == 'MEM_CD03004'){
+                $(".cmssrCdDiv").hide();
+            }
+        });
+    }
     // set model
     ctrl.model = {
         id : {
-            btnSearch : {
-                event : {
-                click : function() {
-                //검색버튼 클릭시
-                    cmmCtrl.setFormData($formObj);
-                    search(1);
-                }
-            }
-        },
         email : {
             event : {
                 input : function() {
@@ -44,26 +92,49 @@ var exports = {
                 }
             }
         },
-        id : {
-                event : {
-                    input : function() {
-                        dupIdChk = false;
+        btnPwdInit : {
+            event : {
+                click : function() {
+                    if (confirm(msgCtrl.getMsg("confirm.co.coa.pwdInit")))
+                    {
+                        $formObj.find("input[name='id']").val(jQuery(this).data("id"));
+                        cmmCtrl.frmAjax(function (data){
+                            alert(msgCtrl.getMsg("success.co.coa.pwdInit"));
+                        }, "/mngwserc/mp/mpa/pwd-init", $formObj, "post", "json", true);
                     }
                 }
+            }
         },
 
-        //이메일 중복 체크
+        //휴대폰 자동 하이픈
+        hpNo : {
+            event : {
+                input : function (event) {
+                    let phoneNumber = event.target.value.replace(/[^0-9]/g, '');
+                    const phoneLen = phoneNumber.length;
+
+                    if (phoneLen > 3 && phoneLen <= 7) {
+                        phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                    } else if (phoneLen > 7) {
+                        phoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
+                    }
+                    event.target.value = phoneNumber;
+                }
+            }
+        },
+            //이메일 중복 체크
         dupEmail : {
             event : {
                 click : function() {
                     if($("#email").val().trim().length > 0) {
                         cmmCtrl.frmAjax(function(respObj) {
+                            console.log(respObj.dupChk);
                             if(respObj.dupChk == 'Y') {
                                 dupEmailChk = true;
                                 alert(msgCtrl.getMsg("fail.mp.mpd.al_027"));
                             } else {
                                 dupEmailChk = false;
-                                alert(msgCtrl.getMsg("fail.mp.mpa.al_026"));
+                                alert(msgCtrl.getMsg("fail.mp.mpd.al_026"));
                             }
                         }, "/mngwserc/mp/mpa/dup-email", $formObj, "POST", "json",'',false);
 
@@ -73,56 +144,12 @@ var exports = {
               }
             }
         },
-        //아이디 중복 체크
-        dupId : {
-                event : {
-                    click : function() {
-                        if($("#id").val().trim().length > 0) {
-                            cmmCtrl.frmAjax(function(respObj) {
-                                if(respObj.dupChk == 'Y') {
-                                    dupIdChk = true;
-                                    alert(msgCtrl.getMsg("fail.mp.mpd.al_009"));
-                                } else {
-                                    dupIdChk = false;
-                                    alert(msgCtrl.getMsg("fail.mp.mpd.al_008"));
-                                }
-                            }, "/mngwserc/mp/mpa/dup-id", $formObj, "POST", "json",'',false);
 
-                        } else {
-                            alert(msgCtrl.getMsg("fail.mp.mpd.al_032"));
-                        }
-                                      }
-                }
-        },
-        hpNo : {
-                event : {
-                    input : function (event) {
-                        let phoneNumber = event.target.value.replace(/[^0-9]/g, '');
-                        const phoneLen = phoneNumber.length;
-
-                        if (phoneLen > 3 && phoneLen <= 7) {
-                            phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
-                        } else if (phoneLen > 7) {
-                            phoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
-                        }
-                        event.target.value = phoneNumber;
-                    }
-                }
-        },
         //업종/분야 select 박스
         cmssrTypeCd : {
                 event : {
                     change : function() {
-                        $(".cmssrCdDiv").show();
-                        $("#cmssrCbsnCd").empty();
-                        $("#cmssrCbsnCd").append("<option value=''>선택</option>");
-                        cmssrCd.MEM_CD.forEach(item => {
-                            if (item.cd.includes($(this).val()) && item.dpth == 4 && $(this).val() != '') {
-                                $("#cmssrCbsnCd").append("<option value="+item.cd+">"+item.cdNm+"</option>");
-                            } else if($(this).val() == 'MEM_CD03004'){
-                                $(".cmssrCdDiv").hide();
-                            }
-                        });
+                        cmssrCdInit(false);
                     }
                 }
             },
@@ -162,8 +189,7 @@ var exports = {
                 }
             }
     },
-
-
+    //페이징 목록 갯수
     listRowSizeContainer : {
         event : {
             change : function(){
@@ -180,6 +206,11 @@ var exports = {
         //폼 데이터 처리
         // cmmCtrl.setFormData($formObj);
         commonCodeAjax();
+        tabOne();
+        cmssrCdInit(true);
+        datepickerLoad();
+
+
 
         /* File Dropzone Setting */
         $formObj.find(".dropzone").each(function(){
@@ -198,22 +229,11 @@ var exports = {
                 let chk = true;
 
                 const regex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()-_=+]).{8,16}$/;
-                if(!dupIdChk) {
-                    alert(msgCtrl.getMsg("fail.mp.mpd.al_013"));
-                    chk = false;
-                }
-                if(!dupEmailChk) {
-                    alert(msgCtrl.getMsg("fail.mp.mpd.al_030"));
-                    chk = false;
-                }
-                if($("#pwd").val() != $("#pwdCon").val()) {
-                    alert(msgCtrl.getMsg("fail.mp.mpd.al_028"));
-                    chk = false;
-
-                }
-                if(!regex.test($("#pwd").val())) {
-                    alert(msgCtrl.getMsg("fail.mp.mpd.al_028"));
-                    chk = false;
+                if(jQuery("#email").val() != jQuery("#oldEmail").val()) {
+                    if(!dupEmailChk) {
+                        alert(msgCtrl.getMsg("fail.mp.mpd.al_030"));
+                        chk = false;
+                    }
                 }
                 if($("#cmssrTypeCd").val()!= 'MEM_CD03004') {
                     if($("#cmssrCbsnCd").val() =='' || $("#cmssrCbsnCd").val() ==undefined) {
@@ -221,11 +241,6 @@ var exports = {
                         chk = false;
                     }
                 }
-                if($("#hpNo").val().length !=13) {
-                    alert(msgCtrl.getMsg("fail.mp.mpd.al_033"));
-                    chk = false;
-                }
-
                 $(".dropzone").not(".notRequired").each(function(i){
                     if ($(this).children(".dz-preview").length == 0)
                     {
@@ -240,12 +255,12 @@ var exports = {
             async : {
                 use : true,
                 func : function (){
-                    var actionUrl = "/mngwserc/mp/mpd/insert";
+                    var actionUrl = "/mngwserc/mp/mpa/update";
                     cmmCtrl.fileFrmAjax(function(data){
                         //콜백함수. 페이지 이동
                         if(data.respCnt > 0){
                             alert(msgCtrl.getMsg("fail.mp.mpd.al_004"));
-                            location.replace("./list");
+                            // location.replace("./list");
                         }
                     }, actionUrl, $formObj, "json");
 

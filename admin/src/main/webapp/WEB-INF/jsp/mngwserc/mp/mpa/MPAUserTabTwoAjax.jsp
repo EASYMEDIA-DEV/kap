@@ -7,18 +7,19 @@
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center">${ list.year}</td>
                 <td class="text-center">${ list.name}</td>
-                <td class="text-center">${ list.participationCategory}</td>
-                <td class="text-center">${ list.ctgryCd}</td>
-                <td class="text-center">${ list.wdcrmCd}</td>
-                <td class="text-center">${ list.appctnSttsCd}</td>
-                <td class="text-center">${ list.mngSttsCd}</td>
+                <td class="text-center">${ list.ptcptTypeNm}</td>
+                <td class="text-center">${ list.themeCdNm}</td>
+                <td class="text-center">${ list.wdcrmCdNm}</td>
+                <td class="text-center">${ list.seoryuCdNm}</td>
+                <td class="text-center">${ list.firstCdNm}</td>
+                <td class="text-center">${ list.endCd}</td>
                 <td class="text-center">${ list.regDtm}</td>
             </tr>
         </c:forEach>
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
-            <td colspan="9" class="text-center">
+            <td colspan="10" class="text-center">
                 검색결과가 없습니다.<br>
                 (등록된 데이터가 없습니다.)
             </td>

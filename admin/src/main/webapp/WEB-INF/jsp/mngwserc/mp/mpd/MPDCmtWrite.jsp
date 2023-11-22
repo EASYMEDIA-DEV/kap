@@ -10,11 +10,12 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="lgnSsnId" value="${rtnData.lgnSsnId}">
             <!-- 현재 페이징 번호 -->
-            <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+            <input type="hidden" id="pageIndex" name="pageIndex" class="notRequired" value="${ rtnData.pageIndex == null ? 1 : rtnData.pageIndex}" />
             <!-- 페이징 버튼 사이즈 -->
-            <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
-            <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+            <input type="hidden" id="pageRowSize" name="pageRowSize" class="notRequired" value="${ rtnData.pageRowSize }" />
+            <input type="hidden" id="listRowSize" name="listRowSize" class="notRequired" value="${ rtnData.listRowSize }" />
 
+            <div class="tab-content">
 
             <div class="table-responsive col-sm-12 p0 m0">
                 <table class="table">
@@ -81,7 +82,7 @@
                         <th scope="row" class="bg-gray-lighter">생년월일<span style="color:red">*</span></th>
                         <td>
                                 <div class="input-group">
-                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="birth" value="" title="생일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="birth" value="" title="생일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();"/>
                                     <span class="input-group-btn" style="z-index:0;">
                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                             <em class="ion-calendar"></em>
@@ -107,7 +108,7 @@
                         <th scope="row" class="bg-gray-lighter">입사일<span style="color:red">*</span></th>
                         <td>
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="cmssrMplmnDt" value="" title="입사일"  readonly onclick="cmmCtrl.initCalendar(this);"/>
+                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="cmssrMplmnDt" value="" title="입사일"  readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();"/>
                                 <span class="input-group-btn" style="z-index:0;">
                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                             <em class="ion-calendar"></em>
@@ -118,7 +119,7 @@
                         <th scope="row" class="bg-gray-lighter">퇴사일</th>
                         <td>
                             <div class="input-group">
-                                <input type="text" class="notRequired form-control input-sm datetimepicker_strtDt " name="cmssrRsgntDt" value="" title="퇴사일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+                                <input type="text" class="notRequired form-control input-sm datetimepicker_strtDt " name="cmssrRsgntDt" value="" title="퇴사일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();"/>
                                 <span class="input-group-btn" style="z-index:0;">
                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                             <em class="ion-calendar"></em>
@@ -130,7 +131,7 @@
                     <tr>
                         <th scope="row" class="bg-gray-lighter">휴대폰번호<span style="color:red">*</span></th>
                         <td>
-                            <input type="text" class="form-control input-sm" id="hpNo" title="휴대폰번호" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="10"/>
+                            <input type="text" class="form-control input-sm" id="hpNo" title="휴대폰번호" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"/>
                         </td>
                         <th scope="row" class="bg-gray-lighter">이메일<span style="color:red">*</span></th>
                         <td>

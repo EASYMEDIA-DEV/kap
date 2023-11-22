@@ -41,23 +41,47 @@ public class MPAAttctnDto extends BaseDTO {
     @Schema(title = "팀장명", example = "홍길동")
     private String name;
 
+    @Schema(title = "참여구분 코드", example = "code")
+    private String ptcptType;
+
     @Schema(title = "참여구분", example = "개인")
-    private String participationCategory;
+    private String ptcptTypeNm;
 
-    @Schema(title = "카테고리", example = "공존")
-    private String ctgryCd;
+    @Schema(title = "주제코드", example = "code")
+    private String themeCd;
 
-    @Schema(title = "시상부문", example = "대상")
+    @Schema(title = "주제", example = "미래")
+    private String themeCdNm;
+
+    @Schema(title = "시상식코드", example = "code")
     private String wdcrmCd;
+
+    @Schema(title = "시상식", example = "우수")
+    private String wdcrmCdNm;
+
+    @Schema(title = "서류합불코드", example = "code")
+    private String seoryuCd;
+
+    @Schema(title = "서류합불", example = "통과")
+    private String seoryuCdNm;
+
+    @Schema(title = "1차합불코드", example = "code")
+    private String firstCd;
+
+    @Schema(title = "1차합불", example = "통과")
+    private String firstCdNm;
+
+    @Schema(title = "최종합불코드", example = "code")
+    private String endCd;
+
+    @Schema(title = "최종합불", example = "수상")
+    private String endCdNm;
+
 
     @Schema(title = "회차", example = "1")
     private String episd;
 
-    @Schema(title = "1차결과", example = "탈락")
-    private String appctnSttsCd;
 
-    @Schema(title = "최종결과", example = "수상")
-    private String mngSttsCd;
 
     private List<MPAAttctnDto> list;
 
