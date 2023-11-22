@@ -66,11 +66,6 @@
              , FFLTN_NM
              , DEPT_NM
              , PSTN_NM
-             , MNG_BSN_CD
-             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT MNG_BSN_CD FROM CP_ISTTR_MST
-                WHERE ISTTR_SEQ = #{isttrSeq})) AS MNG_BSN_TWO_NAME
-             , (SELECT DISTINCT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'LEC_CD' AND CD = SUBSTRING(MNG_BSN_CD, 1, 5))
-            AS MNG_BSN_ONE_NAME
              , TEL_NO
              , HP_NO
              , EMAIL

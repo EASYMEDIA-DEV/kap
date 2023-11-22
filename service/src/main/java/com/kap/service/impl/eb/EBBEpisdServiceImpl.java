@@ -1,12 +1,9 @@
 package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.EBACouseDTO;
-import com.kap.core.dto.EBBEpisdDTO;
-import com.kap.core.dto.EBBLctrDTO;
-import com.kap.service.COFileService;
-import com.kap.service.COSeqGnrService;
-import com.kap.service.EBBEpisdService;
+import com.kap.core.dto.*;
+import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
+import com.kap.service.*;
 import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.eb.EBACouseMapper;
 import com.kap.service.dao.eb.EBBEpisdMapper;
@@ -17,6 +14,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,6 +43,10 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 	//DAO
 	private final EBBEpisdMapper eBBEpisdMapper;
+
+
+	//교육장 서비스
+	private final EBFEduRoomService eBFEduRoomService;
 
 	//파일 서비스
 	private final COFileService cOFileService;
@@ -93,7 +95,17 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		EBBEpisdDTO ebbDto = eBBEpisdMapper.selectEpisdDtl(eBBEpisdDTO);
 
+		EBFEduRoomDetailDTO roomDto = new EBFEduRoomDetailDTO();
+		System.out.println("@@@ebbDto = " + ebbDto);
+		if(ebbDto !=null && ebbDto.getPlaceSeq() !=null){
+			roomDto.setDetailsKey(String.valueOf(ebbDto.getPlaceSeq()));
+			roomDto = eBFEduRoomService.selectEduRoomDtl(roomDto);
+		}
+
+
 		map.put("rtnData", ebbDto);
+		map.put("roomDto", roomDto);
+
 
 		return map;
 	}
@@ -107,23 +119,67 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		int respCnt = 0;
 
+		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+		eBBEpisdDTO.setRegId( coaAdmDTO.getId() );
+		eBBEpisdDTO.setRegName( coaAdmDTO.getName() );
+		eBBEpisdDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
+		eBBEpisdDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
+		eBBEpisdDTO.setRegIp( coaAdmDTO.getLoginIp() );
+		eBBEpisdDTO.setModId( coaAdmDTO.getId() );
+		eBBEpisdDTO.setModIp( coaAdmDTO.getLoginIp() );
+
+
 		//파일 처리
 		HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBBEpisdDTO.getFileList());
 
-		eBBEpisdDTO.setEdctnNtctnFileSeq(fileSeqMap.get("edctnNtctnFileSeq"));
+		eBBEpisdDTO.setEdctnNtctnFileSeq(fileSeqMap.get("edctnNtctnFileSeq"));//교육안내문
 
 		//교육차수 등록
 		respCnt = eBBEpisdMapper.insertEpisd(eBBEpisdDTO);
 
 		//eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
 
+
 		//교육강의 상세 등록(온라인교육)
-		/*List<EBBLctrDTO> lctrDtoList = eBBEpisdDTO.getLctrList();
+		List<EBBLctrDTO> lctrDtoList = eBBEpisdDTO.getLctrList();
+
+		//파일첨부 dto 세팅
+		for(EBBLctrDTO tt : lctrDtoList){
+			List<COFileDTO> fileDtoList = new ArrayList();
+			COFileDTO fileDto = new COFileDTO();
+			fileDto.setStatus(tt.getStatus());
+			fileDto.setWidth(tt.getWidth());
+			fileDto.setHeight(tt.getHeight());
+			fileDto.setWebPath(tt.getWebPath());
+			fileDto.setFieldNm(tt.getFieldNm());
+			fileDto.setOrgnFileNm(tt.getOrgnFileNm());
+			fileDto.setFileDsc(tt.getFileDsc());
+			fileDtoList.add(fileDto);
+			tt.setFileList(fileDtoList);
+		}
+
 		for(EBBLctrDTO lctrDto : lctrDtoList){
+
+			lctrDto.setRegId( coaAdmDTO.getId() );
+			lctrDto.setRegName( coaAdmDTO.getName() );
+			lctrDto.setRegDeptCd( coaAdmDTO.getDeptCd() );
+			lctrDto.setRegDeptNm( coaAdmDTO.getDeptNm() );
+			lctrDto.setRegIp( coaAdmDTO.getLoginIp() );
+			lctrDto.setModId( coaAdmDTO.getId() );
+			lctrDto.setModIp( coaAdmDTO.getLoginIp() );
+
+			//파일 처리
+			HashMap<String, Integer> lctrFileSeqMap = cOFileService.setFileInfo(lctrDto.getFileList());
+
+			lctrDto.setThnlFileSeq(lctrFileSeqMap.get("lctrFileSeq"));
+
+
 			int firstEdctnLctrIIdgen = edctnLctrIdgen.getNextIntegerId();
 			lctrDto.setLctrSeq(firstEdctnLctrIIdgen);
 			eBBEpisdMapper.insertLctrDtl(lctrDto);
-		}*/
+
+
+		}
 
 		return respCnt;
 	}

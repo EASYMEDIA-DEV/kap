@@ -14,6 +14,70 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	//var $formObj = ctrl.obj.find("form").eq(0);
 	var $formObj = jQuery("#frmData");
 
+	//var onlineHtml = $.extend({}, $("#onlineList").find("tr.examTr").eq(0));
+	//var onlineFileHtml = $.extend({}, $("#onlineList").find("tr.examTr").eq(1));
+	var onlineHtml = $("#onlineList").find("tr.examTr").eq(0).clone();
+	var onlineFileHtml = $("#onlineList").find("tr.examTr").eq(1).clone(true);
+
+
+	var filedSet = function(data){
+
+		var stduyMthdCd, jdgmtYn;
+
+		if(data === undefined){
+			stduyMthdCd = $("#stduyMthdCd").val();
+			jdgmtYn = $("#jdgmtYn").val();
+		}else{
+			stduyMthdCd = data.stduyMthdCd;
+			jdgmtYn = data.jdgmtYn;
+		}
+
+		//교육방식이 온라인, 블렌디드 일때만 온라인 목차 출력
+		if("STDUY_MTHD01" == stduyMthdCd){
+		$(".onlineSet").css("display", "none");
+
+		$(".onlineSet").find("input:text").each(function(){
+			if($(this).closest("tr").attr("class") !="examTr"){
+				$(this).addClass("notRequired");
+			}
+
+		});
+		$(".onlineSet").find("div.dropzone").each(function(){
+			if($(this).closest("tr").attr("class") !="examTr"){
+				$(this).addClass("notRequired");
+			}
+		});
+	}else{
+		$(".onlineSet").css("display", "");
+
+		$(".onlineSet").find("input:text").each(function(){
+			if($(this).closest("tr").attr("class") !="examTr"){
+				$(this).removeClass("notRequired");
+			}
+
+		});
+		$(".onlineSet").find("div.dropzone").each(function(){
+			if($(this).closest("tr").attr("class") !="examTr"){
+				$(this).removeClass("notRequired");
+			}
+		});
+
+	}
+
+	//평가여부 N일경우 평가항목 숨김
+	if("N" == jdgmtYn){
+		$(".jdgmtYn").css("display", "none");
+		$(".jdgmtYn").find("input:hidden").each(function(){
+			$(this).addClass("notRequired");
+		});
+	}else{
+		$(".jdgmtYn").css("display", "");
+		$(".jdgmtYn").find("input:hidden").each(function(){
+			$(this).removeClass("notRequired");
+		});
+	}
+	}
+
 	// set model
 	ctrl.model = {
 		id : {
@@ -119,6 +183,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 								$("p.stduyDtm").text(data.stduyDtm);
 							}
 
+							filedSet(data);
+
 
 						});
 					}
@@ -140,7 +206,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 								var addr= data.addr;//주소
 								var rprsntTelNo= data.rprsntTelNo;//대표번호
 
-								$("tr.setPlace").find("td").eq(0).find("input[name='placeSeq']").val(placeSeq).prop("disabled", false);
+								$("#placeSeq").val(placeSeq).prop("disabled", false);
+
 								$("tr.setPlace").find("td").eq(0).text(titl);
 								$("tr.setPlace").find("td").eq(1).text(rgnsNm);
 								$("tr.setPlace").find("td").eq(2).text(addr);
@@ -154,19 +221,73 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						});
 					}
 				}
-			}
+			},
 			//설문 검색
 
 			//시험 검색
+			eduExamSearch : {
+				event : {
+					click : function(){
+						cmmCtrl.getExamLayerPop(function(data){
+							if(data.choiceCnt > 1){
+								alert(msgCtrl.getMsg("fail.ex.notSrchExam1"));
+							}else{
+								var examSeq = data.seq;//시험번호
+								var titl = data.titl;//시험 명
+								$("#examSeq").val(examSeq).prop("disabled", false);
+								$("tr.setExg").find("td").eq(0).text(titl);
+								$("tr.notExg").css("display", "none");
+								$("tr.setExg").css("display", "");
+							}
+						});
+					}
+				}
+			},
+
+
 
 			//강사 검색
-		},
+
+
+			//온라인강의 추가/삭제
+
+			btnAdd : {
+				event : {
+					click : function(){
+						onlineHtml.css("display", "").removeClass("examTr").removeClass("notRequired");
+						onlineFileHtml.css("display", "").removeClass("examTr").removeClass("notRequired");
+						$("#onlineList").append("<tr>"+onlineHtml.html()+"</tr><tr>"+onlineFileHtml.html()+"</tr>");
+						onlineHtml.css("display", "none").addClass("examTr").addClass("notRequired");
+						onlineFileHtml.css("display", "none").addClass("examTr").addClass("notRequired");
+
+						var trgtObj = $("#onlineList").find(".dropzone:last");
+						cmmCtrl.setDropzone(trgtObj, {
+							maxFileCnt  : trgtObj.data("maxFileCnt"),
+							maxFileSize : trgtObj.data("maxFileSize"),
+							fileExtn    : trgtObj.data("fileExtn"),
+							fileFieldNm : trgtObj.data("fileFieldNm")
+						})
+					}
+				}
+			},
+
+			btnRemove : {
+				event : {
+					click : function(){
+						debugger;
+						$(this).closest("tr").next().remove();
+						$(this).closest("tr").remove();
+					}
+				}
+			}
+
+
+
+},
 		immediately : function() {
 			//리스트 조회
+			filedSet();
 			//폼 데이터 처리
-
-
-
 
 			var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
 
@@ -277,11 +398,91 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
 						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
 
-
 						actForm.examSeq = $("#examSeq").val();//시험순번
 						actForm.cmptnAutoYn = $("input[name='expsYn']:checked").val();//수료자동여부
 						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
+
+						//온라인교육 강의 관련 배열 세팅
+						var lctrList = new Array();
+						var onlineIndex = 0;
+						var fileIndex = 1;
+						$("#onlineList > tr").each(function(){
+
+							var onlineNm = $(this).find("[name='onlineNm']").val();
+
+							if(!(onlineNm === undefined) && $(this).attr("class") != "examTr"){
+								var onlinePack = {};
+								var onlineUrl = $(this).find("[name='onlineUrl']").val();
+								var onlineTime = $(this).find("[name='onlineTime']").val();
+
+								onlinePack.edctnSeq = actForm.edctnSeq;
+								onlinePack.episdOrd = actForm.episdOrd;
+								onlinePack.episdYear = actForm.episdYear;
+								onlinePack.onlineNm = onlineNm;
+								onlinePack.onlineUrl = onlineUrl;
+								onlinePack.onlineTime = onlineTime;
+
+
+								if(!($("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0) === undefined) &&
+									$("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files != undefined &&
+									$("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files.length > 0){
+
+									$.each($("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files, function(idx, data){
+
+
+										//alt값  data에 넣어주기.
+										data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+										var fileArray = new Array();
+										for (let i in data) {
+											if (data.hasOwnProperty(i)) {
+
+												var tempFile = {};
+
+												tempFile.status = data.status;
+												tempFile.width = data.width;
+												tempFile.height = data.height;
+												tempFile.webPath = data.webPath;
+												tempFile.fieldNm = data.fieldNm;
+												tempFile.orgnFileNm = data.orgnFileNm;
+												tempFile.fileDsc = data.fileDsc;
+
+
+												/*fileArray.push({
+													name: "fileList["+(fileIndex)+"]." + i, value: data[i]
+												})*/
+
+
+												//onlinePack.fileList =  tempFile;
+
+												onlinePack.status = data.status;
+												onlinePack.width = data.width;
+												onlinePack.height = data.height;
+												onlinePack.webPath = data.webPath;
+												onlinePack.fieldNm = data.fieldNm;
+												onlinePack.orgnFileNm = data.orgnFileNm;
+												onlinePack.fileDsc = data.fileDsc;
+
+												/*frmData.push({
+													name: "fileList["+(fileIndex)+"]." + i, value: data[i]
+												});*/
+
+
+											}
+										}
+									})
+								}
+								fileIndex = fileIndex + 1;
+
+								lctrList.push(onlinePack);
+							}
+
+							onlineIndex = onlineIndex + 1;
+						});
+
+						actForm.lctrList = lctrList;
+
 						debugger;
+
 						cmmCtrl.jsonAjax(function(data){
 							alert("저장되었습니다.");
 							location.href = "./list";

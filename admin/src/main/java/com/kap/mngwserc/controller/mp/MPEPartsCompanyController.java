@@ -211,7 +211,7 @@ public class MPEPartsCompanyController {
     }
 
     /**
-     * 팝업을 수정한다.
+     * 부품사를 수정한다.
      *
      */
     @RequestMapping(value="/update")

@@ -24,32 +24,38 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="isttrSeq" name="isttrSeq" value="${rtnInfo.isttrSeq}" />
             <c:if test="${not empty rtnInfo}">
-                <h6 class="mt-lg"> 강사 기본 정보 </h6>
-                <fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">이름</label>
-                        <div class="col-sm-5">${rtnInfo.name}</div>
 
-                        <label class="col-sm-1 control-label">소속</label>
-                        <div class="col-sm-5">${rtnInfo.ffltnNm}</div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">휴대폰번호</label>
-                        <div class="col-sm-5">${ kl:hpNum(rtnInfo.hpNo)}</div>
-                        <label class="col-sm-1 control-label">이메일</label>
-                        <div class="col-sm-5">${rtnInfo.email}</div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">최초 등록일시</label>
-                        <div class="col-sm-5">${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</div>
-                        <label class="col-sm-1 control-label">관련사업</label>
-                        <div class="col-sm-5">${ rtnInfo.mngBsnOneName } / ${ rtnInfo.mngBsnTwoName }</div>
-                    </div>
-                </fieldset>
+                <h6 class="mt-lg"> 강사 기본 정보 </h6>
+                <div class="table-responsive col-sm-12 p0 m0">
+                    <table class="table">
+                        <colgroup>
+                            <col style="width:10%;">
+                            <col style="width:40%;">
+                            <col style="width:10%;">
+                            <col style="width:40%;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row" class="bg-gray-lighter">이름</th>
+                            <td>${rtnInfo.name}</td>
+                            <th scope="row" class="bg-gray-lighter">소속</th>
+                            <td>${rtnInfo.ffltnNm}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-gray-lighter">휴대폰번호</th>
+                            <td>${rtnInfo.hpNo}</td>
+                            <th scope="row" class="bg-gray-lighter">이메일</th>
+                            <td>${rtnInfo.email}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-gray-lighter">등록일</th>
+                            <td> ${kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
+                            <th scope="row" class="bg-gray-lighter">최종접속일</th>
+                            <td> - </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <ul class="nav nav-tabs" id="myTabs">
                     <li class="active tabClick"><a data-toggle="tab" href="#dtl">강사 상세정보</a></li>
                     <li class="tabClick"><a data-toggle="tab" href="#edu">교육 사업 현황</a></li>

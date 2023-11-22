@@ -26,7 +26,7 @@
 
         </td><!--과정분류-->
         <td class="text-center">${list.nm}</td><!--과정명-->
-        <td class="text-center">${list.stduyMthdCdNm}</td><!--학습방식-->
+        <td class="text-center" data-stduyMthdCd="${list.stduyMthdCd}" data-jdgmtYn="${list.jdgmtYn}">${list.stduyMthdCdNm}</td><!--학습방식-->
         <td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td><!--학습시간-->
         <td class="text-center">${list.regName}(${list.regId})</td><!--최초 등록자-->
         <td class="text-center">${list.regDtm}</td><!--최초등록일시-->

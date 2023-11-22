@@ -90,9 +90,21 @@
                                             <label class="col-sm-1 control-label">${targetList.cdNm}<span class="star"> *</span></label>
                                         </c:when>
                                         <c:otherwise>
-                                            <c:if test="${targetList.cdNm ne '기타'}">
+                                            <c:if test="${targetList.cdNm ne '기타' && targetList.cd ne 'ED_TARGET05001'}">
                                                 <label class="checkbox-inline c-checkbox">
-                                                    <input type="checkbox" class="checkboxSingle notRequired" data-name="useYnList" value="${targetList.cd}" name="targetCd"  <c:if test="${kl:forEachChk(targetList.cd, rtnTrgtData) eq 'Y'}">checked</c:if> />
+                                                    <c:set var="tempChk" value="N" />
+                                                    <c:forEach var="rtnTrgtDataList" items="${rtnTrgtData}">
+                                                        <c:if test="${tempChk eq 'N'}">
+                                                            <c:if test="${rtnTrgtDataList.targetCd eq targetList.cd}">
+                                                                <c:set var="tempChk" value="Y" />
+                                                            </c:if>
+                                                            <c:if test="${rtnTrgtDataList.targetCd ne targetList.cd}">
+                                                                <c:set var="tempChk" value="N" />
+                                                            </c:if>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <%--<input type="checkbox" class="checkboxSingle notRequired" data-name="useYnList" value="${targetList.cd}" name="targetCd"  <c:if test="${kl:forEachChk(targetList.cd, rtnTrgtData) eq 'Y'}">checked</c:if> />--%>
+                                                    <input type="checkbox" class="checkboxSingle notRequired" data-name="useYnList" value="${targetList.cd}" name="targetCd"  <c:if test="${tempChk eq 'Y'}">checked</c:if> />
                                                     <span class="ion-checkmark-round"></span> ${targetList.cdNm}
                                                 </label>
                                             </c:if>

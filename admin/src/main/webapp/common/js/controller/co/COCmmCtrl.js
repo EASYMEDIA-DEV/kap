@@ -1701,6 +1701,8 @@ var cmmCtrl = (function(){
 	//getPartsCompanyMemberLayerPop(function(data){data 객체를 받아서 처리});
 	var fn_parts_member_layer_pop = function(fnc){
 		$(".mpbMemberPartsSocietySrchLayer").one('show.bs.modal', function() {
+			var modal = $(this);
+			modal.appendTo("body");
 			// Add class for soft backdrop
 			$(".mpbMemberPartsSocietySrchLayer").find("#btnRefresh").click();
 			$(".mpbMemberPartsSocietySrchLayer").find("#btnSearch").click();

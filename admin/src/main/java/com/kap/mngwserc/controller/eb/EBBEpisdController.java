@@ -1,9 +1,7 @@
 package com.kap.mngwserc.controller.eb;
 
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.EBACouseDTO;
-import com.kap.core.dto.EBBEpisdDTO;
+import com.kap.core.dto.*;
+import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
@@ -11,6 +9,7 @@ import com.kap.service.EBBEpisdService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.runner.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -116,6 +115,7 @@ public class EBBEpisdController {
         HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
 
         EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
+        EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");
 
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -140,7 +140,12 @@ public class EBBEpisdController {
         cOCodeDTO.setCd("ROUND_CD");
         modelMap.addAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
 
-        modelMap.addAttribute("rtnData", rtnDto);
+        modelMap.addAttribute("rtnData", rtnDto);//교육차수 본문
+        modelMap.addAttribute("roomDto", roomDto);//교육장 정보
+        //설문정보
+        //만족도 조사
+        //강사정보
+        //온라인강의
 
 
 
@@ -180,17 +185,8 @@ public class EBBEpisdController {
         @PostMapping(value="/insert")
         public EBBEpisdDTO insertEpisd(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
         {
-            try
-            {
-                System.out.println("eBBEpisdDTO = " + eBBEpisdDTO);
-                COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-                eBBEpisdDTO.setRegId( coaAdmDTO.getId() );
-                eBBEpisdDTO.setRegName( coaAdmDTO.getName() );
-                eBBEpisdDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
-                eBBEpisdDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-                eBBEpisdDTO.setRegIp( coaAdmDTO.getLoginIp() );
-                eBBEpisdDTO.setModId( coaAdmDTO.getId() );
-                eBBEpisdDTO.setModIp( coaAdmDTO.getLoginIp() );
+            try{
+
 
 
                 eBBEpisdService.insertEpisd(eBBEpisdDTO);

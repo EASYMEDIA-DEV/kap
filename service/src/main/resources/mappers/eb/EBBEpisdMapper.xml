@@ -317,6 +317,7 @@
 			 , episd_ord
 			 , parnt_seq
 			 , (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
+		     , jdgmt_yn
 			 , ctgry_cd
 			 , ctgry_cd_nm
 		     , cbsn_cd
@@ -361,6 +362,7 @@
 		     , srv_strt_dtm
 		     , srv_end_dtm
 			 , exam_seq
+		     , exam_nm
 			 , place_nm
 			 , reg_id
 			 , reg_name
@@ -375,6 +377,7 @@
 		           , a.cbsn_cd
 				   , (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
 				   , (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
+		           , b.jdgmt_yn
 				   , b.nm
 				   , b.stduy_mthd_cd
 				   , (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
@@ -404,6 +407,7 @@
 				   , a.srv_strt_dtm
 				   , a.srv_end_dtm
 				   , a.exam_seq
+				   , (SELECT NM FROM ex_exam_mst WHERE exam_seq = A.exam_seq) as exam_nm
 				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
 				   , a.reg_id
 				   , (select name from co_adm_mst where id = a.reg_id) as reg_name
@@ -563,9 +567,9 @@
 			#{edctnSeq}
 			, #{episdOrd}
 			, #{lctrSeq}
-			, #{nm}
-			, #{url}
-			, #{time}
+			, #{onlineNm}
+			, #{onlineUrl}
+			, #{onlineTime}
 			, #{thnlFileSeq}
 			, #{regId}
 			, #{regIp}

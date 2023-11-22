@@ -99,7 +99,10 @@ public class EBBEpisdDTO extends BaseDTO  {
     private String srvEndDtm;
 
     @Schema(title = "시험순번", example = "숫자")
-    private String examSeq;
+    private Integer examSeq;
+    @Schema(title = "시험명", example = "숫자")
+    private String examNm;
+
 
     @Schema(title = "수료자동여부", example = "Y/N")
     private String cmptnAutoYn;
@@ -110,6 +113,10 @@ public class EBBEpisdDTO extends BaseDTO  {
 
     @Schema(title = "카테고리 부모코드번호", example = "숫자")
     private String parntSeq;
+
+    @Schema(title = "평가여부", example = "Y/N")
+    private String jdgmtYn;
+
 
 
     @Schema(title = "카테고리 부모 코드 ", example = "")
