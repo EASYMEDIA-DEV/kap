@@ -59,25 +59,6 @@
                 </div>
             </fieldset>
             <fieldset>
-                <div class="form-group form-inline">
-                    <label class="col-sm-1 control-label">척도기준<span class="star"> *</span></label>
-                    <div class="col-sm-10">
-                        <input type="hidden" name="preMsrStndCd" class="notRequired">
-                        <select class="form-control input-sm wd-sm msrStndCd" name="msr_stnd_cd" id="msrStndCd" title="척도기준" <c:if test="${rtnDto.msrYn eq 'N'}">disabled</c:if>>
-                            <option value="QST05" <c:if test="${rtnDto.msrStndCd eq 'QST05'}">selected</c:if>>5점</option>
-                            <option value="QST06" <c:if test="${rtnDto.msrStndCd eq 'QST06'}">selected</c:if>>7점</option>
-                            <option value="QST07" <c:if test="${rtnDto.msrStndCd eq 'QST07'}">selected</c:if>>10점</option>
-                        </select>
-                        &nbsp;
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="notRequired msrYn" name="msr_yn" value="N" <c:if test="${rtnDto.msrYn eq 'N'}">checked</c:if>  /><span class="ion-checkmark-round"></span> 척도 미사용
-                        </label>
-
-                    </div>
-                </div>
-            </fieldset>
-
-            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
                     <div class="col-sm-11">
