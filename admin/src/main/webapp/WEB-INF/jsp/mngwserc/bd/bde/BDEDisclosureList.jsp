@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/bd/bda/BDANoticeListCtrl">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/bd/bde/BDEDisclosureListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
         <form class="form-horizontal" name="frmSearch" method="post" action="">
             <!-- 현재 페이징 번호 -->
@@ -96,7 +96,6 @@
                             </th>
                             <th class="text-center">번호</th>
                             <th class="text-center">제목</th>
-                            <th class="text-center">조회수</th>
                             <th class="text-center">최초 등록자</th>
                             <th class="text-center">최초 등록일시</th>
                             <th class="text-center">최종 수정자</th>
