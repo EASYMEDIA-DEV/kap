@@ -621,4 +621,17 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 상생사업 관리 (사이트관리)
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl winMngSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("WIN_MNG_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
 }
