@@ -608,4 +608,17 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 경영공시 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl disclosureSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("DISCLOSURE_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
 }
