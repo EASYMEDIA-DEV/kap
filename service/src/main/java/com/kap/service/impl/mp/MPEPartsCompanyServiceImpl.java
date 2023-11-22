@@ -152,8 +152,8 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
             String seq = "";
             String nm = "";
-            int score = 0;
-            int year = 0;
+            String score = "";
+            String year = "";
             String crtfnCmnNm = "";
             int index = 1;
 
@@ -162,25 +162,32 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                 if (sqList == null) {
                     continue sqLoop;
                 }
-                for(String info : sqList) {
-                    if(info == null || info.isEmpty()) {
-                        continue sqLoop;
-                    }
-                }
+
                 seq = sqList.get(0);
                 nm = sqList.get(1);
-                year = Integer.parseInt(sqList.get(3));
-                score = Integer.parseInt(sqList.get(2));
+                year = sqList.get(3);
+                score = sqList.get(2);
                 crtfnCmnNm = sqList.get(4);
 
+
+                if(year.equals("")|| year.isEmpty()) {
+                    mpePartsCompanyDTO.setYear(null);
+                } else {
+                    mpePartsCompanyDTO.setYear(Integer.valueOf(year));
+                }
+
+                if(score.equals("")|| score.isEmpty()) {
+                    mpePartsCompanyDTO.setScore(null);
+                } else {
+                    mpePartsCompanyDTO.setScore(Integer.valueOf(score));
+                }
                 mpePartsCompanyDTO.setNm(nm);
-                mpePartsCompanyDTO.setYear(year);
-                mpePartsCompanyDTO.setScore(score);
                 mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmnNm);
-                mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
                 if (!seq.isEmpty()) {
+                    mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
                     mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
                 } else {
+                    mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
                     mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
                 }
                 index += 1;

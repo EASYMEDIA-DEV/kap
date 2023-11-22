@@ -15,7 +15,7 @@
             <input type="hidden" id="isttrSeq" name="isttrSeq" value="" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                <jsp:param name="srchText" value="등록/수정기간" />
+                <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchOption" value="등록일,수정기간" />
             </jsp:include>
             <!--기간 검색 종료-->
