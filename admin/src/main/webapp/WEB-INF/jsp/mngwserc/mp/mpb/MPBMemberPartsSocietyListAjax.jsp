@@ -12,24 +12,27 @@
         </td>
 
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-        <td class="text-center">
+        <td class="text-center srchListView">
           <a href="javascript:" class="listView" data-details-key="${list.memSeq}">
               ${kl:idMasking(list.id)}
           </a>
         </td>
         <td class="text-center">${kl:nameMasking(list.name)}</td>
-        <td class="text-center">${ list.cmpnNm}</td>
-        <td class="text-center">${ kl:bsnmNoConvert(list.workBsnmNo)}</td>
-        <td class="text-center">${ list.ctgryCdNm}</td>
-        <td class="text-center">${ list.sizeCdNm}</td>
-        <td class="text-center">TODO 양현우 </td>
+        <td class="text-center">${list.cmpnNm}</td>
+        <td class="text-center">${list.ctgryCdNm}</td>
+        <td class="text-center">${list.sizeCdNm}</td>
+        <td class="text-center">${kl:bsnmNoConvert(list.workBsnmNo)}</td>
+        <td class="text-center deptCd" value="${list.deptCd}">${list.deptDtlNm}</td>
         <td class="text-center">${list.pstnCd}</td>
         <td class="text-center">${kl:hpNum(kl:phoneMasking(list.hpNo))}</td>
         <td class="text-center">${kl:emailMasking(list.email)}</td>
-        <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
+        <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
         <td class="text-center">${list.modName}</td>
-        <td class="text-center">${ kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
+        <td class="text-center">${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
       </tr>
+      <input type="hidden" class="layerZipcode" value="${list.zipcode}"/>
+      <input type="hidden" class="layerBscAddr" value="${list.bscAddr}"/>
+      <input type="hidden" class="layerDtlAddr" value="${list.dtlAddr}"/>
     </c:forEach>
   </c:when>
   <c:otherwise>

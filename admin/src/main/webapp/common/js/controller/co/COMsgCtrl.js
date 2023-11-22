@@ -281,7 +281,6 @@ var msgCtrl = (function(){
 					notSrchPlaceCom1: "교육장을 1개만 선택해주세요.",
 				}
 			},
-
 			ex :{
 				deleteCheck:"매칭된 게시물은 삭제 할 수 없습니다.",
 				deleteExamOptn: "응답내용은 최소 1개 이상 존재해야 하므로, 더 이상 삭제할 수 없습니다.",
@@ -289,6 +288,12 @@ var msgCtrl = (function(){
 				notScord100: "배점의 합은 100점을 넘을 수 없습니다.",
 				notSrchExam: "평가지를 선택해주세요.",
 				notSrchExam1: "평가지를 1개만 선택해주세요.",
+			},
+			cb : {
+				cba : {
+					notSrchMember : "부품사 회원을 선택해주세요.",
+					notSrchMember1 : "부품사 회원을 1명만 선택해주세요."
+				}
 			}
 		}
 	};

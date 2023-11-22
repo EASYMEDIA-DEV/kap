@@ -9,95 +9,212 @@
         2023.11.09    양현우       최초생성
     -->
     <select id="selectUserList" parameterType="MPAUserDto" resultType="MPAUserDto">
-        select mem_seq
-             , id
-             , name
-             , hp_no
-             , email
-             , reg_dtm
-             , mod_dtm
-             , mem_cd
-             , work_bsnm_no
-             , mod_name
-             , cmpn_nm
-             , size_cd_nm
-             , ctgry_cd_nm
-             , gndr
-             , tel_no
-             , zipcode
-             , bsc_addr
-             , dtl_addr
-             , ntfy_sms_rcv_yn
-             , ntfy_email_rcv_yn
-             , cmssr_type_cd
-             , cmssr_type_cd_nm
-             , cmssr_cbsn_cd
-             , cmssr_cbsn_cd_nm
-             , cmssr_work_cd
-             , cmssr_work_cd_nm
-             , cmt_mod_name
-             , birth
-             , cmssr_mplmn_dt
-             , cmssr_rsgnt_dt
-           from ( select mem.mem_seq
-                       , mem.id
-                       , mem.name
-                       , mem.hp_no
-                       , mem.email
-                       , mem.reg_dtm
-                       , mem.mod_dtm
-                       , mem.gndr
-                       , mem.mem_cd
-                       , mem.work_bsnm_no
-                       , mem.ntfy_sms_rcv_yn
-                       , mem.ntfy_email_rcv_yn
-                       , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
-                              when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
-                                else null end as mod_name
-                      , cmpn_mst.cmpn_nm
-                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd ) as size_cd_nm
-                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
-                      , cmpn_mst.ctgry_cd
-                      , mem.tel_no
-                      , mem.zipcode
-                      , mem.bsc_addr
-                      , mem.dtl_addr
-                      , mem.cmssr_type_cd
-                      , (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd ) as cmssr_type_cd_nm
-                      , mem.cmssr_cbsn_cd
-                      , (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd ) as cmssr_cbsn_cd_nm
-                      , mem.cmssr_work_cd
-                      , (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd ) as cmssr_work_cd_nm
-                      , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
-                             when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
-                                else null end as cmt_mod_name
-                      , mem.birth
-                      , mem.cmssr_mplmn_dt
-                      , mem.cmssr_rsgnt_dt
-                      , mem.wthdrw_yn
-                     from co_mem_mst mem
-                      inner join ( select mem_mod_seq
-                                        , mem_seq
-                                        , mod_cd
-                                        , reg_id
-                                      from co_mem_mod_log
-                                        where ( mem_mod_seq
-                                              , mem_seq)
-                                         in ( select max(mem_mod_seq)
-                                                   , mem_seq
-                                                 from co_mem_mod_log
-                                                   group by mem_seq ) ) mst
-                       on mem.mem_seq = mst.mem_seq
-                        left outer join co_mem_cmpn_rel cmpn_rel
-                          on mem.mem_seq = cmpn_rel.mem_seq
-                           and mem.work_bsnm_no = cmpn_rel.bsnm_no
-                        left outer join cp_cmpn_mst cmpn_mst
-                          on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no) as ma
+        SELECT MEM_SEQ
+             , ID
+             , NAME
+             , HP_NO
+             , EMAIL
+             , REG_DTM
+             , MOD_DTM
+             , MEM_CD
+             , WORK_BSNM_NO
+             , MOD_NAME
+             , CMPN_NM
+             , SIZE_CD_NM
+             , CTGRY_CD_NM
+             , GNDR
+             , TEL_NO
+             , ZIPCODE
+             , BSC_ADDR
+             , DTL_ADDR
+             , NTFY_SMS_RCV_YN
+             , NTFY_EMAIL_RCV_YN
+             , CMSSR_TYPE_CD
+             , CMSSR_TYPE_CD_NM
+             , CMSSR_CBSN_CD
+             , CMSSR_CBSN_CD_NM
+             , CMSSR_WORK_CD
+             , CMSSR_WORK_CD_NM
+             , CMT_MOD_NAME
+             , BIRTH
+             , CMSSR_MPLMN_DT
+             , CMSSR_RSGNT_DT
+             , CMPN_BSC_ADDR
+             , CMPN_BSC_DTL_ADDR
+             , CMPN_MPLE_CNT
+             , CMPN_TEL_NO
+             , CMPN_SLS_PMT
+             , CMPN_SLS_YEAR
+             , MJR_PRDCT_1
+             , MJR_PRDCT_2
+             , MJR_PRDCT_3
+             , QLTY_5_STAR_CD
+             , QLTY_5_STAR_YEAR
+             , PAY_5_STAR_CD
+             , PAY_5_STAR_YEAR
+             , TCHLG_5_STAR_CD
+             , TCHLG_5_STAR_YEAR
+             , CMPN_ZIPCODE
+           FROM ( SELECT MEM.MEM_SEQ
+                       , MEM.ID
+                       , MEM.NAME
+                       , MEM.HP_NO
+                       , MEM.EMAIL
+                       , MEM.REG_DTM
+                       , MEM.MOD_DTM
+                       , MEM.GNDR
+                       , MEM.MEM_CD
+                       , MEM.WORK_BSNM_NO
+                       , MEM.NTFY_SMS_RCV_YN
+                       , MEM.NTFY_EMAIL_RCV_YN
+                       , CASE WHEN MST.MOD_CD ='AD' THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MST.REG_ID)
+                              WHEN MST.MOD_CD = 'CO' THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MST.REG_ID)
+                                ELSE NULL END AS MOD_NAME
+                      , CMPN_MST.CMPN_NM
+                      , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.SIZE_CD ) AS SIZE_CD_NM
+                      , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.CTGRY_CD ) AS CTGRY_CD_NM
+                      , CMPN_MST.CTGRY_CD
+                      , MEM.TEL_NO
+                      , MEM.ZIPCODE
+                      , MEM.BSC_ADDR
+                      , MEM.DTL_ADDR
+                      , MEM.CMSSR_TYPE_CD
+                      , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_TYPE_CD ) AS CMSSR_TYPE_CD_NM
+                      , MEM.CMSSR_CBSN_CD
+                      , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_CBSN_CD ) AS CMSSR_CBSN_CD_NM
+                      , MEM.CMSSR_WORK_CD
+                      , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_WORK_CD ) AS CMSSR_WORK_CD_NM
+                      , CASE WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) > 0 THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MEM.REG_ID)
+                             WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.REG_ID)
+                                ELSE NULL END AS CMT_MOD_NAME
+                      , MEM.BIRTH
+                      , MEM.CMSSR_MPLMN_DT
+                      , MEM.CMSSR_RSGNT_DT
+                      , MEM.WTHDRW_YN
+                      , CMPN_MST.ZIPCODE AS CMPN_ZIPCODE
+                      , CMPN_MST.BSC_ADDR AS CMPN_BSC_ADDR
+                      , CMPN_MST.DTL_ADDR AS CMPN_BSC_DTL_ADDR
+                      , CMPN_MST.MPLE_CNT AS CMPN_MPLE_CNT
+                      , CMPN_MST.TEL_NO AS CMPN_TEL_NO
+                      , CMPN_MST.SLS_PMT AS CMPN_SLS_PMT
+                      , CMPN_MST.SLS_YEAR AS CMPN_SLS_YEAR
+                      , CMPN_MST.MJR_PRDCT_1
+                      , CMPN_MST.MJR_PRDCT_2
+                      , CMPN_MST.MJR_PRDCT_3
+                      , CMPN_MST.QLTY_5_STAR_CD
+                      , CMPN_MST.QLTY_5_STAR_YEAR
+                      , CMPN_MST.PAY_5_STAR_CD
+                      , CMPN_MST.PAY_5_STAR_YEAR
+                      , CMPN_MST.TCHLG_5_STAR_CD
+                      , CMPN_MST.TCHLG_5_STAR_YEAR
+                     FROM CO_MEM_MST MEM
+                      INNER JOIN ( SELECT MEM_MOD_SEQ
+                                        , MEM_SEQ
+                                        , MOD_CD
+                                        , REG_ID
+                                      FROM CO_MEM_MOD_LOG
+                                        WHERE ( MEM_MOD_SEQ
+                                              , MEM_SEQ)
+                                         IN ( SELECT MAX(MEM_MOD_SEQ)
+                                                   , MEM_SEQ
+                                                 FROM CO_MEM_MOD_LOG
+                                                   GROUP BY MEM_SEQ ) ) MST
+                       ON MEM.MEM_SEQ = MST.MEM_SEQ
+                        LEFT OUTER JOIN CO_MEM_CMPN_REL CMPN_REL
+                          ON MEM.MEM_SEQ = CMPN_REL.MEM_SEQ
+                           AND MEM.WORK_BSNM_NO = CMPN_REL.BSNM_NO
+                        LEFT OUTER JOIN CP_CMPN_MST CMPN_MST
+                          ON CMPN_MST.BSNM_NO  = CMPN_REL.BSNM_NO) AS MA
                         <include refid="selectUserListWhereSql" />
-                            order by ma.reg_dtm desc
+                            ORDER BY MA.REG_DTM DESC
                         <if test="excelYn != 'Y'.toString() ">
-                            limit   #{firstIndex}, #{recordCountPerPage}
+                            LIMIT   #{firstIndex}, #{recordCountPerPage}
                         </if>
+    </select>
+
+    <!--
+    쿼리명 : MPAUserMapper.selectUserCompanyInfoList
+    설  명 : 부품 회원사의 회사 정보를 함께 리스트로 조회한다.
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.09    양현우       최초생성
+-->
+    <select id="selectUserCompanyInfoList" parameterType="MPAUserDto" resultType="MPAUserDto">
+        SELECT mem_seq,
+            id,
+            name,
+            hp_no,
+            email,
+            reg_dtm,
+            mod_dtm,
+            mem_cd,
+            work_bsnm_no,
+            mod_name,
+            cmpn_nm,
+            size_cd_nm,
+            ctgry_cd_nm,
+            gndr,
+            tel_no,
+            zipcode,
+            bsc_addr,
+            dtl_addr,
+            ntfy_sms_rcv_yn,
+            ntfy_email_rcv_yn
+        FROM   (SELECT mem.mem_seq,
+                       mem.id,
+                       mem.name,
+                       mem.hp_no,
+                       mem.email,
+                       mem.reg_dtm,
+                       mem.mod_dtm,
+                       mem.gndr,
+                       mem.mem_cd,
+                       mem.work_bsnm_no,
+                       mem.ntfy_sms_rcv_yn,
+                       mem.ntfy_email_rcv_yn,
+        CASE
+            WHEN mst.mod_cd = 'AD' THEN (SELECT name
+                                         FROM   co_adm_mst
+                                         WHERE  id = mst.reg_id)
+            WHEN mst.mod_cd = 'CO' THEN (SELECT name
+                                        FROM   co_mem_mst
+                                        WHERE  id = mst.reg_id)
+            ELSE NULL
+            end AS mod_name,
+            cmpn_mst.cmpn_nm,
+            (SELECT cd_nm
+            FROM   co_code_mst
+            WHERE  cd = cmpn_mst.size_cd)  AS size_cd_nm,
+            (SELECT cd_nm
+            FROM   co_code_mst
+            WHERE  cd = cmpn_mst.ctgry_cd) AS ctgry_cd_nm,
+            cmpn_mst.ctgry_cd,
+            mem.tel_no,
+            mem.zipcode,
+            mem.bsc_addr,
+            mem.dtl_addr
+            FROM   co_mem_mst mem
+            INNER JOIN (SELECT mem_mod_seq,
+                               mem_seq,
+                               mod_cd,
+                               reg_id
+                        FROM   co_mem_mod_log
+                        WHERE  ( mem_mod_seq, mem_seq ) IN
+                                (SELECT Max(mem_mod_seq),
+                                mem_seq
+                                FROM   co_mem_mod_log
+                                GROUP  BY mem_seq)) mst
+                        ON mem.mem_seq = mst.mem_seq
+            LEFT OUTER JOIN co_mem_cmpn_rel cmpn_rel
+                       ON mem.mem_seq = cmpn_rel.mem_seq
+                       AND mem.work_bsnm_no = cmpn_rel.bsnm_no
+                       LEFT OUTER JOIN cp_cmpn_mst cmpn_mst
+                       ON cmpn_mst.bsnm_no = cmpn_rel.bsnm_no) AS ma
+        <include refid="selectUserListWhereSql" />
+        order by ma.reg_dtm desc
+        <if test="excelYn != 'Y'.toString() ">
+        limit   #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <select id="selectUserListCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">

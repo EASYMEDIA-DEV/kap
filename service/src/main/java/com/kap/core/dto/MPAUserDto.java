@@ -1,6 +1,5 @@
 package com.kap.core.dto;
 
-import com.kap.common.utility.seed.COSeedCipherUtil;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -179,6 +178,39 @@ public class MPAUserDto extends BaseDTO {
     private String pwd;
     @Schema(title="인코딩 패스워드" , example = "")
     private String encPwd;
+
+    @Schema(title="소속 회사 우편번호" , example = "")
+    private String cmpnZipcode;
+    @Schema(title="소속 회사 기본 주소" , example = "")
+    private String cmpnBscAddr;
+    @Schema(title="소속 회사 상세 주소" , example = "")
+    private String cmpnBscDtlAddr;
+    @Schema(title="파일순번" , example = "1")
+    private Integer cmpnMpleCnt;
+    @Schema(title = "전화번호", example = "022344555")
+    private String cmpnTelNo;
+    @Schema(title="매출금액" , example = "")
+    private Integer cmpnSlsPmt;
+    @Schema(title="매출년도" , example = "")
+    private String cmpnSlsYear;
+    @Schema(title = "주요상품1", example = "")
+    private String mjrPrdct1;
+    @Schema(title = "주요상품2", example = "")
+    private String mjrPrdct2;
+    @Schema(title = "주요상품3", example = "")
+    private String mjrPrdct3;
+    @Schema(title = "품질5스타코드", example = "")
+    private String qlty5StarCd;
+    @Schema(title = "품질5스타년도", example = "")
+    private String qlty5StarYear;
+    @Schema(title = "납입5스타코드", example = "")
+    private String pay5StartCd;
+    @Schema(title = "납입5스타년도", example = "")
+    private String pay5StarYear;
+    @Schema(title = "기술5스타코드", example = "")
+    private String tchlg5StarCd;
+    @Schema(title = "기술5스타년도", example = "")
+    private String tchlg5StarYear;
 
 
 
