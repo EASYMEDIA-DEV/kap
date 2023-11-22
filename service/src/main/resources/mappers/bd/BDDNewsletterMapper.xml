@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.kap.service.dao.bd.BDCFaqMapper">
+<mapper namespace="com.kap.service.dao.bd.BDDNewsletterMapper">
     <!--
-     쿼리명 : BDCFaqMapper.selectFaqList
-     설  명 : FAQ 리스트
+     쿼리명 : BDDNewsletterMapper.selectNewsletterList
+     설  명 : 뉴스레터 리스트
      수정일     수정자     수정내용
     ==========  ======  ==============
-    2023.11.20  장두석     최초 생성
+    2023.11.22  장두석     최초 생성
     -->
-    <select id="selectFaqList" parameterType="BDCFaqDTO" resultType="BDCFaqDTO">
-        SELECT /* BDCFaqMapper.selectFaqList */
-            FAQ_SEQ
-            , CTGRY_CD
-            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CTGRY_CD) CTGRY_NAME
+    <select id="selectNewsletterList" parameterType="BDDNewsletterDTO" resultType="BDDNewsletterDTO">
+        SELECT /* BDDNewsletterMapper.selectNewsletterList */
+            NWSLT_SEQ
             , TITL
             , READ_CNT
             , EXPS_YN
@@ -25,35 +23,36 @@
             , MOD_IP
             , MOD_DTM
         FROM
-            BD_FAQ_MST A
+            BD_NWSLT_MST A
         WHERE 1=1
-          <include refid="selectFaqListwhereSql" />
+          <include refid="selectNewsletterListwhereSql" />
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
-    쿼리명 : BDCFaqMapper.getFaqListCnt
-    설  명 : FAQ 목록 개수 카운
+    쿼리명 : BDDNewsletterMapper.getNewsletterListCnt
+    설  명 : 뉴스레터 목록 개수 카운
       수정일      수정자       수정내용
     ==========   ========   ==============
-    2023.11.20    장두석       최초생성
+    2023.11.22    장두석       최초생성
     -->
-    <select id="getFaqListTotCnt" parameterType="BDCFaqDTO" resultType="java.lang.Integer">
-        SELECT /* BDCFaqMapper.getFaqListCnt */
+    <select id="getNewsletterListTotCnt" parameterType="BDDNewsletterDTO" resultType="java.lang.Integer">
+        SELECT /* BDDNewsletterMapper.getNewsletterListCnt */
             COUNT(*)
         FROM
-            BD_FAQ_MST A
+            BD_NWSLT_MST A
         WHERE 1 = 1
-            <include refid="selectFaqListwhereSql" />
+            <include refid="selectNewsletterListwhereSql" />
     </select>
 
-    <select id="selectFaqDtl" parameterType="BDCFaqDTO" resultType="BDCFaqDTO">
-        SELECT /* BDCFaqMapper.selectFaqDtl */
-            FAQ_SEQ
-            , CTGRY_CD
+    <select id="selectNewsletterDtl" parameterType="BDDNewsletterDTO" resultType="BDDNewsletterDTO">
+        SELECT /* BDDNewsletterMapper.selectNewsletterDtl */
+            NWSLT_SEQ
             , TITL
             , CNTN
             , FILE_SEQ
+            , PC_THNL_SEQ
+            , MBL_THNL_SEQ
             , EXPS_YN
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
@@ -64,19 +63,20 @@
             , MOD_IP
             , MOD_DTM
         FROM
-            BD_FAQ_MST A
+            BD_NWSLT_MST A
         WHERE
-            FAQ_SEQ = #{detailsKey}
+            NWSLT_SEQ = #{detailsKey}
     </select>
 
-    <insert id="insertFaq" parameterType="BDCFaqDTO">
-        INSERT /* BDCFaqMapper.insertFaq */ INTO BD_FAQ_MST
+    <insert id="insertNewsletter" parameterType="BDDNewsletterDTO">
+        INSERT /* BDDNewsletterMapper.insertNewsletter */ INTO BD_NWSLT_MST
             (
-            FAQ_SEQ
-            , CTGRY_CD
+            NWSLT_SEQ
             , TITL
             , CNTN
             , FILE_SEQ
+            , PC_THNL_SEQ
+            , MBL_THNL_SEQ
             , READ_CNT
             , EXPS_YN
             , REG_ID
@@ -85,11 +85,12 @@
             )
             VALUES
             (
-            #{faqSeq}
-            , #{ctgryCd}
+            #{nwsltSeq}
             , #{titl}
             , #{cntn}
             , #{fileSeq}
+            , #{pcThnlSeq}
+            , #{mblThnlSeq}
             , 0
             , #{expsYn}
             , #{regId}
@@ -99,62 +100,63 @@
     </insert>
 
     <!--
-    쿼리명 : BDCFaqMapper.updateFaq
-    설  명 : FAQ 수정
+    쿼리명 : BDDNewsletterMapper.updateNewsletter
+    설  명 : 뉴스레터 수정
      수정일	 수정자     수정내용
     ==========   ======   =============
-    2023.11.20   장두석     최초생성
+    2023.11.22   장두석     최초생성
 	-->
-    <update id="updateFaq" parameterType="BDCFaqDTO">
-        UPDATE  /*BDCFaqMapper.updateFaq*/
-            BD_FAQ_MST
+    <update id="updateNewsletter" parameterType="BDDNewsletterDTO">
+        UPDATE  /* BDDNewsletterMapper.updateNewsletter */
+            BD_NWSLT_MST
         SET
-            CTGRY_CD = #{ctgryCd}
-            , TITL = #{titl}
+            TITL = #{titl}
             , CNTN = #{cntn}
             , FILE_SEQ = #{fileSeq}
+            , PC_THNL_SEQ = #{pcThnlSeq}
+            , MBL_THNL_SEQ = #{mblThnlSeq}
             , EXPS_YN = #{expsYn}
             , MOD_ID = #{modId}
             , MOD_IP = #{modIp}
             , MOD_DTM = NOW()
         WHERE 1 = 1
-            AND FAQ_SEQ = #{detailsKey}
+            AND NWSLT_SEQ = #{detailsKey}
     </update>
 
     <!--
-         쿼리명 : BDCFaqMapper.deleteFaq
-         설  명 : FAQ 삭제
+         쿼리명 : BDDNewsletterMapper.deleteNewsletter
+         설  명 : 뉴스레터 삭제
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.20   장두석       최초생성
+        2023.11.22   장두석       최초생성
         -->
-    <delete id="deleteFaq" parameterType="BDCFaqDTO">
-        DELETE /* BDCFaqMapper.deleteFaq */
+    <delete id="deleteNewsletter" parameterType="BDDNewsletterDTO">
+        DELETE /* BDDNewsletterMapper.deleteNewsletter */
         FROM
-        BD_FAQ_MST
+        BD_NWSLT_MST
         <where>
             <choose>
                 <when test="delValueList != null and delValueList.size() > 0">
-                    FAQ_SEQ IN
+                    NWSLT_SEQ IN
                     <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
                         #{delValueList}
                     </foreach>
                 </when>
                 <otherwise>
-                    AND	FAQ_SEQ = #{detailsKey}
+                    AND	NWSLT_SEQ = #{detailsKey}
                 </otherwise>
             </choose>
         </where>
     </delete>
 
     <!--
-    쿼리명 : selectFaqListwhereSql
-    설  명 : FAQ 관리 where Sql
+    쿼리명 : selectNewsletterListwhereSql
+    설  명 : 뉴스레터 관리 where Sql
       수정일      수정자       수정내용
     ==========   ========   ==============
-    2023.11.20    장두석       최초생성
+    2023.11.22    장두석       최초생성
     -->
-    <sql id="selectFaqListwhereSql">
+    <sql id="selectNewsletterListwhereSql">
         <if test="strtDt != null and strtDt != ''">
             <choose>
                 <when test="srchDate == 1">
@@ -174,13 +176,6 @@
                     AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                 </when>
             </choose>
-        </if>
-        <if test="ctgryCdList != null and ctgryCdList.size() > 0">
-            AND (
-            <foreach collection="ctgryCdList" item="ctgryCd" index="index" open="" close="" separator=" OR ">
-                CTGRY_CD = #{ctgryCd}
-            </foreach>
-            )
         </if>
         <if test="expsYnList != null and expsYnList.size() > 0">
             AND (
