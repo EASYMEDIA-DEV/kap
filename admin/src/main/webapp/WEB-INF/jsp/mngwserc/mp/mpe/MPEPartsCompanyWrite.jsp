@@ -35,7 +35,7 @@
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">부품사명<span class="star text-danger"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" id="cmpnNm" name="cmpnNm" value="${rtnInfo.cmpnNm}" readonly title="부품사명" style="width: 200px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="cmpnNm" name="cmpnNm" value="${rtnInfo.cmpnNm}" readonly title="부품사명" style="width: 200px;"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -43,7 +43,7 @@
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">대표자명<span class="star text-danger"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" id="rprsntNm" name="rprsntNm" value="${rtnInfo.rprsntNm}" readonly title="대표자명" style="width: 200px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="rprsntNm" name="rprsntNm" value="${rtnInfo.rprsntNm}" readonly title="대표자명" style="width: 200px;"/>
                                 </div>
 
                                 <label class="col-sm-1 control-label">부품사코드</label>
@@ -111,7 +111,7 @@
                                     <br>
                                     <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" style="width: 400px;"/><br>
                                     <br>
-                                    <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnInfo.dtlAddr}" placeholder="상세주소 입력" maxlength="50" style="width: 400px;"/>
+                                    <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnInfo.dtlAddr}" title="우편번호" placeholder="상세주소 입력" maxlength="50" style="width: 400px;"/>
                                 </div>
                             </div>
                         </fieldset>
