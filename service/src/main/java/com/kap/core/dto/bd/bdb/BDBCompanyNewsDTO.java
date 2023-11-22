@@ -65,7 +65,7 @@ public class BDBCompanyNewsDTO extends BaseDTO {
 
     @Schema(title = "노출여부 리스트")
     @Hidden
-    private List<Character> expsYnList;
+    private List<String> expsYnList;
 
     @Schema(title = "조회 리스트")
     @Hidden

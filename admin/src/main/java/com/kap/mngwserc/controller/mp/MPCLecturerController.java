@@ -96,34 +96,16 @@ public class MPCLecturerController {
     }
 
     /**
-     * 강사 상세 페이지
-     */
-    @PostMapping(value="/dtl")
-    public String getLecturerDtlAjax(MPCLecturerDTO mpcLecturerDTO, ModelMap modelMap ) throws Exception
-    {
-        try
-        {
-            modelMap.addAttribute("rtnDtl", mpcLecturerService.selectLecturerDtl(mpcLecturerDTO));
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-
-        return  "mngwserc/mp/mpc/MPCLecturerTabOneAjax";
-    }
-
-    /**
      *  교육 사업 현황 리스트 조회
      */
     @PostMapping(value = "/select-tab-two")
     public String selectLecturerListPageTabTwoAjax(MPCLecturerDTO mpcLecturerDTO, ModelMap modelMap) throws Exception {
 
+        // 예시 - 추후 삭제예정
+        mpcLecturerDTO.setF("1");
+        mpcLecturerDTO.setQ("나중에지워야할부분");
         modelMap.addAttribute("rtnData", mpcLecturerService.selectLecturerList(mpcLecturerDTO));
+
         return "mngwserc/mp/mpc/MPCLecturerTabTwoAjax";
     }
 
@@ -231,4 +213,5 @@ public class MPCLecturerController {
         }
         return "jsonView";
     }
+
 }

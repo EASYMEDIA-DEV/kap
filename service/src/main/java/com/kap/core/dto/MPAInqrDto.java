@@ -1,6 +1,7 @@
 package com.kap.core.dto;
 
 import com.kap.core.dto.BaseDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.util.List;
@@ -14,17 +15,23 @@ import java.util.List;
 @AllArgsConstructor
 public class MPAInqrDto extends BaseDTO {
 
-    private String titl; //제목
+    @Schema(title = "제목", example = "제목")
+    private String titl;
 
-    private String startInqrDtm; //문의등록일
+    @Schema(title = "문의등록일", example = "date")
+    private String startInqrDtm;
 
-    private String endInqrDtm;  //답변등록일
+    @Schema(title = "답변등록일", example = "date")
+    private String endInqrDtm;
 
-    private String inqrStts; //진행상태
+    @Schema(title = "진행상태", example = "등록")
+    private String inqrStts;
 
-    private String parntCtgryCdNm ; //부모 카테고리
+    @Schema(title = "부모 카테고리", example = "일반")
+    private String parntCtgryCdNm ;
 
-    private String ctgryCdNm;   //카테고리
+    @Schema(title = "카테고리", example = "아이디찾기")
+    private String ctgryCdNm;
 
     private List<MPAInqrDto> list;
 

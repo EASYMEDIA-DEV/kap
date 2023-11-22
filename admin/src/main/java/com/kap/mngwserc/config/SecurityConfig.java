@@ -52,7 +52,6 @@ public class SecurityConfig  {
                         ,"/**/*index*"
                         , "/**/*write*"
                         ,"/mngwsercgateway/login"
-                        , "/mngwserc/dext5editor/upload"
                         , "/mngwserc/upload"
                         , "/mngwserc/dropzone/upload"
                         , "/mngwserc/file/list"

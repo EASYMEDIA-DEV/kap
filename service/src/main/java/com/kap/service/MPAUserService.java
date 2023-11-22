@@ -55,6 +55,16 @@ public interface MPAUserService {
      */
     int selectDupEmail(MPAUserDto mpaUserDto) throws Exception;
 
+    /**
+     * id 중복 검사
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
+    int selectDupId(MPAUserDto mpaUserDto) throws Exception;
+
+
+
     int updateUserDtl(MPAUserDto mpaUserDto) throws Exception;
 
     /**

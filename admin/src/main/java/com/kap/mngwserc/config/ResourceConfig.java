@@ -11,14 +11,9 @@ import java.io.File;
 
 /**
  * <pre>
- * Data config 설정
+ * 첨부파일 UPLOAD context 설정
  * </pre>
  *
- * @ClassName		    : ApiWebMvcConfig.java
- * @Description		: XSS 필터 config 설정
- * @author 박주석
- * @since 2022.01.10
- * @version 1.0
  * @see
  * @Modification Information
  * <pre>

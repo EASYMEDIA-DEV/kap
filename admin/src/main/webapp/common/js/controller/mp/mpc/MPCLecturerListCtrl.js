@@ -13,19 +13,6 @@ define(["ezCtrl"], function(ezCtrl) {
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
-    var callbackAjaxDelete = function(data){
-
-        if (parseInt(data.respCnt, 10) > 0)
-        {
-            alert(msgCtrl.getMsg("success.del.target.none"));
-            location.href = "./list";
-        }
-        else
-        {
-            alert(msgCtrl.getMsg("fail.act"));
-        }
-    };
-
     // set model
     ctrl.model = {
         id : {
@@ -49,12 +36,12 @@ define(["ezCtrl"], function(ezCtrl) {
                     click: function () {
                         var frmDataObj    = $(this).closest("form");
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-                        if(confirm("삭제 처리하겠습니끼?"))
+                        if(confirm("해당 게시물을 삭제하시겠습니까?"))
                         {
                             //삭제 전송
                             cmmCtrl.frmAjax(function(respObj){
                                 if(respObj != undefined && respObj.respCnt > 0){
-                                    var msg = "삭제되었습니다.";
+                                    var msg = "게시물이 삭제되었습니다.";
 
                                     alert(msg);
                                     $formObj.find("#btnSearch").click();
@@ -63,6 +50,8 @@ define(["ezCtrl"], function(ezCtrl) {
                                     alert(msgCtrl.getMsg("fail.act"));
                                 }
                             }, "./delete", frmDataObj, "POST", "json");
+                        } else {
+                            return false;
                         }
 
                     }
@@ -127,12 +116,6 @@ define(["ezCtrl"], function(ezCtrl) {
             if($formObj.find("input[name=srchLecturerComLayer]").size() == 0){
                 search($formObj.find("input[name=pageIndex]").val());
             }
-
-            $("#btn_delete").click(function () {
-                if (confirm(msgCtrl.getMsg("confirm.del"))) {
-                    cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
-                }
-            });
         }
     };
 

@@ -159,6 +159,9 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
             sqLoop:
             for(List<String> sqList : allSqLists) {
+                if (sqList == null) {
+                    continue sqLoop;
+                }
                 for(String info : sqList) {
                     if(info == null || info.isEmpty()) {
                         continue sqLoop;

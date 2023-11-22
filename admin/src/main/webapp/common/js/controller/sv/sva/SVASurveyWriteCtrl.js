@@ -328,22 +328,29 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var surveyType = filedset.data("survey-type");
                         var sub_qstn_ord = "N";
                         var addAnswerCnt = 0;
-                        var msr_stnd_cd = $("select[name=msr_stnd_cd] option:selected").val();
-                        var msr_stnd_text = $("select[name=msr_stnd_cd] option:selected").text();
-                        var msr_yn = $("input[name=msr_yn]:checked").val();
+                        var msr_stnd_cd = $(this).val();
 
                         if ($(this).val()=='QST05' || $(this).val()=='QST06' || $(this).val()=='QST07'){
-                            if (msr_yn == 'N'){
-                                alert('척도 생성이 불가능합니다.');
-                                $(this).val('QST01').prop("selected",true);
-                                $(this).trigger("change");
-                                return;
-                            }
-                            if (msr_stnd_cd != $(this).val()){
-                                alert(msr_stnd_text+' 척도로만 생성 가능합니다');
-                                $(this).val(msr_stnd_cd).prop("selected",true);
-                                $(this).trigger("change");
-                                return;
+
+                            var stnd_cd = "";
+                            var stnd_text = "";
+                            $('.questionType').each(function(){
+                                if ($(this).val()=='QST05'||$(this).val()=='QST06'||$(this).val()=='QST07'){
+                                    if (msr_stnd_cd != $(this).val()){
+                                        stnd_cd = $(this).val();
+                                        stnd_text = $(this).find('option:selected').text();
+                                        return false;
+                                    }
+                                }
+                            });
+
+                            if (stnd_cd != ''){
+                                if (stnd_cd != $(this).val()){
+                                    alert(stnd_text+' 로만 생성 가능합니다');
+                                    $(this).val(stnd_cd).prop("selected",true);
+                                    $(this).trigger("change");
+                                    return;
+                                }
                             }
                         }
 
@@ -532,55 +539,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
-            msrStndCd : {
-                event : {
-                    focus : function(){
-                        var filedset = $(this).closest('fieldset');
-                        filedset.find('input[name=preMsrStndCd]').val($(this).val());
-                    },
-                    change : function() {
-                        var filedset = $(this).closest('fieldset');
-                        var preMsrStndCd = filedset.find('input[name=preMsrStndCd]').val();
-                        var msr_stnd_cd = $("select[name=msr_stnd_cd] option:selected").val();
-
-                        if(!confirm("척도기준 변경 시 이미 생성된 다른 척도기준은 초기화 됩니다\n척도기준을 변경하시겠습니까?")){
-                            $(this).val(preMsrStndCd).prop("selected",true);
-                            return;
-                        }else{
-                            $('.questionType').each(function(){
-                                if ($(this).val()=='QST05' || $(this).val()=='QST06' || $(this).val()=='QST07'){
-                                    if($(this).val() != msr_stnd_cd){
-                                        $(this).val(msr_stnd_cd).prop("selected",true);
-                                        $(this).trigger("change");
-                                    }
-                                }
-                            })
-                        }
-                    }
-                }
-            },
-            msrYn : {
-                event : {
-                    change : function() {
-                        if($(this).is(":checked")){
-                            if(!confirm("척도기준 미사용으로 변경 시 이미 생성된 척도기준은 삭제 됩니다\n척도기준을 미사용으로 변경하시겠습니까?")){
-                                $(this).attr('checked',false);
-                                return;
-                            }else{
-                                $('.questionType').each(function(){
-                                    if ($(this).val()=='QST05' || $(this).val()=='QST06' || $(this).val()=='QST07'){
-                                        $(this).val('QST01').prop("selected",true);
-                                        $(this).trigger("change");
-                                    }
-                                });
-                            }
-                            $('select[name=msr_stnd_cd]').attr('disabled',true);
-                        }else{
-                            $('select[name=msr_stnd_cd]').attr('disabled',false);
-                        }
-                    }
-                }
-            },
         },
         immediately : function() {
 
@@ -615,7 +573,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         if (editorVal < 1)
                         {
                             editorChk = false;
-                            alert(msgCtrl.getMsg("fail.sm.smc.html"));
+                            alert("설문내용을 입력해주세요.");
                             CKEDITOR.instances[jQuery(this).prop("id")].focus();
                             // 에디터 최상단으로 스크롤 이동
                             jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
@@ -644,8 +602,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         svMst.rspnMm = $formObj.find("select[name=rspnMm] option:selected").val();
                         svMst.cntn = $formObj.find(".ckeditorRequired").val();
                         svMst.expsYn = $formObj.find("input[name=expsYn]:checked").val();
-                        svMst.msrStndCd = $formObj.find("select[name=msr_stnd_cd] option:selected").val();
-                        svMst.msrYn = $formObj.find("input[name=msr_yn]").is(":checked") ? "N" : "Y";
                         svMst.svSurveyQstnDtlList = new Array();
 
                         $(".surveyList").each(function(){

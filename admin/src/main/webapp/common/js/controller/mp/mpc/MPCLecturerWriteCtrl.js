@@ -15,13 +15,6 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
 
     var dupEmailChk = true;
 
-    var tabOne = function () {
-        cmmCtrl.frmAjax(function(respObj) {
-            ctrl.obj.find("#tab1").html(respObj);
-        }, "./dtl", $formObj, "POST", "html",'',false);
-
-    }
-
     var tabTwo = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
@@ -120,7 +113,6 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
             //리스트 조회
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
-            tabOne();
             tabTwo();
 
             // 유효성 검사

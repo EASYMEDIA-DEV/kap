@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.bd.BDEDisclosureMapper">
+    <!--
+     쿼리명 : BDEDisclosureMapper.selectDisclosureList
+     설  명 : 경영공시 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.22  장두석     최초 생성
+    -->
+    <select id="selectDisclosureList" parameterType="BDEDisclosureDTO" resultType="BDEDisclosureDTO">
+        SELECT /* BDEDisclosureMapper.selectDisclosureList */
+            DSCLSR_SEQ
+            , TITL
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+            , EXPS_YN
+        FROM
+            BD_MNGDSCLSR_MST A
+        WHERE 1=1
+          <include refid="selectDisclosureListwhereSql" />
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+    쿼리명 : BDEDisclosureMapper.getDisclosureListCnt
+    설  명 : 경영공시 목록 개수 카운트
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.22    장두석       최초생성
+    -->
+    <select id="getDisclosureListTotCnt" parameterType="BDEDisclosureDTO" resultType="java.lang.Integer">
+        SELECT /* BDEDisclosureMapper.getDisclosureListCnt */
+            COUNT(*)
+        FROM
+            BD_MNGDSCLSR_MST A
+        WHERE 1 = 1
+            <include refid="selectDisclosureListwhereSql" />
+    </select>
+
+    <select id="selectDisclosureDtl" parameterType="BDEDisclosureDTO" resultType="BDEDisclosureDTO">
+        SELECT /* BDEDisclosureMapper.selectDisclosureDtl */
+            DSCLSR_SEQ
+            , TITL
+            , CNTN
+            , FILE_SEQ
+            , EXPS_YN
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+        FROM
+            BD_MNGDSCLSR_MST A
+        WHERE
+            DSCLSR_SEQ = #{detailsKey}
+    </select>
+
+    <insert id="insertDisclosure" parameterType="BDEDisclosureDTO">
+        INSERT /* BDEDisclosureMapper.insertDisclosure */ INTO BD_MNGDSCLSR_MST
+            (
+            DSCLSR_SEQ
+            , TITL
+            , CNTN
+            , FILE_SEQ
+            , EXPS_YN
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+            )
+            VALUES
+            (
+            #{dsclsrSeq}
+            , #{titl}
+            , #{cntn}
+            , #{fileSeq}
+            , #{expsYn}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+    쿼리명 : BDEDisclosureMapper.updateDisclosure
+    설  명 : 경영공시 수정
+     수정일	 수정자     수정내용
+    ==========   ======   =============
+    2023.11.22   장두석     최초생성
+	-->
+    <update id="updateDisclosure" parameterType="BDEDisclosureDTO">
+        UPDATE  /*BDEDisclosureDTO.updateDisclosure*/
+            BD_MNGDSCLSR_MST
+        SET
+            TITL = #{titl}
+            , CNTN = #{cntn}
+            , FILE_SEQ = #{fileSeq}
+            , EXPS_YN = #{expsYn}
+            , MOD_ID = #{modId}
+            , MOD_IP = #{modIp}
+            , MOD_DTM = NOW()
+        WHERE 1 = 1
+            AND DSCLSR_SEQ = #{detailsKey}
+    </update>
+
+    <!--
+         쿼리명 : BDEDisclosureMapper.deleteDisclosure
+         설  명 : 경영공시 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.22   장두석       최초생성
+        -->
+    <delete id="deleteDisclosure" parameterType="BDEDisclosureDTO">
+        DELETE /* BDEDisclosureMapper.deleteDisclosure */
+        FROM
+        BD_MNGDSCLSR_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    DSCLSR_SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    AND	DSCLSR_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+    쿼리명 : selectDisclosureListwhereSql
+    설  명 : 경영공시 관리 where Sql
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.22    장두석       최초생성
+    -->
+    <sql id="selectDisclosureListwhereSql">
+        <if test="strtDt != null and strtDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+            </choose>
+        </if>
+        <if test="endDt != null and endDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+            </choose>
+        </if>
+        <if test="expsYnList != null and expsYnList.size() > 0">
+            AND (
+            <foreach collection="expsYnList" item="expsYn" index="index" open="" close="" separator=" OR ">
+                EXPS_YN = #{expsYn}
+            </foreach>
+            )
+        </if>
+        <if test="q != null and q != ''">
+            <choose>
+                <when test="f == 1">
+                    AND TITL LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 2">
+                    AND (
+                    INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <when test="f == 3">
+                    AND (
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </when>
+                <otherwise>
+                    AND (
+                    INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                    INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                    INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY
+            REG_DTM DESC
+    </sql>
+</mapper>
+
+

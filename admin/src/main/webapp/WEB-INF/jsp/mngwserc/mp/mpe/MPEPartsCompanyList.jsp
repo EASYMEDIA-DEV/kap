@@ -91,7 +91,7 @@
             <hr class="mt0" />
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+                    <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="partsComListContainerTotCnt">0</span> 건)
                 </h6>
                 <div class="pull-right ml-sm">
                     <select class="form-control input-sm listRowSizeContainer" >
@@ -120,11 +120,10 @@
                         <th class="text-center">선택</th>
                         <th class="text-center">대표자명</th>
                         <th class="text-center">부품사명</th>
-                        <th class="text-center">부품사코드</th>
+                        <th class="text-center">사업자등록번호</th>
                         <th class="text-center">구분</th>
                         <th class="text-center">규모</th>
-                        <th class="text-center">사업자등록번호</th>
-                        <th class="text-center">지역</th>
+                        <th class="text-center">부품사코드</th>
                         <th class="text-center">매출액(억원)</th>
                         <th class="text-center">직원수</th>
                         <th class="text-center">전화번호</th>

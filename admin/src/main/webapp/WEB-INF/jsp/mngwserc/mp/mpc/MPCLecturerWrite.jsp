@@ -1,48 +1,115 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="rtnData" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/mp/mpc/MPCLecturerWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 상세/수정</h6>
+        <c:choose>
+            <c:when test="${not empty rtnInfo}">
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 상세/수정</h6>
+            </c:when>
+            <c:when test="${empty rtnInfo}">
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
+            </c:when>
+        </c:choose>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
+            <c:if test="${not empty rtnInfo}">
+                <!-- 현재 페이징 번호 -->
+                <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+                <!-- 페이징 버튼 사이즈 -->
+                <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
+                <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+            </c:if>
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnData.detailsKey}" />
             <!-- CSRF KEY -->
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="isttrSeq" name="isttrSeq" value="${rtnInfo.isttrSeq}" />
-            <h6 class="mt-lg"> 강사 기본 정보 </h6>
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">이름</label>
-                    <div class="col-sm-5">${rtnInfo.name}</div>
+            <c:if test="${not empty rtnInfo}">
+                <h6 class="mt-lg"> 강사 기본 정보 </h6>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">이름</label>
+                        <div class="col-sm-5">${rtnInfo.name}</div>
 
-                    <label class="col-sm-1 control-label">소속</label>
-                    <div class="col-sm-5">${rtnInfo.ffltnNm}</div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">휴대폰번호</label>
-                    <div class="col-sm-5">${ kl:hpNum(rtnInfo.hpNo)}</div>
-                    <label class="col-sm-1 control-label">이메일</label>
-                    <div class="col-sm-5">${rtnInfo.email}</div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">최초 등록일시</label>
-                    <div class="col-sm-5">${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</div>
-                    <label class="col-sm-1 control-label">관련사업</label>
-                    <div class="col-sm-5">${ rtnInfo.mngBsnCd }</div>
-                </div>
-            </fieldset>
-            <ul class="nav nav-tabs" id="myTabs">
-                <li class="active tabClick"><a data-toggle="tab" href="#dtl">강사 상세정보</a></li>
-                <li class="tabClick"><a data-toggle="tab" href="#edu">교육 사업 현황</a></li>
-                <span class="dtl-tab" style="margin-left:55%"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
-            </ul>
-
+                        <label class="col-sm-1 control-label">소속</label>
+                        <div class="col-sm-5">${rtnInfo.ffltnNm}</div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">휴대폰번호</label>
+                        <div class="col-sm-5">${ kl:hpNum(rtnInfo.hpNo)}</div>
+                        <label class="col-sm-1 control-label">이메일</label>
+                        <div class="col-sm-5">${rtnInfo.email}</div>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">최초 등록일시</label>
+                        <div class="col-sm-5">${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</div>
+                        <label class="col-sm-1 control-label">관련사업</label>
+                        <div class="col-sm-5">${ rtnInfo.mngBsnOneName } / ${ rtnInfo.mngBsnTwoName }</div>
+                    </div>
+                </fieldset>
+                <ul class="nav nav-tabs" id="myTabs">
+                    <li class="active tabClick"><a data-toggle="tab" href="#dtl">강사 상세정보</a></li>
+                    <li class="tabClick"><a data-toggle="tab" href="#edu">교육 사업 현황</a></li>
+                    <span class="mb0" style="margin-left:70%"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
+                </ul>
+            </c:if>
             <div class="tab-content">
                 <div id="dtl" class="tab-pane fade in active">
                     <div id="tab1">
+                        <fieldset class="mt-sm">
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">이름<span class="star text-danger"> *</span></label>
+                                <div class="col-sm-5">
+                                    <input type="text" class="form-control input-sm" id="name" name="name" value="${rtnInfo.name}" title="이름" placeholder="이름 입력" style="width: 200px;"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <label class="col-sm-1 control-label">소속<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control input-sm notRequired" id="ffltnNm" name="ffltnNm" value="${rtnInfo.ffltnNm}" title="소속" placeholder="소속 입력" style="width: 220px;"/>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <label class="col-sm-1 control-label">부서</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control input-sm notRequired" id="deptNm" name="deptNm" value="${rtnInfo.deptNm}" title="부서" placeholder="부서 입력" style="width: 220px;"/>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <label class="col-sm-1 control-label">직급</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control input-sm notRequired" id="pstnNm" name="pstnNm" value="${rtnInfo.pstnNm}" title="직급" placeholder="직급 입력" style="width: 220px;"/>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <label class="col-sm-1 control-label">전화번호</label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" placeholder="전화번호 입력"  oninput="this.value=this.value.replace(/[^0-9]/g, '')" style="width: 220px;"/>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control input-sm notRequired" id="hpNo" name="hpNo" value="${rtnInfo.hpNo}" title="휴대폰번호" placeholder="휴대폰번호 입력" style="width: 220px;"/>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-inline">
+                            <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnInfo.email}" name="email" maxlength="50" placeholder="이메일 주소 입력"/>
+                                <button type="button" class="btn btn-sm" id="dupEmail" >중복확인</button>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <label class="col-sm-1 control-label">특이사항</label>
+                            <div class="col-sm-5">
+                                <textarea class="form-control input-sm notRequired" id="spclCntn" name="spclCntn" value="${rtnInfo.spclCntn}" title="특이사항" placeholder="특이사항 입력">${rtnInfo.spclCntn}</textarea>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
                 <div id="edu" class="tab-pane fade">
@@ -81,7 +148,7 @@
                     <!-- 페이징 버튼 -->
                     <div id="pagingContainer"></div>
                 </div>
-             </div>
+            </div>
             <hr />
 
             <div class="clearfix">

@@ -1,0 +1,222 @@
+package com.kap.mngwserc.controller.mp;
+
+import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.MPAUserDto;
+import com.kap.service.*;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+/**
+ * <pre>
+ * 위원 관리를 위한 컨트롤러
+ * </pre>
+ *
+ * @ClassName		: MPAUserController.java
+ * @Description		: 위원 관리를 위한 Controller
+ * @author 양현우
+ * @since 2023.11.21
+ * @version 1.0
+ * @see
+ * @Modification Information
+ * <pre>
+ * 		since			author				  description
+ *    ==========    ==============    =============================
+ *    2023.11.21		양현우				   최초 생성
+ * </pre>
+ */
+@Slf4j
+@Controller
+@RequiredArgsConstructor
+@RequestMapping(value="/mngwserc/mp/mpd")
+public class MPDCmtController {
+
+    private final MPAUserService mpaUserService;
+
+    private final COCodeService cOCodeService;
+
+
+    private final MPDCmtService mpdCmtService;
+
+    @Value("${app.file.imageExtns}")
+    private String imgType;
+
+    /**
+     * 위원 목록 조회
+     * @param mpaUserDto
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/list")
+    public String getPartUserListPage(MPAUserDto mpaUserDto ,
+                                      ModelMap modelMap ) throws Exception {
+        mpaUserDto.setMemCd("CS");
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+        cdDtlList.add("MEM_CD");
+        modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+        modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtList.admin";
+    }
+
+    /**
+     * 위원 관리 목록 조회.
+     */
+    @PostMapping(value = "/select")
+    public String selectPartUserListPageAjax(MPAUserDto mpaUserDto ,
+                                             ModelMap modelMap ) throws Exception {
+        mpaUserDto.setMemCd("CS");
+        MPAUserDto mpaUserDto1 = mpaUserService.selectUserList(mpaUserDto);
+        modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtListAjax";
+    }
+
+
+
+    /**
+     * 업종/분야 조회
+     */
+    @PostMapping(value="/cmssrCbsnCd")
+    public String selectCmssrCbsnCd(MPAUserDto mpaUserDto ,
+                              ModelMap modelMap ) throws Exception
+    {
+        try
+        {
+
+            // 로그인한 계정
+            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("MEM_CD");
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    @GetMapping(value = "/excel-down")
+    public void selectUserListExcel(MPAUserDto mpaUserDto ,
+                                    HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            mpaUserDto.setMemCd("CS");
+            mpaUserDto.setExcelYn("Y");
+            //엑셀 생성
+            mpaUserService.excelDownload(mpaUserService.selectUserList(mpaUserDto), response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 위원 등록 페이지
+     */
+    @RequestMapping(value="/write")
+    public String getCmtInsertPage(HttpServletResponse response , ModelMap modelMap) throws Exception
+    {
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+        cdDtlList.add("MEM_CD");
+
+        modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+        modelMap.addAttribute("imgType", imgType);
+        return "mngwserc/mp/mpd/MPDCmtWrite.admin";
+    }
+
+
+    /**
+     * 위원 등록
+     */
+    @PostMapping(value="/insert")
+    public String insertCmt(MPAUserDto mpaUserDto ,
+                                     ModelMap modelMap) throws Exception
+    {
+        try
+        {
+
+            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setModCd("AD"); //임의 관리자 cd
+            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            mpaUserDto.setRegId( lgnCOAAdmDTO.getId() );
+            mpaUserDto.setRegIp( lgnCOAAdmDTO.getLoginIp() );
+            mpaUserDto.setModId( lgnCOAAdmDTO.getId() );
+            mpaUserDto.setModIp( lgnCOAAdmDTO.getLoginIp() );
+            modelMap.addAttribute("respCnt", mpdCmtService.insertCmt(mpaUserDto));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * 위원 삭제
+     */
+    @PostMapping(value="/delete")
+    public String deleteCmt(MPAUserDto mpaUserDto ,
+                            ModelMap modelMap) throws Exception
+    {
+        try
+        {
+
+            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setModCd("AD"); //임의 관리자 cd
+            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            mpaUserDto.setRegId( lgnCOAAdmDTO.getId() );
+            mpaUserDto.setRegIp( lgnCOAAdmDTO.getLoginIp() );
+            mpaUserDto.setModId( lgnCOAAdmDTO.getId() );
+            mpaUserDto.setModIp( lgnCOAAdmDTO.getLoginIp() );
+            modelMap.addAttribute("respCnt", mpdCmtService.deleteCmt(mpaUserDto));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+}

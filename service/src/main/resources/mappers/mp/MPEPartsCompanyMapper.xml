@@ -102,7 +102,7 @@
              , B.year
              , B.crtfn_cmpn_nm
         FROM cp_cmpn_mst A
-        JOIN cp_cmpn_cbsn_dtl B
+        LEFT JOIN cp_cmpn_cbsn_dtl B
         ON A.bsnm_no = B.bsnm_no
         WHERE 1=1
           AND A.BSNM_NO = #{bsnmNo}

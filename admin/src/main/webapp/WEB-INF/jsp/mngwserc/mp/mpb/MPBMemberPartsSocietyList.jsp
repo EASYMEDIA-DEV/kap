@@ -52,8 +52,8 @@
                                     <option value="">전체</option>
                                     <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
                                     <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
-                                    <option value="2" <c:if test="${rtnData.f eq '6'}">selected</c:if>>부품사명</option>
-                                    <option value="2" <c:if test="${rtnData.f eq '7'}">selected</c:if>>사업자등록번호</option>
+                                    <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>부품사명</option>
+                                    <option value="7" <c:if test="${rtnData.f eq '7'}">selected</c:if>>사업자등록번호</option>
                                     <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>휴대폰번호</option>
                                     <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>이메일</option>
                                     <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종수정자</option>
