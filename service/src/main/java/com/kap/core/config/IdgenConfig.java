@@ -306,6 +306,19 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** SMS 내용 관리 상세
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl smiSmsCntnDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SMS_CNTN_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
     /** 강사 관리 상세
      * @return
      */

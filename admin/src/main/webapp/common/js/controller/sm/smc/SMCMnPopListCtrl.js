@@ -10,7 +10,6 @@ define(["ezCtrl"], function(ezCtrl) {
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
-
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
