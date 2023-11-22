@@ -189,6 +189,8 @@ public class MPAUserDto extends BaseDTO {
     private Integer cmpnMpleCnt;
     @Schema(title = "전화번호", example = "022344555")
     private String cmpnTelNo;
+    @Schema(title = "회사 대표자", example = "")
+    private String rprsntNm;
     @Schema(title="매출금액" , example = "")
     private Integer cmpnSlsPmt;
     @Schema(title="매출년도" , example = "")
@@ -204,15 +206,21 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title = "품질5스타년도", example = "")
     private String qlty5StarYear;
     @Schema(title = "납입5스타코드", example = "")
-    private String pay5StartCd;
+    private String pay5StarCd;
     @Schema(title = "납입5스타년도", example = "")
     private String pay5StarYear;
     @Schema(title = "기술5스타코드", example = "")
     private String tchlg5StarCd;
     @Schema(title = "기술5스타년도", example = "")
     private String tchlg5StarYear;
-
-
-
-
+    @Schema(title = "업종 순번", example = "")
+    private Integer cbsnSeq;
+    @Schema(title = "seq 명", example = "")
+    private Integer seqNm;
+    @Schema(title = "점수", example = "")
+    private String score;
+    @Schema(title = "년도", example = "")
+    private String year;
+    @Schema(title = "인증회사명", example = "")
+    private String crtfnCmpnNm;
 }

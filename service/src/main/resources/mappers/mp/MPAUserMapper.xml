@@ -39,6 +39,8 @@
              , BIRTH
              , CMSSR_MPLMN_DT
              , CMSSR_RSGNT_DT
+             , RPRSNT_NM
+             , CMPN_ZIPCODE
              , CMPN_BSC_ADDR
              , CMPN_BSC_DTL_ADDR
              , CMPN_MPLE_CNT
@@ -54,7 +56,11 @@
              , PAY_5_STAR_YEAR
              , TCHLG_5_STAR_CD
              , TCHLG_5_STAR_YEAR
-             , CMPN_ZIPCODE
+             , CBSN_SEQ
+             , SEQ_NM
+             , SCORE
+             , YEAR
+             , CRTFN_CMPN_NM
            FROM ( SELECT MEM.MEM_SEQ
                        , MEM.ID
                        , MEM.NAME
@@ -91,6 +97,7 @@
                       , MEM.CMSSR_MPLMN_DT
                       , MEM.CMSSR_RSGNT_DT
                       , MEM.WTHDRW_YN
+                      , CMPN_MST.RPRSNT_NM
                       , CMPN_MST.ZIPCODE AS CMPN_ZIPCODE
                       , CMPN_MST.BSC_ADDR AS CMPN_BSC_ADDR
                       , CMPN_MST.DTL_ADDR AS CMPN_BSC_DTL_ADDR
@@ -107,6 +114,11 @@
                       , CMPN_MST.PAY_5_STAR_YEAR
                       , CMPN_MST.TCHLG_5_STAR_CD
                       , CMPN_MST.TCHLG_5_STAR_YEAR
+                      , (SELECT CBSN_SEQ FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS CBSN_SEQ
+                      , (SELECT NM FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS SEQ_NM
+                      , (SELECT SCORE FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS SCORE
+                      , (SELECT YEAR FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS YEAR
+                      , (SELECT CRTFN_CMPN_NM FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS CRTFN_CMPN_NM
                      FROM CO_MEM_MST MEM
                       INNER JOIN ( SELECT MEM_MOD_SEQ
                                         , MEM_SEQ
