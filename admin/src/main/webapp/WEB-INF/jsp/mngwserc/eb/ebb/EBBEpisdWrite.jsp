@@ -16,6 +16,9 @@
             <input type="hidden" class="notRequired" id="prntCd" name="prntCd" value="${rtnDto.prntCd}" />
             <input type="hidden" class="notRequired" id="copyYn" name="copyYn" value="${rtnDto.copyYn}" />
 
+            <input type="hidden" class="notRequired" id="stduyMthdCd" name="stduyMthdCd" value="${rtnDto.stduyMthdCd}" />
+            <input type="hidden" class="notRequired" id="jdgmtYn" name="jdgmtYn" value="${rtnDto.jdgmtYn}" />
+
             <!-- 첨부파일 순번 -->
             <input type="hidden" class="notRequired" id="edctnNtctnFileSeq" name="edctnNtctnFileSeq" value="${rtnDto.edctnNtctnFileSeq}" />
 
@@ -114,7 +117,7 @@
 
                             <label class="col-sm-1 control-label">업종<span class="star text-danger"> *</span></label>
                             <div class="col-sm-4">
-                                <select class="form-control input-sm wd-sm" name="cbsnCd" id="cbsnCd" title="회차">
+                                <select class="form-control input-sm wd-sm" name="cbsnCd" id="cbsnCd" title="업종">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${episdCdList.CBSN_CD}" varStatus="status">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.cbsnCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -260,7 +263,7 @@
                         </div>
                     </fieldset>
 
-                    <fieldset>
+                    <fieldset class="onlineSet" style="display:none;">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">온라인 강의 목차<span class="star text-danger"> *</span></label>
                             <div class="col-sm-11">
@@ -275,28 +278,59 @@
                                         </tr>
                                     </thead>
                                     <!-- 리스트 목록 결과 -->
-                                    <tbody id="listContainer4">
-                                        <tr>
+                                    <tbody id="onlineList">
+                                        <tr class="examTr" style="display: none;">
                                             <td class="text-center" rowspan="2">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                                             <td class="text-center">
-                                                    <input type="text" class="form-control input-sm" id="nm" name="nm" value="${list.url}" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
+                                                <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
                                             </td><!--강의명-->
                                             <td class="text-center">
-                                                    <input type="text" class="form-control input-sm" id="url" name="url" value="${list.url}" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
+                                                <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
                                             </td><!--유튜브 URL-->
                                             <td class="text-center">
-                                                <input type="text" class="form-control input-sm" id="time" name="time" value="${list.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
+                                                <input type="text" class="form-control input-sm notRequired" name="onlineTime" value="" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
                                             </td><!--강의시간-->
                                             <td class="text-center">
-                                                <button type="button" class="btn btn-inverse btn-sm add">추가</button>
-                                                <button type="button" class="btn btn-inverse btn-sm remove" data-isttr_seq="${list.lctrSeq}">삭제</button>
+                                                <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
+                                                <button type="button" class="btn btn-inverse btn-sm btnRemove" data-isttr_seq="">삭제</button>
                                             </td><!--삭제-->
                                         </tr>
-                                       <tr>
+                                        <tr class="examTr" style="display: none;">
                                             <td class="text-center" colspan="4">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="edctnNtctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
+                                                    <div class="dz-default dz-message">
+                                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                                    </div>
+                                                </div>
+                                                <p class="text-bold mt">
+                                                    ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                </p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-center" rowspan="2">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
+                                            <td class="text-center">
+                                                <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="${list.url}" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
+                                            </td><!--강의명-->
+                                            <td class="text-center">
+                                                <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="${list.url}" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
+                                            </td><!--유튜브 URL-->
+                                            <td class="text-center">
+                                                <input type="text" class="form-control input-sm notRequired" name="onlineTime" value="${list.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
+                                            </td><!--강의시간-->
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
+                                                <button type="button" class="btn btn-inverse btn-sm btnRemove" data-isttr_seq="${list.lctrSeq}">삭제</button>
+                                            </td><!--삭제-->
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center" colspan="4">
+                                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -378,25 +412,26 @@
                                     <!-- 리스트 목록 결과 -->
                                     <tbody>
 
-                                    <tr data-total-count="0" class="notPlace">
+                                    <tr data-total-count="0" class="notPlace" <c:if test="${roomDto.nm ne ''}">style="display:none;"</c:if>>
                                         <td colspan="4" class="text-center">
                                             검색결과가 없습니다.<br>
                                             (등록된 데이터가 없습니다.)
                                         </td>
                                     </tr>
-                                    <tr style="display: none;" class="setPlace">
+                                    <tr  class="setPlace" <c:if test="${roomDto.nm eq ''}">style="display: none;"</c:if>>
                                         <td class="text-center">
-                                            <input type="hidden" name="placeSeq" id="placeSeq" value="" disabled="true">
+                                            ${roomDto.nm}
                                         </td>
                                         <td class="text-center">
-
+                                            ${roomDto.rgnsName}
                                         </td>
                                         <td class="text-center">
-
+                                            <c:if test="${not empty roomDto.zipcode}">(${roomDto.zipcode})</c:if> ${roomDto.bscAddr}<c:if test="${not empty roomDto.dtlAddr}">, ${roomDto.dtlAddr}</c:if>
                                         </td>
                                         <td class="text-center">
-
+                                            ${roomDto.rprsntTelNo}
                                         </td>
+                                        <input type="hidden" name="placeSeq" id="placeSeq" value="${rtnDto.placeSeq}" disabled="true" titlle="교육장">
                                     </tr>
                                     </tbody>
                                 </table>
@@ -458,11 +493,11 @@
                     </fieldset>
 
 
-                    <fieldset>
+                    <fieldset class="jdgmtYn" style="display:none;">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">평가<span class="star text-danger"> *</span></label>
                             <div class="col-sm-11">
-                                <button type="button" class="btn btn-inverse btn-sm">
+                                <button type="button" class="btn btn-inverse btn-sm eduExamSearch">
                                     평가 검색
                                 </button>
                                 <table class="table table-hover table-striped">
@@ -472,17 +507,17 @@
                                     </tr>
                                     </thead>
                                     <!-- 리스트 목록 결과 -->
-                                    <tbody id="listContainer3">
-                                    <tr>
-                                        교육 평가_품질아카데미_1
-                                    </tr>
-
-                                    <tr data-total-count="0">
+                                    <tbody>
+                                    <tr data-total-count="0" class="notExg" <c:if test="${rtnDto.examNm ne ''}">style="display:none;"</c:if>>
                                         <td colspan="1" class="text-center">
                                             검색결과가 없습니다.<br>
                                             (등록된 데이터가 없습니다.)
                                         </td>
                                     </tr>
+                                    <tr class="setExg" <c:if test="${rtnDto.examNm eq ''}">style="display: none;"</c:if>>
+                                        <td class="text-center">${rtnDto.examNm}</td>
+                                    </tr>
+                                    <input type="hidden" name="examSeq" id="examSeq" value="${rtnDto.examSeq}" disabled="true">
                                     </tbody>
                                 </table>
                             </div>
@@ -596,3 +631,4 @@
 
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/eba/EBACouseSrchLayer.jsp"></jsp:include>
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebf/EBFEduRoomSrchLayer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jsp/mngwserc/ex/exg/EXGExamListSrchLayer.jsp"></jsp:include>

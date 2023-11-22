@@ -22,6 +22,7 @@
 			, stduy_dd_cd_nm
 			, stduy_time_cd
 			, stduy_time_cd_nm
+		    , jdgmt_yn
 			, reg_id
 			, reg_name
 			, reg_dtm
@@ -43,6 +44,7 @@
 				, (select cd_nm from co_code_mst where cd=a.stduy_dd_cd) as stduy_dd_cd_nm
 				, stduy_time_cd
 				, (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as stduy_time_cd_nm
+				, jdgmt_yn
 				, reg_id
 				, (select name from co_adm_mst where id = a.reg_id) as reg_name
 				, reg_dtm

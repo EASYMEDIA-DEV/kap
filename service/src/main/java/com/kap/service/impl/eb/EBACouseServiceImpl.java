@@ -304,10 +304,6 @@ public class EBACouseServiceImpl implements EBACouseService {
 	public static String forEachChk(String str, List<EBACouseDTO> codeList) {
 		String rtnStr = "N";
 
-
-
-		System.out.println("codeList = " + codeList);
-
         if (codeList != null && codeList.size() > 0) {
             for (EBACouseDTO a : codeList) {
 
