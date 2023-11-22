@@ -1,15 +1,15 @@
 package com.kap.service.impl.sm;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.SMGWinBusinessDTO;
+import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.sm.smg.SMGWinBusinessDTO;
 import com.kap.service.COFileService;
-import com.kap.service.COSystemLogService;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMGWinBusinessService;
 import com.kap.service.dao.sm.SMGWinBusinessMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -29,6 +29,7 @@ import java.util.HashMap;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.11.14		임서화				   최초 생성
+ *    2023.11.22        장두석                  최신화
  * </pre>
  */
 @Slf4j
@@ -36,28 +37,20 @@ import java.util.HashMap;
 @RequiredArgsConstructor
 public class SMGWinBusinessServiceImpl implements SMGWinBusinessService {
 
-    // DAO
+    /** Service **/
     private final COFileService cOFileService;
 
-    /* 상생 사업 시퀀스 */
-    private final EgovIdGnrService winBusIdgen;
-    
+    /** Mapper **/
     private final SMGWinBusinessMapper sMGWinBusinessMapper;
 
-    // 로그인 상태값 시스템 등록
-    private final COSystemLogService cOSystemLogService;
-
-    // 확장자
-    @Value("${app.file.imageExtns}")
-    private String imageExtns;
-
-    @Value("${app.file.videoExtns}")
-    private String videoExtns;
+    /** Sequence **/
+    private final EgovIdGnrService winMngSeqIdgen;
 
     /**
      * 상생 사업 목록 조회
      */
-    public SMGWinBusinessDTO selectWinBusinessList(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception {
+    public SMGWinBusinessDTO selectWinBusinessList(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception
+    {
         COPaginationUtil page = new COPaginationUtil();
 
         page.setCurrentPageNo(pSMGWinBusinessDTO.getPageIndex());
@@ -75,56 +68,76 @@ public class SMGWinBusinessServiceImpl implements SMGWinBusinessService {
     }
     
     /**
-     * 상생 사업 상세 조회
+     * 상생 사업 상세
      */
-    public SMGWinBusinessDTO selectWinBusinessDtl(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception {
-        SMGWinBusinessDTO info = new SMGWinBusinessDTO();
-
-        if (!"".equals(pSMGWinBusinessDTO.getDetailsKey()))
-        {
-            info = sMGWinBusinessMapper.selectWinBusinessDtl(pSMGWinBusinessDTO);
-        }
-
-        return info;
+    public SMGWinBusinessDTO selectWinBusinessDtl(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception
+    {
+        return !"".equals(pSMGWinBusinessDTO.getDetailsKey()) ? sMGWinBusinessMapper.selectWinBusinessDtl(pSMGWinBusinessDTO) : pSMGWinBusinessDTO;
     }
 
     /**
      * 상생 사업 등록
      */
-    public int insertWinBusiness(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception {
-        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMGWinBusinessDTO.getFileList());
-        pSMGWinBusinessDTO.setFileSeq(fileSeqMap.get("fileSeq"));
-        pSMGWinBusinessDTO.setRespCnt(sMGWinBusinessMapper.insertWinBusiness(pSMGWinBusinessDTO));
-        return pSMGWinBusinessDTO.getRespCnt();
-    }
+    public int insertWinBusiness(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception
+    {
+        //작성자
+        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        pSMGWinBusinessDTO.setRegId(coaAdmDTO.getId());
+        pSMGWinBusinessDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-    /**
-     * 상생 사업 삭제
-     */
-    public int deleteWinBusiness(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception {
-        return sMGWinBusinessMapper.deleteWinBusiness(pSMGWinBusinessDTO);
+        //파일 처리
+        if(pSMGWinBusinessDTO.getFileList() != null && !pSMGWinBusinessDTO.getFileList().isEmpty())
+        {
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMGWinBusinessDTO.getFileList());
+            pSMGWinBusinessDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+        }
+
+        pSMGWinBusinessDTO.setCxstnSeq(winMngSeqIdgen.getNextIntegerId());
+
+        return sMGWinBusinessMapper.insertWinBusiness(pSMGWinBusinessDTO);
     }
 
     /**
      * 상생 사업 수정
      */
-    public int updateWinBusiness(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception {
-        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMGWinBusinessDTO.getFileList());
-        pSMGWinBusinessDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+    public int updateWinBusiness(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception
+    {
+        //수정자
+        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        pSMGWinBusinessDTO.setModId(coaAdmDTO.getId());
+        pSMGWinBusinessDTO.setModIp(coaAdmDTO.getLoginIp());
 
-        pSMGWinBusinessDTO.setRespCnt(sMGWinBusinessMapper.updateWinBusiness(pSMGWinBusinessDTO));
-        return pSMGWinBusinessDTO.getRespCnt();
+        //파일 처리
+        if(pSMGWinBusinessDTO.getFileList() != null && !pSMGWinBusinessDTO.getFileList().isEmpty())
+        {
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMGWinBusinessDTO.getFileList());
+            pSMGWinBusinessDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+        }
+
+        return sMGWinBusinessMapper.updateWinBusiness(pSMGWinBusinessDTO);
+    }
+
+    /**
+     * 상생 사업 삭제
+     */
+    public int deleteWinBusiness(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception
+    {
+        return sMGWinBusinessMapper.deleteWinBusiness(pSMGWinBusinessDTO);
     }
 
     /**
      * 상생 사업 정렬 수정
      */
-    public void updateOrder(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception {
+    public void updateOrder(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception
+    {
+        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        pSMGWinBusinessDTO.setModId(coaAdmDTO.getId());
+        pSMGWinBusinessDTO.setModIp(coaAdmDTO.getLoginIp());
 
         SMGWinBusinessDTO newRow = sMGWinBusinessMapper.selectWinBusinessNewRow(pSMGWinBusinessDTO);
 
-        if(newRow != null){
-
+        if(newRow != null)
+        {
             int newRowOrd = newRow.getExpsOrd();
             int orginOrd = pSMGWinBusinessDTO.getExpsOrd();
 
@@ -136,12 +149,5 @@ public class SMGWinBusinessServiceImpl implements SMGWinBusinessService {
             newRow.setExpsOrd(orginOrd);
             sMGWinBusinessMapper.updateOrder(newRow);
         }
-    }
-
-    /**
-     * 정렬할 상생 사업을 조회한다.
-     */
-    public SMGWinBusinessDTO selectWinBusinessNewRow(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception {
-        return sMGWinBusinessMapper.selectWinBusinessNewRow(pSMGWinBusinessDTO);
     }
 }

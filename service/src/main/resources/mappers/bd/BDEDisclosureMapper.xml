@@ -132,7 +132,7 @@
                     </foreach>
                 </when>
                 <otherwise>
-                    AND	DSCLSR_SEQ = #{detailsKey}
+                    DSCLSR_SEQ = #{detailsKey}
                 </otherwise>
             </choose>
         </where>
