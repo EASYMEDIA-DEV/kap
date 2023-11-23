@@ -102,4 +102,45 @@
         </where>
     </delete>
 
+    <!--
+     쿼리명 : MPDCmtMapper.selectKenList
+     설  명 : 근태 목록을 조회한다.
+       수정일      수정자       수정내용
+     ==========   ========   ==============
+     2023.11.23    양현우       최초생성
+ -->
+    <select id="selectKenList" parameterType="MPDKenDto" resultType="MPDKenDto">
+        select (select cd_nm from co_code_mst where  cd=m1.atndc_cd ) -- 근태옵션
+             , guide_part_cmpn_1 -- 지도부품사1
+             , rgns_1-- 소재지역1
+             , guide_part_cmpn_2-- 지도부품사2
+             , rgns_2-- 소재지역2
+             , etc_bsntrp-- 기타출장
+             , etc-- 기타
+             , reg_dtm-- 근태체크일시
+        from co_cmssr_atndc_mst m1
+        where mem_seq =#{detailsKey}
+          and year=#{year}
+          and mnth=#{mnth}
+            order by reg_dtm desc
+            limit   #{firstIndex}, #{recordCountPerPage}
+
+    </select>
+
+
+    <!--
+쿼리명 : MPDCmtMapper.selectKenListCnt
+설  명 : 근태 갯수을 조회한다.
+  수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.23    양현우       최초생성
+-->
+    <select id="selectKenListCnt" parameterType="MPDKenDto" resultType="java.lang.Integer">
+    select count(*)
+        from co_cmssr_atndc_mst m1
+         where mem_seq =#{detailsKey}
+          and year=#{year}
+          and mnth=#{mnth}
+    </select>
+
 </mapper>

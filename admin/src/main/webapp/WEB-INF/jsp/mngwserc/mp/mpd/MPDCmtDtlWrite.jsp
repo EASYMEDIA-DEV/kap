@@ -147,6 +147,9 @@
                                 </jsp:include>
                             </select>
                         </div>
+                        <div class="pull-right ml-sm">
+                            <input type="text" class="monthpicker"  name="monthpicker" />
+                        </div>
                     </div>
 
                 <table class="table table-hover table-striped" >
@@ -163,6 +166,7 @@
                             <th class="text-center">근태체크일시</th>
                         </tr>
                         </thead>
+
                         <!-- 리스트 목록 결과 -->
                         <tbody id="listContainerKen"/>
                     </table>

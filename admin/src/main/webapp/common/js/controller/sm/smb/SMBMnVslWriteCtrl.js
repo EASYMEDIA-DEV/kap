@@ -13,6 +13,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // form Object
     var $formObj = jQuery("#frmData");
 
+    // function
+    function removeFIle(fileCnt) {
+        for(var i = 0; i < fileCnt; i++) {
+            $(".dz-remove")[i].click();
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -39,8 +46,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $("#odtmYn").val('N');
                             $("input[name=expsStrtDtm]").attr("disabled", false);
                             $("input[name=expsEndDtm]").attr("disabled", false);
-                            $("input[name=expsStrtDtm]").attr("readonly", false);
-                            $("input[name=expsEndDtm]").attr("readonly", false);
+                            // $("input[name=expsStrtDtm]").attr("readonly", false);
+                            // $("input[name=expsEndDtm]").attr("readonly", false);
                             $("input[name=expsStrtDtm]").removeClass("notRequired");
                             $("input[name=expsEndDtm]").removeClass("notRequired");
                             $("#odtmYn").addClass("notRequired");
@@ -48,8 +55,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $("#odtmYn").val('Y');
                             $("input[name=expsStrtDtm]").attr("disabled", true);
                             $("input[name=expsEndDtm]").attr("disabled", true);
-                            $("input[name=expsStrtDtm]").attr("readonly", true);
-                            $("input[name=expsEndDtm]").attr("readonly", true);
+                            // $("input[name=expsStrtDtm]").attr("readonly", true);
+                            // $("input[name=expsEndDtm]").attr("readonly", true);
                             $("input[name=expsStrtDtm]").addClass("notRequired");
                             $("input[name=expsEndDtm]").addClass("notRequired");
                             $("#odtmYn").removeClass("notRequired");
@@ -64,25 +71,34 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     click : function(){
                         var mdCd = $("#mdCd").val();
                         var tagCd = $('input[name=tagCd]:checked').val();
+                        var uploadFileCnt = $(".dz-remove").length;
                         if(mdCd == 'pc'){
                             if(tagCd == 'image'){
                                 $(".pcVideo").css("display", "none");
                                 $(".pcImage").css("display", "block");
-                                $(".remove").click();
+                                if(uploadFileCnt > 0) {
+                                    removeFIle(uploadFileCnt)
+                                }
                             }else{
                                 $(".pcImage").css("display", "none");
                                 $(".pcVideo").css("display", "block");
-                                $(".remove").click();
+                                if(uploadFileCnt > 0) {
+                                    removeFIle(uploadFileCnt)
+                                }
                             }
                         }else if(mdCd == 'mobile'){
                             if(tagCd == 'image'){
                                 $(".mobileVideo").css("display", "none");
                                 $(".mobileImg").css("display", "block");
-                                $(".remove").click();
+                                if(uploadFileCnt > 0) {
+                                    removeFIle(uploadFileCnt)
+                                }
                             }else{
                                 $(".mobileImg").css("display", "none");
                                 $(".mobileVideo").css("display", "block");
-                                $(".remove").click();
+                                if(uploadFileCnt > 0) {
+                                    removeFIle(uploadFileCnt)
+                                }
                             }
                         }
 
@@ -134,6 +150,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             return false;
                         }
                     });
+
+                    if($(".dropzone .dz-preview").length < 1) {
+                        var tagCd = $('input[name=tagCd]:checked').val();
+                        if(tagCd == 'image'){
+                            alert("이미지를 첨부해주세요");
+                            isValid = false;
+                        }else{
+                            alert("동영상을 첨부해주세요");
+                            isValid = false;
+                        }
+
+                    }
 
                     if (!editorChk)
                     {

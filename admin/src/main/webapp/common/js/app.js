@@ -313,6 +313,21 @@
 				}
 			});
 		});
+        $.each(jQuery(".monthpicker"), function(i, obj) {
+            var date = new Date();
+
+            var options = {
+                pattern: 'yyyy-mm',
+                selecteYear: date.getFullYear(),
+                startYear: 2000,
+                finalYear: date.getFullYear(),
+                monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                disableMonths: ['5월']
+            };
+            $('.monthpicker').monthpicker(options);
+        });
+
+        /* MonthPicker Set */
 
 		$.each(jQuery(".datetimepicker_endDt"), function(i, obj){
 			jQuery(obj).datetimepicker({

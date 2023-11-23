@@ -1,6 +1,6 @@
 package com.kap.service.dao.sm;
 
-import com.kap.core.dto.SMBMainVslDTO;
+import com.kap.core.dto.sm.smb.SMBMainVslDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

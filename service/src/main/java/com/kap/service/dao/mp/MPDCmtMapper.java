@@ -1,7 +1,10 @@
 package com.kap.service.dao.mp;
 
 import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.mp.mpd.MPDKenDto;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -29,5 +32,9 @@ public interface MPDCmtMapper {
     int insertCmt(MPAUserDto mpaUserDto);
 
     int deleteCmt(MPAUserDto mpaUserDto);
+
+    List<MPDKenDto> selectKenList(MPDKenDto mpdKenDto);
+
+    int selectKenListCnt(MPDKenDto mpdKenDto);
 
 }

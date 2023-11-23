@@ -16,6 +16,20 @@ var exports = {
     let dupEmailChk = false;
     let cmssrCd ;
 
+    function init() {
+        var Month = new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)
+        $(".monthpicker").val(Month);
+        commonCodeAjax();
+        tabOne();
+        tabTwo();
+        tabThree();
+        tabFour();
+        cmssrCdInit(true);
+        datepickerLoad();
+
+
+
+    }
     //업종/분야 코드 호출
     function commonCodeAjax() {
         cmmCtrl.frmAjax(function(respObj) {
@@ -28,7 +42,7 @@ var exports = {
         $.each(jQuery(".datetimepicker_strtDt"), function(i, obj){
             jQuery(obj).datetimepicker({
                 timepicker : false,
-                format : "Y-m-d",
+                format : "Y-m",
                 defaultDate : new Date(jQuery("body").data("curtDt")),
                 defaultTime : "00:00",
                 scrollInput : false,
@@ -36,6 +50,7 @@ var exports = {
                 scrollTime : false,
                 todayButton: false,
                 onSelectDate : function(selectedDate, selectedObj) {
+                    console.log(selectedDate);
                     var strtDt   = selectedDate;
                     var endDtObj = selectedObj.closest("fieldset").find(".datetimepicker_endDt");
                     var endDt	 = new Date(endDtObj.val());
@@ -94,10 +109,25 @@ var exports = {
     }
 
     var tabFour = function() {
+        //근태 사업
+        cmmCtrl.listFrmAjax(function(respObj) {
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+            //CALLBACK 처리
+            ctrl.obj.find("#listContainerKen").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#listContainerKenTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainerKen", "pagingContainerKen");
+        }, "/mngwserc/mp/mpd/select-tab-four", $formObj, "POST", "html",'',false);
 
     }
-    var tabReload = function (type) {
+    var tabReload = function (type,page) {
 
+        if(page != undefined){
+            $formObj.find("#pageIndex").val(page);
+        }
         if(type == 'cun') {
             tabTwo();
         }else if(type == 'bus' ) {
@@ -127,6 +157,7 @@ var exports = {
             }
         });
     }
+
     // set model
     ctrl.model = {
         id : {
@@ -213,6 +244,14 @@ var exports = {
                 }
             }
         },
+        monthpicker : {
+            event : {
+                change : function () {
+                    var activeTab = $('#myTabs li.active a').attr('href').substring(1);
+                        tabReload(activeTab,1);
+                }
+            }
+        },
         classType : {
             event : {
                 click : function() {
@@ -274,13 +313,7 @@ var exports = {
         //리스트 조회
         //폼 데이터 처리
         // cmmCtrl.setFormData($formObj);
-        commonCodeAjax();
-        tabOne();
-        tabTwo();
-        tabThree();
-        cmssrCdInit(true);
-        datepickerLoad();
-
+        init();
 
 
         /* File Dropzone Setting */

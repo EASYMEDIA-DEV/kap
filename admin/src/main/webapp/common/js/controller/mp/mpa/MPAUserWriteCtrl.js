@@ -68,7 +68,11 @@ var exports = {
         tabThree();
     }
 
-    var tabReload = function (type) {
+    var tabReload = function (type , page) {
+
+        if(page != undefined){
+            $formObj.find("#pageIndex").val(page);
+        }
 
         if(type == 'pur') {
             tabTwo();

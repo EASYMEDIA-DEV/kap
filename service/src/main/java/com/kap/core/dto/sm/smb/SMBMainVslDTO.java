@@ -1,5 +1,6 @@
-package com.kap.core.dto;
+package com.kap.core.dto.sm.smb;
 
+import com.kap.core.dto.BaseDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,10 +36,18 @@ public class SMBMainVslDTO extends BaseDTO {
     private String mdCd;
     // 노출 순서
     private Integer expsOrd;
-    //노출 시작 일시
+    // 게시 시작 일
     private String expsStrtDtm;
-    // 노출 종료 일시
+    // 게시 시작 시
+    private String ptupStrtHh;
+    // 게시 시작 분
+    private String ptupStrtMi;
+    // 게시 종료 일
     private String expsEndDtm;
+    // 게시 종료 시
+    private String ptupEndHh;
+    // 게시 종료 분
+    private String ptupEndMi;
     // 상시 여부
     private String odtmYn;
     // 제목
@@ -67,10 +76,6 @@ public class SMBMainVslDTO extends BaseDTO {
     private String expsYn;
     // 정렬
     private String sortType;
-    //검색 시작 날짜
-    private String dStrDt;
-    //검색 종료 날짜
-    private String dEndDt;
 
     // 이미지 파일 확장자
     private String imageExtns;
@@ -87,7 +92,10 @@ public class SMBMainVslDTO extends BaseDTO {
     // 선택 항목
     private List<String> seqList;
 
-
+    // 게시 시작 날짜 (검색)
+    private String dStrDt;
+    // 게시 종료 날짜 (검색)
+    private String dEndDt;
 
 
 }
