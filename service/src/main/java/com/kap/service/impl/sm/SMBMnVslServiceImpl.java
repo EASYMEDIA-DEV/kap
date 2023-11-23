@@ -1,7 +1,7 @@
 package com.kap.service.impl.sm;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.SMBMainVslDTO;
+import com.kap.core.dto.sm.smb.SMBMainVslDTO;
 import com.kap.service.COFileService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.SMBMnVslService;
@@ -98,7 +98,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
     {
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
         String tagCd = pSMBMainVslDTO.getTagCd();
-        if(tagCd.equals("mp4")){
+        if(tagCd.equals("video")){
             pSMBMainVslDTO.setFileSeq(fileSeqMap.get("videoFileSeq"));
         }else{
             pSMBMainVslDTO.setFileSeq(fileSeqMap.get("imgFileSeq"));
@@ -116,7 +116,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
 
         String tagCd = pSMBMainVslDTO.getTagCd();
-        if (tagCd.equals("mp4")) {
+        if (tagCd.equals("video")) {
             pSMBMainVslDTO.setFileSeq(fileSeqMap.get("videoFileSeq"));
         } else {
             pSMBMainVslDTO.setFileSeq(fileSeqMap.get("imgFileSeq"));

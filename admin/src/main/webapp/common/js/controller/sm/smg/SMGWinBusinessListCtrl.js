@@ -136,9 +136,9 @@ define(["ezCtrl"], function(ezCtrl) {
         },
         immediately : function() {
             // 리스트 조회
-            cmmCtrl.setFormData($formObj);
-
-            search($formObj.find("input[name=pageIndex]").val());
+            // cmmCtrl.setFormData($formObj);
+            // search($formObj.find("input[name=pageIndex]").val());
+            search();
         }
     };
 

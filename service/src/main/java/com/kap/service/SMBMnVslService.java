@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.SMBMainVslDTO;
+import com.kap.core.dto.sm.smb.SMBMainVslDTO;
 
 public interface SMBMnVslService {
 
