@@ -1,7 +1,6 @@
 package com.kap.mngwserc.controller.mp;
 
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.*;
 import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +45,8 @@ public class MPDCmtController {
 
 
     private final MPDCmtService mpdCmtService;
+
+    private final MPBMemberPartsSocietyService mpbMemberPartsSocietyService;
 
     @Value("${app.file.imageExtns}")
     private String imgType;
@@ -269,4 +270,36 @@ public class MPDCmtController {
 
         return  "mngwserc/mp/mpd/MPDCmtTabOneAjax";
     }
+
+    /**
+     * 컨설팅 리스트 조회
+     */
+    @PostMapping(value = "/select-tab-two")
+    public String selectUserListPageTabTwoAjax(MPBBusDto mpbBusDto ,
+                                               ModelMap modelMap ) throws Exception {
+
+        mpbBusDto.setChkPS("S");
+        modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectBusList(mpbBusDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpbBusDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtTabTwoAjax";
+    }
+
+    /**
+     * 상생 사업 현황 리스트 조회
+     * 미래차공모전은 [mpa 사용]
+     */
+    @PostMapping(value = "/select-tab-three")
+    public String selectEduListPageTabFourAjax(MPBSanDto mpbSanDto ,
+                                               ModelMap modelMap ) throws Exception {
+        mpbSanDto.setChkPS("S");
+        modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectSanList(mpbSanDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpbSanDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtTabThreeAjax";
+    }
+
+
 }

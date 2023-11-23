@@ -81,6 +81,7 @@ public class MPBMemberPartsSocietyServiceImpl implements MPBMemberPartsSocietySe
 
         mpbBusDto.setFirstIndex( page.getFirstRecordIndex() );
         mpbBusDto.setRecordCountPerPage( page.getRecordCountPerPage() );
+
         mpbBusDto.setTotalCount( mpbMemberPartsSocietyMapper.selectBusListCnt(mpbBusDto));
         List<MPBBusDto> mpbBusDtos = mpbMemberPartsSocietyMapper.selectBusList(mpbBusDto);
 

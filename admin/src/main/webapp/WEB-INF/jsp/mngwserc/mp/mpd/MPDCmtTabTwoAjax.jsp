@@ -14,8 +14,9 @@
                 <td class="text-center">${ list.cmpnSizeCdNm}</td>
                 <td class="text-center">${ list.appctnFldCdNm}</td>
                 <td class="text-center">${list.rgnsCdNm} </td>
-                <td class="text-center">${list.name}</td>
-                <td class="text-center">${list.appctnDt}</td>
+                <td class="text-center">${list.fltyImpvmRate} </td>
+                <td class="text-center">${list.guideBgnDt} </td>
+                <td class="text-center">${ empty list.guidePscndDt ? '-' : list.guidePscndDt } </td>
             </tr>
         </c:forEach>
     </c:when>

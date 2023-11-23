@@ -148,7 +148,6 @@ var exports = {
         tabClick : {
             event : {
                 click : function (e){
-                    console.log(e.target.getAttribute('href').substr(1));
                     if(e.target.getAttribute('href').substr(1)!='dtl') {
                         $(".dtl-tab").hide();
                     } else {

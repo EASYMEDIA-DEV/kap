@@ -52,7 +52,7 @@
             <ul class="nav nav-tabs" id="myTabs">
                 <li class="active tabClick"><a data-toggle="tab" href="#dtl">위원 상세정보</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#cun">컨설팅 사업 현황</a></li>
-                <li class="tabClick"><a data-toggle="tab" href="#bus">상생 사업 현황</a></li>
+                <li class="tabClick"><a data-toggle="tab" href="#san">상생 사업 현황</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#ken">근태 현황</a></li>
                 <span class="dtl-tab" style="margin-left:50%"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
             </ul>
@@ -99,10 +99,46 @@
                     <!-- 페이징 버튼 -->
                     <div id="pagingContainer"></div>
                 </div>
-                <div id="chat" class="tab-pane fade">
+                <div id="san" class="tab-pane fade">
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            1:1문의 목록 (총 <span id="listContainerInqrTotCnt">0</span> 건)
+                            상생 사업 현황 (총 <span id="listContainerSanTotCnt">0</span> 건)
+                        </h6>
+                        <div class="pull-right ml-sm">
+                            <select class="form-control input-sm listRowSizeContainer" >
+                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                    <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                                </jsp:include>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="table table-hover table-striped" >
+                        <thead>
+                        <tr>
+                            <th class="text-center">번호</th>
+                            <th class="text-center">사업년도</th>
+                            <th class="text-center">사업구분</th>
+                            <th class="text-center">회차</th>
+                            <th class="text-center">사업구분</th>
+                            <th class="text-center">사업명</th>
+                            <th class="text-center">진행상태</th>
+                            <th class="text-center">부품사명</th>
+                            <th class="text-center">사업자등록번호</th>
+                            <th class="text-center">구분</th>
+                            <th class="text-center">규모</th>
+                            <th class="text-center">신청일</th>
+                        </tr>
+                        </thead>
+                        <!-- 리스트 목록 결과 -->
+                        <tbody id="listContainerSan"/>
+                    </table>
+                    <!-- 페이징 버튼 -->
+                    <div id="pagingContainerSan"></div>
+                </div>
+                <div id="ken" class="tab-pane fade">
+                    <div class="clearfix">
+                        <h6 class="pull-left mt0">
+                            근태 현황 (총 <span id="listContainerKenTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
@@ -117,19 +153,21 @@
                         <thead>
                         <tr>
                             <th class="text-center">번호</th>
-                            <th class="text-center">1차 문의유형</th>
-                            <th class="text-center">2차 문의유형</th>
-                            <th class="text-center">제목</th>
-                            <th class="text-center">문의등록일</th>
-                            <th class="text-center">답변등록일</th>
-                            <th class="text-center">진행상태</th>
+                            <th class="text-center">근태옵션</th>
+                            <th class="text-center">지도부품사1</th>
+                            <th class="text-center">소재지역1</th>
+                            <th class="text-center">지도부품사2</th>
+                            <th class="text-center">소재지역2</th>
+                            <th class="text-center">기타출장</th>
+                            <th class="text-center">기타</th>
+                            <th class="text-center">근태체크일시</th>
                         </tr>
                         </thead>
                         <!-- 리스트 목록 결과 -->
-                        <tbody id="listContainerInqr"/>
+                        <tbody id="listContainerKen"/>
                     </table>
                     <!-- 페이징 버튼 -->
-                    <div id="pagingContainerInqr"></div>
+                    <div id="pagingContainerKen"></div>
                 </div>
             </div>
             <hr />

@@ -168,6 +168,7 @@ public class MPBMemberPartsSocietyController {
     public String selectEduListPageTabThreeAjax(MPBBusDto mpbBusDto ,
                                               ModelMap modelMap ) throws Exception {
 
+        mpbBusDto.setChkPS("P");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectBusList(mpbBusDto));
         // 로그인한 계정
         COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
@@ -182,7 +183,7 @@ public class MPBMemberPartsSocietyController {
     @PostMapping(value = "/select-tab-four")
     public String selectEduListPageTabFourAjax(MPBSanDto mpbSanDto ,
                                                 ModelMap modelMap ) throws Exception {
-
+        mpbSanDto.setChkPS("P");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectSanList(mpbSanDto));
         // 로그인한 계정
         COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();

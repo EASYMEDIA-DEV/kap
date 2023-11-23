@@ -389,7 +389,7 @@
 
     <!--
 쿼리명 : MPBMemberPartsSocietyMapper.selectBusList
-설  명 : 부품 사회원 컨설팅 사업 리스트  조회
+설  명 : [부품,위원] 컨설팅 사업 리스트  조회
 수정일      수정자       수정내용
 ==========   ========   ==============
 2023.11.20    양현우       최초생성
@@ -407,7 +407,7 @@
                      when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01'  then '지도승인'
                      when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT02'  then '지도불가'
                      when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_bgn_dt > now()  then '지도투입'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_bgn_dt > now() and now()> guide_pscnd_dt  then '지도투입'
+                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_bgn_dt > now() and now()> guide_pscnd_dt  then '지도중'
                      when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND01' then '지도연기'
                      when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND02' then '제단취소'
                      when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND03' then '부품사취소'
@@ -417,10 +417,13 @@
                , (select cd_nm from co_code_mst where  cd=m2.ctgry_cd ) as ctgry_cd_nm -- 구분
                , (select cd_nm from co_code_mst where  cd=m1.cmpn_size_cd ) as cmpn_size_cd_nm-- 규모
                , m1.appctn_bsnm_no-- 사업자등록번호
-               , m1.appctn_fld_cd--  신청분야/업종
-               , m1.rgns_cd-- 신청 소재지
+               , (select cd_nm from co_code_mst where  cd=m1.appctn_fld_cd ) as appctn_fld_cd_nm--  신청분야/업종
+               , (select cd_nm from co_code_mst where  cd=m1.rgns_cd ) as rgns_cd_nm-- 신청 소재지
                , m4.name-- 담당위원
                , m1.appctn_dt-- 신청일
+               , m3.guide_bgn_dt-- 지도착수일
+               , m3.guide_pscnd_dt-- 지도완료일
+               , m3.flty_impvm_rate -- 개선률
              from cp_cnstg_appctn_mst m1
               inner join cp_cmpn_mst m2
                 on m1.appctn_bsnm_no = m2.bsnm_no
@@ -428,7 +431,13 @@
                on m1.cnstg_seq = m3.cnstg_seq
               left outer join co_mem_mst m4
                on m3.cmssr_seq = m4.mem_seq
-                 where appctn_mem_seq=#{detailsKey}
+                 where 1 = 1
+                <if test="chkPS == 'P'.toString() ">
+                  and appctn_mem_seq=#{detailsKey}
+                </if>
+                <if test="chkPS == 'S'.toString() ">
+                    and m3.cmssr_seq=#{detailsKey}
+                </if>
                   order by cnstg_seq desc
                   limit #{firstIndex}, #{recordCountPerPage}
     </select>
@@ -449,12 +458,18 @@
                                  on m1.cnstg_seq = m3.cnstg_seq
                  left outer join co_mem_mst m4
                                  on m3.cmssr_seq = m4.mem_seq
-        where appctn_mem_seq=#{detailsKey}
+            where 1 = 1
+            <if test="chkPS == 'P'.toString() ">
+                and appctn_mem_seq=#{detailsKey}
+            </if>
+            <if test="chkPS == 'S'.toString() ">
+                and m3.cmssr_seq=#{detailsKey}
+            </if>
     </select>
 
     <!--
 쿼리명 : MPBMemberPartsSocietyMapper.selectSanList
-설  명 : 부품 사회원 상생 사업 리스트  조회
+설  명 : [부품 사회원,위원] 상생 사업 리스트  조회
 수정일      수정자       수정내용
 ==========   ========   ==============
 2023.11.20    양현우       최초생성
@@ -463,7 +478,7 @@
         select m1.episd_seq as san_ctn_seq  /*MPBMemberPartsSocietyMapper.selectSanList */
              , m1.year-- 사업년도
              , m1.episd-- 회차
-             , m4.optn_type as type_cd_nm-- 사업구분 TODO 양현우 코드 정의후 수정
+             , (select cd_nm from co_code_mst where  cd=m4.optn_cd )  as type_cd_nm-- 사업구분 TODO 양현우 코드 정의후 수정
              , m4.optn_nm as bsnCdNm
               ,m5.rsume_stts_cd as status -- 진행상태 TODO 양현우 코드
              , m3.cmpn_nm -- 부품사명
@@ -471,7 +486,7 @@
              , (select cd_nm from co_code_mst where  cd=m3.size_cd ) as cmpn_size_cd_nm -- 규모
              , m2.appctn_bsnm_no-- 사업자등록번호
              , (select name from co_mem_mst where mem_seq=m2.pic_cmssr_seq) as name -- 담당위원
-             , m1.reg_dtm-- 신청일
+             , m2.reg_dtm-- 신청일
          from cx_episd_mst m1
           inner join cx_appctn_mst m2
            on m1.episd_seq = m2.episd_seq
@@ -481,7 +496,13 @@
            on m1.episd_seq  = m4.episd_seq
           inner join cx_appctn_rsume_dtl m5
            on m2.appctn_seq = m5.appctn_seq
-            where m2.mem_seq =#{detailsKey}
+            where 1 = 1
+            <if test="chkPS == 'P'.toString() ">
+                and m2.mem_seq =#{detailsKey}
+            </if>
+            <if test="chkPS == 'S'.toString() ">
+                and m2.pic_cmssr_seq=#{detailsKey}
+            </if>
              order by m1.episd_seq desc
               limit #{firstIndex}, #{recordCountPerPage}
     </select>

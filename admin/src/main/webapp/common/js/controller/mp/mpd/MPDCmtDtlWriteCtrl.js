@@ -61,6 +61,51 @@ var exports = {
         }, "/mngwserc/mp/mpd/select-tab-one", $formObj, "POST", "html",'',false);
     }
 
+    /**
+     * 컨설팅 리스트 조회
+     */
+    var tabTwo = function () {
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#listContainer").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
+        }, "/mngwserc/mp/mpd/select-tab-two", $formObj, "POST", "html",'',false);
+    }
+
+    var tabThree = function() {
+        //상생 사업
+        cmmCtrl.listFrmAjax(function(respObj) {
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+            //CALLBACK 처리
+            ctrl.obj.find("#listContainerSan").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#listContainerSanTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainerSan", "pagingContainerSan");
+        }, "/mngwserc/mp/mpd/select-tab-three", $formObj, "POST", "html",'',false);
+
+    }
+
+    var tabFour = function() {
+
+    }
+    var tabReload = function (type) {
+
+        if(type == 'cun') {
+            tabTwo();
+        }else if(type == 'bus' ) {
+            tabThree();
+        } else if(type == 'ken' ) {
+            tabFour();
+        }
+    }
     function cmssrCdInit(values) {
         $(".cmssrCdDiv").show();
         $("#cmssrCbsnCd").empty();
@@ -157,7 +202,17 @@ var exports = {
 
     },
     classname : {
-
+        tabClick : {
+            event : {
+                click : function (e){
+                    if(e.target.getAttribute('href').substr(1)!='dtl') {
+                        $(".dtl-tab").hide();
+                    } else {
+                        $(".dtl-tab").show();
+                    }
+                }
+            }
+        },
         classType : {
             event : {
                 click : function() {
@@ -189,16 +244,30 @@ var exports = {
                 }
             }
     },
-    //페이징 목록 갯수
-    listRowSizeContainer : {
-        event : {
-            change : function(){
-                //리스트 갯수 변경
-                $formObj.find("input[name=listRowSize]").val($(this).val());
-                search(1);
+        pageSet : {
+            event : {
+                click : function() {
+                    var activeTab = $('#myTabs li.active a').attr('href').substring(1);
+                    //페이징 이동
+                    if( $(this).attr("value") != "null" ){
+                        $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
+                        tabReload(activeTab);
+                    }
+                }
+            }
+        },
+        //페이징 목록 갯수
+
+        listRowSizeContainer : {
+            event : {
+                change : function(){
+                    var activeTab = $('#myTabs li.active a').attr('href').substring(1);
+                    //리스트 갯수 변경
+                    $formObj.find("input[name=listRowSize]").val($(this).val());
+                    tabReload(activeTab,1);
+                }
             }
         }
-    }
     },
     immediately : function() {
 
@@ -207,6 +276,8 @@ var exports = {
         // cmmCtrl.setFormData($formObj);
         commonCodeAjax();
         tabOne();
+        tabTwo();
+        tabThree();
         cmssrCdInit(true);
         datepickerLoad();
 

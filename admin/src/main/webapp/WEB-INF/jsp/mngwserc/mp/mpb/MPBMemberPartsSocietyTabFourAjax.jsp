@@ -15,7 +15,7 @@
                 <td class="text-center">${ list.ctgryCdNm}</td>
                 <td class="text-center">${ list.cmpnSizeCdNm}</td>
                 <td class="text-center">${ list.name}</td>
-                <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+<%--                <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>--%>
             </tr>
         </c:forEach>
     </c:when>
