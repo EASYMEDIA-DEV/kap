@@ -463,9 +463,9 @@
         select m1.episd_seq as san_ctn_seq  /*MPBMemberPartsSocietyMapper.selectSanList */
              , m1.year-- 사업년도
              , m1.episd-- 회차
-             , m4.type_cd as type_cd_nm-- 사업구분 TODO 양현우 코드 정의후 수정
-             , (select cd_nm from co_code_mst where  cd=bsn_cd ) as bsn_cd_nm -- 사업명
-              -- 진행상태 TODO 양현우 아직
+             , m4.optn_type as type_cd_nm-- 사업구분 TODO 양현우 코드 정의후 수정
+             , m4.optn_nm as bsnCdNm
+              ,m5.rsume_stts_cd as status -- 진행상태 TODO 양현우 코드
              , m3.cmpn_nm -- 부품사명
              , (select cd_nm from co_code_mst where  cd=m3.ctgry_cd ) as ctgry_cd_nm -- 구분
              , (select cd_nm from co_code_mst where  cd=m3.size_cd ) as cmpn_size_cd_nm -- 규모
@@ -477,8 +477,10 @@
            on m1.episd_seq = m2.episd_seq
           inner join cp_cmpn_mst m3
            on m2.appctn_bsnm_no  = m3.bsnm_no
-          inner join cx_episd_bsn_dtl m4
+          inner join cx_episd_bsn_optn_dtl m4
            on m1.episd_seq  = m4.episd_seq
+          inner join cx_appctn_rsume_dtl m5
+           on m2.appctn_seq = m5.appctn_seq
             where m2.mem_seq =#{detailsKey}
              order by m1.episd_seq desc
               limit #{firstIndex}, #{recordCountPerPage}
@@ -498,8 +500,10 @@
                             on m1.episd_seq = m2.episd_seq
                  inner join cp_cmpn_mst m3
                             on m2.appctn_bsnm_no  = m3.bsnm_no
-                 inner join cx_episd_bsn_dtl m4
+                 inner join cx_episd_bsn_optn_dtl m4
                             on m1.episd_seq  = m4.episd_seq
+                 inner join cx_appctn_mst m5
+                            on m2.appctn_seq = m5.appctn_seq
         where m2.mem_seq =#{detailsKey}
     </select>
 
