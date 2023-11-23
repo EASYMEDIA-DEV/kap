@@ -32,7 +32,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">작성자</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" value="${rtnQaInfo.regName}" readonly />
+                        <input type="text" class="form-control input-sm" value="${rtnQaInfo.regName}(${rtnQaInfo.regId})" readonly />
                     </div>
                     <label class="col-sm-1 control-label">이메일</label>
                     <div class="col-sm-4">

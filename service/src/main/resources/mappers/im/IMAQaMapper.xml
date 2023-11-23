@@ -17,9 +17,9 @@
             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.CTGRY_CD) CTGRY_NM
             , A.TITL
             , MEM.NAME AS REG_NAME
-            , MEM.REG_ID
             , MEM.EMAIL
             , MEM.HP_NO
+            , A.REG_ID
             , A.REG_DTM
             , (SELECT REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE RPLY.QA_SEQ = A.QA_SEQ) MOD_DTM
             , A.RSUME_CD
@@ -50,56 +50,44 @@
             <include refid="selectQaListwhereSql" />
     </select>
 
-    <update id="updateQaRsume" parameterType="IMAQaDTO">
-        UPDATE  /*IMAQaMapper.updateQa*/
-            BD_QA_MST
-        SET
-            RSUME_CD = #{rsumeCd}
-        <if test="rsumeCd !='' and rsumeCd == 'SYNACK' ">
-            , INIT_CHK_ADM_SEQ = (SELECT ADM_SEQ FROM CO_ADM_MST WHERE REG_ID = #{regId})
-            , INIT_CHK_DTM = NOW()
-        </if>
-        WHERE
-            QA_SEQ = #{detailsKey}
-    </update>
-
     <select id="selectQaDtl" parameterType="IMAQaDTO" resultType="IMAQaDTO">
         SELECT /* IMAQaMapper.selectQaDtl */
-            A.QA_SEQ
-            , A.RSUME_CD
-            , A.TITL
-            , A.CNTN
-            , A.FILE_SEQ
-            , A.REG_ID
-            , A.REG_DTM
-            , MEM.NAME AS REG_NAME
-            , MEM.EMAIL
-            , MEM.HP_NO
-            , CT.PARNT_CTGRY_CD
-            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.PARNT_CTGRY_CD) PARNT_CTGRY_NM
-            , CT.CTGRY_CD
-            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.CTGRY_CD) CTGRY_NM
-            <if test="rsumeCd != null and 'ACK'.toString().equals(rsumeCd)">
+        A.QA_SEQ
+        , A.RSUME_CD
+        , A.TITL
+        , A.CNTN
+        , A.FILE_SEQ
+        , A.REG_ID
+        , A.REG_DTM
+        , MEM.NAME AS REG_NAME
+        , MEM.EMAIL
+        , MEM.HP_NO
+        , CT.PARNT_CTGRY_CD
+        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.PARNT_CTGRY_CD) PARNT_CTGRY_NM
+        , CT.CTGRY_CD
+        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.CTGRY_CD) CTGRY_NM
+        <if test="rsumeCd != null and 'ACK'.toString().equals(rsumeCd)">
             , RPLY.QA_RPLY_SEQ
             , RPLY.CNTN AS RPLY_CNTN
             , RPLY.FILE_SEQ AS RPLY_FILE_SEQ
-            , (SELECT NAME FROM CO_ADM_MST WHERE ID = RPLY.REG_ID) AS MOD_NAME
+            , (SELECT NAME FROM CO_ADM_MST WHERE ADM_SEQ = A.INIT_CHK_ADM_SEQ) AS MOD_NAME
             , RPLY.REG_DTM AS MOD_DTM
-            </if>
+            , RPLY.REG_ID AS MOD_ID
+        </if>
         FROM
-            BD_QA_MST A
-            JOIN CO_MEM_MST MEM ON A.REG_ID = MEM.ID
-            JOIN BD_QA_CTGRY_DTL CT ON A.QA_SEQ = CT.QA_SEQ
-            <if test="rsumeCd != null and 'ACK'.toString().equals(rsumeCd)">
+        BD_QA_MST A
+        JOIN CO_MEM_MST MEM ON A.REG_ID = MEM.ID
+        JOIN BD_QA_CTGRY_DTL CT ON A.QA_SEQ = CT.QA_SEQ
+        <if test="rsumeCd != null and 'ACK'.toString().equals(rsumeCd)">
             JOIN BD_QA_RPLY_DTL RPLY ON A.QA_SEQ = RPLY.QA_SEQ
-            </if>
+        </if>
         WHERE
-            A.QA_SEQ = #{detailsKey}
+        A.QA_SEQ = #{detailsKey}
     </select>
 
     <insert id="insertQa" parameterType="IMAQaDTO">
         INSERT /* IMAQaMapper.insertQa */ INTO BD_QA_RPLY_DTL
-            (
+        (
             QA_RPLY_SEQ
             , QA_SEQ
             , CNTN
@@ -110,9 +98,9 @@
             , MOD_ID
             , MOD_IP
             , MOD_DTM
-            )
-            VALUES
-            (
+        )
+        VALUES
+        (
             #{qaRplySeq}
             , #{detailsKey}
             , #{rplyCntn}
@@ -123,8 +111,21 @@
             , #{regId}
             , #{regIp}
             , NOW()
-            )
+        )
     </insert>
+
+    <update id="updateQaRsume" parameterType="IMAQaDTO">
+        UPDATE  /*IMAQaMapper.updateQa*/
+            BD_QA_MST
+        SET
+            RSUME_CD = #{rsumeCd}
+        <if test="rsumeCd !='' and rsumeCd == 'SYNACK' ">
+            , INIT_CHK_ADM_SEQ = (SELECT ADM_SEQ FROM CO_ADM_MST WHERE ID = #{regId})
+            , INIT_CHK_DTM = NOW()
+        </if>
+        WHERE
+            QA_SEQ = #{detailsKey}
+    </update>
 
     <!--
     쿼리명 : selectQaListwhereSql
