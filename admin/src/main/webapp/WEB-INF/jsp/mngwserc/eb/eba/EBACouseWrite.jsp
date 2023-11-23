@@ -282,40 +282,6 @@
                             <button type="button" class="btn btn-sm btn-success couseSearch" data-rel-status="2">과정검색</button>
                         </div>
 
-
-                        <%--<div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">필수과목</label>
-                            <div class="col-sm-10 relForm3">
-                                <c:forEach var="relList" items="${relList.EDCTN_REL03}" varStatus="status">
-                                    <div class="row" style="margin-bottom: 20px;">
-                                        -${relList.cnntNm}
-                                        <input type="hidden" class="notRequired cloneHidden" name="edctnRel1" value="${relList.cnnctCdSeq}">
-                                        <button type="button" class="btn btn-sm btn-danger btnDeleteOptn"><em class="ion-android-remove"></em></button>
-                                    </div>
-                                </c:forEach>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-success" data-rel-status="1">과정검색</button>
-                        </div>--%>
-
-                        <%--<div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">선수과목</label>
-                            <div class="col-sm-10 relForm1">
-                                <div class="row" style="margin-bottom: 20px;">-자동차 품질경영시스템</div>
-                                <div class="row" style="margin-bottom: 20px;">-자동차 품질경영시스템</div>
-                            </div>
-                            <button type="button" class="btn btn-sm btn-success" data-rel-status="1">과정검색</button>
-                        </div>--%>
-
-                        <%--<div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">후속과목</label>
-                            <div class="col-sm-10 relForm2">
-                            </div>
-                            <button type="button" class="btn btn-inverse btn-sm couseSearch" data-rel-status="2">
-                                과정검색
-                            </button>
-                        </div>--%>
-
-
                         <div class="exmplContainer relForm" style="display:none;">
                             <div class="row" style="margin-bottom: 20px;">
                             <span class="nm">

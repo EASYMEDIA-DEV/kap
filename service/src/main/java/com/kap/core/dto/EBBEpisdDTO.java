@@ -37,12 +37,19 @@ public class EBBEpisdDTO extends BaseDTO  {
     @Builder.Default
     private Integer episdOrd = 1;
 
+    //수정시에만 사용
+    @Schema(title = "회차년도(수정전)", example = "yyyy")
+    private Integer orgEpisdYear;
+
+    @Schema(title = "회차정렬(수정전)", example = "숫자")
+    @Builder.Default
+    private Integer orgEpisdOrd = 1;
+
     @Schema(title = "회차년도", example = "yyyy")
     private Integer episdYear;
 
     @Schema(title = "업종코드", example = "")
     private String cbsnCd;
-
 
     @Schema(title = "접수시작일시", example = "yyyy-mm-dd HH:mm:ss")
     private String accsStrtDtm;
@@ -218,7 +225,5 @@ public class EBBEpisdDTO extends BaseDTO  {
 
 
     private String srchLayer;
-
-
 
 }

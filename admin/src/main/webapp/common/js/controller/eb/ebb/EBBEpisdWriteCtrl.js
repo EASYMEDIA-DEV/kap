@@ -274,7 +274,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			btnRemove : {
 				event : {
 					click : function(){
-						debugger;
 						$(this).closest("tr").next().remove();
 						$(this).closest("tr").remove();
 					}
@@ -354,6 +353,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
+						//회차정보 마지막 중복체크 진행
 						$("#episdOrd").trigger("change");
 
 						var actForm = {};
@@ -382,6 +382,38 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						actForm.episdYear =$("#episdYear").val();//연도
 						actForm.episdOrd =$("#episdOrd").val();//회차정렬
 
+						actForm.orgEpisdYear =$("#orgEpisdYear").val();//연도(수정시 where절에 사용되는 pk값)
+						actForm.orgEpisdOrd =$("#orgEpisdOrd").val();//회차정렬(수정시 where절에 사용되는 pk값)
+
+						//접수시간 관련 날짜 유효성 체크
+						if(accsStrtDtm>accsEndDtm){
+							alert("접수 시작일이 접수 종료일보다 이전날짜로 입력 해주세요.");
+							$("#accsStrtDt").focus();
+							return false;
+						}
+						if(accsStrtDt == accsEndDt){
+							if(accsStrtHour > accsEndHour){
+								alert("접수 시작시간이 더 클 수 없습니다.");
+								$("#accsStrtHour").focus();
+								return false;
+							}
+						}
+
+						//교육기간 유효성 체크
+						if(edctnStrtDtm>edctnEndDtm){
+							alert("교육 시작일이 교육 종료일보다 이전날짜로 입력 해주세요.");
+							$("#edctnStrtDt").focus();
+							return false;
+						}
+						if(edctnStrtDt == edctnEndDt){
+							if(edctnStrtHour > edctnEndHour){
+								alert("교육 시작시간이 더 클 수 없습니다.");
+								$("#edctnStrtHour").focus();
+								return false;
+							}
+						}
+
+
 						actForm.accsStrtDtm = accsStrtDtm;//접수시작일시
 						actForm.accsEndDtm = accsEndDtm;//접수종료일시
 						actForm.edctnStrtDtm = edctnStrtDtm;//교육시작일시
@@ -398,9 +430,45 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
 						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
 
+						actForm.edctnNtctnFileSeq = $("#edctnNtctnFileSeq").val();
+
 						actForm.examSeq = $("#examSeq").val();//시험순번
 						actForm.cmptnAutoYn = $("input[name='expsYn']:checked").val();//수료자동여부
 						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
+
+
+						//교육 안내문 세팅
+						var fileArray = new Array();
+						if(!($(".edctnNtctn").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
+							$(".edctnNtctn").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
+							$(".edctnNtctn").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
+							$.each($(".edctnNtctn").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
+								//alt값  data에 넣어주기.
+								data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+
+								for (let i in data) {
+									if (data.hasOwnProperty(i)) {
+										var temp = {};
+										temp.fileSeq = data.fileSeq;
+										temp.status = data.status;
+										temp.width = data.width;
+										temp.height = data.height;
+										temp.webPath = data.webPath;
+										temp.fieldNm = data.fieldNm;
+										temp.orgnFileNm = data.orgnFileNm;
+										temp.fileDsc = data.fileDsc;
+										temp.fileOrd = data.fileOrd;
+
+										if(fileArray == "" || (fileArray[fileArray.length-1].fileOrd != temp.fileOrd)){
+											fileArray.push(temp);
+										}
+
+									}
+								}
+
+							})
+						}
+						actForm.fileList = fileArray;
 
 						//온라인교육 강의 관련 배열 세팅
 						var lctrList = new Array();
@@ -415,14 +483,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 								var onlineUrl = $(this).find("[name='onlineUrl']").val();
 								var onlineTime = $(this).find("[name='onlineTime']").val();
 
+								onlinePack.thnlFileSeq = $(this).next().find("input:hidden").val();
+
 								onlinePack.edctnSeq = actForm.edctnSeq;
 								onlinePack.episdOrd = actForm.episdOrd;
 								onlinePack.episdYear = actForm.episdYear;
-								onlinePack.onlineNm = onlineNm;
-								onlinePack.onlineUrl = onlineUrl;
-								onlinePack.onlineTime = onlineTime;
+								onlinePack.nm = onlineNm;
+								onlinePack.url = onlineUrl;
+								onlinePack.time = onlineTime;
 
-
+								var onlinefileArray = new Array();
 								if(!($("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0) === undefined) &&
 									$("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files != undefined &&
 									$("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files.length > 0){
@@ -432,47 +502,30 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 										//alt값  data에 넣어주기.
 										data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
-										var fileArray = new Array();
+
 										for (let i in data) {
 											if (data.hasOwnProperty(i)) {
+												var temp = {};
+												temp.fileSeq = data.fileSeq;
+												temp.status = data.status;
+												temp.width = data.width;
+												temp.height = data.height;
+												temp.webPath = data.webPath;
+												temp.fieldNm = "lctrFileSeq";//data.fieldNm;
+												temp.orgnFileNm = data.orgnFileNm;
+												temp.fileDsc = data.fileDsc;
+												temp.fileOrd = data.fileOrd;
 
-												var tempFile = {};
-
-												tempFile.status = data.status;
-												tempFile.width = data.width;
-												tempFile.height = data.height;
-												tempFile.webPath = data.webPath;
-												tempFile.fieldNm = data.fieldNm;
-												tempFile.orgnFileNm = data.orgnFileNm;
-												tempFile.fileDsc = data.fileDsc;
-
-
-												/*fileArray.push({
-													name: "fileList["+(fileIndex)+"]." + i, value: data[i]
-												})*/
-
-
-												//onlinePack.fileList =  tempFile;
-
-												onlinePack.status = data.status;
-												onlinePack.width = data.width;
-												onlinePack.height = data.height;
-												onlinePack.webPath = data.webPath;
-												onlinePack.fieldNm = data.fieldNm;
-												onlinePack.orgnFileNm = data.orgnFileNm;
-												onlinePack.fileDsc = data.fileDsc;
-
-												/*frmData.push({
-													name: "fileList["+(fileIndex)+"]." + i, value: data[i]
-												});*/
-
+												if(onlinefileArray == "" || (onlinefileArray[onlinefileArray.length-1].fileOrd != temp.fileOrd)){
+													onlinefileArray.push(temp);
+												}
 
 											}
 										}
 									})
 								}
 								fileIndex = fileIndex + 1;
-
+								onlinePack.fileList = onlinefileArray;
 								lctrList.push(onlinePack);
 							}
 
@@ -482,11 +535,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						actForm.lctrList = lctrList;
 
 						debugger;
-
 						cmmCtrl.jsonAjax(function(data){
 							alert("저장되었습니다.");
 							location.href = "./list";
-						}, actionUrl, actForm, "text")
+						}, actionUrl, actForm, "text");
 
 					}
 				},

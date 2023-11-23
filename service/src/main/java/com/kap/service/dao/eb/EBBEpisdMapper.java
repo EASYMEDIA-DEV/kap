@@ -49,14 +49,32 @@ public interface EBBEpisdMapper {
 	public int insertEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수를 수정한다.
+	 */
+	public int updateEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+	/**
 	 * 교육차수 - 강사관계를 등록한다
 	 */
 	public int insertIsttrRel(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+
+	/**
+	 * 교육차수 - 교육강의 상세를 등록한다.
+	 */
+	public List<EBBLctrDTO> selectLctrDtlList(EBBLctrDTO eBBLctrDTO) throws Exception;
 
 	/**
 	 * 교육차수 - 교육강의 상세를 등록한다.
 	 */
 	public int insertLctrDtl(EBBLctrDTO eBBLctrDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 교육강의 상세를 삭제한다.
+	 */
+	public int deleteLctrDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
 	 * 교육차수를 삭제한다.

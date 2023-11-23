@@ -44,21 +44,15 @@ public interface EBBEpisdService {
 	 */
 	public int updateEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
-
-
 	/**
 	 * 교육차수를 삭제한다.
 	 */
 	public int deleteEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
-
 	/**
 	 * 교육차수 중복 체크
 	 */
 	public EBBEpisdDTO selectEpisdChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
-
-
-
 
 }
 

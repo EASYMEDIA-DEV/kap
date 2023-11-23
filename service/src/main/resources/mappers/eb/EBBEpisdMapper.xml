@@ -303,6 +303,37 @@
 		</where>
 	</sql>
 
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectEpisdDtl
+      설  명 : 교육강의상세목록를 출력한다
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.02   김학규       최초생성
+ 	-->
+	<select id="selectLctrDtlList" parameterType="EBBLctrDTO" resultType="EBBLctrDTO">
+		select
+			edctn_seq
+			, episd_ord
+			, lctr_seq
+			, episd_year
+			, nm
+			, url
+			, time
+			, thnl_file_seq
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		from ed_edctn_lctr_dtl where 1=1
+		and edctn_seq = #{edctnSeq}
+		and episd_ord = #{episdOrd}
+		and episd_year = #{episdYear}
+	</select>
+
+
 	<!--
       쿼리명 : EBBEpisdMapper.selectEpisdDtl
       설  명 : 교육과정 상세를 조회한다.
@@ -351,6 +382,7 @@
 					when isttr_cnt <![CDATA[>]]>  1 then isttr_cnt-1
 			END isttr_out_cnt
 			 , fxnum_cnt
+		     , fxnum_impsb_yn
 			 , accs_cnt
 			 , rcrmt_mthd_cd
 			 , rcrmt_mthd_cd_nm
@@ -548,11 +580,12 @@
             ==========   ======    ==============
             2023.11.02   김학규       최초생성
         -->
-	<insert id="insertLctrDtl" parameterType="EBBEpisdDTO">
+	<insert id="insertLctrDtl" parameterType="EBBLctrDTO">
 		insert into /*EBBEpisdMapper.insertLctrDtl*/ ed_edctn_lctr_dtl (
 			edctn_seq
 			, episd_ord
 			, lctr_seq
+			, episd_year
 			, nm
 			, url
 			, time
@@ -567,9 +600,10 @@
 			#{edctnSeq}
 			, #{episdOrd}
 			, #{lctrSeq}
-			, #{onlineNm}
-			, #{onlineUrl}
-			, #{onlineTime}
+			, #{episdYear}
+			, #{nm}
+			, #{url}
+			, #{time}
 			, #{thnlFileSeq}
 			, #{regId}
 			, #{regIp}
@@ -580,18 +614,59 @@
 		)
 	</insert>
 
-
-
-
+	<!--
+         쿼리명 : EBBEpisdMapper.deleteLctrDtl
+         설  명 : 교육차수 - 교육강의 상세를 삭제한다
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.23   김학규       최초생성
+    -->
+	<delete id="deleteLctrDtl" parameterType="EBBEpisdDTO">
+		delete from ed_edctn_lctr_dtl where 1=1
+		and edctn_seq = #{edctnSeq}
+		and episd_ord = #{episdOrd}
+		and episd_year = #{episdYear}
+	</delete>
 
 	<!--
          쿼리명 : EBBEpisdMapper.updateEpisd
-         설  명 : 교육차수을 수정한다.
+         설  명 : 교육차수를 수정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.02   김학규       최초생성
     -->
+	<update id="updateEpisd" parameterType="EBBEpisdDTO" >
 
+		UPDATE ed_edctn_episd_mst SET /* EBBEpisdMapper.updateEpisd */
+			episd_year = #{episdYear}
+			, episd_ord = #{episdOrd}
+			, cbsn_cd = #{cbsnCd}
+			, accs_strt_dtm = #{accsStrtDtm}
+			, accs_end_dtm = #{accsEndDtm}
+			, edctn_strt_dtm = #{edctnStrtDtm}
+			, edctn_end_dtm = #{edctnEndDtm}
+			, fxnum_cnt = #{fxnumCnt}
+			, fxnum_impsb_yn = #{fxnumImpsbYn}
+			, rcrmt_mthd_cd = #{rcrmtMthdCd}
+			, pic_nm = #{picNm}
+			, pic_email = #{picEmail}
+			, pic_tel_no = #{picTelNo}
+			, edctn_ntctn_file_seq = #{edctnNtctnFileSeq}
+			, place_seq = #{placeSeq}
+			, srv_seq = #{srvSeq}
+			, exam_seq = #{examSeq}
+			, srv_strt_dtm = #{srvStrtDtm}
+			, srv_end_dtm = #{srvEndDtm}
+			, cmptn_auto_yn = #{cmptnAutoYn}
+			, exps_yn = #{expsYn}
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		where 1=1
+			and edctn_seq = #{edctnSeq}
+			and episd_year = #{orgEpisdYear}
+			and episd_ord = #{orgEpisdOrd}
+	</update>
 
 	<!--
          쿼리명 : EBBEpisdMapper.deleteEpisd

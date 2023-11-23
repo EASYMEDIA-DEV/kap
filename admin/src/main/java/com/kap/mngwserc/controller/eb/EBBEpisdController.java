@@ -115,7 +115,8 @@ public class EBBEpisdController {
         HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
 
         EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
-        EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");
+        EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");//교육장 정보
+        List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
 
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -142,6 +143,8 @@ public class EBBEpisdController {
 
         modelMap.addAttribute("rtnData", rtnDto);//교육차수 본문
         modelMap.addAttribute("roomDto", roomDto);//교육장 정보
+        modelMap.addAttribute("lctrDtoList", lctrDtoList);//교육장 정보
+
         //설문정보
         //만족도 조사
         //강사정보
@@ -151,28 +154,6 @@ public class EBBEpisdController {
 
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
     }
-
-    /*@Operation(summary = "교육차수 등록", tags = "교육차수 등록", description = "교육차수, 교육장소, 강사, 온라인 강의 목차")
-    @PostMapping(value="/insert")
-    public String insertEpisd(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap) throws Exception
-    {
-        int respCnt = 0;
-        try
-        {
-            System.out.println("eBBEpisdDTO = " + eBBEpisdDTO);
-            respCnt = eBBEpisdService.insertEpisd(eBBEpisdDTO);
-            modelMap.addAttribute("respCnt", respCnt);
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-        return "jsonView";
-    }*/
 
     @RestController
     @RequiredArgsConstructor
@@ -186,10 +167,29 @@ public class EBBEpisdController {
         public EBBEpisdDTO insertEpisd(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
         {
             try{
-
-
-
                 eBBEpisdService.insertEpisd(eBBEpisdDTO);
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return eBBEpisdDTO;
+        }
+
+        @Operation(summary = "교육차수 수정", tags = "교육차수 수정", description = "교육차수, 교육장소, 강사, 온라인 강의 목차")
+        @PostMapping(value="/update")
+        public EBBEpisdDTO updateEpisd(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+            try{
+
+                System.out.println("eBBEpisdDTO = " + eBBEpisdDTO);
+
+
+                eBBEpisdService.updateEpisd(eBBEpisdDTO);
             }
             catch (Exception e)
             {
@@ -206,14 +206,13 @@ public class EBBEpisdController {
         @PostMapping(value="/selectChk")
         public EBBEpisdDTO selectEpisdChk(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
         {
+            EBBEpisdDTO tempDto = new EBBEpisdDTO();
             int actCnt = 0;
-            /*try
-            {*/
+            try {
 
-                EBBEpisdDTO tempDto = eBBEpisdService.selectEpisdChk(eBBEpisdDTO);
-            System.out.println("@@@@ tempDto= " + tempDto);
+                tempDto = eBBEpisdService.selectEpisdChk(eBBEpisdDTO);
 
-            /*}
+            }
             catch (Exception e)
             {
                 if (log.isDebugEnabled())
@@ -221,7 +220,8 @@ public class EBBEpisdController {
                     log.debug(e.getMessage());
                 }
                 throw new Exception(e.getMessage());
-            }*/
+            }
+
             return tempDto;
         }
 

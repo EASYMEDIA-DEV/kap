@@ -43,24 +43,15 @@ public class EBBLctrDTO extends BaseDTO  {
     private Integer lctrSeq;
 
     @Schema(title = "강의명", example = "텍스트")
-    private String onlineNm;
+    private String nm;
 
     @Schema(title = "URL", example = "텍스트")
-    private String onlineUrl;
+    private String url;
 
     @Schema(title = "시간", example = "텍스트")
-    private String onlineTime;
+    private String time;
 
     @Schema(title = "썸네일파일 순번", example = "텍스트")
     private Integer thnlFileSeq;
-
-
-    private String status;
-    private int width;
-    private int height;
-    private String webPath;
-    private String fieldNm;
-    private String orgnFileNm;
-    private String fileDsc;
 
 }
