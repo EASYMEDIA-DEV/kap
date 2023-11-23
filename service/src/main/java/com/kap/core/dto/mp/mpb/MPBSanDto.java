@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.List;
 
 /**
- *  부품사회원 - 컨설팅 사업
+ *  부품사회원 - 상생 사업
  *
  * @author 양현우
  * @since 2023.11.20
@@ -29,28 +29,34 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MPBBusDto extends BaseDTO {
+public class MPBSanDto extends BaseDTO {
 
     @Schema(title = "컨설팅 순번", example = "숫자")
-    private int busctnSeq;
+    private int sanCtnSeq;
 
 
     @Schema(title = "사업년도", example = "yyyy")
-    private int bsnYear;
+    private int year;
 
 
-    @Schema(title = "사업구분", example = "기술지도")
-    private String cnstgCdNm;
+    @Schema(title = "회차", example = "1")
+    private String episd;
 
 
-    @Schema(title = "진행상태", example = "지원단이관")
-    private String statusNm;
+    @Schema(title = "사업구분", example = "자금지원")
+    private String typeCdNm;
 
 
-    @Schema(title = "부품사명", example = "기업")
+    @Schema(title = "사업명", example = "사업명")
+    private String bsnCdNm;
+
+    @Schema(title = "진행상태", example = "진행중")
+    private String status;
+
+    @Schema(title = "부품사명", example = "부품사명")
     private String cmpnNm;
 
-    @Schema(title = "구분 ", example = "1차")
+    @Schema(title = "구분", example = "1차")
     private String ctgryCdNm;
 
     @Schema(title = "규모", example = "소기업")
@@ -59,27 +65,24 @@ public class MPBBusDto extends BaseDTO {
     @Schema(title = "사업자등록번호", example = "1234567800")
     private String appctnBsnmNo;
 
-    @Schema(title = "신청분야/업종", example = "it")
-    private String appctnFldCd;
-
-    @Schema(title = "신청 소재지", example = "경부")
-    private String rgnsCdNm;
-
     @Schema(title = "담당위원", example = "홍길동")
     private String name;
 
-
     @Schema(title = "신청일", example = "date")
-    private String appctnDt;
+    private String regDtm;
 
-
+    @Schema(title = "날짜", example = "2023-02")
+    private String month;
 
     //로그인세션ID
     private String lgnSsnId;
 
 
-    @Schema(title = "컨설팅 목록", example = "DTO의 리스트")
-    private List<MPBBusDto> list;
+    @Schema(title = "상생 목록", example = "DTO의 리스트")
+    private List<MPBSanDto> list;
+
+    @Schema(title="회원 구분" , example = "C")
+    private String chkPS;
 
 
 }

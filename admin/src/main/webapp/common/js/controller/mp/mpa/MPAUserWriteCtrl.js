@@ -21,7 +21,7 @@ var exports = {
     var tabOne = function () {
         cmmCtrl.frmAjax(function(respObj) {
             ctrl.obj.find("#tab1").html(respObj);
-        }, "/mngwserc/mp/mpa/dtl", $formObj, "POST", "html",'',false);
+        }, "/mngwserc/mp/mpa/select-tab-one", $formObj, "POST", "html",'',false);
 
     }
 
@@ -68,7 +68,11 @@ var exports = {
         tabThree();
     }
 
-    var tabReload = function (type) {
+    var tabReload = function (type , page) {
+
+        if(page != undefined){
+            $formObj.find("#pageIndex").val(page);
+        }
 
         if(type == 'pur') {
             tabTwo();
@@ -148,7 +152,6 @@ var exports = {
         tabClick : {
             event : {
                 click : function (e){
-                    console.log(e.target.getAttribute('href').substr(1));
                     if(e.target.getAttribute('href').substr(1)!='dtl') {
                         $(".dtl-tab").hide();
                     } else {

@@ -17,10 +17,10 @@
           </a>
         </td>
         <td class="text-center">${kl:nameMasking(list.name)} </td>
-        <td class="text-center">${kl:hpNum(kl:phoneMasking(list.hpNo))}</td>
+        <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
         <td class="text-center">${kl:emailMasking(list.email)}</td>
         <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
-        <td class="text-center">${ list.modName}</td>
+        <td class="text-center">${ list.modName}(${list.modId})</td>
         <td class="text-center">${ kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
 
 

@@ -94,6 +94,21 @@ var exports = {
                                       }
                 }
         },
+        hpNo : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, '');
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneLen > 3 && phoneLen <= 7) {
+                            phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                        } else if (phoneLen > 7) {
+                            phoneNumber = phoneNumber.replace(/(\d{3})(\d{4})(\d+)/, '$1-$2-$3');
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+        },
         //업종/분야 select 박스
         cmssrTypeCd : {
                 event : {
@@ -111,16 +126,7 @@ var exports = {
                     }
                 }
             },
-        //엑셀다운로드
-        btnExcelDown : {
-            event : {
-                click: function () {
-                    //사유입력 레이어팝업 활성화
-                    $excelObj.find("#rsn").val('');
-                    $excelObj.modal("show");
-                }
-            }
-        },
+
 
     },
     classname : {
@@ -158,31 +164,6 @@ var exports = {
     },
 
 
-    //페이징 처리
-    pageSet : {
-        event : {
-            click : function() {
-                //페이징 이동
-                if( $(this).attr("value") != "null" ){
-                $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
-                search();
-                }
-            }
-        }
-    },
-    //상세보기
-    listView : {
-        event : {
-            click : function() {
-                //상세보기
-                var detailsKey = $(this).data("detailsKey");
-                $formObj.find("input[name=detailsKey]").val(detailsKey);
-                location.href = "./write?" + $formObj.serialize();
-            }
-        }
-    },
-    //페이징 목록 갯수
-
     listRowSizeContainer : {
         event : {
             change : function(){
@@ -197,7 +178,7 @@ var exports = {
 
         //리스트 조회
         //폼 데이터 처리
-        cmmCtrl.setFormData($formObj);
+        // cmmCtrl.setFormData($formObj);
         commonCodeAjax();
 
         /* File Dropzone Setting */
@@ -235,12 +216,14 @@ var exports = {
                     chk = false;
                 }
                 if($("#cmssrTypeCd").val()!= 'MEM_CD03004') {
-                    console.log($("#cmssrCd").val());
-                    if($("#cmssrCd").val() =='') {
-                        console.log($("#cmssrCd").val());
+                    if($("#cmssrCbsnCd").val() =='' || $("#cmssrCbsnCd").val() ==undefined) {
                         alert(msgCtrl.getMsg("fail.mp.mpd.al_029"));
                         chk = false;
                     }
+                }
+                if($("#hpNo").val().length !=13) {
+                    alert(msgCtrl.getMsg("fail.mp.mpd.al_033"));
+                    chk = false;
                 }
 
                 $(".dropzone").not(".notRequired").each(function(i){

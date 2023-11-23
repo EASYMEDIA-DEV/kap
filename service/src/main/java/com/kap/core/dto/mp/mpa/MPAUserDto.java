@@ -103,8 +103,14 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title = "직급코드", example = "MEM_CD")
     private String pstnCd;
 
+    @Schema(title = "직급명", example = "사원")
+    private String pstnCdNm;
+
     @Schema(title = "부서코드", example = "MEM_CD")
     private String deptCd;
+
+    @Schema(title = "부서명", example = "품질")
+    private String deptCdNm;
 
     @Schema(title = "부서상세명", example = "부서상세명")
     private String deptDtlNm;  //부서상세명

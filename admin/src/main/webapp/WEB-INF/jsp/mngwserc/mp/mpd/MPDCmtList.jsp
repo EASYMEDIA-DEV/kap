@@ -14,7 +14,7 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="lgnSsnId" value="${rtnData.lgnSsnId}">
             <!-- 상세로 이동시 시퀀스 -->
-            <input type="hidden" id="detailsKey" name="detailsKey" value="" />
+            <input type="hidden" id="detailsKey" name="detailsKey" value="${ rtnData.detailsKey }" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="등록/수정기간" />
@@ -23,6 +23,7 @@
             </jsp:include>
             <!--기간 검색 종료-->
             <fieldset>
+
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">위원구분</label>
                     <div class="col-sm-5">
@@ -131,6 +132,8 @@
                         <th class="text-center">이메일</th>
                         <th class="text-center">최초 등록자</th>
                         <th class="text-center">최초 등록일시</th>
+                        <th class="text-center">최종 수정자</th>
+                        <th class="text-center">최종 수정일시</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->
@@ -140,17 +143,16 @@
                 <div id="pagingContainer"/>
             </div>
             <!--리스트 종료 -->
-            <div class="clearfix">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" id="btnDelete" >삭제</button>
-                </div>
-                <div style="float:right">
-                    <button type="submit" class="btn btn-sm btn-success dtl-tab" id="btnWrite" >등록</button>
-                </div>
-            </div>
         </form>
     </div>
-
+    <div class="clearfix">
+        <div class="pull-left">
+            <button type="button" class="btn btn-sm btn-default" id="btnDelete" >삭제</button>
+        </div>
+        <div style="float:right">
+            <button type="submit" class="btn btn-sm btn-success dtl-tab" id="btnWrite" >등록</button>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade excel-down" tabindex="-1" role="dialog" >

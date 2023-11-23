@@ -11,7 +11,14 @@
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/sm/smd/SMDAPsnIfWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle}</h6>
+        <c:choose>
+            <c:when test="${not empty rtnInfo}">
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>개인정보처리방침 상세/수정</h6>
+            </c:when>
+            <c:when test="${empty rtnInfo}">
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>개인정보처리방침 등록</h6>
+            </c:when>
+        </c:choose>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.psnifSeq}" />
@@ -20,7 +27,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="200" placeholder="제목을 입력해주세요." />
+                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="200" placeholder="제목을 입력해주세요" />
                     </div>
                 </div>
             </fieldset>
@@ -34,7 +41,7 @@
             </fieldset>
             <fieldset class="last-child">
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">노출 여부</label>
+                    <label class="col-sm-1 control-label">노출 여부<span class="star"> *</span></label>
                     <div class="col-sm-11">
                         <label class="radio-inline c-radio">
                             <input type="radio" name="expsYn" value="Y" title="노출 여부" <c:if test="${rtnDto.expsYn eq 'Y' or rtnDto.expsYn eq null}">checked</c:if>/>

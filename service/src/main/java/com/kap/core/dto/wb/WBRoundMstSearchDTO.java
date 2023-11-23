@@ -30,6 +30,9 @@ import java.util.List;
 @Schema(title = "상생사업관리 회차 마스터")
 public class WBRoundMstSearchDTO extends BaseDTO {
 
+    @Schema(title = "사업코드", example = "")
+    private String bsnCd;
+
     @Schema(title = "회차순번", example = "숫자")
     private Integer episdSeq;
 

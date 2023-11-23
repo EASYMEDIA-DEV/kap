@@ -1,6 +1,11 @@
 package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.*;
+import com.kap.core.dto.MPAInqrDto;
+import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.MPBBusDto;
+import com.kap.core.dto.MPBEduDto;
+import com.kap.core.dto.MPBSanDto;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPAUserService;
@@ -78,40 +83,7 @@ public class MPBMemberPartsSocietyController {
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyListAjax";
     }
 
-    /**
-     * 부품사회원  상세 페이지
-     */
-    @PostMapping(value="/dtl")
-    public String getPartUserDtlAjax(MPAUserDto mpaUserDto ,
-                                 ModelMap modelMap ) throws Exception
-    {
-        try
-        {
-            mpaUserDto.setMemCd("CP");
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            // 코드 set
-            cdDtlList.add("COMPANY_TYPE");
-            cdDtlList.add("MEM_CD");
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
 
-            if(!"".equals(mpaUserDto.getDetailsKey())){
-                modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
-            }
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-
-        return  "mngwserc/mp/mpb/MPBMemberPartsSocietyTabOneAjax";
-    }
 
     /**
      * 관리자 상세 페이지
@@ -147,6 +119,40 @@ public class MPBMemberPartsSocietyController {
     }
 
     /**
+     * 부품사회원  상세
+     */
+    @PostMapping(value="/select-tab-one")
+    public String getPartUserDtlAjax(MPAUserDto mpaUserDto ,
+                                     ModelMap modelMap ) throws Exception
+    {
+        try
+        {
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("COMPANY_TYPE");
+            cdDtlList.add("MEM_CD");
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            // 로그인한 계정
+            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+
+            if(!"".equals(mpaUserDto.getDetailsKey())){
+                modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return  "mngwserc/mp/mpb/MPBMemberPartsSocietyTabOneAjax";
+    }
+
+    /**
      * 교육 사업 현황 리스트 조회
      */
     @PostMapping(value = "/select-tab-two")
@@ -165,8 +171,9 @@ public class MPBMemberPartsSocietyController {
      */
     @PostMapping(value = "/select-tab-three")
     public String selectEduListPageTabThreeAjax(MPBBusDto mpbBusDto ,
-                                              ModelMap modelMap ) throws Exception {
+                                                ModelMap modelMap ) throws Exception {
 
+        mpbBusDto.setChkPS("P");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectBusList(mpbBusDto));
         // 로그인한 계정
         COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
@@ -180,8 +187,8 @@ public class MPBMemberPartsSocietyController {
      */
     @PostMapping(value = "/select-tab-four")
     public String selectEduListPageTabFourAjax(MPBSanDto mpbSanDto ,
-                                                ModelMap modelMap ) throws Exception {
-
+                                               ModelMap modelMap ) throws Exception {
+        mpbSanDto.setChkPS("P");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectSanList(mpbSanDto));
         // 로그인한 계정
         COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();

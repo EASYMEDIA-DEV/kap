@@ -23,8 +23,26 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td class="text-center">${list.deptNm}</td>
-                <td class="text-center">${list.pstnNm}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ list.deptNm ne ''}">
+                            ${list.deptNm}
+                        </c:when>
+                        <c:otherwise>
+                            -
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ list.pstnNm ne ''}">
+                            ${list.pstnNm}
+                        </c:when>
+                        <c:otherwise>
+                            -
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td class="text-center">${list.hpNo}</td>
                 <td class="text-center">${list.email}</td>
                 <td class="text-center">${list.regName}</td>

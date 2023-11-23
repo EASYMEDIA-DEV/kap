@@ -141,7 +141,7 @@
                     </foreach>
                 </when>
                 <otherwise>
-                    AND	FAQ_SEQ = #{detailsKey}
+                    FAQ_SEQ = #{detailsKey}
                 </otherwise>
             </choose>
         </where>

@@ -15,6 +15,7 @@
             <ul class="nav nav-tabs" id="myTabs">
                 <li class="active tabClick"><a data-toggle="tab" id="consultTab">컨설팅</a></li>
                 <li class="tabClick"><a data-toggle="tab" id="winBusinessTab">상생</a></li>
+                <li class="tabClick"><a data-toggle="tab" id="educationTab">교육</a></li>
             </ul>
             </br>
             <fieldset style="margin-bottom: 25px;">
@@ -24,7 +25,7 @@
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="52428800" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="tchgdFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="tchgdFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
@@ -42,7 +43,7 @@
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="52428800" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="mngmntFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="mngmntFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
@@ -58,7 +59,7 @@
                     <button type="submit" class="btn btn-sm btn-success" >저장</button>
                 </div>
             </div>
-            <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
+            <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
             <div class="table-responsive ">
                 <table class="table text-sm">
                     <tbody>
@@ -67,7 +68,7 @@
                         <td>
                             <c:choose>
                                 <c:when test="${ not empty rtnDto.modName }">
-                                    ${ rtnDto.modName }
+                                    ${ rtnDto.modName }(${ rtnDto.modId })
                                 </c:when>
                                 <c:otherwise>-</c:otherwise>
                             </c:choose>

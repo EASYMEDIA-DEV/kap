@@ -1,8 +1,14 @@
 package com.kap.mngwserc.controller.mp;
 
-import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.*;
 import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.MPBBusDto;
+import com.kap.core.dto.MPBSanDto;
+import com.kap.core.dto.mp.mpd.MPDKenDto;
 import com.kap.service.*;
+import com.kap.service.MPAUserService;
+import com.kap.service.MPBMemberPartsSocietyService;
+import com.kap.service.MPDCmtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +52,8 @@ public class MPDCmtController {
 
 
     private final MPDCmtService mpdCmtService;
+
+    private final MPBMemberPartsSocietyService mpbMemberPartsSocietyService;
 
     @Value("${app.file.imageExtns}")
     private String imgType;
@@ -93,15 +101,12 @@ public class MPDCmtController {
      * 업종/분야 조회
      */
     @PostMapping(value="/cmssrCbsnCd")
-    public String selectCmssrCbsnCd(MPAUserDto mpaUserDto ,
-                              ModelMap modelMap ) throws Exception
+    public String selectCmssrCbsnCd(ModelMap modelMap ) throws Exception
     {
         try
         {
 
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("MEM_CD");
@@ -151,7 +156,6 @@ public class MPDCmtController {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("MEM_CD");
-
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
         modelMap.addAttribute("imgType", imgType);
         return "mngwserc/mp/mpd/MPDCmtWrite.admin";
@@ -219,4 +223,103 @@ public class MPDCmtController {
 
         return "jsonView";
     }
+
+
+    /**
+     * 위원 상세 페이지
+     */
+    @RequestMapping(value="/dtl-write")
+    public String getCmtDtlPage(MPAUserDto mpaUserDto ,
+                                ModelMap modelMap) throws Exception
+    {
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        modelMap.addAttribute("rtnData", mpaUserDto);
+        if(!"".equals(mpaUserDto.getDetailsKey())){
+            modelMap.addAttribute("rtnInfo", mpaUserService.selectUserDtl(mpaUserDto));
+        }
+        return "mngwserc/mp/mpd/MPDCmtDtlWrite.admin";
+    }
+
+
+
+    /**
+     * 위원  상세
+     */
+    @PostMapping(value="/select-tab-one")
+    public String getUserDtlAjax(MPAUserDto mpaUserDto ,
+                                 ModelMap modelMap ) throws Exception
+    {
+        try
+        {
+            // 로그인한 계정
+            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("MEM_CD");
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            modelMap.addAttribute("imgType", imgType);
+
+            if(!"".equals(mpaUserDto.getDetailsKey())){
+                modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return  "mngwserc/mp/mpd/MPDCmtTabOneAjax";
+    }
+
+    /**
+     * 컨설팅 리스트 조회
+     */
+    @PostMapping(value = "/select-tab-two")
+    public String selectUserListPageTabTwoAjax(MPBBusDto mpbBusDto ,
+                                               ModelMap modelMap ) throws Exception {
+
+        mpbBusDto.setChkPS("S");
+        modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectBusList(mpbBusDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpbBusDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtTabTwoAjax";
+    }
+
+    /**
+     * 상생 사업 현황 리스트 조회
+     * 미래차공모전은 [mpa 사용]
+     */
+    @PostMapping(value = "/select-tab-three")
+    public String selectEduListPageTabFourAjax(MPBSanDto mpbSanDto ,
+                                               ModelMap modelMap ) throws Exception {
+        mpbSanDto.setChkPS("S");
+        modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectSanList(mpbSanDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpbSanDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtTabThreeAjax";
+    }
+
+    /**
+     * 근태 리스트 조회
+     */
+    @PostMapping(value = "/select-tab-four")
+    public String selectEduListPageTabFourAjax(MPDKenDto mpdKenDto ,
+                                               ModelMap modelMap ) throws Exception {
+        modelMap.addAttribute("rtnData", mpdCmtService.selectKenList(mpdKenDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpdKenDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtTabFourAjax";
+    }
+
+
 }

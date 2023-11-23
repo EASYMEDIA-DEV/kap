@@ -1,6 +1,6 @@
 package com.kap.service.dao.sm;
 
-import com.kap.core.dto.SMGWinBusinessDTO;
+import com.kap.core.dto.sm.smg.SMGWinBusinessDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

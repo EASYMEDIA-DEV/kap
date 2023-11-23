@@ -24,32 +24,38 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="isttrSeq" name="isttrSeq" value="${rtnInfo.isttrSeq}" />
             <c:if test="${not empty rtnInfo}">
-                <h6 class="mt-lg"> 강사 기본 정보 </h6>
-                <fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">이름</label>
-                        <div class="col-sm-5">${rtnInfo.name}</div>
 
-                        <label class="col-sm-1 control-label">소속</label>
-                        <div class="col-sm-5">${rtnInfo.ffltnNm}</div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">휴대폰번호</label>
-                        <div class="col-sm-5">${ kl:hpNum(rtnInfo.hpNo)}</div>
-                        <label class="col-sm-1 control-label">이메일</label>
-                        <div class="col-sm-5">${rtnInfo.email}</div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">최초 등록일시</label>
-                        <div class="col-sm-5">${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</div>
-                        <label class="col-sm-1 control-label">관련사업</label>
-                        <div class="col-sm-5">${ rtnInfo.mngBsnOneName } / ${ rtnInfo.mngBsnTwoName }</div>
-                    </div>
-                </fieldset>
+                <h6 class="mt-lg"> 강사 기본 정보 </h6>
+                <div class="table-responsive col-sm-12 p0 m0">
+                    <table class="table">
+                        <colgroup>
+                            <col style="width:10%;">
+                            <col style="width:40%;">
+                            <col style="width:10%;">
+                            <col style="width:40%;">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <th scope="row" class="bg-gray-lighter">이름</th>
+                            <td>${rtnInfo.name}</td>
+                            <th scope="row" class="bg-gray-lighter">소속</th>
+                            <td>${rtnInfo.ffltnNm}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-gray-lighter">휴대폰번호</th>
+                            <td>${rtnInfo.hpNo}</td>
+                            <th scope="row" class="bg-gray-lighter">이메일</th>
+                            <td>${rtnInfo.email}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="bg-gray-lighter">등록일</th>
+                            <td> ${kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
+                            <th scope="row" class="bg-gray-lighter">최종접속일</th>
+                            <td> - </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <ul class="nav nav-tabs" id="myTabs">
                     <li class="active tabClick"><a data-toggle="tab" href="#dtl">강사 상세정보</a></li>
                     <li class="tabClick"><a data-toggle="tab" href="#edu">교육 사업 현황</a></li>
@@ -110,6 +116,58 @@
                                 <textarea class="form-control input-sm notRequired" id="spclCntn" name="spclCntn" value="${rtnInfo.spclCntn}" title="특이사항" placeholder="특이사항 입력">${rtnInfo.spclCntn}</textarea>
                             </div>
                         </fieldset>
+                        <hr />
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
+                            </div>
+                            <div class="pull-right">
+                                <c:choose>
+                                    <c:when test="${ not empty rtnInfo}">
+                                        <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                                        <button type="submit" class="btn btn-sm btn-success" >저장</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="submit" class="btn btn-sm btn-success">저장</button>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <c:if test="${ not empty rtnInfo }">
+                            <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                            <div class="table-responsive ">
+                                <table class="table text-sm">
+                                    <tbody>
+                                    <tr>
+                                        <th>최초 등록자</th>
+                                        <td>${ rtnInfo.regName }(${ rtnInfo.regId })</td>
+                                        <th>최초 작성일</th>
+                                        <td>${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                                    </tr>
+                                    <tr>
+                                        <th>최종 수정자</th>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${ not empty rtnInfo.modName }">
+                                                    ${ rtnInfo.modName }(${ rtnInfo.modId })
+                                                </c:when>
+                                                <c:otherwise>-</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <th>최종 수정일</th>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${ not empty rtnInfo.modDtm }">
+                                                    ${ kl:convertDate(rtnInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                                </c:when>
+                                                <c:otherwise>-</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
                 <div id="edu" class="tab-pane fade">
@@ -147,16 +205,6 @@
                     </table>
                     <!-- 페이징 버튼 -->
                     <div id="pagingContainer"></div>
-                </div>
-            </div>
-            <hr />
-
-            <div class="clearfix">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" id="btnList" data-param="${strPam}">목록</button>
-                </div>
-                <div style="float:right">
-                    <button type="submit" class="btn btn-sm btn-success dtl-tab" id="btnSave" >저장</button>
                 </div>
             </div>
         </form>

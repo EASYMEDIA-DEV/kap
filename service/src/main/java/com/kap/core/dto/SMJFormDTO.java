@@ -66,6 +66,15 @@ public class SMJFormDTO extends BaseDTO {
     @Schema(title = "공급망안정화기금 신청서 파일 순번", example = "숫자")
     private Integer splychnStblztnFileSeq;
 
+    @Schema(title = "자동차부품산업대상 신청서 파일 순번", example = "숫자")
+    private Integer carPartAppctnFileSeq;
+
+    @Schema(title = "미래차공모전 신청서 파일 순번", example = "숫자")
+    private Integer ftreCarAppctnFileSeq;
+
+    @Schema(title = "전체교육일정 파일 순번", example = "숫자")
+    private Integer ttlEdctnFileSeq;
+
     @Schema(title = "등록ID", example = "")
     private String regId;
 

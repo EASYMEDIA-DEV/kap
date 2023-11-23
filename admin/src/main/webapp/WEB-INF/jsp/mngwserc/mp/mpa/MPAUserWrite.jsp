@@ -35,7 +35,7 @@
                     </tr>
                     <tr>
                         <th scope="row" class="bg-gray-lighter">휴대폰번호</th>
-                        <td>${ kl:hpNum(rtnInfo.hpNo)}</td>
+                        <td>${rtnInfo.hpNo}</td>
                         <th scope="row" class="bg-gray-lighter">이메일</th>
                         <td>${rtnInfo.email}</td>
                     </tr>
@@ -80,13 +80,14 @@
                             <th class="text-center">사업년도</th>
                             <th class="text-center">팀장명</th>
                             <th class="text-center">참여구분</th>
-                            <th class="text-center">카테고리</th>
+                            <th class="text-center">주제</th>
                             <th class="text-center">시상부문</th>
+                            <th class="text-center">서류심사</th>
                             <th class="text-center">1차결과</th>
                             <th class="text-center">최종결과</th>
                             <th class="text-center">신청일</th>
                         </tr>
-                        </thead>
+                        </thead
                         <!-- 리스트 목록 결과 -->
                             <tbody id="listContainer"/>
                     </table>

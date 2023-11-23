@@ -491,6 +491,19 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 지급차수 마스터 시퀏스
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxEpisdBsnOptnSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CX_EPISD_BSN_OPTN_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
     /** 교육장 관리
      * @return
      */

@@ -57,6 +57,8 @@ public class SMJFormController {
                     typeName = "Consult";
                 } else if (smjFormDTO.getTypeCd().equals("BUSINESS02")) {
                     typeName = "WinBusiness";
+                } else if (smjFormDTO.getTypeCd().equals("BUSINESS03")) {
+                    typeName = "Education";
                 }
             }
             modelMap.addAttribute("rtnInfo", smjFormService.selectFormDtl(smjFormDTO));

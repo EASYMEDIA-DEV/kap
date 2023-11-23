@@ -1,7 +1,7 @@
 package com.kap.mngwserc.controller.sm;
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.SMBMainVslDTO;
+import com.kap.core.dto.sm.smb.SMBMainVslDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMBMnVslService;
 import lombok.RequiredArgsConstructor;

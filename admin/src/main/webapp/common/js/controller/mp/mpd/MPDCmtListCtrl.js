@@ -163,7 +163,7 @@ var exports = {
                 //상세보기
                 var detailsKey = $(this).data("detailsKey");
                 $formObj.find("input[name=detailsKey]").val(detailsKey);
-                location.href = "./write?" + $formObj.serialize();
+                location.href = "./dtl-write?" + $formObj.serialize();
             }
         }
     },

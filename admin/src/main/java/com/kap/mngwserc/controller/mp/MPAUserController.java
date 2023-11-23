@@ -2,6 +2,9 @@ package com.kap.mngwserc.controller.mp;
 
 import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.*;
+import com.kap.core.dto.MPAAttctnDto;
+import com.kap.core.dto.MPAInqrDto;
+import com.kap.core.dto.MPAUserDto;
 import com.kap.service.COMailService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPAUserService;
@@ -105,7 +108,7 @@ public class MPAUserController {
      */
     @PostMapping(value = "/select-tab-three")
     public String selectUserListPageTabThreeAjax(MPAInqrDto mpaInqrDto ,
-                                               ModelMap modelMap ) throws Exception {
+                                                 ModelMap modelMap ) throws Exception {
 
         modelMap.addAttribute("rtnData", mpaUserService.selectInqrList(mpaInqrDto));
         // 로그인한 계정
@@ -220,13 +223,12 @@ public class MPAUserController {
     /**
      * 일반사용자  상세 페이지
      */
-    @PostMapping(value="/dtl")
+    @PostMapping(value="/select-tab-one")
     public String getUserDtlAjax(MPAUserDto mpaUserDto ,
                              ModelMap modelMap ) throws Exception
     {
         try
         {
-            mpaUserDto.setMemCd("CO");
             // 로그인한 계정
             COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
@@ -336,6 +338,8 @@ public class MPAUserController {
                     cOMailDTO.setField3("일반 사용자");
                 } else if(mpPwdInitDto.getMemCd().equals("CP")) {
                     cOMailDTO.setField3("부품 사회원");
+                } else if(mpPwdInitDto.getMemCd().equals("CS")) {
+                    cOMailDTO.setField3("위원");
                 }
                 cOMailService.sendMail(cOMailDTO, "UserPwdInit.html");
             }

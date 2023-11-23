@@ -1,7 +1,9 @@
 package com.kap.service.impl.mp;
 
+import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.mp.mpd.MPDKenDto;
 import com.kap.service.COFileService;
 import com.kap.service.MPAUserService;
 import com.kap.service.MPDCmtService;
@@ -13,6 +15,7 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <pre>
@@ -72,5 +75,25 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
         return  mpdCmtMapper.deleteCmt(mpaUserDto);
+    }
+
+    @Override
+    public MPDKenDto selectKenList(MPDKenDto mpdKenDto) throws Exception {
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(mpdKenDto.getPageIndex());
+        page.setRecordCountPerPage(mpdKenDto.getListRowSize());
+
+        page.setPageSize(mpdKenDto.getPageRowSize());
+
+        mpdKenDto.setFirstIndex( page.getFirstRecordIndex() );
+        mpdKenDto.setRecordCountPerPage( page.getRecordCountPerPage() );
+        mpdKenDto.setYear(mpdKenDto.getMonthpicker().split("-")[0]);
+        mpdKenDto.setMnth(mpdKenDto.getMonthpicker().split("-")[1]);
+        mpdKenDto.setTotalCount( mpdCmtMapper.selectKenListCnt(mpdKenDto ));
+        List<MPDKenDto> mpdKenDtos = mpdCmtMapper.selectKenList(mpdKenDto);
+
+        mpdKenDto.setList( mpdKenDtos );
+        return mpdKenDto;
     }
 }

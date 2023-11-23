@@ -31,6 +31,7 @@
 		<link rel="stylesheet" href="/common/kendo/css/kendo.bootstrap.min.css" />
     	<link rel="stylesheet" href="/common/js/lib/datetimepicker/jquery.datetimepicker.css" />
 		<link rel="stylesheet" href="/common/ckeditor/plugins/codemirror/css/codemirror.min.css" />
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> <%-- monthpicker --%>
     	<script type="text/javascript" src="/common/js/lib/jquery/jquery.1.12.4.js"></script>
     	<script type="text/javascript" src="/bootstrap/vendor/bootstrap/dist/js/bootstrap.js"></script>
 		<script type="text/javascript" src="/bootstrap/vendor/bootstrap/dist/js/bootstrap-submenu.js"></script>
@@ -44,6 +45,10 @@
     	<script type="text/javascript" src="/common/js/lib/xlsx.full.min.js"></script>
 		<script type="text/javascript" src="/common/js/app.js"></script>
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
+		<%-- monthpicker --%>
+		<script src="/common/js/lib/jquery/jquery.mtz.monthpicker.js"></script>
+
 		<!--함수 공통-->
 		<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js?${sysDate}"></script>
 		<!--메시지 공통-->

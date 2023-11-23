@@ -11,11 +11,11 @@
                 <td class="text-center">${ list.bsnCdNm} </td>
                 <td class="text-center">${ list.status} TODO 양현우 추후</td>
                 <td class="text-center">${ list.cmpnNm}</td>
+                <td class="text-center">${ kl:bsnmNoConvert(list.appctnBsnmNo)}</td>
                 <td class="text-center">${ list.ctgryCdNm}</td>
                 <td class="text-center">${ list.cmpnSizeCdNm}</td>
                 <td class="text-center">${ list.name}</td>
-                <td class="text-center">${ kl:bsnmNoConvert(list.appctnBsnmNo)}</td>
-                <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+<%--                <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>--%>
             </tr>
         </c:forEach>
     </c:when>

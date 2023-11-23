@@ -1,6 +1,8 @@
 package com.kap.service;
 
 import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.MPBEduDto;
+import com.kap.core.dto.mp.mpd.MPDKenDto;
 
 /**
  * <pre>
@@ -26,5 +28,9 @@ public interface MPDCmtService {
      int insertCmt(MPAUserDto mpaUserDto) throws Exception;
 
      int deleteCmt(MPAUserDto mpaUserDto) throws Exception;
+
+     MPDKenDto selectKenList(MPDKenDto mpdKenDto) throws Exception;
+
+
 
 }

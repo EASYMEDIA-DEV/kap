@@ -21,8 +21,8 @@
                 <jsp:param name="endId" value="dEndDt" />
             </jsp:include>
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                <jsp:param name="srchText" value="등록/수정기간" />
-                <jsp:param name="srchOption" value="등록일,수정기간" />
+                <jsp:param name="srchText" value="기간검색" />
+                <jsp:param name="srchOption" value="등록일,수정일" />
             </jsp:include>
             <!--기간 검색 종료-->
             <fieldset>
@@ -83,7 +83,7 @@
                     </div>
                     <div class="pull-left ml-sm">
                         <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                        <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
+                        <button type="button" class="btn btn-default btn-sm" id="refresh">초기화</button>
                     </div>
                 </div>
             </fieldset>

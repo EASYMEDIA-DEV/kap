@@ -46,15 +46,6 @@ public class MPCLecturerDTO extends BaseDTO {
     @Schema(title = "직급명", example = "")
     private String pstnNm;
 
-    @Schema(title = "관리사업코드", example = "")
-    private String mngBsnCd;
-
-    @Schema(title = "1차 관리사업명", example = "")
-    private String mngBsnOneName;
-
-    @Schema(title = "2차 관리사업명", example = "")
-    private String mngBsnTwoName;
-
     @Schema(title = "전화번호", example = "")
     private String telNo;
 

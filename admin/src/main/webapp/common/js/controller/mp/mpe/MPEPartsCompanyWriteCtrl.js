@@ -11,6 +11,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var width = 500; //팝업의 너비
     var height = 600; //팝업의 높이
     var valChk = 'N';
+    var bsnmNoChk = true;
+
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
@@ -128,14 +130,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 success : function(r) {
                                     console.log(r.respCnt);
                                     console.log(r);
-                                    if (r.respCnt) {
-                                        alert("인증되었습니다.");
-                                        $("#cmpnNm").val(r.cmpnNm);
-                                        $("#rprsntNm").val(r.rprsntNm);
+                                    if (checkNo !== "" && bsnmNoChk == false) {
+                                        if (r.respCnt) {
+                                            alert("인증되었습니다.");
+                                            $("#cmpnNm").val(r.cmpnNm);
+                                            $("#rprsntNm").val(r.rprsntNm);
+                                            bsnmNoChk = true;
+                                        } else {
+                                            alert('DB에 등록된 정보가 없습니다. NICE 인증으로 넘어갑니다.')
+                                            $("#cmpnNm").val("nice에서 가져온 회사명");
+                                            $("#rprsntNm").val("nice에서 가져온 대표자명");
+                                            bsnmNoChk = true;
+                                        }
                                     } else {
-                                        alert('DB에 등록된 정보가 없습니다. NICE 인증으로 넘어갑니다.')
-                                        $("#cmpnNm").val("nice에서 가져온 회사명");
-                                        $("#rprsntNm").val("nice에서 가져온 대표자명");
+                                        bsnmNoChk = false;
+                                        alert("사업자등록번호를 입력해주세요.");
                                     }
                                 },
                                 error : function(xhr, ajaxSettings, thrownError) {
@@ -161,6 +170,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         {
                             $(".sqInfoArea").show();
                         }
+                    }
+                }
+            },
+            bsnmNo : {
+                event : {
+                    input : function() {
+                        bsnmNoChk = false;
                     }
                 }
             },
@@ -209,7 +225,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }
                     }
                 }
-            },
+            }
         },
         classname : {
             // do something...
@@ -227,6 +243,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
             // 유효성 검사
             $formObj.validation({
+                after : function(){
+                    if(bsnmNoChk == false) {
+                        alert("사업자등록번호 인증을해주세요.");
+                        return false;
+                    } else {
+                        return true;
+                    }
+                },
                 async : {
                     use : true,
                     func : function (){

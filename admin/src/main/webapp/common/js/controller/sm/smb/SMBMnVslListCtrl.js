@@ -42,8 +42,15 @@ define(["ezCtrl"], function(ezCtrl) {
             btnSearch : {
                 event : {
                     click : function() {
-                        cmmCtrl.setFormData($formObj);
+                        // cmmCtrl.setFormData($formObj);
                         search(1);
+                    }
+                }
+            },
+            refresh : {
+                event : {
+                    click : function() {
+                        window.location.reload();
                     }
                 }
             },
@@ -78,8 +85,8 @@ define(["ezCtrl"], function(ezCtrl) {
                             }
 
                             var ajaxData = {
-                                seq : key,
-                                ord : sort,
+                                vslSeq : key,
+                                expsOrd : sort,
                                 sortType : sortType
                             }
 
@@ -115,22 +122,22 @@ define(["ezCtrl"], function(ezCtrl) {
 
                         if (jQuery(this).is(":checked"))
                         {
-                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").addClass("notRequired").prop("disabled", true);
-                            jQuery(".input-group").find("input").prop("disabled", true).val("");
-                            jQuery(".input-group").siblings("select").prop("disabled", true).find("option:eq(0)").prop("selected", true);
+                            jQuery(trgtObj).find("#dStrDt, #dEndDt").addClass("notRequired").prop("disabled", true);
+                            jQuery("#dStrDt, #dEndDt").find("input").prop("disabled", true).val("");
+                            jQuery("#dStrDt, #dEndDt").siblings("select").prop("disabled", true).find("option:eq(0)").prop("selected", true);
                         }
                         else
                         {
-                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").removeClass("notRequired").prop("disabled", false);
-                            jQuery(".input-group").find("input").prop("disabled", false);
-                            jQuery(".input-group").siblings("select").prop("disabled", false);
+                            jQuery(trgtObj).find("#dStrDt, #dEndDt").removeClass("notRequired").prop("disabled", false);
+                            jQuery("#dStrDt, #dEndDt").prop("disabled", false);
+                            jQuery("#dStrDt, #dEndDt").siblings("select").prop("disabled", false);
                         }
 
-                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("setOptions", { /* maxDate : false */ });
-                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("reset").val("");
+                        jQuery(trgtObj).find("#dStrDt").datetimepicker("setOptions", { /* maxDate : false */ });
+                        jQuery(trgtObj).find("#dStrDt").datetimepicker("reset").val("");
 
-                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("setOptions", { minDate : false });
-                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("reset").val("");
+                        jQuery(trgtObj).find("#dEndDt").datetimepicker("setOptions", { minDate : false });
+                        jQuery(trgtObj).find("#dEndDt").datetimepicker("reset").val("");
                     }
                 }
             }
@@ -170,9 +177,9 @@ define(["ezCtrl"], function(ezCtrl) {
         },
         immediately : function() {
             // 리스트 조회
-            cmmCtrl.setFormData($formObj);
-
-            search($formObj.find("input[name=pageIndex]").val());
+            // cmmCtrl.setFormData($formObj);
+            // search($formObj.find("input[name=pageIndex]").val());
+            search();
         }
     };
 

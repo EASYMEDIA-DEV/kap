@@ -1,6 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:choose>
-<%--  ${rtnData}--%>
   <c:when test="${ not empty rtnData.list}">
     <c:forEach var="list" items="${rtnData.list}" varStatus="status">
       <tr data-total-count="${rtnData.totalCount}">
@@ -19,12 +18,12 @@
         </td>
         <td class="text-center">${kl:nameMasking(list.name)}</td>
         <td class="text-center">${list.cmpnNm}</td>
+        <td class="text-center">${kl:bsnmNoConvert(list.workBsnmNo)}</td>
         <td class="text-center">${list.ctgryCdNm}</td>
         <td class="text-center">${list.sizeCdNm}</td>
-        <td class="text-center">${kl:bsnmNoConvert(list.workBsnmNo)}</td>
         <td class="text-center deptCd" value="${list.deptCd}">${list.deptDtlNm}</td>
-        <td class="text-center">${list.pstnCd}</td>
-        <td class="text-center">${kl:hpNum(kl:phoneMasking(list.hpNo))}</td>
+        <td class="text-center">${list.pstnCdNm}</td>
+        <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
         <td class="text-center">${kl:emailMasking(list.email)}</td>
         <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
         <td class="text-center">${list.modName}</td>

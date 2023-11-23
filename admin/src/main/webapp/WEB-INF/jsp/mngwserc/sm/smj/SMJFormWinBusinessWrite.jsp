@@ -17,10 +17,13 @@
             <input type="hidden" class="notRequired" id="examMsremntFileSeq" name="examMsremntFileSeq" value="${rtnDto.examMsremntFileSeq}" />
             <input type="hidden" class="notRequired" id="clbtnFileSeq" name="clbtnFileSeq" value="${rtnDto.clbtnFileSeq}" />
             <input type="hidden" class="notRequired" id="splychnStblztnFileSeq" name="splychnStblztnFileSeq" value="${rtnDto.splychnStblztnFileSeq}" />
+            <input type="hidden" class="notRequired" id="carPartAppctnFileSeq" name="carPartAppctnFileSeq" value="${rtnDto.carPartAppctnFileSeq}" />
+            <input type="hidden" class="notRequired" id="ftreCarAppctnFileSeq" name="ftreCarAppctnFileSeq" value="${rtnDto.ftreCarAppctnFileSeq}" />
 
             <ul class="nav nav-tabs" id="myTabs">
                 <li class="tabClick"><a data-toggle="tab" id="consultTab">컨설팅</a></li>
                 <li class="active tabClick"><a data-toggle="tab" id="winBusinessTab">상생</a></li>
+                <li class="tabClick"><a data-toggle="tab" id="educationTab">교육</a></li>
             </ul>
             </br>
             <fieldset style="margin-bottom: 25px;">
@@ -165,13 +168,49 @@
                     </div>
                 </div>
             </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <h6 class="mt0" style="margin-left:1%"><em class="ion-play mr-sm"></em>자동차부품산업대상</h6>
+                    <label class="col-sm-1 control-label">신청서</label>
+                    <div class="col-sm-10 col-md-11">
+                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                        <spring:eval var="atchUploadMaxSize" expression="52428800" />
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="carPartAppctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
+                            <div class="dz-default dz-message">
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                            </div>
+                        </div>
+                        <p class="text-bold mt">
+                            ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <h6 class="mt0" style="margin-left:1%"><em class="ion-play mr-sm"></em>미래차공모전</h6>
+                    <label class="col-sm-1 control-label">신청서</label>
+                    <div class="col-sm-10 col-md-11">
+                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                        <spring:eval var="atchUploadMaxSize" expression="52428800" />
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="ftreCarAppctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
+                            <div class="dz-default dz-message">
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                            </div>
+                        </div>
+                        <p class="text-bold mt">
+                            ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
             </table>
             <div class="clearfix">
                 <div class="pull-right">
                     <button type="submit" class="btn btn-sm btn-success" >저장</button>
                 </div>
             </div>
-            <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
+            <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
             <div class="table-responsive ">
                 <table class="table text-sm">
                     <tbody>
@@ -180,7 +219,7 @@
                         <td>
                             <c:choose>
                                 <c:when test="${ not empty rtnDto.modName }">
-                                    ${ rtnDto.modName }
+                                    ${ rtnDto.modName }(${ rtnDto.modId })
                                 </c:when>
                                 <c:otherwise>-</c:otherwise>
                             </c:choose>
