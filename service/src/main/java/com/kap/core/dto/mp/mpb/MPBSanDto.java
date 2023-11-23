@@ -71,6 +71,9 @@ public class MPBSanDto extends BaseDTO {
     @Schema(title = "신청일", example = "date")
     private String regDtm;
 
+    @Schema(title = "날짜", example = "2023-02")
+    private String month;
+
     //로그인세션ID
     private String lgnSsnId;
 

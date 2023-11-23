@@ -372,4 +372,11 @@ public class COStringUtil {
         String suffix = str1.substring(5);
         return prefix + "-" + middlePart + "-" + suffix;
     }
+
+    public static String emptyHypen(String str1) {
+        if(str1.isEmpty()){
+            return "-";
+        }
+        return str1;
+    }
 }

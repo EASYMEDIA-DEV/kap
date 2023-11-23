@@ -131,4 +131,13 @@
         <example>${kl:bsnmHypen(value)}</example>
     </function>
 
+    <!-- empty일 경우 hypen-->
+    <function>
+        <description>emptyHypen</description>
+        <name>emptyHypen</name>
+        <function-class>com.kap.common.utility.COStringUtil</function-class>
+        <function-signature>java.lang.String emptyHypen(java.lang.String)</function-signature>
+        <example>${kl:emptyHypen(value)}</example>
+    </function>
+
 </taglib>

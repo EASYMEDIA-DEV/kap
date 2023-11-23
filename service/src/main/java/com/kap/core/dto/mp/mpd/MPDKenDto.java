@@ -60,6 +60,14 @@ public class MPDKenDto extends BaseDTO {
     @Schema(title = "기타", example = "기타")
     private String etc;
 
+    @Schema(title = "근태체크일", example = "기타")
+    private String monthpicker;
+
+    @Schema(title = "년도", example = "2022")
+    private String year;
+
+    @Schema(title = "월", example = "01")
+    private String mnth;
 
 
 
