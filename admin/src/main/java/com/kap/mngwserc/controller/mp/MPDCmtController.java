@@ -1,7 +1,14 @@
 package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.*;
+import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.MPBBusDto;
+import com.kap.core.dto.MPBSanDto;
+import com.kap.core.dto.mp.mpd.MPDKenDto;
 import com.kap.service.*;
+import com.kap.service.MPAUserService;
+import com.kap.service.MPBMemberPartsSocietyService;
+import com.kap.service.MPDCmtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -299,6 +306,19 @@ public class MPDCmtController {
         COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
         mpbSanDto.setLgnSsnId(lgnCOAAdmDTO.getId());
         return "mngwserc/mp/mpd/MPDCmtTabThreeAjax";
+    }
+
+    /**
+     * 근태 리스트 조회
+     */
+    @PostMapping(value = "/select-tab-four")
+    public String selectEduListPageTabFourAjax(MPDKenDto mpdKenDto ,
+                                               ModelMap modelMap ) throws Exception {
+        modelMap.addAttribute("rtnData", mpdCmtService.selectKenList(mpdKenDto));
+        // 로그인한 계정
+        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        mpdKenDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtTabFourAjax";
     }
 
 

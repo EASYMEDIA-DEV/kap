@@ -2,6 +2,7 @@ package com.kap.service.impl.mp;
 
 import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.mp.mpd.MPDKenDto;
 import com.kap.service.COFileService;
 import com.kap.service.MPAUserService;
 import com.kap.service.MPDCmtService;
@@ -72,5 +73,10 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
         return  mpdCmtMapper.deleteCmt(mpaUserDto);
+    }
+
+    @Override
+    public MPDKenDto selectKenList(MPDKenDto mpdKenDto) throws Exception {
+        return null;
     }
 }

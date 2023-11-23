@@ -2,6 +2,9 @@ package com.kap.mngwserc.controller.mp;
 
 import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.*;
+import com.kap.core.dto.MPAAttctnDto;
+import com.kap.core.dto.MPAInqrDto;
+import com.kap.core.dto.MPAUserDto;
 import com.kap.service.COMailService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPAUserService;
@@ -105,7 +108,7 @@ public class MPAUserController {
      */
     @PostMapping(value = "/select-tab-three")
     public String selectUserListPageTabThreeAjax(MPAInqrDto mpaInqrDto ,
-                                               ModelMap modelMap ) throws Exception {
+                                                 ModelMap modelMap ) throws Exception {
 
         modelMap.addAttribute("rtnData", mpaUserService.selectInqrList(mpaInqrDto));
         // 로그인한 계정

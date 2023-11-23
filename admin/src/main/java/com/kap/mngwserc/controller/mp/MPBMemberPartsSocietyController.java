@@ -1,6 +1,11 @@
 package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.*;
+import com.kap.core.dto.MPAInqrDto;
+import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.MPBBusDto;
+import com.kap.core.dto.MPBEduDto;
+import com.kap.core.dto.MPBSanDto;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPAUserService;
@@ -166,7 +171,7 @@ public class MPBMemberPartsSocietyController {
      */
     @PostMapping(value = "/select-tab-three")
     public String selectEduListPageTabThreeAjax(MPBBusDto mpbBusDto ,
-                                              ModelMap modelMap ) throws Exception {
+                                                ModelMap modelMap ) throws Exception {
 
         mpbBusDto.setChkPS("P");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectBusList(mpbBusDto));
@@ -182,7 +187,7 @@ public class MPBMemberPartsSocietyController {
      */
     @PostMapping(value = "/select-tab-four")
     public String selectEduListPageTabFourAjax(MPBSanDto mpbSanDto ,
-                                                ModelMap modelMap ) throws Exception {
+                                               ModelMap modelMap ) throws Exception {
         mpbSanDto.setChkPS("P");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectSanList(mpbSanDto));
         // 로그인한 계정
