@@ -23,6 +23,9 @@
              , EXAM_MSREMNT_FILE_SEQ
              , CLBTN_FILE_SEQ
              , SPLYCHN_STBLZTN_FILE_SEQ
+             , CAR_PART_APPCTN_FILE_SEQ
+             , FTRE_CAR_APPCTN_FILE_SEQ
+             , TTL_EDCTN_FILE_SEQ
              , REG_ID
              , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
              , REG_DTM
@@ -54,6 +57,9 @@
           , EXAM_MSREMNT_FILE_SEQ = #{examMsremntFileSeq}
           , CLBTN_FILE_SEQ = #{clbtnFileSeq}
           , SPLYCHN_STBLZTN_FILE_SEQ = #{splychnStblztnFileSeq}
+          , CAR_PART_APPCTN_FILE_SEQ = #{carPartAppctnFileSeq}
+          , FTRE_CAR_APPCTN_FILE_SEQ = #{ftreCarAppctnFileSeq}
+          , TTL_EDCTN_FILE_SEQ = #{ttlEdctnFileSeq}
           , MOD_ID = #{modId}
           , MOD_IP = #{modIp}
           , MOD_DTM = NOW()

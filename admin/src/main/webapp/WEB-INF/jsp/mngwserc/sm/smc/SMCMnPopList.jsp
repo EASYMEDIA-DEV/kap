@@ -24,7 +24,7 @@
                 <jsp:param name="endId" value="dEndDt" />
             </jsp:include>
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                <jsp:param name="srchText" value="등록/수정기간" />
+                <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchOption" value="등록일,수정기간" />
             </jsp:include>
 
@@ -108,7 +108,7 @@
                 </div>
                 <div class="pull-right">
                     <%--<button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">다중순서변경</button>--%>
-                    <button type="button" class="btn btn-primary btn-sm mb-sm" id="btnExpsYn">미노출</button>
+                    <%--<button type="button" class="btn btn-primary btn-sm mb-sm" id="btnExpsYn">미노출</button>--%>
                     <button type="button" class="btn btn-danger btn-sm mb-sm" id="btn_delete">선택삭제</button>
                     <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>
@@ -124,16 +124,16 @@
                                 <span class="ion-checkmark-round"></span>
                             </label>
                         </th>
-                        <th class="text-center">선택</th>
+                        <th class="text-center">번호</th>
                         <th class="text-center">구분</th>
                         <th class="text-center">제목</th>
-                        <th class="text-center">게시 기간</th>
+                        <th class="text-center">게시기간</th>
                         <th class="text-center">최초 등록자</th>
-                        <th class="text-center">최초 등록일</th>
+                        <th class="text-center">최초 등록일시</th>
                         <th class="text-center">최종 수정자</th>
-                        <th class="text-center">최종 수정일</th>
-                        <th class="text-center">노출 여부</th>
-                        <th class="text-center">노출 순서</th>
+                        <th class="text-center">최종 수정일시</th>
+                        <th class="text-center">노출여부</th>
+                        <th class="text-center">노출순서</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

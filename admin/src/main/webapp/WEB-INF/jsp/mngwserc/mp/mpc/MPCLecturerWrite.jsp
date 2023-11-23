@@ -116,6 +116,58 @@
                                 <textarea class="form-control input-sm notRequired" id="spclCntn" name="spclCntn" value="${rtnInfo.spclCntn}" title="특이사항" placeholder="특이사항 입력">${rtnInfo.spclCntn}</textarea>
                             </div>
                         </fieldset>
+                        <hr />
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
+                            </div>
+                            <div class="pull-right">
+                                <c:choose>
+                                    <c:when test="${ not empty rtnInfo}">
+                                        <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                                        <button type="submit" class="btn btn-sm btn-success" >저장</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="submit" class="btn btn-sm btn-success">저장</button>
+                                    </c:otherwise>
+                                </c:choose>
+                            </div>
+                        </div>
+                        <c:if test="${ not empty rtnInfo }">
+                            <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                            <div class="table-responsive ">
+                                <table class="table text-sm">
+                                    <tbody>
+                                    <tr>
+                                        <th>최초 등록자</th>
+                                        <td>${ rtnInfo.regName }(${ rtnInfo.regId })</td>
+                                        <th>최초 작성일</th>
+                                        <td>${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                                    </tr>
+                                    <tr>
+                                        <th>최종 수정자</th>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${ not empty rtnInfo.modName }">
+                                                    ${ rtnInfo.modName }(${ rtnInfo.modId })
+                                                </c:when>
+                                                <c:otherwise>-</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <th>최종 수정일</th>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${ not empty rtnInfo.modDtm }">
+                                                    ${ kl:convertDate(rtnInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                                </c:when>
+                                                <c:otherwise>-</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
                 <div id="edu" class="tab-pane fade">
@@ -153,16 +205,6 @@
                     </table>
                     <!-- 페이징 버튼 -->
                     <div id="pagingContainer"></div>
-                </div>
-            </div>
-            <hr />
-
-            <div class="clearfix">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" id="btnList" data-param="${strPam}">목록</button>
-                </div>
-                <div style="float:right">
-                    <button type="submit" class="btn btn-sm btn-success dtl-tab" id="btnSave" >저장</button>
                 </div>
             </div>
         </form>

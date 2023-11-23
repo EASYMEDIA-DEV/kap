@@ -40,6 +40,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         location.href = "./write?" + $formObj.serialize();
                     }
                 }
+            },
+            educationTab : {
+                event : {
+                    click : function () {
+                        $formObj.find("#typeCd").val("BUSINESS03");
+                        location.href = "./write?" + $formObj.serialize();
+                    }
+                }
             }
         },
         classname : {

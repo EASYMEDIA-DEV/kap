@@ -303,6 +303,50 @@
                                 </div>
                             </div>
                         </fieldset>
+                        <div class="clearfix">
+                            <div class="pull-left">
+                                <button type="button" class="btn btn-sm btn-default" id="btnList" data-param="${strPam}">목록</button>
+                            </div>
+                            <div style="float:right">
+                                <button type="submit" class="btn btn-sm btn-success dtl-tab" id="btnSave" >저장</button>
+                            </div>
+                        </div>
+                        <hr />
+                        <c:if test="${ not empty rtnInfo }">
+                            <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                            <div class="table-responsive ">
+                                <table class="table text-sm">
+                                    <tbody>
+                                    <tr>
+                                        <th>최초 등록자</th>
+                                        <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
+                                        <th>최초 작성일</th>
+                                        <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                                    </tr>
+                                    <tr>
+                                        <th>최종 수정자</th>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${ not empty rtnDto.modName }">
+                                                    ${ rtnDto.modName }(${ rtnDto.modId })
+                                                </c:when>
+                                                <c:otherwise>-</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                        <th>최종 수정일</th>
+                                        <td>
+                                            <c:choose>
+                                                <c:when test="${ not empty rtnDto.modDtm }">
+                                                    ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                                </c:when>
+                                                <c:otherwise>-</c:otherwise>
+                                            </c:choose>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
                 <div id="edu" class="tab-pane fade">
@@ -438,14 +482,7 @@
                     </table>
                 </div>
             </div>
-            <div class="clearfix">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" id="btnList" data-param="${strPam}">목록</button>
-                </div>
-                <div style="float:right">
-                    <button type="submit" class="btn btn-sm btn-success dtl-tab" id="btnSave" >저장</button>
-                </div>
-            </div>
+
         </form>
     </div>
 </div>

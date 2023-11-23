@@ -43,14 +43,6 @@
                     </div>
                 </div>
             </fieldset>
-            CFG_SEQ
-            SMS_SEND_YN
-            REG_ID
-            REG_IP
-            REG_DTM
-            MOD_ID
-            MOD_IP
-            MOD_DTM
             <hr />
             <div class="clearfix">
                 <div class="pull-left">
@@ -67,7 +59,7 @@
                         <tbody>
                         <tr>
                             <th>최초 등록자</th>
-                            <td>${ rtnDto.regName }</td>
+                            <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
                             <th>최초 등록일시</th>
                             <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                         </tr>
@@ -76,7 +68,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${ not empty rtnDto.modName }">
-                                        ${ rtnDto.modName }
+                                        ${ rtnDto.modName }(${ rtnDto.modId })
                                     </c:when>
                                     <c:otherwise>-</c:otherwise>
                                 </c:choose>

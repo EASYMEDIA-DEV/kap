@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+
 /**
  * <pre>
  * 양식 관리를 위한 ServiceImpl
@@ -50,19 +52,25 @@ public class SMJFormServiceImpl implements SMJFormService {
      */
     public int updateFormDtl(SMJFormDTO smjFormDTO) throws Exception {
 
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(smjFormDTO.getFileList());
+
         if(smjFormDTO.getTypeCd().equals("BUSINESS01")) {
-            smjFormDTO.setTchgdFileSeq(smjFormDTO.getTchgdFileSeq());
-            smjFormDTO.setMngmntFileSeq(smjFormDTO.getMngmntFileSeq());
+            smjFormDTO.setTchgdFileSeq(fileSeqMap.get("tchgdFileSeq"));
+            smjFormDTO.setMngmntFileSeq(fileSeqMap.get("mngmntFileSeq"));
 
         } else if(smjFormDTO.getTypeCd().equals("BUSINESS02")) {
-            smjFormDTO.setScrtyEnvrnmtFileSeq(smjFormDTO.getScrtyEnvrnmtFileSeq());
-            smjFormDTO.setSftyFcltyFileSeq(smjFormDTO.getSftyFcltyFileSeq());
-            smjFormDTO.setCrbnEmsnsFileSeq(smjFormDTO.getCrbnEmsnsFileSeq());
-            smjFormDTO.setSmrtFctryAppctnFileSeq(smjFormDTO.getSmrtFctryAppctnFileSeq());
-            smjFormDTO.setSmrtFctryScrtyFileSeq(smjFormDTO.getSmrtFctryScrtyFileSeq());
-            smjFormDTO.setExamMsremntFileSeq(smjFormDTO.getExamMsremntFileSeq());
-            smjFormDTO.setClbtnFileSeq(smjFormDTO.getClbtnFileSeq());
-            smjFormDTO.setSplychnStblztnFileSeq(smjFormDTO.getSplychnStblztnFileSeq());
+            smjFormDTO.setScrtyEnvrnmtFileSeq(fileSeqMap.get("scrtyEnvrnmtFileSeq"));
+            smjFormDTO.setSftyFcltyFileSeq(fileSeqMap.get("sftyFcltyFileSeq"));
+            smjFormDTO.setCrbnEmsnsFileSeq(fileSeqMap.get("crbnEmsnsFileSeq"));
+            smjFormDTO.setSmrtFctryAppctnFileSeq(fileSeqMap.get("smrtFctryAppctnFileSeq"));
+            smjFormDTO.setSmrtFctryScrtyFileSeq(fileSeqMap.get("smrtFctryScrtyFileSeq"));
+            smjFormDTO.setExamMsremntFileSeq(fileSeqMap.get("examMsremntFileSeq"));
+            smjFormDTO.setClbtnFileSeq(fileSeqMap.get("clbtnFileSeq"));
+            smjFormDTO.setSplychnStblztnFileSeq(fileSeqMap.get("splychnStblztnFileSeq"));
+            smjFormDTO.setCarPartAppctnFileSeq(fileSeqMap.get("carPartAppctnFileSeq"));
+            smjFormDTO.setFtreCarAppctnFileSeq(fileSeqMap.get("ftreCarAppctnFileSeq"));
+        } else if(smjFormDTO.getTypeCd().equals("BUSINESS03")) {
+            smjFormDTO.setTtlEdctnFileSeq(fileSeqMap.get("ttlEdctnFileSeq"));
         }
         return smjFormMapper.updateFormDtl(smjFormDTO);
     }

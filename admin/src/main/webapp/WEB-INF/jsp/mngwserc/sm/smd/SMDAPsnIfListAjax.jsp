@@ -15,9 +15,9 @@
                             ${list.titl}
                     </a>
                 </td>
-                <td class="text-center">${list.regName}</td>
+                <td class="text-center">${list.regName}(${list.regId})</td>
                 <td class="text-center">${list.regDtm}</td>
-                <td class="text-center">${list.modName}</td>
+                <td class="text-center">${list.modName}(${list.modId})</td>
                 <td class="text-center">${list.modDtm}</td>
                 <td class="text-center">${ kl:decode(list.expsYn, 'Y', '노출', '미노출') }</td>
             </tr>

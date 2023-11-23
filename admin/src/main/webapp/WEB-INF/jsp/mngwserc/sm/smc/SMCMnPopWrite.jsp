@@ -107,7 +107,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="200" placeholder="제목을 입력해주세요."/>
+                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="200" placeholder="제목을 입력해주세요"/>
                     </div>
                 </div>
             </fieldset>
@@ -186,7 +186,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">링크 URL</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control input-sm notRequired" id="urlUrl" name="urlUrl" value="${rtnDto.urlUrl}" maxlength="1000" title="링크 URL" placeholder="링크 URL 입력하세요." />
+                        <input type="text" class="form-control input-sm notRequired" id="urlUrl" name="urlUrl" value="${rtnDto.urlUrl}" maxlength="1000" title="링크 URL" placeholder="클릭 시 링크될 URL을 입력하세요" />
                     </div>
                     <div class="col-sm-2">
                         <c:set var="wnppYn" value="${kl:nvl(rtnDto.wnppYn, 'Y')}" />
@@ -240,7 +240,7 @@
                         <tbody>
                         <tr>
                             <th>최초 등록자</th>
-                            <td>${ rtnDto.regName }</td>
+                            <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
                             <th>최초 작성일</th>
                             <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                         </tr>
@@ -249,7 +249,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${ not empty rtnDto.modName }">
-                                        ${ rtnDto.modName }
+                                        ${ rtnDto.modName }(${ rtnDto.modId })
                                     </c:when>
                                     <c:otherwise>-</c:otherwise>
                                 </c:choose>

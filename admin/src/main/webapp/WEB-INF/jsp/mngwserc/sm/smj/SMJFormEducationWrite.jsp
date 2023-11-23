@@ -9,41 +9,22 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.stySeq}" />
             <input type="hidden" class="notRequired" id="typeCd" name="typeCd" value="${rtnInfo.typeCd}" />
-            <input type="hidden" class="notRequired" id="tchgdFileSeq" name="tchgdFileSeq" value="${rtnDto.tchgdFileSeq}" />
-            <input type="hidden" class="notRequired" id="mngmntFileSeq" name="mngmntFileSeq" value="${rtnDto.mngmntFileSeq}" />
+            <input type="hidden" class="notRequired" id="ttlEdctnFileSeq" name="ttlEdctnFileSeq" value="${rtnDto.ttlEdctnFileSeq}" />
 
             <ul class="nav nav-tabs" id="myTabs">
-                <li class="active tabClick"><a data-toggle="tab" id="consultTab">컨설팅</a></li>
+                <li class="tabClick"><a data-toggle="tab" id="consultTab">컨설팅</a></li>
                 <li class="tabClick"><a data-toggle="tab" id="winBusinessTab">상생</a></li>
-                <li class="tabClick"><a data-toggle="tab" id="educationTab">교육</a></li>
+                <li class="active tabClick"><a data-toggle="tab" id="educationTab">교육</a></li>
             </ul>
             </br>
             <fieldset style="margin-bottom: 25px;">
                 <div class="form-group text-sm">
-                    <h6 class="mt0" style="margin-left:1%"><em class="ion-play mr-sm"></em>기술지도</h6>
-                    <label class="col-sm-1 control-label">개선활동 추진계획서</label>
+                    <h6 class="mt0" style="margin-left:1%"><em class="ion-play mr-sm"></em>전체교육일정</h6>
+                    <label class="col-sm-1 control-label">전체 교육 일정</label>
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="52428800" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="tchgdFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
-                            <div class="dz-default dz-message">
-                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                            </div>
-                        </div>
-                        <p class="text-bold mt">
-                            ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
-                        </p>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group text-sm">
-                    <h6 class="mt0" style="margin-left:1%"><em class="ion-play mr-sm"></em>경영컨설팅</h6>
-                    <label class="col-sm-1 control-label">개선활동 추진계획서</label>
-                    <div class="col-sm-10 col-md-11">
-                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="52428800" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="mngmntFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="ttlEdctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="전체교육일정">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>

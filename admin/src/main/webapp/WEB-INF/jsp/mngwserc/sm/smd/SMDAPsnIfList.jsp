@@ -16,11 +16,10 @@
             <input type="hidden" id="psnifSeq" name="psnifSeq" value="" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                <jsp:param name="srchText" value="등록/수정기간" />
+                <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchOption" value="등록일,수정기간" />
             </jsp:include>
             <!--기간 검색 종료-->
-
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">노출여부</label>
