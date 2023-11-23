@@ -23,6 +23,8 @@
                     <!-- CSRF KEY -->
                     <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
+                    <input type="hidden" id="selPartUser" name="selPartUser" value="" />
+
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                         <jsp:param name="srchText" value="등록/수정기간" />

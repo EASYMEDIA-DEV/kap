@@ -42,7 +42,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     var selPartUserData = function (){
         cmmCtrl.frmAjax(function(respObj) {
-            $modalObj.find('button[class=close]').click();
+            $modalObj.modal("hide");
             /* return data input */
             setInputValue(respObj);
         }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json")
@@ -65,6 +65,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 if(tagName === 'P') target.html(rtnData[el]);
             }
         });
+
     }
 
     // set model
@@ -95,10 +96,10 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
                         if(trArea.length != 0 || trArea != undefined){
                             selPartUser = trArea.find('[data-point=id]').html();
+                            $formObj.find("#selPartUser").val(selPartUser);
+                            selPartUserData();
                         }
-                        $formObj.append($('<input/>', {type: 'hidden', name: 'selPartUser', value:selPartUser }));
 
-                        selPartUserData();
                     }
                 }
             },
