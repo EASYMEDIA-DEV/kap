@@ -1,0 +1,526 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.wb.wbf.WBFASmartRoundMapper">
+
+    <!--
+         쿼리명 : WBFASmartRoundMapper.selectSmartRoundList
+         설  명 : 게시판 리스트
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selectSmartRoundList" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstDTO">
+        SELECT /* WBFASmartRoundMapper.selectSmartRoundList */
+        *
+        FROM (
+        SELECT
+        EPISD_SEQ
+        ,BSN_CD
+        ,YEAR
+        ,EPISD
+        ,ACCS_STRT_DTM
+        ,ACCS_END_DTM
+        ,BSN_STRT_DTM
+        ,BSN_END_DTM
+        , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
+        WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+        WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
+        WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+        ELSE '사업종료'
+        END AS DATE_STATE
+        , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 'STATE01'
+        WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 'STATE02'
+        WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN 'STATE03'
+        WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
+        ELSE 'STATE05'
+        END AS DATE_STATE_CD
+        ,EXPS_YN
+        ,REG_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+        ,REG_DTM
+        ,MOD_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+        ,MOD_DTM
+        FROM CX_EPISD_MST A
+        WHERE BSN_CD = #{bsnCd}
+        ) A
+        <include refid="selectListwhereSql" />
+        ORDER BY A.REG_DTM DESC
+    </select>
+
+    <!--
+         쿼리명 : WBFASmartRoundMapper.selectSmartRoundListTotCnt
+         설  명 : 게시판 리스트 Count
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selectSmartRoundListTotCnt" parameterType="wBRoundMstSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBFASmartRoundMapper.selectSmartRoundList */
+            COUNT(*)
+        FROM (
+            SELECT
+            EPISD_SEQ
+            ,BSN_CD
+            ,YEAR
+            ,EPISD
+            ,ACCS_STRT_DTM
+            ,ACCS_END_DTM
+            ,BSN_STRT_DTM
+            ,BSN_END_DTM
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+            ELSE '사업종료'
+            END AS DATE_STATE
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 'STATE01'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 'STATE02'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN 'STATE03'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
+            ELSE 'STATE05'
+            END AS DATE_STATE_CD
+            ,EXPS_YN
+            ,REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            ,REG_DTM
+            ,MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            ,MOD_DTM
+            FROM CX_EPISD_MST A
+            WHERE BSN_CD = #{bsnCd}
+        ) A
+        <include refid="selectListwhereSql" />
+        ORDER BY A.REG_DTM DESC
+    </select>
+
+    <!--
+         쿼리명 : WBFASmartRoundMapper.selectSmartRoundListTotCnt
+         설  명 : 게시판 Write 페이지 옵션
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selectYearDtl" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstDTO">
+        SELECT /* WBFASmartRoundMapper.selectYearDtl */
+            MIN(YEAR) AS YEAR
+        FROM CX_EPISD_MST
+    </select>
+
+    <!--
+         쿼리명 : WBFASmartRoundMapper.selRoundDetail
+         설  명 : 회차 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selRoundDetail" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstDTO">
+        SELECT /* WBFASmartRoundMapper.selectRoundDetail */
+            EPISD_SEQ
+             ,BSN_CD
+             ,YEAR
+             ,EPISD
+             ,ACCS_STRT_DTM
+             ,ACCS_END_DTM
+             ,BSN_STRT_DTM
+             ,BSN_END_DTM
+             , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+            ELSE '사업종료'
+        END AS DATE_STATE
+             ,EXPS_YN
+             ,REG_ID
+             ,REG_IP
+             ,REG_DTM
+             ,MOD_ID
+             ,MOD_IP
+             ,MOD_DTM
+        FROM CX_EPISD_MST
+        WHERE EPISD_SEQ = #{detailsKey}
+    </select>
+
+    <!--
+         쿼리명 : WBFASmartRoundMapper.selectGiveList
+         설  명 : 회차 관리 Detail 지급 차수 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selectGiveList" parameterType="wBRoundMstDTO" resultType="WBOrderMstDto">
+        SELECT /* WBFASmartRoundMapper.selectGiveList */
+            GIVE_SEQ
+             ,EPISD_SEQ
+             ,GIVE_ORD
+             ,STRT_DT
+             ,END_DT
+        FROM CX_EPISD_GIVE_DTL
+        WHERE EPISD_SEQ = #{detailsKey}
+        ORDER BY GIVE_SEQ ASC
+    </select>
+
+    <!--
+         쿼리명 : WBFASmartRoundMapper.selectAssignmentList
+         설  명 : 회차 관리 Detail 사업유형 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selectAssignmentList" parameterType="wBRoundMstDTO" resultType="WBRoundOptnMstDTO">
+        SELECT /* WBFASmartRoundMapper.selectAssignmentList */
+            bsn_optn_seq
+             ,episd_seq
+             ,optn_cd
+             ,optn_nm
+             ,optn_ord
+        FROM cx_episd_bsn_optn_dtl
+        WHERE EPISD_SEQ = #{detailsKey}
+          AND optn_cd = #{optnCd}
+        ORDER BY bsn_optn_seq ASC
+    </select>
+
+    <!--
+         쿼리명 : WBFASmartRoundMapper.selectBusinessList
+         설  명 : 회차 관리 Detail 과제명 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selectBusinessList" parameterType="wBRoundMstDTO" resultType="WBRoundOptnMstDTO">
+        SELECT /* WBFASmartRoundMapper.selectBusinessList */
+            bsn_optn_seq
+             ,episd_seq
+             ,optn_cd
+             ,optn_nm
+             ,optn_ord
+        FROM cx_episd_bsn_optn_dtl
+        WHERE EPISD_SEQ = #{detailsKey}
+          AND optn_cd = #{optnCd}
+        ORDER BY bsn_optn_seq ASC
+    </select>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertRound
+     설  명 : 회차 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <insert id="insertRound" parameterType="wBRoundMstDTO">
+        INSERT /* WBFASmartRoundMapper.insertRound */ INTO CX_EPISD_MST
+        (
+            EPISD_SEQ
+        ,BSN_CD
+        ,YEAR
+        ,EPISD
+        ,ACCS_STRT_DTM
+        ,ACCS_END_DTM
+        ,BSN_STRT_DTM
+        ,BSN_END_DTM
+        ,EXPS_YN
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
+        )
+            VALUE
+            (
+            #{episdSeq}
+            ,#{bsnCd}
+            ,#{year}
+            ,#{episd}
+            ,#{accsStrtDtm}
+            ,#{accsEndDtm}
+            ,#{bsnStrtDtm}
+            ,#{bsnEndDtm}
+            ,#{expsYn}
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+            )
+    </insert>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertGiveList
+     설  명 : 지급차수 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <insert id="insertGiveList" parameterType="wBOrderMstDto">
+        INSERT /* WBFASmartRoundMapper.insertGiveList */ INTO CX_EPISD_GIVE_DTL
+        (
+            GIVE_SEQ
+        ,EPISD_SEQ
+        ,GIVE_ORD
+        ,STRT_DT
+        ,END_DT
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
+        )
+        VALUES
+            (
+                #{giveSeq}
+            ,#{episdSeq}
+            ,#{giveOrd}
+            ,#{strtDt}
+            ,#{endDt}
+            ,#{regId}
+            ,#{regIp}
+            ,#{regDtm}
+            )
+    </insert>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertBsinList
+     설  명 : 지급차수 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <insert id="insertBsinList" parameterType="WBRoundOptnMstDTO">
+        INSERT /* WBFASmartRoundMapper.insertBsinList */ INTO cx_episd_bsn_optn_dtl
+        (
+            bsn_optn_seq
+            ,episd_seq
+            ,optn_cd
+            ,optn_nm
+            ,optn_ord
+            ,reg_id
+            ,reg_ip
+            ,reg_dtm
+        )
+        VALUES
+            (
+            #{bsnOptnSeq}
+            ,#{episdSeq}
+            ,#{optnCd}
+            ,#{optnNm}
+            ,#{optnOrd}
+            ,#{regId}
+            ,#{regIp}
+            ,#{regDtm}
+            )
+    </insert>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertAsigtList
+     설  명 : 지급차수 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <insert id="insertAsigtList" parameterType="WBRoundOptnMstDTO">
+        INSERT /* WBFASmartRoundMapper.insertAsigtList */ INTO cx_episd_bsn_optn_dtl
+        (
+            bsn_optn_seq
+        ,episd_seq
+        ,optn_cd
+        ,optn_nm
+        ,optn_ord
+        ,reg_id
+        ,reg_ip
+        ,reg_dtm
+        )
+        VALUES
+            (
+            #{bsnOptnSeq}
+            ,#{episdSeq}
+            ,#{optnCd}
+            ,#{optnNm}
+            ,#{optnOrd}
+            ,#{regId}
+            ,#{regIp}
+            ,#{regDtm}
+            )
+    </insert>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertGiveList
+     설  명 : 회차 수정
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <update id="updateRound" parameterType="wBRoundMstDTO">
+        UPDATE CX_EPISD_MST SET /* WBFASmartRoundMapper.updateRound  */
+            YEAR = #{year}
+                              ,EPISD =  #{episd}
+                              ,ACCS_STRT_DTM = #{accsStrtDtm}
+                              ,ACCS_END_DTM = #{accsEndDtm}
+                              ,BSN_STRT_DTM = #{bsnStrtDtm}
+                              ,BSN_END_DTM = #{bsnEndDtm}
+                              ,EXPS_YN = #{expsYn}
+                              ,MOD_ID = #{modId}
+                              ,MOD_IP = #{modIp}
+                              ,MOD_DTM = NOW()
+        WHERE EPISD_SEQ = #{detailsKey}
+    </update>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertGiveList
+     설  명 : 지급차수 수정
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <insert id="updateGiveList" parameterType="wBOrderMstDto">
+        INSERT /* WBEACarbonListMapper.insertGiveList */ INTO CX_EPISD_GIVE_DTL
+        (
+            GIVE_SEQ
+        ,EPISD_SEQ
+        ,GIVE_ORD
+        ,STRT_DT
+        ,END_DT
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
+        )
+        VALUES
+            (
+                #{giveSeq}
+            ,#{detailsKey}
+            ,#{giveOrd}
+            ,#{strtDt}
+            ,#{endDt}
+            ,#{regId}
+            ,#{regIp}
+            ,#{regDtm}
+            )
+    </insert>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertGiveList
+     설  명 : 지급차수 삭제
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <delete id="deleteGiveList" parameterType="wBRoundMstDTO">
+        DELETE /* WBFASmartRoundMapper.deleteGiveList */
+        FROM CX_EPISD_GIVE_DTL
+        WHERE EPISD_SEQ = #{detailsKey}
+    </delete>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertGiveList
+     설  명 :  삭제
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <delete id="deleteBsinList" parameterType="wBRoundMstDTO">
+        DELETE /* WBFASmartRoundMapper.deleteBsinList */
+        FROM cx_episd_bsn_optn_dtl
+        WHERE EPISD_SEQ = #{detailsKey}
+        AND optn_cd = #{optnCd}
+    </delete>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertGiveList
+     설  명 : 지급차수 삭제
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <delete id="deleteAsigtList" parameterType="wBRoundMstDTO">
+        DELETE /* WBFASmartRoundMapper.deleteAsigtList */
+        FROM cx_episd_bsn_optn_dtl
+        WHERE EPISD_SEQ = #{detailsKey}
+        AND optn_cd = #{optnCd}
+    </delete>
+
+    <!--
+     쿼리명 : WBFASmartRoundMapper.insertGiveList
+     설  명 : 회차 삭제
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <delete id="deleteRound" parameterType="wBRoundMstDTO">
+        DELETE /* WBFASmartRoundMapper.deleteRound */
+        FROM CX_EPISD_MST
+        WHERE EPISD_SEQ = #{detailsKey}
+    </delete>
+
+    <!--
+         쿼리명 : WBFASmartRoundMapper.selectSmartRoundListTotCnt
+         설  명 : 게시판 리스트 검색 옵션
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <sql id="selectListwhereSql">
+        <where>
+            <if test="carbonDate != null and carbonDate != ''.toString() ">
+                <choose>
+                    <when test="carbonDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                            ACCS_STRT_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            ACCS_END_DTM BETWEEN STR_TO_DATE(#{endDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            STR_TO_DATE(#{strtDt}, '%Y-%m-%d') BETWEEN ACCS_STRT_DTM AND ACCS_END_DTM
+                            OR
+                            STR_TO_DATE(#{endDt}, '%Y-%m-%d') BETWEEN ACCS_STRT_DTM AND ACCS_END_DTM
+                            )
+                        </if>
+                    </when>
+                    <when test="carbonDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                            BSN_STRT_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            BSN_END_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            STR_TO_DATE(#{strtDt}, '%Y-%m-%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
+                            OR
+                            STR_TO_DATE(#{endDt}, '%Y-%m-%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
+                            )
+                        </if>
+                    </when>
+                </choose>
+            </if>
+
+            <if test="carbonCdList != null and carbonCdList.size() > 0">
+                AND (
+                <foreach collection="carbonCdList" item="carbonCdList" index="index" open="" close="" separator=" or ">
+                    A.DATE_STATE_CD = #{carbonCdList}
+                </foreach>
+                )
+            </if>
+            <if test="expsYnList != null and expsYnList.size() > 0">
+                AND (
+                <foreach collection="expsYnList" item="expsYnList" index="index" open="" close="" separator=" or ">
+                    EXPS_YN = #{expsYnList}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 2">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <otherwise>
+                        AND (
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        OR
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+</mapper>
+
+
+
