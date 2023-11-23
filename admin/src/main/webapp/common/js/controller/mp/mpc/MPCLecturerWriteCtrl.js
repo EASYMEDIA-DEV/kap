@@ -12,6 +12,7 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
+    var $excelObj = ctrl.obj.parent().find(".excel-down");
 
     var dupEmailChk = true;
 
@@ -71,6 +72,16 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
                         }
                     }
                 }
+            },
+            //엑셀다운로드
+            btnExcelDown : {
+                event : {
+                    click: function () {
+                        //사유입력 레이어팝업 활성화
+                        $excelObj.find("#rsn").val('');
+                        $excelObj.modal("show");
+                    }
+                }
             }
         },
         classname : {
@@ -114,6 +125,25 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
             tabTwo();
+
+            $excelObj.find("button.down").on('click', function(){
+                var rsn = $excelObj.find("#rsn").val().trim();
+                var frmDataObj    = $formObj.closest("form");
+
+                frmDataObj.find("input[name='rsn']").remove();
+
+                if (rsn != "") {
+                    frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+
+                    //파라미터를 물고 가야함.
+                    location.href = "/mngwserc/mp/mpb/excel-down?" + frmDataObj.serialize();
+
+                } else {
+                    alert(msgCtrl.getMsg("fail.reason"));
+                    return;
+                }
+
+            });
 
             // 유효성 검사
             $formObj.validation({

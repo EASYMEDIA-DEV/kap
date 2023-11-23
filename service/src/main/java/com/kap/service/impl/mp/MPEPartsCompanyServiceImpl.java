@@ -203,4 +203,25 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
     public int deletePartsCompany(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
         return mpePartsCompanyMapper.deletePartsCompany(mpePartsCompanyDTO);
     }
+
+    /**
+     * 교육사업 개수를 조회한다.
+     */
+    public int selectEduCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+        return mpePartsCompanyMapper.selectEduCnt(mpePartsCompanyDTO);
+    }
+
+    /**
+     * 교육사업 개수를 조회한다.
+     */
+    public int selectConsultingCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+        return mpePartsCompanyMapper.selectConsultingCnt(mpePartsCompanyDTO);
+    }
+
+    /**
+     * 상생사업 개수를 조회한다.
+     */
+    public int selectWinBusinessCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+        return mpePartsCompanyMapper.selectWinBusinessCnt(mpePartsCompanyDTO);
+    }
 }

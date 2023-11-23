@@ -70,4 +70,20 @@ public interface MPEPartsCompanyMapper {
      * 부품사 삭제
      */
     public int deletePartsCompany(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 교육사업 개수 조회
+     */
+    public int selectEduCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 개수 조회
+     */
+    public int selectConsultingCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 상생사업 개수 조회
+     */
+    public int selectWinBusinessCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
 }

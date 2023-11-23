@@ -57,9 +57,12 @@
                     </table>
                 </div>
                 <ul class="nav nav-tabs" id="myTabs">
-                    <li class="active tabClick"><a data-toggle="tab" href="#dtl">강사 상세정보</a></li>
+                    <li class="active tabClick"><a data-toggle="tab" href="#">강사 상세정보</a></li>
                     <li class="tabClick"><a data-toggle="tab" href="#edu">교육 사업 현황</a></li>
-                    <span class="mb0" style="margin-left:70%"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
+                    <li class="tabClick"><a data-toggle="tab" href="#win">상생 사업 현황</a></li>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
+                    </div>
                 </ul>
             </c:if>
             <div class="tab-content">
@@ -124,7 +127,6 @@
                             <div class="pull-right">
                                 <c:choose>
                                     <c:when test="${ not empty rtnInfo}">
-                                        <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
                                         <button type="submit" class="btn btn-sm btn-success" >저장</button>
                                     </c:when>
                                     <c:otherwise>
@@ -208,5 +210,32 @@
                 </div>
             </div>
         </form>
+    </div>
+</div>
+
+<div class="modal fade excel-down" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-lg modal-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >▣ 엑셀 다운로드
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group ">
+                    <p><em class="ion-play mr-sm"></em>사유입력</p>
+                    <div class="col-sm-12">
+                        <textarea maxlength="30" class="col-sm-12 pv" style="resize: vertical;" rows="10" placeholder="사유를 입력하세요." id="rsn" title="사유" oninput="cmmCtrl.checkMaxlength(this);"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer row">
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary down mt">다운로드</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

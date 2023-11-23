@@ -1,8 +1,10 @@
 package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.EBBEpisdDTO;
 import com.kap.core.dto.MPCLecturerDTO;
 import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.EBBEpisdService;
 import com.kap.service.MPCLecturerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +42,9 @@ public class MPCLecturerController {
 
     /** 서비스 **/
     public final MPCLecturerService mpcLecturerService;
+
+    /** 교육회차관리 서비스 **/
+    public final EBBEpisdService eBBEpisdService;
 
     /**
      * 강사 목록 페이지로 이동한다.
@@ -99,13 +104,10 @@ public class MPCLecturerController {
      *  교육 사업 현황 리스트 조회
      */
     @PostMapping(value = "/select-tab-two")
-    public String selectLecturerListPageTabTwoAjax(MPCLecturerDTO mpcLecturerDTO, ModelMap modelMap) throws Exception {
+    public String selectLecturerListPageTabTwoAjax(EBBEpisdDTO eBBEpisdDTO, MPCLecturerDTO mpcLecturerDTO, ModelMap modelMap) throws Exception {
 
-        // 예시 - 추후 삭제예정
-        mpcLecturerDTO.setF("1");
-        mpcLecturerDTO.setQ("나중에지워야할부분");
-        modelMap.addAttribute("rtnData", mpcLecturerService.selectLecturerList(mpcLecturerDTO));
-
+        eBBEpisdDTO.setIsttrSeq(mpcLecturerDTO.getIsttrSeq());
+        modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
         return "mngwserc/mp/mpc/MPCLecturerTabTwoAjax";
     }
 

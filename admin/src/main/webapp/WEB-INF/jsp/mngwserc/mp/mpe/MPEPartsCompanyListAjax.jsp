@@ -17,7 +17,7 @@
                             ${list.cmpnNm}
                         </c:when>
                         <c:otherwise>
-                            <a href="javascript:" class="listView" data-details-key="${list.bsnmNo}">
+                            <a href="javascript:" class="listView" data-details-key="${list.bsnmNo}" data-cmpn-nm="${list.cmpnNm}">
                                     ${list.cmpnNm}
                             </a>
                         </c:otherwise>
