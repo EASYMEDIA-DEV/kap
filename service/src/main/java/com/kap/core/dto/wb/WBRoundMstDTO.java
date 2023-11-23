@@ -73,4 +73,13 @@ public class WBRoundMstDTO extends BaseDTO {
     @Schema(title = "지급차수 리스트")
     private List<WBOrderMstDto> giveList;
 
+    @Schema(title = "유형 옵션 구분")
+    private String optnCd;
+
+    @Schema(title = "사업유형 리스트")
+    private List<WBRoundOptnMstDTO> bsinList;
+
+    @Schema(title = "과제명 리스트")
+    private List<WBRoundOptnMstDTO> asigtList;
+
 }
