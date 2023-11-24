@@ -23,7 +23,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     // 목록 조회
     var search = function (page){
 
-        if(page != undefined){
+        if(page !== undefined){
             $formObj.find("#pageIndex").val(page);
         }
         cmmCtrl.listFrmAjax(function(respObj) {
@@ -42,7 +42,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     var selPartUserData = function (){
         cmmCtrl.frmAjax(function(respObj) {
-            $modalObj.find('button[class=close]').click();
+            $modalObj.modal("hide");
             /* return data input */
             setInputValue(respObj);
         }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json")
@@ -58,13 +58,17 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         Object.keys(rtnData).forEach((el) => {
             if(typeof(rtnData[el]) != "object"){
-                var target = $targetFormObj.find("[id=" + el + ']');
-                var tagName = target.prop('tagName');
-                /* SELECT || INPUT || P 태그 공통화 */
-                if(tagName === 'SELECT' || tagName === 'INPUT') target.val(rtnData[el]);
-                if(tagName === 'P') target.html(rtnData[el]);
+                let target = $targetFormObj.find("[id=" + el + ']');
+                if(target !== undefined) {
+                    let tagName = target.prop('tagName');
+                    /* SELECT || INPUT || P 태그 공통화 */
+                    if(tagName === 'SELECT' || tagName === 'INPUT') target.val(rtnData[el]);
+                    if(tagName === 'P') target.html(rtnData[el]);
+                }
             }
         });
+
+
     }
 
     // set model
@@ -93,12 +97,12 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     click: function() {
                         let trArea = $formObj.find("#listContainer input[type=checkbox]:checked").parents("tr");
 
-                        if(trArea.length != 0 || trArea != undefined){
+                        if(trArea.length !== 0 || trArea != undefined){
                             selPartUser = trArea.find('[data-point=id]').html();
+                            $formObj.find("#selPartUser").val(selPartUser);
+                            selPartUserData();
                         }
-                        $formObj.append($('<input/>', {type: 'hidden', name: 'selPartUser', value:selPartUser }));
 
-                        selPartUserData();
                     }
                 }
             },
@@ -121,7 +125,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 event : {
                     click : function() {
                         //페이징 이동
-                        if( $(this).attr("value") != "null" ){
+                        if( $(this).attr("value") !== "null" ){
                             $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
                             search();
                         }

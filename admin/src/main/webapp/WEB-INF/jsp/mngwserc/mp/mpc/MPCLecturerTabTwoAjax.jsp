@@ -5,16 +5,17 @@
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.hpNo}</td><td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.hpNo}</td>
+                <td class="text-center">${list.episdYear}</td>
+                <td class="text-center">${list.episdOrd}</td>
+                <td class="text-center">${list.edctnStatusNm}</td>
+                <td class="text-center">${list.ctgryCdNm}</td>
+                <td class="text-center">${list.nm}</td>
+                <td class="text-center">${list.stduyMthdCdNm}</td>
+                <td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td>
+                <td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
+                <td class="text-center">${list.isttrName}</td>
+                <td class="text-center">${list.ffltnNm} <c:if test="${list.isttrOutCnt ne ''}">외 ${list.isttrOutCnt}명 </c:if></td>
+                <td class="text-center">${list.rcrmtMthdCdNm}</td>
             </tr>
         </c:forEach>
     </c:when>

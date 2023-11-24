@@ -169,10 +169,12 @@
 					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
 						#{delValueList}
 					</foreach>
+					AND PRCS_CD != '10'
 				</when>
 				<otherwise>
 					MENU_SEQ = #{menuSeq}
 					AND	SEQ = #{detailsKey}
+					AND PRCS_CD != '10'
 				</otherwise>
 			</choose>
 		</where>

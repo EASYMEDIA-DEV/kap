@@ -320,6 +320,86 @@
     </delete>
 
     <!--
+         쿼리명 : MPEPartsCompanyMapper.selectEduCnt
+         설  명 : 부품사 실적정보에서 교육사업 개수를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.23   구은희       최초생성
+    -->
+    <select id="selectEduCnt" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
+        SELECT /* MPEPartsCompanyMapper.selectEduCnt */
+            COUNT(A.EDCTN_SEQ)
+        FROM
+        (
+            SELECT
+                EDCTN_SEQ
+                 , EPISD_YEAR
+                 , EPISD_ORD
+            FROM ED_EDCTN_EPISD_MST
+        )A
+        INNER JOIN
+        (
+            SELECT
+                EDCTN_SEQ
+                 , EPISD_YEAR
+                 , EPISD_ORD
+                 , ISTTR_SEQ
+            FROM ED_EDCTN_ISTTR_REL
+        )B
+        ON A.EDCTN_SEQ = B.EDCTN_SEQ
+         AND A.EPISD_YEAR = B.EPISD_YEAR
+         AND A.EPISD_ORD = B.EPISD_ORD
+        INNER JOIN
+        (
+            SELECT
+                ISTTR_SEQ
+               , FFLTN_NM
+                FROM CP_ISTTR_MST
+        )C
+        ON B.ISTTR_SEQ = C.ISTTR_SEQ
+         AND C.FFLTN_NM = #{cmpnNm}
+    </select>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.selectConsultingCnt
+         설  명 : 부품사 실적정보에서 컨설팅사업 개수를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.23   구은희       최초생성
+    -->
+    <select id="selectConsultingCnt" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
+        SELECT /* MPEPartsCompanyMapper.selectConsultingCnt */
+            COUNT(CNSTG_SEQ)
+        FROM CP_CNSTG_APPCTN_MST
+        WHERE APPCTN_BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.selectWinBusinessCnt
+         설  명 : 부품사 실적정보에서 상생사업 개수를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.23   구은희       최초생성
+    -->
+    <select id="selectWinBusinessCnt" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
+        SELECT COUNT(A.EPISD_SEQ)
+        FROM
+        (
+            SELECT EPISD_SEQ
+            FROM CX_EPISD_MST
+        )A
+        INNER JOIN
+        (
+            SELECT APPCTN_SEQ
+                 , EPISD_SEQ
+                 , APPCTN_BSNM_NO
+            FROM CX_APPCTN_MST
+        )B
+        ON A.EPISD_SEQ = B.EPISD_SEQ
+          AND B.APPCTN_BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
 		쿼리명 : selectPartsComListwhereSql
 		설  명 : 부품사 관리 where Sql
 	      수정일      수정자       수정내용

@@ -1,10 +1,9 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
 <c:choose>
-    <c:when test="${ not empty rtnData.list}">
-        <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <tr data-total-count="${rtnData.totalCount}">
-                <td class="text-center">품질아카데미</td>
+    <c:when test="${ not empty eduTotalCntList}">
+        <c:forEach var="list" items="${eduTotalCntList.list}" varStatus="status">
+            <tr data-total-count="${list.totalCount}">
+
             </tr>
         </c:forEach>
     </c:when>
