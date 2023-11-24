@@ -1,8 +1,8 @@
 package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.EBBEpisdDTO;
 import com.kap.core.dto.MPCLecturerDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBBEpisdService;
 import com.kap.service.MPCLecturerService;
