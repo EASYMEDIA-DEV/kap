@@ -21,7 +21,9 @@
              , MOD_NAME
              , CMPN_NM
              , SIZE_CD_NM
+             , SIZE_CD
              , CTGRY_CD_NM
+             , CTGRY_CD
              , GNDR
              , TEL_NO
              , ZIPCODE
@@ -40,6 +42,7 @@
              , CMSSR_MPLMN_DT
              , CMSSR_RSGNT_DT
              , RPRSNT_NM
+             , STBSM_DT
              , CMPN_ZIPCODE
              , CMPN_BSC_ADDR
              , CMPN_BSC_DTL_ADDR
@@ -56,17 +59,19 @@
              , PAY_5_STAR_YEAR
              , TCHLG_5_STAR_CD
              , TCHLG_5_STAR_YEAR
---              , CBSN_SEQ
---              , SEQ_NM
---              , SCORE
---              , YEAR
---              , CRTFN_CMPN_NM
-             , mod_id
-             , dept_cd_nm
-             , dept_dtl_nm
-             , pstn_cd_nm
-             , reg_id
-             , cmssr_mjr_carer_cntn
+              , CBSN_SEQ
+              , SQ_NM
+              , SCORE
+              , YEAR
+              , CRTFN_CMPN_NM
+              , mod_id
+              , dept_cd
+              , dept_dtl_nm
+              , dept_cd_nm
+              , pstn_cd_nm
+              , pstn_cd
+              , reg_id
+              , cmssr_mjr_carer_cntn
            FROM ( SELECT MEM.MEM_SEQ
                        , MEM.ID
                        , MEM.NAME
@@ -84,6 +89,7 @@
                                 ELSE NULL END AS MOD_NAME
                       , CMPN_MST.CMPN_NM
                       , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.SIZE_CD ) AS SIZE_CD_NM
+                      , (SELECT CD FROM CO_CODE_MST WHERE  CD=CMPN_MST.SIZE_CD ) AS SIZE_CD
                       , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.CTGRY_CD ) AS CTGRY_CD_NM
                       , CMPN_MST.CTGRY_CD
                       , MEM.TEL_NO
@@ -104,6 +110,7 @@
                       , MEM.CMSSR_RSGNT_DT
                       , MEM.WTHDRW_YN
                       , CMPN_MST.RPRSNT_NM
+                      , CMPN_MST.STBSM_DT
                       , CMPN_MST.ZIPCODE AS CMPN_ZIPCODE
                       , CMPN_MST.BSC_ADDR AS CMPN_BSC_ADDR
                       , CMPN_MST.DTL_ADDR AS CMPN_BSC_DTL_ADDR
@@ -120,11 +127,11 @@
                       , CMPN_MST.PAY_5_STAR_YEAR
                       , CMPN_MST.TCHLG_5_STAR_CD
                       , CMPN_MST.TCHLG_5_STAR_YEAR
-                      , (SELECT CBSN_SEQ FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS CBSN_SEQ
-                      , (SELECT NM FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS SEQ_NM
-                      , (SELECT SCORE FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS SCORE
-                      , (SELECT YEAR FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS YEAR
-                      , (SELECT CRTFN_CMPN_NM FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO) AS CRTFN_CMPN_NM
+                      , (SELECT CBSN_SEQ FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO order by reg_dtm desc limit 1) AS CBSN_SEQ
+                      , (SELECT NM FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO order by reg_dtm desc limit 1) AS SQ_NM
+                      , (SELECT SCORE FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO order by reg_dtm desc limit 1 ) AS SCORE
+                      , (SELECT YEAR FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO order by reg_dtm desc limit 1) AS YEAR
+                      , (SELECT CRTFN_CMPN_NM FROM CP_CMPN_CBSN_DTL WHERE BSNM_NO = CMPN_REL.BSNM_NO order by reg_dtm desc limit 1) AS CRTFN_CMPN_NM
                      , mst.reg_id as mod_id
                      , mem.dept_cd
                      , (select cd_nm from co_code_mst where  cd=mem.dept_cd ) as dept_cd_nm
