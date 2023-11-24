@@ -10,7 +10,7 @@
                     </label>
                 </td>
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
-                <td class="text-center" data-isttr-seq="${list.isttrSeq}">${list.name}</td>
+                <td class="text-center" data-isttr-seq="${list.isttrSeq}" data-spclCntn="${list.spclCntn}">${list.name}</td>
                 <td class="text-center srchListView">
                     <c:choose>
                         <c:when test="${ lecturerDto.srchLayer eq 'Y'}">

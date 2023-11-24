@@ -1,8 +1,8 @@
 package com.kap.service.dao.eb;
 
-import com.kap.core.dto.EBACouseDTO;
-import com.kap.core.dto.EBBEpisdDTO;
-import com.kap.core.dto.EBBLctrDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBLctrDTO;
+import com.kap.core.dto.eb.ebb.EBBisttrDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -55,11 +55,18 @@ public interface EBBEpisdMapper {
 
 
 	/**
+	 * 교육차수 - 강사관계를 호출한다
+	 */
+	public List<EBBisttrDTO> selectIsttrList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 강사관계를 삭제한다.
+	 */
+	public int deleteIsttrRel(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+	/**
 	 * 교육차수 - 강사관계를 등록한다
 	 */
 	public int insertIsttrRel(EBBEpisdDTO eBBEpisdDTO) throws Exception;
-
-
 
 	/**
 	 * 교육차수 - 교육강의 상세를 등록한다.

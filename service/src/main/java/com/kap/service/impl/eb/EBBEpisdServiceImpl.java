@@ -2,10 +2,12 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.*;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBLctrDTO;
+import com.kap.core.dto.eb.ebb.EBBisttrDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.service.*;
 import com.kap.service.dao.COFileMapper;
-import com.kap.service.dao.eb.EBACouseMapper;
 import com.kap.service.dao.eb.EBBEpisdMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -102,9 +104,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			roomDto = eBFEduRoomService.selectEduRoomDtl(roomDto);
 		}
 
-
-
-
+		//차수관리 - 강사관계 호출
+		List<EBBisttrDTO> isttrList = eBBEpisdMapper.selectIsttrList(ebbDto);
 
 		//온라인 교육강의 상세 호출
 		List<EBBLctrDTO> lctrDtoList = new ArrayList();
@@ -115,11 +116,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			lctrDto.setEpisdYear(ebbDto.getEpisdYear());
 			lctrDtoList = eBBEpisdMapper.selectLctrDtlList(lctrDto);
 		}
-		System.out.println("@@@ lctrDtoList = " + lctrDtoList);
 
 		map.put("rtnData", ebbDto);
 		map.put("roomDto", roomDto);
 		map.put("lctrDtoList", lctrDtoList);
+		map.put("isttrList", isttrList);
 
 		return map;
 	}
@@ -151,7 +152,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		respCnt = eBBEpisdMapper.insertEpisd(eBBEpisdDTO);
 
 		//교육 강사관계 등록
-		//eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
+		eBBEpisdMapper.deleteIsttrRel(eBBEpisdDTO);
+		eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
 
 		//교육강의 상세 등록(온라인교육)
 		setLctrList(eBBEpisdDTO, coaAdmDTO);
@@ -167,24 +169,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			//교육강의 상세 등록(온라인교육)
 			List<EBBLctrDTO> lctrDtoList = eBBEpisdDTO.getLctrList();
 
-			//파일첨부 dto 세팅
-			/*for(EBBLctrDTO tt : lctrDtoList){
-				List<COFileDTO> fileDtoList = new ArrayList();
-				COFileDTO fileDto = new COFileDTO();
-				fileDto.setStatus(tt.getStatus());
-				fileDto.setWidth(tt.getWidth());
-				fileDto.setHeight(tt.getHeight());
-				fileDto.setWebPath(tt.getWebPath());
-				fileDto.setFieldNm(tt.getFieldNm());
-				fileDto.setOrgnFileNm(tt.getOrgnFileNm());
-				fileDto.setFileDsc(tt.getFileDsc());
-				fileDto.setFileOrd(tt.getFileOrd());
-				fileDto.setFileSeq(tt.getThnlFileSeq());
-
-				fileDtoList.add(fileDto);
-				tt.setFileList(fileDtoList);
-			}*/
-
 			for(EBBLctrDTO lctrDto : lctrDtoList){
 
 				lctrDto.setRegId( coaAdmDTO.getId() );
@@ -198,9 +182,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				//파일 처리
 				HashMap<String, Integer> lctrFileSeqMap = cOFileService.setFileInfo(lctrDto.getFileList());
 				lctrDto.setThnlFileSeq(lctrFileSeqMap.get("lctrFileSeq"));
-				/*if(!"addedfile".equals(lctrDto.getStatus())){
-					lctrDto.setThnlFileSeq(lctrFileSeqMap.get("lctrFileSeq"));
-				}*/
 
 				int firstEdctnLctrIIdgen = edctnLctrIdgen.getNextIntegerId();
 				lctrDto.setLctrSeq(firstEdctnLctrIIdgen);
@@ -240,7 +221,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		//강사정보랑 만족도조사(설문), 평가 항목은 교육일 시작 전에만 수정 가능 - 화면단에서 교육 시작일 지나면 수정버튼 비활성화
 
 		//교육 강사관계 등록 (삭제후 등록)
-		//eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
+		eBBEpisdMapper.deleteIsttrRel(eBBEpisdDTO);
+		eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
 
 		//교육강의 상세 등록(온라인교육)
 		eBBEpisdMapper.deleteLctrDtl(eBBEpisdDTO);//삭제후

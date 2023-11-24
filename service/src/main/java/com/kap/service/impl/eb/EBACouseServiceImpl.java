@@ -1,31 +1,18 @@
 package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.*;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.service.*;
-import com.kap.service.dao.COAAdmMapper;
 import com.kap.service.dao.COFileMapper;
-import com.kap.service.dao.COLgnMapper;
 import com.kap.service.dao.eb.EBACouseMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFCellStyle;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
 
-import javax.servlet.http.HttpServletResponse;
-import java.net.URLEncoder;
-import java.security.SecureRandom;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

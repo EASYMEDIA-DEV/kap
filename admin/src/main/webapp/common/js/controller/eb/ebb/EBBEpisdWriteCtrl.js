@@ -20,6 +20,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	var onlineFileHtml = $("#onlineList").find("tr.examTr").eq(1).clone(true);
 
 
+	//강사 테이블 넘버링
+	var isttrTable = function(data){
+
+		//tr 갯수 감지해서 카운트해줌, 없으면 없는폼 꺼냄
+		var totCnt = $("#isttrContainer").find("tr").size();
+		var startCount = 2;
+
+
+		$("#isttrContainer").find("tr").each(function(idx, data){
+			if(idx>1){
+				$(this).find("td").eq(0).text(totCnt-idx);
+			}
+		});
+
+		//삭제했는데 하나도없으면 목록 없다는걸로 돌림
+		if($("#isttrContainer").find("tr").size() == 2){
+			//돌림
+			$("#isttrContainer").find(".notIsttr").css("display", "");
+			$("#isttrContainer").find(".notIsttr").find("td").css("display", "");
+		}
+
+	}
 	var filedSet = function(data){
 
 		var stduyMthdCd, jdgmtYn;
@@ -244,13 +266,77 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				}
 			},
 
-
-
 			//강사 검색
+			eduIsttrSearch : {
+				event : {
+					click : function(){
+						cmmCtrl.getLecturerLayerPop(function(data){
+							if(data.choiceCnt  == 0){
+								alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));
+							}else{
+								var name, ffltnNm, spclCntn, seq;
 
+
+
+								if(data.choiceCnt>1){
+									var trObjList = data.trObjList;
+									for(var i=0; i<trObjList.length; i++){
+										var exIsttr = $(".setIsttr").clone(true);
+										name = trObjList[i].name//이름
+										ffltnNm= trObjList[i].titl//소속
+										spclCntn= trObjList[i].spclCntn//약력(특이사항)
+										seq= trObjList[i].seq;//삭제(시퀀스값)
+
+										//다중등록할때 시퀀스 체크해서 중복값이면 패스함
+										var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 append목록에 추가하지 않는다.
+										$("#isttrContainer").find("tr").find("input:hidden").each(function(){
+											if($(this).val() == seq) passYn = true;
+										});
+
+										if(!passYn){
+											exIsttr.find("td").eq(1).text(name);
+											exIsttr.find("td").eq(2).text(ffltnNm);
+											exIsttr.find("td").eq(3).text(spclCntn);
+											exIsttr.find("input:hidden").val(seq);
+											$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+										}
+									}
+
+								}else{
+									var exIsttr = $(".setIsttr").clone(true);
+									name = data.name//이름
+									ffltnNm = data.titl//소속
+									spclCntn = data.spclCntn//약력(특이사항)
+									seq = data.seq//삭제(시퀀스값)
+
+									var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 현재 동작을 취소한다.
+									$("#isttrContainer").find("tr").find("input:hidden").each(function(){
+										if($(this).val() == seq) {
+											alert("이미 추가된 강사입니다.");
+											passYn = true;
+										}
+									});
+									if(!passYn){
+										exIsttr.find("td").eq(1).text(name);
+										exIsttr.find("td").eq(2).text(ffltnNm);
+										exIsttr.find("td").eq(3).text(spclCntn);
+										exIsttr.find("input:hidden").val(seq);
+										$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+									}
+
+								}
+
+								$(".notIsttr").css("display", "none");
+								$(".setIsttr").css("display", "none");
+							}
+
+							isttrTable();
+						});
+					}
+				}
+			},
 
 			//온라인강의 추가/삭제
-
 			btnAdd : {
 				event : {
 					click : function(){
@@ -267,6 +353,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							fileExtn    : trgtObj.data("fileExtn"),
 							fileFieldNm : trgtObj.data("fileFieldNm")
 						})
+					}
+				}
+			},
+
+
+			btnOneTrRemove : {
+				event : {
+					click : function(){
+						$(this).closest("tr").remove();
+
+						isttrTable();
 					}
 				}
 			},
@@ -385,6 +482,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						actForm.orgEpisdYear =$("#orgEpisdYear").val();//연도(수정시 where절에 사용되는 pk값)
 						actForm.orgEpisdOrd =$("#orgEpisdOrd").val();//회차정렬(수정시 where절에 사용되는 pk값)
 
+						//강사목록 세팅
+						var isttrSeqList= new Array();
+						$("input[name='isttrSeq']").each(function(){
+							if($(this).val() != undefined && $(this).val() != ""){
+								var tempForm = {};
+								tempForm.edctnSeq = $("#edctnSeq").val();
+								tempForm.episdYear = $("#episdYear").val();
+								tempForm.isttrSeq = $(this).val();
+								tempForm.episdOrd = $("#episdOrd").val();
+								isttrSeqList.push(tempForm);
+							}
+
+						});
+						actForm.isttrSeqList = isttrSeqList;
+
 						//접수시간 관련 날짜 유효성 체크
 						if(accsStrtDtm>accsEndDtm){
 							alert("접수 시작일이 접수 종료일보다 이전날짜로 입력 해주세요.");
@@ -499,7 +611,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 									$.each($("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files, function(idx, data){
 
-
 										//alt값  data에 넣어주기.
 										data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
 
@@ -548,8 +659,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					}
 				}
 			});
-
-
 
 		}
 	};

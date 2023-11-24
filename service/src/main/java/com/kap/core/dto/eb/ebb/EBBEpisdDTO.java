@@ -1,5 +1,6 @@
-package com.kap.core.dto;
+package com.kap.core.dto.eb.ebb;
 
+import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -28,7 +29,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EBBEpisdDTO extends BaseDTO  {
+public class EBBEpisdDTO extends BaseDTO {
 
     @Schema(title = "교육순번", example = "숫자")
     private Integer edctnSeq;
@@ -180,6 +181,9 @@ public class EBBEpisdDTO extends BaseDTO  {
     @Schema(title = "강사수(외 x명)", example = "숫자")
     private String isttrOutCnt;
 
+    @Schema(title = "강사순번", example = "숫자")
+    private Integer isttrSeq;
+
     @Schema(title = "신청자수", example = "숫자")
     private String accsCnt;
 
@@ -225,5 +229,7 @@ public class EBBEpisdDTO extends BaseDTO  {
 
 
     private String srchLayer;
+
+    private List<EBBisttrDTO> isttrSeqList;
 
 }

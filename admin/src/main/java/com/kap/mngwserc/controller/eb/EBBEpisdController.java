@@ -1,15 +1,15 @@
 package com.kap.mngwserc.controller.eb;
 
 import com.kap.core.dto.*;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBLctrDTO;
+import com.kap.core.dto.eb.ebb.EBBisttrDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.service.COCodeService;
-import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBBEpisdService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.runner.Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -117,6 +117,7 @@ public class EBBEpisdController {
         EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
         EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");//교육장 정보
         List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
+        List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
 
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -143,12 +144,12 @@ public class EBBEpisdController {
 
         modelMap.addAttribute("rtnData", rtnDto);//교육차수 본문
         modelMap.addAttribute("roomDto", roomDto);//교육장 정보
-        modelMap.addAttribute("lctrDtoList", lctrDtoList);//교육장 정보
-
+        modelMap.addAttribute("lctrDtoList", lctrDtoList);//온라인강의
+        modelMap.addAttribute("isttrList", isttrList);//강사정보
         //설문정보
         //만족도 조사
-        //강사정보
-        //온라인강의
+
+
 
 
 
@@ -187,7 +188,6 @@ public class EBBEpisdController {
             try{
 
                 System.out.println("eBBEpisdDTO = " + eBBEpisdDTO);
-
 
                 eBBEpisdService.updateEpisd(eBBEpisdDTO);
             }

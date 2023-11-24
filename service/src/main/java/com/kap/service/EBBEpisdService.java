@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 
 import java.util.HashMap;
 

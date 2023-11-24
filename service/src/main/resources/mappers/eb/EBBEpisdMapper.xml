@@ -542,6 +542,57 @@
 			)
 	</insert>
 
+
+
+
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectIsttrList
+      설  명 : 교육차수관리 - 강사관계를 호출한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.24   김학규       최초생성
+ 	-->
+	<select id="selectIsttrList" parameterType="EBBEpisdDTO" resultType="EBBIsttrDTO">
+		select /*EBBEpisdMapper.selectIsttrList*/
+			a.edctn_seq
+			 , a.episd_ord
+			 , a.isttr_seq
+			 , a.episd_year
+		     , b.name
+			 , b.ffltn_nm
+			 , b.pstn_nm
+			 , b.dept_nm
+		     , b.spcl_cntn
+			 , a.reg_id
+			 , a.reg_ip
+			 , a.reg_dtm
+			 , a.mod_id
+			 , a.mod_ip
+			 , a.mod_dtm
+		from ed_edctn_isttr_rel a, cp_isttr_mst b
+		where 1=1
+		and a.isttr_seq = b.isttr_seq
+		and edctn_seq = #{edctnSeq}
+		and episd_year = #{episdYear}
+		and episd_ord = #{episdOrd}
+	</select>
+
+
+	<!--
+         쿼리명 : EBBEpisdMapper.deleteIsttrRel
+         설  명 : 교육차수 - 교육강세 관계를 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.23   김학규       최초생성
+    -->
+	<delete id="deleteIsttrRel" parameterType="EBBEpisdDTO">
+		delete from ed_edctn_isttr_rel where 1=1
+										and edctn_seq = #{edctnSeq}
+										and episd_ord = #{episdOrd}
+										and episd_year = #{episdYear}
+	</delete>
+
 	<!--
              쿼리명 : EBBEpisdMapper.insertIsttrRel
              설  명 : 교육차수 - 교육강사관계를 등록한다
@@ -554,16 +605,20 @@
 			edctn_seq
 			, episd_ord
 			, isttr_seq
+			, episd_year
 			, reg_id
 			, reg_ip
 			, reg_dtm
 			, mod_id
 			, mod_ip
 			, mod_dtm
-		) VALUES(
-			#{edctnSeq}
-			, #{episdOrd}
-			, #{isttrSeq}
+		) VALUES
+		<foreach collection="isttrSeqList" item="isttrSeqList" index="index" separator=" , " open="" close=";">
+		      (
+			#{isttrSeqList.edctnSeq}
+			, #{isttrSeqList.episdOrd}
+			, #{isttrSeqList.isttrSeq}
+			, #{isttrSeqList.episdYear}
 			, #{regId}
 			, #{regIp}
 			, now()
@@ -571,6 +626,7 @@
 			, #{modIp}
 			, now()
 		)
+		</foreach>
 	</insert>
 
 	<!--

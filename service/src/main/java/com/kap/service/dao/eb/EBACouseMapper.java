@@ -1,9 +1,6 @@
 package com.kap.service.dao.eb;
 
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COMenuDTO;
-import com.kap.core.dto.EBACouseDTO;
-import com.kap.core.dto.EmfMap;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,5 +1,6 @@
-package com.kap.core.dto;
+package com.kap.core.dto.eb.eba;
 
+import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -28,7 +29,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class EBACouseDTO extends BaseDTO  {
+public class EBACouseDTO extends BaseDTO {
 
     //교육순번
     @Schema(title = "교육순번", example = "숫자")

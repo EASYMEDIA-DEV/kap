@@ -115,7 +115,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 									relForm.find("span.nm").text(rObj.nm);
 									relForm.find("input.cloneHidden").prop("name", "edctnRel"+edctnRelStatus).val(rObj.edctnSeq);
 
-									$(".relForm"+edctnRelStatus).append(relForm.html());
+
+									//다중등록할때 시퀀스 체크해서 중복값이면 패스함
+									var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 append목록에 추가하지 않는다.
+									$(".relField").find("input:hidden").each(function(){
+										if($(this).val() == rObj.edctnSeq) passYn = true;
+									});
+
+									if(!passYn){
+										$(".relForm"+edctnRelStatus).append(relForm.html());
+									}
 
 								}
 
@@ -125,7 +134,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 								var relForm = $(".exmplContainer").clone(true);
 								relForm.find("span.nm").text(data.nm);
 								relForm.find("input.cloneHidden").prop("name", "edctnRel"+edctnRelStatus).val(data.edctnSeq);
-								$(".relForm"+edctnRelStatus).append(relForm.html());
+
+								//다중등록할때 시퀀스 체크해서 중복값이면 패스함
+								var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 append목록에 추가하지 않는다.
+								$(".relField").find("input:hidden").each(function(){
+									if($(this).val() == data.edctnSeq) {
+										alert("이미 추가된 과정입니다.");
+										passYn = true;
+									}
+								});
+
+								if(!passYn){
+									$(".relForm"+edctnRelStatus).append(relForm.html());
+								}
+
+
 
 							}
 						});

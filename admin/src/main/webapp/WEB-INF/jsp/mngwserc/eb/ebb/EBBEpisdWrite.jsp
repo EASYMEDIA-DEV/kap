@@ -20,7 +20,7 @@
             <input type="hidden" class="notRequired" id="jdgmtYn" name="jdgmtYn" value="${rtnDto.jdgmtYn}" />
 
             <!-- 첨부파일 순번 -->
-            <input type="hidden" class="notRequired" id="edctnNtctnFileSeq" name="edctnNtctnFileSeq" value="${rtnDto.edctnNtctnFileSeq}" />
+            <%--<input type="hidden" class="notRequired" id="edctnNtctnFileSeq" name="edctnNtctnFileSeq" value="${rtnDto.edctnNtctnFileSeq}" />--%>
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -207,7 +207,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">강사<span class="star text-danger"> *</span></label>
                             <div class="col-sm-11">
-                                <button type="button" class="btn btn-inverse btn-sm">
+                                <button type="button" class="btn btn-inverse btn-sm eduIsttrSearch">
                                     강사검색
                                 </button>
                                 <table class="table table-hover table-striped">
@@ -221,14 +221,59 @@
                                     </tr>
                                     </thead>
                                     <!-- 리스트 목록 결과 -->
-                                    <tbody id="listContainer">
-
-                                    <tr data-total-count="0">
-                                        <td colspan="5" class="text-center">
+                                    <tbody id="isttrContainer">
+                                    <tr data-total-count="0" class="notIsttr">
+                                        <td colspan="5" class="text-center" <c:if test="${isttrList.size() ne 0}">style="display:none;"</c:if>>
                                             검색결과가 없습니다.<br>
                                             (등록된 데이터가 없습니다.)
                                         </td>
                                     </tr>
+                                    <tr class="setIsttr" data-total-count="0" style="display:none;">
+                                        <td class="text-center">
+                                            -번호
+                                        </td>
+                                        <td class="text-center">
+                                            -이름
+                                        </td>
+                                        <td class="text-center">
+                                            -소속
+                                        </td>
+                                        <td class="text-center">
+                                            -약력
+                                        </td>
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
+                                        </td>
+                                        <input type="hidden" class="notRequired" name="isttrSeq" id="isttrSeq" value="" disabled="true" titlle="강사번호">
+                                    </tr>
+                                    <c:choose>
+                                        <c:when test="${isttrList.size() ne 0}">
+                                            <c:forEach var="list" items="${isttrList}" varStatus="status">
+                                                <tr>
+                                                    <td class="text-center">
+                                                        ${isttrList.size() - status.index}
+                                                    </td>
+                                                    <td class="text-center">
+                                                            ${list.name} - 이름
+                                                    </td>
+                                                    <td class="text-center">
+                                                            ${list.ffltnNm} - 소속
+                                                    </td>
+                                                    <td class="text-center">
+                                                            ${list.spclCntn} - 약력
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
+                                                    </td>
+                                                    <input type="hidden" class="notRequired" name="isttrSeq" value="${list.isttrSeq}" disabled="true" titlle="강사번호">
+                                                </tr>
+                                            </c:forEach>
+
+                                        </c:when>
+                                    </c:choose>
+
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -295,7 +340,7 @@
                                             </td><!--강의시간-->
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
-                                                <button type="button" class="btn btn-inverse btn-sm btnRemove" data-isttr_seq="">삭제</button>
+                                                <button type="button" class="btn btn-inverse btn-sm btnRemove">삭제</button>
                                             </td><!--삭제-->
                                         </tr>
                                         <tr class="examTr" style="display: none;">
@@ -330,7 +375,7 @@
                                                         </td><!--강의시간-->
                                                         <td class="text-center">
                                                             <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
-                                                            <button type="button" class="btn btn-inverse btn-sm btnRemove" data-isttr_seq="${list.lctrSeq}">삭제</button>
+                                                            <button type="button" class="btn btn-inverse btn-sm btnRemove">삭제</button>
                                                         </td><!--삭제-->
                                                     </tr>
                                                     <tr>
@@ -366,7 +411,7 @@
                                                     </td><!--강의시간-->
                                                     <td class="text-center">
                                                         <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
-                                                        <button type="button" class="btn btn-inverse btn-sm btnRemove" data-isttr_seq="${list.lctrSeq}">삭제</button>
+                                                        <button type="button" class="btn btn-inverse btn-sm btnRemove">삭제</button>
                                                     </td><!--삭제-->
                                                 </tr>
                                                 <tr>
@@ -676,6 +721,9 @@
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/jsp/mngwserc/eb/eba/EBACouseSrchLayer.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebf/EBFEduRoomSrchLayer.jsp"></jsp:include>
-<jsp:include page="/WEB-INF/jsp/mngwserc/ex/exg/EXGExamListSrchLayer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/eba/EBACouseSrchLayer.jsp"></jsp:include><!--교육과정검색-->
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebf/EBFEduRoomSrchLayer.jsp"></jsp:include><!--교육장검색-->
+<jsp:include page="/WEB-INF/jsp/mngwserc/ex/exg/EXGExamListSrchLayer.jsp"></jsp:include><!--시험검색-->
+<jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpc/MPCLecturerSrchLayer.jsp"></jsp:include><!--강사검색-->
+<!--설문검색-->
+

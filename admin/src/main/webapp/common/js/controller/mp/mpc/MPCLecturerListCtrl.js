@@ -93,15 +93,49 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click: function(){
                         var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
-                        if( choiceCnt > 1){
+                        /*if( choiceCnt > 1){
                             alert(msgCtrl.getMsg("fail.mp.mpc.notSrchLecturer1"));
-                        } else if(choiceCnt == 0){
+                        } else */if(choiceCnt == 0){
                             alert(msgCtrl.getMsg("fail.mp.mpc.notSrchLecturer"));
                         }else{
                             var clickObj = {};
                             clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();
                             var titl = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text());
-                            clickObj.titl = titl;
+
+                            //여러개 선택한경우
+                            var trObj = ctrl.obj.find("input[name=delValueList]:checked").parents("tr");
+
+                            if(trObj.length >1) {
+                                var trObjList = new Array();
+                                trObj.each(function () {
+                                    var tempObj = {};
+                                    var name = $(this).find("td").eq(2).text().trim();//이름
+                                    var spclCntn = $(this).find("td").eq(2).data("spclcntn");//약력(특이사항)
+                                    var seq = $(this).find("td").eq(0).find("input[name=delValueList]:checked").val();
+                                    var titl= $(this).find(".srchListView").text().trim();
+
+                                    tempObj.name = name;
+                                    tempObj.spclCntn = spclCntn;
+                                    tempObj.titl = titl;
+                                    tempObj.seq = seq;
+                                    tempObj.choiceCnt = choiceCnt;
+
+                                    trObjList.push(tempObj)
+
+                                });
+                                clickObj.trObjList = trObjList;
+
+                            }
+
+                            var obj = ctrl.obj.find("input[name=delValueList]:checked").parents("tr");
+                            var name = obj.find("td").eq(2).text().trim();//이름
+                            var spclCntn = obj.find("td").eq(2).data("spclcntn");//약력(특이사항)
+
+                            clickObj.titl = titl;//소속
+                            clickObj.spclCntn = spclCntn;//약력
+                            clickObj.name = name;//이름
+
+                            clickObj.choiceCnt = choiceCnt;
                             ctrl.obj.trigger("choice", [clickObj])
                             ctrl.obj.find(".close").click();
                         }
@@ -117,7 +151,7 @@ define(["ezCtrl"], function(ezCtrl) {
                 search($formObj.find("input[name=pageIndex]").val());
             }
         }
-    };
+    }
 
     //목록 조회
     var search = function(page){

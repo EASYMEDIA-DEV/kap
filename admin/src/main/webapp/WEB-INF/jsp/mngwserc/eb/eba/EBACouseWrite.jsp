@@ -228,7 +228,7 @@
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="relField">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">연계학습</label>
                     <div class="col-sm-11">

@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.EBACouseDTO;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 
 import java.util.HashMap;
 import java.util.List;
