@@ -50,10 +50,27 @@ var exports = {
             }
         },
 
+        //일일 근태
+        dayKen : {
+            event : {
+                click : function() {
+                    $(".MPDCmtKenDaySrchLayer").one('show.bs.modal', function() {
+
+                    }).one('hidden.bs.modal', function() {
+                        // Remove class for soft backdrop (if not will affect future modals)
+                    }).one('choice', function(data, param) {
+                        // Remove class for soft backdrop (if not will affect future modals)
+                        // fnc(param);
+                    }).modal();
+                }
+            }
+        },
+
         //엑셀다운로드
         btnExcelDown : {
             event : {
                 click: function () {
+
                     //사유입력 레이어팝업 활성화
                     $excelObj.find("#rsn").val('');
                     $excelObj.modal("show");

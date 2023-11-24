@@ -1,5 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
+<jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtKenDaySrchLayer.jsp">
+    <jsp:param name="selPer" value="popup" />
+</jsp:include>
 <div class="container-fluid ">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/mp/mpd/MPDCmtListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
@@ -108,6 +110,8 @@
                     </select>
                 </div>
                 <div class="pull-right">
+                    <button type="button" class="btn btn-inverse btn-sm mb-sm" id="monthKen">월별 출근부</button>
+                    <button type="button" class="btn btn-inverse btn-sm mb-sm" id="dayKen">일일 근태현황</button>
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
                 </div>
             </div>
@@ -180,4 +184,6 @@
             </div>
         </div>
     </div>
+
 </div>
+

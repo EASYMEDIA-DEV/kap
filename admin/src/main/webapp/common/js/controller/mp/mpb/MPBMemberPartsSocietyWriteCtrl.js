@@ -124,6 +124,11 @@ var exports = {
         tabThree();
         tabFour();
         tabFive();
+        if($("#pstnCd").val()!='MEM_CD01007') {
+            $(".pstnNm").hide();
+        } else {
+            $(".pstnNm").show();
+        }
     }
 
 
@@ -155,6 +160,18 @@ var exports = {
                 }
             }
         },
+            pstnCd : {
+                event : {
+                    change : function() {
+                        $(".pstnNm").val('');
+                        if($("#pstnCd").val()!='MEM_CD01007') {
+                            $(".pstnNm").hide();
+                        } else {
+                            $(".pstnNm").show();
+                        }
+                    }
+                }
+            },
         telNo : {
                 event : {
                     input : function (event) {
@@ -308,7 +325,7 @@ var exports = {
                     }
                 }
 
-                if($("#telNo").val().length < 11) {
+                if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
                     alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
                     return false;
 

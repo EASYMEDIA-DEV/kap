@@ -5,6 +5,7 @@
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
+                <td class="text-center chkdd" >${ kl:emptyHypen(list.name)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.atndcCdNm)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.guidePartCmpn1)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.rgns1)}</td>

@@ -464,12 +464,12 @@
 
 
     <!--
-        쿼리명 : MPAUserMapper.selectUserDtlTab
-        설  명 : [일반 , 부품 , 위원 ] 사용자 상세을 조회한다.
-          수정일      수정자       수정내용
-        ==========   ========   ==============
-        2023.11.10    양현우       최초생성
-    -->
+           쿼리명 : MPAUserMapper.selectUserDtlTab
+           설  명 : [일반 , 부품 , 위원 ] 사용자 상세을 조회한다.
+             수정일      수정자       수정내용
+           ==========   ========   ==============
+           2023.11.10    양현우       최초생성
+       -->
     <select id="selectUserDtlTab" parameterType="MPAUserDto" resultType="MPAUserDto">
         select mem.mem_seq /* MPAUserMapper.selectUserDtlTab */
              , mem.id
@@ -512,6 +512,7 @@
                     else null end as mod_name
              , mst.reg_id as mod_id
              , mem.reg_id as reg_id
+             , mem.pstn_nm
         from co_mem_mst mem
                  inner join ( select mem_mod_seq
                                    , mem_seq
@@ -533,6 +534,7 @@
                                  on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
         where mem.mem_seq = #{detailsKey}
     </select>
+
 
     <!--
     쿼리명 : MPAUserMapper.selectDupEmail
@@ -566,12 +568,12 @@
 
 
     <!--
-   쿼리명 : MPAUserMapper.updateUserDtl
-   설  명 :  [일반 , 부품 , 위원 ] 사용자  수정
-     수정일      수정자       수정내용
-   ==========   ========   ==============
-   2023.11.10    양현우       최초생성
--->
+      쿼리명 : MPAUserMapper.updateUserDtl
+      설  명 :  [일반 , 부품 , 위원 ] 사용자  수정
+        수정일      수정자       수정내용
+      ==========   ========   ==============
+      2023.11.10    양현우       최초생성
+   -->
     <update id="updateUserDtl" parameterType="MPAUserDto">
         update co_mem_mst  /* MPAUserMapper.updateUserDtl */
         set work_bsnm_no =#{workBsnmNo}
@@ -579,17 +581,24 @@
         , dept_dtl_nm =#{deptDtlNm}
         , zipcode =#{zipcode}
         , pstn_cd =#{pstnCd}
+        , pstn_nm =#{pstnNm}
         , bsc_addr =#{bscAddr}
         , dtl_addr =#{dtlAddr}
-        , tel_no =#{telNo}
+        <if test="telNo != null and telNo != ''.toString() ">
+            , tel_no =#{telNo}
+        </if>
         , email =#{email}
-        , hp_no =#{hpNo}
+        <if test="hpNo != null and hpNo != ''.toString() ">
+            , hp_no =#{hpNo}
+        </if>
         , ntfy_sms_rcv_yn=#{ntfySmsRcvYn}
         , ntfy_email_rcv_yn =#{ntfyEmailRcvYn}
         , cmssr_type_cd =#{cmssrTypeCd}
         , cmssr_cbsn_cd =#{cmssrCbsnCd}
         , cmssr_work_cd =#{cmssrWorkCd}
-        , birth =#{birth}
+        <if test="birth != null and birth != ''.toString() ">
+            , birth =#{birth}
+        </if>
         , cmssr_mplmn_dt =#{cmssrMplmnDt}
         <if test="cmssrRsgntDt != ''.toString() ">
             , cmssr_rsgnt_dt =#{cmssrRsgntDt}

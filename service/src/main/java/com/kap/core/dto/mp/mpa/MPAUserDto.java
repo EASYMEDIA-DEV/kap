@@ -103,6 +103,9 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title = "직급코드", example = "MEM_CD")
     private String pstnCd;
 
+    @Schema(title = "기타 직급명", example = "기타")
+    private String pstnNm;
+
     @Schema(title = "직급명", example = "사원")
     private String pstnCdNm;
 
@@ -178,6 +181,8 @@ public class MPAUserDto extends BaseDTO {
 
     @Schema(title="경력 노출여부" , example = "Y")
     private String cmssrMjrCarerExpsYn;
+
+
 
 
     @Schema(title="패스워드" , example = "")

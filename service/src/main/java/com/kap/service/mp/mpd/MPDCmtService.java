@@ -4,6 +4,8 @@ import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <pre>
  * 위원 관리를 위한 Service
@@ -31,6 +33,6 @@ public interface MPDCmtService {
 
      MPDKenDto selectKenList(MPDKenDto mpdKenDto) throws Exception;
 
-
+     void excelDownload(MPDKenDto mpdKenDto, HttpServletResponse response) throws Exception;
 
 }

@@ -148,7 +148,7 @@
                             </select>
                         </div>
                         <div class="pull-right ml-sm">
-                            <input type="text" class="monthpicker"  name="monthpicker" />
+                            <input type="text" class="monthpicker monthInit"  name="monthpicker" />
                         </div>
                     </div>
 

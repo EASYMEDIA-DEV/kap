@@ -3,144 +3,155 @@
     <input type="hidden" id="oldEmail" name="oldEmail" value=${rtnDtl.email} />
     <input type="hidden" id="id" name="id" value=${rtnDtl.id} />
 </form>
-        <table class="table">
-            <colgroup>
-                <col style="width:10%;">
-                <col style="width:40%;">
-                <col style="width:10%;">
-                <col style="width:40%;">
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">이름 <span style="color: red">*</span></th>
-                <td>${rtnDtl.name}</td>
-                <th scope="row" class="bg-gray-lighter">부품사명 <span style="color: red">*</span></th>
-                <td>   <input type="text" class="form-control input-sm" id="ctgry_cd" title="부품사명" name="ctgry_cd" readonly  value="${rtnDtl.cmpnNm}"/>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">사업자등록번호 <span style="color: red">*</span></th>
-                <td> <input type="text" class="form-control input-sm" id="workBsnmNo" title="부품사명" name="workBsnmNo"   value="${rtnDtl.workBsnmNo}"/>
-                    <button type="button" class="btn btn-secondary" id="btnBsnmNo" >인증[TODO 양현우]</button> </td>
-                <th scope="row" class="bg-gray-lighter">구분 <span style="color: red">*</span></th>
-                <td>
-                    ${rtnDtl.ctgryCdNm}
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">부서 <span style="color: red">*</span></th>
-                <td>
-                    <select class="form-control input-sm" name="deptCd">
-                        <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                            <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
-                                <option value="${cdList.cd}"  ${rtnDtl.deptCd == cdList.cd ? 'selected' : ''}>${cdList.cdNm}</option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                    <input type="text" class="form-control input-sm" id="deptDtlNm" title="부서상세" name="deptDtlNm"  value="${rtnDtl.deptDtlNm}"/>
-                </td>
-                <th scope="row" class="bg-gray-lighter">직급 <span style="color: red">*</span></th>
-                <td>
-                    <select class="form-control input-sm" name="pstnCd">
-                        <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                            <c:if test="${fn:contains(cdList, 'MEM_CD010')}">
-                                <option value="${cdList.cd}"  ${rtnDtl.pstnCd == cdList.cd ? 'selected' : ''}>${cdList.cdNm}</option>
-                            </c:if>
-                        </c:forEach>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">아이디 <span style="color: red">*</span></th>
-                <td>${rtnDtl.id}</td>
-            </tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">비밀번호</th>
-                <td><button type="button" class="btn btn-secondary" id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button></td>
-            </tr>
-            <tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">주소 <span style="color: red">*</span></th>
-                <td>
-                    <div class="col-sm-10">
-                    <div class="form-group input-group">
-                        <input type="text" class="form-control input-sm" id="zipcode" title="우편번호" name="zipcode" readonly  value="${rtnDtl.zipcode}"/>
-                        <button type="button" class="btn btn-secondary" id="searchPostCode" >우편번호 검색</button>
-                    </div>
-                    </div>
-                    <div class="form-group col-sm-10">
-                        <input type="text" class="form-control input-sm" title="주소" id="bscAddr" name="bscAddr"  readonly  value="${rtnDtl.bscAddr}"/>
-                    </div>
-                    <div class="form-group col-sm-10">
-                        <input type="text" class="form-control input-sm" title="주소" id="dtlAddr" name="dtlAddr" value="${rtnDtl.dtlAddr}"/>
-                    </div>
+<fieldset>
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">이름<span class="star text-danger"> *</span></label>
+        <div class="col-sm-5">
+            <p class="col-sm-11 form-control-static">${rtnDtl.name}</p>
+        </div>
 
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">일반 전화번호 </th>
-                <td> <div class="form-group col-sm-10">
-                        <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnDtl.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"/>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">이메일  <span style="color: red">*</span></th>
-                <td> <div class="form-group col-sm-10">
-                    <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnDtl.email}" name="email" maxlength="50" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
-                    <button type="button" class="btn btn-secondary" id="dupEmail" >중복확인</button>
-                </div>
-                </td>
-            </tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">생년월일 </th>
-                <td> <div class="col-sm-10">
-                    ${ kl:birthConvert(rtnDtl.birth)}
-                </div>
-                </td>
-                <th scope="row" class="bg-gray-lighter">성별 </th>
-                <td> <div class="col-sm-10">
-                    ${rtnDtl.gndr}
-                </div>
-                </td>
-            </tr>
+        <label class="col-sm-1 control-label">부품사명</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control input-sm" id="ctgry_cd" title="부품사명" name="ctgry_cd" readonly  value="${rtnDtl.cmpnNm}"/>
+        </div>
+    </div>
+</fieldset>
 
-            <tr>
-                <th scope="row" class="bg-gray-lighter">SMS 수신여부 <span style="color: red">*</span> </th>
-                <td>
-                    <div class="form-group text-sm">
-                        <div class="col-sm-10">
-                            <label class="radio-inline c-radio">
-                                <input type="radio" name="ntfySmsRcvYn" class="notRequired"  value="Y" checked ${rtnDtl.ntfySmsRcvYn.toString() == 'Y' ? 'checked' : ''} />
-                                <span class="ion-record"></span> 수신
-                            </label>
-                            <label class="radio-inline c-radio">
-                                <input type="radio" name="ntfySmsRcvYn" class="notRequired" value="N"  ${rtnDtl.ntfySmsRcvYn.toString() == 'N' ? 'checked' : ''}/>
-                                <span class="ion-record"></span> 수신 안함
-                            </label>
-                            ${ kl:convertDate(rtnDtl.ntfySmsRcvChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} 변경
-                        </div>
-                    </div>
-                </td>
-                <th scope="row" class="bg-gray-lighter">이메일 수신여부 <span style="color: red">*</span> </th>
-                <td>
-                    <div class="form-group text-sm">
-                        <div class="col-sm-10">
-                            <label class="radio-inline c-radio">
-                                <input type="radio" name="ntfyEmailRcvYn" class="notRequired" value="Y"  ${rtnDtl.ntfyEmailRcvYn.toString() == 'Y' ? 'checked' : ''} />
-                                <span class="ion-record"></span> 수신
-                            </label>
-                            <label class="radio-inline c-radio">
-                                <input type="radio" name="ntfyEmailRcvYn" class="notRequired" value="N"  ${rtnDtl.ntfyEmailRcvYn.toString() == 'N' ? 'checked' : ''}/>
-                                <span class="ion-record"></span> 수신 안함
-                            </label>
-                            ${ kl:convertDate(rtnDtl.ntfyEmailRcvChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} 변경
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<fieldset>
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
+        <div class="col-sm-3">
+            <div class="input-group">
+                <input type="text" class="form-control input-sm " id="workBsnmNo" name="workBsnmNo" value="${rtnDtl.workBsnmNo}" title="사업자등록번호" maxlength="50" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
+                <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="btnBsnmNo">인증 TODO 양현우</button></span>
+            </div>
+        </div>
+
+        <label class="col-sm-3 control-label">구분<span class="star"> *</span></label>
+        <div class="col-sm-5">
+            <p class="col-sm-11 form-control-static">${rtnDtl.ctgryCdNm}</p>
+        </div>
+    </div>
+</fieldset>
+
+<fieldset>
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">부서<span class="star text-danger"> *</span></label>
+        <div class="col-sm-5">
+            <div class="input-group">
+            <select class="form-control input-sm" id="deptCd" name="deptCd" title="부서" style="width:150px; display:inline-block;">
+                <option value="">선택</option>
+                <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                    <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
+                        <option value="${cdList.cd}"  ${rtnDtl.deptCd == cdList.cd ? 'selected' : ''}>${cdList.cdNm}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
+                <input type="text" class="form-control input-sm" id="deptDtlNm" title="부서상세" name="deptDtlNm"  value="${rtnDtl.deptDtlNm}" style="width:150px;"/>
+            </div>
+        </div>
+
+        <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
+        <div class="col-sm-5">
+            <div class="input-group">
+            <select class="form-control input-sm" id="pstnCd" name="pstnCd" title="직급" style="width:auto; display:inline-block;" >
+                <option value="">선택</option>
+                <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                    <c:if test="${fn:contains(cdList, 'MEM_CD010')}">
+                        <option value="${cdList.cd}"  ${rtnDtl.pstnCd == cdList.cd ? 'selected' : ''}>${cdList.cdNm}</option>
+                    </c:if>
+                </c:forEach>
+            </select>
+                    <input type="text" class="form-control input-sm notRequired pstnNm" id="pstnNm" title="기타" name="pstnNm"   style="width:150px;" />
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">아이디<span class="star text-danger"> *</span></label>
+        <div class="col-sm-5">
+            <p class="col-sm-11 form-control-static">${rtnDtl.id}</p>
+        </div>
+
+    </div>
+</fieldset>
+<fieldset>
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">비밀번호<span class="star"> *</span></label>
+        <button type="button" class="btn btn-secondary"  id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="form-group text-sm form-inline">
+        <label class="col-sm-1 control-label">주소<span class="star"> *</span></label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control input-sm" id="zipcode" title="우편번호" name="zipcode" readonly  value="${rtnDtl.zipcode}"/>
+            <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색"><br>
+            <br>
+            <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnDtl.bscAddr}" readonly placeholder="기본주소" style="width: 400px;"/><br>
+            <br>
+            <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnDtl.dtlAddr}" title="우편번호" placeholder="상세주소 입력" maxlength="50" style="width: 400px;"/>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">일반 전화번호</label>
+        <div class="col-sm-2">
+            <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnDtl.telNo}"  oninput="this.value=this.value.replace(/[^0-9]/g, '')" />
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
+        <div class="col-sm-3">
+            <div class="input-group">
+
+                <input type="text" class="form-control input-sm " id="email" name="email" value="${rtnDtl.email}" title="이메일" maxlength="50" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
+                <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupEmail">중복확인</button></span>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">생년월일</label>
+        <p class="col-sm-5 form-control-static">${ rtnDtl.birth}</p>
+        <label class="col-sm-1 control-label">성별</label>
+        <p class="col-sm-5 form-control-static">${rtnDtl.gndr}</p>
+    </div>
+</fieldset>
+<fieldset class="last-child">
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">SMS 수신여부<span class="star"> *</span></label>
+        <div class="col-sm-5">
+            <c:set var="useYn" value="${rtnDtl.ntfySmsRcvYn.toString()}" />
+            <label class="radio-inline c-radio">
+                <input type="radio" name="ntfySmsRcvYn" value="Y" title="수신"  ${rtnDtl.ntfySmsRcvYn.toString() == 'Y' ? 'checked' : ''}  />
+                <span class="ion-record"></span> 수신
+            </label>
+            <label class="radio-inline c-radio">
+                <input type="radio" name="ntfySmsRcvYn" value="N" title="수신"  ${rtnDtl.ntfySmsRcvYn.toString() == 'N' ? 'checked' : ''}  />
+                <span class="ion-record"></span> 수신 안함
+            </label>
+        </div>
+        <label class="col-sm-1 control-label">이메일 수신여부<span class="star"> *</span></label>
+        <div class="col-sm-5">
+            <c:set var="useYn" value="${rtnDtl.ntfyEmailRcvYn.toString()}" />
+            <label class="radio-inline c-radio">
+                <input type="radio" name="ntfyEmailRcvYn" value="Y" title="수신" ${rtnDtl.ntfyEmailRcvYn.toString() == 'Y' ? 'checked' : ''} />
+                <span class="ion-record"></span> 수신
+            </label>
+            <label class="radio-inline c-radio">
+                <input type="radio" name="ntfyEmailRcvYn" value="N" title="수신" ${rtnDtl.ntfyEmailRcvYn.toString() == 'N' ? 'checked' : ''} />
+                <span class="ion-record"></span> 수신 안함
+            </label>
+        </div>
+    </div>
+</fieldset>
+
     <h5>등록/수정이력</h5>
         <table class="table">
             <colgroup>
