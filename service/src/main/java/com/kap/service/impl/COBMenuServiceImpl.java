@@ -95,7 +95,7 @@ public class COBMenuServiceImpl implements COBMenuService {
 			cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
 		}else{
 			if(!"".equals(cOMenuDTO.getUserUrl())){
-				cOMenuDTO.setUserUrl(cOMenuDTO.getUserUrl()+"/content.do");
+				cOMenuDTO.setUserUrl(cOMenuDTO.getUserUrl()+"/content");
 			}
 		}
 

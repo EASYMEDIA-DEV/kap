@@ -93,24 +93,20 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 		String menuType = cOMenuDTO.getMenuType();
 
 		String userUrl = cOMenuDTO.getUserUrl();
-		int trgtLen = cOMenuDTO.getUserUrl().length() - 1;
+		if(userUrl != null && !userUrl.isEmpty()) {
+			int trgtLen = cOMenuDTO.getUserUrl().length() - 1;
 
-		if (userUrl.lastIndexOf("/") == trgtLen) {
-			userUrl = userUrl.substring(0, trgtLen);
-		}
-//		if(menuType.equals("cms")){
-//			cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
-//		}else{
-			if(!"".equals(cOMenuDTO.getUserUrl())){
-				if(menuType.equals("cms")){
-					cOMenuDTO.setUserUrl(COStringUtil.nullConvert(userUrl + "/" + cOMenuDTO.getMenuSeq() + "/content.do"));
-				}
-				else {
-//					cOMenuDTO.setUserUrl(userUrl+"/content.do");
+			if (userUrl.lastIndexOf("/") == trgtLen) {
+				userUrl = userUrl.substring(0, trgtLen);
+			}
+			if (!"".equals(cOMenuDTO.getUserUrl())) {
+				if (menuType.equals("cms")) {
+					cOMenuDTO.setUserUrl(COStringUtil.nullConvert(userUrl + "/" + cOMenuDTO.getMenuSeq() + "/content"));
+				} else {
 					cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
 				}
 			}
-//		}
+		}
 		return cOBUserMenuMapper.updateMenuInf(cOMenuDTO);
 	}
 
