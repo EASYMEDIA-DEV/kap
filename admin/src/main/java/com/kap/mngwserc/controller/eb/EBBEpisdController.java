@@ -1,10 +1,11 @@
 package com.kap.mngwserc.controller.eb;
 
-import com.kap.core.dto.*;
+import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBLctrDTO;
 import com.kap.core.dto.eb.ebb.EBBisttrDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
+import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.EBBEpisdService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -107,7 +108,7 @@ public class EBBEpisdController {
     }
 
     /**
-     * 교육과정관리  상세를 조회한다.
+     * 교육차수관리  상세를 조회한다.
      */
     @GetMapping(value="/write")
     public String getCouseDtl(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -128,13 +129,7 @@ public class EBBEpisdController {
         cdDtlList.add("RCRMT_MTHD"); //모집방식
         cdDtlList.add("CMPTN_AUTO"); //수료 자동화 여부
         cdDtlList.add("CBSN_CD"); //업종코드
-        cdDtlList.add("SYSTEM_HOUR"); //시간 00~23
-
-        //cdDtlList.add("STDUY_MTHD"); //학습방식
-        //cdDtlList.add("STDUY_DD");//학습시간 - 학습일
-        //cdDtlList.add("STDUY_TIME");//학습시간 - 학습시간
-        //cdDtlList.add("RCRMT_MTHD");//학습시간 - 학습시간
-
+        cdDtlList.add("SYSTEM_HOUR"); //시간
 
         modelMap.addAttribute("episdCdList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 
@@ -142,16 +137,16 @@ public class EBBEpisdController {
         cOCodeDTO.setCd("ROUND_CD");
         modelMap.addAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
 
+        cOCodeDTO.setCd("ED_BDGET_CD01");//예산지출 코드 - 예산
+        modelMap.addAttribute("ED_BDGET_CD01", cOCodeService.getCdIdList(cOCodeDTO));
+        cOCodeDTO.setCd("ED_BDGET_CD02");//예산지출 코드 - 지출
+        modelMap.addAttribute("ED_BDGET_CD02", cOCodeService.getCdIdList(cOCodeDTO));
+
         modelMap.addAttribute("rtnData", rtnDto);//교육차수 본문
         modelMap.addAttribute("roomDto", roomDto);//교육장 정보
         modelMap.addAttribute("lctrDtoList", lctrDtoList);//온라인강의
         modelMap.addAttribute("isttrList", isttrList);//강사정보
-        //설문정보
-        //만족도 조사
-
-
-
-
+        //만족도 조사(설문)
 
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
     }

@@ -168,9 +168,6 @@ public class EBACouseController {
             rtnDto.setThnlFileSeq(null);
         }
 
-
-        System.out.println("@@@ relList = " + relList);
-
         modelMap.addAttribute("rtnData", rtnDto);
         modelMap.addAttribute("rtnTrgtData", rtnTrgtData);
         modelMap.addAttribute("relList", relList);

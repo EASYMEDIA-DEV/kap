@@ -228,6 +228,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdMapper.deleteLctrDtl(eBBEpisdDTO);//삭제후
 		setLctrList(eBBEpisdDTO, coaAdmDTO);//재등록
 
+
+		//예산지출 내역 등록
+		eBBEpisdMapper.deleteBdgetList(eBBEpisdDTO);
+		eBBEpisdMapper.insertBdgetList(eBBEpisdDTO);
+
 		return respCnt;
 	}
 

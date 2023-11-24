@@ -393,7 +393,7 @@
                                                         </td>
                                                     </tr>
 
-                                                    <input type="hidden" class="notRequired" id="thnlFileSeq" name="lctrFileSeq${lctrDtoList.thnlFileSeq}" value="${lctrDtoList.thnlFileSeq}" />
+                                                    <input type="hidden" class="notRequired thnlFileForm" id="thnlFileSeq" name="lctrFileSeq${lctrDtoList.thnlFileSeq}" value="${lctrDtoList.thnlFileSeq}" />
                                                 </c:forEach>
                                                 <!-- 온라인강의 목차 출력 e -->
                                             </c:when>
@@ -646,6 +646,62 @@
 
                 <!-- 예산/지출 -->
                 <div id="bdget" class="tab-pane fade">
+
+                    <!--공통코드 데이터 + 입력된 데이터-->
+                    <div class="bdgetTargetData" style="display:none;" data-type="bdget01">
+                        <c:forEach var="cdList" items="${ED_BDGET_CD01}" varStatus="status">
+
+                            <c:set var="tempPmt" value="" />
+                            <c:forEach var="bdgetList" items="${bdgetList}">
+                                <c:if test="${tempPmt eq ''}">
+                                    <c:if test="${cdList.cd eq bdgetList.cd}">
+                                        <c:set var="tempPmt" value="${bdgetList.pmt}" />
+                                    </c:if>
+                                    <c:if test="${cdList.cd ne bdgetList.cd}">
+                                        <c:set var="tempPmt" value="" />
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
+                            <input type="text" class="form-control input-sm calPmtForm bdget01 numberChk notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                        </c:forEach>
+                    </div>
+                    <div class="bdgetTargetData" style="display:none;" data-type="bdget02">
+                        <c:forEach var="cdList" items="${ED_BDGET_CD02}" varStatus="status">
+
+                            <c:set var="tempPmt" value="" />
+                            <c:forEach var="bdgetList" items="${bdgetList}">
+                                <c:if test="${tempPmt eq ''}">
+                                    <c:if test="${cdList.cd eq bdgetList.cd}">
+                                        <c:set var="tempPmt" value="${bdgetList.pmt}" />
+                                    </c:if>
+                                    <c:if test="${cdList.cd ne bdgetList.cd}">
+                                        <c:set var="tempPmt" value="" />
+                                    </c:if>
+                                </c:if>
+                            </c:forEach>
+                            <input type="text" class="form-control input-sm calPmtForm bdget02 numberChk notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                        </c:forEach>
+                    </div>
+
+                    <div class="copyBdgetForm" style="display: none;">
+                            <label class="col-sm-1 control-label">부담금/대관비<span class="star"> *</span></label>
+                            <div class="">
+                            </div>
+                    </div>
+
+                    <fieldset class="copyTitle" style="display: none;">
+                        <div class="form-group text-sm">
+                            <div class="col-sm-12">
+                                <h6 class="mt0"><em class="ion-play mr-sm"></em><span class="title">교육예산<span> (<span class="pmt">10000원</span>)</h6>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!--복사용 끝-->
+
+                    <!-- 협력기관 지출내역 -->
+
+                    <!-- 강사 강의시간 -->
                 </div>
             </div>
 

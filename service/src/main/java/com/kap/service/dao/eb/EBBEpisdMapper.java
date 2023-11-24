@@ -93,5 +93,16 @@ public interface EBBEpisdMapper {
 	 */
 	public EBBEpisdDTO selectEpisdChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 교육차수 - 교육예산지출상세 삭제
+	 */
+	public int deleteBdgetList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 교육예산지출상세 등록
+	 */
+	public int insertBdgetList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
 
 }

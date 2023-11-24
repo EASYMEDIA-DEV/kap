@@ -4,6 +4,7 @@ import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -32,9 +33,11 @@ import java.util.List;
 public class EBBEpisdDTO extends BaseDTO {
 
     @Schema(title = "교육순번", example = "숫자")
+    @NotNull
     private Integer edctnSeq;
 
     @Schema(title = "회차정렬", example = "숫자")
+    @NotNull
     @Builder.Default
     private Integer episdOrd = 1;
 
@@ -47,6 +50,7 @@ public class EBBEpisdDTO extends BaseDTO {
     private Integer orgEpisdOrd = 1;
 
     @Schema(title = "회차년도", example = "yyyy")
+    @NotNull
     private Integer episdYear;
 
     @Schema(title = "업종코드", example = "")
@@ -221,7 +225,6 @@ public class EBBEpisdDTO extends BaseDTO {
 
     private List<String> rcrmtMthdCdList;
 
-    private List<EBBLctrDTO> lctrList;
 
 
     private String sqnm;
@@ -230,6 +233,13 @@ public class EBBEpisdDTO extends BaseDTO {
 
     private String srchLayer;
 
+
+    private List<EBBLctrDTO> lctrList;
+
     private List<EBBisttrDTO> isttrSeqList;
+
+    private List<EBBBdgetDTO> bdgetList;
+
+
 
 }

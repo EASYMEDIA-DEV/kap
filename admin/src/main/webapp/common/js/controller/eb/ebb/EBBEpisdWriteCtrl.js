@@ -20,6 +20,148 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	var onlineFileHtml = $("#onlineList").find("tr.examTr").eq(1).clone(true);
 
 
+	//예산 지출내역 filed 세팅
+	var bdgetSet = function(data){
+
+	//db에서 불러온 데이터
+	$(".bdgetTargetData").each(function(idx){
+		var tempFormArray = new Array();
+		$(this).find("input:text").each(function(){
+
+			//비고일경우 숫자전용 클래스 제거
+			if("ED_BDGET_CD01011".indexOf($(this).attr("name")) > -1 || "ED_BDGET_CD02011".indexOf($(this).attr("name")) > -1 ){
+				$(this).removeClass("numberChk");
+			}
+
+			//인풋박스 복사
+			var tempInput = $(".copyBdgetInput").find("input:hidden").clone();
+
+			//폼 복사
+			var tempForm = $(".copyBdgetForm").clone();
+
+			//이게 11번 루트돈다
+
+			tempForm.find("label").text($(this).attr("title"));//라벨 세팅
+
+
+			tempForm.find("label").next().append($(this));
+
+			tempFormArray.push(tempForm);
+		});
+
+
+		//폼이 짝수인지 홀수인지 확인한다
+		var cntChk = false //짝수:false, 홀수:true
+		if((tempFormArray.length%2) == 1) cntChk = true;
+
+		//fieldset 갯수 산정
+		var fieldset = Math.ceil(tempFormArray.length/2);
+
+		//홀수일경우 마지막 폼의 길이를 11로 설정한다.
+
+		var statIdx = 0;//폼 시작값
+		var endIdx = 1;//폼 종료값
+		var maxIdx = tempFormArray.length-1;
+
+		var lastForm = "";
+		//금액 산정(비고 제외) 비고는 예외로 코드값 ED_BDGET_CD01011를 고정 사용한다.
+		for(var i=1; i<=fieldset; i++){
+
+			//console.log(i+"번째 필드셋 들어가는 값  [" + statIdx+"]번째 폼부터  ["+endIdx+"]번째 폼");
+
+			if( i == fieldset && cntChk == true){
+				//console.log("홀수로 끝나고 마지막이므로 사이즈 11로 함");
+				tempFormArray[statIdx].find("label").next().addClass("col-sm-11");
+				lastForm = lastForm+'<fieldset><div class="form-group text-sm">';
+				lastForm = lastForm+tempFormArray[statIdx].html();
+				lastForm = lastForm+"</div></fieldset>";
+			}else{
+				tempFormArray[statIdx].find("label").next().addClass("col-sm-5");
+				tempFormArray[endIdx].find("label").next().addClass("col-sm-5");
+
+
+				lastForm = lastForm+'<fieldset class="bdget01"><div class="form-group text-sm">';
+				lastForm = lastForm+tempFormArray[statIdx].html();
+				lastForm = lastForm+tempFormArray[endIdx].html();
+				lastForm = lastForm+"</div></fieldset>";
+				//console.log(tempFormArray[statIdx].html());
+			}
+
+			statIdx = statIdx+2;
+			endIdx = endIdx+2;
+			if(statIdx>=maxIdx) statIdx = maxIdx;
+			if(endIdx>=maxIdx) endIdx = maxIdx;
+		}
+
+		//제목 삽입
+		var copyTitle = $(".copyTitle").clone(true);
+		var type = $(this).data("type");
+		if(idx == 0){
+			copyTitle.find("span.title").text("교육예산").addClass(type);
+		}else if(idx == 1){
+			copyTitle.find("span.title").text("지출내역").addClass(type);
+		}
+
+		//인풋 뭉치들 삽입
+		copyTitle.css("display", "");
+		$("#bdget").append(copyTitle.html());
+		$("#bdget").append(lastForm);
+
+	});
+
+	}
+
+	//예산 지출내역 자동계산
+	var totPmtSet = function(data){
+
+		//입력한 인풋의 최상단 폼 찾아감
+		var parentForm = data.closest("fieldset");
+
+		var totPmt1 =0;
+		$(".calPmtForm.bdget01.numberChk").each(function(idx){
+			var inputName = $(this).attr("name");
+
+			if("ED_BDGET_CD01011".indexOf(inputName) == -1 || "ED_BDGET_CD02011".indexOf(inputName) == -1 ){
+				if($(this).val() !="" && $(this).val() != undefined){
+					totPmt1 = totPmt1 + parseInt($(this).val());
+				}
+			}
+		});
+
+		var mtForm = $(".title.bdget01").closest(".mt0");
+		totPmt1 = totPmt1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		if(mtForm.find("span").size()>1){
+			mtForm.find("span:last").remove();
+			mtForm.append("<span> (합계 : "+totPmt1+"원)</span>");
+		}else{
+			mtForm.append("<span> (합계 : "+totPmt1+"원)</span>");
+		}
+
+
+		var totPmt2 =0;
+		$(".calPmtForm.bdget02.numberChk").each(function(idx){
+			var inputName = $(this).attr("name");
+
+			if("ED_BDGET_CD01011".indexOf(inputName) == -1 || "ED_BDGET_CD02011".indexOf(inputName) == -1 ){
+				if($(this).val() !="" && $(this).val() != undefined){
+					totPmt2 = totPmt2 + parseInt($(this).val());
+				}
+			}
+		});
+
+		var mtForm = $(".title.bdget02").closest(".mt0");
+		totPmt2 = totPmt2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		if(mtForm.find("span").size()>1){
+			mtForm.find("span:last").remove();
+			mtForm.append("<span> (합계 : "+totPmt2+"원)</span>");
+		}else{
+			mtForm.append("<span> (합계 : "+totPmt2+"원)</span>");
+		}
+
+
+	}
+
+
 	//강사 테이블 넘버링
 	var isttrTable = function(data){
 
@@ -385,6 +527,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			filedSet();
 			//폼 데이터 처리
 
+			//예산지출내역 폼 조립
+			bdgetSet();
+
+			//예산지출내역 자동계산 함수 실행
+			$(".calPmtForm").blur(function(){
+				totPmtSet(this);
+			});
+
+
 			var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
 
 			/* Editor Setting */
@@ -595,7 +746,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 								var onlineUrl = $(this).find("[name='onlineUrl']").val();
 								var onlineTime = $(this).find("[name='onlineTime']").val();
 
-								onlinePack.thnlFileSeq = $(this).next().find("input:hidden").val();
+								debugger;
+								onlinePack.thnlFileSeq = $(this).next().find("input:hidden.thnlFileForm").val();
 
 								onlinePack.edctnSeq = actForm.edctnSeq;
 								onlinePack.episdOrd = actForm.episdOrd;
@@ -644,6 +796,26 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						});
 
 						actForm.lctrList = lctrList;
+
+
+						//예산, 지출내역 세팅
+
+						var bdgetList = new Array();
+
+						$("input.calPmtForm").each(function(){
+							var temp = {};
+
+							temp.edctnSeq =  actForm.edctnSeq;
+							temp.episdOrd = actForm.episdOrd;
+							temp.cd = $(this).attr("name");
+							temp.episdYear = actForm.episdYear;
+							temp.pmt = $(this).val();
+
+							bdgetList.push(temp);
+						});
+						 actForm.bdgetList = bdgetList;
+
+
 
 						debugger;
 						cmmCtrl.jsonAjax(function(data){

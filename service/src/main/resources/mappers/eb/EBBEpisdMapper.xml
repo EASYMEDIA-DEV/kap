@@ -732,12 +732,68 @@
         2023.11.15   김학규       최초생성
     -->
 	<delete id="deleteEpisdDtl" parameterType="EBBEpisdDTO">
-		delete from ed_edctn_prcs_mst where 1=1
+		delete from ed_edctn_prcs_mst where 1=1  /* EBBEpisdMapper.deleteEpisdDtl */
 		AND edctn_seq IN
 		<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
 			#{delValueList}
 		</foreach>
 	</delete>
+
+	<!--
+         쿼리명 : EBBEpisdMapper.deleteBdgetList
+         설  명 : 교육차수 - 예산/지출내역 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.15   김학규       최초생성
+    -->
+	<delete id="deleteBdgetList" parameterType="EBBEpisdDTO">
+		delete from ed_edctn_bdget_expns_dtl
+	   	where 1=1  /* EBBEpisdMapper.deleteBdgetList */
+	   		and edctn_seq = #{edctnSeq}
+	   		and episd_ord = #{episdOrd}
+	   		and episd_year = #{episdYear}
+	</delete>
+
+	<!--
+             쿼리명 : EBBEpisdMapper.insertIsttrRel
+             설  명 : 교육차수 - 교육강사관계를 등록한다
+              수정일     수정자       수정내용
+            ==========   ======    ==============
+            2023.11.02   김학규       최초생성
+        -->
+	<insert id="insertBdgetList" parameterType="EBBEpisdDTO">
+		insert into /*EBBEpisdMapper.insertEpisd*/ ed_edctn_bdget_expns_dtl (
+			edctn_seq
+			, episd_ord
+			, cd
+			, episd_year
+			, pmt
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		) VALUES
+		<foreach collection="bdgetList" item="bdgetList" index="index" separator=" , " open="" close=";">
+			(
+			#{bdgetList.edctnSeq}
+			, #{bdgetList.episdOrd}
+			, #{bdgetList.cd}
+			, #{bdgetList.episdYear}
+			, #{bdgetList.pmt}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{modId}
+			, #{modIp}
+			, now()
+			)
+		</foreach>
+	</insert>
+
+
+
 
 
 </mapper>

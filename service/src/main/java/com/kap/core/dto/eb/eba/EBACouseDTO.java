@@ -4,6 +4,7 @@ import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -33,6 +34,7 @@ public class EBACouseDTO extends BaseDTO {
 
     //교육순번
     @Schema(title = "교육순번", example = "숫자")
+    @NotNull
     private Integer edctnSeq;
 
     //카테고리코드 소분류

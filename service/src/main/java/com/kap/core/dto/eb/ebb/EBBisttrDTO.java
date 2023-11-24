@@ -4,6 +4,7 @@ import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -32,15 +33,19 @@ import java.util.List;
 public class EBBisttrDTO extends BaseDTO {
 
     @Schema(title = "교육순번", example = "숫자")
+    @NotNull
     private Integer edctnSeq;
 
     @Schema(title = "회차정렬", example = "숫자")
+    @NotNull
     private Integer episdOrd;
 
     @Schema(title = "회차년도", example = "yyyy")
+    @NotNull
     private Integer episdYear;
 
     @Schema(title = "강사순번", example = "숫자")
+    @NotNull
     private Integer isttrSeq;
 
     @Schema(title = "강사명", example = "텍스트")
