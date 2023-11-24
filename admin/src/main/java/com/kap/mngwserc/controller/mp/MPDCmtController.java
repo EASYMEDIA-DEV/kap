@@ -146,6 +146,28 @@ public class MPDCmtController {
         }
     }
 
+
+    @GetMapping(value = "/excel-ken-down")
+    public void selectUserKenListExcel(MPDKenDto mpdKenDto ,
+                                    HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            //엑셀 생성
+            mpdCmtService.excelDownload(mpdCmtService.selectKenList(mpdKenDto), response);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+    }
+
+
     /**
      * 위원 등록 페이지
      */

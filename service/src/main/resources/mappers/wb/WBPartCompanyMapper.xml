@@ -149,12 +149,18 @@
             cm.bsc_addr,
             cm.dtl_addr,
             cm.sls_pmt,
+            cm.qlty_5_star_cd,
+            YEAR(cm.qlty_5_star_year) as qlty_5_star_year,
+            cm.pay_5_star_cd,
+            YEAR(cm.pay_5_star_year) as pay_5_star_year,
+            cm.tchlg_5_star_cd,
+            YEAR(cm.tchlg_5_star_year) as tchlg_5_star_year,
             YEAR(cm.sls_year) as sls_year,
             cm.mple_cnt,
             cm.mjr_prdct_1,
             cm.mjr_prdct_2,
             cm.mjr_prdct_3
-        FROM (SELECT id, email, dept_cd, dept_dtl_nm, pstn_cd, hp_no, tel_no,work_bsnm_no
+        FROM (SELECT mem_seq, id, name, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, hp_no, tel_no, work_bsnm_no
                 FROM co_mem_mst
                 WHERE id = #{selPartUser} AND mem_cd = #{memCd} ) as mm
         INNER JOIN cp_cmpn_mst cm ON mm.work_bsnm_no = cm.bsnm_no;

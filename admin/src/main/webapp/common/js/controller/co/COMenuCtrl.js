@@ -232,8 +232,8 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                                     jQuery("#userUrl").val(rtnData.userUrl.replace(replaceStr, ""));
                                     jQuery("#spanSuffix").text(replaceStr);*/
 
-                                    jQuery("#userUrl").val(userUrl.substring(0, userUrl.replace("/content.do", "").lastIndexOf("/")));
-                                    jQuery("#spanSuffix").text("/content.do")
+                                    jQuery("#userUrl").val(userUrl.substring(0, userUrl.replace("/content", "").lastIndexOf("/")));
+                                    jQuery("#spanSuffix").text("/content")
                                 }else {
                                     jQuery("#spanSuffix").text("");
                                     jQuery("#userUrl").val(rtnData.userUrl);
@@ -468,9 +468,11 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                     var admUrl = "", userUrl = jQuery("#userUrl").val();
                     var spanSuffix = jQuery("#spanSuffix").text();
 
-                    // URL 유효성 체크
-                    if (!cmmCtrl.checkUrl(jQuery("#userUrl"))) {
-                        return false;
+                    if(userUrl) {
+                        // URL 유효성 체크
+                        if (!cmmCtrl.checkUrl(jQuery("#userUrl"))) {
+                            return false;
+                        }
                     }
                     /*2023-10-13 cms url, 관리자 사용자 분리*/
                     if (jQuery("input[name='menuType']:checked").val() == "cms") {
@@ -694,7 +696,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
 
                         /*2023-10-13 cms url, 관리자 사용자 분리*/
                         if (menuSeq && menuType == "cms") {
-                            jQuery("#spanSuffix").text("/content.do");
+                            jQuery("#spanSuffix").text("/content");
                         } else {
                             jQuery("#spanSuffix").text("");
                         }

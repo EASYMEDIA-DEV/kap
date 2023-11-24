@@ -12,20 +12,30 @@ var exports = {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
+    var $excelObj = ctrl.obj.parent().find(".excel-down-day");
 
     let dupEmailChk = false;
     let cmssrCd ;
+    let kenChk  = false;
 
     function init() {
         var Month = new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)
-        $(".monthpicker").val(Month);
-        commonCodeAjax();
-        tabOne();
-        tabTwo();
-        tabThree();
-        tabFour();
-        cmssrCdInit(true);
-        datepickerLoad();
+        var path = window.location.pathname;
+        if(path != '/mngwserc/mp/mpd/list') {
+            kenChk = true;
+            $(".monthInit").val(Month);
+            commonCodeAjax();
+            tabOne();
+            tabTwo();
+            tabThree();
+            cmssrCdInit(true);
+            datepickerLoad();
+        } else {
+            kenChk = false;
+            $(".monthInit").val( new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)+"-"+("0" + (new Date().getDate())).slice(-2));
+
+        }
+            tabFour(kenChk);
 
 
 
@@ -42,7 +52,7 @@ var exports = {
         $.each(jQuery(".datetimepicker_strtDt"), function(i, obj){
             jQuery(obj).datetimepicker({
                 timepicker : false,
-                format : "Y-m",
+                format : "Y-m-d",
                 defaultDate : new Date(jQuery("body").data("curtDt")),
                 defaultTime : "00:00",
                 scrollInput : false,
@@ -108,7 +118,7 @@ var exports = {
 
     }
 
-    var tabFour = function() {
+    var tabFour = function(kenChk) {
         //근태 사업
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
@@ -118,6 +128,9 @@ var exports = {
             var totCnt = $(respObj).eq(0).data("totalCount");
             //총 건수
             ctrl.obj.find("#listContainerKenTotCnt").text(totCnt);
+            if(kenChk) {
+                $('.chkdd').remove();
+            }
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainerKen", "pagingContainerKen");
         }, "/mngwserc/mp/mpd/select-tab-four", $formObj, "POST", "html",'',false);
@@ -133,7 +146,7 @@ var exports = {
         }else if(type == 'bus' ) {
             tabThree();
         } else if(type == 'ken' ) {
-            tabFour();
+            tabFour(kenChk);
         }
     }
     function cmssrCdInit(values) {
@@ -178,6 +191,16 @@ var exports = {
                             alert(msgCtrl.getMsg("success.co.coa.pwdInit"));
                         }, "/mngwserc/mp/mpa/pwd-init", $formObj, "post", "json", true);
                     }
+                }
+            }
+        },
+        //엑셀다운로드
+        btnExcelDown : {
+            event : {
+                click: function () {
+                    //사유입력 레이어팝업 활성화
+                    $excelObj.find("#rsn").val('');
+                    $excelObj.modal("show");
                 }
             }
         },
@@ -231,6 +254,7 @@ var exports = {
             },
 
 
+
     },
     classname : {
         tabClick : {
@@ -244,7 +268,7 @@ var exports = {
                 }
             }
         },
-        monthpicker : {
+        monthInit : {
             event : {
                 change : function () {
                     var activeTab = $('#myTabs li.active a').attr('href').substring(1);
@@ -287,6 +311,7 @@ var exports = {
             event : {
                 click : function() {
                     var activeTab = $('#myTabs li.active a').attr('href').substring(1);
+                    console.log(activeTab);
                     //페이징 이동
                     if( $(this).attr("value") != "null" ){
                         $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
@@ -373,6 +398,25 @@ var exports = {
                     console.log(e);
                 }
             }
+        });
+
+        $excelObj.find("button.down").on('click', function(){
+            var rsn = $excelObj.find("#rsn").val().trim();
+            var frmDataObj    = $formObj.closest("form");
+
+            frmDataObj.find("input[name='rsn']").remove();
+
+            if (rsn != "") {
+                frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+
+                //파라미터를 물고 가야함.
+                location.href = "./excel-ken-down?excelType=D&" + frmDataObj.serialize();
+
+            } else {
+                alert(msgCtrl.getMsg("fail.reason"));
+                return;
+            }
+
         });
 
     }

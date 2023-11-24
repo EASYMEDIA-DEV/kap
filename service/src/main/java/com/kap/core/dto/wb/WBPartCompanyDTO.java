@@ -83,6 +83,8 @@ public class WBPartCompanyDTO extends BaseDTO {
 
     private String pstnCd; //   //직급코드
 
+    private String pstnNm; //   //직급 상세명
+
     private String deptCd; //   // 부서코드
 
     private String deptDtlNm;  //부서상세명
@@ -125,6 +127,21 @@ public class WBPartCompanyDTO extends BaseDTO {
 
     @Schema(title = "직원 수", example = "100")
     private int mpleCnt;          // 직원 수
+
+    @Schema(title = "품질5스타코드", example = "")
+    private String qlty5starCd;
+    @Schema(title = "품질5스타년도", example = "")
+    private String qlty5starYear;
+
+    @Schema(title = "납입5스타코드", example = "")
+    private String pay5starCd;
+    @Schema(title = "납입5스타년도", example = "")
+    private String pay5starYear;
+
+    @Schema(title = "기술5스타코드", example = "")
+    private String tchlg5starCd;
+    @Schema(title = "기술5스타년도", example = "")
+    private String tchlg5starYear;
 
     @Schema(title = "주요생산품 1", example = "")
     private String mjrPrdct1;

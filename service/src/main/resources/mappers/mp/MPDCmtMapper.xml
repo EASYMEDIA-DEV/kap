@@ -111,17 +111,27 @@
  -->
     <select id="selectKenList" parameterType="MPDKenDto" resultType="MPDKenDto">
         select (select cd_nm from co_code_mst where  cd=m1.atndc_cd ) -- 근태옵션
+             , atndc_cd
              , guide_part_cmpn_1 -- 지도부품사1
              , rgns_1-- 소재지역1
              , guide_part_cmpn_2-- 지도부품사2
              , rgns_2-- 소재지역2
              , etc_bsntrp-- 기타출장
              , etc-- 기타
-             , reg_dtm-- 근태체크일시
+             , m1.reg_dtm-- 근태체크일시
+             , name
         from co_cmssr_atndc_mst m1
-        where mem_seq =#{detailsKey}
+         inner join co_mem_mst m2
+          on m1.mem_seq = m2.mem_seq
+        where 1=1
+        <if test="detailsKey != null and detailsKey != ''.toString() ">
+            and m1.mem_seq =#{detailsKey}
+        </if>
           and year=#{year}
           and mnth=#{mnth}
+        <if test="dd != null and dd != ''.toString() ">
+            and dd = #{dd}
+        </if>
             order by reg_dtm desc
             limit   #{firstIndex}, #{recordCountPerPage}
 
@@ -138,9 +148,17 @@
     <select id="selectKenListCnt" parameterType="MPDKenDto" resultType="java.lang.Integer">
     select count(*)
         from co_cmssr_atndc_mst m1
-         where mem_seq =#{detailsKey}
+         inner join co_mem_mst m2
+          on m1.mem_seq = m2.mem_seq
+         where 1=1
+        <if test="detailsKey != null and detailsKey != ''.toString() ">
+         and m1.mem_seq =#{detailsKey}
+        </if>
           and year=#{year}
           and mnth=#{mnth}
+        <if test="dd != null and dd != ''.toString() ">
+            and dd = #{dd}
+        </if>
     </select>
 
 </mapper>

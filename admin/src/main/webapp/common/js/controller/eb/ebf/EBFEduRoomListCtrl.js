@@ -125,7 +125,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             // search();
 
             //폼 데이터 처리
-            cmmCtrl.setFormData($formObj);
+            // cmmCtrl.setFormData($formObj);
             codeSelect();
             //레이어 팝업에서 호출 할 수 있다.
             if($formObj.find("input[name=srchPartsComLayer]").size() == 0){

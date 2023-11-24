@@ -39,6 +39,9 @@ public class MPDKenDto extends BaseDTO {
     @Schema(title = "근태옵션명", example = "지도")
     private String atndcCdNm;
 
+    @Schema(title = "근태옵션", example = "CODE")
+    private String atndcCd;
+
 
     @Schema(title = "지도부품사1", example = "부품사1")
     private String guidePartCmpn1;
@@ -69,16 +72,25 @@ public class MPDKenDto extends BaseDTO {
     @Schema(title = "월", example = "01")
     private String mnth;
 
+    @Schema(title = "일", example = "01")
+    private String dd;
 
+    @Schema(title = "이름", example = "홍길동")
+    private String name;
 
+    @Schema(title="일일 / 월 근태 엑셀 타입" , example = "D")
+    private String excelType;
 
-
+    @Schema(title="사유" , example = "D")
+    private String rsn;
 
     //로그인세션ID
     private String lgnSsnId;
 
 
-    @Schema(title = "컨설팅 목록", example = "DTO의 리스트")
+
+
+    @Schema(title = "근태 목록", example = "DTO의 리스트")
     private List<MPDKenDto> list;
 
 

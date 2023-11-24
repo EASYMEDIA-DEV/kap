@@ -53,10 +53,10 @@
 					</fieldset>
 					<fieldset>
 						<div class="form-group text-sm">
-							<label class="col-sm-2 control-label">URL<span class="star text-danger"> *</span></label>
+							<label class="col-sm-2 control-label">URL</label>
 							<div class="col-sm-10">
 								<div class="input-group">
-									<input type="text" class="form-control input-sm urlChk" id="userUrl" name="userUrl" title="메뉴URL" maxlength="200" oninput="this.value = this.value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/,'');"/>
+									<input type="text" class="form-control input-sm urlChk notRequired" id="userUrl" name="userUrl" title="메뉴URL" maxlength="200" oninput="this.value = this.value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/,'');"/>
 									<span class="input-group-addon" id="spanSuffix"></span>
 								</div>
 								<strong class="help-block mt-sm mb0">※ /${rtnData.lnggCd}/ 을 붙여주세요.</strong>
