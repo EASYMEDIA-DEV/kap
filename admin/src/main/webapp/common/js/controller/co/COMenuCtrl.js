@@ -473,34 +473,34 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                         if (!cmmCtrl.checkUrl(jQuery("#userUrl"))) {
                             return false;
                         }
-                        /*2023-10-13 cms url, 관리자 사용자 분리*/
-                        if (jQuery("input[name='menuType']:checked").val() == "cms") {
-                            admUrl += "/mngwserc/contentsid/" + jQuery("#menuSeq").val() + "/list";
-                            jQuery("#admUrl").val(admUrl);
-                        } else {
-                            if (userUrl) {
-                                if (userUrl.indexOf("http://") < 0 && userUrl.indexOf("https://") < 0) {
-                                    if (userUrl.indexOf("/") != 0) {
-                                        userUrl = "/" + userUrl;
-                                    }
+                    }
+                    /*2023-10-13 cms url, 관리자 사용자 분리*/
+                    if (jQuery("input[name='menuType']:checked").val() == "cms") {
+                        admUrl += "/mngwserc/contentsid/" + jQuery("#menuSeq").val() + "/list";
+                        jQuery("#admUrl").val(admUrl);
+                    } else {
+                        if (userUrl) {
+                            if (userUrl.indexOf("http://") < 0 && userUrl.indexOf("https://") < 0) {
+                                if (userUrl.indexOf("/") != 0) {
+                                    userUrl = "/" + userUrl;
+                                }
 
-                                    if (userUrl.indexOf("/mngwserc/") != 0) {
-                                        admUrl = "/mngwserc" + userUrl;
-                                    } else {
-                                        admUrl = userUrl;
-                                    }
-
-                                    var trgtLen = admUrl.length - 1;
-
-                                    if (admUrl.lastIndexOf("/") == trgtLen) {
-                                        admUrl.substr(0, trgtLen);
-                                    }
+                                if (userUrl.indexOf("/mngwserc/") != 0) {
+                                    admUrl = "/mngwserc" + userUrl;
                                 } else {
                                     admUrl = userUrl;
                                 }
+
+                                var trgtLen = admUrl.length - 1;
+
+                                if (admUrl.lastIndexOf("/") == trgtLen) {
+                                    admUrl.substr(0, trgtLen);
+                                }
+                            } else {
+                                admUrl = userUrl;
                             }
-                            jQuery("#admUrl").val(admUrl);
                         }
+                        jQuery("#admUrl").val(admUrl);
                     }
 
                     return true;
