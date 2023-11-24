@@ -61,10 +61,10 @@
 								</fieldset>
 								<fieldset>
 			              			<div class="form-group text-sm">
-			                			<label class="col-sm-2 control-label">사이트 URL<span class="star text-danger"> *</span></label>
+			                			<label class="col-sm-2 control-label">사이트 URL</label>
 			                			<div class="col-sm-10">
 			                				<div class="input-group">
-			                					<input type="text" class="form-control input-sm urlChk" id="userUrl" name="userUrl" title="사이트URL" maxlength="200" oninput="this.value = this.value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/,'');"/>
+			                					<input type="text" class="form-control input-sm urlChk notRequired" id="userUrl" name="userUrl" title="사이트URL" maxlength="200" oninput="this.value = this.value.replace(/[ㄱ-ㅎㅏ-ㅣ가-힣]/,'');"/>
 			                					<span class="input-group-addon" id="spanSuffix"></span>
 			                				</div>
 			                			</div>
