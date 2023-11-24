@@ -11,7 +11,7 @@
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/cog/COGCntsWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle}</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} ${ not empty rtnDto.cnts ? '상세/수정' : '등록'}</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.seq}" />
@@ -51,18 +51,15 @@
             <div class="clearfix">
                 <div class="pull-left">
                     <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
+                    <c:if test="${ not empty rtnDto }">
+                        <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                    </c:if>
                 </div>
-                <div class="pull-right">
-                    <c:choose>
-                        <c:when test="${ not empty rtnDto}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                            <button type="submit" class="btn btn-sm btn-success" >수정</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button type="submit" class="btn btn-sm btn-success">등록</button>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                <c:if test="${ rtnDto.prcsCd eq '30' }">
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-sm btn-success">저장</button>
+                    </div>
+                </c:if>
             </div>
             <c:if test="${ not empty rtnDto.seq }">
                 <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>

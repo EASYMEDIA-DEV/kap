@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/co/cog/COGCntsListCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
+<%--        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>--%>
         <form class="form-horizontal" name="frmData" method="post" action="">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
@@ -14,10 +14,10 @@
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
             <!--단 처리-->
-            <hr class="mt0" />
+            <%--<hr class="mt0" />--%>
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>${pageTitle}목록(총 <span id="listContainerTotCnt">0</span>건)
+                    <em class="ion-play mr-sm"></em>${pageTitle} (총 <span id="listContainerTotCnt">0</span>건)
                 </h6>
                 <div class="pull-right">
                     <select class="form-control input-sm listRowSizeContainer" >
@@ -64,7 +64,7 @@
             <!--리스트 종료 -->
 
             <div class="pull-left mr-sm">
-                <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete">선택삭제</button>
+                <button type="button" class="btn btn-danger btn-sm mb-sm" id="delete">선택삭제</button>
                 <button type="button" class="btn btn-default btn-sm mb-sm" id="btn_copy">복사</button>
             </div>
             <div class="pull-right mr-sm">

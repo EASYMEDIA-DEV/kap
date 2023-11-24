@@ -5,7 +5,7 @@
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
-                        <input type="checkbox" value="${list.seq}" name="delValueList" class="checkboxSingle notRequired" />
+                        <input type="checkbox" value="${list.seq}" name="delValueList" class="checkboxSingle notRequired" data-prcs-cd="${list.prcsCd}" />
                         <span class="ion-checkmark-round"></span>
                     </label>
                 </td>

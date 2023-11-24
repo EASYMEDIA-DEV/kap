@@ -32,19 +32,23 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         }, "/mngwserc/contentsid/"+menuSeq+"/select", $formObj, "POST", "html");
     }
 
-    var isChecked = function ()
+    var isChecked = function (msg)
     {
         var chkCnt = jQuery("input:checkbox[name='delValueList']:checked").length;
 
         if (chkCnt < 1)
         {
-            alert("컨텐츠를 선택해 주세요.");
+            if(msg) {
+                alert(msg);
+            }
+            else {
+                alert("게시물을 선택해 주세요.");
+            }
             return false;
         }
-
-        if (chkCnt > 1)
+        else if (chkCnt > 1)
         {
-            alert("1개 이상 선택할 수 없습니다.");
+            alert("게시물을 1개 이상 선택할 수 없습니다.");
             return false;
         }
 
@@ -69,7 +73,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 success : function(r)
                 {
                     var prcsCd = r.prcsCd;
-                    console.log(prcsCd);
+
                     if (prcsCd && prcsCd == option.prcsCd)
                     {
                         jQuery.ajax({
@@ -130,12 +134,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btn_immediately : {
                 event : {
                     click : function() {
-                        if (isChecked())
+                        if (isChecked("즉시배포할 게시물을 선택해주세요"))
                         {
                             setProcess({
-                                "confirm" : "해당 컨텐츠로 즉시배포하시겠습니까?",
+                                "confirm" : "선택한 게시물을 즉시배포 하시겠습니까?",
                                 "prcsCd" : "30",
-                                "prcsMsg" : "작성중 컨텐츠가 아닙니다."
+                                "prcsMsg" : "작성중 상태가 아닌 게시물은 즉시배포가 불가합니다"
                             });
                         }
                     }
@@ -145,12 +149,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btn_back : {
                 event : {
                     click : function() {
-                        if (isChecked())
+                        if (isChecked("되돌리기할 게시물을 선택해주세요"))
                         {
                             setProcess({
-                                "confirm" : "해당 컨텐츠로 되돌리시겠습니까?",
+                                "confirm" : "선택한 게시물을 되돌리기 하시겠습니까?",
                                 "prcsCd" : "20",
-                                "prcsMsg" : "만료 컨텐츠가 아닙니다."
+                                "prcsMsg" : "만료 상태가 아닌 게시물은 되돌리기가 불가합니다"
                             });
                         }
                     }
@@ -160,9 +164,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btn_copy : {
                 event : {
                     click : function() {
-                        if (isChecked())
+                        if (isChecked("복사할 게시물을 선택해주세요"))
                         {
-                            if (confirm("복사하시겠습니까?"))
+                            if (confirm("선택한 게시물을 복사하시겠습니까?"))
                             {
                                 var detailsKey = jQuery("input:checkbox[name='delValueList']:checked").val();
 
@@ -184,7 +188,53 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         }
                     }
                 }
-            }
+            },
+            //데이터 삭제
+            delete : {
+                event : {
+                    click : function() {
+                        var frmDataObj    = $(this).closest("form");
+                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
+                        var delList = frmDataObj.find("input:checkbox[name='delValueList']:checked");
+                        if (delActCnt > 0)
+                        {
+                            var isOk = true;
+
+                            delList.each(function(){
+                                var prcsCd = $(this).data('prcsCd');
+
+                                if(prcsCd == '10') {
+                                    alert(msgCtrl.getMsg("fail.co.cog.remove"))
+
+                                    isOk = false;
+                                }
+                            });
+
+                            if(isOk){
+                                if(confirm("선택한 게시물을 삭제하시겠습니까?"))
+                                {
+                                    //삭제 전송
+                                    cmmCtrl.frmAjax(function(respObj){
+                                        if(respObj != undefined && respObj.respCnt > 0){
+                                            alert(msgCtrl.getMsg("success.del.target.board"));
+                                            $formObj.find("#btnSearch").click();
+                                        }
+                                        else{
+                                            alert(msgCtrl.getMsg("fail.act"));
+                                        }
+                                    }, "./delete", frmDataObj, "POST", "json");
+                                }
+                            }
+                        }
+                        else
+                        {
+                            alert(msgCtrl.getMsg("fail.targetBoard"));
+
+                            return;
+                        }
+                    }
+                }
+            },
         },
         classname : {
             //페이징 처리
