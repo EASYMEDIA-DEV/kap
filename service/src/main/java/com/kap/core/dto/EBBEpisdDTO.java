@@ -216,9 +216,10 @@ public class EBBEpisdDTO extends BaseDTO  {
     private String sqnm;
     private String sqscore;
 
-
+    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
     private String srchLayer;
 
-
+    @Schema(title = "강사순번", example = "숫자")
+    private Integer isttrSeq;
 
 }
