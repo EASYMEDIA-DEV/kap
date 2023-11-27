@@ -4,10 +4,7 @@ import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COLoginDTO;
-import com.kap.core.dto.COMenuDTO;
-import com.kap.core.dto.COSystemLogDTO;
+import com.kap.core.dto.*;
 import com.kap.service.COLgnService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
@@ -139,8 +136,13 @@ public class COLgnServiceImpl  implements COLgnService {
 							RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", driveMenuSeq, RequestAttributes.SCOPE_SESSION);
 
 							// 로그인 시간을 업데이트 해준다.
+							COUserDetailsDTO tmpCOUserDetailsDTO = COUserDetailsDTO.builder()
+																	.seq(rtnCOAAdmDTO.getAdmSeq())
+																    .driveMenuSeq(driveMenuSeq)
+																	.authCd( rtnCOAAdmDTO.getAuthCd() )
+																	.build();
 							rtnCOAAdmDTO.setDriveMenuSeq( driveMenuSeq );
-							List<COMenuDTO> menuList = cOLgnMapper.getMenuList(rtnCOAAdmDTO);
+							List<COMenuDTO> menuList = cOLgnMapper.getMenuList(tmpCOUserDetailsDTO);
 							// 관리자 메인으로 사용할 메뉴 url
 							String admMainUrl = "not";
 		        			String admUrl = "";
@@ -187,34 +189,36 @@ public class COLgnServiceImpl  implements COLgnService {
 			String rtnCode = cOLoginDTO.getRespCd(), loginIp = CONetworkUtil.getMyIPaddress(request), loginPrcsCd = "";
 			//로그인 로그 객체
 			COSystemLogDTO cOSystemLogDTO = new COSystemLogDTO();
+			//로그인 객체
+			COUserDetailsDTO cOUserDetailsDTO = null;
 			if (rtnCode.endsWith("00") || rtnCode.endsWith("10"))
 			{
-				COAAdmDTO lgnCOAAdmDTO = cOLgnMapper.actionLogin(rtnCOAAdmDTO);
+				cOUserDetailsDTO = cOLgnMapper.actionLogin(rtnCOAAdmDTO);
 				// 보안 처리 (로그인 세션 변경)
 				request.getSession().invalidate();
         		/// 로그인 세션을 생성한다.
         		if (rtnCode.endsWith("00"))
         		{
     				// 로그인 IP set
-					lgnCOAAdmDTO.setLoginIp(loginIp);
-					lgnCOAAdmDTO.setConSessionId(RequestContextHolder.getRequestAttributes().getSessionId());
+					cOUserDetailsDTO.setLoginIp(loginIp);
+					cOUserDetailsDTO.setConSessionId(RequestContextHolder.getRequestAttributes().getSessionId());
     				// 로그인 처리코드 set
     				loginPrcsCd = "LI";
-        			cOLgnMapper.updateLastLgnDtm(lgnCOAAdmDTO);
-					lgnCOAAdmDTO.setRdctUrl( cOLoginDTO.getRdctUrl() );
-        			RequestContextHolder.getRequestAttributes().setAttribute("tmpLgnMap", lgnCOAAdmDTO, RequestAttributes.SCOPE_SESSION);
+        			cOLgnMapper.updateLastLgnDtm(cOUserDetailsDTO);
+					cOUserDetailsDTO.setRdctUrl( cOLoginDTO.getRdctUrl() );
+        			RequestContextHolder.getRequestAttributes().setAttribute("tmpLgnMap", cOUserDetailsDTO, RequestAttributes.SCOPE_SESSION);
         		}
         		// 임시 로그인 세션을 생성한다.
         		else
         		{
-					COAAdmDTO tmpLgnMap = COAAdmDTO.builder().build();
-					tmpLgnMap.setId(lgnCOAAdmDTO.getId());
-					tmpLgnMap.setRespCd( cOLoginDTO.getRespCd() );
-        			RequestContextHolder.getRequestAttributes().setAttribute("tmpLgnMap", tmpLgnMap, RequestAttributes.SCOPE_SESSION);
+					cOUserDetailsDTO = COUserDetailsDTO.builder().build();
+					cOUserDetailsDTO.setId(cOUserDetailsDTO.getId());
+					cOUserDetailsDTO.setRespCd( cOLoginDTO.getRespCd() );
+        			RequestContextHolder.getRequestAttributes().setAttribute("tmpLgnMap", cOUserDetailsDTO, RequestAttributes.SCOPE_SESSION);
         		}
 
         		// 로그인 오류 횟수를 초기화한다.
-        		cOLgnMapper.updateLgnFailCntInit(lgnCOAAdmDTO);
+        		cOLgnMapper.updateLgnFailCntInit(cOUserDetailsDTO);
 			}
 			else
 			{
@@ -254,7 +258,7 @@ public class COLgnServiceImpl  implements COLgnService {
 	 */
     public void actionLogout(COAAdmDTO cOAAdmDTO, HttpServletRequest request) throws Exception
     {
-		COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+		COUserDetailsDTO lgnCOAAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
 		//로그아웃 로그 객체
 		COSystemLogDTO cOSystemLogDTO = new COSystemLogDTO();
 		cOSystemLogDTO.setTrgtMenuNm("로그아웃 페이지");
@@ -350,10 +354,10 @@ public class COLgnServiceImpl  implements COLgnService {
   	/**
 	 * 로그인 처리에 따른 메뉴를 가져온다.
 	 */
-    public List<COMenuDTO> getMenuList(COAAdmDTO cOAAdmDTO) throws Exception
+    public List<COMenuDTO> getMenuList(COUserDetailsDTO cOUserDetailsDTO) throws Exception
     {
 		/*cOAAdmDTO.setUserMenuList( cOLgnMapper.getUserMenuList() );*/
-    	return cOLgnMapper.getMenuList(cOAAdmDTO);
+    	return cOLgnMapper.getMenuList(cOUserDetailsDTO);
     }
 
 	/**

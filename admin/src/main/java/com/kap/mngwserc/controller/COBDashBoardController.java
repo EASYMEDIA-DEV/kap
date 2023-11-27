@@ -2,6 +2,7 @@ package com.kap.mngwserc.controller;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COBMenuService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
@@ -60,8 +61,8 @@ public class COBDashBoardController {
 			cdDtlList.add("ADMIN_AUTH_CD");
 
 			// 로그인한 계정
-			COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOAAdmDTO.setLgnSsnId(lgnCOAAdmDTO.getId());
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOAAdmDTO.setLgnSsnId(cOUserDetailsDTO.getId());
 
 		}
 		catch (Exception e)

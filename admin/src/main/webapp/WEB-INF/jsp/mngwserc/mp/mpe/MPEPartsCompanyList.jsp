@@ -18,7 +18,7 @@
 
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                <jsp:param name="srchText" value="등록/수정기간" />
+                <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchOption" value="등록일,수정기간" />
             </jsp:include>
             <!--기간 검색 종료-->
@@ -32,7 +32,7 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                            <c:if test="${fn:contains(cdList, 'COMPANY010')}">
+                            <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
                                 <label class="checkbox-inline c-checkbox">
                                     <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
@@ -51,7 +51,7 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                            <c:if test="${fn:contains(cdList, 'COMPANY020')}">
+                            <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY02')}">
                                 <label class="checkbox-inline c-checkbox">
                                     <input type="checkbox" class="checkboxSingle" data-name="sizeCdList" value="${cdList.cd}" />
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}

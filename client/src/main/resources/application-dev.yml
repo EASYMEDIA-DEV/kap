@@ -12,5 +12,4 @@ app:
     #파일 업로드 크기
     max-size: 41943040
     #템플릿 경로
-    template-file-path: /home/app/kap/admin/webapps/WEB-INF/template/email/
-    mail-tmpl-file-path: /home/app/kap/admin/webapps/WEB-INF/template/email/
+    template-file-path: /home/app/kap/admin/webapps/WEB-INF/template/

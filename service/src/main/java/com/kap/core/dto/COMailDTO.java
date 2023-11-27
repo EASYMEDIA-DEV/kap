@@ -1,9 +1,14 @@
 package com.kap.core.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.util.List;
 
 /**
  *  메일 객체
@@ -26,29 +31,21 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
-public class COMailDTO extends BaseDTO {
-    //제목
-    private String subject;
-    //내용
-    private String content;
-    //수신자
-    private String emails;
-    //수신자 이름
-    private String name;
-    //웹서버 경로
-    private String httpFrontUrl;
-    //관리자 경로
-    private String httpAdmUrl;
-    //TITLE 명
-    private String siteName;
-    //치환 필드정의
-    private String field1;
-    private String field2;
-    private String field3;
-    private String field4;
-    private String field5;
-    private String field6;
-    private String field7;
-    private String field8;
-    private String field9;
+@Schema(title="이메일 발송 DTO")
+@Hidden
+public class COMailDTO extends COMessageDTO {
+    //@Schema(title="발송 성공 실패 여부")
+    //private int return_url = 0;
+    //@Schema(title="메일 열람 확인")
+    //private int open = 0;
+    //@Schema(title="메일 클릭 확인")
+    //private int click = 0;
+    @Schema(title="예약 발송")
+    private String mail_type = "NORMAL";
+    @Schema(title="메일 내용(치환전 템플릿)")
+    private String body;
+
+    @Schema(title="첨부 파일")
+    @JsonIgnore
+    private List<COFileDTO> fileList;
 }

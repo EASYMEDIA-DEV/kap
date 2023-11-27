@@ -4,6 +4,7 @@ import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.exceptionn.UnauthorizedException;
 import com.kap.service.COLgnService;
 import com.kap.service.COUserDetailsHelperService;
@@ -56,15 +57,18 @@ public class COMenuInterceptor implements HandlerInterceptor{
         String accept   = COWebUtil.removeCRLF(request.getHeader("accept"));
         List<COMenuDTO> driveMenuList = null;
         List<COMenuDTO> menuList = null;
-        COAAdmDTO lngCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         //dirve 메뉴 목록을 조회한다.
+        COAAdmDTO cOAAdmDTO = new COAAdmDTO();
+        cOAAdmDTO.setAuthCd( cOUserDetailsDTO.getAuthCd() );
+        cOAAdmDTO.setAdmSeq( cOUserDetailsDTO.getSeq() );
         if (RequestContextHolder.getRequestAttributes().getAttribute("driveMenuList", RequestAttributes.SCOPE_SESSION) != null)
         {
             driveMenuList = (List<COMenuDTO>) RequestContextHolder.getRequestAttributes().getAttribute("driveMenuList", RequestAttributes.SCOPE_SESSION);
         }
         else
         {
-            driveMenuList = cOLgnService.getDriveMenuList(lngCOAAdmDTO);
+            driveMenuList = cOLgnService.getDriveMenuList(cOAAdmDTO);
             RequestContextHolder.getRequestAttributes().setAttribute("driveMenuList", driveMenuList, RequestAttributes.SCOPE_SESSION);
         }
         //드라이브 순번 확인
@@ -72,16 +76,16 @@ public class COMenuInterceptor implements HandlerInterceptor{
         if (RequestContextHolder.getRequestAttributes().getAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION) != null)
         {
             int driveMenuSeq = (int) RequestContextHolder.getRequestAttributes().getAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION);
-            if(driveMenuSeq != lngCOAAdmDTO.getDriveMenuSeq()){
+            if(driveMenuSeq != cOUserDetailsDTO.getDriveMenuSeq()){
                 isMenuList = false;
             }
-            lngCOAAdmDTO.setDriveMenuSeq( driveMenuSeq );
+            cOUserDetailsDTO.setDriveMenuSeq( driveMenuSeq );
         }
         else
         {
             if(driveMenuList != null && driveMenuList.size() > 0) {
                 int driveMenuSeq = driveMenuList.get(0).getMenuSeq();
-                lngCOAAdmDTO.setDriveMenuSeq(driveMenuSeq);
+                cOUserDetailsDTO.setDriveMenuSeq(driveMenuSeq);
                 RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", driveMenuSeq, RequestAttributes.SCOPE_SESSION);
             }
         }
@@ -95,7 +99,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
         else
         {
 
-            menuList = cOLgnService.getMenuList(lngCOAAdmDTO);
+            menuList = cOLgnService.getMenuList(cOUserDetailsDTO);
 
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
         }
@@ -204,7 +208,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
         // CMS 관리
         if (requestURI.contains("/mngwserc/contentsid/" + pageNo + "/"))
         {
-            request.setAttribute("cmsRoot", cOLgnService.getCmsRootInf(lngCOAAdmDTO));
+            request.setAttribute("cmsRoot", cOLgnService.getCmsRootInf(cOAAdmDTO));
         }
 
         //AOP용

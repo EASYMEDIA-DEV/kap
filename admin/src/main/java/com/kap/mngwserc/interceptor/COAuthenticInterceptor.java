@@ -5,6 +5,7 @@ import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.exceptionn.UnauthorizedException;
 import com.kap.service.COAAdmService;
 import com.kap.service.COUserDetailsHelperService;
@@ -58,9 +59,9 @@ public class COAuthenticInterceptor implements HandlerInterceptor{
 
         }else{
             //로그인 정보 체크
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO)COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             // IP 접근 제한
-            String allwIp = lgnCOAAdmDTO.getAllwIp();
+            String allwIp = cOUserDetailsDTO.getAllwIp();
             if(!"".equals(COStringUtil.nullConvert(allwIp)))
             {
                 String[] allwIpArr = allwIp.split(",");
@@ -89,8 +90,8 @@ public class COAuthenticInterceptor implements HandlerInterceptor{
             // 중복로그인 검사
             if(!appLogin)
             {
-                String lgnSsnId = cOAAdmService.getAdmSessionId(lgnCOAAdmDTO.getId());
-                if (!COStringUtil.nullConvert(lgnSsnId).equals(lgnCOAAdmDTO.getConSessionId()))
+                String lgnSsnId = cOAAdmService.getAdmSessionId(cOUserDetailsDTO.getId());
+                if (!COStringUtil.nullConvert(lgnSsnId).equals(cOUserDetailsDTO.getConSessionId()))
                 {
                     if (accept != null && accept.indexOf("application/json") > -1)
                     {
@@ -104,7 +105,7 @@ public class COAuthenticInterceptor implements HandlerInterceptor{
             }
 
             // log4j2에 사용할 커스텀 map 생성
-            ThreadContext.put("regId", lgnCOAAdmDTO.getId());
+            ThreadContext.put("regId", cOUserDetailsDTO.getId());
             ThreadContext.put("regIp", CONetworkUtil.getMyIPaddress(request));
             try {
                 ThreadContext.put("trgtMenuNm", RequestContextHolder.getRequestAttributes().getAttribute("pageIndicator", RequestAttributes.SCOPE_SESSION).toString());

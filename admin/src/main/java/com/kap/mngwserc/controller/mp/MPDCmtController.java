@@ -75,8 +75,8 @@ public class MPDCmtController {
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO =COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpd/MPDCmtList.admin";
     }
 
@@ -90,8 +90,8 @@ public class MPDCmtController {
         MPAUserDto mpaUserDto1 = mpaUserService.selectUserList(mpaUserDto);
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpd/MPDCmtListAjax";
     }
 
@@ -149,12 +149,17 @@ public class MPDCmtController {
 
     @GetMapping(value = "/excel-ken-down")
     public void selectUserKenListExcel(MPDKenDto mpdKenDto ,
-                                    HttpServletResponse response) throws Exception
+                                       HttpServletResponse response) throws Exception
     {
         try
         {
             //엑셀 생성
-            mpdCmtService.excelDownload(mpdCmtService.selectKenList(mpdKenDto), response);
+            if(mpdKenDto.getExcelType().equals("D")) {
+                mpdCmtService.excelDownload(mpdCmtService.selectKenList(mpdKenDto), response);
+            } else  {
+                mpdCmtService.excelDownload(mpdCmtService.selectKenMonthList(mpdKenDto), response);
+
+            }
 
         }
         catch (Exception e)
@@ -174,7 +179,6 @@ public class MPDCmtController {
     @RequestMapping(value="/write")
     public String getCmtInsertPage(HttpServletResponse response , ModelMap modelMap) throws Exception
     {
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("MEM_CD");
@@ -189,18 +193,18 @@ public class MPDCmtController {
      */
     @PostMapping(value="/insert")
     public String insertCmt(MPAUserDto mpaUserDto ,
-                                     ModelMap modelMap) throws Exception
+                            ModelMap modelMap) throws Exception
     {
         try
         {
 
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             mpaUserDto.setModCd("AD"); //임의 관리자 cd
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
-            mpaUserDto.setRegId( lgnCOAAdmDTO.getId() );
-            mpaUserDto.setRegIp( lgnCOAAdmDTO.getLoginIp() );
-            mpaUserDto.setModId( lgnCOAAdmDTO.getId() );
-            mpaUserDto.setModIp( lgnCOAAdmDTO.getLoginIp() );
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
+            mpaUserDto.setRegId( cOUserDetailsDTO.getId() );
+            mpaUserDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
+            mpaUserDto.setModId( cOUserDetailsDTO.getId() );
+            mpaUserDto.setModIp( cOUserDetailsDTO.getLoginIp() );
             modelMap.addAttribute("respCnt", mpdCmtService.insertCmt(mpaUserDto));
         }
         catch (Exception e)
@@ -225,13 +229,13 @@ public class MPDCmtController {
         try
         {
 
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             mpaUserDto.setModCd("AD"); //임의 관리자 cd
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
-            mpaUserDto.setRegId( lgnCOAAdmDTO.getId() );
-            mpaUserDto.setRegIp( lgnCOAAdmDTO.getLoginIp() );
-            mpaUserDto.setModId( lgnCOAAdmDTO.getId() );
-            mpaUserDto.setModIp( lgnCOAAdmDTO.getLoginIp() );
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
+            mpaUserDto.setRegId( cOUserDetailsDTO.getId() );
+            mpaUserDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
+            mpaUserDto.setModId( cOUserDetailsDTO.getId() );
+            mpaUserDto.setModIp( cOUserDetailsDTO.getLoginIp() );
             modelMap.addAttribute("respCnt", mpdCmtService.deleteCmt(mpaUserDto));
         }
         catch (Exception e)
@@ -254,8 +258,8 @@ public class MPDCmtController {
     public String getCmtDtlPage(MPAUserDto mpaUserDto ,
                                 ModelMap modelMap) throws Exception
     {
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
         modelMap.addAttribute("rtnData", mpaUserDto);
         if(!"".equals(mpaUserDto.getDetailsKey())){
             modelMap.addAttribute("rtnInfo", mpaUserService.selectUserDtl(mpaUserDto));
@@ -275,8 +279,8 @@ public class MPDCmtController {
         try
         {
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
 
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
@@ -310,8 +314,8 @@ public class MPDCmtController {
         mpbBusDto.setChkPS("S");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectBusList(mpbBusDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpbBusDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpbBusDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpd/MPDCmtTabTwoAjax";
     }
 
@@ -325,8 +329,8 @@ public class MPDCmtController {
         mpbSanDto.setChkPS("S");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectSanList(mpbSanDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpbSanDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpbSanDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpd/MPDCmtTabThreeAjax";
     }
 
@@ -338,10 +342,35 @@ public class MPDCmtController {
                                                ModelMap modelMap ) throws Exception {
         modelMap.addAttribute("rtnData", mpdCmtService.selectKenList(mpdKenDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpdKenDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+        mpdKenDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpd/MPDCmtTabFourAjax";
     }
 
+
+    /**
+     * 근태 월리스트 테이블 월 조회
+     */
+    @PostMapping(value = "/ken-month-table")
+    public String selectKenMonthTableAjax(MPDKenDto mpdKenDto ,
+                                          ModelMap modelMap ) throws Exception {
+
+        modelMap.addAttribute("rtnData", mpdCmtService.selectKenMonthTableList(mpdKenDto));
+
+        return "jsonView";
+    }
+
+    /**
+     * 근태 월리스트 조회
+     */
+    @PostMapping(value = "/ken-month")
+    public String selectKenMonthAjax(MPDKenDto mpdKenDto ,
+                                     ModelMap modelMap ) throws Exception {
+        modelMap.addAttribute("rtnData", mpdCmtService.selectKenMonthList(mpdKenDto));
+        // 로그인한 계정
+        COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+        mpdKenDto.setLgnSsnId(cOUserDetailsDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtKenMonthAjax";
+    }
 
 }

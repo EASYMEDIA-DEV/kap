@@ -2,6 +2,7 @@ package com.kap.mngwserc.controller;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COFCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
@@ -141,11 +142,11 @@ public class COFCodeController {
 			int actCnt = 0;
 			try
 			{
-				COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-				cOCodeDTO.setRegId( coaAdmDTO.getId() );
-				cOCodeDTO.setRegIp( coaAdmDTO.getLoginIp() );
-				cOCodeDTO.setModId( coaAdmDTO.getId() );
-				cOCodeDTO.setModIp( coaAdmDTO.getLoginIp() );
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				cOCodeDTO.setRegId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				cOCodeDTO.setModId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 				actCnt = cOFCodeService.insertCode(cOCodeDTO);
 			}
 			catch (Exception e)
@@ -168,11 +169,11 @@ public class COFCodeController {
 			int actCnt = 0;
 			try
 			{
-				COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-				cOCodeDTO.setRegId( coaAdmDTO.getId() );
-				cOCodeDTO.setRegIp( coaAdmDTO.getLoginIp() );
-				cOCodeDTO.setModId( coaAdmDTO.getId() );
-				cOCodeDTO.setModIp( coaAdmDTO.getLoginIp() );
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				cOCodeDTO.setRegId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				cOCodeDTO.setModId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 				actCnt = cOFCodeService.updateCodeNm(cOCodeDTO);
 			}
 			catch (Exception e)
@@ -196,11 +197,11 @@ public class COFCodeController {
 			try
 			{
 				System.out.println(  cOCodeDTO.toString());
-				COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-				cOCodeDTO.setRegId( coaAdmDTO.getId() );
-				cOCodeDTO.setRegIp( coaAdmDTO.getLoginIp() );
-				cOCodeDTO.setModId( coaAdmDTO.getId() );
-				cOCodeDTO.setModIp( coaAdmDTO.getLoginIp() );
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				cOCodeDTO.setRegId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				cOCodeDTO.setModId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 				actCnt = cOFCodeService.updateCodeInf(cOCodeDTO);
 			}
 			catch (Exception e)
@@ -223,11 +224,11 @@ public class COFCodeController {
 			int actCnt = 0;
 			try
 			{
-				COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-				cOCodeDTO.setRegId( coaAdmDTO.getId() );
-				cOCodeDTO.setRegIp( coaAdmDTO.getLoginIp() );
-				cOCodeDTO.setModId( coaAdmDTO.getId() );
-				cOCodeDTO.setModIp( coaAdmDTO.getLoginIp() );
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				cOCodeDTO.setRegId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				cOCodeDTO.setModId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 				actCnt = cOFCodeService.updateCodePstn(cOCodeDTO);
 			}
 			catch (Exception e)
@@ -250,11 +251,11 @@ public class COFCodeController {
 			int actCnt = 0;
 			try
 			{
-				COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-				cOCodeDTO.setRegId( coaAdmDTO.getId() );
-				cOCodeDTO.setRegIp( coaAdmDTO.getLoginIp() );
-				cOCodeDTO.setModId( coaAdmDTO.getId() );
-				cOCodeDTO.setModIp( coaAdmDTO.getLoginIp() );
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				cOCodeDTO.setRegId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				cOCodeDTO.setModId( cOUserDetailsDTO.getId() );
+				cOCodeDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 				actCnt = cOFCodeService.deleteCode(cOCodeDTO);
 			}
 			catch (Exception e)

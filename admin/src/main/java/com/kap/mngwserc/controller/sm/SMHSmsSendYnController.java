@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.sm;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.SMHSmsSendYnDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMHSmsSendYnService;
@@ -70,9 +71,9 @@ public class SMHSmsSendYnController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smhSmsSendYnDTO.setModId(coaAdmDTO.getId());
-            smhSmsSendYnDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smhSmsSendYnDTO.setModId(cOUserDetailsDTO.getId());
+            smhSmsSendYnDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             smhSmsSendYnDTO.setCfgSeq(smhSmsSendYnDTO.getCfgSeq());
             modelMap.addAttribute("respCnt", smhSmsSendYnService.updateSmsSendYn(smhSmsSendYnDTO));

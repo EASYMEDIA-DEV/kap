@@ -1,12 +1,12 @@
 package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomSearchDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomWriteDTO;
 import com.kap.service.COFileService;
-import com.kap.service.COMailService;
+import com.kap.service.COMessageService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBFEduRoomService;
 import com.kap.service.dao.eb.EBFEduRoomMapper;
@@ -41,7 +41,7 @@ public class EBFEduRoomServiceImpl implements EBFEduRoomService {
 
     /** Service **/
     private final COFileService cOFileService;
-    private final COMailService cOMailService;
+    private final COMessageService cOMessageService;
 
     /** Sequence **/
     /* 관리자 시퀀스 */
@@ -79,9 +79,9 @@ public class EBFEduRoomServiceImpl implements EBFEduRoomService {
      */
     public int insertEduRoom(EBFEduRoomWriteDTO pEBFEduRoomWriteDTO) throws Exception {
         //등록자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pEBFEduRoomWriteDTO.setRegId(coaAdmDTO.getId());
-        pEBFEduRoomWriteDTO.setRegIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pEBFEduRoomWriteDTO.setRegId(cOUserDetailsDTO.getId());
+        pEBFEduRoomWriteDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
         pEBFEduRoomWriteDTO.setPlaceSeq(edctnPlaceSeqIdgen.getNextIntegerId());
 
@@ -94,9 +94,9 @@ public class EBFEduRoomServiceImpl implements EBFEduRoomService {
     public int updateEduRoom(EBFEduRoomWriteDTO pEBFEduRoomWriteDTO) throws Exception {
         if(!pEBFEduRoomWriteDTO.getDetailsKey().isEmpty()) {
             //수정자
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            pEBFEduRoomWriteDTO.setModId(coaAdmDTO.getId());
-            pEBFEduRoomWriteDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            pEBFEduRoomWriteDTO.setModId(cOUserDetailsDTO.getId());
+            pEBFEduRoomWriteDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             return eBFEduRoomMapper.updateEduRoom(pEBFEduRoomWriteDTO);
         }

@@ -59,7 +59,7 @@
                                     <select class="form-control input-sm" id="ctgryCd" name="ctgryCd" title="구분" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                            <c:if test="${fn:contains(cdList, 'COMPANY01') and cdList.cd ne 'COMPANY01'}">
+                                            <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
                                                 <option value="${cdList.cd}" <c:if test="${rtnInfo.ctgryCd eq cdList.cd}">selected</c:if>>
                                                         ${cdList.cdNm}
                                                 </option>
@@ -73,7 +73,7 @@
                                     <select class="form-control input-sm" id="sizeCd" name="sizeCd" title="기업규모" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                            <c:if test="${fn:contains(cdList, 'COMPANY020')}">
+                                            <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY02')}">
                                                 <option value="${cdList.cd}" <c:if test="${rtnInfo.sizeCd eq cdList.cd}">selected</c:if>>
                                                         ${cdList.cdNm}
                                                 </option>
@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset class="qlty5StarArea" <c:if test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">품질5스타</label>
                                 <div class="col-sm-5">
@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset class="pay5StarArea" <c:if test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">납입5스타</label>
                                 <div class="col-sm-5">
@@ -195,7 +195,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset class="tchlg5StarArea" <c:if test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">기술5스타</label>
                                 <div class="col-sm-5">
@@ -222,7 +222,7 @@
                         </fieldset>
                         <fieldset class="sqInfoArea" <c:if test="${rtnInfo.ctgryCd eq null or rtnInfo.ctgryCd eq 'COMPANY01001'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
-                                <label class="col-sm-1 control-label">SQ 정보</label>${sqInfoListCnt}
+                                <label class="col-sm-1 control-label">SQ 정보</label>
                                 <div class="col-sm-5">
                                     <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">${sqInfoList.sqInfoList}
                                         <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>

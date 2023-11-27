@@ -38,9 +38,9 @@
         ==========   ======    ==============
         2020.10.23   허진영       최초생성
     -->
-	<select id="actionLogin" parameterType="COAAdmDTO" resultType="COAAdmDTO">
+	<select id="actionLogin" parameterType="COAAdmDTO" resultType="COUserDetailsDTO">
 		select /* COLgnMapper.actionLogin */
-			  adm_seq
+			  adm_seq as seq
 			, auth_cd
 			, (select cd_nm from co_code_mst where cd_id = 'ADMIN_AUTH_CD' and cd = a.auth_cd) as auth_nm
 		    , dept_cd
@@ -82,12 +82,12 @@
         ==========   ======    ============== 
         2020.10.23   허진영       최초생성
     -->
-	<update id="updateLgnFailCntInit" parameterType="COAAdmDTO">
+	<update id="updateLgnFailCntInit" parameterType="COUserDetailsDTO">
 		update /* COLgnMapper.updateLgnFailCntInit */ co_adm_mst
 		set
 			lgn_fail_cnt = 0
 		where
-			adm_seq = #{admSeq}
+			adm_seq = #{seq}
 	</update>
 
 	<!--
@@ -97,13 +97,13 @@
         ==========   ======    ==============
         2020.10.23   허진영       최초생성
     -->
-	<update id="updateLastLgnDtm" parameterType="COAAdmDTO">
+	<update id="updateLastLgnDtm" parameterType="COUserDetailsDTO">
 		update /* COLgnMapper.updateLastLgnDtm */ co_adm_mst
 		set
 			last_lgn_dtm = now()
 			, lgn_ssn_id = #{conSessionId}
 		where
-			adm_seq = #{admSeq}
+			adm_seq = #{seq}
 	</update>
 
 	<!--
@@ -225,7 +225,7 @@
         ==========   ======    ==============
         2020.10.23   허진영       최초생성
     -->
-	<select id="getMenuList" parameterType="COAAdmDTO" resultType="COMenuDTO">
+	<select id="getMenuList" parameterType="COUserDetailsDTO" resultType="COMenuDTO">
 		<choose>
 			<when test="authCd eq '99'.toString()">
 				select /* COLgnMapper.getMenuList */
@@ -278,7 +278,7 @@
 					co_menu_mst a
 					join co_adm_menu_dtl b on a.menu_seq = b.menu_seq
 					where
-					b.adm_seq = #{admSeq}
+					b.adm_seq = #{seq}
 					and a.lft_val <![CDATA[ > ]]>  (select lft_val from co_menu_mst where menu_seq = #{driveMenuSeq} )
 					and a.rht_val <![CDATA[ < ]]>  (select rht_val from co_menu_mst where menu_seq = #{driveMenuSeq} )
 					/*사용자 메뉴는 노출하면 안됨*/

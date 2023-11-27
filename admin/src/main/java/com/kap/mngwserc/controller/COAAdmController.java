@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -51,7 +50,7 @@ public class COAAdmController {
     private final COLgnService cOLgnService;
     private final COBMenuService cOBMenuService;
     //이메일 발송
-    private final COMailService cOMailService;
+    private final COMessageService cOMessageService;
 
     /**
      * 관리자 목록 페이지
@@ -67,8 +66,8 @@ public class COAAdmController {
             cdDtlList.add("ADMIN_AUTH_CD");
 
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cOAAdmDTO.setLgnSsnId(lgnCOAAdmDTO.getId());
+            COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+            cOAAdmDTO.setLgnSsnId(cOUserDetailsDTO.getId());
 
             // 정의된 코드id값들의 상세 코드 맵 반환
             modelMap.addAttribute("rtnData", cOAAdmDTO);
@@ -168,8 +167,8 @@ public class COAAdmController {
             cdDtlList.add("TYPE_CD");
 
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cOAAdmDTO.setLgnSsnId(lgnCOAAdmDTO.getId());
+            COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+            cOAAdmDTO.setLgnSsnId(cOUserDetailsDTO.getId());
 
             // 정의된 코드id값들의 상세 코드 맵 반환
             modelMap.addAttribute("rtnData", cOAAdmDTO);
@@ -211,8 +210,9 @@ public class COAAdmController {
     {
         try
         {
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            lgnCOAAdmDTO.setDetailsKey(lgnCOAAdmDTO.getAdmSeq().toString());
+            COUserDetailsDTO cOUserDetailsDTO =  COUserDetailsHelperService.getAuthenticatedUser();
+            COAAdmDTO lgnCOAAdmDTO = new COAAdmDTO();
+            lgnCOAAdmDTO.setDetailsKey( cOUserDetailsDTO.getSeq().toString() );
             modelMap.addAttribute("rtnData", cOAAdmService.selectAdmDtl(lgnCOAAdmDTO));
 
 
@@ -323,14 +323,14 @@ public class COAAdmController {
         {
             try
             {
-                COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-                pCOAAdmDTO.setRegId( coaAdmDTO.getId() );
-                pCOAAdmDTO.setRegName( coaAdmDTO.getName() );
-                pCOAAdmDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
-                pCOAAdmDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-                pCOAAdmDTO.setRegIp( coaAdmDTO.getLoginIp() );
-                pCOAAdmDTO.setModId( coaAdmDTO.getId() );
-                pCOAAdmDTO.setModIp( coaAdmDTO.getLoginIp() );
+                COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                pCOAAdmDTO.setRegId( cOUserDetailsDTO.getId() );
+                pCOAAdmDTO.setRegName( cOUserDetailsDTO.getName() );
+                pCOAAdmDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+                pCOAAdmDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+                pCOAAdmDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+                pCOAAdmDTO.setModId( cOUserDetailsDTO.getId() );
+                pCOAAdmDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
                 pCOAAdmDTO.setRespCnt( cOAAdmService.insertAdm(pCOAAdmDTO) );
             }
             catch (Exception e)
@@ -353,15 +353,15 @@ public class COAAdmController {
         {
             try
             {
-                COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+                COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
-                pCOAAdmDTO.setRegId( coaAdmDTO.getId() );
-                pCOAAdmDTO.setRegName( coaAdmDTO.getName() );
-                pCOAAdmDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
-                pCOAAdmDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-                pCOAAdmDTO.setRegIp( coaAdmDTO.getLoginIp() );
-                pCOAAdmDTO.setModId( coaAdmDTO.getId() );
-                pCOAAdmDTO.setModIp( coaAdmDTO.getLoginIp() );
+                pCOAAdmDTO.setRegId( cOUserDetailsDTO.getId() );
+                pCOAAdmDTO.setRegName( cOUserDetailsDTO.getName() );
+                pCOAAdmDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+                pCOAAdmDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+                pCOAAdmDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+                pCOAAdmDTO.setModId( cOUserDetailsDTO.getId() );
+                pCOAAdmDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
                 pCOAAdmDTO.setIsAdmMng("Y");
                 pCOAAdmDTO.setRespCnt( cOAAdmService.updateAdm(pCOAAdmDTO) );
             }
@@ -385,11 +385,11 @@ public class COAAdmController {
         {
             try
             {
-                COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-                pCOAAdmDTO.setRegId( coaAdmDTO.getId() );
-                pCOAAdmDTO.setRegIp( coaAdmDTO.getLoginIp() );
-                pCOAAdmDTO.setModId( coaAdmDTO.getId() );
-                pCOAAdmDTO.setModIp( coaAdmDTO.getLoginIp() );
+                COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+                pCOAAdmDTO.setRegId( cOUserDetailsDTO.getId() );
+                pCOAAdmDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+                pCOAAdmDTO.setModId( cOUserDetailsDTO.getId() );
+                pCOAAdmDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
                 pCOAAdmDTO.setRespCnt( cOAAdmService.deleteAdm(pCOAAdmDTO) );
 
             }
@@ -443,9 +443,9 @@ public class COAAdmController {
         {
             try
             {
-                COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-                pCOAAdmDTO.setRegId( coaAdmDTO.getId() );
-                pCOAAdmDTO.setRegIp( coaAdmDTO.getLoginIp() );
+                COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                pCOAAdmDTO.setRegId( cOUserDetailsDTO.getId() );
+                pCOAAdmDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
                 pCOAAdmDTO.setRespCnt(cOAAdmService.updatePrsnData(pCOAAdmDTO));
             }
             catch (Exception e)
@@ -520,18 +520,23 @@ public class COAAdmController {
 
                 if (actCnt > 0)
                 {
+                    String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
                     //이메일 발송
                     COMailDTO cOMailDTO = new COMailDTO();
                     cOMailDTO.setSubject("["+siteName+"] 임시비밀번호 발급 안내");
-                    cOMailDTO.setSiteName(siteName);
-                    cOMailDTO.setHttpFrontUrl(httpFrontUrl);
-                    cOMailDTO.setHttpAdmUrl(httpAdmtUrl);
-                    cOMailDTO.setEmails(pCOAAdmDTO.getEmail());
-                    cOMailDTO.setField1(pCOAAdmDTO.getPwd());
-                    //인증요청일시
-                    String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
-                    cOMailDTO.setField2(field2);
-                    cOMailService.sendMail(cOMailDTO, "COAAdmPwdInit.html");
+                    //수신자 정보
+                    COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                    //이메일
+                    receiverDto.setEmail(pCOAAdmDTO.getEmail());
+                    //이름
+                    receiverDto.setName("관리자");
+                    //치환문자1
+                    receiverDto.setNote1(pCOAAdmDTO.getPwd());
+                    //치환문자2
+                    receiverDto.setNote2(field2);
+                    //수신자 정보 등록
+                    cOMailDTO.getReceiver().add(receiverDto);
+                    cOMessageService.sendMail(cOMailDTO, "COAAdmPwdInit.html");
                 }
             }
             catch (Exception e)

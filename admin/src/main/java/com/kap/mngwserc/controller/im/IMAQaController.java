@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.im;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.im.ima.IMAQaDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
@@ -103,9 +104,9 @@ public class IMAQaController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO= COUserDetailsHelperService.getAuthenticatedUser();
 
-            iMAQaDTO.setRegId(coaAdmDTO.getId());
+            iMAQaDTO.setRegId(cOUserDetailsDTO.getId());
 
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();

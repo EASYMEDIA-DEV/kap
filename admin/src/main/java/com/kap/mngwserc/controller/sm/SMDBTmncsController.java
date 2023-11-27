@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.sm;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.SMDBTmncsDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMDBTmncsService;
@@ -69,9 +70,9 @@ public class SMDBTmncsController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smdbTmncsDTO.setRegId(coaAdmDTO.getId());
-            smdbTmncsDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smdbTmncsDTO.setRegId(cOUserDetailsDTO.getId());
+            smdbTmncsDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             int respCnt = smdbTmncsService.insertTmncs(smdbTmncsDTO);
             modelMap.addAttribute("respCnt", respCnt);
@@ -97,9 +98,9 @@ public class SMDBTmncsController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smdbTmncsDTO.setModId(coaAdmDTO.getId());
-            smdbTmncsDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO =  COUserDetailsHelperService.getAuthenticatedUser();
+            smdbTmncsDTO.setModId(cOUserDetailsDTO.getId());
+            smdbTmncsDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             smdbTmncsDTO.setTmncsSeq(Integer.valueOf(smdbTmncsDTO.getDetailsKey()));
             modelMap.addAttribute("respCnt", smdbTmncsService.updateTmncs(smdbTmncsDTO));

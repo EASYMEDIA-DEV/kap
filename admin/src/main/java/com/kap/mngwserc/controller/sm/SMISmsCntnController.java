@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.sm;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.SMISmsCntnDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
@@ -147,9 +148,9 @@ public class SMISmsCntnController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smiSmsCntnDTO.setRegId(coaAdmDTO.getId());
-            smiSmsCntnDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO =COUserDetailsHelperService.getAuthenticatedUser();
+            smiSmsCntnDTO.setRegId(cOUserDetailsDTO.getId());
+            smiSmsCntnDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             int respCnt = smiSmsCntnService.insertSmsCntn(smiSmsCntnDTO);
             modelMap.addAttribute("respCnt", respCnt);
@@ -175,9 +176,9 @@ public class SMISmsCntnController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smiSmsCntnDTO.setModId(coaAdmDTO.getId());
-            smiSmsCntnDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smiSmsCntnDTO.setModId(cOUserDetailsDTO.getId());
+            smiSmsCntnDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             modelMap.addAttribute("respCnt", smiSmsCntnService.updateSmsCntn(smiSmsCntnDTO));
         }

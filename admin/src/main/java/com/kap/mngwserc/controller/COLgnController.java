@@ -3,7 +3,7 @@ package com.kap.mngwserc.controller;
 import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.*;
 import com.kap.service.COLgnService;
-import com.kap.service.COMailService;
+import com.kap.service.COMessageService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +17,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Matcher;
 
 /**
  * <pre>
@@ -47,7 +45,7 @@ public class COLgnController {
 	//로그인 서비스
     private final COLgnService cOLgnService;
 	//이메일 발송
-	private final COMailService cOMailService;
+	private final COMessageService cOMessageService;
 
 	//이메일 발송
 	private final COSystemLogService cOSystemLogService;
@@ -204,9 +202,9 @@ public class COLgnController {
 		try
 		{
 			RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", driveMenuSeq, RequestAttributes.SCOPE_SESSION);
-			COAAdmDTO lngCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			lngCOAAdmDTO.setDriveMenuSeq( driveMenuSeq );
-			List<COMenuDTO> menuList = cOLgnService.getMenuList(lngCOAAdmDTO);
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOUserDetailsDTO.setDriveMenuSeq( driveMenuSeq );
+			List<COMenuDTO> menuList = cOLgnService.getMenuList(cOUserDetailsDTO);
 			RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
 			for (int i = 0, size = menuList.size(); i < size; i++)
 			{
@@ -258,10 +256,6 @@ public class COLgnController {
 		@Value("${app.admin-domain}")
 		private String httpAdmtUrl;
 
-		//관리자 이메일 템플릿 경로
-		@Value("${app.file.mail-tmpl-file-path}")
-		private String mailTmplFilePath;
-
 		//서버 유무(개발,운영)
 		//spring.config.activate.on-profile
 		@Value("${spring.config.activate.on-profile}")
@@ -281,36 +275,42 @@ public class COLgnController {
 			try
 			{
 				rtnCOLoginDTO = cOLgnService.actionLogin(cOLoginDTO, request);
-				COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
+				COUserDetailsDTO tmpCOUserDetailsDTO  = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
 
 				if(serverStatus.equals("dev") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
 
 					//이메일 발송
 					COMailDTO cOMailDTO = new COMailDTO();
 					cOMailDTO.setSubject("["+siteName+"] 인증번호 안내");
-					cOMailDTO.setEmails(lgnCOAAdmDTO.getEmail());
-					cOMailDTO.setSiteName(siteName);
-					cOMailDTO.setHttpFrontUrl(httpFrontUrl);
-					cOMailDTO.setHttpAdmUrl(httpAdmtUrl);
+					//수신자 정보
+					COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+					//이메일
+					receiverDto.setEmail(tmpCOUserDetailsDTO.getEmail());
+					//이름
+					receiverDto.setName("");
+
 					Random random = new Random();
 					// 난수 5자리 고정
 					String authNum = "";
 					for(int i = 0; i < 5; i++){
 						authNum += String.valueOf(random.nextInt(10));
 					}
-					//인증번호
-					cOMailDTO.setField1(authNum);
 					//인증요청일시
 					String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
-					cOMailDTO.setField2(field2);
-					cOMailService.sendMail(cOMailDTO, "COAAdmLgnEmail.html");
+					//치환문자1
+					receiverDto.setNote1(authNum);
+					//치환문자2
+					receiverDto.setNote2(field2);
+					//수신자 정보 등록
+					cOMailDTO.getReceiver().add(receiverDto);
+					cOMessageService.sendMail(cOMailDTO, "COAAdmLgnEmail.html");
 
 					//인증번호 로그 등록
 					COSystemLogDTO cOSystemLogDTO = new COSystemLogDTO();
-					cOSystemLogDTO.setAdmSeq(lgnCOAAdmDTO.getAdmSeq());
+					cOSystemLogDTO.setAdmSeq(tmpCOUserDetailsDTO.getSeq());
 
 					cOSystemLogDTO.setCrtfnNo(Integer.parseInt(authNum));
-					cOSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());
+					cOSystemLogDTO.setRegId(tmpCOUserDetailsDTO.getId());
 					cOSystemLogDTO.setRegIp("127.0.0.1");
 
 					cOSystemLogService.logInsertCrtfnNo(cOSystemLogDTO);
@@ -319,7 +319,7 @@ public class COLgnController {
 					RequestContextHolder.getRequestAttributes().setAttribute("tmpEmailAuthNum", authNum, RequestAttributes.SCOPE_SESSION);
 				}else{
 					// 로그인 세션 생성
-					RequestContextHolder.getRequestAttributes().setAttribute("loginMap", lgnCOAAdmDTO, RequestAttributes.SCOPE_SESSION);
+					RequestContextHolder.getRequestAttributes().setAttribute("loginMap", tmpCOUserDetailsDTO, RequestAttributes.SCOPE_SESSION);
 					rtnCOLoginDTO.setLgnCrtfnPassYn("Y");
 				}
 			}
@@ -339,25 +339,25 @@ public class COLgnController {
 		@PostMapping("/mngwsercgateway/change-password")
 		public COAAdmDTO setPwdChng(COAAdmDTO cOAAdmDTO, ModelMap modelMap, HttpSession session) throws Exception
 		{
-			COAAdmDTO loginCOAAdmDTO = null;
+			COUserDetailsDTO cOUserDetailsDTO = null;
 			try
 			{
 				if (COUserDetailsHelperService.isAuthenticated())
 				{
-					loginCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+					cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 				}
 				else
 				{
-					loginCOAAdmDTO = (COAAdmDTO) RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
+					cOUserDetailsDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
 				}
-				if(loginCOAAdmDTO == null)
+				if(cOUserDetailsDTO == null)
 				{
 					//세션이 끊겼을때
 					cOAAdmDTO.setRespCd("40");
 				}
 				else
 				{
-					cOAAdmDTO.setId( loginCOAAdmDTO.getId() );
+					cOAAdmDTO.setId( cOUserDetailsDTO.getId() );
 					String rtnCode = cOLgnService.setPwdChng(cOAAdmDTO);
 					if ("00".equals(rtnCode))
 					{

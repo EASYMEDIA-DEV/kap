@@ -57,6 +57,8 @@ public class SecurityConfig  {
                         , "/mngwserc/file/list"
                         , "/mngwserc/file/upload"
                         , "/mngwserc/editor-image/upload"
+                        , "/mngwserc/email/send"
+                        , "/mngwserc/sms/send"
                         , "/mngwserc/file/view")
                 .and()
                 .exceptionHandling()

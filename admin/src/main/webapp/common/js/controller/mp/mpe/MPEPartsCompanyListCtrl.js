@@ -106,7 +106,9 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
+                        var cmpnNm = $(this).data("cmpnNm");
                         $formObj.find("input[name=bsnmNo]").val(detailsKey);
+                        $formObj.find("input[name=cmpnNm]").val(cmpnNm);
                         location.href = "./write?" + $formObj.serialize();
                     }
                 }

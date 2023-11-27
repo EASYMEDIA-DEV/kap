@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COEMenuRoleDTO;
 import com.kap.core.dto.COSystemLogDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COEMenuRoleService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
@@ -226,7 +227,7 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
         workbook.close();
 
         //다운로드 사유 입력
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         COSystemLogDTO pCODSysLogDTO = new COSystemLogDTO();
 
         pCODSysLogDTO.setTrgtMenuNm("시스템 관리 > 로그 관리 > 메뉴권한변경로그");
@@ -234,8 +235,8 @@ public class COEMenuRoleServiceImpl implements COEMenuRoleService {
         pCODSysLogDTO.setFncNm("selectMenuRoleLogList");
         pCODSysLogDTO.setPrcsCd("DL");
         pCODSysLogDTO.setRsn(pCoMenuRoleDTO.getRsn());
-        pCODSysLogDTO.setRegId(lgnCOAAdmDTO.getId());
-        pCODSysLogDTO.setRegIp(lgnCOAAdmDTO.getLoginIp());
+        pCODSysLogDTO.setRegId(cOUserDetailsDTO.getId());
+        pCODSysLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCODSysLogDTO);
     }
 

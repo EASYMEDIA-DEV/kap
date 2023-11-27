@@ -140,35 +140,31 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
      */
     public int updatePartsCompany(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
 
+        List<String> sqList1 = mpePartsCompanyDTO.getSqInfoList1();
+        List<String> sqList2 = mpePartsCompanyDTO.getSqInfoList2();
+        List<String> sqList3 = mpePartsCompanyDTO.getSqInfoList3();
+
+        List<List<String>> allSqLists = new ArrayList<>();
+        allSqLists.add(sqList1);
+        allSqLists.add(sqList2);
+        allSqLists.add(sqList3);
+
+        String seq = "";
+        String nm = "";
+        String score = "";
+        String year = "";
+        String crtfnCmnNm = "";
+
         if (mpePartsCompanyDTO.getCtgryCd().equals("COMPANY01002")) {
-            List<String> sqList1 = mpePartsCompanyDTO.getSqInfoList1();
-            List<String> sqList2 = mpePartsCompanyDTO.getSqInfoList2();
-            List<String> sqList3 = mpePartsCompanyDTO.getSqInfoList3();
 
-            List<List<String>> allSqLists = new ArrayList<>();
-            allSqLists.add(sqList1);
-            allSqLists.add(sqList2);
-            allSqLists.add(sqList3);
-
-            String seq = "";
-            String nm = "";
-            String score = "";
-            String year = "";
-            String crtfnCmnNm = "";
             int index = 1;
-
-            sqLoop:
             for(List<String> sqList : allSqLists) {
-                if (sqList == null) {
-                    continue sqLoop;
-                }
 
                 seq = sqList.get(0);
                 nm = sqList.get(1);
                 year = sqList.get(3);
                 score = sqList.get(2);
                 crtfnCmnNm = sqList.get(4);
-
 
                 if(year.equals("")|| year.isEmpty()) {
                     mpePartsCompanyDTO.setYear(null);
@@ -183,6 +179,15 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                 }
                 mpePartsCompanyDTO.setNm(nm);
                 mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmnNm);
+
+                // 2차인 경우, 스타등급 빈 값 처리
+                mpePartsCompanyDTO.setTchlg5StarCd(null);
+                mpePartsCompanyDTO.setPay5StarCd(null);
+                mpePartsCompanyDTO.setQlty5StarCd(null);
+                mpePartsCompanyDTO.setTchlg5StarYear(null);
+                mpePartsCompanyDTO.setPay5StarYear(null);
+                mpePartsCompanyDTO.setQlty5StarYear(null);
+
                 if (!seq.isEmpty()) {
                     mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
                     mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
@@ -191,6 +196,20 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                     mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
                 }
                 index += 1;
+            }
+        } else if (mpePartsCompanyDTO.getCtgryCd().equals("COMPANY01001")) {
+            // 1차인 경우, SQ정보 빈 값 처리
+            for(List<String> sqList : allSqLists) {
+                seq = sqList.get(0);
+
+                if (!seq.isEmpty()) {
+                    mpePartsCompanyDTO.setYear(null);
+                    mpePartsCompanyDTO.setScore(null);
+                    mpePartsCompanyDTO.setNm(null);
+                    mpePartsCompanyDTO.setCrtfnCmpnNm(null);
+                    mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
+                    mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
+                }
             }
         }
         return mpePartsCompanyMapper.updatePartsCompany(mpePartsCompanyDTO);

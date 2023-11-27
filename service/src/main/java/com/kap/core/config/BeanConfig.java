@@ -44,7 +44,7 @@ public class BeanConfig  {
     @Bean(name="velocityEngine")
     public VelocityEngine velocityEngine() {
         Properties properties = new Properties();
-        properties.put("file.resource.loader.path", tmplFilePath);
+        properties.put("file.resource.loader.path", tmplFilePath+"email/"+","+tmplFilePath+"sms/");
         properties.setProperty("runtime.log.logsystem.class", "org.apache.velocity.runtime.log.NullLogSystem");
         VelocityEngine velocityEngine = new VelocityEngine();
         velocityEngine.init(properties);

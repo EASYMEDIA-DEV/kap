@@ -2,7 +2,7 @@ package com.kap.service.impl.bd;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
-import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bde.BDEDisclosureDTO;
 import com.kap.service.BDEDisclosureService;
 import com.kap.service.COFileService;
@@ -11,7 +11,6 @@ import com.kap.service.dao.bd.BDEDisclosureMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -77,9 +76,9 @@ public class BDEDisclosureServiceImpl implements BDEDisclosureService {
      */
     public int insertDisclosure(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception {
         //작성자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDEDisclosureDTO.setRegId(coaAdmDTO.getId());
-        pBDEDisclosureDTO.setRegIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDEDisclosureDTO.setRegId(cOUserDetailsDTO.getId());
+        pBDEDisclosureDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDEDisclosureDTO.getFileList() != null && !pBDEDisclosureDTO.getFileList().isEmpty()) {
@@ -101,9 +100,9 @@ public class BDEDisclosureServiceImpl implements BDEDisclosureService {
      */
     public int updateDisclosure(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception{
         //수정자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDEDisclosureDTO.setModId(coaAdmDTO.getId());
-        pBDEDisclosureDTO.setModIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDEDisclosureDTO.setModId(cOUserDetailsDTO.getId());
+        pBDEDisclosureDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDEDisclosureDTO.getFileList() != null && !pBDEDisclosureDTO.getFileList().isEmpty()) {

@@ -57,7 +57,7 @@
                     </table>
                 </div>
                 <ul class="nav nav-tabs" id="myTabs">
-                    <li class="active tabClick"><a data-toggle="tab" href="#">강사 상세정보</a></li>
+                    <li class="active tabClick"><a data-toggle="tab" href="#dtl">강사 상세정보</a></li>
                     <li class="tabClick"><a data-toggle="tab" href="#edu">교육 사업 현황</a></li>
                     <li class="tabClick"><a data-toggle="tab" href="#win">상생 사업 현황</a></li>
                     <div class="pull-right">

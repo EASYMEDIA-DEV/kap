@@ -3,6 +3,7 @@ package com.kap.mngwserc.controller;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COGBoardDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COGBoardService;
 import com.kap.service.COUserDetailsHelperService;
@@ -106,7 +107,6 @@ public class COGBoardController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             cogBoardDTO.setTypeCd(typeCd);
             if(typeCd == 30) {
                 // 공통코드 배열 셋팅
@@ -141,11 +141,11 @@ public class COGBoardController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cogBoardDTO.setTypeCd(typeCd);
 
-            cogBoardDTO.setRegId(coaAdmDTO.getId());
-            cogBoardDTO.setRegIp(coaAdmDTO.getLoginIp());
+            cogBoardDTO.setRegId(cOUserDetailsDTO.getId());
+            cogBoardDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             modelMap.addAttribute("respCnt", cOGBoardService.insertBoard(cogBoardDTO));
         }
         catch (Exception e)
@@ -167,9 +167,9 @@ public class COGBoardController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cogBoardDTO.setModId(coaAdmDTO.getId());
-            cogBoardDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            cogBoardDTO.setModId(cOUserDetailsDTO.getId());
+            cogBoardDTO.setModIp(cOUserDetailsDTO.getLoginIp());
             modelMap.addAttribute("respCnt", cOGBoardService.updateBoard(cogBoardDTO));
         }
         catch (Exception e)

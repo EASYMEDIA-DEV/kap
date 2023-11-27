@@ -3,6 +3,7 @@ package com.kap.service.impl.bd;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bdb.BDBCompanyNewsDTO;
 import com.kap.service.BDBCompanyNewsService;
 import com.kap.service.COFileService;
@@ -81,9 +82,9 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
      */
     public int insertCompanyNews(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception {
         //작성자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDBCompanyNewsDTO.setRegId(coaAdmDTO.getId());
-        pBDBCompanyNewsDTO.setRegIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDBCompanyNewsDTO.setRegId(cOUserDetailsDTO.getId());
+        pBDBCompanyNewsDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDBCompanyNewsDTO.getFileList() != null && !pBDBCompanyNewsDTO.getFileList().isEmpty()) {
@@ -113,9 +114,9 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
      */
     public int updateCompanyNews(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception{
         //수정자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDBCompanyNewsDTO.setModId(coaAdmDTO.getId());
-        pBDBCompanyNewsDTO.setModIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDBCompanyNewsDTO.setModId(cOUserDetailsDTO.getId());
+        pBDBCompanyNewsDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDBCompanyNewsDTO.getFileList() != null && !pBDBCompanyNewsDTO.getFileList().isEmpty()) {

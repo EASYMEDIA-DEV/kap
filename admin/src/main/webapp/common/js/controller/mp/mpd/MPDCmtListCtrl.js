@@ -14,7 +14,6 @@ var exports = {
     var $formObj = ctrl.obj.find("form").eq(0);
     var $excelObj = ctrl.obj.parent().find(".excel-down");
 
-
     // 목록 조회
     var search = function (page){
 
@@ -55,6 +54,7 @@ var exports = {
             event : {
                 click : function() {
                     $(".MPDCmtKenDaySrchLayer").one('show.bs.modal', function() {
+                        $(".monthInit").val( new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)+"-"+("0" + (new Date().getDate())).slice(-2));
 
                     }).one('hidden.bs.modal', function() {
                         // Remove class for soft backdrop (if not will affect future modals)
@@ -65,6 +65,23 @@ var exports = {
                 }
             }
         },
+
+            //월 근태
+            monthKen : {
+                event : {
+                    click : function() {
+                        $(".MPDCmtKenMonthSrchLayer").one('show.bs.modal', function() {
+                            var Month = new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)
+                            $(".monthInit").val(Month);
+                        }).one('hidden.bs.modal', function() {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                        }).one('choice', function(data, param) {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                            // fnc(param);
+                        }).modal();
+                    }
+                }
+            },
 
         //엑셀다운로드
         btnExcelDown : {
@@ -77,6 +94,7 @@ var exports = {
                 }
             }
         },
+
         btnInsert : {
                 event : {
                     click: function () {
@@ -203,6 +221,7 @@ var exports = {
         cmmCtrl.setFormData($formObj);
         search();
 
+
         $excelObj.find("button.down").on('click', function(){
             var rsn = $excelObj.find("#rsn").val().trim();
             var frmDataObj    = $formObj.closest("form");
@@ -210,14 +229,14 @@ var exports = {
             frmDataObj.find("input[name='rsn']").remove();
 
             if (rsn != "") {
-            frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+                frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
 
-            //파라미터를 물고 가야함.
-            location.href = "./excel-down?" + frmDataObj.serialize();
+                //파라미터를 물고 가야함.
+                location.href = "./excel-down?" + frmDataObj.serialize();
 
             } else {
-            alert(msgCtrl.getMsg("fail.reason"));
-            return;
+                alert(msgCtrl.getMsg("fail.reason"));
+                return;
             }
 
         });

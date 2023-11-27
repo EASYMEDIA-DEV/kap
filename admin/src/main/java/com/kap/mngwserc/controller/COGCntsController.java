@@ -1,14 +1,17 @@
 package com.kap.mngwserc.controller;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COGCntsDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COGCntsService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * <pre>
@@ -216,11 +219,11 @@ public class COGCntsController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            pCOGCntsDTO.setModId(coaAdmDTO.getId());
-            pCOGCntsDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO =  COUserDetailsHelperService.getAuthenticatedUser();
+            pCOGCntsDTO.setModId(cOUserDetailsDTO.getId());
+            pCOGCntsDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
-            if ("99".equals(coaAdmDTO.getAuthCd()))
+            if ("99".equals(cOUserDetailsDTO.getAuthCd()))
             {
                 pCOGCntsDTO.setMenuSeq(menuSeq);
 

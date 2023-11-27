@@ -1,9 +1,12 @@
 package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.MPEPartsCompanyDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.EBBEpisdService;
 import com.kap.service.MPEPartsCompanyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +50,9 @@ public class MPEPartsCompanyController {
     //코드 서비스
     private final COCodeService cOCodeService;
 
+    /** 교육회차관리 서비스 **/
+    public final EBBEpisdService eBBEpisdService;
+
     /**
      * 부품사 목록 페이지로 이동한다.
      */
@@ -57,7 +63,7 @@ public class MPEPartsCompanyController {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("COMPANY_TYPE");
-        modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+        modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
         modelMap.addAttribute("rtnData", mpePartsCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
 
         return "mngwserc/mp/mpe/MPEPartsCompanyList.admin";
@@ -88,8 +94,8 @@ public class MPEPartsCompanyController {
     /**
      * 상세 페이지로 이동한다.
      */
-    @RequestMapping(value="/write")
-    public String getPartsCompanyWritePage(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    @GetMapping(value="/write")
+    public String getPartsCompanyWritePage(EBBEpisdDTO eBBEpisdDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -102,11 +108,15 @@ public class MPEPartsCompanyController {
             mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getBsnmNo());
             MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
             if (originList.getList().size() != 0) {
                 modelMap.addAttribute("rtnInfo", originList.getList().get(0));
             }
+
             modelMap.addAttribute("sqInfoList", originList);
+            modelMap.addAttribute("eduCnt", mpePartsCompanyService.selectEduCnt(mpePartsCompanyDTO));
+            modelMap.addAttribute("consultCnt", mpePartsCompanyService.selectConsultingCnt(mpePartsCompanyDTO));
+            modelMap.addAttribute("winBusinessCnt", mpePartsCompanyService.selectWinBusinessCnt(mpePartsCompanyDTO));
         }
         catch (Exception e)
         {
@@ -132,7 +142,7 @@ public class MPEPartsCompanyController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("COMPANY_TYPE");
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
         }
         catch (Exception e)
         {
@@ -175,11 +185,10 @@ public class MPEPartsCompanyController {
     }
 
     /**
-     *  교육 사업 현황 리스트 조회
+     *  부품사 실적정보 조회
      */
     @PostMapping(value = "/select-tab-two")
-    public String selectPartsPerformanceTabTwoAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
-
+    public String selectPartsPerformanceTabTwoAjax(EBBEpisdDTO eBBEpisdDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
         modelMap.addAttribute("rtnData", mpePartsCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
         return "mngwserc/mp/mpe/MPEPartsCompanyTabTwoAjax";
     }
@@ -192,9 +201,9 @@ public class MPEPartsCompanyController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpePartsCompanyDTO.setRegId(coaAdmDTO.getId());
-            mpePartsCompanyDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpePartsCompanyDTO.setRegId(cOUserDetailsDTO.getId());
+            mpePartsCompanyDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             int respCnt = mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
             modelMap.addAttribute("respCnt", respCnt);
@@ -219,9 +228,9 @@ public class MPEPartsCompanyController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpePartsCompanyDTO.setModId(coaAdmDTO.getId());
-            mpePartsCompanyDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpePartsCompanyDTO.setModId(cOUserDetailsDTO.getId());
+            mpePartsCompanyDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getBsnmNo());
             modelMap.addAttribute("respCnt", mpePartsCompanyService.updatePartsCompany(mpePartsCompanyDTO));

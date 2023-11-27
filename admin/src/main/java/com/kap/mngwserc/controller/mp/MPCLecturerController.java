@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.MPCLecturerDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.service.COUserDetailsHelperService;
@@ -146,9 +147,9 @@ public class MPCLecturerController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpcLecturerDTO.setRegId(coaAdmDTO.getId());
-            mpcLecturerDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpcLecturerDTO.setRegId(cOUserDetailsDTO.getId());
+            mpcLecturerDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             int respCnt = mpcLecturerService.insertLecturer(mpcLecturerDTO);
             modelMap.addAttribute("respCnt", respCnt);
@@ -173,9 +174,9 @@ public class MPCLecturerController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpcLecturerDTO.setModId(coaAdmDTO.getId());
-            mpcLecturerDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpcLecturerDTO.setModId(cOUserDetailsDTO.getId());
+            mpcLecturerDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             mpcLecturerDTO.setIsttrSeq(mpcLecturerDTO.getIsttrSeq());
             modelMap.addAttribute("respCnt", mpcLecturerService.updateLecturer(mpcLecturerDTO));

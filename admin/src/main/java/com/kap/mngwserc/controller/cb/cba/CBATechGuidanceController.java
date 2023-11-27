@@ -1,6 +1,6 @@
 package com.kap.mngwserc.controller.cb.cba;
 
-import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.service.CBATechGuidanceService;
@@ -84,8 +84,8 @@ public class CBATechGuidanceController {
      */
     @GetMapping(value = "/write")
     public String getTechGuidanceWritePage(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
-        try {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        try
+        {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
@@ -116,9 +116,9 @@ public class CBATechGuidanceController {
     @RequestMapping(value = "/insert", method= RequestMethod.POST)
     public String insertTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
         try {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cBATechGuidanceInsertDTO.setRegId(coaAdmDTO.getId());
-            cBATechGuidanceInsertDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO =COUserDetailsHelperService.getAuthenticatedUser();
+            cBATechGuidanceInsertDTO.setRegId(cOUserDetailsDTO.getId());
+            cBATechGuidanceInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             System.err.println("cBATechGuidanceDTO:::"+cBATechGuidanceInsertDTO);
 
@@ -136,9 +136,9 @@ public class CBATechGuidanceController {
     @RequestMapping(value = "/update", method= RequestMethod.POST)
     public String updateTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
         try {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cBATechGuidanceInsertDTO.setRegId(coaAdmDTO.getId());
-            cBATechGuidanceInsertDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            cBATechGuidanceInsertDTO.setRegId(cOUserDetailsDTO.getId());
+            cBATechGuidanceInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             modelMap.addAttribute("respCnt", cBATechGuidanceService.updateTechGuidance(cBATechGuidanceInsertDTO));
         } catch (Exception e) {
@@ -158,13 +158,13 @@ public class CBATechGuidanceController {
     @ResponseBody
     public String deleteTechGuidance(@Valid @RequestBody CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap) throws Exception {
         try {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cBATechGuidanceDTO.setRegId(coaAdmDTO.getId());
-            cBATechGuidanceDTO.setRegIp(coaAdmDTO.getLoginIp());
-            cBATechGuidanceDTO.setRegName(coaAdmDTO.getName());
-            cBATechGuidanceDTO.setRegDeptNm(coaAdmDTO.getDeptNm());
-            cBATechGuidanceDTO.setModId(coaAdmDTO.getId());
-            cBATechGuidanceDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            cBATechGuidanceDTO.setRegId(cOUserDetailsDTO.getId());
+            cBATechGuidanceDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+            cBATechGuidanceDTO.setRegName(cOUserDetailsDTO.getName());
+            cBATechGuidanceDTO.setRegDeptNm(cOUserDetailsDTO.getDeptNm());
+            cBATechGuidanceDTO.setModId(cOUserDetailsDTO.getId());
+            cBATechGuidanceDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             modelMap.addAttribute("respCnt", cBATechGuidanceService.deleteTechGuidance(cBATechGuidanceDTO));
         } catch (Exception e) {

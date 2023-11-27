@@ -2,6 +2,7 @@ package com.kap.service.impl.sm;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.sm.smg.SMGWinBusinessDTO;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -81,9 +82,9 @@ public class SMGWinBusinessServiceImpl implements SMGWinBusinessService {
     public int insertWinBusiness(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception
     {
         //작성자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pSMGWinBusinessDTO.setRegId(coaAdmDTO.getId());
-        pSMGWinBusinessDTO.setRegIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pSMGWinBusinessDTO.setRegId(cOUserDetailsDTO.getId());
+        pSMGWinBusinessDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pSMGWinBusinessDTO.getFileList() != null && !pSMGWinBusinessDTO.getFileList().isEmpty())
@@ -103,9 +104,9 @@ public class SMGWinBusinessServiceImpl implements SMGWinBusinessService {
     public int updateWinBusiness(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception
     {
         //수정자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pSMGWinBusinessDTO.setModId(coaAdmDTO.getId());
-        pSMGWinBusinessDTO.setModIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pSMGWinBusinessDTO.setModId(cOUserDetailsDTO.getId());
+        pSMGWinBusinessDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pSMGWinBusinessDTO.getFileList() != null && !pSMGWinBusinessDTO.getFileList().isEmpty())
@@ -130,9 +131,9 @@ public class SMGWinBusinessServiceImpl implements SMGWinBusinessService {
      */
     public void updateOrder(SMGWinBusinessDTO pSMGWinBusinessDTO) throws Exception
     {
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pSMGWinBusinessDTO.setModId(coaAdmDTO.getId());
-        pSMGWinBusinessDTO.setModIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pSMGWinBusinessDTO.setModId(cOUserDetailsDTO.getId());
+        pSMGWinBusinessDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
         SMGWinBusinessDTO newRow = sMGWinBusinessMapper.selectWinBusinessNewRow(pSMGWinBusinessDTO);
 
