@@ -73,7 +73,7 @@
                                     <select class="form-control input-sm" id="sizeCd" name="sizeCd" title="기업규모" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                            <c:if test="${fn:contains(cdList, 'COMPANY020')}">
+                                            <c:if test="${fn:contains(cdList, 'COMPANY02')}">
                                                 <option value="${cdList.cd}" <c:if test="${rtnInfo.sizeCd eq cdList.cd}">selected</c:if>>
                                                         ${cdList.cdNm}
                                                 </option>
