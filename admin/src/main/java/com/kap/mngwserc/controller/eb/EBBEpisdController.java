@@ -119,6 +119,7 @@ public class EBBEpisdController {
         EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");//교육장 정보
         List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
         List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
+        List<EBBisttrDTO> bdgetList = (List<EBBisttrDTO>) rtnMap.get("bdgetList");//예산/지출관리 목록
 
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -146,6 +147,8 @@ public class EBBEpisdController {
         modelMap.addAttribute("roomDto", roomDto);//교육장 정보
         modelMap.addAttribute("lctrDtoList", lctrDtoList);//온라인강의
         modelMap.addAttribute("isttrList", isttrList);//강사정보
+        modelMap.addAttribute("bdgetList", bdgetList);//예산지출목록
+
         //만족도 조사(설문)
 
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";

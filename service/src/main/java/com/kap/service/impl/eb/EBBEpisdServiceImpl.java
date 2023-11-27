@@ -2,6 +2,7 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.*;
+import com.kap.core.dto.eb.ebb.EBBBdgetDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBLctrDTO;
 import com.kap.core.dto.eb.ebb.EBBisttrDTO;
@@ -117,10 +118,22 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			lctrDtoList = eBBEpisdMapper.selectLctrDtlList(lctrDto);
 		}
 
+		//예산지출 상세 호출
+
+		List<EBBBdgetDTO> bdgetList = new ArrayList();
+		EBBBdgetDTO bdgetDto = new EBBBdgetDTO();
+		if(ebbDto !=null) {
+			bdgetDto.setEdctnSeq(ebbDto.getEdctnSeq());
+			bdgetDto.setEpisdOrd(ebbDto.getEpisdOrd());
+			bdgetDto.setEpisdYear(ebbDto.getEpisdYear());
+			bdgetList = eBBEpisdMapper.selectBdgetDtlList(bdgetDto);
+		}
+
 		map.put("rtnData", ebbDto);
 		map.put("roomDto", roomDto);
 		map.put("lctrDtoList", lctrDtoList);
 		map.put("isttrList", isttrList);
+		map.put("bdgetList", bdgetList);
 
 		return map;
 	}

@@ -1,5 +1,6 @@
 package com.kap.service.dao.eb;
 
+import com.kap.core.dto.eb.ebb.EBBBdgetDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBLctrDTO;
 import com.kap.core.dto.eb.ebb.EBBisttrDTO;
@@ -102,6 +103,12 @@ public interface EBBEpisdMapper {
 	 * 교육차수 - 교육예산지출상세 등록
 	 */
 	public int insertBdgetList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 교육예산지출상세목록 조회
+	 */
+	public List<EBBBdgetDTO> selectBdgetDtlList(EBBBdgetDTO eBBBdgetDTO) throws Exception;
+
 
 
 

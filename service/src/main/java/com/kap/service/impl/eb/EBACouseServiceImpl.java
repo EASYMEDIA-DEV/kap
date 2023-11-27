@@ -138,17 +138,37 @@ public class EBACouseServiceImpl implements EBACouseService {
 		//교육과정 등록
 		respCnt = eBACouseMapper.insertCouse(eBACouseDTO);
 
+		//교육과정대상 상세 등록 시작
 		String temp = eBACouseDTO.getTargetCd();
 
-		String[] tempArray =temp.split(",");
+		List<EBACouseDTO> tempList = new ArrayList<>();
 
-		for(String a : tempArray){
-			eBACouseDTO.setTargetCd(a);
-			eBACouseMapper.insertCouseTrgt(eBACouseDTO);
+		if(temp != null &  temp != ""){
+			String[] tempArray =temp.split(",");
+			for(String a : tempArray){
+				EBACouseDTO targetDto = new EBACouseDTO();
+				targetDto.setEdctnSeq(eBACouseDTO.getEdctnSeq());
+				targetDto.setTargetCd(a);
+				targetDto.setEtcNm(null);
+				tempList.add(targetDto);
+			}
+		}
+
+		//기타부분 입력
+		if(eBACouseDTO.getEtcNm() !=""){
+			EBACouseDTO targetDto = new EBACouseDTO();
+			targetDto.setEdctnSeq(eBACouseDTO.getEdctnSeq());
+			targetDto.setTargetCd("ED_TARGET05001");
+			targetDto.setEtcNm(eBACouseDTO.getEtcNm());
+			tempList.add(targetDto);
 		}
 
 		//교육과정대상 등록
-		eBACouseDTO.setEdctnSeq(respCnt);
+		eBACouseDTO.setTrgtDtlList(tempList);
+		eBACouseMapper.insertCouseTrgt(eBACouseDTO);
+		//교육과정대상 상세 등록 끝
+
+
 
 
 		//연계학습 등록
@@ -175,14 +195,36 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 		eBACouseMapper.deleteCouseTrgt(eBACouseDTO);
 
+
+
+		//교육과정대상 상세 등록 시작
 		String temp = eBACouseDTO.getTargetCd();
 
-		String[] tempArray =temp.split(",");
+		List<EBACouseDTO> tempList = new ArrayList<>();
 
-		for(String a : tempArray){
-			eBACouseDTO.setTargetCd(a);
-			eBACouseMapper.insertCouseTrgt(eBACouseDTO);
+		if(temp != null &  temp != ""){
+			String[] tempArray =temp.split(",");
+			for(String a : tempArray){
+				EBACouseDTO targetDto = new EBACouseDTO();
+				targetDto.setEdctnSeq(eBACouseDTO.getEdctnSeq());
+				targetDto.setTargetCd(a);
+				targetDto.setEtcNm(null);
+				tempList.add(targetDto);
+			}
 		}
+
+		//기타부분 입력
+		if(eBACouseDTO.getEtcNm() !=""){
+			EBACouseDTO targetDto = new EBACouseDTO();
+			targetDto.setEdctnSeq(eBACouseDTO.getEdctnSeq());
+			targetDto.setTargetCd("ED_TARGET05001");
+			targetDto.setEtcNm(eBACouseDTO.getEtcNm());
+			tempList.add(targetDto);
+		}
+
+		eBACouseDTO.setTrgtDtlList(tempList);
+		eBACouseMapper.insertCouseTrgt(eBACouseDTO);
+		//교육과정대상 상세 등록 끝
 
 		//연계학습 등록
 		setEdctnRel(eBACouseDTO);

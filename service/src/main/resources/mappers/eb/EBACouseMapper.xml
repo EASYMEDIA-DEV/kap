@@ -195,8 +195,9 @@
 			 , stduy_time_cd
 			 , stduy_time_cd_nm
 		     , stduy_supls_nm
-		     , cprtn_instt_nm
-		     , stduy_cntn
+			 , pc_stduy_cntn
+			 , mbl_stduy_cntn
+		     , lcns_cnnct_cd
 		     , thnl_file_seq
 			 , reg_id
 			 , reg_name
@@ -223,8 +224,10 @@
 				  , cmptn_jdgmt_cd
 				  , jdgmt_yn
 				  , stduy_supls_nm
-				  , cprtn_instt_nm
-				  , stduy_cntn
+				  , pc_stduy_cntn
+				  , mbl_stduy_cntn
+			      , lcns_cnnct_cd
+				  , (select cd_nm from co_code_mst where cd=a.lcns_cnnct_cd) as lcns_cnnct_cd_nm
 				  , thnl_file_seq
 				  , reg_id
 				  , (select name from co_adm_mst where id = a.reg_id) as reg_name
@@ -300,10 +303,10 @@
 			, stduy_dd_cd
 			, stduy_time_cd
 			, stduy_supls_nm
-			, cprtn_instt_nm
-			, stduy_cntn
+			, pc_stduy_cntn
+			, mbl_stduy_cntn
+			, lcns_cnnct_cd
 			, thnl_file_seq
-			, cmptn_auto_yn
 			, exps_yn
 			, reg_id
 			, reg_ip
@@ -327,10 +330,10 @@
 		, #{stduyDdCd}
 		, #{stduyTimeCd}
 		, #{stduySuplsNm}
-		, #{cprtnInsttNm}
-		, #{stduyCntn}
+		, #{pcStduyCntn}
+		, #{mblStduyCntn}
+		, #{lcnsCnnctCd}
 		, #{thnlFileSeq}
-		, #{cmptnAutoYn}
 		, #{expsYn}
 		, #{regId}
 		, #{regIp}
@@ -363,8 +366,9 @@
 			, stduy_dd_cd = #{stduyDdCd}
 			, stduy_time_cd = #{stduyTimeCd}
 			, stduy_supls_nm = #{stduySuplsNm}
-			, cprtn_instt_nm = #{cprtnInsttNm}
-			, stduy_cntn = #{stduyCntn}
+			, pc_stduy_cntn = #{pcStduyCntn}
+		   	, mbl_stduy_cntn = #{mblStduyCntn}
+		   	, lcns_cnnct_cd = #{lcnsCnnctCd}
 			, thnl_file_seq = #{thnlFileSeq}
 			, exps_yn = #{expsYn}
 			, mod_dtm = now()
@@ -397,10 +401,11 @@
 
 		)
 		values
+		<foreach collection="trgtDtlList" item="trgtDtlList" index="index" separator=" , " open="" close=";">
 		(
-		 #{edctnSeq}
-		, #{targetCd}
-		, #{etcNm}
+		 #{trgtDtlList.edctnSeq}
+		, #{trgtDtlList.targetCd}
+		, #{trgtDtlList.etcNm}
 		, #{regId}
 		, #{regIp}
 		,  now()
@@ -408,6 +413,7 @@
 		, #{modIp}
 		,  now()
 		)
+		</foreach>
 	</insert>
 
 
@@ -506,57 +512,6 @@
 	<delete id="deleteEdctnRel" parameterType="EBACouseDTO">
 		delete from ed_edctn_rel_dtl where edctn_seq = #{detailsKey}
 	</delete>
-
-
-
-	<!--
-         쿼리명 : EBACouseMapper.updateCouse
-         설  명 : 교육과정을 수정한다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2023.11.02   김학규       최초생성
-    -->
-	<!--<update id="updateCouse" parameterType="EBACouseDTO">
-		update /* EBACouseMapper.updateCouse */ co_adm_mst
-		set
-		  email = #{email}
-		, dept_cd = #{deptCd}
-		, dept_nm = #{deptNm}
-
-		, mod_id = #{regId}
-		, mod_ip = #{regIp}
-		, mod_dtm = NOW()
-		where
-			adm_seq = #{detailsKey}
-	</update>-->
-
-	<!--
-         쿼리명 : EBACouseMapper.deleteCouse
-         설  명 : 교육과정을 삭제한다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2023.11.02   김학규       최초생성
-    -->
-	<!--<delete id="deleteCouse" parameterType="EBACouseDTO">
-		delete /* EBACouseMapper.deleteCouse */
-		from
-			co_adm_mst
-		<where>
-			<choose>
-				<when test="delValueList != null and delValueList.size() > 0">
-					adm_seq in
-					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
-						#{delValueList}
-					</foreach>
-				</when>
-				<otherwise>
-					adm_seq = #{detailsKey}
-				</otherwise>
-			</choose>
-		</where>
-	</delete>-->
-
-
 
 </mapper>
 

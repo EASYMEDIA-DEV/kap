@@ -204,6 +204,14 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "회차번호 강의순번", example = "숫자")
     private Integer lctrSeq;
 
+    @Schema(title = "협업기관명", example = "텍스트")
+    private String cprtnInsttNm;
+
+    @Schema(title = "오프라인평가여부", example = "Y/N")
+    private String otsdExamPtcptYn;
+
+    //오프라인여부
+
     //로그인세션ID
     private String lgnSsnId;
 

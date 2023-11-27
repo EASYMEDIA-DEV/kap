@@ -139,7 +139,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 								var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 append목록에 추가하지 않는다.
 								$(".relField").find("input:hidden").each(function(){
 									if($(this).val() == data.edctnSeq) {
-										alert("이미 추가된 과정입니다.");
+										alert("이미 등록된 과정입니다.");
 										passYn = true;
 									}
 								});
@@ -195,7 +195,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
 
 			/* Editor Setting */
-			jQuery("textarea[id^='stduyCntn']").each(function(){
+			jQuery("textarea[id$='StduyCntn']").each(function(){
 				cmmCtrl.setEditor({
 					editor : jQuery(this).attr("id"),
 					height : 400,

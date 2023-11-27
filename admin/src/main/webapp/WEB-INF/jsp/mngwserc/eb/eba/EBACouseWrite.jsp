@@ -39,6 +39,22 @@
 
                 </div>
             </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">자격증연계<span class="star"> *</span></label>
+                    <div class="col-sm-2" style="margin-left: -15px">
+                        <div class="col-sm-1">
+                            <select class="form-control input-sm wd-sm" name="lcnsCnnctCd" id="lcnsCnnctCd" title="자격증연계">
+                                <option value="">선택</option>
+                                <c:forEach var="cdList" items="${studyCdList.LCNS_CNNCT}" varStatus="status">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.lcnsCnnctCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+            </fieldset>
 
 
 
@@ -110,7 +126,7 @@
                                             </c:if>
                                             <c:if test="${targetList.cdNm eq '기타' && targetList.cd eq 'ED_TARGET05001'}">
                                                 <div class="col-sm-5">
-                                                    <input type="text" class="form-control input-sm notRequired" id="etcNm" name="etcNm" value="" title="기타" maxlength="200" placeholder="기타 입력"/>
+                                                    <input type="text" class="form-control input-sm notRequired" id="etcNm" name="etcNm" value="${rtnTrgtData[rtnTrgtData.size()-1].etcNm}" title="기타" maxlength="200" placeholder="기타 입력"/>
                                                 </div>
                                             </c:if>
 
@@ -208,21 +224,32 @@
                 </div>
             </fieldset>
 
-            <fieldset>
+            <%--<fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">협업기관</label>
                     <div class="col-sm-11">
                         <input type="text" class="form-control input-sm notRequired" id="cprtnInsttNm" name="cprtnInsttNm" value="${rtnDto.cprtnInsttNm}" title="협업기관" maxlength="200" placeholder="협업기관 입력" />
                     </div>
                 </div>
+            </fieldset>--%>
+
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">PC 학습내용<span class="star"> *</span></label>
+                    <div class="col-sm-11">
+                        <textarea maxlength="500" class="col-sm-12 pv notRequired ckeditorRequired" style="resize: vertical;" rows="10" placeholder="학습내용을 입력하세요" id="pcStduyCntn" name="pcStduyCntn" title="PC 학습내용" oninput="cmmCtrl.checkMaxlength(this);">
+                            ${rtnDto.pcStduyCntn}
+                        </textarea>
+                    </div>
+                </div>
             </fieldset>
 
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">학습내용<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">모바일 학습내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea maxlength="500" class="col-sm-12 pv notRequired ckeditorRequired" style="resize: vertical;" rows="10" placeholder="학습내용을 입력하세요" id="stduyCntn" name="stduyCntn" title="학습내용" oninput="cmmCtrl.checkMaxlength(this);">
-                            ${rtnDto.stduyCntn}
+                        <textarea maxlength="500" class="col-sm-12 pv notRequired ckeditorRequired" style="resize: vertical;" rows="10" placeholder="학습내용을 입력하세요" id="mblStduyCntn" name="mblStduyCntn" title="모바일 학습내용" oninput="cmmCtrl.checkMaxlength(this);">
+                            ${rtnDto.mblStduyCntn}
                         </textarea>
                     </div>
                 </div>

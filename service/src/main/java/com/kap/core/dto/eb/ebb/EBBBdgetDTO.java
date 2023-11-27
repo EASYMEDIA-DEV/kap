@@ -52,6 +52,11 @@ public class EBBBdgetDTO extends BaseDTO {
     @NotNull
     private Integer episdYear;
 
+    @Schema(title = "비고", example = "텍스트")
+    @NotNull
+    private String etcNm;
+
+
 
 
 }

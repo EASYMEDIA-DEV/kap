@@ -26,7 +26,7 @@
                         <jsp:param name="srchText" value="기간검색" />
                         <jsp:param name="srchOption" value="등록일,수정일" />
                     </jsp:include>
-                    <div id="selectBoxArea"></div>
+                    <%--<div id="selectBoxArea"></div>--%>
                     <fieldset class="last-child">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label ta_center">검색<br/>키워드</label>

@@ -101,7 +101,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">연도<span class="star text-danger"> *</span></label>
                             <div class="col-sm-3">
-                                <select class="form-control input-sm wd-sm" name="episdYear" id="episdYear" title="회차">
+                                <select class="form-control input-sm wd-sm" name="episdYear" id="episdYear" title="년도">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${episdCdList.CO_YEAR_CD}" varStatus="status">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.episdYear eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -137,7 +137,7 @@
                             <div class="col-sm-10">
                                 <div class="form-inline">
                                     <div class="input-group form-date-group mr-sm">
-                                        <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="accsStrtDt" id="accsStrtDt" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시작일시" readonly="readonly"/>
+                                        <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" name="accsStrtDt" id="accsStrtDt" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="접수 시작일시" readonly="readonly"/>
                                         <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
@@ -150,7 +150,7 @@
                                             </c:forEach>
                                         </select>
                                         <span class="input-group-addon bg-white b0">~</span>
-                                        <input type="text" class="form-control notRequired input-sm datetimepicker_endDt" name="accsEndDtm" id="accsEndDt" value="${ kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="종료일시" readonly="readonly"/>
+                                        <input type="text" class="form-control notRequired input-sm datetimepicker_endDt" name="accsEndDtm" id="accsEndDt" value="${ kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="접수 종료일시" readonly="readonly"/>
                                         <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
@@ -230,16 +230,12 @@
                                     </tr>
                                     <tr class="setIsttr" data-total-count="0" style="display:none;">
                                         <td class="text-center">
-                                            -번호
                                         </td>
                                         <td class="text-center">
-                                            -이름
                                         </td>
                                         <td class="text-center">
-                                            -소속
                                         </td>
                                         <td class="text-center">
-                                            -약력
                                         </td>
                                         <td class="text-center">
                                             <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
@@ -272,8 +268,6 @@
                                         </c:when>
                                     </c:choose>
 
-
-
                                     </tbody>
                                 </table>
                             </div>
@@ -283,15 +277,14 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">정원<span class="star text-danger"> *</span></label>
                             <div class="col-sm-2">
-                                <label class="input_line">
-                                    <input type="text" class="form-control input-sm" id="fxnumCnt" name="fxnumCnt" value="${rtnDto.fxnumCnt}" title="정원수" maxlength="50" placeholder="정원수 입력" style="max-width: 150px;"/>
-                                    <span>명</span>
+                                <label class="input_line form-inline">
+                                    <input type="text" class="form-control input-sm numberChk" id="fxnumCnt" name="fxnumCnt" value="${rtnDto.fxnumCnt}" title="정원수" maxlength="50" placeholder="정원수 입력" style="max-width: 150px;"/> 명
                                 </label>
 
                             </div>
                             <div class="col-sm-1">
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle notRequired" data-name="fxnumImpsbYn" value="N"  id="fxnumImpsbYn" name="fxnumImpsbYn"  <c:if test="${rtnDto.fxnumImpsbYn eq 'N'}">checked</c:if> />
+                                    <input type="checkbox" class="checkboxSingle notRequired" value="N"  name="fxnumImpsbYn"  <c:if test="${rtnDto.fxnumImpsbYn eq 'N'}">checked</c:if> title="제한없음"/>
                                     <span class="ion-checkmark-round"></span> 제한없음
                                 </label>
                             </div>
@@ -307,131 +300,6 @@
                                         <span class="ion-record"></span> ${cdList.cdNm}
                                     </label>
                                 </c:forEach>
-                            </div>
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="onlineSet" style="display:none;">
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">온라인 강의 목차<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-11">
-                                <table class="table table-hover table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th class="text-center">번호</th>
-                                            <th class="text-center">강의명</th>
-                                            <th class="text-center">유튜브 URL</th>
-                                            <th class="text-center">강의 시간</th>
-                                            <th class="text-center">추가/삭제</th>
-                                        </tr>
-                                    </thead>
-                                    <!-- 리스트 목록 결과 -->
-                                    <tbody id="onlineList">
-                                        <tr class="examTr" style="display: none;">
-                                            <td class="text-center" rowspan="2"></td>
-                                            <td class="text-center">
-                                                <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
-                                            </td><!--강의명-->
-                                            <td class="text-center">
-                                                <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
-                                            </td><!--유튜브 URL-->
-                                            <td class="text-center">
-                                                <input type="text" class="form-control input-sm notRequired" name="onlineTime" value="" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
-                                            </td><!--강의시간-->
-                                            <td class="text-center">
-                                                <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
-                                                <button type="button" class="btn btn-inverse btn-sm btnRemove">삭제</button>
-                                            </td><!--삭제-->
-                                        </tr>
-                                        <tr class="examTr" style="display: none;">
-                                            <td class="text-center" colspan="4">
-                                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
-                                                    <div class="dz-default dz-message">
-                                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                                                    </div>
-                                                </div>
-                                                <p class="text-bold mt">
-                                                    ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
-                                                </p>
-                                            </td>
-                                        </tr>
-
-                                        <c:choose>
-                                            <c:when test="${lctrDtoList.size()>0}">
-                                                <!-- 온라인강의 목차 출력 s -->
-                                                <c:forEach var="lctrDtoList" items="${lctrDtoList}" varStatus="status">
-                                                    <tr>
-                                                        <td class="text-center" rowspan="2">${status.count }</td>
-                                                        <td class="text-center">
-                                                            <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="${lctrDtoList.nm}" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
-                                                        </td><!--강의명-->
-                                                        <td class="text-center">
-                                                            <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="${lctrDtoList.url}" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
-                                                        </td><!--유튜브 URL-->
-                                                        <td class="text-center">
-                                                            <input type="text" class="form-control input-sm notRequired" name="onlineTime" value="${lctrDtoList.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
-                                                        </td><!--강의시간-->
-                                                        <td class="text-center">
-                                                            <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
-                                                            <button type="button" class="btn btn-inverse btn-sm btnRemove">삭제</button>
-                                                        </td><!--삭제-->
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center" colspan="4">
-                                                            <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                            <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                            <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq${lctrDtoList.thnlFileSeq}" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
-                                                                <div class="dz-default dz-message">
-                                                                    <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                                                                </div>
-                                                            </div>
-                                                            <p class="text-bold mt">
-                                                                ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
-                                                            </p>
-                                                        </td>
-                                                    </tr>
-
-                                                    <input type="hidden" class="notRequired thnlFileForm" id="thnlFileSeq" name="lctrFileSeq${lctrDtoList.thnlFileSeq}" value="${lctrDtoList.thnlFileSeq}" />
-                                                </c:forEach>
-                                                <!-- 온라인강의 목차 출력 e -->
-                                            </c:when>
-                                            <c:otherwise>
-                                                <tr>
-                                                    <td class="text-center" rowspan="2">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                                                    <td class="text-center">
-                                                        <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="${list.url}" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
-                                                    </td><!--강의명-->
-                                                    <td class="text-center">
-                                                        <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="${list.url}" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
-                                                    </td><!--유튜브 URL-->
-                                                    <td class="text-center">
-                                                        <input type="text" class="form-control input-sm notRequired" name="onlineTime" value="${list.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
-                                                    </td><!--강의시간-->
-                                                    <td class="text-center">
-                                                        <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
-                                                        <button type="button" class="btn btn-inverse btn-sm btnRemove">삭제</button>
-                                                    </td><!--삭제-->
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center" colspan="4">
-                                                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                        <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
-                                                            <div class="dz-default dz-message">
-                                                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                                                            </div>
-                                                        </div>
-                                                        <p class="text-bold mt">
-                                                            ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </fieldset>
@@ -454,10 +322,10 @@
                                         <input type="text" class="form-control input-sm" id="picNm" name="picNm" value="${rtnDto.picNm}" title="담당자명" maxlength="50" placeholder="담당자명"/>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm" id="picEmail" name="picEmail" value="${rtnDto.picEmail}" title="담당자이메일" maxlength="50" placeholder="담당자이메일"/>
+                                        <input type="text" class="form-control input-sm emailChk" id="picEmail" name="picEmail" value="${rtnDto.picEmail}" title="담당자이메일" maxlength="50" placeholder="담당자이메일"/>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm" id="picTelNo" name="picTelNo" value="${rtnDto.picTelNo}" title="담당자전화번호" maxlength="50" placeholder="담당자전화번호"/>
+                                        <input type="text" class="form-control input-sm mobileNumChk" id="picTelNo" name="picTelNo" value="${rtnDto.picTelNo}" title="담당자전화번호" maxlength="50" placeholder="담당자전화번호"/>
                                     </td>
                                     </tbody>
                                 </table>
@@ -523,7 +391,7 @@
                                         <td class="text-center">
                                             ${roomDto.rprsntTelNo}
                                         </td>
-                                        <input type="hidden" name="placeSeq" id="placeSeq" value="${rtnDto.placeSeq}" disabled="true" titlle="교육장">
+                                        <input type="hidden" class="notRequired" name="placeSeq" id="placeSeq" value="${rtnDto.placeSeq}" disabled="true" titlle="교육장">
                                     </tr>
                                     </tbody>
                                 </table>
@@ -531,7 +399,141 @@
                         </div>
                     </fieldset>
 
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">협력기관</label>
+                            <div class="col-sm-11">
+                                <input type="text" class="form-control input-sm notRequired" id="cprtnInsttNm" name="cprtnInsttNm" value="${rtnDto.cprtnInsttNm}" title="협력기관" maxlength="200" placeholder="협력기관 입력" />
+                            </div>
+                        </div>
+                    </fieldset>
 
+                    <!--온라인 강의 시작-->
+                    <fieldset class="onlineSet" style="display:none;">
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">온라인 강의 목차<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-11">
+                                <table class="table table-hover table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th class="text-center">번호</th>
+                                        <th class="text-center">강의명</th>
+                                        <th class="text-center">유튜브 URL</th>
+                                        <th class="text-center">강의 시간</th>
+                                        <th class="text-center">추가/삭제</th>
+                                    </tr>
+                                    </thead>
+                                    <!-- 리스트 목록 결과 -->
+                                    <tbody id="onlineList">
+                                    <tr class="examTr" style="display: none;">
+                                        <td class="text-center" rowspan="2"></td>
+                                        <td class="text-center">
+                                            <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
+                                        </td><!--강의명-->
+                                        <td class="text-center">
+                                            <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
+                                        </td><!--유튜브 URL-->
+                                        <td class="text-center">
+                                            <input type="text" class="form-control input-sm numberChk notRequired" name="onlineTime" value="" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
+                                        </td><!--강의시간-->
+                                        <td class="text-center">
+                                            <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
+                                            <button type="button" class="btn btn-inverse btn-sm btnRemove">삭제</button>
+                                        </td><!--삭제-->
+                                    </tr>
+                                    <tr class="examTr" style="display: none;">
+                                        <td class="text-center" colspan="4">
+                                            <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                            <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                            <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
+                                                <div class="dz-default dz-message">
+                                                    <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                                </div>
+                                            </div>
+                                            <p class="text-bold mt">
+                                                ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                            </p>
+                                        </td>
+                                    </tr>
+
+                                    <c:choose>
+                                        <c:when test="${lctrDtoList.size()>0}">
+                                            <!-- 온라인강의 목차 출력 s -->
+                                            <c:forEach var="lctrDtoList" items="${lctrDtoList}" varStatus="status">
+                                                <tr>
+                                                    <td class="text-center" rowspan="2">${status.count }</td>
+                                                    <td class="text-center">
+                                                        <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="${lctrDtoList.nm}" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
+                                                    </td><!--강의명-->
+                                                    <td class="text-center">
+                                                        <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="${lctrDtoList.url}" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
+                                                    </td><!--유튜브 URL-->
+                                                    <td class="text-center">
+                                                        <input type="text" class="form-control input-sm numberChk notRequired" name="onlineTime" value="${lctrDtoList.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
+                                                    </td><!--강의시간-->
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
+                                                        <button type="button" class="btn btn-inverse btn-sm btnRemove">삭제</button>
+                                                    </td><!--삭제-->
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center" colspan="4">
+                                                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                        <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq${lctrDtoList.thnlFileSeq}" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
+                                                            <div class="dz-default dz-message">
+                                                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                                            </div>
+                                                        </div>
+                                                        <p class="text-bold mt">
+                                                            ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
+                                                <input type="hidden" class="notRequired thnlFileForm" id="thnlFileSeq" name="lctrFileSeq${lctrDtoList.thnlFileSeq}" value="${lctrDtoList.thnlFileSeq}" />
+                                            </c:forEach>
+                                            <!-- 온라인강의 목차 출력 e -->
+                                        </c:when>
+                                        <c:otherwise>
+                                            <tr>
+                                                <td class="text-center" rowspan="2">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
+                                                <td class="text-center">
+                                                    <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="${list.url}" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
+                                                </td><!--강의명-->
+                                                <td class="text-center">
+                                                    <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="${list.url}" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
+                                                </td><!--유튜브 URL-->
+                                                <td class="text-center">
+                                                    <input type="text" class="form-control input-sm numberChk notRequired" name="onlineTime" value="${list.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
+                                                </td><!--강의시간-->
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
+                                                    <button type="button" class="btn btn-inverse btn-sm btnRemove">삭제</button>
+                                                </td><!--삭제-->
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center" colspan="4">
+                                                    <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                                    <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                    <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
+                                                        <div class="dz-default dz-message">
+                                                            <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-bold mt">
+                                                        ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <!--온라인 강의 끝-->
 
                     <fieldset>
                         <div class="form-group text-sm">
@@ -592,6 +594,12 @@
                                 <button type="button" class="btn btn-inverse btn-sm eduExamSearch">
                                     평가 검색
                                 </button>
+
+                                <label class="checkbox-inline c-checkbox pull-right">
+                                    <input type="checkbox" class="checkboxSingle notRequired" value="Y"  name="otsdExamPtcptYn"  <c:if test="${rtnDto.otsdExamPtcptYn eq 'Y'}">checked</c:if> title="오프라인평가"/>
+                                    <span class="ion-checkmark-round"></span> 오프라인평가
+                                </label>
+
                                 <table class="table table-hover table-striped">
                                     <thead>
                                     <tr>
@@ -609,7 +617,7 @@
                                     <tr class="setExg" <c:if test="${rtnDto.examNm eq ''}">style="display: none;"</c:if>>
                                         <td class="text-center">${rtnDto.examNm}</td>
                                     </tr>
-                                    <input type="hidden" name="examSeq" id="examSeq" value="${rtnDto.examSeq}" disabled="true">
+                                    <input type="hidden" class="notRequired" name="examSeq" id="examSeq" value="${rtnDto.examSeq}" disabled="true">
                                     </tbody>
                                 </table>
                             </div>
@@ -652,10 +660,18 @@
                         <c:forEach var="cdList" items="${ED_BDGET_CD01}" varStatus="status">
 
                             <c:set var="tempPmt" value="" />
+                            <c:set var="tempClass" value="numberChk" />
                             <c:forEach var="bdgetList" items="${bdgetList}">
                                 <c:if test="${tempPmt eq ''}">
                                     <c:if test="${cdList.cd eq bdgetList.cd}">
-                                        <c:set var="tempPmt" value="${bdgetList.pmt}" />
+                                        <c:if test="${cdList.cd eq 'ED_BDGET_CD01011' }">
+                                            <c:set var="tempClass" value="" />
+                                            <c:set var="tempPmt" value="${bdgetList.etcNm}" />
+                                        </c:if>
+                                        <c:if test="${cdList.cd ne 'ED_BDGET_CD01011' }">
+                                            <c:set var="tempPmt" value="${bdgetList.pmt}" />
+                                        </c:if>
+
                                     </c:if>
                                     <c:if test="${cdList.cd ne bdgetList.cd}">
                                         <c:set var="tempPmt" value="" />
@@ -672,7 +688,14 @@
                             <c:forEach var="bdgetList" items="${bdgetList}">
                                 <c:if test="${tempPmt eq ''}">
                                     <c:if test="${cdList.cd eq bdgetList.cd}">
-                                        <c:set var="tempPmt" value="${bdgetList.pmt}" />
+                                        <c:if test="${cdList.cd eq 'ED_BDGET_CD02011' }">
+                                            <c:set var="tempClass" value="" />
+                                            <c:set var="tempPmt" value="${bdgetList.etcNm}" />
+                                        </c:if>
+                                        <c:if test="${cdList.cd ne 'ED_BDGET_CD02011' }">
+                                            <c:set var="tempPmt" value="${bdgetList.pmt}" />
+                                        </c:if>
+
                                     </c:if>
                                     <c:if test="${cdList.cd ne bdgetList.cd}">
                                         <c:set var="tempPmt" value="" />

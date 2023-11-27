@@ -1,4 +1,4 @@
-define(["ezCtrl", "ezVald"], function(ezCtrl) {
+define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 	"use strict";
 
@@ -10,13 +10,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	// get controller object
 	var ctrl = new ezCtrl.controller(exports.controller);
 
+
 	// form Object
-	//var $formObj = ctrl.obj.find("form").eq(0);
 	var $formObj = jQuery("#frmData");
 
-	//var onlineHtml = $.extend({}, $("#onlineList").find("tr.examTr").eq(0));
-	//var onlineFileHtml = $.extend({}, $("#onlineList").find("tr.examTr").eq(1));
-	var onlineHtml = $("#onlineList").find("tr.examTr").eq(0).clone();
+	var onlineHtml = $("#onlineList").find("tr.examTr").eq(0).clone(true);
 	var onlineFileHtml = $("#onlineList").find("tr.examTr").eq(1).clone(true);
 
 
@@ -231,14 +229,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	//평가여부 N일경우 평가항목 숨김
 	if("N" == jdgmtYn){
 		$(".jdgmtYn").css("display", "none");
-		$(".jdgmtYn").find("input:hidden").each(function(){
+		/*$(".jdgmtYn").find("input:hidden").each(function(){
 			$(this).addClass("notRequired");
-		});
+		});*/
+		$("#examSeq").prop("disabled", true);
 	}else{
 		$(".jdgmtYn").css("display", "");
-		$(".jdgmtYn").find("input:hidden").each(function(){
+		/*$(".jdgmtYn").find("input:hidden").each(function(){
 			$(this).removeClass("notRequired");
-		});
+		});*/
+		$("#examSeq").prop("disabled", false);
 	}
 	}
 
@@ -494,7 +494,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							maxFileSize : trgtObj.data("maxFileSize"),
 							fileExtn    : trgtObj.data("fileExtn"),
 							fileFieldNm : trgtObj.data("fileFieldNm")
-						})
+						});
+
+						//강의시간 숫자입력 밸리데이션 체크를 위해서 다시 적용해줌
+						$("#onlineList").find("tr:last").validation({});
+
 					}
 				}
 			},
@@ -526,6 +530,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			//리스트 조회
 			filedSet();
 			//폼 데이터 처리
+
 
 			//예산지출내역 폼 조립
 			bdgetSet();
@@ -598,6 +603,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				async : {
 					use : true,
 					func : function (){
+
 						var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
@@ -646,6 +652,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							}
 
 						});
+
+
+						if(isttrSeqList.length == 0){
+							alert("강사를 추가 해주세요");
+							return false
+						}
+
 						actForm.isttrSeqList = isttrSeqList;
 
 						//접수시간 관련 날짜 유효성 체크
@@ -676,6 +689,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							}
 						}
 
+						if($("#placeSeq").val() == ""){
+							alert("교육장소를 선택해주세요");
+							return false;
+						}
+
+						if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == ""){
+							alert("평가를 선택해주세요");
+							return false;
+						}
+
+
+
 
 						actForm.accsStrtDtm = accsStrtDtm;//접수시작일시
 						actForm.accsEndDtm = accsEndDtm;//접수종료일시
@@ -689,6 +714,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						actForm.picEmail = $("#picEmail").val();//담당자이메일
 						actForm.picTelNo = $("#picTelNo").val()//담당자전화번호
 						actForm.placeSeq = $("#placeSeq").val();//교육장소순번
+
+						actForm.cprtnInsttNm = $("#cprtnInsttNm").val();//협력기관
+
+
 						actForm.srvSeq = $("#srvSeq").val();//설문순번
 						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
 						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
@@ -696,6 +725,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						actForm.edctnNtctnFileSeq = $("#edctnNtctnFileSeq").val();
 
 						actForm.examSeq = $("#examSeq").val();//시험순번
+						actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
 						actForm.cmptnAutoYn = $("input[name='expsYn']:checked").val();//수료자동여부
 						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
 
@@ -746,7 +776,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 								var onlineUrl = $(this).find("[name='onlineUrl']").val();
 								var onlineTime = $(this).find("[name='onlineTime']").val();
 
-								debugger;
+								//debugger;
 								onlinePack.thnlFileSeq = $(this).next().find("input:hidden.thnlFileForm").val();
 
 								onlinePack.edctnSeq = actForm.edctnSeq;
@@ -807,9 +837,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 							temp.edctnSeq =  actForm.edctnSeq;
 							temp.episdOrd = actForm.episdOrd;
-							temp.cd = $(this).attr("name");
 							temp.episdYear = actForm.episdYear;
-							temp.pmt = $(this).val();
+
+							temp.cd = $(this).attr("name");
+
+							if("ED_BDGET_CD01011" == $(this).attr("name") || "ED_BDGET_CD02011" == $(this).attr("name")){
+								temp.etcNm = $(this).val();
+							}else{
+								temp.pmt = $(this).val();
+							}
+
+
+
 
 							bdgetList.push(temp);
 						});

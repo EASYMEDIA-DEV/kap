@@ -151,6 +151,7 @@
 		, a.pic_tel_no
 		, a.place_seq
 		, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
+		, a.exps_yn
 		, a.reg_id
 		, (select name from co_adm_mst where id = a.reg_id) as reg_name
 		, a.reg_dtm
@@ -336,7 +337,7 @@
 
 	<!--
       쿼리명 : EBBEpisdMapper.selectEpisdDtl
-      설  명 : 교육과정 상세를 조회한다.
+      설  명 : 교육차수 상세를 조회한다.
        수정일     수정자       수정내용
      ==========   ======    ==============
      2023.11.02   김학규       최초생성
@@ -395,6 +396,8 @@
 		     , srv_end_dtm
 			 , exam_seq
 		     , exam_nm
+		     , otsd_exam_ptcpt_yn
+		     , cprtn_instt_nm
 			 , place_nm
 			 , reg_id
 			 , reg_name
@@ -439,7 +442,9 @@
 				   , a.srv_strt_dtm
 				   , a.srv_end_dtm
 				   , a.exam_seq
+		           , a.otsd_exam_ptcpt_yn
 				   , (SELECT NM FROM ex_exam_mst WHERE exam_seq = A.exam_seq) as exam_nm
+		           , cprtn_instt_nm
 				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
 				   , a.reg_id
 				   , (select name from co_adm_mst where id = a.reg_id) as reg_name
@@ -502,6 +507,8 @@
 			, srv_strt_dtm
 			, srv_end_dtm
 			, exam_seq
+			, otsd_exam_ptcpt_yn
+			, cprtn_instt_nm
 			, cmptn_auto_yn
 			, exps_yn
 			, reg_id
@@ -531,6 +538,8 @@
 				, #{srvStrtDtm}
 				, #{srvEndDtm}
 				, #{examSeq}
+				, #{otsdExamPtcptYn}
+				, #{cprtnInsttNm}
 				, #{cmptnAutoYn}
 				, #{expsYn}
 				, #{regId}
@@ -707,6 +716,7 @@
 			, pic_nm = #{picNm}
 			, pic_email = #{picEmail}
 			, pic_tel_no = #{picTelNo}
+			, cprtn_instt_nm = #{cprtnInsttNm}
 			, edctn_ntctn_file_seq = #{edctnNtctnFileSeq}
 			, place_seq = #{placeSeq}
 			, srv_seq = #{srvSeq}
@@ -714,6 +724,7 @@
 			, srv_strt_dtm = #{srvStrtDtm}
 			, srv_end_dtm = #{srvEndDtm}
 			, cmptn_auto_yn = #{cmptnAutoYn}
+			, otsd_exam_ptcpt_yn = #{otsdExamPtcptYn}
 			, exps_yn = #{expsYn}
 			, mod_id = #{modId}
 			, mod_ip = #{modIp}
@@ -768,6 +779,7 @@
 			, cd
 			, episd_year
 			, pmt
+			, etc_nm
 			, reg_id
 			, reg_ip
 			, reg_dtm
@@ -782,6 +794,7 @@
 			, #{bdgetList.cd}
 			, #{bdgetList.episdYear}
 			, #{bdgetList.pmt}
+			, #{bdgetList.etcNm}
 			, #{regId}
 			, #{regIp}
 			, now()
@@ -792,6 +805,35 @@
 		</foreach>
 	</insert>
 
+
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectBdgetDtlList
+      설  명 : 교육차수관리 - 강사관계를 호출한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.24   김학규       최초생성
+ 	-->
+	<select id="selectBdgetDtlList" parameterType="EBBBdgetDTO" resultType="EBBBdgetDTO">
+		select /*EBBEpisdMapper.selectBdgetDtlList */
+			edctn_seq
+			, episd_ord
+			, cd
+            , episd_year
+            , pmt
+		     , etc_nm
+            , reg_id
+            , reg_ip
+            , reg_dtm
+            , mod_id
+            , mod_ip
+            , mod_dtm
+		from ed_edctn_bdget_expns_dtl
+		where 1=1
+		  and edctn_seq = #{edctnSeq}
+		  and episd_year = #{episdYear}
+		  and episd_ord = #{episdOrd}
+	</select>
 
 
 

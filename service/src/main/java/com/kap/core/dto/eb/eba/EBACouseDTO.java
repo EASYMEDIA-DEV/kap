@@ -116,11 +116,22 @@ public class EBACouseDTO extends BaseDTO {
     @Schema(title = "학습준비물명", example = "텍스트")
     private String stduySuplsNm;
 
-    @Schema(title = "협업기관명", example = "텍스트")
-    private String cprtnInsttNm;
+    /*@Schema(title = "협업기관명", example = "텍스트")
+    private String cprtnInsttNm;*/
 
-    @Schema(title = "학습내용", example = "텍스트")
-    private String stduyCntn;
+    @Schema(title = "PC학습내용", example = "텍스트")
+    private String pcStduyCntn;
+
+    @Schema(title = "모바일학습내용", example = "텍스트")
+    private String mblStduyCntn;
+
+    @Schema(title = "자격증연계코드", example = "텍스트")
+    private String lcnsCnnctCd;
+
+    @Schema(title = "자격증연계코드명", example = "텍스트")
+    private String lcnsCnnctCdNm;
+
+
 
     @Schema(title = "썸네일파일순번", example = "숫자")
     private Integer thnlFileSeq;
@@ -167,6 +178,7 @@ public class EBACouseDTO extends BaseDTO {
     private List<Integer> edctnRel2;
     private List<Integer> edctnRel3;
 
+    private List<EBACouseDTO> trgtDtlList;//교육과정대상 상세 목록
 
 
 

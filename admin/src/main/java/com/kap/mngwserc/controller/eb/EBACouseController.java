@@ -138,6 +138,7 @@ public class EBACouseController {
         cdDtlList.add("CMPTN_JDGMT");//수료 기준 - 평가
         cdDtlList.add("STDUY_DD");//학습시간 - 학습일
         cdDtlList.add("STDUY_TIME");//학습시간 - 학습시간
+        cdDtlList.add("LCNS_CNNCT");//자격증연계코드
 
         cdDtlList.add("EDCTN_REL");//교욱과정 연계(선수, 후속)
 
