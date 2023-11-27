@@ -162,13 +162,17 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 event : {
                     change : function () {
                         var ctgryCd =  $("#ctgryCd option:selected").val();
-                        if (ctgryCd == "COMPANY01001")
-                        {
+                        if (ctgryCd == "COMPANY01001") {
                             $(".sqInfoArea").hide();
-                        }
-                        else if (ctgryCd == "COMPANY01002")
-                        {
+                            $(".qlty5StarArea").show();
+                            $(".pay5StarArea").show();
+                            $(".tchlg5StarArea").show();
+                       }
+                        else if (ctgryCd == "COMPANY01002") {
                             $(".sqInfoArea").show();
+                            $(".qlty5StarArea").hide();
+                            $(".pay5StarArea").hide();
+                            $(".tchlg5StarArea").hide();
                         }
                     }
                 }

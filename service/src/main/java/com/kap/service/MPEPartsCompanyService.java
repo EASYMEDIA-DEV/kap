@@ -56,4 +56,20 @@ public interface MPEPartsCompanyService {
      * 부품사를 삭제한다.
      */
     public int deletePartsCompany(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 교육사업 개수를 조회한다.
+     */
+    public int selectEduCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 개수를 조회한다.
+     */
+    public int selectConsultingCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 상생사업 개수를 조회한다.
+     */
+    public int selectWinBusinessCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
 }

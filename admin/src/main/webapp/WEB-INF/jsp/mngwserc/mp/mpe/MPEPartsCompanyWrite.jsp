@@ -145,7 +145,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset class="qlty5StarArea" <c:if test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">품질5스타</label>
                                 <div class="col-sm-5">
@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset class="pay5StarArea" <c:if test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">납입5스타</label>
                                 <div class="col-sm-5">
@@ -195,7 +195,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset>
+                        <fieldset class="tchlg5StarArea" <c:if test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">기술5스타</label>
                                 <div class="col-sm-5">
@@ -222,7 +222,7 @@
                         </fieldset>
                         <fieldset class="sqInfoArea" <c:if test="${rtnInfo.ctgryCd eq null or rtnInfo.ctgryCd eq 'COMPANY01001'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
-                                <label class="col-sm-1 control-label">SQ 정보</label>${sqInfoListCnt}
+                                <label class="col-sm-1 control-label">SQ 정보</label>
                                 <div class="col-sm-5">
                                     <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">${sqInfoList.sqInfoList}
                                         <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>
