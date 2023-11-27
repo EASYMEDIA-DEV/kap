@@ -63,7 +63,7 @@ public class MPEPartsCompanyController {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("COMPANY_TYPE");
-        modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+        modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
         modelMap.addAttribute("rtnData", mpePartsCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
 
         return "mngwserc/mp/mpe/MPEPartsCompanyList.admin";
@@ -108,7 +108,7 @@ public class MPEPartsCompanyController {
             mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getBsnmNo());
             MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
-            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
             if (originList.getList().size() != 0) {
                 modelMap.addAttribute("rtnInfo", originList.getList().get(0));
             }
@@ -142,7 +142,7 @@ public class MPEPartsCompanyController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("COMPANY_TYPE");
-            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
         }
         catch (Exception e)
         {
