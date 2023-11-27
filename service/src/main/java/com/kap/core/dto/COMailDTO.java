@@ -41,7 +41,7 @@ public class COMailDTO extends COMessageDTO {
     //@Schema(title="메일 클릭 확인")
     //private int click = 0;
     @Schema(title="예약 발송")
-    private String mailType = "NORMAL";
+    private String mail_type = "NORMAL";
     @Schema(title="메일 내용(치환전 템플릿)")
     private String body;
 

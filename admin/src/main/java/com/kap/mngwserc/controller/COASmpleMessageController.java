@@ -60,7 +60,7 @@ public class COASmpleMessageController {
      */
     @RestController
     @RequestMapping(value="/send")
-    public class COASmpleRestController {
+    public class COASmpleMessageRestController {
         /**
          * 샘플 이메일 발송
          */
@@ -80,7 +80,7 @@ public class COASmpleMessageController {
             //이메일
             receiverDto.setEmail("dldhrwjd@easymedia.net ");
             //이름(비필수)
-            receiverDto.setName("이옥정");
+            receiverDto.setName("이옥정1");
             //치환문자1
             receiverDto.setNote1("치환문자1");
             //치환문자2
@@ -93,6 +93,25 @@ public class COASmpleMessageController {
             receiverDto.setNote5("치환문자5");
             //수신자 정보 등록
             mailForm.getReceiver().add(receiverDto);
+
+            //수신자 정보
+            COMessageReceiverDTO receiverDto2 = new COMessageReceiverDTO();
+            //이메일
+            receiverDto2.setEmail("dldhrwjd@easymedia.net ");
+            //이름(비필수)
+            receiverDto2.setName("이옥정2");
+            //치환문자1
+            receiverDto2.setNote1("치환문자1");
+            //치환문자2
+            receiverDto2.setNote2("치환문자2");
+            //치환문자3
+            receiverDto2.setNote3("치환문자3");
+            //치환문자4
+            receiverDto2.setNote4("치환문자4");
+            //치환문자5
+            receiverDto2.setNote5("치환문자5");
+            //수신자 정보 등록
+            mailForm.getReceiver().add(receiverDto2);
             return cOMessageService.sendMail(mailForm, "IMAQaRply.html");
         }
 
@@ -107,10 +126,10 @@ public class COASmpleMessageController {
             smsDto.setSubject("[ KAP ] 문의에 대한 답변 드립니다");
             //수신자 정보
             COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
-            //이메일
+            //전화번호
             receiverDto.setMobile("01033746727");
             //이름(비필수)
-            receiverDto.setName("이옥정");
+            receiverDto.setName("이옥정1");
             //치환문자1
             receiverDto.setNote1("치환문자1");
             //치환문자2
@@ -121,8 +140,25 @@ public class COASmpleMessageController {
             receiverDto.setNote4("치환문자4");
             //치환문자5
             receiverDto.setNote5("치환문자5");
-            //수신자 정보 등록
             smsDto.getReceiver().add(receiverDto);
+            //수신자 정보
+            COMessageReceiverDTO receiverDto2= new COMessageReceiverDTO();
+            //전화번호
+            receiverDto2.setMobile("01033746727");
+            //이름(비필수)
+            receiverDto2.setName("이옥정2");
+            //치환문자1
+            receiverDto2.setNote1("치환문자1");
+            //치환문자2
+            receiverDto2.setNote2("치환문자2");
+            //치환문자3
+            receiverDto2.setNote3("치환문자3");
+            //치환문자4
+            receiverDto2.setNote4("치환문자4");
+            //치환문자5
+            receiverDto2.setNote5("치환문자5");
+            //수신자 정보 등록
+            smsDto.getReceiver().add(receiverDto2);
             return cOMessageService.sendSms(smsDto, "SMSSample.txt");
         }
     }
