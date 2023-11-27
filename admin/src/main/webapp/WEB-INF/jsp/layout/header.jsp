@@ -32,6 +32,7 @@
     	<link rel="stylesheet" href="/common/js/lib/datetimepicker/jquery.datetimepicker.css" />
 		<link rel="stylesheet" href="/common/ckeditor/plugins/codemirror/css/codemirror.min.css" />
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> <%-- monthpicker --%>
+		<link rel="stylesheet" href="/common/css/kap_admin.css" />
     	<script type="text/javascript" src="/common/js/lib/jquery/jquery.1.12.4.js"></script>
     	<script type="text/javascript" src="/bootstrap/vendor/bootstrap/dist/js/bootstrap.js"></script>
 		<script type="text/javascript" src="/bootstrap/vendor/bootstrap/dist/js/bootstrap-submenu.js"></script>
