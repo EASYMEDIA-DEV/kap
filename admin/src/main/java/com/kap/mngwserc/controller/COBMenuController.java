@@ -2,6 +2,7 @@ package com.kap.mngwserc.controller;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COBMenuService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
@@ -105,11 +106,11 @@ public class COBMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBMenuService.insertMenu(cOMenuDTO));
 		}
 		catch (Exception e)
@@ -131,11 +132,11 @@ public class COBMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBMenuService.updateMenuNm(cOMenuDTO));
 		}
 		catch (Exception e)
@@ -157,11 +158,11 @@ public class COBMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBMenuService.updateMenuInf(cOMenuDTO));
 		}
 		catch (Exception e)
@@ -183,11 +184,11 @@ public class COBMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBMenuService.updateMenuPstn(cOMenuDTO));
 		}
 		catch (Exception e)
@@ -209,11 +210,11 @@ public class COBMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBMenuService.deleteMenu(cOMenuDTO));
 		}
 		catch (Exception e)

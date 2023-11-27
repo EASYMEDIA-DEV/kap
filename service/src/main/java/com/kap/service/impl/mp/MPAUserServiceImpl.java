@@ -198,7 +198,7 @@ public class MPAUserServiceImpl implements MPAUserService {
     public int updatePwdInit(MPPwdInitDto mpPwdInitDto) throws Exception {
         // 특수문자 포함하도록 변경
         String password = RandomStringUtils.random(8, 0, 0, true, true, null, new SecureRandom()) + RandomStringUtils.random(2, 35, 64, false, false, null, new SecureRandom());
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
         // & < > : ; ? ' " 공백은 치환 -> !
         password = password.replaceAll("[\\s&<>:;?']", "!");
@@ -208,12 +208,10 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpPwdInitDto.setPwd(password);
         mpPwdInitDto.setEmail(mpPwdInitDtos.getEmail());
         mpPwdInitDto.setMemCd(mpPwdInitDtos.getMemCd());
-        mpPwdInitDto.setRegId( coaAdmDTO.getId() );
-        mpPwdInitDto.setRegIp( coaAdmDTO.getLoginIp() );
-        mpPwdInitDto.setModId( coaAdmDTO.getId() );
-        mpPwdInitDto.setModIp( coaAdmDTO.getLoginIp() );
-
-
+        mpPwdInitDto.setRegId( cOUserDetailsDTO.getId() );
+        mpPwdInitDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
+        mpPwdInitDto.setModId( cOUserDetailsDTO.getId() );
+        mpPwdInitDto.setModIp( cOUserDetailsDTO.getLoginIp() );
         mpPwdInitDto.setNewEncPwd(COSeedCipherUtil.encryptPassword(password, mpPwdInitDto.getId()));
 
 
@@ -411,15 +409,15 @@ public class MPAUserServiceImpl implements MPAUserService {
         workbook.close();
 
         //다운로드 사유 입력
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
         pCoSystemLogDTO.setTrgtMenuNm("회원/부품사 관리 > 일반회원관리");
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPAUserServiceImpl");
         pCoSystemLogDTO.setFncNm("selectUserList");
         pCoSystemLogDTO.setPrcsCd("DL");
         pCoSystemLogDTO.setRsn(mpaUserDto.getRsn());
-        pCoSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());
-        pCoSystemLogDTO.setRegIp(lgnCOAAdmDTO.getLoginIp());
+        pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+        pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
 
     }
@@ -616,15 +614,15 @@ public class MPAUserServiceImpl implements MPAUserService {
         workbook.close();
 
         //다운로드 사유 입력
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
         pCoSystemLogDTO.setTrgtMenuNm("회원/부품사 관리 > 일반회원관리");
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPAUserServiceImpl");
         pCoSystemLogDTO.setFncNm("selectUserList");
         pCoSystemLogDTO.setPrcsCd("DL");
         pCoSystemLogDTO.setRsn(mpaUserDto.getRsn());
-        pCoSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());
-        pCoSystemLogDTO.setRegIp(lgnCOAAdmDTO.getLoginIp());
+        pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+        pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
     }
 
@@ -878,15 +876,15 @@ public class MPAUserServiceImpl implements MPAUserService {
         workbook.close();
 
         //다운로드 사유 입력
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
         pCoSystemLogDTO.setTrgtMenuNm("회원/부품사 관리 > 부품사회원 관리");
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPAUserServiceImpl");
         pCoSystemLogDTO.setFncNm("selectUserList");
         pCoSystemLogDTO.setPrcsCd("DL");
         pCoSystemLogDTO.setRsn(mpaUserDto.getRsn());
-        pCoSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());
-        pCoSystemLogDTO.setRegIp(lgnCOAAdmDTO.getLoginIp());
+        pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+        pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
     }
 }

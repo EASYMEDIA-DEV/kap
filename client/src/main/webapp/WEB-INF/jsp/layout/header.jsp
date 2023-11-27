@@ -33,10 +33,19 @@
 	<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js"></script>
 	<!--메시지 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js"></script>
+	<c:set var="servletPath" value="${requestScope['javax.servlet.forward.servlet_path']}" scope="request" />
+	<c:choose>
+		<c:when test="${ fn:startsWith(servletPath, '/my-page/') }">
+			<c:set var="wrapClass" value="mypage" />
+		</c:when>
+		<c:otherwise>
+
+		</c:otherwise>
+	</c:choose>
 </head>
 <body>
-<div id="wrap">
-	<header id="header">
+<div id="wrap" class="${ wrapClass }">
+	<header id="header" c>
 		<!-- header - START -->
 		<h1><a class="logo" href="#"></a></h1>
 		<a href="javascript:" class="prev-btn icon-btn"></a>

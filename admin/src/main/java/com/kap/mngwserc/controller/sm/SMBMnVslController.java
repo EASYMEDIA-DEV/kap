@@ -1,6 +1,6 @@
 package com.kap.mngwserc.controller.sm;
 
-import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.sm.smb.SMBMainVslDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMBMnVslService;
@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,7 +85,6 @@ public class SMBMnVslController {
     @GetMapping(value = "/write")
     public String getMnVslWritePage(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
             sMBMainVslDTO.setMdCd(mdCd);
             modelMap.addAttribute("mdCd", sMBMainVslDTO.getMdCd());
 
@@ -105,10 +107,10 @@ public class SMBMnVslController {
     @PostMapping(value = "/insert")
     public String insertMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             sMBMainVslDTO.setMdCd(mdCd);
-            sMBMainVslDTO.setRegId(coaAdmDTO.getId());
-            sMBMainVslDTO.setRegIp(coaAdmDTO.getLoginIp());
+            sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
+            sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             modelMap.addAttribute("respCnt", sMBMnVslService.insertMnVsl(sMBMainVslDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
@@ -123,10 +125,10 @@ public class SMBMnVslController {
     @PostMapping(value = "/update")
     public String updateMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             sMBMainVslDTO.setMdCd(mdCd);
-            sMBMainVslDTO.setRegId(coaAdmDTO.getId());
-            sMBMainVslDTO.setRegIp(coaAdmDTO.getLoginIp());
+            sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
+            sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             modelMap.addAttribute("respCnt", sMBMnVslService.updateMnVsl(sMBMainVslDTO));
         } catch (Exception e) {
@@ -145,13 +147,13 @@ public class SMBMnVslController {
     @PostMapping(value = "/delete")
     public String deleteMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            sMBMainVslDTO.setRegId(coaAdmDTO.getId());
-            sMBMainVslDTO.setRegIp(coaAdmDTO.getLoginIp());
-            sMBMainVslDTO.setRegName(coaAdmDTO.getName());
-            sMBMainVslDTO.setRegDeptNm(coaAdmDTO.getDeptNm());
-            sMBMainVslDTO.setModId(coaAdmDTO.getId());
-            sMBMainVslDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO =  COUserDetailsHelperService.getAuthenticatedUser();
+            sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
+            sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+            sMBMainVslDTO.setRegName(cOUserDetailsDTO.getName());
+            sMBMainVslDTO.setRegDeptNm(cOUserDetailsDTO.getDeptNm());
+            sMBMainVslDTO.setModId(cOUserDetailsDTO.getId());
+            sMBMainVslDTO.setModIp(cOUserDetailsDTO.getLoginIp());
             sMBMainVslDTO.setMdCd(mdCd);
 
             modelMap.addAttribute("respCnt", sMBMnVslService.deleteMnVsl(sMBMainVslDTO));
@@ -175,9 +177,9 @@ public class SMBMnVslController {
 
         try {
             modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslList(sMBMainVslDTO));
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            sMBMainVslDTO.setModId(coaAdmDTO.getId());
-            sMBMainVslDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            sMBMainVslDTO.setModId(cOUserDetailsDTO.getId());
+            sMBMainVslDTO.setModIp(cOUserDetailsDTO.getLoginIp());
             sMBMainVslDTO.setMdCd(mdCd);
 
             sMBMnVslService.updateOrder(sMBMainVslDTO);

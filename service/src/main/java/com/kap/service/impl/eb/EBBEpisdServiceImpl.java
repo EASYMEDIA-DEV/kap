@@ -134,14 +134,14 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		int respCnt = 0;
 
-		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-		eBBEpisdDTO.setRegId( coaAdmDTO.getId() );
-		eBBEpisdDTO.setRegName( coaAdmDTO.getName() );
-		eBBEpisdDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
-		eBBEpisdDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-		eBBEpisdDTO.setRegIp( coaAdmDTO.getLoginIp() );
-		eBBEpisdDTO.setModId( coaAdmDTO.getId() );
-		eBBEpisdDTO.setModIp( coaAdmDTO.getLoginIp() );
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		eBBEpisdDTO.setRegId( cOUserDetailsDTO.getId() );
+		eBBEpisdDTO.setRegName( cOUserDetailsDTO.getName() );
+		eBBEpisdDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+		eBBEpisdDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+		eBBEpisdDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+		eBBEpisdDTO.setModId( cOUserDetailsDTO.getId() );
+		eBBEpisdDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
 
 		//파일 처리
@@ -156,7 +156,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
 
 		//교육강의 상세 등록(온라인교육)
-		setLctrList(eBBEpisdDTO, coaAdmDTO);
+		setLctrList(eBBEpisdDTO, cOUserDetailsDTO);
 
 		return respCnt;
 	}
@@ -164,20 +164,20 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	/**
 	 * 교육차수 -> 온라인교육 강의 목록 등록
 	 */
-	private void setLctrList(EBBEpisdDTO eBBEpisdDTO, COAAdmDTO coaAdmDTO){
+	private void setLctrList(EBBEpisdDTO eBBEpisdDTO, COUserDetailsDTO cOUserDetailsDTO){
 		try{
 			//교육강의 상세 등록(온라인교육)
 			List<EBBLctrDTO> lctrDtoList = eBBEpisdDTO.getLctrList();
 
 			for(EBBLctrDTO lctrDto : lctrDtoList){
 
-				lctrDto.setRegId( coaAdmDTO.getId() );
-				lctrDto.setRegName( coaAdmDTO.getName() );
-				lctrDto.setRegDeptCd( coaAdmDTO.getDeptCd() );
-				lctrDto.setRegDeptNm( coaAdmDTO.getDeptNm() );
-				lctrDto.setRegIp( coaAdmDTO.getLoginIp() );
-				lctrDto.setModId( coaAdmDTO.getId() );
-				lctrDto.setModIp( coaAdmDTO.getLoginIp() );
+				lctrDto.setRegId( cOUserDetailsDTO.getId() );
+				lctrDto.setRegName( cOUserDetailsDTO.getName() );
+				lctrDto.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+				lctrDto.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+				lctrDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				lctrDto.setModId( cOUserDetailsDTO.getId() );
+				lctrDto.setModIp( cOUserDetailsDTO.getLoginIp() );
 
 				//파일 처리
 				HashMap<String, Integer> lctrFileSeqMap = cOFileService.setFileInfo(lctrDto.getFileList());
@@ -203,14 +203,14 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	{
 		int respCnt = 0;
 
-		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-		eBBEpisdDTO.setRegId( coaAdmDTO.getId() );
-		eBBEpisdDTO.setRegName( coaAdmDTO.getName() );
-		eBBEpisdDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
-		eBBEpisdDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-		eBBEpisdDTO.setRegIp( coaAdmDTO.getLoginIp() );
-		eBBEpisdDTO.setModId( coaAdmDTO.getId() );
-		eBBEpisdDTO.setModIp( coaAdmDTO.getLoginIp() );
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		eBBEpisdDTO.setRegId( cOUserDetailsDTO.getId() );
+		eBBEpisdDTO.setRegName( cOUserDetailsDTO.getName() );
+		eBBEpisdDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+		eBBEpisdDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+		eBBEpisdDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+		eBBEpisdDTO.setModId( cOUserDetailsDTO.getId() );
+		eBBEpisdDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
 		//파일 처리
 		HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBBEpisdDTO.getFileList());
@@ -226,7 +226,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		//교육강의 상세 등록(온라인교육)
 		eBBEpisdMapper.deleteLctrDtl(eBBEpisdDTO);//삭제후
-		setLctrList(eBBEpisdDTO, coaAdmDTO);//재등록
+		setLctrList(eBBEpisdDTO, cOUserDetailsDTO);//재등록
 
 
 		//예산지출 내역 등록

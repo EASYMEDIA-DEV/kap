@@ -64,8 +64,8 @@ public class MPBMemberPartsSocietyController {
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyList.admin";
     }
 
@@ -78,8 +78,8 @@ public class MPBMemberPartsSocietyController {
         mpaUserDto.setMemCd("CP");
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyListAjax";
     }
 
@@ -97,8 +97,8 @@ public class MPBMemberPartsSocietyController {
         {
             mpaUserDto.setMemCd("CP");
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
             modelMap.addAttribute("rtnData", mpaUserDto);
 
 
@@ -133,8 +133,8 @@ public class MPBMemberPartsSocietyController {
             cdDtlList.add("MEM_CD");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
 
             if(!"".equals(mpaUserDto.getDetailsKey())){
                 modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
@@ -161,8 +161,8 @@ public class MPBMemberPartsSocietyController {
 
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectEduList(mpbEduDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpbEduDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpbEduDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyTabTwoAjax";
     }
 
@@ -176,8 +176,8 @@ public class MPBMemberPartsSocietyController {
         mpbBusDto.setChkPS("P");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectBusList(mpbBusDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpbBusDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpbBusDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyTabThreeAjax";
     }
 
@@ -191,8 +191,8 @@ public class MPBMemberPartsSocietyController {
         mpbSanDto.setChkPS("P");
         modelMap.addAttribute("rtnData", mpbMemberPartsSocietyService.selectSanList(mpbSanDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpbSanDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpbSanDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyTabFourAjax";
     }
 
@@ -205,8 +205,8 @@ public class MPBMemberPartsSocietyController {
 
         modelMap.addAttribute("rtnData", mpaUserService.selectInqrList(mpaInqrDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaInqrDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaInqrDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyTabFiveAjax";
     }
 

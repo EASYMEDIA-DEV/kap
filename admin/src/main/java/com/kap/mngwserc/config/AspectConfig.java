@@ -3,6 +3,7 @@ package com.kap.mngwserc.config;
 import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COSystemLogDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
@@ -180,10 +181,10 @@ public class AspectConfig {
             /* Authenticated */
             if (COUserDetailsHelperService.isAuthenticated())
             {
-                COAAdmDTO lgnMap = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+                COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
-                cOSystemLogDTO.setRegId(lgnMap.getId());
-                cOSystemLogDTO.setRegIp(lgnMap.getLoginIp());
+                cOSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+                cOSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             }
             cOSystemLogDTO.setQuryCntn(mybatisSql);
             //cOSystemLogService.logInsertSysQuery(cOSystemLogDTO);
@@ -204,10 +205,10 @@ public class AspectConfig {
         /* Authenticated */
         if (COUserDetailsHelperService.isAuthenticated())
         {
-            COAAdmDTO lgnMap = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
-            cOSystemLogDTO.setRegId(lgnMap.getId());
-            cOSystemLogDTO.setRegIp(lgnMap.getLoginIp());
+            cOSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+            cOSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         }
         if(RequestContextHolder.getRequestAttributes().getAttribute("COAAdmId", RequestAttributes.SCOPE_SESSION) != null){
             trgtMenuNm = trgtMenuNm + " ("+RequestContextHolder.getRequestAttributes().getAttribute("COAAdmId", RequestAttributes.SCOPE_SESSION)+")";
@@ -254,9 +255,9 @@ public class AspectConfig {
         /* Authenticated */
         if (COUserDetailsHelperService.isAuthenticated())
         {
-            COAAdmDTO COAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            cOSystemLogDTO.setRegId(COAAdmDTO.getId());
-            cOSystemLogDTO.setRegIp(COAAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            cOSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+            cOSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         }
         cOSystemLogService.logInsertErrLog(cOSystemLogDTO);
     }

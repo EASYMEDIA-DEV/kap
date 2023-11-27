@@ -69,8 +69,8 @@ public class MPAUserController {
         mpaUserDto.setExcelYn("N");
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpa/MPAUserList.admin";
     }
 
@@ -84,8 +84,8 @@ public class MPAUserController {
         mpaUserDto.setExcelYn("N");
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpa/MPAUserListAjax";
     }
 
@@ -98,8 +98,8 @@ public class MPAUserController {
 
         modelMap.addAttribute("rtnData", mpaUserService.selectAttcntList(mpaAttctnDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaAttctnDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaAttctnDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpa/MPAUserTabTwoAjax";
     }
 
@@ -112,8 +112,8 @@ public class MPAUserController {
 
         modelMap.addAttribute("rtnData", mpaUserService.selectInqrList(mpaInqrDto));
         // 로그인한 계정
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        mpaInqrDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaInqrDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpa/MPAUserTabThreeAjax";
     }
 
@@ -129,8 +129,8 @@ public class MPAUserController {
             mpaUserDto.setMemCd("CO");
 
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
             modelMap.addAttribute("rtnData", mpaUserDto);
 
 
@@ -160,8 +160,8 @@ public class MPAUserController {
         try
         {
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
 
             String chk;
             if(mpaUserService.selectDupEmail(mpaUserDto) >=1) {
@@ -195,8 +195,8 @@ public class MPAUserController {
         {
 
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
 
             String chk;
             if(mpaUserService.selectDupId(mpaUserDto) >=1) {
@@ -230,8 +230,8 @@ public class MPAUserController {
         try
         {
             // 로그인한 계정
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
 
             if(!"".equals(mpaUserDto.getDetailsKey())){
                 modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
@@ -258,12 +258,12 @@ public class MPAUserController {
     {
         try
         {
-            COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             mpaUserDto.setModCd("AD"); //임의 관리자 cd
-            mpaUserDto.setLgnSsnId(lgnCOAAdmDTO.getId());
-            mpaUserDto.setRegId( lgnCOAAdmDTO.getId() );
-            mpaUserDto.setRegIp( lgnCOAAdmDTO.getLoginIp() );
-            mpaUserDto.setModId( lgnCOAAdmDTO.getId() );
+            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
+            mpaUserDto.setRegId( cOUserDetailsDTO.getId() );
+            mpaUserDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
+            mpaUserDto.setModId( cOUserDetailsDTO.getId() );
             mpaUserDto.setTableNm(tableNm);
             modelMap.addAttribute("respCnt", mpaUserService.updateUserDtl(mpaUserDto));
         }

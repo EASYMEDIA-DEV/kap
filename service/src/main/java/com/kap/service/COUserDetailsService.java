@@ -1,7 +1,7 @@
 package com.kap.service;
 
 
-import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 
 /**
  * COUserDetailsService Helper 클래스
@@ -25,7 +25,7 @@ public interface COUserDetailsService {
 	 * 인증된 사용자객체를 VO형식으로 가져온다.
 	 * @return Object - 사용자 ValueObject
 	 */
-	public COAAdmDTO getAuthenticatedUser();
+	public COUserDetailsDTO getAuthenticatedUser();
 
 	/**
 	 * 인증된 사용자 여부를 체크한다.

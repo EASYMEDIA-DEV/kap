@@ -3,6 +3,7 @@ package com.kap.service.impl.bd;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bdd.BDDNewsletterDTO;
 import com.kap.service.BDDNewsletterService;
 import com.kap.service.COFileService;
@@ -76,9 +77,9 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
      */
     public int insertNewsletter(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
         //작성자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDDNewsletterDTO.setRegId(coaAdmDTO.getId());
-        pBDDNewsletterDTO.setRegIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDDNewsletterDTO.setRegId(cOUserDetailsDTO.getId());
+        pBDDNewsletterDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDDNewsletterDTO.getFileList() != null && !pBDDNewsletterDTO.getFileList().isEmpty()) {
@@ -108,9 +109,9 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
      */
     public int updateNewsletter(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception{
         //수정자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDDNewsletterDTO.setModId(coaAdmDTO.getId());
-        pBDDNewsletterDTO.setModIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDDNewsletterDTO.setModId(cOUserDetailsDTO.getId());
+        pBDDNewsletterDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDDNewsletterDTO.getFileList() != null && !pBDDNewsletterDTO.getFileList().isEmpty()) {

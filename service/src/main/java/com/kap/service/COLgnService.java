@@ -3,6 +3,7 @@ package com.kap.service;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COLoginDTO;
 import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -46,7 +47,7 @@ public interface COLgnService {
 	/**
 	 * 로그인 처리에 따른 메뉴를 가져온다.
 	 */
-	public List<COMenuDTO> getMenuList(COAAdmDTO cOAAdmDTO) throws Exception;
+	public List<COMenuDTO> getMenuList(COUserDetailsDTO cOUserDetailsDTO) throws Exception;
 	/**
 	 * 비밀번호 이력 업데이트한다.
 	 */

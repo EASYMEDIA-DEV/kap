@@ -1,6 +1,6 @@
 package com.kap.mngwserc.controller.sm;
 
-import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.SMDCMemTrmsDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMDCMemTrmsService;
@@ -69,9 +69,9 @@ public class SMDCMemTrmsController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smdcMemTrmsDTO.setRegId(coaAdmDTO.getId());
-            smdcMemTrmsDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smdcMemTrmsDTO.setRegId(cOUserDetailsDTO.getId());
+            smdcMemTrmsDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             int respCnt = smdcMemTrmsService.insertMemTrms(smdcMemTrmsDTO);
             modelMap.addAttribute("respCnt", respCnt);
@@ -97,9 +97,9 @@ public class SMDCMemTrmsController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smdcMemTrmsDTO.setModId(coaAdmDTO.getId());
-            smdcMemTrmsDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smdcMemTrmsDTO.setModId(cOUserDetailsDTO.getId());
+            smdcMemTrmsDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             smdcMemTrmsDTO.setMemTrmsSeq(Integer.valueOf(smdcMemTrmsDTO.getDetailsKey()));
             modelMap.addAttribute("respCnt", smdcMemTrmsService.updateMemTrms(smdcMemTrmsDTO));

@@ -2,6 +2,7 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomSearchDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomWriteDTO;
@@ -79,9 +80,9 @@ public class EBFEduRoomServiceImpl implements EBFEduRoomService {
      */
     public int insertEduRoom(EBFEduRoomWriteDTO pEBFEduRoomWriteDTO) throws Exception {
         //등록자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pEBFEduRoomWriteDTO.setRegId(coaAdmDTO.getId());
-        pEBFEduRoomWriteDTO.setRegIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pEBFEduRoomWriteDTO.setRegId(cOUserDetailsDTO.getId());
+        pEBFEduRoomWriteDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
         pEBFEduRoomWriteDTO.setPlaceSeq(edctnPlaceSeqIdgen.getNextIntegerId());
 
@@ -94,9 +95,9 @@ public class EBFEduRoomServiceImpl implements EBFEduRoomService {
     public int updateEduRoom(EBFEduRoomWriteDTO pEBFEduRoomWriteDTO) throws Exception {
         if(!pEBFEduRoomWriteDTO.getDetailsKey().isEmpty()) {
             //수정자
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            pEBFEduRoomWriteDTO.setModId(coaAdmDTO.getId());
-            pEBFEduRoomWriteDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            pEBFEduRoomWriteDTO.setModId(cOUserDetailsDTO.getId());
+            pEBFEduRoomWriteDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             return eBFEduRoomMapper.updateEduRoom(pEBFEduRoomWriteDTO);
         }

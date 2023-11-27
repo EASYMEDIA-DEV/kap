@@ -2,6 +2,7 @@ package com.kap.service;
 
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 
 /**
  * EgovUserDetails Helper 클래스
@@ -41,7 +42,7 @@ public class COUserDetailsHelperService {
 	 * 인증된 사용자객체를 가져온다.
 	 * @return Object - 사용자 ValueObject
 	 */
-	public static COAAdmDTO getAuthenticatedUser()
+	public static COUserDetailsDTO getAuthenticatedUser()
 	{
 		return cOUserDetailsService.getAuthenticatedUser();
 	}

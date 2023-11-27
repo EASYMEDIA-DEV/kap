@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.MPEPartsCompanyDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
@@ -192,9 +193,9 @@ public class MPEPartsCompanyController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpePartsCompanyDTO.setRegId(coaAdmDTO.getId());
-            mpePartsCompanyDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpePartsCompanyDTO.setRegId(cOUserDetailsDTO.getId());
+            mpePartsCompanyDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             int respCnt = mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
             modelMap.addAttribute("respCnt", respCnt);
@@ -219,9 +220,9 @@ public class MPEPartsCompanyController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            mpePartsCompanyDTO.setModId(coaAdmDTO.getId());
-            mpePartsCompanyDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            mpePartsCompanyDTO.setModId(cOUserDetailsDTO.getId());
+            mpePartsCompanyDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getBsnmNo());
             modelMap.addAttribute("respCnt", mpePartsCompanyService.updatePartsCompany(mpePartsCompanyDTO));

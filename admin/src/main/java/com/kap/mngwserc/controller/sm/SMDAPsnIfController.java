@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.sm;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.SMDAPsnIfDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMDAPsnIfService;
@@ -121,9 +122,9 @@ public class SMDAPsnIfController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smdPsnIfDTO.setRegId(coaAdmDTO.getId());
-            smdPsnIfDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smdPsnIfDTO.setRegId(cOUserDetailsDTO.getId());
+            smdPsnIfDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             int respCnt = smdPsnIfService.insertPsnIf(smdPsnIfDTO);
             modelMap.addAttribute("respCnt", respCnt);
@@ -149,9 +150,9 @@ public class SMDAPsnIfController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smdPsnIfDTO.setModId(coaAdmDTO.getId());
-            smdPsnIfDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smdPsnIfDTO.setModId(cOUserDetailsDTO.getId());
+            smdPsnIfDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             smdPsnIfDTO.setPsnifSeq(Integer.valueOf(smdPsnIfDTO.getDetailsKey()));
             modelMap.addAttribute("respCnt", smdPsnIfService.updatePsnIf(smdPsnIfDTO));

@@ -3,6 +3,7 @@ package com.kap.service.impl;
 import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COFileDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.EmfMap;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -59,10 +60,10 @@ public class COFileServiceImpl implements COFileService {
      * 하나의 파일에 대한 정보(속성 및 상세)를 등록한다.
      */
     public void insertFileInf(COFileDTO cOFileDTO) throws Exception {
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
-        cOFileDTO.setRegId(coaAdmDTO.getId());
-        cOFileDTO.setRegIp(coaAdmDTO.getLoginIp());
+        cOFileDTO.setRegId(cOUserDetailsDTO.getId());
+        cOFileDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 마스터를 등록한다.
         cOFileMapper.insertFileMaster(cOFileDTO);
@@ -134,7 +135,7 @@ public class COFileServiceImpl implements COFileService {
      */
     public void copyFileInfs(COFileDTO cOFileDTO, String fileTypeId, List<String> filePaths, List<String> fileAlts, String fileSeqCnct, List<Integer> fileOrds) throws Exception {
         Integer fileSeq = cOFileDTO.getFileSeq();
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
         if (!"".equals(fileSeq) && !"".equals(COStringUtil.nullConvert(fileSeqCnct))) {
             COFileDTO fileDTO = new COFileDTO();
@@ -142,8 +143,8 @@ public class COFileServiceImpl implements COFileService {
             fileDTO.setFileSeq(fileSeq);
             fileDTO.setFileOrdArr(Arrays.stream(fileSeqCnct.split(",")).mapToInt(Integer::parseInt).toArray());
 
-            fileDTO.setRegId(coaAdmDTO.getId());
-            fileDTO.setRegIp(coaAdmDTO.getLoginIp());
+            fileDTO.setRegId(cOUserDetailsDTO.getId());
+            fileDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             cOFileMapper.deleteFileInfs(fileDTO);
         }
@@ -177,8 +178,8 @@ public class COFileServiceImpl implements COFileService {
                 paramDTO = new COFileDTO();
 
                 paramDTO.setFileSeq(fileSeq);
-                paramDTO.setRegId(coaAdmDTO.getId());
-                paramDTO.setRegIp(coaAdmDTO.getLoginIp());
+                paramDTO.setRegId(cOUserDetailsDTO.getId());
+                paramDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
                 cOFileMapper.deleteAllFileInf(paramDTO);
 
@@ -246,7 +247,7 @@ public class COFileServiceImpl implements COFileService {
     public int insertFile(List<COFileDTO> cFileDTOList, HashMap<String, Integer> rtnData) throws Exception
     {
         COFileDTO cOFileDTO = null;
-        COAAdmDTO cOAAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
         int fileOrd = 0;
         String filedNm = "";
@@ -256,8 +257,8 @@ public class COFileServiceImpl implements COFileService {
             cOFileDTO = cFileDTOList.get(q);
             fileUtil.cosFileCopy(cOFileDTO);
 
-            cOFileDTO.setRegId( cOAAdmDTO.getId() );
-            cOFileDTO.setRegIp( cOAAdmDTO.getLoginIp() );
+            cOFileDTO.setRegId( cOUserDetailsDTO.getId() );
+            cOFileDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
 
             // 파일이 정상적으로 이동하였고 파일 순번이 없으면 파일 순번딴다.
             if("00".equals(cOFileDTO.getRespCd()) && rtnData.get(cOFileDTO.getFieldNm()) == null && !filedNm.equals(cOFileDTO.getFieldNm()))

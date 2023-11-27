@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COSystemLogDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
 import com.kap.service.*;
@@ -457,15 +458,15 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         workbook.close();
 
         //다운로드 사유 입력
-        COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
         pCoSystemLogDTO.setTrgtMenuNm("위원 관리 > 일일 근태");
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPDCmtServiceImpl");
         pCoSystemLogDTO.setFncNm("selectKenList");
         pCoSystemLogDTO.setPrcsCd("DL");
         pCoSystemLogDTO.setRsn(mpdKenDto.getRsn());
-        pCoSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());
-        pCoSystemLogDTO.setRegIp(lgnCOAAdmDTO.getLoginIp());
+        pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+        pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
 
     }

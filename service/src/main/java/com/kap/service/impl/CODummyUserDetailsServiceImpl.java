@@ -1,6 +1,7 @@
 package com.kap.service.impl;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COUserDetailsService;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -24,10 +25,10 @@ import org.springframework.web.context.request.RequestContextHolder;
  */
 public class CODummyUserDetailsServiceImpl implements COUserDetailsService
 {
-	public COAAdmDTO getAuthenticatedUser()
+	public COUserDetailsDTO getAuthenticatedUser()
 	{
-		COAAdmDTO cOLoginUserDTO = COAAdmDTO.builder().build();
-		cOLoginUserDTO.setAdmSeq(1);
+		COUserDetailsDTO cOLoginUserDTO = COUserDetailsDTO.builder().build();
+		cOLoginUserDTO.setSeq(1);
 		cOLoginUserDTO.setId("hyumain1");
 		cOLoginUserDTO.setName("TBD");
 		cOLoginUserDTO.setAuthCd("99");

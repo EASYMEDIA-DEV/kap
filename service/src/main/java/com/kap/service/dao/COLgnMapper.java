@@ -3,6 +3,7 @@ package com.kap.service.dao;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COLoginDTO;
 import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -34,7 +35,7 @@ public interface COLgnMapper {
 	/**
 	 * 관리자 정보를 가져온다.
 	 */
-    public COAAdmDTO actionLogin(COAAdmDTO cOAAdmDTO) throws Exception;
+    public COUserDetailsDTO actionLogin(COAAdmDTO cOAAdmDTO) throws Exception;
     /**
    	 * 로그인 오류 횟수를 증가시킨다.
    	 */
@@ -42,11 +43,11 @@ public interface COLgnMapper {
 	/**
    	 *  로그인 오류 횟수를 초기화한다.
    	 */
-	public int updateLgnFailCntInit(COAAdmDTO cOAAdmDTO) throws Exception;
+	public int updateLgnFailCntInit(COUserDetailsDTO cOUserDetailsDTO) throws Exception;
     /**
 	 * 로그인 일시를 업데이트한다.
 	 */
-    public int updateLastLgnDtm(COAAdmDTO cOAAdmDTO) throws Exception;
+    public int updateLastLgnDtm(COUserDetailsDTO cOUserDetailsDTO) throws Exception;
     /**
    	 * 비밀번호를 변경한다.
    	 */
@@ -58,7 +59,7 @@ public interface COLgnMapper {
 	/**
 	 * 로그인 처리에 따른 메뉴를 가져온다.
 	 */
-    public List<COMenuDTO> getMenuList(COAAdmDTO cOAAdmDTO) throws Exception;
+    public List<COMenuDTO> getMenuList(COUserDetailsDTO cOUserDetailsDTO) throws Exception;
 	/**
 	 * 로그인 처리에 따른 메뉴를 가져온다.
 	 */

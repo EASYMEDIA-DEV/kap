@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COMailDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.im.ima.IMAQaDTO;
 import com.kap.service.COFileService;
 import com.kap.service.COMailService;
@@ -94,9 +95,9 @@ public class IMAQaServiceImpl implements IMAQaService {
     public int insertQa(IMAQaDTO pIMAQaDTO, HttpServletRequest request) throws Exception {
         if(pIMAQaDTO.getRsumeCd().equals("SYNACK")) {
             //등록자
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            pIMAQaDTO.setRegId(coaAdmDTO.getId());
-            pIMAQaDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            pIMAQaDTO.setRegId(cOUserDetailsDTO.getId());
+            pIMAQaDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             //파일
             List<COFileDTO> uploadFiles = new ArrayList<>();

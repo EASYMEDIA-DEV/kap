@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COGCntsDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COGCntsService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
@@ -81,9 +82,9 @@ public class COGCntsServiceImpl implements COGCntsService {
 	 */
 	public int insertCnts(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
-		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-		pCOGCntsDTO.setRegId(coaAdmDTO.getId());
-		pCOGCntsDTO.setRegIp(coaAdmDTO.getLoginIp());
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		pCOGCntsDTO.setRegId(cOUserDetailsDTO.getId());
+		pCOGCntsDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
 		String cnts = pCOGCntsDTO.getCnts();
 
@@ -101,9 +102,9 @@ public class COGCntsServiceImpl implements COGCntsService {
 	{
 		if (!pCOGCntsDTO.getDetailsKey().isEmpty())
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			pCOGCntsDTO.setModId(coaAdmDTO.getId());
-			pCOGCntsDTO.setModIp(coaAdmDTO.getLoginIp());
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			pCOGCntsDTO.setModId(cOUserDetailsDTO.getId());
+			pCOGCntsDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
 			String cnts = pCOGCntsDTO.getCnts();
 			pCOGCntsDTO.setCnts(COWebUtil.clearXSSMinimum(cnts));
@@ -131,9 +132,9 @@ public class COGCntsServiceImpl implements COGCntsService {
 	public void updateCntsAprvl(COGCntsDTO pCOGCntsDTO) throws Exception
 	{
 		// 수정자 셋팅
-		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-		pCOGCntsDTO.setModId(coaAdmDTO.getId());
-		pCOGCntsDTO.setModIp(coaAdmDTO.getLoginIp());
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		pCOGCntsDTO.setModId(cOUserDetailsDTO.getId());
+		pCOGCntsDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
 		// 컨텐츠 만료
 		cOGCntsMapper.updateCntsExpr(pCOGCntsDTO);
@@ -149,9 +150,9 @@ public class COGCntsServiceImpl implements COGCntsService {
 	{
 		COGCntsDTO selectCnts = cOGCntsMapper.selectCntsDtl(pCOGCntsDTO);
 
-		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-		selectCnts.setRegId(coaAdmDTO.getId());
-		selectCnts.setRegIp(coaAdmDTO.getLoginIp());
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		selectCnts.setRegId(cOUserDetailsDTO.getId());
+		selectCnts.setRegIp(cOUserDetailsDTO.getLoginIp());
 
 		selectCnts.setSeq(cmsSeqIdgen.getNextIntegerId());
 

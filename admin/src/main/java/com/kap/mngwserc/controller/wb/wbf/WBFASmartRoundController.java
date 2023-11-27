@@ -1,6 +1,6 @@
 package com.kap.mngwserc.controller.wb.wbf;
 
-import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.service.COCodeService;
@@ -134,9 +134,9 @@ public class WBFASmartRoundController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            wBRoundMstDTO.setRegId(coaAdmDTO.getId());
-            wBRoundMstDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            wBRoundMstDTO.setRegId(cOUserDetailsDTO.getId());
+            wBRoundMstDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             wBFASmartRoundService.insertRound(wBRoundMstDTO, request);
         }
@@ -160,9 +160,9 @@ public class WBFASmartRoundController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            wBRoundMstDTO.setModId(coaAdmDTO.getId());
-            wBRoundMstDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO= COUserDetailsHelperService.getAuthenticatedUser();
+            wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
+            wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             wBFASmartRoundService.updateRound(wBRoundMstDTO, request);
         }
@@ -187,9 +187,9 @@ public class WBFASmartRoundController {
         try
         {
 
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            wBRoundMstDTO.setModId(coaAdmDTO.getId());
-            wBRoundMstDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
+            wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             modelMap.addAttribute("respCnt", wBFASmartRoundService.deleteRound(wBRoundMstDTO));
         }

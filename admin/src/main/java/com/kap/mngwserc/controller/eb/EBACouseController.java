@@ -239,14 +239,14 @@ public class EBACouseController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            eBACouseDTO.setRegId( coaAdmDTO.getId() );
-            eBACouseDTO.setRegName( coaAdmDTO.getName() );
-            eBACouseDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
-            eBACouseDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-            eBACouseDTO.setRegIp( coaAdmDTO.getLoginIp() );
-            eBACouseDTO.setModId( coaAdmDTO.getId() );
-            eBACouseDTO.setModIp( coaAdmDTO.getLoginIp() );
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            eBACouseDTO.setRegId( cOUserDetailsDTO.getId() );
+            eBACouseDTO.setRegName( cOUserDetailsDTO.getName() );
+            eBACouseDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+            eBACouseDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+            eBACouseDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+            eBACouseDTO.setModId( cOUserDetailsDTO.getId() );
+            eBACouseDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
             modelMap.addAttribute("respCnt", eBACouseService.insertCouse(eBACouseDTO));
         }
         catch (Exception e)
@@ -271,14 +271,14 @@ public class EBACouseController {
     {
         /*try
         {*/
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            eBACouseDTO.setRegId( coaAdmDTO.getId() );
-            eBACouseDTO.setRegName( coaAdmDTO.getName() );
-            eBACouseDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
-            eBACouseDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-            eBACouseDTO.setRegIp( coaAdmDTO.getLoginIp() );
-            eBACouseDTO.setModId( coaAdmDTO.getId() );
-            eBACouseDTO.setModIp( coaAdmDTO.getLoginIp() );
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            eBACouseDTO.setRegId( cOUserDetailsDTO.getId() );
+            eBACouseDTO.setRegName( cOUserDetailsDTO.getName() );
+            eBACouseDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+            eBACouseDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+            eBACouseDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+            eBACouseDTO.setModId( cOUserDetailsDTO.getId() );
+            eBACouseDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
             modelMap.addAttribute("respCnt", eBACouseService.updateCouse(eBACouseDTO));
         /*}
         catch (Exception e)
@@ -355,14 +355,14 @@ public class EBACouseController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            eBACouseDTO.setRegId( coaAdmDTO.getId() );
-            eBACouseDTO.setRegName( coaAdmDTO.getName() );
-            eBACouseDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
-            eBACouseDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-            eBACouseDTO.setRegIp( coaAdmDTO.getLoginIp() );
-            eBACouseDTO.setModId( coaAdmDTO.getId() );
-            eBACouseDTO.setModIp( coaAdmDTO.getLoginIp() );
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            eBACouseDTO.setRegId( cOUserDetailsDTO.getId() );
+            eBACouseDTO.setRegName( cOUserDetailsDTO.getName() );
+            eBACouseDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+            eBACouseDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+            eBACouseDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+            eBACouseDTO.setModId( cOUserDetailsDTO.getId() );
+            eBACouseDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
             //eBACouseDTO.setRespCnt( eBACouseService.copyCouse(eBACouseDTO) );
         }
         catch (Exception e)

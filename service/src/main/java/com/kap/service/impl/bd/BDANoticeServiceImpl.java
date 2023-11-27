@@ -3,6 +3,7 @@ package com.kap.service.impl.bd;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bda.BDANoticeDTO;
 import com.kap.service.BDANoticeService;
 import com.kap.service.COFileService;
@@ -81,9 +82,9 @@ public class BDANoticeServiceImpl implements BDANoticeService {
      */
     public int insertNotice(BDANoticeDTO pBDANoticeDTO) throws Exception {
         //작성자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDANoticeDTO.setRegId(coaAdmDTO.getId());
-        pBDANoticeDTO.setRegIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDANoticeDTO.setRegId(cOUserDetailsDTO.getId());
+        pBDANoticeDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDANoticeDTO.getFileList() != null && !pBDANoticeDTO.getFileList().isEmpty()) {
@@ -116,9 +117,9 @@ public class BDANoticeServiceImpl implements BDANoticeService {
      */
     public int updateNotice(BDANoticeDTO pBDANoticeDTO) throws Exception{
         //수정자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDANoticeDTO.setModId(coaAdmDTO.getId());
-        pBDANoticeDTO.setModIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDANoticeDTO.setModId(cOUserDetailsDTO.getId());
+        pBDANoticeDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDANoticeDTO.getFileList() != null && !pBDANoticeDTO.getFileList().isEmpty()) {

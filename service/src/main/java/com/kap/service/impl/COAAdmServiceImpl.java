@@ -2,10 +2,7 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COMenuDTO;
-import com.kap.core.dto.COSystemLogDTO;
-import com.kap.core.dto.EmfMap;
+import com.kap.core.dto.*;
 import com.kap.service.COAAdmService;
 import com.kap.service.COLgnService;
 import com.kap.service.COSystemLogService;
@@ -135,9 +132,9 @@ public class COAAdmServiceImpl implements COAAdmService {
 			if (!tempAdmDTO.getBfreAuthCd().equals(tempAdmDTO.getModAuthCd()))
 			{
 
-				COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-				tempAdmDTO.setRegId( coaAdmDTO.getId() );
-				tempAdmDTO.setRegIp( coaAdmDTO.getLoginIp() );
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				tempAdmDTO.setRegId( cOUserDetailsDTO.getId() );
+				tempAdmDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
 
 
 				//권한변경 관련하여 로그를 찍을때 사용할것
@@ -170,9 +167,9 @@ public class COAAdmServiceImpl implements COAAdmService {
 	 */
 	public int updatePrsnData(COAAdmDTO pCOAAdmDTO) throws Exception
 	{
-		COAAdmDTO lgnMap = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 		// 관리자 조회
-		pCOAAdmDTO.setAdmSeq( lgnMap.getAdmSeq() );
+		pCOAAdmDTO.setAdmSeq( cOUserDetailsDTO.getSeq() );
 		COAAdmDTO admInfo = cOAAdmMapper.selectAdmDtl(pCOAAdmDTO);
 		// 비밀번호와 비밀번호 값이 같은지 확인
 		String pwd = pCOAAdmDTO.getPwd();
@@ -313,17 +310,17 @@ public class COAAdmServiceImpl implements COAAdmService {
 	{
 		// 특수문자 포함하도록 변경
 		String password = RandomStringUtils.random(8, 0, 0, true, true, null, new SecureRandom()) + RandomStringUtils.random(2, 35, 64, false, false, null, new SecureRandom());
-		COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+		COUserDetailsDTO cOUserDetailsDTO =  COUserDetailsHelperService.getAuthenticatedUser();
 
 		// & < > : ; ? ' " 공백은 치환 -> !
 		password = password.replaceAll("[\\s&<>:;?']", "!");
 
 		pCOAAdmDTO.setPwd(password);
 
-		pCOAAdmDTO.setRegId( coaAdmDTO.getId() );
-		pCOAAdmDTO.setRegIp( coaAdmDTO.getLoginIp() );
-		pCOAAdmDTO.setModId( coaAdmDTO.getId() );
-		pCOAAdmDTO.setModIp( coaAdmDTO.getLoginIp() );
+		pCOAAdmDTO.setRegId( cOUserDetailsDTO.getId() );
+		pCOAAdmDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+		pCOAAdmDTO.setModId( cOUserDetailsDTO.getId() );
+		pCOAAdmDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
 		// 이전 비밀번호 내역 삭제 (2022-07-14 마지막으로 설정한 비밀번호만 삭제하도록 변경)
 		List<String> pwdHistoryList = coLgnMapper.getPwdHistoryCheck(pCOAAdmDTO);
@@ -473,15 +470,15 @@ public class COAAdmServiceImpl implements COAAdmService {
 		workbook.close();
 
 		//다운로드 사유 입력
-		COAAdmDTO lgnCOAAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 		COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
 		pCoSystemLogDTO.setTrgtMenuNm("시스템 관리 > 관리자관리");
 		pCoSystemLogDTO.setSrvcNm("mngwserc.co.coa.service.impl.COAAdmServiceImpl");
 		pCoSystemLogDTO.setFncNm("selectAdmList");
 		pCoSystemLogDTO.setPrcsCd("DL");
 		pCoSystemLogDTO.setRsn(pCOAAdmDTO.getRsn());
-		pCoSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());
-		pCoSystemLogDTO.setRegIp(lgnCOAAdmDTO.getLoginIp());
+		pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+		pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 		cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
 	}
 

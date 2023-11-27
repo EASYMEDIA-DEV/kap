@@ -3,6 +3,7 @@ package com.kap.service.impl.bd;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bdc.BDCFaqDTO;
 import com.kap.service.BDCFaqService;
 import com.kap.service.COFileService;
@@ -81,9 +82,9 @@ public class BDCFaqServiceImpl implements BDCFaqService {
      */
     public int insertFaq(BDCFaqDTO pBDCFaqDTO) throws Exception {
         //작성자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDCFaqDTO.setRegId(coaAdmDTO.getId());
-        pBDCFaqDTO.setRegIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDCFaqDTO.setRegId(cOUserDetailsDTO.getId());
+        pBDCFaqDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDCFaqDTO.getFileList() != null && !pBDCFaqDTO.getFileList().isEmpty()) {
@@ -105,9 +106,9 @@ public class BDCFaqServiceImpl implements BDCFaqService {
      */
     public int updateFaq(BDCFaqDTO pBDCFaqDTO) throws Exception{
         //수정자
-        COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-        pBDCFaqDTO.setModId(coaAdmDTO.getId());
-        pBDCFaqDTO.setModIp(coaAdmDTO.getLoginIp());
+        COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+        pBDCFaqDTO.setModId(cOUserDetailsDTO.getId());
+        pBDCFaqDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
         //파일 처리
         if(pBDCFaqDTO.getFileList() != null && !pBDCFaqDTO.getFileList().isEmpty()) {

@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.um;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.UMAFtpUploadDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.UMAFtpUploadService;
@@ -93,10 +94,10 @@ public class UMAFtpUploadController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO =COUserDetailsHelperService.getAuthenticatedUser();
 
-            uMAFtpUploadDTO.setRegId(coaAdmDTO.getId());
-            uMAFtpUploadDTO.setRegIp(coaAdmDTO.getLoginIp());
+            uMAFtpUploadDTO.setRegId(cOUserDetailsDTO.getId());
+            uMAFtpUploadDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             modelMap.addAttribute("respCnt", uMAFtpUploadService.insertUploadFile(uMAFtpUploadDTO));
         }
         catch (Exception e)

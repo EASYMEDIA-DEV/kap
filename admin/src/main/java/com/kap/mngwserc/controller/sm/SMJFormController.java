@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.sm;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.SMJFormDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMJFormService;
@@ -83,9 +84,9 @@ public class SMJFormController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smjFormDTO.setModId(coaAdmDTO.getId());
-            smjFormDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smjFormDTO.setModId(cOUserDetailsDTO.getId());
+            smjFormDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             smjFormDTO.setStySeq(Integer.valueOf(smjFormDTO.getDetailsKey()));
             modelMap.addAttribute("respCnt", smjFormService.updateFormDtl(smjFormDTO));

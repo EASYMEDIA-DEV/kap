@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.sm;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.SMCMnPopDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMCMnPopService;
@@ -122,9 +123,9 @@ public class SMCMnPopController {
         try
         {
             smcMnPopDTO.setMdCd(mdCd);
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smcMnPopDTO.setRegId(coaAdmDTO.getId());
-            smcMnPopDTO.setRegIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smcMnPopDTO.setRegId(cOUserDetailsDTO.getId());
+            smcMnPopDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             int respCnt = smcMnPopService.insertMnPop(smcMnPopDTO);
             modelMap.addAttribute("respCnt", respCnt);
@@ -179,9 +180,9 @@ public class SMCMnPopController {
         try
         {
 
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smcMnPopDTO.setModId(coaAdmDTO.getId());
-            smcMnPopDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smcMnPopDTO.setModId(cOUserDetailsDTO.getId());
+            smcMnPopDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             smcMnPopDTO.setMdCd(mdCd);
             smcMnPopDTO.setPopupSeq(Integer.valueOf(smcMnPopDTO.getDetailsKey()));
@@ -208,9 +209,9 @@ public class SMCMnPopController {
     {
         try
         {
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smcMnPopDTO.setModId(coaAdmDTO.getId());
-            smcMnPopDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smcMnPopDTO.setModId(cOUserDetailsDTO.getId());
+            smcMnPopDTO.setModIp(cOUserDetailsDTO.getLoginIp());
             smcMnPopDTO.setMdCd(mdCd);
 
             if(!"".equals(smcMnPopDTO.getDetailsKey())){
@@ -243,9 +244,9 @@ public class SMCMnPopController {
         try
         {
             modelMap.addAttribute("rtnData", smcMnPopService.selectMnPopList(smcMnPopDTO));
-            COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            smcMnPopDTO.setModId(coaAdmDTO.getId());
-            smcMnPopDTO.setModIp(coaAdmDTO.getLoginIp());
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            smcMnPopDTO.setModId(cOUserDetailsDTO.getId());
+            smcMnPopDTO.setModIp(cOUserDetailsDTO.getLoginIp());
             smcMnPopDTO.setMdCd(mdCd);
 
             smcMnPopService.updateOrder(smcMnPopDTO);

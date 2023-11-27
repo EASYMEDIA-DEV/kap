@@ -1,7 +1,7 @@
 package com.kap.mngwserc.controller;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COBUserMenuService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
@@ -124,11 +124,11 @@ public class COBUserMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBUserMenuService.insertMenu(cOMenuDTO));
 		}
 		catch (Exception e)
@@ -150,11 +150,11 @@ public class COBUserMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBUserMenuService.updateMenuNm(cOMenuDTO));
 		}
 		catch (Exception e)
@@ -176,11 +176,11 @@ public class COBUserMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBUserMenuService.updateMenuInf(cOMenuDTO));
 		}
 		catch (Exception e)
@@ -202,11 +202,11 @@ public class COBUserMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBUserMenuService.updateMenuPstn(cOMenuDTO));
 		}
 		catch (Exception e)
@@ -228,11 +228,11 @@ public class COBUserMenuController {
 	{
 		try
 		{
-			COAAdmDTO coaAdmDTO = (COAAdmDTO) COUserDetailsHelperService.getAuthenticatedUser();
-			cOMenuDTO.setRegId( coaAdmDTO.getId() );
-			cOMenuDTO.setRegIp( coaAdmDTO.getLoginIp() );
-			cOMenuDTO.setModId( coaAdmDTO.getId() );
-			cOMenuDTO.setModIp( coaAdmDTO.getLoginIp() );
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOMenuDTO.setRegId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			cOMenuDTO.setModId( cOUserDetailsDTO.getId() );
+			cOMenuDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 			modelMap.addAttribute("actCnt", cOBUserMenuService.deleteMenu(cOMenuDTO));
 		}
 		catch (Exception e)
