@@ -30,7 +30,8 @@ var exports = {
             tabThree();
             cmssrCdInit(true);
             datepickerLoad();
-        } else {
+        }
+        else {
             kenChk = false;
             $(".monthInit").val( new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)+"-"+("0" + (new Date().getDate())).slice(-2));
 
@@ -400,7 +401,7 @@ var exports = {
             }
         });
 
-        $excelObj.find("button.down").on('click', function(){
+        $excelObj.find("button.down-day").on('click', function(){
             var rsn = $excelObj.find("#rsn").val().trim();
             var frmDataObj    = $formObj.closest("form");
 

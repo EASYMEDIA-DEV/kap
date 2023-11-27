@@ -53,6 +53,12 @@ public class MPDKenDto extends BaseDTO {
     @Schema(title = "지도부품사2", example = "부품사2")
     private String guidePartCmpn2;
 
+    @Schema(title = "탈퇴여부", example = "Y")
+    private String wthdrwYn = "N";
+
+    @Schema(title = "total", example = "0")
+    private int total;
+
 
     @Schema(title = "소재지역2", example = "경북2")
     private String rgns2;
@@ -87,6 +93,20 @@ public class MPDKenDto extends BaseDTO {
     //로그인세션ID
     private String lgnSsnId;
 
+    @Schema(title="일" , example = "1")
+    private List<String> days ;
+
+    @Schema(title="월" , example = "1")
+    private List<String> months ;
+
+    @Schema(title="월" , example = "2020-11-11,2020-11-11")
+    private String monthDays;
+
+    @Schema(title="근태타입" , example = "지도,지도")
+    private String monthTypes;
+
+
+    private List<String> kenDays;
 
 
 

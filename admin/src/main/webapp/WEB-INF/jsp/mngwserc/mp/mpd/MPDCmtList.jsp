@@ -2,6 +2,9 @@
 <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtKenDaySrchLayer.jsp">
     <jsp:param name="selPer" value="popup" />
 </jsp:include>
+<jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtKenMonthSrchLayer.jsp">
+    <jsp:param name="selPer" value="popup" />
+</jsp:include>
 <div class="container-fluid ">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/mp/mpd/MPDCmtListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>

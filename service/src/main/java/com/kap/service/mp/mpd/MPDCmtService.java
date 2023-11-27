@@ -35,4 +35,12 @@ public interface MPDCmtService {
 
      void excelDownload(MPDKenDto mpdKenDto, HttpServletResponse response) throws Exception;
 
+     MPDKenDto selectKenMonthList(MPDKenDto mpdKenDto) throws Exception;
+
+     MPDKenDto selectKenMonthTableList(MPDKenDto mpdKenDto) throws Exception;
+
+
+
+
+
 }
