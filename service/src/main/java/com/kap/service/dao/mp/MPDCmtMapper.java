@@ -37,4 +37,8 @@ public interface MPDCmtMapper {
 
     int selectKenListCnt(MPDKenDto mpdKenDto);
 
+    List<MPDKenDto> selectKenMonthList(MPDKenDto mpdKenDto);
+
+    int selectKenMonthListCnt(MPDKenDto mpdKenDto);
+
 }

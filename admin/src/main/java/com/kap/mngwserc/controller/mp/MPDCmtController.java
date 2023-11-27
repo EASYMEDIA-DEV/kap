@@ -149,12 +149,17 @@ public class MPDCmtController {
 
     @GetMapping(value = "/excel-ken-down")
     public void selectUserKenListExcel(MPDKenDto mpdKenDto ,
-                                    HttpServletResponse response) throws Exception
+                                       HttpServletResponse response) throws Exception
     {
         try
         {
             //엑셀 생성
-            mpdCmtService.excelDownload(mpdCmtService.selectKenList(mpdKenDto), response);
+            if(mpdKenDto.getExcelType().equals("D")) {
+                mpdCmtService.excelDownload(mpdCmtService.selectKenList(mpdKenDto), response);
+            } else  {
+                mpdCmtService.excelDownload(mpdCmtService.selectKenMonthList(mpdKenDto), response);
+
+            }
 
         }
         catch (Exception e)
@@ -188,7 +193,7 @@ public class MPDCmtController {
      */
     @PostMapping(value="/insert")
     public String insertCmt(MPAUserDto mpaUserDto ,
-                                     ModelMap modelMap) throws Exception
+                            ModelMap modelMap) throws Exception
     {
         try
         {
@@ -342,5 +347,30 @@ public class MPDCmtController {
         return "mngwserc/mp/mpd/MPDCmtTabFourAjax";
     }
 
+
+    /**
+     * 근태 월리스트 테이블 월 조회
+     */
+    @PostMapping(value = "/ken-month-table")
+    public String selectKenMonthTableAjax(MPDKenDto mpdKenDto ,
+                                          ModelMap modelMap ) throws Exception {
+
+        modelMap.addAttribute("rtnData", mpdCmtService.selectKenMonthTableList(mpdKenDto));
+
+        return "jsonView";
+    }
+
+    /**
+     * 근태 월리스트 조회
+     */
+    @PostMapping(value = "/ken-month")
+    public String selectKenMonthAjax(MPDKenDto mpdKenDto ,
+                                     ModelMap modelMap ) throws Exception {
+        modelMap.addAttribute("rtnData", mpdCmtService.selectKenMonthList(mpdKenDto));
+        // 로그인한 계정
+        COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+        mpdKenDto.setLgnSsnId(cOUserDetailsDTO.getId());
+        return "mngwserc/mp/mpd/MPDCmtKenMonthAjax";
+    }
 
 }

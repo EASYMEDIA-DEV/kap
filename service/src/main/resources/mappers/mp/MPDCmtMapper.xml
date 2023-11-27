@@ -161,4 +161,49 @@
         </if>
     </select>
 
+
+    <!--
+ 쿼리명 : MPDCmtMapper.selectKenMonthList
+ 설  명 : 근태 월 목록을 조회한다.
+   수정일      수정자       수정내용
+ ==========   ========   ==============
+ 2023.11.23    양현우       최초생성
+-->
+    <select id="selectKenMonthList" parameterType="MPDKenDto" resultType="MPDKenDto">
+        SELECT m2.name
+             , m2.mem_seq
+             , GROUP_CONCAT(atndc_dt order by atndc_dt asc SEPARATOR ', ' ) AS monthDays
+             , GROUP_CONCAT(atndc_cd order by atndc_dt asc SEPARATOR ', ' ) AS monthTypes
+             , (select count(*) from co_cmssr_atndc_mst where mem_seq = m1.mem_seq and atndc_cd not in('a','b') and year=#{year}) as total -- TODO 코드 확정시 not in 수정
+         FROM co_cmssr_atndc_mst m1
+         inner join co_mem_mst m2
+          on m1.mem_seq = m2.mem_seq
+           where year=#{year}
+            and mnth=#{mnth}
+             and m2.wthdrw_yn=#{wthdrwYn}
+             GROUP BY m1.mem_seq
+        limit  #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+
+    <!--
+쿼리명 : MPDCmtMapper.selectKenMonthListCnt
+설  명 : 근태 월 갯수을 조회한다.
+  수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.23    양현우       최초생성
+-->
+    <select id="selectKenMonthListCnt" parameterType="MPDKenDto" resultType="java.lang.Integer">
+        select count(*) from(
+        SELECT count(*)
+         FROM co_cmssr_atndc_mst m1
+          inner join co_mem_mst m2
+           on m1.mem_seq = m2.mem_seq
+            where  year=#{year}
+             and mnth=#{mnth}
+              and m2.wthdrw_yn=#{wthdrwYn}
+              group by m1.mem_seq ) as a
+    </select>
+
+
 </mapper>
