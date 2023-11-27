@@ -27,13 +27,6 @@ spring:
       add-mappings: true
 
 ---
-spring:
-  mail:
-    username: dev@easymedia.net
-    password: dnfntk1##
-    port: 587
-    host: smtp.gmail.com
-
 #spring :
 #  mail:
 #    host: smtp.gmail.com
@@ -52,7 +45,7 @@ spring:
 
 #강제 로그인 여부
 app:
-  is-login: true
+  is-login: false
   #발신자 이메일
   from-mail: dev@easymedia.net
 
@@ -109,7 +102,7 @@ spring :
     activate:
       on-profile: local, dev
 app:
-  is-login: true
+  is-login: false
 ---
 spring.config.activate.on-profile: stg, prod
 logging:

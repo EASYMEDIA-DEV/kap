@@ -5,7 +5,7 @@ import com.kap.core.dto.*;
 import com.kap.core.dto.MPAAttctnDto;
 import com.kap.core.dto.MPAInqrDto;
 import com.kap.core.dto.MPAUserDto;
-import com.kap.service.COMailService;
+import com.kap.service.COMessageService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPAUserService;
 import lombok.RequiredArgsConstructor;
@@ -13,11 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 
 /**
  * <pre>
@@ -55,7 +56,7 @@ public class MPAUserController {
     private String httpAdmtUrl;
 
     //이메일 발송
-    private final COMailService cOMailService;
+    private final COMessageService cOMessageService;
 
     String tableNm = "MEM_MOD_SEQ";
 
@@ -326,22 +327,29 @@ public class MPAUserController {
                 //이메일 발송
                 COMailDTO cOMailDTO = new COMailDTO();
                 cOMailDTO.setSubject("["+siteName+"] 임시비밀번호 발급 안내");
-                cOMailDTO.setSiteName(siteName);
-                cOMailDTO.setHttpFrontUrl(httpFrontUrl);
-                cOMailDTO.setHttpAdmUrl(httpAdmtUrl);
-                cOMailDTO.setEmails(mpPwdInitDto.getEmail());
-                cOMailDTO.setField1(mpPwdInitDto.getPwd());
                 //인증요청일시
                 String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
-                cOMailDTO.setField2(field2);
+                //수신자 정보
+                COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                //이메일
+                receiverDto.setEmail(mpPwdInitDto.getEmail());
+                //이름
+                receiverDto.setName("");
+                //치환문자1
+                receiverDto.setNote1(mpPwdInitDto.getPwd());
+                //치환문자2
+                receiverDto.setNote2(field2);
+                //치환문자3
+                receiverDto.setNote3(field2);
                 if(mpPwdInitDto.getMemCd().equals("CO")) {
-                    cOMailDTO.setField3("일반 사용자");
+                    receiverDto.setNote3("일반 사용자");
                 } else if(mpPwdInitDto.getMemCd().equals("CP")) {
-                    cOMailDTO.setField3("부품 사회원");
+                    receiverDto.setNote3("부품 사회원");
                 } else if(mpPwdInitDto.getMemCd().equals("CS")) {
-                    cOMailDTO.setField3("위원");
+                    receiverDto.setNote3("위원");
                 }
-                cOMailService.sendMail(cOMailDTO, "UserPwdInit.html");
+                //수신자 정보 등록
+                cOMessageService.sendMail(cOMailDTO, "UserPwdInit.html");
             }
         }
         catch (Exception e)

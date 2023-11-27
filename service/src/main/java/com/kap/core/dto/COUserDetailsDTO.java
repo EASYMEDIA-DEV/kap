@@ -7,7 +7,7 @@ import lombok.*;
 import java.util.List;
 
 /**
- *  관리자 객체
+ *  관리자, 사용자 인증 객체
  *
  * @author 박주석
  * @since 2022.03.29

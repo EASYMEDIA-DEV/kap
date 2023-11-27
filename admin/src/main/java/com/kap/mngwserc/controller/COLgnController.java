@@ -3,7 +3,7 @@ package com.kap.mngwserc.controller;
 import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.*;
 import com.kap.service.COLgnService;
-import com.kap.service.COMailService;
+import com.kap.service.COMessageService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
@@ -17,10 +17,8 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
 import java.util.List;
 import java.util.Random;
-import java.util.regex.Matcher;
 
 /**
  * <pre>
@@ -47,7 +45,7 @@ public class COLgnController {
 	//로그인 서비스
     private final COLgnService cOLgnService;
 	//이메일 발송
-	private final COMailService cOMailService;
+	private final COMessageService cOMessageService;
 
 	//이메일 발송
 	private final COSystemLogService cOSystemLogService;
@@ -258,10 +256,6 @@ public class COLgnController {
 		@Value("${app.admin-domain}")
 		private String httpAdmtUrl;
 
-		//관리자 이메일 템플릿 경로
-		@Value("${app.file.mail-tmpl-file-path}")
-		private String mailTmplFilePath;
-
 		//서버 유무(개발,운영)
 		//spring.config.activate.on-profile
 		@Value("${spring.config.activate.on-profile}")
@@ -288,22 +282,28 @@ public class COLgnController {
 					//이메일 발송
 					COMailDTO cOMailDTO = new COMailDTO();
 					cOMailDTO.setSubject("["+siteName+"] 인증번호 안내");
-					cOMailDTO.setEmails(tmpCOUserDetailsDTO.getEmail());
-					cOMailDTO.setSiteName(siteName);
-					cOMailDTO.setHttpFrontUrl(httpFrontUrl);
-					cOMailDTO.setHttpAdmUrl(httpAdmtUrl);
+					//수신자 정보
+					COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+					//이메일
+					receiverDto.setEmail(tmpCOUserDetailsDTO.getEmail());
+					//이름
+					receiverDto.setName("");
+
 					Random random = new Random();
 					// 난수 5자리 고정
 					String authNum = "";
 					for(int i = 0; i < 5; i++){
 						authNum += String.valueOf(random.nextInt(10));
 					}
-					//인증번호
-					cOMailDTO.setField1(authNum);
 					//인증요청일시
 					String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
-					cOMailDTO.setField2(field2);
-					cOMailService.sendMail(cOMailDTO, "COAAdmLgnEmail.html");
+					//치환문자1
+					receiverDto.setNote1(authNum);
+					//치환문자2
+					receiverDto.setNote2(field2);
+					//수신자 정보 등록
+					cOMailDTO.getReceiver().add(receiverDto);
+					cOMessageService.sendMail(cOMailDTO, "COAAdmLgnEmail.html");
 
 					//인증번호 로그 등록
 					COSystemLogDTO cOSystemLogDTO = new COSystemLogDTO();

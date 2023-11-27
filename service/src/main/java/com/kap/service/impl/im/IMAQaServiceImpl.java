@@ -1,13 +1,13 @@
 package com.kap.service.impl.im;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COMailDTO;
+import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.im.ima.IMAQaDTO;
 import com.kap.service.COFileService;
-import com.kap.service.COMailService;
+import com.kap.service.COMessageService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.IMAQaService;
 import com.kap.service.dao.im.IMAQaMapper;
@@ -47,7 +47,7 @@ public class IMAQaServiceImpl implements IMAQaService {
 
     /** Service **/
     private final COFileService cOFileService;
-    private final COMailService cOMailService;
+    private final COMessageService cOMessageService;
 
     /** Sequence **/
     /* 관리자 싴퉌스 */
@@ -109,19 +109,37 @@ public class IMAQaServiceImpl implements IMAQaService {
 
             //메일 발송
             COMailDTO mailForm = new COMailDTO();
-            mailForm.setEmails(pIMAQaDTO.getEmail());
-//            mailForm.setEmails("jds7447@easymedia.net");
-            mailForm.setName(pIMAQaDTO.getRegName());
             mailForm.setSubject("[ " + pIMAQaDTO.getRegName() + " ] 님의 [ " + pIMAQaDTO.getParntCtgryNm() + " > " + pIMAQaDTO.getCtgryNm() + " ] 문의에 대한 답변 드립니다");
+            //첨부파일 처리
             if (uploadFiles != null && uploadFiles.size() > 0) {
-                mailForm.setFileList(uploadFiles);
+                String fileUrl = "";
+                String fileName = "";
+                for(COFileDTO cOFileDTO : uploadFiles){
+                    fileUrl  +=  ( "".equals(fileUrl) ? "" : "|") + cOFileDTO.getWebPath();
+                    fileName +=  ( "".equals(fileUrl) ? "" : "|") + cOFileDTO.getOrgnFileNm();
+                }
+                mailForm.setFile_url(fileUrl);
+                mailForm.setFile_name(fileName);
             }
-            mailForm.setField1(pIMAQaDTO.getParntCtgryNm());
-            mailForm.setField2(pIMAQaDTO.getCtgryNm());
-            mailForm.setField3(pIMAQaDTO.getTitl());
-            mailForm.setField4(pIMAQaDTO.getCntn());
-            mailForm.setField5(pIMAQaDTO.getRplyCntn());
-            cOMailService.sendMail(mailForm, "IMAQaRply.html");
+            //수신자 정보
+            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+            //이메일
+            receiverDto.setEmail(pIMAQaDTO.getEmail());
+            //이름
+            receiverDto.setName(pIMAQaDTO.getRegName());
+            //치환문자1
+            receiverDto.setNote1(pIMAQaDTO.getParntCtgryNm());
+            //치환문자2
+            receiverDto.setNote2(pIMAQaDTO.getCtgryNm());
+            //치환문자3
+            receiverDto.setNote3(pIMAQaDTO.getTitl());
+            //치환문자4
+            receiverDto.setNote4(pIMAQaDTO.getCntn());
+            //치환문자5
+            receiverDto.setNote5(pIMAQaDTO.getRplyCntn());
+            //수신자 정보 등록
+            mailForm.getReceiver().add(receiverDto);
+            cOMessageService.sendMail(mailForm, "IMAQaRply.html");
 
             //진행상태
             pIMAQaDTO.setRsumeCd("ACK");

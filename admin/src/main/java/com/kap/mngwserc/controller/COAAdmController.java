@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -51,7 +50,7 @@ public class COAAdmController {
     private final COLgnService cOLgnService;
     private final COBMenuService cOBMenuService;
     //이메일 발송
-    private final COMailService cOMailService;
+    private final COMessageService cOMessageService;
 
     /**
      * 관리자 목록 페이지
@@ -521,18 +520,23 @@ public class COAAdmController {
 
                 if (actCnt > 0)
                 {
+                    String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
                     //이메일 발송
                     COMailDTO cOMailDTO = new COMailDTO();
                     cOMailDTO.setSubject("["+siteName+"] 임시비밀번호 발급 안내");
-                    cOMailDTO.setSiteName(siteName);
-                    cOMailDTO.setHttpFrontUrl(httpFrontUrl);
-                    cOMailDTO.setHttpAdmUrl(httpAdmtUrl);
-                    cOMailDTO.setEmails(pCOAAdmDTO.getEmail());
-                    cOMailDTO.setField1(pCOAAdmDTO.getPwd());
-                    //인증요청일시
-                    String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
-                    cOMailDTO.setField2(field2);
-                    cOMailService.sendMail(cOMailDTO, "COAAdmPwdInit.html");
+                    //수신자 정보
+                    COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                    //이메일
+                    receiverDto.setEmail(pCOAAdmDTO.getEmail());
+                    //이름
+                    receiverDto.setName("관리자");
+                    //치환문자1
+                    receiverDto.setNote1(pCOAAdmDTO.getPwd());
+                    //치환문자2
+                    receiverDto.setNote2(field2);
+                    //수신자 정보 등록
+                    cOMailDTO.getReceiver().add(receiverDto);
+                    cOMessageService.sendMail(cOMailDTO, "COAAdmPwdInit.html");
                 }
             }
             catch (Exception e)

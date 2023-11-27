@@ -31,9 +31,9 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
-@Schema(title="이메일 발송 DTO")
+@Schema(title="SMS 발송 DTO")
 @Hidden
-public class COMailDTO extends COMessageDTO {
+public class COSmsDTO extends COMessageDTO {
     //@Schema(title="발송 성공 실패 여부")
     //private int return_url = 0;
     //@Schema(title="메일 열람 확인")
@@ -42,8 +42,10 @@ public class COMailDTO extends COMessageDTO {
     //private int click = 0;
     @Schema(title="예약 발송")
     private String mailType = "NORMAL";
-    @Schema(title="메일 내용(치환전 템플릿)")
-    private String body;
+    @Schema(title="SMS 발송 필수")
+    private String type = "java";
+    @Schema(title="SMS 내용(치환전 템플릿)")
+    private String message;
 
     @Schema(title="첨부 파일")
     @JsonIgnore

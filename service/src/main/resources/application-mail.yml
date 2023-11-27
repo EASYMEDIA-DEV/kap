@@ -1,39 +1,36 @@
 ---
 spring.config.activate.on-profile: local, dev
-spring:
+app:
   #메일 설정
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: dev@easymedia.net
-    password: dnfntk1##
-    properties.mail.smtp:
-      auth: true
-      starttls.enable: true
-      ssl.trust: smtp.gmail.com
+    senderMail: hagas@kapkore.org
+    senderHp: 0232712965
+    sender_name: 자동차부품산업진흥재단
+    username: kapkorea
+    key: 9T2r3AVGeh7rslu
+    mail_url: https://directsend.co.kr/index.php/api_v2/mail_change_word
+    sms_url: https://directsend.co.kr/index.php/api_v2/sms_change_word
 ---
 spring.config.activate.on-profile: stg
-spring:
+app:
   #메일 설정
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: dev@easymedia.net
-    password: dnfntk1##
-    properties.mail.smtp:
-      auth: true
-      starttls.enable: true
-      ssl.trust: smtp.gmail.com
+    senderMail: hagas@kapkore.org
+    senderHp: 0232712965
+    sender_name: 자동차부품산업진흥재단
+    username: kapkorea
+    key: 9T2r3AVGeh7rslu
+    mail_url: https://directsend.co.kr/index.php/api_v2/mail_change_word
+    sms_url: https://directsend.co.kr/index.php/api_v2/sms_change_word
 ---
 spring.config.activate.on-profile: prod
-spring:
+app:
   #메일 설정
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username:
-    password:
-    properties.mail.smtp:
-      auth: true
-      starttls.enable: true
-      ssl.trust: smtp.gmail.com
+    senderMail: hagas@kapkore.org
+    senderHp: 0232712965
+    sender_name: 자동차부품산업진흥재단
+    username: kapkorea
+    key: 9T2r3AVGeh7rslu
+    mail_url: https://directsend.co.kr/index.php/api_v2/mail_change_word
+    sms_url: https://directsend.co.kr/index.php/api_v2/sms_change_word

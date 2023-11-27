@@ -66,14 +66,9 @@ public class COASmpleController {
 
     /**
      * <pre>
-     * 코드 관리 API Controller
+     * 샘플 API Controller
      * </pre>
      *
-     * @ClassName		: COFCodeRestController.java
-     * @Description		: 코드 관리 API Controller
-     * @author 허진영
-     * @since 2020.10.20
-     * @version 1.0
      * @see
      * @Modification Information
      * <pre>
@@ -84,7 +79,7 @@ public class COASmpleController {
      */
     @RestController
     @RequestMapping("/mngwserc")
-    public class COFCodeRestController {
+    public class COASmpleRestController {
         /**
          * 코드 조회
          */
