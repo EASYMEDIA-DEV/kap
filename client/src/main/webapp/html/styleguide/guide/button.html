@@ -155,6 +155,7 @@
                 <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
                   <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
                   <a class="btn-solid small disabled" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small black-line" href="javascript:"><span>button</span><span class="item-count">(n/n)</span></a>
                 </div>
                 <br/>
                 <p>* 어두운 배경</p>
@@ -162,18 +163,21 @@
                   <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
                   <a class="btn-solid small white-bg" href="javascript:"><span>button</span></a>
                   <a class="btn-solid small disabled" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-line" href="javascript:"><span>button</span><span class="item-count">(n/n)</span></a>
                 </div>
               </div>
               <script type="syntaxhighlighter" class="brush: xml;">
                 <div class="btn-wrap" style="padding: 20px; background-color: rgb(224, 232, 235);">
                   <a class="btn-solid small black-bg" href="javascript:"><span>button</span></a>
                   <a class="btn-solid small disabled" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small black-line" href="javascript:"><span>button</span><span class="item-count">(n/n)</span></a>
                 </div>
                 <br/>
                 <div class="btn-wrap" style="padding: 20px; background-color: rgb(64, 100, 112);">
                   <a class="btn-solid small gray-bg" href="javascript:"><span>button</span></a>
                   <a class="btn-solid small white-bg" href="javascript:"><span>button</span></a>
                   <a class="btn-solid small disabled" href="javascript:"><span>button</span></a>
+                  <a class="btn-solid small gray-line" href="javascript:"><span>button</span><span class="item-count">(n/n)</span></a>
                 </div>
               </script>
             </div>
@@ -322,6 +326,23 @@
                 .btn-text-icon.download-bg span {display: block; padding-right: 44rem; font-family: "Pretendard_Regular", sans-serif; font-size: max(16rem, 14px); color: #06161E; line-height: 1.6; letter-spacing: -.02em; word-wrap: break-word; word-break: break-all;}
                 .btn-text-icon.download-bg span:after {position: absolute; left: auto; right: 0; top: 0; margin-left: 0; width: 24rem; height: 24rem; background: url("/common/images/icon-download2.svg") center center no-repeat; background-size: 100%;}
                 .btn-text-icon.download-bg:hover span {text-decoration: underline;}
+              </script>
+            </div>
+            <div class="exs">
+              <h4>download</h4>
+              <div class="ex">
+                <div class="btn-wrap">
+                  <a class="btn-text-icon diagonal-arrow" href="javascript:" download=""><span>대각선 화살표 버튼</span></a>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="btn-wrap">
+                  <a class="btn-text-icon diagonal-arrow" href="javascript:" download=""><span>대각선 화살표 버튼</span></a>
+                </div>
+              </script>
+              <script type="syntaxhighlighter" class="brush: css;">
+                /* 대각선 화살표 아이콘 */
+                .btn-text-icon.diagonal-arrow span:after {margin-left: 0; width: 24rem; height: 24rem; background: url("/common/images/icon-diagonal-arrow.svg") center / 24rem no-repeat;}
               </script>
             </div>
           </div>

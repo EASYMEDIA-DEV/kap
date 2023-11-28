@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <!-- 회차 담당자 정보 안내 팝업 -->
+      <div class="layer-popup eduPersonInfoPopup first-show"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
+        <div class="for-center">
+          <div class="pop-wrap">
+            <div class="pop-con-area">
+              <div class="tit-area">
+                <p class="f-title1">회차 담당자 정보 안내</p>
+              </div>
+              <div class="con-area">
+                <div class="scroll-area">
+                  <div class="p-info-sec">
+                    <p class="f-sub-head">해당 회차에 궁금하신 점이 있으신 경우 아래 담당자에게 문의바랍니다.</p>
+                  </div>
+                  <div class="p-cont-sec">
+                    <div class="sec-con-area">
+                      <div class="p-list-box-w">
+                        <div class="p-list-box">
+                          <p class="f-body1">평일 09:00 ~ 17:00</p>
+                        </div>
+                        <div class="p-list-box">
+                          <p class="f-body1">점심시간 11:30 ~ 12:30 / 토, 일요일 및 공휴일 휴무</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-cont-sec">
+                    <div class="sec-con-area">
+                      <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                        <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                          <!-- 
+                            @ 폰트 기본 좌측 정렬
+                              .txt-c : 폰트 가운데 정렬
+                              .txt-r : 폰트 우측 정렬
+                            @ border-right 기본
+                              .bdl : border-left 생성
+                              .bdr : border-right 생성
+                              .bdln : border-left 삭제
+                              .bdrn : border-right 삭제
+                            @ .txt-ellipsis : 말줄임
+                          -->
+                          <caption>회차 담당자 정보 안내</caption>
+                          <colgroup>
+                            <col style="width: 26%;">
+                            <col style="width: 74%;">
+                          </colgroup>
+                          <tbody>
+                            <tr>
+                              <th>이름</th>
+                              <td>홍길동</td>
+                            </tr>
+                            <tr>
+                              <th>이메일</th>
+                              <td>honggil@kapkorea.org</td>
+                            </tr>
+                            <tr>
+                              <th>전화번호</th>
+                              <td>02-1234-5678</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="user-opt-area">
+                <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

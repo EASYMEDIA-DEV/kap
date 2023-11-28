@@ -2,6 +2,7 @@ var _this_scroll = 0;       // 스크롤 up & down 체크위한 변수
 var _isScrollTop;          // scrollTop 변수
 var comeBackElement;
 let kvTitleChangeMotion;
+var _isPlanMove = false; // 전체 교육 일정 해당 월로 위치 한번만 이동하기 위한 변수
 
 var commonScript = (function(){
   return {
@@ -99,6 +100,9 @@ var commonScript = (function(){
 
       // scrollMotion
       scrollMotionTrigger();
+
+      // 마크업에서 보여주기 위해 적어놨습니다.
+    schedulePopupFn();
     },
     commonMotion: function() {
       // header check
@@ -128,7 +132,11 @@ var commonScript = (function(){
       $(".txt-tab-swiper.func-tab .txt-tab-btn").off().on("click", function(){
         $(this).addClass("active").siblings().removeClass("active");
         // $(this).parents(".tab-con-w").find(".tab-con-area .tab-con").hide().eq($(this).index()).show();
-        $(this).parents(".tab-con-w").find(".tab-con").hide().eq($(this).index()).show();
+        if($(this).parents(".pop-con-area").size() > 0) {
+          $(this).parents(".pop-con-area").find(".tab-con").hide().eq($(this).index()).show();
+        } else {
+          $(this).parents(".tab-con-w").find(".tab-con").hide().eq($(this).index()).show();
+        }
       });
       $(".txt-depth-tab-sweiper .txt-tab-btn").off().on("click", function(){
         $(this).addClass("active").siblings().removeClass("active");
@@ -229,7 +237,7 @@ var commonScript = (function(){
       });
 
 
-      // 재단정보 > 재단소개 > 연혁, history
+      // [재단정보 > 재단소개 > 연혁], history
       if($(".year-wrap").size() > 0){
         // $(window).resize(function() {
         //   if($(window).innerWidth() > 1500 && isPc) {
@@ -349,6 +357,16 @@ var commonScript = (function(){
       }
     },
     formFn: function(){
+      // 툴팁
+      $(".tooltip-wrap .tooltip-btn").off().on("click", function(){
+        $(this).parents(".tooltip-wrap").addClass("open");
+        $(this).parents(".tooltip-wrap").find(".tooltip-box").stop(true, true).fadeIn(200);
+      });
+      $(".tooltip-wrap .tooltip-box .btn-close").off().on("click", function(){
+        $(this).parents(".tooltip-wrap").removeClass("open");
+        $(this).parents(".tooltip-box").stop(true, true).fadeOut(200);
+      });
+
       // 약관 항목 체크 시
       $("input[type='checkbox']").off().change(function(){
         if($(this).parents(".agree-list-w").size() > 0){
@@ -509,7 +527,7 @@ var commonScript = (function(){
           }
         });
   
-        $("#header nav .gnb > li .two-pack-wrap .two-pack > li").on("mouseenter focusin", function(){
+        $("#header nav .gnb > li .two-pack-wrap .two-pack > li").off().on("mouseenter focusin", function(){
           $(this).siblings().removeClass("on");
           $(this).addClass("on");
         });
@@ -557,6 +575,30 @@ var commonScript = (function(){
         // 유틸 - 전체메뉴
         let isAllMenuOpen = false;
         let logoTimeFade;
+        let rollingInterval;
+
+            // 유틸 - 전체메뉴, (mobile) 공지사항 알림 rolling
+        function noticeRollingText(){
+          // prev 삭제
+          $(".notice-rolling .prev").removeClass("prev");
+
+          // current -> prev
+          let current = $(".notice-rolling .current");
+          current.removeClass("current");
+          current.addClass("prev");
+
+          // next -> current
+          let next = $(".notice-rolling .next");
+          //다음 목록 요소가 있을 때, 없을 때
+          if (next.next().length === 0) {
+            $(".notice-rolling ul li:first-child").addClass("next");
+          }else{
+            //목록 처음 요소를 다음 요소로 선택
+            next.next().addClass("next");
+          }
+          next.removeClass("next");
+          next.addClass("current");
+        }
         
         $("#header .util-area .menu-btn").off().on("click", function(){
           $("#header .util-area .menu-btn").removeClass("init");
@@ -574,6 +616,10 @@ var commonScript = (function(){
                   $("#header h1").stop(true, true).fadeIn(400);
                 }, 800)
               }
+
+              // 롤링 텍스트 시작
+              rollingInterval = window.setInterval(noticeRollingText, 3000);
+
             });
           } else {
             $("#header .all-menu").fadeOut(200, function() {
@@ -598,6 +644,14 @@ var commonScript = (function(){
                 $("body").removeClass("stop-scroll");
               }
             }
+
+            // 롤링 텍스트 정지
+            clearInterval(rollingInterval);
+            // 롤링 텍스트 정지 시, 초기화
+            $(".notice-rolling li").removeClass("prev current next");
+            $(".notice-rolling li:first-child").addClass("current");
+            $(".notice-rolling li:nth-child(2)").addClass("next");
+            $(".notice-rolling li:last-child").addClass("prev");
 
             // if($(window).width() >= 1024) {
             //   if(!$("#header").hasClass("srch-open")) {
@@ -651,32 +705,6 @@ var commonScript = (function(){
           }
         });
 
-        // 유틸 - 전체메뉴, (mobile) 공지사항 알림 rolling
-        if($(".notice-rolling").size() > 0){
-          var interval = window.setInterval(noticeRollingText, 3000);
-          
-          function noticeRollingText(){
-            // prev 삭제
-            $(".notice-rolling .prev").removeClass("prev");
-  
-            // current -> prev
-            let current = $(".notice-rolling .current");
-            current.removeClass("current");
-            current.addClass("prev");
-  
-            // next -> current
-            let next = $(".notice-rolling .next");
-            //다음 목록 요소가 있을 때, 없을 때
-            if (next.next().length === 0) {
-              $(".notice-rolling ul li:first-child").addClass("next");
-            }else{
-              //목록 처음 요소를 다음 요소로 선택
-              next.next().addClass("next");
-            }
-            next.removeClass("next");
-            next.addClass("current");
-          }
-        }
 
         // 유틸 - 전체검색
         let srchTimeSlide;
@@ -751,27 +779,22 @@ var commonScript = (function(){
         $(window).resize(function () {
           if (window.innerWidth >= 1024) {
             // 유틸 - 전체 메뉴
-            $("#header .all-menu .gnb .two-pack").css("display", "flex");
+            $("#header .all-menu .gnb .two-pack").removeAttr("style");
             $("#header .all-menu .gnb > li").removeClass("active");
 
             // 유틸 - 전체 검색, 전체 메뉴 스크롤/딤드
-            if($("#header").hasClass("srch-open")) {
-              if(!$("#header").hasClass("menu-open")) {
-                $("body").removeClass("stop-scroll");
-              }
+            if($("#header").hasClass("srch-open") && $("#header").hasClass("menu-open")) {
               $(".dimd").stop(true, true).show();
+              $("body").addClass("stop-scroll");
+            } else if($("#header").hasClass("srch-open")) {
+              $(".dimd").stop(true, true).show();
+              $("body").removeClass("stop-scroll");
             }
           } else {
-            // 유틸 - 전체 메뉴
-            $("#header .all-menu .gnb .two-pack").css("display", "none");
-            
             // 유틸 - 전체 검색, 전체 메뉴 스크롤/딤드/로고
-            if($("#header").hasClass("srch-open")) {
-              $("body").addClass("stop-scroll");
+            if($("#header").hasClass("srch-open") || $("#header").hasClass("menu-open")) {
               $(".dimd").stop(true, true).hide();
-              $("#header h1").css("display", "block");
-            }
-            if($("#header").hasClass("menu-open")){
+              $("body").addClass("stop-scroll");
               $("#header h1").css("display", "block");
             }
           }
@@ -1033,29 +1056,47 @@ var commonScript = (function(){
       })      
     },
     popupFn: function(){
+      let popIdxNum = 200;
+      let dimdIdxNum = 200 - 2;
       // 팝업 떠있을 시
       if($(".layer-popup:visible").size() >= 1){
         $("body").addClass("stop-scroll");
         $(".layer-popup:visible").each(function(q, item){
-          $(item).css("z-index", 200 + q);
+          $(item).css("z-index", popIdxNum + q);
         });
         $(".dimd").css("z-index", (parseInt($(".layer-popup").eq(-1).css("z-index")) - 1)).show(); 
       }
-
+      
       // (공통) 팝업 닫기 버튼
-      $(".layer-popup .btn-role-close").on("click", function(){
+      $(".layer-popup .btn-role-close").off().on("click", function(){
         if(comeBackElement){
           $(comeBackElement).attr("tabindex", 0).show().focus();
         }
 
         if($(".layer-popup:visible").size() == 1){ // 팝업이 하나만 떠있을 때
+          if($(".accepting-fixed-area").hasClass("opened")) { // [컨설팅 사업] 플로팅 여부
+            $(".accepting-fixed-area").css("z-index", "");
+          } else {
+            $(".dimd").css("z-index", 50).stop(true, true).fadeOut(300);
+          }
           $("body").removeClass("stop-scroll");
-          $(".dimd").css("z-index", 50).stop(true, true).fadeOut(300);
         }else{ // 팝업이 여러개 떠있을 때
-          $(".dimd").css("z-index", parseInt($(this).parents(".layer-popup").css("z-index"))-2);
+          $(".dimd").css("z-index", `${ dimdIdxNum + ($(".layer-popup:visible").length - 1) }`);
         }
 
-        $(this).parents(".layer-popup").stop(true, true).fadeOut(300);
+        $(this).parents(".layer-popup").css("z-index", "");
+        if(window.innerWidth > 1023){
+          $(this).parents(".layer-popup").stop(true, true).fadeOut(300);
+        }else{
+          if($(this).parents(".layer-popup").hasClass("main-popup")){
+            $(this).parents(".layer-popup").stop(true, true).fadeOut(300); // 메인팝업만 fadeOut, 나머진 slide 방식
+          }else{
+            var targetPopup = $(this).parents(".layer-popup");
+            gsap.to($(this).parents(".layer-popup").find(".pop-con-area"), 0.6, {top: "100%", ease: Power3, onComplete: function(){
+              $(targetPopup).hide();
+            }});            
+          }
+        }
       });
 
       // (공통) 정보 동의 팝업에서 '동의' 버튼 눌렀을 경우
@@ -1084,10 +1125,13 @@ var commonScript = (function(){
         });
       }
 
+      
+      // [공통 - 교육/세미나] swiper
+      trainingSwperInitFn();
+
 
       // [교육사업 > 교육사업소개] swiper
       swiperInitFn();
-
 
 
       // 컨설팅 사업 > 기술지도 안내 swiper
@@ -1191,8 +1235,14 @@ var commonScript = (function(){
         // 컨설팅사업 > 신청하기 하단 고정 영역 position 변경
         acceptingRePosition();
 
+        // [공통 - 교육/세미나] swiper
+        trainingSwperInitFn();
+
         // [교육사업 > 교육사업소개] swiper
         swiperInitFn();
+
+        // 전체교육일정 일정 바 left, width값 계산
+        schedulePopupFn();
         
         // [교육사업 > 교육신청] 필터 filter 체크하여 dimd 안보이게
         if(window.innerWidth > 1023){
@@ -1205,8 +1255,10 @@ var commonScript = (function(){
             $(".dimd").show();
             $("body").addClass("stop-scroll");
           }else{
-            $(".dimd").hide();
-            $("body").removeClass("stop-scroll");
+            if($(".filter-open-btn").length){
+              $(".dimd").hide();
+              $("body").removeClass("stop-scroll");
+            }
           }
         }
       });
@@ -1238,11 +1290,18 @@ function scrollMotionTrigger(){
       gsap.to($(this), {
         scrollTrigger: {
           trigger: $(this),
-          start: "top 75%",
+          start: "top 85%",
           end:"bottom top",
           toggleClass: {targets: $(".scroll-motion:visible").eq(q), className: "active"},
           once: true,
-          // markers: true,
+          onEnter: () => {
+            // [마이페이지 > 교육 사업 신청내역], progress
+            if($(".progress").size() > 0) {
+              let progressValue = $(".progress .progress-bar").data("progress");
+              $(".scroll-motion.active .for-motion .progress-area .progress .progress-bar").css("width", progressValue);
+            }
+          },
+          //markers: true,
         },
       });
     });
@@ -1293,25 +1352,47 @@ function acceptingRePosition(){
   }
 }
 
+let popIdxNum = 200;
+let dimdIdxNum = 200 - 2;
 function openPopup(popName, comebackEl) {
   comeBackElement = comebackEl;
   var designatedPopup = $("."+popName) || $("#"+popName);
+  
+  if($(".layer-popup:visible").size() >= 1) {
+    $(".layer-popup:visible").each(function(q, item){
+      $(designatedPopup).css("z-index", popIdxNum + (q+1));
+    });
+  } else {
+    $(designatedPopup).css("z-index", popIdxNum);
+  }
+
+  if($(".accepting-fixed-area").hasClass("opened")) {
+    $(".accepting-fixed-area").css("z-index", dimdIdxNum);
+  }
 
   gsap.delayedCall(0.1, function () {
     if(!$(comeBackElement).hasClass("agree")){ // 뉴스레터 수신 동의 구별 위한 if문 추가
-      designatedPopup.stop(true, true).fadeIn(300);
-      $(".dimd").css("z-index", 198).stop(true, true).fadeIn(300);
+      if(window.innerWidth > 1023){
+        designatedPopup.stop(true, true).fadeIn(300);
+      }else{
+        $(designatedPopup).css("display","block");
+        setTimeout(() => {
+          gsap.to($(designatedPopup).find(".pop-con-area"), 0.6, {top: 0, ease: Power3});
+        }, 10);
+      }
+      $(".dimd").css("z-index", `${ dimdIdxNum + $(".layer-popup:visible").length }`).stop(true, true).fadeIn(300);
       designatedPopup.attr("tabindex", 0).focus();
-  
       $("body").addClass("stop-scroll");
     }
   });
+
 }
 
 
 
-var boxListSwiper;
 
+
+var boxListSwiper;
 function swiperInitFn(){
   // [교육사업 > 교육사업소개] swiper
   if (window.innerWidth > 1023 && boxListSwiper == undefined) {
@@ -1331,4 +1412,129 @@ function swiperInitFn(){
     boxListSwiper.destroy();
     boxListSwiper = undefined;
   }
+}
+
+var subTrainingSwiper = [];
+function trainingSwperInitFn(){
+  // [공통 - 교육/세미나] swiper
+  if (window.innerWidth > 1023) {
+    if(!$("#wrap").hasClass("main")){
+      if($(".training-swiper-area").size() > 0){
+        $(".training-swiper-area.swiper-role .training-swiper").each(function(index, item){
+          if(subTrainingSwiper[index] == undefined){
+            $(this).addClass('swiper' + index);
+            $(this).parents(".training-swiper-area").addClass('training-swiper-area' + index);
+            subTrainingSwiper[index] = new Swiper(".training-swiper.swiper" + index, {
+              observer: true,
+              observeParents: true,
+              pagination: {
+                el: ".training-swiper-area .swiper-pagination",
+                type: "bullets",
+              },
+              slidesPerView: 'auto',
+              navigation: {
+                nextEl: ".training-swiper-area.training-swiper-area" + index + " .swiper-button-next",
+                prevEl: ".training-swiper-area.training-swiper-area" + index + " .swiper-button-prev",
+              }
+            });
+          }
+        });
+      }
+    }
+  }else if(window.innerWidth <= 1023) {
+    if(!$("#wrap").hasClass("main")){
+      $(".training-swiper-area.swiper-role .training-swiper").each(function(index, item){
+        if(subTrainingSwiper[index] != undefined){
+          console.log(subTrainingSwiper[index]);
+          subTrainingSwiper[index].destroy();
+          subTrainingSwiper[index] = undefined;
+        }
+      });
+    }
+  }
+}
+
+// 전체 교육 일정 레이어 팝업 관련 함수
+function schedulePopupFn(){
+  if($(".total-edu-area").size() > 0){
+
+    var monthOuterWidth = Math.round($(".total-edu-area .edu-plan-area .month-wrap .month").outerWidth(true))
+  
+    $(".total-edu-area .edu-plan-area .round-period .period").each(function(q){
+      $(".period-bar").eq(q).find("span").text($(this).text())
+  
+      var startPeriod = $(this).text().split("~")[0]
+      var endPeriod = $(this).text().split("~")[1]
+      var startMonth = parseInt(startPeriod.split(".")[0]) // 시작 달
+      var startDate = parseInt(startPeriod.split(".")[1]) // 시작 날짜
+      var endMonth = parseInt(endPeriod.split(".")[0]) // 종료 달
+      var endDate = parseInt(endPeriod.split(".")[1]) // 종료 날짜
+  
+      $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":((endMonth - startMonth) * monthOuterWidth) + ((endDate - startDate) * (monthOuterWidth / 31))})
+    });
+
+    if(window.innerWidth > 1023){
+      Draggable.create(".scroll-div", {
+        type: "scroll-x",
+        cursor:"auto",
+        inertia: true,
+        throwResistance: 3000,
+      });
+    }else{
+      $(".total-edu-area .edu-plan-area .month-area .scroll-div > div").removeAttr("style")
+    }
+    
+    if(!_isPlanMove){
+      _isPlanMove = true;
+      $(".total-edu-area .edu-plan-area .month-area .scroll-div").scrollLeft($(".total-edu-area .edu-plan-area .month-area .month-wrap .month").outerWidth(true) * $(".total-edu-area .edu-plan-area .month-area .month-wrap .month.now").index())
+    }
+  }
+}
+
+
+// 프린트 관련 함수
+function printFn(){
+  // method 1 (새 윈도우 창 열어서 프린트 후 닫기)
+  var popUrl = "FO-PC-MYP-02-013.html";
+  var popOption = "top=10, left=10, width=1080, height=1528, scrollbars=no, status=no, menubar=no, toolbars=no, resizable=no";
+  var myWindow = window.open(popUrl, popOption);
+  myWindow.document.close();
+  myWindow.focus();
+  
+  myWindow.onafterprint = function () { //프린터 출력 후 이벤트
+    myWindow.close();
+  }
+
+  myWindow.print();
+
+
+
+
+
+
+
+
+  // method 2 (기존 바닥페이지에서 내용 교체로 구현)
+  /*var initBody = document.body.innerHTML; //body영역 저장
+
+  const newDiv = document.createElement('div');
+  document.body.appendChild(newDiv);
+  $("body > div:last-child").attr('id', 'for-print-area');
+  $("#for-print-area").load("/html/mypage/FO-PC-MYP-02-013.html", function(){
+    window.print();
+    $("#for-print-area").css("border","5px solid yellow");
+  });
+
+
+  window.onbeforeprint = function () { //프린터 출력 전 이벤트
+    document.body.innerHTML = document.getElementById('for-print-area').innerHTML;
+  }
+  
+  
+	window.onafterprint = function () { //프린터 출력 후 이벤트
+    document.body.innerHTML = initBody;
+    ScrollTrigger.refresh();
+	}
+
+  return false;*/	
 }

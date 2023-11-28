@@ -76,9 +76,6 @@
           <div class="lnb-area">
             <div class="for-motion">
               <div class="lnb-list">
-                <a class="btn-two-depth single-menu" href="javascript:"><span>컨설팅사업 소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-              </div>
-              <div class="lnb-list">
                 <a class="btn-two-depth single-menu active" href="javascript:"><span>기술지도</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
               </div>
               <div class="lnb-list">
@@ -103,13 +100,13 @@
                         </div>
                         <div class="td">
                           <div class="data-line-w">
-                            <div class="data-line">
+                            <div class="data-inner-line">
                               <div class="form-group">
                                 <div class="form-input w-longer">
-                                  <input type="text" placeholder="업체명" required>
+                                  <input type="text" placeholder="업체명 입력" required>
                                 </div>
                                 <div class="form-input">
-                                  <input type="text" placeholder="매출비중(%)">
+                                  <input type="text" placeholder="매출비중(%) 입력">
                                 </div>
                                 <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
                                 <div class="btn-wrap">
@@ -126,36 +123,36 @@
                         </div>
                         <div class="td">
                           <div class="data-line-w">
-                            <div class="data-line">
+                            <div class="data-inner-line">
                               <div class="form-group">
                                 <div class="form-input w-longer">
-                                  <input type="text" placeholder="업체명" value="현대에너지솔루션">
+                                  <input type="text" placeholder="업체명 입력" value="현대에너지솔루션">
                                 </div>
                                 <div class="form-input">
-                                  <input type="text" placeholder="매출비중(%)" value="70%">
+                                  <input type="text" placeholder=" 의존율(%) 입력" value="70%">
                                 </div>
                               </div>
                             </div>
-                            <div class="data-line">
+                            <div class="data-inner-line">
                               <div class="form-group">
                                 <div class="form-input w-longer">
-                                  <input type="text" placeholder="업체명" value="현대에너지솔루션">
+                                  <input type="text" placeholder="업체명 입력" value="현대에너지솔루션">
                                 </div>
                                 <div class="form-input">
-                                  <input type="text" placeholder="매출비중(%)" value="70%">
+                                  <input type="text" placeholder=" 의존율(%) 입력" value="70%">
                                 </div>
                                 <div class="btn-wrap btn-delete-line">
                                   <button class="btn-text-icon delete" type="button"><span>삭제</span></button>
                                 </div>
                               </div>
                             </div>
-                            <div class="data-line">
+                            <div class="data-inner-line">
                               <div class="form-group">
                                 <div class="form-input w-longer">
-                                  <input type="text" placeholder="업체명">
+                                  <input type="text" placeholder="업체명 입력">
                                 </div>
                                 <div class="form-input">
-                                  <input type="text" placeholder="매출비중(%)">
+                                  <input type="text" placeholder=" 의존율(%) 입력">
                                 </div>
                                 <!-- <div class="btn-wrap btn-delete-line">
                                   
@@ -189,7 +186,7 @@
                       </div>
                       <div class="row">
                         <div class="th">
-                          <p class="title f-head">FAX<span class="essential-mark color-sky">*</span></p>
+                          <p class="title f-head">FAX</p>
                         </div>
                         <div class="td">
                           <div class="data-line-w">
@@ -292,7 +289,7 @@
                       </div>
                       <div class="row">
                         <div class="th">
-                          <p class="title f-head">신청동기<span class="essential-mark color-sky">*</span></p>
+                          <p class="title f-head">신청사유<span class="essential-mark color-sky">*</span></p>
                         </div>
                         <div class="td">
                           <div class="data-line-w">
@@ -304,7 +301,7 @@
                                 </div>
                                 <div class="form-radio">
                                   <input type="radio" id="applyMotiveRadio2" name="applyMotiveRadioSet">
-                                  <label for="applyMotiveRadio2">1차업체 권유</label>
+                                  <label for="applyMotiveRadio2">1차부품사 권유</label>
                                 </div>
                                 <div class="form-radio">
                                   <input type="radio" id="applyMotiveRadio3" name="applyMotiveRadioSet">
@@ -327,7 +324,7 @@
                               <div class="opt-group">
                                 <div class="form-radio">
                                   <input type="radio" id="metalFieldRadio1" name="fieldRadioSet">
-                                  <label for="metalFieldRadio1">금속도금</label>
+                                  <label for="metalFieldRadio1">도금</label>
                                 </div>
                                 <div class="form-radio">
                                   <input type="radio" id="metalFieldRadio2" name="fieldRadioSet">
@@ -344,10 +341,6 @@
                                 <div class="form-radio">
                                   <input type="radio" id="metalFieldRadio5" name="fieldRadioSet">
                                   <label for="metalFieldRadio5">절삭가공</label>
-                                </div>
-                                <div class="form-radio">
-                                  <input type="radio" id="metalFieldRadio6" name="fieldRadioSet">
-                                  <label for="metalFieldRadio6">주철주조</label>
                                 </div>
                                 <div class="form-radio">
                                   <input type="radio" id="metalFieldRadio7" name="fieldRadioSet">
@@ -382,24 +375,28 @@
                                   <input type="radio" id="nonMetalFieldRadio5" name="fieldRadioSet">
                                   <label for="nonMetalFieldRadio5">IT</label>
                                 </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="nonMetalFieldRadio5" name="fieldRadioSet">
+                                  <label for="nonMetalFieldRadio5">자동화</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="nonMetalFieldRadio5" name="fieldRadioSet">
+                                  <label for="nonMetalFieldRadio5">보안</label>
+                                </div>
                               </div>
                             </div>
                             <div class="data-line">
                               <p class="data-title f-body1">기타</p>
                               <div class="etc-option-w">
-                                <div class="middle-line">
-                                  <div class="form-group">
-                                    <div class="form-radio">
-                                      <input type="radio" id="etcFieldRadio1" name="fieldRadioSet">
-                                      <label for="etcFieldRadio1">업종 직접 입력</label>
-                                    </div>
+                                <div class="form-group">
+                                  <div class="form-radio">
+                                    <input type="radio" id="etcFieldRadio1" name="fieldRadioSet">
+                                    <label for="etcFieldRadio1">업종 직접 입력</label>
                                   </div>
                                 </div>
-                                <div class="middle-line">
-                                  <div class="form-group">
-                                    <div class="form-input w-longest">
-                                      <input type="text" placeholder="업종 입력" disabled>
-                                    </div>
+                                <div class="form-group">
+                                  <div class="form-input w-longest">
+                                    <input type="text" placeholder="업종 입력" disabled>
                                   </div>
                                 </div>
                               </div>
@@ -474,7 +471,7 @@
                               <div class="noti-txt-w">
                                 <p class="f-body2">상주기술지도 신청 시 회사소개서(자율 양식)와 개선활동 추진계획서가 필수로 첨부되어야 합니다.</p>
                                 <P class="bullet-noti-txt f-caption2">* 개선활동 추진계획서는 아래 [양식 다운로드] 후 양식에 맞게 작성 후 첨부 부탁드립니다.</P>
-                                <P class="bullet-noti-txt f-caption2">* 첨부 가능한 확장자(pdf, ppt, pptx, doc, docx, xls, xlsx, zip) / 최대 업로드 용량(50MB)</P>
+                                <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,dox,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
                               </div>
                             </div>
                             <div class="data-line">
@@ -525,18 +522,14 @@
                         </div>
                         <div class="td">
                           <div class="data-line-w">
-                            <div class="data-line">
-                              <div class="inner-line">
-                                <div class="gray-bg-sec narrow-pad">
-                                  <p class="f-body2">재단의 기술지도는 전액 무상으로 지원되는 사업으로서, 지도 활동을 통해 달성한 유·무형의 성과는 전적으로 지도업체에 귀속되나, 재단의 설립취지인 자동차부품산업 발전을 위해 그 성과를 활용(지도 우수기업 선정 및 정부 등 유공자 포상 추천, 동종업계 수평전개를 위한 개선사례 교육/발표/현장공개 등)할 수 있으며, 구체적인 내용은 재단과 지도업체의 협의를 통해 진행됩니다.</p>
-                                </div>
+                            <div class="agree-box">
+                              <div class="gray-bg-sec narrow-pad">
+                                <p class="f-body2">재단의 기술지도는 전액 무상으로 지원되는 사업으로서, 지도 활동을 통해 달성한 유·무형의 성과는 전적으로 지도업체에 귀속되나, 재단의 설립취지인 자동차부품산업 발전을 위해 그 성과를 활용(지도 우수기업 선정 및 정부 등 유공자 포상 추천, 동종업계 수평전개를 위한 개선사례 교육/발표/현장공개 등)할 수 있으며, 구체적인 내용은 재단과 지도업체의 협의를 통해 진행됩니다.</p>
                               </div>
-                              <div class="inner-line agree-line">
-                                <div class="form-group align-right">
-                                  <div class="form-checkbox">
-                                    <input type="checkbox" id="agreeChk" name="">
-                                    <label for="agreeChk">약관에 동의합니다.</label>
-                                  </div>
+                              <div class="form-group align-right">
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="agreeChk" name="">
+                                  <label for="agreeChk">약관에 동의합니다.</label>
                                 </div>
                               </div>
                             </div>

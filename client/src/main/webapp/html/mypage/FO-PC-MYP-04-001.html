@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap" class="mypage"><!-- 마이페이지 mypage 클래스 추가 -->
+      <header id="header"></header>
+
+			<!-- content 영역 start -->
+      <div class="cont-wrap">
+        <!-- 
+          신청 페이지: apply-page 클래스 추가
+          그 외 페이지: basic-page 클래스 추가
+        -->
+        <div class="sub-top-vis-area">
+          <div class="page-tit-area">
+            <p class="page-tit f-xlarge-title"><span class="for-move">상생 사업 신청내역</span></p>
+          </div>
+        </div>
+        
+        <div class="divide-con-area">
+          <div class="lnb-area">
+            <div class="for-motion">
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>교육/세미나 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>컨설팅 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu active" href="javascript:"><span>상생 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>SQ평가원 자격증</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>근태 체크</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>나의 1:1 문의</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>정보 수정</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>회원탈퇴</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+            </div>
+          </div>
+
+          <div class="right-con-area">
+            <div class="cont-sec-w">
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="filter-wrap">
+                    <div class="for-flex">
+                      <div class="for-center">
+                        <div class="filter-con-area">
+                          <div class="data-enter-form">
+                            <div class="row">
+                              <div class="th">
+                                <p class="title f-head">기간검색</p>
+                              </div>
+                              <div class="td">
+                                <div class="data-line-w">
+                                  <div class="data-line">
+                                    <div class="middle-line">
+                                      <div class="opt-group">
+                                        <div class="form-radio">
+                                          <input type="radio" id="searchPeriodRadio1" name="searchPeriodRadio" checked>
+                                          <label for="searchPeriodRadio1">사업기간</label>
+                                        </div>
+                                        <div class="form-radio">
+                                          <input type="radio" id="searchPeriodRadio2" name="searchPeriodRadio">
+                                          <label for="searchPeriodRadio2">신청기간</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="middle-line">
+                                      <div class="form-group">
+                                        <div class="form-input calendar">
+                                          <input type="text" placeholder="2023.01.01 ~ 2023.01.01">
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="th">
+                                <p class="title f-head">진행상태</p>
+                              </div>
+                              <div class="td">
+                                <div class="data-line-w">
+                                  <div class="data-line">
+                                    <div class="opt-group">
+                                      <div class="form-checkbox">
+                                        <input type="checkbox" id="progressStatus1" name="progressStatus" checked>
+                                        <label for="progressStatus1">전체</label>
+                                      </div>
+                                      <div class="form-checkbox">
+                                        <input type="checkbox" id="progressStatus2" name="progressStatus">
+                                        <label for="progressStatus2">진행중</label>
+                                      </div>
+                                      <div class="form-checkbox">
+                                        <input type="checkbox" id="progressStatus3" name="progressStatus">
+                                        <label for="progressStatus3">완료</label>
+                                      </div>
+                                      <div class="form-checkbox">
+                                        <input type="checkbox" id="progressStatus4" name="progressStatus">
+                                        <label for="progressStatus4">미선정</label>
+                                      </div>
+                                      <div class="form-checkbox">
+                                        <input type="checkbox" id="progressStatus5" name="progressStatus">
+                                        <label for="progressStatus5">취소</label>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="th">
+                                <p class="title f-head">키워드</p>
+                              </div>
+                              <div class="td">
+                                <div class="data-line-w">
+                                  <div class="data-line">
+                                    <div class="form-input srch-input w-longer">
+                                      <input type="text" placeholder="사업명 입력">
+                                      <div class="input-btn-wrap">
+                                        <button class="delete-btn" title="지우기" type="button"></button>
+                                        <button class="srch-btn" title="검색"></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-con-area">
+                    <div class="info-head no-bdr">
+                      <p class="article-total-count f-body2">총 <span>1065</span>개</p>
+                      <div class="sort-select">
+                        <div class="form-select txt-select">
+                          <select id="" title="정렬 바꾸기">
+                            <option value="" selected="">업데이트순</option>
+                            <option value="">신청일자순</option>
+                          </select>
+                        </div>
+                      </div>                       
+                    </div>
+                    <div class="training-confirm">
+                      <div class="top-info">
+                        <div class="training-view-page">
+                          <div class="training-list">
+                            <!-- <div class="img-area">
+                              <img src="/common/images/img-main-training-offline-01.jpg" alt="">
+                            </div> -->
+                            <div class="txt-area">
+                              <div class="top-line">
+                                <div class="sort-label-area">
+                                  <p class="label"><span>경쟁력향상지원</span></p>
+                                  <div class="tooltip-wrap">
+                                    <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                    <div class="tooltip-box">
+                                      <p class="txt f-caption2">사업신청서에 전년도 매출액 누락되어 보완 바랍니다.</p>
+                                      <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                    </div>
+                                  </div>
+                                </div>
+                                <p class="training-name f-title3">2023 2차 스마트공장구축
+                                </p>
+                              </div>
+                              <div class="status-info-w">
+                                <p class="f-head">선급금지급</p>
+                                <p class="box-label bigger arr"><span>보완요청</span></p>
+                                <div class="tooltip-wrap">
+                                  <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                  <div class="tooltip-box">
+                                    <p class="txt f-caption2">사업신청서에 전년도 매출액 누락되어 보완 바랍니다.</p>
+                                    <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bot-info">
+                        <div class="index-list-w">
+                          <div class="list-item">
+                            <p class="available-label">
+                              <span>신청 가능한 회차</span>
+                            </p>
+                            <div class="cont">
+                              <div class="cont-area">
+                                <div class="info-list-w ">
+                                  <div class="info-list">
+                                    <p class="tit f-caption2">신청일자</p>
+                                    <p class="txt f-body2">2023-01-01</p>
+                                  </div>
+                                  <div class="info-list">
+                                    <div class="tit f-caption2">사업기간
+                                      <div class="tooltip-wrap">
+                                        <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                        <div class="tooltip-box">
+                                          <p class="txt f-caption2">사업신청서에 전년도 매출액 누락되어 보완 바랍니다.</p>
+                                          <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <p class="txt f-body2">2023-01-01 ~ <br/>2023-01-01</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="training-confirm">
+                      <div class="top-info">
+                        <div class="training-view-page">
+                          <div class="training-list">
+                            <!-- <div class="img-area">
+                              <img src="/common/images/img-main-training-offline-01.jpg" alt="">
+                            </div> -->
+                            <div class="txt-area">
+                              <div class="top-line">
+                                <div class="sort-label-area">
+                                  <p class="label"><span>자금지원</span></p>
+                                </div>
+                                <p class="training-name f-title3">시험계측장비</p>
+                              </div>
+                              <div class="status-info-w">
+                                <p class="f-head">최초점검</p>
+                                <p class="box-label bigger accepting"><span>적합</span></p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bot-info">
+                        <div class="index-list-w">
+                          <div class="list-item">
+                            <p class="available-label">
+                              <span>신청 가능한 회차</span>
+                            </p>
+                            <div class="cont">
+                              <div class="cont-area">
+                                <div class="info-list-w ">
+                                  <div class="info-list">
+                                    <p class="tit f-caption2">신청일자</p>
+                                    <p class="txt f-body2">2023-01-01</p>
+                                  </div>
+                                  <div class="info-list">
+                                    <p class="tit f-caption2">사업기간</p>
+                                    <p class="txt f-body2">2023-01-01 ~ <br/>2023-01-01</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="btn-wrap add-load align-center">
+                      <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
+			<!-- content 영역 end -->
+
+      <footer></footer>
+
+      <div class="quick-menu">
+        <div class="menu-area">
+					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
+					<div class="btn-w">
+						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
+						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
+            <a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
+					</div>
+        </div>
+        <a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
+      </div>
+
+      <div class="scroll-gauge">
+        <div class="bar"></div>
+      </div>
+
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>
