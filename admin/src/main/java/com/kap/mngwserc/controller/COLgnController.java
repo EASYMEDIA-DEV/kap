@@ -101,7 +101,7 @@ public class COLgnController {
 	public String getLoginEmailAuthPage(ModelMap modelMap, HttpSession session) throws Exception
 	{
 		String rtnUrl = "";
-		COAAdmDTO lgnCOAAdmDTO = null;
+		COUserDetailsDTO lgnCOAAdmDTO = null;
 		String authNum = "";
 		try
 		{
@@ -110,7 +110,7 @@ public class COLgnController {
 					&& RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) != null
 			)
 			{
-				lgnCOAAdmDTO = (COAAdmDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
+				lgnCOAAdmDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
 				authNum      = String.valueOf( RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) );
 				rtnUrl = "mngwserc/co/COLgnEmail";
 			}
@@ -276,7 +276,8 @@ public class COLgnController {
 			{
 				rtnCOLoginDTO = cOLgnService.actionLogin(cOLoginDTO, request);
 				COUserDetailsDTO tmpCOUserDetailsDTO  = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
-
+				System.out.println("===============" + serverStatus);
+				System.out.println("===============" + rtnCOLoginDTO.getRespCd());
 				if(serverStatus.equals("dev") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
 
 					//이메일 발송
@@ -387,7 +388,7 @@ public class COLgnController {
 		@PostMapping("/mngwsercgateway/email-auth")
 		public COLoginDTO getLoginEmailAuthConfirm(COLoginDTO cOLoginDTO, ModelMap modelMap, HttpSession session) throws Exception
 		{
-			COAAdmDTO lgnCOAAdmDTO = null;
+			COUserDetailsDTO lgnCOAAdmDTO = null;
 			String authNum = "";
 			try
 			{
@@ -399,7 +400,7 @@ public class COLgnController {
 					authNum = String.valueOf( RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) );
 					if(authNum.equals( cOLoginDTO.getEmailAuthNum() )){
 						cOLoginDTO.setRespCd("0000");
-						lgnCOAAdmDTO = (COAAdmDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailLgnMap", RequestAttributes.SCOPE_SESSION);
+						lgnCOAAdmDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailLgnMap", RequestAttributes.SCOPE_SESSION);
 						session.invalidate();
 						cOLoginDTO.setRdctUrl( lgnCOAAdmDTO.getRdctUrl() );
 						RequestContextHolder.getRequestAttributes().setAttribute("loginMap", lgnCOAAdmDTO, RequestAttributes.SCOPE_SESSION);
