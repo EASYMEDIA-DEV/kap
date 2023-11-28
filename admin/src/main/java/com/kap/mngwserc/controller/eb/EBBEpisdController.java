@@ -3,6 +3,7 @@ package com.kap.mngwserc.controller.eb;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBLctrDTO;
+import com.kap.core.dto.eb.ebb.EBBSrvRstDTO;
 import com.kap.core.dto.eb.ebb.EBBisttrDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
@@ -120,7 +121,7 @@ public class EBBEpisdController {
         List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
         List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
         List<EBBisttrDTO> bdgetList = (List<EBBisttrDTO>) rtnMap.get("bdgetList");//예산/지출관리 목록
-
+        EBBSrvRstDTO srvRstDtl = (EBBSrvRstDTO)rtnMap.get("srvRstDtl");//만족도 결과 부서, 직급별 인원 통계
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
@@ -148,6 +149,8 @@ public class EBBEpisdController {
         modelMap.addAttribute("lctrDtoList", lctrDtoList);//온라인강의
         modelMap.addAttribute("isttrList", isttrList);//강사정보
         modelMap.addAttribute("bdgetList", bdgetList);//예산지출목록
+        modelMap.addAttribute("srvRstDtl", srvRstDtl);//만족도 결과 부서, 직급별 인원 통계
+
 
         //만족도 조사(설문)
 

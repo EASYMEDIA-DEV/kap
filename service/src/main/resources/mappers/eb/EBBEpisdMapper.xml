@@ -394,8 +394,13 @@
 			 , srv_seq
 		     , srv_strt_dtm
 		     , srv_end_dtm
+		     , srv_nm
+		     , srv_mem_cnt
+		     , edctn_mem_cnt
 			 , exam_seq
 		     , exam_nm
+			 , exam_strt_dtm
+			 , exam_end_dtm
 		     , otsd_exam_ptcpt_yn
 		     , cprtn_instt_nm
 			 , place_nm
@@ -441,9 +446,14 @@
 				   , a.srv_seq
 				   , a.srv_strt_dtm
 				   , a.srv_end_dtm
+		           , (select titl from sv_mst where srv_seq = a.srv_seq) as srv_nm
+				   , (select COUNT(mem_seq) from sv_rspn_mst WHERE srv_seq = a.srv_seq) AS srv_mem_cnt /*설문 참여자수*/
+				   , (SELECT COUNT(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord) AS edctn_mem_cnt
 				   , a.exam_seq
+		           , a.exam_strt_dtm
+		           , a.exam_end_dtm
 		           , a.otsd_exam_ptcpt_yn
-				   , (SELECT NM FROM ex_exam_mst WHERE exam_seq = A.exam_seq) as exam_nm
+				   , (SELECT titl FROM ex_exam_mst WHERE exam_seq = A.exam_seq) as exam_nm
 		           , cprtn_instt_nm
 				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
 				   , a.reg_id
@@ -490,6 +500,7 @@
 			edctn_seq
 			, episd_year
 			, episd_ord
+			, episd_seq
 			, cbsn_cd
 			, accs_strt_dtm
 			, accs_end_dtm
@@ -507,6 +518,8 @@
 			, srv_strt_dtm
 			, srv_end_dtm
 			, exam_seq
+		  	, exam_strt_dtm
+		  	, exam_end_dtm
 			, otsd_exam_ptcpt_yn
 			, cprtn_instt_nm
 			, cmptn_auto_yn
@@ -521,6 +534,7 @@
 				#{edctnSeq}
 				, #{episdYear}
 				, #{episdOrd}
+				, #{episdSeq}
 				, #{cbsnCd}
 				, #{accsStrtDtm}
 				, #{accsEndDtm}
@@ -538,6 +552,8 @@
 				, #{srvStrtDtm}
 				, #{srvEndDtm}
 				, #{examSeq}
+				,#{ examStrtDtm}
+				, #{examEndDtm}
 				, #{otsdExamPtcptYn}
 				, #{cprtnInsttNm}
 				, #{cmptnAutoYn}
@@ -723,6 +739,8 @@
 			, exam_seq = #{examSeq}
 			, srv_strt_dtm = #{srvStrtDtm}
 			, srv_end_dtm = #{srvEndDtm}
+			, exam_strt_dtm = #{examStrtDtm}
+			, exam_end_dtm = #{examEndDtm}
 			, cmptn_auto_yn = #{cmptnAutoYn}
 			, otsd_exam_ptcpt_yn = #{otsdExamPtcptYn}
 			, exps_yn = #{expsYn}
@@ -837,6 +855,93 @@
 
 
 
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectEpisdSrvRstDtl
+      설  명 : 교육차수관리 - 만족도 결과 통계 호출
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectEpisdSrvRstDtl" parameterType="EBBEpisdDTO" resultType="EBBSrvRstDTO">
+		SELECT /* EBBEpisdMapper.selectEpisdSrvRstDtl */
+			EDCTN_SEQ
+			 , EPISD_YEAR
+			 , EPISD_ORD
+			 , SRV_SEQ
+			 ,SUM(CNT1) AS T1
+			 ,SUM(CNT2) AS T2
+			 ,SUM(CNT3) AS T3
+			 ,SUM(CNT4) AS T4
+			 ,SUM(CNT5) AS T5
+			 ,SUM(CNT6) AS T6
+			 ,SUM(CNT7) AS T7
+			 ,SUM(CNT8) AS T8
+			 ,SUM(CNT9) AS T9
+
+			 ,SUM(CNT01) AS A1
+			 ,SUM(CNT02) AS A2
+			 ,SUM(CNT03) AS A3
+			 ,SUM(CNT04) AS A4
+			 ,SUM(CNT05) AS A5
+			 ,SUM(CNT06) AS A6
+			 ,SUM(CNT07) AS A7
+		FROM
+			(
+				SELECT
+
+					EDCTN_SEQ
+					 , EPISD_YEAR
+					 , EPISD_ORD
+					 , A.SRV_SEQ
+					 , CASE WHEN DEPT_CD = 'MEM_CD02002' THEN COUNT(C.DEPT_CD) ELSE 0 END AS CNT1
+					 , CASE WHEN DEPT_CD = 'MEM_CD02003' THEN COUNT(C.DEPT_CD) ELSE 0 END AS CNT2
+					 , CASE WHEN DEPT_CD = 'MEM_CD02004' THEN COUNT(C.DEPT_CD) ELSE 0 END AS CNT3
+					 , CASE WHEN DEPT_CD = 'MEM_CD02005' THEN COUNT(C.DEPT_CD) ELSE 0 END AS CNT4
+					 , CASE WHEN DEPT_CD = 'MEM_CD02006' THEN COUNT(C.DEPT_CD) ELSE 0 END AS CNT5
+					 , CASE WHEN DEPT_CD = 'MEM_CD02007' THEN COUNT(C.DEPT_CD) ELSE 0 END AS CNT6
+					 , CASE WHEN DEPT_CD = 'MEM_CD02008' THEN COUNT(C.DEPT_CD) ELSE 0 END AS CNT7
+					 , CASE WHEN DEPT_CD = 'MEM_CD02009' THEN COUNT(C.DEPT_CD) ELSE 0 END AS CNT8
+					 , CASE WHEN DEPT_CD = 'MEM_CD02010' THEN COUNT(C.DEPT_CD) ELSE 0 END AS CNT9
+
+					 , CASE WHEN PSTN_CD = 'MEM_CD01001' THEN COUNT(C.PSTN_CD) ELSE 0 END AS CNT01
+					 , CASE WHEN PSTN_CD = 'MEM_CD01002' THEN COUNT(C.PSTN_CD) ELSE 0 END AS CNT02
+					 , CASE WHEN PSTN_CD = 'MEM_CD01003' THEN COUNT(C.PSTN_CD) ELSE 0 END AS CNT03
+					 , CASE WHEN PSTN_CD = 'MEM_CD01004' THEN COUNT(C.PSTN_CD) ELSE 0 END AS CNT04
+					 , CASE WHEN PSTN_CD = 'MEM_CD01005' THEN COUNT(C.PSTN_CD) ELSE 0 END AS CNT05
+					 , CASE WHEN PSTN_CD = 'MEM_CD01006' THEN COUNT(C.PSTN_CD) ELSE 0 END AS CNT06
+					 , CASE WHEN PSTN_CD = 'MEM_CD01007' THEN COUNT(C.PSTN_CD) ELSE 0 END AS CNT07
+
+				FROM ED_EDCTN_EPISD_MST A
+						 LEFT JOIN (
+					SELECT MEM_SEQ, srv_seq, rfnc_seq, rfnc_cd FROM SV_RSPN_MST
+				) B ON A.srv_seq = B.srv_seq AND b.rfnc_seq = A.episd_ord
+
+						 LEFT JOIN
+					 (
+						 SELECT MEM_SEQ, MEM_CD, DEPT_CD, PSTN_CD FROM co_mem_mst
+					 ) C ON B.mem_seq = C.mem_seq
+						 LEFT JOIN
+					 (
+						 SELECT CD
+						 FROM CO_CODE_MST
+						 WHERE PARNT_SEQ IN
+							   (SELECT CD_SEQ
+								FROM CO_CODE_MST
+								WHERE CD IN ('MEM_CD01', 'MEM_CD02'))
+					 ) T2 ON C.DEPT_CD = T2.CD
+				WHERE C.MEM_CD = 'CP' AND B.rfnc_cd = 'EDU'
+				GROUP BY EDCTN_SEQ, EPISD_YEAR, EPISD_ORD, B.SRV_SEQ, DEPT_CD, PSTN_CD
+			) T
+		WHERE 1=1
+		  and edctn_seq = #{edctnSeq}
+		  and episd_year = #{episdYear}
+		  and episd_ord = #{episdOrd}
+
+		GROUP BY EDCTN_SEQ, EPISD_YEAR, EPISD_ORD, SRV_SEQ
+
+
+	</select>
 
 </mapper>
 

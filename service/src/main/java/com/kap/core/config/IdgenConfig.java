@@ -405,7 +405,7 @@ public class IdgenConfig {
         return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
                 .setBlockSize(1)
                 .setTable("co_seq_mst")
-                .setTableName("EDCTN_PISD_SEQ")
+                .setTableName("EDCTN_EPISD_SEQ")
                 .setCipers(13)
                 .build();
     }

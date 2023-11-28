@@ -1,9 +1,6 @@
 package com.kap.service.dao.eb;
 
-import com.kap.core.dto.eb.ebb.EBBBdgetDTO;
-import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.core.dto.eb.ebb.EBBLctrDTO;
-import com.kap.core.dto.eb.ebb.EBBisttrDTO;
+import com.kap.core.dto.eb.ebb.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -108,6 +105,13 @@ public interface EBBEpisdMapper {
 	 * 교육차수 - 교육예산지출상세목록 조회
 	 */
 	public List<EBBBdgetDTO> selectBdgetDtlList(EBBBdgetDTO eBBBdgetDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 만족도 조사결과 통계
+	 */
+	public EBBSrvRstDTO selectEpisdSrvRstDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
 
 
 

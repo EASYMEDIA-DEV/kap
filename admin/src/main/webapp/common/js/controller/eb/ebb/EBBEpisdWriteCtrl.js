@@ -17,6 +17,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	var onlineHtml = $("#onlineList").find("tr.examTr").eq(0).clone(true);
 	var onlineFileHtml = $("#onlineList").find("tr.examTr").eq(1).clone(true);
 
+	//오프라인평가 체크시 실행
+	var setSelectBox = function(arg){
+
+		if($("input[name='otsdExamPtcptYn']").is(":checked")){
+			//alert("평가 선택");
+			$("#examSeq").prop("disabled", true);
+		}else{
+			//alert("평가 선택 해제");
+			$("#examSeq").val(null).prop("disabled", false);
+		}
+
+	}
+
 
 	//예산 지출내역 filed 세팅
 	var bdgetSet = function(data){
@@ -521,7 +534,26 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$(this).closest("tr").remove();
 					}
 				}
-			}
+			},
+
+
+			srvReset : {
+				event : {
+					click : function(){
+						if(confirm("응답 내용이 즉시 삭제됩니다. 초기화 하시겠습니까?")){
+
+						}
+					}
+				}
+			},
+
+			otsdExamPtcptYn : {
+				event : {
+					change : function() {
+						setSelectBox(this);
+					}
+				}
+			},
 
 
 
@@ -721,6 +753,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.srvSeq = $("#srvSeq").val();//설문순번
 						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
 						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
+
+						actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
+						actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
+
+
 
 						actForm.edctnNtctnFileSeq = $("#edctnNtctnFileSeq").val();
 

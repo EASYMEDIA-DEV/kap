@@ -2,10 +2,7 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.*;
-import com.kap.core.dto.eb.ebb.EBBBdgetDTO;
-import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.core.dto.eb.ebb.EBBLctrDTO;
-import com.kap.core.dto.eb.ebb.EBBisttrDTO;
+import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.service.*;
 import com.kap.service.dao.COFileMapper;
@@ -129,11 +126,18 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			bdgetList = eBBEpisdMapper.selectBdgetDtlList(bdgetDto);
 		}
 
+
+		//만족도결과 호출
+		EBBSrvRstDTO srvRstDtl = eBBEpisdMapper.selectEpisdSrvRstDtl(ebbDto);
+
+
 		map.put("rtnData", ebbDto);
 		map.put("roomDto", roomDto);
 		map.put("lctrDtoList", lctrDtoList);
 		map.put("isttrList", isttrList);
 		map.put("bdgetList", bdgetList);
+		map.put("srvRstDtl", srvRstDtl);
+
 
 		return map;
 	}
@@ -155,6 +159,15 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
 		eBBEpisdDTO.setModId( cOUserDetailsDTO.getId() );
 		eBBEpisdDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+
+
+
+		int firstEdctnEpisdIdgen = edctnEpisdIdgen.getNextIntegerId();
+
+		eBBEpisdDTO.setEpisdSeq(firstEdctnEpisdIdgen);
+
+
 
 
 		//파일 처리

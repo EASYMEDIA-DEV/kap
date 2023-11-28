@@ -548,6 +548,7 @@
                                         <th class="text-center">설문유형</th>
                                         <th class="text-center">제목</th>
                                         <th class="text-center">설문기간</th>
+                                        <th class="text-center"></th>
                                     </tr>
                                     </thead>
                                     <!-- 리스트 목록 결과 -->
@@ -573,6 +574,11 @@
                                                 </div>
 
                                             </td>
+                                            <td>
+                                                <button type="button" class="btn btn-inverse btn-sm srvReset">
+                                                    설문 초기화
+                                                </button>
+                                            </td>
                                         </tr>
                                     <%--<tr data-total-count="0">
                                         <td colspan="4" class="text-center">
@@ -580,6 +586,7 @@
                                             (등록된 데이터가 없습니다.)
                                         </td>
                                     </tr>--%>
+                                        <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" value="${rtnDto.srvSeq}" disabled="true">
                                     </tbody>
                                 </table>
                             </div>
@@ -596,14 +603,15 @@
                                 </button>
 
                                 <label class="checkbox-inline c-checkbox pull-right">
-                                    <input type="checkbox" class="checkboxSingle notRequired" value="Y"  name="otsdExamPtcptYn"  <c:if test="${rtnDto.otsdExamPtcptYn eq 'Y'}">checked</c:if> title="오프라인평가"/>
+                                    <input type="checkbox" class="checkboxSingle notRequired otsdExamPtcptYn" value="Y"  name="otsdExamPtcptYn"  <c:if test="${rtnDto.otsdExamPtcptYn eq 'Y'}">checked</c:if> title="오프라인평가"/>
                                     <span class="ion-checkmark-round"></span> 오프라인평가
                                 </label>
 
                                 <table class="table table-hover table-striped">
                                     <thead>
                                     <tr>
-                                        <th class="text-center">제목</th>
+                                        <th class="text-center" colspan="4">제목</th>
+                                        <th class="text-center" colspan="6">평가기간</th>
                                     </tr>
                                     </thead>
                                     <!-- 리스트 목록 결과 -->
@@ -615,7 +623,25 @@
                                         </td>
                                     </tr>
                                     <tr class="setExg" <c:if test="${rtnDto.examNm eq ''}">style="display: none;"</c:if>>
-                                        <td class="text-center">${rtnDto.examNm}</td>
+                                        <td class="text-center" colspan="4">${rtnDto.examNm}</td>
+                                        <td colspan="6">
+                                            <div class="input-group form-date-group mr-sm">
+                                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="examStrtDtm" id="examStrtDtm" value="${ kl:convertDate(rtnDto.examStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시험시작일시" readonly="readonly"/>
+                                                <span class="input-group-btn" style="z-index:0;">
+                                                        <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
+                                                            <em class="ion-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                <span class="input-group-addon bg-white b0">~</span>
+                                                <input type="text" class="form-control input-sm datetimepicker_endDt" name="examEndDtm" id="examEndDtm" value="${ kl:convertDate(rtnDto.examEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시험종료일시" readonly="readonly"/>
+                                                <span class="input-group-btn" style="z-index:0;">
+                                                        <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
+                                                            <em class="ion-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                            </div>
+
+                                        </td>
                                     </tr>
                                     <input type="hidden" class="notRequired" name="examSeq" id="examSeq" value="${rtnDto.examSeq}" disabled="true">
                                     </tbody>
@@ -650,6 +676,202 @@
 
                 <!-- 만족도 결과 -->
                 <div id="svResult" class="tab-pane fade">
+
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <div class="col-sm-11">
+                                <h6 class="mt0"><em class="ion-play mr-sm"></em>설문정보</h6>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">설문명<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-5">
+                                <p class="form-control-static">
+                                    ${rtnDto.srvNm}
+                                </p>
+                            </div>
+                            <label class="col-sm-1 control-label">설문기간<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-5">
+                                <p class="form-control-static">
+                                    ${kl:convertDate(rtnDto.srvStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(rtnDto.srvEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">교육 참여자<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-5">
+                                <p class="form-control-static">
+                                    <c:if test="${rtnDto.edctnMemCnt ne ''}">${rtnDto.edctnMemCnt}명</c:if>
+                                </p>
+                            </div>
+                            <label class="col-sm-1 control-label">설문 참여자<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-5">
+                                <p class="form-control-static">
+                                    <c:if test="${rtnDto.srvMemCnt ne ''}">${rtnDto.srvMemCnt}명</c:if>
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">설문 참여율<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-11">
+                                <p class="form-control-static">
+                                        <c:choose>
+                                            <c:when test="${rtnDto.edctnMemCnt ne 0 && rtnDto.srvMemCnt ne 0}">
+                                                <fmt:parseNumber var= "cnt" integerOnly= "true" value= "${(rtnDto.srvMemCnt/rtnDto.edctnMemCnt)*100}" />
+                                                ${cnt}%
+                                            </c:when>
+                                            <c:otherwise>
+                                                0%
+                                            </c:otherwise>
+                                        </c:choose>
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <div class="table-responsive ">
+                                <table class="table text-sm">
+                                    <tbody>
+                                        <tr>
+                                            <th colspan="9">부서별 인원</th><th colspan="7">직급별 인원</th>
+                                        </tr>
+                                        <tr>
+                                            <th>품질</th>
+                                            <th>R&D</th>
+                                            <th>생산</th>
+                                            <th>구매</th>
+                                            <th>경영지원</th>
+                                            <th>업체평가</th>
+                                            <th>안전</th>
+                                            <th>ESG</th>
+                                            <th>기타</th>
+
+                                            <th>대표</th>
+                                            <th>임원</th>
+                                            <th>부장</th>
+                                            <th>과장/차장</th>
+                                            <th>사원/대리</th>
+                                            <th>조장/반창(계장)</th>
+                                            <th>기타</th>
+                                        </tr>
+
+                                        <c:choose>
+                                            <c:when test="${not empty srvRstDtl}">
+                                                <fmt:parseNumber var= "tPer1" integerOnly= "true" value= "${(srvRstDtl.t1/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "tPer2" integerOnly= "true" value= "${(srvRstDtl.t2/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "tPer3" integerOnly= "true" value= "${(srvRstDtl.t3/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "tPer4" integerOnly= "true" value= "${(srvRstDtl.t4/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "tPer5" integerOnly= "true" value= "${(srvRstDtl.t5/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "tPer6" integerOnly= "true" value= "${(srvRstDtl.t6/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "tPer7" integerOnly= "true" value= "${(srvRstDtl.t7/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "tPer8" integerOnly= "true" value= "${(srvRstDtl.t8/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "tPer9" integerOnly= "true" value= "${(srvRstDtl.t9/rtnDto.srvMemCnt)*100}" />
+
+                                                <fmt:parseNumber var= "aPer1" integerOnly= "true" value= "${(srvRstDtl.a1/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "aPer2" integerOnly= "true" value= "${(srvRstDtl.a2/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "aPer3" integerOnly= "true" value= "${(srvRstDtl.a3/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "aPer4" integerOnly= "true" value= "${(srvRstDtl.a4/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "aPer5" integerOnly= "true" value= "${(srvRstDtl.a5/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "aPer6" integerOnly= "true" value= "${(srvRstDtl.a6/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "aPer7" integerOnly= "true" value= "${(srvRstDtl.a7/rtnDto.srvMemCnt)*100}" />
+                                                <tr>
+                                                    <td class="text-center">${srvRstDtl.t1}명(${tPer1}%)</td>
+                                                    <td class="text-center">${srvRstDtl.t2}명(${tPer2}%)</td>
+                                                    <td class="text-center">${srvRstDtl.t3}명(${tPer3}%)</td>
+                                                    <td class="text-center">${srvRstDtl.t4}명(${tPer4}%)</td>
+                                                    <td class="text-center">${srvRstDtl.t5}명(${tPer5}%)</td>
+                                                    <td class="text-center">${srvRstDtl.t6}명(${tPer6}%)</td>
+                                                    <td class="text-center">${srvRstDtl.t7}명(${tPer7}%)</td>
+                                                    <td class="text-center">${srvRstDtl.t8}명(${tPer8}%)</td>
+                                                    <td class="text-center">${srvRstDtl.t9}명(${tPer9}%)</td>
+
+                                                    <td class="text-center">${srvRstDtl.a1}명(${aPer1}%)</td>
+                                                    <td class="text-center">${srvRstDtl.a2}명(${aPer2}%)</td>
+                                                    <td class="text-center">${srvRstDtl.a3}명(${aPer3}%)</td>
+                                                    <td class="text-center">${srvRstDtl.a4}명(${aPer4}%)</td>
+                                                    <td class="text-center">${srvRstDtl.a5}명(${aPer5}%)</td>
+                                                    <td class="text-center">${srvRstDtl.a6}명(${aPer6}%)</td>
+                                                    <td class="text-center">${srvRstDtl.a7}명(${aPer7}%)</td>
+                                                </tr>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <tr>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                    <td class="text-center">0명(0%)</td>
+                                                </tr>
+                                            </c:otherwise>
+
+                                        </c:choose>
+
+                                    </tbody>
+                                </table>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <div class="table-responsive ">
+                                <table class="table text-sm">
+                                    <tbody>
+                                    <tr>
+                                        <th>종합평균</th>
+                                        <th>전체(공통)</th>
+                                        <th>교육환경</th>
+                                        <th>교육지원</th>
+                                        <th>교육내용</th>
+                                        <th>강사평가</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
                 </div>
 
                 <!-- 예산/지출 -->

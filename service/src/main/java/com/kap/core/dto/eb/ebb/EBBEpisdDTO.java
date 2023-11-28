@@ -32,6 +32,10 @@ import java.util.List;
 @AllArgsConstructor
 public class EBBEpisdDTO extends BaseDTO {
 
+
+    @Schema(title = "교육차수순번", example = "숫자")
+    private Integer episdSeq;
+
     @Schema(title = "교육순번", example = "숫자")
     @NotNull
     private Integer edctnSeq;
@@ -104,16 +108,33 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "설문순번", example = "숫자")
     private Integer srvSeq;
 
+    @Schema(title = "설문명", example = "숫자")
+    private String srvNm;
+
     @Schema(title = "설문시작일", example = "날짜 yyyy-mm-dd HH:mm:ss")
     private String srvStrtDtm;
 
     @Schema(title = "설문종료일", example = "날짜 yyyy-mm-dd HH:mm:ss")
     private String srvEndDtm;
 
+    @Schema(title = "설문 참여수", example = "숫자")
+    private Integer srvMemCnt;
+
+    @Schema(title = "교육 참여수", example = "숫자")
+    private Integer edctnMemCnt;
+
+
+
     @Schema(title = "시험순번", example = "숫자")
     private Integer examSeq;
     @Schema(title = "시험명", example = "숫자")
     private String examNm;
+
+    @Schema(title = "시험시작일", example = "날짜 yyyy-mm-dd HH:mm:ss")
+    private String examStrtDtm;
+
+    @Schema(title = "시험종료일", example = "날짜 yyyy-mm-dd HH:mm:ss")
+    private String examEndDtm;
 
 
     @Schema(title = "수료자동여부", example = "Y/N")
