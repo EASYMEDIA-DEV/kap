@@ -647,4 +647,17 @@ public class IdgenConfig {
                 .build();
     }
 
+
+    /** 메시지 발송 로그
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl msgSendMstSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("MSG_SEND_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }

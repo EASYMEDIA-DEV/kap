@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kap.core.dto.*;
 import com.kap.service.COMessageService;
 import com.kap.service.SMHSmsSendYnService;
+import com.kap.service.dao.COMsgSendMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +22,9 @@ import java.io.StringWriter;
 import java.lang.reflect.Field;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -64,6 +68,11 @@ public class COMessageServiceImpl implements COMessageService {
 	//이메일 템플릿 경로
 	@Value("${app.file.template-file-path}")
 	private String tmplFilePath;
+
+	/** 메시지 발송 순번 **/
+	private final EgovIdGnrService msgSendMstSeqIdgen;
+	/** 메시지 발송 Mapper **/
+	private final COMsgSendMapper cOMsgSendMapper;
 
 	/**
 	 * 메일 발송 처리
@@ -127,6 +136,7 @@ public class COMessageServiceImpl implements COMessageService {
 			TypeReference<HashMap<String, Object>> typeReference = new TypeReference<HashMap<String,Object>>() {};
 			responseMap = objectMapper.readValue(response.toString(), typeReference);
 			log.error("response : {}", response.toString());
+			insertMessageLog(cOMailDTO, responseMap);
 		}
 		catch (MessagingException me)
 		{
@@ -192,6 +202,7 @@ public class COMessageServiceImpl implements COMessageService {
 			TypeReference<HashMap<String, Object>> typeReference = new TypeReference<HashMap<String,Object>>() {};
 			responseMap = objectMapper.readValue(response.toString(), typeReference);
 			log.error("response : {}", response.toString());
+			insertMessageLog(cOSmsDTO, responseMap);
 		}
 		catch (MessagingException me)
 		{
@@ -245,5 +256,47 @@ public class COMessageServiceImpl implements COMessageService {
 		}
 
 		return body;
+	}
+
+	/**
+	 * 메시지 발송 로그 등록
+	 */
+	public void insertMessageLog(COMessageDTO cOMessageDTO, HashMap<String, Object> rtnMap) throws Exception
+	{
+		int msgSendSeq = msgSendMstSeqIdgen.getNextIntegerId();
+		String body = "";
+		if(cOMessageDTO instanceof COMailDTO){
+			body = ((COMailDTO)cOMessageDTO).getBody();
+		}
+		else{
+			body = ((COSmsDTO)cOMessageDTO).getMessage();
+		}
+		COMsgSendMst cOMsgSendMst = COMsgSendMst.builder().msgSendSeq(msgSendSeq)
+				.sttsCd(String.valueOf(rtnMap.get("status")))
+				.sttsMsg(String.valueOf(rtnMap.get("msg")))
+				.titl(cOMessageDTO.getSubject())
+				.cntn(body).build();
+		List<COMsgSendDtl> cOMsgSendDtlList = new ArrayList<COMsgSendDtl>();
+		for(int q = 0 ; q < cOMessageDTO.getReceiver().size() ; q++){
+			COMsgSendDtl cOMsgSendDtl = new COMsgSendDtl();
+			cOMsgSendDtl.setMsgSendSeq(msgSendSeq);
+			cOMsgSendDtl.setSendOrd(q);
+			if(cOMessageDTO instanceof COMailDTO){
+				cOMsgSendDtl.setType("email");
+				cOMsgSendDtl.setEmail(cOMessageDTO.getReceiver().get(q).getEmail());
+			}
+			else{
+				cOMsgSendDtl.setType("sms");
+				cOMsgSendDtl.setHpNo(cOMessageDTO.getReceiver().get(q).getMobile());
+			}
+			cOMsgSendDtl.setNote1(cOMessageDTO.getReceiver().get(q).getNote1());
+			cOMsgSendDtl.setNote2(cOMessageDTO.getReceiver().get(q).getNote2());
+			cOMsgSendDtl.setNote3(cOMessageDTO.getReceiver().get(q).getNote3());
+			cOMsgSendDtl.setNote4(cOMessageDTO.getReceiver().get(q).getNote4());
+			cOMsgSendDtl.setNote5(cOMessageDTO.getReceiver().get(q).getNote5());
+			cOMsgSendDtlList.add(cOMsgSendDtl);
+		}
+		cOMsgSendMapper.insertMsgSendMst(cOMsgSendMst);
+		cOMsgSendMapper.insertMsgSendDtl(cOMsgSendDtlList);
 	}
 }
