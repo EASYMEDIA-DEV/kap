@@ -53,34 +53,228 @@
                 <p class="step-num">2</p>
                 <p class="step-con">약관동의</p>
               </div>
-              <div class="step-list completed">
+              <div class="step-list ongoing">
                 <p class="step-num">3</p>
                 <p class="step-con">회원정보 입력</p>
               </div>
-              <div class="step-list ongoing">
+              <div class="step-list">
                 <p class="step-num">4</p>
                 <p class="step-con">가입완료</p>
               </div>
             </div>
           </div>
 
-          <div class="wht-con-box join-complete">
-            <div class="join-result">
-              <p class="f-title1"><span class="color-sky">회원가입</span> 이<br> 완료되었습니다.</p>
-              <p class="detail-txt">자동차부품산업진흥재단 회원이 되신 것을 진심으로 축하드립니다. <br>로그인 후 다양한 서비스를 이용하실 수 있습니다.</p>
-              <div class="info-area">
-                <p class="tit">회원가입 완료일</p>
-                <p class="txt">2023-01-01 10:00</p>
+          <div class="inner-con-box">
+            <div class="cont-sec-w">
+              <div class="cont-sec">
+                <div class="sec-tit-area">
+                  <p class="f-title3">회원 정보 입력</p>
+                  <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                </div>
+                <div class="sec-con-area">
+                  <div class="data-enter-form">
+                    <div class="row">
+                      <div class="th">
+                        <p class="title f-head">아이디<span class="essential-mark color-sky">*</span></p>
+                      </div>
+                      <div class="td">
+                        <div class="for-status-chk satisfy"><!-- 조건 충족 시 satisfy 클래스 추가 -->
+                          <div class="form-group">                            
+                            <div class="form-input">
+                              <input type="text" placeholder="아이디 입력" required>
+                            </div>
+                            <div class="btn-wrap">
+                              <button class="btn-solid small gray-bg" type="button"><span>중복확인</span></button>
+                            </div>
+                          </div>
+                          <p class="satisfy-msg">사용 가능한 아이디입니다.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="th">
+                        <p class="title f-head">비밀번호<span class="essential-mark color-sky">*</span></p>
+                      </div>
+                      <div class="td">
+                        <div class="form-group">
+                          <div class="for-status-chk"><!-- 조건 충족 시 error 클래스 삭제 -->
+                            <div class="form-input w-longer">
+                              <input type="password" placeholder="비밀번호 입력">
+                            </div>
+                            <p class="error-msg">8~16자 이내 영문+숫자+특수문자 조합으로 입력해주세요.</p>
+                          </div>
+                        </div>
+                        <div class="noti-txt-w">
+                          <p class="bullet-noti-txt f-caption2">* 8~16자 이내 영문+숫자+특수문자 조합으로 입력해주세요.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="th">
+                        <p class="title f-head">비밀번호 확인<span class="essential-mark color-sky">*</span></p>
+                      </div>
+                      <div class="td">
+                        <div class="form-group">
+                          <div class="for-status-chk error"><!-- 조건 충족 시 error 클래스 삭제 -->
+                            <div class="form-input w-longer">
+                              <input type="password" placeholder="비밀번호 확인">
+                            </div>
+                            <p class="error-msg">비밀번호가 일치하지 않습니다.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="th">
+                        <p class="title f-head">이메일<span class="essential-mark color-sky">*</span></p>
+                      </div>
+                      <div class="td">
+                        <div class="data-line-w">
+                          <div class="data-line">
+                            <div class="inner-line">
+                              <div class="form-group form-email">
+                                <div class="form-input">
+                                  <input type="text" placeholder="이메일 입력">
+                                </div>
+                                <div class="form-input">
+                                  <input type="text" placeholder="직접입력">
+                                </div>
+                                <div class="form-select">
+                                  <select id="" title="메일 선택">
+                                    <option value="" selected>직접입력</option>
+                                    <option value="">option1</option>
+                                    <option value="">option2</option>
+                                    <option value="">option3</option>
+                                  </select>
+                                </div>
+                                <div class="btn-wrap">
+                                  <button class="btn-solid small gray-bg" type="button"><span>인증</span></button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="inner-line">
+                              <div class="for-status-chk satisfy"><!-- 조건 충족 시 satisfy 클래스 추가 -->
+                                <div class="form-group">                            
+                                  <div class="form-input w-longer">
+                                    <input type="text" placeholder="인증번호 입력" required>
+                                    <p class="unit-txt timer">유효시간 <span>05:00</span></p>
+                                  </div>
+                                </div>
+                                <p class="satisfy-msg">인증되었습니다.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="th">
+                        <p class="title f-head">일반 전화번호<span class="essential-mark color-sky">*</span></p>
+                      </div>
+                      <div class="td">
+                        <div class="data-line-w">
+                          <div class="data-line">
+                            <div class="form-group">
+                              <div class="form-input">
+                                <input type="number" placeholder="일반 전화번호 입력">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="th">
+                        <p class="title f-head">주소<span class="essential-mark color-sky">*</span></p>
+                      </div>
+                      <div class="td">
+                        <div class="data-line-w">
+                          <div class="data-line">
+                            <div class="inner-line">
+                              <div class="form-address">
+                                <div class="form-group">
+                                  <div class="form-input w-shortest">
+                                    <input type="text" placeholder="우편번호" readonly>
+                                  </div>
+                                  <div class="form-input">
+                                    <input type="text" placeholder="기본주소" readonly>
+                                  </div>
+                                  <div class="btn-wrap">
+                                    <button class="btn-solid small gray-bg" type="button"><span>우편번호 찾기</span></button>
+                                  </div>
+                                </div>
+                                <div class="form-group">
+                                  <div class="form-input w-longer">
+                                    <input type="text" placeholder="상세주소 입력">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="th">
+                        <p class="title f-head">부서<span class="essential-mark color-sky">*</span></p>
+                      </div>
+                      <div class="td">
+                        <div class="data-line-w">
+                          <div class="data-line">
+                            <div class="form-group">
+                              <div class="form-select">
+                                <select id="" title="선택">
+                                  <option value="" selected>선택</option>
+                                  <option value="">option1</option>
+                                  <option value="">option2</option>
+                                  <option value="">option3</option>
+                                </select>
+                              </div>
+                              <div class="form-input">
+                                <input type="text" placeholder="부서 상세 입력">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="th">
+                        <p class="title f-head">직급<span class="essential-mark color-sky">*</span></p>
+                      </div>
+                      <div class="td">
+                        <div class="data-line-w">
+                          <div class="data-line">
+                            <div class="form-group">
+                              <div class="form-select">
+                                <select id="" title="선택">
+                                  <option value="" selected>선택</option>
+                                  <option value="">option1</option>
+                                  <option value="">option2</option>
+                                  <option value="">option3</option>
+                                </select>
+                              </div>
+                              <div class="form-input">
+                                <input type="text" placeholder="기타 직급 입력">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+            
 
             <div class="page-bot-btn-sec">
               <div class="btn-wrap">
                 <div class="btn-set">
-                  <a class="btn-solid small gray-bg" href="javascript:"><span>메인으로</span></a>
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>이전</span></a>
                 </div>
                 <div class="btn-set">
-                  <a class="btn-solid small black-bg" href="javascript:"><span>로그인</span></a>
+                  <a class="btn-solid small black-bg" href="javascript:"><span>회원가입</span></a>
                 </div>
               </div>
             </div>

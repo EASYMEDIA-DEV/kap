@@ -35,6 +35,7 @@ public class MPAUserDto extends BaseDTO {
 
     @Schema(title = "회원코드", example = "1")
     private String memCd;
+    
 
     @Schema(title = "아이디", example = "1")
     private String id;
@@ -81,8 +82,9 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title = "마지막로그인일시", example = "date")
     private String lastLgnDtm;
 
-    @Schema(title = "마지막로그인일시", example = "Y")
+    @Schema(title = "엑셀", example = "Y")
     private String excelYn;             //엑셀
+
 
     private String lgnSsnId;
 

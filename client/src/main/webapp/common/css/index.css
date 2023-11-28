@@ -198,7 +198,7 @@ em {font-style: normal; text-align: center;}
 }
 .table a div:nth-child(10) ~ div {
   /* flex: .5; */
-  text-align: center;
+  text-align: left;
 }
 .table .title div:nth-last-child(1) {
   /* flex: 1.5 !important; */

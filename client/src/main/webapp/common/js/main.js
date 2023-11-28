@@ -83,6 +83,7 @@ var mainScript = (function(){
                 $(".main-kv-sec .roll-img-area .roll-img-list.hide-motion").css("z-index", 20);
                 $(".main-kv-sec .roll-img-area .roll-img-list").eq(this.realIndex).css("z-index", 19);
 
+                //gsap.to($(".main-kv-sec .title-area .kv-txt-swiper .swiper-slide-active .txt-wrap"), 1, {clipPath: "polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%)", ease: Power3}); // 글씨 clip-path
                 gsap.to($(".main-kv-sec .title-area .kv-txt-swiper .swiper-slide-active .motion"), 0.7, {left: 0, opacity: 1, stagger:0.08, ease: Power3}); // 글씨 나타나게  
                 gsap.to($(".main-kv-sec .roll-img-area .roll-img-list").eq(this.realIndex).find(".img-area"), 1, {left: 0, ease: Power3}); // 이미지가 왼쪽으로 움직이게
                 gsap.to($(".main-kv-sec .roll-img-area .roll-img-list.hide-motion .img-area"), 1, {clipPath: "polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%)", ease: Power3}); // clip-path 이미지 분할 사라지게
@@ -93,6 +94,8 @@ var mainScript = (function(){
                 $(".main-kv-sec .roll-img-area .roll-img-list").removeClass("hide-motion").eq(this.realIndex).addClass("hide-motion");
 
                 gsap.to($(".main-kv-sec .roll-img-area .roll-img-list:not(.hide-motion) .img-area"), 0, {left: "100rem"});
+
+                //gsap.to($(".main-kv-sec .title-area .kv-txt-swiper .list:not(.swiper-slide-active) .txt-wrap"), 0, {clipPath: "polygon(0 0, 0 100%, 50% 100%, 50% 0, 50% 0, 50% 100%, 100% 100%, 100% 0)"}); // 글씨 clip-path
                 gsap.to($(".main-kv-sec .title-area .kv-txt-swiper .list:not(.swiper-slide-active) .motion"), 0, {left: "-100rem", opacity: 0});
 
                 $(".main-kv-sec .roll-img-area .roll-img-list").css("z-index", 1);
@@ -197,12 +200,10 @@ var mainScript = (function(){
       });
 
       $(".hover-accordion .acco-list").on("mouseleave", function(){
-        if($(this).index() !== 0){
-          
+        if(!($(this).parents(".coexisting-swiper-w").size() > 0 && $(this).index() == 0)){
           $(this).removeClass("active");
           if($(this).parents(".biz-line-sec").size() > 0){
-            gsap.to($(".hover-accordion .acco-list:nth-child(n+2) .title-area"), .5, {opacity:0.5, ease:Power3.easeOut});
-            gsap.to($(".hover-accordion .acco-list:first-child .title-area"), .5, {opacity:1, ease:Power3.easeOut});
+            gsap.to($(this).parents(".hover-accordion").find(".acco-list:nth-child(n+2) .title-area"), .5, {opacity:0.5, ease:Power3.easeOut});
           }
         }
 
@@ -210,17 +211,16 @@ var mainScript = (function(){
       });
 
       $(".hover-accordion").on("mouseleave", function(){
-        $(this).find(".acco-list:first-child").addClass("active");
+        if($(this).parents(".coexisting-swiper-w").size() > 0){
+          $(this).find(".acco-list:first-child").addClass("active");
+        }
       });
 
-      document.addEventListener("mousemove",(e) => {
-        if($(e.target).parents(".acco-list").size() > 0 || $(e.target).hasClass("acco-list")){
-        }else{
-          $(lastTarget).find(".acco-list:first-child").addClass("active");     
-        }
-
-        if($(e.target).parents(".thumbnail-img").size() > 0){
-          $(lastTarget).find(".acco-list:first-child").addClass("active");
+      document.addEventListener("mousemove",(e) => {        
+        if($(e.target).parents(".coexisting-swiper-w").size() > 0){
+          if($(e.target).hasClass("acco-list") || $(e.target).hasClass("swiper-slide")){
+            $(lastTarget).find(".acco-list:first-child").addClass("active").siblings().removeClass("active");
+          }
         }
       })
 
@@ -246,110 +246,72 @@ var mainScript = (function(){
     },
     resizeFn: function(){
       $(window).resize(function(){
+        // main kv 높이값
         $(".main-kv-sec").height(window.innerHeight);
-      });
+
+        // [공통 - 교육/세미나] swiper
+        mainTrainingInitFn();
+
+        // 상생사업 swiper
+        coexistingSwperInitFn();
+      }).resize();
     },
     swiperFn: function(){
-      // 교육 swiper
-      /*var mainTrainingSwiper = [];
-      $(".training-swiper").each(function(index, item){
-        $(this).addClass('swiper' + index);
-        $(this).parents(".training-swiper-area").addClass('training-swiper-area' + index);
-        mainTrainingSwiper[index] = new Swiper(".training-swiper.swiper" + index, {
-          freeMode: true,
-          autoplay: {
-            delay: 1,
-            stopOnLastSlide: true,
-            disableOnInteraction: false,
-          },
-          autoplayDisableOnInteraction: true,
-          speed: 5000,
-          loop: true,
-          slidesPerView: 'auto',
-          navigation: {
-            nextEl: ".training-swiper-area.training-swiper-area" + index + " .swiper-button-next",
-            prevEl: ".training-swiper-area.training-swiper-area" + index + " .swiper-button-prev",
-          }
-          //loop : true,
-        });
-      });
-
-      $(".training-swiper-area .swiper-container").on("mouseover", function(){
-        console.log("enter");
-        //console.log($(this).parents(".training-list-w").index());
-        mainTrainingSwiper[0].autoplay.stop();
-      });
-
-      $(".training-swiper-area .swiper-container").on("mouseleave", function(){
-        console.log("leave");
-        mainTrainingSwiper[0].autoplay.start();
-      })*/
-
-
-
-
-
-
+      // [공통 - 교육/세미나] swiper
+      //mainTrainingInitFn();
+      trainingPCFn();
 
       
-
-      let activeElement;
-      const boxes = gsap.utils.toArray(".marquee_item1");
-      const loop = horizontalLoop(boxes, {
-        repeat: 99999999,
-        paused: false,
-        draggable: true,
-        center: false,
-        onChange: (element, index) => {
-            activeElement && activeElement.classList.remove("-active");
-            element.classList.add("-active");
-            activeElement = element;
-        }
-      });
-
-      document.querySelector(".btn_next").addEventListener("click", () => loop.next({duration: 0.4, ease: "power1.inOut"}));
-      document.querySelector(".btn_prev").addEventListener("click", () => loop.previous({duration: 0.4, ease: "power1.inOut"}));
-
-
-
-      const wrapper2 = document.querySelector(".marquee_wrapper2");
-      const boxes2 = gsap.utils.toArray(".marquee_item2");
-
-      let activeElement2;
-
-      const loop2 = horizontalLoop2(boxes2, {
-          repeat: 99999999,
-          paused: false,
-          draggable: true,
-          center: false,
-          onChange: (element, index) => {
-              activeElement2 && activeElement2.classList.remove("-active");
-              element.classList.add("-active");
-              activeElement2 = element;
-          }
-      });
-      
-      document.querySelector(".btn_next2").addEventListener("click", () => loop2.next({duration: 0.4, ease: "power1.inOut"}));
-      document.querySelector(".btn_prev2").addEventListener("click", () => loop2.previous({duration: 0.4, ease: "power1.inOut"}));
-
-
       // 상생사업 swiper
-      var mainCoexistingSwiper;
-      mainCoexistingSwiper = new Swiper(".coexisting-swiper-w .swiper-container", {
-        loop: true,
-        spaceBetween: 1,
-        slidesPerView: "auto",
-        observer: true,
-        observeParents: true,
-        pagination: {
-          el: ".coexisting-swiper-w .swiper-pagination",
-          type: "bullets",
-        },
-        navigation: {
-          nextEl: ".coexisting-swiper-w .swiper-button-next",
-          prevEl: ".coexisting-swiper-w .swiper-button-prev",
+      coexistingSwperInitFn();
+
+      $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").each(function(index, item){
+        $(item).css("z-index", $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").length - index);
+      });
+
+      var easing = BezierEasing(0.6, 0, 0.3, 1);
+      var slideNum = 0;
+
+      if(slideNum == 0){
+        $(".coexisting-swiper-w .swiper-button-prev").addClass("swiper-button-disabled");
+      }
+
+      $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-button-next").on("click", function(){
+        if(window.innerWidth > 1023){
+          if(slideNum < $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").length - 1){
+            $(".coexisting-swiper-w .swiper-button-prev").removeClass("swiper-button-disabled");
+            gsap.to($(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum).find(".inner-motion"), 0.6, {y: "-100%", opacity: 0, ease: easing});
+            gsap.to($(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum).find(".thumbnail-img"), 0.6, {opacity: 0, ease: easing, onComplete: function(){
+              slideNum += 1;
+              $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum - 1).hide();
+              $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum - 1).find(".biz-list .title-area").hide();
+              $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum - 1).find(".biz-list .hide-area").hide();
+              gsap.fromTo($(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum).find(".inner-motion"), 0.6, {y: 100, opacity: 0}, {y: 0, opacity: 1, ease: easing});
+              if(slideNum >= $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").length - 1){
+                $(".coexisting-swiper-w .swiper-button-next").addClass("swiper-button-disabled");
+              }
+            }});
+          }
         }
-        //loop : true,
+      });
+
+      $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-button-prev").off().on("click", function(){
+        if(window.innerWidth > 1023){
+          if(slideNum > 0){
+            $(".coexisting-swiper-w .swiper-button-next").removeClass("swiper-button-disabled");
+            $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum - 1).show();
+            gsap.to($(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum).find(".inner-motion"), 0.6, {y: "-100%", opacity: 0, ease: easing});
+            gsap.to($(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum - 1).find(".thumbnail-img"), 0.6, {opacity: 1, ease: easing, onComplete: function(){
+              slideNum -= 1;
+              $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum).find(".biz-list .title-area").show();
+              $(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum).find(".biz-list .hide-area").show();
+              gsap.fromTo($(".biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide").eq(slideNum).find(".inner-motion"), 0.6, {y: 100, opacity: 0}, {y: 0, opacity: 1, ease: easing});
+              if(slideNum == 0){
+                $(".coexisting-swiper-w .swiper-button-prev").addClass("swiper-button-disabled");
+              }
+            }});
+          }
+        }
       });
     },
   }
@@ -364,6 +326,34 @@ $(window).on("load", function(){
   mainScript.swiperFn();
 });
 
+
+// 상생사업 swiper
+var mainCoexistingSwiper;
+function coexistingSwperInitFn(){  
+  if (window.innerWidth <= 1023 && mainCoexistingSwiper == undefined) {
+    if($(".coexisting-swiper-w").size() > 0){
+      mainCoexistingSwiper = new Swiper(".coexisting-swiper-w .swiper-container", {
+        loop: true,
+        spaceBetween: 1,
+        slidesPerView: "auto",
+        observer: true,
+        observeParents: true,
+        autoHeight: true,
+        pagination: {
+          el: ".coexisting-swiper-w .swiper-pagination",
+          type: "bullets",
+        },
+        navigation: {
+          nextEl: ".coexisting-swiper-w .swiper-button-next",
+          prevEl: ".coexisting-swiper-w .swiper-button-prev",
+        }
+      });
+    }
+  }else if(window.innerWidth > 1023 && mainCoexistingSwiper != undefined) {
+    mainCoexistingSwiper.destroy();
+    mainCoexistingSwiper = undefined;
+  }
+}
 
 
 function horizontalLoop(items, config) {
@@ -394,6 +384,8 @@ function horizontalLoop(items, config) {
   container = center === true ? items[0].parentNode : gsap.utils.toArray(center)[0] || items[0].parentNode,
   totalWidth,
   getTotalWidth = () => items[length-1].offsetLeft + xPercents[length-1] / 100 * widths[length-1] - startX + spaceBefore[0] + items[length-1].offsetWidth * gsap.getProperty(items[length-1], "scaleX") + (parseFloat(config.paddingRight) || 0),
+
+  
 
   populateWidths = () => {
       let b1 = container.getBoundingClientRect(), b2;
@@ -454,12 +446,14 @@ function horizontalLoop(items, config) {
   },
 
   refresh = (deep) => {
+    if(window.innerWidth > 1023){
       let progress = tl.progress();
       tl.progress(0, true);
       populateWidths();
       deep && populateTimeline();
       populateOffsets();
       deep && tl.draggable ? tl.time(times[curIndex], true) : tl.progress(progress, true);
+    }
   },
 
   
@@ -470,9 +464,14 @@ function horizontalLoop(items, config) {
   populateTimeline();
   populateOffsets();
 
-  window.addEventListener("resize", () => refresh(true));
+  window.addEventListener("resize", () => {
+    if(window.innerWidth > 1023){
+      refresh(true);
+    }
+  });
 
   function toIndex(index, vars) {
+    if(window.innerWidth > 1023){
       vars = vars || {};
       (Math.abs(index - curIndex) > length / 2) && (index += index > curIndex ? -length : length);
       let newIndex = gsap.utils.wrap(0, length, index),
@@ -487,6 +486,7 @@ function horizontalLoop(items, config) {
       vars.overwrite = true;
       gsap.killTweensOf(proxy);
       return tl.tweenTo(time, vars);
+    }
   }
 
   var moveItem;
@@ -502,19 +502,23 @@ function horizontalLoop(items, config) {
   }
 
   tl.next = vars => {
+    if(window.innerWidth > 1023){
       toIndex(curIndex+moveItem, vars);
       function nextPlay() {
           tl.play();
       }
       setTimeout(nextPlay, 1000);
+    }
   }
 
   tl.previous = vars => {
+    if(window.innerWidth > 1023){
       toIndex(curIndex-moveItem, vars);
       function previousPlay() {
           tl.play();
       }
       setTimeout(previousPlay, 1000);
+    }
   }
 
   tl.current = () => curIndex;
@@ -534,6 +538,7 @@ function horizontalLoop(items, config) {
   }
 
   if (config.draggable && typeof(Draggable) === "function") {
+    if(window.innerWidth > 1023){
       proxy = document.createElement("div")
       let wrap = gsap.utils.wrap(0, 1),
       ratio, startProgress, draggable, dragSnap,
@@ -567,16 +572,21 @@ function horizontalLoop(items, config) {
       })[0];
 
       tl.draggable = draggable;
+    }
   }
 
   tl.closestIndex(true);
   onChange && onChange(items[curIndex], curIndex);
 
   $('.marquee_wrapper1').on('mouseover',()=>{
+    if(window.innerWidth > 1023){
       tl.pause();
+    }
   })
   $('.marquee_wrapper1').on('mouseleave',()=>{
+    if(window.innerWidth > 1023){
       tl.play();
+    }
   })
 
   return tl;
@@ -795,4 +805,113 @@ function horizontalLoop2(items, config) {
   })
 
   return tl;
+}
+
+
+var wrapper, wrapper2;
+var boxes, boxes2;
+var loop, loop2;
+var activeElement, activeElement2;
+
+function trainingPCFn() {
+  // 교육 리스트  
+  wrapper, wrapper2 = undefined;
+  boxes, boxes2 = undefined;
+  loop, loop2 = undefined;
+  activeElement, activeElement2 = undefined;
+
+  wrapper = document.querySelector(".marquee_wrapper1");
+  boxes = gsap.utils.toArray(".marquee_item1");
+
+  activeElement;
+  loop = horizontalLoop(boxes, {
+    repeat: 99999999,
+    paused: false,
+    draggable: true,
+    center: false,
+    onChange: (element, index) => {
+        activeElement && activeElement.classList.remove("-active");
+        element.classList.add("-active");
+        activeElement = element;
+    }
+  });
+
+  document.querySelector(".btn_next").addEventListener("click", () => loop.next({duration: 0.4, ease: "power1.inOut"}));
+  document.querySelector(".btn_prev").addEventListener("click", () => loop.previous({duration: 0.4, ease: "power1.inOut"}));
+
+
+
+  wrapper2 = document.querySelector(".marquee_wrapper2");
+  boxes2 = gsap.utils.toArray(".marquee_item2");
+
+  activeElement2;
+  loop2 = horizontalLoop2(boxes2, {
+      repeat: 99999999,
+      paused: false,
+      draggable: true,
+      center: false,
+      onChange: (element, index) => {
+          activeElement2 && activeElement2.classList.remove("-active");
+          element.classList.add("-active");
+          activeElement2 = element;
+      }
+  });
+  
+  document.querySelector(".btn_next2").addEventListener("click", () => loop2.next({duration: 0.4, ease: "power1.inOut"}));
+  document.querySelector(".btn_prev2").addEventListener("click", () => loop2.previous({duration: 0.4, ease: "power1.inOut"}));
+
+
+  //loop.restart();
+  //loop2.restart();
+}
+
+
+var mainTrainingSwiper = [];
+function mainTrainingInitFn() {
+  // [공통 - 교육/세미나] swiper
+  if (window.innerWidth <= 1023) { // mobile
+    if($("#wrap").hasClass("main")){
+      if($(".training-swiper-area").size() > 0){
+        if(loop != undefined){
+          loop.pause();
+          loop2.pause();
+        }
+
+        $(".training-swiper-area").addClass("is-mobile");
+
+        $(".training-swiper-area .training-swiper").each(function(index, item){
+          if(mainTrainingSwiper[index] == undefined){
+            $(this).addClass('swiper' + index);
+            $(this).parents(".training-swiper-area").addClass('training-swiper-area' + index);
+            mainTrainingSwiper[index] = new Swiper(".training-swiper.swiper" + index, {
+              observer: true,
+              observeParents: true,
+              loop: true,
+              /*pagination: {
+                el: ".training-swiper-area.training-swiper-area" + index + " .swiper-pagination",
+                type: "progressbar",
+              },*/
+              slidesPerView: 'auto',
+              navigation: {
+                nextEl: ".training-swiper-area.training-swiper-area" + index + " .swiper-button-next",
+                prevEl: ".training-swiper-area.training-swiper-area" + index + " .swiper-button-prev",
+              }
+            });
+          }
+        });
+      }
+    }
+  }else if(window.innerWidth > 1023) { // pc
+    if($("#wrap").hasClass("main")){
+      $(".training-swiper-area").removeClass("is-mobile");
+      //$(".training-swiper-area .swiper-slide").css("transform", "translate(0, 0)");
+
+      $(".training-swiper-area .training-swiper").each(function(index, item){
+        if(mainTrainingSwiper[index] != undefined){
+          mainTrainingSwiper[index].destroy();
+          mainTrainingSwiper[index] = undefined;
+        }
+      });
+    }
+  }
 }

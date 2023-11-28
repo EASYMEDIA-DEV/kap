@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <header id="header"></header>
+
+			<!-- content 영역 start -->
+      <div class="cont-wrap">
+        <div class="sub-top-vis-area">
+          <div class="page-tit-area">
+            <p class="page-tit f-xlarge-title"><span class="for-move">교육신청</span></p>
+          </div>
+        </div>
+        
+        <div class="divide-con-area">
+          <div class="lnb-area">
+            <div class="for-motion">
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>교육사업 소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu active" href="javascript:"><span>교육신청</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>방문교육</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+            </div>
+          </div>
+
+          <div class="right-con-area">
+            <div class="cont-sec-w">
+              <div class="cont-sec scroll-motion">
+                <div class="for-motion">
+                  <div class="training-view-page">
+                    <div class="training-list">
+                      <div class="img-area">
+                        <img src="/common/images/img-main-training-offline-01.jpg" alt="">
+                      </div>
+                      <div class="txt-area">
+                        <div class="top-line">
+                          <div class="sort-label-area">
+                            <p class="label"><span>품질아카데미</span></p>
+                            <p class="label"><span>품질학교</span></p>
+                          </div>
+                          <p class="training-name f-title1">꼭 알아야 할 품질 기초</p>
+                          <p class="training-explain-txt">품질 전문가로서의 첫 시작을 위한 교육!</p>
+                        </div>
+                        <div class="class-property-w">
+                          <div class="property-list offline"><!-- offline: 집체교육 -->
+                            <p class="txt">
+                              <span>집체교육</span>
+                            </p>
+                          </div>
+                          <div class="property-list online"><!-- online: 온라인교육 -->
+                            <p class="txt">
+                              <span>온라인교육</span>
+                            </p>
+                          </div>
+                          <div class="property-list time"><!-- time: 학습시간 -->
+                            <p class="txt">
+                              <span>2일(14시간)</span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area non-block"><!-- non-block : pc/mobile 둘다 flex -->
+                    <p class="f-title3">회차정보</p>
+                    <p class="article-total-count f-body2">총 <span>0</span>개</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="index-list-w">
+                      <!-- 데이터 없을 경우 노출되는 영역 -->
+                      <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
+                        <div class="txt-box">
+                          <p class="txt f-body1">등록된 회차가 없습니다.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">과정개요</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="txt-sec">
+                      <div class="paragraph">
+                        <p class="f-sub-head">품질 전문가로서의 첫 시작을 위한 교육!</p>
+                      </div>
+                      <div class="paragraph">
+                        <p class="f-sub-head">품질의 기본 개념부터 올바른 품질 문제 파악 및 실용적인 QC 7도구 활용 방법까지, 품질 세계에 입문한 부품사 직원들이 품질을 제대로 이해하고 업무에 바로 활용할 수 있도록 최고 품질 전문가의 실전 강의를 제공합니다.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">학습목표</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="txt-sec">
+                      <div class="ul-txt-w highlight">
+                        <div class="ul-txt-list">
+                          <p class="ul-txt has-dot">(K) 품질이 중요한 이유에 대해 설명할 수 있다.</p>
+                          <p class="ul-txt has-dot">(K) 완성차 구매/품질 정책을 조직 시스템 및 업무에 반영한다.</p>
+                          <p class="ul-txt has-dot">(S) 품질 문제를 정의하고 해결 방안을 제시할 수 있다.</p>
+                          <p class="ul-txt has-dot">(S) 현장에서 품질 문제 해결을 위해 QC-7 Tool를 용도에 맞게 활용할 수 있다.</p>
+                          <p class="ul-txt has-dot">(S) 현장에서 품질 개선을 위한 기법을 적용할 수 있다.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">학습대상</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="table-sec">
+                      <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                        <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                          <!-- 
+                            @ 폰트 기본 좌측 정렬
+                              .txt-c : 폰트 가운데 정렬
+                              .txt-r : 폰트 우측 정렬
+                            @ border-right 기본
+                              .bdl : border-left 생성
+                              .bdr : border-right 생성
+                              .bdln : border-left 삭제
+                              .bdrn : border-right 삭제
+                            @ .txt-ellipsis : 말줄임
+                          -->
+                          <caption>신청자 기본 정보</caption>
+                          <colgroup>
+                            <col style="width: 25%;">
+                            <col style="width: 75%;">
+                          </colgroup>
+                          <tbody>
+                            <tr>
+                              <th>회사</th>
+                              <td>1차 부품사</td>
+                            </tr>
+                            <tr>
+                              <th>업종</th>
+                              <td>구분없음</td>
+                            </tr>
+                            <tr>
+                              <th>직무</th>
+                              <td>구분없음</td>
+                            </tr>
+                            <tr>
+                              <th>직급</th>
+                              <td>사원/대리(매니저, 주임)</td>
+                            </tr>
+                            <tr>
+                              <th>기타</th>
+                              <td>경력 3년 이상 필수</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">학습 기본정보</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="table-sec">
+                      <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                        <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                          <!-- 
+                            @ 폰트 기본 좌측 정렬
+                              .txt-c : 폰트 가운데 정렬
+                              .txt-r : 폰트 우측 정렬
+                            @ border-right 기본
+                              .bdl : border-left 생성
+                              .bdr : border-right 생성
+                              .bdln : border-left 삭제
+                              .bdrn : border-right 삭제
+                            @ .txt-ellipsis : 말줄임
+                          -->
+                          <caption>신청자 기본 정보</caption>
+                          <colgroup>
+                            <col style="width: 25%;">
+                            <col style="width: 75%;">
+                          </colgroup>
+                          <tbody>
+                            <tr>
+                              <th>학습방식</th>
+                              <td>집체교육</td>
+                            </tr>
+                            <tr>
+                              <th>수료기준</th>
+                              <td>출석 80% 이상, 평가 90점 이상</td>
+                            </tr>
+                            <tr>
+                              <th>학습시간</th>
+                              <td>2일 / 14시간</td>
+                            </tr>
+                            <tr>
+                              <th>학습 준비물</th>
+                              <td>노트북</td>
+                            </tr>
+                            <tr>
+                              <th>협업기관</th>
+                              <td>영남대</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">학습내용</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="curriculum-div">
+                      <div class="day-list">
+                        <div class="tit-area">
+                          <p class="tit f-title2">1일차</p>
+                        </div>
+                        <div class="con-area">
+                          <div class="chapter-list">
+                            <p class="chapter-tit f-head">품질 경쟁력 확보의 중요성</p>
+                            <div class="ul-txt-w highlight">
+                              <div class="ul-txt-list">
+                                <p class="ul-txt has-dot">품질의 정의</p>
+                                <p class="ul-txt has-dot">품질의 진화</p>
+                                <p class="ul-txt has-dot">협력사 품질 평가 제도</p>
+                              </div>
+                            </div>
+                            <p class="method">강의 / 퀴즈</p>
+                          </div>
+                          <div class="chapter-list">
+                            <p class="chapter-tit f-head">품질 문제의 인식과 해결</p>
+                            <div class="ul-txt-w highlight">
+                              <div class="ul-txt-list">
+                                <p class="ul-txt has-dot">문제의 인식과 해결</p>
+                                <p class="ul-txt has-dot">품질 문제를 통계적으로 표현하기</p>
+                                <p class="ul-txt has-dot">품질 문제의 해결(SW2H)</p>
+                              </div>
+                            </div>
+                            <p class="method">강의 / 퀴즈</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="day-list">
+                        <div class="tit-area">
+                          <p class="tit f-title2">2일차</p>
+                        </div>
+                        <div class="con-area">
+                          <div class="chapter-list">
+                            <p class="chapter-tit f-head">품질 경쟁력 확보의 중요성</p>
+                            <div class="ul-txt-w highlight">
+                              <div class="ul-txt-list">
+                                <p class="ul-txt has-dot">문제해결 절차와 QC7 도구 활용 흐름</p>
+                                <p class="ul-txt has-dot">QC7 도구 별 활용 실습</p>
+                              </div>
+                            </div>
+                            <p class="method">강의 / 퀴즈</p>
+                          </div>
+                          <div class="chapter-list">
+                            <p class="chapter-tit f-head">품질 문제의 인식과 해결</p>
+                            <div class="ul-txt-w highlight">
+                              <div class="ul-txt-list">
+                                <p class="ul-txt has-dot">7Step, 8D report, 품질분임조 등 품질 향상 기업 활용 사례</p>
+                              </div>
+                            </div>
+                            <p class="method">강의 / 퀴즈</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">연계학습</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="training-swiper-area swiper-role">
+                      <div class="inner-title">
+                        <p class="f-title2">선수과목(0)</p>
+                      </div>
+                      <!-- 데이터 없을 경우 노출되는 영역 -->
+                      <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
+                        <div class="txt-box">
+                          <p class="txt f-body1">등록된 선수과목이 없습니다.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="training-swiper-area swiper-role">
+                      <div class="inner-title">
+                        <p class="f-title2">후속과목(0)</p>
+                      </div>
+                      <!-- 데이터 없을 경우 노출되는 영역 -->
+                      <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
+                        <div class="txt-box">
+                          <p class="txt f-body1">등록된 후속과목이 없습니다.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-bot-btn-sec scroll-motion">
+              <div class="btn-wrap align-center for-motion">
+                <a class="btn-solid small black-bg" href="javascript:"><span>목록으로</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
+			<!-- content 영역 end -->
+
+      <footer></footer>
+
+      <div class="quick-menu">
+        <div class="menu-area">
+					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
+					<div class="btn-w">
+						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
+						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
+            <a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
+					</div>
+        </div>
+        <a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
+      </div>
+
+      <div class="scroll-gauge">
+        <div class="bar"></div>
+      </div>
+
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

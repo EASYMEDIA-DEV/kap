@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.COMsgSendMapper">
+    <!--
+        쿼리명 : COMsgSendMapper.insertMsgSendMst
+        설  명 : 마스터 등록
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.28    이옥정       최초생성
+     -->
+    <insert id="insertMsgSendMst" parameterType="COMsgSendMst">
+        insert into /* COSeqGnrMapper.insertSeq */ co_msg_send_mst
+            (msg_send_seq, stts_cd, stts_msg, titl, cntn, reg_dtm)
+        values
+            (#{msgSendSeq}, #{sttsCd}, #{sttsMsg}, #{titl}, #{cntn}, now())
+    </insert>
+
+    <!--
+        쿼리명 : COMsgSendMapper.insertMsgSendDtl
+        설  명 : 상세 등록
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.28    이옥정       최초생성
+     -->
+    <insert id="insertMsgSendDtl" parameterType="java.util.List">
+        insert into /* COSeqGnrMapper.insertMsgSendDtl */ co_msg_send_dtl
+            (msg_send_seq, send_ord, type, email, hp_no, note1, note2, note3, note4, note5, reg_dtm)
+        values
+        <foreach collection="list" item="item" index="index" open="" close="" separator=",">
+            (#{item.msgSendSeq}, #{item.sendOrd}, #{item.type}, #{item.email}, #{item.hpNo}, #{item.note1}, #{item.note2}, #{item.note3}, #{item.note4}, #{item.note5}, now())
+        </foreach>
+    </insert>
+</mapper>

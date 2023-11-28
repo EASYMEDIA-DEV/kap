@@ -60,18 +60,30 @@ public class WBRoundMstDTO extends BaseDTO {
 
     @Schema(title = "시상식파일순번", example = "숫자")
     private int wdcrmFileSeq;
+    
+    @Schema(title = "포상금액", example = "숫자")
+    private int prizePmt;
 
     @Schema(title = "노출 여부")
     private String expsYn;
 
     @Schema(title = "진행상태", example = "")
     private String dateState;
+    
+    @Schema(title = "장소", example = "")
+    private String placeNm;
 
     @Schema(title = "회차 조회 결과 리스트")
     private List<WBRoundMstDTO> list;
 
     @Schema(title = "지급차수 리스트")
     private List<WBOrderMstDto> giveList;
+
+    @Schema(title = "포상금 리스트")
+    private List<WBOrderMstDto> prizeList;
+    
+    @Schema(title = "지역 리스트")
+    private List<WBOrderMstDto> roomList;
 
     @Schema(title = "유형 옵션 구분")
     private String optnCd;

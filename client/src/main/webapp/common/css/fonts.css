@@ -4,6 +4,13 @@
 
 /* Pretendard */
 @font-face {
+  font-family: "Pretendard_ExtraBold";
+  src: url(../fonts/Pretendard-ExtraBold.eot);
+  src: url(../fonts/Pretendard-ExtraBold.eot?#iefix) format("embedded-opentype"), url(../fonts/Pretendard-ExtraBold.woff2) format("woff2"), url(../fonts/Pretendard-ExtraBold.woff) format("woff"), url(../fonts/Pretendard-ExtraBold.ttf) format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
   font-family: "Pretendard_Bold";
   src: url(../fonts/Pretendard-Bold.eot);
   src: url(../fonts/Pretendard-Bold.eot?#iefix) format("embedded-opentype"), url(../fonts/Pretendard-Bold.woff2) format("woff2"), url(../fonts/Pretendard-Bold.woff) format("woff"), url(../fonts/Pretendard-Bold.ttf) format("truetype");

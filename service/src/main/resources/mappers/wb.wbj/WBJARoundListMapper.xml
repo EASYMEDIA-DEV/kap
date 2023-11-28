@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.wb.wbj.WBJARoundListMapper">
+
+    <!--
+         쿼리명 : WBJARoundListMapper.selectRoundList
+         설  명 : 게시판 리스트
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.20  오병호     최초 생성
+    -->
+    <select id="selectRoundList" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstDTO">
+        SELECT /* WBJARoundListMapper.selectRoundList */ *
+        FROM (
+            SELECT
+            EPISD_SEQ
+            ,BSN_CD
+            ,YEAR
+            ,EPISD
+            ,ACCS_STRT_DTM
+            ,ACCS_END_DTM
+            ,BSN_STRT_DTM
+            ,BSN_END_DTM
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+            ELSE '사업종료'
+            END AS DATE_STATE
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 'STATE01'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 'STATE02'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN 'STATE03'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
+            ELSE 'STATE05'
+            END AS DATE_STATE_CD
+            , (SELECT NM FROM ED_EDCTN_PLACE_MST WHERE PLACE_SEQ = A.PLACE_SEQ) AS PLACE_NM
+            , (SELECT SUM(PRIZE_PMT) FROM CX_EPISD_PRIZE_DTL WHERE EPISD_SEQ = A.EPISD_SEQ) AS PRIZE_PMT
+            ,EXPS_YN
+            ,REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            ,REG_DTM
+            ,MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            ,MOD_DTM
+            FROM CX_EPISD_MST A
+        ) A
+        <include refid="selectRoundListwhereSql" />
+        ORDER BY A.REG_DTM DESC
+        limit #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : WBEACarbonListMapper.getCarbonListTotCnt
+         설  명 : 게시판 총 갯수
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.20  오병호     최초 생성
+    -->
+    <select id="getRoundListTotCnt" parameterType="wBRoundMstSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBEACarbonListMapper.getRoundListTotCnt*/ COUNT(*)
+        FROM (
+            SELECT
+            EPISD_SEQ
+            ,BSN_CD
+            ,YEAR
+            ,EPISD
+            ,ACCS_STRT_DTM
+            ,ACCS_END_DTM
+            ,BSN_STRT_DTM
+            ,BSN_END_DTM
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+            ELSE '사업종료'
+            END AS DATE_STATE
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 'STATE01'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 'STATE02'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN 'STATE03'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
+            ELSE 'STATE05'
+            END AS DATE_STATE_CD
+            , (SELECT NM FROM ED_EDCTN_PLACE_MST WHERE PLACE_SEQ = A.PLACE_SEQ) AS PLACE_NM
+            , (SELECT SUM(PRIZE_PMT) FROM CX_EPISD_PRIZE_DTL WHERE EPISD_SEQ = A.EPISD_SEQ) AS PRIZE_PMT
+            ,EXPS_YN
+            ,REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            ,REG_DTM
+            ,MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            ,MOD_DTM
+            FROM CX_EPISD_MST A
+        ) A
+        <include refid="selectRoundListwhereSql" />
+    </select>
+
+    <!--
+		쿼리명 : selectRoundListwhereSql
+		설  명 : 게시판 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20  오병호     최초 생성
+    -->
+    <sql id="selectRoundListwhereSql">
+        <where>
+            <if test="carbonDate != null and carbonDate != ''.toString() ">
+                <choose>
+                    <when test="carbonDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                                ACCS_STRT_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                OR
+                                ACCS_END_DTM BETWEEN STR_TO_DATE(#{endDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                OR
+                                STR_TO_DATE(#{strtDt}, '%Y-%m-%d') BETWEEN ACCS_STRT_DTM AND ACCS_END_DTM
+                                OR
+                                STR_TO_DATE(#{endDt}, '%Y-%m-%d') BETWEEN ACCS_STRT_DTM AND ACCS_END_DTM
+                            )
+                        </if>
+                    </when>
+                    <when test="carbonDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                                BSN_STRT_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                OR
+                                BSN_END_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                OR
+                                STR_TO_DATE(#{strtDt}, '%Y-%m-%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
+                                OR
+                                STR_TO_DATE(#{endDt}, '%Y-%m-%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
+                            )
+                        </if>
+                    </when>
+                </choose>
+            </if>
+
+            <if test="carbonCdList != null and carbonCdList.size() > 0">
+                AND (
+                <foreach collection="carbonCdList" item="carbonCdList" index="index" open="" close="" separator=" or ">
+                    A.DATE_STATE_CD = #{carbonCdList}
+                </foreach>
+                )
+            </if>
+            <if test="expsYnList != null and expsYnList.size() > 0">
+                AND (
+                <foreach collection="expsYnList" item="expsYnList" index="index" open="" close="" separator=" or ">
+                    EXPS_YN = #{expsYnList}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 2">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 3">
+                        AND A.PLACE_NM LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <otherwise>
+                        AND (
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        OR
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        AND BSN_CD = 'INQ07010'
+        </where>
+    </sql>
+
+    <!--
+         쿼리명 : WBJARoundListMapper.selectRoundDtl
+         설  명 : 회차 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.20  오병호     최초 생성
+    -->
+    <select id="selectRoundDtl" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstDTO">
+        SELECT /* WBJARoundListMapper.selectRoundDtl */
+            EPISD_SEQ
+             ,BSN_CD
+             ,YEAR
+             ,EPISD
+             ,ACCS_STRT_DTM
+             ,ACCS_END_DTM
+             ,BSN_STRT_DTM
+             ,BSN_END_DTM
+             , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+            ELSE '사업종료'
+        END AS DATE_STATE
+             ,PLACE_SEQ
+             ,EXPS_YN
+             ,REG_ID
+             ,REG_IP
+             ,REG_DTM
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+             ,MOD_ID
+             ,MOD_IP
+             ,MOD_DTM
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+             ,ADD_NTFY_CNTN
+        FROM CX_EPISD_MST A
+        WHERE EPISD_SEQ = #{detailsKey}
+    </select>
+
+    <!--
+     쿼리명 : WBJARoundListMapper.selectYearDtl
+     설  명 : 연도 조회
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.20  오병호     최초 생성
+-->
+    <select id="selectYearDtl" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstDTO">
+        SELECT /* WBJARoundListMapper.selectYearDtl */
+            MIN(YEAR) AS YEAR
+        FROM CX_EPISD_MST
+    </select>
+
+    <!--
+     쿼리명 : WBJARoundListMapper.insertRound
+     설  명 : 회차 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.20  오병호     최초 생성
+    -->
+    <insert id="insertRound" parameterType="wBRoundMstDTO">
+        INSERT /* WBJARoundListMapper.insertRound */ INTO CX_EPISD_MST
+        (
+            EPISD_SEQ
+        ,BSN_CD
+        ,YEAR
+        ,EPISD
+        ,ACCS_STRT_DTM
+        ,ACCS_END_DTM
+        ,BSN_STRT_DTM
+        ,BSN_END_DTM
+        ,PLACE_SEQ
+        ,ADD_NTFY_CNTN
+        ,EXPS_YN
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
+        )
+            VALUE
+            (
+            #{episdSeq}
+            ,#{bsnCd}
+            ,#{year}
+            ,#{episd}
+            ,#{accsStrtDtm}
+            ,#{accsEndDtm}
+            ,#{bsnStrtDtm}
+            ,#{bsnEndDtm}
+            ,#{placeSeq}
+            ,#{addNtfyCntn}
+            ,#{expsYn}
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+            )
+    </insert>
+
+    <!--
+     쿼리명 : WBJARoundListMapper.insertPrizeList
+     설  명 : 포상금/포상종류 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.20  오병호     최초 생성
+    -->
+    <insert id="insertPrizeList" parameterType="wBOrderMstDto">
+        INSERT /* WBJARoundListMapper.insertPrizeList */ INTO CX_EPISD_PRIZE_DTL
+        (
+            PRIZE_SEQ
+        ,EPISD_SEQ
+        ,MRTS_CD
+        ,PRIZE_CD
+        ,PRIZE_PMT
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
+        )
+        VALUES
+            (
+                #{prizeSeq}
+            ,#{episdSeq}
+            ,#{mrtsCd}
+            ,#{prizeCd}
+            ,#{prizePmt}
+            ,#{regId}
+            ,#{regIp}
+            ,#{regDtm}
+            )
+    </insert>
+
+    <!--
+         쿼리명 : WBJARoundListMapper.selectPrizeList
+         설  명 : 포상금/포상종류 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.20  오병호     최초 생성
+    -->
+    <select id="selectPrizeList" parameterType="wBRoundMstDTO" resultType="WBOrderMstDto">
+        SELECT /* WBJARoundListMapper.selectPrizeList*/
+            PRIZE_SEQ
+             ,EPISD_SEQ
+             ,MRTS_CD
+             ,PRIZE_CD
+             ,PRIZE_PMT
+             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.MRTS_CD) AS MRTS_NAME
+             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.PRIZE_CD) AS PMT_NAME
+        FROM CX_EPISD_PRIZE_DTL A
+        WHERE EPISD_SEQ = #{detailsKey}
+        ORDER BY PRIZE_SEQ ASC
+
+    </select>
+
+    <!--
+         쿼리명 : WBJARoundListMapper.selectRoomList
+         설  명 : 장소 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.20  오병호     최초 생성
+    -->
+    <select id="selectRoomList" parameterType="wBRoundMstDTO" resultType="EBFEduRoomDetailDTO">
+        SELECT /* WBJARoundListMapper.selectRoomList */
+                (SELECT NM FROM ED_EDCTN_PLACE_MST WHERE PLACE_SEQ = A.PLACE_SEQ) AS NM
+             , (SELECT CD_NM FROM ED_EDCTN_PLACE_MST B INNER JOIN CO_CODE_MST C ON B.RGNS_CD = C.CD WHERE B.PLACE_SEQ = A.PLACE_SEQ) AS RGNS_NAME
+             , (SELECT ZIPCODE FROM ED_EDCTN_PLACE_MST WHERE PLACE_SEQ = A.PLACE_SEQ) AS ZIPCODE
+             , (SELECT BSC_ADDR FROM ED_EDCTN_PLACE_MST WHERE PLACE_SEQ = A.PLACE_SEQ) AS BSC_ADDR
+             , (SELECT DTL_ADDR FROM ED_EDCTN_PLACE_MST WHERE PLACE_SEQ = A.PLACE_SEQ) AS DTL_ADDR
+             , (SELECT RPRSNT_TEL_NO FROM ED_EDCTN_PLACE_MST WHERE PLACE_SEQ = A.PLACE_SEQ) AS RPRSNT_TEL_NO
+        FROM CX_EPISD_MST A
+        WHERE EPISD_SEQ = #{detailsKey}
+    </select>
+
+    <!--
+     쿼리명 : WBJARoundListMapper.updatePrizeList
+     설  명 : 포상 수정
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.20  오병호     최초 생성
+    -->
+    <insert id="updatePrizeList" parameterType="wBOrderMstDto">
+            INSERT /* WBJARoundListMapper.updatePrizeList */ INTO CX_EPISD_PRIZE_DTL
+        (
+            PRIZE_SEQ
+        ,EPISD_SEQ
+        ,MRTS_CD
+        ,PRIZE_CD
+        ,PRIZE_PMT
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
+        )
+        VALUES
+            (
+            #{prizeSeq}
+                ,#{detailsKey}
+                ,#{mrtsCd}
+                ,#{prizeCd}
+                ,#{prizePmt}
+                ,#{regId}
+                ,#{regIp}
+                ,#{regDtm}
+            )
+    </insert>
+
+    <!--
+		쿼리명 : WBJARoundListMapper.updateRound
+		설  명 : 회차 수정
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.11.20  오병호     최초 생성
+	-->
+    <update id="updateRound" parameterType="wBRoundMstDTO">
+        UPDATE CX_EPISD_MST SET /* WBJARoundListMapper.updateRound  */
+            YEAR = #{year}
+              ,EPISD =  #{episd}
+              ,ACCS_STRT_DTM = #{accsStrtDtm}
+              ,ACCS_END_DTM = #{accsEndDtm}
+              ,BSN_STRT_DTM = #{bsnStrtDtm}
+              ,BSN_END_DTM = #{bsnEndDtm}
+              ,ADD_NTFY_CNTN = #{addNtfyCntn}
+              ,PLACE_SEQ = #{placeSeq}
+              ,EXPS_YN = #{expsYn}
+              ,MOD_ID = #{modId}
+              ,MOD_IP = #{modIp}
+              ,MOD_DTM = NOW()
+        WHERE EPISD_SEQ = #{detailsKey}
+    </update>
+
+    <!--
+      쿼리명 : WBJARoundListMapper.deletePrizeList
+      설  명 : 포상 삭제
+       수정일	 수정자     수정내용
+      ==========   ======   =============
+      2023.11.20  오병호     최초 생성
+  -->
+    <delete id="deletePrizeList" parameterType="wBRoundMstDTO">
+        DELETE /* WBEACarbonListMapper.deletePrizeList */
+        FROM CX_EPISD_PRIZE_DTL
+        WHERE
+        <choose>
+            <when test="delValueList != null and delValueList.size() > 0">
+                EPISD_SEQ in
+                <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                    #{delValueList}
+                </foreach>
+            </when>
+            <otherwise>
+                EPISD_SEQ = #{detailsKey}
+            </otherwise>
+        </choose>
+    </delete>
+
+    <!--
+       쿼리명 : WBJARoundListMapper.deleteRound
+       설  명 : 회차 삭제
+        수정일	 수정자     수정내용
+       ==========   ======   =============
+       2023.11.20  오병호     최초 생성
+   -->
+    <delete id="deleteRound" parameterType="wBRoundMstDTO">
+        DELETE /* WBJARoundListMapper.deleteRound */
+        FROM CX_EPISD_MST
+        WHERE
+        <choose>
+            <when test="delValueList != null and delValueList.size() > 0">
+                EPISD_SEQ in
+                <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                    #{delValueList}
+                </foreach>
+            </when>
+            <otherwise>
+                EPISD_SEQ = #{detailsKey}
+            </otherwise>
+        </choose>
+    </delete>
+
+</mapper>
+
+
+

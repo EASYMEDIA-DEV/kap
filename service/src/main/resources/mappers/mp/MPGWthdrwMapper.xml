@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.mp.MPGWthdrwMapper">
+
+    <!--
+        쿼리명 : MPDCmtMapper.selectWthdrwList
+        설  명 : 탈퇴 사용자 조회 이력
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.28    양현우       최초생성
+        -->
+    <select id="selectWthdrwList" parameterType="MPGWthdrwDto" resultType="MPGWthdrwDto">
+        select wthdrw_reg_dtm
+             , mem_cd
+             , mem_cd_nm
+             , id
+             , wthdrw_rsn_nm
+             , wthdrw_yn
+        from( select  m2.reg_dtm as wthdrw_reg_dtm-- 탈퇴일
+                     , m1.mem_cd -- 회원 분류
+                     , case when m1.mem_cd ='CO' then '일반'
+                            when m1.mem_cd='CP' then '부품사'
+                            when m1.mem_cd='CS' then '위원'
+                            else '' end as mem_cd_nm -- 회원 분류_nm
+                     , m1.id -- 아이디
+                     , m1.wthdrw_yn
+                     , case when  m2.wthdrw_rsn_cd = 'e' then m2.wthdrw_rsn_etc_nm
+                            else m2.wthdrw_rsn_cd end as wthdrw_rsn_nm -- TODO 양현우 else (select cd_nm from co_code_mst where  cd m2.wthdrw_rsn_cd  )
+                from co_mem_mst m1
+                         inner join co_mem_wthdrw_dtl m2
+                                    on m1.mem_seq =m2.mem_seq ) as ma
+                        <include refid="selectWthdrwListWhereSql" />
+                         order by ma.wthdrw_reg_dtm desc
+                            LIMIT   #{firstIndex}, #{recordCountPerPage}
+
+    </select>
+
+    <!--
+     쿼리명 : MPDCmtMapper.selectWthdrwListCnt
+     설  명 : 탈퇴 사용자 갯수
+       수정일      수정자       수정내용
+     ==========   ========   ==============
+     2023.11.28    양현우       최초생성
+     -->
+    <select id="selectWthdrwListCnt" parameterType="MPGWthdrwDto" resultType="java.lang.Integer">
+        select count(*)
+        from( select  m2.reg_dtm as wthdrw_reg_dtm-- 탈퇴일
+        , m1.mem_cd -- 회원 분류
+        , case when m1.mem_cd ='CO' then '일반'
+        when m1.mem_cd='CP' then '부품사'
+        when m1.mem_cd='CS' then '위원'
+        else '' end as mem_cd_nm -- 회원 분류_nm
+        , m1.id -- 아이디
+        , m1.wthdrw_yn
+        , case when  m2.wthdrw_rsn_cd = 'e' then m2.wthdrw_rsn_etc_nm
+        else m2.wthdrw_rsn_cd end as wthdrw_rsn_nm -- TODO 양현우 else (select cd_nm from co_code_mst where  cd m2.wthdrw_rsn_cd  )
+        from co_mem_mst m1
+        inner join co_mem_wthdrw_dtl m2
+        on m1.mem_seq =m2.mem_seq ) as ma
+        <include refid="selectWthdrwListWhereSql" />
+
+    </select>
+
+    <!--
+           쿼리명 : selectWthdrwListWhereSql
+           설  명 : 탈퇴사용자 목록 검색 조건 SQL
+             수정일      수정자       수정내용
+           ==========   ========   ==============
+           2023.11.28   양현우       최초생성
+       -->
+    <sql id="selectWthdrwListWhereSql">
+        <where>
+                and ma.wthdrw_yn='Y'
+            <if test="date == 1">
+                <if test="strtDt != null and strtDt != ''.toString() ">
+                    and ma.wthdrw_reg_dtm <![CDATA[>=]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                </if>
+                <if test="endDt != null and endDt != ''.toString() ">
+                    and ma.wthdrw_reg_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                </if>
+            </if>
+            <if test="memCdList != null and memCdList.size() > 0">
+                and (
+                <foreach collection="memCdList" item="memCdList" index="index" open="" close="" separator=" or ">
+                    ma.mem_cd = #{memCdList}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        and ma.id like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        and ma.wthdrw_rsn_nm like concat('%', #{q}, '%')
+                    </when>
+                    <otherwise>
+                        and
+                        (
+                        ma.id like concat('%', #{q}, '%')
+                        or
+                        ma.wthdrw_rsn_nm like concat('%', #{q}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+
+</mapper>

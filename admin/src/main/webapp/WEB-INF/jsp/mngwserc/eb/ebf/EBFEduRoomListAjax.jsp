@@ -20,11 +20,11 @@
             </c:otherwise>
           </c:choose>
         </td><!--교육장명-->
-        <td class="text-center">${list.rgnsName}</td><!--지역-->
-        <td class="text-center">
+        <td class="text-center rgnsNm">${list.rgnsName}</td><!--지역-->
+        <td class="text-center addr">
           <c:if test="${not empty list.zipcode}">(${list.zipcode})</c:if> ${list.bscAddr}<c:if test="${not empty list.dtlAddr}">, ${list.dtlAddr}</c:if>
         </td><!--주소-->
-        <td class="text-center">${ list.rprsntTelNo }</td><!--대표번호-->
+        <td class="text-center rprsntTelNo">${ list.rprsntTelNo }</td><!--대표번호-->
         <td class="text-center">${list.regName}(${ list.regId })</td><!--최초 등록자-->
         <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--최초등록일시-->
         <td class="text-center">${empty list.modName ? '-' : list.modName}</td><!--최종수정자-->

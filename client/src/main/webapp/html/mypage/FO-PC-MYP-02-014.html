@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap" class="mypage"><!-- 마이페이지 mypage 클래스 추가 -->
+      <header id="header"></header>
+
+			<!-- content 영역 start -->
+      <div class="cont-wrap">
+        <!-- 
+          신청 페이지: apply-page 클래스 추가
+          그 외 페이지: basic-page 클래스 추가
+        -->
+        <div class="sub-top-vis-area">
+          <div class="page-tit-area">
+            <p class="page-tit f-xlarge-title"><span class="for-move">교육 양도</span></p>
+          </div>
+        </div>
+        
+        <div class="divide-con-area">
+          <div class="lnb-area">
+            <div class="for-motion">
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu active" href="javascript:"><span>교육/세미나 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>컨설팅 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>상생 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>SQ평가원 자격증</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>근태 체크</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>나의 1:1 문의</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>정보 수정</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>회원탈퇴</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+            </div>
+          </div>
+
+          <div class="right-con-area">
+            <div class="guide-info-area scroll-motion">
+              <div class="for-motion">
+                <div class="info-sec">
+                  <p class="exclamation-txt f-body1">교육 양도는 교육 시작 전일까지만 가능하며, 교육 양도 후 회수는 불가능하며, 다시 신청 후 교육 참여 가능합니다.</p>
+                  <p class="exclamation-txt f-body1">교육 양도는 소속 부품사내 다른 회원에게만 양도 가능하며, 양도 받은 회원 또한 소속 부품사내 회원에게 양도 가능합니다.</p>
+                </div>
+              </div>
+            </div>
+            <div class="cont-sec-w">
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">소속 부품사</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="table-sec">
+                      <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                        <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                          <!-- 
+                            @ 폰트 기본 좌측 정렬
+                              .txt-c : 폰트 가운데 정렬
+                              .txt-r : 폰트 우측 정렬
+                            @ border-right 기본
+                              .bdl : border-left 생성
+                              .bdr : border-right 생성
+                              .bdln : border-left 삭제
+                              .bdrn : border-right 삭제
+                            @ .txt-ellipsis : 말줄임
+                          -->
+                          <caption>소속 부품사</caption>
+                          <colgroup>
+                            <col style="width: 25%;">
+                            <col style="width: 75%;">
+                          </colgroup>
+                          <tbody>
+                            <tr>
+                              <th>부품사명</th>
+                              <td>자동차부품산업진흥재단</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">회원목록</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="table-sec">
+                      <div class="info-head">
+                        <p class="article-total-count f-body2">총 <span>1065</span>건</p>
+                        <div class="form-input srch-input">
+                          <input type="text" placeholder="검색어를 입력해 주세요.">
+                          <div class="input-btn-wrap">
+                            <button class="delete-btn" title="지우기" type="button"></button>
+                            <button class="srch-btn" title="검색"></button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                        <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                          <!-- 
+                            @ 폰트 기본 좌측 정렬
+                              .txt-c : 폰트 가운데 정렬
+                              .txt-r : 폰트 우측 정렬
+                            @ border-right 기본
+                              .bdl : border-left 생성
+                              .bdr : border-right 생성
+                              .bdln : border-left 삭제
+                              .bdrn : border-right 삭제
+                            @ .txt-ellipsis : 말줄임
+                          -->
+                          <caption>회원목록</caption>
+                          <colgroup>
+                            <col style="width: 8%;">
+                            <col style="width: 16.4%;">
+                            <col style="width: 29.6%;">
+                            <col style="width: 16.4%;">
+                            <col style="width: 29.6%;">
+                          </colgroup>
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>성명</th>
+                              <th>아이디</th>
+                              <th>핸드폰번호</th>
+                              <th>이메일</th>
+                            </tr>
+                          </thead>
+                          <tbody class="txt-c">
+                            <tr>
+                              <td>
+                                <div class="form-radio">
+                                  <input type="radio" id="memListeRadio1" name="memListeRadioSet">
+                                  <label for="memListeRadio1"></label>
+                                </div>
+                              </td>
+                              <td>홍길동</td>
+                              <td>kap****</td>
+                              <td>010-****-5678</td>
+                              <td>Pla****@easymedia.net</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="form-radio">
+                                  <input type="radio" id="memListeRadio2" name="memListeRadioSet">
+                                  <label for="memListeRadio2"></label>
+                                </div>
+                              </td>
+                              <td>홍길동</td>
+                              <td>kap****</td>
+                              <td>010-****-5678</td>
+                              <td>Pla****@easymedia.net</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="form-radio">
+                                  <input type="radio" id="memListeRadio3" name="memListeRadioSet">
+                                  <label for="memListeRadio3"></label>
+                                </div>
+                              </td>
+                              <td>홍길동</td>
+                              <td>kap****</td>
+                              <td>010-****-5678</td>
+                              <td>Pla****@easymedia.net</td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <div class="form-radio">
+                                  <input type="radio" id="memListeRadio4" name="memListeRadioSet">
+                                  <label for="memListeRadio4"></label>
+                                </div>
+                              </td>
+                              <td>홍길동</td>
+                              <td>kap****</td>
+                              <td>010-****-5678</td>
+                              <td>Pla****@easymedia.net</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="btn-wrap add-load align-center">
+                      <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">GPC 아이디 인증</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="data-enter-form">
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">GPC 아이디</p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="for-status-chk satisfy"><!-- 조건 충족 시 satisfy 클래스 추가 -->
+                                <div class="form-group">                            
+                                  <div class="form-input">
+                                    <input type="text" placeholder="GPC 아이디 입력" required="">
+                                  </div>
+                                  <div class="btn-wrap">
+                                    <button class="btn-solid small gray-bg" type="button"><span>인증</span></button>
+                                  </div>
+                                </div>
+                                <p class="satisfy-msg">아이디가 인증되었습니다.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="info-sec">
+                      <p class="exclamation-txt f-body1">GPC 교육의 경우 GPC 홈페이지의 KAP 아이디와 로그인한 아이디가 동일해야 신청 가능합니다.</p>
+                      <p class="exclamation-txt f-body1">GPC(글로벌상생협력센터) 아이디의 경우 본인의 계정만 사용 가능하며, 타인의 아이디는 사용이 불가능합니다.</p>
+                    </div>
+                    <div class="btn-sec">
+                      <div class="btn-wrap">
+                        <button class="btn-text-icon black-arrow" type="button"><span>GPC 회원가입</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="page-bot-btn-sec scroll-motion">
+              <div class="btn-wrap align-right for-motion">
+                <a class="btn-solid small black-bg" href="javascript:"><span>교육 양도하기</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+			</div>
+			<!-- content 영역 end -->
+
+      <footer></footer>
+
+      <div class="quick-menu">
+        <div class="menu-area">
+					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
+					<div class="btn-w">
+						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
+						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
+            <a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
+					</div>
+        </div>
+        <a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
+      </div>
+
+      <div class="scroll-gauge">
+        <div class="bar"></div>
+      </div>
+
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

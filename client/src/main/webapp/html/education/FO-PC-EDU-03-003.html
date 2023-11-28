@@ -1,0 +1,551 @@
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <header id="header"></header>
+
+			<!-- content 영역 start -->
+      <div class="cont-wrap">
+        <!-- 
+          신청 페이지: apply-page 클래스 추가
+          그 외 페이지: basic-page 클래스 추가
+        -->
+        <!-- 
+          교육 사업: edu-biz
+          컨실팅 사업: consult-biz
+          상생 사업: coexisting-biz
+        -->
+        <div class="sub-top-vis-area apply-page consult-biz">
+          <div class="page-tit-area">
+            <p class="page-tit f-xlarge-title"><span class="for-move">방문교육신청</span></p>
+            <div class="apply-step-w">
+              <div class="for-move">
+                <div class="step-list completed"><!-- 완료: , 진행 중: ongoing 클래스 추가 -->
+                  <p class="step-num">1</p>
+                  <p class="step-con">기본정보</p>
+                </div>
+                <div class="step-list ongoing">
+                  <p class="step-num">2</p>
+                  <p class="step-con">정보입력</p>
+                </div>
+                <div class="step-list">
+                  <p class="step-num">3</p>
+                  <p class="step-con">신청완료</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="img-area">
+            <div class="gray-bg"></div>
+            <div class="graphic-item-w">
+              <div class="item"></div>
+              <div class="item"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divide-con-area">
+          <div class="lnb-area">
+            <div class="for-motion">
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>교육사업 소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>교육신청</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu active" href="javascript:"><span>방문교육</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+            </div>
+          </div>
+
+          <div class="right-con-area">
+            <div class="cont-sec-w">
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">방문교육 부품사 추가정보를 입력해주세요</p>
+                    <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="data-enter-form">
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">부품사 규모<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="opt-group">
+                                <div class="form-radio">
+                                  <input type="radio" id="partCompanySizeRadio1" name="partCompanySizeRadioSet">
+                                  <label for="partCompanySizeRadio1">대기업</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="partCompanySizeRadio2" name="partCompanySizeRadioSet">
+                                  <label for="partCompanySizeRadio2">중견기업</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="partCompanySizeRadio3" name="partCompanySizeRadioSet">
+                                  <label for="partCompanySizeRadio3">중소기업</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">승용/상용구분<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="opt-group">
+                                <div class="form-radio">
+                                  <input type="radio" id="useTypeRadio1" name="useTypeRadioSet">
+                                  <label for="useTypeRadio1">승용</label>
+                                </div>
+                                <div class="form-radio">
+                                  <input type="radio" id="useTypeRadio2" name="useTypeRadioSet">
+                                  <label for="useTypeRadio2">상용</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">신청부품사업종<br class="only-pc"/>/1차업체<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="opt-group">
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="businessTypeChk1" name="">
+                                  <label for="businessTypeChk1">구동</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="businessTypeChk2" name="">
+                                  <label for="businessTypeChk2">전장</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="businessTypeChk3" name="">
+                                  <label for="businessTypeChk3">샤시</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="businessTypeChk4" name="">
+                                  <label for="businessTypeChk4">의장</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="businessTypeChk5" name="">
+                                  <label for="businessTypeChk5">차체</label>
+                                </div>
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="businessTypeChk6" name="">
+                                  <label for="businessTypeChk6">기타</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">소재지역<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-select">
+                                  <select id="" title="소재지 선택">
+                                    <option value="" selected="">선택</option>
+                                    <option value="">시, 도 대분류 선택1</option>
+                                    <option value="">시, 도 대분류 선택2</option>
+                                    <option value="">시, 도 대분류 선택3</option>
+                                  </select>
+                                </div>
+                                <div class="form-select">
+                                  <select id="" title="소재지 선택">
+                                    <option value="" selected="">선택</option>
+                                    <option value="">군, 구 중분류 선택1</option>
+                                    <option value="">군, 구 중분류 선택2</option>
+                                    <option value="">군, 구 중분류 선택3</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">홈페이지 주소</p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input w-longer">
+                                  <input type="text" placeholder="홈페이지 주소 입력">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">방문교육 신청내용을 입력해주세요</p>
+                    <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="data-enter-form">
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">신청사유<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-textarea">
+                                  <textarea name="" id="" cols="" rows="" placeholder="신청사유 입력"></textarea>
+                                  <div class="check-byte">
+                                    <p class="txt"><span class="current-byte">0</span>자</p>
+                                    <p class="txt"><span class="max-byte">500</span>자</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">신청분야<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="inner-line">
+                                <div class="form-group">
+                                  <div class="form-select">
+                                    <select id="" title="시간 선택">
+                                      <option value="" selected="">선택</option>
+                                      <option value="">선택1</option>
+                                      <option value="">선택2</option>
+                                      <option value="">선택3</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="inner-line">
+                                <div class="agree-box">
+                                  <div class="gray-bg-sec narrow-pad">
+                                    <p class="f-body2">
+                                      (공통)
+                                      <br/>업종 기초기술, 품질관리, 공정관리 개선, 레이아웃 개선, 설비관리 개선, 생산기술 개선, 3정 5행, 작업조건 관리, 개선 사례, (IT/전산) 전산화 현황 진단, 스마트공장 구축 지원사례
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="inner-line">
+                                <div class="opt-group">
+                                  <div class="form-checkbox">
+                                    <input type="checkbox" id="applicationFieldChk1" name="">
+                                    <label for="applicationFieldChk1">용접</label>
+                                  </div>
+                                  <div class="form-checkbox">
+                                    <input type="checkbox" id="applicationFieldChk2" name="">
+                                    <label for="applicationFieldChk2">사출</label>
+                                  </div>
+                                  <div class="form-checkbox">
+                                    <input type="checkbox" id="applicationFieldChk3" name="">
+                                    <label for="applicationFieldChk3">도금</label>
+                                  </div>
+                                  <div class="form-checkbox">
+                                    <input type="checkbox" id="applicationFieldChk4" name="">
+                                    <label for="applicationFieldChk4">도장</label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">신청주제<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-textarea">
+                                  <textarea name="" id="" cols="" rows="" placeholder="신청주제 입력"></textarea>
+                                  <div class="check-byte">
+                                    <p class="txt"><span class="current-byte">0</span>자</p>
+                                    <p class="txt"><span class="max-byte">500</span>자</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="noti-txt-w">
+                                <p class="bullet-noti-txt f-caption2">* 신청분야 상세내용을 참고하여 입력 바랍니다.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">신청내용<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-textarea">
+                                  <textarea name="" id="" cols="" rows="" placeholder="신청내용 입력"></textarea>
+                                  <div class="check-byte">
+                                    <p class="txt"><span class="current-byte">0</span>자</p>
+                                    <p class="txt"><span class="max-byte">500</span>자</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">교육희망일<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input calendar">
+                                  <input type="text" placeholder="날짜 선택">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">교육장소<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="middle-line">
+                                <div class="form-checkbox">
+                                  <input type="checkbox" id="sameAsHQChk" name="">
+                                  <label for="sameAsHQChk">본사와 동일</label>
+                                </div>
+                              </div>
+                              <div class="middle-line">
+                                <div class="form-address">
+                                  <div class="form-group">
+                                    <div class="form-input">
+                                      <input type="text" placeholder="우편번호" value="12345" readonly="">
+                                    </div>
+                                    <div class="form-input w-longer">
+                                      <input type="text" placeholder="주소" value="서울시 구로구 디저털로32길 20" readonly="">
+                                    </div>
+                                    <div class="btn-wrap">
+                                      <button class="btn-solid small gray-bg" type="button"><span>우편번호 찾기</span></button>
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <div class="form-input w-longest">
+                                      <input type="text" placeholder="상세주소 입력" value="서울시 구로구 디저털로32길 20">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">참석대상<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-textarea">
+                                  <textarea name="" id="" cols="" rows="" placeholder="참석대상 입력"></textarea>
+                                  <div class="check-byte">
+                                    <p class="txt"><span class="current-byte">0</span>자</p>
+                                    <p class="txt"><span class="max-byte">500</span>자</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">교육 인원<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input">
+                                  <input type="number" placeholder="인원수 입력">
+                                  <p class="unit-txt">명</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">교육 시간<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-select">
+                                  <select id="" title="시간 선택">
+                                    <option value="" selected="">시간 선택</option>
+                                    <option value="">시간 선택1</option>
+                                    <option value="">시간 선택2</option>
+                                    <option value="">시간 선택3</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">방문교육 선정을 위한 첨부파일을 등록해주세요</p>
+                    <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="data-enter-form">
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">회사소개서<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="noti-txt-w">
+                                <p class="f-body2">방문교육 신청 시 회사소개서(자율 양식)가 필수로 첨부되어야 합니다.</p>
+                                <p class="bullet-noti-txt f-caption2">* 첨부 가능한 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,dox,hwp,hwpx, txt,zip) / 최대 업로드 용량(50MB) / 최대 개수(1개)</p>
+                              </div>
+                            </div>
+                            <div class="data-line">
+                              <p class="data-title f-body1">첨부파일</p>
+                              <div class="form-group">
+                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                  <p class="empty-txt">선택된 파일 없음</p>
+                                </div>
+                                <div class="file-btn-area">
+                                  <input type="file" id="searchFile">
+                                  <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-bot-btn-sec scroll-motion">
+              <div class="btn-wrap for-motion">
+                <div class="btn-set">
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                </div>
+                <div class="btn-set">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>신청하기</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- content 영역 end -->
+
+      <footer></footer>
+
+      <div class="quick-menu">
+        <div class="menu-area">
+					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
+					<div class="btn-w">
+						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
+						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
+						<a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
+					</div>
+        </div>
+        <a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
+      </div>
+
+      <div class="scroll-gauge">
+        <div class="bar"></div>
+      </div>
+
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

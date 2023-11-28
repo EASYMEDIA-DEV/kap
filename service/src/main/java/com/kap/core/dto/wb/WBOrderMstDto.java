@@ -36,6 +36,8 @@ public class WBOrderMstDto extends BaseDTO {
     private int giveSeq;
     @Schema(title = "회차순번", example = "숫자")
     private Integer episdSeq;
+    @Schema(title = "포상순번", example = "숫자")
+    private Integer prizeSeq;
 
     @Schema(title = "지급정렬", example = "숫자")
     private int giveOrd;
@@ -48,4 +50,15 @@ public class WBOrderMstDto extends BaseDTO {
     @Schema(title = "지급차수 리스트")
     private List<WBOrderMstDto> giveList;
     
+    @Schema(title = "포상 리스트")
+    private List<WBOrderMstDto> prizeList;
+
+    @Schema(title = "훈격코드", example = "코드")
+    private String mrtsCd;
+
+    @Schema(title = "포상코드", example = "코드")
+    private String prizeCd;
+
+    @Schema(title = "포상금", example = "숫자")
+    private int prizePmt;
 }

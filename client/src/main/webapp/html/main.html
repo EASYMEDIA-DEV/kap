@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<title>KAP</title>
-    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<link rel="shortcut icon" href="/common/images/favicon.ico" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<meta name="keywords" content="KAP"/>
 		<meta name="description" content="KAP"/>
@@ -26,8 +26,9 @@
 		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
 		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
 		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
-		<script src="https://www.multicampus.com/customize/CUS0001/js/Draggable.min.js"></script>
+		<script type="text/javascript" src="/common/js/Draggable.min.js"></script>
 		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+		<script type="text/javascript" src="/common/js/bezier-easing.min.js"></script>
     <script type="text/javascript" src="/common/js/script.js"></script>
     <script type="text/javascript" src="/common/js/main.js"></script>
 	</head>
@@ -113,7 +114,7 @@
 
 				<!-- 사업 영역 -->
 				<section class="biz-line-sec hover-accordion">
-					<a class="biz-list acco-list edu active" href="javascript:">
+					<a class="biz-list acco-list edu" href="javascript:">
 						<div class="title-area" href="javascript:">
 							<p class="tit">교육사업</p>
 							<p class="txt only-mobile">교육과 세미나 진행</p>
@@ -186,15 +187,11 @@
 													<img src="/common/images/img-main-training-offline-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">1111111</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">꼭 알아야 할 품질 기초 2줄 테스트 테스트 테스트꼭 알아야 할 품질 기초 2줄 테스트 테스트 테스트꼭 알아야 할 품질 기초 2줄 테스트 테스트 테스트꼭 알아야 할 품질 기초 2줄 테스트 테스트 테스트</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -206,20 +203,18 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label"><span>글로벌상생교육센터</span></p>
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+														<p class="box-label bigger accepting"><span>접수중</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야 할 품질 기초 2줄 테스트 테스트 테스트</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질학교</span></p>
+															<p class="label"><span>경주GPC</span></p>
 														</div>
+														<p class="training-name">꼭 알아야 할 품질 기초 2줄 테스트 테스트 테스트</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -235,8 +230,8 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label"><span>글로벌상생교육센터</span></p>
-															<p class="box-label accepting"><span>접수중</span></p>
+															<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+															<p class="box-label bigger accepting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -254,15 +249,11 @@
 													<img src="/common/images/img-main-training-offline-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -274,20 +265,18 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label"><span>글로벌상생교육센터</span></p>
-														<p class="box-label end"><span>접수마감</span></p>
+														<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+														<p class="box-label bigger end"><span>접수마감</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야 할 품질 기초 2줄 테스트 테스트 테스트</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -303,8 +292,8 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label"><span>글로벌상생교육센터</span></p>
-															<p class="box-label end"><span>접수마감</span></p>
+															<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+															<p class="box-label bigger end"><span>접수마감</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -322,15 +311,11 @@
 													<img src="/common/images/img-main-training-offline-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">3333꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -342,20 +327,18 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label"><span>글로벌상생교육센터</span></p>
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+														<p class="box-label bigger accepting"><span>접수중</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">테스트 테스트 테스트</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -371,8 +354,8 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label"><span>글로벌상생교육센터</span></p>
-															<p class="box-label accepting"><span>접수중</span></p>
+															<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+															<p class="box-label bigger accepting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -390,15 +373,11 @@
 													<!-- <img src="/common/images/img-main-training-offline-01.jpg" alt=""> -->
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label waiting"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">44444꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -410,20 +389,18 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label"><span>글로벌상생교육센터</span></p>
-														<p class="box-label waiting"><span>접수대기</span></p>
+														<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+														<p class="box-label bigger waiting"><span>접수대기</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">품질 기초 2줄 테스트 테스트 테스트</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -439,8 +416,8 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label"><span>글로벌상생교육센터</span></p>
-															<p class="box-label waiting"><span>접수중</span></p>
+															<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+															<p class="box-label bigger waiting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -458,15 +435,11 @@
 													<img src="/common/images/img-main-training-offline-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">5555꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -478,20 +451,18 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label"><span>글로벌상생교육센터</span></p>
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+														<p class="box-label bigger accepting"><span>접수중</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야 </p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -507,8 +478,8 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label"><span>글로벌상생교육센터</span></p>
-															<p class="box-label accepting"><span>접수중</span></p>
+															<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+															<p class="box-label bigger accepting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -526,15 +497,11 @@
 													<img src="/common/images/img-main-training-offline-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">66666꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -546,20 +513,18 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label"><span>글로벌상생교육센터</span></p>
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+														<p class="box-label bigger accepting"><span>접수중</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -575,8 +540,8 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label"><span>글로벌상생교육센터</span></p>
-															<p class="box-label accepting"><span>접수중</span></p>
+															<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+															<p class="box-label bigger accepting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -594,15 +559,11 @@
 													<img src="/common/images/img-main-training-offline-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">77777꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -614,20 +575,18 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label"><span>글로벌상생교육센터</span></p>
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+														<p class="box-label bigger accepting"><span>접수중</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야 할 품질</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -643,8 +602,8 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label"><span>글로벌상생교육센터</span></p>
-															<p class="box-label accepting"><span>접수중</span></p>
+															<p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+															<p class="box-label bigger accepting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -667,8 +626,8 @@
 								</div>
 								<div class="training-swiper-area">
 									<div class="swiper-container training-swiper">
-										<div class="swiper-wrapper marquee_wrapper1">
-											<a class="swiper-slide marquee_item1 accepting" href="javascript:">
+										<div class="swiper-wrapper marquee_wrapper2">
+											<a class="swiper-slide marquee_item2 accepting" href="javascript:">
 												<!--
 													접수중: accepting
 													접수대기: waiting
@@ -678,15 +637,11 @@
 													<img src="/common/images/img-main-training-online-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">1111111</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -698,85 +653,17 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger accepting"><span>접수중</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야 할 품질 기초 2줄 테스트 테스트 테스트</p>
-														</div>
-														<div class="date-info-w">
-															<div class="list">
-																<div class="tit">접수기간</div>
-																<div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
-															</div>
-															<div class="list">
-																<div class="tit">교육기간</div>
-																<div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
-															</div>
-															<div class="list ">
-																<div class="tit">집체교육</div>
-																<div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
-															</div>
-														</div>
-														<div class="status-info-w">
-															<p class="box-label accepting"><span>접수중</span></p>
-														</div>
-														<div class="btn-wrap">
-															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
-														</div>
-													</div>
-												</div>
-											</a>
-											<a class="swiper-slide marquee_item1 end" href="javascript:">
-												<!--
-													접수중: accepting
-													접수대기: waiting
-													접수마감: end
-												-->
-												<div class="img-area">
-													<img src="/common/images/img-main-training-online-01.jpg" alt="">
-												</div>
-												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
 														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
-													</div>
-													<div class="date-info-w">
-														<div class="list">
-															<p class="txt">교육기간</p>
-															<p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
-														</div>
-														<div class="list">
-															<p class="txt">집체교육</p>
-															<p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
-														</div>
-													</div>
-													<div class="status-info-w">
-														<p class="box-label end"><span>접수마감</span></p>
-													</div>
-												</div>
-												<!-- hover 시 노출되는 영역 -->
-												<div class="hover-area">
-													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야 할 품질 기초 2줄 테스트 테스트 테스트</p>
-														</div>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -792,7 +679,7 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label end"><span>접수마감</span></p>
+															<p class="box-label bigger accepting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -800,7 +687,7 @@
 													</div>
 												</div>
 											</a>
-											<a class="swiper-slide marquee_item1 accepting" href="javascript:">
+											<a class="swiper-slide marquee_item2 end" href="javascript:">
 												<!--
 													접수중: accepting
 													접수대기: waiting
@@ -810,15 +697,11 @@
 													<img src="/common/images/img-main-training-online-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">3333꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -830,19 +713,17 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger end"><span>접수마감</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">테스트 테스트 테스트</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -858,7 +739,7 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label accepting"><span>접수중</span></p>
+															<p class="box-label bigger end"><span>접수마감</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -866,7 +747,67 @@
 													</div>
 												</div>
 											</a>
-											<a class="swiper-slide marquee_item1 waiting" href="javascript:">
+											<a class="swiper-slide marquee_item2 accepting" href="javascript:">
+												<!--
+													접수중: accepting
+													접수대기: waiting
+													접수마감: end
+												-->
+												<div class="img-area">
+													<img src="/common/images/img-main-training-online-01.jpg" alt="">
+												</div>
+												<div class="txt-area">
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
+													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
+													<div class="date-info-w">
+														<div class="list">
+															<p class="txt">교육기간</p>
+															<p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
+														</div>
+														<div class="list">
+															<p class="txt">집체교육</p>
+															<p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
+														</div>
+													</div>
+													<div class="status-info-w">
+														<p class="box-label bigger accepting"><span>접수중</span></p>
+													</div>
+												</div>
+												<!-- hover 시 노출되는 영역 -->
+												<div class="hover-area">
+													<div class="for-position">
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
+														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
+														<div class="date-info-w">
+															<div class="list">
+																<div class="tit">접수기간</div>
+																<div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
+															</div>
+															<div class="list">
+																<div class="tit">교육기간</div>
+																<div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
+															</div>
+															<div class="list ">
+																<div class="tit">집체교육</div>
+																<div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
+															</div>
+														</div>
+														<div class="status-info-w">
+															<p class="box-label bigger accepting"><span>접수중</span></p>
+														</div>
+														<div class="btn-wrap">
+															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
+														</div>
+													</div>
+												</div>
+											</a>
+											<a class="swiper-slide marquee_item2 waiting" href="javascript:">
 												<!--
 													접수중: accepting
 													접수대기: waiting
@@ -876,15 +817,11 @@
 													<!-- <img src="/common/images/img-main-training-online-01.jpg" alt=""> -->
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">44444꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -896,19 +833,17 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label waiting"><span>접수대기</span></p>
+														<p class="box-label bigger waiting"><span>접수대기</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">품질 기초 2줄 테스트 테스트 테스트</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -924,7 +859,7 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label waiting"><span>접수중</span></p>
+															<p class="box-label bigger waiting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -932,7 +867,7 @@
 													</div>
 												</div>
 											</a>
-											<a class="swiper-slide marquee_item1 accepting" href="javascript:">
+											<a class="swiper-slide marquee_item2 accepting" href="javascript:">
 												<!--
 													접수중: accepting
 													접수대기: waiting
@@ -942,15 +877,11 @@
 													<img src="/common/images/img-main-training-online-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">5555꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -962,19 +893,17 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger accepting"><span>접수중</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야 </p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -990,7 +919,7 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label accepting"><span>접수중</span></p>
+															<p class="box-label bigger accepting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -998,7 +927,7 @@
 													</div>
 												</div>
 											</a>
-											<a class="swiper-slide marquee_item1 accepting" href="javascript:">
+											<a class="swiper-slide marquee_item2 accepting" href="javascript:">
 												<!--
 													접수중: accepting
 													접수대기: waiting
@@ -1008,15 +937,11 @@
 													<img src="/common/images/img-main-training-online-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">66666꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -1028,19 +953,17 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger accepting"><span>접수중</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -1056,7 +979,7 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label accepting"><span>접수중</span></p>
+															<p class="box-label bigger accepting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -1064,7 +987,7 @@
 													</div>
 												</div>
 											</a>
-											<a class="swiper-slide marquee_item1 accepting" href="javascript:">
+											<a class="swiper-slide marquee_item2 accepting" href="javascript:">
 												<!--
 													접수중: accepting
 													접수대기: waiting
@@ -1074,15 +997,11 @@
 													<img src="/common/images/img-main-training-online-01.jpg" alt="">
 												</div>
 												<div class="txt-area">
-													<div class="sort-info-w">
-														<div class="top-line">
-															<div class="sort-label-area">
-																<p class="label"><span>품질아카데미</span></p>
-																<p class="label"><span>품질학교</span></p>
-															</div>
-														</div>
-														<p class="training-name">77777꼭 알아야 할 품질 기초</p>
+													<div class="sort-label-area">
+														<p class="label"><span>품질아카데미</span></p>
+														<p class="label"><span>품질학교</span></p>
 													</div>
+													<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 													<div class="date-info-w">
 														<div class="list">
 															<p class="txt">교육기간</p>
@@ -1094,19 +1013,17 @@
 														</div>
 													</div>
 													<div class="status-info-w">
-														<p class="box-label accepting"><span>접수중</span></p>
+														<p class="box-label bigger accepting"><span>접수중</span></p>
 													</div>
 												</div>
 												<!-- hover 시 노출되는 영역 -->
 												<div class="hover-area">
 													<div class="for-position">
-														<div class="sort-info-w">
-															<div class="sort-label-area">
-																<p class="label"><span>품질학교</span></p>
-																<p class="label"><span>경주GPC</span></p>
-															</div>
-															<p class="training-name">꼭 알아야 할 품질</p>
+														<div class="sort-label-area">
+															<p class="label"><span>품질아카데미</span></p>
+															<p class="label"><span>품질학교</span></p>
 														</div>
+														<p class="training-name">22222꼭 알아야 할 품질 기초</p>
 														<div class="date-info-w">
 															<div class="list">
 																<div class="tit">접수기간</div>
@@ -1122,7 +1039,7 @@
 															</div>
 														</div>
 														<div class="status-info-w">
-															<p class="box-label accepting"><span>접수중</span></p>
+															<p class="box-label bigger accepting"><span>접수중</span></p>
 														</div>
 														<div class="btn-wrap">
 															<div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -1132,8 +1049,8 @@
 											</a>
 										</div>
 									</div>
-									<div class="swiper-button-next circle-arr btn_next"></div>
-									<div class="swiper-button-prev circle-arr btn_prev"></div>
+									<div class="swiper-button-next circle-arr btn_next2"></div>
+									<div class="swiper-button-prev circle-arr btn_prev2"></div>
 								</div>
 							</div>
 						</div>
@@ -1215,12 +1132,14 @@
 														<img src="/common/images/img-main-coexisting-biz-01.jpg" alt="">
 													</div>
 													<div class="title-area">
-														<p class="tit">111미래차다각화</p>
+														<p class="tit"><span class="inner-motion">111미래차다각화</span></p>
 													</div>
 													<div class="hide-area">
-														<p class="txt">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</p>
+														<p class="txt"><span class="inner-motion">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</span></p>
 														<div class="btn-wrap">
-															<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															<div class="inner-motion">
+																<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															</div>
 														</div>
 													</div>
 												</a>
@@ -1229,12 +1148,14 @@
 														<img src="/common/images/img-main-coexisting-biz-02.jpg" alt="">
 													</div>
 													<div class="title-area">
-														<p class="tit">222사업재편지원</p>
+														<p class="tit"><span class="inner-motion">222사업재편지원</span></p>
 													</div>
 													<div class="hide-area">
-														<p class="txt">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</p>
+														<p class="txt"><span class="inner-motion">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</span></p>
 														<div class="btn-wrap">
-															<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															<div class="inner-motion">
+																<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															</div>
 														</div>
 													</div>
 												</a>
@@ -1243,12 +1164,14 @@
 														<img src="/common/images/img-main-coexisting-biz-03.jpg" alt="">
 													</div>
 													<div class="title-area">
-														<p class="tit">333보안솔루션구축</p>
+														<p class="tit"><span class="inner-motion">333보안솔루션구축</span></p>
 													</div>
 													<div class="hide-area">
-														<p class="txt">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</p>
+														<p class="txt"><span class="inner-motion">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</span></p>
 														<div class="btn-wrap">
-															<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															<div class="inner-motion">
+																<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															</div>
 														</div>
 													</div>
 												</a>
@@ -1257,12 +1180,14 @@
 														<img src="/common/images/img-main-coexisting-biz-04.jpg" alt="">
 													</div>
 													<div class="title-area">
-														<p class="tit">444안전설비구축</p>
+														<p class="tit"><span class="inner-motion">444안전설비구축</span></p>
 													</div>
 													<div class="hide-area">
-														<p class="txt">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</p>
+														<p class="txt"><span class="inner-motion">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</span></p>
 														<div class="btn-wrap">
-															<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															<div class="inner-motion">
+																<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															</div>
 														</div>
 													</div>
 												</a>
@@ -1270,15 +1195,17 @@
 											<div class="swiper-slide hover-accordion">
 												<a class="biz-list acco-list active" href="javascript:">
 													<div class="thumbnail-img">
-														<img src="/common/images/img-main-coexisting-biz-05.jpg" alt="">
+														<img src="/common/images/img-sub-top-visual-foundation-promotion-mobile.jpg" alt="">
 													</div>
 													<div class="title-area">
-														<p class="tit">555미래차다각화</p>
+														<p class="tit"><span class="inner-motion">555미래차다각화</span></p>
 													</div>
 													<div class="hide-area">
-														<p class="txt">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</p>
+														<p class="txt"><span class="inner-motion">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</span></p>
 														<div class="btn-wrap">
-															<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															<div class="inner-motion">
+																<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															</div>
 														</div>
 													</div>
 												</a>
@@ -1287,43 +1214,17 @@
 														<img src="/common/images/img-main-coexisting-biz-06.jpg" alt="">
 													</div>
 													<div class="title-area">
-														<p class="tit">666사업재편지원</p>
+														<p class="tit"><span class="inner-motion">666사업재편지원</span></p>
 													</div>
 													<div class="hide-area">
-														<p class="txt">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</p>
+														<p class="txt"><span class="inner-motion">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</span></p>
 														<div class="btn-wrap">
-															<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															<div class="inner-motion">
+																<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+															</div>
 														</div>
 													</div>
 												</a>
-												<a class="biz-list acco-list" href="javascript:">
-													<div class="thumbnail-img">
-														<img src="/common/images/img-main-coexisting-biz-07.jpg" alt="">
-													</div>
-													<div class="title-area">
-														<p class="tit">777보안솔루션구축</p>
-													</div>
-													<div class="hide-area">
-														<p class="txt">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</p>
-														<div class="btn-wrap">
-															<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
-														</div>
-													</div>
-												</a>
-												<!-- <a class="biz-list acco-list" href="javascript:">
-													<div class="thumbnail-img">
-														<img src="/common/images/img-main-coexisting-biz-08.jpg" alt="">
-													</div>
-													<div class="title-area">
-														<p class="tit">888안전설비구축</p>
-													</div>
-													<div class="hide-area">
-														<p class="txt">자동차 부품사의 미래차 부품기업으로서의 대응력 강화를 위해 사업 다각화 지원사업을 운영합니다</p>
-														<div class="btn-wrap">
-															<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
-														</div>
-													</div>
-												</a> -->
 											</div>
 										</div>
 									</div>
@@ -1402,22 +1303,22 @@
 									</div>
 								</div>
 								<div class="article-list-w txt-list">
-									<a class="list-item" href="javascript:" title="새 페이지 이동">
+									<a class="list-item" href="javascript:" title="링크 이동">
 										<div class="txt-box">
-											<p class="txt f-sub-head">제 2회 대학(원)생 미래 자동차산업 아이디어 공모전 1차 심사결과 안내</p>
-											<span class="sub-txt f-body2">2023.09.18</span>
+											<p class="tit f-head">제 2회 대학(원)생 미래 자동차산업 아이디어 공모전 1차 심사결과 안내 제 2회 대학(원)생 미래 자동차산업 아이디어 공모전 1차 심사결과 안내</p>
+											<p class="sub-txt f-body2"><span class="date">2023.09.18</span><span class="view">조회수 <span>263</span></span></p>
 										</div>
 									</a>
-									<a class="list-item" href="javascript:" title="새 페이지 이동">
+									<a class="list-item" href="javascript:" title="링크 이동">
 										<div class="txt-box">
-											<p class="txt f-sub-head">23년 추계 자동차부품산업 발전 전략 세미나 개최 안내</p>
-											<span class="sub-txt f-body2">2023.09.18</span>
+											<p class="tit f-head">23년 추계 자동차부품산업 발전 전략 세미나 개최 안내</p>
+											<p class="sub-txt f-body2"><span class="date">2023.09.18</span><span class="view">조회수 <span>263</span></span></p>
 										</div>
 									</a>
-									<a class="list-item" href="javascript:" title="새 페이지 이동">
+									<a class="list-item" href="javascript:" title="링크 이동">
 										<div class="txt-box">
-											<p class="txt f-sub-head">2023년 상생형스마트공장 구축지원사업 사업계획서 및 관련서류 안내</p>
-											<span class="sub-txt f-body2">2023.09.18</span>
+											<p class="tit f-head">2023년 상생형스마트공장 구축지원사업 사업계획서 및 관련서류 안내</p>
+											<p class="sub-txt f-body2"><span class="date">2023.09.18</span><span class="view">조회수 <span>263</span></span></p>
 										</div>
 									</a>
 								</div>
@@ -1434,21 +1335,21 @@
 									</div>
 								</div>
 								<div class="article-list-w txt-list">
-									<a class="list-item" href="javascript:" title="새 페이지 이동">
+									<a class="list-item" href="javascript:" title="링크 이동">
 										<div class="txt-box">
-											<p class="txt f-sub-head">재단수료증 인쇄 불가시</p>
+											<p class="tit f-head">재단수료증 인쇄 불가시</p>
 											<span class="sub-txt f-body2">회원가입</span>
 										</div>
 									</a>
-									<a class="list-item" href="javascript:" title="새 페이지 이동">
+									<a class="list-item" href="javascript:" title="링크 이동">
 										<div class="txt-box">
-											<p class="txt f-sub-head">교육 정원 마감으로 인한 교육신청불가</p>
+											<p class="tit f-head">교육 정원 마감으로 인한 교육신청불가</p>
 											<span class="sub-txt f-body2">사업신청</span>
 										</div>
 									</a>
-									<a class="list-item" href="javascript:" title="새 페이지 이동">
+									<a class="list-item" href="javascript:" title="링크 이동">
 										<div class="txt-box">
-											<p class="txt f-sub-head">수료증 화면이 안나올 경우 해결방안</p>
+											<p class="tit f-head">수료증 화면이 안나올 경우 해결방안</p>
 											<span class="sub-txt f-body2">수료증발급</span>
 										</div>
 									</a>
@@ -1466,12 +1367,12 @@
 									</div>
 								</div>
 								<div class="article-list-w with-thunmbnail">
-									<a class="list-item" href="javascript:" title="새 페이지 이동">
+									<a class="list-item" href="javascript:" title="링크 이동">
 										<div class="img-box">
 											<img src="/common/images/@img-main-noti-foundation.jpg" alt="">
 										</div>
 										<div class="txt-box">
-											<p class="txt f-sub-head">재단소식 2023년 4월호</p>
+											<p class="tit f-head">재단소식 2023년 4월호</p>
 											<span class="sub-txt f-body2">2023.09.18</span>
 										</div>
 									</a>
@@ -1486,7 +1387,8 @@
 									<p class="sec-tit f-title3">뉴스레터</p>
 								</div>
 								<div>
-									<p class="txt f-sub-head">다양한 자동차부품산업진흥재단의 최신 소식을 가장 먼저 받아보세요.</p>
+									<p class="txt f-body1">다양한 자동차부품산업진흥재단의 최신 소식을 가장 먼저 받아보세요.</p>
+									<p class="title f-head">이메일</p>
 									<div class="form-input">
 										<input type="text" placeholder="이메일 주소">
 									</div>
@@ -1533,29 +1435,50 @@
 					<div class="pop-wrap">
 						<div class="pop-con-area">
 							<div class="tit-area">
-								<p class="f-large-title">자동차부품산업진흥재단의 소식 및 관련 정보 수신에 관한 동의</p>
+								<p class="f-title1">자동차부품산업진흥재단의 소식 및 관련 <br class="only-pc"/>정보수신에 관한 동의</p>
 							</div>
 							<div class="con-area">
 								<div class="scroll-area">
-									<p>
-										자동차부품산업진흥재단의 뉴스레터를 받아보기 위하여 아래의 개인정보 수집ㆍ이용에 대한 내용을 자세히 읽어 보신 후 <br>
-										동의 여부를 결정하여 주시기 바랍니다.<br><br>
-										
-										1. 개인정보의 수집 및 이용 목적<br>
-										뉴스레터 이메일 수신 활용<br><br>
-										
-										2. 수집하는 개인정보의 항목<br>
-										- 개인정보 : 이메일<br>
-										※ 서비스 이용과정에서 아래와 같은 정보들이 자동으로 생성되어 수집될 수 있습니다.<br>
-										- IP Address, 쿠키, 방문 일시, 서비스 이용 기록<br><br>
-										
-										3. 개인정보의 보유 및 이용 기간<br>
-										개인정보 수집 및 이용에 관한 동의 후 2년간 개인정보를 보유하고 이후 해당 정보를 지체 없이 파기합니다. <br>
-										단, 법률에 의해 보존 의무가 있는 경우에는 법령이 지정한 일정기간 동안 보존합니다.<br><br>
-										
-										4. 귀하는 위와 같은 개인정보 수집ㆍ이용에 동의하지 않으실 수 있습니다.<br>
-										동의를 하지 않을 경우 자동차부품산업진흥재단 뉴스레터 정보 수신이 제한될 수 있습니다.
-									</p>
+                  <div class="p-info-sec">
+                    <p class="f-sub-head">자동차부품산업진흥재단의 뉴스레터를 받아보기 위하여 아래의 개인정보 수집ㆍ이용에 대한 내용을 자세히 읽어 보신 후 동의 여부를 결정하여 주시기 바랍니다.</p>
+                  </div>
+                  <div class="p-cont-sec">
+                    <div class="sec-con-area">
+                      <div class="p-list-box-w">
+                        <div class="p-list-box">
+                          <p class="f-body1">1. 개인정보의 수집 및 이용 목적</p>
+                          <div class="ul-txt-list">
+                            <p class="ul-txt f-body2">뉴스레터 이메일 수신 활용</p>
+                          </div>
+                        </div>
+                        <div class="p-list-box">
+                          <p class="f-body1">2. 수집하는 개인정보의 항목</p>
+                          <div class="ul-txt-list">
+                            <p class="ul-txt f-body2">
+                              개인정보 : 이메일
+                              <br/>IP Address, 쿠키, 방문 일시, 서비스 이용 기록
+                            </p>
+                            <p class="ul-txt f-caption2">※ 서비스 이용과정에서 아래와 같은 정보들이 자동으로 생성되어 수집될 수 있습니다.</p>
+                          </div>
+                        </div>
+                        <div class="p-list-box">
+                          <p class="f-body1">3. 개인정보의 보유 및 이용 기간</p>
+                          <div class="ul-txt-list">
+                            <p class="ul-txt f-body2">
+                              개인정보 수집 및 이용에 관한 동의 후 2년간 개인정보를 보유하고 이후 해당 정보를 지체 없이 파기합니다. 
+                              <br/>단, 법률에 의해 보존 의무가 있는 경우에는 법령이 지정한 일정기간 동안 보존합니다.
+                            </p>
+                          </div>
+                        </div>
+                        <div class="p-list-box">
+                          <p class="f-body1">4. 귀하는 위와 같은 개인정보 수집ㆍ이용에 동의하지 않으실 수 있습니다.</p>
+                          <div class="ul-txt-list">
+                            <p class="ul-txt f-body2">동의를 하지 않을 경우 자동차부품산업진흥재단 뉴스레터 정보 수신이 제한될 수 있습니다.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 								</div>
 							</div>
 							<div class="bot-fix-btn-area">
