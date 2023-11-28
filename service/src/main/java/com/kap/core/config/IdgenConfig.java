@@ -180,6 +180,19 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 1:1 문의 담당자
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl qaPicIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("QA_PIC_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
     /** 교육 시험 마스터
      * @return
      */
