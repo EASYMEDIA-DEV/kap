@@ -3,6 +3,7 @@ package com.kap.service;
 
 import com.kap.core.dto.COFrontHeaderNtfyDTO;
 import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.co.COCNiceServiceDto;
 import com.kap.core.dto.co.COCompApiResDto;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,4 +37,6 @@ public interface COCommService {
     public List<COFrontHeaderNtfyDTO> getHeaderNtfyList() throws Exception;
 
     COCompApiResDto niceChk(String compNum) throws Exception;
+
+    COCNiceServiceDto niceChk() throws Exception;
 }

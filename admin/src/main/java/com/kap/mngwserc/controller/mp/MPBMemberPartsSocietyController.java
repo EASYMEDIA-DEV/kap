@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
@@ -67,6 +68,13 @@ public class MPBMemberPartsSocietyController {
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyList.admin";
+    }
+
+    @GetMapping(value = "/list2")
+    public void getPartUserListPage2(HttpServletResponse response, HttpServletRequest request) throws Exception {
+        System.out.println(":::" + response);
+        System.out.println(":::" + request);
+        // 로그인한 계정
     }
 
     /**

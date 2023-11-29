@@ -5,6 +5,7 @@ import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMenuDTO;
 import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.co.COCNiceServiceDto;
 import com.kap.core.dto.co.COCompApiResDto;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
@@ -99,10 +100,16 @@ public class COCOmmController {
             return cOUserCmpnDto;
         }
 
+//        @PostMapping("/nice/comp-chk")
+//        @ResponseBody
+//        public COCompApiResDto niceChk(COCompApiResDto coCompApiResDto) throws Exception {
+//            return cOCommService.niceChk(coCompApiResDto.getCompNum());
+//        }
+
         @PostMapping("/nice/comp-chk")
         @ResponseBody
-        public COCompApiResDto niceChk(COCompApiResDto coCompApiResDto) throws Exception {
-            return cOCommService.niceChk(coCompApiResDto.getCompNum());
+        public COCNiceServiceDto niceChk() throws Exception {
+            return cOCommService.niceChk();
         }
     }
 }

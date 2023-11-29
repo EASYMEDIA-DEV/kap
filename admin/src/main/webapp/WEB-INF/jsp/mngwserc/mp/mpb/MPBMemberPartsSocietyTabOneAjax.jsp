@@ -3,6 +3,13 @@
     <input type="hidden" id="oldEmail" name="oldEmail" value=${rtnDtl.email} />
     <input type="hidden" id="id" name="id" value=${rtnDtl.id} />
 </form>
+<form name="form" id="form" action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
+    <input type="hidden" id="m" name="m" value="service" />
+    <input type="hidden" id="token_version_id" name="token_version_id" value="" />
+    <input type="hidden" id="enc_data" name="enc_data" />
+    <input type="hidden" id="integrity_value" name="integrity_value" />
+</form>
+
 <fieldset>
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">이름<span class="star text-danger"> *</span></label>
@@ -23,7 +30,8 @@
         <div class="col-sm-3">
             <div class="input-group">
                 <input type="text" class="form-control input-sm " id="workBsnmNo" name="workBsnmNo" value="${rtnDtl.workBsnmNo}" title="사업자등록번호" maxlength="13" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
-                <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="btnBsnmNo">인증 TODO 양현우</button></span>
+                <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="btnBsnmNo">인증</button></span>
+                <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="btnTest">본인 테스트</button></span>
             </div>
         </div>
 
