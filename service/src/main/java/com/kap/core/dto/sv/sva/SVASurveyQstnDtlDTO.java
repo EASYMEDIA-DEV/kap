@@ -45,6 +45,10 @@ public class SVASurveyQstnDtlDTO extends BaseDTO  {
     @NotNull
     private String srvTypeCd;
 
+    @Schema(title = "설문유형이름", example = "")
+    @NotNull
+    private String srvTypeNm;
+
     @Schema(title = "부모질문순번", example = "숫자")
     @NotNull
     private Integer parntQstnSeq;
@@ -105,6 +109,8 @@ public class SVASurveyQstnDtlDTO extends BaseDTO  {
     //코드명
     private String cdNm;
 
+    @Schema(title = "설문응답순번", example = "숫자")
+    private Integer srvRspnSeq;
 
 
 }

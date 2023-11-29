@@ -9,8 +9,9 @@
                         <span class="ion-checkmark-round"></span>
                     </label>
                 </td>
+
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center" > ${list.year}</td>
+                <td class="text-center" > ${fn:substring(list.year,0,4)}</td>
                 <td class="text-center" > ${list.episd}</td>
                 <td class="text-center" > ${list.partCmpnNm1}</td>
                 <td class="text-center" > ${list.partCmpnCd1}</td>
@@ -19,8 +20,8 @@
                             ${list.partCmpnNm2}
                     </a>
                 </td>
-                <td class="text-center" > ${list.partCmpnCd2}</td>
-                <td class="text-center" data-use-yn="${list.cmpltnYn}">${ list.cmpltnYn eq 'Y' ? '참여' : '미참여' }</td>
+                <td class="text-center"> ${list.partCmpnCd2}</td>
+                <td class="text-center"> ${ list.ptcptCd eq 'E' ? '대기' : list.ptcptCd eq 'N' ? '미참여' : '참여' }</td>
                 <td class="text-center"></td>
                 <td class="text-center"></td>
                 <td class="text-center"></td>

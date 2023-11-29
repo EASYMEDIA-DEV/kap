@@ -3,6 +3,7 @@ package com.kap.core.dto.sv.sva;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -47,10 +48,20 @@ public class SVASurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "설문유형")
     private String typeNm;
 
+    @Schema(title = "설문유형코드")
+    private String typeCd;
+
     @Schema(title = "조회 리스트")
     private List<SVASurveyMstSearchDTO> list;
     @Schema(title = "검색 사용 여부 리스트")
     private List<String> expsYnList;
     private List<String> typeCdList;
+
+    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
+    @Hidden
+    private String srchLayer;
+
+    @Schema(title = "설문응답순번", example = "숫자")
+    private Integer srvRspnSeq;
 
 }

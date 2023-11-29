@@ -92,9 +92,6 @@
                         </c:if>
                         <c:if test="${qstnList.cd ne 'CON01' && qstnList.cd ne 'CON02'}">
                             <c:set var="rowspan" value="${qstnList.exmplCnt+3}" />
-
-
-
                             <fieldset style="<c:if test="${qstnList.ctgryCd eq null}">display:none;</c:if>" class="surveyList ${qstnList.cd}" data-survey-type="${qstnList.cd}" >
                                 <input type="hidden" name="qstn_ord" value="0">
                                 <input type="hidden" name="parnt_qstn_ord" value="0">

@@ -12,9 +12,17 @@
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center" > ${list.typeNm}</td>
                 <td class="text-center">
-                    <a href="javascript:" class="listView"  data-details-key="${list.srvSeq}">
+                    <c:choose>
+                        <c:when test="${ rtnData.srchLayer eq 'Y'}">
                             ${list.titl}
-                    </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="javascript:" class="listView"  data-details-key="${list.srvSeq}">
+                                    ${list.titl}
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
+
                 </td>
                 <td class="text-center" >${ list.regName }</td>
                 <td class="text-center" data-reg-dtm="${list.regDtm}">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>

@@ -13,6 +13,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
+    var $excelObj = ctrl.obj.parent().find(".excel-down");
 
     //목록 조회
     var search = function(page){
@@ -56,6 +57,60 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
+            btnEpisd : {
+                event : {
+                    click : function() {
+//                        $(".svaSurveySrchLayer").one('show.bs.modal', function() {
+                        $(".episdSrchLayer").one('show.bs.modal', function() {
+                            var modal = $(this);
+                            modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+                        }).one('hidden.bs.modal', function() {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                        }).one('choice', function(data, param) {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                            // fnc(param);
+                        }).modal();
+                    }
+                }
+            },
+            btnExcelupload : {
+                event : {
+                    click : function() {
+                        $(".episdSurveySrchLayer").one('show.bs.modal', function() {
+                            var modal = $(this);
+                            modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+                        }).one('hidden.bs.modal', function() {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                        }).one('choice', function(data, param) {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                            // fnc(param);
+                        }).modal();
+                    }
+                }
+            },
+            btnExcelDown : {
+                event : {
+                    click: function () {
+
+                        $(".excel-down").one('show.bs.modal', function() {
+                            var modal = $(this);
+                            modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+                            $excelObj.find("#rsn").val('');
+
+                        }).one('hidden.bs.modal', function() {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                        }).one('choice', function(data, param) {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                            // fnc(param);
+                        }).modal();
+
+                    }
+                }
+            },
+
         },
         classname : {
             // 페이징 처리
@@ -95,6 +150,27 @@ define(["ezCtrl"], function(ezCtrl) {
             cmmCtrl.setFormData($formObj);
 
             search($formObj.find("input[name=pageIndex]").val());
+
+
+            $excelObj.find("button.down").on('click', function(){
+                var rsn = $excelObj.find("#rsn").val().trim();
+                var frmDataObj    = $formObj.closest("form");
+
+                frmDataObj.find("input[name='rsn']").remove();
+
+                if (rsn != "") {
+                    frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+
+                    //파라미터를 물고 가야함.
+                    location.href = "./excel-down?" + frmDataObj.serialize();
+
+                } else {
+                    alert(msgCtrl.getMsg("fail.reason"));
+                    return;
+                }
+
+            });
+
 
         }
     };

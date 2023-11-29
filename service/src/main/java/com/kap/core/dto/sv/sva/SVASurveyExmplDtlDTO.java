@@ -54,6 +54,15 @@ public class SVASurveyExmplDtlDTO extends BaseDTO  {
     @NotNull
     private String nextNo;
 
+    @Schema(title = "객관식답변", example = "")
+    @NotNull
+    private String winAnswer;
+
+    @Schema(title = "주관식답변", example = "")
+    @NotNull
+    private String winAnswerText;
+
+
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
     @Schema(title = "등록일시", example = "yyyy-MM-dd hh:mm:ss")

@@ -59,5 +59,10 @@ public interface SVASurveyService {
 	 */
 	public SVASurveyMstInsertDTO selectSurveyDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
 
+	/**
+	 * 응답 상세
+	 */
+	public SVASurveyMstInsertDTO selectSurveyTypeWinDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
+
 
 }

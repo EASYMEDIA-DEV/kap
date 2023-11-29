@@ -107,5 +107,16 @@ public interface SVASurveyMapper {
      */
     public int deleteSurveyQstnList(SVASurveyMstSearchDTO sVASurveyDTO);
 
-    
+    /**
+     * 설문 질문 조회(내용)
+     */
+    public List<SVASurveyQstnDtlDTO> selectSurveyQstnTypeDtlList(SVASurveyMstSearchDTO sVASurveyDTO);
+
+    /**
+     * 설문질문 보기 조회(응답)
+     */
+    public List<SVASurveyExmplDtlDTO> selectSurveyExmplWinDtlList(SVASurveyQstnDtlDTO sVASurveyQstnDtlDTO);
+
+
+
 }

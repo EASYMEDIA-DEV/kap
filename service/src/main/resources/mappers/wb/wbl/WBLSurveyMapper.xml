@@ -12,27 +12,28 @@
      -->
 	<select id="selectSurveyList" parameterType="WBLSurveyMstSearchDTO">
 		SELECT /* WBLSurveyMapper.selectSurveyList */
-		cxstn_srv_seq
-		,year
-		,episd
-		,part_cmpn_nm_1
-		,part_cmpn_cd_1
-		,part_cmpn_nm_2
-		,part_cmpn_cd_2
-		,ptcpt_cd
-		,ptcpt_cmpltn_dtm
-		,reg_id
+		a.cxstn_srv_seq
+		,b.year
+		,b.episd
+		,b.srv_seq
+		,a.part_cmpn_nm_1
+		,a.part_cmpn_cd_1
+		,a.part_cmpn_nm_2
+		,a.part_cmpn_cd_2
+		,a.ptcpt_cd
+		,a.ptcpt_cmpltn_dtm
+		,a.reg_id
 		,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
-		,reg_ip
-		,reg_dtm
-		,mod_id
+		,a.reg_ip
+		,a.reg_dtm
+		,a.mod_id
 		,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
-		,mod_ip
-		,mod_dtm
-		FROM cx_appctn_rsume_srv_mst A
+		,a.mod_ip
+		,a.mod_dtm
+		FROM cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
 		<include refid="selectSurveyListwhereSql" />
 		ORDER BY
-		SRV_SEQ DESC
+		a.cxstn_srv_seq DESC
 		LIMIT #{firstIndex}, #{recordCountPerPage}
 
 	</select>
@@ -46,9 +47,9 @@
     -->
 	<select id="selectSurveyListCnt" parameterType="WBLSurveyMstSearchDTO" resultType="java.lang.Integer">
 		SELECT /* WBLSurveyMapper.selectSurveyListCnt*/
-		COUNT(cxstn_srv_seq)
+		COUNT(a.cxstn_srv_seq)
 		FROM
-		cx_appctn_rsume_srv_mst A
+		cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
 		<include refid="selectSurveyListwhereSql" />
 	</select>
 
@@ -65,26 +66,26 @@
 				<choose>
 					<when test="srchDate == 1">
 						<if test="strtDt != null and strtDt != ''.toString() ">
-							AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+							AND a.REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
 						</if>
 						<if test="endDt != null and endDt != ''.toString() ">
-						AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						AND a.REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
 						</if>
 					</when>
 					<when test="srchDate == 2">
 						<if test="strtDt != null and strtDt != ''.toString() ">
-							AND MOD_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+							AND a.MOD_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
 						</if>
 						<if test="endDt != null and endDt != ''.toString() ">
-							AND MOD_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+							AND a.MOD_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
 						</if>
 					</when>
 					<when test="srchDate == 3">
 						<if test="strtDt != null and strtDt != ''.toString() ">
-							AND ptcpt_cmpltn_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+							AND a.ptcpt_cmpltn_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
 						</if>
 						<if test="endDt != null and endDt != ''.toString() ">
-							AND ptcpt_cmpltn_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+							AND a.ptcpt_cmpltn_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
 						</if>
 					</when>
 				</choose>
@@ -92,32 +93,40 @@
 			<if test="cmpltnYnList != null and cmpltnYnList.size() > 0">
 				AND (
 				<foreach collection="cmpltnYnList" item="cmpltnYnList" index="index" open="" close="" separator=" or ">
-					cmpltn_yn = #{cmpltnYnList}
+					a.cmpltn_yn = #{cmpltnYnList}
+				</foreach>
+				)
+			</if>
+			<if test="ptcptCdList != null and ptcptCdList.size() > 0">
+				AND (
+				<foreach collection="ptcptCdList" item="ptcptCdList" index="index" open="" close="" separator=" or ">
+					a.ptcpt_cd = #{ptcptCdList}
 				</foreach>
 				)
 			</if>
 
+
 			<if test="year != null and year != ''">
-				AND year = #{year}
+				AND b.year = #{year}
 			</if>
 
 			<if test="year != null and year != ''">
-				AND episd = #{episd}
+				AND b.episd = #{episd}
 			</if>
 
 			<if test="q != null and q != ''">
 				<choose>
 					<when test="f == 1">
-						AND part_cmpn_nm_1 LIKE CONCAT('%', #{q}, '%')
+						AND a.part_cmpn_nm_1 LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 2">
-						AND part_cmpn_cd_1 LIKE CONCAT('%', #{q}, '%')
+						AND a.part_cmpn_cd_1 LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 3">
-						AND part_cmpn_nm_2 LIKE CONCAT('%', #{q}, '%')
+						AND a.part_cmpn_nm_2 LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 4">
-						AND part_cmpn_cd_2 LIKE CONCAT('%', #{q}, '%')
+						AND a.part_cmpn_cd_2 LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 5">
 						AND (
@@ -133,12 +142,12 @@
 					</when>
 					<otherwise>
 						AND (
-						INSTR(#{q}, part_cmpn_nm_1) <![CDATA[>]]> 0 OR
-						INSTR(#{q}, part_cmpn_cd_1) <![CDATA[>]]> 0 OR
-						INSTR(#{q}, part_cmpn_nm_2) <![CDATA[>]]> 0 OR
-						INSTR(#{q}, part_cmpn_cd_2) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, a.part_cmpn_nm_1) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, a.part_cmpn_cd_1) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, a.part_cmpn_nm_2) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, a.part_cmpn_cd_2) <![CDATA[>]]> 0 OR
 						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
-						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						INSTR(#{q}, a.MOD_ID) <![CDATA[>]]> 0 OR
 						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
 						)
 					</otherwise>
@@ -159,8 +168,7 @@
 		insert /* WBLSurveyMapper.insertSurveyMst */ into cx_appctn_rsume_srv_mst
 		(
 		 cxstn_srv_seq
-		, year
-		, episd
+		, cxstn_cmpn_episd_seq
 		, part_cmpn_nm_1
 		, part_cmpn_cd_1
 		, part_cmpn_nm_2
@@ -170,7 +178,6 @@
 		, pic_nm
 		, tel_no
 		, email
-		, srv_seq
 		, srv_rspn_seq
 		, crtfn_no
 		, ptcpt_cd
@@ -185,8 +192,7 @@
 		, mod_dtm)
 		values (
 				#{cxstnSrvSeq}
-               ,#{year}
-			   ,#{episd}
+			   ,#{cxstnCmpnEpisdSeq}
 			   ,#{partCmpnNm1}
 			   ,#{partCmpnCd1}
 			   ,#{partCmpnNm2}
@@ -196,7 +202,6 @@
 			   ,#{picNm}
 			   ,#{telNo}
 			   ,#{email}
-			   ,#{srvSeq}
 			   ,#{srvRspnSeq}
 			   ,#{crtfnNo}
 			   ,#{ptcptCd}
@@ -237,4 +242,192 @@
 			</choose>
 		</where>
 	</delete>
+
+
+
+	<!--
+		쿼리명 : WBLSurveyMapper.selectSurveyDtl
+		설  명 :  조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.23    박준희       최초생성
+    -->
+	<select id="selectSurveyDtl" parameterType="WBLSurveyMstSearchDTO" resultType="WBLSurveyMstInsertDTO">
+		select /* WBLSurveyMapper.selectSurveyDtl */
+			a.cxstn_srv_seq
+		     , a.cxstn_cmpn_episd_seq
+			 , b.year
+			 , b.episd
+			 , a.part_cmpn_nm_1
+			 , a.part_cmpn_cd_1
+			 , a.part_cmpn_nm_2
+			 , a.part_cmpn_cd_2
+			 , a.rprsnt_nm
+			 , a.bsnm_reg_no
+			 , a.pic_nm
+			 , a.tel_no
+			 , a.email
+			 , b.srv_seq
+			 , (select titl from sv_mst where srv_seq = b.srv_seq) as titl
+			 , a.srv_rspn_seq
+			 , a.crtfn_no
+			 , a.ptcpt_cd
+			 , a.cmpltn_yn
+			 , a.ptcpt_cmpltn_dtm
+			 , a.score
+			 , a.reg_id
+			 , a.reg_ip
+			 , a.reg_dtm
+			 , a.mod_id
+			 , a.mod_ip
+			 , a.mod_dtm
+		from cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
+		where a.cxstn_srv_seq = #{detailsKey}
+	</select>
+
+	<!--
+		쿼리명 : WBLSurveyMapper.selectEpisdList
+		설  명 :  조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.27    박준희       최초생성
+    -->
+	<select id="selectEpisdList" parameterType="WBLEpisdMstDTO">
+		select /* WBLSurveyMapper.selectEpisdList */
+			a.cxstn_cmpn_episd_seq
+			 , a.year
+			 , a.episd
+			 , a.srv_seq
+			 , b.titl
+  	 		 , (select count(cxstn_srv_seq) from cx_appctn_rsume_srv_mst where cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ifnull(srv_rspn_seq,0) > 0 ) as rspn_cnt
+		from cx_cmpn_episd_mst a inner join sv_mst b on a.srv_seq = b.srv_seq
+		<if test="cxstnCmpnEpisdSeq != null and cxstnCmpnEpisdSeq != ''.toString() ">
+			where a.cxstn_cmpn_episd_seq = #{cxstnCmpnEpisdSeq}
+		</if>
+		ORDER BY
+		a.year , a.episd ASC
+		LIMIT #{firstIndex}, #{recordCountPerPage}
+
+	</select>
+
+	<!--
+         쿼리명 : WBLSurveyMapper.selectEpisdListCnt
+         설  명 : 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    박준희       최초생성
+    -->
+	<select id="selectEpisdListCnt" parameterType="WBLEpisdMstDTO" resultType="java.lang.Integer">
+		SELECT /* WBLSurveyMapper.selectEpisdListCnt*/
+			COUNT(a.cxstn_cmpn_episd_seq)
+		FROM
+			 cx_cmpn_episd_mst a inner join sv_mst b on a.srv_seq = b.srv_seq
+		<if test="cxstnCmpnEpisdSeq != null and cxstnCmpnEpisdSeq != ''.toString() ">
+			where a.cxstn_cmpn_episd_seq = #{cxstnCmpnEpisdSeq}
+		</if>
+	</select>
+
+
+	<!--
+         쿼리명 : WBLSurveyMapper.deleteEpisdList
+         설  명 : 목록 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.27   박준희       최초생성
+    -->
+	<delete id="deleteEpisdList" parameterType="WBLEpisdMstDTO">
+		delete /* WBLSurveyMapper.deleteEpisdList */
+		from cx_cmpn_episd_mst
+		<where>
+			cxstn_cmpn_episd_seq = #{detailsKey}
+		</where>
+	</delete>
+
+
+	<!--
+         쿼리명 : WBLSurveyMapper.insertEpisdMst
+         설  명 : 상생협력체감도조사 회차 마스터 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.27    박준희       최초생성
+    -->
+	<insert id="insertEpisdMst" parameterType="WBLEpisdMstDTO">
+		insert /* WBLSurveyMapper.insertEpisdMst */ into cx_cmpn_episd_mst
+		(
+		 cxstn_cmpn_episd_seq
+		, year
+		, episd
+		, srv_seq
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm)
+		values (
+			   #{cxstnCmpnEpisdSeq}
+			   ,#{year}
+			   ,#{episd}
+			   ,#{srvSeq}
+			   ,#{regId}
+			   ,#{regIp}
+			   ,now()
+			   ,#{modId}
+			   ,#{modIp}
+			   ,now()
+			   )
+	</insert>
+
+
+	<!--
+          쿼리명 : WBLSurveyMapper.selectEpisdMst
+          설  명 : 목록을 조회한다.
+              수정일	 수정자     수정내용
+         ==========   ======   =============
+         2023.11.28   박준희     최초생성
+     -->
+	<select id="selectEpisdMst" parameterType="WBLEpisdMstDTO" resultType="WBLEpisdMstDTO">
+		SELECT /* WBLSurveyMapper.selectEpisdMst */
+			cxstn_cmpn_episd_seq
+		FROM cx_cmpn_episd_mst
+		WHERE year=#{year} and episd = #{episd}
+	</select>
+
+	<!--
+	쿼리명 : SVASurveyMapper.updateSurveyMst
+	설  명 : 설문마스터 수정
+	  수정일      수정자       수정내용
+	==========   ========   ==============
+	2023.11.18    박준희       최초생성
+	-->
+	<update id="updateEpisdMst" parameterType="WBLEpisdMstDTO">
+		update /* SVASurveyMapper.updateEpisdMst */ cx_cmpn_episd_mst
+		set
+		   srv_seq = #{srvSeq}
+		  ,mod_id = #{modId}
+		  ,mod_ip = #{modIp}
+		  ,mod_dtm = now()
+		where
+			cxstn_cmpn_episd_seq = #{cxstnCmpnEpisdSeq}
+	</update>
+
+
+	<!--
+          쿼리명 : WBLSurveyMapper.selectEpisdSurveyList
+          설  명 : 목록을 조회한다.
+              수정일	 수정자     수정내용
+         ==========   ======   =============
+         2023.11.28   박준희     최초생성
+     -->
+	<select id="selectEpisdSurveyList" parameterType="WBLEpisdMstDTO">
+		select /* WBLSurveyMapper.selectEpisdSurveyList */
+			a.cxstn_cmpn_episd_seq
+			 , a.year
+			 , a.episd
+			 , a.srv_seq
+			 , b.titl
+			 , (select count(cxstn_srv_seq) from cx_appctn_rsume_srv_mst where cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ifnull(srv_rspn_seq,0) > 0 ) as rspn_cnt
+		from cx_cmpn_episd_mst a inner join sv_mst b on a.srv_seq = b.srv_seq
+		order by a.year , a.episd asc
+	</select>
 </mapper>
