@@ -22,7 +22,7 @@
         <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
         <div class="col-sm-3">
             <div class="input-group">
-                <input type="text" class="form-control input-sm " id="workBsnmNo" name="workBsnmNo" value="${rtnDtl.workBsnmNo}" title="사업자등록번호" maxlength="50" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
+                <input type="text" class="form-control input-sm " id="workBsnmNo" name="workBsnmNo" value="${rtnDtl.workBsnmNo}" title="사업자등록번호" maxlength="13" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
                 <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="btnBsnmNo">인증 TODO 양현우</button></span>
             </div>
         </div>
