@@ -23,6 +23,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         //사용자 권한 체크
         registry.addInterceptor(cOAuthenticInterceptor()).addPathPatterns("/my-page/**")
+                .excludePathPatterns("/**/*.*")
+                .excludePathPatterns("/error")
                 .order(1);
 
         //web, mbl jsp

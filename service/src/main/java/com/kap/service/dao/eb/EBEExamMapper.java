@@ -1,10 +1,7 @@
 package com.kap.service.dao.eb;
 
 import com.kap.core.dto.COEgovSeqDTO;
-import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
-import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
+import com.kap.core.dto.ex.exg.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -102,4 +99,31 @@ public interface EBEExamMapper {
      * 평가지 마스터 수정
      */
     public int updateExamMst(EXGExamMstInsertDTO eXGExamMstInsertDTO);
+
+    /**
+     * 사용자 평가지
+     */
+    public EXGExamEdctnPtcptMst selectUserExamDtl(EXGExamMstSearchDTO eXGExamMstSearchDTO);
+
+    /**
+     * 교육 시험 질문(정답) 조회
+     */
+    public List<EXGExamQstnDtlDTO> getExamQstnCanswList(EXGExamMstSearchDTO eXGExamMstSearchDTO);
+
+    /**
+     * 교육 시험 참여 등록
+     */
+    public int insertExamPtcptMst(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
+    /**
+     * 교육 시험 주관식 등록
+     */
+    public int insertExamPtcptSbjctRspnDtl(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
+    /**
+     * 교육 시험 객관식 등록
+     */
+    public int insertExamPtcptMtlccRspnDtl(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
+    /**
+     * 교육 참여 점수 변경
+     */
+    public int updateEdctnPtcptScord(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
 }

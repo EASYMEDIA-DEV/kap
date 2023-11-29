@@ -3,6 +3,7 @@ package com.kap.core.dto.ex.exg;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -66,4 +67,8 @@ public class EXGExamQstnDtlDTO extends BaseDTO  {
 
     @Schema(title = "교육 시험 질문 보기 리스트")
     private List<EXGExamExmplDtlDTO> exExamExmplDtlList;
+
+    @Schema(title = "사용자 시험 질문 정답 보기(채점)", description = "group_concat(exmpl_seq SEPARATOR ',')")
+    @Hidden
+    private String exmplCansw;
 }

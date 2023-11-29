@@ -38,7 +38,7 @@ public class COAuthenticInterceptor implements HandlerInterceptor{
             }
             else
             {
-                ModelAndView modelAndView = new ModelAndView("blank.error");
+                ModelAndView modelAndView = new ModelAndView("front/COBlank.error");
                 if ("".equals(COStringUtil.nullConvert(requestURI)))
                 {
                     modelAndView.addObject("url", "/login");

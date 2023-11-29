@@ -100,13 +100,13 @@ public class COCOmmController {
             return cOUserCmpnDto;
         }
 
-//        @PostMapping("/nice/comp-chk")
-//        @ResponseBody
-//        public COCompApiResDto niceChk(COCompApiResDto coCompApiResDto) throws Exception {
-//            return cOCommService.niceChk(coCompApiResDto.getCompNum());
-//        }
-
         @PostMapping("/nice/comp-chk")
+        @ResponseBody
+        public COCompApiResDto niceChk(COCompApiResDto coCompApiResDto) throws Exception {
+            return cOCommService.niceChk(coCompApiResDto.getCompNum());
+        }
+
+        @PostMapping("/nice/my-chk")
         @ResponseBody
         public COCNiceServiceDto niceChk() throws Exception {
             return cOCommService.niceChk();

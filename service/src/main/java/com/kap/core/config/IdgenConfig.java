@@ -686,4 +686,17 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 교육 시험 참여 순번
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl examPtcptSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EXAM_PTCPT_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }
