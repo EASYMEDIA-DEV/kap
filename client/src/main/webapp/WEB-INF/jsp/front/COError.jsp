@@ -15,19 +15,10 @@
     <meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
     <meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
     <meta property="og:image" content="img URL" id="og-image-value"/>
-    <!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
-    <meta name="twitter:title" content="Main" id="twitter-title-value"/>
-    <meta name="twitter:image" content="img URL" />
-    <meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
     <link rel="stylesheet" href="/common/css/swiper.css" />
     <link rel="stylesheet" href="/common/css/fonts.css" />
     <link rel="stylesheet" href="/common/css/common.css" />
     <link rel="stylesheet" href="/common/css/style.css" />
-    <script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="/common/js/gsap.min.js"></script>
-    <script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
-    <script type="text/javascript" src="/common/js/swiper.min.js"></script>
-    <script type="text/javascript" src="/common/js/script.js"></script>
 </head>
 <body>
 <div id="wrap">

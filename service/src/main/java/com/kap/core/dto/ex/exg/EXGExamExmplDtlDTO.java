@@ -60,4 +60,7 @@ public class EXGExamExmplDtlDTO extends BaseDTO  {
     private String modDtm;
     @Schema(title = "수정ID")
     private String modId;
+
+    @Schema(title = "질문 배점(사용자 사용)")
+    private Integer qstnScord;
 }

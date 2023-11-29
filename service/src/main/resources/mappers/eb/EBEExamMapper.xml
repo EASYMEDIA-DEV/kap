@@ -353,7 +353,7 @@
 
 	<!--
 		쿼리명 : EXGExamMapper.getExamQstnDtlList
-		설  명 : 교육 시험 마스터 조회
+		설  명 : 교육 시험 질문 조회
 	      수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.09    김학규       최초생성
@@ -384,19 +384,43 @@
     -->
 	<select id="getExamExmplDtlList" parameterType="EXGExamMstSearchDTO" resultType="EXGExamExmplDtlDTO">
 		select /* EXGExamMapper.getExamExmplDtlList */
-			  exam_seq
-			 ,qstn_seq
-			 ,exmpl_seq
-			 ,exmpl_nm
-			 ,exmpl_ord
-			 ,cansw_yn
-			 ,reg_id
-			 ,reg_dtm
-			 ,mod_id
-			 ,mod_dtm
-		from ex_exam_exmpl_dtl
-		where exam_seq = #{detailsKey}
-		order by qstn_seq asc, exmpl_ord asc
+			  a.exam_seq
+			 ,a.qstn_seq
+			 ,a.exmpl_seq
+			 ,a.exmpl_nm
+			 ,a.exmpl_ord
+			 ,a.cansw_yn
+			 ,a.reg_id
+			 ,a.reg_dtm
+			 ,a.mod_id
+			 ,a.mod_dtm
+			<if test="canswYn != null and canswYn != ''.toString() ">
+			 ,(select scord from ex_exam_qstn_dtl where qstn_seq = a.qstn_seq) qstn_scord
+			</if>
+		from ex_exam_exmpl_dtl a
+		where a.exam_seq = #{detailsKey}
+		<if test="canswYn != null and canswYn != ''.toString() ">
+			and a.cansw_yn = #{canswYn}
+		</if>
+		order by a.qstn_seq asc, a.exmpl_ord asc
+	</select>
+
+	<!--
+		쿼리명 : EXGExamMapper.getExamQstnCanswList
+		설  명 : 교육 시험 문항(보기답변) 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getExamQstnCanswList" parameterType="EXGExamMstSearchDTO" resultType="EXGExamQstnDtlDTO">
+		select /* EXGExamMapper.getExamQstnCanswList */
+		 a.exam_seq
+		,a.qstn_seq
+		,a.scord
+		,(select group_concat(exmpl_seq SEPARATOR ',') FROM ex_exam_exmpl_dtl where cansw_yn = 'Y' and qstn_seq = a.qstn_seq) exmpl_cansw
+		from ex_exam_qstn_dtl a
+		where a.exam_seq = #{detailsKey} AND (a.srv_type_cd = 'EXG_A' OR a.srv_type_cd = 'EXG_B')
+		order by a.qstn_seq asc
 	</select>
 
 	<!--
@@ -447,6 +471,170 @@
 			NEXT_ID = #{netxId}
 		where
 			TABLE_NAME = #{tableName}
+	</update>
+
+	<!--
+		쿼리명 : EXGExamMapper.selectUserExamDtl
+		설  명 : 사용자 평가지 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="selectUserExamDtl" parameterType="EXGExamMstSearchDTO" resultType="EXGExamEdctnPtcptMst">
+		select /* EXGExamMapper.selectUserExamDtl */
+			ptcpt_mst.ptcpt_seq
+			 , ptcpt_mst.edctn_seq
+			 , ptcpt_mst.episd_year
+			 , ptcpt_mst.episd_ord
+			 , ptcpt_mst.mem_seq
+			 , episd_mst.exam_seq
+			 , prcs_mst.nm
+			 , episd_mst.cbsn_cd
+			 , (select code_mst.cd_nm from co_code_mst code_mst where code_mst.cd = episd_mst.cbsn_cd and code_mst.cd_id = 'CBSN_CD') cbsn_cd_nm
+			 , prcs_mst.ctgry_cd
+			 , (select GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = prcs_mst.ctgry_cd) AND rht_val <![CDATA[>=]]> (SELECT rht_val FROM co_code_mst WHERE cd = prcs_mst.ctgry_cd) AND dpth <![CDATA[<]]> 4 AND dpth> 1) ctgry_cd_nm
+			 , (select GROUP_CONCAT(name SEPARATOR ', ') FROM cp_isttr_mst WHERE exists( SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq=episd_mst.edctn_seq AND episd_year=episd_mst.episd_year AND episd_ord=episd_mst.episd_ord)) isttr_nm
+			 , (select count(*) from ex_exam_qstn_dtl WHERE exam_seq = episd_mst.exam_seq) qstn_cnt
+			 , (select count(*) from ep_edctn_exam_ptcpt_mst WHERE ptcpt_seq = ptcpt_mst.ptcpt_seq AND exam_seq = episd_mst.exam_seq) ptcpt_cnt
+			 , (SELECT smmry_cntn FROM ex_exam_mst WHERE exam_seq = episd_mst.exam_seq) smmry_cntn
+		FROM ep_edctn_ptcpt_mst ptcpt_mst JOIN ed_edctn_episd_mst episd_mst
+											   ON episd_mst.edctn_seq = ptcpt_mst.edctn_seq AND episd_mst.episd_year = ptcpt_mst.episd_year AND episd_mst.episd_ord = ptcpt_mst.episd_ord
+										  JOIN ed_edctn_prcs_mst prcs_mst ON prcs_mst.edctn_seq = ptcpt_mst.edctn_seq
+		WHERE ptcpt_mst.ptcpt_seq = #{ptcptSeq} AND ptcpt_mst.mem_seq = #{memSeq} and ptcpt_mst.stts_cd = 'R' AND prcs_mst.jdgmt_yn = 'Y'
+		  AND NOW() between episd_mst.exam_strt_dtm and episd_mst.exam_end_dtm
+	</select>
+
+	<!--
+         쿼리명 : EXGExamMapper.insertExamPtcptMst
+         설  명 : 교육 시험 참여 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<insert id="insertExamPtcptMst" parameterType="EXGExamEdctnPtcptRspnMst">
+		insert /* EXGExamMapper.insertExamMst */ into ep_edctn_exam_ptcpt_mst
+		(
+			  exam_ptcpt_seq
+			, ptcpt_seq
+			, exam_seq
+			, mem_seq
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		(
+			  #{examPtcptSeq}
+			, #{ptcptSeq}
+			, #{examSeq}
+			, #{memSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+         쿼리명 : EXGExamMapper.insertExamPtcptSbjctRspnDtl
+         설  명 : 교육 시험 주관식 답변 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<insert id="insertExamPtcptSbjctRspnDtl" parameterType="EXGExamEdctnPtcptRspnMst">
+		insert /* EXGExamMapper.insertExamPtcptSbjctRspnDtl */ into ep_edctn_sbjct_rspn_dtl
+		(
+			  exam_ptcpt_seq
+			, ptcpt_seq
+			, exam_seq
+			, qstn_seq
+			, sbjct_rply
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		<foreach collection="sbjctList" item="list" index="index" separator=" , " open="" close=";">
+			(
+			  #{examPtcptSeq}
+			, #{ptcptSeq}
+			, #{examSeq}
+			, #{list.qstnSeq}
+			, #{list.sbjctRply}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+		</foreach>
+	</insert>
+
+	<!--
+         쿼리명 : EXGExamMapper.insertExamPtcptMtlccRspnDtl
+         설  명 : 교육 시험 객관식 답변 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<insert id="insertExamPtcptMtlccRspnDtl" parameterType="EXGExamEdctnPtcptRspnMst">
+		insert /* EXGExamMapper.insertExamPtcptMtlccRspnDtl */ into ep_edctn_mtlcc_rspn_dtl
+		(
+			 exam_ptcpt_seq
+			, ptcpt_seq
+			, exam_seq
+			, qstn_seq
+			, exmpl_seq
+			, cansw_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		<foreach collection="mtlccList" item="list" index="index" separator=" , " open="" close=";">
+		(
+			  #{examPtcptSeq}
+			, #{ptcptSeq}
+			, #{examSeq}
+			, #{list.qstnSeq}
+			, #{list.exmplSeq}
+			, #{list.canswYn}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+		</foreach>
+	</insert>
+
+	<!--
+         쿼리명 : EXGExamMapper.updateEdctnPtcptScord
+         설  명 : 교육 참여 점수 변경
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<update id="updateEdctnPtcptScord" parameterType="EXGExamEdctnPtcptRspnMst">
+		update /* EXGExamMapper.updateEdctnPtcptScord */ ep_edctn_ptcpt_mst
+		set
+			exam_score = #{examScore}
+		where
+			ptcpt_seq = #{ptcptSeq}
 	</update>
 
 </mapper>

@@ -324,11 +324,9 @@ var cmmCtrl = (function(){
 	var fn_ajax_error = function(data, status, xhr)
 	{
 		var loginFlag = true, statusCode = data.status;
-
 		if (statusCode == 401 || statusCode == 403 || statusCode == 406)
 		{
 			alert(msgCtrl.getMsg("fail.http.status.C" + statusCode));
-
 			if (statusCode != 403)
 			{
 				loginFlag = false;
@@ -364,7 +362,7 @@ var cmmCtrl = (function(){
 
 		if (!loginFlag)
 		{
-			location.href = "/mngwsercgateway/login";
+			location.href = "/";
 		}
 	};
 
@@ -951,6 +949,7 @@ var cmmCtrl = (function(){
 		{
 			obj.value = obj.value.slice(0, maxLength);
 		}
+		return obj.value.length;
 	};
 
 	/* Check Continuous String */
