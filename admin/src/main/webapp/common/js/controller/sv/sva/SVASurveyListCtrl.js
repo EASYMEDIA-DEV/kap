@@ -117,6 +117,32 @@ define(["ezCtrl"], function(ezCtrl) {
                         location.href = "./write?" + $formObj.serialize();
                     }
                 }
+            },
+
+            // 레이어팝업 버튼 클릭시
+            srvBtnChoice : {
+                event : {
+                    click : function() {
+                        var clickObj = {};
+                        var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
+                        if(choiceCnt > 1){
+                            alert(msgCtrl.getMsg("fail.sv.sva.notSrchServey1"));
+                        }else{
+                            clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();//설문 조사 번호
+                            var typeNm = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find("td").eq(2).text());//설문유형
+                            var titl = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find("td").eq(3).text());//제목
+
+                            clickObj.typeNm = typeNm;
+                            clickObj.titl = titl;
+
+                            ctrl.obj.trigger("choice", [clickObj])
+                            ctrl.obj.find(".close").click();
+                        }
+
+
+
+                    }
+                }
             }
         },
         immediately : function() {

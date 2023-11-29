@@ -310,6 +310,11 @@ var msgCtrl = (function(){
 					notSrchMember : "부품사 회원을 선택해주세요.",
 					notSrchMember1 : "부품사 회원을 1명만 선택해주세요."
 				}
+			},
+			sv : {
+				sva : {
+					notSrchServey1 : "부품사 회원을 1명만 선택해주세요."
+				}
 			}
 		}
 	};

@@ -395,6 +395,7 @@
 		     , srv_strt_dtm
 		     , srv_end_dtm
 		     , srv_nm
+		     , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = AA.type_cd) AS TYPE_NM
 		     , srv_mem_cnt
 		     , edctn_mem_cnt
 			 , exam_seq
@@ -444,6 +445,7 @@
 				   , a.pic_tel_no
 				   , a.place_seq
 				   , a.srv_seq
+		           , (select type_cd from sv_mst where srv_seq = a.srv_seq) as type_cd
 				   , a.srv_strt_dtm
 				   , a.srv_end_dtm
 		           , (select titl from sv_mst where srv_seq = a.srv_seq) as srv_nm

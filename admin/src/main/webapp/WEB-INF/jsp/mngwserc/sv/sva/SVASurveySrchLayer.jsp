@@ -26,7 +26,7 @@
                         <jsp:param name="srchText" value="기간검색" />
                         <jsp:param name="srchOption" value="등록일,수정일" />
                     </jsp:include>
-                    <div id="selectBoxArea"></div>
+
                     <fieldset>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">노출여부</label>
@@ -75,7 +75,7 @@
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+                            <em class="ion-play mr-sm"></em>설문 조사관리 목록 (총 <span id="listContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
@@ -117,7 +117,7 @@
                 </div>
                 <div class="modal-footer row">
                     <div class="text-center">
-                        <button type="button" class="btn btn-success down mt">선택</button>
+                        <button type="button" class="btn btn-success down mt srvBtnChoice">선택</button>
                     </div>
                 </div>
                 <!--리스트 종료 -->

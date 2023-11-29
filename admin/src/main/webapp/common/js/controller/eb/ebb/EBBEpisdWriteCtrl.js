@@ -242,15 +242,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	//평가여부 N일경우 평가항목 숨김
 	if("N" == jdgmtYn){
 		$(".jdgmtYn").css("display", "none");
-		/*$(".jdgmtYn").find("input:hidden").each(function(){
+		$(".jdgmtYn").find("input:hidden").each(function(){
 			$(this).addClass("notRequired");
-		});*/
+		});
 		$("#examSeq").prop("disabled", true);
 	}else{
 		$(".jdgmtYn").css("display", "");
-		/*$(".jdgmtYn").find("input:hidden").each(function(){
+		$(".jdgmtYn").find("input:hidden").each(function(){
 			$(this).removeClass("notRequired");
-		});*/
+		});
 		$("#examSeq").prop("disabled", false);
 	}
 	}
@@ -400,6 +400,39 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			},
 			//설문 검색
+			eduSrvSearch : {
+				event : {
+					click : function(){
+
+
+						$(".svaSurveySrchLayer").one('show.bs.modal', function() {
+
+							var modal = $(this);
+							modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+						}).one('hidden.bs.modal', function() {
+							// Remove class for soft backdrop (if not will affect future modals)
+						}).one('choice', function(data, param) {
+							var obj = param;
+							$("#listContainer3").find("td").eq(0).text(obj.typeNm);
+							$("#listContainer3").find("td").eq(1).text(obj.titl);
+							$("#srvSeq").val(obj.seq);
+						}).modal();
+
+
+
+
+
+
+
+
+
+					}
+				}
+			},
+
+
+
 
 			//시험 검색
 			eduExamSearch : {
@@ -754,8 +787,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
 						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
 
-						actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
-						actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
+						//시험안하면 날짜 안넣어줌 에러남
+						if($("#examStrtDtm").attr("class").indexOf("notRequired") < 0){
+							actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
+							actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
+						}
+						
 
 
 
