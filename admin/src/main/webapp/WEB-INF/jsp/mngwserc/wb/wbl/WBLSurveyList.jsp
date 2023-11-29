@@ -28,9 +28,9 @@
                                 <select class="form-control input-sm" name="year">
                                     <option value="">선택</option>
                                     <c:set var="startYear" value="2023"/>
-                                        <c:forEach begin="0" end="10" var="year" step="1">
-                                            <option value="${startYear+year}" <c:if test="${rtnData.year eq startYear+year}">selected</c:if>>${startYear+year}년</option>
-                                        </c:forEach>
+                                    <c:forEach begin="0" end="10" var="year" step="1">
+                                        <option value="${startYear+year}" <c:if test="${rtnData.year eq startYear+year}">selected</c:if>>${startYear+year}년</option>
+                                    </c:forEach>
                                 </select>
                             </div>
                             <div class="col-sm-4">
@@ -53,17 +53,35 @@
                             <input type="checkbox" class="checkboxAll" />
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
+                        <c:forEach var="cdList" items="${cdDtlList.PTCPT_CD}" varStatus="status">
+                            <label class="checkbox-inline c-checkbox">
+                                <input type="checkbox" class="checkboxSingle" data-name="ptcptCdList" value="${cdList.cd}"  <c:if test="${fn:contains(rtnData.ptcptCdList, cdList.cd)}">checked</c:if>/>
+                                <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                            </label>
+                        </c:forEach>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">완료여부</label>
+                    <div class="col-sm-5">
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="cmpltnYnList" value="Y"  <c:if test="${fn:contains(rtnData.cmpltnYnList, 'Y')}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> 참여
+                            <input type="checkbox" class="checkboxAll" />
+                            <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="cmpltnYnList" value="N"  <c:if test="${fn:contains(rtnData.cmpltnYnList, 'N')}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> 미참여
+                            <input type="checkbox" class="checkboxSingle" data-name="cmpltnYnList" value="Y"  <c:if test="${fn:contains(rtnData.cmpltnYnList, 'E')}">checked</c:if> />
+                            <span class="ion-checkmark-round"></span> 완료
+                        </label>
+                        <label class="checkbox-inline c-checkbox">
+                            <input type="checkbox" class="checkboxSingle" data-name="cmpltnYnList" value="Y"  <c:if test="${fn:contains(rtnData.cmpltnYnList, 'Y')}">checked</c:if> />
+                            <span class="ion-checkmark-round"></span> 미완료
                         </label>
                     </div>
                 </div>
             </fieldset>
+
             <fieldset class="last-child">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">검색키워드</label>
@@ -107,6 +125,7 @@
                 <div class="pull-right mr-sm">
                     <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete">선택삭제</button>
                     <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
+                    <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
                 </div>
             </div>
             <!--리스트 시작 -->
@@ -145,7 +164,47 @@
                 <!-- 페이징 버튼 -->
                 <div id="pagingContainer"/>
             </div>
+            <div class="pull-right mr-sm">
+                <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnEpisd">회차관리</button>
+                <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelupload">대상 엑셀 업로드</button>
+            </div>
             <!--리스트 종료 -->
         </form>
+    </div>
+</div>
+
+
+<%--<jsp:include page="/WEB-INF/jsp/mngwserc/sv/sva/SVASurveySrchLayer.jsp">--%>
+<%--    <jsp:param name="typeCd" value="WIN" />--%>
+<%--</jsp:include>--%>
+
+
+<jsp:include page="/WEB-INF/jsp/mngwserc/wb/wbl/WBLEpisdLayer.jsp"/>
+<jsp:include page="/WEB-INF/jsp/mngwserc/wb/wbl/WBLEpisdSurveyLayer.jsp"/>
+
+<div class="modal fade excel-down" tabindex="-1" role="dialog" >
+    <div class="modal-dialog modal-lg modal-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >엑셀 다운로드
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group ">
+                    <p><em class="ion-play mr-sm"></em>사유입력</p>
+                    <div class="col-sm-12">
+                        <textarea maxlength="30" class="col-sm-12 pv" style="resize: vertical;" rows="10" placeholder="사유를 입력하세요." id="rsn" title="사유" oninput="cmmCtrl.checkMaxlength(this);"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer row">
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary down mt">다운로드</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

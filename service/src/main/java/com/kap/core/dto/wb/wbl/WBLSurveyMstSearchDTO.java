@@ -39,12 +39,6 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "순번", example = "숫자")
     private Integer cxstnSrvSeq;
 
-    @Schema(title = "연도")
-    private String year;
-
-    @Schema(title = "회차", example = "숫자")
-    private Integer episd;
-
     @Schema(title = "1차 부품사")
     private String partCmpnNm1;
 
@@ -57,8 +51,11 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "2차 부품사 코드")
     private String partCmpnCd2;
 
-    @Schema(title = "참여 여부")
+    @Schema(title = "완료 여부")
     private String cmpltnYn;
+
+    @Schema(title = "참여 코드")
+    private String ptcptCd;
 
     @Schema(title = "참여 완료일시")
     private String ptcptCmpltnDtm;
@@ -67,5 +64,11 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     private List<WBLSurveyMstSearchDTO> list;
     @Schema(title = "검색 사용 여부 리스트")
     private List<String> cmpltnYnList;
+    private List<String> ptcptCdList;
+
+    @Schema(title = "연도")
+    private String year;
+    @Schema(title = "회차", example = "숫자")
+    private Integer episd;
 
 }

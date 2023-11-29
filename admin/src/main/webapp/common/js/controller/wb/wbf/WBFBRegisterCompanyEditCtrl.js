@@ -4,7 +4,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     // set controller name
     var exports = {
-        controller: "controller/wb/wbf/WBFBRegisterCompanyWriteCtrl"
+        controller: "controller/wb/wbf/WBFBRegisterCompanyEditCtrl"
     };
 
     // get controller object
@@ -238,10 +238,10 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         classname : {
             checkboxSingle : {
                 event : {
-                    click : function() {
-                        $modalFormObj.find('tbody').find('input[type=checkbox]').prop('checked',false);
-                        $(this).prop('checked',true);
-                    }
+                  click : function() {
+                      $modalFormObj.find('tbody').find('input[type=checkbox]').prop('checked',false);
+                      $(this).prop('checked',true);
+                  }
                 },
             },
             //페이징 처리
@@ -298,6 +298,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         if($formObj.find(".dropzone").size() > 0)
                         {
                             cmmCtrl.fileFrmAjax(function(data){
+                                console.log(data.respCnt);
                                 //콜백함수. 페이지 이동
                                 if(data.respCnt > 0){
                                     alert(msgCtrl.getMsg("success.ins"));
@@ -308,6 +309,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         else
                         {
                             cmmCtrl.frmAjax(function(data){
+                                console.log(data.respCnt);
+
                                 if(data.respCnt > 0){
                                     alert(msgCtrl.getMsg("success.ins"));
                                     location.replace("./list");

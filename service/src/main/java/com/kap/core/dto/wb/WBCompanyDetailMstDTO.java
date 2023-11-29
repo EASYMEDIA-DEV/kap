@@ -31,6 +31,9 @@ import java.util.List;
 public class WBCompanyDetailMstDTO extends BaseDTO {
 
     @Schema(title = "업종순번")
+    private String bsnmNo;
+
+    @Schema(title = "업종순번")
     private int cbsnSeq;
 
     @Schema(title = "명")
