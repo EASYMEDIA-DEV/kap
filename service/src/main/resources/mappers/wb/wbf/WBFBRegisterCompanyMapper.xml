@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.wb.wbf.WBFBRegisterCompanyMapper">
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getRegisterCompanyList
+         설  명 : List Data Select
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getRegisterCompanyList" parameterType="WBFBRegisterSearchDTO" resultType="WBFBRegisterSearchDTO">
+        SELECT /*WBFBRegisterCompanyMapper.getRegisterCompanyList*/
+            YEAR(A.year) as year, A.episd,
+            B.appctn_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm,
+            C.*,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm
+        FROM
+        (
+            SELECT * FROM cx_episd_mst
+            WHERE bsn_cd = #{bsnCd}
+        ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+        INNER JOIN
+        (
+            SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
+            FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+        ) C /* 회원-회사 JOIN 테이블 */
+        ON C.mem_seq = B.mem_seq
+        ORDER BY year DESC, episd DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getRegisterCompanyCount
+         설  명 : List Data Count
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getRegisterCompanyCount" parameterType="WBFBRegisterSearchDTO" resultType="java.lang.Integer">
+        SELECT /*WBFBRegisterCompanyMapper.getRegisterCompanyList*/
+            count(*)
+        FROM
+            (
+            SELECT * FROM cx_episd_mst
+            WHERE bsn_cd = #{bsnCd}
+        ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getRegisterCompanySubList
+         설  명 : List Data Select Sub - 상생 진행 상세
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getRegisterCompanySubList" parameterType="WBFBRegisterSearchDTO" resultType="WBFBRegisterSearchDTO">
+        SELECT /*WBFBRegisterCompanyMapper.getRegisterCompanySubList*/
+               A.rsume_stts_cd, (SELECT cd_nm FROM co_code_mst WHERE cd = A.rsume_stts_cd) as rsume_stts_cd_nm,
+               A.mng_stts_cd, (SELECT cd_nm FROM co_code_mst WHERE cd = A.mng_stts_cd) as mng_stts_cd_nm,
+               A.appctn_stts_chng_dtm, A.mng_stts_chng_dtm, A.mod_id, A.mod_dtm
+        FROM (SELECT * FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{appctnSeq}) A
+        ORDER BY A.rsume_ord DESC LIMIT 1;
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getRegisterCompanyDetailSubList
+         설  명 : List Data Select Sub - 상생 진행 상세
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getRegisterCompanyDetailSubList" parameterType="WBFBRegisterSearchDTO">
+        SELECT /*WBFBRegisterCompanyMapper.getRegisterCompanyDetailSubList*/
+            A.rsume_stts_cd, (SELECT cd_nm FROM co_code_mst WHERE cd = A.rsume_stts_cd) as rsume_stts_nm,
+            A.appctn_stts_chng_dtm, A.mng_stts_chng_dtm, A.mod_id, A.mod_dtm
+        FROM (SELECT * FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{appctnSeq}) A
+        LEFT JOIN cx_appctn_rsume_task_dtl B
+        ON A.rsume_seq = B.rsume_seq AND A.rsume_ord = B.rsume_ord
+        ORDER BY A.rsume_ord DESC LIMIT 1;
+    </select>
+
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getOptYearList
+         설  명 : 연도 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getOptYearList" parameterType="WBFBRegisterSearchDTO">
+        SELECT DISTINCT YEAR(year)
+        FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
+        ORDER BY year ASC
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getOptEpisdList
+         설  명 : 연도 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getOptEpisdList" parameterType="WBFBRegisterSearchDTO">
+        SELECT DISTINCT episd
+        FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
+        AND year = #{year}
+        ORDER BY episd_seq DESC
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.selRoundYear
+         설  명 : 연도/회차의 사업 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getOptnList" parameterType="WBFBRegisterSearchDTO" resultType="WBRoundOptnMstDTO">
+        SELECT bsn_optn_seq, optn_cd, optn_nm, optn_ord
+        FROM cx_episd_bsn_optn_dtl
+        WHERE episd_seq = #{episdSeq}
+        AND optn_cd = #{optnCd}
+        ORDER BY optn_cd, optn_ord;
+    </select>
+
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getEpisdSeq
+         설  명 : 연도 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getEpisdSeq" parameterType="WBFBRegisterSearchDTO" resultType="java.lang.Integer">
+        SELECT episd_seq
+        FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
+        AND year = #{year}
+        AND episd = #{episd}
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.putAppctnMst
+         설  명 : 회차신청 마스터 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <insert id="putAppctnMst" parameterType="wBFBRegisterDTO" >
+        INSERT /* WBFBRegisterCompanyMapper.putAppctnMst */ INTO cx_appctn_mst
+        (
+            appctn_seq,
+            episd_seq,
+            mem_seq,
+            appctn_bsnm_no,
+            sbrdn_bsnm_no,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+        (
+            #{appctnSeq},
+            #{episdSeq},
+            #{memSeq},
+            #{bsnmNo},
+            #{sbrdnBsnmNo},
+            #{regId},
+            #{regIp},
+            now()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.putAppctnFileDtl
+         설  명 : 회차신청 마스터 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <insert id="putAppctnFileDtl" parameterType="wBFBRegisterDTO" >
+        INSERT /* WBFBRegisterCompanyMapper.putAppctnFileDtl */ INTO cx_appctn_file_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            file_cd,
+            file_seq,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+        (
+            #{rsumeSeq},
+            #{rsumeOrd},
+            #{fileCd},
+            #{fileSeq},
+            #{regId},
+            #{regIp},
+            now()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.putAppctnRsumeDtl
+         설  명 : 회차신청 상세 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <insert id="putAppctnRsumeDtl" parameterType="wBFBRegisterDTO" >
+        INSERT /* WBFBRegisterCompanyMapper.putAppctnRsumeDtl */ INTO cx_appctn_rsume_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            appctn_seq,
+            rsume_stts_cd,
+            appctn_stts_cd,
+            appctn_stts_chng_dtm,
+            mng_stts_cd,
+            mng_stts_chng_dtm,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+        (
+            #{rsumeSeq},
+            #{rsumeOrd},
+            #{appctnSeq},
+            #{rsumeSttsCd},
+            #{appctnSttsCd},
+            now(),
+            #{mngSttsCd},
+            now(),
+            #{regId},
+            #{regIp},
+            now()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl
+         설  명 : 회차신청 스마트 상세 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <insert id="putAppctnRsumeTaskDtl" parameterType="wBFBRegisterDTO"  >
+        INSERT /* WBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl */ INTO cx_appctn_rsume_task_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            task_cd,
+            bsn_type_cd,
+            smtfn_prsnt_cd,
+            smtfn_trgt_cd,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+        (
+            #{rsumeSeq},
+            1,
+            #{taskCd},
+            #{bsnTypeCd},
+            #{smtfnPrsntCd},
+            #{smtfnTrgtCd},
+            #{regId},
+            #{regIp},
+            now()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.updCmpnCbsnMst
+         설  명 : 회사 마스터 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <update id="updCmpnCbsnMst" parameterType="wBFBRegisterDTO">
+        UPDATE /* WBFBRegisterCompanyMapper.updCmpnCbsnMst */ cp_cmpn_mst
+        SET
+            ctgry_cd = #{ctgryCd},
+            size_cd = #{sizeCd},
+            stbsm_dt = #{stbsmDt},
+            tel_no = #{compTel},
+            zipcode = #{zipCode},
+            bsc_addr = #{bscAddr},
+            dtl_addr = #{dtlAddr},
+            sls_pmt = #{slsPmt},
+            sls_year = #{slsYear},
+            mple_cnt = #{mpleCnt},
+            mjr_prdct_1 = #{mjrPrdct1},
+            mjr_prdct_2 = #{mjrPrdct2},
+            mjr_prdct_3 = #{mjrPrdct3},
+            qlty_5_star_cd = #{qlty5starCd},
+            qlty_5_star_year = #{qlty5starYear},
+            pay_5_star_cd = #{pay5starCd},
+            pay_5_star_year = #{pay5starYear},
+            tchlg_5_star_cd = #{tchlg5starCd},
+            tchlg_5_star_year = #{tchlg5starYear},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE bsnm_no = #{bsnmNo}
+    </update>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.updCoMemMst
+         설  명 : 회원 마스터 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <update id="updCoMemMst" parameterType="wBFBRegisterDTO">
+        UPDATE /*WBFBRegisterCompanyMapper.updCoMemMst*/ co_mem_mst
+        SET
+            tel_no = #{telNo},
+            dept_cd = #{deptCd},
+            dept_dtl_nm = #{deptDtlNm},
+            pstn_cd = #{pstnCd},
+            pstn_nm = #{pstnNm},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE mem_seq = #{memSeq}
+        AND id = #{id}
+    </update>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.updCmpnCbsnDtl
+         설  명 : 회사 상세 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <update id="updCmpnCbsnDtl" parameterType="WBCompanyDetailMstDTO">
+        UPDATE /* WBFBRegisterCompanyMapper.updCmpnCbsnDtl */ cp_cmpn_cbsn_dtl
+        SET
+            nm = #{nm},
+            score = #{score},
+            year = #{year},
+            crtfn_cmpn_nm = #{crtfnCmpnNm},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE bsnm_no = #{bsnmNo}
+        AND cbsn_seq = #{cbsnSeq}
+    </update>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.insCmpnCbsnDtl
+         설  명 : 회사 상세 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <insert id="insCmpnCbsnDtl" parameterType="WBCompanyDetailMstDTO">
+        INSET /* WBFBRegisterCompanyMapper.insCmpnCbsnDtl */ cp_cmpn_cbsn_dtl
+        (
+            bsnm_no,
+            cbsn_seq,
+            nm,
+            score,
+            year,
+            crtfn_cmpn_nm,
+            reg_id,
+            reg_ip,
+            reg_dtm,
+        )
+        VALUES
+        (
+            #{bsnCd},
+            #{cbsnSeq},
+            #{nm},
+            #{score},
+            #{year},
+            #{crtfnCmpnNm},
+            #{regId},
+            #{regIp},
+            now()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : WBFASmartRoundMapper.selectListwhereSql
+         설  명 : 게시판 리스트 검색 옵션
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <sql id="selectListwhereSql">
+        <where>
+
+            <if test="carbonDate != null and carbonDate != ''.toString() ">
+                <choose>
+                    <when test="carbonDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                            ACCS_STRT_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            ACCS_END_DTM BETWEEN STR_TO_DATE(#{endDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            STR_TO_DATE(#{strtDt}, '%Y-%m-%d') BETWEEN ACCS_STRT_DTM AND ACCS_END_DTM
+                            OR
+                            STR_TO_DATE(#{endDt}, '%Y-%m-%d') BETWEEN ACCS_STRT_DTM AND ACCS_END_DTM
+                            )
+                        </if>
+                    </when>
+                    <when test="carbonDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                            BSN_STRT_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            BSN_END_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            STR_TO_DATE(#{strtDt}, '%Y-%m-%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
+                            OR
+                            STR_TO_DATE(#{endDt}, '%Y-%m-%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
+                            )
+                        </if>
+                    </when>
+                </choose>
+            </if>
+
+            <if test="ctgryCdList != null and ctgryCdList.size() > 0">
+                AND (
+                <foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="" close="" separator=" or ">
+                    A.DATE_STATE_CD = #{ctgryCdList}
+                </foreach>
+                )
+            </if>
+            <if test="selYear != null and selYear != ''.toString()">
+                AND (
+
+                )
+            </if>
+            <if test="selEpisd != null and selEpisd != ''.toString()">
+                AND (
+
+                )
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 2">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 3">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 4">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 5">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <otherwise>
+                        AND (
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        OR
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+</mapper>
+
+
+
