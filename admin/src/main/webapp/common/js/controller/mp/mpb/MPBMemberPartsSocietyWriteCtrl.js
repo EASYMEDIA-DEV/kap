@@ -228,7 +228,7 @@ var exports = {
                             return ;
                         } else {
                             jQuery.ajax({
-                                url : "/mngwserc/nice/comp-chk",
+                                url : "/mngwserc/nice/my-chk",
                                 type : "post",
                                 data :
                                     {
@@ -236,44 +236,17 @@ var exports = {
                                     },
                                 success : function(data)
                                 {
-                                    console.log(data);
+                                    const { form } = document;
+                                    const option = `status=no, menubar=no, toolbar=no, resizable=no, width=500, height=600`;
+                                    document.getElementById('enc_data').value = data.enc_data; // enc_data 값을 설정
+                                    document.getElementById('integrity_value').value = data.integrity_value; // integrity_value 값을 설정
+                                    document.getElementById('token_version_id').value = data.token_version_id; // integrity_value 값을 설정
 
-                                    var form = document.createElement('form');
-                                    form.setAttribute('method', 'post');
-                                    form.setAttribute('action', "https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb");
+                                    window.open('', 'nicePopup', option);
 
-                                    // 필요한 input 요소 등을 폼에 추가
-                                    var inputField1 = document.createElement('input');
-                                    inputField1.setAttribute('type', 'hidden');
-                                    inputField1.setAttribute('id', 'm');
-                                    inputField1.setAttribute('name', 'm');
-                                    inputField1.setAttribute('value', 'service');
-                                    form.appendChild(inputField1);
+                                    form.target = 'nicePopup';
+                                    document.getElementById('form').submit();
 
-                                    var inputField2 = document.createElement('input');
-                                    inputField2.setAttribute('type', 'hidden');
-                                    inputField2.setAttribute('id', 'token_version_id');
-                                    inputField2.setAttribute('name', 'token_version_id');
-                                    inputField2.setAttribute('value', data.token_version_id);
-                                    form.appendChild(inputField2);
-
-                                    var inputField3 = document.createElement('input');
-                                    inputField3.setAttribute('type', 'hidden');
-                                    inputField3.setAttribute('id', 'enc_data');
-                                    inputField3.setAttribute('name', 'enc_data');
-                                    inputField3.setAttribute('value', data.enc_data);
-
-                                    form.appendChild(inputField3);
-
-                                    var inputField4 = document.createElement('input');
-                                    inputField4.setAttribute('type', 'hidden');
-                                    inputField4.setAttribute('id', 'integrity_value');
-                                    inputField4.setAttribute('name', 'integrity_value');
-                                    inputField4.setAttribute('value', data.integrity_value);
-                                    form.appendChild(inputField4);
-
-                                    document.body.appendChild(form);
-                                    form.submit();
                                 },
                                 error : function(xhr, ajaxSettings, thrownError)
                                 {
