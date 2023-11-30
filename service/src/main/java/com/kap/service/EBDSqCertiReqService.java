@@ -3,6 +3,7 @@ package com.kap.service;
 import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
+import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
 
@@ -50,4 +51,9 @@ public interface EBDSqCertiReqService {
      * 수정
      */
     public int updateConfirmInfo(COUserCmpnDto cOUserCmpnDto, EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * 만료일시 기준 몇개월전 알림 발송
+     */
+    public List<EBDSqCertiListDTO> getSqValidEndEmailList(int validMonth) throws Exception;
 }

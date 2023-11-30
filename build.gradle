@@ -114,6 +114,10 @@ project(":admin") {
         implementation "org.springdoc:springdoc-openapi-ui:1.6.2"
         implementation "org.springdoc:springdoc-openapi-security:1.6.2"
 
+        /*ScheduleLock*/
+        implementation "net.javacrumbs.shedlock:shedlock-spring:4.46.0"
+        implementation "net.javacrumbs.shedlock:shedlock-provider-jdbc-template:4.46.0"
+
 
         implementation project(':common')
         implementation project(':error')

@@ -291,4 +291,5 @@ public class EBEExamServiceImpl implements EBEExamService {
         eBEExamMapper.updateEdctnPtcptScord(eXGExamEdctnPtcptRspnMst);
         return actCnt;
     }
+
 }
