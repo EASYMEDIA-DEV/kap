@@ -7,21 +7,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.*;
 import com.kap.core.dto.MPAUserDto;
-import com.kap.core.dto.co.COCNiceServiceDto;
-import com.kap.core.dto.co.COCReqEncDto;
-import com.kap.core.dto.co.COCompApiResDto;
+import com.kap.core.dto.co.*;
+
 import com.kap.core.utility.COClassUtil;
 import com.kap.service.COCommService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.dao.COCommMapper;
 import com.kap.service.dao.mp.MPAUserMapper;
 
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.util.Base64Util;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Base64Utils;
 import org.springframework.util.LinkedMultiValueMap;
@@ -32,9 +32,11 @@ import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -76,12 +78,6 @@ public class COCommServiceImpl implements COCommService {
     private String encProductId;
 
 
-
-    private RestTemplate restTemplate;
-
-    private final ObjectMapper objectMapper;
-
-    private String hmac_key = "DFLGKG=";
     /**
      * 신청자, 부품사 정보 조회
      */
@@ -137,38 +133,52 @@ public class COCommServiceImpl implements COCommService {
     }
 
     @Override
-    public COCNiceServiceDto niceChk() throws Exception {
+    public COCNiceServiceDto idnttvrfct(HttpServletRequest request, COCNiceReqEncDto cocNiceReqEncDto) throws Exception {
         String niceApiAccessToken = getNiceApiAccessToken();
         if (niceApiAccessToken != null) {
             String[] niceEncToken = getNiceEncToken(niceApiAccessToken);
-            if(niceEncToken.length !=0){
+            if (niceEncToken.length != 0) {
                 String keyIv = setDchngEnc(niceEncToken[0]); //키생성
-                String reqData = newCocReqEncDto(niceEncToken[1]); //요청 데이터 생성
+                String reqData = newCocReqEncDto(niceEncToken[1], request ,cocNiceReqEncDto); //요청 데이터 생성
                 String encData = setJSONDchngEnc(reqData, keyIv); //요청 데이터 암호화
-                byte[] bytes = setHMacChk(keyIv.substring(0, 32).getBytes(), encData.getBytes());
-                String integrity_value = Base64.getEncoder().encodeToString(bytes);
+
+                HttpSession session = request.getSession();
+                session.setAttribute("key", keyIv);
+                session.setMaxInactiveInterval(60*60);
+                String integrity_value = Base64.getEncoder().encodeToString(setHMacChk(keyIv.substring(0, 32).getBytes(), encData.getBytes()));
 
                 COCNiceServiceDto cocNiceServiceDto = new COCNiceServiceDto(niceEncToken[2], encData, integrity_value);
 
                 return cocNiceServiceDto;
             }
-
         }
         return null;
     }
 
+
+    /**
+     * 암호화 토큰 생성
+     * @param accessToken
+     * @return
+     * @throws URISyntaxException
+     * @throws JsonProcessingException
+     */
     private String[] getNiceEncToken(String accessToken) throws URISyntaxException, JsonProcessingException {
         SecureRandom secureRandom = new SecureRandom();
         StringBuilder randomNumber = new StringBuilder();
         String[] returnVal = new String[3];
+
         // 30자리의 랜덤 숫자 생성
         for (int i = 0; i < 30; i++) {
             int digit = secureRandom.nextInt(10); // 0부터 9까지의 랜덤 숫자
             randomNumber.append(digit);
         }
 
-        String plainCredentials = accessToken + ":" +  (new Date().getTime()/1000)+":"+clientId;
+        Date currentDate = new Date();
+        long current_timestamp = currentDate.getTime()/1000;
+        String plainCredentials = accessToken + ":" +  current_timestamp+":"+clientId;
         String base64Credentials = Base64.getEncoder().encodeToString(plainCredentials.getBytes());
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "bearer " + base64Credentials);
@@ -186,7 +196,6 @@ public class COCommServiceImpl implements COCommService {
         dataBody.put("req_no", randomNumber.toString());
         dataBody.put("enc_mode", "1");
 
-
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("dataBody", dataBody);
         ObjectMapper objectMapper = new ObjectMapper();
@@ -202,32 +211,19 @@ public class COCommServiceImpl implements COCommService {
         RestTemplate restTemplate = new RestTemplate();
         URI url = new URI(niceApiUrl+"/digital/niceid/api/v1.0/common/crypto/token");
 
-        ResponseEntity<Map> response = restTemplate.postForEntity(url, stringHttpEntity, Map.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(url, stringHttpEntity, String.class);
 
         if (response.getStatusCode() == HttpStatus.OK) {
-            Map body = response.getBody();
-            String jsonData = body.get("dataBody").toString();
+            String json2 = response.getBody();
+            ObjectMapper objectMapperChange = new ObjectMapper();
+            JsonNode root = objectMapperChange.readTree(json2);
+            JsonNode dataBodyNode = root.path("dataBody");
+            String dataBodyJson = dataBodyNode.toString();
+            COCNiceResDto cocNiceResDto = objectMapperChange.readValue(dataBodyJson, COCNiceResDto.class);
 
-            String[] keyValuePairs = jsonData.split(", ");
-
-            String token_val = null;
-            String site_code = null;
-            String token_version_id = null;
-            for (String pair : keyValuePairs) {
-                String[] entry = pair.split("=");
-                if (entry[0].equals("token_val")) {
-                    token_val = entry[1];
-                }
-                if (entry[0].equals("site_code")) {
-                    site_code = entry[1];
-                }
-                if (entry[0].equals("token_version_id")) {
-                    token_version_id = entry[1];
-                }
-            }
-            returnVal[0] = formattedDateTime.trim() + randomNumber.toString().trim() + token_val.trim(); //대칭키
-            returnVal[1] = site_code; //사이트 코드
-            returnVal[2] = token_version_id; //버전
+            returnVal[0] = formattedDateTime.trim() + randomNumber.toString().trim() + cocNiceResDto.getToken_val().trim(); //대칭키
+            returnVal[1] = cocNiceResDto.getSite_code(); //사이트 코드
+            returnVal[2] = cocNiceResDto.getToken_version_id(); //버전
             return returnVal ;
         } else {
             log.info("access_token_status_x");
@@ -236,6 +232,12 @@ public class COCommServiceImpl implements COCommService {
         return null;
     }
 
+    /**
+     * 대칭키 생성 및 암호화
+     * @param dchngKey
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
     private String setDchngEnc(String dchngKey) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         md.update(dchngKey.getBytes());
@@ -244,18 +246,45 @@ public class COCommServiceImpl implements COCommService {
 
     }
 
-    private String newCocReqEncDto(String siteCode) {
-        COCReqEncDto cocReqEncDto = new COCReqEncDto();
-        cocReqEncDto.setRequestno("REQ2021123199");
-        cocReqEncDto.setReturnurl("https://localhost:9012/mngwserc/mp/mpb/list2");
-        cocReqEncDto.setSitecode(siteCode);
-        cocReqEncDto.setPopupyn("Y");
+    /**
+     * json데이터 생성
+     *
+     * @param siteCode
+     * @param request
+     * @return
+     */
+    private String newCocReqEncDto(String siteCode, HttpServletRequest request, COCNiceReqEncDto cocNiceReqEncDtoRe) {
+        COCNiceReqEncDto cocNiceReqEncDto = new COCNiceReqEncDto();
+        SecureRandom secureRandom = new SecureRandom();
+        Date now = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmsss");
+        String formattedDate = sdf.format(now);
+
+        StringBuilder randomNumber = new StringBuilder();
+        String[] returnVal = new String[3];
+
+        // 30자리의 랜덤 숫자 생성
+        for (int i = 0; i < 10; i++) {
+            int digit = secureRandom.nextInt(10); // 0부터 9까지의 랜덤 숫자
+            randomNumber.append(digit);
+        }
+
+        cocNiceReqEncDto.setRequestno("REQ" + formattedDate + randomNumber);
+        cocNiceReqEncDto.setReturnurl("https://localhost:9012/mngwserc/nice/my-idnttvrfct-confirm");
+        cocNiceReqEncDto.setSitecode(siteCode);
+        cocNiceReqEncDto.setMethodtype("post");
+        cocNiceReqEncDto.setReceivedata(cocNiceReqEncDtoRe.getReceivedata());
+        cocNiceReqEncDto.setPopupyn("Y");
+
+        HttpSession session = request.getSession();
+        session.setAttribute("requestno", cocNiceReqEncDto.getRequestno());
+        session.setMaxInactiveInterval(60*60);
+
         String json = null;
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         try {
-            json = objectMapper.writeValueAsString(cocReqEncDto);
-            System.out.println("DTO as JSON: " + json);
+            json = objectMapper.writeValueAsString(cocNiceReqEncDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -263,9 +292,17 @@ public class COCommServiceImpl implements COCommService {
         return json;
     }
 
+    /**
+     * json 데이터 암호화
+     * @param reqData
+     * @param keyIv
+     * @return
+     * @throws Exception
+     */
     private String setJSONDchngEnc(String reqData, String keyIv) throws Exception {
         String key = keyIv.substring(0, 16);
         String iv = keyIv.substring(keyIv.length() - 16);
+
         SecretKey secureKey = new SecretKeySpec(key.getBytes(), "AES");
         Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
         c.init(Cipher.ENCRYPT_MODE, secureKey, new IvParameterSpec(iv.getBytes()));
@@ -273,7 +310,12 @@ public class COCommServiceImpl implements COCommService {
         return Base64.getEncoder().encodeToString(encrypted);
     }
 
-
+    /**
+     * 데이터 무결성 값 생성
+     * @param secretKey
+     * @param message
+     * @return
+     */
     private byte[] setHMacChk(byte[] secretKey , byte[] message) {
         byte[] hmac256 = null;
         try {
@@ -288,6 +330,59 @@ public class COCommServiceImpl implements COCommService {
         }
     }
 
+    /**
+     * 나이스로 받아온 데이터 복호화 후 return
+     * @param params
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public COCNiceMyResDto idnttvrfctConfirm(String params , HttpServletRequest request) throws Exception {
+        /** decode **/
+        HttpSession session = request.getSession();
+        COCNiceMyResDto cocNiceMyResDto = decodeParams((String) session.getAttribute("key"), (String) session.getAttribute("requestno"), params);
+        session.removeAttribute("key");
+        session.removeAttribute("requestno");
+
+        return cocNiceMyResDto;
+    }
+
+    /**
+     * 나이스로 받아온 데이터 복호화 메소드
+     * @param keyIv
+     * @param requestno
+     * @param params
+     * @return
+     * @throws Exception
+     */
+    private COCNiceMyResDto decodeParams(String keyIv, String requestno, String params) throws Exception {
+        String key1 = keyIv.substring(0, 16);
+        String key2 = keyIv.substring(keyIv.length() - 16);
+
+        SecretKey secretKey = new SecretKeySpec(key1.getBytes(), "AES");
+        Cipher c = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        c.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(key2.getBytes()));
+        byte[] decode = Base64.getDecoder().decode(params);
+
+        String returnData = new String(c.doFinal(decode), "euc-kr");
+
+        ObjectMapper mapper = new ObjectMapper();
+        COCNiceMyResDto cocNiceMyResDto = mapper.readValue(returnData, COCNiceMyResDto.class);
+
+        if(!requestno.equals(cocNiceMyResDto.getRequestno())) {
+            log.info("requestno 가 일치 하지 않음");
+            throw new Exception();
+        }
+
+        return cocNiceMyResDto;
+    }
+
+    /**
+     * 기관 인증 토큰
+     * @return
+     * @throws URISyntaxException
+     */
     private String getNiceApiAccessToken() throws URISyntaxException {
         String plainCredentials = clientId + ":" + clientSecret;
         String base64Credentials = Base64.getEncoder().encodeToString(plainCredentials.getBytes());
@@ -320,29 +415,26 @@ public class COCommServiceImpl implements COCommService {
         return null;
     }
 
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 사업자 등록 번호 조회 nice
+     * @param accessToken
+     * @param compNum
+     * @return
+     * @throws URISyntaxException
+     * @throws JsonProcessingException
+     */
     private COCompApiResDto getNiceCompDtl(String accessToken , String compNum) throws URISyntaxException, JsonProcessingException {
         String plainCredentials = accessToken + ":" +  (new Date().getTime()/1000)+":"+clientId;
         String base64Credentials = Base64.getEncoder().encodeToString(plainCredentials.getBytes());
         HttpHeaders headers = new HttpHeaders();
+
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization", "bearer " + base64Credentials);
         headers.set("client_id", clientId);
         headers.set("productID", productId);
 
-
         Map<String, Object> dataBody = new HashMap<>();
         dataBody.put("comp_num", compNum);
-
 
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("dataBody", dataBody);

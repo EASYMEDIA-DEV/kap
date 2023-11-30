@@ -14,7 +14,7 @@ import javax.validation.constraints.Max;
 @NoArgsConstructor
 @AllArgsConstructor
 @Schema(title = "나이스 api 요청데이터 암호화")
-public class COCReqEncDto  {
+public class COCNiceReqEncDto {
 
     @Schema(title = "서비스 요청 고유 번호" , example = "121313" )
 
