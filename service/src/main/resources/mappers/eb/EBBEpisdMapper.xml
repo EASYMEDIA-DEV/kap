@@ -950,7 +950,7 @@
 
 						 LEFT JOIN
 					 (
-						 SELECT MEM_SEQ, MEM_CD, DEPT_CD, PSTN_CD FROM co_mem_mst
+						 SELECT MEM_SEQ, MEM_CD, DEPT_CD, PSTN_CD FROM co_mem_mst where mem_cd = 'CP'
 					 ) C ON B.mem_seq = C.mem_seq
 						 LEFT JOIN
 					 (
@@ -971,6 +971,64 @@
 
 		GROUP BY EDCTN_SEQ, EPISD_YEAR, EPISD_ORD, SRV_SEQ
 
+
+	</select>
+
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectEpisdSrvRstDtl
+      설  명 : 교육차수관리 - 참여자 목록 카운트
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectEpisdPtcptListCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		select
+			count(*)
+		from ep_edctn_ptcpt_mst a
+				 left join(select mem_seq, id, name, hp_no, email, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') b on a.mem_seq = b.mem_seq
+				 left join(select cmpn_nm, ctgry_cd, bsnm_no from cp_cmpn_mst where 1=1) c on c.bsnm_no = a.ptcpt_bsnm_no
+		where 1=1
+		  and edctn_seq = #{edctnSeq}
+		  and episd_year = #{episdYear}
+		  and episd_ord = #{episdOrd}
+	</select>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectEpisdSrvRstDtl
+      설  명 : 교육차수관리 - 참여자 목록
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectEpisdPtcptList" parameterType="EBBEpisdDTO" resultType="EBBPtcptDTO">
+		select
+			a.ptcpt_seq
+			, b.id
+			, b.name
+			, (select cmpn_nm from cp_cmpn_mst where bsnm_no = a.ptcpt_bsnm_no) as cmpn_nm
+			, (select cd_nm from co_code_mst where cd = c.ctgry_cd) as ctgry_nm
+			, a.ptcpt_bsnm_no /*사업자등록번호*/
+			, b.hp_no
+			, b.email
+		    , a.stts_cd
+		    , (select cd_nm from co_code_mst where cd = a.stts_cd) as stts_cd_nm
+			, a.reg_dtm as edu_dtm
+			, b.reg_dtm
+			, a.cmptn_yn
+
+		from ep_edctn_ptcpt_mst a
+				 left join(select mem_seq, id, name, hp_no, email, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') b on a.mem_seq = b.mem_seq
+				 left join(select cmpn_nm, ctgry_cd, bsnm_no from cp_cmpn_mst where 1=1) c on c.bsnm_no = a.ptcpt_bsnm_no
+		where 1=1
+		  and edctn_seq = #{edctnSeq}
+		  and episd_year = #{episdYear}
+		  and episd_ord = #{episdOrd}
+
+		order by
+			reg_dtm desc
+
+			limit #{firstIndex}, #{recordCountPerPage}
 
 	</select>
 

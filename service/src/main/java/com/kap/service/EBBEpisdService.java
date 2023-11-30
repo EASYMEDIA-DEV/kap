@@ -1,6 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 
 import java.util.HashMap;
 
@@ -33,6 +34,12 @@ public interface EBBEpisdService {
 	 * 교육차수 상세를 조회한다.
 	 */
 	public HashMap<String, Object> selectEpisdDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육 참여자 목록을 호출한다.
+	 */
+	public EBBPtcptDTO setPtcptList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
 
 	/**
 	 * 교육차수를 등록한다.

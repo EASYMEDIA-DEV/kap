@@ -2,6 +2,7 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.*;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.service.*;
@@ -130,16 +131,45 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		//만족도결과 호출
 		EBBSrvRstDTO srvRstDtl = eBBEpisdMapper.selectEpisdSrvRstDtl(ebbDto);
 
-
-		map.put("rtnData", ebbDto);
-		map.put("roomDto", roomDto);
-		map.put("lctrDtoList", lctrDtoList);
-		map.put("isttrList", isttrList);
-		map.put("bdgetList", bdgetList);
-		map.put("srvRstDtl", srvRstDtl);
-
+		map.put("rtnData", ebbDto);//교육차수 상세
+		map.put("roomDto", roomDto);//교육장정보
+		map.put("lctrDtoList", lctrDtoList);//온라인강의 목록
+		map.put("isttrList", isttrList);//강사 목록
+		map.put("bdgetList", bdgetList);//예산지출내역 목록
+		map.put("srvRstDtl", srvRstDtl);//설문 상세
 
 		return map;
+	}
+
+	/**
+	 * 교육 참여자 목록을 호출한다.
+	 */
+	public EBBPtcptDTO setPtcptList(EBBEpisdDTO ebbDto) throws Exception
+	{
+
+		List<EBBPtcptDTO> ptcptList = new ArrayList();
+		EBBPtcptDTO dto = new EBBPtcptDTO();
+
+		COPaginationUtil page = new COPaginationUtil();
+
+		page.setCurrentPageNo(ebbDto.getPageIndex());
+		page.setRecordCountPerPage(ebbDto.getListRowSize());
+
+		page.setPageSize(ebbDto.getPageRowSize());
+
+		ebbDto.setFirstIndex( page.getFirstRecordIndex() );
+		ebbDto.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+		ptcptList = eBBEpisdMapper.selectEpisdPtcptList(ebbDto);
+		int ptcptCnt = eBBEpisdMapper.selectEpisdPtcptListCnt(ebbDto);
+
+
+
+		dto.setPtcptList(ptcptList);
+		dto.setTotalCount(ptcptCnt);
+
+
+		return dto;
 	}
 
 

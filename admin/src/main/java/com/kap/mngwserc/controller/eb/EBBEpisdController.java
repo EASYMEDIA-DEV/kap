@@ -1,10 +1,8 @@
 package com.kap.mngwserc.controller.eb;
 
 import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.core.dto.eb.ebb.EBBLctrDTO;
-import com.kap.core.dto.eb.ebb.EBBSrvRstDTO;
-import com.kap.core.dto.eb.ebb.EBBisttrDTO;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
+import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.service.COCodeService;
@@ -112,7 +110,7 @@ public class EBBEpisdController {
      * 교육차수관리  상세를 조회한다.
      */
     @GetMapping(value="/write")
-    public String getCouseDtl(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getEPisdDtl(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
 
@@ -120,8 +118,14 @@ public class EBBEpisdController {
         EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");//교육장 정보
         List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
         List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
-        List<EBBisttrDTO> bdgetList = (List<EBBisttrDTO>) rtnMap.get("bdgetList");//예산/지출관리 목록
+        List<EBBBdgetDTO> bdgetList = (List<EBBBdgetDTO>) rtnMap.get("bdgetList");//예산/지출관리 목록
         EBBSrvRstDTO srvRstDtl = (EBBSrvRstDTO)rtnMap.get("srvRstDtl");//만족도 결과 부서, 직급별 인원 통계
+
+        List<EBBPtcptDTO> ptcptList = (List<EBBPtcptDTO>) rtnMap.get("ptcptList");//교육참여자 목록
+
+
+
+
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
@@ -150,12 +154,38 @@ public class EBBEpisdController {
         modelMap.addAttribute("isttrList", isttrList);//강사정보
         modelMap.addAttribute("bdgetList", bdgetList);//예산지출목록
         modelMap.addAttribute("srvRstDtl", srvRstDtl);//만족도 결과 부서, 직급별 인원 통계
-
+        modelMap.addAttribute("ptcptList", ptcptList);//교육 참여자 목록
 
         //만족도 조사(설문)
 
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
     }
+
+
+
+    /**
+     * 교육참여자 목록을 호출한다.
+     */
+    @GetMapping(value = "/episdPtcptList")
+    public String getPtcptListPageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", eBBEpisdService.setPtcptList(eBBEpisdDTO));
+            modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/eb/ebb/EBBEpisdPtcptListAjax";
+    }
+
+
 
     @RestController
     @RequiredArgsConstructor

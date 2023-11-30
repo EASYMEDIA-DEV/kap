@@ -13,9 +13,43 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 	// form Object
 	var $formObj = jQuery("#frmData");
-
+	//온라인강의 복사본 생성
 	var onlineHtml = $("#onlineList").find("tr.examTr").eq(0).clone(true);
 	var onlineFileHtml = $("#onlineList").find("tr.examTr").eq(1).clone(true);
+	//온라인강의 복사본 생성 끝
+
+	// 교육 참여자 목록 호출
+	var search = function (page){
+		//data로 치환해주어야한다.
+		//cmmCtrl.setFormData($formObj);
+
+		if(page != undefined){
+			$formObj.find("#pageIndex").val(page);
+		}
+
+		cmmCtrl.listFrmAjax(function(respObj) {
+			$formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+			//CALLBACK 처리
+			ctrl.obj.find("#ptcptListContainer").html(respObj);
+
+
+			//전체 갯수
+			var totCnt = $(respObj).eq(0).data("totalCount");
+			//총 건수
+			ctrl.obj.find("#ptcptListContainerTotCnt").text(totCnt);
+
+			//페이징 처리
+			cmmCtrl.listPaging(totCnt, $formObj, "ptcptListContainer", "ptcptPagingContainer");
+		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "GET", "html");
+
+	}
+
+
+
+
+
+
+
 
 	//오프라인평가 체크시 실행
 	var setSelectBox = function(arg){
@@ -592,9 +626,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 },
 		immediately : function() {
-			//리스트 조회
-			filedSet();
+			//교육 참여자목록 조회
+			search();
+
+
 			//폼 데이터 처리
+			filedSet();
+
 
 
 			//예산지출내역 폼 조립
