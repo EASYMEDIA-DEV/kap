@@ -1,10 +1,14 @@
 package com.kap.service;
 
+import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.wb.wbl.WBLEpisdMstDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <pre> 
@@ -68,6 +72,17 @@ public interface WBLSurveyService {
 	 *  회차 설문 목록을 조회한다.
 	 */
 	public WBLEpisdMstDTO selectEpisdSurveyList(WBLEpisdMstDTO wBLEpisdMstDTO) throws Exception;
+
+	/**
+	 * 샘플 엑셀 생성
+	 */
+	public void excelSampleDownload(HttpServletResponse response) throws Exception;
+
+	/**
+	 * 리스트 등록
+	 */
+	public int insertSurveyExcelList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request ) throws Exception;
+
 
 
 }

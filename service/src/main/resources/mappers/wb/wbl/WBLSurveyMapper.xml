@@ -22,6 +22,7 @@
 		,a.part_cmpn_cd_2
 		,a.ptcpt_cd
 		,a.ptcpt_cmpltn_dtm
+		,a.score
 		,a.reg_id
 		,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
 		,a.reg_ip
