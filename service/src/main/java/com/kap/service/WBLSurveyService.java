@@ -1,14 +1,10 @@
 package com.kap.service;
 
-import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
+import com.kap.core.dto.wb.wbl.WBLEpisdMstDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * <pre> 
@@ -45,5 +41,33 @@ public interface WBLSurveyService {
 	 * 리스트 삭제
 	 */
 	public int deleteSurveyList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
+
+	/**
+	 *  상세
+	 */
+	public WBLSurveyMstInsertDTO selectSurveyDtl(WBLSurveyMstSearchDTO wBLSurveyMstSearchDT) throws Exception;
+
+	/**
+	 *  회차 목록을 조회한다.
+	 */
+	public WBLEpisdMstDTO selectEpisdList(WBLEpisdMstDTO wBLEpisdMstDTO) throws Exception;
+
+
+	/**
+	 * 리스트 삭제
+	 */
+	public int deleteEpisdList(WBLEpisdMstDTO wBLEpisdMstDTO) throws Exception;
+
+	/**
+	 * 리스트 등록
+	 */
+	public int insertEpisdList(WBLEpisdMstDTO wBLEpisdMstDTO, HttpServletRequest request) throws Exception;
+
+
+	/**
+	 *  회차 설문 목록을 조회한다.
+	 */
+	public WBLEpisdMstDTO selectEpisdSurveyList(WBLEpisdMstDTO wBLEpisdMstDTO) throws Exception;
+
 
 }

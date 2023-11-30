@@ -100,17 +100,15 @@
                     <fieldset>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">연도<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-3">
-                                <select class="form-control input-sm wd-sm" name="episdYear" id="episdYear" title="년도">
+                            <div class="col-sm-6 form-inline">
+                                <select class="form-control input-sm wd-sm" name="episdYear" id="episdYear" title="년도" style="min-width: 100px;">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${episdCdList.CO_YEAR_CD}" varStatus="status">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.episdYear eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                     </c:forEach>
                                 </select>
-                            </div>
 
-                            <div class="col-sm-3">
-                                <select class="form-control input-sm wd-sm" name="episdOrd" id="episdOrd" title="회차">
+                                <select class="form-control input-sm wd-sm" name="episdOrd" id="episdOrd" title="회차" style="min-width: 100px;">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${episdCdList.ROUND_CD}" varStatus="status">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.episdOrd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -119,7 +117,7 @@
                             </div>
 
                             <label class="col-sm-1 control-label">업종<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <select class="form-control input-sm wd-sm" name="cbsnCd" id="cbsnCd" title="업종">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${episdCdList.CBSN_CD}" varStatus="status">
@@ -539,7 +537,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">만족도조사<span class="star text-danger"> *</span></label>
                             <div class="col-sm-11">
-                                <button type="button" class="btn btn-inverse btn-sm">
+                                <button type="button" class="btn btn-inverse btn-sm eduSrvSearch">
                                     설문 검색
                                 </button>
                                 <table class="table table-hover table-striped">
@@ -554,8 +552,8 @@
                                     <!-- 리스트 목록 결과 -->
                                     <tbody id="listContainer3">
                                         <tr>
-                                            <td class="text-center">교육 만족도 조사</td>
-                                            <td class="text-center">교육만족도조사 품질아카데미_1</td>
+                                            <td class="text-center">${rtnDto.srvNm}</td>
+                                            <td class="text-center">${rtnDto.typeNm}</td>
                                             <td class="text-center">
                                                 <div class="input-group form-date-group mr-sm">
                                                     <input type="text" class="form-control input-sm datetimepicker_strtDt" name="srvStrtDtm" id="srvStrtDtm" value="${ kl:convertDate(rtnDto.srvStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="설문시작일시" readonly="readonly"/>
@@ -1027,4 +1025,6 @@
 <jsp:include page="/WEB-INF/jsp/mngwserc/ex/exg/EXGExamListSrchLayer.jsp"></jsp:include><!--시험검색-->
 <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpc/MPCLecturerSrchLayer.jsp"></jsp:include><!--강사검색-->
 <!--설문검색-->
-
+<jsp:include page="/WEB-INF/jsp/mngwserc/sv/sva/SVASurveySrchLayer.jsp">
+<jsp:param name="typeCd" value="EDU" />
+</jsp:include>

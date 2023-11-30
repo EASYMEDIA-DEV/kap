@@ -15,7 +15,7 @@ var exports = {
     var $formObj = ctrl.obj.find("form").eq(0);
     var $excelObj = ctrl.obj.parent().find(".excel-down");
     var $excelObj2 = ctrl.obj.parent().find(".container-fluid");
-
+    var workChk = true;
 
     var dupEmailChk = true;
 
@@ -160,6 +160,105 @@ var exports = {
                 }
             }
         },
+            workBsnmNo : {
+                event : {
+                    input : function (event) {
+                        let bsnmNo = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        event.target.value = bsnmNo;
+                    },
+                }
+            },
+            btnBsnmNo : {
+                event : {
+                    click : function () {
+                        workChk = false;
+                        if($("#workBsnmNo").val() =='' || $("#workBsnmNo").val() == undefined) {
+                            alert(msgCtrl.getMsg("fail.mp.mpa.al_016"));
+                            return ;
+                        } else {
+                            jQuery.ajax({
+                                url : "/mngwserc/nice/comp-chk",
+                                type : "post",
+                                data :
+                                    {
+                                        "compNum" : $("#workBsnmNo").val()
+                                    },
+                                success : function(data)
+                                {
+                                    if(data.rsp_cd=='P000') {
+                                        if(data.result_cd == '01') {
+                                            if(data.comp_status == '1') {
+                                                $("#ctgry_cd").val(data.comp_name);
+                                                workChk = true;
+                                            } else {
+                                                alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                                $("#ctgry_cd").val("");
+                                                $("#workBsnmNo").val("");
+                                                workChk = false;
+                                            }
+                                        } else {
+                                            alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                            $("#ctgry_cd").val("");
+                                            $("#workBsnmNo").val("");
+                                            workChk = false;
+                                        }
+                                    } else {
+                                        alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                        $("#ctgry_cd").val("");
+                                        $("#workBsnmNo").val("");
+                                        workChk = false;
+                                    }
+                                },
+                                error : function(xhr, ajaxSettings, thrownError)
+                                {
+                                    cmmCtrl.errorAjax(xhr);
+                                    jQuery.jstree.rollback(data.rlbk);
+                                }
+                            });
+                        }
+                    }
+                }
+            },
+            btnTest : {
+                event : {
+                    click : function () {
+                        workChk = false;
+                        if($("#workBsnmNo").val() =='' || $("#workBsnmNo").val() == undefined) {
+                            alert(msgCtrl.getMsg("fail.mp.mpa.al_016"));
+                            return ;
+                        } else {
+                            jQuery.ajax({
+                                url : "/mngwserc/nice/my-chk",
+                                type : "post",
+                                data :
+                                    {
+                                        "compNum" : $("#workBsnmNo").val()
+                                    },
+                                success : function(data)
+                                {
+                                    const { form } = document;
+                                    const option = `status=no, menubar=no, toolbar=no, resizable=no, width=500, height=600`;
+                                    document.getElementById('enc_data').value = data.enc_data; // enc_data 값을 설정
+                                    document.getElementById('integrity_value').value = data.integrity_value; // integrity_value 값을 설정
+                                    document.getElementById('token_version_id').value = data.token_version_id; // integrity_value 값을 설정
+
+                                    window.open('', 'nicePopup', option);
+
+                                    form.target = 'nicePopup';
+                                    document.getElementById('form').submit();
+
+                                },
+                                error : function(xhr, ajaxSettings, thrownError)
+                                {
+                                    cmmCtrl.errorAjax(xhr);
+                                    jQuery.jstree.rollback(data.rlbk);
+                                }
+                            });
+                        }
+                    }
+                }
+            },
+
             pstnCd : {
                 event : {
                     change : function() {
@@ -329,6 +428,10 @@ var exports = {
                     alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
                     return false;
 
+                }
+                if(!workChk) {
+                    alert(msgCtrl.getMsg("fail.mp.mpa.al_012"));
+                    return false;
                 }
                 return true;
             },

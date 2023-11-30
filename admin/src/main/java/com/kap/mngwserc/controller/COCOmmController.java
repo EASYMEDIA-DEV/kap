@@ -5,6 +5,8 @@ import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMenuDTO;
 import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.co.COCNiceServiceDto;
+import com.kap.core.dto.co.COCompApiResDto;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.service.*;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,6 +49,8 @@ public class COCOmmController {
     private final COCommService cOCommService;
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
+
+
 
     /**
      * @ClassName		: EXGExamRestController.java
@@ -93,6 +98,18 @@ public class COCOmmController {
             }
 
             return cOUserCmpnDto;
+        }
+
+        @PostMapping("/nice/comp-chk")
+        @ResponseBody
+        public COCompApiResDto niceChk(COCompApiResDto coCompApiResDto) throws Exception {
+            return cOCommService.niceChk(coCompApiResDto.getCompNum());
+        }
+
+        @PostMapping("/nice/my-chk")
+        @ResponseBody
+        public COCNiceServiceDto niceChk() throws Exception {
+            return cOCommService.niceChk();
         }
     }
 }

@@ -150,6 +150,10 @@ project(":client") {
         /* MOBILE */
         implementation 'org.springframework.mobile:spring-mobile-device:1.1.3.RELEASE'
 
+        //SWAGGER
+        implementation "org.springdoc:springdoc-openapi-ui:1.6.2"
+        implementation "org.springdoc:springdoc-openapi-security:1.6.2"
+
 
         implementation project(':common')
         implementation project(':error')

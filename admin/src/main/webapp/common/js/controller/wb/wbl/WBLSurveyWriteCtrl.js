@@ -13,13 +13,87 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // form Object
     var $formObj = jQuery("#frmData");
 
+
+    var questionSet = function(){
+
+        $(".surveyList").each(function(){
+            var surveyTypeData = $(this).data('survey-type');
+            var cnt = 1;
+            var subCnt = 1;
+            $("."+surveyTypeData).each(function(index){                         // 질문, 하위질문 번호를 구분하고 순서를 셋팅
+                if ($(this).find('input[name=dpth]').val() == '2'){
+                    $("."+surveyTypeData+"questionTxt:eq("+index+")").text("└질문"+eval(cnt-1)+"-"+subCnt);
+                    subCnt = subCnt + 1;
+                }else{
+                    $("."+surveyTypeData+"questionTxt:eq("+index+")").text("질문"+cnt);
+                    cnt = cnt+1;
+                    subCnt = 1;
+                }
+            });
+        });
+    }
+
+    var episdSurveyEpisdSelect = function(episdSurveyYear){
+
+        $('select[name=episd]').children('option:not(:first)').remove();
+        $("input[name=episdSurveyYearEpisd]").each(function(){
+            var year = $(this).data('year');
+            var episd = $(this).data('episd');
+            if(year == episdSurveyYear){
+                $('select[name=episd]').append($('<option></option>').attr('value',episd).text(episd+"차"));
+            }
+        });
+    }
+
+
     // set model
     ctrl.model = {
         id : {
         },
         classname : {
+            episdSurveySelect : {
+                event : {
+                    change : function(){
+                        var episdSurveyYear = $formObj.find("select[name=year] option:selected").val();
+                        var episdSurveyEpisd = $formObj.find("select[name=episd] option:selected").val();
+                        var episdSurveyInfo = episdSurveyYear+episdSurveyEpisd;
+
+                        $("input[name=episdSurveySrvSeq]").val('');
+                        $(".episdSurveyText").text('');
+
+                        $("input[name=episdSurveyYearEpisd]").each(function(){
+                            if ($(this).val() == episdSurveyInfo){
+                                $("input[name=episdSurveySrvSeq]").val($(this).data("srv-seq"));
+                                $("input[name=cxstnCmpnEpisdSeq]").val($(this).data("cxstn-cmpn-episd-seq"));
+                                $(".episdSurveyText").text($(this).data("titl"));
+                                return false;
+                            }
+                        });
+                    }
+                }
+            },
+            episdSurveyYear : {
+                event : {
+                    change : function(){
+                        episdSurveyEpisdSelect($(this).val());
+                    }
+                }
+            },
+
         },
         immediately : function() {
+
+            questionSet();
+
+            $('select[name=year]').children('option:not(:first)').remove();
+            var year = "";
+            $("input[name=episdSurveyYearEpisd]").each(function(){
+                var yearData = $(this).data('year');
+                if (year != yearData){
+                    $('select[name=year]').append($('<option></option>').attr('value',yearData).text(yearData+"년"));
+                }
+                year = yearData;
+            });
 
 
             // 유효성 검사
@@ -37,6 +111,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var svMst = {};
                         svMst.year = $formObj.find("select[name=year] option:selected").val();
                         svMst.episd = $formObj.find("select[name=episd] option:selected").val();
+                        svMst.srvSeq = $formObj.find("input[name=episdSurveySrvSeq]").val();
+                        svMst.cxstnCmpnEpisdSeq = $formObj.find("input[name=cxstnCmpnEpisdSeq]").val();
                         svMst.partCmpnNm1 = $formObj.find("input[name=partCmpnNm1]").val();
                         svMst.partCmpnCd1 = $formObj.find("input[name=partCmpnCd1]").val();
                         svMst.partCmpnNm2 = $formObj.find("input[name=partCmpnNm2]").val();
@@ -45,9 +121,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         svMst.bsnmRegNo = $formObj.find("input[name=bsnmRegNo]").val();
                         svMst.picNm = $formObj.find("input[name=picNm]").val();
                         svMst.telNo = $formObj.find("input[name=telNo]").val();
-                        svMst.email = $formObj.find("input[name=email]").val();
 
-                        console.log(svMst)
+                        svMst.email = $formObj.find("input[name=email]").val();
                         cmmCtrl.jsonAjax(function(data){
                            location.replace("./list");
                         }, actionUrl, svMst, "text")

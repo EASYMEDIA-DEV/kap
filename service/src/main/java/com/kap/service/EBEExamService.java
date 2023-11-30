@@ -1,5 +1,7 @@
 package com.kap.service;
 
+import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptMst;
+import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptRspnMst;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 
@@ -46,4 +48,14 @@ public interface EBEExamService {
      * 평가지 상세
      */
     public EXGExamMstInsertDTO selectExamDtl(EXGExamMstSearchDTO eXGExamMstSearchDTO) throws Exception;
+
+    /**
+     * 사용자 평가지
+     */
+    public EXGExamEdctnPtcptMst selectUserExamDtl(int ptcptSeq) throws Exception;
+
+    /**
+     * 답변 등록
+     */
+    public int insertEdctnRspn(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst, HttpServletRequest request) throws Exception;
 }

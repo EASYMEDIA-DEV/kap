@@ -529,4 +529,86 @@
 		where qstn_seq = #{qstnSeq}
 		order by qstn_seq asc, exmpl_ord asc
 	</select>
+
+
+
+	<!--
+    쿼리명 : SVASurveyMapper.selectSurveyQstnTypeDtlList
+    설  명 : 설문 질문 내용 조회
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.15    박준희       최초생성
+-->
+	<select id="selectSurveyQstnTypeDtlList" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyQstnDtlDTO">
+
+		SELECT 		/* SVASurveyMapper.selectSurveyQstnTypeDtlList */
+			cd_id
+			 , cd
+			 , cd_nm
+			 , qstn_seq
+			 , ctgry_cd
+			 , srv_type_cd
+			 , parnt_qstn_seq
+			 , case when dpth is null then 0 else dpth end dpth
+			 , qstn_nm
+			 , ncs_yn
+			 , qstn_ord
+			 , exmpl_cnt
+			 , qstn_grp_ord
+			 , qstn_cnt
+			, srv_type_nm
+		FROM (
+				 SELECT
+					 cd_id
+					  , cd
+					  , cd_nm
+					  , b.qstn_seq
+					  , b.ctgry_cd
+					  , b.srv_type_cd
+					  , (select cd_nm from co_code_mst where cd_id = 'QUESTION_TYPE' and cd = b.srv_type_cd) as srv_type_nm
+					  , b.parnt_qstn_seq
+					  , b.dpth
+					  , b.qstn_nm
+					  , b.ncs_yn
+					  , b.qstn_ord
+					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
+					  , case when @grp collate utf8mb4_general_ci = b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
+					  , (@grp := ctgry_cd) as dum
+					  , (select count(*) from sv_qstn_dtl c where c.srv_seq = #{detailsKey} and c.parnt_qstn_seq = b.qstn_seq  ) as qstn_cnt
+				 FROM
+					 co_code_mst a left join (select * from sv_qstn_dtl where srv_seq = #{detailsKey}) b on a.cd = b.ctgry_cd
+					, (select @rownum:=0, @grp:='') r
+				 WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd} AND b.qstn_seq is not null
+				 ORDER BY
+					 lft_val , qstn_ord
+			 ) T
+
+	</select>
+
+
+	<!--
+		쿼리명 : SVASurveyMapper.selectSurveyExmplWinDtlList
+		설  명 : 응답 조회(상생만족도)
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.27    박준희       최초생성
+    -->
+	<select id="selectSurveyExmplWinDtlList" parameterType="SVASurveyQstnDtlDTO" resultType="SVASurveyExmplDtlDTO">
+		select /* SVASurveyMapper.selectSurveyExmplAnswerDtlList */
+			a.exmpl_seq
+			 ,a.qstn_seq
+			 ,a.exmpl_nm
+			 ,a.exmpl_ord
+			 ,a.next_no
+			 ,a.reg_id
+			 ,a.reg_dtm
+			 ,a.mod_id
+			 ,a.mod_dtm
+			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = #{srvRspnSeq} and svmd.exmpl_seq = a.exmpl_seq) as win_answer
+			 , (select sbjct_rply from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where svm.srv_rspn_seq = #{srvRspnSeq} and svsd.qstn_seq = a.qstn_seq) as win_answer_text
+		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
+		where a.qstn_seq = #{qstnSeq}
+		order by a.qstn_seq asc, a.exmpl_ord asc
+
+	</select>
 </mapper>

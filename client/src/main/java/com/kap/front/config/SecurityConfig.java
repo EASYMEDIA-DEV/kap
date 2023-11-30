@@ -60,18 +60,17 @@ public class SecurityConfig {
                     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException {
                         if (accessDeniedException instanceof MissingCsrfTokenException || accessDeniedException instanceof InvalidCsrfTokenException) {
                             String accept   = COWebUtil.removeCRLF(request.getHeader("accept"));
-                            log.error("ForbiddenException");
                             if (accept != null && accept.indexOf("application/json") > -1){
                                 if(COUserDetailsHelperService.isAuthenticated()){
                                     //JSON이면
-                                    new Exception("CSRF");
+                                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                                 }else{
                                     // 세션이 끊긴 경우
                                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                                 }
                             }
                             else{
-                                new Exception("CSRF");
+                                response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
                             }
                         }
                     }

@@ -39,6 +39,9 @@ public class WBLSurveyMstInsertDTO extends BaseDTO {
     @Schema(title = "순번", example = "숫자")
     private Integer cxstnSrvSeq;
 
+    @Schema(title = "회차관리순번", example = "숫자")
+    private Integer cxstnCmpnEpisdSeq;
+
     @Schema(title = "연도")
     private String year;
 
@@ -74,6 +77,9 @@ public class WBLSurveyMstInsertDTO extends BaseDTO {
 
     @Schema(title = "설문순번", example = "숫자")
     private Integer srvSeq;
+
+    @Schema(title = "설문타이틀")
+    private String titl;
 
     @Schema(title = "설문응답순번", example = "숫자")
     private Integer srvRspnSeq;

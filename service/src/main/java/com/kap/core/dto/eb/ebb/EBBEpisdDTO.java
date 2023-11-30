@@ -127,8 +127,13 @@ public class EBBEpisdDTO extends BaseDTO {
 
     @Schema(title = "시험순번", example = "숫자")
     private Integer examSeq;
-    @Schema(title = "시험명", example = "숫자")
+
+    @Schema(title = "시험명", example = "텍스트")
     private String examNm;
+
+    @Schema(title = "시험유형", example = "텍스트")
+    private String typeNm;
+
 
     @Schema(title = "시험시작일", example = "날짜 yyyy-mm-dd HH:mm:ss")
     private String examStrtDtm;

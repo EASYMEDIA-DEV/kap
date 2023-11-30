@@ -56,6 +56,35 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
+            btnLayerRefresh : {
+                event : {
+                    click : function() {
+                        //FORM 데이터 전체 삭제
+                        var pageIndex 	= $formObj.find("#pageIndex").val();
+                        var listRowSize = $formObj.find("#listRowSize").val();
+                        var pageRowSize = $formObj.find("#pageRowSize").val();
+                        var csrfKey 	= $formObj.find("#csrfKey").val();
+                        var srchLayer 	= $formObj.find("input[name=srchLayer]").val();
+                        var typeCdList 	= $formObj.find("input[name=typeCdList]").val();
+                        $formObj.clearForm();
+                        //FORM 전송 필수 데이터 삽입
+                        $formObj.find("#pageIndex").val( pageIndex );
+                        $formObj.find("#listRowSize").val( listRowSize );
+                        $formObj.find(".listRowSizeContainer").val( listRowSize );
+                        $formObj.find("#pageRowSize").val( pageRowSize );
+                        $formObj.find("#csrfKey").val( csrfKey );
+                        $formObj.find("input[name=srchLayer]").val( srchLayer );
+                        $formObj.find("input[name=typeCdList]").val( typeCdList );
+
+                        //캘린더 초기화
+                        cmmCtrl.setPeriod(this, "", "", false);
+
+                        //검색 로직 실행
+                        $formObj.find("#btnSearch").click();
+                    }
+                }
+
+            },
         },
         classname : {
             // 페이징 처리
@@ -86,6 +115,32 @@ define(["ezCtrl"], function(ezCtrl) {
                         var detailsKey = $(this).data("detailsKey");
                         $formObj.find("input[name=detailsKey]").val(detailsKey);
                         location.href = "./write?" + $formObj.serialize();
+                    }
+                }
+            },
+
+            // 레이어팝업 버튼 클릭시
+            srvBtnChoice : {
+                event : {
+                    click : function() {
+                        var clickObj = {};
+                        var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
+                        if(choiceCnt > 1){
+                            alert(msgCtrl.getMsg("fail.sv.sva.notSrchServey1"));
+                        }else{
+                            clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();//설문 조사 번호
+                            var typeNm = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find("td").eq(2).text());//설문유형
+                            var titl = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find("td").eq(3).text());//제목
+
+                            clickObj.typeNm = typeNm;
+                            clickObj.titl = titl;
+
+                            ctrl.obj.trigger("choice", [clickObj])
+                            ctrl.obj.find(".close").click();
+                        }
+
+
+
                     }
                 }
             }

@@ -1,6 +1,13 @@
 
 server-status : dev
 
+nice :
+  client-id : 1d9b7bb5-b3da-4b64-a852-003b3b5615f6
+  client-secret : 5402455ebfb7f2d9178213d312c7d206756db5e
+  product-id : 2101764012
+  url : https://svc.niceapi.co.kr:22001
+  enc-product-id : 2101979031
+
 #강제 로그인 여부
 app:
   file:

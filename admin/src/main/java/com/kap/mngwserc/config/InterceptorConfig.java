@@ -34,6 +34,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/mngwserc/**/logout")
                 .excludePathPatterns("/mngwserc/dext5editor/upload")
                 .excludePathPatterns("/mngwserc/dropzone/upload")
+                .excludePathPatterns("/mngwserc/nice/**")
                 .excludePathPatterns("/mngwserc/file/list")
                 .excludePathPatterns("/mngwserc/file/upload")
                 .excludePathPatterns("/mngwserc/upload")

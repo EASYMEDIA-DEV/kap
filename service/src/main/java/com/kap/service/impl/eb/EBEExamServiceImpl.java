@@ -3,10 +3,8 @@ package com.kap.service.impl.eb;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COEgovSeqDTO;
-import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
-import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
+import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.ex.exg.*;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBEExamService;
 import com.kap.service.dao.eb.EBEExamMapper;
@@ -44,6 +42,9 @@ public class EBEExamServiceImpl implements EBEExamService {
 
     /* 교육평가질문보기 시퀀스 */
     private final EgovIdGnrService examQstnExmplDtlIdgen;
+
+    /* 교육 참여 순번 시퀀스 */
+    private final EgovIdGnrService examPtcptSeqIdgen;
 
     /**
      * 리스트 조회
@@ -212,5 +213,82 @@ public class EBEExamServiceImpl implements EBEExamService {
         int edctnEpisdCnt = eBEExamMapper.getExamEdctnEpisdCnt( eXGExamMstSearchDTO );
         eXGExamMstInsertDTO.setPosbChg( edctnEpisdCnt > 0 ? false : true );
         return eXGExamMstInsertDTO;
+    }
+
+    /**
+     * 사용자 평가지
+     */
+    public EXGExamEdctnPtcptMst selectUserExamDtl(int ptcptSeq) throws Exception{
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        EXGExamMstSearchDTO eXGExamMstSearchDTO = EXGExamMstSearchDTO.builder().ptcptSeq(ptcptSeq).memSeq(cOUserDetailsDTO.getSeq()).build();
+        return eBEExamMapper.selectUserExamDtl(eXGExamMstSearchDTO);
+    }
+
+    /**
+     * 답변 등록
+     */
+    public int insertEdctnRspn(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst, HttpServletRequest request) throws Exception{
+        int examPtcptSeq = examPtcptSeqIdgen.getNextIntegerId();
+        int actCnt = 0;
+        EXGExamMstSearchDTO eXGExamMstSearchDTO = new EXGExamMstSearchDTO();
+        eXGExamMstSearchDTO.setDetailsKey( String.valueOf(eXGExamEdctnPtcptRspnMst.getExamSeq()) );
+        //객관식 평가
+        int totScord = 0;
+        eXGExamMstSearchDTO.setCanswYn("Y");
+        List<EXGExamQstnDtlDTO> eXGExamExmplDtlDTOList = eBEExamMapper.getExamQstnCanswList(eXGExamMstSearchDTO);
+        if(eXGExamEdctnPtcptRspnMst.getMtlccList() != null && eXGExamEdctnPtcptRspnMst.getMtlccList().size() > 0 && eXGExamExmplDtlDTOList != null && eXGExamExmplDtlDTOList.size() > 0)
+        {
+            boolean isSuccess = false;
+            for(EXGExamQstnDtlDTO eXGExamQstnDtlDTO : eXGExamExmplDtlDTOList)
+            {
+                isSuccess = false;
+                int exmplSize = 0;
+                int size = 0;
+                String[] exmplCanswList = null;
+                for(EXGExamEdctnPtcptMtlccRspnMst eXGExamEdctnPtcptMtlccRspnMst : eXGExamEdctnPtcptRspnMst.getMtlccList()) {
+                    eXGExamEdctnPtcptMtlccRspnMst.setCanswYn("N");
+                    if (eXGExamEdctnPtcptMtlccRspnMst.getQstnSeq() == eXGExamQstnDtlDTO.getQstnSeq())
+                    {
+                        exmplSize = exmplSize + 1;
+                        exmplCanswList = eXGExamQstnDtlDTO.getExmplCansw().split(",");
+                        if (exmplCanswList != null && exmplCanswList.length > 0)
+                        {
+                            for (int q = 0; q < exmplCanswList.length; q++)
+                            {
+                                //등록된 정답 보기와 요청한 보기가 맞는지
+                                if(Integer.parseInt(exmplCanswList[q]) == eXGExamEdctnPtcptMtlccRspnMst.getExmplSeq())
+                                {
+                                    size = size + 1;
+                                    eXGExamEdctnPtcptMtlccRspnMst.setCanswYn("Y");
+                                    isSuccess = true;
+                                }
+                            }
+                        }
+                    }
+                }
+                if(size != exmplCanswList.length || exmplSize != exmplCanswList.length){
+                    isSuccess = false;
+                }
+                if(isSuccess){
+                    totScord += eXGExamQstnDtlDTO.getScord();
+                }
+            }
+        }
+        //교육 참여 마스터 등록
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        eXGExamEdctnPtcptRspnMst.setMemSeq( cOUserDetailsDTO.getSeq() );
+        eXGExamEdctnPtcptRspnMst.setRegId( cOUserDetailsDTO.getId() );
+        eXGExamEdctnPtcptRspnMst.setRegIp( CONetworkUtil.getMyIPaddress(request) );
+        eXGExamEdctnPtcptRspnMst.setExamPtcptSeq( examPtcptSeq );
+        eXGExamEdctnPtcptRspnMst.setExamScore( totScord );
+        actCnt = eBEExamMapper.insertExamPtcptMst(eXGExamEdctnPtcptRspnMst);
+        if(eXGExamEdctnPtcptRspnMst.getSbjctList() != null && eXGExamEdctnPtcptRspnMst.getSbjctList().size() > 0){
+            eBEExamMapper.insertExamPtcptSbjctRspnDtl(eXGExamEdctnPtcptRspnMst);
+        }
+        if(eXGExamEdctnPtcptRspnMst.getMtlccList() != null && eXGExamEdctnPtcptRspnMst.getMtlccList().size() > 0){
+            eBEExamMapper.insertExamPtcptMtlccRspnDtl(eXGExamEdctnPtcptRspnMst);
+        }
+        eBEExamMapper.updateEdctnPtcptScord(eXGExamEdctnPtcptRspnMst);
+        return actCnt;
     }
 }

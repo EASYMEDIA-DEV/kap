@@ -59,7 +59,8 @@ public class SecurityConfig  {
                         , "/mngwserc/editor-image/upload"
                         , "/mngwserc/email/send"
                         , "/mngwserc/sms/send"
-                        , "/mngwserc/file/view")
+                        , "/mngwserc/file/view"
+                        , "/mngwserc/nice/**")
                 .and()
                 .exceptionHandling()
                 .accessDeniedHandler(new AccessDeniedHandler() {

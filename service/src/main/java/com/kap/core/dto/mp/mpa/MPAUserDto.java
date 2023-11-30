@@ -35,7 +35,7 @@ public class MPAUserDto extends BaseDTO {
 
     @Schema(title = "회원코드", example = "1")
     private String memCd;
-    
+
 
     @Schema(title = "아이디", example = "1")
     private String id;

@@ -182,6 +182,7 @@
 			, now()
 			, #{regId}
 			, #{regIp}
+			, now()
 			/*, 0*/
 		)
 	</insert>
