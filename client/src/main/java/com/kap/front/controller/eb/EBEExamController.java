@@ -16,6 +16,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 /**
@@ -99,6 +100,32 @@ public class EBEExamController {
             eXGExamMstSearchDTO.setDetailsKey( String.valueOf(eXGExamEdctnPtcptMst.getExamSeq()) );
             modelMap.addAttribute("rtnData", eXGExamEdctnPtcptMst);
             modelMap.addAttribute("rtnExamData", eBEExamService.selectExamDtl(eXGExamMstSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return vwUrl;
+    }
+    /**
+     * 시험 참여 완료
+     */
+    @GetMapping(value="/exam/complete")
+    public String getUserExamParticipationComplete(@RequestParam(required = true) int ptcptSeq, ModelMap modelMap, HttpServletResponse response) throws Exception
+    {
+        String vwUrl = "front/eb/EBEExamComplete.front";
+        try
+        {
+
+            EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst = eBEExamService.selectUserExamDtl(ptcptSeq);
+            //시험 항목 조회
+            EXGExamMstSearchDTO eXGExamMstSearchDTO = new EXGExamMstSearchDTO();
+            eXGExamMstSearchDTO.setDetailsKey( String.valueOf(eXGExamEdctnPtcptMst.getExamSeq()) );
+            modelMap.addAttribute("rtnData", eXGExamEdctnPtcptMst);
         }
         catch (Exception e)
         {
