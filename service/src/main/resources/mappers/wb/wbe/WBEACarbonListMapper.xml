@@ -44,6 +44,7 @@
         ) A
         <include refid="selectCarbonListwhereSql" />
         ORDER BY A.REG_DTM DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
@@ -153,6 +154,7 @@
     -->
     <sql id="selectCarbonListwhereSql">
         <where>
+            AND BSN_CD = 'INQ07005'
             <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
                     <when test="carbonDate == 1">
@@ -387,6 +389,57 @@
         FROM CX_EPISD_MST
         WHERE EPISD_SEQ = #{detailsKey}
     </delete>
+
+    <!--
+         쿼리명 : WBEACarbonListMapper.getAppctnCnt
+         설  명 : 매핑 정보 확인
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="getAppctnCnt" parameterType="WBRoundMstDTO" resultType="java.lang.Integer">
+        SELECT /* WBEACarbonListMapper.getAppctnCnt*/ COUNT(*)
+        FROM CX_APPCTN_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    APPCTN_SEQ in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    APPCTN_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--
+       쿼리명 : WBEACarbonListMapper.carbonDeleteList
+       설  명 : 회차 리스트 삭제
+        수정일	 수정자     수정내용
+       ==========   ======   =============
+       2023.11.08  김대성     최초 생성
+   -->
+    <delete id="carbonDeleteList" parameterType="wBRoundMstDTO">
+        DELETE /* WBEACarbonListMapper.carbonDeleteList */
+        FROM CX_EPISD_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    EPISD_SEQ in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    EPISD_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
 
 </mapper>
 

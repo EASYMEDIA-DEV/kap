@@ -37,4 +37,14 @@ public interface WBEACarbonListService {
      * 연도 상세 조회한다.
      */
     public WBRoundMstDTO selectYearDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 회차 삭제
+     */
+    public int getAppctnCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 회차 리스트 삭제
+     */
+    public int carbonDeleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 }

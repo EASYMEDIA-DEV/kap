@@ -1,6 +1,6 @@
 package com.kap.service.dao.mp;
 
-import com.kap.core.dto.MPEPartsCompanyDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

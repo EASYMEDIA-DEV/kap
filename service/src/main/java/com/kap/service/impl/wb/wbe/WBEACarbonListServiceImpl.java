@@ -33,17 +33,12 @@ public class WBEACarbonListServiceImpl implements WBEACarbonListService {
      */
     public WBRoundMstSearchDTO selectCarbonList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
-
-        WBRoundMstDTO wBRoundMstDTO = new WBRoundMstDTO();
-
         page.setCurrentPageNo(wBRoundMstSearchDTO.getPageIndex());
         page.setRecordCountPerPage(wBRoundMstSearchDTO.getListRowSize());
-
         page.setPageSize(wBRoundMstSearchDTO.getPageRowSize());
 
         wBRoundMstSearchDTO.setFirstIndex(page.getFirstRecordIndex());
         wBRoundMstSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
-
         wBRoundMstSearchDTO.setList(wBEACarbonListMapper.selectCarbonList(wBRoundMstSearchDTO));
         wBRoundMstSearchDTO.setTotalCount(wBEACarbonListMapper.getCarbonListTotCnt(wBRoundMstSearchDTO));
 
@@ -144,8 +139,31 @@ public class WBEACarbonListServiceImpl implements WBEACarbonListService {
      * 연도 상세 조회
      */
     public WBRoundMstDTO selectYearDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
-
         return wBEACarbonListMapper.selectYearDtl(wBRoundMstSearchDTO);
+    }
+
+    /**
+     * 회차 매핑 여부 확인
+     */
+    public int getAppctnCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBEACarbonListMapper.getAppctnCnt(wBRoundMstDTO);
+
+        wBRoundMstDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 회차 삭제
+     */
+    public int carbonDeleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception {
+
+        int respCnt = wBEACarbonListMapper.carbonDeleteList(wBRoundMstDTO);
+
+        return respCnt;
     }
     
     

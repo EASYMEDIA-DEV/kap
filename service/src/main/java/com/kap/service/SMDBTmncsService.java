@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.SMDBTmncsDTO;
+import com.kap.core.dto.sm.smd.SMDBTmncsDTO;
 
 /**
  * <pre>

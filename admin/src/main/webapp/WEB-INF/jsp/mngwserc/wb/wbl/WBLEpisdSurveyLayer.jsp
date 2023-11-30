@@ -11,15 +11,15 @@
             </div>
             <hr class="mt0" />
 
-            <form id="formEpidsSurvey" method="post">
+            <form id="formEpidsSurvey" method="post" enctype="multipart/form-data" action="./insertExcel">
                 <!-- CSRF KEY -->
                 <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-                <input type="hidden" name="episdSurveySrvSeq">
+                <input type="hidden" name="episdSurveySrvSeq" class="notRequired">
+                <input type="hidden" name="cxstnCmpnEpisdSeq" class="notRequired">
 
                 <c:if test="${ not empty rtnEpisdSurveyData.list}">
                     <c:forEach var="list" items="${rtnEpisdSurveyData.list}" varStatus="status">
-                        <input type="hidden" name="episdSurveyYearEpisd" value="${fn:substring(list.year,0,4)}${list.episd}" data-srv-seq="${list.srvSeq}" data-titl="${list.titl}" data-year="${fn:substring(list.year,0,4)}" data-episd="${list.episd}">
+                        <input type="hidden" name="episdSurveyYearEpisd" value="${fn:substring(list.year,0,4)}${list.episd}" data-srv-seq="${list.srvSeq}" data-titl="${list.titl}" data-year="${fn:substring(list.year,0,4)}" data-episd="${list.episd}" data-cxstn-cmpn-episd-seq="${list.cxstnCmpnEpisdSeq}">
                     </c:forEach>
                 </c:if>
 
@@ -36,12 +36,12 @@
                             <div class="col-sm-4">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <select class="form-control input-sm episdSurveySelect episdSurveyYear" name="episdSurveyYear">
+                                        <select class="form-control input-sm episdSurveySelect episdSurveyYear" name="episdSurveyYear" title="년도">
                                             <option value="">선택</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <select class="form-control input-sm episdSurveySelect" name="episdSurveyEpisd">
+                                        <select class="form-control input-sm episdSurveySelect" name="episdSurveyEpisd" title="회차">
                                             <option value="">선택</option>
                                         </select>
                                     </div>
@@ -69,33 +69,26 @@
                         </h6>
                     </div>
                     <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">파일찾기</label>
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-12">
-                                        <spring:eval var="atchUploadMaxSize" expression="52428800" />
-                                        <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="xlsx" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지">
-                                            <div class="dz-default dz-message">
-                                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                                            </div>
-                                        </div>
-                                        <p class="text-bold mt">
-                                            <button type="button" class="btn btn-inverse down mt">양식다운로드</button>
-                                        </p>
-                                        <p class="text-bold mt">
-                                            ※ 파일 확장자(xlsx) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
-                                        </p>
-                                    </div>
-                                </div>
+                        <div class="form-group">
+                            <label for="" class="control-label col-sm-2 col-md-2 pr-xl">파일찾기</label>
+                            <div class="col-sm-10 col-md-10">
+                                <input type="file" name="wblListExcel" accept=".xls,.xlsx" class="notRequired" title="파일"/>
                             </div>
                         </div>
                     </fieldset>
-
+                    <fieldset>
+                        <div class="form-group">
+                            <div class="col-sm-10 col-md-10">
+                                <p class="text-bold mt">
+                                    <button type="button" class="btn btn-inverse down mt excelSample">양식다운로드</button>
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
                 </div>
                 <div class="modal-footer row">
                     <div class="text-center">
-                        <button type="button" class="btn btn-success down mt epidsSurveySave">저장</button>
+                        <button type="submit" class="btn btn-success down mt">저장</button>
                     </div>
                 </div>
                 <!--리스트 종료 -->

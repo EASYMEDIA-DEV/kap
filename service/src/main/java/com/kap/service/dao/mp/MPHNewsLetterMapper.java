@@ -1,6 +1,6 @@
 package com.kap.service.dao.mp;
 
-import com.kap.core.dto.MPHNewsLetterDTO;
+import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

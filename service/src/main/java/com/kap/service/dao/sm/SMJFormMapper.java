@@ -1,6 +1,6 @@
 package com.kap.service.dao.sm;
 
-import com.kap.core.dto.SMJFormDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

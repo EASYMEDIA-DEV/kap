@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.SMDAPsnIfDTO;
+import com.kap.core.dto.sm.smd.SMDAPsnIfDTO;
 
 /**
  * <pre>

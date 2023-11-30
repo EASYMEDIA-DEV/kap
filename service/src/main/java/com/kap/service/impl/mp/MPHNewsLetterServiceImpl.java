@@ -1,7 +1,7 @@
 package com.kap.service.impl.mp;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.MPHNewsLetterDTO;
+import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
 import com.kap.service.MPHNewsLetterService;
 import com.kap.service.dao.mp.MPHNewsLetterMapper;
 import lombok.RequiredArgsConstructor;

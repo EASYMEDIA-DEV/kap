@@ -1,6 +1,6 @@
 package com.kap.service.dao.sm;
 
-import com.kap.core.dto.SMDCMemTrmsDTO;
+import com.kap.core.dto.sm.smd.SMDCMemTrmsDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -101,7 +101,9 @@
 				, a.mod_dtm
 			    , a.exps_yn
 				FROM ed_edctn_episd_mst a
-				LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq) AA
+				LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+			<include refid="selectLecturerEpisdListSql" />
+		) AA
 
 		<include refid="selectEpisdListwhereSql" />
 
@@ -159,7 +161,9 @@
 		, (select name from co_adm_mst where id = a.reg_id) as mod_name
 		, a.mod_dtm
 		FROM ed_edctn_episd_mst a
-		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq) AA
+		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+		<include refid="selectLecturerEpisdListSql" />
+		) AA
 		<include refid="selectEpisdListwhereSql" />
 	</select>
 
@@ -304,6 +308,31 @@
 		</where>
 	</sql>
 
+	<!--
+		쿼리명 : selectLecturerEpisdListSql
+		설  명 : 강사 관리 상세에서 교육 사업 현황 조회 조인 Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.23    구은희       최초생성
+    -->
+	<sql id="selectLecturerEpisdListSql">
+		<if test="isttrSeq != null and isttrSeq != ''">
+			INNER JOIN
+			(
+			SELECT
+			edctn_seq
+			, episd_year
+			, episd_ord
+			, isttr_seq
+			FROM ed_edctn_isttr_rel
+			) C
+			ON 1 = 1
+			AND A.edctn_seq = C.edctn_seq
+			AND A.episd_year = C.episd_year
+			AND A.episd_ord = C.episd_ord
+			AND C.isttr_seq = #{isttrSeq}
+		</if>
+	</sql>
 
 	<!--
       쿼리명 : EBBEpisdMapper.selectEpisdDtl

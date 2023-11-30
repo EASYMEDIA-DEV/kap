@@ -1,6 +1,7 @@
-package com.kap.core.dto;
+package com.kap.core.dto.sm.smd;
 
 import com.kap.core.annotation.SaxFilter;
+import com.kap.core.dto.BaseDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;

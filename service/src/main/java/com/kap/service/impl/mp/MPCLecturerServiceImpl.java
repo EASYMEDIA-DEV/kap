@@ -1,7 +1,7 @@
 package com.kap.service.impl.mp;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.MPCLecturerDTO;
+import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 import com.kap.service.MPCLecturerService;
 import com.kap.service.dao.mp.MPCLecturerMapper;
 import lombok.RequiredArgsConstructor;

@@ -44,7 +44,7 @@ import java.util.ArrayList;
 @RequestMapping(value="/mngwserc/wb/wbea")
 public class WBEACarbonListController {
 
-    /** 1서비스 **/
+    /** 서비스 **/
     public final WBEACarbonListService wBEACarbonListService;
     public final COCodeService cOCodeService;
 
@@ -82,8 +82,7 @@ public class WBEACarbonListController {
             {
                 log.debug(e.getMessage());
             }
-            /*throw new Exception(e.getMessage());*/
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
         return "mngwserc/wb/wbe/WBEACarbonListAjax";
     }
@@ -200,4 +199,47 @@ public class WBEACarbonListController {
         }
         return "jsonView";
     }
+
+    /**
+     * 회차 매핑 여부 확인
+     */
+    @PostMapping(value="/getAppctnCnt")
+    public String getAppctnCnt(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBEACarbonListService.getAppctnCnt(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 회차 리스트 삭제
+     */
+    @PostMapping(value="/deleteList")
+    public String carbonDeleteList(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBEACarbonListService.carbonDeleteList(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
 }
