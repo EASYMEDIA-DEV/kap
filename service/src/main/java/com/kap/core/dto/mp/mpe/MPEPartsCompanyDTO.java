@@ -1,6 +1,8 @@
-package com.kap.core.dto;
+package com.kap.core.dto.mp.mpe;
 
 import com.kap.core.annotation.SaxFilter;
+import com.kap.core.dto.BaseDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,112 +33,113 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 public class MPEPartsCompanyDTO extends BaseDTO {
 
-    // 사업자번호
+    @Schema(title = "사업자번호", example = "")
     private String bsnmNo;
 
-    // 회사명
+    @Schema(title = "회사명", example = "")
     private String cmpnNm;
 
-    // 대표자명
+    @Schema(title = "대표자명", example = "")
     private String rprsntNm;
 
-    // 회사약식명
+    @Schema(title = "회사약식명", example = "")
     private String cmpnNfrmlNm;
 
-    // 회사코드
+    @Schema(title = "부품사코드", example = "")
     private String cmpnCd;
 
-    // 카테고리코드
+    @Schema(title = "구분코드", example = "")
     private String ctgryCd;
 
-    // 카테고리명
+    @Schema(title = "구분명", example = "")
     private String ctgryNm;
 
-    // 규모코드
+    @Schema(title = "규모코드", example = "")
     private String sizeCd;
 
-    // 규모명
+    @Schema(title = "규모명", example = "")
     private String sizeNm;
 
-    // 설립일자
+    @Schema(title = "설립일자", example = "")
     private String stbsmDt;
 
-    // 전화번호
+    @Schema(title = "전화번호", example = "")
     private String telNo;
 
-    // 우편번호
+    @Schema(title = "우편번호", example = "")
     private String zipcode;
 
-    // 기본주소
+    @Schema(title = "기본주소", example = "")
     private String bscAddr;
 
-    // 상세주소
+    @Schema(title = "상세주소", example = "")
     private String dtlAddr;
 
-    // 매출금액
+    @Schema(title = "매출금액", example = "")
     private Integer slsPmt;
 
-    // 매출년도
+    @Schema(title = "매출년도", example = "")
     private Integer slsYear;
 
-    // 직원수
+    @Schema(title = "직원수", example = "")
     private Integer mpleCnt;
 
-    // 주요상품1
+    @Schema(title = "주요상품1", example = "")
     private String mjrPrdct1;
 
-    // 주요상품2
+    @Schema(title = "주요상품2", example = "")
     private String mjrPrdct2;
 
-    // 주요상품3
+    @Schema(title = "주요상품3", example = "")
     private String mjrPrdct3;
 
-    // 품질5스타코드
+    @Schema(title = "품질5스타코드", example = "")
     private String qlty5StarCd;
 
-    // 품질5스타년도
+    @Schema(title = "품질5스타년도", example = "")
     private Integer qlty5StarYear;
 
-    // 납입5스타코드
+    @Schema(title = "납입5스타코드", example = "")
     private String pay5StarCd;
 
-    // 납입5스타년도
-    private Integer pay5StarYear;
+    @Schema(title = "납입5스타년도", example = "")
+    private String pay5StarYear;
 
-    // 기술5스타코드
+    @Schema(title = "기술5스타코드", example = "")
     private String tchlg5StarCd;
 
-    // 기술5스타년도
+    @Schema(title = "기술5스타년도", example = "")
     private Integer tchlg5StarYear;
 
     // SQ정보
-    // 업종순번
+    @Schema(title = "업종순서", example = "")
     private Integer cbsnSeq;
 
-    // 업종명
+    @Schema(title = "업종명", example = "")
     private String nm;
 
-    // 점수
+    @Schema(title = "점수", example = "")
     private Integer score;
 
-    // SQ 평가년도
+    @Schema(title = "SQ 평가년도", example = "")
     private Integer year;
 
-    // 인증주관사명
+    @Schema(title = "인증주관사명", example = "")
     private String crtfnCmpnNm;
 
-    // SQ 리스트
+    @Schema(title = "SQ 리스트", example = "")
     private List<String> sqInfoList;
 
-    // SQ 리스트1
+    @Schema(title = "SQ 리스트1", example = "")
     private List<String> sqInfoList1;
-    // SQ 리스트2
+
+    @Schema(title = "SQ 리스트2", example = "")
     private List<String> sqInfoList2;
-    // SQ 리스트3
+
+    @Schema(title = "SQ 리스트3", example = "")
     private List<String> sqInfoList3;
 
-
-    // 관리자메모
+    @Schema(title = "관리자메모", example = "")
     @SaxFilter
     private String admMemo;
 

@@ -2,7 +2,7 @@ package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.MPEPartsCompanyDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;

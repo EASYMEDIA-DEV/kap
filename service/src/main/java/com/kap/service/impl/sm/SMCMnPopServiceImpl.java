@@ -1,7 +1,7 @@
 package com.kap.service.impl.sm;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.SMCMnPopDTO;
+import com.kap.core.dto.sm.smc.SMCMnPopDTO;
 import com.kap.service.COFileService;
 import com.kap.service.SMCMnPopService;
 import com.kap.service.dao.sm.SMCMnPopMapper;

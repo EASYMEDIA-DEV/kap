@@ -81,4 +81,6 @@ public class EBDSqCertiListDTO {
     private String acqsnDtm;
     @Schema(title = "만료예정일")
     private String validEndDt;
+    @Schema(title = "자격증번호")
+    private String jdgmtNo;
 }

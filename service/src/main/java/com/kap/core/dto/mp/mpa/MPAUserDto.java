@@ -1,5 +1,6 @@
 package com.kap.core.dto;
 
+import com.kap.core.dto.co.COCNiceMyResDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -28,7 +29,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MPAUserDto extends BaseDTO {
+public class MPAUserDto extends BaseDTO  {
 
     @Schema(title = "회원순번", example = "1")
     private Integer memSeq;

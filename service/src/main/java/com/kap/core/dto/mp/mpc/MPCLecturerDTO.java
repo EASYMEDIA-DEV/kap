@@ -1,6 +1,6 @@
-package com.kap.core.dto;
+package com.kap.core.dto.mp.mpc;
 
-import com.kap.core.annotation.SaxFilter;
+import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,10 +10,10 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- *  SMS 발송 관리
+ *  강사 관리
  *
  * @author 구은희
- * @since 2023.11.16
+ * @since 2023.11.20
  * @version 1.0
  * @see
  *
@@ -22,7 +22,7 @@ import java.util.List;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2023.11.16  구은희         최초 생성
+ *   2023.11.20  구은희         최초 생성
  * </pre>
  */
 
@@ -30,21 +30,34 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
-@Schema(title = "SMS 내용 관리")
-public class SMISmsCntnDTO extends BaseDTO {
+public class MPCLecturerDTO extends BaseDTO {
 
-    @Schema(title = "SMS내용순번", example = "숫자")
-    private Integer smsCntnSeq;
+    @Schema(title = "강사순번", example = "숫자")
+    private Integer isttrSeq;
 
-    @Schema(title = "SMS내용코드", example = "SMS01, SMS02, SMS03, SMS04, SMS05, SMS06")
-    private String smsCntnCd;
+    @Schema(title = "이름", example = "")
+    private String name;
 
-    @Schema(title = "SMS내용코드명", example = "")
-    private String smsCntnName;
+    @Schema(title = "소속명", example = "")
+    private String ffltnNm;
 
-    @Schema(title = "내용", example = "")
-    @SaxFilter
-    private String cntn;
+    @Schema(title = "부서명", example = "")
+    private String deptNm;
+
+    @Schema(title = "직급명", example = "")
+    private String pstnNm;
+
+    @Schema(title = "전화번호", example = "")
+    private String telNo;
+
+    @Schema(title = "휴대전화번호", example = "")
+    private String hpNo;
+
+    @Schema(title = "이메일", example = "")
+    private String email;
+
+    @Schema(title = "약력", example = "")
+    private String spclCntn;
 
     @Schema(title = "등록ID", example = "")
     private String regId;
@@ -65,11 +78,15 @@ public class SMISmsCntnDTO extends BaseDTO {
     private String modDtm;
 
     @Schema(title = "조회 리스트", example = "")
-    private List<SMISmsCntnDTO> list;
+    private List<MPCLecturerDTO> list;
 
+    // 검색조건
     @Schema(title = "검색 등록/수정 기간 시작일자", example = "yyyy-MM-dd")
     private String dStrDt;
 
     @Schema(title = "검색 등록/수정 기간 종료일자", example = "yyyy-MM-dd")
     private String dEndDt;
+
+    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
+    private String srchLayer;
 }

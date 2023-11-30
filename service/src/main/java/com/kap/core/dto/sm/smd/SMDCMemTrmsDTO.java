@@ -1,18 +1,17 @@
-package com.kap.core.dto;
+package com.kap.core.dto.sm.smd;
 
 import com.kap.core.annotation.SaxFilter;
+import com.kap.core.dto.BaseDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-
 /**
- *  개인정보처리방침 관리
+ *  회원약관 관리
  *
  * @author 구은희
- * @since 2023.09.26
+ * @since 2023.11.06
  * @version 1.0
  * @see
  *
@@ -21,7 +20,7 @@ import java.util.List;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2023.09.26  구은희         최초 생성
+ *   2023.11.06  구은희         최초 생성
  * </pre>
  */
 
@@ -29,20 +28,22 @@ import java.util.List;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
-public class SMDAPsnIfDTO extends BaseDTO {
+public class SMDCMemTrmsDTO extends BaseDTO {
 
-    // 개인정보순번
-    private Integer psnifSeq;
+    // 회원약관순번
+    private Integer memTrmsSeq;
 
-    // 제목
-    private String titl;
-
-    // 내용
+    // 이용약관
     @SaxFilter
-    private String cntn;
+    private String tmncsCntn;
 
-    // 노출여부
-    private String expsYn;
+    // 개인정보수집및이용동의
+    @SaxFilter
+    private String psnifCntn;
+
+    // 제3자정보제공동의
+    @SaxFilter
+    private String offerCntn;
 
     // 등록ID
     private String regId;
@@ -61,22 +62,6 @@ public class SMDAPsnIfDTO extends BaseDTO {
 
     // 수정일시
     private String modDtm;
-
-    // 검색 등록/수정 기간 시작일
-    private String dStrDt;
-
-    // 검색 등록/수정 기간 종료일
-    private String dEndDt;
-
-    // 조회
-    private List<SMDAPsnIfDTO> list;
-
-    // 검색 조건
-    // 노출여부 구분(=사용여부 구분)
-    private List<String> expsYnList;
-
-    //삭제할 데이터
-    private List<String> delValueList;
 
     //테이블 이름
     private String tableNm;

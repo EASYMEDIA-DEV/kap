@@ -2,7 +2,7 @@ package com.kap.mngwserc.controller.sm;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.SMCMnPopDTO;
+import com.kap.core.dto.sm.smc.SMCMnPopDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMCMnPopService;
 import lombok.RequiredArgsConstructor;

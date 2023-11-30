@@ -65,4 +65,9 @@ public interface EBDSqCertiReqMapper {
      * 자격증 정보 변경
      */
     public int updateConfirmInfo(EBGExamAppctnMstDTO eBGExamAppctnMstDTO);
+
+    /**
+     * 만료일시 기준 몇개월전 대상자 조회
+     */
+    public List<EBDSqCertiListDTO> getSqValidEndEmailList(int month);
 }

@@ -1,7 +1,7 @@
 package com.kap.service.impl.mp;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.MPEPartsCompanyDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.MPEPartsCompanyService;
 import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import lombok.RequiredArgsConstructor;

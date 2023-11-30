@@ -7,7 +7,7 @@
     	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no,maximum-scale=1.0,minimum-scale=1.0,target-densitydpi=medium-dpi" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
     	<title>${siteName}</title>
-    	<link rel="shortcut icon" href="/common/images/bookmark_logo.ico" />
+    	<link rel="shortcut icon" href="/common/images/favicon.ico" />
     	<link rel="stylesheet" href="/bootstrap/vendor/animate.css/animate.css" />
     	<link rel="stylesheet" href="/bootstrap/vendor/bootstrap/dist/css/bootstrap.min.css" />
     	<link rel="stylesheet" href="/bootstrap/vendor/bootstrap/dist/css/bootstrap-submenu.css" />
@@ -27,17 +27,15 @@
       		<div class="page-container bg-blue-grey-900">
         		<div class="container-full">
           			<div class="container container-xs" data-controller="controller/co/COLgnCtrl" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:100%">
+						<div class="card-title text-center mb-xl">
+							<img src="/common/images/icon-logo-wht.svg" alt="로고" title="로고" />
+						</div>
             			<form class="card b0 form-validate" id="frmLogin" name="frmLogin" method="post" action="">
             				<input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
               				<div class="card-offset pb0">
 			                	<div class="card-offset-item text-right hidden">
 			                  		<div class="btn btn-success btn-circle btn-lg"><em class="ion-checkmark-round"></em></div>
 			                	</div>
-			              	</div>
-              				<div class="card-heading">
-			                	<div class="card-title text-center mt-xl">
-									<!--img src="/common/images/logo.gif" alt="로고" title="로고" /-->
-								</div>
 			              	</div>
               				<div class="card-body">
 				                <div class="mda-form-group float-label mda-input-group">
@@ -55,7 +53,7 @@
 				                  	<span class="mda-input-group-addon"><em class="ion-ios-locked-outline icon-lg"></em></span>
 				                </div>
 				                <div class="card-body bg-gray-lighter text-left text-sm">
-				                	• 비밀번호 5회 오류 시 계정 사용이 제한됩니다.&nbsp;&nbsp;(이전 입력 오류 횟수 누적)<br>
+				                	• 비밀번호 5회 오류 시 계정 사용이 제한됩니다.&nbsp;&nbsp;<br>&nbsp;&nbsp;(이전 입력 오류 횟수 누적)<br>
 									• 로그인 관련 문의사항은 관리자에게 문의하세요.
 								</div>
 							</div>

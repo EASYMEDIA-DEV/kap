@@ -1,6 +1,6 @@
 package com.kap.service.impl.sm;
 
-import com.kap.core.dto.SMDCMemTrmsDTO;
+import com.kap.core.dto.sm.smd.SMDCMemTrmsDTO;
 import com.kap.service.SMDCMemTrmsService;
 import com.kap.service.dao.sm.SMDCMemTrmsMapper;
 import lombok.RequiredArgsConstructor;

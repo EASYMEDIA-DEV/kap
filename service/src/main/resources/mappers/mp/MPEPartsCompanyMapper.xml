@@ -240,9 +240,15 @@
     <update id="updatePartsCompany" parameterType="MPEPartsCompanyDTO">
         UPDATE /* MPEPartsCompanyMapper.updatePartsCompany */ CP_CMPN_MST
         SET
+        <if test="cmpnNm != null and cmpnNm != ''.toString() ">
             CMPN_NM = #{cmpnNm}
+        </if>
+        <if test="rprsntNm != null and rprsntNm != ''.toString() ">
           , RPRSNT_NM = #{rprsntNm}
+        </if>
+        <if test="cmpnNfrmlNm != null and cmpnNfrmlNm != ''.toString() ">
           , CMPN_NFRML_NM = #{cmpnNfrmlNm}
+        </if>
           , CMPN_CD = #{cmpnCd}
           , CTGRY_CD = #{ctgryCd}
           , SIZE_CD = #{sizeCd}
@@ -251,19 +257,33 @@
           , ZIPCODE = #{zipcode}
           , BSC_ADDR = #{bscAddr}
           , DTL_ADDR = #{dtlAddr}
-          , SLS_PMT = #{slsPmt}
+        <if test="slsPmt != null and slsPmt != ''.toString() ">
+           , SLS_PMT = #{slsPmt}
+        </if>
+        <if test="slsYear != null and slsYear != ''.toString() ">
           , SLS_YEAR = #{slsYear}
+        </if>
+       <if test="mpleCnt != null and mpleCnt != ''.toString() ">
           , MPLE_CNT = #{mpleCnt}
+        </if>
           , MJR_PRDCT_1 = #{mjrPrdct1}
           , MJR_PRDCT_2 = #{mjrPrdct2}
           , MJR_PRDCT_3 = #{mjrPrdct3}
           , QLTY_5_STAR_CD = #{qlty5StarCd}
+        <if test="qlty5StarYear != null and qlty5StarYear != ''.toString() ">
           , QLTY_5_STAR_YEAR = #{qlty5StarYear}
+        </if>
           , PAY_5_STAR_CD = #{pay5StarCd}
+        <if test="pay5StarYear != null and pay5StarYear != ''.toString() ">
           , PAY_5_STAR_YEAR = #{pay5StarYear}
+        </if>
           , TCHLG_5_STAR_CD = #{tchlg5StarCd}
+        <if test="tchlg5StarYear != null and tchlg5StarYear != ''.toString() ">
           , TCHLG_5_STAR_YEAR = #{tchlg5StarYear}
-          , ADM_MEMO = #{admMemo}
+        </if>
+        <if test="admMemo != null and admMemo != ''.toString() ">
+            , ADM_MEMO = #{admMemo}
+        </if>
           , MOD_ID = #{modId}
           , MOD_IP = #{modIp}
           , MOD_DTM = NOW()

@@ -1,6 +1,6 @@
 package com.kap.service.impl.sm;
 
-import com.kap.core.dto.SMDBTmncsDTO;
+import com.kap.core.dto.sm.smd.SMDBTmncsDTO;
 import com.kap.service.SMDBTmncsService;
 import com.kap.service.dao.sm.SMDBTmncsMapper;
 import lombok.RequiredArgsConstructor;

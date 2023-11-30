@@ -434,6 +434,9 @@
 		update /* EXGExamMapper.updateExamMstExpnYn */ ex_exam_mst
 			set
 			    exps_yn = #{expsYn}
+				, mod_id = #{modId}
+			    , mod_ip = #{modIp}
+			    , mod_dtm = now()
 		where
 			exam_seq = #{detailsKey}
 	</update>

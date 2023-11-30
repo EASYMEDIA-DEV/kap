@@ -212,7 +212,7 @@ public class COLgnServiceImpl  implements COLgnService {
         		else
         		{
 					cOUserDetailsDTO = COUserDetailsDTO.builder().build();
-					cOUserDetailsDTO.setId(cOUserDetailsDTO.getId());
+					cOUserDetailsDTO.setId(cOLoginDTO.getId());
 					cOUserDetailsDTO.setRespCd( cOLoginDTO.getRespCd() );
         			RequestContextHolder.getRequestAttributes().setAttribute("tmpLgnMap", cOUserDetailsDTO, RequestAttributes.SCOPE_SESSION);
         		}

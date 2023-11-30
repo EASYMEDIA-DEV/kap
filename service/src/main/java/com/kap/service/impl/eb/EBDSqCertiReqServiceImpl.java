@@ -5,6 +5,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
+import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
 import com.kap.service.COCommService;
@@ -110,5 +111,14 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
         eBGExamAppctnMstDTO.setModIp(CONetworkUtil.getMyIPaddress(request));
         eBDSqCertiReqMapper.updateConfirmInfo( eBGExamAppctnMstDTO );
         return respCnt;
+    }
+
+
+    /**
+     * 만료일시 기준 몇개월전 알림 발송
+     */
+    public List<EBDSqCertiListDTO> getSqValidEndEmailList(int validMonth) throws Exception{
+        List<EBDSqCertiListDTO> EBDSqCertiListDTOList = eBDSqCertiReqMapper.getSqValidEndEmailList(validMonth);
+        return EBDSqCertiListDTOList;
     }
 }

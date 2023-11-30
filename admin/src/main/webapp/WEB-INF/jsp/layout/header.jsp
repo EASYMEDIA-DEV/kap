@@ -14,7 +14,7 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     	<meta name="X-CSRF-TOKEN" content="${_csrf.token}" />
     	<title>${siteName}</title>
-    	<link rel="shortcut icon" href="/common/images/bookmark_logo.ico" />
+    	<link rel="shortcut icon" href="/common/images/favicon.ico" />
     	<link rel="stylesheet" href="/bootstrap/vendor/animate.css/animate.css" />
     	<link rel="stylesheet" href="/bootstrap/vendor/bootstrap/dist/css/bootstrap.min.css" />
     	<link rel="stylesheet" href="/bootstrap/vendor/bootstrap/dist/css/bootstrap-submenu.css" />

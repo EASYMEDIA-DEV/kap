@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.MPHNewsLetterDTO;
+import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
 
 /**
  * <pre>

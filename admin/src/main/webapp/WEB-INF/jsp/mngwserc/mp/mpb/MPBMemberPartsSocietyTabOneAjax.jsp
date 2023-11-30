@@ -3,7 +3,7 @@
     <input type="hidden" id="oldEmail" name="oldEmail" value=${rtnDtl.email} />
     <input type="hidden" id="id" name="id" value=${rtnDtl.id} />
 </form>
-<form name="form" id="form" action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
+<form name="form" id="form"  action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
     <input type="hidden" id="m" name="m" value="service" />
     <input type="hidden" id="token_version_id" name="token_version_id" value="" />
     <input type="hidden" id="enc_data" name="enc_data" />

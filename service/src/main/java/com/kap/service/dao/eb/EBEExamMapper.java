@@ -126,4 +126,6 @@ public interface EBEExamMapper {
      * 교육 참여 점수 변경
      */
     public int updateEdctnPtcptScord(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
+
+
 }

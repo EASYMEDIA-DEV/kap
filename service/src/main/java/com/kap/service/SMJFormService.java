@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.SMJFormDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 
 /**
  * <pre>

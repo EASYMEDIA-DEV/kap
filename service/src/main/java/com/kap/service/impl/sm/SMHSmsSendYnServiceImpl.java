@@ -1,6 +1,6 @@
 package com.kap.service.impl.sm;
 
-import com.kap.core.dto.SMHSmsSendYnDTO;
+import com.kap.core.dto.sm.smh.SMHSmsSendYnDTO;
 import com.kap.service.SMHSmsSendYnService;
 import com.kap.service.dao.sm.SMHSmsSendYnMapper;
 import lombok.RequiredArgsConstructor;

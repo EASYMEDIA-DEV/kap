@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.SMCMnPopDTO;
+import com.kap.core.dto.sm.smc.SMCMnPopDTO;
 
 /**
  * <pre>

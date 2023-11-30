@@ -15,18 +15,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// 로그인 콜백
 	var callbackAjaxLogin = function(data){
 		var code = data.respCd;
-		// 정상
 		if (code == "0000")
 		{
-			if(data.lgnCrtfnYn == "N" || data.lgnCrtfnPassYn == "Y"){
-				// 이메일 인증 없이 로그인 처리
-				location.replace(data.rdctUrl);
-			}
-			else
-			{
+			if(data.lgnCrtfnYn == "Y"){
 				//이메일 인증으로
 				alert(msgCtrl.getMsg("success.co.login.auth.email"));
 				location.replace("/mngwsercgateway/email");
+			}
+			else
+			{
+				// 이메일 인증 없이 로그인 처리
+				location.replace(data.rdctUrl);
 			}
 		}
 		// 계정차단

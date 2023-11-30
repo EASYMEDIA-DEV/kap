@@ -1,6 +1,6 @@
 package com.kap.service.dao.sm;
 
-import com.kap.core.dto.SMCMnPopDTO;
+import com.kap.core.dto.sm.smc.SMCMnPopDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 

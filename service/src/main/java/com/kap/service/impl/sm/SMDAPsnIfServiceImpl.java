@@ -1,7 +1,7 @@
 package com.kap.service.impl.sm;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.SMDAPsnIfDTO;
+import com.kap.core.dto.sm.smd.SMDAPsnIfDTO;
 import com.kap.service.SMDAPsnIfService;
 import com.kap.service.dao.sm.SMDAPsnIfMapper;
 import lombok.RequiredArgsConstructor;
