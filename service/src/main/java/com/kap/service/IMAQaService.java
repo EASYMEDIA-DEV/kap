@@ -1,8 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.im.ima.IMAQaDTO;
-
-import javax.servlet.http.HttpServletRequest;
+import com.kap.core.dto.im.ima.IMAQaPicDTO;
 
 /**
  * 1:1 문의 service
@@ -28,13 +27,43 @@ public interface IMAQaService {
     public IMAQaDTO selectQaList(IMAQaDTO pIMAQaDTO) throws Exception;
 
     /**
-     * 1:1 문의 등록
-     */
-    public int insertQa(IMAQaDTO pIMAQaDTO, HttpServletRequest request) throws Exception;
-
-    /**
      * 1:1 문의 상세
      */
     public IMAQaDTO selectQaDtl(IMAQaDTO pIMAQaDTO) throws Exception;
+
+    /**
+     * 1:1 문의 등록
+     */
+    public int insertQa(IMAQaDTO pIMAQaDTO) throws Exception;
+
+    /**
+     * 1:1 문의 담당자 목록 조회
+     */
+    public IMAQaPicDTO selectQaPicList(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+
+    /**
+     * 1:1 문의 담당자 등록
+     */
+    public int insertQaPic(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+
+    /**
+     * 1:1 문의 담당자 수정
+     */
+    public int updateQaPic(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+
+    /**
+     * 1:1 문의 담당자 삭제
+     */
+    public int deleteQaPic(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+
+    /**
+     * 1:1 문의 유형별 담당자 등록 개수 조회
+     */
+    public int getQaPicCnt(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+
+    /**
+     * 1:1 문의 담당자 상세 조회
+     */
+    public IMAQaPicDTO selectQaPicDtl(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
 
 }

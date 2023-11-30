@@ -1,6 +1,7 @@
 package com.kap.service.dao.im;
 
 import com.kap.core.dto.im.ima.IMAQaDTO;
+import com.kap.core.dto.im.ima.IMAQaPicDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -34,6 +35,14 @@ public interface IMAQaMapper {
      */
     public int getQaListTotCnt(IMAQaDTO iMAQaDTO) throws Exception;
     /**
+     * 1:1 문의 담당자 목록 조회
+     */
+    public List<IMAQaPicDTO> selectQaPicList(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+    /**
+     * 1:1 문의 담당자 전체 개수
+     */
+    public int getQaPicListTotCnt(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+    /**
      * 1:1 문의 등록
      */
     public int insertQa(IMAQaDTO iMAQaDTO) throws Exception;
@@ -45,5 +54,25 @@ public interface IMAQaMapper {
      * 1:1 문의 상세
      */
     public IMAQaDTO selectQaDtl(IMAQaDTO iMAQaDTO) throws Exception;
+    /**
+     * 1:1 문의 담당자 등록
+     */
+    public int insertQaPic(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+    /**
+     * 1:1 문의 담당자 수정
+     */
+    public int updateQaPic(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+    /**
+     * 1:1 문의 담당자 삭제
+     */
+    public int deleteQaPic(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+    /**
+     * 1:1 문의 유형별 담당자 등록 개수 조회
+     */
+    public int getQaPicCnt(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+    /**
+     * 1:1 문의 담당자 상세
+     */
+    public IMAQaPicDTO selectQaPicDtl(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
 
 }

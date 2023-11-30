@@ -40,7 +40,7 @@
     2023.11.01    장두석       최초생성
     -->
     <select id="getQaListTotCnt" parameterType="IMAQaDTO" resultType="java.lang.Integer">
-        SELECT /* COGCntsMapper.getQaListCnt */
+        SELECT /* IMAQaMapper.getQaListCnt */
             COUNT(*)
         FROM
             BD_QA_MST A
@@ -50,6 +50,13 @@
             <include refid="selectQaListwhereSql" />
     </select>
 
+    <!--
+    쿼리명 : IMAQaMapper.selectQaDtl
+    설  명 : 1:1문의 상세
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.01    장두석       최초생성
+    -->
     <select id="selectQaDtl" parameterType="IMAQaDTO" resultType="IMAQaDTO">
         SELECT /* IMAQaMapper.selectQaDtl */
         A.QA_SEQ
@@ -85,6 +92,13 @@
         A.QA_SEQ = #{detailsKey}
     </select>
 
+    <!--
+    쿼리명 : IMAQaMapper.insertQa
+    설  명 : 1:1문의 답변 등록
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.01    장두석       최초생성
+    -->
     <insert id="insertQa" parameterType="IMAQaDTO">
         INSERT /* IMAQaMapper.insertQa */ INTO BD_QA_RPLY_DTL
         (
@@ -114,18 +128,169 @@
         )
     </insert>
 
+    <!--
+    쿼리명 : IMAQaMapper.updateQaRsume
+    설  명 : 1:1 문의 진행상태 수정
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.01    장두석       최초생성
+    -->
     <update id="updateQaRsume" parameterType="IMAQaDTO">
-        UPDATE  /*IMAQaMapper.updateQa*/
-            BD_QA_MST
+        UPDATE  /*IMAQaMapper.updateQaRsume*/
+        BD_QA_MST
         SET
-            RSUME_CD = #{rsumeCd}
+        RSUME_CD = #{rsumeCd}
         <if test="rsumeCd !='' and rsumeCd == 'SYNACK' ">
             , INIT_CHK_ADM_SEQ = (SELECT ADM_SEQ FROM CO_ADM_MST WHERE ID = #{regId})
             , INIT_CHK_DTM = NOW()
         </if>
         WHERE
-            QA_SEQ = #{detailsKey}
+        QA_SEQ = #{detailsKey}
     </update>
+
+    <!--
+     쿼리명 : IMAQaMapper.selectQaPicList
+     설  명 : 1:1 문의 담당자 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.28  장두석     최초 생성
+    -->
+    <select id="selectQaPicList" parameterType="IMAQaPicDTO" resultType="IMAQaPicDTO">
+        SELECT /* IMAQaMapper.selectQaPicList */
+            PIC_SEQ
+             , PARNT_CTGRY_CD
+             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = PARNT_CTGRY_CD) PARNT_CTGRY_NM
+             , CTGRY_CD
+             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CTGRY_CD) CTGRY_NM
+             , PIC_NM
+             , PICE_MAIL
+        FROM
+            BD_QA_PIC_MST A
+        WHERE
+            1=1
+        ORDER BY
+            A.REG_DTM DESC
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+    쿼리명 : IMAQaMapper.getQaPicListTotCnt
+    설  명 : 1:1문의 담당자 목록 개수 카운팅
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.28    장두석       최초생성
+    -->
+    <select id="getQaPicListTotCnt" parameterType="IMAQaPicDTO" resultType="java.lang.Integer">
+        SELECT /* IMAQaMapper.getQaPicListTotCnt */
+            COUNT(*)
+        FROM
+            BD_QA_PIC_MST A
+    </select>
+
+    <!--
+    쿼리명 : IMAQaMapper.insertQaPic
+    설  명 : 1:1문의 담당자 등록
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.28    장두석       최초생성
+    -->
+    <insert id="insertQaPic" parameterType="IMAQaPicDTO">
+        INSERT /* IMAQaMapper.insertQaPic */ INTO BD_QA_PIC_MST
+            (
+            PIC_SEQ
+            , PARNT_CTGRY_CD
+            , CTGRY_CD
+            , PIC_NM
+            , PICE_MAIL
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+            )
+        VALUES
+            (
+            #{picSeq}
+            , #{inqFirPic}
+            , #{inqSecPic}
+            , #{picNm}
+            , #{piceMail}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+    쿼리명 : IMAQaMapper.updateQaPic
+    설  명 : 1:1문의 담당자 수정
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.28    장두석       최초생성
+    -->
+    <update id="updateQaPic" parameterType="IMAQaPicDTO">
+        UPDATE /* IMAQaMapper.updateQaPic */
+            BD_QA_PIC_MST
+        SET
+            PARNT_CTGRY_CD = #{inqFirPic}
+            , CTGRY_CD = #{inqSecPic}
+            , PIC_NM = #{picNm}
+            , PICE_MAIL = #{piceMail}
+            , MOD_ID = #{modId}
+            , MOD_IP = #{modIp}
+            , MOD_DTM = NOW()
+        WHERE
+            PIC_SEQ = #{detailsKey}
+    </update>
+
+    <!--
+    쿼리명 : IMAQaMapper.deleteQaPic
+    설  명 : 1:1문의 담당자 삭제
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.28    장두석       최초생성
+    -->
+    <delete id="deleteQaPic" parameterType="IMAQaPicDTO">
+        DELETE FROM /* IMAQaMapper.deleteQaPic */
+            BD_QA_PIC_MST
+        WHERE
+            PIC_SEQ = #{picSeq}
+    </delete>
+
+    <!--
+    쿼리명 : IMAQaMapper.getQaPicCnt
+    설  명 : 1:1문의 담당자 목록 개수 카운팅
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2023.11.28    장두석       최초생성
+    -->
+    <select id="getQaPicCnt" parameterType="IMAQaPicDTO" resultType="java.lang.Integer">
+        SELECT /* IMAQaMapper.getQaPicCnt */
+            COUNT(*)
+        FROM
+            BD_QA_PIC_MST A
+        WHERE 1=1
+            AND PARNT_CTGRY_CD = #{parntCtgryCd}
+            AND CTGRY_CD = #{ctgryCd}
+    </select>
+
+    <!--
+     쿼리명 : IMAQaMapper.selectQaPicDtl
+     설  명 : 1:1 문의 담당자 상세
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.28  장두석     최초 생성
+    -->
+    <select id="selectQaPicDtl" parameterType="IMAQaPicDTO" resultType="IMAQaPicDTO">
+        SELECT /* IMAQaMapper.selectQaPicDtl */
+            PIC_SEQ
+             , PARNT_CTGRY_CD
+             , CTGRY_CD
+             , PIC_NM
+             , PICE_MAIL
+        FROM
+            BD_QA_PIC_MST A
+        WHERE
+            PIC_SEQ = #{picSeq}
+    </select>
 
     <!--
     쿼리명 : selectQaListwhereSql

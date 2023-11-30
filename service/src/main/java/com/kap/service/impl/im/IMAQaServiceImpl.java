@@ -6,6 +6,7 @@ import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.im.ima.IMAQaDTO;
+import com.kap.core.dto.im.ima.IMAQaPicDTO;
 import com.kap.service.COFileService;
 import com.kap.service.COMessageService;
 import com.kap.service.COUserDetailsHelperService;
@@ -16,7 +17,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,10 +50,10 @@ public class IMAQaServiceImpl implements IMAQaService {
     private final COMessageService cOMessageService;
 
     /** Sequence **/
-    /* 관리자 싴퉌스 */
+    /* 답변 시퀀스 */
     private final EgovIdGnrService rplyIdgen;
-//    String tableNm = "RPLY_SEQ";
-//    private final COSeqGnrService cOSeqGnrService;
+    /* 문의 담당자 시퀀스 */
+    private final EgovIdGnrService qaPicIdgen;
 
 
     /**
@@ -92,7 +92,7 @@ public class IMAQaServiceImpl implements IMAQaService {
     /**
      * 1:1 문의 답변 등록
      */
-    public int insertQa(IMAQaDTO pIMAQaDTO, HttpServletRequest request) throws Exception {
+    public int insertQa(IMAQaDTO pIMAQaDTO) throws Exception {
         if(pIMAQaDTO.getRsumeCd().equals("SYNACK")) {
             //등록자
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
@@ -153,4 +153,76 @@ public class IMAQaServiceImpl implements IMAQaService {
             return 0;
         }
     }
+
+    /**
+     * 1:1 문의 담당자 등록
+     */
+    public int insertQaPic(IMAQaPicDTO pIMAQaPicDTO) throws Exception {
+
+        //등록자
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pIMAQaPicDTO.setRegId(cOUserDetailsDTO.getId());
+        pIMAQaPicDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+
+        //담당자 등록
+        pIMAQaPicDTO.setPicSeq(qaPicIdgen.getNextIntegerId());
+
+        return iMAQaMapper.insertQaPic(pIMAQaPicDTO);
+    }
+
+    /**
+     * 1:1 문의 담당자 수정
+     */
+    public int updateQaPic(IMAQaPicDTO pIMAQaPicDTO) throws Exception {
+
+        //수정자
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        pIMAQaPicDTO.setModId(cOUserDetailsDTO.getId());
+        pIMAQaPicDTO.setModIp(cOUserDetailsDTO.getLoginIp());
+
+        return iMAQaMapper.updateQaPic(pIMAQaPicDTO);
+    }
+
+    /**
+     * 1:1 문의 담당자 삭제
+     */
+    public int deleteQaPic(IMAQaPicDTO pIMAQaPicDTO) throws Exception {
+
+        return iMAQaMapper.deleteQaPic(pIMAQaPicDTO);
+    }
+
+    /**
+     * 1:1 문의 담당자 목록 조회
+     */
+    public IMAQaPicDTO selectQaPicList(IMAQaPicDTO pIMAQaPicDTO) throws Exception {
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(pIMAQaPicDTO.getPageIndex());
+        page.setRecordCountPerPage(pIMAQaPicDTO.getListRowSize());
+
+        page.setPageSize(pIMAQaPicDTO.getPageRowSize());
+
+        pIMAQaPicDTO.setFirstIndex(page.getFirstRecordIndex());
+        pIMAQaPicDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        pIMAQaPicDTO.setTotalCount(iMAQaMapper.getQaPicListTotCnt(pIMAQaPicDTO));
+        pIMAQaPicDTO.setList(iMAQaMapper.selectQaPicList(pIMAQaPicDTO));
+        return pIMAQaPicDTO;
+    }
+
+    /**
+     * 1:1 문의 유형별 담당자 등록 개수 조회
+     */
+    public int getQaPicCnt(IMAQaPicDTO pIMAQaPicDTO) throws Exception{
+
+        return iMAQaMapper.getQaPicCnt(pIMAQaPicDTO);
+    }
+
+    /**
+     * 1:1 문의 담당자 상세
+     */
+    public IMAQaPicDTO selectQaPicDtl(IMAQaPicDTO pIMAQaPicDTO) throws Exception{
+        return iMAQaMapper.selectQaPicDtl(pIMAQaPicDTO);
+    }
+
 }

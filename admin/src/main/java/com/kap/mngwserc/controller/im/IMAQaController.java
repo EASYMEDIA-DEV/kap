@@ -1,8 +1,8 @@
 package com.kap.mngwserc.controller.im;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.im.ima.IMAQaDTO;
+import com.kap.core.dto.im.ima.IMAQaPicDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.IMAQaService;
@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -79,7 +82,7 @@ public class IMAQaController {
      * 1:1 문의 목록 조회
      */
     @GetMapping(value = "/select")
-    public String selectQaListPageAjax(IMAQaDTO iMAQaDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String selectQaListPageAjax(IMAQaDTO iMAQaDTO, ModelMap modelMap) throws Exception
     {
         try
         {
@@ -94,6 +97,27 @@ public class IMAQaController {
             throw new Exception(e.getMessage());
         }
         return "mngwserc/im/ima/IMAQaListAjax";
+    }
+
+    /**
+     * 1:1 문의 담당자 목록 조회
+     */
+    @GetMapping(value = "/select-pic")
+    public String selectQaPicLayerPageAjax(IMAQaPicDTO pIMAQaPicDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", iMAQaService.selectQaPicList(pIMAQaPicDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/im/ima/IMAQaPicLayerAjax";
     }
 
     /**
@@ -155,14 +179,14 @@ public class IMAQaController {
         private final IMAQaService iMAQaService;
 
         /**
-         * 1:1 문의 등록
+         * 1:1 문의 답변 등록
          */
         @PostMapping(value="/insert")
-        public IMAQaDTO qaInsertPage(@Valid IMAQaDTO iMAQaDTO, HttpServletRequest request) throws Exception
+        public IMAQaDTO qaInsertPage(@Valid IMAQaDTO iMAQaDTO) throws Exception
         {
             try
             {
-                iMAQaDTO.setRespCnt(iMAQaService.insertQa(iMAQaDTO, request));
+                iMAQaDTO.setRespCnt(iMAQaService.insertQa(iMAQaDTO));
             }
             catch (Exception e)
             {
@@ -173,6 +197,119 @@ public class IMAQaController {
                 throw new Exception(e.getMessage());
             }
             return iMAQaDTO;
+        }
+
+        /**
+         * 1:1 문의 담당자 등록
+         */
+        @PostMapping(value="/insert-pic")
+        public IMAQaPicDTO qaPicInsert(@Valid IMAQaPicDTO pIMAQaPicDTO) throws Exception
+        {
+            try
+            {
+                pIMAQaPicDTO.setRespCnt(iMAQaService.insertQaPic(pIMAQaPicDTO));
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return pIMAQaPicDTO;
+        }
+
+        /**
+         * 1:1 문의 담당자 수정
+         */
+        @PostMapping(value="/update-pic")
+        public IMAQaPicDTO qaPicUpdate(@Valid IMAQaPicDTO pIMAQaPicDTO) throws Exception
+        {
+            try
+            {
+                if(pIMAQaPicDTO.getDetailsKey() != null && !pIMAQaPicDTO.getDetailsKey().isEmpty()) {
+                    pIMAQaPicDTO.setRespCnt(iMAQaService.updateQaPic(pIMAQaPicDTO));
+                }
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return pIMAQaPicDTO;
+        }
+
+        /**
+         * 1:1 문의 담당자 삭제
+         */
+        @PostMapping(value="/delete-pic")
+        public IMAQaPicDTO qaPicDelete(@Valid IMAQaPicDTO pIMAQaPicDTO) throws Exception
+        {
+            try
+            {
+                if(pIMAQaPicDTO.getPicSeq() != null && pIMAQaPicDTO.getPicSeq() > -1) {
+                    pIMAQaPicDTO.setRespCnt(iMAQaService.deleteQaPic(pIMAQaPicDTO));
+                }
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return pIMAQaPicDTO;
+        }
+
+        /**
+         * 1:1 문의 유형별 담당자 등록 개수 조회
+         */
+        @PostMapping(value="/pic-cnt-check")
+        public IMAQaPicDTO getQaPicCnt(IMAQaPicDTO pIMAQaPicDTO) throws Exception
+        {
+            try
+            {
+                pIMAQaPicDTO.setRespCnt(iMAQaService.getQaPicCnt(pIMAQaPicDTO));
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return pIMAQaPicDTO;
+        }
+
+        /**
+         * 1:1 문의 담당자 상세 조회
+         */
+        @PostMapping(value="/write-pic")
+        public IMAQaPicDTO getQaPicWrite(IMAQaPicDTO pIMAQaPicDTO) throws Exception
+        {
+            IMAQaPicDTO rtnDto = new IMAQaPicDTO();
+
+            try
+            {
+                if(pIMAQaPicDTO.getPicSeq() != null && pIMAQaPicDTO.getPicSeq() > -1) {
+                    rtnDto = iMAQaService.selectQaPicDtl(pIMAQaPicDTO);
+                }
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return rtnDto;
         }
 
     }
