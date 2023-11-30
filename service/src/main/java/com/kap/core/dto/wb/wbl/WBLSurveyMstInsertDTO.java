@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -112,5 +113,5 @@ public class WBLSurveyMstInsertDTO extends BaseDTO {
     @Schema(title = "수정ID")
     private String modId;
 
-
+    private MultipartFile wblListExcel;
 }

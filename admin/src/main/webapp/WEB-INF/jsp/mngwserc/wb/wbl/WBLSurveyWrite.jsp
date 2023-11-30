@@ -232,7 +232,7 @@
                             <div class="form-group text-sm">
                                 <table class="table">
                                     <tr>
-                                        <th rowspan="${rowspan}" class="col-md-1 ${qstnList.cd}questionTxt">질문1</th>
+                                        <th rowspan="3" class="col-md-1 ${qstnList.cd}questionTxt">질문1</th>
                                         <th class="col-md-1">설문유형<span class="star"> *</span></th>
                                         <td class="form-inline col-md-8" >
                                             ${qstnList.srvTypeNm}
@@ -243,21 +243,25 @@
                                         <td>${qstnList.qstnNm}</td>
                                         <td></td>
                                     </tr>
-                                    <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
-                                        <tr class="answerForm">
-                                            <th>응답<span class="star"> *</span></th>
-                                            <td class="form-inline">
+                                    <tr>
+                                        <th>응답<span class="star"> *</span></th>
+                                        <td>
+                                       <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
                                             <c:choose>
-                                                <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
-                                                    ${exmplList.winAnswerText}
-                                                </c:when>
-                                                <c:otherwise>
-                                                    ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:25px;"></em></c:if></td>
-                                                </c:otherwise>
+                                            <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
+                                                ${exmplList.winAnswerText}
+                                            </c:when>
+                                            <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
+                                                - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                            </c:when>
+                                            <c:otherwise>
+                                                - ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                            </c:otherwise>
                                             </c:choose>
-                                            <td></td>
-                                        </tr>
-                                    </c:forEach>
+                                        </c:forEach>
+                                        </td>
+                                        <td></td>
+                                    </tr>
                                 </table>
                             </div>
                         </fieldset>

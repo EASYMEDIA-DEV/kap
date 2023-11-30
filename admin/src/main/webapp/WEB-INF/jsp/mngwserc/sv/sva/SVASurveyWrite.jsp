@@ -145,7 +145,7 @@
                                                                 <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
-                                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="라벨" placeholder="라벨명을 입력해주세요." style="width:80%"/>
+                                                                <input type="text" class="form-control input-sm answer <c:if test="${!(exmplStatus.first || exmplStatus.last)}">notRequired</c:if>" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="라벨" placeholder="라벨명을 입력해주세요." style="width:80%" <c:if test="${!(exmplStatus.first || exmplStatus.last)}">disabled</c:if>/>
                                                                 <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
                                                             </c:when>
                                                         </c:choose>
