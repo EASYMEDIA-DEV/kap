@@ -21,8 +21,8 @@
                     </a>
                 </td>
                 <td class="text-center"> ${list.partCmpnCd2}</td>
-                <td class="text-center"> ${ list.ptcptCd eq 'E' ? '대기' : list.ptcptCd eq 'N' ? '미참여' : '참여' }</td>
-                <td class="text-center"></td>
+                <td class="text-center"> ${list.ptcptCd eq 'E' ? '대기' : list.ptcptCd eq 'N' ? '미참여' : '참여' }</td>
+                <td class="text-center"> ${list.score}</td>
                 <td class="text-center"></td>
                 <td class="text-center"></td>
                 <td class="text-center"></td>

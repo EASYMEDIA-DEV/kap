@@ -416,13 +416,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find("input[name=next_no]").val("")
                                 .end()
-                                .find('.answer').removeClass("notRequired")
+                                .find('.answer').attr("disabled",true).addClass("notRequired")
                                 .end()
                                 .find('.addAnswer').hide()
                                 .end()
                                 .find('.delAnswer').hide()
                                 .end()
-                                .find(".answerForm").show();
+                                .find(".answerForm").show()
 
                         }else if($(this).val()=='QST06'){   //  7점척도
 
@@ -440,7 +440,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find("input[name=next_no]").val("")
                                 .end()
-                                .find('.answer').removeClass("notRequired")
+                                .find('.answer').attr("disabled",true).addClass("notRequired")
                                 .end()
                                 .find('.addAnswer').hide()
                                 .end()
@@ -462,7 +462,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find("input[name=next_no]").val("")
                                 .end()
-                                .find('.answer').removeClass("notRequired")
+                                .find('.answer').attr("disabled",true).addClass("notRequired")
                                 .end()
                                 .find('.addAnswer').hide()
                                 .end()
@@ -533,8 +533,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 var clone = answerFiledset.clone(true);
                                 var rowspan = parseInt(filedset.find("."+surveyType+"questionTxt").attr("rowspan"));
                                 filedset.find("."+surveyType+"questionTxt").attr("rowspan",rowspan+1);
+                                if (i==0){
+                                    clone.find('.answer').attr("disabled",false).removeClass("notRequired");
+                                }
                                 $(answerFiledset).last().after(clone);
                             }
+                            $(answerFiledset).find('.answer').attr("disabled",false).removeClass("notRequired");
                         }
                     }
                 }

@@ -1,4 +1,4 @@
-define(["ezCtrl"], function(ezCtrl) {
+define(["ezCtrl" ,"ezVald"], function(ezCtrl , ezVald) {
 
     "use strict";
 
@@ -44,6 +44,7 @@ define(["ezCtrl"], function(ezCtrl) {
                         $("input[name=episdSurveyYearEpisd]").each(function(){
                             if ($(this).val() == episdSurveyInfo){
                                 $("input[name=episdSurveySrvSeq]").val($(this).data("srv-seq"));
+                                $("input[name=cxstnCmpnEpisdSeq]").val($(this).data("cxstn-cmpn-episd-seq"));
                                 $(".episdSurveyText").text($(this).data("titl"));
                                 return false;
                             }
@@ -58,33 +59,10 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-            epidsSurveySave : {
+            excelSample : {
                 event : {
                     click : function(){
-                        var episdYear = $formObj.find("select[name=episdSurveyYear] option:selected").val();
-                        var episdEpisd = $formObj.find("select[name=episdSurveyEpisd] option:selected").val();
-                        var episdSrvSeq = $formObj.find("input[name=episdSurveySrvSeq]").val();
-
-                        if (episdYear == ""){
-                            alert('년도를 선택해주세요.');
-                            return;
-                        }
-                        if (episdEpisd == ""){
-                            alert('회차를 선택해주세요.');
-                            return;
-                        }
-
-
-                        if($(".dropzone .dz-preview").length < 1) {
-                            alert('첨부파일을 등록해주세요.')
-                            return;
-                        }
-
-                        var episdMst = {};
-                        episdMst.year = episdYear;
-                        episdMst.episd = episdEpisd;
-                        episdMst.srvSeq = episdSrvSeq;
-
+                        location.href='./excelSampleDownload';
                     }
                 }
             },
@@ -92,16 +70,6 @@ define(["ezCtrl"], function(ezCtrl) {
         immediately : function() {
             // 리스트 조회
 
-            /* File Dropzone Setting */
-            $formObj.find(".dropzone").each(function(){
-                var trgtObj = $(this);
-                cmmCtrl.setDropzone(trgtObj, {
-                    maxFileCnt  : trgtObj.data("maxFileCnt"),
-                    maxFileSize : trgtObj.data("maxFileSize"),
-                    fileExtn    : trgtObj.data("fileExtn"),
-                    fileFieldNm : trgtObj.data("fileFieldNm")
-                })
-            });
 
             $('select[name=episdSurveyYear]').children('option:not(:first)').remove();
             var year = "";
@@ -112,6 +80,49 @@ define(["ezCtrl"], function(ezCtrl) {
                 }
                 year = yearData;
             });
+
+
+            //엑셀업로드
+            $formObj.validation({
+                after : function(){
+                    return true;
+                },
+                async: {
+                    use: true,
+                    func: function(obj, tagid, okval, msg) {
+                        var formData = new FormData($formObj[0]);
+                        formData.append('year', $formObj.find("select[name=episdSurveyYear] option:selected").val());
+                        formData.append('episd', $formObj.find("select[name=episdSurveyEpisd] option:selected").val());
+                        formData.append('srvSeq',$formObj.find("input[name=episdSurveySrvSeq]").val());
+                        formData.append('cxstnCmpnEpisdSeq',$formObj.find("input[name=cxstnCmpnEpisdSeq]").val());
+
+                        jQuery.ajax($formObj.prop("action"), {
+                            method: $formObj.prop("method"),
+                            data :  formData,
+                            dataType : "json",
+                            processData: false,
+                            contentType: false,
+                        })
+                            .done(function(r) {
+                                alert(r.rtnMsg);
+                                $(".close").click();
+                            })
+                            .fail(function() {
+                                alert("잠시후 다시 시도 바랍니다.");
+                            })
+                    }
+                },
+                customfunc : function (obj, tagid, okval, msg) {
+                    if (jQuery(obj).prop("name") == "wblListExcel"
+                        && !!!jQuery(obj).val().match(/.+\.(xls|xlsx)$/)) {
+                        return !!alert("엑셀파일을 선택해주세요.")
+                    }
+                },
+                loadingbar: {
+                    use: true
+                },
+            });
+
         }
     };
     ctrl.exec();

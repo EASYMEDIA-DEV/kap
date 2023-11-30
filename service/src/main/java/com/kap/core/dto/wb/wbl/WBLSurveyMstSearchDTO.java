@@ -60,6 +60,9 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "참여 완료일시")
     private String ptcptCmpltnDtm;
 
+    @Schema(title = "점수")
+    private String score;
+
     @Schema(title = "조회 리스트")
     private List<WBLSurveyMstSearchDTO> list;
     @Schema(title = "검색 사용 여부 리스트")
