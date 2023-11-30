@@ -18,7 +18,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // 목록 조회
     var search = function (page){
         //data로 치환해주어야한다.
-        //cmmCtrl.setFormData($formObj);
+        cmmCtrl.setFormData($formObj);
 
         if(page != undefined){
             $formObj.find("#pageIndex").val(page);
@@ -57,7 +57,46 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         search(1);
                     }
                 }
-            },
+            },//데이터 삭제
+            btnDeleteList : {
+                event : {
+                    click : function() {
+                        var frmDataObj    = $(this).closest("form");
+                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
+                        var delType = frmDataObj.data("delType");
+                        if (delActCnt > 0)
+                        {
+                            //삭제 전송
+                            cmmCtrl.frmAjax(function(respObj){
+
+                                if(respObj != undefined && respObj.respCnt > 0){
+                                    alert("신청정보가 존재하여 삭제할 수 없습니다.");
+                                }else{
+                                    if(confirm('삭제하시겠습니까?'))
+                                    {
+                                        //삭제 전송
+                                        cmmCtrl.frmAjax(function(respObj){
+                                            if(respObj != undefined && respObj.respCnt > 0){
+                                                alert('게시물이 삭제되었습니다.');
+                                                $formObj.find("#btnSearch").click();
+                                            }
+                                            else{
+                                                alert(msgCtrl.getMsg("fail.act"));
+                                            }
+                                        }, "./deleteList", frmDataObj, "POST", "json");
+                                    }
+                                }
+                            }, "./getAppctnCnt", frmDataObj, "POST", "json");
+                        }
+                        else
+                        {
+                            alert('삭제할 게시물을 선택해주세요.');
+
+                            return;
+                        }
+                    }
+                }
+            }
         },
         classname : {
             //페이징 처리
@@ -66,7 +105,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         //페이징 이동
                         if( $(this).attr("value") != "null" ){
-                            search($formObj.find("input[name=pageIndex]").val($(this).attr("value")));
+                            search($(this).attr("value"));
                         }
                     }
                 }
