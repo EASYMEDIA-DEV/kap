@@ -7,7 +7,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 		<meta http-equiv="x-ua-compatible" content="IE=edge" />
 		<title>${siteName}</title>
-		<link rel="shortcut icon" href="/common/images/bookmark_logo.ico" />
+		<link rel="shortcut icon" href="/common/images/favicon.ico" />
 		<link rel="stylesheet" href="/bootstrap/vendor/animate.css/animate.css" />
 		<link rel="stylesheet" href="/bootstrap/vendor/bootstrap/dist/css/bootstrap.min.css" />
 		<link rel="stylesheet" href="/bootstrap/vendor/bootstrap/dist/css/bootstrap-submenu.css" />
@@ -27,6 +27,9 @@
       		<div class="page-container bg-blue-grey-900">
         		<div class="container-full">
           			<div class="container container-xs" data-controller="controller/co/COLgnCtrl" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:100%" >
+						<div class="card-title text-center mb-xl">
+							<img src="/common/images/icon-logo-wht.svg" alt="로고" title="로고" />
+						</div>
 						<form class="card b0 form-validate" id="frmPwdChng" name="frmPwdChng" method="post" action="" autocomplete="off" data-login-id="${ tmpLgnMap.id }">
 							<input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
               				<div class="card-offset pb0">
@@ -35,7 +38,6 @@
                 				</div>
               				</div>
               				<div class="card-heading">
-                				<div class="card-title text-center mt-xl"><img src="/common/images/logo.gif" alt="로고" title="로고" /></div>
 								<h5 class="text-center text-bold">비밀번호 변경안내</h5>
 								<div class="text-left text-sm text-bold">
 									<c:choose>

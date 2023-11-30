@@ -101,7 +101,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         cmmCtrl.jsonAjax(function(data){
                             if(data.respCnt > 0){
                                 alert(actionMsg);
-                                location.href="/my-page/main";
+                                location.href="./complete?ptcptSeq="+data.ptcptSeq;
                             }
                         }, actionUrl, rspnObj, "json")
                     }

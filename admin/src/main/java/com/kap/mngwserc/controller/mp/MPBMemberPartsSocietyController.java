@@ -70,12 +70,7 @@ public class MPBMemberPartsSocietyController {
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyList.admin";
     }
 
-    @GetMapping(value = "/list2")
-    public void getPartUserListPage2(HttpServletResponse response, HttpServletRequest request) throws Exception {
-        System.out.println(":::" + response);
-        System.out.println(":::" + request);
-        // 로그인한 계정
-    }
+
 
     /**
      * 부품사회원 목록으로 이동한다.

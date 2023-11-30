@@ -174,6 +174,9 @@ public class EBEExamServiceImpl implements EBEExamService {
         if(respCnt > 0)
         {
             //사용 여부만 수정
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            eXGExamMstInsertDTO.setModId(cOUserDetailsDTO.getId());
+            eXGExamMstInsertDTO.setModIp(CONetworkUtil.getMyIPaddress(request));
             respCnt = eBEExamMapper.updateExamMstExpnYn( eXGExamMstInsertDTO );
         }
         else
@@ -291,4 +294,5 @@ public class EBEExamServiceImpl implements EBEExamService {
         eBEExamMapper.updateEdctnPtcptScord(eXGExamEdctnPtcptRspnMst);
         return actCnt;
     }
+
 }

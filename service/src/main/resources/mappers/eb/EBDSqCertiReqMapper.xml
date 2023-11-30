@@ -330,6 +330,29 @@
 		WHERE exam_appctn_seq = #{examAppctnSeq}
 	</update>
 
+	<!--
+		쿼리명 : EBDSqCertiReqMapper.getSqValidEndEmailList
+		설  명 : 만료일시 기준 몇개월전 대상자 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getSqValidEndEmailList" parameterType="java.lang.Integer" resultType="EBDSqCertiListDTO">
+		SELECT /* EBDSqCertiReqMapper.getSqValidEndEmailList */
+			  a.jdgmt_no
+			 , a.mem_seq
+			 , a.exam_appctn_seq
+			 , a.rfrsh_dtm
+			 , a.acqsn_dtm
+			 , a.valid_strt_dt
+			 , a.valid_end_dt
+			 , b.email
+			 , b.name
+		FROM sq_exam_appctn_mst a JOIN co_mem_mst b ON b.mem_seq = a.mem_seq
+		WHERE a.use_yn = 'Y' AND a.issue_cd='EBD_SQ_I'
+		  AND DATE_FORMAT(DATE_ADD(a.valid_end_dt, INTERVAL #{value} MONTH), '%Y-%m-%d') = DATE_FORMAT(NOW(), '%Y-%m-%d')
+	</select>
+
 </mapper>
 
 

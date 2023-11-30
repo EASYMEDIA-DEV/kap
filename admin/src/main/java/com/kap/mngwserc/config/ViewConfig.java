@@ -3,6 +3,8 @@ package com.kap.mngwserc.config;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.impl.CODummyUserDetailsServiceImpl;
 import com.kap.service.impl.COUserDetailsSessionServiceImpl;
+import net.javacrumbs.shedlock.core.LockProvider;
+import net.javacrumbs.shedlock.provider.jdbctemplate.JdbcTemplateLockProvider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,8 @@ import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
 import org.springframework.web.servlet.view.tiles3.TilesViewResolver;
+
+import javax.sql.DataSource;
 
 @Configuration
 public class ViewConfig {
@@ -75,6 +79,12 @@ public class ViewConfig {
             helper.setEgovUserDetailsService(new COUserDetailsSessionServiceImpl());
         }
         return helper;
+    }
+
+    //Spring Schedule Lock 설정
+    @Bean
+    public LockProvider lockProvider(DataSource dataSource) {
+        return new JdbcTemplateLockProvider(dataSource);
     }
 
 

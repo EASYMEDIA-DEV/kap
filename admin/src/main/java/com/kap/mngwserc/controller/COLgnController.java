@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller;
 
 import com.kap.common.utility.CODateUtil;
+import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.*;
 import com.kap.service.COLgnService;
 import com.kap.service.COMessageService;
@@ -106,11 +107,11 @@ public class COLgnController {
 		try
 		{
 			if(
-					RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION) != null
-					&& RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) != null
+					RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) != null
+					&& RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailLgnMap", RequestAttributes.SCOPE_SESSION) != null
 			)
 			{
-				lgnCOAAdmDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
+				lgnCOAAdmDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailLgnMap", RequestAttributes.SCOPE_SESSION);
 				authNum      = String.valueOf( RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) );
 				rtnUrl = "mngwserc/co/COLgnEmail";
 			}
@@ -177,7 +178,7 @@ public class COLgnController {
 			}
 			else
 			{
-				COAAdmDTO rtnCOAAdmDTO = (COAAdmDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
+				COUserDetailsDTO rtnCOAAdmDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
 				modelMap.addAttribute("tmpLgnVO", rtnCOAAdmDTO);
 			}
     	}
@@ -276,9 +277,7 @@ public class COLgnController {
 			{
 				rtnCOLoginDTO = cOLgnService.actionLogin(cOLoginDTO, request);
 				COUserDetailsDTO tmpCOUserDetailsDTO  = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
-				System.out.println("===============" + serverStatus);
-				System.out.println("===============" + rtnCOLoginDTO.getRespCd());
-				if(serverStatus.equals("dev") && "0000".equals(rtnCOLoginDTO.getRespCd()) && !"N".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
+				if("0000".equals(rtnCOLoginDTO.getRespCd()) && "Y".equals(rtnCOLoginDTO.getLgnCrtfnYn())){
 
 					//이메일 발송
 					COMailDTO cOMailDTO = new COMailDTO();
@@ -312,11 +311,12 @@ public class COLgnController {
 
 					cOSystemLogDTO.setCrtfnNo(Integer.parseInt(authNum));
 					cOSystemLogDTO.setRegId(tmpCOUserDetailsDTO.getId());
-					cOSystemLogDTO.setRegIp("127.0.0.1");
+					cOSystemLogDTO.setRegIp(CONetworkUtil.getMyIPaddress(request));
 
 					cOSystemLogService.logInsertCrtfnNo(cOSystemLogDTO);
 
 
+					RequestContextHolder.getRequestAttributes().setAttribute("tmpEmailLgnMap", tmpCOUserDetailsDTO, RequestAttributes.SCOPE_SESSION);
 					RequestContextHolder.getRequestAttributes().setAttribute("tmpEmailAuthNum", authNum, RequestAttributes.SCOPE_SESSION);
 				}else{
 					// 로그인 세션 생성

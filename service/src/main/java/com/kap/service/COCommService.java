@@ -3,6 +3,8 @@ package com.kap.service;
 
 import com.kap.core.dto.COFrontHeaderNtfyDTO;
 import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.co.COCNiceMyResDto;
+import com.kap.core.dto.co.COCNiceReqEncDto;
 import com.kap.core.dto.co.COCNiceServiceDto;
 import com.kap.core.dto.co.COCompApiResDto;
 
@@ -38,5 +40,9 @@ public interface COCommService {
 
     COCompApiResDto niceChk(String compNum) throws Exception;
 
-    COCNiceServiceDto niceChk() throws Exception;
+    COCNiceServiceDto idnttvrfct(HttpServletRequest request , COCNiceReqEncDto cocNiceReqEncDto) throws Exception;
+
+    COCNiceMyResDto idnttvrfctConfirm(String params , HttpServletRequest request) throws Exception;
+
+
 }

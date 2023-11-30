@@ -5,6 +5,8 @@ import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMenuDTO;
 import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.co.COCNiceMyResDto;
+import com.kap.core.dto.co.COCNiceReqEncDto;
 import com.kap.core.dto.co.COCNiceServiceDto;
 import com.kap.core.dto.co.COCompApiResDto;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
@@ -100,16 +102,66 @@ public class COCOmmController {
             return cOUserCmpnDto;
         }
 
+        /**
+         * 나이스 회사 체크
+         * @param coCompApiResDto
+         * @return
+         * @throws Exception
+         */
         @PostMapping("/nice/comp-chk")
         @ResponseBody
         public COCompApiResDto niceChk(COCompApiResDto coCompApiResDto) throws Exception {
             return cOCommService.niceChk(coCompApiResDto.getCompNum());
         }
 
-        @PostMapping("/nice/my-chk")
+        /**
+         * 나이스 본인 인증
+         * @param request
+         * @param cocNiceReqEncDto
+         * @return
+         * @throws Exception
+         */
+        @PostMapping("/nice/my-idnttvrfct")
         @ResponseBody
-        public COCNiceServiceDto niceChk() throws Exception {
-            return cOCommService.niceChk();
+        public COCNiceServiceDto idnttvrfct(HttpServletRequest request , COCNiceReqEncDto cocNiceReqEncDto) throws Exception {
+            return cOCommService.idnttvrfct(request , cocNiceReqEncDto);
         }
+
+
+    }
+
+    /**
+     * 나이스 본인 인증 후 팝업
+     * @param request
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
+    @GetMapping(value = "/nice/my-idnttvrfct-confirm")
+    public String idnttvrfctConfirm(HttpServletRequest request , ModelMap modelMap) throws Exception {
+
+        modelMap.addAttribute("rtnData", cOCommService.idnttvrfctConfirm(request.getParameter("enc_data") , request));
+
+        return  "mngwserc/CONicePopUp";
+    }
+
+    /**
+     * 나이스 본인 인증 테스트  페이지 없다고 나옴 값만 확인!
+     * name
+     * birthdate
+     * gender
+     * nationalinfo
+     * mobile_no
+     * ci
+     * 사용하고하지는 dto에 변수 추가 하기
+     * @param request
+     * @param cocNiceMyResDto
+     * @throws Exception
+     */
+    @RequestMapping(value = "/nice/test")
+    public void testNice(HttpServletRequest request , COCNiceMyResDto cocNiceMyResDto) throws Exception {
+        log.info("호출 되었음");
+        log.info("parameters :::: {}", cocNiceMyResDto);
+
     }
 }

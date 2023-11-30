@@ -1,6 +1,7 @@
 package com.kap.front.config;
 
 import com.kap.front.interceptor.COAuthenticInterceptor;
+import com.kap.front.interceptor.COBackCookieDeleteInterceptor;
 import com.kap.front.interceptor.COViewInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +32,11 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(cOViewInterceptor()).addPathPatterns("/**").order(2)
                 .excludePathPatterns("/**/*.*")
                 .excludePathPatterns("/error");
+
+        //뒤로가기 쿠키 삭제
+        registry.addInterceptor(cOBackCookieDeleteInterceptor())
+                .addPathPatterns("/my-page/education/exam/complete")
+                .order(3);
     }
 
     //관리자 메뉴 적용(인터셉터에서 @Resource로 등록된건 빈으로 등록해주어야 사용가능)
@@ -43,6 +49,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Bean
     public COAuthenticInterceptor cOAuthenticInterceptor() {
         return new COAuthenticInterceptor();
+    }
+
+    //뒤로가기 Cache 삭제
+    @Bean
+    public COBackCookieDeleteInterceptor cOBackCookieDeleteInterceptor() {
+        return new COBackCookieDeleteInterceptor();
     }
 
     //모바일 체크 Device Resolver. 파라미터로 받음.

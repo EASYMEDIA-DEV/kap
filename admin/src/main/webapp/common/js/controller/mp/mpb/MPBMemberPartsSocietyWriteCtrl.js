@@ -228,11 +228,11 @@ var exports = {
                             return ;
                         } else {
                             jQuery.ajax({
-                                url : "/mngwserc/nice/my-chk",
+                                url : "/mngwserc/nice/my-idnttvrfct",
                                 type : "post",
                                 data :
                                     {
-                                        "compNum" : $("#workBsnmNo").val()
+                                        "receivedata" : "https://localhost:9012/mngwserc/nice/test" //팝업 후 이동할 페이지
                                     },
                                 success : function(data)
                                 {

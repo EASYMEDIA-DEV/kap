@@ -74,17 +74,6 @@ public class RestExceptionHandler {
     }
 
     /**
-     * enum type 일치하지 않아 binding 못할 경우 발생
-     * 주로 @RequestParam enum으로 binding 못했을 경우 발생
-     */
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    protected ResponseEntity<ErrorResponse> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e) {
-        log.error("handleMethodArgumentTypeMismatchException", e);
-        final ErrorResponse response = ErrorResponse.of(e);
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
-
-    /**
      * 지원하지 않은 HTTP method 호출 할 경우 발생
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -145,13 +134,4 @@ public class RestExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    /**
-     * Unknown 오류
-     */
-    @ExceptionHandler(Exception.class)
-    protected ResponseEntity<ErrorResponse> handleException(Exception e) {
-        log.error("handleException", e);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.INTERNAL_SERVER_ERROR);
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
 }
