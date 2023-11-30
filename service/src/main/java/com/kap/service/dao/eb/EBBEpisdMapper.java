@@ -92,6 +92,16 @@ public interface EBBEpisdMapper {
 	public EBBEpisdDTO selectEpisdChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 - 교육 참여자 목록 카운트
+	 */
+	public int selectEpisdPtcptListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 교육 참여자 목록
+	 */
+	public List<EBBPtcptDTO> selectEpisdPtcptList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
 	 * 교육차수 - 교육예산지출상세 삭제
 	 */
 	public int deleteBdgetList(EBBEpisdDTO eBBEpisdDTO) throws Exception;

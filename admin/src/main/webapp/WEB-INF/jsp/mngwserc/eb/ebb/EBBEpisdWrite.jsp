@@ -670,6 +670,80 @@
 
                 <!-- 참여자 목록-->
                 <div id="accsList" class="tab-pane fade">
+
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <div class="col-sm-11">
+                                <h6 class="mt0"><em class="ion-play mr-sm"></em>참여자 목록</h6>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <div class="clearfix">
+                            <h6 class="pull-left mt0">
+                                <em class="ion-play mr-sm"></em>교육 참여자 목록 (총 <span id="ptcptListContainerTotCnt">0</span> 건)
+                            </h6>
+                            <!-- 현재 페이징 번호 -->
+                            <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+                            <!-- 페이징 버튼 사이즈 -->
+                            <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
+                            <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+
+                            <div class="pull-right ml-sm">
+                                <select class="form-control input-sm listRowSizeContainer" >
+                                    <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                        <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                                    </jsp:include>
+                                </select>
+                            </div>
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-default btn-sm mb-sm" id="btnEdDelete">출석부</button>
+                                <button type="button" class="btn btn-default btn-sm mb-sm" id="btnCopy">신청자 등록</button>
+                                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">엑셀 다운로드</button>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive col-sm-12 p0 m0" id="vueList">
+                            <table class="table table-hover table-striped" >
+                                <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <label class="checkbox-inline c-checkbox">
+                                            <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
+                                            <span class="ion-checkmark-round"></span>
+                                        </label>
+                                    </th>
+                                    <th class="text-center">번호</th>
+                                    <th class="text-center">아이디</th>
+                                    <th class="text-center">이름</th>
+                                    <th class="text-center">부품사명</th>
+                                    <th class="text-center">구분</th>
+                                    <th class="text-center">사업자등록번호</th>
+                                    <th class="text-center">휴대폰번호</th>
+                                    <th class="text-center">이메일</th>
+                                    <th class="text-center">가입일</th>
+                                    <th class="text-center">교육신청일</th>
+                                    <th class="text-center">교육상태</th>
+                                    <th class="text-center">출석</th>
+                                    <th class="text-center">평가</th>
+                                    <th class="text-center">수료</th>
+
+                                </tr>
+                                </thead>
+
+                                <!-- 리스트 목록 결과 -->
+                                <tbody id="ptcptListContainer"/>
+
+                            </table>
+                            <!-- 페이징 버튼 -->
+                            <div id="ptcptPagingContainer"/>
+                        </div>
+                    </fieldset>
+
+
+
+
                 </div>
 
                 <!-- 만족도 결과 -->
