@@ -3,9 +3,7 @@
 <html lang="en">
   	<head>
 		<spring:eval var="siteName" expression="@environment.getProperty('app.site.name')" />
-		<%--<spring:eval var="siteProfile" expression="@environment.getProperty('spring.config.activate.on-profile')" />--%>
-		<spring:eval var="siteProfile" expression="@environment.getProperty('server-status')" />
-
+		<spring:eval var="siteProfile" expression="@environment.getProperty('spring.config.activate.on-profile')" />
     	<meta charset="utf-8" />
     	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     	<meta http-equiv="x-ua-compatible" content="IE=edge" />
@@ -30,6 +28,9 @@
       		<div class="page-container bg-blue-grey-900">
         		<div class="container-full">
           			<div class="container container-xs" data-controller="controller/co/COLgnCtrl" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:100%">
+						<div class="card-title text-center mb-xl">
+							<img src="/common/images/icon-logo-wht.svg" alt="로고" title="로고" />
+						</div>
             			<form class="card b0 form-validate" id="frmLoginEmail" name="frmLoginEmail" method="post" action="" autocomplete="off">
             				<input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
               				<div class="card-offset pb0">
@@ -37,22 +38,18 @@
 			                  		<div class="btn btn-success btn-circle btn-lg"><em class="ion-checkmark-round"></em></div>
 			                	</div>
 			              	</div>
-              				<div class="card-heading">
-			                	<div class="card-title text-center mt-xl"><img src="/common/images/logo.gif" alt="로고" title="로고" /></div>
-			              	</div>
               				<div class="card-body">
 				                <div class="mda-input-group input-group colorpicker-element">
 				                  	<div class="mda-form-control">
 										<c:set var="emailAuthNum" value="" />
 										<c:choose>
-											<c:when test="${ siteProfile ne 'real'  }">
-												<c:set var="emailAuthNum" value="${ sessionScope.tmpEmailAuthNum }" />
+											<c:when test="${ fn:indexOf(siteProfile, 'prod') > 0  }">
+												<c:set var="emailAuthNum" value="" />
 											</c:when>
 											<c:otherwise>
-												<c:set var="emailAuthNum" value="" />
+												<c:set var="emailAuthNum" value="${ sessionScope.tmpEmailAuthNum }" />
 											</c:otherwise>
 										</c:choose>
-
 										<input type="text" class="form-control numberChk" value="${ emailAuthNum }" name="emailAuthNum" title="인증번호" placeholder="인증번호" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/gi,'');" />
 				                    	<div class="mda-form-control-line"></div>
 				                  	</div>
