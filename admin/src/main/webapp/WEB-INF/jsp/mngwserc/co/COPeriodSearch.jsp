@@ -64,7 +64,15 @@
 					</select>
 				</c:if>
 				<div class="input-group">
-					<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+					<%--교육 및 컨설팅은 날짜 기본값이 30일전 그 외에는 1년전 처리 관련--%>
+					<c:choose>
+						<c:when test="${param.srchType eq 'cnstg' or param.srchType eq 'edctn'}">
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-30'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+						</c:when>
+						<c:otherwise>
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+						</c:otherwise>
+					</c:choose>
 					<span class="input-group-btn" style="z-index:0;">
 					<button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
 						<em class="ion-calendar"></em>
