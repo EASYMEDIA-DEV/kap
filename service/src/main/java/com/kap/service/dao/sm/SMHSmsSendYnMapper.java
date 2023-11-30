@@ -1,6 +1,6 @@
 package com.kap.service.dao.sm;
 
-import com.kap.core.dto.SMHSmsSendYnDTO;
+import com.kap.core.dto.sm.smh.SMHSmsSendYnDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

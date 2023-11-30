@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.SMHSmsSendYnDTO;
+import com.kap.core.dto.sm.smh.SMHSmsSendYnDTO;
 
 /**
  * <pre>

@@ -1,8 +1,7 @@
 package com.kap.mngwserc.controller.sm;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.SMISmsCntnDTO;
+import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMISmsCntnService;

@@ -20,7 +20,7 @@
             <input type="hidden" class="notRequired" id="etcMatlsFileSeq" name="etcMatlsFileSeq" value="${rtnInfo.etcMatlsFileSeq}" />
             <input type="hidden" class="notRequired" id="selectCtgryCd" name="selectCtgryCd" value="${rtnInfo.selectCtgryCd}" />
 
-            <h6 class="mt-lg"> 강사 기본 정보 </h6>
+            <h6 class="mt-lg"> 신청자 정보 </h6>
             <div class="table-responsive col-sm-12 p0 m0">
                 <table class="table">
                     <colgroup>
@@ -81,7 +81,7 @@
                 </table>
             </div>
 
-            <div class="text-left mb-xl"><h5>부품사 정보</h5></div>
+            <h6 class="mt-lg"> 부품사 정보 </h6>
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">부품사명<span class="star text-danger"> *</span></label>

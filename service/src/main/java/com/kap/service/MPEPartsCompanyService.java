@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.MPEPartsCompanyDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 
 /**
  * <pre>

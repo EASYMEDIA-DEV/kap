@@ -1,6 +1,6 @@
 package com.kap.service.dao.sm;
 
-import com.kap.core.dto.SMDAPsnIfDTO;
+import com.kap.core.dto.sm.smd.SMDAPsnIfDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.kap.core.dto.eb.ebc;
 
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.MPCLecturerDTO;
+import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

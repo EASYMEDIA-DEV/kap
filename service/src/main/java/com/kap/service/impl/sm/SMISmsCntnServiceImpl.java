@@ -1,7 +1,7 @@
 package com.kap.service.impl.sm;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.SMISmsCntnDTO;
+import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.service.SMISmsCntnService;
 import com.kap.service.dao.sm.SMISmsCntnMapper;
 import lombok.RequiredArgsConstructor;

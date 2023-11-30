@@ -3,7 +3,7 @@ package com.kap.mngwserc.controller.eb;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.MPEPartsCompanyDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;

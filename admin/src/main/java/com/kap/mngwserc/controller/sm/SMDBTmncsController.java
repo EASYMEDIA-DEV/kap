@@ -1,8 +1,7 @@
 package com.kap.mngwserc.controller.sm;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.SMDBTmncsDTO;
+import com.kap.core.dto.sm.smd.SMDBTmncsDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SMDBTmncsService;
 import lombok.RequiredArgsConstructor;

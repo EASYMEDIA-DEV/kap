@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.MPCLecturerDTO;
+import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 
 /**
  * <pre>

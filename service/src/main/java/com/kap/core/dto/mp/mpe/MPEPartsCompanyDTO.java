@@ -1,6 +1,7 @@
-package com.kap.core.dto;
+package com.kap.core.dto.mp.mpe;
 
 import com.kap.core.annotation.SaxFilter;
+import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -121,12 +121,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $(".pay5StarArea").hide();
                             $(".tchlg5StarArea").hide();
                         }
-
-                        var selectedAppctnFldCd = $('#ctgryCd option:selected').val();
-                        $formObj.find("input[name=appctnFldCd]").val(selectedAppctnFldCd);
-                        cmmCtrl.frmAjax(function(respObj) {
-                            ctrl.obj.find(".checkBoxArea").html(respObj);
-                        }, "/mngwserc/eb/ebc/changeCtgryCd", $formObj, "POST", "html",'',false);
                     }
                 }
             },

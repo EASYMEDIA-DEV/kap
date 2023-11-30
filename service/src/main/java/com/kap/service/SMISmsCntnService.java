@@ -1,6 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.SMISmsCntnDTO;
+import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 
 /**
  * <pre>

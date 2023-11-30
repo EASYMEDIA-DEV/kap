@@ -1,6 +1,6 @@
 package com.kap.mngwserc.controller.mp;
 
-import com.kap.core.dto.MPHNewsLetterDTO;
+import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
 import com.kap.service.MPHNewsLetterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
