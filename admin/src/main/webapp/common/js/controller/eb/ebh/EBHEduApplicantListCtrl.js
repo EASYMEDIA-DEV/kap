@@ -4,7 +4,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // set controller name
     var exports = {
-        controller : "controller/cb/cba/CBATechGuidanceListCtrl"
+        controller : "controller/eb/ebh/EBHEduApplicantListCtrl"
     };
 
     // get controller object
@@ -12,7 +12,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-    var $excelObj = ctrl.obj.parent().find(".excel-down");
 
 
     //var 선택삭제
@@ -79,7 +78,7 @@ define(["ezCtrl"], function(ezCtrl) {
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/cb/cba/select", $formObj, "POST", "html");
+        }, "/mngwserc/eb/eba/select", $formObj, "GET", "html");
 
     }
 
@@ -166,7 +165,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
         },
         classname : {
-
             classType : {
                 event : {
                     click : function() {
@@ -201,8 +199,6 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-
-
             //페이징 처리
             pageSet : {
                 event : {
@@ -227,7 +223,6 @@ define(["ezCtrl"], function(ezCtrl) {
                 }
             },
             //페이징 목록 갯수
-
             listRowSizeContainer : {
                 event : {
                     change : function(){
@@ -307,28 +302,8 @@ define(["ezCtrl"], function(ezCtrl) {
         },
         immediately : function() {
             //리스트 조회
-            //폼 데이터 처리
-            cmmCtrl.setFormData($formObj);
-            search();
-
-            $excelObj.find("button.down").on('click', function(){
-                var rsn = $excelObj.find("#rsn").val().trim();
-                var frmDataObj    = $formObj.closest("form");
-
-                frmDataObj.find("input[name='rsn']").remove();
-
-                if (rsn != "") {
-                    frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
-
-                    //파라미터를 물고 가야함.
-                    location.href = "./excel-down?" + frmDataObj.serialize();
-
-                } else {
-                    alert(msgCtrl.getMsg("fail.reason"));
-                    return;
-                }
-
-            });
+            // cmmCtrl.setFormData($formObj);
+            // search();
         }
     };
 

@@ -10,32 +10,51 @@
     -->
     <select id="selectTechGuidanceList" parameterType="CBATechGuidanceDTO" resultType="CBATechGuidanceDTO">
         SELECT /* CBATechGuidanceMapper.selectTechGuidanceList */
-            CNSTG_SEQ,
-            BSN_YEAR,
-            /*RSUME_STTS_CD,*/
-            (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = A.BSNM_NO) AS CMPN_NM
-            CNSTG_CD,
-            APPCTN_DT,
-            CMPN_SIZE_CD,
-            BSNM_NO,
-            (SELECT SLS_PMT FROM CP_CMPN_MST WHERE BSNM_NO = A.BSNM_NO) AS SLS_PMT,
-            (SELECT MPLE_CNT FROM CP_CMPN_MST WHERE BSNM_NO = A.BSNM_NO) AS MPLE_CNT,
-            (SELECT BFRE_JDGMT_RSLT_CD FROM CP_CNSTG_RSUME_MST WHERE BSNM_NO = A.BSNM_NO) AS BFRE_JDGMT_RSLT_CD
-            (SELECT BFRE_JDGMT_RSLT_CD FROM CP_CNSTG_RSUME_MST WHERE BSNM_NO = A.BSNM_NO) AS BFRE_JDGMT_RSLT_CD
-        FROM CP_CNSTG_APPCTN_MST A
+            A.CNSTG_SEQ,
+            A.APPCTN_BSNM_NO,
+            A.APPCTN_MEM_SEQ,
+            A.CNSTG_CD,
+            A.APPCTN_DT,
+            A.CMPN_SIZE_CD,
+            A.CMPN_ADDR_SAME_YN,
+            A.FCTRY_ZIPCODE,
+            A.FCTRY_BSC_ADDR,
+            A.FCTRY_DTL_ADDR,
+            A.FIRST_RGNS_CD,
+            A.SCND_RGNS_CD,
+            A.FAX_NO,
+            A.RPRSNT_APPRV_YN,
+            A.APPCTN_RSN_CD,
+            A.APPCTN_FLD_CD,
+            A.ITRDC_FILE_SEQ,
+            A.IMPVM_FILE_SEQ,
+            B.MEM_SEQ,
+            B.ID,
+            B.NAME,
+            B.HP_NO,
+            B.EMAIL,
+            B.TEL_NO,
+            B.DEPT_CD,
+            B.DEPT_DTL_NM,
+            B.PSTN_CD,
+            B.PSTN_NM
+        FROM
+            CP_CNSTG_APPCTN_MST A
+        LEFT JOIN
+            CO_MEM_MST B
+        ON A.APPCTN_BSNM_NO = B.WORK_BSNM_NO
+        AND A.APPCTN_MEM_SEQ = B.MEM_SEQ
         <include refid="selectTechGuidancewhereSql" />
-        ORDER BY
-         DESC
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
     <!--
-         쿼리명 : CBATechGuidanceMapper.selectTechGuidanceTopCnt
+         쿼리명 : CBATechGuidanceMapper.selectTechGuidanceTotCnt
          설  명 :  컨설팅 기술 관리 목록 카운트.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.14   임서화      최초생성
     -->
-    <select id="selectTechGuidanceTopCnt" parameterType="CBATechGuidanceDTO" resultType="java.lang.Integer">
+    <select id="selectTechGuidanceTotCnt" parameterType="CBATechGuidanceDTO" resultType="java.lang.Integer">
         SELECT
             count(*)
         FROM
@@ -52,12 +71,95 @@
     -->
     <select id="selectTechGuidanceDtl" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /* CBATechGuidanceMapper.selectTechGuidanceDtl */
-            *
+            A.CNSTG_SEQ,
+            A.APPCTN_BSNM_NO AS BSNM_NO,
+            A.APPCTN_MEM_SEQ,
+            A.CNSTG_CD,
+            A.RSUME_STTS_CD,
+            A.APPCTN_DT,
+            A.CMPN_SIZE_CD,
+            A.CMPN_ADDR_SAME_YN,
+            A.FCTRY_ZIPCODE,
+            A.FCTRY_BSC_ADDR,
+            A.FCTRY_DTL_ADDR,
+            A.APPCTN_FLD_CD,
+            A.FAX_NO,
+            A.RPRSNT_APPRV_YN,
+            A.FIRST_RGNS_CD,
+            A.SCND_RGNS_CD,
+            A.APPCTN_RSN_CD,
+            A.APPCTN_FLD_CD,
+            A.ITRDC_FILE_SEQ,
+            A.IMPVM_FILE_SEQ,
+            B.MEM_SEQ,
+            B.ID,
+            B.NAME,
+            B.HP_NO,
+            B.EMAIL,
+            B.TEL_NO,
+            B.DEPT_CD,
+            B.DEPT_DTL_NM,
+            B.PSTN_CD,
+            B.PSTN_NM,
+            (SELECT CD FROM CP_CNSTG_CBSN_DTL where cnstg_seq = A.CNSTG_SEQ) CBSN_CD,
+            (SELECT ETC_NM FROM CP_CNSTG_CBSN_DTL where cnstg_seq = A.CNSTG_SEQ) ETC_NM,
+            (SELECT FILE_SEQ FROM CO_FILE_MST WHERE FILE_SEQ = A.ITRDC_FILE_SEQ ) ITRDC_FILE_SEQ,
+            (SELECT FILE_SEQ FROM CO_FILE_MST WHERE FILE_SEQ = A.IMPVM_FILE_SEQ ) IMPVM_FILE_SEQ,
+            (SELECT CMPN_NFRML_NM from cp_cmpn_mst where bsnm_no = A.APPCTN_BSNM_NO) AS CMPN_NFRML_NM,
+            (SELECT CMPN_CD from cp_cmpn_mst where bsnm_no = A.APPCTN_BSNM_NO) AS CMPN_CD,
+            A.ADM_MEMO,
+            A.REG_DTM,
+            A.REG_ID,
+            (SELECT NAME CO_MEM_MST WHERE ID = B.REG_ID) AS REG_NAME,
+            A.MOD_DTM,
+            A.MOD_ID,
+            (SELECT NAME CO_MEM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
         FROM
-            CP_CNSTG_APPCTN_MST A
+            CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
-          AND CNSTG_SEQ = #{detailsKey}
+          AND A.CNSTG_SEQ = #{detailsKey}
+          AND A.APPCTN_BSNM_NO = B.WORK_BSNM_NO
+          AND A.APPCTN_MEM_SEQ = B.MEM_SEQ
     </select>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.selectCnstgDlvryInfo
+     설  명 :  고객사 비율 상세 조회
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectCnstgDlvryInfo" parameterType="java.lang.Integer" resultType="CBATechGuidanceInsertDTO">
+        SELECT /* CBATechGuidanceMapper.selectCnstgDlvryInfo */
+            CNSTG_SEQ,
+            CMPN_DLVRY_SEQ,
+            CMPN_NM AS DLVRY_CMPN_NM,
+            RATE AS DLVRY_RATE
+        FROM
+            CP_CNSTG_DLVRY_DTL
+        WHERE
+            CNSTG_SEQ =  #{cnstgSeq}
+    </select>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.selectCnstgDpndnInfo
+     설  명 :  완성차 의존 비율 상세 조회
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectCnstgDpndnInfo" parameterType="java.lang.Integer" resultType="CBATechGuidanceInsertDTO">
+        SELECT /* CBATechGuidanceMapper.selectCnstgDpndnInfo */
+            CNSTG_SEQ,
+            DPNDN_SEQ,
+            CMPN_NM as DPNDN_CMPN_NM,
+            RATE as DPNDN_RATE
+        FROM
+            CP_CNSTG_DPNDN_DTL
+        WHERE
+            CNSTG_SEQ =  #{cnstgSeq}
+    </select>
+
 
     <!--
      쿼리명 : CBATechGuidanceMapper.insertTechGuidance
@@ -67,57 +169,53 @@
     2023.11.14   임서화      최초생성
     -->
     <insert id="insertTechGuidance" parameterType="CBATechGuidanceInsertDTO">
-        INSERT /* CBATechGuidanceMapper.insertTechGuidance */ INTO CP_CNSTG_APPCTN_MST
-        ( CNSTG_SEQ
-        , APPCTN_BSNM_NO
-        , APPCTN_MEM_SEQ
-        , CNSTG_CD
-        , BSN_YEAR
-        , APPCTN_DT
-        , CMPN_SIZE_CD
-        , CMPN_ADDR_SAME_YN
-        , FCTRY_ZIPCODE
-        , FCTRY_BSC_ADDR
-        , FCTRY_DTL_ADDR
-        , RGNS_CD
-        , HMPGE_URL
-        , QLTY_PIC_CNT
-        , FAX_NO
-        , RPRSNT_APPRV_YN
-        , APPCTN_RSN_CD
-        , APPCTN_FLD_CD
-        , RQST_CNTN
-        , ITRDC_FILE_SEQ
-        , IMPVM_FILE_SEQ
-        , REG_ID
-        , REG_IP
-        , REG_DTM
+        INSERT /* CBATechGuidanceMapper.insertTechGuidance */ INTO CP_CNSTG_APPCTN_MST (
+            CNSTG_SEQ
+            , APPCTN_BSNM_NO
+            , APPCTN_MEM_SEQ
+            , CNSTG_CD
+            , APPCTN_DT
+            , CMPN_SIZE_CD
+            , CMPN_ADDR_SAME_YN
+            , FCTRY_ZIPCODE
+            , FCTRY_BSC_ADDR
+            , FCTRY_DTL_ADDR
+            , FIRST_RGNS_CD
+            , SCND_RGNS_CD
+            , QLTY_PIC_CNT
+            , FAX_NO
+            , RPRSNT_APPRV_YN
+            , APPCTN_RSN_CD
+            , RQST_CNTN
+            , ITRDC_FILE_SEQ
+            , IMPVM_FILE_SEQ
+            , REG_ID
+            , REG_IP
+            , REG_DTM
         )
-        VALUES
-        ( #{cnstgSeq}
-        , #{appctnBsnmNo}
-        , #{appctnMemSeq}
-        , #{cnstgCd}
-        , #{bsnYear}
-        , #{appctnDt}
-        , #{cmpnSizeCd}
-        , #{cmpnAddrSameYn}
-        , #{fctryZipcode}
-        , #{fctryBscAddr}
-        , #{fctryDtlAddr}
-        , #{rgnsCd}
-        , #{hmpgeUrl}
-        , #{qltyPicCnt}
-        , #{faxNo}
-        , #{rprsntApprvYn}
-        , #{appctnRsnCd}
-        , #{appctnFldCd}
-        , #{rqstCntn}
-        , #{itrdcFileSeq}
-        , #{impvmFileSeq}
-        , #{regId}
-        , #{regIp}
-        , NOW()
+        VALUES (
+            #{cnstgSeq}
+            , #{bsnmNo}
+            , #{memSeq}
+            , "INQ03001"
+            , #{appctnDt}
+            , #{sizeCd}
+            , #{cmpnAddrSameYn}
+            , #{fctryZipcode}
+            , #{fctryBscAddr}
+            , #{fctryDtlAddr}
+            , #{firstRgnsCd}
+            , #{scndRgnsCd}
+            , #{qltyPicCnt}
+            , #{faxNo}
+            , #{rprsntApprvYn}
+            , #{appctnRsnCd}
+            , #{rqstCntn}
+            , #{itrdcFileSeq}
+            , #{impvmFileSeq}
+            , #{regId}
+            , #{regIp}
+            , NOW()
         )
     </insert>
 
@@ -129,19 +227,85 @@
     2023.11.14   임서화      최초생성
     -->
     <update id="updateTechGuidance" parameterType="CBATechGuidanceInsertDTO">
-        /*UPDATE /* CBATechGuidanceMapper.updateTechGuidance */ CP_CNSTG_APPCTN_MST
+        UPDATE CP_CNSTG_APPCTN_MST  /*CBATechGuidanceMapper.updateTechGuidance*/
         SET
-        TITL = #{titl}
-        , ODTM_YN = #{odtmYn}
-        , FILE_SEQ = #{fileSeq}
-        , MN_COPY = #{mnCopy}
-        , MN_HEX_CD = #{mnHexCd}
-        , MOD_ID = #{regId}
-        , MOD_IP = #{regIp}
-        , MOD_DTM = NOW()
-        , TAG_CD = #{tagCd}
-        WHERE 1=1
-        AND CNSTG_SEQ = #{detailsKey}*/
+           APPCTN_DT = #{appctnDt},
+           CMPN_SIZE_CD = #{sizeCd},
+           CMPN_ADDR_SAME_YN = #{cmpnAddrSameYn},
+           FCTRY_ZIPCODE = #{fctryZipcode},
+           FCTRY_BSC_ADDR = #{fctryBscAddr},
+           FCTRY_DTL_ADDR = #{fctryDtlAddr},
+           FIRST_RGNS_CD = #{firstRgnsCd},
+           SCND_RGNS_CD = #{scndRgnsCd},
+           QLTY_PIC_CNT = #{qltyPicCnt},
+           FAX_NO =  #{faxNo},
+           RPRSNT_APPRV_YN = #{rprsntApprvYn},
+           APPCTN_RSN_CD = #{appctnRsnCd},
+           RQST_CNTN = #{rqstCntn},
+           ITRDC_FILE_SEQ = #{itrdcFileSeq},
+           IMPVM_FILE_SEQ = #{impvmFileSeq},
+           ADM_MEMO = #{admMemo},
+           MOD_DTM = now(),
+           MOD_ID = #{regId},
+           MOD_IP = #{regIp}
+    </update>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.selectCnstgDpndnInfoCnt
+     설  명 :  부품사 업종 카운트
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectCnstgDpndnInfoCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT /* CBATechGuidanceMapper.selectCnstgDpndnInfoCnt */
+            count(*)
+        FROM
+            CP_CNSTG_CBSN_DTL
+        WHERE CNSTG_SEQ = #{cnstgSeq}
+    </select>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.insertCbsnDtl
+     설  명 :  부품사 업종 상세 등록
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <insert id="insertCbsnDtl" parameterType="java.util.HashMap">
+    Insert /* CBATechGuidanceMapper.insertCbsnDtl */ INTO CP_CNSTG_CBSN_DTL(
+          CNSTG_SEQ
+          , CD
+          , ETC_NM
+          , REG_ID
+          , REG_IP
+          , REG_DTM
+    )
+    VALUES(
+          #{cnstgSeq}
+          , #{cbsnCd}
+          , #{etcNm}
+          , #{regId}
+          , #{regIp}
+          , NOW()
+          )
+    </insert>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.updateCbsnDtl
+     설  명 :  부품사 업종 상세 수정
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <update id="updateCbsnDtl" parameterType="java.util.HashMap">
+        UPDATE CP_CNSTG_CBSN_DTL /*CBATechGuidanceMapper.updateCbsnDtl*/
+        SET
+            CD = #{cbsnCd},
+            ETC_NM = #{etcNm},
+            mod_id = #{regId},
+            mod_ip = #{regIp}
+        WHERE CNSTG_SEQ = #{cnstgSeq}
     </update>
 
     <!--
@@ -154,13 +318,13 @@
     <update id="updateTechMemberInfo" parameterType="java.util.HashMap">
         UPDATE /* CBATechGuidanceMapper.updateTechMemberInfo */ CO_MEM_MST
         SET
-        DEPT_CD = #{deptCd}
-        , DEPT_DTL_NM = #{deptDtlNm}
-        , PSTN_CD = #{pstnCd}
-        , MEM_TEL_NO = #{memTelNo}
-        , MOD_ID = #{regId}
-        , MOD_IP = #{regIp}
-        , MOD_DTM = NOW()
+            DEPT_CD = #{deptCd}
+            , DEPT_DTL_NM = #{deptDtlNm}
+            , PSTN_CD = #{pstnCd}
+            , TEL_NO = #{memTelNo}
+            , MOD_ID = #{regId}
+            , MOD_IP = #{regIp}
+            , MOD_DTM = NOW()
         WHERE 1=1
         AND MEM_SEQ = #{memSeq}
     </update>
@@ -175,16 +339,392 @@
     <update id="updateTechCompanyInfo" parameterType="java.util.HashMap">
         UPDATE /* CBATechGuidanceMapper.updateTechCompanyInfo */ CP_CMPN_MST
         SET
-        DEPT_CD = #{deptCd}
-        , DEPT_DTL_NM = #{deptDtlNm}
-        , PSTN_CD = #{pstnCd}
-        , MEM_TEL_NO = #{memTelNo}
+        CTGRY_CD = #{ctgryCd}
+        , SIZE_CD = #{sizeCd}
+        , RPRSNT_NM = #{rprsntNm}
+        , STBSM_DT = #{stbsmDt}
+        , ZIPCODE = #{zipcode}
+        , BSC_ADDR = #{bscAddr}
+        , DTL_ADDR = #{dtlAddr}
+        , SLS_PMT = #{slsPmt}
+        , SLS_YEAR = #{slsYear}
+        , MPLE_CNT = #{mpleCnt}
+        , MJR_PRDCT_1 = #{mjrPrdct1}
+        , MJR_PRDCT_2 = #{mjrPrdct2}
+        , MJR_PRDCT_3 = #{mjrPrdct3}
+        <if test="ctgryCd == null and ctgryCd != ''.toString() ">
+            <choose>
+                <when test="ctgryCd == 'COMPANY01001'">
+                    , QLTY_5_STAR_CD = #{qlty5StarCd}
+                    , QLTY_5_STAR_YEAR = #{qlty5StarYear}
+                    , PAY_5_STAR_CD = #{pay5StarCd}
+                    , PAY_5_STAR_YEAR = #{pay5StarYear}
+                    , TCHLG_5_STAR_CD = #{tchlg5StarCd}
+                    , TCHLG_5_STAR_YEAR = #{tchlg5StarYear}
+                </when>
+                <when test="ctgryCd == 'COMPANY01002'">
+                    , NM = #{nm}
+                    , SCORE = #{score}
+                    , YEAR = #{year}
+                    , CRTFN_CMPN_NM = #{crtfnCmpnNm}
+                </when>
+            </choose>
+        </if>
         , MOD_ID = #{regId}
         , MOD_IP = #{regIp}
         , MOD_DTM = NOW()
         WHERE 1=1
         AND BSNM_NO = #{bsnmNo}
     </update>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.insertCnstgDlvryInfo
+     설  명 :  고객사 비율 비율 등록
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <insert id="insertCnstgDlvryInfo" parameterType="java.util.HashMap">
+    INSERT /* CBATechGuidanceMapper.insertCnstgDlvryInfo */ INTO CP_CNSTG_DLVRY_DTL(
+        CNSTG_SEQ
+        , CMPN_DLVRY_SEQ
+        , CMPN_NM
+        , RATE
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        )
+    VALUES(
+        #{cnstgSeq}
+        , #{cmpnDlvrySeq}
+        , #{dlvryCmpnNm}
+        , #{dlvryRate}
+        , #{regId}
+        , #{regIp}
+        , now()
+        )
+    </insert>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.updateCnstgDlvryInfo
+     설  명 :  고객사 비율 비율 수정
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <update id="updateCnstgDlvryInfo" parameterType="java.util.HashMap">
+        UPDATE /* CBATechGuidanceMapper.updateCnstgDlvryInfo */ CP_CNSTG_DLVRY_DTL
+        SET
+            CMPN_NM = #{dlvryCmpnNm},
+            RATE = #{dlvryRate},
+            MOD_ID = #{regId},
+            MOD_IP = #{regIp},
+            MOD_DTM = now()
+        WHERE CNSTG_SEQ = #{cnstgSeq}
+            AND CMPN_DLVRY_SEQ = #{cmpnDlvrySeq}
+    </update>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.selectCmpnCbsnInfoCnt
+     설  명 :  회사 업종 카운트
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectCmpnCbsnInfoCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT /* CBATechGuidanceMapper.selectCmpnCbsnInfoCnt */
+            count(*)
+        FROM
+            CP_CMPN_CBSN_DTL
+        WHERE 1=1
+          AND CBSN_SEQ = #{cbsnSeq}
+    </select>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.insertCnstgDpndnInfo
+     설  명 :  완성차 의존 비율 등록
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <insert id="insertCnstgDpndnInfo" parameterType="java.util.HashMap">
+        INSERT /* CBATechGuidanceMapper.insertCnstgDpndnInfo */ INTO CP_CNSTG_DPNDN_DTL
+        (
+             CNSTG_SEQ
+           , DPNDN_SEQ
+           , CMPN_NM
+           , RATE
+           , REG_ID
+           , REG_IP
+           , REG_DTM
+        )
+        VALUES(
+            #{cnstgSeq}
+           , #{dpndnSeq}
+           , #{cmpnNm}
+           , #{dpndnRate}
+           , #{regId}
+           , #{regIp}
+           , now()
+        )
+    </insert>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.insertCnstgAppctnType
+     설  명 :  신청 분야 상세
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <insert id="insertCnstgAppctnType" parameterType="java.util.HashMap">
+        INSERT /* CBATechGuidanceMapper.insertCnstgAppctnType */INTO CP_CNSTG_APPCTN_TYPE_DTL
+        (
+            CNSTG_SEQ
+           , CD
+           , REG_ID
+           , REG_IP
+           , REG_DTM
+           )
+        VALUES(
+            #{cnstgSeq}
+            , #{appctnTypeCd}
+            , #{regId}
+            , #{regIp}
+            , now()
+        )
+    </insert>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.selectCnstgAppctnType
+     설  명 :  신청 분야 상세
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectCnstgAppctnType" parameterType="java.util.HashMap" resultType="CBATechGuidanceInsertDTO">
+        SELECT /* CBATechGuidanceMapper.selectCmpnCbsnInfoCnt */
+            CNSTG_SEQ,
+            CD AS APPCTN_TYPE_CD,
+            REG_ID,
+            REG_IP,
+            REG_DTM
+        FROM
+            CP_CNSTG_APPCTN_TYPE_DTL
+        WHERE 1=1
+          AND CNSTG_SEQ = #{cnstgSeq}
+    </select>
+    <!--
+     쿼리명 : CBATechGuidanceMapper.deleteCnstgAppctnType
+     설  명 : 신청 분야 상세 삭제
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <delete id="deleteCnstgAppctnType" parameterType="java.util.HashMap">
+        DELETE /*CBATechGuidanceMapper.deleteCnstgAppctnType*/
+        FROM
+            CP_CNSTG_APPCTN_TYPE_DTL
+        WHERE
+            CNSTG_SEQ = #{cnstgSeq}
+    </delete>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.updateCnstgDpndnInfo
+     설  명 :  고객사 비율 비율 수정
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <update id="updateCnstgDpndnInfo" parameterType="java.util.HashMap">
+        UPDATE /* CBATechGuidanceMapper.updateCnstgDpndnInfo */ CP_CNSTG_DPNDN_DTL
+        SET
+            CMPN_NM = #{cmpnNm},
+            RATE = #{dpndnRate},
+            MOD_ID = #{regId},
+            MOD_IP = #{regIp},
+            MOD_DTM = now()
+        WHERE CNSTG_SEQ = #{cnstgSeq}
+          AND DPNDN_SEQ = #{dpndnSeq}
+    </update>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.isnertTechGuidanceRsume
+     설  명 :  컨설팅 진행 마스터
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <insert id="isnertTechGuidanceRsume" parameterType="java.util.HashMap">
+        INSERT /* CBATechGuidanceMapper.insertTechGuidanceRsume */ INTO CP_CNSTG_RSUME_MST(
+             BSNM_NO
+           , CNSTG_SEQ
+           , BFRE_JDGMT_RSLT_CD
+           , BFRE_JDGMT_RSLT_CNTN
+           , VST_DT
+           , VSTR_NM
+           , NTRVR_NM
+           , INIT_VST_RSLT_CD
+           , INIT_VST_RSLT_CNTN
+           , INIT_VST_OPNN_CNTN
+           , CMSSR_SEQ
+           , GUIDE_TYPE_CD
+           , GUIDE_PSCND_CD
+           , GUIDE_PSCND_DT
+           , GUIDE_BGN_DT
+           , GUIDE_KICKF_DT
+           , XTNSN_CNCL_RSN
+           , FLTY_IMPVM_BFRE_RATE
+           , FLTY_IMPVM_AFTR_RATE
+           , FLTY_IMPVM_RATE
+           , INIT_VST_FILE_SEQ
+           , KICKF_FILE_SEQ
+           , LVLUP_FILE_SEQ
+           , ETC_FILE_SEQ
+           , SRV_SEQ
+           , SRV_STRT_DTM
+           , SRV_END_DTM
+           , REG_ID
+           , REG_IP
+           , REG_DTM
+        )
+        VALUES(
+          #{bsnmNo},
+          #{detailsKey} ,
+          #{bfreJdgmtRsltCd},
+          #{bfreJdgmtRsltCntn},
+          #{vstDt} ,
+          #{vstrNm} ,
+          #{ntrvrNm} ,
+          #{initVstRsltCd} ,
+          #{initVstRsltCntn} ,
+          #{initVstOpnnCntn} ,
+          #{cmssrSeq} ,
+          #{guideTypeCd} ,
+          #{guidePscndCd} ,
+          #{guidePscndDt} ,
+          #{guideBgnDt} ,
+          #{guideKickfDt} ,
+          #{xtnsnCnclRsn} ,
+          #{fltyImpvmBfreRate} ,
+          #{fltyImpvmAftrRate} ,
+          #{fltyImpvmRate} ,
+          #{initVstFileSeq} ,
+          #{kickfFileSeq} ,
+          #{lvlupFileSeq} ,
+          #{etcFileSeq},
+          #{srvSeq},
+          #{srvStrtDtm},
+          #{srvEndDtm},
+          #{regId},
+          #{regIp},
+          now()
+        )
+    </insert>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.updateTechGuidanceRseume
+     설  명 :  컨설팅 진행 마스터 업데이트
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.20   임서화      최초생성
+    -->
+    <update id="updateTechGuidanceRsume" parameterType="CBATechGuidanceUpdateDTO">
+        UPDATE /* CBATechGuidanceMapper.updateTechGuidanceRsume */ CP_CNSTG_RSUME_MST
+        SET
+           BFRE_JDGMT_RSLT_CD =  #{bfreJdgmtRsltCd} ,
+           bfre_jdgmt_rslt_cntn =  #{bfreJdgmtRsltCntn} ,
+           VST_DT =  #{vstDt} ,
+           VSTR_NM = #{vstrNm} ,
+           NTRVR_NM =  #{ntrvrNm} ,
+           INIT_VST_RSLT_CD = #{initVstRsltCd} ,
+           INIT_VST_OPNN_CNTN = #{initVstOpnnCntn},
+           CMSSR_SEQ =  #{cmssrSeq} ,
+           GUIDE_TYPE_CD = #{guideTypeCd} ,
+           GUIDE_PSCND_CD =  #{guidePscndCd} ,
+           GUIDE_PSCND_DT =  #{guidePscndDt} ,
+           GUIDE_BGN_DT =  #{guideBgnDt} ,
+           GUIDE_KICKF_DT =  #{guideKickfDt} ,
+           XTNSN_CNCL_RSN =  #{xtnsnCnclRsn} ,
+           FLTY_IMPVM_BFRE_RATE =  #{fltyImpvmBfreRate} ,
+           FLTY_IMPVM_AFTR_RATE =  #{fltyImpvmAftrRate} ,
+           FLTY_IMPVM_RATE =  #{fltyImpvmRate} ,
+           INIT_VST_FILE_SEQ =  #{initVstFileSeq} ,
+           KICKF_FILE_SEQ =  #{kickfFileSeq} ,
+           LVLUP_FILE_SEQ =  #{lvlupFileSeq} ,
+           ETC_FILE_SEQ =  #{etcFileSeq} ,
+           SRV_SEQ = #{srvSeq},
+           SRV_STRT_DTM = #{srvStrtDtm},
+           SRV_END_DTM = #{srvEndDtm},
+           MOD_ID =  #{regId},
+           MOD_IP =  #{regIp},
+           MOD_DTM = NOW()
+        WHERE BSNM_NO =  #{bsnmNo}
+              AND CNSTG_SEQ =  #{cnstgSeq}
+    </update>
+
+    <!--
+         쿼리명 : CBATechGuidanceMapper.selectTechGuidanceRsume
+         설  명 : 컨설팅 진행 사항
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초생성
+    -->
+    <select id="selectTechGuidanceRsume" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceUpdateDTO">
+        SELECT /* CBATechGuidanceMapper.selectTechGuidanceRsume */
+            BSNM_NO
+           , CNSTG_SEQ
+           , BFRE_JDGMT_RSLT_CD
+           , BFRE_JDGMT_RSLT_CNTN
+           , VST_DT
+           , VSTR_NM
+           , NTRVR_NM
+           , INIT_VST_RSLT_CD
+           , INIT_VST_RSLT_CNTN
+           , INIT_VST_OPNN_CNTN
+           , CMSSR_SEQ
+           , GUIDE_TYPE_CD
+           , GUIDE_PSCND_CD
+           , GUIDE_PSCND_DT
+           , GUIDE_BGN_DT
+           , GUIDE_KICKF_DT
+           , XTNSN_CNCL_RSN
+           , FLTY_IMPVM_BFRE_RATE
+           , FLTY_IMPVM_AFTR_RATE
+           , FLTY_IMPVM_RATE
+           , INIT_VST_FILE_SEQ
+           , KICKF_FILE_SEQ
+           , LVLUP_FILE_SEQ
+           , ETC_FILE_SEQ
+           , SRV_SEQ
+           , (SELECT CD_ID FROM CO_CODE_MST WHERE CD_ID = 'SURVEY_TYPE' AND CD = (SELECT TYPE_CD FROM SV_MST WHERE SRV_SEQ = A.SRV_SEQ)) AS TYPE_NM
+           , (SELECT TITL FROM SV_MST WHERE SRV_SEQ = A.SRV_SEQ) AS SRV_NM
+           , SRV_STRT_DTM
+           , SRV_END_DTM
+           , REG_ID
+           , REG_IP
+           , REG_DTM
+        FROM CP_CNSTG_RSUME_MST A
+        WHERE BSNM_NO = #{bsnmNo}
+        AND CNSTG_SEQ = #{cnstgSeq}
+    </select>
+
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.selectRsumeTotCnt
+     설  명 :  컨설팅 기술 관리 목록 카운트.
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+-->
+    <select id="selectRsumeTotCnt" parameterType="CBATechGuidanceDTO" resultType="java.lang.Integer">
+        SELECT /*CBATechGuidanceMapper.selectRsumeTotCnt*/
+            count(*)
+        FROM
+            CP_CNSTG_RSUME_MST
+        WHERE
+            CNSTG_SEQ = #{cnstgSeq}
+    </select>
+
 
     <!--
      쿼리명 : CBATechGuidanceMapper.deleteTechGuidance

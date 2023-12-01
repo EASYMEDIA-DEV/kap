@@ -97,7 +97,6 @@ public class CBATechGuidanceDTO extends BaseDTO {
     // 선택 항목
     private List<String> seqList;
 
-
-
-
+    @Schema(title = "부품사 이름")
+    private String cmpnNm;
 }

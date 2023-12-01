@@ -1,4 +1,4 @@
-package com.kap.mngwserc.controller.wb;
+package com.kap.mngwserc.controller.wb.wbj;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
