@@ -1,5 +1,6 @@
 package com.kap.mngwserc.controller.eb;
 
+import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.service.COCodeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,6 +39,7 @@ import java.util.ArrayList;
 @RequiredArgsConstructor
 @RequestMapping(value="/mngwserc/eb/ebh")
 public class EBHEduApplicantController {
+
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
 
@@ -48,23 +50,37 @@ public class EBHEduApplicantController {
      *  목록
      */
     @GetMapping(value="/list")
-    public String getSqList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO, ModelMap modelMap) throws Exception
     {
         try
         {
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
-            cdDtlList.add("EBD_SQ");
-            cdDtlList.add("EBD_SQ_TP");
-            cdDtlList.add("COMPANY_TYPE");
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            modelMap.addAttribute("rtnData", eBDSqCertiSearchDTO);
+            cdDtlList.add("CLASS_TYPE");
+            cdDtlList.add("STDUY_MTHD"); //학습방식
+            cdDtlList.add("STDUY_DD"); //학습시간 - 학습일
+            cdDtlList.add("STDUY_TIME"); //학습시간 - 학습시간
+            cdDtlList.add("COMPANY_TYPE"); //부품사 구분
+//            cdDtlList.add(""); //선발 구분
+
+            modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
+
+            COCodeDTO cOCodeDTO = new COCodeDTO();
+            cOCodeDTO.setCd("CLASS01");
+            modelMap.addAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
+
+            cOCodeDTO.setCd("CLASS02");
+            modelMap.addAttribute("cdList2", cOCodeService.getCdIdList(cOCodeDTO));
+
+            cOCodeDTO.setCd("CLASS03");
+            modelMap.addAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));
         }
         catch (Exception e)
         {
             throw new Exception(e.getMessage());
         }
+
         return "mngwserc/eb/ebh/EBHEduApplicantList.admin";
     }
 
@@ -72,7 +88,7 @@ public class EBHEduApplicantController {
      * 목록 AJAX
      */
     @GetMapping(value="/select")
-    public String getSqAjaxList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getSqListAjax(EBDSqCertiSearchDTO eBDSqCertiSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -121,7 +137,7 @@ public class EBHEduApplicantController {
      *   2023.11.10			장두석			 		최초생성
      * </pre>
      */
-    @Tag(name = "교육 신청자관리", description = "SQ평가원")
+    @Tag(name = "교육 신청자 관리", description = "교육 신청자 관리")
     @RestController
     @RequiredArgsConstructor
     @RequestMapping("/mngwserc/eb/ebh")

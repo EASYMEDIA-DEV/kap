@@ -11,7 +11,7 @@ import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
 import com.kap.service.COCommService;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.EBDSqCertiReqService;
+import com.kap.service.EBHEduApplicantService;
 import com.kap.service.dao.eb.EBDSqCertiReqMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +34,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EBHEduApplicantServiceImpl implements EBDSqCertiReqService {
+public class EBHEduApplicantServiceImpl implements EBHEduApplicantService {
     //Mapper
     private final EBDSqCertiReqMapper eBDSqCertiReqMapper;
 
