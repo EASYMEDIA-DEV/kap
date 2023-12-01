@@ -3,7 +3,7 @@
 
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/eb/ebb/EBBEpisdWriteCtrl">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/ebb/EBBEpisdWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -679,7 +679,7 @@
                         </div>
                     </fieldset>
 
-                    <fieldset>
+                    <fieldset class="ptcptField">
                         <div class="clearfix">
                             <h6 class="pull-left mt0">
                                 <em class="ion-play mr-sm"></em>교육 참여자 목록 (총 <span id="ptcptListContainerTotCnt">0</span> 건)
@@ -698,9 +698,9 @@
                                 </select>
                             </div>
                             <div class="pull-right">
-                                <button type="button" class="btn btn-default btn-sm mb-sm" id="btnEdDelete">출석부</button>
-                                <button type="button" class="btn btn-default btn-sm mb-sm" id="btnCopy">신청자 등록</button>
-                                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">엑셀 다운로드</button>
+                                <button type="button" class="btn btn-default btn-sm mb-sm" id="btnEdctnAtndc">출석부</button>
+                                <button type="button" class="btn btn-default btn-sm mb-sm" id="btnAddApp">신청자 등록</button>
+                                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnExcel">엑셀 다운로드</button>
                             </div>
                         </div>
 

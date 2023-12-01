@@ -38,9 +38,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//총 건수
 			ctrl.obj.find("#ptcptListContainerTotCnt").text(totCnt);
 
+			$(".ptcptField").validation({});
+
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "ptcptListContainer", "ptcptPagingContainer");
+
+			$(".ptcptField").find("ul.pagination").find("li").on("click", function(){
+				if(!confirm("다른 페이지로 이동 시 입력한 값은 저장되지 않습니다. 이동하시겠습니까?")){
+					return false;
+				}
+			});
+
 		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "GET", "html");
+
+
+
 
 	}
 
@@ -347,7 +359,50 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					}
 				}
-			}
+			},
+			btnAddApp : {
+				event : {
+					click : function() {
+						//신청자등록 시작
+						var seqObj = {};
+						seqObj.edctnSeq = $("#edctnSeq").val();
+						seqObj.episdYear = $("#episdYear").val();
+						seqObj.episdOrd = $("#episdOrd").val();
+
+
+						//정원수 체크
+						cmmCtrl.jsonAjax(function(data){
+							if(data !=""){
+								var rtn = JSON.parse(data);
+								console.log(rtn);
+								//정원여유
+								if(rtn.fxnumStta == "S"){
+
+									alert("정원 여유");
+									//레이어팝업 호출
+
+
+									//콜백
+
+									//seach(1); 함수 실행해서 참여자목록 다시 갱신시킴
+
+
+								//정원초과
+								}else{
+									alert("정원이 초과되었습니다.");
+									return false;
+								}
+							}
+
+						}, "./fxnumChk", seqObj, "text");
+
+
+
+					}
+				}
+			},
+
+
 
 		},
 		classname : {
@@ -578,6 +633,49 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						//강의시간 숫자입력 밸리데이션 체크를 위해서 다시 적용해줌
 						$("#onlineList").find("tr:last").validation({});
+
+					}
+				}
+			},
+
+			//참여자목록 오프라인평가 점수 수정
+			examScoreUpdate : {
+				event : {
+					click : function(){
+						var edctnSeq = $("#edctnSeq").val();
+						var episdYear = $("#episdYear").val();
+						var episdOrd = $("#episdOrd").val();
+
+						var examScore = $(this).closest("tr").find("input[name='examScore']").val();
+						var ptcptSeq = $(this).closest("tr").find("input[name=delValueList]").val();
+
+						var ptcptForm = {};
+
+						ptcptForm.edctnSeq = edctnSeq;
+						ptcptForm.episdYear = episdYear;
+						ptcptForm.episdOrd = episdOrd;
+						ptcptForm.ptcptSeq = ptcptSeq;
+						ptcptForm.examScore = examScore;
+
+						cmmCtrl.jsonAjax(function(data){
+							alert("저장되었습니다.");
+						}, "./examScoreUpdate", ptcptForm, "text");
+
+
+					}
+				}
+			},
+
+			//참여자목록 수료여부 변경
+			cmptnYnUpdate : {
+				event : {
+					click : function(){
+						var edctnSeq = $("#edctnSeq").val();
+						var episdYear = $("#episdYear").val();
+						var episdOrd = $("#episdOrd").val();
+
+						debugger;
+
 
 					}
 				}
@@ -888,7 +986,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								var onlineUrl = $(this).find("[name='onlineUrl']").val();
 								var onlineTime = $(this).find("[name='onlineTime']").val();
 
-								//debugger;
+
 								onlinePack.thnlFileSeq = $(this).next().find("input:hidden.thnlFileForm").val();
 
 								onlinePack.edctnSeq = actForm.edctnSeq;
@@ -938,7 +1036,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						});
 
 						actForm.lctrList = lctrList;
-
+						//온라인교육 강의 관련 배열 세팅 끝
 
 						//예산, 지출내역 세팅
 
@@ -965,6 +1063,45 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							bdgetList.push(temp);
 						});
 						 actForm.bdgetList = bdgetList;
+
+						 //오프라인평가 관련 데이터 세팅
+						if(actForm.otsdExamPtcptYn != undefined && actForm.otsdExamPtcptYn == "Y"){
+
+							var ptcptList = new Array();
+							$("#ptcptListContainer").find("tr").each(function(){
+
+								var ptcptForm = {};
+								var examScore = $(this).find("input[name='examScore']").val();
+								var ptcptSeq = $(this).find("input[name=delValueList]").val();
+								var cmptnYn = $(this).find("td").find("select#cmptnYn").val();
+								var orgCmptnYn = $(this).find("td").find("select#cmptnYn").data("orgcmptnyn");
+
+								var cmptnChangeYn = "N";//수료여부 변경여부(변경없으면 굳이 안건드려서 수료일, 등등 업데이트 안침
+								if(orgCmptnYn != cmptnYn) cmptnChangeYn = "Y";
+
+								ptcptForm.edctnSeq = actForm.edctnSeq;//과정번호
+								ptcptForm.episdYear = actForm.episdYear;//회차년도
+								ptcptForm.episdOrd = actForm.episdOrd;//회차번호
+								ptcptForm.ptcptSeq = ptcptSeq;//참여자 번호
+								ptcptForm.examScore = examScore;//평가점수
+								ptcptForm.cmptnYn = cmptnYn//수료여부
+								ptcptForm.otsdExamPtcptYn = actForm.otsdExamPtcptYn;//오프라인 여부
+								ptcptForm.cmptnChangeYn = cmptnChangeYn;
+
+								
+
+								ptcptList.push(ptcptForm);
+
+							});
+
+
+							actForm.ptcptList = ptcptList;
+
+						}
+						//오프라인평가 관련 데이터 세팅끝
+
+						//수료여부
+
 
 
 

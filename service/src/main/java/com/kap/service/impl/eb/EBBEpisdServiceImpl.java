@@ -289,6 +289,18 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdMapper.deleteBdgetList(eBBEpisdDTO);
 		eBBEpisdMapper.insertBdgetList(eBBEpisdDTO);
 
+		List<EBBPtcptDTO> ptcptList = eBBEpisdDTO.getPtcptList();
+		if(ptcptList !=null && ptcptList.size()>0){
+			for(EBBPtcptDTO eBBPtcptDTO : ptcptList){
+				eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
+				eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+			}
+			//교육참여자 평가, 수료상태 수정
+			eBBEpisdMapper.updateEpisdPtcpt(eBBEpisdDTO);
+		}
+
+
+
 		return respCnt;
 	}
 
@@ -318,6 +330,23 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		return tempDto;
 	}
+
+	/**
+	 * 교육차수 신청자 정원체크
+	 */
+	@Transactional
+	public EBBEpisdDTO selectFxnumChk(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+		EBBEpisdDTO tempDto = new EBBEpisdDTO();
+
+		tempDto = eBBEpisdMapper.selectFxnumChk(eBBEpisdDTO);
+		//정원수 비교
+
+
+		return tempDto;
+	}
+
+
 
 
 
