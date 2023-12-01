@@ -9,7 +9,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
-    console.log(ctrl)
     var $formObj = jQuery("#frmData");
 
     //설문지 html
@@ -119,7 +118,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
             examListSize = $(".examList").size();
 
-            var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
             var isAddNtfyCntn = false;
             jQuery("textarea[id^='addNtfyCntn']").each(function(){
                 cmmCtrl.setEditor({

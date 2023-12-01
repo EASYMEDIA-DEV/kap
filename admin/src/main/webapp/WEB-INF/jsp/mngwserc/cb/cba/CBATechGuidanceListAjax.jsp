@@ -5,33 +5,29 @@
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
-                        <input type="checkbox" value="${list.vslSeq}" name="delValueList" class="checkboxSingle notRequired" />
+                        <input type="checkbox" value="" name="delValueList" class="checkboxSingle notRequired"/>
                         <span class="ion-checkmark-round"></span>
                     </label>
                 </td>
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
+                </td><!--과정분류-->
+                <td class="text-center">${list.regName}(${list.regId})</td><!--최초 등록자-->
+                <td class="text-center">${list.cnstgSeq}</td><!--최초등록일시-->
                 <td class="text-center">
-                    <a href="javascript:" class="listView"  data-details-key="${list.vslSeq}">
-                            ${list.titl}
-                    </a>
+                <a href="javascript:" class="listView"  data-details-key="${list.cnstgSeq}">
+                        ${list.cnstgSeq}
+                </a>
                 </td>
-                <td class="text-center" >${ list.odtmYn == 'Y' ? "상시" : kl:convertDate(list.expsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') +=  '</br> ~ </br>' +=  kl:convertDate(list.expsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } </td>
-                <td class="text-center" >${ list.regName }</td>
-                <td class="text-center" data-reg-dtm="${list.regDtm}">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
-                <td class="text-center" >${ list.modName }</td>
-                <td class="text-center" data-list-dtm="${list.modDtm}">${ kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
-                <td class="text-center" data-use-yn="${list.expsYn}">${ list.expsYn eq 'Y' ? '노출' : '미노출' }</td>
-                <td class="text-center" data-key="${list.vslSeq}" data-value="${list.expsOrd}">
-                    <button type="button" class="btn btn-default btn-xs sortUp" name="sortUp" id="btnSort"><i class="ion-arrow-up-b"></i></button>
-                    <button type="button" class="btn btn-default btn-xs ml-sm sortDown" name="sortDown" id="btnSort"><i class="ion-arrow-down-b"></i></button>
-                </td>
+                <td class="text-center">${list.modName}(${list.modId})</td><!--최종수정자-->
+                <td class="text-center">${ empty list.modDtm ? '-' : kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최종 수정일시-->
             </tr>
         </c:forEach>
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
             <td colspan="11" class="text-center">
-                등록된 데이터가 없습니다.
+                검색결과가 없습니다.<br>
+                (등록된 데이터가 없습니다.)
             </td>
         </tr>
     </c:otherwise>

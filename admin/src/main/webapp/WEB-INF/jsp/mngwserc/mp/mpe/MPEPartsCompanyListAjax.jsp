@@ -24,7 +24,7 @@
                     </c:choose>
                 </td>
                 <td class="text-center">${list.bsnmNo}</td>
-                <td class="text-center" data-ctgry-cd="${list.ctgryCd}">${list.ctgryNm}</td>
+                <td class="text-center ctgryNm" data-ctgry-cd="${list.ctgryCd}">${list.ctgryNm}</td>
                 <td class="text-center" data-size-cd="${list.sizeCd}">${list.sizeNm}</td>
                 <td class="text-center">${list.cmpnCd}</td>
                 <td class="text-center">${list.slsPmt}</td>

@@ -2,6 +2,10 @@ package com.kap.service;
 
 import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+
+import java.util.List;
 
 /**
  * CBATechGuidanceService 서비스
@@ -25,7 +29,6 @@ public interface CBATechGuidanceService {
      * 컨설팅 기술 지도 관리 리스트
      */
     public CBATechGuidanceDTO selectTechGuidanceList(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
-
     /**
      * 컨설팅 기술 지도 상세
      */
@@ -44,6 +47,7 @@ public interface CBATechGuidanceService {
     /**
      * 컨설팅 기술 지도 관리 수정
      */
-    public int updateTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+    public int updateTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, CBATechGuidanceUpdateDTO cBATechGuidanceUpdateDTO) throws Exception;
 
+    public List<MPEPartsCompanyDTO> selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 }

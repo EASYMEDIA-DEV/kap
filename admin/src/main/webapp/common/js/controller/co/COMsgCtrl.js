@@ -313,7 +313,7 @@ var msgCtrl = (function(){
 			},
 			sv : {
 				sva : {
-					notSrchServey1 : "부품사 회원을 1명만 선택해주세요."
+					notSrchServey1 : "설문을 1개만 선택해주세요."
 				}
 			}
 		}

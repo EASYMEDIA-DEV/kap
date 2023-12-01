@@ -699,4 +699,56 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 교육 신청자 관리 순번
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl eduApplicantSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EDU_APPLICANT_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 컨설팅 기술 지도 관리 (컨설팅관리)
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cosultSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CONSULT_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 완성차의존비율상세 (컨설팅관리)
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl dpndnSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("DPNDN_SEQ")
+                .setCipers(13)
+                .build();
+    }
+    /** 고객사비율상세 (컨설팅관리)
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl dlvrySeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("DLVRY_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
 }

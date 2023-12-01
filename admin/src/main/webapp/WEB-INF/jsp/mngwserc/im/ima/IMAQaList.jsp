@@ -104,12 +104,15 @@
                 <h6 class="pull-left mt0">
                     <em class="ion-play mr-sm"></em>${pageTitle} 목록(총 <span id="listContainerTotCnt">0</span>건)
                 </h6>
-                <div class="pull-right">
+                <div class="pull-right ml-sm">
                     <select class="form-control input-sm listRowSizeContainer" >
                         <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
                             <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
                         </jsp:include>
                     </select>
+                </div>
+                <div class="pull-right">
+                    <button type="button" id="btnQaPic" class="btn btn-inverse btn-sm mb-sm">문의담당자 관리</button>
                 </div>
             </div>
             <!--리스트 시작 -->
@@ -137,5 +140,6 @@
             </div>
             <!--리스트 종료 -->
         </form>
+        <jsp:include page="/WEB-INF/jsp/mngwserc/im/ima/IMAQaPicLayer.jsp"></jsp:include>
     </div>
 </div>

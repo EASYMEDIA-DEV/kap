@@ -52,15 +52,45 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         var inqSecOpsions = document.getElementsByClassName("inqSec");
                         var addOption;
 
-                        for(var i = 0, max = inqSecOpsions.length; i < max; i++) {
-                            addOption = inqSecOpsions.item(i);
-                            if(addOption.value.indexOf(selectFir) > -1 && addOption.value.length > 5) {
-                                addOption.style.display = "block";
+                        if(selectFir) {
+                            for(var i = 0, max = inqSecOpsions.length; i < max; i++) {
+                                addOption = inqSecOpsions.item(i);
+                                if(addOption.value.indexOf(selectFir) > -1 && addOption.value.length > 5) {
+                                    addOption.style.display = "block";
+                                }
+                                else {
+                                    addOption.style.display = "none";
+                                }
                             }
-                            else {
+                            $("#inqSec").prop("selectedIndex", 0);
+                        }
+                        else {
+                            for(var i = 0, max = inqSecOpsions.length; i < max; i++) {
+                                addOption = inqSecOpsions.item(i);
                                 addOption.style.display = "none";
                             }
+                            $("#inqSec").prop("selectedIndex", 0);
                         }
+                    }
+                }
+            },
+            btnQaPic : {
+                event : {
+                    click : function(data) {
+                        $(".imaQaPicLayer").one('show.bs.modal', function() {
+                            var modal = $(this);
+                            modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+                        }).one('hidden.bs.modal', function() {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                            $("#QaPicLayerFrm #detailsKey").val("");
+                            $("#QaPicLayerFrm #inqFirPic").val("");
+                            $("#QaPicLayerFrm #inqSecPic").val("");
+                            $("#QaPicLayerFrm #picNm").val("");
+                            $("#QaPicLayerFrm #piceMail").val("");
+                        }).one('choice', function(data, param) {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                            fnc(param);
+                        }).modal();
                     }
                 }
             }
