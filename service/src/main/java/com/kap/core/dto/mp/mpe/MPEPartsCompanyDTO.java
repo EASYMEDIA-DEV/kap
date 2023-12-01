@@ -103,7 +103,7 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     private String pay5StarCd;
 
     @Schema(title = "납입5스타년도", example = "")
-    private String pay5StarYear;
+    private Integer pay5StarYear;
 
     @Schema(title = "기술5스타코드", example = "")
     private String tchlg5StarCd;
