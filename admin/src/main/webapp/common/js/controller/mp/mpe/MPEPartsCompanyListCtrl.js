@@ -136,6 +136,8 @@ define(["ezCtrl"], function(ezCtrl) {
                             clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();
                             var titl = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text());
                             clickObj.titl = titl;
+                            var ctgryNm = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".ctgryNm").text());
+                            clickObj.ctgryNm = ctgryNm;
                             ctrl.obj.trigger("choice", [clickObj])
                             ctrl.obj.find(".close").click();
                         }
