@@ -7,7 +7,7 @@ import com.kap.core.dto.MPAInqrDto;
 import com.kap.core.dto.MPAUserDto;
 import com.kap.service.COMessageService;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.MPAUserService;
+import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 /**
  * <pre>
@@ -79,7 +80,7 @@ public class MPAUserController {
      * 일반회원관리 목록으로 이동한다.
      */
     @PostMapping(value = "/select")
-    public String selectUserListPageAjax(MPAUserDto mpaUserDto ,
+    public String selectUserListPageAjax(@Valid MPAUserDto mpaUserDto ,
                                          ModelMap modelMap ) throws Exception {
         mpaUserDto.setMemCd("CO");
         mpaUserDto.setExcelYn("N");
@@ -236,6 +237,7 @@ public class MPAUserController {
 
             if(!"".equals(mpaUserDto.getDetailsKey())){
                 modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
+
             }
         }
         catch (Exception e)
@@ -349,6 +351,7 @@ public class MPAUserController {
                     receiverDto.setNote3("위원");
                 }
                 //수신자 정보 등록
+                cOMailDTO.getReceiver().add(receiverDto);
                 cOMessageService.sendMail(cOMailDTO, "UserPwdInit.html");
             }
         }

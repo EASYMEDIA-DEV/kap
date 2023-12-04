@@ -1,4 +1,4 @@
-package com.kap.service;
+package com.kap.service.mp.mpa;
 
 import com.kap.core.dto.*;
 import com.kap.core.dto.MPAAttctnDto;
