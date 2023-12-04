@@ -61,16 +61,56 @@ var exports = {
                 }
             }
         },
-            btnExcelDown2 : {
-                event : {
-                    click : function () {
-                        cmmCtrl.getUserPopOpen(popup);
+        btnExcelDown2 : {
+            event : {
+                click : function () {
+                    cmmCtrl.getUserPopOpen(popup);
+                }
+            }
+        },
+        memberChoice : {
+            event : {
+                click : function(){
+                    var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
+                    if( choiceCnt > 1){
+                        alert(msgCtrl.getMsg("fail.cb.cba.notSrchMember1"));
+                    } else if(choiceCnt == 0){
+                        alert(msgCtrl.getMsg("fail.cb.cba.notSrchMember"));
+                    }else{
+                        var clickObj = {};
+                         var memSeq = ctrl.obj.find("input[name=delValueList]:checked").val();
+                         var memId = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text()); // 신청자 아이디
+                         var memName = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(0)").text(); // 신청자 이름
+
+                         var memEmail = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(8)").text(); // 이메일
+                         var cmpnNm = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(1)").text(); // 회사 이름
+                         var deptDtlNm = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(5)").text(); // 부서 이름, 상세
+                         var hpNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(7)").text(); // 핸드폰 번호
+                         var bsnmNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(2)").text(); // 사업자 번호
+                         var telNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".telNo").val(); // 회원 일반 전화번호
+                         var pstnCd = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCd").val(); // 직급 - select
+
+                         $('input[name=memSeq]').val(memSeq);
+                         $('input[name=name]').val(memName);
+                         $('input[name=memId]').val(memId);
+                         $('input[name=memInfo]').val(memName+"("+memId+")");
+                         $('input[name=deptDtlNm]').val(deptDtlNm);
+                         $('input[name=telNo]').val(telNo);
+                         $("#pstnCdSelect").val(pstnCd).prop("selected", true);
+
+                         $('p[name=email]').text(memEmail);
+                         $('p[name=hpNo]').text(hpNo);
+                         $('p[name=bsnmNo]').text(bsnmNo);
+
+                         clickObj.bsnmNo = bsnmNo;
+                         ctrl.obj.trigger("choice", [clickObj])
+                         ctrl.obj.find(".close").click();
                     }
                 }
-            },
+            }
+        }
     },
     classname : {
-
         classType : {
             event : {
                 click : function() {
@@ -80,11 +120,7 @@ var exports = {
                     $(".cdListContainer").find("input:checkbox").prop("checked", false);
 
                     $(".classType input:checked").each(function(){
-                    console.log($(this).val());
-
                     var checkVal = $(this).val();
-
-                    console.log(checkVal);
 
                     $("."+checkVal).css("display","block");
 

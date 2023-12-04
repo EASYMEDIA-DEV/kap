@@ -23,22 +23,46 @@
                 <div class="modal-body">
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                        <jsp:param name="srchText" value="기간검색" />
-                        <jsp:param name="srchOption" value="가입일,수정일" />
+                        <jsp:param name="srchText" value="등록/수정기간" />
+                        <jsp:param name="periodType" value="notSelect" />
+                        <jsp:param name="selPer" value="select" />
                     </jsp:include>
+                    <!--기간 검색 종료-->
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">구분</label>
+                            <div class="col-sm-5">
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxAll" />
+                                    <span class="ion-checkmark-round"></span> 전체
+                                </label>
+                                <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                    <c:if test="${fn:contains(cdList.cd,'COMPANY01') && fn:length(cdList.cd) eq 12}">
+                                        <label class="checkbox-inline c-checkbox">
+                                            <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                        </label>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </fieldset>
                     <div id="selectBoxArea"></div>
                     <fieldset class="last-child">
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label ta_center">검색<br/>키워드</label>
+                            <label class="col-sm-1 control-label">검색키워드</label>
                             <div class="col-sm-4">
                                 <div class="row">
                                     <div class="col-sm-3 pr0">
                                         <select class="form-control input-sm" data-name="f">
                                             <option value="">전체</option>
-                                            <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>교육장명</option>
-                                            <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>주소</option>
-                                            <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>최초 등록자</option>
-                                            <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>최종 수정자</option>
+                                            <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
+                                            <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
+                                            <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>부품사명</option>
+                                            <option value="7" <c:if test="${rtnData.f eq '7'}">selected</c:if>>사업자등록번호</option>
+                                            <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>휴대폰번호</option>
+                                            <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>이메일</option>
+                                            <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종수정자</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-9 pr0">
@@ -57,7 +81,7 @@
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="eduRoomListContainerTotCnt">0</span> 건)
+                            <em class="ion-play mr-sm"></em>${pageTitle} 부품사 목록 (총 <span id="listContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
@@ -100,12 +124,12 @@
                             <tbody id="listContainer"/>
                         </table>
                         <!-- 페이징 버튼 -->
-                        <div id="listContainerTotCnt"/>
+                        <div id="pagingContainer"/>
                     </div>
                 </div>
                 <div class="modal-footer row">
                     <div class="text-center">
-                        <button type="button" class="btn btn-success down mt memberChoice">선택</button>
+                        <button type="button" class="btn btn-success down mt btnPartsCompanyLayerChoice" id="memberChoice">선택</button>
                     </div>
                 </div>
                 <!--리스트 종료 -->
