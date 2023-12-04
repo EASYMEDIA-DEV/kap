@@ -81,7 +81,7 @@
 					</div>
 				</div>
 				<!--VUE 영역 시작 -->
-				<div class="table-responsive col-sm-12 p0 m0" id="vueList">
+				<div class="table-responsive col-sm-12 p0 m0 text-sm" id="vueList">
 					<table class="table table-hover table-striped" >
 						<thead>
 							<tr>

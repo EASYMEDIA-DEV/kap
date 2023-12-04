@@ -43,11 +43,11 @@
 				                  	<div class="mda-form-control">
 										<c:set var="emailAuthNum" value="" />
 										<c:choose>
-											<c:when test="${ fn:indexOf(siteProfile, 'prod') > 0  }">
-												<c:set var="emailAuthNum" value="" />
+											<c:when test="${ fn:indexOf(siteProfile, 'local') > -1  }">
+												<c:set var="emailAuthNum" value="${ sessionScope.tmpEmailAuthNum }" />
 											</c:when>
 											<c:otherwise>
-												<c:set var="emailAuthNum" value="${ sessionScope.tmpEmailAuthNum }" />
+												<c:set var="emailAuthNum" value="" />
 											</c:otherwise>
 										</c:choose>
 										<input type="text" class="form-control numberChk" value="${ emailAuthNum }" name="emailAuthNum" title="인증번호" placeholder="인증번호" maxlength="5" oninput="this.value=this.value.replace(/[^0-9]/gi,'');" />
