@@ -21,6 +21,7 @@
 			cd_id = #{list}
 		</foreach>
 			and dpth <![CDATA[ > ]]> 1
+			and use_yn = 'Y'
 		order by
 			lft_val
 	</select>
