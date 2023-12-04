@@ -89,9 +89,9 @@ var exports = {
                          var bsnmNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(2)").text(); // 사업자 번호
                          var telNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".telNo").val(); // 회원 일반 전화번호
                          var pstnCd = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCd").val(); // 직급 - select
-                         var pstnCdNm= $(".pstnCdNm").val();
+                         var pstnCdNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCdNm").val();
 
-                         $('input[name=memSeq]').val(memSeq);
+                        $('input[name=memSeq]').val(memSeq);
                          $('input[name=name]').val(memName);
                          $('input[name=memId]').val(memId);
                          $('input[name=memInfo]').val(memName+"("+memId+")");
@@ -111,7 +111,7 @@ var exports = {
                          clickObj.memEmail = memEmail;
                          clickObj.cmpnNm = cmpnNm;
                          clickObj.deptDtlNm = deptDtlNm;
-                        clickObj.pstnCdNm = pstnCdNm;
+                         clickObj.pstnCdNm = pstnCdNm;
 
                          clickObj.hpNo = hpNo;
                          clickObj.telNo = telNo;
