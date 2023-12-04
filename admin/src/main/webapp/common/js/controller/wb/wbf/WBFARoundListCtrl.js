@@ -26,7 +26,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         cmmCtrl.listFrmAjax(function(respObj) {
             console.log(respObj);
-            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+            $formObj.find("table").eq(0).find(".").prop("checked", false);
             //CALLBACK 처리
             ctrl.obj.find("#listContainer").html(respObj);
             //전체 갯수

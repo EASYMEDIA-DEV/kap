@@ -5,7 +5,7 @@
       <tr  data-total-count="${rtnData.totalCount}">
         <td class="text-center">
           <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-edctn_seq="${ptcptList.ptcptSeq}"/>
+            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}"/>
             <span class="ion-checkmark-round"></span>
           </label>
         </td>
@@ -19,21 +19,35 @@
         <td class="text-center">${ptcptList.email}</td>
         <td class="text-center">${ empty ptcptList.regDtm ? '-' : kl:convertDate(ptcptList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>
         <td class="text-center">${ptcptList.eduDtm}</td>
-        <td class="text-center">${ptcptList.sttsCdNm}</td>
+        <td class="text-center">${ptcptList.eduStat}</td>
         <td class="text-center">출석</td>
-        <td class="text-center">평가</td>
-        <td class="text-center">
-          <select class="form-control input-sm wd-sm" name="cmptnYn" id="cmptnYn" title="수료여부">
+        <td class="text-center  form-inline">
+          <!--오프라인 평가인경우 입력창과 버튼출력, 일반 평가인경우 점수가 표기 -->
+          <c:if test="${ptcptList.otsdExamPtcptYn eq 'Y'}">
+            <input type="text" class="form-control input-sm numberChk notRequired" name="examScore" value="${ptcptList.examScore}" title="평가점수" maxlength="50" placeholder="" style="width:50px;" />점
+            <%--<button type="button" class="btn btn-inverse btn-sm examScoreUpdate">
+              저장
+            </button>--%>
+          </c:if>
+          <c:if test="${ptcptList.otsdExamPtcptYn ne 'Y'}">
+            ${ptcptList.examScore}
+          </c:if>
+        </td>
+        <td class="text-center form-inline">
+          <select class="form-control input-sm wd-sm" name="cmptnYn" id="cmptnYn" title="수료여부" style="width: 100px" data-org_cmptnYn="${ptcptList.cmptnYn}">
             <option value="N" <c:if test="${ptcptList.cmptnYn eq 'N'}">selected</c:if>>미수료</option>
             <option value="Y" <c:if test="${ptcptList.cmptnYn eq 'Y'}">selected</c:if>>수료</option>
           </select>
+          <%--<button type="button" class="btn btn-inverse btn-sm cmptnYnUpdate">
+            저장
+          </button>--%>
         </td>
       </tr>
     </c:forEach>
   </c:when>
   <c:otherwise>
     <tr data-total-count="0">
-      <td colspan="10" class="text-center">
+      <td colspan="14" class="text-center">
         검색결과가 없습니다.<br>
         (등록된 데이터가 없습니다.)
       </td>

@@ -256,10 +256,34 @@ public class EBBEpisdController {
             return tempDto;
         }
 
+
+        @Operation(summary = "교육차수 신청자 정원체크", tags = "교육차수 중복체크", description = "")
+        @PostMapping(value="/fxnumChk")
+        public EBBEpisdDTO selectFxnumChk(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+
+            EBBEpisdDTO tempDto = new EBBEpisdDTO();
+
+            try {
+
+                tempDto = eBBEpisdService.selectFxnumChk(eBBEpisdDTO);
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return tempDto;
+        }
+
+
+
     }
-
-
-
 
 
 }

@@ -3,6 +3,7 @@ package com.kap.service.impl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kap.core.dto.*;
+import com.kap.core.dto.sm.smh.SMHSmsSendYnDTO;
 import com.kap.service.COMessageService;
 import com.kap.service.SMHSmsSendYnService;
 import com.kap.service.dao.COMsgSendMapper;

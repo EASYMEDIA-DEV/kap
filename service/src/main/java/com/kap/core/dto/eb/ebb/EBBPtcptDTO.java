@@ -69,24 +69,32 @@ public class EBBPtcptDTO extends BaseDTO {
     @Schema(title = "이메일", example = "텍스트")
     private String email;
 
-
-    @Schema(title = "교육상태", example = "텍스트")
+    @Schema(title = "교육상태코드", example = "텍스트")
     private String sttsCd;
 
-    @Schema(title = "교육상태명", example = "텍스트")
+    @Schema(title = "교육상태코드명", example = "텍스트")
     private String sttsCdNm;
 
     @Schema(title = "교육신청일시", example = "날짜 yyyy-mm-dd HH:mm:ss")
     private String eduDtm;
 
-    @Schema(title = "교육 출석", example = "xx점")
+    @Schema(title = "교육 출석률", example = "xx")
     private String eduAtndc;
 
-    @Schema(title = "교육 평가", example = "xx점")
-    private String eduExam;
+    @Schema(title = "시험점수", example = "")
+    private Integer examScore;
 
-    @Schema(title = "교육 수료여부", example = "Y/N")
+    @Schema(title = "수료여부", example = "Y/N")
     private String cmptnYn;
+
+    @Schema(title = "오프라인 평가 여부", example = "Y/N")
+    private String otsdExamPtcptYn;
+
+    @Schema(title = "수료여부 변경여부", example = "Y/N")
+    private String cmptnChangeYn;
+
+    @Schema(title = "교육상태", example = "텍스트")
+    private String eduStat;
 
 
     private List<EBBPtcptDTO> ptcptList;//교육 참여자 목록

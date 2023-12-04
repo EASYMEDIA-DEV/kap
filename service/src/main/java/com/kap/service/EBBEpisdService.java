@@ -61,5 +61,12 @@ public interface EBBEpisdService {
 	 */
 	public EBBEpisdDTO selectEpisdChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 교육차수 신청자 정원체크
+	 */
+	public EBBEpisdDTO selectFxnumChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+
 }
 

@@ -84,6 +84,10 @@ public class EBBEpisdDTO extends BaseDTO {
     @Builder.Default
     private String fxnumImpsbYn = "Y";
 
+    @Schema(title = "정원수포화상태 여부 S : 포화X, F:포화", example = "숫자")
+    private String fxnumStta;
+
+
     @Schema(title = "모집방법코드", example = "숫자")
     private String rcrmtMthdCd;
 
@@ -236,6 +240,11 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "오프라인평가여부", example = "Y/N")
     private String otsdExamPtcptYn;
 
+    @Schema(title = "교육차수 상태(개강, 종강)", example = "Y/N")
+    @Builder.Default
+    private String edctnSttsCd = "EDCTN_STTS_CD01";
+
+
     //오프라인여부
 
     //로그인세션ID
@@ -266,7 +275,7 @@ public class EBBEpisdDTO extends BaseDTO {
 
 
     private String srchLayer;
-
+    private List<EBBPtcptDTO> ptcptList;//참여자 목록
 
     private List<EBBLctrDTO> lctrList;//온라인강의 목록
 

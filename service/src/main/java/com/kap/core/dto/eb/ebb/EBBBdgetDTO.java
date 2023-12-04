@@ -44,7 +44,7 @@ public class EBBBdgetDTO extends BaseDTO {
     @NotNull
     private String cd;
 
-    @Schema(title = "코드", example = "공통코드")
+    @Schema(title = "금액", example = "공통코드")
     @NotNull
     private Integer pmt;
 
