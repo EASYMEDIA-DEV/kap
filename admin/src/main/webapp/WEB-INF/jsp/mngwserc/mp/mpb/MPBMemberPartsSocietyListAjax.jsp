@@ -30,6 +30,8 @@
         <td class="text-center">${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
         <input type="hidden" class="telNo" value="${list.telNo}"/>
         <input type="hidden" class="pstnCd" value="${list.pstnCd}"/>
+        <input type="hidden" class="pstnCdNm" value="${list.pstnCdNm}"/>
+
       </tr>
     </c:forEach>
   </c:when>
