@@ -704,11 +704,11 @@ public class IdgenConfig {
      * @return
      */
     @Bean(destroyMethod = "destroy")
-    public EgovTableIdGnrServiceImpl eduApplicantSeqIdgen() {
+    public EgovTableIdGnrServiceImpl edctnPtcptSeqIdgen() {
         return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
                 .setBlockSize(1)
                 .setTable("co_seq_mst")
-                .setTableName("EDU_APPLICANT_SEQ")
+                .setTableName("EDCTN_PTCPT_SEQ")
                 .setCipers(13)
                 .build();
     }
