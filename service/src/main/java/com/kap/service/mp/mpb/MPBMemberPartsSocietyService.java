@@ -1,4 +1,4 @@
-package com.kap.service;
+package com.kap.service.mp.mpb;
 
 import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.MPBBusDto;

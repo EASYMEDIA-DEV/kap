@@ -6,9 +6,10 @@ import com.kap.core.dto.MPBBusDto;
 import com.kap.core.dto.MPBSanDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
 import com.kap.service.*;
-import com.kap.service.MPAUserService;
-import com.kap.service.MPBMemberPartsSocietyService;
-import com.kap.service.MPDCmtService;
+
+import com.kap.service.mp.mpa.MPAUserService;
+import com.kap.service.mp.mpb.MPBMemberPartsSocietyService;
+import com.kap.service.mp.mpd.MPDCmtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
