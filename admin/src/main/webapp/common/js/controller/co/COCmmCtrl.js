@@ -1568,6 +1568,10 @@ var cmmCtrl = (function(){
 				// 우편번호와 주소 정보를 해당 필드에 넣는다.
 				$("#"+zipcode).val(data.zonecode);
 				$("#"+bscAddr).val(addr);
+
+				// 방문교육시 교육장소 받아오기
+				$("#edctnPlace").val(data.sido + " " + data.sigungu);
+
 				// 커서를 상세주소 필드로 이동한다.
 				$("#"+dtlAddr).focus();
 
@@ -1728,21 +1732,7 @@ var cmmCtrl = (function(){
 		}).modal();
 	}
 
-	var fn_survey_list = function(fnc){
-		$(".svaSurveySrchLayer").one('show.bs.modal', function () {
 
-			var modal = $(this);
-			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
-
-		}).one('hidden.bs.modal', function () {
-			// Remove class for soft backdrop (if not will affect future modals)
-		}).one('choice', function (data, param) {
-			var obj = param;
-			$("#listContainer3").find("td").eq(0).text(obj.typeNm);
-			$("#listContainer3").find("td").eq(1).text(obj.titl);
-			$("#srvSeq").val(obj.seq);
-		}).modal();
-	}
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1795,11 +1785,8 @@ var cmmCtrl = (function(){
 		getEduRoomLayerPop : fn_edu_room_layer_pop,
 		//부품사 회원 검색 매핑
 		getPartsCompanyMemberLayerPop : fn_parts_member_layer_pop,
+
 		//위원 검색 매핑
-		getCmtSrchPop : fn_cmt_srch_layer_pop,
-		// 설문 검색 매핑
-		getSurveyList : fn_survey_list
+		getCmtSrchPop : fn_cmt_srch_layer_pop
 	}
-
-
 }());
