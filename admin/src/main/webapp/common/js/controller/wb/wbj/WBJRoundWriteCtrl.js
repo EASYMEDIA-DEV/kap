@@ -16,38 +16,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     //설문지 순차 순번
     var examListSize = 0;
 
-    var callbackAjaxInsert = function(data){
-        if (parseInt(data.actCnt, 10) > 0)
-        {
-            alert(msgCtrl.getMsg("success.ins"));
-            location.href = "./list";
-        }
-        else
-        {
-            if(data.excessCntYn == "Y"){
-                alert(msgCtrl.getMsg("fail.sm.smb.insert"));
-            }else{
-                alert(msgCtrl.getMsg("fail.act"));
-            }
-        }
-    };
-
-    var callbackAjaxUpdate = function(data){
-        if (parseInt(data.actCnt, 10) > 0)
-        {
-            alert(msgCtrl.getMsg("success.upd"));
-            location.href = "./list";
-        }
-        else
-        {
-            if(data.excessCntYn == "Y"){
-                alert(msgCtrl.getMsg("fail.sm.smb.insert"));
-            }else{
-                alert(msgCtrl.getMsg("fail.act"));
-            }
-        }
-    };
-
     var callbackAjaxDelete = function(data){
 
         if (parseInt(data.respCnt, 10) > 0)
@@ -60,11 +28,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             alert(msgCtrl.getMsg("fail.act"));
         }
     };
-
     // set model
     ctrl.model = {
         id : {
-
         },
         classname : {
             btnExamWrite :{
@@ -129,7 +95,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
             $("#btn_delete").click(function () {
                 if (confirm(msgCtrl.getMsg("confirm.del"))) {
-                    cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+                    cmmCtrl.frmAjax(function(respObj) {
+                        if(respObj.optEpisdCnt == '0'){
+                            cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+                        }else{
+                            alert("신청정보가 존재하여 삭제할 수 없습니다.");
+                        }
+                    }, "/mngwserc/wb/wbja/getRsumeCnt", $formObj, "post", "json")
                 }
             });
 
@@ -211,10 +183,31 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                             wbRoundMstDTO.prizeList.push(wBOrderMstDto);
                         })
-                        cmmCtrl.jsonAjax(function(data){
-                            alert(actionMsg);
-                            location.href = "./list";
-                        }, actionUrl, wbRoundMstDTO, "text")
+                        var yearDtl = $("#yearDtl").val();
+                        cmmCtrl.frmAjax(function(respObj) {
+                            var episdCnt = respObj.optEpisdCnt[0];
+
+                            if(actionUrl.indexOf('update') != -1 ){
+                                if(episdCnt >= 1 && yearDtl != wbRoundMstDTO.year){
+                                    alert("이미 등록된 회차입니다.");
+                                }else{
+                                    cmmCtrl.jsonAjax(function(data){
+                                        alert(actionMsg);
+                                        location.href = "./list";
+                                    }, actionUrl, wbRoundMstDTO, "text")
+                                }
+                            }else{
+                                if(episdCnt >= 1){
+                                    alert("이미 등록된 회차입니다.");
+                                }else{
+                                    cmmCtrl.jsonAjax(function(data){
+                                        alert(actionMsg);
+                                        location.href = "./list";
+                                    }, actionUrl, wbRoundMstDTO, "text")
+                                }
+                            }
+                        }, "/mngwserc/wb/wbja/getEpisdCnt", $formObj, "post", "json")
+
                     }
                 },
                 msg : {

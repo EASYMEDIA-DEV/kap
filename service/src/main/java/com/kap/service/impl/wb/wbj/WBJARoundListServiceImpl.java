@@ -7,6 +7,7 @@ import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 import com.kap.service.COFileService;
 import com.kap.service.WBEACarbonListService;
 import com.kap.service.WBJARoundListService;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -87,7 +89,6 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
 
             wBJARoundListMapper.insertPrizeList(wBOrderMstDto);
         }
-
         wBRoundMstDTO.setRespCnt(respCnt);
 
         return respCnt;
@@ -137,6 +138,7 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
         EXGExamExmplDtlDTO eXGExamExmplDtlDTO = new EXGExamExmplDtlDTO();
         eXGExamExmplDtlDTO.setDelValueList( wBRoundMstDTO.getDelValueList() );
         wBJARoundListMapper.deletePrizeList(wBRoundMstDTO);
+
         return respCnt;
     }
 
@@ -162,6 +164,25 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
     public WBRoundMstDTO selectYearDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
 
         return wBJARoundListMapper.selectYearDtl(wBRoundMstSearchDTO);
+    }
+
+    /**
+     *  선택 연도 값에 따른 episdCnt 값 가져오기
+     */
+    public List<String> roundCnt(WBRoundMstDTO wBRoundMstDTO)  throws Exception
+    {
+        return wBJARoundListMapper.roundCnt(wBRoundMstDTO);
+    }
+
+    /**
+     *  해당년도 신청 갯수
+     */
+    public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO)  throws Exception
+    {
+        EXGExamQstnDtlDTO eXGExamQstnDtlDTO = new EXGExamQstnDtlDTO();
+        eXGExamQstnDtlDTO.setDelValueList( wBRoundMstDTO.getDelValueList() );
+
+        return wBJARoundListMapper.episdCnt(wBRoundMstDTO);
     }
 
 }

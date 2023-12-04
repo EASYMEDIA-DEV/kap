@@ -4,6 +4,7 @@ import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 
 import java.util.List;
 
@@ -68,4 +69,15 @@ public interface WBJARoundListMapper {
      */
     public int updatePrizeList(WBOrderMstDto wBOrderMstDto) throws Exception;
 
+    /**
+     *  선택 연도 값에 따른 episdCnt 값 가져오기
+     *
+     */
+    public List<String> roundCnt(WBRoundMstDTO wBRoundMstDTO);
+    
+    /**
+     *  해당 년도 회차 신청 갯수
+     *
+     */
+    public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO);
 }

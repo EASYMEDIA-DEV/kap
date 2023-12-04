@@ -6,6 +6,7 @@ import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBJARoundListService;
@@ -93,7 +94,7 @@ public class WBJRoundController {
      * 자동차부품산업대상 회차 상세 페이지
      */
     @RequestMapping(value = "/write")
-    public String getRoundWritePage(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap
+    public String getRoundWritePage(WBRoundMstSearchDTO wBRoundMstSearchDTO, WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap
             ,@Parameter(description = "회차 순번", required = false) @RequestParam(required = false) String detailsKey) throws Exception
     {
         try
@@ -110,7 +111,6 @@ public class WBJRoundController {
 
             if(wBRoundMstSearchDTO.getDetailsKey() != null){
                 modelMap.addAttribute("rtnInfo", wBJARoundListService.selectRoundDtl(wBRoundMstSearchDTO));
-                System.out.println("rtnInfo   ::  " + wBJARoundListService.selectRoundDtl(wBRoundMstSearchDTO));
             }
 
         }
@@ -201,4 +201,46 @@ public class WBJRoundController {
         return WBRoundMstDTO;
     }
 
+    /**
+     * 선택 연도 값에 따른
+     * 회차 SELECT Ajax
+     */
+    @PostMapping(value="/getEpisdCnt")
+    public String getEpisdAjax(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap) throws Exception
+    {
+        try {
+            wBRoundMstDTO.setBsnCd("INQ07010");
+            modelMap.addAttribute("optEpisdCnt", wBJARoundListService.roundCnt(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 선택 연도 값에 따른
+     * 회차 SELECT Ajax
+     */
+    @PostMapping(value="/getRsumeCnt")
+    public String getRsumeAjax(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap) throws Exception
+    {
+        try {
+            modelMap.addAttribute("optEpisdCnt", wBJARoundListService.episdCnt(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
 }

@@ -94,4 +94,7 @@ public class WBRoundMstDTO extends BaseDTO {
     @Schema(title = "과제명 리스트")
     private List<WBRoundOptnMstDTO> asigtList;
 
+    @Schema(title = "회차 갯수", example = "숫자")
+    private Integer episdCnt;
+
 }

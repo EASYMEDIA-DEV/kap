@@ -19,12 +19,13 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.episdSeq}" />
             <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07010" />
             <input type="hidden" class="notRequired" id="episd" name="episd" value="1" />
+            <input type="hidden" class="notRequired" id="yearDtl" name="yearDtl" value="${rtnInfo.year}" />
 
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">연도<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <select class="form-control input-sm" id="year" name="year">
+                        <select class="form-control input-sm yearCnt" id="year" name="year">
                             <c:forEach begin="${year}" end="${todayYear+3}" var="result" step="1">
                                 <option value="${result}" <c:if test="${rtnInfo.year eq result}">selected</c:if><c:if test="${empty rtnInfo and todayYear eq result}">selected</c:if>>${result}</option>
                             </c:forEach>

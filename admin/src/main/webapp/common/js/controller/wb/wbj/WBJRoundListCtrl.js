@@ -47,7 +47,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 }
             },
             //데이터 삭제
-            btnDelete123 : {
+            btnChooseDelete : {
                 event : {
                     click : function() {
                         var frmDataObj    = $(this).closest("form");
@@ -55,20 +55,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         var delType = frmDataObj.data("delType");
                         if (delActCnt > 0)
                         {
-                            //삭제 전송
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    var msg = msgCtrl.getMsg("success.del.target.none");
-                                    if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
-                                        msg = msgCtrl.getMsg("success.del.target." + delType);
+                            if (confirm(msgCtrl.getMsg("confirm.del"))) {
+                                cmmCtrl.frmAjax(function(respObj) {
+                                    if(respObj.optEpisdCnt == '0'){
+                                        //삭제 전송
+                                        cmmCtrl.frmAjax(function(respObj){
+                                            if(respObj != undefined && respObj.respCnt > 0){
+                                                var msg = msgCtrl.getMsg("success.del.target.none");
+                                                if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
+                                                    msg = msgCtrl.getMsg("success.del.target." + delType);
+                                                }
+                                                alert(msg);
+                                                $formObj.find("#btnSearch").click();
+                                            }
+                                            else{
+                                                alert(msgCtrl.getMsg("fail.act"));
+                                            }
+                                        }, "./delete", frmDataObj, "POST", "json");
+                                    }else{
+                                        alert("신청정보가 존재하여 삭제할 수 없습니다.");
                                     }
-                                    alert(msg);
-                                    $formObj.find("#btnSearch").click();
-                                }
-                                else{
-                                    alert(msgCtrl.getMsg("fail.act"));
-                                }
-                            }, "./delete", frmDataObj, "POST", "json");
+                                }, "/mngwserc/wb/wbja/getRsumeCnt", $formObj, "post", "json")
+                            }
                         }
                         else
                         {

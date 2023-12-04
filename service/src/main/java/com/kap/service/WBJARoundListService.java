@@ -4,8 +4,10 @@ package com.kap.service;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface WBJARoundListService {
 
@@ -39,4 +41,15 @@ public interface WBJARoundListService {
      */
     public WBRoundMstDTO selectYearDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
+    /**
+     * 선택 연도 값에 따른
+     * episdCnt 값 가져오기
+     */
+    public List<String> roundCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+    
+    /**
+     * 회차 신청 갯수
+     * 
+     */
+    public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 }
