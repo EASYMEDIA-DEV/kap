@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.*;
-import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.co.*;
 
 import com.kap.core.utility.COClassUtil;

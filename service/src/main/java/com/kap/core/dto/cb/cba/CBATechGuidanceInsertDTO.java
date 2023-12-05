@@ -38,6 +38,11 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String name;
     @Schema(title = "신청자 순번")
     private String memSeq;
+
+    @Schema(title = "이관 전 신청자 순번")
+    private String bfreMemSeq;
+    @Schema(title = "이관 후 신청자 순번")
+    private String aftrMemSeq;
     @Schema(title = "신청자 이메일")
     private String email;
     @Schema(title = "신청자 아이디")
@@ -54,6 +59,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String telNo;
     @Schema(title = "신청자 핸드폰 전화번호")
     private String hpNo;
+    @Schema(title = "이관 순번")
+    private Integer trnsfSeq;
 
     // 부품사 정보
     @Schema(title = "컨설팅 순번")
@@ -226,4 +233,6 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     @Schema(title = "설문종료일자")
     private String typeNm;
 
+    // 이관 이력 리스트
+    List<CBATechGuidanceInsertDTO> trsfGuidanceList;
 }

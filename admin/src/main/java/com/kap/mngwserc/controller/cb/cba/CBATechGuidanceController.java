@@ -2,13 +2,14 @@ package com.kap.mngwserc.controller.cb.cba;
 
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.CBATechGuidanceService;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -89,24 +90,24 @@ public class CBATechGuidanceController {
     public String getTechGuidanceWritePage(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
         /*try
         {*/
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            // 코드 set
-            cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
-            cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
-            cdDtlList.add("MEM_CD"); // 직급, 부서 코드
-            cdDtlList.add("COMPANY_TYPE"); //부품사 구분 코드
-            cdDtlList.add("CO_YEAR_CD"); // 연도 코드 (2021년 ~ 2024년)
-            cdDtlList.add("COMPANY_TYPE"); // 스타등급
-            cdDtlList.add("APPCTN_RSN_CD"); // 신청사유 코드
-            cdDtlList.add("ADDR_CD"); // 소재지 코드
-            cdDtlList.add("BF_JDGMT_RSLT"); // 사전심사결과 코드
-            cdDtlList.add("GUIDE_TYPE_CD"); // 지도 구분 코드
-            cdDtlList.add("GUIDE_PSCND"); // 지도 현황 코드
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+        cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
+        cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
+        cdDtlList.add("MEM_CD"); // 직급, 부서 코드
+        cdDtlList.add("COMPANY_TYPE"); //부품사 구분 코드
+        cdDtlList.add("CO_YEAR_CD"); // 연도 코드 (2021년 ~ 2024년)
+        cdDtlList.add("COMPANY_TYPE"); // 스타등급
+        cdDtlList.add("APPCTN_RSN_CD"); // 신청사유 코드
+        cdDtlList.add("ADDR_CD"); // 소재지 코드
+        cdDtlList.add("BF_JDGMT_RSLT"); // 사전심사결과 코드
+        cdDtlList.add("GUIDE_TYPE_CD"); // 지도 구분 코드
+        cdDtlList.add("GUIDE_PSCND"); // 지도 현황 코드
+        modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-            if (!"".equals(cBATechGuidanceInsertDTO.getDetailsKey()) && cBATechGuidanceInsertDTO.getDetailsKey() != null) {
-                modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
-            }
+        if (!"".equals(cBATechGuidanceInsertDTO.getDetailsKey()) && cBATechGuidanceInsertDTO.getDetailsKey() != null) {
+            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
+        }
         /*} catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -128,8 +129,6 @@ public class CBATechGuidanceController {
             cBATechGuidanceInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBATechGuidanceInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
-            System.err.println("cBATechGuidanceDTO:::"+cBATechGuidanceInsertDTO);
-
             modelMap.addAttribute("respCnt", cBATechGuidanceService.insertTechGuidance(cBATechGuidanceInsertDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
@@ -143,18 +142,19 @@ public class CBATechGuidanceController {
 
     @RequestMapping(value = "/update", method= RequestMethod.POST)
     public String updateTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, CBATechGuidanceUpdateDTO cBATechGuidanceUpdateDTO, ModelMap modelMap) throws Exception {
-       /* try {*/
+        try {
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBATechGuidanceInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+            cBATechGuidanceUpdateDTO.setBsnmNo(cBATechGuidanceUpdateDTO.getBsnmNo().replace("-", ""));
 
             modelMap.addAttribute("respCnt", cBATechGuidanceService.updateTechGuidance(cBATechGuidanceInsertDTO, cBATechGuidanceUpdateDTO));
-       /* } catch (Exception e) {
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
         return "jsonView";
     }
@@ -185,6 +185,29 @@ public class CBATechGuidanceController {
         return "jsonView";
     }
 
+    /**
+     * 컨설팅 이관 내역을 조회한다.
+     */
+    @GetMapping(value = "/trsfList")
+    public String getTrsfListPageAjax(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTrsfGuidanceList(cBATechGuidanceInsertDTO));
+            modelMap.addAttribute("CBATechGuidanceInsertDTO", cBATechGuidanceInsertDTO);
+            System.err.println("rtnData:::"+modelMap);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/cb/cba/CBATechGuidanceTrsfListAjax";
+    }
+
 
     @RestController
     @RequiredArgsConstructor
@@ -192,6 +215,7 @@ public class CBATechGuidanceController {
     public class CBATechGuiadnceRestController {
 
         private final CBATechGuidanceService cBATechGuidanceService;
+        private final MPAUserService mPAUserService;
         private final COCodeService cOCodeService;
 
         /**
@@ -202,7 +226,6 @@ public class CBATechGuidanceController {
         public List<MPEPartsCompanyDTO> bsnmNoSearch(@Valid @RequestBody MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
             List<MPEPartsCompanyDTO> list = new ArrayList<>();
             try {
-                System.err.println("MPEPartsCompanyDTO"+mpePartsCompanyDTO);
                 list = cBATechGuidanceService.selectPartsCompanyDtl(mpePartsCompanyDTO);
             } catch (Exception e) {
                 if (log.isErrorEnabled()) {
@@ -221,7 +244,6 @@ public class CBATechGuidanceController {
         public List<COCodeDTO> selectSubAddr(@RequestBody COCodeDTO cOCodeDTO) throws Exception {
             List<COCodeDTO> detailList = null;
             try {
-                System.err.println("cOCodeDTO"+cOCodeDTO);
                 detailList = cOCodeService.getCdIdList(cOCodeDTO);
             } catch (Exception e) {
                 if (log.isErrorEnabled()) {

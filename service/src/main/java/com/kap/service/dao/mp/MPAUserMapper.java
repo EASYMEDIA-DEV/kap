@@ -1,8 +1,8 @@
 package com.kap.service.dao.mp;
 
- import com.kap.core.dto.MPAAttctnDto;
- import com.kap.core.dto.MPAInqrDto;
- import com.kap.core.dto.MPAUserDto;
+ import com.kap.core.dto.mp.mpa.MPAAttctnDto;
+ import com.kap.core.dto.mp.mpa.MPAInqrDto;
+ import com.kap.core.dto.mp.mpa.MPAUserDto;
  import com.kap.core.dto.MPPwdInitDto;
  import org.apache.ibatis.annotations.Mapper;
 

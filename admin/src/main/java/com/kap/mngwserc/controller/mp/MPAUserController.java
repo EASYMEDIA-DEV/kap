@@ -2,9 +2,9 @@ package com.kap.mngwserc.controller.mp;
 
 import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.*;
-import com.kap.core.dto.MPAAttctnDto;
-import com.kap.core.dto.MPAInqrDto;
-import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.mp.mpa.MPAAttctnDto;
+import com.kap.core.dto.mp.mpa.MPAInqrDto;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.COMessageService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.mp.mpa.MPAUserService;

@@ -5,7 +5,7 @@ import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
 import com.kap.service.*;
 import com.kap.service.dao.mp.MPAUserMapper;

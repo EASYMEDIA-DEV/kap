@@ -1,6 +1,6 @@
 package com.kap.core.annotation;
 
-import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 
 import java.lang.reflect.Field;
 import java.text.ParseException;

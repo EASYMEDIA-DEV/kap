@@ -75,8 +75,7 @@ public interface CBATechGuidanceMapper {
     /**
      * 컨설팅 진행 마스터 등록
      */
-    public int isnertTechGuidanceRsume(CBATechGuidanceUpdateDTO pCBATechGuidanceupUpdateDTO) throws Exception;
-
+    public int insertTechGuidanceRsume(CBATechGuidanceUpdateDTO pCBATechGuidanceupUpdateDTO) throws Exception;
     /**
      * 컨설팅 진행 마스터 수정
      */
@@ -91,12 +90,12 @@ public interface CBATechGuidanceMapper {
      * 컨설팅 기술 지도 삭제
      */
     public int deleteTechGuidance(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
-    
+
     /**
      * 부품사 업종 상세 수정
      */
     public int updateCbsnDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO);
-    
+
     /**
      *  부품사 업종 수정
      */
@@ -144,7 +143,7 @@ public interface CBATechGuidanceMapper {
      * 고객사 비율 상세 등록
      */
     public int insertCnstgDlvryInfo(HashMap dpndnMap);
-    
+
     /**
      * 완성차 의존 매출 등록
      */
@@ -170,4 +169,18 @@ public interface CBATechGuidanceMapper {
      */
     public int selectRsumeTotCnt(Integer cnstgSeq) throws Exception;
 
+    /**
+     * 컨설팅 이관 내역 카운트
+     */
+    public int selectTrsfGuidanceCnt(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅 이관 내역 등록
+     */
+    public int insertTrsfGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅 이관 목록 조회
+     */
+    public  List<CBATechGuidanceInsertDTO> selectTrsfGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 }

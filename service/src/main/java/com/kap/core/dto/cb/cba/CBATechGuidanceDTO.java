@@ -99,4 +99,7 @@ public class CBATechGuidanceDTO extends BaseDTO {
 
     @Schema(title = "부품사 이름")
     private String cmpnNm;
+
+    @Schema(title = "진행 상태 코드")
+    private String rsumeSttsCd;
 }

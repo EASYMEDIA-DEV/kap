@@ -10,38 +10,38 @@
     -->
     <select id="selectTechGuidanceList" parameterType="CBATechGuidanceDTO" resultType="CBATechGuidanceDTO">
         SELECT /* CBATechGuidanceMapper.selectTechGuidanceList */
-            A.CNSTG_SEQ,
-            A.APPCTN_BSNM_NO,
-            A.APPCTN_MEM_SEQ,
-            A.CNSTG_CD,
-            A.APPCTN_DT,
-            A.CMPN_SIZE_CD,
-            A.CMPN_ADDR_SAME_YN,
-            A.FCTRY_ZIPCODE,
-            A.FCTRY_BSC_ADDR,
-            A.FCTRY_DTL_ADDR,
-            A.FIRST_RGNS_CD,
-            A.SCND_RGNS_CD,
-            A.FAX_NO,
-            A.RPRSNT_APPRV_YN,
-            A.APPCTN_RSN_CD,
-            A.APPCTN_FLD_CD,
-            A.ITRDC_FILE_SEQ,
-            A.IMPVM_FILE_SEQ,
-            B.MEM_SEQ,
-            B.ID,
-            B.NAME,
-            B.HP_NO,
-            B.EMAIL,
-            B.TEL_NO,
-            B.DEPT_CD,
-            B.DEPT_DTL_NM,
-            B.PSTN_CD,
-            B.PSTN_NM
+        A.CNSTG_SEQ,
+        A.APPCTN_BSNM_NO,
+        A.APPCTN_MEM_SEQ,
+        A.CNSTG_CD,
+        A.APPCTN_DT,
+        A.CMPN_SIZE_CD,
+        A.CMPN_ADDR_SAME_YN,
+        A.FCTRY_ZIPCODE,
+        A.FCTRY_BSC_ADDR,
+        A.FCTRY_DTL_ADDR,
+        A.FIRST_RGNS_CD,
+        A.SCND_RGNS_CD,
+        A.FAX_NO,
+        A.RPRSNT_APPRV_YN,
+        A.APPCTN_RSN_CD,
+        A.APPCTN_FLD_CD,
+        A.ITRDC_FILE_SEQ,
+        A.IMPVM_FILE_SEQ,
+        B.MEM_SEQ,
+        B.ID,
+        B.NAME,
+        B.HP_NO,
+        B.EMAIL,
+        B.TEL_NO,
+        B.DEPT_CD,
+        B.DEPT_DTL_NM,
+        B.PSTN_CD,
+        B.PSTN_NM
         FROM
-            CP_CNSTG_APPCTN_MST A
+        CP_CNSTG_APPCTN_MST A
         LEFT JOIN
-            CO_MEM_MST B
+        CO_MEM_MST B
         ON A.APPCTN_BSNM_NO = B.WORK_BSNM_NO
         AND A.APPCTN_MEM_SEQ = B.MEM_SEQ
         <include refid="selectTechGuidancewhereSql" />
@@ -56,9 +56,9 @@
     -->
     <select id="selectTechGuidanceTotCnt" parameterType="CBATechGuidanceDTO" resultType="java.lang.Integer">
         SELECT
-            count(*)
+        count(*)
         FROM
-            CP_CNSTG_APPCTN_MST A
+        CP_CNSTG_APPCTN_MST A
         <include refid="selectTechGuidancewhereSql" />
     </select>
 
@@ -113,7 +113,7 @@
             (SELECT NAME CO_MEM_MST WHERE ID = B.REG_ID) AS REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-            (SELECT NAME CO_MEM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
+                                        (SELECT NAME CO_MEM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
@@ -170,53 +170,53 @@
     -->
     <insert id="insertTechGuidance" parameterType="CBATechGuidanceInsertDTO">
         INSERT /* CBATechGuidanceMapper.insertTechGuidance */ INTO CP_CNSTG_APPCTN_MST (
-            CNSTG_SEQ
-            , APPCTN_BSNM_NO
-            , APPCTN_MEM_SEQ
-            , CNSTG_CD
-            , APPCTN_DT
-            , CMPN_SIZE_CD
-            , CMPN_ADDR_SAME_YN
-            , FCTRY_ZIPCODE
-            , FCTRY_BSC_ADDR
-            , FCTRY_DTL_ADDR
-            , FIRST_RGNS_CD
-            , SCND_RGNS_CD
-            , QLTY_PIC_CNT
-            , FAX_NO
-            , RPRSNT_APPRV_YN
-            , APPCTN_RSN_CD
-            , RQST_CNTN
-            , ITRDC_FILE_SEQ
-            , IMPVM_FILE_SEQ
-            , REG_ID
-            , REG_IP
-            , REG_DTM
+                                                                                         CNSTG_SEQ
+                                                                                       , APPCTN_BSNM_NO
+                                                                                       , APPCTN_MEM_SEQ
+                                                                                       , CNSTG_CD
+                                                                                       , APPCTN_DT
+                                                                                       , CMPN_SIZE_CD
+                                                                                       , CMPN_ADDR_SAME_YN
+                                                                                       , FCTRY_ZIPCODE
+                                                                                       , FCTRY_BSC_ADDR
+                                                                                       , FCTRY_DTL_ADDR
+                                                                                       , FIRST_RGNS_CD
+                                                                                       , SCND_RGNS_CD
+                                                                                       , QLTY_PIC_CNT
+                                                                                       , FAX_NO
+                                                                                       , RPRSNT_APPRV_YN
+                                                                                       , APPCTN_RSN_CD
+                                                                                       , RQST_CNTN
+                                                                                       , ITRDC_FILE_SEQ
+                                                                                       , IMPVM_FILE_SEQ
+                                                                                       , REG_ID
+                                                                                       , REG_IP
+                                                                                       , REG_DTM
         )
         VALUES (
-            #{cnstgSeq}
-            , #{bsnmNo}
-            , #{memSeq}
-            , "INQ03001"
-            , #{appctnDt}
-            , #{sizeCd}
-            , #{cmpnAddrSameYn}
-            , #{fctryZipcode}
-            , #{fctryBscAddr}
-            , #{fctryDtlAddr}
-            , #{firstRgnsCd}
-            , #{scndRgnsCd}
-            , #{qltyPicCnt}
-            , #{faxNo}
-            , #{rprsntApprvYn}
-            , #{appctnRsnCd}
-            , #{rqstCntn}
-            , #{itrdcFileSeq}
-            , #{impvmFileSeq}
-            , #{regId}
-            , #{regIp}
-            , NOW()
-        )
+                   #{cnstgSeq}
+               , #{bsnmNo}
+               , #{memSeq}
+               , "INQ03001"
+               , #{appctnDt}
+               , #{sizeCd}
+               , #{cmpnAddrSameYn}
+               , #{fctryZipcode}
+               , #{fctryBscAddr}
+               , #{fctryDtlAddr}
+               , #{firstRgnsCd}
+               , #{scndRgnsCd}
+               , #{qltyPicCnt}
+               , #{faxNo}
+               , #{rprsntApprvYn}
+               , #{appctnRsnCd}
+               , #{rqstCntn}
+               , #{itrdcFileSeq}
+               , #{impvmFileSeq}
+               , #{regId}
+               , #{regIp}
+               , NOW()
+               )
     </insert>
 
     <!--
@@ -229,25 +229,28 @@
     <update id="updateTechGuidance" parameterType="CBATechGuidanceInsertDTO">
         UPDATE CP_CNSTG_APPCTN_MST  /*CBATechGuidanceMapper.updateTechGuidance*/
         SET
-           APPCTN_DT = #{appctnDt},
-           CMPN_SIZE_CD = #{sizeCd},
-           CMPN_ADDR_SAME_YN = #{cmpnAddrSameYn},
-           FCTRY_ZIPCODE = #{fctryZipcode},
-           FCTRY_BSC_ADDR = #{fctryBscAddr},
-           FCTRY_DTL_ADDR = #{fctryDtlAddr},
-           FIRST_RGNS_CD = #{firstRgnsCd},
-           SCND_RGNS_CD = #{scndRgnsCd},
-           QLTY_PIC_CNT = #{qltyPicCnt},
-           FAX_NO =  #{faxNo},
-           RPRSNT_APPRV_YN = #{rprsntApprvYn},
-           APPCTN_RSN_CD = #{appctnRsnCd},
-           RQST_CNTN = #{rqstCntn},
-           ITRDC_FILE_SEQ = #{itrdcFileSeq},
-           IMPVM_FILE_SEQ = #{impvmFileSeq},
-           ADM_MEMO = #{admMemo},
-           MOD_DTM = now(),
-           MOD_ID = #{regId},
-           MOD_IP = #{regIp}
+            APPCTN_MEM_SEQ = #{memSeq},
+            APPCTN_DT = #{appctnDt},
+            CMPN_SIZE_CD = #{sizeCd},
+            CMPN_ADDR_SAME_YN = #{cmpnAddrSameYn},
+            FCTRY_ZIPCODE = #{fctryZipcode},
+            FCTRY_BSC_ADDR = #{fctryBscAddr},
+            FCTRY_DTL_ADDR = #{fctryDtlAddr},
+            FIRST_RGNS_CD = #{firstRgnsCd},
+            SCND_RGNS_CD = #{scndRgnsCd},
+            QLTY_PIC_CNT = #{qltyPicCnt},
+            FAX_NO =  #{faxNo},
+            RPRSNT_APPRV_YN = #{rprsntApprvYn},
+            APPCTN_RSN_CD = #{appctnRsnCd},
+            RQST_CNTN = #{rqstCntn},
+            ITRDC_FILE_SEQ = #{itrdcFileSeq},
+            IMPVM_FILE_SEQ = #{impvmFileSeq},
+            ADM_MEMO = #{admMemo},
+            MOD_DTM = now(),
+            MOD_ID = #{regId},
+            MOD_IP = #{regIp}
+        WHERE
+            CNSTG_SEQ = #{cnstgSeq}
     </update>
 
     <!--
@@ -273,22 +276,22 @@
     2023.11.14   임서화      최초생성
     -->
     <insert id="insertCbsnDtl" parameterType="java.util.HashMap">
-    Insert /* CBATechGuidanceMapper.insertCbsnDtl */ INTO CP_CNSTG_CBSN_DTL(
-          CNSTG_SEQ
-          , CD
-          , ETC_NM
-          , REG_ID
-          , REG_IP
-          , REG_DTM
-    )
-    VALUES(
-          #{cnstgSeq}
-          , #{cbsnCd}
-          , #{etcNm}
-          , #{regId}
-          , #{regIp}
-          , NOW()
-          )
+        Insert /* CBATechGuidanceMapper.insertCbsnDtl */ INTO CP_CNSTG_CBSN_DTL(
+                                                                                 CNSTG_SEQ
+                                                                               , CD
+                                                                               , ETC_NM
+                                                                               , REG_ID
+                                                                               , REG_IP
+                                                                               , REG_DTM
+        )
+        VALUES(
+                  #{cnstgSeq}
+              , #{cbsnCd}
+              , #{etcNm}
+              , #{regId}
+              , #{regIp}
+              , NOW()
+              )
     </insert>
 
     <!--
@@ -319,14 +322,14 @@
         UPDATE /* CBATechGuidanceMapper.updateTechMemberInfo */ CO_MEM_MST
         SET
             DEPT_CD = #{deptCd}
-            , DEPT_DTL_NM = #{deptDtlNm}
-            , PSTN_CD = #{pstnCd}
-            , TEL_NO = #{memTelNo}
-            , MOD_ID = #{regId}
-            , MOD_IP = #{regIp}
-            , MOD_DTM = NOW()
+          , DEPT_DTL_NM = #{deptDtlNm}
+          , PSTN_CD = #{pstnCd}
+          , TEL_NO = #{memTelNo}
+          , MOD_ID = #{regId}
+          , MOD_IP = #{regIp}
+          , MOD_DTM = NOW()
         WHERE 1=1
-        AND MEM_SEQ = #{memSeq}
+          AND MEM_SEQ = #{memSeq}
     </update>
 
     <!--
@@ -385,24 +388,24 @@
     2023.11.14   임서화      최초생성
     -->
     <insert id="insertCnstgDlvryInfo" parameterType="java.util.HashMap">
-    INSERT /* CBATechGuidanceMapper.insertCnstgDlvryInfo */ INTO CP_CNSTG_DLVRY_DTL(
-        CNSTG_SEQ
-        , CMPN_DLVRY_SEQ
-        , CMPN_NM
-        , RATE
-        , REG_ID
-        , REG_IP
-        , REG_DTM
+        INSERT /* CBATechGuidanceMapper.insertCnstgDlvryInfo */ INTO CP_CNSTG_DLVRY_DTL(
+                                                                                         CNSTG_SEQ
+                                                                                       , CMPN_DLVRY_SEQ
+                                                                                       , CMPN_NM
+                                                                                       , RATE
+                                                                                       , REG_ID
+                                                                                       , REG_IP
+                                                                                       , REG_DTM
         )
-    VALUES(
-        #{cnstgSeq}
-        , #{cmpnDlvrySeq}
-        , #{dlvryCmpnNm}
-        , #{dlvryRate}
-        , #{regId}
-        , #{regIp}
-        , now()
-        )
+        VALUES(
+                  #{cnstgSeq}
+              , #{cmpnDlvrySeq}
+              , #{dlvryCmpnNm}
+              , #{dlvryRate}
+              , #{regId}
+              , #{regIp}
+              , now()
+              )
     </insert>
 
     <!--
@@ -421,7 +424,7 @@
             MOD_IP = #{regIp},
             MOD_DTM = now()
         WHERE CNSTG_SEQ = #{cnstgSeq}
-            AND CMPN_DLVRY_SEQ = #{cmpnDlvrySeq}
+          AND CMPN_DLVRY_SEQ = #{cmpnDlvrySeq}
     </update>
 
     <!--
@@ -450,23 +453,23 @@
     <insert id="insertCnstgDpndnInfo" parameterType="java.util.HashMap">
         INSERT /* CBATechGuidanceMapper.insertCnstgDpndnInfo */ INTO CP_CNSTG_DPNDN_DTL
         (
-             CNSTG_SEQ
-           , DPNDN_SEQ
-           , CMPN_NM
-           , RATE
-           , REG_ID
-           , REG_IP
-           , REG_DTM
+            CNSTG_SEQ
+        , DPNDN_SEQ
+        , CMPN_NM
+        , RATE
+        , REG_ID
+        , REG_IP
+        , REG_DTM
         )
         VALUES(
-            #{cnstgSeq}
-           , #{dpndnSeq}
-           , #{cmpnNm}
-           , #{dpndnRate}
-           , #{regId}
-           , #{regIp}
-           , now()
-        )
+                  #{cnstgSeq}
+              , #{dpndnSeq}
+              , #{cmpnNm}
+              , #{dpndnRate}
+              , #{regId}
+              , #{regIp}
+              , now()
+              )
     </insert>
 
     <!--
@@ -480,18 +483,18 @@
         INSERT /* CBATechGuidanceMapper.insertCnstgAppctnType */INTO CP_CNSTG_APPCTN_TYPE_DTL
         (
             CNSTG_SEQ
-           , CD
-           , REG_ID
-           , REG_IP
-           , REG_DTM
-           )
-        VALUES(
-            #{cnstgSeq}
-            , #{appctnTypeCd}
-            , #{regId}
-            , #{regIp}
-            , now()
+        , CD
+        , REG_ID
+        , REG_IP
+        , REG_DTM
         )
+        VALUES(
+                  #{cnstgSeq}
+              , #{appctnTypeCd}
+              , #{regId}
+              , #{regIp}
+              , now()
+              )
     </insert>
 
     <!--
@@ -548,77 +551,75 @@
     </update>
 
     <!--
-     쿼리명 : CBATechGuidanceMapper.isnertTechGuidanceRsume
+     쿼리명 : CBATechGuidanceMapper.insertTechGuidanceRsume
      설  명 :  컨설팅 진행 마스터
       수정일     수정자       수정내용
     ==========   ======    ==============
     2023.11.14   임서화      최초생성
     -->
-    <insert id="isnertTechGuidanceRsume" parameterType="java.util.HashMap">
+    <insert id="insertTechGuidanceRsume" parameterType="CBATechGuidanceUpdateDTO">
         INSERT /* CBATechGuidanceMapper.insertTechGuidanceRsume */ INTO CP_CNSTG_RSUME_MST(
-             BSNM_NO
-           , CNSTG_SEQ
-           , BFRE_JDGMT_RSLT_CD
-           , BFRE_JDGMT_RSLT_CNTN
-           , VST_DT
-           , VSTR_NM
-           , NTRVR_NM
-           , INIT_VST_RSLT_CD
-           , INIT_VST_RSLT_CNTN
-           , INIT_VST_OPNN_CNTN
-           , CMSSR_SEQ
-           , GUIDE_TYPE_CD
-           , GUIDE_PSCND_CD
-           , GUIDE_PSCND_DT
-           , GUIDE_BGN_DT
-           , GUIDE_KICKF_DT
-           , XTNSN_CNCL_RSN
-           , FLTY_IMPVM_BFRE_RATE
-           , FLTY_IMPVM_AFTR_RATE
-           , FLTY_IMPVM_RATE
-           , INIT_VST_FILE_SEQ
-           , KICKF_FILE_SEQ
-           , LVLUP_FILE_SEQ
-           , ETC_FILE_SEQ
-           , SRV_SEQ
-           , SRV_STRT_DTM
-           , SRV_END_DTM
-           , REG_ID
-           , REG_IP
-           , REG_DTM
+                                                                                            CNSTG_SEQ
+                                                                                          , BFRE_JDGMT_RSLT_CD
+                                                                                          , BFRE_JDGMT_RSLT_CNTN
+                                                                                          , VST_DT
+                                                                                          , VSTR_NM
+                                                                                          , NTRVR_NM
+                                                                                          , INIT_VST_RSLT_CD
+                                                                                          , INIT_VST_RSLT_CNTN
+                                                                                          , INIT_VST_OPNN_CNTN
+                                                                                          , CMSSR_SEQ
+                                                                                          , GUIDE_TYPE_CD
+                                                                                          , GUIDE_PSCND_CD
+                                                                                          , GUIDE_PSCND_DT
+                                                                                          , GUIDE_BGN_DT
+                                                                                          , GUIDE_KICKF_DT
+                                                                                          , XTNSN_CNCL_RSN
+                                                                                          , FLTY_IMPVM_BFRE_RATE
+                                                                                          , FLTY_IMPVM_AFTR_RATE
+                                                                                          , FLTY_IMPVM_RATE
+                                                                                          , INIT_VST_FILE_SEQ
+                                                                                          , KICKF_FILE_SEQ
+                                                                                          , LVLUP_FILE_SEQ
+                                                                                          , ETC_FILE_SEQ
+                                                                                          , SRV_SEQ
+                                                                                          , SRV_STRT_DTM
+                                                                                          , SRV_END_DTM
+                                                                                          , REG_ID
+                                                                                          , REG_IP
+                                                                                          , REG_DTM
         )
         VALUES(
-          #{bsnmNo},
-          #{detailsKey} ,
-          #{bfreJdgmtRsltCd},
-          #{bfreJdgmtRsltCntn},
-          #{vstDt} ,
-          #{vstrNm} ,
-          #{ntrvrNm} ,
-          #{initVstRsltCd} ,
-          #{initVstRsltCntn} ,
-          #{initVstOpnnCntn} ,
-          #{cmssrSeq} ,
-          #{guideTypeCd} ,
-          #{guidePscndCd} ,
-          #{guidePscndDt} ,
-          #{guideBgnDt} ,
-          #{guideKickfDt} ,
-          #{xtnsnCnclRsn} ,
-          #{fltyImpvmBfreRate} ,
-          #{fltyImpvmAftrRate} ,
-          #{fltyImpvmRate} ,
-          #{initVstFileSeq} ,
-          #{kickfFileSeq} ,
-          #{lvlupFileSeq} ,
-          #{etcFileSeq},
-          #{srvSeq},
-          #{srvStrtDtm},
-          #{srvEndDtm},
-          #{regId},
-          #{regIp},
-          now()
-        )
+                  #{detailsKey} ,
+                  #{bfreJdgmtRsltCd},
+                  #{bfreJdgmtRsltCntn},
+                  #{vstDt} ,
+                  #{vstrNm} ,
+                  #{ntrvrNm} ,
+                  #{initVstRsltCd} ,
+                  #{initVstRsltCntn} ,
+                  #{initVstOpnnCntn} ,
+                  #{cmssrSeq} ,
+                  #{guideTypeCd} ,
+                  #{guidePscndCd} ,
+                  #{guidePscndDt} ,
+                  #{guideBgnDt} ,
+                  #{guideKickfDt} ,
+                  #{xtnsnCnclRsn} ,
+                  #{fltyImpvmBfreRate} ,
+                  #{fltyImpvmAftrRate} ,
+                  #{fltyImpvmRate} ,
+                  #{initVstFileSeq} ,
+                  #{kickfFileSeq} ,
+                  #{lvlupFileSeq} ,
+                  #{etcFileSeq},
+                  #{srvSeq},
+                  #{srvStrtDtm},
+                  #{srvEndDtm},
+                  #{regId},
+                  #{regIp},
+                  now()
+              )
     </insert>
 
     <!--
@@ -631,35 +632,34 @@
     <update id="updateTechGuidanceRsume" parameterType="CBATechGuidanceUpdateDTO">
         UPDATE /* CBATechGuidanceMapper.updateTechGuidanceRsume */ CP_CNSTG_RSUME_MST
         SET
-           BFRE_JDGMT_RSLT_CD =  #{bfreJdgmtRsltCd} ,
-           bfre_jdgmt_rslt_cntn =  #{bfreJdgmtRsltCntn} ,
-           VST_DT =  #{vstDt} ,
-           VSTR_NM = #{vstrNm} ,
-           NTRVR_NM =  #{ntrvrNm} ,
-           INIT_VST_RSLT_CD = #{initVstRsltCd} ,
-           INIT_VST_OPNN_CNTN = #{initVstOpnnCntn},
-           CMSSR_SEQ =  #{cmssrSeq} ,
-           GUIDE_TYPE_CD = #{guideTypeCd} ,
-           GUIDE_PSCND_CD =  #{guidePscndCd} ,
-           GUIDE_PSCND_DT =  #{guidePscndDt} ,
-           GUIDE_BGN_DT =  #{guideBgnDt} ,
-           GUIDE_KICKF_DT =  #{guideKickfDt} ,
-           XTNSN_CNCL_RSN =  #{xtnsnCnclRsn} ,
-           FLTY_IMPVM_BFRE_RATE =  #{fltyImpvmBfreRate} ,
-           FLTY_IMPVM_AFTR_RATE =  #{fltyImpvmAftrRate} ,
-           FLTY_IMPVM_RATE =  #{fltyImpvmRate} ,
-           INIT_VST_FILE_SEQ =  #{initVstFileSeq} ,
-           KICKF_FILE_SEQ =  #{kickfFileSeq} ,
-           LVLUP_FILE_SEQ =  #{lvlupFileSeq} ,
-           ETC_FILE_SEQ =  #{etcFileSeq} ,
-           SRV_SEQ = #{srvSeq},
-           SRV_STRT_DTM = #{srvStrtDtm},
-           SRV_END_DTM = #{srvEndDtm},
-           MOD_ID =  #{regId},
-           MOD_IP =  #{regIp},
-           MOD_DTM = NOW()
-        WHERE BSNM_NO =  #{bsnmNo}
-              AND CNSTG_SEQ =  #{cnstgSeq}
+            BFRE_JDGMT_RSLT_CD =  #{bfreJdgmtRsltCd} ,
+            bfre_jdgmt_rslt_cntn =  #{bfreJdgmtRsltCntn} ,
+            VST_DT =  #{vstDt} ,
+            VSTR_NM = #{vstrNm} ,
+            NTRVR_NM =  #{ntrvrNm} ,
+            INIT_VST_RSLT_CD = #{initVstRsltCd} ,
+            INIT_VST_OPNN_CNTN = #{initVstOpnnCntn},
+            CMSSR_SEQ =  #{cmssrSeq} ,
+            GUIDE_TYPE_CD = #{guideTypeCd} ,
+            GUIDE_PSCND_CD =  #{guidePscndCd} ,
+            GUIDE_PSCND_DT =  #{guidePscndDt} ,
+            GUIDE_BGN_DT =  #{guideBgnDt} ,
+            GUIDE_KICKF_DT =  #{guideKickfDt} ,
+            XTNSN_CNCL_RSN =  #{xtnsnCnclRsn} ,
+            FLTY_IMPVM_BFRE_RATE =  #{fltyImpvmBfreRate} ,
+            FLTY_IMPVM_AFTR_RATE =  #{fltyImpvmAftrRate} ,
+            FLTY_IMPVM_RATE =  #{fltyImpvmRate} ,
+            INIT_VST_FILE_SEQ =  #{initVstFileSeq} ,
+            KICKF_FILE_SEQ =  #{kickfFileSeq} ,
+            LVLUP_FILE_SEQ =  #{lvlupFileSeq} ,
+            ETC_FILE_SEQ =  #{etcFileSeq} ,
+            SRV_SEQ = #{srvSeq},
+            SRV_STRT_DTM = #{srvStrtDtm},
+            SRV_END_DTM = #{srvEndDtm},
+            MOD_ID =  #{regId},
+            MOD_IP =  #{regIp},
+            MOD_DTM = NOW()
+        WHERE CNSTG_SEQ =  #{cnstgSeq}
     </update>
 
     <!--
@@ -671,41 +671,40 @@
     -->
     <select id="selectTechGuidanceRsume" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceUpdateDTO">
         SELECT /* CBATechGuidanceMapper.selectTechGuidanceRsume */
-            BSNM_NO
-           , CNSTG_SEQ
-           , BFRE_JDGMT_RSLT_CD
-           , BFRE_JDGMT_RSLT_CNTN
-           , VST_DT
-           , VSTR_NM
-           , NTRVR_NM
-           , INIT_VST_RSLT_CD
-           , INIT_VST_RSLT_CNTN
-           , INIT_VST_OPNN_CNTN
-           , CMSSR_SEQ
-           , GUIDE_TYPE_CD
-           , GUIDE_PSCND_CD
-           , GUIDE_PSCND_DT
-           , GUIDE_BGN_DT
-           , GUIDE_KICKF_DT
-           , XTNSN_CNCL_RSN
-           , FLTY_IMPVM_BFRE_RATE
-           , FLTY_IMPVM_AFTR_RATE
-           , FLTY_IMPVM_RATE
-           , INIT_VST_FILE_SEQ
-           , KICKF_FILE_SEQ
-           , LVLUP_FILE_SEQ
-           , ETC_FILE_SEQ
-           , SRV_SEQ
-           , (SELECT CD_ID FROM CO_CODE_MST WHERE CD_ID = 'SURVEY_TYPE' AND CD = (SELECT TYPE_CD FROM SV_MST WHERE SRV_SEQ = A.SRV_SEQ)) AS TYPE_NM
-           , (SELECT TITL FROM SV_MST WHERE SRV_SEQ = A.SRV_SEQ) AS SRV_NM
-           , SRV_STRT_DTM
-           , SRV_END_DTM
-           , REG_ID
-           , REG_IP
-           , REG_DTM
+            CNSTG_SEQ
+             , BFRE_JDGMT_RSLT_CD
+             , BFRE_JDGMT_RSLT_CNTN
+             , VST_DT
+             , VSTR_NM
+             , NTRVR_NM
+             , INIT_VST_RSLT_CD
+             , INIT_VST_RSLT_CNTN
+             , INIT_VST_OPNN_CNTN
+             , CMSSR_SEQ
+             , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.CMSSR_SEQ) CMSSR_NAME
+             , GUIDE_TYPE_CD
+             , GUIDE_PSCND_CD
+             , GUIDE_PSCND_DT
+             , GUIDE_BGN_DT
+             , GUIDE_KICKF_DT
+             , XTNSN_CNCL_RSN
+             , FLTY_IMPVM_BFRE_RATE
+             , FLTY_IMPVM_AFTR_RATE
+             , FLTY_IMPVM_RATE
+             , INIT_VST_FILE_SEQ
+             , KICKF_FILE_SEQ
+             , LVLUP_FILE_SEQ
+             , ETC_FILE_SEQ
+             , SRV_SEQ
+             , (SELECT CD_ID FROM CO_CODE_MST WHERE CD_ID = 'SURVEY_TYPE' AND CD = (SELECT TYPE_CD FROM SV_MST WHERE SRV_SEQ = A.SRV_SEQ)) AS TYPE_NM
+             , (SELECT TITL FROM SV_MST WHERE SRV_SEQ = A.SRV_SEQ) AS SRV_NM
+             , SRV_STRT_DTM
+             , SRV_END_DTM
+             , REG_ID
+             , REG_IP
+             , REG_DTM
         FROM CP_CNSTG_RSUME_MST A
-        WHERE BSNM_NO = #{bsnmNo}
-        AND CNSTG_SEQ = #{cnstgSeq}
+        WHERE CNSTG_SEQ = #{cnstgSeq}
     </select>
 
 
@@ -727,6 +726,53 @@
 
 
     <!--
+         쿼리명 : CBATechGuidanceMapper.selectTrsfGuidanceList
+         설  명 : 컨설팅 참여 이관 로그
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초생성
+    -->
+    <select id="selectTrsfGuidanceList" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
+        SELECT /* CBATechGuidanceMapper.selectTrsfGuidanceList */
+            CNSTG_SEQ,
+            BFRE_MEM_SEQ,
+            AFTR_MEM_SEQ,
+            REG_DTM,
+            REG_ID,
+            (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) REG_NAME
+        FROM CP_CNSTG_APPCTN_TRNSF_DTL A
+        WHERE CNSTG_SEQ = #{cnstgSeq}
+    </select>
+
+    <!--
+         쿼리명 : CBATechGuidanceMapper.insertTrsfGuidanceList
+         설  명 : 컨설팅 참여 이관 로그
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초생성
+    -->
+    <insert id="insertTrsfGuidanceList" parameterType="CBATechGuidanceInsertDTO" >
+        INSERT /* CBATechGuidanceMapper.insertTrsfGuidanceList */ INTO CP_CNSTG_APPCTN_TRNSF_DTL
+        ( TRNSF_SEQ,
+          CNSTG_SEQ,
+          BFRE_MEM_SEQ,
+          AFTR_MEM_SEQ,
+          REG_ID,
+          REG_IP,
+          REG_DTM
+        )
+        VALUES(
+                  #{trnsfSeq},
+                  #{cnstgSeq},
+                  #{bfreMemSeq},
+                  #{aftrMemSeq},
+                  #{regId},
+                  #{regIp},
+                  NOW()
+              )
+    </insert>
+
+    <!--
      쿼리명 : CBATechGuidanceMapper.deleteTechGuidance
      설  명 :  컨설팅 기술 관리 삭제
       수정일     수정자       수정내용
@@ -746,11 +792,29 @@
                     </foreach>
                 </when>
                 <otherwise>
-                    CNSTG_SEQ = #{detailsKey}
+                    CNSTG_SEQ = #{cnstgSeq}
                 </otherwise>
             </choose>
         </where>
     </delete>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.selectTrsfGuidanceCnt
+     설  명 :  컨설팅 기술 관리 이관 내역 카운트
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectTrsfGuidanceCnt" parameterType="CBATechGuidanceUpdateDTO" resultType="java.lang.Integer">
+        SELECT /*CBATechGuidanceMapper.selectTrsfGuidanceCnt*/
+            count(*)
+        FROM
+            CP_CNSTG_APPCTN_TRNSF_DTL
+        WHERE
+            CNSTG_SEQ = #{detailsKey}
+    </select>
+
+
 
     <!--
 		쿼리명 : selectTechGuidancewhereSql

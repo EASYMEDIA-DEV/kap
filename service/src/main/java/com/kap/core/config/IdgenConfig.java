@@ -750,5 +750,17 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+    /** 컨설팅 이관 (컨설팅관리)
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl consTrnsfSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CONS_TRANSF_SEQ")
+                .setCipers(13)
+                .build();
+    }
 
 }

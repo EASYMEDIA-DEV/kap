@@ -11,10 +11,37 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
+
     var width = 500; //팝업의 너비
     var height = 600; //팝업의 높이
     var valChk = 'N';
     var idNum = 0;
+
+    var search = function (page){
+        //data로 치환해주어야한다.
+        //cmmCtrl.setFormData($formObj);
+
+        if(page != undefined){
+            $formObj.find("#pageIndex").val(page);
+        }
+
+        cmmCtrl.listFrmAjax(function(respObj) {
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+            //CALLBACK 처리
+            ctrl.obj.find("#trsfListContainer").html(respObj);
+
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#trsfListContainerTotCnt").val(totCnt);
+
+            $(".ptcptField").validation({});
+
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
+
+        }, "/mngwserc/cb/cba/trsfList", $formObj, "GET", "html");
+    }
 
     var callbackAjaxDelete = function (data) {
 
@@ -135,7 +162,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
         }
     }
-
     var callbackAjaxAddrList = function (data) {
         var detailList = JSON.parse(data);
         var selectHtml = "<option value=''>전체</option>";
@@ -234,6 +260,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         } else {
                             $(".pstnCdInput").hide();
                         }
+                    }
+                }
+            }, btnRefresh : {
+                event : {
+                    click : function(){
                     }
                 }
             }
@@ -363,13 +394,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
-            btnSearch: {
+            btnPartUserModal: {
                 event: {
                     click: function () {
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             var cmpnMst = {};
                             cmpnMst.bsnmNo = data.bsnmNo.replaceAll("-", "");
-                            ;
                             cmmCtrl.jsonAjax(function (data) {
                                 callbackAjaxBsnmNo(data);
                             }, './bsnmNoSearch', cmpnMst, "text");
@@ -381,7 +411,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 event: {
                     click: function () {
                         cmmCtrl.getCmtSrchPop(function (data) {
-
+                            $("input[name=cmssrSeq]").val(data.seq);
+                            $("input[name=cmssrName]").val(data.name);
+                            console.log(data)
                         });
                     }
                 }
@@ -412,13 +444,36 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             //설문 검색
             srvSearch: {
                 event: {
-                    click: function () {
-                        cmmCtrl.getSurveyList(function (data) {
-                            var surv = {};
-                        });
+                    click : function(){
+                        $(".svaSurveySrchLayer").one('show.bs.modal', function() {
+
+                            var modal = $(this);
+                            modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+                        }).one('hidden.bs.modal', function() {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                        }).one('choice', function(data, param) {
+                            var obj = param;
+                            $("#listContainer3").find("td").eq(0).text(obj.typeNm);
+                            $("#listContainer3").find("td").eq(1).text(obj.titl);
+                            $("#srvSeq").val(obj.seq);
+                        }).modal();
                     }
                 }
-            }
+            },tabClick : {
+                event : {
+                    click : function (e){
+                        console.log(e.target.getAttribute('href'));
+                        if(e.target.getAttribute('href') == "#techGuidance") {
+                            $("#episdList").addClass("in active");
+                            $("#svResult").removeClass("in active");
+                        } else {
+                            $("#episdList").removeClass("in active");
+                            $("#svResult").addClass("in active");
+                        }
+                    }
+                }
+            },
         },
         immediately: function () {
 
@@ -478,6 +533,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
                 $(".tempRow").eq(0).find(".close").hide();
                 $(".dpTempRow").eq(0).find(".close").hide();
+                search();
             }
 
             // 유효성 검사

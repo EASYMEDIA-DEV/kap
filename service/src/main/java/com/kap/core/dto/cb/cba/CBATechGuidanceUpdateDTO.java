@@ -33,7 +33,7 @@ public class CBATechGuidanceUpdateDTO extends BaseDTO {
     @Schema(title = "컨설팅 순번")
     private Integer cnstgSeq;
     @Schema(title = "신청사업자번호")
-    private Integer bsnmNo;
+    private String bsnmNo;
 
     @Schema(title = "사전심사결과")
     private String bfreJdgmtRsltCd;
@@ -53,8 +53,10 @@ public class CBATechGuidanceUpdateDTO extends BaseDTO {
     private String initVstOpnnCntn;
     @Schema(title = "초도방문코드")
     private String initVstOpnnCd;
-    @Schema(title = "담당위원")
+    @Schema(title = "담당위원시퀀스")
     private Integer cmssrSeq;
+    @Schema(title = "담당위원이름")
+    private String cmssrName;
     @Schema(title = "지도구분")
     private String guideTypeCd;
     @Schema(title = "지도현황")
@@ -87,7 +89,7 @@ public class CBATechGuidanceUpdateDTO extends BaseDTO {
 
     // 만족도 설문
     @Schema(title = "설문순번")
-    private String srvSeq;
+    private Integer srvSeq;
     @Schema(title = "설문이름")
     private String srvNm;
     @Schema(title = "설문시작일자")
@@ -96,4 +98,5 @@ public class CBATechGuidanceUpdateDTO extends BaseDTO {
     private String srvEndDtm;
     @Schema(title = "설문종료일자")
     private String typeNm;
+
 }

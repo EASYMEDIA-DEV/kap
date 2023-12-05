@@ -1,7 +1,6 @@
 package com.kap.service.mp.mpd;
 
-import com.kap.core.dto.MPAUserDto;
-import com.kap.core.dto.MPBEduDto;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
 
 import javax.servlet.http.HttpServletResponse;

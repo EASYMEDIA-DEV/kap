@@ -1,4 +1,4 @@
-package com.kap.core.dto;
+package com.kap.core.dto.mp.mpa;
 
 import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;

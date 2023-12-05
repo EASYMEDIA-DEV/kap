@@ -1705,9 +1705,14 @@ var cmmCtrl = (function(){
 	//getPartsCompanyMemberLayerPop(function(data){data 객체를 받아서 처리});
 	var fn_parts_member_layer_pop = function(fnc){
 		$(".mpbMemberPartsSocietySrchLayer").one('show.bs.modal', function() {
+			// 2023-12-05 컨설팅 사업관리 관련하여 검색 제외 dto 추가
+			var cnstgSeq = $("#detailsKey").val();
 			var modal = $(this);
 			modal.appendTo("body");
 			// Add class for soft backdrop
+			if(cnstgSeq != null || cnstgSeq != ""){
+				$(".mpbMemberPartsSocietySrchLayer").find("#cnstgSeq").val(cnstgSeq);
+			}
 			$(".mpbMemberPartsSocietySrchLayer").find("#btnRefresh").click();
 			$(".mpbMemberPartsSocietySrchLayer").find("#btnSearch").click();
 		}).one('hidden.bs.modal', function() {

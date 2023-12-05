@@ -1,4 +1,4 @@
-package com.kap.core.dto;
+package com.kap.core.dto.mp.mpa;
 
 /**
  *  미래차공모전 신청내역

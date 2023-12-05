@@ -1,11 +1,11 @@
 package com.kap.mngwserc.controller.mp;
 
-import com.kap.core.dto.*;
-import com.kap.core.dto.MPAInqrDto;
-import com.kap.core.dto.MPAUserDto;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.MPBBusDto;
 import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.MPBSanDto;
+import com.kap.core.dto.mp.mpa.MPAInqrDto;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.mp.mpa.MPAUserService;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 

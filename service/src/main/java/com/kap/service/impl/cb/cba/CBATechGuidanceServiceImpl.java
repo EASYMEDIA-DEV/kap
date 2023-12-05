@@ -1,13 +1,17 @@
 package com.kap.service.impl.cb.cba;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
-import com.kap.service.*;
+import com.kap.service.CBATechGuidanceService;
+import com.kap.service.COFileService;
+import com.kap.service.COSystemLogService;
+import com.kap.service.MPEPartsCompanyService;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
+import com.kap.service.dao.mp.MPAUserMapper;
 import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
@@ -55,9 +59,11 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     private final EgovIdGnrService dpndnSeqIdgen;
     private final EgovIdGnrService dlvrySeqIdgen;
     private final EgovIdGnrService mpePartsCompanyDtlIdgen;
+    private final EgovIdGnrService consTrnsfSeqIdgen;
 
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
     private final MPEPartsCompanyMapper mpePartsCompanyMapper;
+    private final MPAUserMapper mpaUserMapper;
 
     // 로그인 상태값 시스템 등록
     private final COSystemLogService cOSystemLogService;
@@ -118,7 +124,9 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                 pCBATechGuidanceInsertDTO.setMjrPrdct3(companyInfo.getList().get(i).getMjrPrdct3());
                 pCBATechGuidanceInsertDTO.setCmpnTelNo(companyInfo.getList().get(i).getTelNo());
             }
-            for(int j=0; j<3; j++){
+
+            System.err.println("companyInfo:::"+companyInfo.getList().size());
+            for(int j=0; j<companyInfo.getList().size(); j++){
                 List sqlInfoList = new ArrayList();
                 sqlInfoList.add(0,companyInfo.getList().get(j).getNm());
                 sqlInfoList.add(1,String.valueOf(companyInfo.getList().get(j).getScore()));
@@ -132,7 +140,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                 }else{
                     pCBATechGuidanceInsertDTO.setSqInfoList2(sqlInfoList);
                 }
-           }
+            }
             int cnstgSeq = pCBATechGuidanceInsertDTO.getCnstgSeq();
 
             List<CBATechGuidanceInsertDTO> dlvryInfo = cBATechGuidanceMapper.selectCnstgDlvryInfo(cnstgSeq);
@@ -241,12 +249,12 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         }
         // 부품사 업종 상세 등록 있으면 수정
         HashMap cbsnCdMap = new HashMap();
-            cbsnCdMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
-            cbsnCdMap.put("cbsnCd",  pCBATechGuidanceInsertDTO.getCbsnCd());
-            cbsnCdMap.put("etcNm", pCBATechGuidanceInsertDTO.getEtcNm());
-            cbsnCdMap.put("regIp", pCBATechGuidanceInsertDTO.getRegId());
-            cbsnCdMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
-            cbsnCdMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
+        cbsnCdMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
+        cbsnCdMap.put("cbsnCd",  pCBATechGuidanceInsertDTO.getCbsnCd());
+        cbsnCdMap.put("etcNm", pCBATechGuidanceInsertDTO.getEtcNm());
+        cbsnCdMap.put("regIp", pCBATechGuidanceInsertDTO.getRegId());
+        cbsnCdMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
+        cbsnCdMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
 
         int cnt = cBATechGuidanceMapper.selectCnstgDpndnInfoCnt(cbsnCdMap);
         if(cnt > 0){
@@ -257,7 +265,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
         // 신청 분야 상세
         String[] appctnTypeCd =  pCBATechGuidanceInsertDTO.getAppctnTypeCd().split(",");
-        System.err.println("appctnTypeCd:::"+appctnTypeCd);
         HashMap appctnTypeMap = new HashMap();
         appctnTypeMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
         cBATechGuidanceMapper.deleteCnstgAppctnType(appctnTypeMap);
@@ -269,9 +276,9 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             appctnTypeMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
             appctnTypeMap.put("appctnTypeCd", appctnTypeCd[i]);
 
-        int cnstgSeq = pCBATechGuidanceInsertDTO.getCnstgSeq();
+            int cnstgSeq = pCBATechGuidanceInsertDTO.getCnstgSeq();
 
-        cBATechGuidanceMapper.insertCnstgAppctnType(appctnTypeMap);
+            cBATechGuidanceMapper.insertCnstgAppctnType(appctnTypeMap);
         }
     }
 
@@ -294,7 +301,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             mPAUserDto.setPstnCd(pCBATechGuidanceInsertDTO.getPstnCd());
             mPAUserDto.setTelNo(pCBATechGuidanceInsertDTO.getTelNo());
             mPAUserDto.setHpNo(pCBATechGuidanceInsertDTO.getHpNo());
-
             mpaUserService.updateUserDtl(mPAUserDto);
         }
     }
@@ -329,13 +335,13 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
             HashMap cbsnCdMap = new HashMap();
 
-            for(int i=0; i < 3; i++) {
+            for(int i=0; i < cbsnCdMap.size(); i++) {
                 mpePartsCompanyDTO.setNm(nm[i]);
                 mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(cbsnSeq[i]));
                 mpePartsCompanyDTO.setScore(Integer.valueOf(score[i]));
                 mpePartsCompanyDTO.setYear(Integer.valueOf(year[i]));
                 mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmpnNm[i]);
-                mpePartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
+                mpePartsCompanyDTO.setBsnmNo(mPEPartsCompanyDTO.getBsnmNo());
 
                 int cnt = cBATechGuidanceMapper.selectCmpnCbsnInfoCnt(Integer.valueOf(cbsnSeq[i]));
 
@@ -401,7 +407,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         pCBATechGuidanceupUpdateDTO.setRegId(pCBATechGuidanceInsertDTO.getRegId());
 
         pCBATechGuidanceInsertDTO.setCnstgSeq(Integer.valueOf(pCBATechGuidanceInsertDTO.getDetailsKey()));
-        
+
         // 부품사 회원 정보 수정
         updateTechMemberInfo(pCBATechGuidanceInsertDTO);
         // 부품사 정보 수정
@@ -411,14 +417,25 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
         cBATechGuidanceMapper.updateCbsnDtl(pCBATechGuidanceInsertDTO);
 
-        int cnstgSeq = Integer.parseInt(pCBATechGuidanceInsertDTO.getDetailsKey());
+        int cnstgSeq = pCBATechGuidanceInsertDTO.getCnstgSeq();
+
         int totCnt = cBATechGuidanceMapper.selectRsumeTotCnt(cnstgSeq);
         pCBATechGuidanceupUpdateDTO.setCnstgSeq(cnstgSeq);
-
         if(totCnt>0){
             cBATechGuidanceMapper.updateTechGuidanceRsume(pCBATechGuidanceupUpdateDTO);
         }else if(totCnt == 0){
-           cBATechGuidanceMapper.isnertTechGuidanceRsume(pCBATechGuidanceupUpdateDTO);
+            cBATechGuidanceMapper.insertTechGuidanceRsume(pCBATechGuidanceupUpdateDTO);
+        }
+
+        String bfreMemSeq = pCBATechGuidanceInsertDTO.getBfreMemSeq();
+        String aftrMemSeq = pCBATechGuidanceInsertDTO.getMemSeq();
+        System.err.println("pCBATechGuidanceInsertDTO"+pCBATechGuidanceInsertDTO);
+        System.err.println("bfreMemSeq"+bfreMemSeq);
+        System.err.println("aftrMemSeq"+aftrMemSeq);
+        if(bfreMemSeq != aftrMemSeq){
+            pCBATechGuidanceInsertDTO.setTrnsfSeq(consTrnsfSeqIdgen.getNextIntegerId());
+            pCBATechGuidanceInsertDTO.setAftrMemSeq(aftrMemSeq);
+            cBATechGuidanceMapper.insertTrsfGuidanceList(pCBATechGuidanceInsertDTO);
         }
         pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.updateTechGuidance(pCBATechGuidanceInsertDTO));
 
@@ -428,5 +445,30 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     public List<MPEPartsCompanyDTO> selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
         return mpePartsCompanyMapper.selectPartsCompanyDtl(mpePartsCompanyDTO);
     }
+
+    public CBATechGuidanceInsertDTO selectTrsfGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception
+    {
+
+        List<CBATechGuidanceInsertDTO> trsfGuidanceList = new ArrayList();
+        CBATechGuidanceInsertDTO trsfDto = new CBATechGuidanceInsertDTO();
+
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(pCBATechGuidanceInsertDTO.getPageIndex());
+        page.setRecordCountPerPage(pCBATechGuidanceInsertDTO.getListRowSize());
+
+        page.setPageSize(pCBATechGuidanceInsertDTO.getPageRowSize());
+
+        trsfDto.setFirstIndex( page.getFirstRecordIndex() );
+        trsfDto.setRecordCountPerPage( page.getRecordCountPerPage() );
+        trsfGuidanceList = cBATechGuidanceMapper.selectTrsfGuidanceList(pCBATechGuidanceInsertDTO);
+        int trsfCnt = cBATechGuidanceMapper.selectTrsfGuidanceCnt(pCBATechGuidanceInsertDTO);
+
+        trsfDto.setTrsfGuidanceList(trsfGuidanceList);
+        trsfDto.setTotalCount(trsfCnt);
+
+        return trsfDto;
+    }
+
 }
 
