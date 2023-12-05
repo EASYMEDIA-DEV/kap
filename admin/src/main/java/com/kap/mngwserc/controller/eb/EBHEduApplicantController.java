@@ -1,8 +1,9 @@
 package com.kap.mngwserc.controller.eb;
 
 import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
+import com.kap.core.dto.eb.ebh.EBHEduApplicantMstDTO;
 import com.kap.service.COCodeService;
+import com.kap.service.EBHEduApplicantService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
  * <pre>
  * 		since			author				  description
  *    ==========    ==============    =============================
- *    2023.11.02		장두석				   최초 생성
+ *    2023.12.01		장두석				   최초 생성
  * </pre>
  */
 @Tag(name = "교육 신청자 관리", description = "교육 신청자 관리")
@@ -44,13 +45,13 @@ public class EBHEduApplicantController {
     private final COCodeService cOCodeService;
 
     /** 서비스 **/
-//    private final EBHEduApplicantService eBHEduApplicantService;
+    private final EBHEduApplicantService eBHEduApplicantService;
 
     /**
-     *  목록
+     *  목록 패이지
      */
     @GetMapping(value="/list")
-    public String getList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO, ModelMap modelMap) throws Exception
+    public String getListPage(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, ModelMap modelMap) throws Exception
     {
         try
         {
@@ -61,10 +62,13 @@ public class EBHEduApplicantController {
             cdDtlList.add("STDUY_MTHD"); //학습방식
             cdDtlList.add("STDUY_DD"); //학습시간 - 학습일
             cdDtlList.add("STDUY_TIME"); //학습시간 - 학습시간
-            cdDtlList.add("COMPANY_TYPE"); //부품사 구분
 //            cdDtlList.add(""); //선발 구분
-
             modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
+
+            cdDtlList.clear();
+            cdDtlList.add("COMPANY_TYPE"); //부품사 구분
+            cdDtlList.add("EDU_STTS_CD"); //선발 상태(교육참여 교육상태) 구분
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
 
             COCodeDTO cOCodeDTO = new COCodeDTO();
             cOCodeDTO.setCd("CLASS01");
@@ -75,6 +79,8 @@ public class EBHEduApplicantController {
 
             cOCodeDTO.setCd("CLASS03");
             modelMap.addAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));
+
+            modelMap.addAttribute("rtnData", pEBHEduApplicantMstDTO);
         }
         catch (Exception e)
         {
@@ -85,15 +91,15 @@ public class EBHEduApplicantController {
     }
 
     /**
-     * 목록 AJAX
+     * 목록 조회
      */
     @GetMapping(value="/select")
-    public String getSqListAjax(EBDSqCertiSearchDTO eBDSqCertiSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getEduApplicantListAjax(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-//            modelMap.addAttribute("rtnData", eBHEduApplicantService.selectList(eBDSqCertiSearchDTO));
-            modelMap.addAttribute("searchDto", eBDSqCertiSearchDTO);
+            modelMap.addAttribute("rtnData", eBHEduApplicantService.selectList(pEBHEduApplicantMstDTO));
+//            modelMap.addAttribute("searchDto", pEBHEduApplicantMstDTO);
         }
         catch (Exception e)
         {
@@ -103,10 +109,10 @@ public class EBHEduApplicantController {
     }
 
     /**
-     *  상세
+     *  상세 조회
      */
     @GetMapping(value="/write")
-    public String getSqView(EBDSqCertiSearchDTO eBDSqCertiSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getSqView(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -115,11 +121,11 @@ public class EBHEduApplicantController {
             // 코드 set
             cdDtlList.add("EBD_SQ_TP");
             cdDtlList.add("EBD_SQ");
-//            modelMap.addAttribute("rtnData", eBHEduApplicantService.selectExamAppctnMst(eBDSqCertiSearchDTO));
-//            modelMap.addAttribute("rtnDataSqReqData", eBHEduApplicantService.selectView(eBDSqCertiSearchDTO));
+//            modelMap.addAttribute("rtnData", eBHEduApplicantService.selectExamAppctnMst(pEBHEduApplicantMstDTO));
+//            modelMap.addAttribute("rtnDataSqReqData", eBHEduApplicantService.selectView(pEBHEduApplicantMstDTO));
 //            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-//            modelMap.addAttribute("rtnPrePrcsList", eBHEduApplicantService.getPrePrcsList(eBDSqCertiSearchDTO));
-            modelMap.addAttribute("srchData", eBDSqCertiSearchDTO);
+//            modelMap.addAttribute("rtnPrePrcsList", eBHEduApplicantService.getPrePrcsList(pEBHEduApplicantMstDTO));
+            modelMap.addAttribute("srchData", pEBHEduApplicantMstDTO);
         }
         catch (Exception e)
         {
@@ -127,14 +133,15 @@ public class EBHEduApplicantController {
         }
         return "mngwserc/eb/ebh/EBHEduApplicantWrite.admin";
     }
+    
     /**
-     * @ClassName		: EXGExamRestController.java
-     * @Description		: 홈 > 교육사업관리 > SQ평가원 자격증 신청관리 REST CONTROLLER
+     * @ClassName		: EBHEduApplicantRestController.java
+     * @Description		: 홈 > 교육사업관리 > 교육 신청자 관리 REST CONTROLLER
      * @Modification Information
      * <pre>
      * 		since			author				   description
      *   ===========    ==============    =============================
-     *   2023.11.10			장두석			 		최초생성
+     *   2023.12.01			장두석			 		최초생성
      * </pre>
      */
     @Tag(name = "교육 신청자 관리", description = "교육 신청자 관리")

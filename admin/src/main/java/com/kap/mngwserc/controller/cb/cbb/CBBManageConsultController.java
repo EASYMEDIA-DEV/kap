@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.cb.cbb;
 
-import com.kap.core.dto.cb.cbb.*;
+import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 import com.kap.service.CBBManageConsultService;
 import com.kap.service.COCodeService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -9,7 +10,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
