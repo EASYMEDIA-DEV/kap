@@ -721,7 +721,7 @@
                                 <tr>
                                     <th class="text-center">
                                         <label class="checkbox-inline c-checkbox">
-                                            <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
+                                            <input type="checkbox" class="checkboxAll notRequired" title="전체선택" name="ptcptChk"/>
                                             <span class="ion-checkmark-round"></span>
                                         </label>
                                     </th>

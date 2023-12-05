@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div class="modal fade svaSurveySrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/sv/sva/SVASurveyListCtrl">
+<div class="modal fade svaSurveySrchLayer" tabindex="-1" role="dialog" data-controller="controller/sv/sva/SVASurveyListCtrl">
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1500px;">
         <div class="modal-content">
             <div class="modal-header">

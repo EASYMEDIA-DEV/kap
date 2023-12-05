@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 레이어 팝업(Modal) -->
-<div class="modal fade mpcLecturerSrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/mp/mpc/MPCLecturerListCtrl">
+<div class="modal fade mpcLecturerSrchLayer" tabindex="-1" role="dialog" data-controller="controller/mp/mpc/MPCLecturerListCtrl">
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1000px;">
         <div class="modal-content">
             <div class="modal-header">

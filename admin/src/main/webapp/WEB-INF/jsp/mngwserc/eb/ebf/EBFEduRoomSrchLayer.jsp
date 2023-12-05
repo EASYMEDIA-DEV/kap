@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 사유 레이어 팝업(Modal) -->
-<div class="modal fade ebfEduRoomSrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/eb/ebf/EBFEduRoomListCtrl controller/wb/wbj/WBJRoundMakeCtrl">
+<div class="modal fade ebfEduRoomSrchLayer" tabindex="-1" role="dialog" data-controller="controller/eb/ebf/EBFEduRoomListCtrl controller/wb/wbj/WBJRoundMakeCtrl">
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1500px;">
         <div class="modal-content">
             <div class="modal-header">

@@ -1099,10 +1099,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						//수료여부
 
-
-
-
-						debugger;
 						cmmCtrl.jsonAjax(function(data){
 							alert("저장되었습니다.");
 							location.href = "./list";
