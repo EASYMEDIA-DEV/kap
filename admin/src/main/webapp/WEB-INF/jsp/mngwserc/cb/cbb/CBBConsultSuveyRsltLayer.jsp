@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 만족도종합결과(Modal) -->
-<div class="modal fade consultSuveyRsltLayer" tabindex="-1" role="dialog" data-controller="controller/cb/cbb/CBBConsultSuveyRsltLayertCtrl">
+<div class="modal fade consultSuveyRsltLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/cb/cbb/CBBConsultSuveyRsltLayertCtrl">
   <div class="modal-dialog modal-lg modal-center" role="document" style="width:1500px;">
     <div class="modal-content">
       <div class="modal-header">
@@ -20,6 +20,7 @@
           <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
           <!-- 레이어 여부 -->
           <input type="hidden" name="srchLayer" value="Y" />
+          <input type="hidden" id="rtnBsnGubun" name="rtnBsnGubun" value="" />
           <div class="modal-body">
               <fieldset>
                 <div class="form-group text-sm">
@@ -36,7 +37,7 @@
                     </div>
                     <div class="col-sm-4">
                       <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                      <button type="button" class="btn btn-default btn-sm btnRefresh" >초기화</button>
+                      <button type="button" class="btn btn-default btn-sm btnRefresh" id="btnRefresh">초기화</button>
                     </div>
                   </div>
                 </div>
