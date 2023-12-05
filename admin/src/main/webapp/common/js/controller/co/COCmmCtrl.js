@@ -1732,6 +1732,21 @@ var cmmCtrl = (function(){
 		}).modal();
 	}
 
+	//컨설팅 만족도 종합결과 관련
+	//getCmtSrchPop(function(data){data 객체를 받아서 처리});
+	var fn_consult_suvey_rslt_layer_pop = function(fnc){
+		$(".consultSuveyRsltLayer").one('show.bs.modal', function() {
+			// Add class for soft backdrop
+			$(".consultSuveyRsltLayer").find("#btnRefresh").click();
+			$(".consultSuveyRsltLayer").find("#btnSearch").click();
+		}).one('hidden.bs.modal', function() {
+			// Remove class for soft backdrop (if not will affect future modals)
+		}).one('choice', function(data, param) {
+			// Remove class for soft backdrop (if not will affect future modals)
+			fnc(param);
+		}).modal();
+	}
+
 
 	return {
 		nvl : fn_replace_null,
@@ -1787,6 +1802,9 @@ var cmmCtrl = (function(){
 		getPartsCompanyMemberLayerPop : fn_parts_member_layer_pop,
 
 		//위원 검색 매핑
-		getCmtSrchPop : fn_cmt_srch_layer_pop
+		getCmtSrchPop : fn_cmt_srch_layer_pop,
+
+		//컨설팅 만족도종합결과
+		getConsultSuveyRsltPop : fn_consult_suvey_rslt_layer_pop
 	}
 }());

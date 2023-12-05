@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.cb.cbb.CBBManageConsultMapper">
+    <!--
+        쿼리명 : CBBManageConsultMapper.selectManageConsultList
+        설  명 : 목록 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.21    이옥정       최초생성
+    -->
+    <select id="selectManageConsultList" parameterType="CBBManageConsultSearchDTO" resultType="CBBManageConsultListDTO">
+        select /* CBBManageConsultMapper.selectManageConsultList */
+            cnstg_seq					/* 컨설팅순번 */
+            , cnstg_cd                  /* 컨설팅코드 */
+            , bsn_year					/* 사엽연도 */
+            , rsume_stts_cd			    /* 진행상태코드 */
+            , resume_stts_nm			/* 진행상태코드명 */
+            , cmpn_nm					/* 부품사명 */
+            , ctgry_cd					/* 부품사구분코드 */
+            , ctgry_nm					/* 부품사구분코드명 */
+            , size_cd					/* 부품사규모코드 */
+            , size_nm					/* 부품사큐모코드명 */
+            , appctn_bsnm_no			/* 신청당시 사업자번호 */
+            , sls_pmt					/* 매출액(억원) */
+            , mple_cnt					/* 부품사 직원수 */
+            , appctn_fld_cd				/* 신청분야 코드 */
+            , appctn_fld_nm				/* 신청분야 코드명 */
+            , first_rgns_cd			    /* 첫번째 지역 코드 */
+            , first_rgns_nm			    /* 첫번째 지역 코드명 */
+            , scnd_rgns_cd				/* 두번째 지역 코드 */
+            , scnd_rgns_nm				/* 첫번째 지역 코드명 */
+            , crtfn_cmpn_nm			    /* SQ 인증 주관사 */
+            , mn_cmpn_nm				/* 주고객사 */
+            , vst_dt					/* 방문일 */
+            , cmssr_seq					/* 위원순번 */
+            , cmssr_nm					/* 위원이름 */
+            , cmssr_cbsn_cd			    /* 담당위원지도분야 코드 */
+            , cmssr_cbsn_nm			    /* 담당위원지도분야 코드명 */
+            , cnstg_kickf_dt			/* 킥오프시작일 */
+            , kickf_file_seq			/* 킥오프파일순번 */
+            , kickf_file_ord            /* 킥오프파일ord */
+            , cnstg_pscnd_cd			/* 컨설팅현황코드 */
+            , cnstg_pscnd_nm			/* 컨설팅현황코드명 */
+            , cnstg_pscnd_dt			/* 컨설팅현황일자 */
+            , lvlup_dt					/* 렙업일자 */
+            , lvlup_file_seq			/* 렙업파일순번 */
+            , lvlup_file_ord			/* 렙업파일ord */
+            , appctn_dt					/* 신청일 */
+            , reg_id					/* 등록자id */
+            , reg_name					/* 등록자이름 */
+            , reg_dtm					/* 등록일 */
+            , mod_id					/* 수정자id */
+            , mod_name					/* 수정자이름 */
+            , mod_dtm					/* 수정일 */
+            , mjr_prdct_1               /* 주생산품1 */
+            , mjr_prdct_2               /* 주생산품2 */
+            , mjr_prdct_3               /* 주생산품3 */
+            FROM(
+                select
+                    cp_mst.cnstg_seq
+                    , cp_mst.cnstg_cd
+                    , cp_mst.bsn_year
+                    , cmpn_mst.cmpn_nm
+                    , cmpn_mst.ctgry_cd
+                    , (select cd_nm from co_code_mst where cd = cmpn_mst.ctgry_cd and cd_id = 'COMPANY_TYPE') ctgry_nm
+                    , cmpn_mst.size_cd
+                    , (select cd_nm from co_code_mst where cd = cmpn_mst.size_cd and cd_id = 'COMPANY_TYPE') size_nm
+                    , cp_mst.appctn_bsnm_no
+                    , cmpn_mst.sls_pmt
+                    , cmpn_mst.mple_cnt
+                    , cp_mst.appctn_fld_cd
+                    , (select cd_nm from co_code_mst where cd = cp_mst.appctn_fld_cd and cd_id = 'MNGCNSLT_APP_AREA') appctn_fld_nm
+                    , cp_mst.first_rgns_cd
+                    , (select cd_nm from co_code_mst where cd = cp_mst.first_rgns_cd and cd_id = 'ADDR_CD') first_rgns_nm
+                    , cp_mst.scnd_rgns_cd
+                    , (select cd_nm from co_code_mst where cd = cp_mst.scnd_rgns_cd and cd_id = 'ADDR_CD') scnd_rgns_nm
+                    , (select crtfn_cmpn_nm from cp_cmpn_cbsn_dtl cmpnDtl where bsnm_no = cp_mst.appctn_bsnm_no order by cmpnDtl.year desc, cmpnDtl.reg_dtm desc limit 1) crtfn_cmpn_nm
+                    , (select cmpn_nm from cp_cnstg_dlvry_dtl where cnstg_seq = cp_mst.cnstg_seq order by rate desc limit 1) mn_cmpn_nm
+                    , cpr_mst.vst_dt
+                    , cpr_mst.cmssr_seq
+                    , (select name from co_mem_mst where mem_cd = 'CS' and mem_seq = (select cmssr_seq from cp_cnstg_rsume_mst where cnstg_seq = cp_mst.cnstg_seq)) cmssr_nm
+                    , (select cmssr_cbsn_cd from co_mem_mst where mem_cd = 'CS' and mem_seq = (select cmssr_seq from cp_cnstg_rsume_mst where cnstg_seq = cp_mst.cnstg_seq)) cmssr_cbsn_cd
+                    , (select cd_nm from co_code_mst where cd_id = 'MEM_CD' and cd = (select cmssr_cbsn_cd from co_mem_mst where mem_cd = 'CS' and mem_seq = (select cmssr_seq from cp_cnstg_rsume_mst where cnstg_seq = cp_mst.cnstg_seq))) cmssr_cbsn_nm
+                    , cpr_mst.cnstg_kickf_dt
+                    , cpr_mst.kickf_file_seq
+                    , (select file_ord from co_file_dtl where file_seq = cpr_mst.kickf_file_seq and use_yn = 'Y') kickf_file_ord
+                    , cpr_mst.cnstg_pscnd_cd
+                    , (select cd_nm from co_code_mst where cd = cpr_mst.cnstg_pscnd_cd and cd_id = 'CNSTG_PSCND') cnstg_pscnd_nm
+                    , cpr_mst.cnstg_pscnd_dt
+                    , (select cnstg_kickf_dt from cp_cnstg_rsume_mst where cnstg_seq = cp_mst.cnstg_seq and cnstg_pscnd_cd = 'CNSTG_PSCND03') lvlup_dt
+                    , cpr_mst.lvlup_file_seq
+                    , (select file_ord from co_file_dtl where file_seq = cpr_mst.lvlup_file_seq and use_yn = 'Y') lvlup_file_ord
+                    , cp_mst.appctn_dt
+                    , cp_mst.rsume_stts_cd
+                    , (select cd_nm from co_code_mst where cd = cp_mst.rsume_stts_cd and cd_id = 'MNGCNSLT_STATUS') resume_stts_nm
+                    , cp_mst.reg_id
+                    , (select name from co_mem_mst where mem_seq = cp_mst.appctn_mem_seq) reg_name
+                    , cp_mst.reg_dtm
+                    , cpr_mst.mod_id
+                    , (select name from co_adm_mst where id = cpr_mst.mod_id) mod_name
+                    , cpr_mst.mod_dtm
+                    , cmpn_mst.mjr_prdct_1
+                    , cmpn_mst.mjr_prdct_2
+                    , cmpn_mst.mjr_prdct_3
+                from cp_cnstg_appctn_mst cp_mst join co_mem_mst mem_mst on mem_mst.mem_seq = cp_mst.appctn_mem_seq
+                left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = cp_mst.appctn_bsnm_no
+                left join cp_cnstg_rsume_mst cpr_mst on cp_mst.cnstg_seq = cpr_mst.cnstg_seq
+            ) mst
+        <include refid="selectManageConsultListWhereSql" />
+        order by
+        reg_dtm desc
+        limit #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+        쿼리명 : CBBManageConsultMapper.getManageConsultListCnt
+        설  명 : 목록 전체 갯수
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.24    이옥정       최초생성
+    -->
+    <select id="getManageConsultListCnt" parameterType="CBBManageConsultSearchDTO" resultType="java.lang.Integer">
+        select /* CBBManageConsultMapper.getManageConsultListCnt */
+        count(*)
+        from cp_cnstg_appctn_mst cp_mst join co_mem_mst mem_mst on mem_mst.mem_seq = cp_mst.appctn_mem_seq
+        left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = cp_mst.appctn_bsnm_no
+        left join cp_cnstg_rsume_mst cpr_mst on cp_mst.cnstg_seq = cpr_mst.cnstg_seq
+        <include refid="selectManageConsultListWhereSql" />
+    </select>
+    <!--
+        쿼리명 : selectManageConsultListWhereSql
+        설  명 : 목록 조건
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.24    이옥정       최초생성
+    -->
+    <sql id="selectManageConsultListWhereSql">
+        <where>
+            <!--and cnstg_cd = 'CONSULT_GB02'-->
+            <!--기간검색 -->
+            <if test="strtDt != null and strtDt != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        AND appctn_dt <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 2">
+                        AND vst_dt <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 3">
+                        AND cnstg_kickf_dt <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 4">
+                        AND lvlup_dt <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 5">
+                        AND reg_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 6">
+                        AND mod_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                </choose>
+            </if>
+            <if test="endDt != null and endDt != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        AND appctn_dt <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 2">
+                        AND vst_dt <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 3">
+                        AND cnstg_kickf_dt <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 4">
+                        AND lvlup_dt <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 5">
+                        AND reg_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 6">
+                        AND mod_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                </choose>
+            </if>
+            <!-- 구분 -->
+            <if test="ctgryCdList != null and ctgryCdList.size() > 0">
+                AND
+                <foreach collection="ctgryCdList" item="list" index="index" open="(" close=")" separator=" or ">
+                    ctgry_cd = #{list}
+                </foreach>
+            </if>
+            <!-- 지도분야 -->
+            <if test="appctnFidCd != null and appctnFidCd != ''">
+                AND appctn_fld_cd = #{appctnFidCd}
+            </if>
+            <!-- 진행상태 -->
+            <if test="resumeSttsCd != null and resumeSttsCd != ''">
+                AND rsume_stts_cd = #{resumeSttsCd}
+            </if>
+
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        <!-- 부품사명 -->
+                        AND exists(select bsnm_no from cp_cmpn_mst where bsnm_no = mst.appctn_bsnm_no and cmpn_nm LIKE concat('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 2 ">
+                        <!-- 사업자등록번호 -->
+                        AND exists(select bsnm_no from cp_cmpn_mst where bsnm_no = mst.appctn_bsnm_no and bsnm_no LIKE concat('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 3 ">
+                        <!-- 매출액 -->
+                        and exists(select bsnm_no from cp_cmpn_mst where bsnm_no = mst.appctn_bsnm_no and sls_pmt LIKE concat('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 4 ">
+                        <!-- 직원수 -->
+                        AND exists(select bsnm_no from cp_cmpn_mst where bsnm_no = mst.appctn_bsnm_no and mple_cnt like concat('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 5 ">
+                        <!-- 신청소재지 -->
+                        AND exists(select cnstg_seq from cp_cnstg_appctn_mst where cnstg_seq = mst.cnstg_seq and (INSTR(#{q}, first_rgns_nm) <![CDATA[>]]> 0 or INSTR(#{q}, scnd_rgns_nm) <![CDATA[>]]> 0 ))
+                    </when>
+                    <when test="f == 6 ">
+                        <!-- SQ인증주관사 -->
+                        AND exists(select cnstg_seq from cp_cnstg_appctn_mst where cnstg_seq = mst.cnstg_seq and crtfn_cmpn_nm like concat('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 7 ">
+                        <!-- 담당위원 -->
+                        AND exists(select mem_seq from co_mem_mst where mem_seq = mst.cmssr_seq and name like concat('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 8 ">
+                        <!-- 최초등록자 -->
+                        AND (
+                        INSTR(#{q}, mst.REG_ID) <![CDATA[>]]> 0
+                        or EXISTS(SELECT mem_seq FROM co_adm_mst WHERE id = mst.reg_id AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        or EXISTS(SELECT mem_seq FROM co_mem_mst WHERE id = mst.reg_id AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <when test="f == 9 ">
+                        <!-- 최종등록자 -->
+                        AND (
+                        INSTR(#{q}, aa.MOD_ID) <![CDATA[>]]> 0
+                        or EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = aa.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <otherwise>
+                        AND (
+                        exists(select bsnm_no from cp_cmpn_mst where bsnm_no = mst.appctn_bsnm_no and cmpn_nm LIKE concat('%', #{q}, '%'))
+                        or exists(select bsnm_no from cp_cmpn_mst where bsnm_no = mst.appctn_bsnm_no and bsnm_no LIKE concat('%', #{q}, '%'))
+                        or exists(select bsnm_no from cp_cmpn_mst where bsnm_no = mst.appctn_bsnm_no and sls_pmt LIKE concat('%', #{q}, '%'))
+                        or exists(select bsnm_no from cp_cmpn_mst where bsnm_no = mst.appctn_bsnm_no and mple_cnt like concat('%', #{q}, '%'))
+                        or exists(select cnstg_seq from cp_cnstg_appctn_mst where cnstg_seq = mst.cnstg_seq and (INSTR(#{q}, first_rgns_nm) <![CDATA[>]]> 0 or INSTR(#{q}, scnd_rgns_nm) <![CDATA[>]]> 0 ))
+                        or exists(select cnstg_seq from cp_cnstg_appctn_mst where cnstg_seq = mst.cnstg_seq and crtfn_cmpn_nm like concat('%', #{q}, '%'))
+                        or exists(select mem_seq from co_mem_mst where mem_seq = mst.cmssr_seq and name like concat('%', #{q}, '%'))
+                        or INSTR(#{q}, mst.REG_ID) <![CDATA[>]]> 0
+                        or EXISTS(SELECT mem_seq FROM co_adm_mst WHERE id = mst.reg_id AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        or EXISTS(SELECT mem_seq FROM co_mem_mst WHERE id = mst.reg_id AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        or INSTR(#{q}, aa.MOD_ID) <![CDATA[>]]> 0
+                        or EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = aa.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+    <!--
+        쿼리명 : CBBManageConsultMapper.selectConsultSuveyRsltList
+        설  명 : 만족도 종합결과 리스트 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.04    이옥정       최초생성
+    -->
+    <select id="selectConsultSuveyRsltList" parameterType="CBBConsultSuveyRsltListDTO" resultType="CBBConsultSuveyRsltListDTO">
+        select
+            bsn_year        <!-- 사업연도 -->
+             , count(appctn_bsnm_no) cmpn_Cnt         <!-- 대상부품사 -->
+             , sum(srv_cmplt_cmpn_cnt) srv_cmplt_cmpn_cnt   <!-- 설문완료 부품사 -->
+             , sum(rglr_cmpn_cnt) rglr_cmpn_cnt             <!-- 정규 부품사 -->
+             , sum(shrt_cmpn_cnt) shrt_cmpn_cnt             <!-- 단기 부품사 -->
+             , sum(cmssr_cnt) cmssr_cnt                     <!-- 위원 -->
+             , IFNULL(ROUND((sum(ttl_score) / sum(srv_cmplt_cmpn_cnt)),1),0) ttl_avg_score      <!-- 총합점수평균 -->
+             , IFNULL(ROUND((sum(rglr_score) / sum(rglr_cmpn_cnt)),1),0) rglr_avg_score         <!-- 정규점수평균 -->
+             , IFNULL(ROUND((sum(shrt_score) / sum(shrt_cmpn_cnt)),1),0) shrt_avg_score         <!-- 단기점수평균 -->
+        FROM (
+                 select
+                     cp_mst.bsn_year
+                      , cp_mst.appctn_bsnm_no
+                      , (SELECT COUNT(ttl_score) FROM cp_cnstg_srv_rslt_dtl ccsr WHERE cp_mst.cnstg_seq = ccsr.cnstg_seq ) srv_cmplt_cmpn_cnt
+                      , (SELECT COUNT(*) FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq AND ccr.guide_type_cd = 'GUIDE_TYPE_CD01' ) shrt_cmpn_cnt
+                      , (SELECT COUNT(*) FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq AND ccr.guide_type_cd = 'GUIDE_TYPE_CD02' ) rglr_cmpn_cnt
+                      , (SELECT COUNT(cmssr_seq) FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq ) cmssr_cnt
+                      , cpsr.ttl_score
+                      , (SELECT ttl_score from cp_cnstg_srv_rslt_dtl WHERE cnstg_seq = (SELECT cnstg_seq FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq AND ccr.guide_type_cd = 'GUIDE_TYPE_CD01' )) shrt_score
+                      , (SELECT ttl_score from cp_cnstg_srv_rslt_dtl WHERE cnstg_seq = (SELECT cnstg_seq FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq AND ccr.guide_type_cd = 'GUIDE_TYPE_CD02' )) rglr_score
+                 from cp_cnstg_appctn_mst cp_mst
+                 join co_mem_mst mem_mst on mem_mst.mem_seq = cp_mst.appctn_mem_seq
+                 left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = cp_mst.appctn_bsnm_no
+                 left join cp_cnstg_rsume_mst cpr_mst on cp_mst.cnstg_seq = cpr_mst.cnstg_seq
+                 LEFT JOIN cp_cnstg_srv_rslt_dtl cpsr ON cp_mst.cnstg_seq = cpsr.cnstg_seq
+                 WHERE 1=1
+                 <if test="rtnBsnGubun != null and rtnBsnGubun != ''">
+                    and cp_mst.cnstg_cd = '${rtnBsnGubun}'
+                 </if>
+                <!--and cpr_mst.bfre_jdgmt_rslt_cd = 'BF_JDGMT_RSLT01'
+                AND cpr_mst.init_vst_rslt_cd = 'INIT_VST_RSLT01'
+                AND cpr_mst.cnstg_pscnd_cd = 'CNSTG_PSCND03'-->
+
+                 <!--AND guide_pscnd_cd = 'GUIDE_PSCND04'-->
+             ) mst
+        <if test="rtnBsnYear != null and rtnBsnYear != ''">
+            where bsn_year = ${rtnBsnYear}
+        </if>
+        GROUP BY mst.bsn_year
+        order by
+        mst.bsn_year desc
+        limit #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+        쿼리명 : CBBManageConsultMapper.getManageConsultListCnt
+        설  명 : 만족도 종합결과 목록 전체 갯수
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.04    이옥정       최초생성
+    -->
+    <select id="getConsultSuveyRsltCnt" parameterType="CBBConsultSuveyRsltListDTO" resultType="java.lang.Integer">
+        select
+            count(*)
+        from(
+                select
+                    bsn_year
+                FROM (
+                select
+                cp_mst.bsn_year
+                , cp_mst.appctn_bsnm_no
+                , (SELECT COUNT(ttl_score) FROM cp_cnstg_srv_rslt_dtl ccsr WHERE cp_mst.cnstg_seq = ccsr.cnstg_seq ) srv_cmplt_cmpn_cnt
+                , (SELECT COUNT(*) FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq AND ccr.guide_type_cd = 'GUIDE_TYPE_CD01' ) shrt_cmpn_cnt
+                , (SELECT COUNT(*) FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq AND ccr.guide_type_cd = 'GUIDE_TYPE_CD02' ) rglr_cmpn_cnt
+                , (SELECT COUNT(cmssr_seq) FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq ) cmssr_cnt
+                , cpsr.ttl_score
+                , (SELECT ttl_score from cp_cnstg_srv_rslt_dtl WHERE cnstg_seq = (SELECT cnstg_seq FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq AND ccr.guide_type_cd = 'GUIDE_TYPE_CD01' )) shrt_score
+                , (SELECT ttl_score from cp_cnstg_srv_rslt_dtl WHERE cnstg_seq = (SELECT cnstg_seq FROM cp_cnstg_rsume_mst ccr WHERE cp_mst.cnstg_seq = ccr.cnstg_seq AND ccr.guide_type_cd = 'GUIDE_TYPE_CD02' )) rglr_score
+                from cp_cnstg_appctn_mst cp_mst
+                join co_mem_mst mem_mst on mem_mst.mem_seq = cp_mst.appctn_mem_seq
+                left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = cp_mst.appctn_bsnm_no
+                left join cp_cnstg_rsume_mst cpr_mst on cp_mst.cnstg_seq = cpr_mst.cnstg_seq
+                LEFT JOIN cp_cnstg_srv_rslt_dtl cpsr ON cp_mst.cnstg_seq = cpsr.cnstg_seq
+                where 1=1
+                <if test="rtnBsnGubun != null and rtnBsnGubun != ''">
+                    and cp_mst.cnstg_cd = '${rtnBsnGubun}'
+                </if>
+                <!--WHERE cp_mst.cnstg_cd = 'CONSULT_GB02'
+                and cpr_mst.bfre_jdgmt_rslt_cd = 'BF_JDGMT_RSLT01'
+                AND cpr_mst.init_vst_rslt_cd = 'INIT_VST_RSLT01'
+                AND cpr_mst.cnstg_pscnd_cd = 'CNSTG_PSCND03'-->
+
+                <!--AND guide_pscnd_cd = 'GUIDE_PSCND04'-->
+                ) mst
+                GROUP BY mst.bsn_year
+            ) AA
+    </select>
+
+    <!--
+        쿼리명 : CBBManageConsultMapper.selectConsultSuveyRsltDtlExcel
+        설  명 : 만족도 종합결과 엑셀다운 상세 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.04    이옥정       최초생성
+    -->
+    <select id="selectConsultSuveyRsltDtlExcel" parameterType="CBBConsultSuveyRsltListDTO" resultType="CBBConsultSuveyRsltListDTO">
+        select
+        cp_mst.bsn_year             <!-- 사업연도 -->
+        , cmpn_mst.cmpn_nm          <!-- 부품사명 -->
+        , (select name from co_mem_mst where mem_cd = 'CS' and mem_seq = (select cmssr_seq from cp_cnstg_rsume_mst where cnstg_seq = cp_mst.cnstg_seq)) cmssr_nm    <!-- 담당위원 -->
+        , cpsr.ptcpt_name           <!-- 참여자 -->
+        , (select cd_nm from co_code_mst where cd = cp_mst.appctn_fld_cd and cd_id = 'MNGCNSLT_APP_AREA') appctn_fld_nm     <!-- 신청업종/분야 -->
+        , (select cd_nm from co_code_mst where cd = cpr_mst.guide_type_cd and cd_id = 'GUIDE_TYPE_CD') guide_type_nm        <!-- 지도구분 -->
+        , case IFNULL(cpsr.ttl_score, 0) when 0 then '미참여' ELSE '참여' END AS srv_stts                                     <!-- 설문참여상태 -->
+        , (select cnstg_kickf_dt from cp_cnstg_rsume_mst where cnstg_seq = cp_mst.cnstg_seq and cnstg_pscnd_cd = 'CNSTG_PSCND03') lvlup_dt      <!-- 렙업일 -->
+        , IFNULL(cpsr.ttl_score, 0) ttl_score                       <!-- 총점(100) -->
+        , IFNULL(cpsr.guide_rslt_score, 0) guide_rslt_score         <!-- 지도실적(50) -->
+        , IFNULL(cpsr.cmmnctn_score, 0) cmmnctn_score               <!-- 의사소동(5) -->
+        , IFNULL(cpsr.plnngablt_score, 0) plnngablt_score           <!-- 기획력(10) -->
+        , IFNULL(cpsr.exctvablt_score, 0) exctvablt_score           <!-- 실행력(15) -->
+        , IFNULL(cpsr.mnd_score, 0) mnd_score                       <!-- 마인드(5) -->
+        , IFNULL(cpsr.exprts_score, 0) exprts_score                 <!-- 전문지식(15) -->
+        from cp_cnstg_appctn_mst cp_mst
+        join co_mem_mst mem_mst on mem_mst.mem_seq = cp_mst.appctn_mem_seq
+        left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = cp_mst.appctn_bsnm_no
+        left join cp_cnstg_rsume_mst cpr_mst on cp_mst.cnstg_seq = cpr_mst.cnstg_seq
+        LEFT JOIN cp_cnstg_srv_rslt_dtl cpsr ON cp_mst.cnstg_seq = cpsr.cnstg_seq
+        where 1=1
+        <if test="rtnBsnYear != null and rtnBsnYear != ''">
+            and bsn_year = ${rtnBsnYear}
+        </if>
+        <!--and cpr_mst.bfre_jdgmt_rslt_cd = 'BF_JDGMT_RSLT01'
+        AND cpr_mst.init_vst_rslt_cd = 'INIT_VST_RSLT01'
+        AND cpr_mst.cnstg_pscnd_cd = 'CNSTG_PSCND03'-->
+
+        <!--AND guide_pscnd_cd = 'GUIDE_PSCND04'-->
+        ORDER BY cp_mst.regdtm desc
+        <!-- limit #{firstIndex}, #{recordCountPerPage}-->
+    </select>
+
+    <!--
+        쿼리명 : CBBManageConsultMapper.getConsultSuveyRsltDtlCnt
+        설  명 : 만족도 종합결과 엑셀 상세 전체 갯수
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.04    이옥정       최초생성
+    -->
+    <select id="getConsultSuveyRsltDtlCnt" parameterType="CBBConsultSuveyRsltListDTO" resultType="java.lang.Integer">
+        select
+            count(*)
+        from cp_cnstg_appctn_mst cp_mst
+        join co_mem_mst mem_mst on mem_mst.mem_seq = cp_mst.appctn_mem_seq
+        left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = cp_mst.appctn_bsnm_no
+        left join cp_cnstg_rsume_mst cpr_mst on cp_mst.cnstg_seq = cpr_mst.cnstg_seq
+        LEFT JOIN cp_cnstg_srv_rslt_dtl cpsr ON cp_mst.cnstg_seq = cpsr.cnstg_seq
+        where 1=1
+        <if test="rtnBsnYear != null and rtnBsnYear != ''">
+            and bsn_year = ${rtnBsnYear}
+        </if>
+        <!--and cpr_mst.bfre_jdgmt_rslt_cd = 'BF_JDGMT_RSLT01'
+        AND cpr_mst.init_vst_rslt_cd = 'INIT_VST_RSLT01'
+        AND cpr_mst.cnstg_pscnd_cd = 'CNSTG_PSCND03'-->
+
+        <!--AND guide_pscnd_cd = 'GUIDE_PSCND04'-->
+    </select>
+
+
+</mapper>
