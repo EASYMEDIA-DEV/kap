@@ -2,154 +2,188 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kap.service.dao.eb.EBHEduApplicantMapper">
 	<!--
-		쿼리명 : EBDSqCertiReqMapper.selectList
+		쿼리명 : EBHEduApplicantMapper.selectList
 		설  명 : 목록 조회
 	      수정일      수정자       수정내용
         ==========   ========   ==============
-        2023.11.09    김학규       최초생성
+        2023.12.01    장두석       최초생성
     -->
-	<select id="selectList" parameterType="EBDSqCertiSearchDTO" resultType="EBDSqCertiListDTO">
-		select /* EBDSqCertiReqMapper.selectExamList */
-		  sq_mst.issue_cd
-		, sq_mst.exam_appctn_seq
-		, (select cd_nm from co_code_mst where cd = sq_mst.issue_cd and cd_id = 'EBD_SQ') issue_nm
-		, ptcpt_mst.episd_year
-		, ptcpt_mst.episd_ord
-		, (select code_mst.cd_nm from ed_edctn_episd_mst episd_mst join co_code_mst  code_mst on code_mst.cd = episd_mst.cbsn_cd where edctn_seq = ptcpt_mst.edctn_seq and code_mst.cd_id = 'CLASS_TYPE') cbsn_nm
-		, cmpn_mst.cmpn_nm
-		, cmpn_mst.ctgry_cd
-		, (select cd_nm from co_code_mst where cd = cmpn_mst.ctgry_cd and cd_id = 'COMPANY_TYPE') ctgry_nm
-		, cmpn_mst.size_cd
-		, (select cd_nm from co_code_mst where cd = cmpn_mst.size_cd and cd_id = 'COMPANY_TYPE') size_nm
-		, cmpn_mst.bsnm_no
-		, mem_mst.id
-		, mem_mst.name
-		, ptcpt_mst.gpc_id
-		, mem_mst.hp_no
-		, mem_mst.email
-		, sq_mst.reg_dtm
-		, sq_mst.mod_dtm
-	    , sq_mst.mod_id
-		, (select name from co_adm_mst where id = sq_mst.mod_id) mod_name
-		, sq_mst.use_yn
-		, sq_mst.exam_cd
-		, (select cd_nm from co_code_mst where cd = sq_mst.exam_cd and cd_id = 'EBD_SQ_TP') exam_cd_nm
-		, sq_mst.acqsn_dtm
-		, sq_mst.valid_end_dt
-		from sq_exam_appctn_mst sq_mst join co_mem_mst mem_mst on mem_mst.mem_seq = sq_mst.mem_seq
-		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.mem_seq = mem_mst.mem_seq and exists(select 1 from sq_exam_appctn_ptcpt_mst sq_ptcpt_mst where  sq_ptcpt_mst.ptcpt_seq = ptcpt_mst.ptcpt_seq
-		and exists( select edctn_seq from ed_edctn_prcs_mst where ctgry_cd = 'CLASS01002' and edctn_seq = ptcpt_mst.edctn_seq ) )
-		left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = mem_mst.work_bsnm_no
-		<include refid="selectExamListWhereSql" />
-		order by
-		sq_mst.reg_dtm desc
+	<select id="selectList" parameterType="EBHEduApplicantMstDTO" resultType="EBHEduApplicantMstDTO">
+		SELECT /* EBHEduApplicantMapper.selectList */
+			A.PTCPT_SEQ
+		    , A.EDCTN_SEQ
+			, A.MEM_SEQ
+			, A.STTS_CD
+			/*, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.STTS_CD) STTS_NM*/
+		    , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = SUBSTRING(B.CTGRY_CD, 1, 7)) STD_PRT_CATE_NM
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = B.CTGRY_CD) STD_CATE_NM
+			, B.NM
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = B.STDUY_MTHD_CD) STDUY_MTHD_NM
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = B.STDUY_DD_CD) STDUY_DD
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = B.STDUY_TIME_CD) STDUY_TIME
+			, A.EPISD_YEAR
+			, A.EPISD_ORD
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = C.CBSN_CD) CBSN_NM
+			, D.CMPN_NM
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = D.CTGRY_CD) CMPN_CATE_NM
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = D.SIZE_CD) SIZE_NM
+			, A.PTCPT_BSNM_NO
+		    , D.BSC_ADDR
+			, SUBSTRING(D.BSC_ADDR, 1, 2) ADDR
+			, E.NAME
+			, E.ID
+			, A.GPC_ID
+			, E.HP_NO
+			, E.EMAIL
+			, A.REG_DTM
+			, A.MOD_ID
+			, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) MOD_NAME
+			, A.MOD_DTM
+		FROM
+			EP_EDCTN_PTCPT_MST A
+			JOIN ED_EDCTN_PRCS_MST B ON B.EDCTN_SEQ = A.EDCTN_SEQ
+			JOIN ED_EDCTN_EPISD_MST C ON C.EDCTN_SEQ = A.EDCTN_SEQ AND C.EPISD_YEAR = A.EPISD_YEAR AND C.EPISD_ORD = A.EPISD_ORD
+			JOIN CP_CMPN_MST D ON D.BSNM_NO = A.PTCPT_BSNM_NO
+			JOIN CO_MEM_MST E ON E.MEM_SEQ = A.MEM_SEQ
+		<include refid="selectEduApplicantListWhereSql" />
+		ORDER BY
+			A.REG_DTM DESC
 		limit #{firstIndex}, #{recordCountPerPage}
 	</select>
+
 	<!--
-		쿼리명 : EBDSqCertiReqMapper.getListCnt
-		설  명 : 목록 전체 갯수
+		쿼리명 : EBHEduApplicantMapper.getListCnt
+		설  명 : 목록 전체 개수
 	      수정일      수정자       수정내용
         ==========   ========   ==============
-        2023.11.09    김학규       최초생성
+        2023.12.01    장두석       최초생성
     -->
-	<select id="getListCnt" parameterType="EBDSqCertiSearchDTO" resultType="java.lang.Integer">
-		select /* EBDSqCertiReqMapper.getAdmListCnt */
+	<select id="getListCnt" parameterType="EBHEduApplicantMstDTO" resultType="java.lang.Integer">
+		SELECT /* EBHEduApplicantMapper.getAdmListCnt */
 			count(*)
-		from sq_exam_appctn_mst sq_mst join co_mem_mst mem_mst on mem_mst.mem_seq = sq_mst.mem_seq
-		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.mem_seq = mem_mst.mem_seq and exists(select 1 from sq_exam_appctn_ptcpt_mst sq_ptcpt_mst where  sq_ptcpt_mst.ptcpt_seq = ptcpt_mst.ptcpt_seq
-		and exists( select edctn_seq from ed_edctn_prcs_mst where ctgry_cd = 'CLASS01002' and edctn_seq = ptcpt_mst.edctn_seq ) )
-		left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = mem_mst.work_bsnm_no
-		<include refid="selectExamListWhereSql" />
+		FROM
+			EP_EDCTN_PTCPT_MST A
+			JOIN ED_EDCTN_PRCS_MST B ON B.EDCTN_SEQ = A.EDCTN_SEQ
+			JOIN ED_EDCTN_EPISD_MST C ON C.EDCTN_SEQ = A.EDCTN_SEQ AND C.EPISD_YEAR = A.EPISD_YEAR AND C.EPISD_ORD = A.EPISD_ORD
+			JOIN CP_CMPN_MST D ON D.BSNM_NO = A.PTCPT_BSNM_NO
+			JOIN CO_MEM_MST E ON E.MEM_SEQ = A.MEM_SEQ
+		<include refid="selectEduApplicantListWhereSql" />
 	</select>
+
 	<!--
-		쿼리명 : selectExamListWhereSql
+		쿼리명 : selectEduApplicantListWhereSql
 		설  명 : 목록 조건
 	      수정일      수정자       수정내용
         ==========   ========   ==============
-        2019.07.08    김학규       최초생성
+        2023.12.01    장두석       최초생성
     -->
-	<sql id="selectExamListWhereSql">
+	<sql id="selectEduApplicantListWhereSql">
 		<where>
 			<if test="strtDt != null and strtDt != ''.toString() ">
 				<choose>
 					<when test="srchDate == 1">
-						and sq_mst.reg_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+						AND C.EDCTN_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
 					</when>
 					<when test="srchDate == 2">
-						and sq_mst.mod_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+						AND C.ACCS_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+					</when>
+					<when test="srchDate == 3">
+						AND A.REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+					</when>
+					<when test="srchDate == 4">
+						AND A.MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
 					</when>
 				</choose>
 			</if>
 			<if test="endDt != null and endDt != ''.toString() ">
 				<choose>
 					<when test="srchDate == 1">
-						and sq_mst.reg_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+						AND C.EDCTN_END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
 					</when>
 					<when test="srchDate == 2">
-						and sq_mst.mod_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+						AND C.ACCS_END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+					</when>
+					<when test="srchDate == 3">
+						AND A.REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+					</when>
+					<when test="srchDate == 4">
+						AND A.MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
 					</when>
 				</choose>
 			</if>
-			<if test="certiSttsList != null and certiSttsList.size() > 0">
-				and
-				<foreach collection="certiSttsList" item="list" index="index" open="(" close=")" separator=" or ">
-					<choose>
-						<when test="list == 0">
-							<!-- 만료 -->
-							sq_mst.valid_end_dt <![CDATA[ < ]]> str_to_date(now(), '%Y-%m-%d')
-						</when>
-						<when test="list == 1">
-							<!-- 정상 -->
-							sq_mst.valid_strt_dt <![CDATA[ <= ]]> str_to_date(now(), '%Y-%m-%d')
-							and sq_mst.valid_end_dt <![CDATA[ >= ]]> str_to_date(now(), '%Y-%m-%d')
-						</when>
-						<otherwise>
-							<!-- 중지 -->
-							sq_mst.use_yn = 'N'
-						</otherwise>
-					</choose>
-				</foreach>
-			</if>
+			<!-- 과정분류 -->
 			<if test="ctgryCdList != null and ctgryCdList.size() > 0">
 				and
 				<foreach collection="ctgryCdList" item="list" index="index" open="(" close=")" separator=" or ">
-					cmpn_mst.ctgry_cd = #{list}
+					B.CTGRY_CD = #{list}
 				</foreach>
 			</if>
-			<if test="issueCdList != null and issueCdList.size() > 0">
+			<!--학습방식 -->
+			<if test="stduyMthdCdList != null and stduyMthdCdList.size() > 0">
+				and (
+				<foreach collection="stduyMthdCdList" item="stduyMthdCdList" index="index" open="" close="" separator=" or ">
+					B.STDUY_MTHD_CD = #{stduyMthdCdList}
+				</foreach>
+				)
+			</if>
+			<!-- 학습일 -->
+			<if test="stduyDdCd != null and stduyDdCd != ''">
+				AND stduy_dd_cd = #{stduyDdCd}
+			</if>
+			<!-- 학습시간 -->
+			<if test="stduyTimeCd != null and stduyTimeCd != ''">
+				AND stduy_time_cd = #{stduyTimeCd}
+			</if>
+			<!-- 부품사 구분 -->
+			<if test="partsCtgryCdList != null and partsCtgryCdList.size() > 0">
 				and
-				<foreach collection="issueCdList" item="list" index="index" open="(" close=")" separator=" or ">
-					sq_mst.issue_cd = #{list}
+				<foreach collection="partsCtgryCdList" item="list" index="index" open="(" close=")" separator=" or ">
+					D.CTGRY_CD = #{list}
+				</foreach>
+			</if>
+			<!-- 선발 구분 -->
+			<if test="choiceCtgryCdList != null and choiceCtgryCdList.size() > 0">
+				and
+				<foreach collection="choiceCtgryCdList" item="list" index="index" open="(" close=")" separator=" or ">
+					A.STTS_CD = #{list}
 				</foreach>
 			</if>
 			<if test="q != null and q != ''.toString() ">
 				<choose>
+					<when test="f == 1">
+						AND B.NM LIKE CONCAT('%', #{q}, '%')
+					</when>
 					<when test="f == 2">
-						and exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and name like concat('%', #{q}, '%') )
+						AND E.NAME LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 3 ">
-						and exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and hp_no like concat('%', #{q}, '%') )
+						AND E.HP_NO LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 4 ">
-						and exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and email like concat('%', #{q}, '%') )
+						AND E.EMAIL LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 5 ">
-						and exists(select bsnm_no from cp_cmpn_mst where bsnm_no = cmpn_mst.bsnm_no and cmpn_nm like concat('%', #{q}, '%') )
+						AND D.CMPN_NM LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 6 ">
-						and exists(select bsnm_no from cp_cmpn_mst where bsnm_no = cmpn_mst.bsnm_no and bsnm_no like concat('%', #{q}, '%') )
+						AND A.PTCPT_BSNM_NO LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 7 ">
-						and exists(select id from co_adm_mst where id = sq_mst.mod_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')) )
+						AND EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+					</when>
+					<when test="f == 8 ">
+						AND DATE_FORMAT(A.MOD_DTM, '%Y%m%d') LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<otherwise>
-						and (
-							   exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and name like concat('%', #{q}, '%') )
-							or exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and hp_no like concat('%', #{q}, '%') )
-							or exists(select mem_seq from co_mem_mst where mem_seq = ptcpt_mst.mem_seq and email like concat('%', #{q}, '%') )
-							or exists(select bsnm_no from cp_cmpn_mst where bsnm_no = cmpn_mst.bsnm_no and cmpn_nm like concat('%', #{q}, '%') )
-							or exists(select bsnm_no from cp_cmpn_mst where bsnm_no = cmpn_mst.bsnm_no and bsnm_no like concat('%', #{q}, '%') )
-							or exists(select id from co_adm_mst where id = sq_mst.mod_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')) )
+						AND (
+							B.NM LIKE CONCAT('%', #{q}, '%')
+							OR E.NAME LIKE CONCAT('%', #{q}, '%')
+							OR E.HP_NO LIKE CONCAT('%', #{q}, '%')
+							OR E.EMAIL LIKE CONCAT('%', #{q}, '%')
+							OR D.CMPN LIKE CONCAT('%', #{q}, '%')
+							OR A.PTCPT_BSNM_NO LIKE CONCAT('%', #{q}, '%')
+							OR A.MOD_ID LIKE CONCAT('%', #{q}, '%')
+							OR DATE_FORMAT(A.MOD_DTM, '%Y%n%d') LIKE CONCAT('%', #{q}, '%')
 						)
 					</otherwise>
 				</choose>
@@ -158,13 +192,13 @@
 	</sql>
 
 	<!--
-		쿼리명 : EBDSqCertiReqMapper.selectView
+		쿼리명 : EBHEduApplicantMapper.selectView
 		설  명 : SQ평가원 자격증 신청 상세
 	      수정일      수정자       수정내용
         ==========   ========   ==============
-        2023.11.09    김학규       최초생성
+        2023.12.01    장두석       최초생성
     -->
-	<select id="selectView" parameterType="EBDSqCertiSearchDTO" resultType="EBDEdctnEdisdDTO">
+	<select id="selectView" parameterType="EBHEduApplicantMstDTO" resultType="EBDEdctnEdisdDTO">
 		SELECT
 			  edctn_prcs_mst.nm
 			, appctn_mst.exam_appctn_seq
@@ -221,13 +255,13 @@
 	</select>
 
 	<!--
-		쿼리명 : EBDSqCertiReqMapper.selectExamAppctnMst
+		쿼리명 : EBHEduApplicantMapper.selectExamAppctnMst
 		설  명 : SQ평가원 자격증 상세
 	      수정일      수정자       수정내용
         ==========   ========   ==============
-        2023.11.09    김학규       최초생성
+        2023.12.01    장두석       최초생성
     -->
-	<select id="selectExamAppctnMst" parameterType="EBDSqCertiSearchDTO" resultType="EBGExamAppctnMstDTO">
+	<select id="selectExamAppctnMst" parameterType="EBHEduApplicantMstDTO" resultType="EBGExamAppctnMstDTO">
 		SELECT
 			   appctn_mst.exam_appctn_seq
 			 , appctn_mst.mem_seq
@@ -255,14 +289,14 @@
 
 
 	<!--
-		쿼리명 : EBDSqCertiReqMapper.getPrePrcsList
+		쿼리명 : EBHEduApplicantMapper.getPrePrcsList
 		설  명 : 선수과목 수료 목록 조회
 	      수정일      수정자       수정내용
         ==========   ========   ==============
-        2023.11.09    김학규       최초생성
+        2023.12.01    장두석       최초생성
     -->
-	<select id="getPrePrcsList" parameterType="EBDSqCertiSearchDTO" resultType="EBDPrePrcsDTO">
-		select /* EBDSqCertiReqMapper.getPrePrcsList */
+	<select id="getPrePrcsList" parameterType="EBHEduApplicantMstDTO" resultType="EBDPrePrcsDTO">
+		select /* EBHEduApplicantMapper.getPrePrcsList */
 		  (select GROUP_CONCAT(cd_nm SEPARATOR ' > ') from co_code_mst where lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = 'CLASS01002') AND rht_val <![CDATA[>=]]> (SELECT rht_val FROM co_code_mst WHERE cd = 'CLASS01002') AND dpth <![CDATA[<]]> 4 AND dpth <![CDATA[>]]> 1) ctgry_cd_nm
 		, prcs_mst.nm
 		, (select cd_nm from co_code_mst where cd = prcs_mst.stduy_mthd_cd and cd_id = 'STDUY_MTHD') stduy_mthd_cd_nm
@@ -284,14 +318,14 @@
 	</select>
 
 	<!--
-         쿼리명 : EBDSqCertiReqMapper.updateIssue
+         쿼리명 : EBHEduApplicantMapper.updateIssue
          설  명 : 신청서 상태 변경
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.09    김학규       최초생성
+        2023.12.01    장두석       최초생성
     -->
 	<update id="updateIssue" parameterType="EBDEdctnEdisdDTO">
-		update /* EBDSqCertiReqMapper.updateIssue */ sq_exam_appctn_mst
+		update /* EBHEduApplicantMapper.updateIssue */ sq_exam_appctn_mst
 		set
 			exam_cd = #{examCd}
 		  , issue_cd = #{issueCd}
@@ -312,14 +346,14 @@
 	</update>
 
 	<!--
-         쿼리명 : EBDSqCertiReqMapper.updateConfirmInfo
+         쿼리명 : EBHEduApplicantMapper.updateConfirmInfo
          설  명 : 자격증 정보 수정
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.09    김학규       최초생성
+        2023.12.01    장두석       최초생성
     -->
 	<update id="updateConfirmInfo" parameterType="EBDEdctnEdisdDTO">
-		update /* EBDSqCertiReqMapper.updateConfirmInfo */ sq_exam_appctn_mst
+		update /* EBHEduApplicantMapper.updateConfirmInfo */ sq_exam_appctn_mst
 		set
 		  exam_cd = #{examCd}
 		, idntfn_photo_file_seq = #{idntfnPhotoFileSeq}
@@ -331,14 +365,14 @@
 	</update>
 
 	<!--
-		쿼리명 : EBDSqCertiReqMapper.getSqValidEndEmailList
+		쿼리명 : EBHEduApplicantMapper.getSqValidEndEmailList
 		설  명 : 만료일시 기준 몇개월전 대상자 조회
 	      수정일      수정자       수정내용
         ==========   ========   ==============
-        2023.11.09    김학규       최초생성
+        2023.12.01    장두석       최초생성
     -->
-	<select id="getSqValidEndEmailList" parameterType="java.lang.Integer" resultType="EBDSqCertiListDTO">
-		SELECT /* EBDSqCertiReqMapper.getSqValidEndEmailList */
+	<select id="getSqValidEndEmailList" parameterType="java.lang.Integer" resultType="EBHEduApplicantMstDTO">
+		SELECT /* EBHEduApplicantMapper.getSqValidEndEmailList */
 			  a.jdgmt_no
 			 , a.mem_seq
 			 , a.exam_appctn_seq
