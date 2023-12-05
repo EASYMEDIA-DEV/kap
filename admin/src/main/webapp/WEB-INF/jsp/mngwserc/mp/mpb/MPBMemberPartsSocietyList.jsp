@@ -32,7 +32,14 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                            <c:if test="${fn:contains(cdList, 'COMPANY010')}">
+                            <c:if test= "${cdList.cd eq 'COMPANY01001'}">
+
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                </label>
+                            </c:if>
+                            <c:if test= "${cdList.cd eq 'COMPANY01002'}">
                                 <label class="checkbox-inline c-checkbox">
                                     <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}

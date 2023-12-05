@@ -1,4 +1,4 @@
-package com.kap.mngwserc.controller;
+package com.kap.front.controller;
 
 import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.COAAdmDTO;
@@ -45,7 +45,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc")
+@RequestMapping(value="/")
 public class COCOmmController {
     /** 공통 서비스 **/
     private final COCommService cOCommService;
@@ -67,15 +67,16 @@ public class COCOmmController {
     @Tag(name = "공통 API", description = "공통")
     @RestController
     @RequiredArgsConstructor
-    @RequestMapping("/mngwserc")
+    @RequestMapping("/")
     public class EXGExamRestController  {
         /** 공통 서비스 **/
         private final COCommService cOCommService;
         /** 코드 서비스 **/
         private final COCodeService cOCodeService;
 
-        @Value("${app.admin-domain}")
+        @Value("${app.user-domain}")
         private String url;
+
         @Operation(summary = "신청자, 부품사 정보 조회", tags = "회원", description = "신청자, 부품사 정보 조회")
         @GetMapping(value="/**/get-member-company-info")
         public COUserCmpnDto getMemCmpnDtl(ModelMap modelMap, @Parameter(description = "회원 순번", required = true) @RequestParam(required = true) Integer memSeq) throws Exception
@@ -118,7 +119,7 @@ public class COCOmmController {
         }
 
         /**
-         * 나이스 본인 인증
+         * 나이스 본인 인증 TODO 배포 시 returlUrl 변경 하기
          * @param request
          * @param cocNiceReqEncDto
          * @return
@@ -126,8 +127,8 @@ public class COCOmmController {
          */
         @PostMapping("/nice/my-idnttvrfct")
         @ResponseBody
-        public COCNiceServiceDto idnttvrfct(HttpServletRequest request ,COCNiceReqEncDto cocNiceReqEncDto) throws Exception {
-            return cOCommService.idnttvrfct(request , cocNiceReqEncDto , url+"/mngwserc/nice/my-idnttvrfct-confirm");
+        public COCNiceServiceDto idnttvrfct(HttpServletRequest request , COCNiceReqEncDto cocNiceReqEncDto) throws Exception {
+            return cOCommService.idnttvrfct(request , cocNiceReqEncDto,url+"/nice/my-idnttvrfct-confirm");
         }
 
 
@@ -145,7 +146,7 @@ public class COCOmmController {
 
         modelMap.addAttribute("rtnData", cOCommService.idnttvrfctConfirm(request.getParameter("enc_data") , request));
 
-        return  "mngwserc/CONicePopUp";
+        return  "/front/co/CONicePopUp";
     }
 
     /**

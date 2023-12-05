@@ -1,12 +1,9 @@
 package com.kap.service;
 
-import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 
-import com.kap.core.dto.cb.cbb.*;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * 컨설팅 사업 경영컨설팅 서비스

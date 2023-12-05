@@ -14,50 +14,6 @@ define(["ezCtrl"], function(ezCtrl) {
     var $formObj = ctrl.obj.find("form").eq(0);
 
 
-    //var 선택삭제
-    var delCallback = function(obj){
-
-        var frmDataObj    = $(obj).closest("form");
-        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-        var delType = frmDataObj.data("delType");
-        if (delActCnt > 0)
-        {
-            // 계정은 최고 관리자 및 본인 계정은 삭제 불가
-            if(confirm(msgCtrl.getMsg("confirm.del")))
-            {
-                //삭제 전송
-                cmmCtrl.frmAjax(function(respObj){
-                    if(respObj != undefined && respObj.respCnt > 0){
-                        var msg = msgCtrl.getMsg("success.del.target.none");
-                        if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
-                            msg = msgCtrl.getMsg("success.del.target." + delType);
-                        }
-                        alert(msg);
-                        $formObj.find("#btnSearch").click();
-                    }
-                    else{
-                        alert(msgCtrl.getMsg("fail.act"));
-                    }
-                }, "./delete", frmDataObj, "POST", "json");
-            }
-
-        }
-        else
-        {
-            if(typeof delType!= "undefined")
-            {
-                alert(msgCtrl.getMsg("fail.del.target." + frmDataObj.data("delType")));
-            }
-            else
-            {
-                alert(msgCtrl.getMsg("fail.target"));
-            }
-
-            return;
-        }
-
-    }
-
 
     // 목록 조회
     var search = function (page){
@@ -78,14 +34,14 @@ define(["ezCtrl"], function(ezCtrl) {
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/eb/eba/select", $formObj, "GET", "html");
+        }, "/mngwserc/eb/ebh/select", $formObj, "GET", "html");
 
     }
 
 
     var callbackAjaxCdList  = function (cdList){
 
-        console.log(cdList);
+        // console.log(cdList);
 
         var detailList = cdList.detailList;
 
@@ -175,7 +131,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 
                         $(".classType input:checked").each(function(){
-                            console.log($(this).val());
+                            // console.log($(this).val());
 
                             var checkVal = $(this).val();
 
@@ -184,7 +140,7 @@ define(["ezCtrl"], function(ezCtrl) {
                             $("."+checkVal).css("display","block");
 
                             $("."+checkVal).find("input:checkbox").attr("disabled", false);
-                            console.log(cdnm);
+                            // console.log(cdnm);
                             $("."+checkVal).find("input:checkbox").find("span").append(cdnm+"23434");
 
 
@@ -303,7 +259,7 @@ define(["ezCtrl"], function(ezCtrl) {
         immediately : function() {
             //리스트 조회
             // cmmCtrl.setFormData($formObj);
-            // search();
+            search();
         }
     };
 

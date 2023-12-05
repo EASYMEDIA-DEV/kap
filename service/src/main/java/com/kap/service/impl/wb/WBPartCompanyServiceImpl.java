@@ -1,7 +1,6 @@
 package com.kap.service.impl.wb;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import com.kap.core.dto.wb.WBPartCompanyDTO;
 import com.kap.service.WBPartCompanyService;
@@ -9,8 +8,6 @@ import com.kap.service.dao.wb.WBPartCompanyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <pre>

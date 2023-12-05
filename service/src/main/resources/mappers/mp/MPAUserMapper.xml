@@ -741,9 +741,11 @@
           , mod_id = #{modId}
           , mod_ip = #{modIp}
           , mod_dtm = now()
+          , tmp_pwd_yn = 'Y'
         where id =#{id}
 
     </update>
+
 
 
 </mapper>

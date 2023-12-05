@@ -1,6 +1,5 @@
 package com.kap.service.mp.mpg;
 
-import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.mp.mpg.MPGWthdrwDto;
 
 import javax.servlet.http.HttpServletResponse;

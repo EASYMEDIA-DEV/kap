@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -371,15 +373,75 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		//없어서 새로 추가함
 		}else{
+
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			eBBPtcptDTO.setRegId( cOUserDetailsDTO.getId() );
+			eBBPtcptDTO.setRegName( cOUserDetailsDTO.getName() );
+			eBBPtcptDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+			eBBPtcptDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+			eBBPtcptDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
+			eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+
 			int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
 			eBBPtcptDTO.setPtcptSeq(firstEdctnPtcptIdgen);
 
 			eBBEpisdMapper.insertPtcptDtl(eBBPtcptDTO);
+			setAtndcList(eBBPtcptDTO);//교육참여 출석 상세 목록을 등록한다.
 			eBBPtcptDTO.setRegStat("S");
 		}
 
 
 		return eBBPtcptDTO;
+
+	}
+
+
+	/*
+	* 교육차수 신청자(참여) 출석 상세 생성
+	* */
+	public void setAtndcList(EBBPtcptDTO eBBPtcptDTO){
+
+		try {
+			String getEdctnStrtDtm= eBBPtcptDTO.getEdctnStrtDtm();
+			String getEdctnEndDtm= eBBPtcptDTO.getEdctnEndDtm();
+
+			// 시작 날짜와 종료 날짜 설정
+			String startDateString = getEdctnStrtDtm.substring(0, 10);
+			String endDateString = getEdctnEndDtm.substring(0, 10);
+
+			// 시작 날짜와 종료 날짜를 LocalDate 객체로 변환
+			LocalDate startDate = LocalDate.parse(startDateString);
+			LocalDate endDate = LocalDate.parse(endDateString);
+
+			// 날짜 출력 형식 지정
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+
+			List<EBBPtcptDTO> atndcDtoList = new ArrayList<>();
+			// 반복문을 통해 날짜 출력
+			while (!startDate.isAfter(endDate)) {
+				EBBPtcptDTO atndcDto = new EBBPtcptDTO();
+				System.out.println("@@@날짜 = "+startDate.format(formatter));
+				startDate = startDate.plusDays(1); // 다음 날짜로 이동
+
+				atndcDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
+				atndcDto.setEdctnDt(String.valueOf(startDate));
+				atndcDto.setAtndcDtm(null);
+				atndcDto.setLvgrmDtm(null);
+				atndcDto.setRegId(eBBPtcptDTO.getRegId());
+				atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
+				atndcDto.setModId(eBBPtcptDTO.getModId());
+				atndcDto.setModIp(eBBPtcptDTO.getModIp());
+				atndcDtoList.add(atndcDto);
+			}
+
+			eBBPtcptDTO.setPtcptList(atndcDtoList);
+			eBBEpisdMapper.insertAtndcList(eBBPtcptDTO);
+		}catch (Exception e){
+			System.out.println("e = " + e);
+		}
 
 	}
 

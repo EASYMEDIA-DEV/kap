@@ -23,6 +23,7 @@
 	<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="/common/js/gsap.min.js"></script>
 	<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+	<script type="text/javascript" src="/common/js/jquery.cookies.js"></script>
 	<script type="text/javascript" src="/common/js/swiper.min.js"></script>
 	<script type="text/javascript" src="/common/js/script.js"></script>
 	<c:set var="now" value="<%=new java.util.Date()%>" />
