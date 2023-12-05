@@ -126,6 +126,7 @@ define(["ezCtrl"], function(ezCtrl) {
                         var frmDataObj  = $formObj.closest("form");
 
                         frmDataObj.find("input[name='rsn']").remove();
+                        frmDataObj.find("input[name='excelBsnYear']").remove();
 
                         if (rsn != "") {
                             frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
