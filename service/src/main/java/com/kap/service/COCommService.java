@@ -40,7 +40,7 @@ public interface COCommService {
 
     COCompApiResDto niceChk(String compNum) throws Exception;
 
-    COCNiceServiceDto idnttvrfct(HttpServletRequest request , COCNiceReqEncDto cocNiceReqEncDto) throws Exception;
+    COCNiceServiceDto idnttvrfct(HttpServletRequest request , COCNiceReqEncDto cocNiceReqEncDto,String returnUrl) throws Exception;
 
     COCNiceMyResDto idnttvrfctConfirm(String params , HttpServletRequest request) throws Exception;
 

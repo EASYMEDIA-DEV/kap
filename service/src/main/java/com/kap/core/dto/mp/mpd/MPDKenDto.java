@@ -55,7 +55,7 @@ public class MPDKenDto extends BaseDTO {
 
     @Schema(title = "탈퇴여부", example = "Y")
     @Builder.Default
-    private String wthdrwYn = "N";
+    private String wthdrwYn = "Y";
 
     @Schema(title = "total", example = "0")
     private int total;

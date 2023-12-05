@@ -49,9 +49,14 @@ public class SecurityConfig {
                 .httpBasic().disable() //기본으로 제공하는 httpBasic설정 사용안함
                 .csrf()
                 .ignoringAntMatchers("/error/**"
+                        ,"/login"
+                        ,"/id-find"  //아이디 찾기
+                        ,"/id-find-res" //아이디 찾기 결과
+                        ,"/id-email-trans" //메일 전송
                         ,"/**/*list*"
                         ,"/**/*index*"
                         ,"/**/*select*"
+                        ,"/nice/**"
                         , "/**/*write*")
                 .and()
                 .exceptionHandling()
