@@ -132,7 +132,15 @@ public interface EBBEpisdMapper {
 	 */
 	public EBBSrvRstDTO selectEpisdSrvRstDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 교육차수 - 신청자 등록 전 확인
+	 */
+	public EBBPtcptDTO selectPtcptDtl(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
+	/**
+	 * 교육차수 - 신청자 등록
+	 */
+	public int insertPtcptDtl(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 
 

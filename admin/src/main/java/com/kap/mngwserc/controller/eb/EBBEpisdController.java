@@ -185,6 +185,66 @@ public class EBBEpisdController {
         return "mngwserc/eb/ebb/EBBEpisdPtcptListAjax";
     }
 
+    /**
+     * 교육차수관리 > 신청자 등록 화면을 호출한다.
+     */
+    @RequestMapping(value = "/ptcpt/write")
+    public String ptcptSelect(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            //화차정보
+            HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+            EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");//회차정보
+            EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");//교육장 정보
+            List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
+
+            modelMap.addAttribute("rtnData", rtnDto);//교육차수 본문
+            modelMap.addAttribute("isttrList", isttrList);//교육차수 본문
+
+            modelMap.addAttribute("roomDto", roomDto);//교육장 정보
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/eb/ebb/EBBPtcptWrite.admin";
+    }
+
+    @Operation(summary = "교육차수 신청자 등록", tags = "교육차수 신청자 등록", description = "")
+    @PostMapping(value="/ptcpt/setPtcptInfo")
+    public String setPtcptInfo(EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap) throws Exception
+    {
+
+        //교육차수 신청자를 등록한다. 등록할때 이미 회원이 있으면 취소
+        EBBPtcptDTO temoDto = new EBBPtcptDTO();
+        //try {
+
+            temoDto = eBBEpisdService.setPtcptInfo(eBBPtcptDTO);
+
+            System.out.println("@@@ temoDto = " + temoDto);
+
+            modelMap.addAttribute("rtnData", temoDto);
+
+        /*}
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }*/
+
+        return "jsonView";
+    }
+
 
 
     @RestController
@@ -280,6 +340,11 @@ public class EBBEpisdController {
 
             return tempDto;
         }
+
+
+
+
+
 
 
 

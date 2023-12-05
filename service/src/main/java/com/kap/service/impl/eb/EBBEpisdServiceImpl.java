@@ -63,6 +63,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	/* 교육차수 - 교육강의상세 시퀀스 */
 	private final EgovIdGnrService edctnLctrIdgen;
 
+	/* 교육차수 - 교육참여마스터 시퀀스 */
+	private final EgovIdGnrService edctnPtcptSeqIdgen;
+
+
+
 
 
 	/**
@@ -137,6 +142,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		map.put("isttrList", isttrList);//강사 목록
 		map.put("bdgetList", bdgetList);//예산지출내역 목록
 		map.put("srvRstDtl", srvRstDtl);//설문 상세
+
+
 
 		return map;
 	}
@@ -345,6 +352,37 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		return tempDto;
 	}
+
+	/**
+	 * 교육차수 신청자 등록
+	 */
+	@Transactional
+	public EBBPtcptDTO setPtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception
+	{
+		EBBPtcptDTO tempDto = new EBBPtcptDTO();
+
+		tempDto = eBBEpisdMapper.selectPtcptDtl(eBBPtcptDTO);
+
+		//이미 등록된 회원
+		if(tempDto !=null){
+
+			eBBPtcptDTO.setRegStat("F");
+
+		//없어서 새로 추가함
+		}else{
+			int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
+			eBBPtcptDTO.setPtcptSeq(firstEdctnPtcptIdgen);
+
+			eBBEpisdMapper.insertPtcptDtl(eBBPtcptDTO);
+			eBBPtcptDTO.setRegStat("S");
+		}
+
+
+		return eBBPtcptDTO;
+
+	}
+
+
 
 
 

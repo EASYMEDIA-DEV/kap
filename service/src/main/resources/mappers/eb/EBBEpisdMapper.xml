@@ -335,14 +335,14 @@
 	</sql>
 
 	<!--
-      쿼리명 : EBBEpisdMapper.selectEpisdDtl
+      쿼리명 : EBBEpisdMapper.selectLctrDtlList
       설  명 : 교육강의상세목록를 출력한다
        수정일     수정자       수정내용
      ==========   ======    ==============
      2023.11.02   김학규       최초생성
  	-->
 	<select id="selectLctrDtlList" parameterType="EBBLctrDTO" resultType="EBBLctrDTO">
-		select
+		select /* EBBEpisdMapper.selectLctrDtlList */
 			edctn_seq
 			, episd_ord
 			, lctr_seq
@@ -372,16 +372,18 @@
      2023.11.02   김학규       최초생성
  	-->
 	<select id="selectEpisdDtl" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		SELECT /*EBBEpisdMapper.selectEpisdList*/
+		SELECT /*EBBEpisdMapper.selectEpisdDtl*/
 			edctn_seq
 			 , episd_year
 			 , episd_ord
+			 , episd_seq
 			 , parnt_seq
 			 , (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
 		     , jdgmt_yn
 			 , ctgry_cd
 			 , ctgry_cd_nm
 		     , cbsn_cd
+			 , (select cd_nm from co_code_mst WHERE cd = aa.cbsn_cd) AS cbsn_cd_nm
 			 , nm
 			 , stduy_mthd_cd
 			 , stduy_mthd_cd_nm
@@ -443,6 +445,7 @@
 			 , exps_yn
 		FROM (SELECT
 				  b.edctn_seq
+		           , a.episd_seq
 				   , b.ctgry_cd
 		           , a.cbsn_cd
 				   , (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
@@ -511,7 +514,7 @@
      2023.11.02   김학규       최초생성
  	-->
 	<select id="selectEpisdChk" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		select *
+		select * /* EBBEpisdMapper.selectEpisdChk */
 		from ed_edctn_episd_mst
 		where
 		edctn_seq = #{edctnSeq}
@@ -645,7 +648,7 @@
         2023.11.23   김학규       최초생성
     -->
 	<delete id="deleteIsttrRel" parameterType="EBBEpisdDTO">
-		delete from ed_edctn_isttr_rel where 1=1
+		delete from ed_edctn_isttr_rel where 1=1 /* EBBEpisdMapper.deleteIsttrRel */
 										and edctn_seq = #{edctnSeq}
 										and episd_ord = #{episdOrd}
 										and episd_year = #{episdYear}
@@ -978,14 +981,14 @@
 
 
 	<!--
-      쿼리명 : EBBEpisdMapper.selectEpisdSrvRstDtl
+      쿼리명 : EBBEpisdMapper.selectEpisdPtcptListCnt
       설  명 : 교육차수관리 - 참여자 목록 카운트
        수정일     수정자       수정내용
      ==========   ======    ==============
      2023.11.28   김학규       최초생성
  	-->
 	<select id="selectEpisdPtcptListCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
-		select
+		select /* EBBEpisdMapper.selectEpisdPtcptListCnt */
 			count(*)
 		from ep_edctn_ptcpt_mst a
 				 left join(select mem_seq, id, name, hp_no, email, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') b on a.mem_seq = b.mem_seq
@@ -997,14 +1000,14 @@
 	</select>
 
 	<!--
-      쿼리명 : EBBEpisdMapper.selectEpisdSrvRstDtl
+      쿼리명 : EBBEpisdMapper.selectEpisdPtcptList
       설  명 : 교육차수관리 - 참여자 목록
        수정일     수정자       수정내용
      ==========   ======    ==============
      2023.11.28   김학규       최초생성
  	-->
 	<select id="selectEpisdPtcptList" parameterType="EBBEpisdDTO" resultType="EBBPtcptDTO">
-		select
+		select /* EBBEpisdMapper.selectEpisdPtcptList */
 			a.ptcpt_seq
 			, b.id
 			, b.name
@@ -1057,7 +1060,7 @@
         -->
 	<update id="updateEpisdPtcpt" parameterType="EBBEpisdDTO" >
 		<foreach collection="ptcptList" item="ptcptList" index="index" separator=";" open="" close=";">
-			update ep_edctn_ptcpt_mst set
+			update ep_edctn_ptcpt_mst set /* EBBEpisdMapper.updateEpisdPtcpt */
 
 				mod_id = #{ptcptList.modId}
 				, mod_ip = #{ptcptList.modIp}
@@ -1092,7 +1095,7 @@
      2023.11.28   김학규       최초생성
  	-->
 	<select id="selectFxnumChk" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		select
+		select /* EBBEpisdMapper.selectFxnumChk */
 				aa.edctn_seq
 				, aa.episd_year
 				, aa.episd_ord
@@ -1119,6 +1122,77 @@
 				and episd_ord = #{episdOrd}
 			) aa
 	</select>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectPtcptDtl
+      설  명 : 교육차수 - 신청자 등록 전 확인
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectPtcptDtl" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
+			select
+			ptcpt_seq
+			, edctn_seq
+			, episd_year
+			, episd_ord
+			, mem_seq
+			, gpc_id
+			from ep_edctn_ptcpt_mst
+			  WHERE 1=1
+				and edctn_seq = #{edctnSeq}
+				and episd_year = #{episdYear}
+				and episd_ord = #{episdOrd}
+				and mem_seq = #{memSeq}
+	</select>
+
+	<!--
+             쿼리명 : EBBEpisdMapper.insertPtcptDtl
+             설  명 : 교육차수 - 신청자 등록
+              수정일     수정자       수정내용
+            ==========   ======    ==============
+            2023.11.02   김학규       최초생성
+        -->
+	<insert id="insertPtcptDtl" parameterType="EBBPtcptDTO">
+		INSERT INTO ep_edctn_ptcpt_mst (
+			ptcpt_seq
+			, edctn_seq
+			, episd_year
+			, episd_ord
+			, mem_seq
+			, ptcpt_bsnm_no
+			, stts_cd
+			, gpc_id
+			, cmptn_yn
+			, cmptn_dtm
+			, exam_score
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		) VALUES(
+				#{ptcptSeq}
+				, #{edctnSeq}
+				, #{episdYear}
+				, #{episdOrd}
+				, #{memSeq}
+				, #{ptcptBsnmNo}
+				, 'EDCTN_STTS_CD01'
+				, #{gpcId}
+				, 'N'
+				, null
+				, null
+				, #{regId}
+				, #{regIp}
+				, now()
+				, #{modId}
+				, #{modIp}
+				, now()
+			)
+
+	</insert>
 
 
 

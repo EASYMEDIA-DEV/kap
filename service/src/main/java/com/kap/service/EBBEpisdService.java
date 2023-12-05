@@ -67,6 +67,10 @@ public interface EBBEpisdService {
 	public EBBEpisdDTO selectFxnumChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
+	/**
+	 * 교육차수 신청자 등록
+	 */
+	public EBBPtcptDTO setPtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 }
 

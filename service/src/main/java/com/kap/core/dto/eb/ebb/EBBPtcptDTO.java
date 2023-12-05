@@ -44,12 +44,22 @@ public class EBBPtcptDTO extends BaseDTO {
     @NotNull
     private Integer episdYear;
 
+    @Schema(title = "회차순번", example = "숫자")
+    private Integer episdSeq;
+
+
     @Schema(title = "참여순번", example = "숫자")
     @NotNull
     private Integer ptcptSeq;
 
     @Schema(title = "아이디", example = "텍스트")
     private String id;
+
+    @Schema(title = "GPC 아이디", example = "텍스트")
+    private String gpcId;
+
+    @Schema(title = "회원순번", example = "텍스트")
+    private Integer memSeq;
 
     @Schema(title = "이름", example = "텍스트")
     private String name;
@@ -96,6 +106,8 @@ public class EBBPtcptDTO extends BaseDTO {
     @Schema(title = "교육상태", example = "텍스트")
     private String eduStat;
 
+    @Schema(title = "등록상태", example = "텍스트 이미있음(실패):F, 성공:S")
+    private String regStat;
 
     private List<EBBPtcptDTO> ptcptList;//교육 참여자 목록
 

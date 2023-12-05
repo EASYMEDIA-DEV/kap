@@ -10,7 +10,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// get controller object
 	var ctrl = new ezCtrl.controller(exports.controller);
 
-
 	// form Object
 	var $formObj = jQuery("#frmData");
 	//온라인강의 복사본 생성
@@ -368,24 +367,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						seqObj.edctnSeq = $("#edctnSeq").val();
 						seqObj.episdYear = $("#episdYear").val();
 						seqObj.episdOrd = $("#episdOrd").val();
+						seqObj.episdSeq = $("#episdSeq").val();
 
 
 						//정원수 체크
 						cmmCtrl.jsonAjax(function(data){
 							if(data !=""){
 								var rtn = JSON.parse(data);
-								console.log(rtn);
 								//정원여유
 								if(rtn.fxnumStta == "S"){
-
-									alert("정원 여유");
+									//alert("정원 여유");
 									//레이어팝업 호출
-
-
-									//콜백
-
-									//seach(1); 함수 실행해서 참여자목록 다시 갱신시킴
-
+									location.href = "./ptcpt/write?detailsKey="+seqObj.edctnSeq+"&episdYear="+seqObj.episdYear+"&episdOrd="+seqObj.episdOrd+"&episdSeq="+seqObj.episdSeq;
 
 								//정원초과
 								}else{
@@ -723,9 +716,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 },
-		immediately : function() {
+		immediately : function(event) {
+
 			//교육 참여자목록 조회
-			search();
+			if($(".card-body").data("actiontype") == "update"){
+				search();
+			}
+
 
 
 			//폼 데이터 처리

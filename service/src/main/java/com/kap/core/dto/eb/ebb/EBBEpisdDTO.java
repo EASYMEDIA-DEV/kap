@@ -57,8 +57,12 @@ public class EBBEpisdDTO extends BaseDTO {
     @NotNull
     private Integer episdYear;
 
-    @Schema(title = "업종코드", example = "")
+    @Schema(title = "업종코드", example = "코드")
     private String cbsnCd;
+
+    @Schema(title = "업종코드", example = "코드명")
+    private String cbsnCdNm;
+
 
     @Schema(title = "접수시작일시", example = "yyyy-mm-dd HH:mm:ss")
     private String accsStrtDtm;

@@ -1,9 +1,19 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<script>
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            $(".tabClick:eq(1)").find("a").trigger("click");
 
+        }
+    }
+</script>
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
+<c:set var="actionType" value="${not empty rtnDto ? 'update' : 'write'}"/>
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/ebb/EBBEpisdWriteCtrl">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/ebb/EBBEpisdWriteCtrl" data-actionType="${actionType}">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -11,6 +21,7 @@
             <input type="hidden" class="notRequired" id="edctnSeq" name="edctnSeq" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="orgEpisdYear" name="orgEpisdYear" value="${rtnDto.episdYear}" />
             <input type="hidden" class="notRequired" id="orgEpisdOrd" name="orgEpisdOrd" value="${rtnDto.episdOrd}" />
+            <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnDto.episdSeq}" />
             <input type="hidden" class="notRequired" id="ctgryCd" name="ctgryCd" value="${rtnDto.ctgryCd}" />
 
             <input type="hidden" class="notRequired" id="prntCd" name="prntCd" value="${rtnDto.prntCd}" />
@@ -81,9 +92,9 @@
 
             <ul class="nav nav-tabs" id="myTabs">
                 <li class="active tabClick"><a data-toggle="tab" href="#episdList">회차정보</a></li>
-                <li class="tabClick"><a data-toggle="tab" href="#accsList">참여자 목록</a></li>
-                <li class="tabClick"><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
-                <li class="tabClick"><a data-toggle="tab" href="#bdget">예산/지출</a></li>
+                <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>> <a data-toggle="tab" href="#accsList">참여자 목록</a></li>
+                <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
+                <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#bdget">예산/지출</a></li>
             </ul>
 
             <div class="tab-content">
@@ -144,7 +155,7 @@
                                         <select class="form-control input-sm wd-sm classType" name="accsStrtHour" id="accsStrtHour" title="접수 시작시간">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
-                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '')eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
                                             </c:forEach>
                                         </select>
                                         <span class="input-group-addon bg-white b0">~</span>
