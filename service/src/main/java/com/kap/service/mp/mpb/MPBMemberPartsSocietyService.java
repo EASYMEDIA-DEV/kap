@@ -1,6 +1,5 @@
 package com.kap.service.mp.mpb;
 
-import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.MPBBusDto;
 import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.MPBSanDto;

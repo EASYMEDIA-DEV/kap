@@ -1,6 +1,5 @@
 package com.kap.service;
 
-import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import com.kap.core.dto.wb.WBPartCompanyDTO;
 
