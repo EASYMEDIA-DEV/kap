@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.*;
-import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.co.*;
 
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.utility.COClassUtil;
 import com.kap.service.COCommService;
 import com.kap.service.COUserDetailsHelperService;
@@ -133,13 +133,13 @@ public class COCommServiceImpl implements COCommService {
     }
 
     @Override
-    public COCNiceServiceDto idnttvrfct(HttpServletRequest request, COCNiceReqEncDto cocNiceReqEncDto) throws Exception {
+    public COCNiceServiceDto idnttvrfct(HttpServletRequest request, COCNiceReqEncDto cocNiceReqEncDto , String returnUrl) throws Exception {
         String niceApiAccessToken = getNiceApiAccessToken();
         if (niceApiAccessToken != null) {
             String[] niceEncToken = getNiceEncToken(niceApiAccessToken);
             if (niceEncToken.length != 0) {
                 String keyIv = setDchngEnc(niceEncToken[0]); //키생성
-                String reqData = newCocReqEncDto(niceEncToken[1], request ,cocNiceReqEncDto); //요청 데이터 생성
+                String reqData = newCocReqEncDto(niceEncToken[1], request ,cocNiceReqEncDto ,returnUrl); //요청 데이터 생성
                 String encData = setJSONDchngEnc(reqData, keyIv); //요청 데이터 암호화
 
                 HttpSession session = request.getSession();
@@ -253,7 +253,7 @@ public class COCommServiceImpl implements COCommService {
      * @param request
      * @return
      */
-    private String newCocReqEncDto(String siteCode, HttpServletRequest request, COCNiceReqEncDto cocNiceReqEncDtoRe) {
+    private String newCocReqEncDto(String siteCode, HttpServletRequest request, COCNiceReqEncDto cocNiceReqEncDtoRe , String returnUrl) {
         COCNiceReqEncDto cocNiceReqEncDto = new COCNiceReqEncDto();
         SecureRandom secureRandom = new SecureRandom();
         Date now = new Date();
@@ -270,7 +270,7 @@ public class COCommServiceImpl implements COCommService {
         }
 
         cocNiceReqEncDto.setRequestno("REQ" + formattedDate + randomNumber);
-        cocNiceReqEncDto.setReturnurl("https://localhost:9012/mngwserc/nice/my-idnttvrfct-confirm");
+        cocNiceReqEncDto.setReturnurl(returnUrl);
         cocNiceReqEncDto.setSitecode(siteCode);
         cocNiceReqEncDto.setMethodtype("post");
         cocNiceReqEncDto.setReceivedata(cocNiceReqEncDtoRe.getReceivedata());
@@ -367,8 +367,13 @@ public class COCommServiceImpl implements COCommService {
 
         String returnData = new String(c.doFinal(decode), "euc-kr");
 
+
+
         ObjectMapper mapper = new ObjectMapper();
         COCNiceMyResDto cocNiceMyResDto = mapper.readValue(returnData, COCNiceMyResDto.class);
+
+
+
 
         if(!requestno.equals(cocNiceMyResDto.getRequestno())) {
             log.info("requestno 가 일치 하지 않음");

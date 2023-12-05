@@ -73,6 +73,9 @@ public class COCOmmController {
         private final COCommService cOCommService;
         /** 코드 서비스 **/
         private final COCodeService cOCodeService;
+
+        @Value("${app.admin-domain}")
+        private String url;
         @Operation(summary = "신청자, 부품사 정보 조회", tags = "회원", description = "신청자, 부품사 정보 조회")
         @GetMapping(value="/**/get-member-company-info")
         public COUserCmpnDto getMemCmpnDtl(ModelMap modelMap, @Parameter(description = "회원 순번", required = true) @RequestParam(required = true) Integer memSeq) throws Exception
@@ -123,8 +126,8 @@ public class COCOmmController {
          */
         @PostMapping("/nice/my-idnttvrfct")
         @ResponseBody
-        public COCNiceServiceDto idnttvrfct(HttpServletRequest request , COCNiceReqEncDto cocNiceReqEncDto) throws Exception {
-            return cOCommService.idnttvrfct(request , cocNiceReqEncDto);
+        public COCNiceServiceDto idnttvrfct(HttpServletRequest request ,COCNiceReqEncDto cocNiceReqEncDto) throws Exception {
+            return cOCommService.idnttvrfct(request , cocNiceReqEncDto , url+"/mngwserc/nice/my-idnttvrfct-confirm");
         }
 
 

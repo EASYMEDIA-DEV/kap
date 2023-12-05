@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -17,7 +18,6 @@ import javax.validation.constraints.Max;
 public class COCNiceReqEncDto {
 
     @Schema(title = "서비스 요청 고유 번호" , example = "121313" )
-
     private String requestno;
 
     @Schema(title = "인증결과를 받을 회원사 url" , example = "https://~~" )
