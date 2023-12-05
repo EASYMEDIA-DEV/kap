@@ -136,11 +136,15 @@ public class CBBManageConsultController {
     @GetMapping(value = "/srvRsltexcel-down")
     public void selectConsultSrvRsltExcel(CBBConsultSuveyRsltListDTO cBBConsultSuveyRsltListDTO , HttpServletResponse response) throws Exception
     {
+        System.out.println("===========================" + cBBConsultSuveyRsltListDTO);
+
+        cBBConsultSuveyRsltListDTO.setRtnBsnGubun("CONSULT_GB02");
+        //엑셀 생성
+        cBBManageConsultService.srvRsltExcelDownload(cBBManageConsultService.selectConsultSuveyRsltDtlExcel(cBBConsultSuveyRsltListDTO), response);
+
         try
         {
-            cBBConsultSuveyRsltListDTO.setRtnBsnGubun("CONSULT_GB02");
-            //엑셀 생성
-            cBBManageConsultService.srvRsltExcelDownload(cBBManageConsultService.selectConsultSuveyRsltDtlExcel(cBBConsultSuveyRsltListDTO), response);
+
         }
         catch (Exception e)
         {

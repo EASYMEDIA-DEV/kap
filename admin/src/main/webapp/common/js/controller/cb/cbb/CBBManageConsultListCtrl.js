@@ -151,26 +151,6 @@ define(["ezCtrl"], function(ezCtrl) {
                         search(1);
                     }
                 }
-            },
-            //검색 레이어에서 선택시 호출
-            btnExamSrchLayerChoice:{
-                event : {
-                    click: function(){
-                        var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
-                        if( choiceCnt > 1){
-                            alert(msgCtrl.getMsg("fail.ex.notSrchExam1"));
-                        } else if(choiceCnt == 0){
-                            alert(msgCtrl.getMsg("fail.ex.notSrchExam"));
-                        }else{
-                            var clickObj = {};
-                            clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();
-                            var titl = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text());
-                            clickObj.titl = titl;
-                            ctrl.obj.trigger("choice", [clickObj])
-                            ctrl.obj.find(".close").click();
-                        }
-                    }
-                }
             }
         },
         immediately : function() {

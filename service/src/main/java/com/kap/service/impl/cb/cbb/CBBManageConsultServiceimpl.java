@@ -221,7 +221,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
             //사업연도
             cell = row.createCell(1);
-            cell.setCellValue(list.get(i).getBsnYear());
+            cell.setCellValue(list.get(i).getBsnYear() == null ? 0 : list.get(i).getBsnYear() );
             cell.setCellStyle(style_body);
 
             //진행상태
@@ -354,7 +354,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         page.setPageSize(cBBConsultSuveyRsltListDTO.getPageRowSize());
         cBBConsultSuveyRsltListDTO.setFirstIndex(page.getFirstRecordIndex());
         cBBConsultSuveyRsltListDTO.setRecordCountPerPage(page.getRecordCountPerPage());*/
-        /*cBBConsultSuveyRsltListDTO.setTotalCount(cBBManageConsultMapper.getConsultSuveyRsltDtlCnt(cBBConsultSuveyRsltListDTO));*/
+        cBBConsultSuveyRsltListDTO.setTotalCount(cBBManageConsultMapper.getConsultSuveyRsltDtlCnt(cBBConsultSuveyRsltListDTO));
         cBBConsultSuveyRsltListDTO.setList(cBBManageConsultMapper.selectConsultSuveyRsltDtlExcel(cBBConsultSuveyRsltListDTO));
         return cBBConsultSuveyRsltListDTO;
     }

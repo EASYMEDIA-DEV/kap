@@ -83,11 +83,30 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-            // 페이징 목록 갯수
+            //검색 초기화
             btnRefresh : {
                 event : {
-                    click : function(){
-                        var aaa = $("#rtnBsnGubun").val();
+                    click : function() {
+                        //FORM 데이터 전체 삭제
+                        var pageIndex 	= $formObj.find("#pageIndex").val();
+                        var listRowSize = $formObj.find("#listRowSize").val();
+                        var pageRowSize = $formObj.find("#pageRowSize").val();
+                        var csrfKey 	= $formObj.find("#csrfKey").val();
+                        var srchLayer 	= $formObj.find("input[name=srchLayer]").val();
+                        $formObj.clearForm();
+                        //FORM 전송 필수 데이터 삽입
+                        $formObj.find("#pageIndex").val( pageIndex );
+                        $formObj.find("#listRowSize").val( listRowSize );
+                        $formObj.find(".listRowSizeContainer").val( listRowSize );
+                        $formObj.find("#pageRowSize").val( pageRowSize );
+                        $formObj.find("#csrfKey").val( csrfKey );
+                        $formObj.find("input[name=srchLayer]").val( srchLayer );
+
+                        //캘린더 초기화
+                        cmmCtrl.setPeriod(this, "", "", false);
+
+                        //검색 로직 실행
+                        $formObj.find("#btnSearch").click();
                     }
                 }
             },
@@ -110,7 +129,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
                         if (rsn != "") {
                             frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
-                            frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rtnBsnYear', value: excelDownYearChk, class: 'notRequired' }));
+                            frmDataObj.append($('<input/>', { type: 'hidden',  name: 'excelBsnYear', value: excelDownYearChk, class: 'notRequired' }));
 
                             //파라미터를 물고 가야함.
                             location.href = "./srvRsltexcel-down?" + frmDataObj.serialize();
