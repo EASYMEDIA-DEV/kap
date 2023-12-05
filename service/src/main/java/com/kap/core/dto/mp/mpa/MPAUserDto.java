@@ -177,6 +177,7 @@ public class MPAUserDto extends BaseDTO  {
     private String cmssrRsgntDt;
 
     @Schema(title = "탈퇴여부", example = "Y")
+    @Builder.Default
     private String wthdrwYn = "N";
 
     @Schema(title="파일순번" , example = "1")

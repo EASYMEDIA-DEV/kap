@@ -1,7 +1,6 @@
 package com.kap.core.dto.wb;
 
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.MPAUserDto;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
