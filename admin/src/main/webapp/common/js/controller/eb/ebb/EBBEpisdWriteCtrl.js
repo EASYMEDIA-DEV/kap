@@ -805,6 +805,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
+						//유효성체크 플래그
+						var resultFlag = true;
+
 						//회차정보 마지막 중복체크 진행
 						$("#episdOrd").trigger("change");
 
@@ -974,6 +977,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var lctrList = new Array();
 						var onlineIndex = 0;
 						var fileIndex = 1;
+
 						$("#onlineList > tr").each(function(){
 
 							var onlineNm = $(this).find("[name='onlineNm']").val();
@@ -992,6 +996,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								onlinePack.nm = onlineNm;
 								onlinePack.url = onlineUrl;
 								onlinePack.time = onlineTime;
+
+								if(onlineNm ===undefined || onlineNm =="" && resultFlag == true){
+									alert("강의명을 입력해 주세요");
+									resultFlag = false;
+								}
+
+								if(onlineUrl ===undefined || onlineUrl =="" && resultFlag == true){
+									alert("유튜브 URL을 입력해 주세요");
+									resultFlag = false;
+								}
+
+								if(onlineTime ===undefined || onlineTime =="" && resultFlag == true){
+									alert("강의 시간을  입력해 주세요");
+									resultFlag = false;
+								}
 
 								var onlinefileArray = new Array();
 								if(!($("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0) === undefined) &&
@@ -1031,6 +1050,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 							onlineIndex = onlineIndex + 1;
 						});
+
 
 						actForm.lctrList = lctrList;
 						//온라인교육 강의 관련 배열 세팅 끝
@@ -1099,10 +1119,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						//수료여부
 
-						cmmCtrl.jsonAjax(function(data){
-							alert("저장되었습니다.");
-							location.href = "./list";
-						}, actionUrl, actForm, "text");
+						if(resultFlag){
+							debugger;
+							cmmCtrl.jsonAjax(function(data){
+								alert("저장되었습니다.");
+								location.href = "./list";
+							}, actionUrl, actForm, "text");
+						}
+
+
 
 					}
 				},

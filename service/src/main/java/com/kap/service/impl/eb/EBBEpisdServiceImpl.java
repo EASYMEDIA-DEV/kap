@@ -278,6 +278,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		//파일 처리
 		HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBBEpisdDTO.getFileList());
 
+		eBBEpisdDTO.setEdctnNtctnFileSeq(fileSeqMap.get("edctnNtctnFileSeq"));
 		//교육차수 수정
 		respCnt = eBBEpisdMapper.updateEpisd(eBBEpisdDTO);
 
