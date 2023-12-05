@@ -11,32 +11,42 @@
          2023.11.20   박준희     최초생성
      -->
 	<select id="selectSurveyList" parameterType="WBLSurveyMstSearchDTO">
-		SELECT /* WBLSurveyMapper.selectSurveyList */
-		a.cxstn_srv_seq
-		,b.year
-		,b.episd
-		,b.srv_seq
-		,a.part_cmpn_nm_1
-		,a.part_cmpn_cd_1
-		,a.part_cmpn_nm_2
-		,a.part_cmpn_cd_2
-		,a.ptcpt_cd
-		,a.ptcpt_cmpltn_dtm
-		,a.score
-		,a.reg_id
-		,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
-		,a.reg_ip
-		,a.reg_dtm
-		,a.mod_id
-		,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
-		,a.mod_ip
-		,a.mod_dtm
-		FROM cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
-		<include refid="selectSurveyListwhereSql" />
-		ORDER BY
-		a.cxstn_srv_seq DESC
-		LIMIT #{firstIndex}, #{recordCountPerPage}
-
+		select  /* WBLSurveyMapper.selectSurveyList */
+		a.*,
+		round((total_score/cnt),2) as avg_score,
+		(case when cnt > 2 then round((hkmc_total_score/(cnt-2)),2) when cnt = 0 then round((episd_total_score/episd_cnt),2) else round((total_score/cnt),2) end) as hkmc_avg_score
+		from (
+			SELECT
+			a.cxstn_srv_seq
+			,b.year
+			,b.episd
+			,b.srv_seq
+			,a.part_cmpn_nm_1
+			,a.part_cmpn_cd_1
+			,a.part_cmpn_nm_2
+			,a.part_cmpn_cd_2
+			,a.ptcpt_cd
+			,a.ptcpt_cmpltn_dtm
+			,a.score
+			,a.reg_id
+			,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+			,a.reg_ip
+			,a.reg_dtm
+			,a.mod_id
+			,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+			,a.mod_ip
+			,a.mod_dtm
+			, (select sum(ifnull(score,0)) from cx_appctn_rsume_srv_mst where part_cmpn_cd_1 = a.part_cmpn_cd_1 and cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ptcpt_cd = 'Y') as total_score
+			, (select sum(ifnull(score,0)) - max(ifnull(score,0)) - min(ifnull(score,0)) from cx_appctn_rsume_srv_mst where part_cmpn_cd_1 = a.part_cmpn_cd_1 and cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ptcpt_cd = 'Y') as hkmc_total_score
+			, (select count(score) from cx_appctn_rsume_srv_mst where part_cmpn_cd_1 = a.part_cmpn_cd_1 and cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ptcpt_cd = 'Y') as cnt
+			, (select sum(ifnull(score,0)) from cx_appctn_rsume_srv_mst where cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ptcpt_cd = 'Y') as episd_total_score
+			, (select count(score)from cx_appctn_rsume_srv_mst where cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ptcpt_cd = 'Y') as episd_cnt
+			FROM cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
+			<include refid="selectSurveyListwhereSql" />
+			) a
+			ORDER BY
+			a.cxstn_srv_seq DESC
+			LIMIT #{firstIndex}, #{recordCountPerPage}
 	</select>
 
 	<!--

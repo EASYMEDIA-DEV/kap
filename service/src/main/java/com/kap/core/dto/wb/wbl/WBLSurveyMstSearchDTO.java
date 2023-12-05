@@ -74,4 +74,14 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "회차", example = "숫자")
     private Integer episd;
 
+    @Schema(title = "평균점수", example = "숫자")
+    private double avgScore;
+
+    @Schema(title = "HKMC 평균점수", example = "숫자")
+    private double hkmcAvgScore;
+
+    @Schema(title = "응답업체수", example = "숫자")
+    private Integer cnt;
+
+
 }
