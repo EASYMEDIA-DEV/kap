@@ -13,7 +13,7 @@
                 <td class="text-center">${ list.ttlAvgScore }</td>                                          <%--총합점수평균--%>
                 <td class="text-center">${ list.rglrAvgScore }</td>                                         <%--정규점수평균--%>
                 <td class="text-center">${ list.shrtAvgScore }</td>                                         <%--단기점수평균--%>
-                <td class="text-center btnExcelDown" data-bsnyear="${ list.bsnYear }">엑셀다운로드</td>                                                     <%--엑셀다운로드--%>
+                <td class="text-center btnExcelDown" data-bsnyear="${ list.bsnYear }"><button type="button" class="btn btn-inverse btn-sm mb-sm btnExcelDown">엑셀다운로드</button></td>                                                     <%--엑셀다운로드--%>
             </tr>
         </c:forEach>
     </c:when>

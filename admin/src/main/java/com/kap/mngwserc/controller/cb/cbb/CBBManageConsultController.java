@@ -1,6 +1,5 @@
 package com.kap.mngwserc.controller.cb.cbb;
 
-import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.cb.cbb.*;
 import com.kap.service.CBBManageConsultService;
 import com.kap.service.COCodeService;

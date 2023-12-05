@@ -1,7 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.COUserCmpnDto;
-import com.kap.core.dto.MPAUserDto;
+
 import com.kap.core.dto.cb.cbb.*;
 
 import javax.servlet.http.HttpServletRequest;
