@@ -2,6 +2,8 @@ package com.kap.service;
 
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
 
+import java.util.List;
+
 /**
  * <pre>
  * 방문교육 관리를 위한 Service
@@ -27,14 +29,30 @@ public interface EBCVisitEduService {
      */
     public EBCVisitEduDTO selectVisitEduList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
-    /**
-     * 방문교육 신청회원 정보 수정
-     */
-    public int updateVisitEdu(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
     /**
      * 방문교육 상세 조회
      */
     public EBCVisitEduDTO selectVisitEduDtl(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+    /**
+     * 목록을 조회
+     */
+    public List<EBCVisitEduDTO> selectAppctnTypeList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+    /**
+     * 방문교육 강사를 조회
+     */
+    public List<EBCVisitEduDTO> selectIsttrList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+    /**
+     * 방문교육 교육실적 조회
+     */
+    public List<EBCVisitEduDTO> selectResultOpList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+    /**
+     * 방문교육 수정
+     */
+    public int updateVisitEdu(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
 }

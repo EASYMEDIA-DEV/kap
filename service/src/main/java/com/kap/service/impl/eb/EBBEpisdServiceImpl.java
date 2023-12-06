@@ -505,8 +505,44 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			System.out.println("e = " + e);
 		}
 
+
 	}
 
+	/**
+	 * 교육차수 신청자 등록
+	 */
+	@Transactional
+	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+
+		int rtnCnt = 0;
+		//출석 목록 호출
+		List<EBBPtcptDTO> ptcptList= eBBEpisdDTO.getPtcptList();
+
+
+		for(EBBPtcptDTO tempDto : ptcptList){
+
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			tempDto.setRegId( cOUserDetailsDTO.getId() );
+			tempDto.setRegName( cOUserDetailsDTO.getName() );
+			tempDto.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+			tempDto.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+			tempDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			tempDto.setModId( cOUserDetailsDTO.getId() );
+			tempDto.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+			if(tempDto.getAtndcHour() != null){
+				tempDto.setAtndcDtm(tempDto.getEdctnDt()+" "+tempDto.getAtndcHour());
+			}
+			if(tempDto.getLvgrmHour() != null){
+				tempDto.setLvgrmDtm(tempDto.getEdctnDt()+" "+tempDto.getLvgrmHour());
+			}
+		}
+		eBBEpisdDTO.setPtcptList(ptcptList);
+
+		rtnCnt = eBBEpisdMapper.updateAtndcList(eBBEpisdDTO);
+		return rtnCnt;
+	}
 
 
 

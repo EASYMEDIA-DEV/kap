@@ -2,7 +2,7 @@
 <!-- 사유 레이어 팝업(Modal) -->
 <div class="modal fade ebbAtndcSrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/eb/ebb/EBBAtndcWriteCtrl">
     <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
-    <div class="modal-dialog modal-lg modal-center" role="document" style="width:2000px;">
+    <div class="modal-dialog modal-lg modal-center" role="document" style="width:97%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" >▣ 출석부
@@ -226,15 +226,12 @@
                         <div id="ptcptPagingLayerContainer"/>
                     </div>
                     <!--리스트 종료 -->
-
-
-
-
                 </div>
 
+
                 <div class="modal-footer row">
-                    <div class="text-center">
-                        <button type="button" class="btn btn-success down mt btnCouseSrchLayerChoice">선택</button>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-sm btn-success">저장</button>
                     </div>
                 </div>
                 <!--리스트 종료 -->

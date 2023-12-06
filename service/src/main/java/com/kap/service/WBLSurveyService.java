@@ -1,11 +1,8 @@
 package com.kap.service;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.wb.wbl.WBLEpisdMstDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -83,6 +80,15 @@ public interface WBLSurveyService {
 	 */
 	public int insertSurveyExcelList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request ) throws Exception;
 
+	/**
+	 * 응답 초기화
+	 */
+	public int updateSurveyRspn(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request ) throws Exception;
+
+	/**
+	 * 엑셀 생성
+	 */
+	void excelDownload(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, HttpServletResponse response) throws Exception;
 
 
 }

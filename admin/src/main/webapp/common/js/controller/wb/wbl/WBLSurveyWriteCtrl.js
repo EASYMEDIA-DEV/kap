@@ -79,7 +79,27 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
+            btnReset : {
+                event : {
+                    click : function(){
+                        if(confirm("초기화 하시겠습니까?")){
+                            var srvRspnSeq = $(this).data("srv-rspn-seq");
+                            var cxstnSrvSeq = $(this).data("cxstn-srv-seq");
 
+                            var svMst = {};
+                            svMst.srvRspnSeq = srvRspnSeq;
+                            svMst.cxstnSrvSeq = cxstnSrvSeq;
+
+                            cmmCtrl.jsonAjax(function(data){
+                                var rtn = JSON.parse(data);
+                                if(rtn.respCnt>0){
+                                    location.reload();
+                                }
+                            }, './updateSurveyRspn', svMst, "text")
+                        }
+                    }
+                }
+            },
         },
         immediately : function() {
 

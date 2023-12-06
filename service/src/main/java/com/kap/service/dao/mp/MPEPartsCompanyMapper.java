@@ -86,4 +86,9 @@ public interface MPEPartsCompanyMapper {
      */
     public int selectWinBusinessCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
+    /**
+     * SQ 정보 삭제
+     */
+    public int deletePartsComSQInfo(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
 }

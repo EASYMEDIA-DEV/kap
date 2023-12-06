@@ -404,6 +404,30 @@ public class EBBEpisdController {
             return tempDto;
         }
 
+        @Operation(summary = "교육차수 참여자 출석부 수정", tags = "교육차수 중복체크", description = "")
+        @PostMapping(value="/updateAtndc")
+        public int updateAtndcList(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+
+            int rtnCnt = 0;
+
+            try {
+
+                rtnCnt = eBBEpisdService.updateAtndcList(eBBEpisdDTO);
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return rtnCnt;
+        }
+
 
 
 

@@ -164,12 +164,73 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
 
+						var atndcForm = {};
 
 
+
+
+						//출석용 리스트
+						var ptcptAtndcList = new Array();
+
+						$("#ptcptListLayerContainer").find("tr").each(function(){
+
+							$(this).find("[data-targetdt]").each(function(){
+								var targetDt =$(this).data("targetdt");
+
+
+								//같은 일자 안에서만 탐색, 한사람의 하루치 데이터가 리스트<폼>로 구성됨
+								$(this).find('[data-edctndt='+targetDt+']').each(function(){
+
+									var orgatndcHour, atndcHour, orglvgrmHour, lvgrmHour, orgEtcNm, etcNm;
+									var atndcDayForm = {};
+
+
+									atndcDayForm.ptcptSeq = $(this).closest("tr").find("input:checkbox").val();;
+									atndcDayForm.edctnDt = targetDt;
+
+									orgatndcHour = $(this).data("orgatndchour");//수정전 출석시간
+									atndcHour = $(this).val();//수정후 출석시간
+
+									orglvgrmHour = $(this).parent().next().find("input[name='lvgrmDtm']").data("orglvgrmhour");//수정전 퇴실시간
+									lvgrmHour = $(this).parent().next().find("input[name='lvgrmDtm']").val();//수정후 퇴실시간
+
+									orgEtcNm = $(this).parent().next().next().find("input[name='etcNm']").data("orgEtcNm");//수정전 비고
+									etcNm = $(this).parent().next().next().find("input[name='etcNm']").val();//수정후 비고
+
+
+									if(orgatndcHour != atndcHour){
+										atndcDayForm.atndcHour = atndcHour;
+									}
+
+									if(orglvgrmHour != lvgrmHour){
+										atndcDayForm.lvgrmHour = lvgrmHour;
+									}
+
+									if(orgEtcNm != etcNm && etcNm !=""){
+										atndcDayForm.etcNm = etcNm;
+									}
+
+
+									ptcptAtndcList.push(atndcDayForm);
+								});
+
+							});
+
+						});
+						//여기까지가 모든 사람의 출석 데이터 ptcptAtndcList
+
+
+						atndcForm.edctnSeq = $("#edctnSeq").val();//교육순번
+						atndcForm.episdSeq = $("#episdSeq").val();//회차순번
+						atndcForm.episdYear =$("#episdYear").val();//연도
+						atndcForm.episdOrd =$("#episdOrd").val();//회차정렬
+						atndcForm.ptcptList = ptcptAtndcList;
+
+						//debugger;
 						cmmCtrl.jsonAjax(function(data){
 							alert("저장되었습니다.");
 							location.href = "./list";
-						}, actionUrl, actForm, "text");
+						}, "./updateAtndc", atndcForm, "text");
 
 					}
 				},

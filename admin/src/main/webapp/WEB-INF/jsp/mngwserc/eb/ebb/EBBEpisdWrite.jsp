@@ -72,23 +72,19 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <div class="form-flexbox">
-                        <label class="col-sm-1 control-label">학습방식<span class="star text-danger"> *</span></label>
-                        <div class="col-sm-5 ">
-                            <p class="form-control-static stduyMthd">${rtnDto.stduyMthdCdNm}</p>
-                        </div>
+
+                    <label class="col-sm-1 control-label">학습방식<span class="star text-danger"> *</span></label>
+                    <div class="col-sm-5 ">
+                        <p class="form-control-static stduyMthd">${rtnDto.stduyMthdCdNm}</p>
                     </div>
 
-
-                    <div class="form-flexbox">
-                        <label class="col-sm-1 control-label">학습시간<span class="star"> *</span></label>
-                        <div class="col-sm-5 ">
-                            <p class="form-control-static stduyDtm">
-                                <c:if test="${rtnDto.stduyDdCdNm ne null}">
-                                    ${rtnDto.stduyDdCdNm}일/${rtnDto.stduyTimeCdNm} 시간
-                                </c:if>
-                            </p>
-                        </div>
+                    <label class="col-sm-1 control-label">학습시간<span class="star"> *</span></label>
+                    <div class="col-sm-5 ">
+                        <p class="form-control-static stduyDtm">
+                            <c:if test="${rtnDto.stduyDdCdNm ne null}">
+                                ${rtnDto.stduyDdCdNm}일/${rtnDto.stduyTimeCdNm} 시간
+                            </c:if>
+                        </p>
                     </div>
 
                 </div>
@@ -1122,4 +1118,4 @@
 <jsp:param name="typeCd" value="EDU" />
 </jsp:include>
 
-<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--강사검색-->
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업-->
