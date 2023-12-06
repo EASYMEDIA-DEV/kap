@@ -1,12 +1,7 @@
 package com.kap.service.dao.cm;
 
-import com.kap.core.dto.MPAAttctnDto;
- import com.kap.core.dto.MPAInqrDto;
- import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.MPPwdInitDto;
 import org.apache.ibatis.annotations.Mapper;
-
- import java.util.List;
 
 /**
  * <pre>

@@ -86,11 +86,14 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">접수기간<span class="star"> *</span></label>
                     <div class="col-sm-5" style="margin-left: -15px">
+
                         <p class="form-control-static">${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}  ~ ${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</p>
                     </div>
 
                     <label class="col-sm-1 control-label">교육기간<span class="star"> *</span></label>
                     <div class="col-sm-5" style="margin-left: -15px">
+                        <input type="hidden" name="edctnStrtDtm" id="edctnStrtDtm" value="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
+                        <input type="hidden" name="edctnEndDtm" id="edctnEndDtm" value="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
                         <p class="form-control-static">${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}  ~ ${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</p>
                     </div>
                 </div>

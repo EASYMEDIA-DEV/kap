@@ -12,7 +12,7 @@
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>    <%--번호--%>
         <td class="text-center">${ list.bsnYear }</td>                                              <%--사업연도--%>
         <td class="text-center">${ list.resumeSttsNm }</td>                                         <%--진행상태--%>
-        <td class="text-center">${ list.cmpnNm }</td>                                               <%--부품사명--%>
+        <td class="text-center"><a href="javascript:" class="listView" data-details-key="${list.cnstgSeq}">${ list.cmpnNm }</a></td>                                               <%--부품사명--%>
         <td class="text-center">${ list.appctnBsnmNo }</td>                                         <%--사업자등록번호--%>
         <td class="text-center">${ list.ctgryNm }</td>                                              <%--구분--%>
         <td class="text-center">${ list.sizeNm }</td>                                               <%--규모--%>

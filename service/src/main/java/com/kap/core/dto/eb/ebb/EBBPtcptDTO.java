@@ -109,6 +109,21 @@ public class EBBPtcptDTO extends BaseDTO {
     @Schema(title = "등록상태", example = "텍스트 이미있음(실패):F, 성공:S")
     private String regStat;
 
+    @Schema(title = "교육일자", example = "날짜 yyyy-MM-dd")
+    private String edctnDt;
+
+    @Schema(title = "교육시작일시", example = "yyyy-mm-dd HH:mm:ss")
+    private String edctnStrtDtm;
+
+    @Schema(title = "교육종료일시", example = "yyyy-mm-dd HH:mm:ss")
+    private String edctnEndDtm;
+
+    @Schema(title = "출석일시", example = "날짜 yyyy-mm-dd HH:mm:ss")
+    private String atndcDtm;
+
+    @Schema(title = "퇴실일시", example = "날짜 yyyy-mm-dd HH:mm:ss")
+    private String lvgrmDtm;
+
     private List<EBBPtcptDTO> ptcptList;//교육 참여자 목록
 
 

@@ -1,7 +1,6 @@
 package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.MPAUserDto;
 import com.kap.core.dto.mp.mpg.MPGWthdrwDto;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.mp.mpg.MPGWthdrwService;
