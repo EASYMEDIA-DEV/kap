@@ -20,6 +20,7 @@
                 <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <!-- 검색 여부 -->
                 <input type="hidden" name="srchLayer" value="Y" />
+                <input type="hidden" id="wthdrwYn" name="wthdrwYn" value="N" /> <%--위원 탈퇴 여부 기본 N--%>
                 <div class="modal-body">
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
@@ -133,7 +134,7 @@
                                 <th class="text-center">이메일</th>
                                 <th class="text-center">최초 등록자</th>
                                 <th class="text-center">최초 등록일시</th>
-                            </tr>ㅊ
+                            </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->
                             <tbody id="listContainer"/>

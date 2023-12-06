@@ -416,20 +416,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             btnCmtSearch: {
                 event: {
                     click: function () {
+                        cmmCtrl.getCmtSrchPop(function (data) {
+                            $("input[name=cmssrSeq]").val(data.seq);
+                            $("input[name=cmssrName]").val(data.name);
+                        });
 
-                        $(".svaSurveySrchLayer").one('show.bs.modal', function() {
-
-                            var modal = $(this);
-                            modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
-
-                        }).one('hidden.bs.modal', function() {
-                            // Remove class for soft backdrop (if not will affect future modals)
-                        }).one('choice', function(data, param) {
-                            var obj = param;
-                            $("#listContainer3").find("td").eq(0).text(obj.typeNm);
-                            $("#listContainer3").find("td").eq(1).text(obj.titl);
-                            $("#srvSeq").val(obj.seq);
-                        }).modal();
                     }
                 }
             },
