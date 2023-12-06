@@ -2,7 +2,7 @@
 <!-- 사유 레이어 팝업(Modal) -->
 <div class="modal fade ebbAtndcSrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/eb/ebb/EBBAtndcWriteCtrl">
     <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
-    <div class="modal-dialog modal-lg modal-center" role="document" style="width:2000px;">
+    <div class="modal-dialog modal-lg modal-center" role="document" style="width:97%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" >▣ 출석부
@@ -63,19 +63,26 @@
                     </fieldset>
                     <fieldset>
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">학습방식<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static stduyMthd">${rtnDto.stduyMthdCdNm}</p>
+                            <div class="form-flexbox">
+                                <label class="col-sm-1 control-label">학습방식<span class="star text-danger"> *</span></label>
+                                <div class="col-sm-5">
+                                    <p class="form-control-static stduyMthd">${rtnDto.stduyMthdCdNm}</p>
+                                </div>
                             </div>
 
-                            <label class="col-sm-1 control-label">학습시간<span class="star"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static stduyDtm">
-                                    <c:if test="${rtnDto.stduyDdCdNm ne null}">
-                                        ${rtnDto.stduyDdCdNm}일/${rtnDto.stduyTimeCdNm} 시간
-                                    </c:if>
-                                </p>
+                            <div class="form-flexbox">
+                                <label class="col-sm-1 control-label">학습시간<span class="star"> *</span></label>
+                                <div class="col-sm-5">
+                                    <p class="form-control-static stduyDtm">
+                                        <c:if test="${rtnDto.stduyDdCdNm ne null}">
+                                            ${rtnDto.stduyDdCdNm}일/${rtnDto.stduyTimeCdNm} 시간
+                                        </c:if>
+                                    </p>
+                                </div>
                             </div>
+
+
+
                         </div>
                     </fieldset>
 

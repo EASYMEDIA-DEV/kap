@@ -61,15 +61,21 @@
 
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">과정명<span class="star"> *</span></label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="nm" name="nm" value="${rtnDto.nm}" title="제목" maxlength="50" placeholder="과정명 입력" />
+                    <div class="form-flexbox">
+                        <label class="col-sm-1 control-label">과정명<span class="star"> *</span></label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control input-sm" id="nm" name="nm" value="${rtnDto.nm}" title="제목" maxlength="50" placeholder="과정명 입력" />
+                        </div>
+                    </div>
+                    <div class="form-flexbox">
+                        <label class="col-sm-1 control-label">과정요약<span class="star"> *</span></label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control input-sm" id="smmryNm" name="smmryNm" value="${rtnDto.smmryNm}" title="과정요약" maxlength="50" placeholder="과정요약 입력"/>
+                        </div>
                     </div>
 
-                    <label class="col-sm-1 control-label">과정요약<span class="star"> *</span></label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="smmryNm" name="smmryNm" value="${rtnDto.smmryNm}" title="과정요약" maxlength="50" placeholder="과정요약 입력"/>
-                    </div>
+
+
 
                 </div>
             </fieldset>
@@ -154,36 +160,43 @@
             </div>
 
             <div class="form-group text-sm">
+
                 <label class="col-sm-1 control-label">수료 기준<span class="star"> *</span></label>
                 <div class="col-sm-11" style="margin-left: -80px;">
-                    <label class="col-sm-1 control-label">출석</label>
-                    <div class="col-sm-1">
-                        <select class="form-control input-sm wd-sm" name="cmptnStndCd" id="cmptnStndCd" title="출석">
-                            <option value="">선택</option>
-                            <c:forEach var="cdList" items="${studyCdList.CMPTN_STND}" varStatus="status">
-                                <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnStndCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
-                            </c:forEach>
-                        </select>
-                    </div>
-
-                    <label class="col-sm-1 control-label">평가</label>
-                    <div class="col-sm-4 ">
-                        <div class="pull-left">
-                            <select class="form-control input-sm wd-sm" name="cmptnJdgmtCd" id="cmptnJdgmtCd" title="평가">
+                    <div class="form-flexbox form-inline">
+                        <label class="col-sm-1 control-label">출석</label>
+                        <div class="col-sm-1">
+                            <select class="form-control input-sm wd-sm" name="cmptnStndCd" id="cmptnStndCd" title="출석">
                                 <option value="">선택</option>
-                                <c:forEach var="cdList" items="${studyCdList.CMPTN_JDGMT}" varStatus="status">
-                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnJdgmtCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                <c:forEach var="cdList" items="${studyCdList.CMPTN_STND}" varStatus="status">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnStndCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="pull-left ml-lg">
-                            <label class="checkbox-inline c-checkbox">
-                                <input type="checkbox" class="checkboxSingle jdgmtYn notRequired" value="N" name="jdgmtYn" <c:if test="${rtnDto.jdgmtYn eq 'N'}">checked</c:if>/>
-                                <span class="ion-checkmark-round"></span> 평가없음
-                            </label>
-                        </div>
-
                     </div>
+
+
+                    <div class="form-flexbox">
+                        <label class="col-sm-1 control-label">평가</label>
+                        <div class="col-sm-4 ">
+                            <div class="pull-left">
+                                <select class="form-control input-sm wd-sm" name="cmptnJdgmtCd" id="cmptnJdgmtCd" title="평가">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${studyCdList.CMPTN_JDGMT}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnJdgmtCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="pull-left ml-lg">
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxSingle jdgmtYn notRequired" value="N" name="jdgmtYn" <c:if test="${rtnDto.jdgmtYn eq 'N'}">checked</c:if>/>
+                                    <span class="ion-checkmark-round"></span> 평가없음
+                                </label>
+                            </div>
+
+                        </div>
+                    </div>
+
 
 
 
@@ -223,15 +236,6 @@
                     </div>
                 </div>
             </fieldset>
-
-            <%--<fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">협업기관</label>
-                    <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm notRequired" id="cprtnInsttNm" name="cprtnInsttNm" value="${rtnDto.cprtnInsttNm}" title="협업기관" maxlength="200" placeholder="협업기관 입력" />
-                    </div>
-                </div>
-            </fieldset>--%>
 
             <fieldset>
                 <div class="form-group text-sm">
