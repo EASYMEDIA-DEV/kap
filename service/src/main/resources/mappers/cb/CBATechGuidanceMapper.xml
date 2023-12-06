@@ -715,7 +715,7 @@
     ==========   ======    ==============
     2023.11.14   임서화      최초생성
 -->
-    <select id="selectRsumeTotCnt" parameterType="CBATechGuidanceDTO" resultType="java.lang.Integer">
+    <select id="selectRsumeTotCnt" parameterType="CBATechGuidanceInsertDTO" resultType="java.lang.Integer">
         SELECT /*CBATechGuidanceMapper.selectRsumeTotCnt*/
             count(*)
         FROM
@@ -742,7 +742,7 @@
             (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) REG_NAME
         FROM CP_CNSTG_APPCTN_TRNSF_DTL A
         WHERE CNSTG_SEQ = #{detailsKey}
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+            LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--

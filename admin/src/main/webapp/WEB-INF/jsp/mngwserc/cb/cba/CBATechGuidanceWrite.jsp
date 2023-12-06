@@ -375,16 +375,17 @@
                                 <input type="hidden" id="trsfListContainerTotCnt" value="0">
                             </h6>
                             <!-- 현재 페이징 번호 -->
-                            <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
+                            <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnDto.pageIndex }" />
                             <!-- 페이징 버튼 사이즈 -->
-                            <input type="hidden" id="pageRowSize" name="pageRowSize" value="10" />
-                        </div>
-                        <div class="pull-right ml-sm">
-                            <select class="form-control input-sm listRowSizeContainer" >
-                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
-                                    <jsp:param name="listRowSize" value="10" />
-                                </jsp:include>
-                            </select>
+                            <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnDto.pageRowSize }" />
+                            <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnDto.listRowSize }" />
+
+                            <div class="pull-right ml-sm">
+                                <select class="form-control input-sm listRowSizeContainer" >
+                                    <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                        <jsp:param name="listRowSize" value="${ rtnDto.listRowSize }" />
+                                    </jsp:include>
+                                </select>
                         </div>
                         <div class="table-responsive col-sm-12 p0 m0" id="vueList">
                             <table class="table table-hover table-striped" >
