@@ -280,7 +280,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 		//로그아웃 로그 객체
 		COSystemLogDTO cOSystemLogDTO = new COSystemLogDTO();
 		cOSystemLogDTO.setTrgtMenuNm("로그아웃 페이지");
-		cOSystemLogDTO.setSrvcNm("mngwserc.co.cob.service.impl.COBLgnServiceImpl");
+		cOSystemLogDTO.setSrvcNm("co.service.impl.COUserLgnServiceImpl");
 		cOSystemLogDTO.setFncNm("actionLogout");
 		cOSystemLogDTO.setPrcsCd("LO");
 		cOSystemLogDTO.setRegId(lgnCOAAdmDTO.getId());

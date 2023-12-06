@@ -196,7 +196,7 @@ public class COLgnController {
     /**
 	 * 로그아웃을 처리한다.
 	 */
-    @RequestMapping(value="/mngwserc/**/logout", method=RequestMethod.GET)
+    @RequestMapping(value="/my-page/logout", method=RequestMethod.GET)
     public String actionLogout(MPAUserDto mpaUserDto, ModelMap modelMap, HttpSession sesssion, HttpServletRequest request) throws Exception
     {
     	try
@@ -216,7 +216,7 @@ public class COLgnController {
 			}
 			throw new Exception(e.getMessage());
 		}
-    	return "redirect:/mngwsercgateway/login";
+    	return "redirect:/login";
     }
 
     /**
