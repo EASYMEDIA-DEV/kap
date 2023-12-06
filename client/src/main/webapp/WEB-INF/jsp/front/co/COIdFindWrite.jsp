@@ -37,6 +37,7 @@
 
                     <div class="tab-con">
                         <input type='hidden' value='1' name='types' readonly>
+                        <input type="hidden" name="birthdate" value="" id="birthdate-id" class="notRequired" />
                         <div class="data-enter-form">
                             <div class="row">
                                 <div class="th">
@@ -110,6 +111,8 @@
                         <form id="frmIdFind-email" name="frmIdFind-email" method="post" action="./id-find-res">
                         <div class="data-enter-form">
                             <input type='hidden' value='2' name='types' readonly>
+                            <input type="hidden" name="birthdate" value="" id="birthdate-email" />
+                            <input type="hidden" name="birthdate" value="" id="email" />
                             <div class="row">
                                 <div class="th">
                                     <p class="title f-head">이름</p>
@@ -157,7 +160,7 @@
                                         <div class="data-line">
                                             <div class="form-group form-email">
                                                 <div class="form-input">
-                                                    <input id="email" name="email" title="이메일"  type="text" placeholder="이메일 입력">
+                                                    <input id="email-first" name="email" title="이메일"  type="text" placeholder="이메일 입력">
                                                 </div>
                                                 <div class="form-input">
                                                     <input id="emailAddr" name="emailAddr" title="이메일 주소" type="text" placeholder="직접입력">

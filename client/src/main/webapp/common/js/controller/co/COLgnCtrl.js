@@ -375,8 +375,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				async : {
 					use : true,
 					func : function (){
-						const birth = $("<input type='hidden' value=" +$("#year-id").val()+"-"+$("#month-id").val()+"-"+$("#day-id").val() + " name='birthdate' readonly>");
-						$("#frmIdFind").append(birth);
+						$("#birthdate-id").val($("#year-id").val() + "-" + $("#month-id").val() + "-" + $("#day-id").val());
 						document.getElementById('frmIdFind').submit();
 					}
 				}
@@ -408,8 +407,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				async : {
 					use : true,
 					func : function (){
-						const birth = $("<input type='hidden' value=" +$("#year-email").val()+"-"+$("#month-email").val()+"-"+$("#day-email").val() + " name='birthdate' readonly>");
-						$("#frmIdFind-email").append(birth);
+						$("#birthdate-email").val($("#year-email").val() + "-" + $("#month-email").val() + "-" + $("#day-email").val());
+						$("#email").val($("#email-first").val() + "@" + $("emailAddr").val());
 						document.getElementById('frmIdFind-email').submit();
 					}
 				}
