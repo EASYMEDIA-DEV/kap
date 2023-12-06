@@ -178,7 +178,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							type : "post",
 							data :
 								{
-									"receivedata" : "/id-find-res" //팝업 후 이동할 페이지
+									"receivedata" : "/id-find-res" //팝업 후 이동할 페이지 파라미터 추가 ex /id-find-res&ex1&ex2 최대 5개
 								},
 							success : function(data)
 							{
@@ -410,6 +410,103 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$("#birthdate-email").val($("#year-email").val() + "-" + $("#month-email").val() + "-" + $("#day-email").val());
 						$("#email").val($("#email-first").val() + "@" + $("emailAddr").val());
 						document.getElementById('frmIdFind-email').submit();
+					}
+				}
+			});
+
+
+			//이메일 으로 아이디 찾기
+			var $formObj6 = $("#frmPwdFind");
+			$formObj6.validation({
+				msg : {
+					confirm : {
+						init : ""
+					}
+				},
+				after : function(){
+					if($("#hpNo-pwd").val().length !=13) {
+						alert(msgCtrl.getMsg("fail.co.login.find.hp"));
+						return false;
+					}
+
+					return true;
+				},
+				async : {
+					use : true,
+					func : function (){
+						cmmCtrl.frmAjax(function(data){
+							if(data.data == null) {
+								alert(msgCtrl.getMsg("fail.co.login.notIdExist"));
+								return ;
+							} else {
+								jQuery.ajax({
+									url : "/nice/my-idnttvrfct",
+									type : "post",
+									data :
+										{
+											"receivedata": '/pwd-find-setting&' + data.data.id   //1.returnurl 2.넘길파라미터들 최대 5개
+										},
+									success : function(data)
+									{
+										const { form } = document;
+										const option = `status=no, menubar=no, toolbar=no, resizable=no, width=500, height=600`;
+										document.getElementById('enc_data').value = data.enc_data; // enc_data 값을 설정
+										document.getElementById('integrity_value').value = data.integrity_value; // integrity_value 값을 설정
+										document.getElementById('token_version_id').value = data.token_version_id; // integrity_value 값을 설정
+
+										window.open('', 'nicePopup', option);
+
+										form.target = 'nicePopup';
+										document.getElementById('form').submit();
+
+									},
+									error : function(xhr, ajaxSettings, thrownError)
+									{
+										cmmCtrl.errorAjax(xhr);
+										jQuery.jstree.rollback(data.rlbk);
+									}
+								});
+							}
+
+						}, "/pwd-find", $formObj6, "POST", "json");
+					}
+				}
+			});
+
+
+			//이메일 으로 아이디 찾기
+			var $formObj7 = $("#formPwdChng");
+			$formObj7.validation({
+				msg : {
+					confirm : {
+						init : ""
+					}
+				},
+				after : function(){
+					var trgtObj = jQuery(".pwdSet");
+					var passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])([a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]){8,16}$/;
+					if(passwordRegex.test(trgtObj.val())) {
+						$(".for-status-chk3").removeClass('error');
+					} else {
+						trgtObj.focus();
+						$(".for-status-chk3").addClass('error');
+						return false;
+					}
+					if($(".pwdSetConfirm").val() == $(".pwdSet").val()) {
+						$(".for-status-chk4").removeClass('error');
+					} else {
+						$(".pwdSetConfirm").focus();
+						$(".for-status-chk4").addClass('error');
+						return false;
+					}
+					return true;
+				},
+				async : {
+					use : true,
+					func : function (){
+						if(confirm(msgCtrl.getMsg("confirm.pwdUpd"))) {
+							cmmCtrl.frmAjax(callbackAjaxPwdChng, "/upd-password", $formObj7);
+						}
 					}
 				}
 			});

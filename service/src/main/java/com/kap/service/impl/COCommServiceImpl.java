@@ -17,6 +17,7 @@ import com.kap.service.dao.mp.MPAUserMapper;
 
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.logging.log4j.util.Base64Util;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
@@ -367,13 +368,37 @@ public class COCommServiceImpl implements COCommService {
 
         String returnData = new String(c.doFinal(decode), "euc-kr");
 
-
-
         ObjectMapper mapper = new ObjectMapper();
         COCNiceMyResDto cocNiceMyResDto = mapper.readValue(returnData, COCNiceMyResDto.class);
 
+        String receivedata = cocNiceMyResDto.getReceivedata();
 
+        COCNiceMyResDto.ReceiveDatas receiveDatas = new COCNiceMyResDto.ReceiveDatas();
 
+        String[] split = receivedata.split("&amp;");
+
+        if(split.length ==0) {
+            receiveDatas.setRedirectUrl(receivedata);
+        } else {
+            receiveDatas.setRedirectUrl(split[0]);
+            if(split.length >=2) {
+                receiveDatas.setParamsOne(split[1]);
+                if(split.length >=3) {
+                    receiveDatas.setParamsTwo(split[2]);
+                    if(split.length >=4) {
+                        receiveDatas.setParamsThree(split[3]);
+                        if(split.length >=5) {
+                            receiveDatas.setParamsFour(split[4]);
+                            if(split.length >=6) {
+                                receiveDatas.setParamsFive(split[5]);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        cocNiceMyResDto.setReceivedatass(receiveDatas);
 
         if(!requestno.equals(cocNiceMyResDto.getRequestno())) {
             log.info("requestno 가 일치 하지 않음");

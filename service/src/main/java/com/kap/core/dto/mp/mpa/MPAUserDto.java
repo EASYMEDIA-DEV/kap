@@ -203,4 +203,44 @@ public class MPAUserDto extends BaseDTO  {
     // 2023-12-05 컨설팅 사업관리 관련하여 검색 제외 dto 추가
     @Schema(title = "컨설팅 순번", example = "")
     private Integer cnstgSeq;
+
+
+    @Schema(title = "로그인변경일시", example = "date")
+    private String pwdChngDtm;
+
+    @Schema(title = "실패횟수", example = "date")
+    private int lgnFailCnt;
+
+    @Schema(title = "변경할 원본 비밀번호 확인", example = "")
+    private String passwordConfirm;
+
+
+    //전달받은 비밀번호
+    @Schema(title = "전달받은 비밀번호", example = "")
+    private String password;
+
+
+    private int driveMenuSeq;
+
+    @Schema(title = "변경할 암호화 비밀번호 확인", example = "")
+    private String newEncPwd;
+
+    @Schema(title = "현재 암호화 비밀번호 확인", example = "")
+    private String nowEncPwd;
+
+    @Schema(title = "변경할 원본 비밀번호", example = "")
+    private String newPassword;
+
+    @Schema(title = "임시 비밀번호 확인", example = "")
+    private String tmpPwdYn;
+
+    @Schema(title = "변경연장수", example = "")
+    private int chngXtnsnCnt;
+
+    @Schema(title ="ci")
+    private String ci;
+
+    @Schema(title = "비밀번호 변경 타입 " , example = "new")
+    private String pwdChngType;
+
 }
