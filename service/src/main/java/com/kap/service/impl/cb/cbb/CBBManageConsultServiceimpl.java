@@ -1,20 +1,14 @@
 package com.kap.service.impl.cb.cbb;
 
-import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COSystemLogDTO;
-import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.cb.cbb.CBBManageConsultListDTO;
-import com.kap.service.COSystemLogService;
-import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
-import com.kap.service.CBBManageConsultService;
+import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultListDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
+import com.kap.service.*;
 import com.kap.service.dao.cb.cbb.CBBManageConsultMapper;
-import com.kap.service.COCommService;
-import com.kap.service.COFileService;
-import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -22,12 +16,10 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -89,7 +81,119 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         cBBConsultSuveyRsltListDTO.setList(cBBManageConsultMapper.selectConsultSuveyRsltList(cBBConsultSuveyRsltListDTO));
         return cBBConsultSuveyRsltListDTO;
     }
+    /**
+     * 컨설팅 기술 지도 상세 조회
+     */
+    public CBBManageConsultInsertDTO selectManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
+       /* MPEPartsCompanyDTO companyInfo = new MPEPartsCompanyDTO();
 
+        if (!"".equals(pCBATechGuidanceInsertDTO.getDetailsKey()))
+        {
+            pCBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectTechGuidanceDtl(pCBATechGuidanceInsertDTO);
+            MPEPartsCompanyDTO mPEPartsCompanyDTO = new MPEPartsCompanyDTO();
+            mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replace("-", ""));
+            companyInfo = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
+
+            for(int i =0; i<1; i++){
+                pCBATechGuidanceInsertDTO.setCmpnNm(companyInfo.getList().get(i).getCmpnNm());
+                pCBATechGuidanceInsertDTO.setRprsntNm(companyInfo.getList().get(i).getRprsntNm());
+                pCBATechGuidanceInsertDTO.setStbsmDt(companyInfo.getList().get(i).getStbsmDt());
+                pCBATechGuidanceInsertDTO.setTelNo(companyInfo.getList().get(i).getTelNo());
+                pCBATechGuidanceInsertDTO.setCtgryCd(companyInfo.getList().get(i).getCtgryCd());
+                pCBATechGuidanceInsertDTO.setBscAddr(companyInfo.getList().get(i).getBscAddr());
+                pCBATechGuidanceInsertDTO.setDtlAddr(companyInfo.getList().get(i).getDtlAddr());
+                pCBATechGuidanceInsertDTO.setZipcode(companyInfo.getList().get(i).getZipcode());
+                pCBATechGuidanceInsertDTO.setSlsPmt(companyInfo.getList().get(i).getSlsPmt());
+                pCBATechGuidanceInsertDTO.setSlsYear(companyInfo.getList().get(i).getSlsYear());
+                pCBATechGuidanceInsertDTO.setMpleCnt(companyInfo.getList().get(i).getMpleCnt());
+                pCBATechGuidanceInsertDTO.setMjrPrdct1(companyInfo.getList().get(i).getMjrPrdct1());
+                pCBATechGuidanceInsertDTO.setMjrPrdct2(companyInfo.getList().get(i).getMjrPrdct2());
+                pCBATechGuidanceInsertDTO.setMjrPrdct3(companyInfo.getList().get(i).getMjrPrdct3());
+                pCBATechGuidanceInsertDTO.setCmpnTelNo(companyInfo.getList().get(i).getTelNo());
+            }
+
+            System.err.println("companyInfo:::"+companyInfo.getList().size());
+            for(int j=0; j<companyInfo.getList().size(); j++){
+                List sqlInfoList = new ArrayList();
+                sqlInfoList.add(0,companyInfo.getList().get(j).getNm());
+                sqlInfoList.add(1,String.valueOf(companyInfo.getList().get(j).getScore()));
+                sqlInfoList.add(2,String.valueOf(companyInfo.getList().get(j).getYear()));
+                sqlInfoList.add(3,companyInfo.getList().get(j).getCrtfnCmpnNm());
+                sqlInfoList.add(4,companyInfo.getList().get(j).getCbsnSeq());
+                if(j==0){
+                    pCBATechGuidanceInsertDTO.setSqInfoList(sqlInfoList);
+                }else if(j==1){
+                    pCBATechGuidanceInsertDTO.setSqInfoList1(sqlInfoList);
+                }else{
+                    pCBATechGuidanceInsertDTO.setSqInfoList2(sqlInfoList);
+                }
+            }
+            int cnstgSeq = pCBATechGuidanceInsertDTO.getCnstgSeq();
+
+            List<CBATechGuidanceInsertDTO> dlvryInfo = cBATechGuidanceMapper.selectCnstgDlvryInfo(cnstgSeq);
+            List dlvryInfoList = new ArrayList();
+            for(int i=0; i<dlvryInfo.size(); i++){
+                CBATechGuidanceInsertDTO dlvryDto = new CBATechGuidanceInsertDTO();
+                dlvryDto.setDlvryCmpnNm(dlvryInfo.get(i).getDlvryCmpnNm());
+                dlvryDto.setDlvryRate(dlvryInfo.get(i).getDlvryRate());
+                dlvryDto.setCmpnDlvrySeq(dlvryInfo.get(i).getCmpnDlvrySeq());
+                dlvryInfoList.add(dlvryDto);
+            }
+            pCBATechGuidanceInsertDTO.setDlvryCmpnList(dlvryInfoList);
+
+            List<CBATechGuidanceInsertDTO> dpndnInfo = cBATechGuidanceMapper.selectCnstgDpndnInfo(cnstgSeq);
+            List dpndnInfoList = new ArrayList();
+            for(int i=0; i<dpndnInfo.size(); i++){
+                CBATechGuidanceInsertDTO dpndnDto = new CBATechGuidanceInsertDTO();
+                dpndnDto.setDpndnCmpnNm(dpndnInfo.get(i).getDpndnCmpnNm());
+                dpndnDto.setDpndnRate(dpndnInfo.get(i).getDpndnRate());
+                dpndnDto.setDpndnSeq(dpndnInfo.get(i).getDpndnSeq());
+                dpndnInfoList.add(dpndnDto);
+            }
+            pCBATechGuidanceInsertDTO.setDpndCmpnList(dpndnInfoList);
+
+            List<CBATechGuidanceInsertDTO> appctnTypeInfo = cBATechGuidanceMapper.selectCnstgAppctnType(cnstgSeq);
+            List appctnTypeList = new ArrayList();
+            for(int i=0; i<appctnTypeInfo.size(); i++){
+                CBATechGuidanceInsertDTO appctnDto = new CBATechGuidanceInsertDTO();
+                appctnDto.setAppctnTypeCd(appctnTypeInfo.get(i).getAppctnTypeCd());
+                appctnTypeList.add(appctnDto);
+            }
+            pCBATechGuidanceInsertDTO.setAppctnTypeList(appctnTypeList);
+
+        }
+        CBATechGuidanceUpdateDTO CBATechGuidanceUpdateDTO = new CBATechGuidanceUpdateDTO();
+        pCBATechGuidanceInsertDTO.setRsumeList(cBATechGuidanceMapper.selectTechGuidanceRsume(pCBATechGuidanceInsertDTO));
+
+        System.err.println("pCBATechGuidanceInsertDTO"+pCBATechGuidanceInsertDTO.getRsumeList());
+
+        return pCBATechGuidanceInsertDTO;*/
+        return pCBBManageConsultInsertDTO;
+    }
+
+    /**
+     * 컨설팅 기술 지도 등록
+     */
+    public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
+
+       /* HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCBATechGuidanceInsertDTO.getFileList());
+        pCBATechGuidanceInsertDTO.setItrdcFileSeq(fileSeqMap.get("itrdcFileSeq"));
+        pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("impvmFileSeq"));
+        pCBATechGuidanceInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
+
+        // 신청 회원 정보
+        updateTechMemberInfo(pCBATechGuidanceInsertDTO);
+
+        // 부품사 정보
+        updateTechCompanyInfo(pCBATechGuidanceInsertDTO);
+
+        // 컨설팅 서브 정보 수정
+        updateSubTechGuidanceInfo(pCBATechGuidanceInsertDTO);
+
+        pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO));
+        pCBATechGuidanceInsertDTO.getRespCnt();*/
+        return 1;
+    }
 
 
     /**

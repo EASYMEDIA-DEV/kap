@@ -1,10 +1,19 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
+<script type="text/javascript">
+    if("${rtnData.id}" == null || "${rtnData.id}" == "") {
+        alert("존재하지 않는 계정입니다.");
+        history.back(-1);
+    }
+
+
+</script>
+
 <div class="cont-wrap" data-controller="controller/co/COLgnCtrl">
     <form id="frmEmail" name="frmEmail" method="post" action="">
     <input type="hidden" name="id" value="${rtnData.id}" />
     <input type="hidden" name="email" value="${rtnData.email}" />
-    <input type="hidden" name="email" value="${rtnData.name}" />
+    <input type="hidden" name="name" value="${rtnData.name}" />
 
 
     </form>

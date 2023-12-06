@@ -51,6 +51,32 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
+            btnMpbRefresh : {
+                event : {
+                    click : function(){
+                        //FORM 데이터 전체 삭제
+                        var pageIndex 	= $formObj.find("#pageIndex").val();
+                        var listRowSize = $formObj.find("#listRowSize").val();
+                        var pageRowSize = $formObj.find("#pageRowSize").val();
+                        var csrfKey 	= $formObj.find("#csrfKey").val();
+                        var srchLayer 	= $formObj.find("input[name=srchLayer]").val();
+                        $formObj.clearForm();
+                        //FORM 전송 필수 데이터 삽입
+                        $formObj.find("#pageIndex").val( pageIndex );
+                        $formObj.find("#listRowSize").val( listRowSize );
+                        $formObj.find(".listRowSizeContainer").val( listRowSize );
+                        $formObj.find("#pageRowSize").val( pageRowSize );
+                        $formObj.find("#csrfKey").val( csrfKey );
+                        $formObj.find("input[name=srchLayer]").val( srchLayer );
+
+                        //캘린더 초기화
+                        cmmCtrl.setPeriod(this, "", "", false);
+
+                        //검색 로직 실행
+                        $formObj.find("#btnSearch").click();
+                    }
+                }
+            },
             //엑셀다운로드
             btnExcelDown : {
                 event : {
@@ -84,12 +110,13 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             var memEmail = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(8)").text(); // 이메일
                             var cmpnNm = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(1)").text(); // 회사 이름
-                            var deptDtlNm = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(5)").text(); // 부서 이름, 상세
                             var hpNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(7)").text(); // 핸드폰 번호
                             var bsnmNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(2)").text(); // 사업자 번호
                             var telNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".telNo").val(); // 회원 일반 전화번호
                             var pstnCd = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCd").val(); // 직급 - select
                             var pstnCdNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCdNm").val();
+                            var deptDtlNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptDtlNm").val();
+
                             $('input[name=memSeq]').val(memSeq);
                             $('input[name=name]').val(memName);
                             $('input[name=memId]').val(memId);
@@ -97,7 +124,6 @@ define(["ezCtrl"], function(ezCtrl) {
                             $('input[name=deptDtlNm]').val(deptDtlNm);
                             $('input[name=telNo]').val(telNo);
                             $("#pstnCdSelect").val(pstnCd).prop("selected", true);
-
                             $('p[name=email]').text(memEmail);
                             $('p[name=hpNo]').text(hpNo);
                             $('p[name=bsnmNo]').text(bsnmNo);
@@ -115,7 +141,6 @@ define(["ezCtrl"], function(ezCtrl) {
                             clickObj.hpNo = hpNo;
                             clickObj.telNo = telNo;
                             clickObj.pstnCd = pstnCd;
-
                             ctrl.obj.trigger("choice", [clickObj])
                             ctrl.obj.find(".close").click();
                         }

@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.cb.cbb;
 
 import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 import com.kap.service.CBBManageConsultService;
 import com.kap.service.COCodeService;
@@ -69,6 +70,41 @@ public class CBBManageConsultController {
             throw new Exception(e.getMessage());
         }
         return "mngwserc/cb/cbb/CBBManageConsultList.admin";
+    }
+    /**
+     * 컨설팅 사업 경영컨설팅  상세 페이지
+     */
+    @GetMapping(value = "/write")
+    public String getManageConsultWritePage(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, ModelMap modelMap) throws Exception {
+        /*try
+        {*/
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+            cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
+            cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
+            cdDtlList.add("MEM_CD"); // 직급, 부서 코드
+            cdDtlList.add("COMPANY_TYPE"); //부품사 구분 코드
+            cdDtlList.add("CO_YEAR_CD"); // 연도 코드 (2021년 ~ 2024년)
+            cdDtlList.add("COMPANY_TYPE"); // 스타등급
+            cdDtlList.add("APPCTN_RSN_CD"); // 신청사유 코드
+            cdDtlList.add("ADDR_CD"); // 소재지 코드
+            cdDtlList.add("BF_JDGMT_RSLT"); // 사전심사결과 코드
+            cdDtlList.add("GUIDE_TYPE_CD"); // 지도 구분 코드
+            cdDtlList.add("GUIDE_PSCND"); // 지도 현황 코드
+        modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+        if (!"".equals(cBBManageConsultInsertDTO.getDetailsKey()) && cBBManageConsultInsertDTO.getDetailsKey() != null) {
+            modelMap.addAttribute("rtnData", cBBManageConsultService.selectManageConsultDtl(cBBManageConsultInsertDTO));
+        }
+        /*} catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }*/
+
+
+        return "mngwserc/cb/cbb/CBBManageConsultWrite.admin";
     }
 
     /**

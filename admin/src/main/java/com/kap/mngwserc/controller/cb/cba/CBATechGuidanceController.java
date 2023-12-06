@@ -5,6 +5,7 @@ import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
+import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.CBATechGuidanceService;
 import com.kap.service.COCodeService;
@@ -195,7 +196,6 @@ public class CBATechGuidanceController {
         {
             modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTrsfGuidanceList(cBATechGuidanceInsertDTO));
             modelMap.addAttribute("CBATechGuidanceInsertDTO", cBATechGuidanceInsertDTO);
-            System.err.println("rtnData:::"+modelMap);
         }
         catch (Exception e)
         {
@@ -208,6 +208,24 @@ public class CBATechGuidanceController {
         return "mngwserc/cb/cba/CBATechGuidanceTrsfListAjax";
     }
 
+    /**
+     * 컨설팅 사업 경영컨설팅 만족도 종합결과 목록 조회
+     */
+    @GetMapping(value = "/selectSuveyRslt")
+    public String selectConsultSuveyRsltList(CBBConsultSuveyRsltListDTO cBBConsultSuveyRsltListDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+        try {
+            cBBConsultSuveyRsltListDTO.setRtnBsnGubun("CONSULT_GB01");
+            /*modelMap.addAttribute("rtnData", cBATechGuidanceService.selectConsultSuveyRsltList(cBBConsultSuveyRsltListDTO));
+            modelMap.addAttribute("searchDto", cBBConsultSuveyRsltListDTO);*/
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "mngwserc/cb/cba/CBBConsultSuveyRsltLayerAjax";
+    }
 
     @RestController
     @RequiredArgsConstructor
