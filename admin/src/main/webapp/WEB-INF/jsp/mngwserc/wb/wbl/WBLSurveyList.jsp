@@ -146,7 +146,8 @@
                         <th class="text-center">1차 부품사 코드</th>
                         <th class="text-center">2차 부품사</th>
                         <th class="text-center">2차 부품사 코드</th>
-                        <th class="text-center">참여상태</th>
+                        <th class="text-center">참여여부</th>
+                        <th class="text-center">완료여부</th>
                         <th class="text-center">점수</th>
                         <th class="text-center">응답업체수</th>
                         <th class="text-center">평균점수</th>

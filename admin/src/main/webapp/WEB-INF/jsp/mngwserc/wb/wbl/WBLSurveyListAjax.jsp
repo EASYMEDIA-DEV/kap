@@ -22,6 +22,7 @@
                 </td>
                 <td class="text-center"> ${list.partCmpnCd2}</td>
                 <td class="text-center"> ${list.ptcptCd eq 'E' ? '대기' : list.ptcptCd eq 'N' ? '미참여' : '참여' }</td>
+                <td class="text-center"> ${list.cmpltnYn eq 'Y' ? '완료' : list.cmpltnYn eq 'N' ? '미완료' : '-' }</td>
                 <td class="text-center"> ${list.score}</td>
                 <td class="text-center"> ${list.cnt}</td>
                 <td class="text-center"> ${list.avgScore}</td>

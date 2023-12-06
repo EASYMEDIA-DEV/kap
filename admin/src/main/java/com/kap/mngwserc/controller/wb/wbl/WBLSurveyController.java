@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.wb.wbl;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.mp.mpg.MPGWthdrwDto;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.wb.wbl.WBLEpisdMstDTO;
@@ -317,5 +318,44 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    @Operation(summary = "응답 초기화", tags = "", description = "")
+    @PostMapping(value="/updateSurveyRspn")
+    public String updateSurveyRspn(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wLSurveyService.updateSurveyRspn(wBLSurveyMstInsertDTO, request ));
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    @GetMapping(value = "/excel-down")
+    public void getSurveyListExcel(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            wBLSurveyMstSearchDTO.setExcelYn("Y");
+            //엑셀 생성
+            wLSurveyService.excelDownload(wLSurveyService.selectSurveyList(wBLSurveyMstSearchDTO), response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
     }
 }
