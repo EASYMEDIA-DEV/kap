@@ -1,7 +1,6 @@
 package com.kap.mngwserc.controller.wb.wbl;
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.mp.mpg.MPGWthdrwDto;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.wb.wbl.WBLEpisdMstDTO;
@@ -17,9 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;

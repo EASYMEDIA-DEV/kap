@@ -1,12 +1,8 @@
 package com.kap.service;
 
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.wbl.WBLEpisdMstDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
