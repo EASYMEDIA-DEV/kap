@@ -10,9 +10,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var $formObj = jQuery("#frmData");
     var width = 500; //팝업의 너비
     var height = 600; //팝업의 높이
-    var valChk = 'N';
-    var bsnmNoChk = true;
-
+    var workChk = true;
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
@@ -105,55 +103,57 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
-            checkBtn : {
+            btnBsnmNo : {
                 event : {
-                    click : function() {
-                        var checkNo = $("#bsnmNo").val();
-                        var ajaxData = {
-                            bsnmNo : checkNo
-                        }
-
-                        jQuery("#frmData").serializeArray().forEach(function(field) {
-                            if (field.name == '_csrf') {
-                                ajaxData[field.name] = field.value;
-                            }
-                        });
-
-                        console.log(JSON.stringify(ajaxData, null, 2));
-
-                        if(valChk) {
-                            $.ajax({
+                    click : function () {
+                        workChk = false;
+                        if($("#bsnmNo").val() =='' || $("#bsnmNo").val() == undefined) {
+                            alert(msgCtrl.getMsg("fail.mp.mpa.al_016"));
+                            return ;
+                        } else {
+                            jQuery.ajax({
+                                url : "/mngwserc/nice/comp-chk",
                                 type : "post",
-                                url : './checkBsnmNo',
-                                dataType : "json",
-                                data : ajaxData,
-                                success : function(r) {
-                                    console.log(r.respCnt);
-                                    console.log(r);
-                                    if (checkNo !== "" && bsnmNoChk == false) {
-                                        if (r.respCnt) {
-                                            alert("인증되었습니다.");
-                                            $("#cmpnNm").val(r.cmpnNm);
-                                            $("#rprsntNm").val(r.rprsntNm);
-                                            bsnmNoChk = true;
+                                data :
+                                    {
+                                        "compNum" : $("#bsnmNo").val()
+                                    },
+                                success : function(data)
+                                {
+                                    if(data.rsp_cd=='P000') {
+                                        if(data.result_cd == '01') {
+                                            if(data.comp_status == '1') {
+                                                $("#cmpnNm").val(data.comp_name);
+                                                $("#rprsntNm").val(data.representive_name);
+                                                workChk = true;
+                                            } else {
+                                                alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                                $("#cmpnNm").val("");
+                                                $("#rprsntNm").val("");
+                                                $("#bsnmNo").val("");
+                                                workChk = false;
+                                            }
                                         } else {
-                                            alert('DB에 등록된 정보가 없습니다. NICE 인증으로 넘어갑니다.')
-                                            $("#cmpnNm").val("nice에서 가져온 회사명");
-                                            $("#rprsntNm").val("nice에서 가져온 대표자명");
-                                            bsnmNoChk = true;
+                                            alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                            $("#cmpnNm").val("");
+                                            $("#rprsntNm").val("");
+                                            $("#bsnmNo").val("");
+                                            workChk = false;
                                         }
                                     } else {
-                                        bsnmNoChk = false;
-                                        alert("사업자등록번호를 입력해주세요.");
+                                        alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                        $("#cmpnNm").val("");
+                                        $("#rprsntNm").val("");
+                                        $("#bsnmNo").val("");
+                                        workChk = false;
                                     }
                                 },
-                                error : function(xhr, ajaxSettings, thrownError) {
-                                    alert("인증에 실패했습니다.");
+                                error : function(xhr, ajaxSettings, thrownError)
+                                {
+                                    cmmCtrl.errorAjax(xhr);
+                                    jQuery.jstree.rollback(data.rlbk);
                                 }
                             });
-                        } else {
-                            alert("사업자등록번호를 인증해주세요");
-                            return false;
                         }
                     }
                 }
@@ -180,41 +180,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             bsnmNo : {
                 event : {
                     input : function() {
-                        bsnmNoChk = false;
-                    }
-                }
-            },
-            bsnmNoCheck : {
-                event : {
-                    keyup : function(){
-
-                        var str = this.value;
-                        str = str.replace(/[^0-9]/g, "");
-                        var tmp = ""
-                            , lens1 = 4, lens2 = 6, lens3 = 10
-                            , cutlen1 = 3, cutlen2 = 2;
-
-                        if(str.length < lens1){
-                            tmp = str;
-                        }
-                        else if (str.length < lens2)
-                        {
-                            tmp += str.substr(0, cutlen1);
-                            tmp += str.substr(cutlen1);
-                        }
-                        else if (str.length < lens3)
-                        {
-                            tmp += str.substr(0, cutlen1);
-                            tmp += str.substr(cutlen1, cutlen2);
-                            tmp += str.substr(cutlen1 + cutlen2);
-                        }
-                        else
-                        {
-                            tmp += str.substr(0, cutlen1);
-                            tmp += str.substr(cutlen1, cutlen2);
-                            tmp += str.substr(cutlen1 + (cutlen2));
-                        }
-                        this.value = tmp;
+                        workChk = false;
                     }
                 }
             },
@@ -248,8 +214,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             // 유효성 검사
             $formObj.validation({
                 after : function(){
-                    if(bsnmNoChk == false) {
-                        alert("사업자등록번호 인증을해주세요.");
+                    if(workChk == false) {
+                        alert("사업자등록번호를 인증해주세요.");
                         return false;
                     } else {
                         return true;

@@ -14,7 +14,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
-
     var callbackAjaxDelete = function(data){
 
         if (parseInt(data.respCnt, 10) > 0)
@@ -27,6 +26,29 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             alert(msgCtrl.getMsg("fail.act"));
         }
     };
+
+    //강사 테이블 넘버링
+    var isttrTable = function(data){
+
+        //tr 갯수 감지해서 카운트해줌, 없으면 없는폼 꺼냄
+        var totCnt = $("#isttrContainer").find("tr").size();
+        var startCount = 2;
+
+
+        $("#isttrContainer").find("tr").each(function(idx, data){
+            if(idx>1){
+                $(this).find("td").eq(0).text(totCnt-idx);
+            }
+        });
+
+        //삭제했는데 하나도없으면 목록 없다는걸로 돌림
+        if($("#isttrContainer").find("tr").size() == 2){
+            //돌림
+            $("#isttrContainer").find(".notIsttr").css("display", "");
+            $("#isttrContainer").find(".notIsttr").find("td").css("display", "");
+        }
+
+    }
 
     //소재지역 분류 조회
     var selectCtgryCdList = function(arg){
@@ -68,30 +90,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var changeAppctnFldCd = function () {
         cmmCtrl.frmAjax(function(respObj) {
             ctrl.obj.find(".checkBoxArea").html(respObj);
+            $(".checkBoxArea").validation({});
         }, "/mngwserc/eb/ebc/changeAppctnFldCd", $formObj, "POST", "html",'',false);
     }
 
-
-    //강사 테이블 넘버링
-    var isttrTable = function(data){
-
-        //tr 갯수 감지해서 카운트해줌, 없으면 없는폼 꺼냄
-        var totCnt = $("#isttrContainer").find("tr").size();
-        var startCount = 2;
-
-        $("#isttrContainer").find("tr").each(function(idx, data){
-            if(idx>1){
-                $(this).find("td").eq(0).text(totCnt-idx);
-            }
-        });
-
-        //삭제했는데 하나도없으면 목록 없다는걸로 돌림
-        if($("#isttrContainer").find("tr").size() == 2){
-            //돌림
-            $("#isttrContainer").find(".notIsttr").css("display", "");
-            $("#isttrContainer").find(".notIsttr").find("td").css("display", "");
-        }
-    }
 
     // set model
     ctrl.model = {
@@ -100,6 +102,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 event : {
                     click : function() {
                         cmmCtrl.searchPostCode(width,height,"zipcode","bscAddr","dtlAddr");
+                    }
+                }
+            },
+            searchEduPlacePostCode : {
+                event : {
+                    click : function() {
+                        cmmCtrl.searchPostCode(width,height,"placeZipcode","placeBscAddr","placeDtlAddr");
                     }
                 }
             },
@@ -148,7 +157,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 event : {
                     click : function() {
                         cmmCtrl.getPartsCompanyMemberLayerPop(function(data){
-                            $("#bsnmNo").val(data.seq);
+                            console.log(data.seq);
+                            var updatedSeq = $("#memName").data("updatedMemSeq");
+                            updatedSeq.val(data.seq);
                             $("#memName").val(data.titl);
                         });
                     }
@@ -216,7 +227,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                         $("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
                                     }
                                 }
-
                                 $(".notIsttr").css("display", "none");
                                 $(".setIsttr").css("display", "none");
                             }
@@ -236,6 +246,24 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         },
         immediately : function(){
             changeAppctnFldCd();
+            //sendInformation();
+
+            //부품사 우편번호와 동일하면 본사와 동일 체크 박스 checked
+            var originPartsZipCode = $formObj.find("input[name=zipcode]").val();
+            var originPartsBscAddr = $formObj.find("input[name=bscAddr]").val();
+            var originPartsDtlAddr  =$formObj.find("input[name=dtlAddr]").val();
+
+            var placeZipcode = $formObj.find("input[name=placeZipcode]").val();
+            var placeBscAddr = $formObj.find("input[name=placeBscAddr]").val();
+            var placeDtlAddr = $formObj.find("input[name=placeDtlAddr]").val();
+
+            if (placeZipcode == originPartsZipCode && placeBscAddr == originPartsBscAddr
+                && placeDtlAddr == originPartsDtlAddr) {
+                $("input:checkbox[id='samePlaceBtn']").prop("checked", true);
+            }
+
+            //신청분야상세코드 체크박스 checked
+
 
             var scndRgnsCd = $("#scndRgnsCd").data("scndRgnsCd");
             $("#scndRgnsCd").val(scndRgnsCd).prop("selected", true);
@@ -243,10 +271,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             $("#samePlaceBtn").change(function() {
                 // 체크된 경우
                 if ($(this).is(":checked")) {
-                    var originPartsZipCode = $formObj.find("input[name=zipcode]").val();
-                    var originPartsBscAddr = $formObj.find("input[name=bscAddr]").val();
-                    var originPartsDtlAddr  =$formObj.find("input[name=dtlAddr]").val();
-
                     $formObj.find("input[name=placeZipcode]").val(originPartsZipCode);
                     $formObj.find("input[name=placeBscAddr]").val(originPartsBscAddr);
                     $formObj.find("input[name=placeDtlAddr]").val(originPartsDtlAddr);
@@ -282,7 +306,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             // 유효성 검사
             $formObj.validation({
                 after : function() {
-                    var isValid = true, editorChk = true;
+                    var isValid = true
 
                     jQuery(".dropzone").not(".notRequired").each(function(i){
                         if (jQuery(this).children(".dz-preview").length == 0)
@@ -294,41 +318,335 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }
                     });
 
-                    $formObj.find(".ckeditorRequired").each(function() {
-                        jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-
-                        var editorVal = jQuery(this).val().length;
-
-                        if (editorVal < 1)
-                        {
-                            editorChk = false;
-
-                            alert(msgCtrl.getMsg("fail.sm.smc.html"));
-
-                            CKEDITOR.instances[jQuery(this).prop("id")].focus();
-
-                            // 에디터 최상단으로 스크롤 이동
-                            jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
-
-                            return false;
-                        }
-                    });
-
-                    if (!editorChk)
-                    {
-                        isValid = false;
-                    }
-
                     return isValid;
                 },
                 async : {
                     use : true,
                     func : function (){
-                        var actionUrl = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update" );
-                        var actionMsg = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
-                        if($formObj.find(".dropzone.dz-started").size() > 0)
+
+                        // controller에 json으로 넘길 form값
+                        var actForm = {};
+
+                        var vstSeq = $("#vstSeq").val();
+                        var memSeq = $("#memSeq").val();
+                        var vstRsltSeq = $("#vstRsltSeq").val();
+
+                        actForm.vstSeq = vstSeq;
+                        actForm.memSeq = memSeq;
+                        actForm.vstRsltSeq = vstRsltSeq;
+
+                        //신청자 정보
+                        var memName = $("#memName").val();
+                        var memDeptCd = $("#memDeptCd").val();
+                        var memDeptDtlNm = $("#memDeptDtlNm").val();
+                        var memPstnCd = $("#memPstnCd").val();
+                        var memPstnNm = $("#memPstnNm").val();
+                        var memTelNo = $("#memTelNo").val();
+
+                        actForm.memName = memName;
+                        actForm.memDeptCd = memDeptCd;
+                        actForm.memDeptDtlNm = memDeptDtlNm;
+                        actForm.memPstnCd = memPstnCd;
+                        actForm.memPstnNm = memPstnNm;
+                        actForm.memTelNo = memTelNo;
+
+                        //부품사 정보
+                        var ctgryCd = $("#ctgryCd").val();
+                        var sizeCd = $("#sizeCd").val();
+                        var stbsmDt = $("#stbsmDt").val();
+                        var telNo = $("#telNo").val();
+                        var zipcode = $("#zipcode").val();
+                        var bscAddr = $("#bscAddr").val();
+                        var dtlAddr = $("#dtlAddr").val();
+                        var slsPmt = $("#slsPmt").val();
+                        var mpleCnt = $("#mpleCnt").val();
+                        var slsYear = $("#slsYear").val();
+                        var mjrPrdct1 = $("#mjrPrdct1").val();
+                        var mjrPrdct2 = $("#mjrPrdct2").val();
+                        var mjrPrdct3 = $("#mjrPrdct3").val();
+                        var qlty5StarCd = $("#qlty5StarCd").val();
+                        var qlty5StarYear = $("#qlty5StarYear").val();
+                        var pay5StarCd = $("#pay5StarCd").val();
+                        var pay5StarYear = $("#pay5StarYear").val();
+                        var tchlg5StarCd = $("#tchlg5StarCd").val();
+                        var tchlg5StarYear = $("#tchlg5StarYear").val();
+
+                        actForm.ctgryCd = ctgryCd;
+                        actForm.sizeCd = sizeCd;
+                        actForm.stbsmDt = stbsmDt;
+                        actForm.telNo = telNo;
+                        actForm.zipcode = zipcode;
+                        actForm.bscAddr = bscAddr;
+                        actForm.dtlAddr = dtlAddr;
+                        actForm.slsPmt = slsPmt;
+                        actForm.mpleCnt = mpleCnt;
+                        actForm.slsYear = slsYear;
+                        actForm.mjrPrdct1 = mjrPrdct1;
+                        actForm.mjrPrdct2 = mjrPrdct2;
+                        actForm.mjrPrdct3 = mjrPrdct3;
+                        actForm.qlty5StarCd = qlty5StarCd;
+                        actForm.qlty5StarYear = qlty5StarYear;
+                        actForm.pay5StarCd = pay5StarCd;
+                        actForm.pay5StarYear = pay5StarYear;
+                        actForm.tchlg5StarCd = tchlg5StarCd;
+                        actForm.tchlg5StarYear = tchlg5StarYear;
+
+                        var index = 1;
+                        var sqInfoList1 = new Array();
+                        var sqInfoList2 = new Array();
+                        var sqInfoList3 = new Array();
+
+                        $(".sqInfoList").each(function(){
+                            var temp = {};
+                            var cbsnSeq = $(this).find("#cbsnSeq" + index).val();
+                            var nm = $(this).find("#nm" + index).val();
+                            var score = $(this).find("#score" + index).val();
+                            var year = $(this).find("#year" + index).val();
+                            var crtfnCmpnNm = $(this).find("#crtfnCmpnNm" + index).val();
+
+                            temp.cbsnSeq = cbsnSeq;
+                            temp.nm = nm;
+                            temp.score = score;
+                            temp.year = year;
+                            temp.crtfnCmpnNm = crtfnCmpnNm;
+
+                            if(index == 1) {
+                                sqInfoList1.push(cbsnSeq);
+                                sqInfoList1.push(nm);
+                                sqInfoList1.push(score);
+                                sqInfoList1.push(year);
+                                sqInfoList1.push(crtfnCmpnNm);
+
+                            } else if(index == 2) {
+                                sqInfoList2.push(cbsnSeq);
+                                sqInfoList2.push(nm);
+                                sqInfoList2.push(score);
+                                sqInfoList2.push(year);
+                                sqInfoList2.push(crtfnCmpnNm);
+
+                            } else if(index == 3) {
+                                sqInfoList3.push(cbsnSeq);
+                                sqInfoList3.push(nm);
+                                sqInfoList3.push(score);
+                                sqInfoList3.push(year);
+                                sqInfoList3.push(crtfnCmpnNm);
+                            }
+                            index++;
+                        });
+
+                        actForm.sqInfoList1 = sqInfoList1;
+                        actForm.sqInfoList2 = sqInfoList2;
+                        actForm.sqInfoList3 = sqInfoList3;
+
+                        // 신청내용
+                        var appctnBsnmNo = $("#appctnBsnmNo").val();
+                        var appctnRsn = $("#appctnRsn").val();
+                        var appctnFldCd = $("#appctnFldCd").val();
+                        var appctnThemeCntn = $("#appctnThemeCntn").val();
+                        var hopeDt = $("#hopeDt").val();
+                        var placeZipcode = $("#placeZipcode").val();
+                        var placeBscAddr = $("#placeBscAddr").val();
+                        var placeDtlAddr = $("#placeDtlAddr").val();
+                        var edctnPlaceAddr = $("#edctnPlaceAddr").val();
+                        var ptcptTrgtCntn = $("#ptcptTrgtCntn").val();
+                        var ptcptCnt = $("#ptcptCnt").val();
+                        var ptcptHh = $("#ptcptHh").val();
+                        var itrdcFileSeq = $("#itrdcFileSeq").val();
+
+                        actForm.appctnBsnmNo = appctnBsnmNo;
+                        actForm.appctnRsn = appctnRsn;
+                        actForm.appctnFldCd = appctnFldCd;
+                        actForm.appctnThemeCntn = appctnThemeCntn;
+                        actForm.hopeDt = hopeDt;
+                        actForm.placeZipcode = placeZipcode;
+                        actForm.placeBscAddr = placeBscAddr;
+                        actForm.placeDtlAddr = placeDtlAddr;
+                        actForm.edctnPlaceAddr = edctnPlaceAddr;
+                        actForm.ptcptTrgtCntn = ptcptTrgtCntn;
+                        actForm.ptcptCnt = ptcptCnt;
+                        actForm.ptcptHh = ptcptHh;
+                        actForm.itrdcFileSeq = itrdcFileSeq;
+
+                        var appctnTypeList = new Array();
+
+                        $(".checkBoxArea input[type='checkbox']:checked").each(function(){
+                            appctnTypeList.push($(this).val());
+                        });
+
+                        actForm.appctnTypeList = appctnTypeList;
+
+                        //교육실적
+                        var cnfrmdTheme = $("#cnfrmdTheme").val();
+                        var edctnSttsCd = $("#edctnSttsCd").val();
+                        var edctnYear = $("#edctnYear").val();
+                        var edctnDtm = $("#edctnDtm").val();
+                        var edctnPlace = $("#edctnPlace").val();
+
+                        //강사정보
+                        var isttrSeqList= new Array();
+
+                        $("input[name='isttrSeq']").each(function(){
+                            if($(this).val() != undefined && $(this).val() != ""){
+                                var tempForm = {};
+                                tempForm.vstSeq = $("#vstSeq").val();
+                                tempForm.memSeq = $("#memSeq").val();
+                                tempForm.vstRsltSeq = $("#vstRsltSeq").val();
+                                tempForm.isttrSeq = $(this).val();
+                                isttrSeqList.push(tempForm);
+                            }
+                        });
+
+                        /*if(isttrSeqList.length == 0){
+                            alert("강사를 추가 해주세요.");
+                            return false;
+                        }*/
+                        actForm.isttrSeqList = isttrSeqList;
+
+                        var cmptnCnt = $("#cmptnCnt").val();
+                        var ptcptRate = $("#ptcptRate").val();
+                        var lctrFileSeq = $("#lctrFileSeq").val();
+                        var etcMatlsFileSeq = $("#etcMatlsFileSeq").val();
+
+                        actForm.cnfrmdTheme = cnfrmdTheme;
+                        actForm.edctnSttsCd = edctnSttsCd;
+                        actForm.edctnYear = edctnYear;
+                        actForm.edctnDtm = edctnDtm;
+                        actForm.edctnPlace = edctnPlace;
+                        actForm.cmptnCnt = cmptnCnt;
+                        actForm.ptcptRate = ptcptRate;
+                        actForm.lctrFileSeq = lctrFileSeq;
+                        actForm.etcMatlsFileSeq = etcMatlsFileSeq;
+
+                        //방문교육 결과 옵션 상세
+                        var resultOpList = new Array();
+
+                        $(".cnt-list").each(function(){
+
+                            var temp = {};
+                            var rsltTypeCd = $(this).data("rsltTypeCd");
+                            var optnCd = $(this).find("input:text").attr("name");
+                            var rsltVal = $(this).find("input:text").val();
+
+                            temp.vstSeq = parseInt(vstSeq);
+                            temp.memSeq = parseInt(memSeq);
+                            temp.vstRsltSeq = parseInt(vstRsltSeq);
+                            temp.rsltTypeCd = rsltTypeCd;
+                            temp.optnCd = optnCd;
+                            temp.rsltVal = parseInt(rsltVal);
+                            resultOpList.push(temp);
+                        });
+                        console.log(resultOpList);
+                        actForm.resultOpList = resultOpList;
+
+                        //회사소개서 파일 세팅
+                        var itrdcFileArray = new Array();
+                        if(!($(".itrdcFile").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
+                            $(".itrdcFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
+                            $(".itrdcFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
+                            $.each($(".itrdcFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
+                                //alt값  data에 넣어주기.
+                                data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+
+                                for (let i in data) {
+                                    if (data.hasOwnProperty(i)) {
+                                        var temp = {};
+                                        temp.fileSeq = data.fileSeq;
+                                        temp.status = data.status;
+                                        temp.width = data.width;
+                                        temp.height = data.height;
+                                        temp.webPath = data.webPath;
+                                        temp.fieldNm = "itrdcFileSeq";
+                                        temp.orgnFileNm = data.orgnFileNm;
+                                        temp.fileDsc = data.fileDsc;
+                                        temp.fileOrd = data.fileOrd;
+
+                                        if(itrdcFileArray == "" || (itrdcFileArray[itrdcFileArray.length-1].fileOrd != temp.fileOrd)){
+                                            itrdcFileArray.push(temp);
+                                        }
+
+                                    }
+                                }
+
+                            })
+                        }
+                        actForm.itrdcFileList = itrdcFileArray;
+
+                        //강의교안 파일 세팅
+                        var lctrFileArray = new Array();
+                        if(!($(".lctrFile").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
+                            $(".lctrFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
+                            $(".lctrFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
+                            $.each($(".lctrFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
+                                //alt값  data에 넣어주기.
+                                data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+
+                                for (let i in data) {
+                                    if (data.hasOwnProperty(i)) {
+                                        var temp = {};
+                                        temp.fileSeq = data.fileSeq;
+                                        temp.status = data.status;
+                                        temp.width = data.width;
+                                        temp.height = data.height;
+                                        temp.webPath = data.webPath;
+                                        temp.fieldNm = "lctrFileSeq";
+                                        temp.orgnFileNm = data.orgnFileNm;
+                                        temp.fileDsc = data.fileDsc;
+                                        temp.fileOrd = data.fileOrd;
+
+                                        if(lctrFileArray == "" || (lctrFileArray[lctrFileArray.length-1].fileOrd != temp.fileOrd)){
+                                            lctrFileArray.push(temp);
+                                        }
+
+                                    }
+                                }
+
+                            })
+                        }
+                        actForm.lctrFileList = lctrFileArray;
+
+                        //기타자료 파일 세팅
+                        var etcMatlsFileArray = new Array();
+                        if(!($(".etcMatlsFile").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
+                            $(".etcMatlsFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
+                            $(".etcMatlsFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
+                            $.each($(".etcMatlsFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
+                                //alt값  data에 넣어주기.
+                                data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+
+                                for (let i in data) {
+                                    if (data.hasOwnProperty(i)) {
+                                        var temp = {};
+                                        temp.fileSeq = data.fileSeq;
+                                        temp.status = data.status;
+                                        temp.width = data.width;
+                                        temp.height = data.height;
+                                        temp.webPath = data.webPath;
+                                        temp.fieldNm = "etcMatlsFileSeq";
+                                        temp.orgnFileNm = data.orgnFileNm;
+                                        temp.fileDsc = data.fileDsc;
+                                        temp.fileOrd = data.fileOrd;
+
+                                        if(etcMatlsFileArray == "" || (etcMatlsFileArray[etcMatlsFileArray.length-1].fileOrd != temp.fileOrd)){
+                                            etcMatlsFileArray.push(temp);
+                                        }
+
+                                    }
+                                }
+
+                            })
+                        }debugger;
+                        actForm.etcMatlsFileList = etcMatlsFileArray;
+                        console.log(actForm);
+                        debugger;
+                        cmmCtrl.jsonAjax(function(data){
+                            alert("저장되었습니다.");
+                            location.href = "./list";
+                        }, "./update", actForm, "text");
+
+                        /* if($formObj.find(".dropzone.dz-started").size() > 0)
                         {
                             cmmCtrl.fileFrmAjax(function(data){
+                                $formObj.find("input[name=data]").val(dataSet);
                                 //콜백함수. 페이지 이동
                                 if(data.respCnt > 0){
                                     alert(actionMsg);
@@ -339,13 +657,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         else
                         {
                             cmmCtrl.frmAjax(function(data){
+                                $formObj.find("input[name=data]").val(dataSet);
                                 if(data.respCnt > 0){
                                     alert(actionMsg);
                                     location.replace("./list");
                                 }
                                 actionUrl = "./list";
                             }, actionUrl, $formObj, "post", "json")
-                        }
+                        } */
                     }
                 },
                 msg : {
