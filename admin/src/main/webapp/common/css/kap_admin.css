@@ -15,9 +15,12 @@ input[type="text"], input[type="email"], input[type="search"], input[type="passw
 
 .form-group:has(.form-flexbox){display:flex;}
 .form-group:has(.form-flexbox) .form-flexbox{width:50%;}
+.form-group:has(.form-flexbox) .form-flexbox .col-sm-1{width:120px;}
+.form-group:has(.form-flexbox) .form-flexbox .col-sm-1 + *{width:calc(100% - 120px);}
 
 @media only screen and (max-width: 768px) {
 	.form-inline > .col-sm-1, .form-group > .col-sm-1{width:100%;}
   .form-inline > .col-sm-1 + *, .form-group > .col-sm-1 + *{width:100%;}
+  .form-group:has(.form-flexbox){flex-wrap:wrap;}
   .form-group:has(.form-flexbox) .form-flexbox{width:100%;}
 }
