@@ -67,10 +67,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		if($("input[name='otsdExamPtcptYn']").is(":checked")){
 			//alert("평가 선택");
-			$("#examSeq").prop("disabled", true);
+			$("#examSeq").val(null).prop("disabled", false);
+			$("#examSeq").addClass("notRequired");
+
 		}else{
 			//alert("평가 선택 해제");
-			$("#examSeq").val(null).prop("disabled", false);
+			$("#examSeq").prop("disabled", true);
+			$("#examSeq").removeClass("notRequired");
 		}
 
 	}
@@ -390,6 +393,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						}, "./fxnumChk", seqObj, "text");
 
 
+
+					}
+				}
+			},
+			btnEdctnAtndc : {
+				event : {
+					click : function() {
+
+						//출석부 레이어 팝업 호출
+						$(".ebbAtndcSrchLayer").one('show.bs.modal', function() {
+
+							var modal = $(this);
+							modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+						}).one('hidden.bs.modal', function() {
+							// Remove class for soft backdrop (if not will affect future modals)
+						}).one('choice', function(data, param) {
+							var obj = param;
+							$("#listContainer3").find("td").eq(0).text(obj.typeNm);
+							$("#listContainer3").find("td").eq(1).text(obj.titl);
+							$("#srvSeq").val(obj.seq);
+						}).modal();
 
 					}
 				}
@@ -895,7 +920,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 						}
 
-						if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == ""){
+						if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined){
 							alert("평가를 선택해주세요");
 							return false;
 						}
@@ -1120,7 +1145,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//수료여부
 
 						if(resultFlag){
-							debugger;
+							//debugger;
 							cmmCtrl.jsonAjax(function(data){
 								alert("저장되었습니다.");
 								location.href = "./list";

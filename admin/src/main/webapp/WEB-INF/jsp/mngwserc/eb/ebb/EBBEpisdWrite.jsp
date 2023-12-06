@@ -652,7 +652,7 @@
 
                                         </td>
                                     </tr>
-                                    <input type="hidden" class="notRequired" name="examSeq" id="examSeq" value="${rtnDto.examSeq}" disabled="true">
+                                    <input type="hidden" class="notRequired" name="examSeq" id="examSeq" value="${rtnDto.examSeq}" disabled="true" title="평가">
                                     </tbody>
                                 </table>
                             </div>
@@ -1117,3 +1117,5 @@
 <jsp:include page="/WEB-INF/jsp/mngwserc/sv/sva/SVASurveySrchLayer.jsp">
 <jsp:param name="typeCd" value="EDU" />
 </jsp:include>
+
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--강사검색-->

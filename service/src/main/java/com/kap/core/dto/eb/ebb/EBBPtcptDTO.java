@@ -126,5 +126,7 @@ public class EBBPtcptDTO extends BaseDTO {
 
     private List<EBBPtcptDTO> ptcptList;//교육 참여자 목록
 
+    private List<EBBPtcptDTO> atndcList;//교육 참여자 출석목록
+
 
 }

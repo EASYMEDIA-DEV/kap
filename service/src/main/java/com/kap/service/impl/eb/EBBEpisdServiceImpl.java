@@ -173,9 +173,54 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		int ptcptCnt = eBBEpisdMapper.selectEpisdPtcptListCnt(ebbDto);
 
 
+		dto.setPtcptList(ptcptList);
+		dto.setTotalCount(ptcptCnt);
+
+
+		return dto;
+	}
+
+	/**
+	 * 교육 참여자 출석부 목록을 호출한다.
+	 */
+	public EBBPtcptDTO setAtndcList(EBBEpisdDTO ebbDto) throws Exception
+	{
+
+		List<EBBPtcptDTO> ptcptList = new ArrayList();
+		EBBPtcptDTO dto = new EBBPtcptDTO();
+
+		COPaginationUtil page = new COPaginationUtil();
+
+		page.setCurrentPageNo(ebbDto.getPageIndex());
+		page.setRecordCountPerPage(ebbDto.getListRowSize());
+
+		page.setPageSize(ebbDto.getPageRowSize());
+
+		ebbDto.setFirstIndex( page.getFirstRecordIndex() );
+		ebbDto.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+		ptcptList = eBBEpisdMapper.selectEpisdPtcptList(ebbDto);
+		int ptcptCnt = eBBEpisdMapper.selectEpisdPtcptListCnt(ebbDto);
+
+
 
 		dto.setPtcptList(ptcptList);
 		dto.setTotalCount(ptcptCnt);
+		List<EBBPtcptDTO> ptcptAtndcList = new ArrayList();
+		ptcptAtndcList = eBBEpisdMapper.selectPtcptAtndcList(dto);
+
+		for(EBBPtcptDTO orgDto: ptcptList){
+			List<EBBPtcptDTO> tempList = new ArrayList();
+			for(EBBPtcptDTO atndcDto : ptcptAtndcList){
+				//원본 참여자 목록 반복문 돌리면서 출석데이터와 매칭, 매칭하면서 같으면 리스트안에 리스트 넣어줌
+				if(atndcDto.getPtcptSeq() == orgDto.getPtcptSeq()){
+					tempList.add(atndcDto);
+				}
+			}
+			orgDto.setAtndcList(tempList);
+		}
+		dto.setPtcptList(ptcptList);
+
 
 
 		return dto;
@@ -423,8 +468,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			// 반복문을 통해 날짜 출력
 			while (!startDate.isAfter(endDate)) {
 				EBBPtcptDTO atndcDto = new EBBPtcptDTO();
-				System.out.println("@@@날짜 = "+startDate.format(formatter));
-				startDate = startDate.plusDays(1); // 다음 날짜로 이동
 
 				atndcDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
 				atndcDto.setEdctnDt(String.valueOf(startDate));
@@ -434,6 +477,23 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
 				atndcDto.setModId(eBBPtcptDTO.getModId());
 				atndcDto.setModIp(eBBPtcptDTO.getModIp());
+				atndcDtoList.add(atndcDto);
+
+				startDate = startDate.plusDays(1); // 다음 날짜로 이동
+			}
+			//마지막날은 while에서 안되서서 따로 추가해줌
+			if(startDate.isAfter(endDate)){
+				EBBPtcptDTO atndcDto = new EBBPtcptDTO();
+
+				atndcDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
+				atndcDto.setEdctnDt(String.valueOf(startDate));
+				atndcDto.setAtndcDtm(null);
+				atndcDto.setLvgrmDtm(null);
+				atndcDto.setRegId(eBBPtcptDTO.getRegId());
+				atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
+				atndcDto.setModId(eBBPtcptDTO.getModId());
+				atndcDto.setModIp(eBBPtcptDTO.getModIp());
+				atndcDto.setEdctnDt(String.valueOf(startDate));
 				atndcDtoList.add(atndcDto);
 			}
 
