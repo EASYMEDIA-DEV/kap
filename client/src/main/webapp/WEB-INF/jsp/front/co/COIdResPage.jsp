@@ -11,7 +11,10 @@
 
 <div class="cont-wrap" data-controller="controller/co/COLgnCtrl">
     <form id="frmEmail" name="frmEmail" method="post" action="">
-    <input type="hidden" name="id" value="${rtnData.id}" />
+        <!-- CSRF KEY -->
+        <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+        <input type="hidden" name="id" value="${rtnData.id}" />
     <input type="hidden" name="email" value="${rtnData.email}" />
     <input type="hidden" name="name" value="${rtnData.name}" />
 
@@ -39,7 +42,7 @@
                     </div>
                     <div class="btn-wrap align-left">
                         <div class="btn-set">
-                            <button class="btn-text-icon black-circle" id="goToPwd"><span>비밀번호 찾기</span></button>
+                            <a class="btn-text-icon black-circle" href="/pwd-find"><span>비밀번호 찾기</span></a>
                             <button class="btn-text-icon black-circle" id="btnEmail"><span>이메일로 받기</span></button>
                         </div>
                     </div>

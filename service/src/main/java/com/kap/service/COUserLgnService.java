@@ -1,6 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.*;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -32,23 +33,23 @@ public interface COUserLgnService {
     /**
 	 * 로그아웃을 처리한다.
 	 */
-    public void actionLogout(COUserDto cOUserDto, HttpServletRequest request) throws Exception;
+    public void actionLogout(MPAUserDto mpaUserDto, HttpServletRequest request) throws Exception;
     /**
      * 비밀번호를 변경한다.
      */
-    public String setPwdChng(COUserDto cOUserDto) throws Exception;
+    public String setPwdChng(MPAUserDto mpaUserDto) throws Exception;
 
 	/**
 	 * 다음에 비밀번호 변경
-	 * @param cOUserDto
+	 * @param mpaUserDto
 	 * @return
 	 * @throws Exception
 	 */
-    public String setPwdNextChng(COUserDto cOUserDto) throws Exception;
+    public String setPwdNextChng(MPAUserDto mpaUserDto) throws Exception;
     /**
 	 * 드라이브 메뉴 목록을 조회한다.
 	 */
-    public List<COMenuDTO> getDriveMenuList(COUserDto cOUserDto) throws Exception;
+    public List<COMenuDTO> getDriveMenuList(MPAUserDto mpaUserDto) throws Exception;
 	/**
 	 * 로그인 처리에 따른 메뉴를 가져온다.
 	 */
@@ -57,8 +58,8 @@ public interface COUserLgnService {
 	/**
 	 * CMS Root 메뉴 정보를 가져온다.
 	 */
-	public COMenuDTO getCmsRootInf(COUserDto cOUserDto) throws Exception;
+	public COMenuDTO getCmsRootInf(MPAUserDto mpaUserDto) throws Exception;
 
 
-	COUserDto getIdFind(COIdFindDto coIdFindDto) throws Exception;
+	MPAUserDto getIdFind(COIdFindDto coIdFindDto) throws Exception;
 }

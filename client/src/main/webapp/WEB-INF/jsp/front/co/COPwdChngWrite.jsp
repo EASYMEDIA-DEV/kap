@@ -22,7 +22,7 @@
             <form id="frmPwdChng" name="frmPwdChng" method="post" action="" autocomplete="off" data-login-id="${ tmpLgnMap.id }">
                 <!-- CSRF KEY -->
                 <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
+                <input type="hidden" id="pwdChngType" name="pwdChngType"  value="old"/>
                 <p class="con-sub-tit f-title2">안전한 개인정보 보호를 위해 비밀번호를 재설정해주세요.</p>
             <div class="data-enter-form">
                 <div class="row">

@@ -5,6 +5,7 @@ import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.*;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.COLgnService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
@@ -13,6 +14,7 @@ import com.kap.service.dao.COLgnMapper;
 import com.kap.service.dao.COUserLgnMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.apache.logging.log4j.ThreadContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestAttributes;
@@ -67,7 +69,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 		ThreadContext.put("regIp", CONetworkUtil.getMyIPaddress(request));
 		ThreadContext.put("trgtMenuNm", "로그인");
 
-		COUserDto rtnCOUserDto = cOUserLgnMapper.getLoginInfo(cOLoginDTO);
+		MPAUserDto rtnCOUserDto = cOUserLgnMapper.getLoginInfo(cOLoginDTO);
 
 		if (rtnCOUserDto != null)
     	{
@@ -272,7 +274,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
     /**
 	 * 일반 로그아웃을 처리한다.
 	 */
-    public void actionLogout(COUserDto cOUserDto, HttpServletRequest request) throws Exception
+    public void actionLogout(MPAUserDto mpaUserDto, HttpServletRequest request) throws Exception
     {
 		COUserDetailsDTO lgnCOAAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
 		//로그아웃 로그 객체
@@ -289,26 +291,27 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
     /**
      * 비밀번호를 변경한다.
      */
-    public String setPwdChng(COUserDto cOUserDto) throws Exception
+    public String setPwdChng(MPAUserDto mpaUserDto) throws Exception
     {
 		String rtnCode = "";
 		COLoginDTO cOLoginDTO = new COLoginDTO();
-		cOLoginDTO.setId( cOUserDto.getId() );
-		COUserDto rtnCOUserDTO = cOUserLgnMapper.getLoginInfo(cOLoginDTO);
+		cOLoginDTO.setId( mpaUserDto.getId() );
+		MPAUserDto rtnCOUserDTO = cOUserLgnMapper.getLoginInfo(cOLoginDTO);
 		if (rtnCOUserDTO != null)
 		{
 			// 암호화 비밀번호
-			System.out.println(COSeedCipherUtil.encryptPassword(cOUserDto.getPassword(), cOUserDto.getId()));
-			rtnCOUserDTO.setNowEncPwd(COSeedCipherUtil.encryptPassword(cOUserDto.getPassword(), cOUserDto.getId()));
-			rtnCOUserDTO.setNewEncPwd(COSeedCipherUtil.encryptPassword(cOUserDto.getNewPassword(), cOUserDto.getId()));
-
-    		// 현재 비밀번호 확인
-    		if (!rtnCOUserDTO.getPwd().equals(rtnCOUserDTO.getNowEncPwd()))
-        	{
-        		rtnCode = "10";
-        	}
+			System.out.println(COSeedCipherUtil.encryptPassword(mpaUserDto.getPassword(), mpaUserDto.getId()));
+			rtnCOUserDTO.setNowEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getPassword(), mpaUserDto.getId()));
+			rtnCOUserDTO.setNewEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getNewPassword(), mpaUserDto.getId()));
+			rtnCOUserDTO.setPwdChngType(mpaUserDto.getPwdChngType());
+			if(rtnCOUserDTO.getPwdChngType().equals("old")) {
+				// 현재 비밀번호 확인
+				if (!rtnCOUserDTO.getPwd().equals(rtnCOUserDTO.getNowEncPwd())) {
+					rtnCode = "10";
+				}
+			}
 			// 신규 비밀번호 확인
-	    	else if ("".equals(cOUserDto.getNewPassword()) || ( !cOUserDto.getNewPassword().equals(cOUserDto.getPasswordConfirm())) )
+	    	else if ("".equals(mpaUserDto.getNewPassword()) || ( !mpaUserDto.getNewPassword().equals(mpaUserDto.getPasswordConfirm())) )
 	    	{
 	    		rtnCode = "20";
 	    	}
@@ -327,15 +330,17 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
     }
 
 
+
+
 	/**
 	 * 다음에 비밀번호를 변경한다.
 	 */
-	public String setPwdNextChng(COUserDto cOUserDto) throws Exception
+	public String setPwdNextChng(MPAUserDto mpaUserDto) throws Exception
 	{
 		String rtnCode = "";
 		COLoginDTO cOLoginDTO = new COLoginDTO();
-		cOLoginDTO.setId( cOUserDto.getId() );
-		COUserDto rtnCOUserDTO = cOUserLgnMapper.getLoginInfo(cOLoginDTO);
+		cOLoginDTO.setId( mpaUserDto.getId() );
+		MPAUserDto rtnCOUserDTO = cOUserLgnMapper.getLoginInfo(cOLoginDTO);
 		if (rtnCOUserDTO != null)
 		{
 			int actCnt = cOUserLgnMapper.updatePwdNextChng(rtnCOUserDTO);
@@ -351,9 +356,9 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 	/**
 	 * 드라이브 메뉴 목록을 조회한다.
 	 */
-	public List<COMenuDTO> getDriveMenuList(COUserDto cOUserDto) throws Exception
+	public List<COMenuDTO> getDriveMenuList(MPAUserDto mpaUserDto) throws Exception
 	{
-		return cOUserLgnMapper.getDriveMenuList(cOUserDto);
+		return cOUserLgnMapper.getDriveMenuList(mpaUserDto);
 	}
 
   	/**
@@ -365,23 +370,29 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
     	return cOUserLgnMapper.getMenuList(cOUserDetailsDTO);
     }
 
-	/**
-	 * CMS Root 메뉴 정보를 가져온다.
-	 */
-	public COMenuDTO getCmsRootInf(COUserDto cOUserDto) throws Exception
-	{
-		return cOUserLgnMapper.getCmsRootInf(cOUserDto);
+	@Override
+	public COMenuDTO getCmsRootInf(MPAUserDto mpaUserDto) throws Exception {
+		return  cOUserLgnMapper.getCmsRootInf(mpaUserDto);
 	}
 
-	@Override
-	public COUserDto getIdFind(COIdFindDto coIdFindDto) throws Exception {
 
-		String replaceBirth = coIdFindDto.getBirthdate().replace("-", "");
-		coIdFindDto.setBirthdate(replaceBirth.substring(0,4)+"-"+replaceBirth.substring(4,6)+"-"+replaceBirth.substring(6));
-		if(coIdFindDto.getTypes().equals("1")) {
+
+	@Override
+	public MPAUserDto getIdFind(COIdFindDto coIdFindDto) throws Exception {
+		// 1. 휴대폰
+		// 2. 이메일
+		// 3. 본인인증
+
+		if(!StringUtils.isEmpty(coIdFindDto.getBirthdate())) {
+			String replaceBirth = coIdFindDto.getBirthdate().replace("-", "");
+				coIdFindDto.setBirthdate(replaceBirth.substring(0, 4) + "-" + replaceBirth.substring(4, 6) + "-" + replaceBirth.substring(6));
+		}
+
+		if(!StringUtils.isEmpty(coIdFindDto.getMobile_no())) {
 			String replaceHp = coIdFindDto.getMobile_no().replace("-", "");
 			coIdFindDto.setMobile_no(replaceHp.substring(0, 3) + "-" + replaceHp.substring(3, 7) + "-" + replaceHp.substring(7));
 		}
+
 
 		return cOUserLgnMapper.getIdFind(coIdFindDto);
 	}

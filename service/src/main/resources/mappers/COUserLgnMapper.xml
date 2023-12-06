@@ -9,7 +9,7 @@
         ==========   ======    ==============
         2020.10.23   허진영       최초생성
     -->
-	<select id="getLoginInfo" parameterType="COLoginDTO" resultType="COUserDto">
+	<select id="getLoginInfo" parameterType="COLoginDTO" resultType="MPAUserDto">
 		select  /* COUserLgnMapper.getLoginInfo */
 			mem_seq
 			 , mem_cd
@@ -39,7 +39,7 @@
         ==========   ======    ==============
         2020.10.23   허진영       최초생성
     -->
-	<select id="actionLogin" parameterType="COUserDto" resultType="COUserDetailsDTO">
+	<select id="actionLogin" parameterType="MPAUserDto" resultType="COUserDetailsDTO">
 		select /* COUserLgnMapper.actionLogin */
 			  mem_seq as seq
 			, mem_cd as auth_cd
@@ -65,7 +65,7 @@
         ==========   ======    ============== 
         2020.10.23   허진영       최초생성
     -->
-	<update id="updateLgnFailCntIncrs" parameterType="COUserDto">
+	<update id="updateLgnFailCntIncrs" parameterType="MPAUserDto">
 		update /* COUserLgnMapper.updateLgnFailCntIncrs */ co_mem_mst
 		set
 			lgn_fail_cnt = ifnull(lgn_fail_cnt, 0) + 1
@@ -110,7 +110,7 @@
         ==========   ======    ==============
         2020.10.23   허진영       최초생성
     -->
-	<update id="updatePwdChng" parameterType="COUserDto">
+	<update id="updatePwdChng" parameterType="MPAUserDto">
 		update /* COUserLgnMapper.updatePwdChng */ co_mem_mst
 		set
 			  pwd = #{newEncPwd}
@@ -129,7 +129,7 @@
     ==========   ======    ==============
     2020.10.23   허진영       최초생성
 -->
-	<update id="updatePwdNextChng" parameterType="COUserDto">
+	<update id="updatePwdNextChng" parameterType="MPAUserDto">
 		update /* COUserLgnMapper.updatePwdNextChng */ co_mem_mst
 		set
 		   pwd_chng_dtm = DATE_SUB(NOW(), INTERVAL 2 MONTH)
@@ -148,7 +148,7 @@
         ==========   ======    ==============
         2020.10.23   허진영       최초생성
     -->
-	<select id="getDriveMenuList" parameterType="COUserDto" resultType="COMenuDTO">
+	<select id="getDriveMenuList" parameterType="MPAUserDto" resultType="COMenuDTO">
 				select /* COUserLgnMapper.getDriveMenuList */
 				menu_seq
 				, parnt_seq
@@ -248,7 +248,7 @@
         ==========   ======    ==============
         2022.04.25   신혜정       최초생성
     -->
-	<select id="getPwdHistoryCheck" parameterType="COUserDto" resultType="java.lang.String">
+	<select id="getPwdHistoryCheck" parameterType="MPAUserDto" resultType="java.lang.String">
 		select /* COUserLgnMapper.getPwdHistoryCheck */
 			pwd.pwd_seq
 		from
@@ -268,7 +268,7 @@
         ==========   ======    ==============
         2022.04.25   신혜정       최초생성
     -->
-	<delete id="deletePwdHistory" parameterType="COUserDto">
+	<delete id="deletePwdHistory" parameterType="MPAUserDto">
 		delete /* COUserLgnMapper.deletePwdHistory */  pwd
 		from co_adm_pwd_dtl pwd join co_adm_mst adm on pwd.adm_seq = adm.adm_seq
 		where
@@ -288,7 +288,7 @@
         ==========   ======    ==============
         2022.04.25   신혜정       최초생성
     -->
-	<update id="updatePwdHistory" parameterType="COUserDto">
+	<update id="updatePwdHistory" parameterType="MPAUserDto">
 		update /* COUserLgnMapper.updatePwdHistory */
 		    co_adm_pwd_dtl pwd
 			join co_adm_mst adm on pwd.adm_seq = adm.adm_seq
@@ -314,8 +314,8 @@
         ==========   ======    ==============
         2022.04.25   신혜정       최초생성
     -->
-	<insert id="insertPwdHistory" parameterType="COUserDto" >
-		<selectKey keyProperty="ord,memSeq" order="BEFORE" resultType="COUserDto">
+	<insert id="insertPwdHistory" parameterType="MPAUserDto" >
+		<selectKey keyProperty="ord,memSeq" order="BEFORE" resultType="MPAUserDto">
 			select
 			       ifnull(max(pwd.ord)+1, 1) as ord
 			     , adm.adm_seq as admSeq
@@ -355,7 +355,7 @@
         ==========   ======    ==============
         2099.99.99   &&&       최초생성
     -->
-	<select id="getCmsRootInf" parameterType="COUserDto" resultType="COMenuDTO">
+	<select id="getCmsRootInf" parameterType="MPAUserDto" resultType="COMenuDTO">
 		SELECT /* COUserLgnMapper.getCmsRootInf */
 			MENU_SEQ
 			 , LFT_VAL
@@ -377,28 +377,37 @@
     ==========   ======    ==============
     2020.10.23   허진영       최초생성
 -->
-	<select id="getIdFind" parameterType="COIdFindDto" resultType="COUserDto">
+	<select id="getIdFind" parameterType="COIdFindDto" resultType="MPAUserDto">
 		select /* COUserLgnMapper.idFind */
-			mem_seq
-		  , id
-		  , email
-		  , name
+			a.mem_seq
+		  , a.id
+		  , a.email
+		  , a.name
 		from
 			co_mem_mst a
+		 inner join co_mem_dtl b
+		  on a.mem_seq = b.mem_seq
 		where 1=1
 		<if test="name != null and name != ''.toString() ">
-		  and name = #{name}
+		  and a.name = #{name}
 		</if>
 		<if test="birthdate != null and birthdate != ''.toString() ">
-		  and birth = #{birthdate}
+		  and a.birth = #{birthdate}
 		</if>
 		<if test="mobile_no != null and mobile_no != ''.toString() ">
-		  and hp_no =#{mobile_no}
+		  and a.hp_no =#{mobile_no}
 		</if>
 		<if test="email != null and email != ''.toString() ">
-			and email =#{email}
+			and a.email =#{email}
+		</if>
+		<if test="id != null and id != ''.toString() ">
+			and a.id = #{id}
+		</if>
+		<if test="ci != null and ci != ''.toString() ">
+			and b.ci = #{ci}
 		</if>
 		  and wthdrw_yn = 'Y'
 	</select>
+
 
 </mapper>
