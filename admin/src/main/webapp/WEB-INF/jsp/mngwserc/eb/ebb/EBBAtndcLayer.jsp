@@ -63,26 +63,19 @@
                     </fieldset>
                     <fieldset>
                         <div class="form-group text-sm">
-                            <div class="form-flexbox">
-                                <label class="col-sm-1 control-label">학습방식<span class="star text-danger"> *</span></label>
-                                <div class="col-sm-5">
-                                    <p class="form-control-static stduyMthd">${rtnDto.stduyMthdCdNm}</p>
-                                </div>
+                            <label class="col-sm-1 control-label">학습방식<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-5">
+                                <p class="form-control-static stduyMthd">${rtnDto.stduyMthdCdNm}</p>
                             </div>
 
-                            <div class="form-flexbox">
-                                <label class="col-sm-1 control-label">학습시간<span class="star"> *</span></label>
-                                <div class="col-sm-5">
-                                    <p class="form-control-static stduyDtm">
-                                        <c:if test="${rtnDto.stduyDdCdNm ne null}">
-                                            ${rtnDto.stduyDdCdNm}일/${rtnDto.stduyTimeCdNm} 시간
-                                        </c:if>
-                                    </p>
-                                </div>
+                            <label class="col-sm-1 control-label">학습시간<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <p class="form-control-static stduyDtm">
+                                    <c:if test="${rtnDto.stduyDdCdNm ne null}">
+                                        ${rtnDto.stduyDdCdNm}일/${rtnDto.stduyTimeCdNm} 시간
+                                    </c:if>
+                                </p>
                             </div>
-
-
-
                         </div>
                     </fieldset>
 
@@ -233,15 +226,12 @@
                         <div id="ptcptPagingLayerContainer"/>
                     </div>
                     <!--리스트 종료 -->
-
-
-
-
                 </div>
 
+
                 <div class="modal-footer row">
-                    <div class="text-center">
-                        <button type="button" class="btn btn-success down mt btnCouseSrchLayerChoice">선택</button>
+                    <div class="pull-right">
+                        <button type="submit" class="btn btn-sm btn-success">저장</button>
                     </div>
                 </div>
                 <!--리스트 종료 -->

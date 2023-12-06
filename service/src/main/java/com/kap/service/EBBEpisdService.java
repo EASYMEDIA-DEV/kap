@@ -78,5 +78,13 @@ public interface EBBEpisdService {
 	 */
 	public EBBPtcptDTO setPtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
+	/**
+	 * 교육차수 신청자 출석부 수정
+	 */
+	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+
+
 }
 
