@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 만족도종합결과(Modal) -->
-<div class="modal fade consultSuveyRsltLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/cb/cbb/CBBConsultSuveyRsltLayertCtrl">
+<div class="modal fade consultSuveyRsltLayer" tabindex="-1" role="dialog" data-controller="controller/cb/cbb/CBBConsultSuveyRsltLayertCtrl">
   <div class="modal-dialog modal-lg modal-center" role="document" style="width:1500px;">
     <div class="modal-content">
       <div class="modal-header">

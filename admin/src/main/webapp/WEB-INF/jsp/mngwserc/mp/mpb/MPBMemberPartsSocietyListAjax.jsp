@@ -31,6 +31,7 @@
         <input type="hidden" class="telNo" value="${list.telNo}"/>
         <input type="hidden" class="pstnCd" value="${list.pstnCd}"/>
         <input type="hidden" class="pstnCdNm" value="${list.pstnCdNm}"/>
+        <input type="hidden" class="deptDtlNm" value="${list.deptDtlNm}"/>
 
       </tr>
     </c:forEach>

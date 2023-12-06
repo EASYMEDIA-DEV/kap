@@ -1053,6 +1053,29 @@
 	</select>
 
 	<!--
+      쿼리명 : EBBEpisdMapper.selectPtcptAtndcList
+      설  명 : 교육차수관리 - 참여자 목록
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectPtcptAtndcList" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
+
+		SELECT /*EBBEpisdMapper.selectPtcptAtndcList*/
+		ptcpt_seq
+		, edctn_dt
+		, atndc_dtm
+		, lvgrm_dtm
+
+		FROM ep_edctn_atndc_dtl
+		WHERE ptcpt_seq IN
+		<foreach collection="ptcptList" item="ptcptList" index="index" separator=", " open="(" close=")">
+			#{ptcptList.ptcptSeq}
+		</foreach>
+
+	</select>
+
+	<!--
              쿼리명 : EBBEpisdMapper.updateEpisdPtcpt
              설  명 : 교육차수관리 - 참여자 목록 수정(평가점수, 수료상태 변경)
               수정일     수정자       수정내용

@@ -1,44 +1,44 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
 <div class="container-fluid">
-  <div class="card-body" data-controller="controller/co/COFormCtrl controller/cb/cbb/CBBManageConsultListCtrl">
-    <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
-    <form class="form-horizontal" name="frmSearch" method="post" action="" >
-      <!-- 현재 페이징 번호 -->
-      <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
-      <!-- 페이징 버튼 사이즈 -->
-      <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
-      <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
-      <!-- CSRF KEY -->
-      <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-      <!-- 상세로 이동시 시퀀스 -->
-      <input type="hidden" id="detailsKey" name="detailsKey" value="" />
-      <!--기간 검색 시작-->
-      <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-        <jsp:param name="srchText" value="기간검색" />
-        <jsp:param name="srchOption" value="신청일,방문일,킥오프일,렙업일,등록일,수정일" />
-        <jsp:param name="srchType" value="cnstg" />
-      </jsp:include>
-      <fieldset>
-        <div class="form-group text-sm">
-          <label class="col-sm-1 control-label">구분</label>
-          <div class="col-sm-5">
-            <label class="checkbox-inline c-checkbox">
-              <input type="checkbox" class="checkboxAll" />
-              <span class="ion-checkmark-round"></span> 전체
-            </label>
-            <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-              <c:if test="${ cdList.cd eq 'COMPANY01001' or cdList.cd eq 'COMPANY01002' }">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/cb/cbb/CBBManageConsultListCtrl">
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
+        <form class="form-horizontal" name="frmSearch" method="post" action="" >
+        <!-- 현재 페이징 번호 -->
+        <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+        <!-- 페이징 버튼 사이즈 -->
+        <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
+        <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+        <!-- CSRF KEY -->
+        <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <!-- 상세로 이동시 시퀀스 -->
+        <input type="hidden" id="detailsKey" name="detailsKey" value="" />
+        <!--기간 검색 시작-->
+        <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
+          <jsp:param name="srchText" value="기간검색" />
+          <jsp:param name="srchOption" value="신청일,방문일,킥오프일,렙업일,등록일,수정일" />
+          <jsp:param name="srchType" value="cnstg" />
+        </jsp:include>
+        <fieldset>
+            <div class="form-group text-sm">
+              <label class="col-sm-1 control-label">구분</label>
+              <div class="col-sm-5">
                 <label class="checkbox-inline c-checkbox">
-                  <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCdList, cdList.cd)}">checked</c:if> />
-                  <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                  <input type="checkbox" class="checkboxAll" />
+                  <span class="ion-checkmark-round"></span> 전체
                 </label>
-              </c:if>
-            </c:forEach>
-          </div>
-        </div>
-      </fieldset>
-      <fieldset>
+              <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                <c:if test="${ cdList.cd eq 'COMPANY01001' or cdList.cd eq 'COMPANY01002' }">
+                  <label class="checkbox-inline c-checkbox">
+                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCdList, cdList.cd)}">checked</c:if> />
+                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                  </label>
+                </c:if>
+              </c:forEach>
+              </div>
+            </div>
+        </fieldset>
+        <fieldset>
         <div class="form-group text-sm">
           <label class="col-sm-1 control-label">지도분야</label>
           <div class="col-sm-5">
