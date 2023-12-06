@@ -85,7 +85,27 @@ public class COCNiceMyResDto  {
     private String businessno;
 
     @Schema(title = "요청 시 전달 받은 RECEIVEDATA" , example = "{}" )
+    private ReceiveDatas receivedatass;
+
+    @Schema(title = "요청 시 전달 받은 RECEIVEDATA" , example = "{}" )
     private String receivedata;
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class ReceiveDatas {
+        private String redirectUrl ;
+
+        private String paramsOne ;
+
+        private String paramsTwo ;
+
+        private String paramsThree;
+
+        private String paramsFour;
+
+        private String paramsFive;
+    }
 
 }

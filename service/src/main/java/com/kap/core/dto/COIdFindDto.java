@@ -54,6 +54,10 @@ public class COIdFindDto extends BaseDTO  {
     @Schema(title = "아이디", example = "1")
     private String id;
 
+    @Schema(title = "ci")
+    private String ci;
+
+    private String param1;
 
 
 }
