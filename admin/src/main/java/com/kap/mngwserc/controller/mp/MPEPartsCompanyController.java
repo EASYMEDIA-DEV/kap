@@ -228,10 +228,6 @@ public class MPEPartsCompanyController {
     {
         try
         {
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            mpePartsCompanyDTO.setModId(cOUserDetailsDTO.getId());
-            mpePartsCompanyDTO.setModIp(cOUserDetailsDTO.getLoginIp());
-
             mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getBsnmNo());
             modelMap.addAttribute("respCnt", mpePartsCompanyService.updatePartsCompany(mpePartsCompanyDTO));
         }

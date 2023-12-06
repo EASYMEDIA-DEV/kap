@@ -1,12 +1,9 @@
 package com.kap.mngwserc.controller.eb;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.COCodeService;
-import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBCVisitEduService;
 import com.kap.service.MPEPartsCompanyService;
 import lombok.RequiredArgsConstructor;
@@ -58,6 +55,14 @@ public class EBCVisitEduController {
     @GetMapping(value="/list")
     public String getVisitEduListPage(EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap) throws Exception
     {
+        // 공통코드 배열 셋팅
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+        cdDtlList.add("EBC_VISIT_CD");
+        cdDtlList.add("COMPANY_TYPE");
+        cdDtlList.add("ADDR_CD");
+
+        modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
         modelMap.addAttribute("rtnData", ebcVisitEduService.selectVisitEduList(ebcVisitEduDTO));
 
         return "mngwserc/eb/ebc/EBCVisitEduList.admin";
@@ -97,42 +102,45 @@ public class EBCVisitEduController {
             // 코드 set
             cdDtlList.add("COMPANY_TYPE");
             cdDtlList.add("CO_YEAR_CD");
-             cdDtlList.add("MEM_CD");
+            cdDtlList.add("MEM_CD");
             cdDtlList.add("ADDR_CD");
             cdDtlList.add("EBC_VISIT_CD");
 
-            mpePartsCompanyDTO.setBsnmNo(mpePartsCompanyDTO.getBsnmNo());
+            mpePartsCompanyDTO.setBsnmNo(ebcVisitEduDTO.getAppctnBsnmNo());
             MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            modelMap.addAttribute("twoDpthCdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
-            modelMap.addAttribute("fourDpthCdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "4"));
-
-            COCodeDTO cOCodeDTO = new COCodeDTO();
-            cOCodeDTO.setCd("COMPANY01001");
-            modelMap.addAttribute("oneCtgryCdList", cOCodeService.getCdIdList(cOCodeDTO));
-
-            cOCodeDTO.setCd("COMPANY01002");
-            modelMap.addAttribute("twoCtgryCdList", cOCodeService.getCdIdList(cOCodeDTO));
 
             // 방문결과 관련 코드 조회
+            COCodeDTO cOCodeDTO = new COCodeDTO();
+            cOCodeDTO.setCd("EBC_VISIT_CD03");
+            modelMap.addAttribute("totalCdList", cOCodeService.getCdIdList(cOCodeDTO));
+
             cOCodeDTO.setCd("EBC_VISIT_CD03001");
-            modelMap.addAttribute("oneCdList", cOCodeService.getCdIdList(cOCodeDTO));
+            modelMap.addAttribute("eduCdList", cOCodeService.getCdIdList(cOCodeDTO));
 
             cOCodeDTO.setCd("EBC_VISIT_CD03002");
-            modelMap.addAttribute("twoCdList", cOCodeService.getCdIdList(cOCodeDTO));
+            modelMap.addAttribute("fieldCdList", cOCodeService.getCdIdList(cOCodeDTO));
 
             cOCodeDTO.setCd("EBC_VISIT_CD03003");
-            modelMap.addAttribute("threeCdList", cOCodeService.getCdIdList(cOCodeDTO));
+            modelMap.addAttribute("positionCdList", cOCodeService.getCdIdList(cOCodeDTO));
 
             cOCodeDTO.setCd("EBC_VISIT_CD03004");
-            modelMap.addAttribute("fourCdList", cOCodeService.getCdIdList(cOCodeDTO));
+            modelMap.addAttribute("attendCdList", cOCodeService.getCdIdList(cOCodeDTO));
+
+            cOCodeDTO.setCd("EBC_VISIT_CD03005");
+            modelMap.addAttribute("satisfactionCdList", cOCodeService.getCdIdList(cOCodeDTO));
+
+            cOCodeDTO.setCd("EBC_VISIT_CD03006");
+            modelMap.addAttribute("eduTimeCdList", cOCodeService.getCdIdList(cOCodeDTO));
 
 
             if (originList.getList().size() != 0) {
                 modelMap.addAttribute("rtnInfo", originList.getList().get(0));
             }
             modelMap.addAttribute("rtnInfo", ebcVisitEduService.selectVisitEduDtl(ebcVisitEduDTO));
+            modelMap.addAttribute("isttrList", ebcVisitEduService.selectIsttrList(ebcVisitEduDTO));
+            modelMap.addAttribute("resultOpList", ebcVisitEduService.selectResultOpList(ebcVisitEduDTO));
             modelMap.addAttribute("sqInfoList", originList);
         }
         catch (Exception e)
@@ -160,6 +168,8 @@ public class EBCVisitEduController {
             // 코드 set
             cdDtlList.add("COMPANY_TYPE");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+
             System.err.println(cOCodeService.getCmmCodeBindAll(cdDtlList));
         }
         catch (Exception e)
@@ -189,6 +199,10 @@ public class EBCVisitEduController {
             detailList = cOCodeService.getCdIdList(cOCodeDTO);
             modelMap.addAttribute("cdDtlList", detailList);
             modelMap.addAttribute("cdName", cOCodeDTO.getCd());
+
+            //신청분야상세코드 목록
+            modelMap.addAttribute("appctnTypeList", ebcVisitEduService.selectAppctnTypeList(ebcVisitEduDTO));
+
         }
         catch (Exception e)
         {
@@ -203,7 +217,7 @@ public class EBCVisitEduController {
     /**
      * 방문교육 정보를 수정한다.
      *
-     */
+     *//*
     @RequestMapping(value="/update")
     public String updateVisitEdu(EBCVisitEduDTO ebcVisitEduDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap) throws Exception
     {
@@ -225,6 +239,30 @@ public class EBCVisitEduController {
             throw new Exception(e.getMessage());
         }
 
+        return "jsonView";
+    }*/
+
+    /**
+     * 방문교육 정보를 수정한다.
+     *
+     */
+    @PostMapping(value="/update")
+    public String updateVisitEdu(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap) throws Exception
+    {
+        try{
+            modelMap.addAttribute("rtnData", ebcVisitEduService.updateVisitEdu(ebcVisitEduDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            System.err.println("에러메시지1 = " + e);
+            System.err.println("에러메시지2 = " + e.getMessage());
+
+            throw new Exception(e.getMessage());
+        }
         return "jsonView";
     }
 

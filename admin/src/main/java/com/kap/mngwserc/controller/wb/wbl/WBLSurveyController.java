@@ -16,9 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -317,5 +314,44 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    @Operation(summary = "응답 초기화", tags = "", description = "")
+    @PostMapping(value="/updateSurveyRspn")
+    public String updateSurveyRspn(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wLSurveyService.updateSurveyRspn(wBLSurveyMstInsertDTO, request ));
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    @GetMapping(value = "/excel-down")
+    public void getSurveyListExcel(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            wBLSurveyMstSearchDTO.setExcelYn("Y");
+            //엑셀 생성
+            wLSurveyService.excelDownload(wLSurveyService.selectSurveyList(wBLSurveyMstSearchDTO), response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
     }
 }

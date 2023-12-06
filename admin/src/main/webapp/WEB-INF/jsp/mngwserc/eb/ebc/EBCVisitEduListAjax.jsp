@@ -12,30 +12,27 @@
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
                 <td class="text-center">교육결과값</td>
                 <td class="text-center">
-                    <a href="javascript:" class="listView" data-details-key="${list.vstSeq}">
+                    <a href="javascript:" class="listView" data-details-key="${list.vstSeq}" data-mem-seq="${list.memSeq}" data-vst-rslt-seq="${list.vstSeq}" data-appctn-bsnm-no="${list.appctnBsnmNo}">
                             ${list.cmpnNm}
                     </a>
                 </td>
-                <td class="text-center">${list.ctgryName}</td>
-                <td class="text-center">${list.cmpnSizeName}</td>
                 <td class="text-center">${list.appctnBsnmNo}</td>
-                <td class="text-center">${list.bscAddr}</td>
-                <td class="text-center">${list.slsPmt}</td>
-                <td class="text-center">${list.mpleCnt}</td>
-                <td class="text-center">${list.firstRgnsName} ${list.scndRgnsName}</td>
-                <td class="text-center">교육상태값</td>
-                <td class="text-center">${list.appctnCnt}</td>
-                <td class="text-center">${list.ptcptHhNum}</td>
-                <td class="text-center">${list.hopeDt}</td>
-                <td class="text-center">${list.edctnStrtDt}</td>
-                <td class="text-center">${list.edctnEndDt}</td>
+                <td class="text-center">${list.ctgryName}</td>
+                <td class="text-center">${list.sizeName}</td>
+                <td class="text-center">${kl:convertDate(list.visitRegDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}</td>
+                <td class="text-center">${list.appctnFldName}</td>
+                <td class="text-center">${kl:convertDate(list.hopeDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</td>
                 <td class="text-center">${list.ptcptCnt}</td>
-                <td class="text-center">${list.memName}(${list.memId})</td>
+                <td class="text-center">${list.ptcptHhNum}</td>
+                <td class="text-center">${list.memName}<br>(${kl:idMasking(list.memId)})</td>
                 <td class="text-center">${list.memHpNo}</td>
                 <td class="text-center">${list.memEmail}</td>
-                <td class="text-center">${list.regDtm}</td>
-                <td class="text-center">${list.modName}(${list.modId})</td>
-                <td class="text-center">${list.modDtm}</td>
+                <td class="text-center">${list.edctnSttsName}</td>
+                <td class="text-center">${list.cnfrmdTheme}</td>
+                <td class="text-center">${kl:convertDate(list.edctnDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</td>
+                <td class="text-center">${list.cmptnCnt}</td>
+                <td class="text-center">${list.modName}(${kl:idMasking(list.modId)})</td>
+                <td class="text-center">${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}</td>
             </tr>
         </c:forEach>
     </c:when>

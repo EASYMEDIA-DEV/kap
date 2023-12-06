@@ -1570,7 +1570,7 @@ var cmmCtrl = (function(){
 				$("#"+bscAddr).val(addr);
 
 				// 방문교육시 교육장소 받아오기
-				$("#edctnPlace").val(data.sido + " " + data.sigungu);
+				$("#edctnPlaceAddr").val(data.sido + " " + data.sigungu);
 
 				// 커서를 상세주소 필드로 이동한다.
 				$("#"+dtlAddr).focus();

@@ -201,9 +201,8 @@
                         <div class="col-sm-5">
                             <p class="form-control-static">${ rtnDto.ptcptCd eq 'E' ? '대기' : rtnDto.ptcptCd eq 'N' ? '미참여' : '참여' }
                             </p>
-                            <c:if test="${rtnDto.ptcptCd eq 'Y'}"> <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnReset">초기화</button></c:if>
+                            <c:if test="${rtnDto.ptcptCd eq 'Y'}"> <button type="button" class="btn btn-inverse btn-sm mb-sm btnReset" data-srv-rspn-seq="${rtnDto.srvRspnSeq}" data-cxstn-srv-seq="${rtnDto.cxstnSrvSeq}">초기화</button></c:if>
                         </div>
-
                     </c:if>
                 </div>
             </fieldset>

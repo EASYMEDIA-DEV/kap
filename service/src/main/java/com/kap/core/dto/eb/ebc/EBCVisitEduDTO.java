@@ -1,7 +1,7 @@
 package com.kap.core.dto.eb.ebc;
 
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
+import com.kap.core.dto.COFileDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -34,6 +34,7 @@ import java.util.List;
 @Schema(title = "방문교육 관리")
 public class EBCVisitEduDTO extends BaseDTO {
 
+    // 방문마스터
     @Schema(title = "방문순번", example = "숫자")
     private Integer vstSeq;
 
@@ -43,59 +44,23 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "신청사업자번호", example = "숫자")
     private String appctnBsnmNo;
 
-    @Schema(title = "담당자이름", example = "")
-    private String picName;
-
-    @Schema(title = "담당자이메일", example = "")
-    private String picEmail;
-
-    @Schema(title = "담당자부서명", example = "")
-    private String picDeptNm;
-
-    @Schema(title = "담당자직급명", example = "")
-    private String picPstnNm;
-
-    @Schema(title = "담당자휴대전화번호", example = "")
-    private String picHpNo;
-
-    @Schema(title = "담당자회사전화번호", example = "")
-    private String picCmpnTelNo;
-
-    @Schema(title = "회사규모코드", example = "")
-    private String cmpnSizeCd;
-
-    @Schema(title = "회사규모명", example = "")
-    private String cmpnSizeName;
-
-    @Schema(title = "승용상용코드", example = "")
-    private String rdngCmbsnCd;
-
-    @Schema(title = "첫번째지역코드", example = "")
-    private String firstRgnsCd;
-
-    @Schema(title = "첫번째지역명", example = "")
-    private String firstRgnsName;
-
-    @Schema(title = "두번째지역코드", example = "")
-    private String scndRgnsCd;
-
-    @Schema(title = "두번째지역명", example = "")
-    private String scndRgnsName;
-
-    @Schema(title = "홈페이지URL", example = "")
-    private String hmpgeUrl;
-
     @Schema(title = "신청사유", example = "")
     private String appctnRsn;
 
     @Schema(title = "신청분야코드", example = "")
     private String appctnFldCd;
 
-    @Schema(title = "신청주체내용", example = "")
-    private String appctnMngntCntn;
+    @Schema(title = "신청분야명", example = "")
+    private String appctnFldName;
 
-    @Schema(title = "신청내용", example = "")
-    private String appctnCntn;
+    @Schema(title = "신청분야상세코드", example = "")
+    private String cd;
+
+    @Schema(title = "신청분야상세리스트", example = "")
+    private List<String> appctnTypeCdList;
+
+    @Schema(title = "신청주체내용", example = "")
+    private String appctnThemeCntn;
 
     @Schema(title = "희망일자", example = "")
     private String hopeDt;
@@ -113,26 +78,42 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "장소상세주소", example = "")
     private String placeDtlAddr;
 
+    @Schema(title = "소재지 검색을 위한 교육장소주소값", example = "")
+    private String edctnPlaceAddr;
+
     @Schema(title = "참여대상내용", example = "")
     private String ptcptTrgtCntn;
 
-    @Schema(title = "참여수", example = "")
+    @Schema(title = "교육인원", example = "")
     private Integer ptcptCnt;
 
-    @Schema(title = "참여시코드", example = "")
+    @Schema(title = "교육시간코드", example = "")
     private String ptcptHh;
 
-    @Schema(title = "참여시간", example = "숫자")
+    @Schema(title = "교육시간", example = "숫자")
     private Integer ptcptHhNum;
 
     @Schema(title = "소개파일순번", example = "")
-    private String itrdcFileSeq;
+    private Integer itrdcFileSeq;
 
     @Schema(title = "등록ID", example = "")
     private String regId;
 
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
+
+    @Schema(title = "방문교육신청일시", example = "yyyy-MM-dd hh:mm:ss")
+    private String visitRegDtm;
+
+    @Schema(title = "방문교육수정ID", example = "")
+    private String visitModId;
+
+    @Schema(title = "방문교육수정IP", example = "127.0.0.1")
+    private String visitModIp;
+
+    @Schema(title = "방문교육수정일시", example = "yyyy-MM-dd hh:mm:ss")
+    private String visitModDtm;
+
 
     @Schema(title = "등록일시", example = "yyyy-MM-dd hh:mm:ss")
     private String regDtm;
@@ -166,13 +147,13 @@ public class EBCVisitEduDTO extends BaseDTO {
     private String memDeptCd;
 
     @Schema(title = "신청회원 부서상세명", example = "")
-    private String memDeptDtlName;
+    private String memDeptDtlNm;
 
     @Schema(title = "신청회원 직급코드", example = "")
     private String memPstnCd;
 
     @Schema(title = "신청회원 직급상세명", example = "")
-    private String memPstnName;
+    private String memPstnNm;
 
     // 방문교육을 신청한 회사 정보
     @Schema(title = "선택된 구분값 가져오기", example = "")
@@ -195,6 +176,9 @@ public class EBCVisitEduDTO extends BaseDTO {
 
     @Schema(title = "규모코드", example = "")
     private String sizeCd;
+
+    @Schema(title = "규모명", example = "")
+    private String sizeName;
 
     @Schema(title = "설립일자", example = "")
     private String stbsmDt;
@@ -239,7 +223,7 @@ public class EBCVisitEduDTO extends BaseDTO {
     private String pay5StarCd;
 
     @Schema(title = "납입5스타년도", example = "")
-    private String pay5StarYear;
+    private Integer pay5StarYear;
 
     @Schema(title = "기술5스타코드", example = "")
     private String tchlg5StarCd;
@@ -281,59 +265,44 @@ public class EBCVisitEduDTO extends BaseDTO {
     private Integer isttrSeq;
 
     @Schema(title = "강사이름", example = "")
-    private Integer name;
+    private String name;
 
     @Schema(title = "강사소속", example = "")
-    private Integer ffltnNm;
+    private String ffltnNm;
 
     @Schema(title = "강사약력", example = "")
-    private Integer spclCntn;
+    private String spclCntn;
 
     @Schema(title = "강사리스트", example = "")
-    private List<MPCLecturerDTO> isttrList;
+    private List<EBCVisitEduDTO> isttrSeqList;
 
     // 방문교육 결과상세
-    @Schema(title = "교육시작일자", example = "yyyy-MM-dd")
-    private String edctnStrtDt;
+    @Schema(title = "방문결과순번", example = "숫자")
+    private Integer vstRsltSeq;
 
-    @Schema(title = "교육종료일자", example = "yyyy-MM-dd")
-    private String edctnEndDt;
+    @Schema(title = "확정주제", example = "")
+    private String cnfrmdTheme;
+
+    @Schema(title = "교육상태코드", example = "")
+    private String edctnSttsCd;
+
+    @Schema(title = "교육상태명", example = "")
+    private String edctnSttsName;
+
+    @Schema(title = "교육년도", example = "숫자")
+    private Integer edctnYear;
+
+    @Schema(title = "교육일시", example = "yyyy-MM-dd hh:mm:ss")
+    private String edctnDtm;
 
     @Schema(title = "교육장소", example = "")
     private String edctnPlace;
 
-    @Schema(title = "협업기관", example = "")
-    private String cprtnInstt;
+    @Schema(title = "수료인원", example = "숫자")
+    private Integer cmptnCnt;
 
-    @Schema(title = "교육계획수", example = "숫자")
-    private Integer edctnPlanCnt;
-
-    @Schema(title = "강사1 교육시간", example = "숫자")
-    private Integer isttrEdctnTime1;
-
-    @Schema(title = "강사2 교육시간", example = "숫자")
-    private Integer isttrEdctnTime2;
-
-    @Schema(title = "교육방법", example = "")
-    private String edctnMthd;
-
-    @Schema(title = "교육신청인원", example = "숫자")
-    private Integer appctnCnt;
-
-    @Schema(title = "시행코드 - 교육결과", example = "")
-    private String enfrcmntCd;
-
-    @Schema(title = "방문교육회사", example = "")
-    private String vstEdctnCmpn;
-
-    @Schema(title = "방문교육주제", example = "")
-    private String vstEdctnTheme;
-
-    @Schema(title = "방문교육일자", example = "yyyy-MM-dd")
-    private String vstEdctnDt;
-
-    @Schema(title = "방문교육시간", example = "숫자")
-    private Integer vstEdctnTime;
+    @Schema(title = "참석률", example = "숫자")
+    private Integer ptcptRate;
 
     @Schema(title = "강의파일순번", example = "숫자")
     private Integer lctrFileSeq;
@@ -342,6 +311,9 @@ public class EBCVisitEduDTO extends BaseDTO {
     private Integer etcMatlsFileSeq;
 
     //방문교육 결과 옵션 상세
+    @Schema(title = "결과옵션순번", example = "")
+    private Integer rsltOptnSeq;
+
     @Schema(title = "결과구분코드", example = "")
     private String rsltTypeCd;
 
@@ -349,11 +321,13 @@ public class EBCVisitEduDTO extends BaseDTO {
     private String optnCd;
 
     @Schema(title = "결과값", example = "")
-    private String rsltVal;
+    private Integer rsltVal;
 
     @Schema(title = "옵션정렬", example = "")
     private Integer optnOrd;
 
+    @Schema(title = "방문교육결과옵션상세 결과코드 리스트", example = "")
+    private List<EBCVisitEduDTO> resultOpList;
 
     @Schema(title = "조회 리스트", example = "")
     private List<EBCVisitEduDTO> list;
@@ -365,9 +339,40 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "검색 등록/수정 기간 종료일자", example = "yyyy-MM-dd")
     private String dEndDt;
 
+    // 검색
+    @Schema(title = "신청분야코드 리스트", example = "")
+    private List<String> appctnFldList;
+
+    @Schema(title = "부품사구분 리스트", example = "")
+    private List<String> ctgryCdList;
+
+    @Schema(title = "신청 소재지 첫번째지역코드", example = "")
+    private String firstRgnsCd;
+
+    @Schema(title = "신청 소재지 첫번째지역명", example = "")
+    private String firstRgnsName;
+
+    @Schema(title = "신청 소재지 두번째지역코드", example = "")
+    private String scndRgnsCd;
+
+    @Schema(title = "신청 소재지 두번째지역명", example = "")
+    private String scndRgnsName;
+
     @Schema(title = "엑셀 다운로드 여부", example = "Y")
     private String excelYn;
 
     @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
     private String srchLayer;
+
+    // 첨부파일
+    @Schema(title = "회사소개서 파일 리스트", example = "")
+    private List<COFileDTO> itrdcFileList;
+
+    @Schema(title = "강의교안 파일 리스트", example = "")
+    private List<COFileDTO> lctrFileList;
+
+    @Schema(title = "기타자료 파일 리스트", example = "")
+    private List<COFileDTO> etcMatlsFileList;
+
+
 }

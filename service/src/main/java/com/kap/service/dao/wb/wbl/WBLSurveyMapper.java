@@ -88,6 +88,14 @@ public interface WBLSurveyMapper {
 
     public List<WBLEpisdMstDTO> selectEpisdSurveyList(WBLEpisdMstDTO wBLEpisdMstDTO) throws Exception;
 
+    /**
+     * 응답 삭제
+     */
+    public int deleteSurveyRspn(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO);
 
+    /**
+     * 응답 초기화
+     */
+    public int updateSurveyRspn(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO);
 
 }

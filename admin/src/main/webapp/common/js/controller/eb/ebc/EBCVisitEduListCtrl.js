@@ -13,6 +13,44 @@ define(["ezCtrl"], function(ezCtrl) {
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
+    //소재지역 분류 조회
+    var selectCtgryCdList = function(arg){
+
+        if(arg === undefined){
+            arg = $("#scndRgnsCd").data("scndRgnsCd");
+        }
+        var cdMst= {};
+        cdMst.cd = $(arg).val();
+
+        cmmCtrl.jsonAjax(function(data){
+            callbackAjaxCtgryCdList(data);
+        }, './classTypeList', cdMst, "text");
+
+    }
+
+
+    //소재지역 분류 2뎁스 세팅
+    var callbackAjaxCtgryCdList = function(data){
+
+        var detailList = JSON.parse(data);
+        var selectHtml = "<option value=''>전체</option>";
+
+        for(var i =0; i < detailList.length; i++){
+
+            var cd = detailList[i].cd;
+            var cdNm = detailList[i].cdNm;
+
+            selectHtml += "<option value='"+cd+"' >"+cdNm+"</option>";
+        }
+        console.log(selectHtml);
+
+        $("#scndRgnsCd option").remove();
+        $("#scndRgnsCd").append(selectHtml);
+        console.log(selectHtml);
+        var scndRgnsCd = $("#scndRgnsCd").data("scndRgnsCd");
+        $("#scndRgnsCd").val(scndRgnsCd).prop("selected", true);
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -28,32 +66,6 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     change : function(){
                         search(1);
-                    }
-                }
-            },
-            odtmYn : {
-                event : {
-                    change : function(){
-                        var trgtObj = jQuery(this).closest("fieldset");
-
-                        if (jQuery(this).is(":checked"))
-                        {
-                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").addClass("notRequired").prop("disabled", true);
-                            jQuery(".input-group").find("input").prop("disabled", true).val("");
-                            jQuery(".input-group").siblings("select").prop("disabled", true).find("option:eq(0)").prop("selected", true);
-                        }
-                        else
-                        {
-                            jQuery(trgtObj).find(".datetimepicker_strtDt, .datetimepicker_endDt").removeClass("notRequired").prop("disabled", false);
-                            jQuery(".input-group").find("input").prop("disabled", false);
-                            jQuery(".input-group").siblings("select").prop("disabled", false);
-                        }
-
-                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("setOptions", { /* maxDate : false */ });
-                        jQuery(trgtObj).find(".datetimepicker_strtDt").datetimepicker("reset").val("");
-
-                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("setOptions", { minDate : false });
-                        jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("reset").val("");
                     }
                 }
             },
@@ -83,86 +95,6 @@ define(["ezCtrl"], function(ezCtrl) {
                         }
                     }
                 }
-            },
-            btnSort : {
-                event : {
-                    click : function () {
-
-                        var btn = $(this),
-                            td = btn.parents("td"),
-                            key = td.data("key"),
-                            sort = td.data("value"),
-                            index = btn.parent().index(),
-                            sortType = btn.attr('name') === 'sortUp' ? 'UP' : 'DOWN';
-
-                        if(sortType != null) {
-
-                            //if(sortType == 'UP' && $("pageIndex").val() == '1' && btn.parents('tr').prev().length == 0) {
-                            if(sortType == 'UP' && btn.parents('tr').prev().length == 0) {
-                                alert(msgCtrl.getMsg("fail.sm.sort.notMoveUp"));
-                                return false;
-                                //} else if (sortType == 'DOWN' && $("pageIndex").val() == $(".pagination").children().length && btn.parents('tr').next().length == 0) {
-                            } else if (sortType == 'DOWN' && btn.parents('tr').next().length == 0) {
-                                alert(msgCtrl.getMsg("fail.sm.sort.notMoveDown"));
-                                return false;
-                            }
-
-                            var ajaxData = {
-                                popupSeq : key,
-                                expsOrd : sort,
-                                sortType : sortType
-                            }
-
-                            console.log(JSON.stringify(ajaxData, null, 2));
-
-                            $("#frmSearch").serializeArray().forEach(function(field) {
-                                if (field.name != 'seq') {
-                                    ajaxData[field.name] = field.value;
-                                }
-                            });
-
-                            $.ajax({
-                                type: "post",
-                                url: "./sort",
-                                dataType: "json",
-                                data: ajaxData,
-                                success: function(r) {
-                                    alert('노출 순서가 변경되었습니다.');
-
-                                    cmmCtrl.setFormData($formObj);
-                                    search($("pageIndex").val());
-                                }
-                            })
-                        }
-                    }
-                }
-            },
-            btnExpsYn : {
-                event : {
-                    click : function() {
-                        var frmDataObj    = $(this).closest("form");
-                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-                        if (delActCnt != 0) {
-                            if(confirm(msgCtrl.getMsg("fail.sm.smc.notuse")))
-                            {
-                                //삭제 전송
-                                cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
-                                        var msg = "미노출 처리가 완료되었습니다.";
-
-                                        alert(msg);
-                                        $formObj.find("#btnSearch").click();
-                                    }
-                                    else{
-                                        alert(msgCtrl.getMsg("fail.act"));
-                                    }
-                                }, "./use-yn-update", frmDataObj, "POST", "json");
-                            }
-                        } else {
-                            alert(msgCtrl.getMsg("fail.notUse"));
-                        }
-                    }
-                }
             }
         },
         classname : {
@@ -180,8 +112,11 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click : function() {
                         //상세보기
-                        var detailsKey = $(this).data("detailsKey");
-                        $formObj.find("input[name=vstSeq]").val(detailsKey);
+                        $formObj.find("input[name=vstSeq]").val($(this).data("detailsKey"));
+                        $formObj.find("input[name=memSeq]").val($(this).data("memSeq"));
+                        $formObj.find("input[name=vstRsltSeq]").val($(this).data("vstRsltSeq"));
+                        $formObj.find("input[name=appctnBsnmNo]").val($(this).data("appctnBsnmNo"));
+
                         location.href = "./write?" + $formObj.serialize();
                     }
                 }
@@ -192,6 +127,13 @@ define(["ezCtrl"], function(ezCtrl) {
                         //리스트 갯수 변경
                         $formObj.find("input[name=listRowSize]").val($(this).val());
                         search(1);
+                    }
+                }
+            },
+            classType : {
+                event : {
+                    change : function() {
+                        selectCtgryCdList(this);
                     }
                 }
             }

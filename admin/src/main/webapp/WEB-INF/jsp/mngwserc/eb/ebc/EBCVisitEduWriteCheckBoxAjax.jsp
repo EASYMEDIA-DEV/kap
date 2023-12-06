@@ -11,13 +11,24 @@
 <div class="col-sm-8">
     <c:if test="${not empty cdDtlList}">
         <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" class="checkboxAll" />
+            <input type="checkbox" class="checkboxAll notRequired" name="appctnTypeAll" />
             <span class="ion-checkmark-round"></span> 전체
         </label>
     </c:if>
     <c:forEach var="cdList" items="${cdDtlList}" varStatus="status">
         <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+            <c:set var="tempChk" value="N" />
+            <c:forEach var="appctnTypeList" items="${appctnTypeList}">
+                <c:if test="${tempChk eq 'N'}">
+                    <c:if test="${appctnTypeList.cd eq cdList.cd}">
+                        <c:set var="tempChk" value="Y" />
+                    </c:if>
+                    <c:if test="${appctnTypeList.cd ne cdList.cd}">
+                        <c:set var="tempChk" value="N" />
+                    </c:if>
+                </c:if>
+            </c:forEach>
+            <input type="checkbox" class="checkboxSingle notRequired" data-name="appctnTypeList" value="${cdList.cd}" name="appctnType" <c:if test="${tempChk eq 'Y'}">checked</c:if> />
             <span class="ion-checkmark-round"></span> ${cdList.cdNm}
         </label>
     </c:forEach>
