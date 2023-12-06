@@ -1054,7 +1054,7 @@
 
 	<!--
       쿼리명 : EBBEpisdMapper.selectPtcptAtndcList
-      설  명 : 교육차수관리 - 참여자 목록
+      설  명 : 교육차수관리 - 참여자 목록 개인별 출석부 목록
        수정일     수정자       수정내용
      ==========   ======    ==============
      2023.11.28   김학규       최초생성
@@ -1066,7 +1066,7 @@
 		, edctn_dt
 		, atndc_dtm
 		, lvgrm_dtm
-
+		, etc_nm
 		FROM ep_edctn_atndc_dtl
 		WHERE ptcpt_seq IN
 		<foreach collection="ptcptList" item="ptcptList" index="index" separator=", " open="(" close=")">
@@ -1233,6 +1233,7 @@
 			, edctn_dt
 			, atndc_dtm
 			, lvgrm_dtm
+			, etc_nm
 			, reg_id
 			, reg_ip
 			, reg_dtm
@@ -1246,6 +1247,7 @@
 			, #{ptcptList.edctnDt}
 			, #{ptcptList.atndcDtm}
 			, #{ptcptList.lvgrmDtm}
+			, #{ptcptList.etcNm}
 			, #{ptcptList.regId}
 			, #{ptcptList.regIp}
 			, now()

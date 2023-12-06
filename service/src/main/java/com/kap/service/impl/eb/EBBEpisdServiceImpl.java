@@ -473,6 +473,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				atndcDto.setEdctnDt(String.valueOf(startDate));
 				atndcDto.setAtndcDtm(null);
 				atndcDto.setLvgrmDtm(null);
+				atndcDto.setEtcNm(null);
 				atndcDto.setRegId(eBBPtcptDTO.getRegId());
 				atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
 				atndcDto.setModId(eBBPtcptDTO.getModId());
@@ -489,6 +490,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				atndcDto.setEdctnDt(String.valueOf(startDate));
 				atndcDto.setAtndcDtm(null);
 				atndcDto.setLvgrmDtm(null);
+				atndcDto.setEtcNm(null);
 				atndcDto.setRegId(eBBPtcptDTO.getRegId());
 				atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
 				atndcDto.setModId(eBBPtcptDTO.getModId());

@@ -124,6 +124,9 @@ public class EBBPtcptDTO extends BaseDTO {
     @Schema(title = "퇴실일시", example = "날짜 yyyy-mm-dd HH:mm:ss")
     private String lvgrmDtm;
 
+    @Schema(title = "비고", example = "텍스트")
+    private String etcNm;
+
     private List<EBBPtcptDTO> ptcptList;//교육 참여자 목록
 
     private List<EBBPtcptDTO> atndcList;//교육 참여자 출석목록
