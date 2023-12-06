@@ -267,6 +267,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     click : function(){
                     }
                 }
+            },
+            allSelector : {
+                event : {
+                        click : function(){
+                        var cdVal = $(this).children("input[name='appctnTypeCd']").val();
+                        if (cdVal == "TEC_GUIDE_APPCTN00") {
+                            if($(this).children("input[name='appctnTypeCd']").is(":checked"))
+                            {
+                                $("input[name=appctnTypeCd]").prop("checked", true);
+                            }else{
+                                $("input[name=appctnTypeCd]").prop("checked", false);
+                            }
+                        }
+                    }
+                }
             }
         },
         classname: {
@@ -287,7 +302,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     click: function () {
                         var rowCnt = $(".tempRow").size();
 
-                        if (rowCnt < 4) {
+                        if (rowCnt < 3) {
                             var temp = document.getElementById("dlvryRow");
                             var newNode = temp.cloneNode(true);
                             idNum++;
@@ -296,6 +311,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                             $("#dlvryTempDiv").append(newNode);
                             $("#" + newNodeId).children().find("input").val("");
                             $("#" + newNodeId).children(".closeLabel").css("display", "block");
+                            $("#" + newNodeId).children(".closeLabel").children(".close").css("display", "block");
                         } else {
                             alert("최대 3개까지 추가할 수 있습니다.");
                         }
@@ -307,7 +323,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     click: function () {
                         var rowCnt = $(".dpTempRow").size();
 
-                        if (rowCnt < 4) {
+                        if (rowCnt < 3) {
                             var temp = document.getElementById("dpndnRow");
                             var newNode = temp.cloneNode(true);
                             idNum++;
@@ -316,6 +332,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                             $("#dpTempDiv").append(newNode);
                             $("#" + newNodeId).children().find("input").val("");
                             $("#" + newNodeId).children(".closeLabel").css("display", "block");
+                            $("#" + newNodeId).children(".closeLabel").children(".close").css("display", "block");
                         } else {
                             alert("최대 3개까지 추가할 수 있습니다.");
                         }
@@ -326,17 +343,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 event: {
                     click: function () {
                         $(this).parent().remove();
-                    }
-                }
-            },
-            appctnTypeCd: {
-                event: {
-                    click: function () {
-                        var cdVal = $(this).val();
-                        if (cdVal == "TEC_GUIDE_APPCTN00") {
-                            if ($(this).is(":checked")) $("input[name=appctnTypeCd]").prop("checked", true);
-                            else $("input[name=appctnTypeCd]").prop("checked", false);
-                        }
                     }
                 }
             },
@@ -410,11 +416,20 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             btnCmtSearch: {
                 event: {
                     click: function () {
-                        cmmCtrl.getCmtSrchPop(function (data) {
-                            $("input[name=cmssrSeq]").val(data.seq);
-                            $("input[name=cmssrName]").val(data.name);
-                            console.log(data)
-                        });
+
+                        $(".svaSurveySrchLayer").one('show.bs.modal', function() {
+
+                            var modal = $(this);
+                            modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+                        }).one('hidden.bs.modal', function() {
+                            // Remove class for soft backdrop (if not will affect future modals)
+                        }).one('choice', function(data, param) {
+                            var obj = param;
+                            $("#listContainer3").find("td").eq(0).text(obj.typeNm);
+                            $("#listContainer3").find("td").eq(1).text(obj.titl);
+                            $("#srvSeq").val(obj.seq);
+                        }).modal();
                     }
                 }
             },
@@ -474,6 +489,30 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
+            //페이징 처리
+            pageSet : {
+                event : {
+                    click : function() {
+                        //페이징 이동
+                        if( $(this).attr("value") != "null" ){
+                            $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
+                            search();
+                        }
+                    }
+                }
+            },
+            //페이징 목록 갯수
+
+            listRowSizeContainer : {
+                event : {
+                    change : function(){
+                        //리스트 갯수 변경
+                        $formObj.find("input[name=listRowSize]").val($(this).val());
+                        search(1);
+                    }
+                }
+            }
+
         },
         immediately: function () {
 

@@ -366,43 +366,78 @@
                     </c:forEach>
                 </div>
             </fieldset>
+            <fieldset>
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>담당인원 정보</h6>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">이름<span class="star"> *</span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm notRequired"  name="score"/>
+                    </div>
+                    <label class="col-sm-1 control-label">이메일</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm notRequired"  name="score"/>
+                    </div>
+                </div>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm notRequired"  name="score"/>
+                    </div>
+                    <label class="col-sm-1 control-label">직급</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm notRequired"  name="score"/>
+                    </div>
+                </div>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">이름<span class="star"> *</span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm notRequired"  name="score"/>
+                    </div>
+                    <label class="col-sm-1 control-label">이메일</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm notRequired"  name="score"/>
+                    </div>
+                </div>
+            </fieldset>
+
             <c:choose>
                 <c:when test="${not empty rtnDto}">
-                    <fieldset class="ptcptField">
-                        <div class="clearfix">
-                            <h6 class="pull-left mt0">
-                                <em class="ion-play mr-sm"></em>신청자 변경 이력
-                                <input type="hidden" id="trsfListContainerTotCnt" value="0">
-                            </h6>
-                            <!-- 현재 페이징 번호 -->
-                            <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
-                            <!-- 페이징 버튼 사이즈 -->
-                            <input type="hidden" id="pageRowSize" name="pageRowSize" value="10" />
-                        </div>
-                        <div class="pull-right ml-sm">
-                            <select class="form-control input-sm listRowSizeContainer" >
-                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
-                                    <jsp:param name="listRowSize" value="10" />
-                                </jsp:include>
-                            </select>
-                        </div>
-                        <div class="table-responsive col-sm-12 p0 m0" id="vueList">
-                            <table class="table table-hover table-striped" >
-                                <thead>
-                                <tr>
-                                    <th class="text-center">이전 신청자</th>
-                                    <th class="text-center">변경 신청자</th>
-                                    <th class="text-center">변경일 / 변경자</th>
-                                </tr>
-                                </thead>
-                                <!-- 리스트 목록 결과 -->
-                                <tbody id="trsfListContainer"/>
+                <fieldset class="ptcptField">
+                    <div class="clearfix">
+                        <h6 class="pull-left mt0">
+                            <em class="ion-play mr-sm"></em>신청자 변경 이력
+                            <input type="hidden" id="trnsfListContainerTotCnt" value="0">
+                        </h6>
+                        <!-- 현재 페이징 번호 -->
+                        <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+                        <!-- 페이징 버튼 사이즈 -->
+                        <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
+                    </div>
+                    <div class="pull-right ml-sm">
+                        <select class="form-control input-sm listRowSizeContainer" >
+                            <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                            </jsp:include>
+                        </select>
+                    </div>
+                    <div class="table-responsive col-sm-12 p0 m0" id="vueList">
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">이전 신청자</th>
+                                <th class="text-center">변경 신청자</th>
+                                <th class="text-center">변경일 / 변경자</th>
+                            </tr>
+                            </thead>
 
-                            </table>
-                            <!-- 페이징 버튼 -->
-                            <div id="trsfPagingContainer"/>
-                        </div>
-                    </fieldset>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="trsfListContainer"/>
+
+                        </table>
+                        <!-- 페이징 버튼 -->
+                        <div id="trsfPagingContainer"/>
+                    </div>
+                </fieldset>
                 </c:when>
             </c:choose>
             <fieldset>
@@ -484,7 +519,7 @@
                                             <input type="number" class="form-control input-sm" data-name="dpndnRateList" name="dpndnRate" value="${dpndCmpnList.dpndnRate}" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3"/>
                                         </label>
                                         <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
-                                        <label class="col-sm-1 control-label closeLabel" <c:if test="${empty dpndCmpnList}">style="display: none"</c:if>>
+                                        <label class="col-sm-1 control-label closeLabel" <c:if test="${empty dpndnRateList}">style="display: none"</c:if>>
                                             <button type="button" class="close" aria-label="Close">x</button>
                                         </label>
                                     </div>
@@ -646,17 +681,11 @@
                         <input type="hidden" class="apTypeCd" value="${appctnList.appctnTypeCd}">
                     </c:forEach>
                     <label class="col-sm-1 control-label">신청사항<span class="star"> *</span></label>
-                    <label class="checkbox-inline c-checkbox" id="allSelector">
-                        <input type="checkbox" name="appctnTypeCd" value="TEC_GUIDE_APPCTN00" title="신청사항">
-                        <span class="ion-checkmark-round"></span>전체
-                    </label>
                     <c:forEach var="appctnCdList" items="${cdDtlList.TEC_GUIDE_APPCTN}" varStatus="status">
-                        <c:if test="${appctnCdList.cd ne 'TEC_GUIDE_APPCTN00'}">
                         <label class="checkbox-inline c-checkbox">
                             <input type="checkbox" name="appctnTypeCd" value="${appctnCdList.cd}" title="신청사항" <%--<c:if test="${eq appctnCdList.cd}">checked</c:if>--%>/>
                             <span class="ion-checkmark-round"></span>${appctnCdList.cdNm}
                         </label>
-                        </c:if>
                     </c:forEach>
                 </div>
             </fieldset>

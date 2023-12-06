@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 사유 레이어 팝업(Modal) -->
-<div class="modal fade mpbMemberPartsSocietySrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/mp/mpb/MPBMemberPartsSocietyListCtrl">
+<div class="modal fade mpbMemberPartsSocietySrchLayer" tabindex="-1" role="dialog" data-controller="controller/mp/mpb/MPBMemberPartsSocietyListCtrl">
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1000px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -72,7 +72,7 @@
                             </div>
                             <div class="pull-left ml-sm">
                                 <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                                <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
+                                <button type="button" class="btn btn-default btn-sm" id="btnMpbRefresh">초기화</button>
                             </div>
                         </div>
                     </fieldset>

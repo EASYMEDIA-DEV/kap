@@ -178,8 +178,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         CBATechGuidanceUpdateDTO CBATechGuidanceUpdateDTO = new CBATechGuidanceUpdateDTO();
         pCBATechGuidanceInsertDTO.setRsumeList(cBATechGuidanceMapper.selectTechGuidanceRsume(pCBATechGuidanceInsertDTO));
 
-        System.err.println("pCBATechGuidanceInsertDTO"+pCBATechGuidanceInsertDTO.getRsumeList());
-
         return pCBATechGuidanceInsertDTO;
     }
 
@@ -429,9 +427,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
         String bfreMemSeq = pCBATechGuidanceInsertDTO.getBfreMemSeq();
         String aftrMemSeq = pCBATechGuidanceInsertDTO.getMemSeq();
-        System.err.println("pCBATechGuidanceInsertDTO"+pCBATechGuidanceInsertDTO);
-        System.err.println("bfreMemSeq"+bfreMemSeq);
-        System.err.println("aftrMemSeq"+aftrMemSeq);
         if(bfreMemSeq != aftrMemSeq){
             pCBATechGuidanceInsertDTO.setTrnsfSeq(consTrnsfSeqIdgen.getNextIntegerId());
             pCBATechGuidanceInsertDTO.setAftrMemSeq(aftrMemSeq);
@@ -453,12 +448,11 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         CBATechGuidanceInsertDTO trsfDto = new CBATechGuidanceInsertDTO();
 
         COPaginationUtil page = new COPaginationUtil();
-
         page.setCurrentPageNo(pCBATechGuidanceInsertDTO.getPageIndex());
         page.setRecordCountPerPage(pCBATechGuidanceInsertDTO.getListRowSize());
 
         page.setPageSize(pCBATechGuidanceInsertDTO.getPageRowSize());
-
+        System.err.println("page::"+page);
         trsfDto.setFirstIndex( page.getFirstRecordIndex() );
         trsfDto.setRecordCountPerPage( page.getRecordCountPerPage() );
         trsfGuidanceList = cBATechGuidanceMapper.selectTrsfGuidanceList(pCBATechGuidanceInsertDTO);

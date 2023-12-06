@@ -1,12 +1,10 @@
 package com.kap.service;
 
-import com.kap.core.dto.COUserCmpnDto;
-import com.kap.core.dto.MPAUserDto;
-import com.kap.core.dto.cb.cbb.*;
+import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * 컨설팅 사업 경영컨설팅 서비스
@@ -50,4 +48,11 @@ public interface CBBManageConsultService {
      * @throws Exception
      */
     void srvRsltExcelDownload(CBBConsultSuveyRsltListDTO CBBConsultSuveyRsltListDTO, HttpServletResponse response) throws Exception;
+
+    public CBBManageConsultInsertDTO selectManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅 기술 지도 관리 등록
+     */
+    public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 }
