@@ -83,5 +83,10 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "응답업체수", example = "숫자")
     private Integer cnt;
 
+    @Schema(title = "엑셀", example = "Y")
+    private String excelYn;
+
+    @Schema(title = "엑셀사유", example = "")
+    private String rsn;
 
 }
