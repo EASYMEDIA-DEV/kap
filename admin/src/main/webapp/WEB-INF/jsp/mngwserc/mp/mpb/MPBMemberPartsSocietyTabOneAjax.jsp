@@ -31,7 +31,6 @@
             <div class="input-group">
                 <input type="text" class="form-control input-sm " id="workBsnmNo" name="workBsnmNo" value="${rtnDtl.workBsnmNo}" title="사업자등록번호" maxlength="13" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
                 <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="btnBsnmNo">인증</button></span>
-                <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="btnTest">본인 테스트</button></span>
             </div>
         </div>
 

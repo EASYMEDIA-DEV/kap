@@ -418,7 +418,7 @@
                , (select cd_nm from co_code_mst where  cd=m1.cmpn_size_cd ) as cmpn_size_cd_nm-- 규모
                , m1.appctn_bsnm_no-- 사업자등록번호
                , (select cd_nm from co_code_mst where  cd=m1.appctn_fld_cd ) as appctn_fld_cd_nm--  신청분야/업종
-               , (select cd_nm from co_code_mst where  cd=m1.rgns_cd ) as rgns_cd_nm-- 신청 소재지
+               , CONCAT((select cd_nm from co_code_mst where  cd=m1.first_rgns_cd ),' ',(select cd_nm from co_code_mst where  cd=m1.scnd_rgns_cd ))  as rgns_cd_nm-- 신청 소재지
                , m4.name-- 담당위원
                , m1.appctn_dt-- 신청일
                , m3.guide_bgn_dt-- 지도착수일
@@ -478,9 +478,9 @@
         select m1.episd_seq as san_ctn_seq  /*MPBMemberPartsSocietyMapper.selectSanList */
              , m1.year-- 사업년도
              , m1.episd-- 회차
-             , (select cd_nm from co_code_mst where  cd=m4.optn_cd )  as type_cd_nm-- 사업구분 TODO 양현우 코드 정의후 수정
+             , (select cd_nm from co_code_mst where  cd=m4.optn_cd )  as type_cd_nm-- 사업구분
              , m4.optn_nm as bsnCdNm
-              ,m5.rsume_stts_cd as status -- 진행상태 TODO 양현우 코드
+             , (select cd_nm from co_code_mst where  cd=m5.rsume_stts_cd )  as status -- 진행상태
              , m3.cmpn_nm -- 부품사명
              , (select cd_nm from co_code_mst where  cd=m3.ctgry_cd ) as ctgry_cd_nm -- 구분
              , (select cd_nm from co_code_mst where  cd=m3.size_cd ) as cmpn_size_cd_nm -- 규모
