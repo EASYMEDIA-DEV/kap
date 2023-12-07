@@ -19,10 +19,10 @@
             <input type="hidden" class="notRequired" id="itrdcFileSeq" name="itrdcFileSeq" value="${rtnDto.itrdcFileSeq}" />
             <input type="hidden" class="notRequired" id="impvmFileSeq" name="impvmFileSeq" value="${rtnDto.impvmFileSeq}" />
             <c:forEach var="rsumeList" items="${rtnDto.rsumeList}" varStatus="status">
-            <input type="hidden" class="notRequired" id="initVstFileSeq" name="initVstFileSeq" value="${rsumeList.initVstFileSeq}" />
-            <input type="hidden" class="notRequired" id="kickfFileSeq" name="kickfFileSeq" value="${rsumeList.kickfFileSeq}" />
-            <input type="hidden" class="notRequired" id="lvlupFileSeq" name="lvlupFileSeq" value="${rsumeList.lvlupFileSeq}" />
-            <input type="hidden" class="notRequired" id="etcFileSeq" name="etcFileSeq" value="${rsumeList.etcFileSeq}" />
+                <input type="hidden" class="notRequired" id="initVstFileSeq" name="initVstFileSeq" value="${rsumeList.initVstFileSeq}" />
+                <input type="hidden" class="notRequired" id="kickfFileSeq" name="kickfFileSeq" value="${rsumeList.kickfFileSeq}" />
+                <input type="hidden" class="notRequired" id="lvlupFileSeq" name="lvlupFileSeq" value="${rsumeList.lvlupFileSeq}" />
+                <input type="hidden" class="notRequired" id="etcFileSeq" name="etcFileSeq" value="${rsumeList.etcFileSeq}" />
             </c:forEach>
             <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${rtnDto.memSeq}" />
             <input type="hidden" class="notRequired" id="bfreMemSeq" name="bfreMemSeq" value="${rtnDto.memSeq}" />
@@ -30,6 +30,7 @@
             <input type="hidden" class="notRequired" id="name" name="name" value="${rtnDto.name}" />
             <input type="hidden" class="notRequired" id="cmpnNfrmlNm" name="cmpnNfrmlNm" value="${rtnDto.cmpnNfrmlNm}" />
             <input type="hidden" class="notRequired" id="cmpnCd" name="cmpnCd" value="${rtnDto.cmpnCd}" />
+            <input type="hidden" class="notRequired" id="cnstgCd" name="cnstgCd" value="CONSULT_GB01" />
             <fieldset>
                 <span class="dtl-tab" style="float:right"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
@@ -769,8 +770,8 @@
                                         <div class="col-sm-2">
                                             <select class="form-control input-sm listRowSizeContainer initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과">
                                                 <option value="">선택</option>
-                                                <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                    <option value="${bfJdgmtRsltList.cd}" >${bfJdgmtRsltList.cdNm} </option>
+                                                <c:forEach var="initVstRsltCd" items="${cdDtlList.INIT_VST_RSLT}" varStatus="status">
+                                                    <option value="${initVstRsltCd.cd}" >${initVstRsltCd.cdNm} </option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -861,7 +862,7 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">연기/취소 사유</label>
                                     <div class="col-sm-5">
-                                        <textarea class="form-control input-sm notRequired" id="xtnsnCnclRsn" name="xtnsnCnclRsn" placeholder="연기/취소 사유" maxlength="500"></textarea>
+                                        <textarea class="form-control input-sm notRequired" id="xtnsnCnclRsn" name="xtnsnCnclRsn" placeholder="연기/취소 사유 입력" maxlength="500"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
@@ -1060,8 +1061,8 @@
                                             <div class="col-sm-2">
                                                 <select class="form-control input-sm listRowSizeContainer initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과">
                                                     <option value="">선택</option>
-                                                    <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                        <option value="${bfJdgmtRsltList.cd}" <c:if test="${rsumeList.initVstRsltCd eq bfJdgmtRsltList.cd}">selected</c:if>>${bfJdgmtRsltList.cdNm} </option>
+                                                    <c:forEach var="initVstRsltCd" items="${cdDtlList.INIT_VST_RSLT}" varStatus="status">
+                                                        <option value="${initVstRsltCd.cd}" >${initVstRsltCd.cdNm} </option>
                                                     </c:forEach>
                                                 </select>
                                             </div>

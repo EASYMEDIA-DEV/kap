@@ -56,9 +56,9 @@
     -->
     <select id="selectTechGuidanceTotCnt" parameterType="CBATechGuidanceDTO" resultType="java.lang.Integer">
         SELECT
-        count(*)
+            count(*)
         FROM
-        CP_CNSTG_APPCTN_MST A
+            CP_CNSTG_APPCTN_MST A
         <include refid="selectTechGuidancewhereSql" />
     </select>
 
@@ -197,7 +197,7 @@
                 #{cnstgSeq}
                , #{bsnmNo}
                , #{memSeq}
-               , "INQ03001"
+               , "CONSULT_GB01"
                , #{appctnDt}
                , #{sizeCd}
                , #{cmpnAddrSameYn}
@@ -826,6 +826,7 @@
     -->
     <sql id="selectTechGuidancewhereSql">
         <where>
+            CNSTG_CD = #{cnstgCd}
             <if test="srchDate != null and srchDate != ''.toString() ">
                 <choose>
                     <when test="srchDate == 1">
