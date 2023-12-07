@@ -632,7 +632,7 @@
                                         </td>
                                     </tr>
                                     <tr class="setExg" <c:if test="${rtnDto.examNm eq ''}">style="display: none;"</c:if>>
-                                        <td class="text-center" colspan="4">${rtnDto.examNm}</td>
+                                        <td class="text-center examNmForm" colspan="4">${rtnDto.examNm}</td>
                                         <td colspan="6">
                                             <div class="input-group form-date-group mr-sm">
                                                 <input type="text" class="form-control input-sm datetimepicker_strtDt" name="examStrtDtm" id="examStrtDtm" value="${ kl:convertDate(rtnDto.examStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시험시작일시" readonly="readonly"/>
@@ -666,12 +666,12 @@
                             <div class="col-sm-11">
                                     <c:set var="cmptnAutoYn" value="${kl:nvl(rtnDto.cmptnAutoYn, 'Y')}" />
                                     <label class="radio-inline c-radio">
-                                        <input type="radio" name="cmptnAutoYn" value="Y" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'Y'}">checked</c:if>/>
+                                        <input type="radio" name="cmptnAutoYn" value="Y" class="cmptnAutoYn" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'Y'}">checked</c:if>/>
                                         <span class="ion-record"></span> 자동
                                     </label>
 
                                     <label class="radio-inline c-radio">
-                                        <input type="radio" name="cmptnAutoYn" value="N" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'N'}">checked</c:if>/>
+                                        <input type="radio" name="cmptnAutoYn" value="N" class="cmptnAutoYn" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'N'}">checked</c:if>/>
                                         <span class="ion-record"></span> 수동
                                     </label>
                             </div>
