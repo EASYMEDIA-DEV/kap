@@ -1,6 +1,7 @@
 package com.kap.service.dao.eb;
 
 import com.kap.core.dto.eb.ebh.EBHEduApplicantMstDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public interface EBHEduApplicantMapper {
     public List<EBHEduApplicantMstDTO> selectList(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO);
 
     /**
-     * 리스트 새수 조회
+     * 리스트 개수 조회
      */
     public int getListCnt(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO);
 
@@ -39,5 +40,20 @@ public interface EBHEduApplicantMapper {
      * 상세 조회
      */
     public EBHEduApplicantMstDTO selectView(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO);
+
+    /**
+     * 상세의 강사 목록 조회
+     */
+    public List<String> selectViewIns(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO);
+
+    /**
+     * 상세의 SQ 정보 목록 조회
+     */
+    public List<MPEPartsCompanyDTO> selectViewSq(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO);
+
+    /**
+     * 선발 상태 변경
+     */
+    public int updateStts(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO);
 
 }

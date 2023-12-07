@@ -251,8 +251,8 @@
 					</select>
 				</div>
 				<div class="pull-right">
-					<button type="button" class="btn btn-default btn-sm mb-sm" id="btnChoice">복사</button>
-					<button type="button" class="btn btn-info btn-sm mb-sm" id="btnNotChoice">등록</button>
+					<button type="button" class="btn btn-success btn-sm mb-sm" id="btnChoice" style="width: 60px">선발</button>
+					<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnNotChoice" style="width: 60px">미선발</button>
 				</div>
 			</div>
 			<!--VUE 영역 시작 -->
