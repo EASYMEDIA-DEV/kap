@@ -202,24 +202,29 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		ptcptList = eBBEpisdMapper.selectEpisdPtcptList(ebbDto);
 		int ptcptCnt = eBBEpisdMapper.selectEpisdPtcptListCnt(ebbDto);
 
-
+		System.out.println("@@ ptcptList = " + ptcptList.size());
 
 		dto.setPtcptList(ptcptList);
 		dto.setTotalCount(ptcptCnt);
-		List<EBBPtcptDTO> ptcptAtndcList = new ArrayList();
-		ptcptAtndcList = eBBEpisdMapper.selectPtcptAtndcList(dto);
 
-		for(EBBPtcptDTO orgDto: ptcptList){
-			List<EBBPtcptDTO> tempList = new ArrayList();
-			for(EBBPtcptDTO atndcDto : ptcptAtndcList){
-				//원본 참여자 목록 반복문 돌리면서 출석데이터와 매칭, 매칭하면서 같으면 리스트안에 리스트 넣어줌
-				if(atndcDto.getPtcptSeq() == orgDto.getPtcptSeq()){
-					tempList.add(atndcDto);
+		//참여자가 있을때만 불러옴
+		if(ptcptList.size()>0){
+			List<EBBPtcptDTO> ptcptAtndcList = new ArrayList();
+			ptcptAtndcList = eBBEpisdMapper.selectPtcptAtndcList(dto);
+
+			for(EBBPtcptDTO orgDto: ptcptList){
+				List<EBBPtcptDTO> tempList = new ArrayList();
+				for(EBBPtcptDTO atndcDto : ptcptAtndcList){
+					//원본 참여자 목록 반복문 돌리면서 출석데이터와 매칭, 매칭하면서 같으면 리스트안에 리스트 넣어줌
+					if(atndcDto.getPtcptSeq() == orgDto.getPtcptSeq()){
+						tempList.add(atndcDto);
+					}
 				}
+				orgDto.setAtndcList(tempList);
 			}
-			orgDto.setAtndcList(tempList);
+			dto.setPtcptList(ptcptList);
 		}
-		dto.setPtcptList(ptcptList);
+
 
 
 
@@ -505,8 +510,44 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			System.out.println("e = " + e);
 		}
 
+
 	}
 
+	/**
+	 * 교육차수 신청자 등록
+	 */
+	@Transactional
+	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+
+		int rtnCnt = 0;
+		//출석 목록 호출
+		List<EBBPtcptDTO> ptcptList= eBBEpisdDTO.getPtcptList();
+
+
+		for(EBBPtcptDTO tempDto : ptcptList){
+
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			tempDto.setRegId( cOUserDetailsDTO.getId() );
+			tempDto.setRegName( cOUserDetailsDTO.getName() );
+			tempDto.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+			tempDto.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+			tempDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
+			tempDto.setModId( cOUserDetailsDTO.getId() );
+			tempDto.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+			if(tempDto.getAtndcHour() != null){
+				tempDto.setAtndcDtm(tempDto.getEdctnDt()+" "+tempDto.getAtndcHour());
+			}
+			if(tempDto.getLvgrmHour() != null){
+				tempDto.setLvgrmDtm(tempDto.getEdctnDt()+" "+tempDto.getLvgrmHour());
+			}
+		}
+		eBBEpisdDTO.setPtcptList(ptcptList);
+
+		rtnCnt = eBBEpisdMapper.updateAtndcList(eBBEpisdDTO);
+		return rtnCnt;
+	}
 
 
 

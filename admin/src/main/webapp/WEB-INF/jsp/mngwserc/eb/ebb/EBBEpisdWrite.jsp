@@ -72,23 +72,19 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <div class="form-flexbox">
-                        <label class="col-sm-1 control-label">학습방식<span class="star text-danger"> *</span></label>
-                        <div class="col-sm-5 ">
-                            <p class="form-control-static stduyMthd">${rtnDto.stduyMthdCdNm}</p>
-                        </div>
+
+                    <label class="col-sm-1 control-label">학습방식<span class="star text-danger"> *</span></label>
+                    <div class="col-sm-5 ">
+                        <p class="form-control-static stduyMthd">${rtnDto.stduyMthdCdNm}</p>
                     </div>
 
-
-                    <div class="form-flexbox">
-                        <label class="col-sm-1 control-label">학습시간<span class="star"> *</span></label>
-                        <div class="col-sm-5 ">
-                            <p class="form-control-static stduyDtm">
-                                <c:if test="${rtnDto.stduyDdCdNm ne null}">
-                                    ${rtnDto.stduyDdCdNm}일/${rtnDto.stduyTimeCdNm} 시간
-                                </c:if>
-                            </p>
-                        </div>
+                    <label class="col-sm-1 control-label">학습시간<span class="star"> *</span></label>
+                    <div class="col-sm-5 ">
+                        <p class="form-control-static stduyDtm">
+                            <c:if test="${rtnDto.stduyDdCdNm ne null}">
+                                ${rtnDto.stduyDdCdNm}일/${rtnDto.stduyTimeCdNm} 시간
+                            </c:if>
+                        </p>
                     </div>
 
                 </div>
@@ -636,7 +632,7 @@
                                         </td>
                                     </tr>
                                     <tr class="setExg" <c:if test="${rtnDto.examNm eq ''}">style="display: none;"</c:if>>
-                                        <td class="text-center" colspan="4">${rtnDto.examNm}</td>
+                                        <td class="text-center examNmForm" colspan="4">${rtnDto.examNm}</td>
                                         <td colspan="6">
                                             <div class="input-group form-date-group mr-sm">
                                                 <input type="text" class="form-control input-sm datetimepicker_strtDt" name="examStrtDtm" id="examStrtDtm" value="${ kl:convertDate(rtnDto.examStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시험시작일시" readonly="readonly"/>
@@ -670,12 +666,12 @@
                             <div class="col-sm-11">
                                     <c:set var="cmptnAutoYn" value="${kl:nvl(rtnDto.cmptnAutoYn, 'Y')}" />
                                     <label class="radio-inline c-radio">
-                                        <input type="radio" name="cmptnAutoYn" value="Y" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'Y'}">checked</c:if>/>
+                                        <input type="radio" name="cmptnAutoYn" value="Y" class="cmptnAutoYn" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'Y'}">checked</c:if>/>
                                         <span class="ion-record"></span> 자동
                                     </label>
 
                                     <label class="radio-inline c-radio">
-                                        <input type="radio" name="cmptnAutoYn" value="N" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'N'}">checked</c:if>/>
+                                        <input type="radio" name="cmptnAutoYn" value="N" class="cmptnAutoYn" title="수료 자동화 여부" <c:if test="${cmptnAutoYn eq 'N'}">checked</c:if>/>
                                         <span class="ion-record"></span> 수동
                                     </label>
                             </div>
@@ -1122,4 +1118,4 @@
 <jsp:param name="typeCd" value="EDU" />
 </jsp:include>
 
-<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--강사검색-->
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업-->

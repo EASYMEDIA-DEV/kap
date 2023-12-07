@@ -153,6 +153,11 @@ public interface EBBEpisdMapper {
 	 */
 	public int insertAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
+	/**
+	 * 교육차수 - 신청자  출석 목록 수정
+	 */
+	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
 
 
 
