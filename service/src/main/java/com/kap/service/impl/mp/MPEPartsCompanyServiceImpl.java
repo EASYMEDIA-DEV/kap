@@ -1,7 +1,9 @@
 package com.kap.service.impl.mp;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPEPartsCompanyService;
 import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import lombok.RequiredArgsConstructor;
@@ -40,8 +42,11 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
     // DAO
     private final MPEPartsCompanyMapper mpePartsCompanyMapper;
     
-    /* 시퀀스 */
+    /* 회사 테이블 시퀀스 */
     private final EgovIdGnrService mpePartsCompanyDtlIdgen;
+
+    /* SQ정보 테이블 시퀀스 */
+    private final EgovIdGnrService mpePartsCompanySqInfoDtlIdgen;
 
     /**
      * 부품사 목록을 조회한다.
@@ -126,7 +131,7 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                 mpePartsCompanyDTO.setYear(year);
                 mpePartsCompanyDTO.setScore(score);
                 mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmnNm);
-                mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
+                mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
 
                 mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
                 index += 1;
@@ -139,6 +144,10 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
      * 부품사를 수정한다.
      */
     public int updatePartsCompany(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpePartsCompanyDTO.setModId(cOUserDetailsDTO.getId());
+        mpePartsCompanyDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
         List<String> sqList1 = mpePartsCompanyDTO.getSqInfoList1();
         List<String> sqList2 = mpePartsCompanyDTO.getSqInfoList2();
@@ -159,58 +168,49 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
             int index = 1;
             for(List<String> sqList : allSqLists) {
+                if(!sqList.isEmpty()) {
+                    seq = sqList.get(0);
+                    nm = sqList.get(1);
+                    year = sqList.get(3);
+                    score = sqList.get(2);
+                    crtfnCmnNm = sqList.get(4);
 
-                seq = sqList.get(0);
-                nm = sqList.get(1);
-                year = sqList.get(3);
-                score = sqList.get(2);
-                crtfnCmnNm = sqList.get(4);
+                    if(year.equals("")|| year.isEmpty()) {
+                        mpePartsCompanyDTO.setYear(null);
+                    } else {
+                        mpePartsCompanyDTO.setYear(Integer.valueOf(year));
+                    }
 
-                if(year.equals("")|| year.isEmpty()) {
-                    mpePartsCompanyDTO.setYear(null);
-                } else {
-                    mpePartsCompanyDTO.setYear(Integer.valueOf(year));
+                    if(score.equals("")|| score.isEmpty()) {
+                        mpePartsCompanyDTO.setScore(null);
+                    } else {
+                        mpePartsCompanyDTO.setScore(Integer.valueOf(score));
+                    }
+                    mpePartsCompanyDTO.setNm(nm);
+                    mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmnNm);
+
+                    // 2차인 경우, 스타등급 빈 값 처리
+                    mpePartsCompanyDTO.setTchlg5StarCd(null);
+                    mpePartsCompanyDTO.setPay5StarCd(null);
+                    mpePartsCompanyDTO.setQlty5StarCd(null);
+                    mpePartsCompanyDTO.setTchlg5StarYear(null);
+                    mpePartsCompanyDTO.setPay5StarYear(null);
+                    mpePartsCompanyDTO.setQlty5StarYear(null);
+
+                    if (!seq.isEmpty()) {
+                        mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
+                        mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
+                    } else {
+                        mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
+                        mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
+                    }
                 }
 
-                if(score.equals("")|| score.isEmpty()) {
-                    mpePartsCompanyDTO.setScore(null);
-                } else {
-                    mpePartsCompanyDTO.setScore(Integer.valueOf(score));
-                }
-                mpePartsCompanyDTO.setNm(nm);
-                mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmnNm);
-
-                // 2차인 경우, 스타등급 빈 값 처리
-                mpePartsCompanyDTO.setTchlg5StarCd(null);
-                mpePartsCompanyDTO.setPay5StarCd(null);
-                mpePartsCompanyDTO.setQlty5StarCd(null);
-                mpePartsCompanyDTO.setTchlg5StarYear(null);
-                mpePartsCompanyDTO.setPay5StarYear(null);
-                mpePartsCompanyDTO.setQlty5StarYear(null);
-
-                if (!seq.isEmpty()) {
-                    mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
-                    mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
-                } else {
-                    mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
-                    mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
-                }
                 index += 1;
             }
         } else if (mpePartsCompanyDTO.getCtgryCd().equals("COMPANY01001")) {
             // 1차인 경우, SQ정보 빈 값 처리
-            for(List<String> sqList : allSqLists) {
-                seq = sqList.get(0);
-
-                if (!seq.isEmpty()) {
-                    mpePartsCompanyDTO.setYear(null);
-                    mpePartsCompanyDTO.setScore(null);
-                    mpePartsCompanyDTO.setNm(null);
-                    mpePartsCompanyDTO.setCrtfnCmpnNm(null);
-                    mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
-                    mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
-                }
-            }
+            mpePartsCompanyMapper.deletePartsComSQInfo(mpePartsCompanyDTO);
         }
         return mpePartsCompanyMapper.updatePartsCompany(mpePartsCompanyDTO);
     }

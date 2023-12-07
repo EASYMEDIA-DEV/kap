@@ -12,73 +12,63 @@
 		SELECT /*EBCVisitEduMapper.selectVisitEduList*/
 			A.vst_seq -- 방문순번
 			 , A.mem_seq -- 회원순번
-			 , A.appctn_bsnm_no -- 신청당시의 사업자등록번호
-			 , A.cmpn_size_cd -- 회사 규모
-			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.cmpn_size_cd) AS cmpn_size_name
-			 , A.appctn_fld_cd -- 신청분야코드
-			 , A.first_rgns_cd -- 첫번째 지역 -- 신청소재지1
-			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = A.first_rgns_cd) AS first_rgns_name
-			 , A.scnd_rgns_cd -- 두번째 지역 -- 신청소재지2
-			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = A.scnd_rgns_cd) AS scnd_rgns_name
-			 , A.ptcpt_cnt -- 실제 참여 인원수
+			 , A.appctn_bsnm_no -- 신청당시 사업자등록번호
+			 , A.appctn_fld_cd -- 신청분야 코드
+			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.appctn_fld_cd) AS appctn_fld_name -- 신청분야명
+			 , A.hope_dt -- 교육희망일
+			 , A.ptcpt_cnt -- 교육인원
 			 , A.ptcpt_hh -- 교육시간
-			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.ptcpt_hh) AS ptcptHhNum
-			 , A.hope_dt -- 희망일자
-			 , A.reg_dtm -- 신청일시
-			 , A.mod_id -- 수정자
-			 , (select name from co_adm_mst where id = A.mod_id) AS mod_name
-			 , A.mod_dtm -- 수정일시
-			 , B.name AS mem_name -- 방문교육신청한 회원이름
-			 , B.id AS mem_id -- 회원아이디
-			 , B.hp_no AS mem_hp_no -- 회원 휴대폰번호
-			 , B.email AS mem_email -- 회원이메일
-			 , c.cmpn_nm
-			 , C.cmpn_cd
-			 , C.ctgry_cd
+			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.ptcpt_hh) AS ptcpt_hh_num
+			 , A.edctn_place AS edctn_place_addr -- 교육장소 hidden값
+			 , A.reg_dtm AS visit_reg_dtm -- 방문교육신청일시
+			 , A.mod_id AS visit_mod_id -- 최종수정자
+			 , A.mod_dtm  AS visit_mod_dtm-- 최종수정일시
+			 , B.name AS mem_name-- 신청자이름
+			 , B.id AS mem_id -- 신청자 아이디
+			 , B.hp_no AS mem_hp_no -- 신청자 핸드폰번호
+			 , B.email AS mem_email --  -- 신청자이메일
+			 , C.cmpn_nm -- 부품사명
+			 , C.ctgry_cd -- 부품사구분코드
 			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = C.ctgry_cd) AS ctgry_name
-			 , C.size_cd
-			 , C.stbsm_dt
-			 , C.tel_no
-			 , C.zipcode
-			 , C.bsc_addr
-			 , C.dtl_addr
-			 , C.sls_pmt
-			 , C.sls_year
-			 , C.mple_cnt
-			 , D.edctn_strt_dt -- 교육시작일자
-			 , D.edctn_end_dt -- 교육종료일자
-			 , D.appctn_cnt -- 교육신청인원
-			 , D.enfrcmnt_cd -- 시행결과코드
+			 , C.size_cd -- 부품사규모
+			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = C.size_cd) AS size_name
+			 , D.vst_rslt_seq -- 방문결과순번
+			 , D.cnfrmd_theme -- 확정주제
+			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = D.edctn_stts_cd) AS edctn_stts_name -- 교육상태명
+			 , D.edctn_dtm -- 교육일시
+			 , D.cmptn_cnt -- 수료인원
+
 		FROM
 			(
 				SELECT vst_seq
 					 , mem_seq
 					 , appctn_bsnm_no
-					 , cmpn_size_cd
 					 , appctn_fld_cd
-					 , first_rgns_cd
-					 , scnd_rgns_cd
+					 , hope_dt
 					 , ptcpt_cnt
 					 , ptcpt_hh
-					 , hope_dt
+					 , edctn_place
 					 , reg_dtm
 					 , mod_id
 					 , mod_dtm
 				FROM ev_edctn_vst_mst
 			)A
-				INNER JOIN
+				LEFT JOIN
 			(
 				SELECT mem_seq
-					 , NAME
+					 , name
 					 , id
 					 , hp_no
 					 , email
 				FROM co_mem_mst
 			)B
 			ON A.mem_seq = B.mem_seq
-				INNER JOIN
+				LEFT JOIN
 			(
-				SELECT *
+				SELECT bsnm_no
+					 , cmpn_nm
+					 , ctgry_cd
+					 , size_cd
 				FROM cp_cmpn_mst
 			)C
 			ON A.appctn_bsnm_no = C.bsnm_no
@@ -87,25 +77,18 @@
 				SELECT vst_rslt_seq
 					 , vst_seq
 					 , mem_seq
-					 , edctn_strt_dt
-					 , edctn_end_dt
-					 , appctn_cnt
-					 , enfrcmnt_cd
-					 , edctn_place
-					 , cprtn_instt
-					 , edctn_plan_cnt
-					 , edctn_mthd
-					 , vst_edctn_cmpn
-					 , vst_edctn_theme
-					 , vst_edctn_dt
-					 , vst_edctn_time
+					 , cnfrmd_theme
+					 , edctn_stts_cd
+					 , edctn_dtm
+					 , cmptn_cnt
 				FROM ev_edctn_vst_rslt_dtl
 			)D
 			ON A.vst_seq = D.vst_seq
 				AND A.mem_seq = D.mem_seq
+		<include refid="selectVisitEduListwhereSql" />
 		ORDER BY
 			A.reg_dtm DESC
-		LIMIT #{firstIndex}, #{recordCountPerPage}
+			LIMIT #{firstIndex}, #{recordCountPerPage}
 	</select>
 
 	<!--
@@ -119,13 +102,13 @@
 		SELECT /*EBCVisitEduMapper.selectVisitEduCnt*/
 			count(A.vst_seq)
 		FROM ev_edctn_vst_mst A
-		INNER JOIN co_mem_mst B
-			ON A.mem_seq = B.mem_seq
-		INNER JOIN cp_cmpn_mst C
-			ON A.appctn_bsnm_no = C.bsnm_no
+		LEFT JOIN co_mem_mst B
+		ON A.mem_seq = B.mem_seq
+		LEFT JOIN cp_cmpn_mst C
+		ON A.appctn_bsnm_no = C.bsnm_no
 		LEFT JOIN ev_edctn_vst_rslt_dtl D
-			ON A.vst_seq = D.vst_seq
-			 AND A.mem_seq = D.mem_seq
+		ON A.vst_seq = D.vst_seq
+		AND A.mem_seq = D.mem_seq
 	</select>
 
 	<!--
@@ -139,30 +122,34 @@
 		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
 			A.vst_seq -- 방문순번
 			 , A.mem_seq -- 회원순번
-			 , A.appctn_bsnm_no -- 신청당시의 사업자등록번호
-			 , A.cmpn_size_cd -- 회사 규모
-			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.cmpn_size_cd) AS cmpn_size_name
-			 , A.appctn_fld_cd -- 신청분야코드
-			 , A.first_rgns_cd -- 첫번째 지역 -- 신청소재지1
-			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = A.first_rgns_cd) AS first_rgns_cd_name
-			 , A.scnd_rgns_cd -- 두번째 지역 -- 신청소재지2
-			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = A.scnd_rgns_cd) AS scnd_rgns_name
+			 , A.appctn_bsnm_no -- 신청당시 사업자등록번호
+			 , A.appctn_fld_cd -- 신청분야 코드
+			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.appctn_fld_cd) AS appctn_fld_name -- 신청분야명
+			 , A.hope_dt -- 교육희망일
+			 , A.ptcpt_cnt -- 교육인원
 			 , A.ptcpt_hh -- 교육시간
-			 , A.hope_dt -- 희망일자
-			 , A.reg_dtm -- 신청일시
-			 , A.mod_id -- 수정자
-			 , (select name from co_adm_mst where id = A.mod_id) AS mod_name
-			 , A.mod_dtm -- 수정일시
-			 , B.name AS mem_name -- 방문교육신청한 회원이름
-			 , B.id AS mem_id -- 회원아이디
-			 , B.hp_no AS mem_hp_no -- 회원 휴대폰번호
-			 , B.tel_no AS mem_tel_no -- 회원 전화번호
-			 , B.dept_cd AS mem_dept_cd -- 회원 부서코드
-			 , B.dept_dtl_nm AS mem_dept_dtl_name -- 회원 부서명
-			 , B.pstn_cd AS mem_pstn_cd -- 회원 직급코드
-			 , B.pstn_nm AS mem_pstn_name -- 회원직급명
-			 , B.email AS mem_email -- 회원이메일
-			 , c.cmpn_nm
+			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.ptcpt_hh) AS ptcpt_hh_num
+			 , A.appctn_theme_cntn -- 신청주제내용
+			 , A.appctn_rsn -- 신청사유
+			 , A.place_zipcode -- 방문교육 우편주소
+			 , A.place_bsc_addr -- 방문교육 기본주소
+			 , A.place_dtl_addr -- 방문교육 상세주소
+			 , A.edctn_place AS edctn_place_addr -- 교육장소 hidden값
+			 , A.ptcpt_trgt_cntn -- 참여대상내용
+			 , A.itrdc_file_seq -- 소개파일순번
+			 , A.reg_dtm AS visit_reg_dtm -- 방문교육신청일시
+			 , A.mod_id AS visit_mod_id -- 최종수정자
+			 , A.mod_dtm  AS visit_mod_dtm-- 최종수정일시
+			 , B.name AS mem_name-- 신청자이름
+			 , B.id AS mem_id -- 신청자 아이디
+			 , B.hp_no AS mem_hp_no -- 신청자 핸드폰번호
+			 , B.email AS mem_email --  -- 신청자이메일
+			 , B.tel_no AS mem_tel_no
+			 , B.dept_cd AS mem_dept_cd
+			 , B.dept_dtl_nm AS mem_dept_dtl_nm
+			 , B.pstn_cd AS mem_pstn_cd
+			 , B.pstn_nm AS mem_pstn_nm
+			 , C.cmpn_nm
 			 , C.rprsnt_nm
 			 , C.cmpn_cd
 			 , C.ctgry_cd
@@ -184,39 +171,34 @@
 			 , C.pay_5_star_year
 			 , C.tchlg_5_star_cd
 			 , C.tchlg_5_star_year
-			 , D.edctn_strt_dt -- 교육시작일자
-			 , D.edctn_end_dt -- 교육종료일자
-			 , D.appctn_cnt -- 교육신청인원
-			 , D.enfrcmnt_cd -- 시행코드 -- 교육결과
+			 , D.vst_rslt_seq -- 방문결과순번
+			 , D.cnfrmd_theme -- 확정주제
+			 , D.edctn_stts_cd -- 교육상태코드
+			 , D.edctn_dtm -- 교육일시
+			 , D.cmptn_cnt -- 수료인원
+			 , D.edctn_year -- 교육년도
 			 , D.edctn_place -- 교육장소
-			 , D.cprtn_instt -- 협업기관
-			 , D.edctn_plan_cnt -- 교육계획수
-			 , D.isttr_edctn_time_1 -- 강사1 교육시간
-			 , D.isttr_edctn_time_2 -- 강사2 교육시간
-			 , D.edctn_mthd -- 교육방법
-			 , D.vst_edctn_cmpn -- 방문교육회사
-			 , D.vst_edctn_theme -- 방문교육주제
-			 , D.vst_edctn_dt -- 방문교육일자
-			 , D.vst_edctn_time -- 방문교육시간
+			 , D.ptcpt_rate -- 참석률
 			 , D.lctr_file_seq -- 강의파일순번
 			 , D.etc_matls_file_seq -- 기타자료파일순번
-			 , E.rslt_type_cd -- 결과구분코드
-			 , E.optn_cd -- 옵션코드
-			 , E.rslt_val -- 결과값
-			 , E.optn_ord -- 옵션정렬
 
 		FROM
 			(
 				SELECT vst_seq
 					 , mem_seq
 					 , appctn_bsnm_no
-					 , cmpn_size_cd
 					 , appctn_fld_cd
-					 , first_rgns_cd
-					 , scnd_rgns_cd
+					 , appctn_theme_cntn -- 신청주제내용
+					 , appctn_rsn -- 신청사유
+					 , hope_dt
+					 , place_zipcode
+					 , place_bsc_addr
+					 , place_dtl_addr
+					 , edctn_place -- 교육장소 hidden값
+					 , ptcpt_trgt_cntn -- 참여대상내용
 					 , ptcpt_cnt
 					 , ptcpt_hh
-					 , hope_dt
+					 , itrdc_file_seq -- 소개파일순번
 					 , reg_dtm
 					 , mod_id
 					 , mod_dtm
@@ -225,7 +207,7 @@
 				INNER JOIN
 			(
 				SELECT mem_seq
-					 , NAME
+					 , name
 					 , id
 					 , hp_no
 					 , tel_no
@@ -239,7 +221,32 @@
 			ON A.mem_seq = B.mem_seq
 				INNER JOIN
 			(
-				SELECT *
+				SELECT  bsnm_no
+					 , cmpn_nm
+					 , rprsnt_nm
+					 , cmpn_cd
+					 , ctgry_cd
+					 , size_cd
+					 , stbsm_dt
+					 , tel_no
+					 , zipcode
+					 , bsc_addr
+					 , dtl_addr
+					 , sls_pmt
+					 , sls_year
+					 , mple_cnt
+					 , mjr_prdct_1
+					 , mjr_prdct_2
+					 , mjr_prdct_3
+					 , qlty_5_star_cd
+					 , qlty_5_star_year
+					 , pay_5_star_cd
+					 , pay_5_star_year
+					 , tchlg_5_star_cd
+					 , tchlg_5_star_year
+					 , reg_id
+					 , reg_ip
+					 , reg_dtm
 				FROM cp_cmpn_mst
 			)C
 			ON A.appctn_bsnm_no = C.bsnm_no
@@ -248,141 +255,468 @@
 				SELECT vst_rslt_seq
 					 , vst_seq
 					 , mem_seq
-					 , edctn_strt_dt
-					 , edctn_end_dt
-					 , appctn_cnt
-					 , enfrcmnt_cd
-					 , edctn_place
-					 , cprtn_instt
-					 , edctn_plan_cnt
-					 , isttr_edctn_time_1
-					 , isttr_edctn_time_2
-					 , edctn_mthd
-					 , vst_edctn_cmpn
-					 , vst_edctn_theme
-					 , vst_edctn_dt
-					 , vst_edctn_time
+					 , cnfrmd_theme
+					 , edctn_stts_cd
+					 , edctn_year -- 교육년도
+					 , edctn_dtm
+					 , edctn_place -- 교육장소
+					 , cmptn_cnt
+					 , ptcpt_rate -- 참석률
 					 , lctr_file_seq
 					 , etc_matls_file_seq
 				FROM ev_edctn_vst_rslt_dtl
 			)D
 			ON A.vst_seq = D.vst_seq
 				AND A.mem_seq = D.mem_seq
-				LEFT JOIN
-			(
-				select vst_rslt_seq
-					 , vst_seq
-					 , mem_seq
-					 , rslt_type_cd
-					 , optn_cd
-					 , rslt_val
-					 , optn_ord
-				from ev_edctn_vst_optn_dtl
-			)E
-			ON A.vst_seq = E.vst_seq
-				AND D.vst_rslt_seq = E.vst_rslt_seq
-				AND D.mem_seq = E.mem_seq
 		where A.vst_seq = #{vstSeq}
 
 	</select>
 
 	<!--
-         쿼리명 : EBCVisitEduMapper.updateMemberPartsSocietyInfo
-         설  명 : 방문교육 신청회원정보를 수정한다.
+		쿼리명 : EBCVisitEduMapper.selectAppctnTypeList
+		설  명 : 방문교육 신청분야 상세코드 목록을 조회한다.
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.04    구은희       최초생성
+    -->
+	<select id="selectAppctnTypeList" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduDTO">
+		SELECT /*EBCVisitEduMapper.selectAppctnTypeList*/
+			cd
+			 , vst_seq
+			 , mem_seq
+		from ev_edctn_appctn_type_dtl
+	</select>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.updateMemPartsSociety
+         설  명 : 방문교육 신청자 정보를 수정한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.30   구은희       최초생성
+        2023.12.04   구은희       최초생성
     -->
-	<update id="updateMemberPartsSocietyInfo" parameterType="EBCVisitEduDTO">
-		UPDATE /* EBCVisitEduMapper.updateMemberPartsSocietyInfo */ CO_MEM_MST
+	<update id="updateMemPartsSociety" parameterType="EBCVisitEduDTO">
+		UPDATE /* EBCVisitEduMapper.updateMemPartsSociety */ co_mem_mst
 		SET
-			dept_cd = #{memDeptCd}
-		  , dept_dtl_nm = #{memDeptDtlName}
+			tel_no = #{telNo}
+		  , dept_cd = #{memDeptCd}
+		  , dept_dtl_nm = #{memDeptDtlNm}
 		  , pstn_cd = #{memPstnCd}
-		  , pstn_nm = #{memPstnName}
-		  , tel_no = #{memTelNo}
-		where
-			mem_seq = #{memSeq}
-		  and mem_seq = '111122'
-		  and mem_cd ='CP'
+		  , pstn_nm = #{memPstnNm}
+		  , MOD_ID = #{modId}
+		  , MOD_IP = #{modIp}
+		  , MOD_DTM = NOW()
+		WHERE 1=1
+		  AND mem_cd = 'CP'
+		  AND mem_seq = #{memSeq}
+		and tel_no = 'CP'
 	</update>
-
 	<!--
-         쿼리명 : EBCVisitEduMapper.updateVisitEduMasterInfo
-         설  명 : 방문교육 마스터를 수정한다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2023.11.30   구은희       최초생성
-    -->
-	<update id="updateVisitEduMasterInfo" parameterType="EBCVisitEduDTO">
-		UPDATE /* EBCVisitEduMapper.updateVisitEduMasterInfo */ ev_edctn_vst_mst
-		SET
-			cmpn_size_cd = #{cmpnSizeCd}
-		  , appctn_fld_cd = #{appctnFldCd}
-		  , first_rgns_cd = #{firstRgnsCd}
-		  , scnd_rgns_cd = #{scndRgnsCd}
-		  , ptcpt_cnt = #{ptcptCnt}
-		  , ptcpt_hh = #{ptcptHh}
-		  , hope_dt = #{hopeDt}
-		  , reg_ip = #{regIp}
-		  , reg_dtm = #{regDtm}
-		  , mod_id = #{modId}
-		  , mod_ip = #{modIp}
-		  , mod_dtm = #{modDtm}
-		WHERE  vst_seq = #{vstSeq}
+          쿼리명 : EBCVisitEduMapper.selectIsttrList
+          설  명 : 방문교육 강사를 조회한다.
+           수정일     수정자       수정내용
+         ==========   ======    ==============
+         2023.12.05   구은희       최초생성
+         -->
+	<select id="selectIsttrList" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduDTO">
+		select /*EBCVisitEduMapper.selectIsttrList*/
+			a.vst_seq
+			 , a.vst_rslt_seq
+			 , a.isttr_seq
+			 , a.mem_seq
+			 , b.name
+			 , a.reg_id
+			 , a.reg_ip
+			 , a.reg_dtm
+			 , a.mod_id
+			 , a.mod_ip
+			 , a.mod_dtm
+		from ev_edctn_isttr_rel a, cp_isttr_mst b
+		where 1=1
+		  and a.isttr_seq = b.isttr_seq
+		  and vst_seq = #{vstSeq}
+		  and vst_rslt_seq = #{vstRsltSeq}
 		  and mem_seq = #{memSeq}
-		  and appctn_bsnm_no = #{appctnBsnmNo}
-	</update>
+	</select>
 
 	<!--
-         쿼리명 : EBCVisitEduMapper.updateVisitEduResultInfo
-         설  명 : 방문교육결과상세 정보를 수정한다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2023.11.30   구은희       최초생성
+		 쿼리명 : EBCVisitEduMapper.insertIsttrRel
+		 설  명 : 방문교육 강사관계를 등록한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.04   구은희       최초생성
     -->
-	<update id="updateVisitEduResultInfo" parameterType="EBCVisitEduDTO">
-		UPDATE /* EBCVisitEduMapper.updateVisitEduResultInfo */ ev_edctn_vst_rslt_dtl
-		SET
-			edctn_strt_dt = #{edctnStrtDt}
-		  , edctn_end_dt = #{edctnEndDt}
-		  , appctn_cnt = #{appctnCnt}
-		  , enfrcmnt_cd = #{enfrcmnt_cd}
-		  , edctn_place = #{edctn_place}
-		  , cprtn_instt = #{cprtn_instt}
-		  , edctn_plan_cnt = #{edctn_plan_cnt}
-		  , isttr_edctn_time_1 = #{isttr_edctn_time_1}
-		  , isttr_edctn_time_2 = #{isttr_edctn_time_2}
-		  , edctn_mthd = #{edctn_mthd}
-		  , vst_edctn_cmpn = #{vst_edctn_cmpn}
-		  , vst_edctn_theme = #{vst_edctn_theme}
-		  , vst_edctn_dt = #{vst_edctn_dt}
-		  , vst_edctn_time = #{vst_edctn_time}
-		  , lctr_file_seq = #{lctr_file_seq}
-		  , etc_matls_file_seq = #{etc_matls_file_seq}
-		  , mod_id = #{modId}
-		  , mod_ip = #{modIp}
-		  , mod_dtm = #{modDtm}
-		WHERE vst_rslt_seq = #{vst_rslt_seq}
-		  AND vst_seq = #{vst_seq}
-		  AND mem_seq = #{mem_seq}
-	</update>
+	<insert id="insertIsttrRel" parameterType="EBCVisitEduDTO">
+		insert into /*EBCVisitEduMapper.insertIsttrRel*/ ev_edctn_isttr_rel (
+		vst_seq
+		, mem_seq
+		, vst_rslt_seq
+		, isttr_seq
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm
+		) VALUES
+		<foreach collection="isttrSeqList" item="isttrSeqList" index="index" separator=" , " open="" close=";">
+			(
+			#{isttrSeqList.vstSeq}
+			, #{isttrSeqList.memSeq}
+			, #{isttrSeqList.vstRsltSeq}
+			, #{isttrSeqList.isttrSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{modId}
+			, #{modIp}
+			, now()
+			)
+		</foreach>
+	</insert>
 
 	<!--
          쿼리명 : EBCVisitEduMapper.deleteIsttrRel
-         설  명 : 방문교육강사 관계를 삭제한다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2023.11.29   구은희       최초생성
+         설  명 : 방문교육 강사관계를 삭제한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.04   구은희       최초생성
     -->
 	<delete id="deleteIsttrRel" parameterType="EBCVisitEduDTO">
-		delete from ev_edctn_isttr_rel
+		delete from /*EBCVisitEduMapper.deleteIsttrRel*/ ev_edctn_isttr_rel
 		where 1=1
-		 and vst_seq = #{vstSeq}
-		 and episd_ord = #{memSeq}
-		 and isttr_seq = #{isttrSeq}
+		  and vst_seq = #{vstSeq}
+		  and mem_seq = #{memSeq}
+		  and vst_rslt_seq = #{vstRsltSeq}
 	</delete>
 
+	<!--
+		 쿼리명 : EBCVisitEduMapper.insertAppctnType
+		 설  명 : 방문교육 신청분야 상세를 등록한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.04   구은희       최초생성
+    -->
+	<insert id="insertAppctnType" parameterType="EBCVisitEduDTO">
+		insert into /*EBCVisitEduMapper.insertAppctnType*/ ev_edctn_appctn_type_dtl (
+		vst_seq
+		, mem_seq
+		, cd
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm
+		) VALUES
+		<foreach collection="appctnTypeCdList" item="list" index="index" separator=" , " open="" close=";">
+			(
+			#{list.vstSeq}
+			, #{list.memSeq}
+			, #{list.cd}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{modId}
+			, #{modIp}
+			, now()
+			)
+		</foreach>
+	</insert>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.deleteAppctnType
+         설  명 : 방문교육 신청분야 상세를 삭제한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.04   구은희       최초생성
+    -->
+	<delete id="deleteAppctnType" parameterType="EBCVisitEduDTO">
+		delete from /*EBCVisitEduMapper.deleteAppctnType*/ ev_edctn_appctn_type_dtl
+		where 1=1
+		  and vst_seq = #{vstSeq}
+		  and mem_seq = #{memSeq}
+	</delete>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.updateEdctnVst
+         설  명 : 방문교육 신청내용을 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.04   구은희       최초생성
+    -->
+	<update id="updateEdctnVst" parameterType="EBCVisitEduDTO">
+		update /* EBCVisitEduMapper.updateEdctnVst */ ev_edctn_vst_mst
+		set
+			mem_seq = #{memSeq}
+		  , appctn_fld_cd = #{appctnFldCd}
+		  , appctn_theme_cntn = #{appctnThemeCntn}
+		  , appctn_rsn = #{appctnRsn}
+		  , hope_dt = #{hopeDt}
+		  , place_zipcode = #{placeZipcode}
+		  , place_bsc_addr = #{placeBscAddr}
+		  , place_dtl_addr = #{placeDtlAddr}
+		  , ptcpt_trgt_cntn = #{ptcptTrgtCntn}
+		  , ptcpt_cnt = #{ptcptCnt}
+		  , ptcpt_hh = #{ptcptHh}
+		<if test="itrdcFileSeq != null and itrdcFileSeq != ''.toString() ">
+			, itrdc_file_seq = #{itrdcFileSeq}
+		</if>
+		  , mod_id = #{modId}
+		  , mod_ip = #{modIp}
+		  , mod_dtm = now()
+		where 1=1
+		  and vst_seq = #{vstSeq}
+		  and mem_seq = #{memSeq}
+	</update>
+
+	<!--
+		 쿼리명 : EBCVisitEduMapper.insertEdctnVstRslt
+		 설  명 : 방문교육 결과상세를 등록한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.05   구은희       최초생성
+    -->
+	<insert id="insertEdctnVstRslt" parameterType="EBCVisitEduDTO">
+		insert into /*EBCVisitEduMapper.insertEdctnVstRslt*/ ev_edctn_vst_rslt_dtl (
+			 vst_rslt_seq
+		   , vst_seq
+		   , mem_seq
+		   , cnfrmd_theme
+		   , edctn_stts_cd
+		   , edctn_year
+		   , edctn_dtm
+		   , edctn_place
+		   , cmptn_cnt
+		   , ptcpt_rate
+		   , lctr_file_seq
+		   , etc_matls_file_seq
+		   , reg_id
+		   , reg_ip
+		   , reg_dtm
+		) VALUES
+		(
+			#{vstRsltSeq}
+			, #{vstSeq}
+			, #{memSeq}
+			, #{cnfrmdTheme}
+			, #{edctnSttsCd}
+			, #{edctnYear}
+			, #{edctnDtm}
+			, #{edctnPlace}
+			, #{cmptnCnt}
+			, #{ptcptRate}
+			, #{lctrFileSeq}
+			, #{etcMatlsFileSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.updateEdctnVstRslt
+         설  명 : 방문교육 결과상세를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.04   구은희       최초생성
+    -->
+	<update id="updateEdctnVstRslt" parameterType="EBCVisitEduDTO">
+		update /* EBCVisitEduMapper.updateEdctnVstRslt */ ev_edctn_vst_rslt_dtl
+		set
+			mem_seq = #{memSeq}
+		  , cnfrmd_theme = #{cnfrmdTheme}
+		  , edctn_stts_cd = #{edctnSttsCd}
+		  , edctn_year = #{edctnYear}
+		  , edctn_dtm = #{edctnDtm}
+		  , edctn_place = #{edctnPlace}
+		  , cmptn_cnt = #{cmptnCnt}
+		  , ptcpt_rate = #{ptcptRate}
+		  , lctr_file_seq = #{lctrFileSeq}
+		  , etc_matls_file_seq = #{etcMatlsFileSeq}
+		  , mod_id = #{modId}
+		  , mod_ip = #{modIp}
+		  , mod_dtm = now()
+		where 1=1
+		  and vst_seq = #{vstSeq}
+		  and mem_seq = #{memSeq}
+		  and vst_rslt_seq = #{vstRsltSeq}
+	</update>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.selectResultOpList
+         설  명 : 방문교육 결과옵션 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.05   구은희       최초생성
+    -->
+	<select id="selectResultOpList" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduDTO">
+		select /*EBCVisitEduMapper.selectResultOpList*/
+			rslt_optn_seq
+			 , vst_seq
+			 , mem_seq
+			 , vst_rslt_seq
+			 , rslt_type_cd
+			 , optn_cd
+			 , rslt_val
+			 , reg_id
+			 , reg_ip
+			 , reg_dtm
+			 , mod_id
+			 , mod_ip
+			 , mod_dtm
+		from ev_edctn_vst_optn_dtl
+		where 1=1
+		  and vst_seq = #{vstSeq}
+		  and vst_rslt_seq = #{vstRsltSeq}
+		  and mem_seq = #{memSeq}
+	</select>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.insertResultOp
+         설  명 : 방문교육 결과옵션 상세를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.04   구은희       최초생성
+    -->
+	<insert id="insertResultOp" parameterType="EBCVisitEduDTO">
+		insert into /*EBCVisitEduMapper.insertResultOp*/ ev_edctn_vst_optn_dtl (
+		rslt_optn_seq
+		, vst_seq
+		, mem_seq
+		, vst_rslt_seq
+		, rslt_type_cd
+		, optn_cd
+		, rslt_val
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm
+		) VALUES
+		(
+			#{rsltOptnSeq}
+			, #{vstSeq}
+			, #{memSeq}
+			, #{vstRsltSeq}
+			, #{rsltTypeCd}
+			, #{optnCd}
+			, #{rsltVal}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{modId}
+			, #{modIp}
+			, now()
+			)
+
+	</insert>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.deleteResultOp
+         설  명 : 방문교육 결과옵션 상세를 삭제한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.04   구은희       최초생성
+    -->
+	<delete id="deleteResultOp" parameterType="EBCVisitEduDTO">
+		delete from /*EBCVisitEduMapper.deleteResultOp*/ ev_edctn_vst_optn_dtl
+		where 1=1
+		  and vst_seq = #{vstSeq}
+		  and mem_seq = #{memSeq}
+		  and vst_rslt_seq = #{vstRsltSeq}
+	</delete>
+
+	<!--
+		쿼리명 : selectVisitEduListwhereSql
+		설  명 : 방문교육 관리 where Sql
+		  수정일      수정자       수정내용
+		==========   ========   ==============
+		2023.12.04  구은희       최초생성
+	-->
+	<sql id="selectVisitEduListwhereSql">
+		<where>
+			<if test="srchDate != null and srchDate != ''.toString() ">
+				<choose>
+					<when test="srchDate == 1">
+						<if test="dStrDt != null and dStrDt != ''.toString() ">
+							AND REG_DTM <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
+							AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						</if>
+					</when>
+					<when test="srchDate == 2">
+						<if test="dEndDt != null and dEndDt != ''.toString() ">
+							AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
+							AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						</if>
+					</when>
+					<otherwise>
+
+					</otherwise>
+				</choose>
+			</if>
+			<if test="ctgryCdList != null and ctgryCdList.size() > 0">
+				and (
+				<foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="" close="" separator=" or ">
+					CTGRY_CD = #{ctgryCdList}
+				</foreach>
+				)
+			</if>
+			<if test="appctnFldList != null and appctnFldList.size() > 0">
+				and (
+				<foreach collection="appctnFldList" item="appctnFldList" index="index" open="" close="" separator=" or ">
+					A.appctn_fld_cd = #{appctnFldList}
+				</foreach>
+				)
+			</if>
+			<if test="firstRgnsCd != null and firstRgnsCd != ''.toString()">
+				AND A.edctn_place LIKE CONCAT('%', (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = #{firstRgnsCd}), '%')
+				OR A.edctn_place LIKE CONCAT('%', (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = #{scndRgnsCd}), '%')
+			</if>
+			<if test="q != null and q != ''">
+				<choose>
+					<when test="f == 1">
+						AND C.cmpn_nm LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 2">
+						AND A.appctn_bsnm_no LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 3">
+						AND (
+						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
+					</when>
+					<when test="f == 4">
+						AND B.name LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 5">
+						AND B.hp_no LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 6">
+						AND B.email LIKE CONCAT('%', #{q}, '%')
+					</when>
+					<when test="f == 7">
+						AND (
+						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
+					</when>
+					<otherwise>
+						AND (
+						C.cmpn_nm LIKE CONCAT('%', #{q}, '%') OR
+						A.appctn_bsnm_no LIKE CONCAT('%', #{q}, '%') OR
+						B.name LIKE CONCAT('%', #{q}, '%') OR
+						B.hp_no LIKE CONCAT('%', #{q}, '%') OR
+						B.email LIKE CONCAT('%', #{q}, '%') OR
+						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						)
+					</otherwise>
+				</choose>
+			</if>
+		</where>
+	</sql>
 </mapper>
 
 

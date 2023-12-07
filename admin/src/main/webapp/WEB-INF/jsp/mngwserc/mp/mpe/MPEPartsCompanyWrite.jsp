@@ -27,7 +27,7 @@
                                 <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
                                 <div class="col-sm-5">
                                     <input type="text" class="form-control input-sm" id="bsnmNo" name="bsnmNo" value="${rtnInfo.bsnmNo}" title="사업자번호" placeholder="사업자등록번호 입력" <c:if test="${not empty rtnInfo.bsnmNo or not empty rtnInfo }">readonly</c:if> style="width: 220px;"/>
-                                    <button type="button" class="btn btn-sm" id="checkBtn">인증</button> <span>※ 사업자등록번호 인증 시 부품사/대표자명이 자동으로 입력됩니다.</span>
+                                    <button type="button" class="btn btn-sm" id="btnBsnmNo">인증</button> <span>※ 사업자등록번호 인증 시 부품사/대표자명이 자동으로 입력됩니다.</span>
                                 </div>
                             </div>
                         </fieldset>
@@ -299,7 +299,7 @@
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">관리자메모</label>
                                 <div class="col-sm-5">
-                                    <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" value="${rtnInfo.admMemo}" title="관리자메모" placeholder="관리자 메모 입력" maxlength="500"></textarea>
+                                    <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" title="관리자메모" placeholder="관리자 메모 입력" maxlength="500">${rtnInfo.admMemo}</textarea>
                                 </div>
                             </div>
                         </fieldset>

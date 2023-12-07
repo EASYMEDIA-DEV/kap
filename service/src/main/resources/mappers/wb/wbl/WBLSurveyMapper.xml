@@ -27,6 +27,7 @@
 			,a.part_cmpn_cd_2
 			,a.ptcpt_cd
 			,a.ptcpt_cmpltn_dtm
+			,a.cmpltn_yn
 			,a.score
 			,a.reg_id
 			,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
@@ -46,7 +47,10 @@
 			) a
 			ORDER BY
 			a.cxstn_srv_seq DESC
-			LIMIT #{firstIndex}, #{recordCountPerPage}
+			<if test="excelYn != 'Y'.toString() ">
+				LIMIT #{firstIndex}, #{recordCountPerPage}
+			</if>
+
 	</select>
 
 	<!--
@@ -441,4 +445,43 @@
 		from cx_cmpn_episd_mst a inner join sv_mst b on a.srv_seq = b.srv_seq
 		order by a.year , a.episd asc
 	</select>
+
+	<!--
+         쿼리명 : WBLSurveyMapper.deleteSurveyRspn
+         설  명 : 응답 삭제(초기화)
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.06   박준희       최초생성
+    -->
+	<delete id="deleteSurveyRspn" parameterType="WBLSurveyMstInsertDTO">
+		delete /* WBLSurveyMstSearchDTO.deleteSurveyRspn */
+		sv_rspn_mst , sv_sbjct_rspn_dtl , sv_mtlcc_rspn_dtl
+		from sv_rspn_mst
+		inner join sv_sbjct_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_sbjct_rspn_dtl.srv_rspn_seq
+		inner join sv_mtlcc_rspn_dtl on sv_sbjct_rspn_dtl.srv_rspn_seq = sv_mtlcc_rspn_dtl.srv_rspn_seq
+		where sv_rspn_mst.srv_rspn_seq = #{srvRspnSeq}
+	</delete>
+
+	<!--
+	쿼리명 : WBLSurveyMstInsertDTO.updateSurveyRspn
+	설  명 : 응답 초기화
+	  수정일      수정자       수정내용
+	==========   ========   ==============
+	2023.12.06    박준희       최초생성
+	-->
+	<update id="updateSurveyRspn" parameterType="WBLSurveyMstInsertDTO">
+		update /* WBLSurveyMstInsertDTO.updateSurveyRspn */
+		    cx_appctn_rsume_srv_mst
+		set
+		    ptcpt_cd = 'E'
+		  , cmpltn_yn = 'N'
+		  , score = 0
+		  , ptcpt_cmpltn_dtm = null
+		  , srv_rspn_seq = null
+		  , mod_id = #{modId}
+		  , mod_ip = #{modIp}
+		  , mod_dtm = now()
+		where cxstn_srv_seq = #{cxstnSrvSeq}
+	</update>
+
 </mapper>

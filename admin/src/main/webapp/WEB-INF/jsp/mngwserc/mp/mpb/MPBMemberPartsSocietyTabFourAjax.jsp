@@ -7,9 +7,9 @@
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center">${ list.year}</td>
                 <td class="text-center">${ list.episd}</td>
-                <td class="text-center">${ list.typeCdNm} TODO 양현우 임의로함</td>
+                <td class="text-center">${ list.typeCdNm}</td>
                 <td class="text-center">${ list.bsnCdNm} </td>
-                <td class="text-center">${ list.status} TODO 양현우 추후</td>
+                <td class="text-center">${ list.status}</td>
                 <td class="text-center">${ list.cmpnNm}</td>
                 <td class="text-center">${ kl:bsnmNoConvert(list.appctnBsnmNo)}</td>
                 <td class="text-center">${ list.ctgryCdNm}</td>

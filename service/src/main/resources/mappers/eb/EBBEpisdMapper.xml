@@ -993,10 +993,12 @@
 		from ep_edctn_ptcpt_mst a
 				 left join(select mem_seq, id, name, hp_no, email, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') b on a.mem_seq = b.mem_seq
 				 left join(select cmpn_nm, ctgry_cd, bsnm_no from cp_cmpn_mst where 1=1) c on c.bsnm_no = a.ptcpt_bsnm_no
+				 left join(SELECT edctn_seq, episd_year, episd_ord, edctn_strt_dtm, edctn_end_dtm, otsd_exam_ptcpt_yn, edctn_stts_cd FROM ed_edctn_episd_mst) d ON d.edctn_seq = a.edctn_seq AND d.episd_year = a.episd_year AND d.episd_ord = a.episd_ord
 		where 1=1
-		  and edctn_seq = #{edctnSeq}
-		  and episd_year = #{episdYear}
-		  and episd_ord = #{episdOrd}
+		  and a.edctn_seq = #{edctnSeq}
+		  and a.episd_year = #{episdYear}
+		  and a.episd_ord = #{episdOrd}
+		  and a.stts_cd != 'EDU_STTS_CD04'
 	</select>
 
 	<!--
@@ -1049,6 +1051,29 @@
 			edu_dtm desc
 
 			limit #{firstIndex}, #{recordCountPerPage}
+
+	</select>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectPtcptAtndcList
+      설  명 : 교육차수관리 - 참여자 목록 개인별 출석부 목록
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectPtcptAtndcList" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
+
+		SELECT /*EBBEpisdMapper.selectPtcptAtndcList*/
+		ptcpt_seq
+		, edctn_dt
+		, atndc_dtm
+		, lvgrm_dtm
+		, etc_nm
+		FROM ep_edctn_atndc_dtl
+		WHERE ptcpt_seq IN
+		<foreach collection="ptcptList" item="ptcptList" index="index" separator=", " open="(" close=")">
+			#{ptcptList.ptcptSeq}
+		</foreach>
 
 	</select>
 
@@ -1210,6 +1235,7 @@
 			, edctn_dt
 			, atndc_dtm
 			, lvgrm_dtm
+			, etc_nm
 			, reg_id
 			, reg_ip
 			, reg_dtm
@@ -1223,6 +1249,7 @@
 			, #{ptcptList.edctnDt}
 			, #{ptcptList.atndcDtm}
 			, #{ptcptList.lvgrmDtm}
+			, #{ptcptList.etcNm}
 			, #{ptcptList.regId}
 			, #{ptcptList.regIp}
 			, now()
@@ -1232,6 +1259,37 @@
 			)
 		</foreach>
 	</insert>
+
+	<!--
+             쿼리명 : EBBEpisdMapper.updateAtndcList
+             설  명 : 교육차수관리 - 참여자 목록 출석부 수정
+              수정일     수정자       수정내용
+            ==========   ======    ==============
+            2023.11.02   김학규       최초생성
+        -->
+	<update id="updateAtndcList" parameterType="EBBEpisdDTO" >
+		<foreach collection="ptcptList" item="ptcptList" index="index" separator=";" open="" close=";">
+			update ep_edctn_atndc_dtl set /* EBBEpisdMapper.updateAtndcList */
+
+			mod_id = #{ptcptList.modId}
+			, mod_ip = #{ptcptList.modIp}
+			, mod_dtm = now()
+
+			<if test="ptcptList.atndcDtm != null and ptcptList.atndcDtm != ''">
+				, atndc_dtm = #{ptcptList.atndcDtm}
+			</if>
+			<if test="ptcptList.lvgrmDtm != null and ptcptList.lvgrmDtm != ''">
+				, lvgrm_dtm = #{ptcptList.lvgrmDtm}
+			</if>
+			<if test="ptcptList.etcNm != null and ptcptList.etcNm != ''">
+				, etc_nm = #{ptcptList.etcNm}
+			</if>
+
+			where 1=1
+			and ptcpt_seq = #{ptcptList.ptcptSeq}
+			and edctn_dt = #{ptcptList.edctnDt}
+		</foreach>
+	</update>
 
 
 

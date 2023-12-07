@@ -1,8 +1,7 @@
 package com.kap.front.controller.co;
 
-import com.kap.common.utility.CODateUtil;
-import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.*;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Random;
 
 /**
  * <pre>
@@ -60,7 +58,7 @@ public class COLgnController {
     	try
 		{
 			// 보안 처리(로그인 세션 변경)
-    		session.invalidate();
+		session.invalidate();
 		}
     	catch (Exception e)
 		{
@@ -93,10 +91,34 @@ public class COLgnController {
 		return "/front/co/COIdResPage.front";
 	}
 
+	/**
+	 * 비밀번호 찾기
+	 */
+	@GetMapping("/pwd-find")
+	public String getPwdFind(ModelMap modelMap, HttpSession session) throws Exception
+	{
+
+		return "/front/co/COPwdFindWrite.front";
+	}
+
+	/**
+	 * 비밀번호 찾기 후 설정 화면
+	 */
+	@RequestMapping("/pwd-find-setting")
+	public String getPwdFindSetting(COIdFindDto coIdFindDto , ModelMap modelMap) throws Exception
+	{
+		MPAUserDto idFind = cOUserLgnService.getIdFind(coIdFindDto);
+
+		modelMap.addAttribute("rtnData",idFind);
+
+
+		return "/front/co/COPwdSettingWrite.front";
+	}
+
 
 	/**
 	 * 아이디 이메일 전송
-	 * @param id
+	 * @param
 	 * @return
 	 * @throws Exception
 	 */
@@ -105,8 +127,6 @@ public class COLgnController {
 	{
 		try
 		{
-
-
 				//이메일 발송
 				COMailDTO cOMailDTO = new COMailDTO();
 				cOMailDTO.setSubject("["+siteName+"] 아이디 찾기 결과 안내");
@@ -136,37 +156,18 @@ public class COLgnController {
 
 	}
 
-
-
-
 	/**
-	 * 로그인 이메일 인증 페이지
+	 * 아이디 이메일 전송
+	 * @param
+	 * @return
+	 * @throws Exception
 	 */
-	@GetMapping("/mngwsercgateway/email")
-	public String getLoginEmailAuthPage(ModelMap modelMap, HttpSession session) throws Exception
+	@PostMapping(value="/pwd-chng")
+	public String idEmailTran(MPAUserDto mpaUserDto) throws Exception
 	{
-		String rtnUrl = "";
-		COUserDetailsDTO lgnCOAAdmDTO = null;
-		String authNum = "";
 		try
 		{
-			if(
-					RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) != null
-					&& RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailLgnMap", RequestAttributes.SCOPE_SESSION) != null
-			)
-			{
-				lgnCOAAdmDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailLgnMap", RequestAttributes.SCOPE_SESSION);
-				authNum      = String.valueOf( RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) );
-				rtnUrl = "mngwserc/co/COLgnEmail";
-			}
-			else
-			{
-				rtnUrl = "redirect:/";
-			}
-			// 보안 처리(로그인 세션 변경)
-			session.invalidate();
-			RequestContextHolder.getRequestAttributes().setAttribute("tmpEmailLgnMap", lgnCOAAdmDTO, RequestAttributes.SCOPE_SESSION);
-			RequestContextHolder.getRequestAttributes().setAttribute("tmpEmailAuthNum", authNum, RequestAttributes.SCOPE_SESSION);
+
 		}
 		catch (Exception e)
 		{
@@ -176,22 +177,33 @@ public class COLgnController {
 			}
 			throw new Exception(e.getMessage());
 		}
-		return rtnUrl;
+		return "jsonView";
+
 	}
 
+	/**
+	 * 비밀번호 찾기
+	 */
+	@PostMapping("/pwd-find")
+	public String getIdFindPage(COIdFindDto coIdFindDto, ModelMap modelMap) throws Exception
+	{
+
+		modelMap.addAttribute("data", cOUserLgnService.getIdFind(coIdFindDto));
+		return "jsonView";
+	}
 
 
     /**
 	 * 로그아웃을 처리한다.
 	 */
-    @RequestMapping(value="/mngwserc/**/logout", method=RequestMethod.GET)
-    public String actionLogout(COUserDto cOUserDto, ModelMap modelMap, HttpSession sesssion, HttpServletRequest request) throws Exception
+    @RequestMapping(value="/my-page/logout", method=RequestMethod.GET)
+    public String actionLogout(MPAUserDto mpaUserDto, ModelMap modelMap, HttpSession sesssion, HttpServletRequest request) throws Exception
     {
     	try
         {
     		if (COUserDetailsHelperService.isAuthenticated())
     		{
-				cOUserLgnService.actionLogout(cOUserDto, request);
+				cOUserLgnService.actionLogout(mpaUserDto, request);
     		}
     		// 보안 처리(로그인 세션 변경)
     		sesssion.invalidate();
@@ -204,7 +216,7 @@ public class COLgnController {
 			}
 			throw new Exception(e.getMessage());
 		}
-    	return "redirect:/mngwsercgateway/login";
+    	return "redirect:/login";
     }
 
     /**
@@ -241,7 +253,7 @@ public class COLgnController {
 	 * 정보 업데이트 페이지
 	 */
 	@RequestMapping(value="/info-upd", method=RequestMethod.GET)
-	public String getInfoUpdatePage(COUserDto coUserDto, ModelMap modelMap) throws Exception
+	public String getInfoUpdatePage(MPAUserDto mpaUserDto, ModelMap modelMap) throws Exception
 	{
 		String rtnUrl = "/front/co/COLgnInfoUpd";
 		try
@@ -366,10 +378,10 @@ public class COLgnController {
 			return rtnCOLoginDTO;
 		}
 		/**
-		 * 임시 또는 최초 비밀번호를 변경한다.
+		 * 임시 또는 최초 비밀번호를 변경한다  로그인 한 경우 비밀번호 변경.
 		 */
 		@PostMapping("/change-password")
-		public COUserDto setPwdChng(COUserDto cOUserDto, ModelMap modelMap, HttpSession session) throws Exception
+		public MPAUserDto setPwdChng(MPAUserDto mpaUserDto, ModelMap modelMap, HttpSession session) throws Exception
 		{
 			COUserDetailsDTO cOUserDetailsDTO = null;
 			try
@@ -385,22 +397,22 @@ public class COLgnController {
 				if(cOUserDetailsDTO == null)
 				{
 					//세션이 끊겼을때
-					cOUserDto.setRespCd("40");
+					mpaUserDto.setRespCd("40");
 				}
 				else
 				{
-					cOUserDto.setId( cOUserDetailsDTO.getId() );
-					String rtnCode = cOUserLgnService.setPwdChng(cOUserDto);
+					mpaUserDto.setId( cOUserDetailsDTO.getId() );
+					String rtnCode = cOUserLgnService.setPwdChng(mpaUserDto);
 					if ("00".equals(rtnCode))
 					{
 						session.invalidate();
 					}
-					cOUserDto.setRespCd(rtnCode);
+					mpaUserDto.setRespCd(rtnCode);
 				}
-				cOUserDto.setPwd("");
-				cOUserDto.setPassword("");
-				cOUserDto.setNewPassword("");
-				cOUserDto.setPassword("");
+				mpaUserDto.setPwd("");
+				mpaUserDto.setPassword("");
+				mpaUserDto.setNewPassword("");
+				mpaUserDto.setPassword("");
 			}
 			catch (Exception e)
 			{
@@ -410,14 +422,40 @@ public class COLgnController {
 				}
 				throw new Exception(e.getMessage());
 			}
-			return cOUserDto;
+			return mpaUserDto;
+		}
+
+		/**
+		 * 임시 또는 최초 비밀번호를 변경한다.
+		 */
+		@PostMapping("/upd-password")
+		public MPAUserDto setPwdChngUpd(MPAUserDto mpaUserDto, ModelMap modelMap, HttpSession session) throws Exception
+		{
+			try
+			{
+				String rtnCode = cOUserLgnService.setPwdChng(mpaUserDto);
+				mpaUserDto.setRespCd(rtnCode);
+				mpaUserDto.setPwd("");
+				mpaUserDto.setPassword("");
+				mpaUserDto.setNewPassword("");
+				mpaUserDto.setPassword("");
+			}
+			catch (Exception e)
+			{
+				if (log.isDebugEnabled())
+				{
+					log.debug(e.getMessage());
+				}
+				throw new Exception(e.getMessage());
+			}
+			return mpaUserDto;
 		}
 
 		/**
 		 * 다음에 비밀번호 변경하기
 		 */
 		@PostMapping("/change-password-next")
-		public COUserDto setPwdNextChng(COUserDto cOUserDto, ModelMap modelMap, HttpSession session) throws Exception
+		public MPAUserDto setPwdNextChng(MPAUserDto mpaUserDto, ModelMap modelMap, HttpSession session) throws Exception
 		{
 			COUserDetailsDTO cOUserDetailsDTO = null;
 			try
@@ -433,22 +471,22 @@ public class COLgnController {
 				if(cOUserDetailsDTO == null)
 				{
 					//세션이 끊겼을때
-					cOUserDto.setRespCd("40");
+					mpaUserDto.setRespCd("40");
 				}
 				else
 				{
-					cOUserDto.setId( cOUserDetailsDTO.getId() );
-					String rtnCode = cOUserLgnService.setPwdNextChng(cOUserDto);
+					mpaUserDto.setId( cOUserDetailsDTO.getId() );
+					String rtnCode = cOUserLgnService.setPwdNextChng(mpaUserDto);
 					if ("00".equals(rtnCode))
 					{
 						session.invalidate();
 					}
-					cOUserDto.setRespCd(rtnCode);
+					mpaUserDto.setRespCd(rtnCode);
 				}
-				cOUserDto.setPwd("");
-				cOUserDto.setPassword("");
-				cOUserDto.setNewPassword("");
-				cOUserDto.setPassword("");
+				mpaUserDto.setPwd("");
+				mpaUserDto.setPassword("");
+				mpaUserDto.setNewPassword("");
+				mpaUserDto.setPassword("");
 			}
 			catch (Exception e)
 			{
@@ -458,54 +496,8 @@ public class COLgnController {
 				}
 				throw new Exception(e.getMessage());
 			}
-			return cOUserDto;
+			return mpaUserDto;
 		}
 
-
-
-
-		/**
-		 * 로그인 이메일 인증 진행
-		 */
-		@PostMapping("/mngwsercgateway/email-auth")
-		public COLoginDTO getLoginEmailAuthConfirm(COLoginDTO cOLoginDTO, ModelMap modelMap, HttpSession session) throws Exception
-		{
-			COUserDetailsDTO lgnCOAAdmDTO = null;
-			String authNum = "";
-			try
-			{
-				if(
-						  RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailLgnMap", RequestAttributes.SCOPE_SESSION) != null
-						&& RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) != null
-				 )
-				{
-					authNum = String.valueOf( RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailAuthNum", RequestAttributes.SCOPE_SESSION) );
-					if(authNum.equals( cOLoginDTO.getEmailAuthNum() )){
-						cOLoginDTO.setRespCd("0000");
-						lgnCOAAdmDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpEmailLgnMap", RequestAttributes.SCOPE_SESSION);
-						session.invalidate();
-						cOLoginDTO.setRdctUrl( lgnCOAAdmDTO.getRdctUrl() );
-						RequestContextHolder.getRequestAttributes().setAttribute("loginMap", lgnCOAAdmDTO, RequestAttributes.SCOPE_SESSION);
-
-					}
-					else{
-						cOLoginDTO.setRespCd("9999");
-					}
-				}
-				else
-				{
-					cOLoginDTO.setRespCd("9999");
-				}
-			}
-			catch (Exception e)
-			{
-				if (log.isDebugEnabled())
-				{
-					log.debug(e.getMessage());
-				}
-				throw new Exception(e.getMessage());
-			}
-			return cOLoginDTO;
-		}
 	}
 }

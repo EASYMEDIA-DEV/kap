@@ -40,6 +40,12 @@ public interface EBBEpisdService {
 	 */
 	public EBBPtcptDTO setPtcptList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 교육 참여자 출석부 목록을 호출한다.
+	 */
+	public EBBPtcptDTO setAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
 
 	/**
 	 * 교육차수를 등록한다.
@@ -71,6 +77,14 @@ public interface EBBEpisdService {
 	 * 교육차수 신청자 등록
 	 */
 	public EBBPtcptDTO setPtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
+	 * 교육차수 신청자 출석부 수정
+	 */
+	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+
 
 }
 

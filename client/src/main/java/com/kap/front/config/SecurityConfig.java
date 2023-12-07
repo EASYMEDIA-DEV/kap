@@ -50,9 +50,8 @@ public class SecurityConfig {
                 .csrf()
                 .ignoringAntMatchers("/error/**"
                         ,"/login"
-                        ,"/id-find"  //아이디 찾기
                         ,"/id-find-res" //아이디 찾기 결과
-                        ,"/id-email-trans" //메일 전송
+                        ,"/pwd-find-setting" //비밀번호 변경
                         ,"/**/*list*"
                         ,"/**/*index*"
                         ,"/**/*select*"

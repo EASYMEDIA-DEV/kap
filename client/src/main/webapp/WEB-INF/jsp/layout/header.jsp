@@ -120,14 +120,34 @@
 			</div>
 			<button class="search-btn icon-btn" type="button" title=""><span>검색</span></button>
 			<div class="pop-wrap">
-				<button class="log-btn icon-btn" type="button" title="팝업"><span>로그인</span></button>
+				<c:choose>
+					<c:when test="${ not empty loginMap}">
+						<button class="log-btn icon-btn" type="button" title="팝업"><span>마이페이지</span></button>
+					</c:when>
+					<c:otherwise>
+						<button class="log-btn icon-btn" type="button" title="팝업"><span>로그인</span></button>
+					</c:otherwise>
+				</c:choose>
+
 				<div class="pop-box">
-					<div class="btn-wrap">
-						<a class="btn-text-icon black-arrow" href="/login" title="링크 이동"><span>로그인</span></a>
-					</div>
-					<div class="btn-wrap">
-						<a class="btn-text-icon black-arrow" href="/member/join" title="링크 이동"><span>회원가입</span></a>
-					</div>
+					<c:choose>
+						<c:when test="${ not empty loginMap}">
+							<div class="btn-wrap">
+								<a class="btn-text-icon black-arrow" href="/my-page/main" title="링크 이동"><span>마이페이지</span></a>
+							</div>
+							<div class="btn-wrap">
+								<a class="btn-text-icon black-arrow" href="/my-page/logout" title="링크 이동"><span>로그아웃</span></a>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="btn-wrap">
+								<a class="btn-text-icon black-arrow" href="/login" title="링크 이동"><span>로그인</span></a>
+							</div>
+							<div class="btn-wrap">
+								<a class="btn-text-icon black-arrow" href="/member/join" title="링크 이동"><span>회원가입</span></a>
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</div>
 			<button class="init menu-btn icon-btn" type="button" title="">

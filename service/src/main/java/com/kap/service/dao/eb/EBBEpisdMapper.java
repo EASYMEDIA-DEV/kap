@@ -102,6 +102,12 @@ public interface EBBEpisdMapper {
 	public List<EBBPtcptDTO> selectEpisdPtcptList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 - 교육 참여자 출석정보 목록
+	 */
+	public List<EBBPtcptDTO> selectPtcptAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+
+	/**
 	 * 교육차수 - 교육 참여자 수정(평가점수, 수료여부)
 	 */
 	public int updateEpisdPtcpt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
@@ -146,6 +152,11 @@ public interface EBBEpisdMapper {
 	 * 교육차수 - 신청자  출석 목록 등록
 	 */
 	public int insertAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 신청자  출석 목록 수정
+	 */
+	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
 

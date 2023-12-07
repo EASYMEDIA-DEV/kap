@@ -240,8 +240,9 @@
     <update id="updatePartsCompany" parameterType="MPEPartsCompanyDTO">
         UPDATE /* MPEPartsCompanyMapper.updatePartsCompany */ CP_CMPN_MST
         SET
+            CTGRY_CD = #{ctgryCd}
         <if test="cmpnNm != null and cmpnNm != ''.toString() ">
-            CMPN_NM = #{cmpnNm}
+           , CMPN_NM = #{cmpnNm}
         </if>
         <if test="rprsntNm != null and rprsntNm != ''.toString() ">
           , RPRSNT_NM = #{rprsntNm}
@@ -249,8 +250,9 @@
         <if test="cmpnNfrmlNm != null and cmpnNfrmlNm != ''.toString() ">
           , CMPN_NFRML_NM = #{cmpnNfrmlNm}
         </if>
-          , CMPN_CD = #{cmpnCd}
-          , CTGRY_CD = #{ctgryCd}
+        <if test="cmpnCd != null and cmpnCd != ''.toString() ">
+            , CMPN_CD = #{cmpnCd}
+        </if>
           , SIZE_CD = #{sizeCd}
           , STBSM_DT = #{stbsmDt}
           , TEL_NO = #{telNo}
@@ -263,7 +265,7 @@
         <if test="slsYear != null and slsYear != ''.toString() ">
           , SLS_YEAR = #{slsYear}
         </if>
-       <if test="mpleCnt != null and mpleCnt != ''.toString() ">
+        <if test="mpleCnt != null and mpleCnt != ''.toString() ">
           , MPLE_CNT = #{mpleCnt}
         </if>
           , MJR_PRDCT_1 = #{mjrPrdct1}
@@ -301,8 +303,7 @@
     <update id="updatePartsComSQInfo" parameterType="MPEPartsCompanyDTO">
         UPDATE /* MPEPartsCompanyMapper.updatePartsComSQInfo */ CP_CMPN_CBSN_DTL
         SET
-            BSNM_NO = #{bsnmNo}
-          , NM = #{nm}
+            NM = #{nm}
           , SCORE = #{score}
           , YEAR = #{year}
           , CRTFN_CMPN_NM = #{crtfnCmpnNm}
@@ -338,6 +339,20 @@
             </choose>
         </where>
     </delete>
+
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.deletePartsComSQInfo
+         설  명 : SQ 정보를 삭제한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.06   구은희       최초생성
+    -->
+    <delete id="deletePartsComSQInfo" parameterType="MPEPartsCompanyDTO">
+        delete from /*MPEPartsCompanyMapper.deletePartsComSQInfo*/ cp_cmpn_cbsn_dtl
+        WHERE bsnm_no = #{bsnmNo}
+    </delete>
+
 
     <!--
          쿼리명 : MPEPartsCompanyMapper.selectEduCnt

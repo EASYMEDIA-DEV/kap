@@ -160,6 +160,37 @@ public class EBBEpisdController {
         modelMap.addAttribute("srvRstDtl", srvRstDtl);//만족도 결과 부서, 직급별 인원 통계
         modelMap.addAttribute("ptcptList", ptcptList);//교육 참여자 목록
 
+
+        //교육 참여자 출석부 th부분 날짜 세팅용 시작
+        String getEdctnStrtDtm= rtnDto.getEdctnStrtDtm();
+        String getEdctnEndDtm= rtnDto.getEdctnEndDtm();
+        // 시작 날짜와 종료 날짜 설정
+        String startDateString = getEdctnStrtDtm.substring(0, 10);
+        String endDateString = getEdctnEndDtm.substring(0, 10);
+
+        // 시작 날짜와 종료 날짜를 LocalDate 객체로 변환
+        LocalDate startDate = LocalDate.parse(startDateString);
+        LocalDate endDate = LocalDate.parse(endDateString);
+        // 날짜 출력 형식 지정
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        // 반복문을 통해 날짜 출력
+        List<EBBPtcptDTO> tableAtndcList = new ArrayList();
+
+        while (!startDate.isAfter(endDate)) {
+            EBBPtcptDTO tableAtndcDto = new EBBPtcptDTO();
+
+            tableAtndcDto.setEdctnDt(String.valueOf(startDate));
+            tableAtndcList.add(tableAtndcDto);
+
+            startDate = startDate.plusDays(1); // 다음 날짜로 이동
+            if(startDate.isAfter(endDate)){
+                tableAtndcDto.setEdctnDt(String.valueOf(startDate));
+                tableAtndcList.add(tableAtndcDto);
+            }
+        }
+        modelMap.addAttribute("tableAtndcList", tableAtndcList);
+        //교육 참여자 출석부 th부분 날짜 세팅용 종료
+
         //만족도 조사(설문)
 
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
@@ -188,6 +219,33 @@ public class EBBEpisdController {
         }
         return "mngwserc/eb/ebb/EBBEpisdPtcptListAjax";
     }
+
+    /**
+     * 교육참여자 출석부 목록을 호출한다.
+     */
+    @GetMapping(value = "/episdAtndcList")
+    public String getEpisdAtndcList(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            //목록 상단 th에 뿌려줄 날짜 리스트를 구한다.
+            EBBPtcptDTO eBBPtcptDTO = eBBEpisdService.setAtndcList(eBBEpisdDTO);
+
+            modelMap.addAttribute("rtnData", eBBPtcptDTO);
+            modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/eb/ebb/EBBEpisdAtndcListAjax";
+    }
+
 
     /**
      * 교육차수관리 > 신청자 등록 화면을 호출한다.
@@ -344,6 +402,30 @@ public class EBBEpisdController {
             }
 
             return tempDto;
+        }
+
+        @Operation(summary = "교육차수 참여자 출석부 수정", tags = "교육차수 중복체크", description = "")
+        @PostMapping(value="/updateAtndc")
+        public int updateAtndcList(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+
+            int rtnCnt = 0;
+
+            try {
+
+                rtnCnt = eBBEpisdService.updateAtndcList(eBBEpisdDTO);
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return rtnCnt;
         }
 
 
