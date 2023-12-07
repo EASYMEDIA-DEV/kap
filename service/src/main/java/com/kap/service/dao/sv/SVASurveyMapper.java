@@ -113,10 +113,24 @@ public interface SVASurveyMapper {
     public List<SVASurveyQstnDtlDTO> selectSurveyQstnTypeDtlList(SVASurveyMstSearchDTO sVASurveyDTO);
 
     /**
-     * 설문질문 보기 조회(응답)
+     * 설문질문 보기 조회(상생응답)
      */
     public List<SVASurveyExmplDtlDTO> selectSurveyExmplWinDtlList(SVASurveyQstnDtlDTO sVASurveyQstnDtlDTO);
 
+    /**
+     * 설문질문 보기 조회(교육응답)
+     */
+    public List<SVASurveyExmplDtlDTO> selectSurveyExmplEduDtlList(SVASurveyQstnDtlDTO sVASurveyQstnDtlDTO);
+
+    /**
+     * 강사 설문 질문 조회(내용)
+     */
+    public List<SVASurveyQstnDtlDTO> selectSurveyIsttrQstnTypeDtlList(SVASurveyMstSearchDTO sVASurveyDTO);
+
+    /**
+     * 설문질문 보기 조회(교육응답)
+     */
+    public List<SVASurveyExmplDtlDTO> selectSurveyIsttrExmplEduDtlList(SVASurveyQstnDtlDTO sVASurveyQstnDtlDTO);
 
 
 }

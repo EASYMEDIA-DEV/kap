@@ -5,8 +5,11 @@ import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.EBBEpisdService;
+import com.kap.service.SVASurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,6 +55,8 @@ public class EBBEpisdController {
     public final EBBEpisdService eBBEpisdService;
 
     public final COCodeService cOCodeService;
+
+    private final SVASurveyService sVSurveyService;
 
     /**
      *  교육회차관리 목록으로 이동한다.
@@ -191,7 +196,22 @@ public class EBBEpisdController {
         modelMap.addAttribute("tableAtndcList", tableAtndcList);
         //교육 참여자 출석부 th부분 날짜 세팅용 종료
 
+
         //만족도 조사(설문)
+        if (!"".equals(rtnDto.getSrvSeq()) && rtnDto.getSrvSeq() != null){
+            SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
+            sVASurveyDTO.setDetailsKey(Integer.toString(rtnDto.getSrvSeq()));
+            sVASurveyDTO.setRfncSeq(rtnDto.getEpisdSeq());
+            sVASurveyDTO.setEpisdSeq(rtnDto.getEpisdSeq());
+            sVASurveyDTO.setTypeCd("EDU");
+
+            SVASurveyMstInsertDTO sVASurveyMstInsertDTO = sVSurveyService.selectSurveyTypeEduDtl(sVASurveyDTO);
+            if (sVASurveyMstInsertDTO != null){
+                modelMap.addAttribute("rtnSurveyData", sVASurveyMstInsertDTO);
+            }
+        }
+
+
 
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
     }
