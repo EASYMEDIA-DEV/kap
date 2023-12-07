@@ -3,12 +3,15 @@ package com.kap.service.impl.eb;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBCVisitEduService;
 import com.kap.service.MPEPartsCompanyService;
 import com.kap.service.dao.eb.EBCVisitEduMapper;
+import com.kap.service.dao.mp.MPEPartsCompanyMapper;
+import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -43,11 +46,18 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
     // DAO
     private final EBCVisitEduMapper ebcVisitEduMapper;
+
+    // 부품사관리 DAO
+    private final MPEPartsCompanyMapper mpePartsCompanyMapper;
+
     // 파일 서비스
     private final COFileService cOFileService;
     
-    // 부품사 관리 서비스
+    // 부품사관리 서비스
     public final MPEPartsCompanyService mpePartsCompanyService;
+
+    // 회원관리 서비스
+    private final MPAUserService mpaUserService;
 
     /* 방문교육 결과 상세 시퀀스 */
     private final EgovIdGnrService edctnVstRsltSeqIdgen;
@@ -97,6 +107,10 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         return ebcVisitEduMapper.selectResultOpList(ebcVisitEduDTO);
     }
 
+    public List<MPEPartsCompanyDTO> selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+        return mpePartsCompanyMapper.selectPartsCompanyDtl(mpePartsCompanyDTO);
+    }
+
     /**
      * 강사를 수정한다.
      */
@@ -125,13 +139,31 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         ebcVisitEduDTO.setModId( cOUserDetailsDTO.getId() );
         ebcVisitEduDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
+        // 방문교육 결과정보 insert, 시퀀스 생성
+        if(ebcVisitEduDTO.getVstRsltSeq() == null) {
+            ebcVisitEduDTO.setVstRsltSeq(edctnVstRsltSeqIdgen.getNextIntegerId());
+            ebcVisitEduMapper.insertEdctnVstRslt(ebcVisitEduDTO);
+        }
         //신청자 정보 수정
-        ebcVisitEduMapper.updateMemPartsSociety(ebcVisitEduDTO);
+        MPAUserDto mPAUserDto = new MPAUserDto();
+        mPAUserDto.setDetailsKey(String.valueOf(ebcVisitEduDTO.getMemSeq()));
+        mPAUserDto = mpaUserService.selectUserDtlTab(mPAUserDto);
+
+        if(mPAUserDto != null){
+            mPAUserDto.setRegId(ebcVisitEduDTO.getRegId());
+            mPAUserDto.setRegIp(ebcVisitEduDTO.getRegIp());
+            mPAUserDto.setMemSeq(Integer.valueOf(ebcVisitEduDTO.getMemSeq()));
+            mPAUserDto.setDeptCd(ebcVisitEduDTO.getDeptCd());
+            mPAUserDto.setDeptDtlNm(ebcVisitEduDTO.getDeptDtlNm());
+            mPAUserDto.setPstnCd(ebcVisitEduDTO.getPstnCd());
+            mPAUserDto.setTelNo(ebcVisitEduDTO.getTelNo());
+            mPAUserDto.setHpNo(ebcVisitEduDTO.getHpNo());
+            mpaUserService.updateUserDtl(mPAUserDto);
+        }
 
         //부품사 정보 수정
         MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
 
-        // dto 세팅
         mpePartsCompanyDTO.setBsnmNo(ebcVisitEduDTO.getAppctnBsnmNo());
         mpePartsCompanyDTO.setCtgryCd(ebcVisitEduDTO.getCtgryCd());
         mpePartsCompanyDTO.setSizeCd(ebcVisitEduDTO.getSizeCd());
@@ -175,8 +207,8 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         ebcVisitEduMapper.updateEdctnVstRslt(ebcVisitEduDTO);
 
         //신청분야 상세 수정
-        //ebcVisitEduMapper.deleteAppctnType(ebcVisitEduDTO);
-        //ebcVisitEduMapper.insertAppctnType(ebcVisitEduDTO);
+        ebcVisitEduMapper.deleteAppctnType(ebcVisitEduDTO);
+        ebcVisitEduMapper.insertAppctnType(ebcVisitEduDTO);
 
         //교육실적 수정
         ebcVisitEduMapper.deleteResultOp(ebcVisitEduDTO);

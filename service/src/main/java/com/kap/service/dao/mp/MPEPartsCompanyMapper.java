@@ -91,4 +91,9 @@ public interface MPEPartsCompanyMapper {
      */
     public int deletePartsComSQInfo(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
+    /**
+     * 자동차부품산업대상 목록을 조회
+     */
+    public List<MPEPartsCompanyDTO> selectCarTargetList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
 }

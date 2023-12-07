@@ -57,6 +57,11 @@ public interface EBCVisitEduMapper {
 	public List<EBCVisitEduDTO> selectIsttrList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
 	/**
+	 * 방문교육 결과상세를 등록
+	 */
+	public int insertEdctnVstRslt(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+	/**
 	 * 방문교육 강사관계 등록
 	 */
 	public int insertIsttrRel(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;

@@ -23,10 +23,10 @@
 			 , A.reg_dtm AS visit_reg_dtm -- 방문교육신청일시
 			 , A.mod_id AS visit_mod_id -- 최종수정자
 			 , A.mod_dtm  AS visit_mod_dtm-- 최종수정일시
-			 , B.name AS mem_name-- 신청자이름
-			 , B.id AS mem_id -- 신청자 아이디
-			 , B.hp_no AS mem_hp_no -- 신청자 핸드폰번호
-			 , B.email AS mem_email --  -- 신청자이메일
+			 , B.name-- 신청자이름
+			 , B.id -- 신청자 아이디
+			 , B.hp_no -- 신청자 핸드폰번호
+			 , B.email -- 신청자이메일
 			 , C.cmpn_nm -- 부품사명
 			 , C.ctgry_cd -- 부품사구분코드
 			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = C.ctgry_cd) AS ctgry_name
@@ -140,15 +140,15 @@
 			 , A.reg_dtm AS visit_reg_dtm -- 방문교육신청일시
 			 , A.mod_id AS visit_mod_id -- 최종수정자
 			 , A.mod_dtm  AS visit_mod_dtm-- 최종수정일시
-			 , B.name AS mem_name-- 신청자이름
-			 , B.id AS mem_id -- 신청자 아이디
-			 , B.hp_no AS mem_hp_no -- 신청자 핸드폰번호
-			 , B.email AS mem_email --  -- 신청자이메일
-			 , B.tel_no AS mem_tel_no
-			 , B.dept_cd AS mem_dept_cd
-			 , B.dept_dtl_nm AS mem_dept_dtl_nm
-			 , B.pstn_cd AS mem_pstn_cd
-			 , B.pstn_nm AS mem_pstn_nm
+			 , B.name-- 신청자이름
+			 , B.id -- 신청자 아이디
+			 , B.hp_no -- 신청자 핸드폰번호
+			 , B.email -- 신청자이메일
+			 , B.tel_no
+			 , B.dept_cd
+			 , B.dept_dtl_nm
+			 , B.pstn_cd
+			 , B.pstn_nm AS dept_cd_nm
 			 , C.cmpn_nm
 			 , C.rprsnt_nm
 			 , C.cmpn_cd
@@ -285,31 +285,11 @@
 			 , vst_seq
 			 , mem_seq
 		from ev_edctn_appctn_type_dtl
+		where 1=1
+		  and vst_seq = #{vstSeq}
+		  and mem_seq = #{memSeq}
 	</select>
 
-	<!--
-         쿼리명 : EBCVisitEduMapper.updateMemPartsSociety
-         설  명 : 방문교육 신청자 정보를 수정한다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2023.12.04   구은희       최초생성
-    -->
-	<update id="updateMemPartsSociety" parameterType="EBCVisitEduDTO">
-		UPDATE /* EBCVisitEduMapper.updateMemPartsSociety */ co_mem_mst
-		SET
-			tel_no = #{telNo}
-		  , dept_cd = #{memDeptCd}
-		  , dept_dtl_nm = #{memDeptDtlNm}
-		  , pstn_cd = #{memPstnCd}
-		  , pstn_nm = #{memPstnNm}
-		  , MOD_ID = #{modId}
-		  , MOD_IP = #{modIp}
-		  , MOD_DTM = NOW()
-		WHERE 1=1
-		  AND mem_cd = 'CP'
-		  AND mem_seq = #{memSeq}
-		and tel_no = 'CP'
-	</update>
 	<!--
           쿼리명 : EBCVisitEduMapper.selectIsttrList
           설  명 : 방문교육 강사를 조회한다.
@@ -408,11 +388,11 @@
 		, mod_ip
 		, mod_dtm
 		) VALUES
-		<foreach collection="appctnTypeCdList" item="list" index="index" separator=" , " open="" close=";">
+		<foreach collection="appctnTypeCdList" item="appctnTypeCdList" index="index" separator=" , " open="" close=";">
 			(
-			#{list.vstSeq}
-			, #{list.memSeq}
-			, #{list.cd}
+			#{vstSeq}
+			, #{memSeq}
+			, #{appctnTypeCdList}
 			, #{regId}
 			, #{regIp}
 			, now()

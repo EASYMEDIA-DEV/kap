@@ -115,13 +115,16 @@ define(["ezCtrl"], function(ezCtrl) {
                             var telNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".telNo").val(); // 회원 일반 전화번호
                             var pstnCd = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCd").val(); // 직급 - select
                             var pstnCdNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCdNm").val();
+                            var deptCd= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptCd").val();
                             var deptDtlNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptDtlNm").val();
 
                             $('input[name=memSeq]').val(memSeq);
                             $('input[name=name]').val(memName);
                             $('input[name=memId]').val(memId);
                             $('input[name=memInfo]').val(memName+"("+memId+")");
+                            $('input[name=deptCd]').val(deptCd);
                             $('input[name=deptDtlNm]').val(deptDtlNm);
+                            $('input[name=pstnCd]').val(pstnCd);
                             $('input[name=telNo]').val(telNo);
                             $("#pstnCdSelect").val(pstnCd).prop("selected", true);
                             $('p[name=email]').text(memEmail);
@@ -129,7 +132,6 @@ define(["ezCtrl"], function(ezCtrl) {
                             $('p[name=bsnmNo]').text(bsnmNo);
 
                             clickObj.bsnmNo = bsnmNo;
-
                             clickObj.memSeq = memSeq;
                             clickObj.memId = memId;
                             clickObj.memName = memName;
@@ -140,6 +142,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             clickObj.hpNo = hpNo;
                             clickObj.telNo = telNo;
+                            clickObj.deptCd = deptCd;
                             clickObj.pstnCd = pstnCd;
                             ctrl.obj.trigger("choice", [clickObj])
                             ctrl.obj.find(".close").click();

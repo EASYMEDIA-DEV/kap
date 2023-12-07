@@ -188,9 +188,27 @@ public class MPEPartsCompanyController {
      *  부품사 실적정보 조회
      */
     @PostMapping(value = "/select-tab-two")
-    public String selectPartsPerformanceTabTwoAjax(EBBEpisdDTO eBBEpisdDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
+    public String selectPartsPerformanceTabTwoAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
         modelMap.addAttribute("rtnData", mpePartsCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
         return "mngwserc/mp/mpe/MPEPartsCompanyTabTwoAjax";
+    }
+
+    /**
+     *  부품사 실적정보 조회 - 교육참여 연도별 개수 조회
+     */
+    @PostMapping(value = "/selectEduList")
+    public String selectEduListAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap) throws Exception {
+        modelMap.addAttribute("eduList", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
+        return "mngwserc/mp/mpe/MPEPartsCompanyEduListAjax";
+    }
+
+    /**
+     *  부품사 실적정보 조회 - 자동자부품산업대상 목록 조회
+     */
+    @PostMapping(value = "/selectCarTargetList")
+    public String selectCarTargetListAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
+        modelMap.addAttribute("carTargetList", mpePartsCompanyService.selectCarTargetList(mpePartsCompanyDTO));
+        return "mngwserc/mp/mpe/MPEPartsCompanyCarTargetListAjax";
     }
 
     /**
