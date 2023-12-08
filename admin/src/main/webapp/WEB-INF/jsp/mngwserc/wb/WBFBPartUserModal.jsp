@@ -58,8 +58,8 @@
                             <div class="col-sm-4">
                                 <div class="row">
                                     <div class="col-sm-3 pr0">
+                                        <%-- 검색어 옵션 --%>
                                         <select class="form-control input-sm" data-name="f">
-
                                         </select>
                                     </div>
                                     <div class="col-sm-9 pr0">
@@ -93,6 +93,7 @@
                     <div class="table-responsive col-sm-12 p0 m0" id="vueList">
                         <table class="table table-hover table-striped" >
                             <thead>
+                                <%-- Table Head --%>
                                 <tr>
 
                                 </tr>
