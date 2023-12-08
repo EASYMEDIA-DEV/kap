@@ -79,7 +79,7 @@
             <div class="page-bot-btn-sec">
                 <div class="btn-wrap">
                     <div class="btn-set">
-                        <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                        <a class="btn-solid small gray-bg" href="/login"><span>취소</span></a>
                     </div>
                     <div class="btn-set">
                         <button class="btn-solid small black-bg" type="submit"><span>비밀번호 변경</span></button>

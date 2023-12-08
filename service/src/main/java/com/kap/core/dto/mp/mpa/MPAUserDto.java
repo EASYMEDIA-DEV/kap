@@ -243,4 +243,25 @@ public class MPAUserDto extends BaseDTO  {
     @Schema(title = "비밀번호 변경 타입 " , example = "new")
     private String pwdChngType;
 
+
+    @Schema(title="약관동의")
+    private String trmsAgmntYn;
+
+    @Schema(title="개인정보")
+    private String psnifAgmntYn;
+
+    @Schema(title="3자정보")
+    private String psnif3AgmntYn;
+
+    @Schema(title="마케팅")
+    private String fndnNtfyRcvYn;
+
+
+
+
+
+
+
+
+
 }

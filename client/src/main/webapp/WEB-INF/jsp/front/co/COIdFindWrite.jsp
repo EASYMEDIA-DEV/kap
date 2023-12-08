@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
+<div id="wrap" class="member">
 <div class="cont-wrap" data-controller="controller/co/COLgnCtrl">
     <div class="inner">
         <div class="sub-top-vis-area">
@@ -110,9 +110,8 @@
                     <div class="tab-con">
                         <form id="frmIdFind-email" name="frmIdFind-email" method="post" action="./id-find-res">
                         <div class="data-enter-form">
-                            <input type='hidden' value='2' name='types' readonly>
-                            <input type="hidden" name="birthdate" value="" id="birthdate-email" />
-                            <input type="hidden" name="birthdate" value="" id="email" />
+                            <input type="hidden" name="birthdate" value="" id="birthdate-email" class="notRequired"/>
+                            <input type="hidden" name="birthdate" value="" id="email" class="notRequired"/>
                             <div class="row">
                                 <div class="th">
                                     <p class="title f-head">이름</p>
@@ -160,10 +159,10 @@
                                         <div class="data-line">
                                             <div class="form-group form-email">
                                                 <div class="form-input">
-                                                    <input id="email-first" name="email" title="이메일"  type="text" placeholder="이메일 입력">
+                                                    <input id="email-first" name="email" title="이메일" class="emailChks" type="text" placeholder="이메일 입력" >
                                                 </div>
                                                 <div class="form-input">
-                                                    <input id="emailAddr" name="emailAddr" title="이메일 주소" type="text" placeholder="직접입력">
+                                                    <input id="emailAddr" name="emailAddr" title="이메일 주소" type="text" placeholder="직접입력" maxlength="256">
                                                 </div>
                                                 <div class="form-select">
                                                     <select id="emailSelect" class="notRequired" title="메일 선택">
@@ -213,4 +212,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

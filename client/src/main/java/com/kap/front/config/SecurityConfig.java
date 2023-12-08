@@ -53,6 +53,8 @@ public class SecurityConfig {
                         ,"/login"
                         ,"/id-find-res" //아이디 찾기 결과
                         ,"/pwd-find-setting" //비밀번호 변경
+                        ,"/member/agreement" //회원가입 약관동의
+                        ,"/member/mp-user-join" //비밀번호 변경
                         ,"/**/*list*"
                         ,"/**/*index*"
                         ,"/**/*select*"
