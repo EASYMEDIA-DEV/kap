@@ -1,9 +1,11 @@
 package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebh.EBHEduApplicantMstDTO;
 import com.kap.service.COCommService;
 import com.kap.service.COFileService;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBHEduApplicantService;
 import com.kap.service.dao.eb.EBHEduApplicantMapper;
 import lombok.RequiredArgsConstructor;
@@ -57,8 +59,13 @@ public class EBHEduApplicantServiceImpl implements EBHEduApplicantService {
      * 상세 조회
      */
     public EBHEduApplicantMstDTO selectView(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception{
+        EBHEduApplicantMstDTO rtnData = pEBHEduApplicantMapper.selectView(pEBHEduApplicantMstDTO);
 
-        return pEBHEduApplicantMstDTO;
+        rtnData.setInsNameList(pEBHEduApplicantMapper.selectViewIns(rtnData));
+
+        rtnData.setSqList(pEBHEduApplicantMapper.selectViewSq(rtnData));
+
+        return rtnData;
     }
 
     /**
@@ -67,6 +74,29 @@ public class EBHEduApplicantServiceImpl implements EBHEduApplicantService {
     public int update(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception{
 
         return 0;
+    }
+
+    /**
+     * 선발 상태 수정
+     */
+    public int updateStts(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception{
+        if(pEBHEduApplicantMstDTO.getDelValueList() != null && !pEBHEduApplicantMstDTO.getDelValueList().isEmpty()) {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            pEBHEduApplicantMstDTO.setModId(cOUserDetailsDTO.getId());
+            pEBHEduApplicantMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
+
+            if("Y".equals(pEBHEduApplicantMstDTO.getStts())) {
+                pEBHEduApplicantMstDTO.setSttsCd("EDU_STTS_CD01");
+            }
+            else if("N".equals(pEBHEduApplicantMstDTO.getStts())) {
+                pEBHEduApplicantMstDTO.setSttsCd("EDU_STTS_CD04");
+            }
+
+            return pEBHEduApplicantMapper.updateStts(pEBHEduApplicantMstDTO);
+        }
+        else {
+            return 0;
+        }
     }
 
 }

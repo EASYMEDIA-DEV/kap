@@ -87,4 +87,11 @@ public interface MPAUserService {
      * @throws Exception
      */
     int updatePwdInit(MPPwdInitDto mpPwdInitDto) throws Exception;
+
+    /**
+     * 사용자 , 부품사 등록
+     * @param mpaUserDto
+     * @throws Exception
+     */
+    void insertUser(MPAUserDto mpaUserDto) throws Exception;
 }

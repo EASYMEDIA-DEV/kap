@@ -45,7 +45,7 @@ var mainScript = (function(){
           $(item).css("z-index", 20 - idx);
         });
 
-        var mainKvTimerMotion = gsap.to($(".main-kv-sec .slide-control-area .timer-gauge .bar"), 4, {
+        var mainKvTimerMotion = gsap.to($(".main-kv-sec .slide-control-area .timer-gauge .bar"), 10, {
           width: "100%",
           ease: "none",
           onComplete: function() {
@@ -80,28 +80,24 @@ var mainScript = (function(){
             },
             slideChangeTransitionStart:function(swiper){
               if(!$(".main-kv-sec").hasClass("first-time")){
+                console.log(this.realIndex);
+                $(".main-kv-sec .roll-img-area .roll-img-list:not(.hide-motion)").css("z-index", 1);
                 $(".main-kv-sec .roll-img-area .roll-img-list.hide-motion").css("z-index", 20);
-                $(".main-kv-sec .roll-img-area .roll-img-list").eq(this.realIndex).css("z-index", 19);
 
-                //gsap.to($(".main-kv-sec .title-area .kv-txt-swiper .swiper-slide-active .txt-wrap"), 1, {clipPath: "polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%)", ease: Power3}); // 글씨 clip-path
+                gsap.to($(".main-kv-sec .roll-img-area .roll-img-list:not(.hide-motion) .img-area"), 0, {clipPath: "polygon(0 0, 0 100%, 50% 100%, 50% 0, 50% 0, 50% 100%, 100% 100%, 100% 0)"}); // 이미지 사라진거 원복
+                gsap.to($(".main-kv-sec .roll-img-area .roll-img-list.hide-motion .img-area"), 1, {clipPath: "polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%)", ease: Power3}); // 이미지 사라지게                
+                
+                $(".main-kv-sec .roll-img-area .roll-img-list").eq(this.realIndex).addClass("hide-motion").siblings().removeClass("hide-motion");
+                $(".main-kv-sec .roll-img-area .roll-img-list.hide-motion").css("z-index", 19);
+
                 gsap.to($(".main-kv-sec .title-area .kv-txt-swiper .swiper-slide-active .motion"), 0.7, {left: 0, opacity: 1, stagger:0.08, ease: Power3}); // 글씨 나타나게  
                 gsap.to($(".main-kv-sec .roll-img-area .roll-img-list").eq(this.realIndex).find(".img-area"), 1, {left: 0, ease: Power3}); // 이미지가 왼쪽으로 움직이게
-                gsap.to($(".main-kv-sec .roll-img-area .roll-img-list.hide-motion .img-area"), 1, {clipPath: "polygon(0% 0%, 0% 100%, 0% 100%, 0% 0%, 50% 0%, 50% 100%, 50% 100%, 50% 0%)", ease: Power3}); // clip-path 이미지 분할 사라지게
               }
             },
             slideChangeTransitionEnd:function(){
               if(!$(".main-kv-sec").hasClass("first-time")){
-                $(".main-kv-sec .roll-img-area .roll-img-list").removeClass("hide-motion").eq(this.realIndex).addClass("hide-motion");
-
-                gsap.to($(".main-kv-sec .roll-img-area .roll-img-list:not(.hide-motion) .img-area"), 0, {left: "100rem"});
-
-                //gsap.to($(".main-kv-sec .title-area .kv-txt-swiper .list:not(.swiper-slide-active) .txt-wrap"), 0, {clipPath: "polygon(0 0, 0 100%, 50% 100%, 50% 0, 50% 0, 50% 100%, 100% 100%, 100% 0)"}); // 글씨 clip-path
                 gsap.to($(".main-kv-sec .title-area .kv-txt-swiper .list:not(.swiper-slide-active) .motion"), 0, {left: "-100rem", opacity: 0});
-
-                $(".main-kv-sec .roll-img-area .roll-img-list").css("z-index", 1);
-                $(".main-kv-sec .roll-img-area .roll-img-list").eq(this.realIndex).css("z-index", 20);
-  
-                gsap.to($(".main-kv-sec .roll-img-area .roll-img-list").eq(this.realIndex).siblings().find(".img-area"), 0, {clipPath: "polygon(0 0, 0 100%, 50% 100%, 50% 0, 50% 0, 50% 100%, 100% 100%, 100% 0)"});
+                gsap.to($(".main-kv-sec .roll-img-area .roll-img-list:not(.hide-motion) .img-area"), 0, {left: "100rem"});
   
                 mainKvTimerMotion.restart();
                 $(".main-kv-sec .slide-control-area .move-control .btn-pause").removeClass("stopped");

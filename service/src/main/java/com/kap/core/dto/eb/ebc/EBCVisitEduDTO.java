@@ -129,31 +129,31 @@ public class EBCVisitEduDTO extends BaseDTO {
 
     // 방문교육을 신청한 회원정보
     @Schema(title = "신청회원이름", example = "")
-    private String memName;
+    private String name;
 
     @Schema(title = "신청회원아이디", example = "")
-    private String memId;
+    private String id;
 
     @Schema(title = "신청회원 휴대폰번호", example = "")
-    private String memHpNo;
+    private String hpNo;
 
     @Schema(title = "신청회원 전화번호", example = "")
-    private String memTelNo;
+    private String telNo;
 
     @Schema(title = "신청회원 이메일", example = "")
-    private String memEmail;
+    private String email;
 
     @Schema(title = "신청회원 부서코드", example = "")
-    private String memDeptCd;
+    private String deptCd;
 
     @Schema(title = "신청회원 부서상세명", example = "")
-    private String memDeptDtlNm;
+    private String deptDtlNm;
 
     @Schema(title = "신청회원 직급코드", example = "")
-    private String memPstnCd;
+    private String pstnCd;
 
     @Schema(title = "신청회원 직급상세명", example = "")
-    private String memPstnNm;
+    private String deptCdNm;
 
     // 방문교육을 신청한 회사 정보
     @Schema(title = "선택된 구분값 가져오기", example = "")
@@ -184,7 +184,7 @@ public class EBCVisitEduDTO extends BaseDTO {
     private String stbsmDt;
 
     @Schema(title = "전화번호", example = "")
-    private String telNo;
+    private String cmpnTelNo;
 
     @Schema(title = "우편번호", example = "")
     private String zipcode;
@@ -265,7 +265,7 @@ public class EBCVisitEduDTO extends BaseDTO {
     private Integer isttrSeq;
 
     @Schema(title = "강사이름", example = "")
-    private String name;
+    private String isttrName;
 
     @Schema(title = "강사소속", example = "")
     private String ffltnNm;

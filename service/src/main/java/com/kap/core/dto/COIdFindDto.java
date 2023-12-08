@@ -41,6 +41,9 @@ public class COIdFindDto extends BaseDTO  {
     @Schema(title = "생년", example = "19999999")
     private String birthdate;
 
+    @Schema(title="성별")
+    private String gndr;
+
 
     @Schema(title = "휴대폰번호", example = "010-1234-4567")
     private String mobile_no;

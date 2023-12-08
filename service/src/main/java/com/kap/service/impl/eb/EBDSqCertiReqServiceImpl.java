@@ -3,6 +3,7 @@ package com.kap.service.impl.eb;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
@@ -120,5 +121,34 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
     public List<EBDSqCertiListDTO> getSqValidEndEmailList(int validMonth) throws Exception{
         List<EBDSqCertiListDTO> EBDSqCertiListDTOList = eBDSqCertiReqMapper.getSqValidEndEmailList(validMonth);
         return EBDSqCertiListDTOList;
+    }
+
+    /**
+     * 사용자 MY-PAGE 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 경우
+     */
+    public EBDSqCertiSearchDTO getEducationCompleteList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception {
+        COPaginationUtil page = new COPaginationUtil();
+        page.setCurrentPageNo(eBDSqCertiSearchDTO.getPageIndex());
+        page.setRecordCountPerPage(eBDSqCertiSearchDTO.getListRowSize());
+        page.setPageSize(eBDSqCertiSearchDTO.getPageRowSize());
+        eBDSqCertiSearchDTO.setFirstIndex( page.getFirstRecordIndex() );
+        eBDSqCertiSearchDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+        eBDSqCertiSearchDTO.setTotalCount( eBDSqCertiReqMapper.selectEducationCompleteListCnt(eBDSqCertiSearchDTO));
+        eBDSqCertiSearchDTO.setEducationList( eBDSqCertiReqMapper.selectEducationCompleteList(eBDSqCertiSearchDTO) );
+        return eBDSqCertiSearchDTO;
+    }
+
+    /**
+     * 사용자 MY-PAGE 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 갯수
+     */
+    public int selectEducationCompleteListCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception{
+        return eBDSqCertiReqMapper.selectEducationCompleteListCnt(eBDSqCertiSearchDTO);
+    }
+
+    /**
+     * SQ 평가원 자격증 신청 조건(자격증 연계를 수료하였고 평가원을 신청하지 않아야함)
+     */
+    public int getPosibleSqCertiCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception{
+        return eBDSqCertiReqMapper.getPosibleSqCertiCnt(eBDSqCertiSearchDTO);
     }
 }

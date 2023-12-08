@@ -23,14 +23,17 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td class="text-center">${list.bsnmNo}</td>
+                <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
                 <td class="text-center ctgryNm" data-ctgry-cd="${list.ctgryCd}">${list.ctgryNm}</td>
                 <td class="text-center" data-size-cd="${list.sizeCd}">${list.sizeNm}</td>
                 <td class="text-center">${list.cmpnCd}</td>
                 <td class="text-center">${list.slsPmt}</td>
                 <td class="text-center">${list.mpleCnt}</td>
                 <td class="text-center">${list.telNo}</td>
-                <td class="text-center">${list.regName}</td>
+                <td class="text-center">${list.regName}(${list.regId})</td>
+                <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
+                <td class="text-center">${list.regName}(${list.regId})</td>
+                <td class="text-center">${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
             </tr>
         </c:forEach>
     </c:when>

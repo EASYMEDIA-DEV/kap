@@ -28,4 +28,9 @@ public interface EBHEduApplicantService {
      * 수정
      */
     public int update(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception;
+
+    /**
+     * 선발 상태 수정
+     */
+    public int updateStts(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception;
 }

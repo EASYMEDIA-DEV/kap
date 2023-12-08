@@ -25,6 +25,7 @@
 		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
 		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
 		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/Draggable.min.js"></script>
 		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
     <script type="text/javascript" src="/common/js/script.js"></script>
 	</head>
@@ -53,6 +54,9 @@
                 <a class="btn-two-depth single-menu" href="javascript:"><span>방문교육</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
               </div>
             </div>
+            <div class="nonmember-his-area">
+              <a class="btn-text-icon black-arrow btn-nonmember-his" href="javascript:"><span>비회원 신청내역 조회</span></a>
+            </div>
           </div>
 
           <div class="right-con-area">
@@ -65,6 +69,10 @@
                     <div class="btn-set">
                       <button class="btn-solid small gray-bg"><span>전체교육일정</span></button>
                     </div>
+                  </div>
+
+                  <div class="nonmember-his-area">
+                    <a class="btn-text-icon black-arrow btn-nonmember-his" href="javascript:"><span>비회원 신청내역 조회</span></a>
                   </div>
 
                   <div class="info-head">
@@ -93,36 +101,6 @@
                       <div class="for-center">
                         <div class="filter-con-area">
                           <div class="data-enter-form">
-                            <div class="row">
-                              <div class="th">
-                                <p class="title f-head">기간검색</p>
-                              </div>
-                              <div class="td">
-                                <div class="data-line-w">
-                                  <div class="data-line">
-                                    <div class="middle-line">
-                                      <div class="opt-group">
-                                        <div class="form-radio">
-                                          <input type="radio" id="searchPeriodRadio1" name="searchPeriodRadio" checked>
-                                          <label for="searchPeriodRadio1">접수기간</label>
-                                        </div>
-                                        <div class="form-radio">
-                                          <input type="radio" id="searchPeriodRadio2" name="searchPeriodRadio">
-                                          <label for="searchPeriodRadio2">교육기간</label>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div class="middle-line">
-                                      <div class="form-group">
-                                        <div class="form-input calendar">
-                                          <input type="text" placeholder="2023.01.01 ~ 2023.01.01">
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
                             <div class="row">
                               <div class="th">
                                 <p class="title f-head">과정분류</p>
@@ -159,21 +137,21 @@
                               <div class="td">
                                 <div class="data-line-w">
                                   <div class="data-line">
-                                    <div class="opt-group">
-                                      <div class="form-checkbox">
+                                    <div class="opt-group total-check-w">
+                                      <div class="form-checkbox total-check">
                                         <input type="checkbox" id="studyingWayChk1" name="studyingWayChk" checked>
                                         <label for="studyingWayChk1">전체</label>
                                       </div>
                                       <div class="form-checkbox">
-                                        <input type="checkbox" id="studyingWayChk2" name="studyingWayChk">
+                                        <input type="checkbox" id="studyingWayChk2" name="studyingWayChk" checked>
                                         <label for="studyingWayChk2">집체교육</label>
                                       </div>
                                       <div class="form-checkbox">
-                                        <input type="checkbox" id="studyingWayChk3" name="studyingWayChk">
+                                        <input type="checkbox" id="studyingWayChk3" name="studyingWayChk" checked>
                                         <label for="studyingWayChk3">온라인교육</label>
                                       </div>
                                       <div class="form-checkbox">
-                                        <input type="checkbox" id="studyingWayChk4" name="studyingWayChk">
+                                        <input type="checkbox" id="studyingWayChk4" name="studyingWayChk" checked>
                                         <label for="studyingWayChk4">블렌디드</label>
                                       </div>
                                     </div>
@@ -188,21 +166,21 @@
                               <div class="td">
                                 <div class="data-line-w">
                                   <div class="data-line">
-                                    <div class="opt-group">
-                                      <div class="form-checkbox">
+                                    <div class="opt-group total-check-w">
+                                      <div class="form-checkbox total-check">
                                         <input type="checkbox" id="acceptStateChk1" name="acceptStateChk" checked>
                                         <label for="acceptStateChk1">전체</label>
                                       </div>
                                       <div class="form-checkbox">
-                                        <input type="checkbox" id="acceptStateChk2" name="acceptStateChk">
+                                        <input type="checkbox" id="acceptStateChk2" name="acceptStateChk" checked>
                                         <label for="acceptStateChk2">접수대기</label>
                                       </div>
                                       <div class="form-checkbox">
-                                        <input type="checkbox" id="acceptStateChk3" name="acceptStateChk">
+                                        <input type="checkbox" id="acceptStateChk3" name="acceptStateChk" checked>
                                         <label for="acceptStateChk3">접수중</label>
                                       </div>
                                       <div class="form-checkbox">
-                                        <input type="checkbox" id="acceptStateChk4" name="acceptStateChk">
+                                        <input type="checkbox" id="acceptStateChk4" name="acceptStateChk" checked>
                                         <label for="acceptStateChk4">마감</label>
                                       </div>
                                     </div>
@@ -222,6 +200,36 @@
                                       <div class="input-btn-wrap">
                                         <button class="delete-btn" title="지우기" type="button"></button>
                                         <button class="srch-btn" title="검색"></button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="th">
+                                <p class="title f-head">기간검색</p>
+                              </div>
+                              <div class="td">
+                                <div class="data-line-w">
+                                  <div class="data-line">
+                                    <div class="middle-line">
+                                      <div class="opt-group">
+                                        <div class="form-radio">
+                                          <input type="radio" id="searchPeriodRadio1" name="searchPeriodRadio" checked>
+                                          <label for="searchPeriodRadio1">교육기간</label>
+                                        </div>
+                                        <div class="form-radio">
+                                          <input type="radio" id="searchPeriodRadio2" name="searchPeriodRadio">
+                                          <label for="searchPeriodRadio2">접수기간</label>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="middle-line">
+                                      <div class="form-group">
+                                        <div class="form-input calendar">
+                                          <input type="text" placeholder="2023.01.01 ~ 2023.01.01">
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -277,7 +285,7 @@
                                 </div>
                               </div>
                               <div class="status-info-w">
-                                <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                 <p class="box-label bigger end"><span>접수마감</span></p>
                               </div>
                             </div>
@@ -304,7 +312,7 @@
                                   </div>
                                 </div>
                                 <div class="status-info-w">
-                                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                  <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                   <p class="box-label bigger"><span>접수마감</span></p>
                                 </div>
                                 <div class="btn-wrap">
@@ -323,6 +331,10 @@
                               <img src="/common/images/img-main-training-offline-01.jpg" alt="">
                             </div>
                             <div class="txt-area">
+                              <div class="top-label-area">
+                                <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
+                              </div>
+
                               <div class="sort-label-area">
                                 <p class="label"><span>품질아카데미</span></p>
                                 <p class="label"><span>품질학교</span></p>
@@ -339,7 +351,7 @@
                                 </div>
                               </div>
                               <div class="status-info-w">
-                                <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                 <p class="box-label bigger waiting"><span>접수대기</span></p>
                               </div>
                             </div>
@@ -366,7 +378,7 @@
                                   </div>
                                 </div>
                                 <div class="status-info-w">
-                                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                  <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                   <p class="box-label bigger waiting"><span>접수중</span></p>
                                 </div>
                                 <div class="btn-wrap">
@@ -401,7 +413,7 @@
                                 </div>
                               </div>
                               <div class="status-info-w">
-                                <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                 <p class="box-label bigger accepting"><span>접수중</span></p>
                               </div>
                             </div>
@@ -428,7 +440,7 @@
                                   </div>
                                 </div>
                                 <div class="status-info-w">
-                                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                  <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                   <p class="box-label bigger accepting"><span>접수중</span></p>
                                 </div>
                                 <div class="btn-wrap">
@@ -463,7 +475,7 @@
                                 </div>
                               </div>
                               <div class="status-info-w">
-                                <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                 <p class="box-label bigger accepting"><span>접수중</span></p>
                               </div>
                             </div>
@@ -490,7 +502,7 @@
                                   </div>
                                 </div>
                                 <div class="status-info-w">
-                                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                  <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                   <p class="box-label bigger accepting"><span>접수중</span></p>
                                 </div>
                                 <div class="btn-wrap">
@@ -525,7 +537,7 @@
                                 </div>
                               </div>
                               <div class="status-info-w">
-                                <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                 <p class="box-label bigger accepting"><span>접수중</span></p>
                               </div>
                             </div>
@@ -552,7 +564,7 @@
                                   </div>
                                 </div>
                                 <div class="status-info-w">
-                                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                  <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                   <p class="box-label bigger accepting"><span>접수중</span></p>
                                 </div>
                                 <div class="btn-wrap">
@@ -587,7 +599,7 @@
                                 </div>
                               </div>
                               <div class="status-info-w">
-                                <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                 <p class="box-label bigger accepting"><span>접수중</span></p>
                               </div>
                             </div>
@@ -614,7 +626,7 @@
                                   </div>
                                 </div>
                                 <div class="status-info-w">
-                                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                  <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                   <p class="box-label bigger accepting"><span>접수중</span></p>
                                 </div>
                                 <div class="btn-wrap">
@@ -649,7 +661,7 @@
                                 </div>
                               </div>
                               <div class="status-info-w">
-                                <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                 <p class="box-label bigger accepting"><span>접수중</span></p>
                               </div>
                             </div>
@@ -676,7 +688,7 @@
                                   </div>
                                 </div>
                                 <div class="status-info-w">
-                                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                  <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                   <p class="box-label bigger accepting"><span>접수중</span></p>
                                 </div>
                                 <div class="btn-wrap">
@@ -711,7 +723,7 @@
                                 </div>
                               </div>
                               <div class="status-info-w">
-                                <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                 <p class="box-label bigger accepting"><span>접수중</span></p>
                               </div>
                             </div>
@@ -738,7 +750,7 @@
                                   </div>
                                 </div>
                                 <div class="status-info-w">
-                                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                  <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                   <p class="box-label bigger accepting"><span>접수중</span></p>
                                 </div>
                                 <div class="btn-wrap">
@@ -773,7 +785,7 @@
                                 </div>
                               </div>
                               <div class="status-info-w">
-                                <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                 <p class="box-label bigger accepting"><span>접수중</span></p>
                               </div>
                             </div>
@@ -800,7 +812,7 @@
                                   </div>
                                 </div>
                                 <div class="status-info-w">
-                                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                                  <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
                                   <p class="box-label bigger accepting"><span>접수중</span></p>
                                 </div>
                                 <div class="btn-wrap">
@@ -827,11 +839,229 @@
 
       <footer></footer>
 
+      <div class="layer-popup full-popup allTrainingSchedulePopup"><!-- full-popup: 화면 꽉 차는 팝업 -->
+        <div class="for-center">
+          <div class="pop-wrap">
+            <div class="pop-con-area">
+              <div class="tit-area">
+                <p class="f-head">전체교육일정</p>
+              </div>
+              <div class="con-area">
+                <div class="scroll-area">
+                  <div class="p-cont-sec">
+                    <div class="tab-con-w">
+                      <div class="tab-btn-area">
+                        <div class="txt-major-tab-swiper">
+                          <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                              <a class="swiper-slide txt-tab-btn active" href="javascript:">
+                                <p class="txt"><span class="menu-name">품질아카데미</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">제조혁신</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">경영혁신</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">세미나</span></p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="txt-tab-swiper func-tab">
+                          <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                              <a class="swiper-slide txt-tab-btn active" href="javascript:">
+                                <p class="txt"><span class="menu-name">품질기초</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">SQ인증</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">품질향상</span></p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="txt-depth-tab-swiper">
+                          <div class="swiper-container">
+                            <div class="swiper-wrapper">
+                              <a class="swiper-slide txt-tab-btn active" href="javascript:">
+                                <p class="txt"><span class="menu-name">꼭 알아야 할 품질 기초</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">꼭 알아야 할 품질 심화</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">품질 실무_Part1</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">품질 실무_Part2</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">품질을 알라면 개념을 알아야한다</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">품질의 이해</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">품질의 중요성</span></p>
+                              </a>
+                              <a class="swiper-slide txt-tab-btn" href="javascript:">
+                                <p class="txt"><span class="menu-name">품질 평가 기준</span></p>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="total-edu-area">
+                        <div class="edu-info-div">
+                          <a class="btn-text-icon black-circle" href="javascript:"><span>품질을 알라면 개념을 알아야한다</span></a>
+                          <div class="status-info-w">
+														<p class="box-label"><span>집체교육</span></p>
+														<p class="box-label"><span>nn일(nn시간)</span></p>
+													</div>
+                        </div>
+                        <div class="edu-plan-area">
+                          <div class="period-area">
+                            <div class="period-div">
+                              <p class="period receive f-caption2">접수기간</p>
+                              <p class="period education f-caption2">교육기간</p>
+                            </div>
+                            <div class="round-list">
+                              <div class="round-div">
+                                <p class="f-body2">1회차</p>
+                                <div class="round-period-div">
+                                  <div class="round-period">
+                                    <p class="tit f-caption2">접수</p>
+                                    <p class="period f-caption2">01.01 ~ 01.04</p>
+                                  </div>
+                                  <div class="round-period">
+                                    <p class="tit f-caption2">교육</p>
+                                    <p class="period f-caption2">03.22 ~ 04.30</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="round-div">
+                                <p class="f-body2">2회차</p>
+                                <div class="round-period-div">
+                                  <div class="round-period">
+                                    <p class="tit f-caption2">접수</p>
+                                    <p class="period f-caption2">02.01 ~ 03.12</p>
+                                  </div>
+                                  <div class="round-period">
+                                    <p class="tit f-caption2">교육</p>
+                                    <p class="period f-caption2">05.05 ~ 06.25</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="round-div">
+                                <p class="f-body2">3회차</p>
+                                <div class="round-period-div">
+                                  <div class="round-period">
+                                    <p class="tit f-caption2">접수</p>
+                                    <p class="period f-caption2">01.01 ~ 01.31</p>
+                                  </div>
+                                  <div class="round-period">
+                                    <p class="tit f-caption2">교육</p>
+                                    <p class="period f-caption2">02.01 ~ 06.15</p>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="round-div">
+                                <p class="f-body2">4회차</p>
+                                <div class="round-period-div">
+                                  <div class="round-period">
+                                    <p class="tit f-caption2">접수</p>
+                                    <p class="period f-caption2">09.17 ~ 09.21</p>
+                                  </div>
+                                  <div class="round-period">
+                                    <p class="tit f-caption2">교육</p>
+                                    <p class="period f-caption2">10.08 ~ 11.15</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="month-area">
+                            <p class="f-head">2023년</p>
+                            <div class="scroll-div">
+                              <div class="scroll-box">
+                                <div class="month-wrap">
+                                  <p class="month"><span class="f-body2">1월</span></p>
+                                  <p class="month"><span class="f-body2">2월</span></p>
+                                  <p class="month"><span class="f-body2">3월</span></p>
+                                  <p class="month"><span class="f-body2">4월</span></p>
+                                  <p class="month"><span class="f-body2">5월</span></p>
+                                  <p class="month"><span class="f-body2">6월</span></p>
+                                  <p class="month"><span class="f-body2">7월</span></p>
+                                  <p class="month"><span class="f-body2">8월</span></p>
+                                  <p class="month now"><span class="f-body2">9월</span></p>
+                                  <p class="month"><span class="f-body2">10월</span></p>
+                                  <p class="month"><span class="f-body2">11월</span></p>
+                                  <p class="month"><span class="f-body2">12월</span></p>
+                                </div>
+                                <div class="period-bar-list">
+                                  <div class="period-bar-div">
+                                    <p class="period-bar receive">
+                                      <a href="javascript:"><span></span></a>
+                                    </p>
+                                    <p class="period-bar education">
+                                      <span></span>
+                                    </p>
+                                  </div>
+                                  <div class="period-bar-div">
+                                    <p class="period-bar receive">
+                                      <a href="javascript:"><span></span></a>
+                                    </p>
+                                    <p class="period-bar education">
+                                      <span></span>
+                                    </p>
+                                  </div>
+                                  <div class="period-bar-div">
+                                    <p class="period-bar receive">
+                                      <a href="javascript:"><span></span></a>
+                                    </p>
+                                    <p class="period-bar education">
+                                      <span></span>
+                                    </p>
+                                  </div>
+                                  <div class="period-bar-div">
+                                    <p class="period-bar receive">
+                                      <a href="javascript:" class="now"><span></span></a><!-- Today( ) 기준 교육기간에 포함되는 경우 now class 추가 -->
+                                    </p>
+                                    <p class="period-bar education"><span></span></p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="year-plan-btn">
+                          <a class="btn-text-icon download" href="javascript:" download=""><span>연간 일정 다운로드</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="user-opt-area">
+                <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="quick-menu">
         <div class="menu-area">
 					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
 					<div class="btn-w">
-						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn edu-schedule" href="javascript:" onclick="openPopup('allTrainingSchedulePopup', this);
+						schedulePopupFn();"><span class="txt">교육일정</span></a>
 						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
 						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
 						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
@@ -846,6 +1076,8 @@
       </div>
 
       <div class="dimd"></div>
+            
+      <div class="only-vertical-view"></div>
     </div>
 	</body>
 </html>

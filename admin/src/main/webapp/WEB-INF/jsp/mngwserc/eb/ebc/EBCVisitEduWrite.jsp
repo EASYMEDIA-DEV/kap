@@ -22,6 +22,7 @@
             <input type="hidden" class="notRequired" id="lctrFileSeq" name="lctrFileSeq" value="${rtnInfo.lctrFileSeq}" />
             <input type="hidden" class="notRequired" id="etcMatlsFileSeq" name="etcMatlsFileSeq" value="${rtnInfo.etcMatlsFileSeq}" />
             <input type="hidden" class="notRequired" id="selectCtgryCd" name="selectCtgryCd" value="${rtnInfo.selectCtgryCd}" />
+            <input type="hidden" class="notRequired" id="edctnPlaceAddr" name="edctnPlaceAddr" value="${rtnInfo.edctnPlaceAddr}"/>
 
             <fieldset>
                 <span class="dtl-tab" style="float:right"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
@@ -31,14 +32,14 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청자(아이디)<span class="star"> *</span></label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" readonly="readonly" id="memName" name="memName" value="${rtnInfo.memName}(${rtnInfo.memId})" data-updated-mem-seq="" title="신청자 정보">
+                        <input type="text" class="form-control input-sm" readonly="readonly" name="memInfo" value="${rtnInfo.name}(${rtnInfo.id})" title="신청자 정보">
                     </div>
                     <div class="col-sm-1">
                         <button type="button" class="btn btn-sm btn-info bsnmNoBtn">회원검색</button>
                     </div>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <p class="form-control-static" name="email" id="emailTxt">${rtnInfo.memEmail}</p>
+                        <p class="form-control-static" name="email" id="emailTxt">${rtnInfo.email}</p>
                     </div>
                 </div>
             </fieldset>
@@ -46,11 +47,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm" id="memDeptCd" name="memDeptCd" title="부서" >
+                        <select class="form-control input-sm" id="deptCd" name="deptCd" title="부서" >
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                 <c:if test="${fn:contains(cdList, 'MEM_CD02')}">
-                                    <option value="${cdList.cd}" <c:if test="${rtnInfo.memDeptCd eq cdList.cd}">selected</c:if>>
+                                    <option value="${cdList.cd}" <c:if test="${rtnInfo.deptCd eq cdList.cd}">selected</c:if>>
                                             ${cdList.cdNm}
                                     </option>
                                 </c:if>
@@ -58,16 +59,16 @@
                         </select>
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control input-sm" id="memDeptDtlNm" name="memDeptDtlNm" value="${rtnInfo.memDeptDtlNm}" title="부서상세명" />
+                        <input type="text" class="form-control input-sm" id="deptDtlNm" name="deptDtlNm" value="${rtnInfo.deptDtlNm}" title="부서상세명" />
                     </div>
 
                     <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm" id="memPstnCd" name="memPstnCd" title="직급" >
+                        <select class="form-control input-sm" id="pstnCdSelect" name="pstnCd" title="직급" >
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                 <c:if test="${fn:contains(cdList, 'MEM_CD01') and cdList.cd ne 'COMPANY01'}">
-                                    <option value="${cdList.cd}" <c:if test="${rtnInfo.memPstnCd eq cdList.cd}">selected</c:if>>
+                                    <option value="${cdList.cd}" <c:if test="${rtnInfo.pstnCd eq cdList.cd}">selected</c:if>>
                                             ${cdList.cdNm}
                                     </option>
                                 </c:if>
@@ -75,7 +76,7 @@
                         </select>
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control input-sm notRequired" id="memPstnNm" name="memPstnNm" value="${rtnInfo.memPstnNm}" title="직급상세명"/>
+                        <input type="text" class="form-control input-sm notRequired" id="deptCdNm" name="deptCdNm" value="${rtnInfo.deptCdNm}" title="직급상세명"/>
                     </div>
                 </div>
             </fieldset>
@@ -83,11 +84,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <p class="form-control-static">${rtnInfo.memHpNo}</p>
+                        <p class="form-control-static">${rtnInfo.hpNo}</p>
                     </div>
                     <label class="col-sm-1 control-label">전화번호</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" id="memTelNo" name="memTelNo" value="${rtnInfo.memTelNo}" title="전화번호" />
+                        <input type="text" class="form-control input-sm" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" />
                     </div>
                 </div>
             </fieldset>
@@ -162,7 +163,7 @@
                     </div>
                     <label class="col-sm-1 control-label">사업자등록번호<span class="star text-danger"> *</span></label>
                     <div class="col-sm-5">
-                        ${rtnInfo.appctnBsnmNo}
+                        <p class="form-control-static">${kl:bsnmNoConvert(rtnInfo.appctnBsnmNo)}</p>
                     </div>
                 </div>
             </fieldset>
@@ -171,7 +172,7 @@
                     <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" style="width: 130px;"/>
-                        <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색"><br>
+                        <input type="button" class="btn btn-sm btn-primary" id="searchPostCode" value="우편번호 검색"><br>
                         <br>
                         <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" style="width: 400px;"/><br>
                         <br>
@@ -305,8 +306,8 @@
                         </c:forEach>
                         <c:choose>
                             <c:when test="${sqInfoListCnt == 0}">
-                                <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
-                                    <input type="hidden" class="notRequired" id="cbsnSeq${ status.count}" name="sqInfoList${status.count}" value=""/>
+                                <c:forEach var="i" begin="1" end="${3 - sqInfoListCnt}" varStatus="status">
+                                    <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value=""/>
                                     <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
                                     <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="" title="점수" placeholder="SQ 점수입력" maxlength="50"/>
                                     <select class="form-control input-sm notRequired" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도" style="width:auto;">
@@ -372,7 +373,7 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm form-inline">
-                    <label class="col-sm-1 control-label">신청분야</label>
+                    <label class="col-sm-1 control-label">신청분야<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <select class="form-control input-sm" id="appctnFldCd" name="appctnFldCd" title="신청분야" >
                             <option value="">선택</option>
@@ -415,15 +416,14 @@
                 <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">교육장소<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="button" class="btn btn-sm" id="searchEduPlacePostCode" value="우편번호 찾기">
-                        <%--<label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" id="samePlaceBtn" />
+                        <input type="button" class="btn btn-sm btn-primary" id="searchEduPlacePostCode" value="우편번호 찾기">
+                        <label class="checkbox-inline c-checkbox">
+                            <input type="checkbox" class="checkboxSingle notRequired" id="samePlaceBtn" name="samePlace" />
                             <span class="ion-checkmark-round"></span> 본사와 동일
-                        </label>--%>
+                        </label>
                         <br><br>
                         <input type="text" class="form-control input-sm" id="placeZipcode" name="placeZipcode" value="${rtnInfo.placeZipcode}" readonly placeholder="우편번호" style="width: 130px;"/>
                         <br><br>
-                        <input type="hidden" id="edctnPlaceAddr" name="edctnPlaceAddr" value="${rtnInfo.edctnPlaceAddr}" />
                         <input type="text" class="form-control input-sm" id="placeBscAddr" name="placeBscAddr" value="${rtnInfo.placeBscAddr}" readonly placeholder="기본주소" style="width: 400px;"/>
                         <br><br>
                         <input type="text" class="form-control input-sm" id="placeDtlAddr" name="placeDtlAddr" value="${rtnInfo.placeDtlAddr}" title="우편번호" placeholder="상세주소 입력" maxlength="50" style="width: 400px;"/>

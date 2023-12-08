@@ -24,7 +24,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "eduListContainer", "pagingContainer");
-        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
+        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false)
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
@@ -61,27 +61,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
-            ctrl.obj.find("#kapTargetListContainer").html(respObj);
-            //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            //총 건수
-            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "kapTargetListContainer", "pagingContainer");
-        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
-
+            ctrl.obj.find("#carTargetListContainer").html(respObj);
+        }, "/mngwserc/mp/mpe/selectCarTargetList", $formObj, "POST", "html",'',false);
     }
-
-    var tabReload = function (type) {
-
-        if(type === 'edu') {
-            tabTwo();
-        }
-    }
-
 
     var callbackAjaxDelete = function(data){
-
         if (parseInt(data.respCnt, 10) > 0)
         {
             alert(msgCtrl.getMsg("success.del.target.none"));
@@ -106,10 +90,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             btnBsnmNo : {
                 event : {
                     click : function () {
+                        // 사업자등록번호 형식 체크 알럿 추가하기
+
+
                         workChk = false;
                         if($("#bsnmNo").val() =='' || $("#bsnmNo").val() == undefined) {
                             alert(msgCtrl.getMsg("fail.mp.mpa.al_016"));
-                            return ;
+                            return;
                         } else {
                             jQuery.ajax({
                                 url : "/mngwserc/nice/comp-chk",

@@ -164,6 +164,27 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     // 조회
     private List<MPEPartsCompanyDTO> list;
 
+    //부품사 실적정보
+    //자동차부품산업대상 목록 조회
+    @Schema(title = "수상년도", example = "숫자")
+    private Integer cartTargetYear;
+
+    @Schema(title = "포상금액", example = "숫자")
+    private Integer prizePmt;
+
+    @Schema(title = "훈격명", example = "")
+    private String mrtsName;
+
+    @Schema(title = "포상부문명", example = "")
+    private String pmtName;
+
+    @Schema(title = "수상자명", example = "")
+    private String winnerName;
+
+    @Schema(title = "수상자 직급", example = "")
+    private String winnerPstnNm;
+
+
     // 검색조건
     // 검색 등록/수정 기간 시작일
     private String dStrDt;
