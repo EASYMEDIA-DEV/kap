@@ -2,7 +2,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     "use strict";
     // set controller name
     var exports = {
-        controller : "controller/eb/ebg/EBGSqCertiConfrimWriteCtrl"
+        controller : "controller/eb/ebh/EBHEduApplicantWriteCtrl"
     };
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);

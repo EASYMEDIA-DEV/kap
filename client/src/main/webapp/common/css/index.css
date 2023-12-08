@@ -88,13 +88,13 @@ em {font-style: normal; text-align: center;}
 .table .title div:nth-child(3) {width: 190px;}/* 3depth */
 .table .title div:nth-child(4) {width: 170px;}/* 4depth */
 .table .title div:nth-child(5) {width: 150px;}/* 5depth */
-/*.table .title div:nth-child(6) {width: 135px;} folder */
-.table .title div:nth-child(6) {width: 120px;}/* publish */
-.table .title div:nth-child(7) {width: 120px;}/* progress + 30 */
-.table .title div:nth-child(8) {width: 130px;}/* 완료일 + 30 */
-.table .title div:nth-child(9) {width: 130px;}/* screen id + 35 */
-.table .title div:nth-child(10) {width: 190px;}/* 반응형 완료 유,무 */
-.table .title div:nth-child(11) {width: 200px;}/* memo + 40 */
+.table .title div:nth-child(6) {width: 100px;}/* publish */
+.table .title div:nth-child(7) {width: 80px;}/* progress + 30 */
+.table .title div:nth-child(8) {width: 110px;}/* 완료일 + 30 */
+.table .title div:nth-child(9) {width: 110px;}/* screen id + 35 */
+.table .title div:nth-child(10) {width: 170px;}/* 반응형 완료 유,무 */
+.table .title div:nth-child(11) {width: 170px;}/* memo + 40 */
+.table .title div:nth-child(12) {width: 100px;}/* memo + 40 */
 .table a div {
   /*flex: .8;*/
   padding: 1rem .5rem;
@@ -108,13 +108,13 @@ em {font-style: normal; text-align: center;}
 .table a div:nth-child(3) {width: 190px;}/* 3depth */
 .table a div:nth-child(4) {width: 170px;}/* 4depth */
 .table a div:nth-child(5) {width: 150px;}/* 5depth */
-/*.table a div:nth-child(6) {width: 135px;} folder */
-.table a div:nth-child(6) {width: 120px;}/* publish */
-.table a div:nth-child(7) {width: 120px;}/* progress + 30 */
-.table a div:nth-child(8) {width: 130px;}/* 완료일 + 30 */
-.table a div:nth-child(9) {width: 130px;}/* screen id + 35 */
-.table a div:nth-child(10) {width: 190px;}/* 반응형 완료 유,무 */
-.table a div:nth-child(11) {width: 200px;}/* memo + 40 */
+.table a div:nth-child(6) {width: 100px;}/* publish */
+.table a div:nth-child(7) {width: 80px;}/* progress + 30 */
+.table a div:nth-child(8) {width: 110px;}/* 완료일 + 30 */
+.table a div:nth-child(9) {width: 110px;}/* screen id + 35 */
+.table a div:nth-child(10) {width: 170px;}/* 반응형 완료 유,무 */
+.table a div:nth-child(11) {width: 170px;}/* memo + 40 */
+.table a div:nth-child(12) {width: 100px;}/* memo + 40 */
 .table a div.d1 {
   font-size: 1.25rem;
   font-weight: 600;

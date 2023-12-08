@@ -45,10 +45,8 @@ public class WBPartCompanyController {
      */
     @PostMapping(value = "/selModalData")
     public String selectPartUserListPageAjax(WBPartCompanyDTO wBPartCompanyDTO , ModelMap modelMap ) throws Exception {
-        wBPartCompanyDTO.setMemCd("CP");
         wBPartCompanyDTO.setExcelYn("N");
         modelMap.addAttribute("rtnData", wBPartCompanyService.selPartCompanyUserList(wBPartCompanyDTO));
-
         return "mngwserc/wb/WBFBPartUserModalAjax";
     }
 
@@ -59,7 +57,6 @@ public class WBPartCompanyController {
     public String selectPartUserDetailAjax(WBPartCompanyDTO wBPartCompanyDTO , ModelMap modelMap ) throws Exception {
         try
         {
-            wBPartCompanyDTO.setMemCd("CP");
             modelMap.addAttribute("rtnData", wBPartCompanyService.selPartUserDetail(wBPartCompanyDTO));
             wBPartCompanyDTO.setWorkBsnmNo(((WBPartCompanyDTO)modelMap.getAttribute("rtnData")).getWorkBsnmNo());
             modelMap.addAttribute("rtnDataCompDetail", wBPartCompanyService.selectPartUserCompDetailAjax(wBPartCompanyDTO));

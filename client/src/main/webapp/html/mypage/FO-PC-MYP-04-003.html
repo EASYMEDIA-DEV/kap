@@ -83,10 +83,14 @@
                   </div>
                   <div class="sec-con-area">
                     <div class="gray-bg-sec">
-                      <p class="f-title1">2023 2차 미래차다각화</p>
-                      <div class="status-info-w">
-                        <p class="f-head">신청</p>
-                        <p class="box-label bigger accepting"><span>선정</span></p>
+                      <div class="flex">
+                        <p class="f-title1">2023 2차 미래차다각화</p>
+                        <div class="group">
+                          <p class="index-num f-head">신청</p>
+                          <div class="status-info-w">
+                            <p class="box-label bigger accepting"><span>선정</span></p>
+                          </div>
+                        </div>
                       </div>
                       <div class="def-list-w">
                         <div class="def-list">
@@ -112,19 +116,8 @@
                   </div>
                   <div class="sec-con-area">
                     <div class="table-sec">
-                      <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                      <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                         <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
-                          <!-- 
-                            @ 폰트 기본 좌측 정렬
-                              .txt-c : 폰트 가운데 정렬
-                              .txt-r : 폰트 우측 정렬
-                            @ border-right 기본
-                              .bdl : border-left 생성
-                              .bdr : border-right 생성
-                              .bdln : border-left 삭제
-                              .bdrn : border-right 삭제
-                            @ .txt-ellipsis : 말줄임
-                          -->
                           <caption>신청자 기본 정보</caption>
                           <colgroup>
                             <col style="width: 25%;">
@@ -145,7 +138,7 @@
                             </tr>
                             <tr>
                               <th>일반 휴대폰번호</th>
-                              <td></td>
+                              <td>-</td>
                             </tr>
                             <tr>
                               <th>부서</th>
@@ -169,19 +162,8 @@
                   </div>
                   <div class="sec-con-area">
                     <div class="table-sec">
-                      <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                      <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                         <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
-                          <!-- 
-                            @ 폰트 기본 좌측 정렬
-                              .txt-c : 폰트 가운데 정렬
-                              .txt-r : 폰트 우측 정렬
-                            @ border-right 기본
-                              .bdl : border-left 생성
-                              .bdr : border-right 생성
-                              .bdln : border-left 삭제
-                              .bdrn : border-right 삭제
-                            @ .txt-ellipsis : 말줄임
-                          -->
                           <caption>소속 부품사 기본정보</caption>
                           <colgroup>
                             <col style="width: 25%;">
@@ -270,7 +252,7 @@
                   <div class="sec-con-area">
                     <div class="article-sec">
                       <div class="article-list-w accordion-st"><!-- accordion-st : 아코디언 스타일 -->
-                        <div class="list-item">
+                        <div class="list-item active"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                           <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
                               <p class="tit f-head">신청</p>
@@ -323,7 +305,7 @@
                                   <div class="data-line-w">
                                     <div class="data-line">
                                       <div class="noti-txt-w">
-                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,dox,hwp,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
+                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
                                       </div>
                                     </div>
                                     <div class="data-line">
@@ -385,7 +367,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="list-item">
+                        <div class="list-item"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                           <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
                               <p class="tit f-head">증빙</p>
@@ -438,7 +420,7 @@
                                   <div class="data-line-w">
                                     <div class="data-line">
                                       <div class="noti-txt-w">
-                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,dox,hwp,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
+                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
                                       </div>
                                     </div>
                                     <div class="data-line">
@@ -537,6 +519,8 @@
       </div>
 
       <div class="dimd"></div>
+            
+      <div class="only-vertical-view"></div>
     </div>
 	</body>
 </html>

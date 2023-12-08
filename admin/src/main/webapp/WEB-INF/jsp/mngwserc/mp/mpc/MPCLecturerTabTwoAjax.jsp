@@ -8,7 +8,7 @@
                 <td class="text-center">${list.episdYear}</td>
                 <td class="text-center">${list.episdOrd}</td>
                 <td class="text-center">${list.edctnStatusNm}</td>
-                <td class="text-center">${list.ctgryCdNm}</td>
+                <td class="text-center">${list.prntCdNm} > ${list.ctgryCdNm}</td>
                 <td class="text-center">${list.nm}</td>
                 <td class="text-center">${list.stduyMthdCdNm}</td>
                 <td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td>
@@ -16,6 +16,8 @@
                 <td class="text-center">${list.isttrName}</td>
                 <td class="text-center">${list.ffltnNm} <c:if test="${list.isttrOutCnt ne ''}">외 ${list.isttrOutCnt}명 </c:if></td>
                 <td class="text-center">${list.rcrmtMthdCdNm}</td>
+                <td class="text-center">선발여부값</td>
+                <td class="text-center">교육장소값</td>
             </tr>
         </c:forEach>
     </c:when>

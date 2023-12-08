@@ -35,8 +35,25 @@ define(["ezCtrl"], function(ezCtrl) {
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
         }, "/mngwserc/eb/ebh/select", $formObj, "GET", "html");
-
     }
+
+    var isChecked = function (msg)
+    {
+        var chkCnt = jQuery("input:checkbox[name='delValueList']:checked").length;
+
+        if (chkCnt < 1)
+        {
+            if(msg) {
+                alert(msg);
+            }
+            else {
+                alert("게시물을 선택해 주세요.");
+            }
+            return false;
+        }
+
+        return true;
+    };
 
 
     var callbackAjaxCdList  = function (cdList){
@@ -65,60 +82,124 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-            btnCopy : {
-                event :{
-                    click : function() {
-
-
-                        var valList = jQuery("input[name='delValueList']:checked");
-
-                        //여러개 체크 할 경우
-                        if(valList.length>1){
-                            alert("복사는 1개의 게시물만 가능합니다.");
-                            return false;
-                            //과정이 없는경우
-                        }else if(valList.length == 0){
-                            alert("복사할 과정을 선택해주세요.");
-                            return false;
-                        }
-                        //복사
-                        $("#copyYn").val("Y");
-                        valList.closest("tr").find("td:eq(2) > a").trigger("click")
-                    }
-                }
-            },
-            btnEdDelete : {
+            btnChoice : {
                 event : {
                     click : function() {
+                        if(isChecked("선발할 게시물을 선택해주세요.")) {
+                            // 체크된 체크박스의 data-stts-cd 값들을 배열로 추출
+                            var checkedValues = $("input:checkbox[name='delValueList']:checked").map(function() {
+                                return $(this).data('stts-cd');
+                            }).get();
 
-                        var $this = this;
+                            // 가져온 배열의 값들 중 '02'라는 단어가 포함된 단어가 있는지 확인 (신청취소 데이터)
+                            var containsValue02 = checkedValues.some(function(value) {
+                                return value.includes('02');
+                            });
 
-                        var delList = new Array();
-                        $("#listContainer").find("input:checkbox[name='delValueList']:checked").each(function(){
-                            delList.push($(this).val());
-                        })
-                        var seqObj = {};
-                        seqObj['edctnSeqList'] = delList;
-                        cmmCtrl.jsonAjax(function(data){
-                            var rtn = JSON.parse(data);
-                            if(rtn.respCnt>0){
-                                console.log('회차가 등록된 게시물이 존재하여 삭제 할 수 없습니다.');
-                            }else{
-                                console.log('등록된 회차 없음');
-                                delCallback($this);
+                            // 신청취소 확인
+                            if(containsValue02) {
+                                alert("교육 신청을 취소한 회원이 존재합니다.");
+                                return false;
                             }
 
-
-                        }, "./deleteChk", seqObj, "text");
-
-                        //delCallback(this);
-
-
+                            console.log("선발 데이터 ajax 전송");
+                            if(confirm("선택한 회원을 선발하시겠습니까?")) {
+                                var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                    return $(this).val();
+                                }).get();
+                                console.log(delValueList);
+                                jQuery.ajax({
+                                    type : "post",
+                                    url : "./stts-update",
+                                    data :
+                                        {
+                                            "delValueList" : delValueList
+                                            , "stts" : "Y"
+                                            , "_csrf": $("#csrfKey").val()
+                                        },
+                                    dataType : "json",
+                                    success : function(r)
+                                    {
+                                        console.log(r);
+                                        if (r.respCnt > 0)
+                                        {
+                                            alert("처리되었습니다.");
+                                            location.reload();
+                                        }
+                                        else
+                                        {
+                                            alert("잘못된 접근입니다.");
+                                        }
+                                    },
+                                    error : function(xhr, ajaxSettings, thrownError)
+                                    {
+                                        alert("잠시후 다시 시도 바랍니다.");
+                                    }
+                                });
+                            }
+                        }
                     }
                 }
             },
+            btnNotChoice : {
+                event : {
+                    click : function() {
+                        if(isChecked("비선발할 게시물을 선택해주세요.")) {
+                            // 체크된 체크박스의 data-stts-cd 값들을 배열로 추출
+                            var checkedValues = $("input:checkbox[name='delValueList']:checked").map(function() {
+                                return $(this).data('stts-cd');
+                            }).get();
 
+                            // 가져온 배열의 값들 중 '02'라는 단어가 포함된 단어가 있는지 확인 (신청취소 데이터)
+                            var containsValue02 = checkedValues.some(function(value) {
+                                return value.includes('02');
+                            });
 
+                            // 신청취소 확인
+                            if(containsValue02) {
+                                alert("교육 신청을 취소한 회원이 존재합니다.");
+                                return false;
+                            }
+
+                            console.log("선발 데이터 ajax 전송");
+                            if(confirm("선택한 회원을 비선발하시겠습니까?")) {
+                                var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                    return $(this).val();
+                                }).get();
+                                console.log(delValueList);
+                                jQuery.ajax({
+                                    type : "post",
+                                    url : "./stts-update",
+                                    data :
+                                        {
+                                            "delValueList" : delValueList
+                                            , "stts" : "N"
+                                            , "_csrf": $("#csrfKey").val()
+                                        },
+                                    dataType : "json",
+                                    success : function(r)
+                                    {
+                                        if (r.respCnt > 0)
+                                        {
+                                            console.log(r);
+                                            alert("처리되었습니다.");
+                                            location.reload();
+                                        }
+                                        else
+                                        {
+                                            alert("잘못된 접근입니다.");
+                                        }
+                                    },
+                                    error : function(xhr, ajaxSettings, thrownError)
+                                    {
+                                        alert("잠시후 다시 시도 바랍니다.");
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+            }
         },
         classname : {
             classType : {

@@ -30,41 +30,59 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WBPartCompanyDTO extends BaseDTO {
-    private Integer memSeq;                 //회원순번
 
-    private String memCd;                   //회원코드
+    @Schema(title = "회원순번")
+    private Integer memSeq;
 
-    private String id;                      //아이디
+    @Schema(title = "회원코드")
+    private String memCd;
 
-    private String name;                    //이름
+    @Schema(title = "아이디")
+    private String id;
 
-    private String birth;                   //생일
+    @Schema(title = "이름")
+    private String name;
 
-    private String gndr;                    //성별
+    @Schema(title = "생일")
+    private String birth;
 
-    private String hpNo;                    //휴대번호
+    @Schema(title = "성별")
+    private String gndr;
 
-    private String email;                   //이메일
+    @Schema(title = "휴대번호")
+    private String hpNo;
 
-    private String telNo;                   //전화번호
+    @Schema(title = "이메일")
+    private String email;
 
-    private String zipCode;                 //우편변호
+    @Schema(title = "전화번호")
+    private String telNo;
 
-    private String bscAddr;                 //기본주소
+    @Schema(title = "우편변호")
+    private String zipCode;
 
-    private String dtlAddr;                 //상세주소
+    @Schema(title = "기본주소")
+    private String bscAddr;
 
-    private Character ntfySmsRcvYn;              //공지sms수신여부
+    @Schema(title = "상세주소")
+    private String dtlAddr;
 
-    private String ntfySmsRcvChngDtm;       //공지sms수신변경일시
+    @Schema(title = "공지sms수신여부")
+    private Character ntfySmsRcvYn;
 
-    private Character ntfyEmailRcvYn;            //공지이메일수신여부
+    @Schema(title = "공지sms수신변경일시")
+    private String ntfySmsRcvChngDtm;
 
-    private String ntfyEmailRcvChngDtm;     //공지이메일수신변경일시
+    @Schema(title = "공지이메일수신여부")
+    private Character ntfyEmailRcvYn;
 
-    private String lastLgnDtm;              //마지막로그인일시
+    @Schema(title = "공지이메일수신변경일시")
+    private String ntfyEmailRcvChngDtm;
 
-    private String excelYn;             //변경사유
+    @Schema(title = "마지막로그인일시")
+    private String lastLgnDtm;
+
+    private String excelYn;
 
     private String lgnSsnId;
 
@@ -72,7 +90,7 @@ public class WBPartCompanyDTO extends BaseDTO {
 
     private String modCd;
 
-    //변경사유
+    @Schema(title = "변경사유")
     private String rsn;
 
     //테이블 이름
@@ -80,27 +98,36 @@ public class WBPartCompanyDTO extends BaseDTO {
 
     private int modSeq;
 
-    private String pstnCd; //   //직급코드
-
-    private String pstnNm; //   //직급 상세명
-
-    private String deptCd; //   // 부서코드
-
-    private String deptDtlNm;  //부서상세명
-
-    private String cmpnNm;          //회사명
-
+    @Schema(title = "직급코드")
+    private String pstnCd;
+    @Schema(title = "직급코드 명")
+    private String pstnCdNm;
+    @Schema(title = "직급 상세명")
+    private String pstnNm;
+    @Schema(title = "부서코드")
+    private String deptCd;
+    @Schema(title = "부서코드 명")
+    private String deptCdNm;
+    @Schema(title = "부서상세명")
+    private String deptDtlNm;
+    @Schema(title = "회사명")
+    private String cmpnNm;
     @Schema(title = "대표자 명")
     private String rprsntNm;
-
     @Schema(title = "회사 규모 Code 값")
     private String sizeCd;
-    
     @Schema(title = "회사 사이즈")
     private String sizeCdNm;
-
     @Schema(title = "구분")
     private String ctgryCdNm;
+    @Schema(title = "최초등록자 ID")
+    private String regId;
+    @Schema(title = "최초등록자 이름")
+    private String regName;
+    @Schema(title = "최종수정자 이름")
+    private String modId;
+    @Schema(title = "최종수정자 이름")
+    private String modName;
 
     @Schema(title = "설립일자", example = "yyyy-MM-dd")
     private String stbsmDt;       //설립일자

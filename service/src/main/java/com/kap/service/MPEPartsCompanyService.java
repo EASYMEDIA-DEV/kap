@@ -72,4 +72,8 @@ public interface MPEPartsCompanyService {
      */
     public int selectWinBusinessCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
+    /**
+     * 자동차부품산업대상 목록을 조회
+     */
+    public MPEPartsCompanyDTO selectCarTargetList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 }

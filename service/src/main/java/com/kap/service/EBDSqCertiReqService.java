@@ -1,6 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
@@ -56,4 +57,18 @@ public interface EBDSqCertiReqService {
      * 만료일시 기준 몇개월전 알림 발송
      */
     public List<EBDSqCertiListDTO> getSqValidEndEmailList(int validMonth) throws Exception;
+
+    /**
+     * 사용자 MY-PAGE 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 경우
+     */
+    public EBDSqCertiSearchDTO getEducationCompleteList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
+    /**
+     * 사용자 MY-PAGE 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 갯수
+     */
+    public int selectEducationCompleteListCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
+
+    /**
+     * SQ 평가원 자격증 신청 조건(자격증 연계를 수료하였고 평가원을 신청하지 않아야함)
+     */
+    public int getPosibleSqCertiCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
 }

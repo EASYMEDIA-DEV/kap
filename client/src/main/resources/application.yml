@@ -28,7 +28,9 @@ spring:
 
 #강제 로그인 여부
 app:
-  is-login: true
+  is-login: false
+  #사이트 구분
+  site-gubun: front
   #발신자 이메일
   from-mail: dev@easymedia.net
   #사용자 도메인1
@@ -71,9 +73,6 @@ logging:
     #console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr([%10t]){faint} %clr(%-60(%logger{39}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
     #console: "%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\\(%L\\) : %m%n"
 ---
-spring.config.activate.on-profile: local, dev, stg, prod
-
----
 spring.config.activate.on-profile: stg, prod
 logging:
   pattern:
@@ -93,4 +92,4 @@ spring :
       cache: false
 
 app:
-  is-login:
+  is-login: false

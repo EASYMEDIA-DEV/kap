@@ -69,6 +69,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//alert("평가 선택");
 			$("#examSeq").val(null).prop("disabled", false);
 			$("#examSeq").addClass("notRequired");
+			$("input:radio[name='cmptnAutoYn']:radio[value='N']").prop("checked", true);//오프라인평가 진행시 수료자동화여부 무조건 수동 고정
+			$(".examNmForm").text("");
 
 		}else{
 			//alert("평가 선택 해제");
@@ -299,7 +301,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		$(".jdgmtYn").find("input:hidden").each(function(){
 			$(this).removeClass("notRequired");
 		});
-		$("#examSeq").prop("disabled", false);
+
+		//오프라인평가면 평가 시퀀스 사용안함
+		if($("input[name='otsdExamPtcptYn']:checked").val() =="Y"){
+			$("#examSeq").addClass("notRequired").prop("disabled", true);
+		}else{
+			$("#examSeq").prop("disabled", false);
+		}
+
 	}
 	}
 
@@ -757,6 +766,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+			cmptnAutoYn : {
+				event : {
+					change : function() {
+
+						if($(this).val() == "Y" && $("input[name='otsdExamPtcptYn']:checked").val() == "Y"){
+							alert("오프라인평가를 선택하면 수료자동화여부 '자동'을 선택할수 없습니다.");
+							$("input:radio[name='cmptnAutoYn']:radio[value='N']").prop("checked", true);//오프라인평가 진행시 수료자동화여부 무조건 수동 고정
+							return false;
+						}
+
+					}
+				}
+			},
 
 
 
@@ -982,7 +1004,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actForm.examSeq = $("#examSeq").val();//시험순번
 						actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
-						actForm.cmptnAutoYn = $("input[name='expsYn']:checked").val();//수료자동여부
+						actForm.cmptnAutoYn = $("input[name='cmptnAutoYn']:checked").val();//수료자동여부
 						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
 
 

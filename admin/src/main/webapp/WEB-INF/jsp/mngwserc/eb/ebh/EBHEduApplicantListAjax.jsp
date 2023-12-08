@@ -7,7 +7,7 @@
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
-                        <input type="checkbox" value="${list.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt-seq="${list.ptcptSeq}"/><%--체크박스--%>
+                        <input type="checkbox" value="${list.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt-seq="${list.ptcptSeq}" data-stts-cd="${ list.sttsCd }"/><%--체크박스--%>
                         <span class="ion-checkmark-round"></span>
                     </label>
                 </td>
@@ -52,7 +52,7 @@
                 <td class="text-center">${ list.email }</td>
                 <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>
                 <td class="text-center">${ empty list.modName ? '-' : list.modName += '<br/>(' += list.modId += ')' }</td>
-                <td class="text-center">${empty list.modDtm ? '-' : kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
+                <td class="text-center">${ empty list.modDtm ? '-' : kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>
             </tr>
         </c:forEach>
     </c:when>

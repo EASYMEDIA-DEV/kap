@@ -69,11 +69,9 @@
                 <div id="dtl" class="tab-pane fade in active">
                     <div id="tab1">
                         <fieldset class="mt-sm">
-                            <div class="form-group text-sm">
-                                <label class="col-sm-1 control-label">이름<span class="star text-danger"> *</span></label>
-                                <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" id="name" name="name" value="${rtnInfo.name}" title="이름" placeholder="이름 입력" style="width: 200px;"/>
-                                </div>
+                            <label class="col-sm-1 control-label">이름<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-5">
+                                <input type="text" class="form-control input-sm" id="name" name="name" value="${rtnInfo.name}" title="이름" placeholder="이름 입력" style="width: 220px;"/>
                             </div>
                         </fieldset>
                         <fieldset>
@@ -85,19 +83,19 @@
                         <fieldset>
                             <label class="col-sm-1 control-label">부서</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm notRequired" id="deptNm" name="deptNm" value="${rtnInfo.deptNm}" title="부서" placeholder="부서 입력" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm notRequired" id="deptNm" name="deptNm" value="${rtnInfo.deptNm}" title="부서" placeholder="부서명 입력" style="width: 220px;"/>
                             </div>
                         </fieldset>
                         <fieldset>
                             <label class="col-sm-1 control-label">직급</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm notRequired" id="pstnNm" name="pstnNm" value="${rtnInfo.pstnNm}" title="직급" placeholder="직급 입력" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm notRequired" id="pstnNm" name="pstnNm" value="${rtnInfo.pstnNm}" title="직급" placeholder="직급명 입력" style="width: 220px;"/>
                             </div>
                         </fieldset>
                         <fieldset>
                             <label class="col-sm-1 control-label">전화번호</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" placeholder="전화번호 입력"  oninput="this.value=this.value.replace(/[^0-9]/g, '')" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" placeholder="회사 전화번호 입력"  oninput="this.value=this.value.replace(/[^0-9]/g, '')" style="width: 220px;"/>
                             </div>
                         </fieldset>
                         <fieldset>
@@ -109,14 +107,14 @@
                         <fieldset class="form-inline">
                             <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnInfo.email}" name="email" maxlength="50" placeholder="이메일 주소 입력"/>
+                                <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnInfo.email}" name="email" maxlength="50" placeholder="이메일 주소 입력" style="width: 220px;"/>
                                 <button type="button" class="btn btn-sm" id="dupEmail" >중복확인</button>
                             </div>
                         </fieldset>
                         <fieldset>
                             <label class="col-sm-1 control-label">특이사항</label>
                             <div class="col-sm-5">
-                                <textarea class="form-control input-sm notRequired" id="spclCntn" name="spclCntn" value="${rtnInfo.spclCntn}" title="특이사항" placeholder="특이사항 입력">${rtnInfo.spclCntn}</textarea>
+                                <textarea class="form-control input-sm notRequired" id="spclCntn" name="spclCntn" value="${rtnInfo.spclCntn}" title="특이사항" placeholder="특이사항 입력" rows="5">${rtnInfo.spclCntn}</textarea>
                             </div>
                         </fieldset>
                         <hr />
@@ -185,26 +183,66 @@
                             </select>
                         </div>
                     </div>
-                    <table class="table table-hover table-striped" >
-                        <thead>
-                        <tr>
-                            <th class="text-center">번호</th>
-                            <th class="text-center">사업년도</th>
-                            <th class="text-center">회차</th>
-                            <th class="text-center">교육상태</th>
-                            <th class="text-center">과정분류</th>
-                            <th class="text-center">과정명</th>
-                            <th class="text-center">학습방식</th>
-                            <th class="text-center">학습시간</th>
-                            <th class="text-center">교육기간</th>
-                            <th class="text-center">강사</th>
-                            <th class="text-center">강사 소속</th>
-                            <th class="text-center">모집방식</th>
-                        </tr>
-                        </thead>
-                        <!-- 리스트 목록 결과 -->
-                        <tbody id="listContainer"/>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">번호</th>
+                                <th class="text-center">사업연도</th>
+                                <th class="text-center">회차</th>
+                                <th class="text-center">교육상태</th>
+                                <th class="text-center">과정분류</th>
+                                <th class="text-center">과정명</th>
+                                <th class="text-center">학습방식</th>
+                                <th class="text-center">학습시간</th>
+                                <th class="text-center">교육기간</th>
+                                <th class="text-center">강사</th>
+                                <th class="text-center">강사 소속</th>
+                                <th class="text-center">모집방식</th>
+                            </tr>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="listContainer"/>
+                        </table>
+                    </div>
+                    <!-- 페이징 버튼 -->
+                    <div id="pagingContainer"></div>
+                </div>
+                <div id="win" class="tab-pane fade">
+                    <div class="clearfix">
+                        <h6 class="pull-left mt0">
+                            상생 사업 현황 (총 <span id="listContainerTotCnt">0</span> 건)
+                        </h6>
+                        <div class="pull-right ml-sm">
+                            <select class="form-control input-sm listRowSizeContainer" >
+                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                    <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                                </jsp:include>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">번호</th>
+                                <th class="text-center">사업연도</th>
+                                <th class="text-center">회차</th>
+                                <th class="text-center">사업구분</th>
+                                <th class="text-center">사업명</th>
+                                <th class="text-center">진행상태</th>
+                                <th class="text-center">부품사명</th>
+                                <th class="text-center">사업자등록번호</th>
+                                <th class="text-center">구분</th>
+                                <th class="text-center">규모</th>
+                                <th class="text-center">신청일</th>
+                                <th class="text-center">사업기간</th>
+                            </tr>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="listContainer"/>
+                        </table>
+                    </div>
                     <!-- 페이징 버튼 -->
                     <div id="pagingContainer"></div>
                 </div>

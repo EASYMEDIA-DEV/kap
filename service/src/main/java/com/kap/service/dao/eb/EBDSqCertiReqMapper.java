@@ -1,12 +1,12 @@
 package com.kap.service.dao.eb;
 
-import com.kap.core.dto.COEgovSeqDTO;
-import com.kap.core.dto.eb.ebd.*;
+import com.kap.core.dto.MPBEduDto;
+import com.kap.core.dto.eb.ebb.EBBEpisdSqCertDTO;
+import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
+import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
+import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
+import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
-import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
-import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -70,4 +70,21 @@ public interface EBDSqCertiReqMapper {
      * 만료일시 기준 몇개월전 대상자 조회
      */
     public List<EBDSqCertiListDTO> getSqValidEndEmailList(int month);
+
+
+    /**
+     * 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 경우
+     */
+    public List<EBBEpisdSqCertDTO> selectEducationCompleteList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
+
+    /**
+     * 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 경우 갯수 조회
+     */
+    public int selectEducationCompleteListCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
+
+    /**
+     * SQ 평가원 자격증 신청 조건(자격증 연계를 수료하였고 평가원을 신청하지 않아야함)
+     */
+    public int getPosibleSqCertiCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
+
 }
