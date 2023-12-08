@@ -114,17 +114,6 @@
                     <div class="table-sec">
                       <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                         <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
-                          <!-- 
-                            @ 폰트 기본 좌측 정렬
-                              .txt-c : 폰트 가운데 정렬
-                              .txt-r : 폰트 우측 정렬
-                            @ border-right 기본
-                              .bdl : border-left 생성
-                              .bdr : border-right 생성
-                              .bdln : border-left 삭제
-                              .bdrn : border-right 삭제
-                            @ .txt-ellipsis : 말줄임
-                          -->
                           <caption>신청자 기본 정보</caption>
                           <colgroup>
                             <col style="width: 25%;">
@@ -175,17 +164,6 @@
                     <div class="table-sec">
                       <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                         <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
-                          <!-- 
-                            @ 폰트 기본 좌측 정렬
-                              .txt-c : 폰트 가운데 정렬
-                              .txt-r : 폰트 우측 정렬
-                            @ border-right 기본
-                              .bdl : border-left 생성
-                              .bdr : border-right 생성
-                              .bdln : border-left 삭제
-                              .bdrn : border-right 삭제
-                            @ .txt-ellipsis : 말줄임
-                          -->
                           <caption>소속 부품사 기본정보</caption>
                           <colgroup>
                             <col style="width: 25%;">
@@ -267,131 +245,6 @@
                   </div>
                 </div>
               </div>
-              <div class="cont-sec no-border scroll-motion">
-                <div class="for-motion">
-                  <div class="sec-tit-area">
-                    <p class="f-title3">담당임원 정보를 입력해주세요</p>
-                    <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
-                  </div>
-                  <div class="sec-con-area">
-                    <div class="data-enter-form">
-                      <div class="row">
-                        <div class="form-checkbox">
-                          <input type="checkbox" id="infoSameChk" name="">
-                          <label for="infoSameChk">담당자 정보와 동일</label>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="th">
-                          <p class="title f-head">성명<span class="essential-mark color-sky">*</span></p>
-                        </div>
-                        <div class="td">
-                          <div class="data-line-w">
-                            <div class="data-line">
-                              <div class="form-group">
-                                <div class="form-input w-longer">
-                                  <input type="text" placeholder="성명 입력" required="">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="th">
-                          <p class="title f-head">이메일<span class="essential-mark color-sky">*</span></p>
-                        </div>
-                        <div class="td">
-                          <div class="data-line-w">
-                            <div class="data-line">
-                              <div class="form-group form-email">
-                                <div class="form-input">
-                                  <input type="text" placeholder="이메일 입력">
-                                </div>
-                                <div class="form-input">
-                                  <input type="text" placeholder="직접입력">
-                                </div>
-                                <div class="form-select">
-                                  <select id="" title="메일 선택">
-                                    <option value="" selected="">직접입력</option>
-                                    <option value="">option1</option>
-                                    <option value="">option2</option>
-                                    <option value="">option3</option>
-                                  </select>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="th">
-                          <p class="title f-head">부서<span class="essential-mark color-sky">*</span></p>
-                        </div>
-                        <div class="td">
-                          <div class="data-line-w">
-                            <div class="data-line">
-                              <div class="form-group">
-                                <div class="form-input w-longer">
-                                  <input type="text" placeholder="부서 입력" required="">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="th">
-                          <p class="title f-head">직급<span class="essential-mark color-sky">*</span></p>
-                        </div>
-                        <div class="td">
-                          <div class="data-line-w">
-                            <div class="data-line">
-                              <div class="form-group">
-                                <div class="form-input w-longer">
-                                  <input type="text" placeholder="직급 입력" required="">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="th">
-                          <p class="title f-head">휴대폰번호<span class="essential-mark color-sky">*</span></p>
-                        </div>
-                        <div class="td">
-                          <div class="data-line-w">
-                            <div class="data-line">
-                              <div class="form-group">
-                                <div class="form-input w-longer">
-                                  <input type="text" placeholder="휴대폰번호 입력" required="">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="th">
-                          <p class="title f-head">회사 전화번호<span class="essential-mark color-sky">*</span></p>
-                        </div>
-                        <div class="td">
-                          <div class="data-line-w">
-                            <div class="data-line">
-                              <div class="form-group">
-                                <div class="form-input w-longer">
-                                  <input type="text" placeholder="회사 전화번호 입력" required="">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div class="page-bot-btn-sec scroll-motion">
@@ -430,6 +283,8 @@
       </div>
 
       <div class="dimd"></div>
+            
+      <div class="only-vertical-view"></div>
     </div>
 	</body>
 </html>

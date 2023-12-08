@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <!-- 부품사 검색 팝업 -->
+      <div class="layer-popup partCompanySrchPop first-show"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
+				<div class="for-center">
+					<div class="pop-wrap">
+						<div class="pop-con-area">
+							<div class="tit-area">
+								<p class="f-title1">부품사 검색</p>
+							</div>
+							<div class="con-area">
+								<div class="scroll-area">
+                  <div class="p-cont-sec">
+                    <div class="form-group">
+                      <div class="form-select">
+                        <select id="" title="">
+                          <option value="" selected="">전체</option>
+                          <option value="">옵션1</option>
+                          <option value="">옵션2</option>
+                          <option value="">옵션3</option>
+                        </select>
+                      </div>
+                      <div class="form-input srch-input w-longer">
+                        <input type="text" placeholder="검색어를 입력해 주세요.">
+                        <div class="input-btn-wrap">
+                          <button class="delete-btn" title="지우기" type="button"></button>
+                          <button class="srch-btn" title="검색"></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-cont-sec">
+                    <div class="sec-con-area">
+                      <div class="table-sec total-check-w">
+                        <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                          <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                            <caption>신청자 기본 정보</caption>
+                            <colgroup>
+                              <col style="width: 10%;">
+                              <col style="width: 10%;">
+                              <col style="width: 40%;">
+                              <col style="width: 40%;">
+                            </colgroup>
+                            <thead>
+                              <tr>
+                                <th>
+                                  <div class="form-checkbox-w">
+                                    <div class="form-checkbox no-txt total-check">
+                                      <input type="checkbox" id="Chk1" name="">
+                                      <label for="Chk1"></label>
+                                    </div>
+                                  </div>
+                                </th>
+                                <th>번호</th>
+                                <th>부품사명</th>
+                                <th>사업자등록번호</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td>
+                                  <div class="form-checkbox-w">
+                                    <div class="form-checkbox no-txt">
+                                      <input type="checkbox" id="Chk2" name="">
+                                      <label for="Chk2"></label>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class="t-align-center">1</td>
+                                <td class="t-align-center">자동차코리아(주)</td>
+                                <td class="t-align-center">123-45-67890</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <div class="form-checkbox-w">
+                                    <div class="form-checkbox no-txt">
+                                      <input type="checkbox" id="Chk3" name="">
+                                      <label for="Chk3"></label>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class="t-align-center">1</td>
+                                <td class="t-align-center">자동차코리아(주)</td>
+                                <td class="t-align-center">123-45-67890</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <div class="form-checkbox-w">
+                                    <div class="form-checkbox no-txt">
+                                      <input type="checkbox" id="Chk4" name="">
+                                      <label for="Chk4"></label>
+                                    </div>
+                                  </div>
+                                </td>
+                                <td class="t-align-center">1</td>
+                                <td class="t-align-center">자동차코리아(주)</td>
+                                <td class="t-align-center">123-45-67890</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="btn-wrap add-load align-center">
+                          <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(3/15)</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+								</div>
+							</div>
+              <div class="bot-fix-btn-area">
+								<div class="btn-wrap align-right">
+                  <div class="btn-set">
+                    <a class="btn-solid small black-bg" href="javascript:"><span>선택</span></a>
+                  </div>
+                </div>
+							</div>
+							<div class="user-opt-area">
+								<button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

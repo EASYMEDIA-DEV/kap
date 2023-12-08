@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <!-- 지급정보관리 팝업 -->
+      <div class="layer-popup paymentInfoManagPopup first-show"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
+        <div class="for-center">
+          <div class="pop-wrap">
+            <div class="pop-con-area">
+              <div class="tit-area">
+                <p class="f-title1">SQ평가원 자격증 신청</p>
+              </div>
+              <div class="con-area">
+                <div class="scroll-area">
+                  <div class="p-info-sec">
+                    <p class="f-sub-head">SQ평가원 자격증은 담당자가 SQ평가원 양성과정 및 업종별 기술이해, SQ품질지도 과정에 대한 내용을 확인 후 발급 처리되므로, 업무일 기준 최대 5일까지 소요될 수 있으니, 이 점 양해 바랍니다.</p>
+                  </div>
+                  <div class="p-cont-sec">
+                    <div class="noti-txt-w t-align-right">
+                      <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                    </div>
+                    <div class="sec-tit-area">
+                      <p class="f-head">신청자 증명사진<span class="essential-mark color-sky">*</span></p>
+                    </div>
+                    <div class="sec-con-area">
+                      <div class="data-enter-form">
+                        <div class="row">
+                          <!-- <div class="th">
+                            <p class="title f-body1">신청자 증명사진<span class="essential-mark color-sky">*</span></p>
+                          </div> -->
+                          <div class="td">
+                            <div class="data-line-w">
+                              <div class="data-line">
+                                <div class="inner-line">
+                                  <div class="form-group">
+                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                      <p class="empty-txt">선택된 파일 없음</p>
+                                    </div>
+                                    <div class="file-btn-area">
+                                      <input type="file" id="searchFile">
+                                      <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="inner-line">
+                                  <div class="noti-txt-w">
+                                    <p class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-cont-sec">
+                    <div class="sec-tit-area">
+                      <p class="f-head">신청자 기본정보</p>
+                    </div>
+                    <div class="sec-con-area">
+                      <div class="table-sec">
+                        <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                          <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                            <caption>신청자 기본정보</caption>
+                            <colgroup>
+                              <col style="width: 26%;">
+                              <col style="width: 74%;">
+                            </colgroup>
+                            <tbody>
+                              <tr>
+                                <th>부품사명</th>
+                                <td>㈜이지미디어</td>
+                              </tr>
+                              <tr>
+                                <th>성명</th>
+                                <td>홍길동</td>
+                              </tr>
+                              <tr>
+                                <th>부서</th>
+                                <td>기획그룹</td>
+                              </tr>
+                              <tr>
+                                <th>핸드폰 번호</th>
+                                <td>010-1234-5678</td>
+                              </tr>
+                              <tr>
+                                <th>이메일</th>
+                                <td>abc@easymedia.net</td>
+                              </tr>
+                              <tr>
+                                <th>직급</th>
+                                <td>과장</td>
+                              </tr>
+                              <tr>
+                                <th>회사 전화번호</th>
+                                <td>02-1234-5678</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="btn-wrap align-right">
+                          <a class="btn-text-icon black-circle" href="javascript:"><span>신청자 기본정보 수정</span></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="p-cont-sec">
+                    <div class="sec-tit-area">
+                      <p class="f-head">수료 과정정보</p>
+                    </div>
+                    <div class="sec-con-area">
+                      <div class="article-list-w box-list">
+                        <div class="list-item">
+                          <div class="left">
+                            <div class="sort-label-area">
+                              <p class="label"><span>품질아카데미</span></p>
+                              <p class="label"><span>품질학교</span></p>
+                            </div>
+                            <p class="tit f-sub-head">
+                              SQ평가원양성-기초
+                            </p>
+                          </div>
+                          <div class="right">
+                            <dl>
+                              <dt class="f-body2">회차</dt>
+                              <dd class="f-body2">2023년/8회차</dd>
+                            </dl>
+                            <dl>
+                              <dt class="f-body2">업종</dt>
+                              <dd class="f-body2">절삭가공</dd>
+                            </dl>
+                            <dl>
+                              <dt class="f-body2">수료일시</dt>
+                              <dd class="f-body2">2023.01.01 10:00</dd>
+                            </dl>
+                          </div>
+                        </div>
+                        <div class="list-item">
+                          <div class="left">
+                            <div class="sort-label-area">
+                              <p class="label"><span>품질아카데미</span></p>
+                              <p class="label"><span>품질학교</span></p>
+                            </div>
+                            <p class="tit f-sub-head">
+                              SQ평가원양성-기초
+                            </p>
+                          </div>
+                          <div class="right">
+                            <dl>
+                              <dt class="f-body2">회차</dt>
+                              <dd class="f-body2">2023년/8회차</dd>
+                            </dl>
+                            <dl>
+                              <dt class="f-body2">업종</dt>
+                              <dd class="f-body2">절삭가공</dd>
+                            </dl>
+                            <dl>
+                              <dt class="f-body2">수료일시</dt>
+                              <dd class="f-body2">2023.01.01 10:00</dd>
+                            </dl>
+                          </div>
+                        </div>
+                        <div class="list-item">
+                          <div class="left">
+                            <div class="sort-label-area">
+                              <p class="label"><span>품질아카데미</span></p>
+                              <p class="label"><span>품질학교</span></p>
+                            </div>
+                            <p class="tit f-sub-head">
+                              SQ평가원양성-기초
+                            </p>
+                          </div>
+                          <div class="right">
+                            <dl>
+                              <dt class="f-body2">회차</dt>
+                              <dd class="f-body2">2023년/8회차</dd>
+                            </dl>
+                            <dl>
+                              <dt class="f-body2">업종</dt>
+                              <dd class="f-body2">절삭가공</dd>
+                            </dl>
+                            <dl>
+                              <dt class="f-body2">수료일시</dt>
+                              <dd class="f-body2">2023.01.01 10:00</dd>
+                            </dl>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="bot-fix-btn-area">
+                <div class="btn-wrap align-right">
+                  <button class="btn-solid small black-bg btn-role-close btn-agree" type="button"><span>자격증 신청</span></button>
+                </div>
+              </div>
+              <div class="user-opt-area">
+                <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

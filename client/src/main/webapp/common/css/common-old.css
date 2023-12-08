@@ -141,12 +141,12 @@ body.ios {}
   .f_t2 {font-size: 32rem;}
   .f_t3 {font-size: 28rem;}
   .f_t4 {font-size: 22rem;}
-  .f_st {font-size: 18rem;}
-  .f_body1 {font-size: 16rem;}
-  .f_body2 {font-size: 16rem;}
-  .f_caption {font-size: 14rem;}
-  .f_category {font-size: 16rem;}
-  .f_date {font-size: 14rem;}
+  .f_st {font-size: max(18rem, 16px);}
+  .f_body1 {font-size: max(16rem, 14px);}
+  .f_body2 {font-size: max(16rem, 14px);}
+  .f_caption {font-size: max(14rem, 13px);}
+  .f_category {font-size: max(16rem, 14px);}
+  .f_date {font-size: max(14rem, 13px);}
 }
 
 @media all and (max-width: 599px) {
@@ -404,7 +404,7 @@ footer .inner .copyright {margin-top: 40rem; font-size: max(16rem, 12px);}
   footer .inner .flex_box .right .group_link {width: 100%;}
   footer .inner .flex_box .right .group_link .btn_open {height: max(40rem, 32px);}
   footer .inner .flex_box .right .group_link .group {bottom: max(42rem, 34px);}
-  footer .inner .copyright {margin-top: 60rem; font-size: 14rem; line-height: 17rem;}
+  footer .inner .copyright {margin-top: 60rem; font-size: max(14rem, 13px); line-height: 17rem;}
 }
 
 
@@ -421,8 +421,8 @@ footer .inner .copyright {margin-top: 40rem; font-size: max(16rem, 12px);}
 /* form - search */
 .form_search {position: relative; display: inline-block; width: 560rem;}
 .form_search .form_search_div {overflow: hidden; position: relative; display: flex; align-items: center; justify-content: space-between; background: transparent; border-bottom: 2px solid #000;}
-.form_search input {padding: 0; width: calc(100% - 60rem); width: -webkit-calc(100% - 60rem); height: 44rem; font-family: "Pretendard_Regular", sans-serif; font-size: 16rem; color: #000; line-height: 120%; border: none; background: transparent;}
-.form_search input::placeholder {color: #999; font-size: 16rem; line-height: 120%; font-family: "Pretendard_Regular", sans-serif;}
+.form_search input {padding: 0; width: calc(100% - 60rem); width: -webkit-calc(100% - 60rem); height: 44rem; font-family: "Pretendard_Regular", sans-serif; font-size: max(16rem, 14px); color: #000; line-height: 120%; border: none; background: transparent;}
+.form_search input::placeholder {color: #999; font-size: max(16rem, 14px); line-height: 120%; font-family: "Pretendard_Regular", sans-serif;}
 .form_search .btn_delete {display: none; margin-right: 15rem; width: 18rem; height: 18rem; background: url(/images/common/btn-input-delete.svg) no-repeat center center/cover;}
 .form_search .btn_search {/* position: absolute; right: 20px; top: 50%; transform: translateY(-50%); */ width: 18rem; height: 18rem; background: url(/images/common/btn-search-menu.svg) no-repeat center center/18rem;}
 
@@ -506,7 +506,7 @@ footer .inner .copyright {margin-top: 40rem; font-size: max(16rem, 12px);}
 
 @media screen and (max-width: 1023px) {
   .card_list .txt_box {margin-top: 20rem;}
-  .card_list .txt_box .tit {margin-top: 10rem; font-size: 18rem;}
+  .card_list .txt_box .tit {margin-top: 10rem; font-size: max(18rem, 16px);}
   .card_list .date {margin-top: 20rem;}
 }
 

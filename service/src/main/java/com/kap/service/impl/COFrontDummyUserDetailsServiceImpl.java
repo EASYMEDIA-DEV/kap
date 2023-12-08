@@ -31,6 +31,7 @@ public class COFrontDummyUserDetailsServiceImpl implements COUserDetailsService
 		cOLoginUserDTO.setSeq(1);
 		cOLoginUserDTO.setId("hyumain1");
 		cOLoginUserDTO.setName("TBD");
+		cOLoginUserDTO.setAuthCd("CP");
 		cOLoginUserDTO.setLastLgnDtm("2023-11-16 00:00:00");
 		cOLoginUserDTO.setLoginIp("127.0.0.1");
 		cOLoginUserDTO.setConSessionId("11111");

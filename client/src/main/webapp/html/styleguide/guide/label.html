@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>퍼블리싱 스타일 가이드</title>
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="../assets/styles/shCore.css"/>
+	<link rel="Stylesheet" href="../assets/styles/shCoreEclipse.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="/common/css/fonts.css">
+  <link rel="stylesheet" href="/common/css/common.css">
+  <script src="../assets/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+	<script src="../assets/scripts/shCore.js"></script>
+	<script src="../assets/scripts/shBrushJScript.js"></script>
+	<script src="../assets/scripts/shBrushXml.js"></script>
+	<script src="../assets/scripts/shBrushCss.js"></script>
+  <script type="text/javascript">SyntaxHighlighter.all();</script>
+  <style>
+    .ex-box ~ .ex-box {margin-top: 20px;} 
+    .ex-box > p {margin-bottom: 10px;}
+    .exs ~ .exs {margin-top: 40px;}
+    .ex ~ .ex {margin-top: 40px;}
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <h1>KAP 가이드</h1>
+      <div class="btn-wrap">
+        <a href="/html/worklist.html">작업현황판  <i class="fas fa-angle-right"></i></a>
+      </div>
+    </header>
+    <div id="contents">
+      <aside>
+        <a href="/html/styleguide/guide-intro.html">기본 정책 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-markup.html">마크업 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-css.html">CSS 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-naming.html">네이밍 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="javascript:" class="active">스타일 가이드 <i class="fas fa-angle-right"></i></a>
+        <ul class="guide-list">
+          <li><a href="/html/styleguide/guide/form.html">FORM</a></li>
+          <li><a href="/html/styleguide/guide/typography.html">TYPOGRAPHY</a></li>
+          <li><a href="/html/styleguide/guide/button.html">BUTTON</a></li>
+          <li><a href="/html/styleguide/guide/popup.html">POPUP</a></li>
+          <li><a href="/html/styleguide/guide/accordion.html">ACCORDION</a></li>
+          <li><a href="/html/styleguide/guide/tab.html">TAB</a></li>
+          <li><a href="/html/styleguide/guide/table.html">TABLE</a></li>
+          <li><a href="/html/styleguide/guide/list.html">LIST</a></li>
+          <li><a href="/html/styleguide/guide/layout.html">LAYOUT</a></li>
+          <li><a href="/html/styleguide/guide/label.html" class="active">LABEL</a></li>
+        </ul>
+      </aside>
+      <!-- 가이드 Start -->
+      <div class="content-area">
+        <h2>라벨 스타일 가이드</h2>
+        <br/>
+        <section>
+          <div class="ex-box">
+            <h3>Label</h3>
+            <div class="exs">
+              <!-- <h4>basic (horizontal)</h4> -->
+              <p class="info">박스형 라벨</p>
+              <div class="ex">
+                <div>
+                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+									<p class="box-label bigger accepting"><span>접수중</span></p>
+									<p class="box-label bigger waiting"><span>접수대기</span></p>
+									<p class="box-label bigger end"><span>마감</span></p>
+									<p class="box-label bigger complete"><span>답변완료</span></p>
+									<p class="box-label bigger arr"><span>에러</span></p>
+									<p class="box-label bigger available"><span>비회원 신청 가능</span></p>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div>
+                  <p class="box-label bigger"><span>글로벌상생교육센터</span></p>
+                  <p class="box-label bigger accepting"><span>접수중</span></p>
+                  <p class="box-label bigger waiting"><span>접수대기</span></p>
+                  <p class="box-label bigger end"><span>마감</span></p>
+                  <p class="box-label bigger complete"><span>답변완료</span></p>
+                  <p class="box-label bigger arr"><span>에러</span></p>
+                  <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
+                </div>
+              </script>
+              <script type="syntaxhighlighter" class="brush: css;">
+              </script>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

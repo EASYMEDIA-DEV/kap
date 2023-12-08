@@ -2,6 +2,7 @@ package com.kap.front.controller.mp.mpe;
 
 import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.service.COCodeService;
@@ -11,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -50,6 +52,12 @@ public class MPESqCertiController {
     private final COCodeService cOCodeService;
     /** 서비스 **/
     private final EBDSqCertiReqService eBDSqCertiReqService;
+    // 파일 확장자
+    @Value("${app.file.imageExtns}")
+    private String imageExtns;
+    //파일 업로드 사이즈
+    @Value("${app.file.max-size}")
+    private int atchUploadMaxSize;
     /**
      *  목록
      */
@@ -63,12 +71,12 @@ public class MPESqCertiController {
             //자격증이 없고 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 경우
             //SQ 평가원 자격증 신청 조건(자격증 연계를 수료하였고 평가원을 신청하지 않아야함)
             eBDSqCertiSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
-            System.out.println(eBDSqCertiSearchDTO.getSiteGubun());
             //SQ자격증 신청 버튼
             modelMap.addAttribute("sqCerti", eBDSqCertiReqService.selectExamAppctnMst(eBDSqCertiSearchDTO));
             //SQ자격증 보기 버튼
             modelMap.addAttribute("posibleSqCertiCnt", eBDSqCertiReqService.getPosibleSqCertiCnt(eBDSqCertiSearchDTO));
             modelMap.addAttribute("educationCompleteListCnt", eBDSqCertiReqService.selectEducationCompleteListCnt(eBDSqCertiSearchDTO));
+
             modelMap.addAttribute("rtnData", eBDSqCertiSearchDTO);
         }
         catch (Exception e)
@@ -114,6 +122,40 @@ public class MPESqCertiController {
             throw new Exception(e.getMessage());
         }
         return "front/mp/mpe/MPESqCertiListAjax";
+    }
+
+    /**
+     * SQ평가원 자격증 신청 폼
+     */
+    @GetMapping(value="/complete/apply")
+    public String setEducationCompleteApply(EBDSqCertiSearchDTO eBDSqCertiSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            COUserDetailsDTO coUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT02");
+            //자격증 신청 가능 확인
+            //자격증이 없고 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 경우
+            //SQ 평가원 자격증 신청 조건(자격증 연계를 수료하였고 평가원을 신청하지 않아야함)
+            eBDSqCertiSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+            //SQ자격증 신청 버튼
+            int posibleSqCertiCnt = eBDSqCertiReqService.getPosibleSqCertiCnt(eBDSqCertiSearchDTO);
+            if("CP".equals(coUserDetailsDTO.getAuthCd()) && posibleSqCertiCnt == 1)
+            {
+                modelMap.addAttribute("rtnData", eBDSqCertiReqService.getEducationCompleteList(eBDSqCertiSearchDTO));
+            }
+            else
+            {
+                throw new Exception("NOT PERMIT");
+            }
+            modelMap.addAttribute("imageExtns", imageExtns);
+            modelMap.addAttribute("atchUploadMaxSize", atchUploadMaxSize);
+        }
+        catch (Exception e)
+        {
+            throw new Exception(e.getMessage());
+        }
+        return "front/mp/mpe/MPESqCertiApplyAjax";
     }
 }
 

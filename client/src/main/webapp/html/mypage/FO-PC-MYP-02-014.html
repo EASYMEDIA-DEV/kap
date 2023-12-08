@@ -78,8 +78,8 @@
             <div class="guide-info-area scroll-motion">
               <div class="for-motion">
                 <div class="info-sec">
-                  <p class="exclamation-txt f-body1">교육 양도는 교육 시작 전일까지만 가능하며, 교육 양도 후 회수는 불가능하며, 다시 신청 후 교육 참여 가능합니다.</p>
-                  <p class="exclamation-txt f-body1">교육 양도는 소속 부품사내 다른 회원에게만 양도 가능하며, 양도 받은 회원 또한 소속 부품사내 회원에게 양도 가능합니다.</p>
+                  <p class="exclamation-txt f-body1">교육 양도는 교육 시작 전일까지만 가능합니다. 교육 양도 후 회수는 불가능하며, 새로 신청하여 교육에 참여하실 수 있습니다.</p>
+                  <p class="exclamation-txt f-body1">교육 양도는 소속 부품사내 회원에 한해서 양도 가능합니다. 양도 받은 회원 또한 소속 부품사내 회원에게 재양도 하실 수 있습니다.</p>
                 </div>
               </div>
             </div>
@@ -91,19 +91,8 @@
                   </div>
                   <div class="sec-con-area">
                     <div class="table-sec">
-                      <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                      <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                         <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
-                          <!-- 
-                            @ 폰트 기본 좌측 정렬
-                              .txt-c : 폰트 가운데 정렬
-                              .txt-r : 폰트 우측 정렬
-                            @ border-right 기본
-                              .bdl : border-left 생성
-                              .bdr : border-right 생성
-                              .bdln : border-left 삭제
-                              .bdrn : border-right 삭제
-                            @ .txt-ellipsis : 말줄임
-                          -->
                           <caption>소속 부품사</caption>
                           <colgroup>
                             <col style="width: 25%;">
@@ -112,7 +101,7 @@
                           <tbody>
                             <tr>
                               <th>부품사명</th>
-                              <td>자동차부품산업진흥재단</td>
+                              <td class="t-align-center">자동차부품산업진흥재단</td>
                             </tr>
                           </tbody>
                         </table>
@@ -127,30 +116,19 @@
                     <p class="f-title3">회원목록</p>
                   </div>
                   <div class="sec-con-area">
-                    <div class="table-sec">
-                      <div class="info-head">
-                        <p class="article-total-count f-body2">총 <span>1065</span>건</p>
-                        <div class="form-input srch-input">
-                          <input type="text" placeholder="검색어를 입력해 주세요.">
-                          <div class="input-btn-wrap">
-                            <button class="delete-btn" title="지우기" type="button"></button>
-                            <button class="srch-btn" title="검색"></button>
-                          </div>
+                    <div class="info-head">
+                      <p class="article-total-count f-body2">총 <span>1065</span>건</p>
+                      <div class="form-input srch-input">
+                        <input type="text" placeholder="성명/아이디/핸드폰번호/이메일 입력"><!-- 2023-12-07 수정 -->
+                        <div class="input-btn-wrap">
+                          <button class="delete-btn" title="지우기" type="button"></button>
+                          <button class="srch-btn" title="검색"></button>
                         </div>
                       </div>
+                    </div>
+                    <div class="table-sec">
                       <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                        <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
-                          <!-- 
-                            @ 폰트 기본 좌측 정렬
-                              .txt-c : 폰트 가운데 정렬
-                              .txt-r : 폰트 우측 정렬
-                            @ border-right 기본
-                              .bdl : border-left 생성
-                              .bdr : border-right 생성
-                              .bdln : border-left 삭제
-                              .bdrn : border-right 삭제
-                            @ .txt-ellipsis : 말줄임
-                          -->
+                        <table class="basic-table w932"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
                           <caption>회원목록</caption>
                           <colgroup>
                             <col style="width: 8%;">
@@ -168,54 +146,54 @@
                               <th>이메일</th>
                             </tr>
                           </thead>
-                          <tbody class="txt-c">
+                          <tbody>
                             <tr>
-                              <td>
+                              <td class="t-align-center">
                                 <div class="form-radio">
                                   <input type="radio" id="memListeRadio1" name="memListeRadioSet">
                                   <label for="memListeRadio1"></label>
                                 </div>
                               </td>
-                              <td>홍길동</td>
-                              <td>kap****</td>
-                              <td>010-****-5678</td>
-                              <td>Pla****@easymedia.net</td>
+                              <td class="t-align-center">홍*동</td>
+                              <td class="t-align-center">kap****</td>
+                              <td class="t-align-center">010-****-5678</td>
+                              <td class="t-align-center">Pla****@easymedia.net</td>
                             </tr>
                             <tr>
-                              <td>
+                              <td class="t-align-center">
                                 <div class="form-radio">
                                   <input type="radio" id="memListeRadio2" name="memListeRadioSet">
                                   <label for="memListeRadio2"></label>
                                 </div>
                               </td>
-                              <td>홍길동</td>
-                              <td>kap****</td>
-                              <td>010-****-5678</td>
-                              <td>Pla****@easymedia.net</td>
+                              <td class="t-align-center">홍*동</td>
+                              <td class="t-align-center">kap****</td>
+                              <td class="t-align-center">010-****-5678</td>
+                              <td class="t-align-center">Pla****@easymedia.net</td>
                             </tr>
                             <tr>
-                              <td>
+                              <td class="t-align-center">
                                 <div class="form-radio">
                                   <input type="radio" id="memListeRadio3" name="memListeRadioSet">
                                   <label for="memListeRadio3"></label>
                                 </div>
                               </td>
-                              <td>홍길동</td>
-                              <td>kap****</td>
-                              <td>010-****-5678</td>
-                              <td>Pla****@easymedia.net</td>
+                              <td class="t-align-center">홍*동</td>
+                              <td class="t-align-center">kap****</td>
+                              <td class="t-align-center">010-****-5678</td>
+                              <td class="t-align-center">Pla****@easymedia.net</td>
                             </tr>
                             <tr>
-                              <td>
+                              <td class="t-align-center">
                                 <div class="form-radio">
                                   <input type="radio" id="memListeRadio4" name="memListeRadioSet">
                                   <label for="memListeRadio4"></label>
                                 </div>
                               </td>
-                              <td>홍길동</td>
-                              <td>kap****</td>
-                              <td>010-****-5678</td>
-                              <td>Pla****@easymedia.net</td>
+                              <td class="t-align-center">홍*동</td>
+                              <td class="t-align-center">kap****</td>
+                              <td class="t-align-center">010-****-5678</td>
+                              <td class="t-align-center">Pla****@easymedia.net</td>
                             </tr>
                           </tbody>
                         </table>
@@ -301,6 +279,8 @@
       </div>
 
       <div class="dimd"></div>
+            
+      <div class="only-vertical-view"></div>
     </div>
 	</body>
 </html>

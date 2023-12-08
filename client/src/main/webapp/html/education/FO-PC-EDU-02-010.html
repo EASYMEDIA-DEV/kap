@@ -1,0 +1,394 @@
+
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <header id="header"></header>
+
+			<!-- content 영역 start -->
+      <div class="cont-wrap">
+        <!-- 
+          신청 페이지: apply-page 클래스 추가
+          그 외 페이지: basic-page 클래스 추가
+        -->
+        <!-- 
+          교육 사업: edu-biz
+          컨실팅 사업: consult-biz
+          상생 사업: coexisting-biz
+        -->
+        <div class="sub-top-vis-area apply-page consult-biz">
+          <div class="page-tit-area">
+            <p class="page-tit f-xlarge-title"><span class="for-move">교육신청</span></p>
+            <div class="apply-step-w">
+              <div class="for-move">
+                <div class="step-list ongoing"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
+                  <p class="step-num">1</p>
+                  <p class="step-con">기본정보</p>
+                </div>
+                <div class="step-list ">
+                  <p class="step-num">2</p>
+                  <p class="step-con">신청완료</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="img-area">
+            <div class="gray-bg"></div>
+            <div class="graphic-item-w">
+              <div class="item"></div>
+              <div class="item"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divide-con-area">
+          <div class="lnb-area">
+            <div class="for-motion">
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>교육사업 소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu active" href="javascript:"><span>교육신청</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+              <div class="lnb-list">
+                <a class="btn-two-depth single-menu" href="javascript:"><span>방문교육</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+              </div>
+            </div>
+          </div>
+
+          <div class="right-con-area">
+            <div class="cont-sec-w">
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">과정 정보를 확인해주세요</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="training-confirm">
+                      <div class="top-info">
+                        <div class="training-view-page">
+                          <div class="training-list">
+                            <div class="img-area">
+                              <img src="/common/images/img-main-training-offline-01.jpg" alt="">
+                            </div>
+                            <div class="txt-area">
+                              <div class="top-line">
+                                <div class="sort-label-area">
+                                  <p class="label"><span>품질아카데미</span></p>
+                                  <p class="label"><span>품질학교</span></p>
+                                </div>
+                                <p class="training-name f-title1">꼭 알아야 할 품질 기초 두줄로 떨어질 때</p>
+                                <p class="training-explain-txt">품질 전문가로서의 첫 시작을 위한 교육!</p>
+                              </div>
+                              <div class="class-property-w">
+                                <div class="property-list offline"><!-- non-member: 비회원 가능 -->
+                                  <p class="txt">
+                                    <span>비회원 가능</span>
+                                  </p>
+                                </div>
+                                <div class="property-list offline"><!-- offline: 집체교육 -->
+                                  <p class="txt">
+                                    <span>집체교육</span>
+                                  </p>
+                                </div>
+                                <div class="property-list time"><!-- time: 학습시간 -->
+                                  <p class="txt">
+                                    <span>2일(14시간)</span>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="bot-info">
+                        <div class="index-list-w">
+                          <div class="list-item">
+                            <div class="cont">
+                              <div class="cont-area">
+                                <div class="info-list-w">
+                                  <div class="info-list">
+                                    <p class="tit f-caption2">강사</p>
+                                    <p class="txt f-body2">홍길동</p>
+                                  </div>
+                                  <div class="info-list">
+                                    <p class="tit f-caption2">정원</p>
+                                    <p class="txt f-body2">30명(모집 후 선발)</p>
+                                  </div>
+                                  <div class="info-list">
+                                    <p class="tit f-caption2">교육장소</p>
+                                    <p class="txt f-body2"><a href="javascript:" title="교육장 안내 팝업 열기">글로벌상생협력센터<br class="only-pc" />(GPC)(경주)</a></p>
+                                  </div>
+                                  <div class="info-list">
+                                    <p class="tit f-caption2">교육일자</p>
+                                    <p class="txt f-body2">2023.10.26 10:00 ~ <br/>2023.10.27 11:00(1일간)</p>
+                                  </div>
+                                </div>
+                                <div class="btn-wrap no-absolute">
+                                  <div class="btn-set v-align-center">
+                                    <button class="btn-text-icon download" href="javascript:" download><span>안내문</span></button>
+                                    <button class="btn-text-icon black-arrow" type="button"><span>회차 담당자 문의</span></button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">신청자 정보를 입력해주세요.
+                    </p>
+                    <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="data-enter-form">
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">사업자등록번호<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="for-status-chk satisfy"><!-- 조건 충족 시 satisfy 클래스 추가 -->
+                                <div class="form-group">
+                                  <div class="form-input">
+                                    <input type="text" placeholder="">
+                                  </div>
+                                  <div class="btn-wrap">
+                                    <button class="btn-solid small gray-bg" href="javascript:"><span>인증</span></button> 
+                                  </div>
+                                </div>
+                                <p class="satisfy-msg">인증되었습니다.</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">구분<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input">
+                                  <input type="text" placeholder="인증된 업체명" disabled>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">이름<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input">
+                                  <input type="text" placeholder="이름 입력">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">부서<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-select">
+                                  <select id="" title="부서 선택">
+                                    <option value="" selected="">선택</option>
+                                    <option value="">부서 선택1</option>
+                                    <option value="">부서 선택2</option>
+                                    <option value="">부서 선택3</option>
+                                  </select>
+                                </div>
+                                <div class="form-input">
+                                  <input type="text" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">직급<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-select">
+                                  <select id="" title="직급 선택">
+                                    <option value="" selected="">선택</option>
+                                    <option value="">직급 선택1</option>
+                                    <option value="">직급 선택2</option>
+                                    <option value="">직급 선택3</option>
+                                  </select>
+                                </div>
+                                <div class="form-input">
+                                  <input type="text" placeholder="">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">휴대폰번호<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group">
+                                <div class="form-input">
+                                  <input type="number" placeholder="휴대폰번호 입력">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="th">
+                          <p class="title f-head">이메일<span class="essential-mark color-sky">*</span></p>
+                        </div>
+                        <div class="td">
+                          <div class="data-line-w">
+                            <div class="data-line">
+                              <div class="form-group form-email">
+                                <div class="form-input">
+                                  <input type="text" placeholder="이메일 입력">
+                                </div>
+                                <div class="form-input">
+                                  <input type="text" placeholder="직접입력">
+                                </div>
+                                <div class="form-select">
+                                  <select id="" title="메일 선택">
+                                    <option value="" selected>직접입력</option>
+                                    <option value="">option1</option>
+                                    <option value="">option2</option>
+                                    <option value="">option3</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="cont-sec no-border scroll-motion">
+                <div class="for-motion">
+                  <div class="sec-tit-area">
+                    <p class="f-title3">개인정보 사용동의</p>
+                  </div>
+                  <div class="sec-con-area">
+                    <div class="agree-box">
+                      <div class="gray-bg-sec narrow-pad">
+                        <p class="f-body2">
+                          재단법인 '자동차부품산업진흥재단'(이하 '재단')은 고객님의 개인정보를 중요시하며, [개인정보보호법]에 관한 법률을 준수하고 있습니다.
+                          <br class="only-pc"/>재단은 개인정보처리방침을 통하여 고객님께서 제공하시는 개인정보가 어떠한 용도와 방식으로 이용되고 있으며, 개인정보보호를 위해 어떠한 조치가 취해지고 있는지 알려드립니다.
+                          <br class="only-pc"/>재단은 개인정보처리방침을 개정하는 경우 웹사이트 공지사항(또는 개별공지)을 통하여 공지할 것입니다.
+                        </p>
+                      </div>
+                      <div class="form-group align-right">
+                        <div class="form-checkbox">
+                          <input type="checkbox" id="agreeChk" name="">
+                          <label for="agreeChk">약관에 동의합니다.</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="page-bot-btn-sec scroll-motion">
+              <div class="btn-wrap for-motion">
+                <div class="btn-set">
+                  <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                </div>
+                <div class="btn-set">
+                  <a class="btn-solid small black-bg" href="javascript:"><span>신청하기</span></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+			<!-- content 영역 end -->
+
+      <footer></footer>
+
+      <div class="quick-menu">
+        <div class="menu-area">
+					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
+					<div class="btn-w">
+						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
+						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
+						<a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
+					</div>
+        </div>
+        <a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
+      </div>
+
+      <div class="scroll-gauge">
+        <div class="bar"></div>
+      </div>
+
+      <div class="dimd"></div>
+            
+      <div class="only-vertical-view"></div>
+    </div>
+	</body>
+</html>
