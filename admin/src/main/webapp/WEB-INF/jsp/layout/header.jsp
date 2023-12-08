@@ -47,6 +47,11 @@
 		<script type="text/javascript" src="/common/js/app.js"></script>
 		<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
+		<!-- jspdfDownload 관련 -->
+		<script type="text/javascript" src="/common/js/lib/jspdf/bluebird.min.js"></script>
+		<script type="text/javascript" src="/common/js/lib/jspdf/html2canvas.js"></script>
+		<script type="text/javascript" src="/common/js/lib/jspdf/jspdf.min.js"></script>
+
 		<%-- monthpicker --%>
 		<script src="/common/js/lib/jquery/jquery.mtz.monthpicker.js"></script>
 
@@ -107,6 +112,7 @@
 					}
 				}
 			}
+
 			//]]>
 		</script>
 	</head>

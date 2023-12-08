@@ -62,17 +62,6 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-            // 상세보기
-            listView : {
-                event : {
-                    click : function() {
-                        //상세보기
-                        var detailsKey = $(this).data("detailsKey");
-                        $formObj.find("input[name=detailsKey]").val(detailsKey);
-                        location.href = "./write?" + $formObj.serialize();
-                    }
-                }
-            },
             // 페이징 목록 갯수
             listRowSizeContainer : {
                 event : {

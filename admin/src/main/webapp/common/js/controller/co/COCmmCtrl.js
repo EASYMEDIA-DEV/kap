@@ -1753,6 +1753,63 @@ var cmmCtrl = (function(){
 		}).modal();
 	}
 
+	// 신청자 정보 pdf 다운로드 관련
+	var fn_appctn_pdf_download = function(fileName){
+		
+		// pdf 변환 관련 상단 padding 값 추가
+		$("#appctnPdfArea1").css("padding-top" ,"20px");
+		$("#appctnPdfArea2").css("padding-top" ,"40px");
+
+		// 신청자 정보 pdf 다운로드시 스크롤방지 코드 삽입(스크롤시 영역 틀어짐) 
+		$('html, body').css({'overflow': 'hidden', 'height': '100%'});
+		$("#element").on('scroll touchmove mousewheel', function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			return false;
+		});
+
+		// 로딩바 노출
+		jQuery(".loadingbar").stop().fadeIn(200);
+
+		var doc = new jsPDF("p", "mm", "a4", true);
+		var imgData = "";
+		var imgHeight = "";
+		html2canvas($("#appctnPdfArea1")[0], {
+		}).then(function(canvas){
+			//console.log(canvas);
+			imgData = canvas.toDataURL('image/jpeg', 1.0);
+			imgHeight = canvas.height * 220 / canvas.width;
+
+			doc.addImage(imgData, 'jpeg', 5, 5, 200, imgHeight);
+
+			html2canvas($('#appctnPdfArea2')[0], {
+			}).then(function(canvas){
+				imgData = canvas.toDataURL('image/jpeg', 1.0);
+				imgHeight = canvas.height * 200 / canvas.width;
+
+				doc.addPage();
+				doc.addImage(imgData, 'jpeg', 5, 5, 200, imgHeight);
+
+				// 파일 저장
+				doc.save(fileName);
+
+				//화면 확인 용(이미지로 표현)
+				//document.write('<img src="' + imgData + '" />');
+				
+				// pdf 변환 관련 추가한 상단 padding 값 제거
+				$("#appctnPdfArea1").css("padding-top" ,"0");
+				$("#appctnPdfArea2").css("padding-top" ,"0");
+				//로딩바 숨기기
+				jQuery(".loadingbar").stop().fadeOut(200);
+
+				// 신청자 정보 pdf 다운로드 후 스크롤 노출 처리
+				$('html, body').css({'overflow': '', 'height': ''});
+				$("#element").off('scroll touchmove mousewheel');
+
+			});
+		});
+	}
+
 
 	return {
 		nvl : fn_replace_null,
@@ -1809,6 +1866,8 @@ var cmmCtrl = (function(){
 		//위원 검색 매핑
 		getCmtSrchPop : fn_cmt_srch_layer_pop,
 		//컨설팅 만족도종합결과
-		getConsultSuveyRsltPop : fn_consult_suvey_rslt_layer_pop
+		getConsultSuveyRsltPop : fn_consult_suvey_rslt_layer_pop,
+
+		getAppctnPdfDownload : fn_appctn_pdf_download
 	}
 }());
