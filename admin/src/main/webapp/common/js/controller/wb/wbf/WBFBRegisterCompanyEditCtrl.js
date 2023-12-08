@@ -14,12 +14,29 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     let height = 600; //팝업의 높이
     let selPartUser; /* 선택 사용자 ID*/
 
-    var $formObj = ctrl.obj.find("form").eq(0);
+    var $formObj = ctrl.obj.find("#frmData").eq(0);
+
+    var $sendForm;
+
+    var $basicData = $formObj.find("#basicData").eq(0);
+    var $dataSpprt = $formObj.find("#frmDataSpprt").eq(0);
+    var $dataRsumeTask = $formObj.find("#frmDataRsumeTask").eq(0);
 
     // form Object
     var $modalObj = $(".part-modal");
     //modalForm
     var $modalFormObj = $modalObj.find("form").eq(0);
+
+    /* 팝업 옵션 */
+    let optVal = {
+        '1' : '아이디',
+        '2' : '이름',
+        '3' : '휴대폰번호',
+        '4' : '이메일',
+        '5' : '최종수정자',
+        '6' : '부품사명',
+        '7' : '사업자등록번호',
+    }
 
     // 목록 조회
     var search = function (page){
@@ -169,9 +186,33 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }
     }
 
+    /* 선급금 영역 Show-Hide */
+    let pmndvPmtViewShowFn = () => {
+        let checkedVal = $formObj.find('input[name=pmndvPmtYn]:checked').val();
+        let pmndvPmtViwe = $formObj.find('#pmndvPmtView');
+
+        if(checkedVal === 'Y') {
+            pmndvPmtViwe.css('display', 'block');
+            pmndvPmtViwe.find("input,select").prop('disabled', false);
+        } else {
+            pmndvPmtViwe.css('display', 'none');
+            pmndvPmtViwe.find("input,select").prop('disabled', true);
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
+            /* Test Code*/
+            btnTest : {
+                event : {
+                    click: function () {
+                        /* Test Code*/
+                        TT();
+                    }
+                }
+            },
+            /* Test Code*/
             ctgryCd : {
                 event : {
                     change : function() {
@@ -199,6 +240,26 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnPartUserModal : {
                 event : {
                     click: function () {
+                        $modalObj.find("input[name=memCd]").val('CP');
+                        $modalObj.find("#cdList").show();
+
+                        $modalObj.find("select[data-name=f]").empty();
+                        let selOpt = ['1','2','6','7','3','4','5'];
+                        let opt = '<option value="">전체</option>';
+                        selOpt.forEach(function(el, idx) {
+                            opt += `<option value="${el}">${optVal[el]}</option>`
+                        });
+                        $modalObj.find("select[data-name=f]").append(opt);
+
+                        $modalObj.find("thead tr").empty();
+                        let tableHead = ['번호','아이디','이름','부품사명','구분'
+                            ,'규모','사업자등록번호','휴대폰번호','이메일','가입일','최종 수정자','수정 일시'];
+                        let html = '<th class="text-center"></th>';
+                        tableHead.forEach(function(el, idx) {
+                           html += `<th class="text-center">${el}</th>`;
+                        });
+                        $modalObj.find("thead tr").append(html);
+                        fnRefresh();
                         search(1);
                         $modalObj.modal("show");
                     }
@@ -210,6 +271,13 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         //검색버튼 클릭시
                         cmmCtrl.setFormData($modalFormObj);
                         search(1);
+                    }
+                }
+            },
+            btnModalRefresh : {
+                event: {
+                    click: function () {
+                        fnRefresh();
                     }
                 }
             },
@@ -236,6 +304,42 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         classname : {
+            pmndvPmtYn : {
+                event : {
+                    click : function() {
+                        pmndvPmtViewShowFn();
+                    }
+                },
+            },
+            // 위원검색 모달
+            btnCommUserModal : {
+                event : {
+                    click: function () {
+                        $modalObj.find("input[name=memCd]").val('CS');
+                        $modalObj.find("#cdList").hide();
+
+                        $modalObj.find("select[data-name=f]").empty();
+                        let selOpt = ['1','2','3','4','5'];
+                        let opt = '<option value="">전체</option>';
+                        selOpt.forEach(function(el, idx) {
+                            opt += `<option value="${el}">${optVal[el]}</option>`
+                        });
+                        $modalObj.find("select[data-name=f]").append(opt);
+
+                        $modalObj.find("thead tr").empty();
+                        let tableHead = ['번호','이름','부품사명','부서'
+                            ,'직급','휴대폰번호','이메일','최초등록자','최초 등록일시','최종 수정자','최종 수정일시'];
+                        let html = '<th class="text-center"></th>';
+                        tableHead.forEach(function(el, idx) {
+                            html += `<th class="text-center">${el}</th>`;
+                        });
+                        $modalObj.find("thead tr").append(html);
+                        fnRefresh();
+                        search(1);
+                        $modalObj.modal("show");
+                    }
+                }
+            },
             checkboxSingle : {
                 event : {
                   click : function() {
@@ -268,7 +372,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             }
         },
         immediately : function() {
-            //리스트 조회
+
             //폼 데이터 처리
             cmmCtrl.setFormData($modalFormObj);
             $formObj.find(".dropzone").each(function(){
@@ -281,42 +385,85 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 })
             });
 
+            getPageInfo();
+            pmndvPmtViewShowFn();
+
             $formObj.validation({
                 after : function() {
                     var isValid = true;
 
-                    if($(".dropzone .dz-preview").length < 1) {
-                        alert(msgCtrl.getMsg("fail.notFileRequired"));
-                        isValid = !isValid;
-                    }
 
                     return isValid;
                 },
                 async : {
                     use : true,
                     func : function (){
-                        if($formObj.find(".dropzone").size() > 0)
-                        {
-                            cmmCtrl.fileFrmAjax(function(data){
-                                console.log(data.respCnt);
-                                //콜백함수. 페이지 이동
-                                if(data.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.ins"));
-                                    location.replace("./list");
-                                }
-                            }, "./insert", $formObj, "json");
-                        }
-                        else
-                        {
-                            cmmCtrl.frmAjax(function(data){
-                                console.log(data.respCnt);
 
-                                if(data.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.ins"));
-                                    location.replace("./list");
+                        $formObj.validation({
+                            after : function() {
+                                var isValid = true;
+
+
+                                return isValid;
+                            },
+                            async : {
+                                use : true,
+                                func : function (){
+
+                                    let code1 = 'PRO_TYPE03001';
+                                    let code2 = 'PRO_TYPE02001';
+
+                                    let basicDtl = $basicData.find("input,select");
+                                    let spprtDtl = $dataSpprt.find(`[data-sttscd=${code1}]`).find("input,select");
+                                    let rsumeTaskDtl = $dataRsumeTask.find(`[data-sttscd=${code2}]`).find("input,select");
+
+                                    var $sendFormData = $('<form></form>');
+
+                                    /* 회차 정보 ~ 선급금 해당 여부*/
+                                    $(basicDtl).each(function(idx, el){
+                                        $sendFormData.append($('<input/>', {type: 'hidden', name: el.name, value:el.value }));
+                                    });
+
+                                    /* 선급금 지급 */
+                                    spprtDtl.each(function(idx, el){
+                                        $sendFormData.append($('<input/>', {type: 'hidden', name: el.name, value:el.value }));
+                                    });
+
+                                    /* 부품사 관리 등록 */
+                                    rsumeTaskDtl.each(function(idx, el){
+                                        $sendFormData.append($('<input/>', {type: 'hidden', name: el.name, value:el.value }));
+                                    });
+
+                                    /* 관리자 메모 */
+                                    $sendFormData.append($('<input/>', {type: 'hidden', name: 'admMemo', value: $('input[name=admMemo]').val() }));
+
+                                    if($formObj.find(".dropzone").size() > 0)
+                                    {
+                                        cmmCtrl.fileFrmAjax(function(data){
+                                            //콜백함수. 페이지 이동
+                                            if(data.respCnt > 0){
+                                                alert(msgCtrl.getMsg("success.ins"));
+                                                location.replace("./list");
+                                            }
+                                        }, "./updaete", $sendFormData, "json");
+                                    }
+                                    else
+                                    {
+                                        cmmCtrl.frmAjax(function(data){
+                                            if(data.respCnt > 0){
+                                                alert(msgCtrl.getMsg("success.ins"));
+                                                location.replace("./list");
+                                            }
+                                        }, "./updaete", $sendFormData, "post", "json")
+                                    }
                                 }
-                            }, "./insert", $formObj, "post", "json")
-                        }
+                            },
+                            msg : {
+                                empty : {
+                                    text : " 입력해주세요."
+                                }
+                            }
+                        });
                     }
                 },
                 msg : {
@@ -327,6 +474,115 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             });
         }
     };
+
+    let fnRefresh = function() {
+        //FORM 데이터 전체 삭제
+        let pageIndex 	= $modalObj.find("#pageIndex").val();
+        let listRowSize = $modalObj.find("#listRowSize").val();
+        let pageRowSize = $modalObj.find("#pageRowSize").val();
+        let csrfKey 	= $modalObj.find("#csrfKey").val();
+        let srchLayer 	= $modalObj.find("input[name=srchLayer]").val();
+        let memCd 	= $modalObj.find("input[name=memCd]").val();
+        $modalObj.clearForm();
+        //FORM 전송 필수 데이터 삽입
+        $modalObj.find("#pageIndex").val( pageIndex );
+        $modalObj.find("#listRowSize").val( listRowSize );
+        $modalObj.find(".listRowSizeContainer").val( listRowSize );
+        $modalObj.find("#pageRowSize").val( pageRowSize );
+        $modalObj.find("#csrfKey").val( csrfKey );
+        $modalObj.find("input[name=srchLayer]").val( srchLayer );
+        $modalObj.find("input[name=memCd]").val( memCd );
+        //캘린더 초기화
+        cmmCtrl.setPeriod($modalObj.find('.datetimepicker_strtDt, .datetimepicker_endDt'), "", "", false);
+
+        //검색 로직 실행
+        $modalObj.find("#btnSearch").click();
+    }
+
+    /* 회차 검색 Ajax */
+    let getPageInfo = () => {
+        cmmCtrl.frmAjax(function(respObj) {
+
+            let dataSpprt = respObj.rtnData.spprtDtlList;
+            let dataRsumeTask = respObj.rtnData.rsumeTaskDtlList;
+
+            dataRsumeTask.forEach(function(el, idx) {
+                let panel = $dataRsumeTask.find(`.panel[data-sttscd=${el['rsumeSttsCd']}]`);
+                setValue(panel, el);
+            });
+
+        }, "/mngwserc/wb/wbfb/selectEditInfo", $formObj, "post", "json")
+    }
+
+    function setValue(area, data) {
+
+        let input = area.find("input,select, p");
+        input.each(function(idx, el) {
+            let target = $(el);
+            let [tagName, dataKey] = [target.prop('tagName'), target.data('name')];
+            let dataValue = data[dataKey];
+
+            if(dataKey != undefined && dataValue != undefined) {
+                if(tagName === 'SELECT' || tagName === 'INPUT') target.val((dataValue || ''));
+                if(tagName === 'P') target.html((dataValue || ''));
+            }
+        });
+
+        let file = area.find('.dropzone');
+        file.each(function(el, idx) {
+
+        });
+    }
+
+    function TT(){
+        let code1 = 'PRO_TYPE03001';
+        let code2 = 'PRO_TYPE02001';
+
+        let basicDtl = $basicData.find("input,select");
+        let spprtDtl = $dataSpprt.find(`[data-sttscd=${code1}]`).find("input,select");
+        let rsumeTaskDtl = $dataRsumeTask.find(`[data-sttscd=${code2}]`).find("input,select");
+
+        var $sendFormData = $('<form></form>');
+
+        /* 회차 정보 ~ 선급금 해당 여부*/
+        $(basicDtl).each(function(idx, el){
+            $sendFormData.append($('<input/>', {type: 'hidden', name: el.name, value:el.value }));
+        });
+
+        /* 선급금 지급 */
+        spprtDtl.each(function(idx, el){
+            $sendFormData.append($('<input/>', {type: 'hidden', name: el.name, value:el.value }));
+        });
+
+        /* 부품사 관리 등록 */
+        rsumeTaskDtl.each(function(idx, el){
+            $sendFormData.append($('<input/>', {type: 'hidden', name: el.name, value:el.value }));
+        });
+
+        /* 관리자 메모 */
+        $sendFormData.append($('<input/>', {type: 'hidden', name: 'admMemo', value: $('input[name=admMemo]').val() }));
+
+        if($formObj.find(".dropzone").size() > 0)
+        {
+            cmmCtrl.fileFrmAjax(function(data){
+                //콜백함수. 페이지 이동
+                if(data.respCnt > 0){
+                    alert(msgCtrl.getMsg("success.ins"));
+                    location.replace("./list");
+                }
+            }, "./update", $sendFormData, "json");
+        }
+        else
+        {
+            cmmCtrl.frmAjax(function(data){
+                if(data.respCnt > 0){
+                    alert(msgCtrl.getMsg("success.ins"));
+                    location.replace("./list");
+                }
+            }, "./update", $sendFormData, "post", "json");
+        }
+    }
+
 
     // execute model
     ctrl.exec();

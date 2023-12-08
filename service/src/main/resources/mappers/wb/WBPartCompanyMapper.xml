@@ -11,67 +11,81 @@
     -->
     <select id="selPartCompanyUserList" parameterType="WBPartCompanyDTO" resultType="WBPartCompanyDTO">
         select mem_seq
-             , id
-             , name
-             , hp_no
-             , email
-             , reg_dtm
-             , mod_dtm
-             , mem_cd
-             , work_bsnm_no
-             , mod_name
-             , cmpn_nm
-             , size_cd_nm
-             , ctgry_cd_nm
-             , gndr
-             , tel_no
-             , zipcode
-             , bsc_addr
-             , dtl_addr
-             , ntfy_sms_rcv_yn
-             , ntfy_email_rcv_yn
+            , id
+            , name
+            , hp_no
+            , email
+            , mem_cd
+            , work_bsnm_no
+            , cmpn_nm
+            , size_cd_nm
+            , ctgry_cd_nm
+            , gndr
+            , tel_no
+            , zipcode
+            , bsc_addr
+            , dtl_addr
+            , ntfy_sms_rcv_yn
+            , ntfy_email_rcv_yn
+            , dept_cd
+            , dept_cd_nm
+            , pstn_cd
+            , pstn_cd_nm
+            , reg_id
+            , reg_name
+            , DATE_FORMAT(reg_dtm, '%Y-%m-%d %H:%i') as reg_dtm
+            , mod_id
+            , mod_name
+            , DATE_FORMAT(mod_dtm, '%Y-%m-%d %H:%i') as mod_dtm
            from ( select mem.mem_seq
-                       , mem.id
-                       , mem.name
-                       , mem.hp_no
-                       , mem.email
-                       , mem.reg_dtm
-                       , mem.mod_dtm
-                       , mem.gndr
-                       , mem.mem_cd
-                       , mem.work_bsnm_no
-                       , mem.ntfy_sms_rcv_yn
-                       , mem.ntfy_email_rcv_yn
-                       , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
-                              when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
-                                else null end as mod_name
-                      , cmpn_mst.cmpn_nm
-                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd ) as size_cd_nm
-                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
-                      , cmpn_mst.ctgry_cd
-                      , mem.tel_no
-                      , mem.zipcode
-                      , mem.bsc_addr
-                      , mem.dtl_addr
-                     from co_mem_mst mem
-                      inner join ( select mem_mod_seq
-                                        , mem_seq
-                                        , mod_cd
-                                        , reg_id
-                                      from co_mem_mod_log
-                                        where ( mem_mod_seq
-                                              , mem_seq)
-                                         in ( select max(mem_mod_seq)
-                                                   , mem_seq
-                                                 from co_mem_mod_log
-                                                   group by mem_seq ) ) mst
-                       on mem.mem_seq = mst.mem_seq
-                        left outer join co_mem_cmpn_rel cmpn_rel
-                          on mem.mem_seq = cmpn_rel.mem_seq
-                           and mem.work_bsnm_no = cmpn_rel.bsnm_no
-                        left outer join cp_cmpn_mst cmpn_mst
-                          on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
-               ) as ma
+                    , mem.id
+                    , mem.name
+                    , mem.hp_no
+                    , mem.email
+                    , mem.reg_dtm
+                    , mem.reg_id
+                    , mem.mod_dtm
+                    , mem.gndr
+                    , mem.mem_cd
+                    , mem.work_bsnm_no
+                    , mem.ntfy_sms_rcv_yn
+                    , mem.ntfy_email_rcv_yn
+                    , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
+                          when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
+                            else null end as mod_name
+                    , mst.reg_id as mod_id
+                    , (select name from co_mem_mst where id=mem.reg_id) as reg_name
+                    , cmpn_mst.cmpn_nm
+                    , (select cd_nm from co_code_mst where cd=cmpn_mst.size_cd ) as size_cd_nm
+                    , (select cd_nm from co_code_mst where cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
+                    , cmpn_mst.ctgry_cd
+                    , mem.tel_no
+                    , mem.zipcode
+                    , mem.bsc_addr
+                    , mem.dtl_addr
+                    , mem.dept_cd
+                    , (select cd_nm from co_code_mst where  cd=mem.dept_cd ) as dept_cd_nm
+                    , mem.pstn_cd
+                    , (select cd_nm from co_code_mst where  cd=mem.pstn_cd ) as pstn_cd_nm
+                from co_mem_mst mem
+                inner join ( select mem_mod_seq
+                                , mem_seq
+                                , mod_cd
+                                , reg_id
+                              from co_mem_mod_log
+                                where ( mem_mod_seq
+                                      , mem_seq)
+                                 in ( select max(mem_mod_seq)
+                                           , mem_seq
+                                         from co_mem_mod_log
+                                           group by mem_seq ) ) mst
+                on mem.mem_seq = mst.mem_seq
+                left outer join co_mem_cmpn_rel cmpn_rel
+                  on mem.mem_seq = cmpn_rel.mem_seq
+                   and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                left outer join cp_cmpn_mst cmpn_mst
+                  on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
+            ) as ma
             <include refid="selectUserListWhereSql" />
             order by ma.reg_dtm desc
             <if test="excelYn != 'Y'.toString() ">
