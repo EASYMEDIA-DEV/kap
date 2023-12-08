@@ -282,7 +282,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         }
                     }
                 }
-            }
+            },
         },
         classname: {
             searchPostCode: {
@@ -502,7 +502,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         search(1);
                     }
                 }
-            }
+            },
+            appctnPdfDownload : {
+                event : {
+                    click : function(){
+                        var fileName = "TechGuide.pdf";
+                        cmmCtrl.getAppctnPdfDownload(fileName);
+                    }
+                }
+            },
 
         },
         immediately: function () {
