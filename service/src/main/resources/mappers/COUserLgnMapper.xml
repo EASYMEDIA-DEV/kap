@@ -33,29 +33,35 @@
 	</select>
 
 	<!--
-         쿼리명 : COUserLgnMapper.actionLogin
+         쿼리명 : COLgnMapper.actionLogin
          설  명 : 사용자 정보를 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.12.06   양현우       최초생성
+        2020.10.23   양현우       최초생성
     -->
 	<select id="actionLogin" parameterType="MPAUserDto" resultType="COUserDetailsDTO">
 		select /* COUserLgnMapper.actionLogin */
-			  mem_seq as seq
-			, mem_cd as auth_cd
-		    , dept_cd
-			, dept_dtl_nm as dept_nm
-			, id
-			, name
-			, email
-			, hp_no
-			, chng_xtnsn_cnt
+			   a.mem_seq as seq
+			 , a.mem_cd as auth_cd
+			 , a.dept_cd
+			 , a.dept_dtl_nm as dept_nm
+			 , a.id
+			 , a.name
+			 , a.email
+			 , a.hp_no
+			 , a.chng_xtnsn_cnt
+			 , a.pstn_cd
+			 , (select cd_nm from co_code_mst where  cd = a.pstn_cd ) as pstn_cd_nm
+			 , a.pstn_nm
+			 , b.cmpn_nm
+			 , b.tel_no
 		from
-			co_mem_mst a
+			co_mem_mst a left join cp_cmpn_mst b
+			on b.bsnm_no = a.work_bsnm_no
 		where 1=1
-			and id = #{id}
-		   	and pwd = #{pwd}
-		   	and wthdrw_yn = 'Y'
+		  and id = #{id}
+		  and pwd = #{pwd}
+		  and wthdrw_yn = 'Y'
 	</select>
 
 	<!--

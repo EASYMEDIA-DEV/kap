@@ -1404,6 +1404,25 @@ var cmmCtrl = (function(){
 		$formObj.find("#"+pagingFormId).html(template);
 	}
 
+	//더보기 페이징 처리
+	var fn_more_paging = function(totCnt, $formObj, listFormId, pagingFormId){
+
+		// 페이징 세팅
+		const pageRowSize	 = parseInt($formObj.find("input[name=listRowSize]").val()); // 한 페이지에 보여지는 데이터의 수
+		const pageButtonSize = parseInt($formObj.find("input[name=pageRowSize]").val()); // 한 번에 보여질 페이지 버튼의 수 (홀수여야만 함)
+		const totalCount = parseInt(totCnt); // 전체 데이터 수
+		const trRowCount = $formObj.find("#"+listFormId).find("tr").size();
+		if(totalCount <= trRowCount || totalCount == 0){
+			$formObj.find("#"+pagingFormId).hide();
+		}else{
+			// 페이징 버튼
+			var template = '<span>더보기</span>' +
+				'<span class="item-count">('+trRowCount+'/'+totalCount+')</span>';
+			// 화면 붙이기
+			$formObj.find("#"+pagingFormId).html(template);
+		}
+	}
+
 	/* Grid Record Count */
 	var fn_grid_record_count = function()
 	{
@@ -1627,6 +1646,7 @@ var cmmCtrl = (function(){
 		vueConvertDtm: fn_vue_convert_dtm,
 		vueContainer: fn_vue,
 		listPaging : fn_paging,
+		morePaging : fn_more_paging,
 		setFormData: fn_list_frm_set_data,
 		pad: fn_pad,
 		checkUrl: fn_check_url,
