@@ -202,8 +202,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		ptcptList = eBBEpisdMapper.selectEpisdPtcptList(ebbDto);
 		int ptcptCnt = eBBEpisdMapper.selectEpisdPtcptListCnt(ebbDto);
 
-		System.out.println("@@ ptcptList = " + ptcptList.size());
-
+		dto.setFirstIndex( page.getFirstRecordIndex() );
+		dto.setRecordCountPerPage( page.getRecordCountPerPage() );
 		dto.setPtcptList(ptcptList);
 		dto.setTotalCount(ptcptCnt);
 
@@ -225,12 +225,21 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			dto.setPtcptList(ptcptList);
 		}
 
-
-
-
 		return dto;
 	}
 
+	/**
+	 * 교육차수 개인별 출석부를 호출한다.
+	 */
+	public List<EBBPtcptDTO> selectMemAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception
+	{
+		List<EBBPtcptDTO> memAtndcList = new ArrayList();
+
+		memAtndcList = eBBEpisdMapper.selectMemAtndcDtl(eBBPtcptDTO);
+
+
+		return memAtndcList;
+	}
 
 	/**
 	 * 교육차수를  등록한다.
@@ -525,8 +534,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		List<EBBPtcptDTO> ptcptList= eBBEpisdDTO.getPtcptList();
 
 
-		for(EBBPtcptDTO tempDto : ptcptList){
+		List<EBBPtcptDTO> removeList = new ArrayList();
+		for(int i=0; i < ptcptList.size(); i ++){
 
+			EBBPtcptDTO tempDto = ptcptList.get(i);
+
+			int removeStack = 0;
 			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 			tempDto.setRegId( cOUserDetailsDTO.getId() );
 			tempDto.setRegName( cOUserDetailsDTO.getName() );
@@ -539,13 +552,18 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			if(tempDto.getAtndcHour() != null){
 				tempDto.setAtndcDtm(tempDto.getEdctnDt()+" "+tempDto.getAtndcHour());
 			}
+
 			if(tempDto.getLvgrmHour() != null){
 				tempDto.setLvgrmDtm(tempDto.getEdctnDt()+" "+tempDto.getLvgrmHour());
 			}
-		}
-		eBBEpisdDTO.setPtcptList(ptcptList);
 
-		rtnCnt = eBBEpisdMapper.updateAtndcList(eBBEpisdDTO);
+		}
+
+		if(ptcptList.size()>0){
+			eBBEpisdDTO.setPtcptList(ptcptList);
+			rtnCnt = eBBEpisdMapper.updateAtndcList(eBBEpisdDTO);
+		}
+
 		return rtnCnt;
 	}
 

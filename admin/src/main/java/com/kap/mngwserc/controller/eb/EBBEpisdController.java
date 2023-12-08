@@ -123,8 +123,9 @@ public class EBBEpisdController {
         List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
         List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
         List<EBBBdgetDTO> bdgetList = (List<EBBBdgetDTO>) rtnMap.get("bdgetList");//예산/지출관리 목록
+        System.out.println("@@@@@1");
         EBBSrvRstDTO srvRstDtl = (EBBSrvRstDTO)rtnMap.get("srvRstDtl");//만족도 결과 부서, 직급별 인원 통계
-
+        System.out.println("@@@@@2");
         List<EBBPtcptDTO> ptcptList = (List<EBBPtcptDTO>) rtnMap.get("ptcptList");//교육참여자 목록
 
 
@@ -246,7 +247,6 @@ public class EBBEpisdController {
         return "mngwserc/eb/ebb/EBBEpisdAtndcListAjax";
     }
 
-
     /**
      * 교육차수관리 > 신청자 등록 화면을 호출한다.
      */
@@ -287,7 +287,7 @@ public class EBBEpisdController {
 
         //교육차수 신청자를 등록한다. 등록할때 이미 회원이 있으면 취소
         EBBPtcptDTO temoDto = new EBBPtcptDTO();
-        //try {
+        try {
 
             temoDto = eBBEpisdService.setPtcptInfo(eBBPtcptDTO);
 
@@ -295,7 +295,7 @@ public class EBBEpisdController {
 
             modelMap.addAttribute("rtnData", temoDto);
 
-        /*}
+        }
         catch (Exception e)
         {
             if (log.isDebugEnabled())
@@ -303,9 +303,36 @@ public class EBBEpisdController {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
         return "jsonView";
+    }
+
+    /**
+     * 교육참여자 개인 출석부를 호출한다.
+     */
+    @Operation(summary = "교육참여자 개인 출석부를 호출한다.", tags = "", description = "")
+    @PostMapping(value="/memAtndcList")
+    public String selectMemAtndcList(EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        List<EBBPtcptDTO> eBBPtcptList = new ArrayList();
+        try
+        {
+
+            //개인별 출석부를 호출한다. 데이터 양식은 리스트지만 화면 출력은 단건임
+            eBBPtcptList = eBBEpisdService.selectMemAtndcList(eBBPtcptDTO);
+            modelMap.addAttribute("rtnData", eBBPtcptList);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/eb/ebb/EBBMemAtndcAjax";
     }
 
 
@@ -411,11 +438,11 @@ public class EBBEpisdController {
 
             int rtnCnt = 0;
 
-            try {
+            //try {
 
                 rtnCnt = eBBEpisdService.updateAtndcList(eBBEpisdDTO);
 
-            }
+            /*}
             catch (Exception e)
             {
                 if (log.isDebugEnabled())
@@ -423,17 +450,10 @@ public class EBBEpisdController {
                     log.debug(e.getMessage());
                 }
                 throw new Exception(e.getMessage());
-            }
+            }*/
 
             return rtnCnt;
         }
-
-
-
-
-
-
-
 
     }
 

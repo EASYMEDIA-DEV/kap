@@ -39,6 +39,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			$(".ptcptField").validation({});
 
+			$(".ptcptField").find(".btnMemAtndc").on("click", function(){
+				memAtndcLayer(this);
+
+			});
+
+
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "ptcptListContainer", "ptcptPagingContainer");
 
@@ -50,20 +56,35 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "GET", "html");
 
+	}
 
 
+	var memAtndcLayer = function(e){
+
+		var ptcptSeq =  $(e).data("ptcptseq");
+
+		//출석부 레이어 팝업 호출
+		$(".ebbMemAtndcSrchLayer").one('show.bs.modal', function() {
+			$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
+			$(this).find("button.tempBtn").trigger("click");
+
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+		}).one('hidden.bs.modal', function() {
+			// Remove class for soft backdrop (if not will affect future modals)
+		}).one('choice', function(data, param) {
+			var obj = param;
+			$("#listContainer3").find("td").eq(0).text(obj.typeNm);
+			$("#listContainer3").find("td").eq(1).text(obj.titl);
+			$("#srvSeq").val(obj.seq);
+		}).modal();
 
 	}
 
 
-
-
-
-
-
-
 	//오프라인평가 체크시 실행
-	var setSelectBox = function(arg){
+	var setOtsdSelectBox = function(arg){
 
 		if($("input[name='otsdExamPtcptYn']").is(":checked")){
 			//alert("평가 선택");
@@ -742,7 +763,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			otsdExamPtcptYn : {
 				event : {
 					change : function() {
-						setSelectBox(this);
+						setOtsdSelectBox(this);
 					}
 				}
 			},

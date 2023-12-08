@@ -181,6 +181,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								//같은 일자 안에서만 탐색, 한사람의 하루치 데이터가 리스트<폼>로 구성됨
 								$(this).find('[data-edctndt='+targetDt+']').each(function(){
 
+									var deleteStack = 0;
+
 									var orgatndcHour, atndcHour, orglvgrmHour, lvgrmHour, orgEtcNm, etcNm;
 									var atndcDayForm = {};
 
@@ -194,7 +196,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 									orglvgrmHour = $(this).parent().next().find("input[name='lvgrmDtm']").data("orglvgrmhour");//수정전 퇴실시간
 									lvgrmHour = $(this).parent().next().find("input[name='lvgrmDtm']").val();//수정후 퇴실시간
 
-									orgEtcNm = $(this).parent().next().next().find("input[name='etcNm']").data("orgEtcNm");//수정전 비고
+									orgEtcNm = $(this).parent().next().next().find("input[name='etcNm']").data("orgetcnm") === undefined ? "" : $(this).parent().next().next().find("input[name='etcNm']").data("orgetcnm");//수정전 비고
 									etcNm = $(this).parent().next().next().find("input[name='etcNm']").val();//수정후 비고
 
 
@@ -210,8 +212,29 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 										atndcDayForm.etcNm = etcNm;
 									}
 
+									//변경점이 없는경우 or 애초에 값이 없는경우
+									if(orgatndcHour == atndcHour || atndcHour == ""){
+										deleteStack++;
+									}
 
-									ptcptAtndcList.push(atndcDayForm);
+									if(orglvgrmHour == lvgrmHour || lvgrmHour == ""){
+										deleteStack++;
+									}
+
+									if(orgEtcNm == etcNm || (orgEtcNm == "" && etcNm == "")){
+										deleteStack++
+									}
+
+									//debugger;
+
+
+
+									if(deleteStack<3){
+										ptcptAtndcList.push(atndcDayForm);
+									}
+
+
+
 								});
 
 							});

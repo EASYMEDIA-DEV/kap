@@ -1119,3 +1119,4 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업-->
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBMemAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업 - 개인별 -->
