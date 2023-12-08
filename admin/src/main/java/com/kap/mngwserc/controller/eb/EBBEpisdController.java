@@ -168,49 +168,60 @@ public class EBBEpisdController {
 
 
         //교육 참여자 출석부 th부분 날짜 세팅용 시작
-        String getEdctnStrtDtm= rtnDto.getEdctnStrtDtm();
-        String getEdctnEndDtm= rtnDto.getEdctnEndDtm();
-        // 시작 날짜와 종료 날짜 설정
-        String startDateString = getEdctnStrtDtm.substring(0, 10);
-        String endDateString = getEdctnEndDtm.substring(0, 10);
 
-        // 시작 날짜와 종료 날짜를 LocalDate 객체로 변환
-        LocalDate startDate = LocalDate.parse(startDateString);
-        LocalDate endDate = LocalDate.parse(endDateString);
-        // 날짜 출력 형식 지정
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        // 반복문을 통해 날짜 출력
-        List<EBBPtcptDTO> tableAtndcList = new ArrayList();
+        if(rtnDto != null){
+            String getEdctnStrtDtm= rtnDto.getEdctnStrtDtm();
+            String getEdctnEndDtm= rtnDto.getEdctnEndDtm();
+            // 시작 날짜와 종료 날짜 설정
+            String startDateString = getEdctnStrtDtm.substring(0, 10);
+            String endDateString = getEdctnEndDtm.substring(0, 10);
 
-        while (!startDate.isAfter(endDate)) {
-            EBBPtcptDTO tableAtndcDto = new EBBPtcptDTO();
+            // 시작 날짜와 종료 날짜를 LocalDate 객체로 변환
+            LocalDate startDate = LocalDate.parse(startDateString);
+            LocalDate endDate = LocalDate.parse(endDateString);
+            // 날짜 출력 형식 지정
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            // 반복문을 통해 날짜 출력
+            List<EBBPtcptDTO> tableAtndcList = new ArrayList();
 
-            tableAtndcDto.setEdctnDt(String.valueOf(startDate));
-            tableAtndcList.add(tableAtndcDto);
+            while (!startDate.isAfter(endDate)) {
+                EBBPtcptDTO tableAtndcDto = new EBBPtcptDTO();
 
-            startDate = startDate.plusDays(1); // 다음 날짜로 이동
-            if(startDate.isAfter(endDate)){
                 tableAtndcDto.setEdctnDt(String.valueOf(startDate));
                 tableAtndcList.add(tableAtndcDto);
+
+                startDate = startDate.plusDays(1); // 다음 날짜로 이동
+                if(startDate.isAfter(endDate)){
+                    tableAtndcDto.setEdctnDt(String.valueOf(startDate));
+                    tableAtndcList.add(tableAtndcDto);
+                }
+            }
+            modelMap.addAttribute("tableAtndcList", tableAtndcList);
+
+
+
+            //만족도 조사(설문)
+            if (!"".equals(rtnDto.getSrvSeq()) && rtnDto.getSrvSeq() != null){
+                SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
+                sVASurveyDTO.setDetailsKey(Integer.toString(rtnDto.getSrvSeq()));
+                sVASurveyDTO.setRfncSeq(rtnDto.getEpisdSeq());
+                sVASurveyDTO.setEpisdSeq(rtnDto.getEpisdSeq());
+                sVASurveyDTO.setTypeCd("EDU");
+
+                SVASurveyMstInsertDTO sVASurveyMstInsertDTO = sVSurveyService.selectSurveyTypeEduDtl(sVASurveyDTO);
+                if (sVASurveyMstInsertDTO != null){
+                    modelMap.addAttribute("rtnSurveyData", sVASurveyMstInsertDTO);
+                }
             }
         }
-        modelMap.addAttribute("tableAtndcList", tableAtndcList);
+
+
+
+
         //교육 참여자 출석부 th부분 날짜 세팅용 종료
 
 
-        //만족도 조사(설문)
-        if (!"".equals(rtnDto.getSrvSeq()) && rtnDto.getSrvSeq() != null){
-            SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
-            sVASurveyDTO.setDetailsKey(Integer.toString(rtnDto.getSrvSeq()));
-            sVASurveyDTO.setRfncSeq(rtnDto.getEpisdSeq());
-            sVASurveyDTO.setEpisdSeq(rtnDto.getEpisdSeq());
-            sVASurveyDTO.setTypeCd("EDU");
 
-            SVASurveyMstInsertDTO sVASurveyMstInsertDTO = sVSurveyService.selectSurveyTypeEduDtl(sVASurveyDTO);
-            if (sVASurveyMstInsertDTO != null){
-                modelMap.addAttribute("rtnSurveyData", sVASurveyMstInsertDTO);
-            }
-        }
 
 
 
