@@ -391,7 +391,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		if (EDU05Cnt == 0) {
 			$("#EDU05Score").text(0);
 		}else{
-			$("#EDU05Score").text((EDU05Score/EDU01Cnt).toFixed(1));
+			$("#EDU05Score").text((EDU05Score/EDU05Cnt).toFixed(1));
 		}
 		if (totalCnt == 0) {
 			$("#totalScore").text(0);
