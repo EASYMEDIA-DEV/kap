@@ -931,12 +931,12 @@
                                         <th>강사평가</th>
                                     </tr>
                                     <tr>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
+                                        <td class="text-center" id="totalScore">5.0</td>
+                                        <td class="text-center" id="EDU01Score">5.0</td>
+                                        <td class="text-center" id="EDU02Score">5.0</td>
+                                        <td class="text-center" id="EDU03Score">5.0</td>
+                                        <td class="text-center" id="EDU04Score">5.0</td>
+                                        <td class="text-center" id="EDU05Score">5.0</td>
 
                                     </tr>
                                     </tbody>
@@ -977,7 +977,11 @@
                                                                 </c:forTokens>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
-                                                                - ${exmplList.exmplOrd} (${exmplList.winAnswer}명) <br>
+                                                                - ${exmplList.exmplOrd} (${exmplList.winAnswer}명)
+                                                                <input type="hidden" name="qstnCd" value="${qstnList.cd}">
+                                                                <input type="hidden" name="qstnCdScore" value="${exmplList.exmplOrd}">
+                                                                <input type="hidden" name="qstnCdCount" value="${exmplList.winAnswer}">
+                                                                <br>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 - ${exmplList.exmplNm} (${exmplList.winAnswer}명) <br>

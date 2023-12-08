@@ -312,7 +312,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	}
 	}
 
-	//질문 번호 셋팅
+	//질문 번호 셋팅,점수 셋팅
 	var questionSet = function(){
 
 		$(".surveyList").each(function(){
@@ -330,6 +330,75 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			});
 		});
+
+		var EDU01Score =0;
+		var EDU02Score =0;
+		var EDU03Score =0;
+		var EDU04Score =0;
+		var EDU05Score =0;
+		var totalScore = 0;
+		var EDU01Cnt =0;
+		var EDU02Cnt =0;
+		var EDU03Cnt =0;
+		var EDU04Cnt =0;
+		var EDU05Cnt =0;
+		var totalCnt = 0;
+
+		$("input[name=qstnCd]").each(function(index){
+
+			if ($(this).val()=="EDU01"){
+				EDU01Score = EDU01Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU01Cnt = EDU01Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU02"){
+				EDU02Score = EDU02Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU02Cnt = EDU02Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU03"){
+				EDU03Score = EDU03Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU03Cnt = EDU03Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU04"){
+				EDU04Score = EDU04Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU04Cnt = EDU04Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU05"){
+				EDU05Score = EDU05Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU05Cnt = EDU05Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}
+
+			totalScore = totalScore + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+			totalCnt = totalCnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+
+		})
+
+		if (EDU01Cnt == 0) {
+			$("#EDU01Score").text(0);
+		}else{
+			$("#EDU01Score").text((EDU01Score/EDU01Cnt).toFixed(1));
+		}
+		if (EDU02Cnt == 0) {
+			$("#EDU02Score").text(0);
+		}else{
+			$("#EDU02Score").text((EDU02Score/EDU02Cnt).toFixed(1));
+		}
+		if (EDU03Cnt == 0) {
+			$("#EDU03Score").text(0);
+		}else{
+			$("#EDU03Score").text((EDU03Score/EDU03Cnt).toFixed(1));
+		}
+		if (EDU04Cnt == 0) {
+			$("#EDU04Score").text(0);
+		}else{
+			$("#EDU04Score").text((EDU04Score/EDU04Cnt).toFixed(1));
+		}
+		if (EDU05Cnt == 0) {
+			$("#EDU05Score").text(0);
+		}else{
+			$("#EDU05Score").text((EDU05Score/EDU01Cnt).toFixed(1));
+		}
+		if (totalCnt == 0) {
+			$("#totalScore").text(0);
+		}else{
+			$("#totalScore").text((totalScore/totalCnt).toFixed(1));
+		}
+
 	}
 
 	// set model
@@ -790,8 +859,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				search();
 			}
 			
-			//질문 번호 셋팅
+			//질문 번호 셋팅,점수 셋팅
 			questionSet();
+
 
 			//폼 데이터 처리
 			filedSet();
