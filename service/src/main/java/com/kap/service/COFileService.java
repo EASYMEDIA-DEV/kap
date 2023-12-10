@@ -94,6 +94,11 @@ public interface COFileService {
      */
     public int insertFile(List<COFileDTO> cFileDTOList, HashMap<String, Integer> rtnData) throws Exception;
 
+    /**
+     * 파일 DB 저장
+     */
+    public Integer insertFiles(List<COFileDTO> cFileDTOList) throws Exception;
+
     /*
     * 파일 운영 복사 및 DB 처리
      */

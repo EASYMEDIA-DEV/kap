@@ -23,10 +23,10 @@
                 <div class="for-motion">
                     <div class="btn-wrap align-right">
                         <div class="btn-set">
-                            <c:if test="${ posibleSqCertiCnt eq 1 and loginMap.authCd eq 'CP'}">
+                            <c:if test="${ posibleSqCertiCnt eq 1 and loginMap.authCd eq 'CP' and (empty sqCerti)}">
                                 <button class="btn-solid small black-bg" type="button" id="paymentInfoManagPopupBtn"><span>SQ평가원 자격증 신청</span></button>
                             </c:if>
-                            <c:if test="${ not empty sqCerti}">
+                            <c:if test="${ not empty sqCerti and sqCerti.useYn eq 'Y' and sqCerti.issueCd ne 'EBD_SQ_R'}">
                                 <button class="btn-solid small gray-bg" type="button"><span>SQ평가원 자격증 보기</span></button>
                             </c:if>
                         </div>
@@ -78,7 +78,7 @@
                                     </div>
                                 </div>
                                 <div class="btn-wrap add-load align-center">
-                                    <a class="btn-solid small black-line" href="javascript:" id="moreCompletePagingContainer"><span>더보기</span><span class="item-count">(0/0)</span></a>
+                                    <a class="btn-solid small black-line " href="javascript:" id="moreCompletePagingContainer"><span>더보기</span><span class="item-count">(0/0)</span></a>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +138,28 @@
 <!-- content 영역 end -->
 <!-- 지급정보관리 팝업 -->
 <c:if test="${loginMap.authCd eq 'CP'}">
-    <div class="layer-popup paymentInfoManagPopup"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
-
+    <div class="layer-popup paymentInfoManagPopup" data-controller="controller/mp/mpe/MPESqCertiAppliyCtrl"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
+        <form style="height:100%">
+            <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <div class="for-center" >
+                <div class="pop-wrap">
+                    <div class="pop-con-area">
+                        <div class="tit-area">
+                            <p class="f-title1">SQ평가원 자격증 신청</p>
+                        </div>
+                        <div class="con-area" id="paymentInfoManagPopupFrm">
+                        </div>
+                        <div class="bot-fix-btn-area">
+                            <div class="btn-wrap align-right">
+                                <button class="btn-solid small black-bg " type="button" id="submitBtn"><span>자격증 신청</span></button>
+                            </div>
+                        </div>
+                        <div class="user-opt-area">
+                            <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </c:if>

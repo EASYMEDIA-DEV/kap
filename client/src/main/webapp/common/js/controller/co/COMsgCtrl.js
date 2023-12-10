@@ -12,7 +12,9 @@ var msgCtrl = (function(){
 			list : "목록으로 이동 시 입력한 값이 초기화 처리됩니다. \n이동하시겠습니까?",
 			pwdUpd : '비밀번호를 변경하시겠습니까?',
 			pwdNextUpd : '비밀번호를 다음에 변경하시겠습니까?',
-			emailTrans : "이메일로 전체 아이디를 받으시겠습니까?"
+			emailTrans : "이메일로 전체 아이디를 받으시겠습니까?",
+			//SQ평가원신청
+			sqCertiApply : "SQ평가원 자격증을 신청하시겠습니까?",
 		},
 		success : {
 			cre : "생성되었습니다.",
@@ -36,7 +38,8 @@ var msgCtrl = (function(){
 				join : {
 				  emailAuth : '인증이 발송 되었습니다.',
 				}
-			}
+			},
+			sqCertiApply : "자격증 신청이 완료되었습니다.",
 		},
 		fail : {
 			act : "문제가 발생하여 진행이 중단됩니다. 잠시 후 다시 시도 바랍니다.",
@@ -98,6 +101,13 @@ var msgCtrl = (function(){
 
 
 				}
+			}
+			,sqCertiFile : "신청자 증명사진을 등록해주세요."
+			,file: {
+				extn: "등록가능한 확장자가 아닙니다.",
+				length: "첨부하는 파일명의 길이는 20자로 제한합니다.",
+				size: "첨부파일은 최대 100M까지만 등록가능합니다.",
+				no_size:"비어있는 파일은 등록할 수 없습니다.",
 			}
 		}
 	};

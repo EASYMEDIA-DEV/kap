@@ -42,6 +42,7 @@ public class COFrontDummyUserDetailsServiceImpl implements COUserDetailsService
 		cOLoginUserDTO.setPstnNm("직위코드가 ED_TARGET04007일때 등록");
 		cOLoginUserDTO.setCmpnNm("이지미디어");
 		cOLoginUserDTO.setTelNo("020000000");
+		cOLoginUserDTO.setBsnmNo("000000000");
 		RequestContextHolder.getRequestAttributes().setAttribute("loginMap", cOLoginUserDTO, RequestAttributes.SCOPE_SESSION);
 		return cOLoginUserDTO;
 	}

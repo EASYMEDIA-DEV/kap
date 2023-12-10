@@ -17,7 +17,7 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click : function() {
                         cmmCtrl.frmAjax(function(data) {
-                            $(".paymentInfoManagPopup").html(data);
+                            $("#paymentInfoManagPopupFrm").html(data);
                             openPopup('paymentInfoManagPopup')
                         }, "./complete/apply", $formObj, "GET", "html");
                     }

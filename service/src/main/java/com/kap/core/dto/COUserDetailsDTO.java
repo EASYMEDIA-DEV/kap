@@ -80,4 +80,6 @@ public class COUserDetailsDTO extends  BaseDTO{
     private String cmpnNm;
     @Schema(title="회사전화번호")
     private String telNo;
+    @Schema(title="회사순번")
+    private String bsnmNo;
 }

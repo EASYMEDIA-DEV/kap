@@ -31,6 +31,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         //web, mbl jsp
         registry.addInterceptor(cOViewInterceptor()).addPathPatterns("/**").order(2)
                 .excludePathPatterns("/**/*.*")
+                .excludePathPatterns("/my-page/sq-license/complete/insert")
                 .excludePathPatterns("/error");
 
         //뒤로가기 쿠키 삭제

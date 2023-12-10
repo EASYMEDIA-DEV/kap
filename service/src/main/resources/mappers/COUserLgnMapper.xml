@@ -55,6 +55,7 @@
 			 , a.pstn_nm
 			 , b.cmpn_nm
 			 , b.tel_no
+		     , b.bsnm_no
 		from
 			co_mem_mst a left join cp_cmpn_mst b
 			on b.bsnm_no = a.work_bsnm_no

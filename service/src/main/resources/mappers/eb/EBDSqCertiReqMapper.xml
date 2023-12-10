@@ -15,7 +15,6 @@
 		, (select cd_nm from co_code_mst where cd = sq_mst.issue_cd and cd_id = 'EBD_SQ') issue_nm
 		, ptcpt_mst.episd_year
 		, ptcpt_mst.episd_ord
-		, (select code_mst.cd_nm from ed_edctn_episd_mst episd_mst join co_code_mst  code_mst on code_mst.cd = episd_mst.cbsn_cd where edctn_seq = ptcpt_mst.edctn_seq and code_mst.cd_id = 'CBSN_CD') cbsn_nm
 		, cmpn_mst.cmpn_nm
 		, cmpn_mst.ctgry_cd
 		, (select cd_nm from co_code_mst where cd = cmpn_mst.ctgry_cd and cd_id = 'COMPANY_TYPE') ctgry_nm
@@ -37,8 +36,8 @@
 		, sq_mst.acqsn_dtm
 		, sq_mst.valid_end_dt
 		from sq_exam_appctn_mst sq_mst join co_mem_mst mem_mst on mem_mst.mem_seq = sq_mst.mem_seq
-		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.mem_seq = mem_mst.mem_seq and exists(select 1 from sq_exam_appctn_ptcpt_mst sq_ptcpt_mst where  sq_ptcpt_mst.ptcpt_seq = ptcpt_mst.ptcpt_seq
-		and exists( select edctn_seq from ed_edctn_prcs_mst where ctgry_cd = 'CLASS01002' and edctn_seq = ptcpt_mst.edctn_seq ) )
+	    join sq_exam_appctn_ptcpt_mst sq_ptcpt_mst on sq_ptcpt_mst.exam_appctn_seq = sq_mst.exam_appctn_seq
+		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.ptcpt_seq = sq_ptcpt_mst.ptcpt_seq
 		left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = mem_mst.work_bsnm_no
 		<include refid="selectExamListWhereSql" />
 		order by
@@ -56,8 +55,8 @@
 		select /* EBDSqCertiReqMapper.getAdmListCnt */
 			count(*)
 		from sq_exam_appctn_mst sq_mst join co_mem_mst mem_mst on mem_mst.mem_seq = sq_mst.mem_seq
-		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.mem_seq = mem_mst.mem_seq and exists(select 1 from sq_exam_appctn_ptcpt_mst sq_ptcpt_mst where  sq_ptcpt_mst.ptcpt_seq = ptcpt_mst.ptcpt_seq
-		and exists( select edctn_seq from ed_edctn_prcs_mst where ctgry_cd = 'CLASS01002' and edctn_seq = ptcpt_mst.edctn_seq ) )
+		join sq_exam_appctn_ptcpt_mst sq_ptcpt_mst on sq_ptcpt_mst.exam_appctn_seq = sq_mst.exam_appctn_seq
+		join ep_edctn_ptcpt_mst ptcpt_mst on ptcpt_mst.ptcpt_seq = sq_ptcpt_mst.ptcpt_seq
 		left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = mem_mst.work_bsnm_no
 		<include refid="selectExamListWhereSql" />
 	</select>
@@ -205,6 +204,7 @@
 			, appctn_mst.mem_seq
 			, ptcpt_mst.cmptn_yn
 			, ptcpt_mst.cmptn_dtm
+			, appctn_mst.jdgmt_no
 
 
 			, appctn_mst.idntfn_photo_file_seq
@@ -216,6 +216,7 @@
 		and exists( select edctn_seq from ed_edctn_prcs_mst where ctgry_cd = 'CLASS01002' and edctn_seq = ptcpt_mst.edctn_seq ) )
 		JOIN ed_edctn_episd_mst edctn_episd_mst ON edctn_episd_mst.edctn_seq = ptcpt_mst.edctn_seq AND edctn_episd_mst.episd_year = ptcpt_mst.episd_year AND edctn_episd_mst.episd_ord = ptcpt_mst.episd_ord
 		JOIN ed_edctn_prcs_mst edctn_prcs_mst ON edctn_prcs_mst.edctn_seq = edctn_episd_mst.edctn_seq
+
 		WHERE
 		appctn_ptcpt_mst.exam_appctn_seq = #{detailsKey};
 	</select>
@@ -228,7 +229,7 @@
         2023.11.09    김학규       최초생성
     -->
 	<select id="selectExamAppctnMst" parameterType="EBDSqCertiSearchDTO" resultType="EBGExamAppctnMstDTO">
-		SELECT
+		SELECT /*EBDSqCertiReqMapper.selectExamAppctnMst*/
 			   appctn_mst.exam_appctn_seq
 			 , appctn_mst.mem_seq
 			 , appctn_mst.exam_cd
@@ -374,6 +375,9 @@
 		                                                                    (SELECT lft_val FROM co_code_mst WHERE cd = prcs_mst.ctgry_cd) AND rht_val <![CDATA[ >= ]]>
 		                                                                    (SELECT rht_val FROM co_code_mst WHERE cd = prcs_mst.ctgry_cd) AND dpth <![CDATA[ < ]]> 4 AND dpth <![CDATA[ >  ]]> 1) ctgry_cd_nm
 		, prcs_mst.nm
+		, (select cd_nm from co_code_mst where cd = prcs_mst.stduy_mthd_cd and cd_id = 'STDUY_MTHD') stduy_mthd_cd_nm
+		, (select cd_nm from co_code_mst where cd = prcs_mst.stduy_dd_cd and cd_id = 'STDUY_DD') stduy_dd_cd_nm
+		, (select cd_nm from co_code_mst where cd = prcs_mst.stduy_time_cd and cd_id = 'STDUY_TIME') stduy_time_cd_nm
 		, ptcpt_mst.edctn_seq
 		, ptcpt_mst.episd_year
 		, ptcpt_mst.episd_ord
@@ -384,6 +388,7 @@
 		, episd_mst.edctn_end_dtm
 		, ptcpt_mst.reg_dtm
 		, ptcpt_mst.cmptn_dtm
+		, ptcpt_mst.cmptn_yn
 		, prcs_mst.lcns_cnnct_cd
 		<include refid="selectEducationCompleteListWhereSql" />
 		ORDER BY episd_mst.edctn_strt_dtm desc
@@ -445,6 +450,116 @@
 		AND NOT EXISTS(SELECT exam_appctn_seq FROM sq_exam_appctn_mst WHERE mem_seq =  #{memSeq} and issue_cd != 'EBD_SQ_C')
 	</select>
 
+	<!--
+         쿼리명 : EBDSqCertiReqMapper.insert
+         설  명 : 자격증 신청
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<insert id="insert" parameterType="EBGExamAppctnMstDTO">
+		insert into /*EBBEpisdMapper.insertEpisd*/ sq_exam_appctn_mst (
+			  exam_appctn_seq
+			, mem_seq
+			, exam_cd
+			, issue_cd
+			, idntfn_photo_file_seq
+			, bsnm_no
+			, use_yn
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		)
+		values
+		(
+			  #{examAppctnSeq}
+			, #{memSeq}
+			, #{examCd}
+			, #{issueCd}
+			, #{idntfnPhotoFileSeq}
+			, #{bsnmNo}
+			, 'Y'
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+		)
+	</insert>
+
+	<!--
+		쿼리명 : EBDSqCertiReqMapper.getEducationCompleteLcnsCnnct
+		설  명 : 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 경우
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getEducationCompleteLcnsCnnct" parameterType="EBDSqCertiSearchDTO" resultType="EBBEpisdSqCertDTO">
+		SELECT /* EBDSqCertiReqMapper.getEducationCompleteLcnsCnnct */
+		(select GROUP_CONCAT(cd_nm SEPARATOR ' | ') from co_code_mst where lft_val <![CDATA[ <= ]]>
+		(SELECT lft_val FROM co_code_mst WHERE cd = prcs_mst.ctgry_cd) AND rht_val <![CDATA[ >= ]]>
+		(SELECT rht_val FROM co_code_mst WHERE cd = prcs_mst.ctgry_cd) AND dpth <![CDATA[ < ]]> 4 AND dpth <![CDATA[ >  ]]> 1) ctgry_cd_nm
+		, prcs_mst.nm
+		, ptcpt_mst.edctn_seq
+		, ptcpt_mst.episd_year
+		, ptcpt_mst.episd_ord
+		, ptcpt_mst.episd_seq
+		, episd_mst.cbsn_cd
+		, (select code_mst.cd_nm from co_code_mst code_mst where code_mst.cd = episd_mst.cbsn_cd and code_mst.cd_id = 'CBSN_CD') cbsn_cd_nm
+		, episd_mst.edctn_strt_dtm
+		, episd_mst.edctn_end_dtm
+		, ptcpt_mst.reg_dtm
+		, ptcpt_mst.cmptn_dtm
+		, prcs_mst.lcns_cnnct_cd
+		, ptcpt_mst.ptcpt_seq
+		FROM ep_edctn_ptcpt_mst ptcpt_mst JOIN ed_edctn_prcs_mst prcs_mst ON
+		     prcs_mst.edctn_seq = ptcpt_mst.edctn_seq
+		JOIN ed_edctn_episd_mst episd_mst ON
+		     episd_mst.edctn_seq = ptcpt_mst.edctn_seq
+		AND episd_mst.episd_year = ptcpt_mst.episd_year
+		AND episd_mst.episd_ord = ptcpt_mst.episd_ord
+		AND episd_mst.episd_seq = ptcpt_mst.episd_seq
+		<where>
+			ptcpt_mst.mem_Seq = #{memSeq} AND ptcpt_mst.cmptn_yn = 'Y' and prcs_mst.lcns_cnnct_cd = #{lcnsCnnctCd}
+		</where>
+		ORDER BY episd_mst.edctn_strt_dtm desc
+	</select>
+
+	<!--
+         쿼리명 : EBDSqCertiReqMapper.insertPtcptMst
+         설  명 : 자격증 신청
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<insert id="insertPtcptMst" parameterType="EBGExamAppctnMstDTO">
+		insert into /*EBBEpisdMapper.insertPtcptMst*/ sq_exam_appctn_ptcpt_mst
+		    (
+				exam_appctn_seq
+			  , ptcpt_seq
+			  , reg_id
+			  , reg_ip
+			  , reg_dtm
+			  , mod_id
+			  , mod_ip
+			  , mod_dtm
+		)
+		values
+			(
+			  #{examAppctnSeq}
+			, #{ptcptSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+	</insert>
 
 </mapper>
 

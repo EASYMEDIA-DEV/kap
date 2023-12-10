@@ -826,104 +826,62 @@ var cmmCtrl = (function(){
 		return isSend;
 	}
 
-	//DROPZON 파일 정보 송신
-	var fn_ajax_file_data = function(callbackAjax, url, formObj, dataType){
-
+	//파일 정보 송신
+	var fn_ajax_file_data = function(callbackAjax, url, formObj, dataType, sync, loading){
 		if (typeof dataType == "undefined") {
 			dataType = "json";
 		}
-		var frmData = formObj.serializeArray();
-		var fileIndex = 0;
-		formObj.find(".dropzone.attachFile").each(function(){
-			if($(this).get(0).dropzone.files != undefined && $(this).get(0).dropzone.files.length > 0){
-				$.each($(this).get(0).dropzone.files, function(idx, data){
-					//alt값  data에 넣어주기.
-					data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
-					for (let i in data) {
-						if (data.hasOwnProperty(i)) {
-							frmData.push({
-								name: "fileList["+(fileIndex)+"]." + i, value: data[i]
-							});
-						}
+		if (typeof sync == "undefined") {
+			sync = true;
+		}
+		if (formObj.data("submitFlag") != "Y") {
+			jQuery.ajax({
+				url : url,
+				type : "POST",
+				enctype: 'multipart/form-data',
+				timeout: 30000,
+				data : new FormData(formObj[0]),
+				dataType : dataType,
+				async: sync,
+				cache : false,
+				contentType: false,
+				processData: false,
+				beforeSend : function() {
+					formObj.data("submitFlag", "Y");
+					if (loading) {
+						$(".dimd").stop().fadeIn(100);
 					}
-					fileIndex = fileIndex + 1;
-				})
-			}
-		});
-		fileIndex = 0;
-		formObj.find(".dropzone.pcThumbFile").each(function(){
-			if($(this).get(0).dropzone.files != undefined && $(this).get(0).dropzone.files.length > 0){
-				$.each($(this).get(0).dropzone.files, function(idx, data){
-					//alt값  data에 넣어주기.
-					data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
-					for (let i in data) {
-						if (data.hasOwnProperty(i)) {
-							frmData.push({
-								name: "pcThumbList["+(fileIndex)+"]." + i, value: data[i]
-							});
-						}
-					}
-					fileIndex = fileIndex + 1;
-				})
-			}
-		});
-		fileIndex = 0;
-		formObj.find(".dropzone.moThumbFile").each(function(){
-			if($(this).get(0).dropzone.files != undefined && $(this).get(0).dropzone.files.length > 0){
-				$.each($(this).get(0).dropzone.files, function(idx, data){
-					//alt값  data에 넣어주기.
-					data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
-					for (let i in data) {
-						if (data.hasOwnProperty(i)) {
-							frmData.push({
-								name: "moThumbList["+(fileIndex)+"]." + i, value: data[i]
-							});
-						}
-					}
-					fileIndex = fileIndex + 1;
-				})
-			}
-		});
-		$.ajax({
-			url : url,
-			type : "post",
-			timeout: 300000,
-			dataType: dataType,
-			data : frmData,
-			async: true,
-			cache : false,
-			beforeSend : function() {
-				$(".loadingbar").stop().fadeIn(200);
-			},
-			success : function(data, status, xhr) {
-				if(data.errors != null)
-				{
-					fn_ajax_error(data, status, xhr);
-				}
-				else
-				{
-					//input 삽입 또는 인풋있으면 데이터 삽입
-					if(data.fileList != undefined && data.fileList.length > 0){
-						$.each(data.fileList, function(idx, data){
-							for (let key in data) {
-								if (data.hasOwnProperty(key) && key == "fieldNm") {
-									formObj.find("input[name="+data[key]+"]").val(data["fileSeq"]);
-								}
-							}
-						});
-					}
+				},
+				success : function(data, status, xhr) {
+					formObj.data("submitFlag", "N");
 					if (callbackAjax) {
 						callbackAjax(data);
 					}
+				},
+				error : function(data, status, xhr) {
+					formObj.data("submitFlag", "N");
+					fn_ajax_error(data, status, xhr);
+				},
+				complete : function() {
+					if (loading) {
+						$(".dimd").stop().fadeOut(100);
+					}
 				}
-			},
-			error : function(data, status, xhr) {
-				fn_ajax_error(data, status, xhr);
-			},
-			complete : function() {
-				$(".loadingbar").stop().fadeOut(200);
-			}
-		});
+			});
+		}
+	}
+
+	//FORM태그의 파일 객체 초기화
+	var fn_input_file_init = function(fileObj){
+		var agent = navigator.userAgent.toLowerCase();
+		if ( (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) || (agent.indexOf("msie") != -1) )
+		{
+			fileObj.replaceWith(fileObj.clone(true));
+		}
+		else
+		{
+			fileObj.val("");
+		}
 	}
 
 	/* Set Popup */
@@ -1639,6 +1597,7 @@ var cmmCtrl = (function(){
 		setDropzone : fn_set_dropzone,
 		chkDropzone : fn_chk_dropzone,
 		fileFrmAjax: fn_ajax_file_data,
+		inputFileInit: fn_input_file_init,
 		setPopup : fn_set_popup,
 		checkMaxlength : fn_check_maxlength,
 		checkContString : check_cont_string,

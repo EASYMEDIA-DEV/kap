@@ -46,6 +46,10 @@ public class EBDSqCertiSearchDTO extends BaseDTO {
     @Schema(title = "조회 자격증 연계 코드")
     private String lcnsCnnctCd;
 
-    @Schema(title = "사용자 MY-PAGE 리스트")
+    @Schema(title = "필수과목 리스트")
     private List<EBBEpisdSqCertDTO> educationList;
+
+    @Schema(title = "보수과목 리스트")
+    private List<EBBEpisdSqCertDTO> educationRepairList;
+    private int repairTotalCount = 0;
 }

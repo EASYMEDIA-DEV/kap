@@ -7,6 +7,7 @@ import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -68,7 +69,17 @@ public interface EBDSqCertiReqService {
     public int selectEducationCompleteListCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
 
     /**
+     * 사용자 MY-PAGE 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 보수 과목
+     */
+    public EBDSqCertiSearchDTO getEducationRepairList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
+
+    /**
      * SQ 평가원 자격증 신청 조건(자격증 연계를 수료하였고 평가원을 신청하지 않아야함)
      */
     public int getPosibleSqCertiCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception;
+
+    /**
+     * SQ 평가원 자격증 신청
+     */
+    public int insert(MultipartHttpServletRequest multiRequest) throws Exception;
 }

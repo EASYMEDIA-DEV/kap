@@ -27,7 +27,7 @@ define(["ezCtrl"], function(ezCtrl) {
     ctrlRepair.model = {
         id : {
             // 페이징 처리
-            moreCompletePagingContainer : {
+            moreRepairPagingContainer : {
                 event : {
                     click : function() {
                         var pageIndex = parseInt($formObj.find("input[name=pageIndex]").val()) + 1;
