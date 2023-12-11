@@ -4,12 +4,14 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.ebh.EBHEduApplicantMstDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.EBHEduApplicantService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -94,12 +96,11 @@ public class EBHEduApplicantController {
      * 목록 조회
      */
     @GetMapping(value="/select")
-    public String getEduApplicantListAjax(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getEduApplicantListAjax(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, ModelMap modelMap) throws Exception
     {
         try
         {
             modelMap.addAttribute("rtnData", eBHEduApplicantService.selectList(pEBHEduApplicantMstDTO));
-//            modelMap.addAttribute("searchDto", pEBHEduApplicantMstDTO);
         }
         catch (Exception e)
         {
@@ -112,18 +113,20 @@ public class EBHEduApplicantController {
      *  상세 조회
      */
     @GetMapping(value="/write")
-    public String getSqView(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getEduApplicantView(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
-            cdDtlList.add("EBD_SQ_TP");
-            cdDtlList.add("EBD_SQ");
-//            modelMap.addAttribute("rtnData", eBHEduApplicantService.selectExamAppctnMst(pEBHEduApplicantMstDTO));
-//            modelMap.addAttribute("rtnDataSqReqData", eBHEduApplicantService.selectView(pEBHEduApplicantMstDTO));
-//            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            cdDtlList.add("MEM_CD");
+            cdDtlList.add("COMPANY_TYPE");
+            cdDtlList.add("CO_YEAR_CD");
+
+            modelMap.addAttribute("rtnData", eBHEduApplicantService.selectView(pEBHEduApplicantMstDTO));
+//            modelMap.addAttribute("rtnDataEduApplicantReqData", eBHEduApplicantService.selectView(pEBHEduApplicantMstDTO));
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 //            modelMap.addAttribute("rtnPrePrcsList", eBHEduApplicantService.getPrePrcsList(pEBHEduApplicantMstDTO));
             modelMap.addAttribute("srchData", pEBHEduApplicantMstDTO);
         }
@@ -152,11 +155,11 @@ public class EBHEduApplicantController {
         /** 코드 서비스 **/
         private final COCodeService cOCodeService;
         /** 서비스 **/
-//        private final EBHEduApplicantService eBHEduApplicantService;
+        private final EBHEduApplicantService eBHEduApplicantService;
 
         /*@Operation(summary = "신청자, 부품사 정보 조회", tags = "회원", description = "신청자, 부품사 정보 조회")
         @PostMapping(value="/update")
-        public BaseDTO updateSqCertiConfrim(@Valid COUserCmpnDto cOUserCmpnDto, @Valid EBGExamAppctnMstDTO pEBGExamAppctnMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+        public BaseDTO updateEduApplicantCertiConfrim(@Valid COUserCmpnDto cOUserCmpnDto, @Valid EBGExamAppctnMstDTO pEBGExamAppctnMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
         {
             log.error("COUserCmpnDto : {}", cOUserCmpnDto.toString());
             log.error("EBDEdctnEdisdDTO : {}", eBGExamAppctnMstDTO.toString());
@@ -171,6 +174,27 @@ public class EBHEduApplicantController {
             }
             return baseDTO;
         }*/
+
+        @Operation(summary = "교육 신청자 선발 상태 변경", tags = "교육 신청자", description = "교육 신청자 선발 상태 변경")
+        @PostMapping(value="/stts-update")
+        public EBHEduApplicantMstDTO updateStts(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception
+        {
+            try
+            {
+                pEBHEduApplicantMstDTO.setRespCnt(eBHEduApplicantService.updateStts(pEBHEduApplicantMstDTO));
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return pEBHEduApplicantMstDTO;
+        }
+
     }
 }
 

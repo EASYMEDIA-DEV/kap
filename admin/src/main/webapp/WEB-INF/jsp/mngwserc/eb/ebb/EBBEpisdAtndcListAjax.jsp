@@ -36,11 +36,15 @@
   </c:when>
   <c:otherwise>
     <tr data-total-count="0">
-      <td colspan="15" class="text-center">
+      <td colspan="10+${fn:length(tableAtndcList) * 3}" class="text-center">
         검색결과가 없습니다.<br>
         (등록된 데이터가 없습니다.)
       </td>
     </tr>
+    <script>
+      var size = $('[data-atndcsize]').data("atndcsize");
+      $('[data-atndcsize]').find("tr:last").find("td:last").attr("colspan", 10+size);
+    </script>
   </c:otherwise>
 </c:choose>
 

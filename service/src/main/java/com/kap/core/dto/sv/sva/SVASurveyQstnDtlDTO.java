@@ -112,5 +112,16 @@ public class SVASurveyQstnDtlDTO extends BaseDTO  {
     @Schema(title = "설문응답순번", example = "숫자")
     private Integer srvRspnSeq;
 
+    @Schema(title = "참조코드")
+    private String rfncCd;
+
+    @Schema(title = "참조순번", example = "숫자")
+    private Integer rfncSeq;
+
+    @Schema(title = "강사순번", example = "숫자")
+    private Integer isttrSeq;
+
+    @Schema(title = "강사이름")
+    private String isttrName;
 
 }

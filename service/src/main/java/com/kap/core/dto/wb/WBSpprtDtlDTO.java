@@ -73,7 +73,7 @@ public class WBSpprtDtlDTO extends BaseDTO {
     private Integer lsePayFileSeq;
 
     /* 파일 저장시 사용 정보 */
-    List<HashMap<String, Object>> appctnFileInfo;
+    List<WBRsumeFileDtlDTO> appctnFileInfo;
 
     @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;

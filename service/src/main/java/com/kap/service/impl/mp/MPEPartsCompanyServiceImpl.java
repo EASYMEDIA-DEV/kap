@@ -205,7 +205,6 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                         mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
                     }
                 }
-
                 index += 1;
             }
         } else if (mpePartsCompanyDTO.getCtgryCd().equals("COMPANY01001")) {
@@ -242,5 +241,21 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
      */
     public int selectWinBusinessCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
         return mpePartsCompanyMapper.selectWinBusinessCnt(mpePartsCompanyDTO);
+    }
+
+    /**
+     * 부품사 목록을 조회한다.
+     */
+    public MPEPartsCompanyDTO selectCarTargetList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+        page.setCurrentPageNo(mpePartsCompanyDTO.getPageIndex());
+        page.setRecordCountPerPage(mpePartsCompanyDTO.getListRowSize());
+        page.setPageSize(mpePartsCompanyDTO.getPageRowSize());
+        mpePartsCompanyDTO.setFirstIndex(page.getFirstRecordIndex());
+        mpePartsCompanyDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        mpePartsCompanyDTO.setList(mpePartsCompanyMapper.selectCarTargetList(mpePartsCompanyDTO));
+
+        return mpePartsCompanyDTO;
     }
 }

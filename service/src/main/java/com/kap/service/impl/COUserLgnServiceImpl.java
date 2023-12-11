@@ -36,14 +36,14 @@ import java.util.List;
  * @ClassName		: COUserLgnServiceImpl.java
  * @Description		: 로그인/로그아웃을 위한 ServiceImpl
  * @author 박주석
- * @since 2022.01.13
+ * @since 2023.12.06
  * @version 1.0
  * @see
  * @Modification Information
  * <pre>
  * 		since			author				   description
  *   ===========    ==============    =============================
- *   2022.01.13			박주석			 		최초생성
+ *   2023.12.06			양현우			 		최초생성
  * </pre>
  */
 @Slf4j
@@ -142,51 +142,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 						// 접근가능 메뉴 확인
 						else
 						{
-							//드라이브 메뉴 목록 조회
-							List<COMenuDTO> driveMenuList = cOUserLgnMapper.getDriveMenuList(rtnCOUserDto);
-							int driveMenuSeq = driveMenuList.get(0).getMenuSeq();
-							RequestContextHolder.getRequestAttributes().setAttribute("driveMenuList", driveMenuList, RequestAttributes.SCOPE_SESSION);
-							RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", driveMenuSeq, RequestAttributes.SCOPE_SESSION);
-
-							// 로그인 시간을 업데이트 해준다.
-							COUserDetailsDTO tmpCOUserDetailsDTO = COUserDetailsDTO.builder()
-																	.seq(rtnCOUserDto.getMemSeq())
-																    .driveMenuSeq(driveMenuSeq)
-																	.authCd( rtnCOUserDto.getMemCd() )
-																	.build();
-
-//							List<COMenuDTO> menuList = cOLgnMapper.getMenuList(tmpCOUserDetailsDTO);
-							// 관리자 메인으로 사용할 메뉴 url
-//							String admMainUrl = "not";
-//							String admUrl = "";
-//							// 관리자 메인으로 사용할 메뉴 접근권한
-//							boolean admMainAuth = false;
-//							for (int i = 0, size = menuList.size(); i < size; i++)
-//							{
-//								if ("".equals(admUrl) && !"".equals(COStringUtil.nullConvert(menuList.get(i).getAdmUrl())))
-//								{
-//									admUrl = menuList.get(i).getAdmUrl();
-//								}
-//								if (admMainUrl.equals(menuList.get(i).getAdmUrl()))
-//								{
-//									admMainAuth = true;
-//									break;
-//								}
-//							}
-//							if ("".equals(admUrl))
-//							{
-//								cOLoginDTO.setRespCd("2090");
-//							}
-//							else if (admMainAuth)
-//							{
-//								cOLoginDTO.setRdctUrl(admMainUrl);
-//							}
-//							else
-//							{
-//								cOLoginDTO.setRdctUrl(admUrl);
-//							}
 							cOLoginDTO.setRdctUrl("/");
-							rtnCOUserDto.setDriveMenuSeq( driveMenuSeq );
 						}
 					}
 				}
@@ -201,7 +157,6 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 				cOLoginDTO.setRespCd("0000");
 			}
 			String rtnCode = cOLoginDTO.getRespCd(), loginIp = CONetworkUtil.getMyIPaddress(request), loginPrcsCd = "";
-//			String rtnCode = cOLoginDTO.getRespCd(), loginIp = CONetworkUtil.getMyIPaddress(request), loginPrcsCd = "";
 			//로그인 로그 객체
 			COSystemLogDTO cOSystemLogDTO = new COSystemLogDTO();
 			//로그인 객체
@@ -274,7 +229,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
     /**
 	 * 일반 로그아웃을 처리한다.
 	 */
-    public void actionLogout(MPAUserDto mpaUserDto, HttpServletRequest request) throws Exception
+    public void actionLogout(HttpServletRequest request) throws Exception
     {
 		COUserDetailsDTO lgnCOAAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
 		//로그아웃 로그 객체
@@ -353,35 +308,10 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 		return rtnCode;
 	}
 
-	/**
-	 * 드라이브 메뉴 목록을 조회한다.
-	 */
-	public List<COMenuDTO> getDriveMenuList(MPAUserDto mpaUserDto) throws Exception
-	{
-		return cOUserLgnMapper.getDriveMenuList(mpaUserDto);
-	}
-
-  	/**
-	 * 로그인 처리에 따른 메뉴를 가져온다.
-	 */
-    public List<COMenuDTO> getMenuList(COUserDetailsDTO cOUserDetailsDTO) throws Exception
-    {
-		/*cOAAdmDTO.setUserMenuList( cOLgnMapper.getUserMenuList() );*/
-    	return cOUserLgnMapper.getMenuList(cOUserDetailsDTO);
-    }
-
-	@Override
-	public COMenuDTO getCmsRootInf(MPAUserDto mpaUserDto) throws Exception {
-		return  cOUserLgnMapper.getCmsRootInf(mpaUserDto);
-	}
-
-
 
 	@Override
 	public MPAUserDto getIdFind(COIdFindDto coIdFindDto) throws Exception {
-		// 1. 휴대폰
-		// 2. 이메일
-		// 3. 본인인증
+
 
 		if(!StringUtils.isEmpty(coIdFindDto.getBirthdate())) {
 			String replaceBirth = coIdFindDto.getBirthdate().replace("-", "");
@@ -391,6 +321,9 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 		if(!StringUtils.isEmpty(coIdFindDto.getMobile_no())) {
 			String replaceHp = coIdFindDto.getMobile_no().replace("-", "");
 			coIdFindDto.setMobile_no(replaceHp.substring(0, 3) + "-" + replaceHp.substring(3, 7) + "-" + replaceHp.substring(7));
+		}
+		if(!StringUtils.isEmpty(coIdFindDto.getCi())) {
+			coIdFindDto.setMobile_no("");
 		}
 
 

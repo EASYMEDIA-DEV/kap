@@ -23,15 +23,15 @@ import java.util.List;
  *
  * @ClassName		: COBLgnController.java
  * @Description		: 로그인/로그아웃을 위한 Controller
- * @author 허진영
- * @since 2020.10.20
+ * @author 양현우
+ * @since 2023.12.06
  * @version 1.0
  * @see
  * @Modification Information
  * <pre>
  * 		since			author				   description
  *   ===========    ==============    =============================
- *   2020.10.20			허진영			 		최초생성
+ *   2023.12.06			양현우			 		최초생성
  * </pre>
  */
 @Slf4j
@@ -43,8 +43,6 @@ public class COLgnController {
 	//이메일 발송
 	private final COMessageService cOMessageService;
 
-	//이메일 발송
-	private final COSystemLogService cOSystemLogService;
 
 	@Value("${app.site.name}")
 	private String siteName;
@@ -53,7 +51,7 @@ public class COLgnController {
 	 * 로그인 페이지
 	 */
     @GetMapping("/login")
-	public String getLoginPage(ModelMap modelMap, HttpSession session) throws Exception
+	public String getLoginPage(HttpSession session) throws Exception
     {
     	try
 		{
@@ -75,9 +73,8 @@ public class COLgnController {
 	 * 아이디 찾기
 	 */
 	@GetMapping("/id-find")
-	public String getIdFind(ModelMap modelMap, HttpSession session) throws Exception
+	public String getIdFind() throws Exception
 	{
-
 		return "/front/co/COIdFindWrite.front";
 	}
 
@@ -95,7 +92,7 @@ public class COLgnController {
 	 * 비밀번호 찾기
 	 */
 	@GetMapping("/pwd-find")
-	public String getPwdFind(ModelMap modelMap, HttpSession session) throws Exception
+	public String getPwdFind() throws Exception
 	{
 
 		return "/front/co/COPwdFindWrite.front";
@@ -157,13 +154,13 @@ public class COLgnController {
 	}
 
 	/**
-	 * 아이디 이메일 전송
+	 * 비밀번호 변경
 	 * @param
 	 * @return
 	 * @throws Exception
 	 */
 	@PostMapping(value="/pwd-chng")
-	public String idEmailTran(MPAUserDto mpaUserDto) throws Exception
+	public String idEmailTran() throws Exception
 	{
 		try
 		{
@@ -197,13 +194,13 @@ public class COLgnController {
 	 * 로그아웃을 처리한다.
 	 */
     @RequestMapping(value="/my-page/logout", method=RequestMethod.GET)
-    public String actionLogout(MPAUserDto mpaUserDto, ModelMap modelMap, HttpSession sesssion, HttpServletRequest request) throws Exception
+    public String actionLogout(HttpSession sesssion, HttpServletRequest request) throws Exception
     {
     	try
         {
     		if (COUserDetailsHelperService.isAuthenticated())
     		{
-				cOUserLgnService.actionLogout(mpaUserDto, request);
+				cOUserLgnService.actionLogout(request);
     		}
     		// 보안 처리(로그인 세션 변경)
     		sesssion.invalidate();
@@ -253,7 +250,7 @@ public class COLgnController {
 	 * 정보 업데이트 페이지
 	 */
 	@RequestMapping(value="/info-upd", method=RequestMethod.GET)
-	public String getInfoUpdatePage(MPAUserDto mpaUserDto, ModelMap modelMap) throws Exception
+	public String getInfoUpdatePage(ModelMap modelMap) throws Exception
 	{
 		String rtnUrl = "/front/co/COLgnInfoUpd";
 		try
@@ -280,77 +277,25 @@ public class COLgnController {
 	}
 
 	/**
-	 * 관리자 다국어 처리
-	 */
-	@RequestMapping(value="/mngwserc/drive/{driveMenuSeq}", method= RequestMethod.GET)
-	public String getDriveMenuSeq(ModelMap modelMap, @PathVariable int driveMenuSeq) throws Exception
-	{
-		String url = "";
-		try
-		{
-			RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", driveMenuSeq, RequestAttributes.SCOPE_SESSION);
-			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-			cOUserDetailsDTO.setDriveMenuSeq( driveMenuSeq );
-			List<COMenuDTO> menuList = cOUserLgnService.getMenuList(cOUserDetailsDTO);
-			RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
-			for (int i = 0, size = menuList.size(); i < size; i++)
-			{
-				if(!"".equals(menuList.get(i).getAdmUrl())){
-					url = menuList.get(i).getAdmUrl();
-					break;
-				}
-			}
-		}
-		catch (Exception e)
-		{
-			if (log.isErrorEnabled())
-			{
-				log.debug(e.getMessage());
-			}
-			throw new Exception(e.getMessage());
-		}
-		return "redirect:" + url;
-	}
-
-	/**
 	 * <pre>
 	 * 로그인/로그아웃을 위한 API Controller
 	 * </pre>
 	 *
 	 * @ClassName		: COLgnRestController.java
 	 * @Description		: 로그인/로그아웃을 위한 API Controller
-	 * @author 허진영
-	 * @since 2020.10.20
+	 * @author 양현우
+	 * @since 2023.12.06
 	 * @version 1.0
 	 * @see
 	 * @Modification Information
 	 * <pre>
 	 * 		since			author				   description
 	 *   ===========    ==============    =============================
-	 *   2020.10.20			허진영			 		최초생성
+	 *   2023.12.06		양현우			 		최초생성
 	 * </pre>
 	 */
 	@RestController
 	public class COLgnRestController {
-
-		//사이트 명
-		@Value("${app.site.name}")
-		private String siteName;
-		//사이트 웹 소스 URL
-		@Value("${app.user-domain}")
-		private String httpFrontUrl;
-		//사이트 관리자 URL
-		@Value("${app.admin-domain}")
-		private String httpAdmtUrl;
-
-		//서버 유무(개발,운영)
-		//spring.config.activate.on-profile
-		@Value("${spring.config.activate.on-profile}")
-		private String serverProfile;
-
-		@Value("${server-status}")
-		private String serverStatus;
-
 
 		/**
 		 * 로그인을 처리한다.
@@ -381,7 +326,7 @@ public class COLgnController {
 		 * 임시 또는 최초 비밀번호를 변경한다  로그인 한 경우 비밀번호 변경.
 		 */
 		@PostMapping("/change-password")
-		public MPAUserDto setPwdChng(MPAUserDto mpaUserDto, ModelMap modelMap, HttpSession session) throws Exception
+		public MPAUserDto setPwdChng(MPAUserDto mpaUserDto,HttpSession session) throws Exception
 		{
 			COUserDetailsDTO cOUserDetailsDTO = null;
 			try
@@ -429,7 +374,7 @@ public class COLgnController {
 		 * 임시 또는 최초 비밀번호를 변경한다.
 		 */
 		@PostMapping("/upd-password")
-		public MPAUserDto setPwdChngUpd(MPAUserDto mpaUserDto, ModelMap modelMap, HttpSession session) throws Exception
+		public MPAUserDto setPwdChngUpd(MPAUserDto mpaUserDto) throws Exception
 		{
 			try
 			{
@@ -455,7 +400,7 @@ public class COLgnController {
 		 * 다음에 비밀번호 변경하기
 		 */
 		@PostMapping("/change-password-next")
-		public MPAUserDto setPwdNextChng(MPAUserDto mpaUserDto, ModelMap modelMap, HttpSession session) throws Exception
+		public MPAUserDto setPwdNextChng(MPAUserDto mpaUserDto,HttpSession session) throws Exception
 		{
 			COUserDetailsDTO cOUserDetailsDTO = null;
 			try

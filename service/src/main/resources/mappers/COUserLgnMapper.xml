@@ -7,7 +7,7 @@
          설  명 : 로그인 정보를 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2020.10.23   허진영       최초생성
+        2023.12.06   양현우       최초생성
     -->
 	<select id="getLoginInfo" parameterType="COLoginDTO" resultType="MPAUserDto">
 		select  /* COUserLgnMapper.getLoginInfo */
@@ -34,36 +34,43 @@
 
 	<!--
          쿼리명 : COLgnMapper.actionLogin
-         설  명 : 관리자 정보를 가져온다.
+         설  명 : 사용자 정보를 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2020.10.23   허진영       최초생성
+        2020.10.23   양현우       최초생성
     -->
 	<select id="actionLogin" parameterType="MPAUserDto" resultType="COUserDetailsDTO">
 		select /* COUserLgnMapper.actionLogin */
-			  mem_seq as seq
-			, mem_cd as auth_cd
-		    , dept_cd
-			, dept_dtl_nm as dept_nm
-			, id
-			, name
-			, email
-			, hp_no
-			, chng_xtnsn_cnt
+			   a.mem_seq as seq
+			 , a.mem_cd as auth_cd
+			 , a.dept_cd
+			 , a.dept_dtl_nm as dept_nm
+			 , a.id
+			 , a.name
+			 , a.email
+			 , a.hp_no
+			 , a.chng_xtnsn_cnt
+			 , a.pstn_cd
+			 , (select cd_nm from co_code_mst where  cd = a.pstn_cd ) as pstn_cd_nm
+			 , a.pstn_nm
+			 , b.cmpn_nm
+			 , b.tel_no
+		     , b.bsnm_no
 		from
-			co_mem_mst a
+			co_mem_mst a left join cp_cmpn_mst b
+			on b.bsnm_no = a.work_bsnm_no
 		where 1=1
-			and id = #{id}
-		   	and pwd = #{pwd}
-		   	and wthdrw_yn = 'Y'
+		  and id = #{id}
+		  and pwd = #{pwd}
+		  and wthdrw_yn = 'Y'
 	</select>
 
 	<!--
          쿼리명 : COUserLgnMapper.updateLgnFailCntIncrs
          설  명 : 로그인 오류 횟수를 증가시킨다.
-          수정일     수정자       수정내용 
-        ==========   ======    ============== 
-        2020.10.23   허진영       최초생성
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.06   양현우       최초생성
     -->
 	<update id="updateLgnFailCntIncrs" parameterType="MPAUserDto">
 		update /* COUserLgnMapper.updateLgnFailCntIncrs */ co_mem_mst
@@ -76,9 +83,9 @@
 	<!--
          쿼리명 : COUserLgnMapper.updateLgnFailCntInit
          설  명 :  로그인 오류 횟수를 초기화한다.
-          수정일     수정자       수정내용 
-        ==========   ======    ============== 
-        2020.10.23   허진영       최초생성
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.06   양현우       최초생성
     -->
 	<update id="updateLgnFailCntInit" parameterType="COUserDetailsDTO">
 		update /* COUserLgnMapper.updateLgnFailCntInit */ co_mem_mst
@@ -93,7 +100,7 @@
          설  명 : 로그인 일시를 업데이트한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2020.10.23   허진영       최초생성
+        2023.12.06   양현우       최초생성
     -->
 	<update id="updateLastLgnDtm" parameterType="COUserDetailsDTO">
 		update /* COUserLgnMapper.updateLastLgnDtm */ co_mem_mst
@@ -108,7 +115,7 @@
          설  명 : 비밀번호를 변경한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2020.10.23   허진영       최초생성
+        2023.12.06   양현우       최초생성
     -->
 	<update id="updatePwdChng" parameterType="MPAUserDto">
 		update /* COUserLgnMapper.updatePwdChng */ co_mem_mst
@@ -127,7 +134,7 @@
      설  명 : 다음에 비밀번호를 변경한다.
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2020.10.23   허진영       최초생성
+    2023.12.06   양현우       최초생성
 -->
 	<update id="updatePwdNextChng" parameterType="MPAUserDto">
 		update /* COUserLgnMapper.updatePwdNextChng */ co_mem_mst
@@ -140,242 +147,12 @@
 	</update>
 
 
-
-	<!--
-         쿼리명 : COUserLgnMapper.getDriveMenuList
-         설  명 : 드라이브 메뉴를 조회한다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2020.10.23   허진영       최초생성
-    -->
-	<select id="getDriveMenuList" parameterType="MPAUserDto" resultType="COMenuDTO">
-				select /* COUserLgnMapper.getDriveMenuList */
-				menu_seq
-				, parnt_seq
-				, pstn
-				, lft_val
-				, rht_val
-				, dpth
-				, menu_type
-				, menu_nm
-				, user_url
-				, wnpp_yn
-				from
-				co_menu_mst
-				where 1=1
-				and menu_type = 'drive' and dpth = 1
-				and use_yn = 'Y'
-				order by
-				lft_val
-	</select>
-	<!--
-         쿼리명 : COUserLgnMapper.getUserMenuList
-         설  명 : 사용자 메뉴 TYPE을 조회한다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2020.10.19   허진영       최초생성
-    -->
-	<select id="getUserMenuList" parameterType="COMenuDTO" resultType="COMenuDTO">
-		select /* COUserLgnMapper.getUserMenuList */
-			menu_seq
-			 , parnt_seq
-			 , pstn
-			 , lft_val
-			 , rht_val
-			 , dpth
-			 , menu_type
-			 , menu_nm
-			 , adm_url
-			 , user_url
-			 , use_yn
-		from
-			co_menu_mst a
-		where
-			menu_type = 'menu'
-		order by lft_val
-	</select>
-
-	<!--
-         쿼리명 : COUserLgnMapper.getMenuList
-         설  명 : 로그인 처리에 따른 메뉴를 가져온다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2020.10.23   허진영       최초생성
-    -->
-	<select id="getMenuList" parameterType="COUserDetailsDTO" resultType="COMenuDTO">
-				select /* COUserLgnMapper.getMenuList */
-				  a.menu_seq
-				, a.parnt_seq
-				, a.pstn
-				, a.lft_val
-				, a.rht_val
-				, a.dpth
-				, a.menu_type
-				, a.menu_nm
-				, a.user_url
-				, a.wnpp_yn
-				from
-				co_menu_mst a
-				where 1=1
-				and lft_val <![CDATA[ > ]]> (select lft_val from co_menu_mst where menu_seq = #{driveMenuSeq})
-				and rht_val <![CDATA[ < ]]> (select rht_val from co_menu_mst where menu_seq = #{driveMenuSeq})
-				and use_yn = 'Y'
-				order by
-				lft_val
-	</select>
-
-	<!--
-         쿼리명 : COLgnMapper.getPwdHistoryCheck
-         설  명 : 기존 비밀번호 사용여부 확인	select /* COLgnMapper.getDriveMenuList */
-				menu_seq
-				, parnt_seq
-				, pstn
-				, lft_val
-				, rht_val
-				, dpth
-				, menu_type
-				, menu_nm
-				, adm_url
-				, wnpp_yn
-				from
-				co_menu_mst
-				where 1=1
-				and menu_type = 'drive' and dpth = 1
-				and use_yn = 'Y'
-				order by
-				lft_val
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2022.04.25   신혜정       최초생성
-    -->
-	<select id="getPwdHistoryCheck" parameterType="MPAUserDto" resultType="java.lang.String">
-		select /* COUserLgnMapper.getPwdHistoryCheck */
-			pwd.pwd_seq
-		from
-			co_adm_pwd_dtl pwd
-			join co_adm_mst adm on pwd.adm_seq = adm.adm_seq
-		where adm.id = #{id}
-		  <if test="newEncPwd != null and newEncPwd != ''.toString() ">
-			and pwd.pwd in (#{newEncPwd})
-		  </if>
-		order by pwd.ord
-	</select>
-
-	<!--
-         쿼리명 : COUserLgnMapper.deletePwdHistory
-         설  명 : 기존 비밀번호 초기값 삭제
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2022.04.25   신혜정       최초생성
-    -->
-	<delete id="deletePwdHistory" parameterType="MPAUserDto">
-		delete /* COUserLgnMapper.deletePwdHistory */  pwd
-		from co_adm_pwd_dtl pwd join co_adm_mst adm on pwd.adm_seq = adm.adm_seq
-		where
-			adm.id = #{id}
-		<if test="pwdList != null">
-			and pwd_seq in
-			<foreach collection="pwdList" item="pwdList" index="index" separator=" , " open=" (" close=")">
-				#{pwdList}
-			</foreach>
-		</if>
-	</delete>
-
-	<!--
-         쿼리명 : COUserLgnMapper.updatePwdHistory
-         설  명 : 기존 비밀번호 정렬값 수정
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2022.04.25   신혜정       최초생성
-    -->
-	<update id="updatePwdHistory" parameterType="MPAUserDto">
-		update /* COUserLgnMapper.updatePwdHistory */
-		    co_adm_pwd_dtl pwd
-			join co_adm_mst adm on pwd.adm_seq = adm.adm_seq
-		set
-			pwd.ord = pwd.ord-1
-		  , pwd.mod_dtm = now()
-		  , pwd.mod_id = #{regId}
-		  , pwd.mod_ip = #{regIp}
-		where
-			adm.id = #{id}
-			<if test="pwdList != null">
-				and pwd.pwd_seq in
-				<foreach collection="pwdList" item="pwdList" index="index" separator=" , " open=" (" close=")">
-					#{pwdList}
-				</foreach>
-			</if>
-	</update>
-
-	<!--
-         쿼리명 : COUserLgnMapper.insertPwdHistory
-         설  명 : 기존 비밀번호 삽입
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2022.04.25   신혜정       최초생성
-    -->
-	<insert id="insertPwdHistory" parameterType="MPAUserDto" >
-		<selectKey keyProperty="ord,memSeq" order="BEFORE" resultType="MPAUserDto">
-			select
-			       ifnull(max(pwd.ord)+1, 1) as ord
-			     , adm.adm_seq as admSeq
-			from co_adm_pwd_dtl pwd right join co_adm_mst adm on pwd.adm_seq = adm.adm_seq
-			where adm.id=#{id}
-		</selectKey>
-		insert 	/* COLgnMapper.insertPwdHistory */into co_adm_pwd_dtl
-		(
-			   adm_seq
-			 , pwd
-			 , ord
-			 , reg_id
-			 , reg_ip
-			 , reg_dtm
-			 , mod_id
-			 , mod_ip
-			 , mod_dtm
-		)
-		values
-		(
-			   #{admSeq}
-			 , #{newEncPwd}
-			 , #{ord}
-			 , #{regId}
-			 , #{regIp}
-			 , now()
-			 , #{regId}
-			 , #{regIp}
-			 , now()
-		)
-	</insert>
-
-	<!--
-         쿼리명 : COUserLgnMapper.getCmsRootInf
-         설  명 : CMS Root 메뉴 정보를 가져온다.
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2099.99.99   &&&       최초생성
-    -->
-	<select id="getCmsRootInf" parameterType="MPAUserDto" resultType="COMenuDTO">
-		SELECT /* COUserLgnMapper.getCmsRootInf */
-			MENU_SEQ
-			 , LFT_VAL
-			 , RHT_VAL
-		FROM
-			CO_MENU_MST
-		WHERE 1=1
-		  AND MENU_TYPE = 'menu'
-		  AND USE_YN = 'Y'
-		  AND LFT_VAL <![CDATA[>]]> (SELECT LFT_VAL FROM CO_MENU_MST WHERE MENU_SEQ = #{driveMenuSeq})
-		  AND RHT_VAL <![CDATA[<]]> (SELECT RHT_VAL FROM CO_MENU_MST WHERE MENU_SEQ = #{driveMenuSeq})
-	</select>
-
-
 	<!--
      쿼리명 : COUserLgnMapper.idFind
      설  명 : 아이디 찾기
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2020.10.23   허진영       최초생성
+    2023.12.06   양현우       최초생성
 -->
 	<select id="getIdFind" parameterType="COIdFindDto" resultType="MPAUserDto">
 		select /* COUserLgnMapper.idFind */

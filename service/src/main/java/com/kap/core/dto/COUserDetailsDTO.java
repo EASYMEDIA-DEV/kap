@@ -68,4 +68,18 @@ public class COUserDetailsDTO extends  BaseDTO{
     private String rdctUrl;
     @Schema(title="로그인 객체 드라이브 순번")
     private int driveMenuSeq;
+
+    /** 사용자 시작 **/
+    @Schema(title="직급코드")
+    private String pstnCd;
+    @Schema(title="직급코드")
+    private String pstnCdNm;
+    @Schema(title="직급명")
+    private String pstnNm;
+    @Schema(title="회사명")
+    private String cmpnNm;
+    @Schema(title="회사전화번호")
+    private String telNo;
+    @Schema(title="회사순번")
+    private String bsnmNo;
 }

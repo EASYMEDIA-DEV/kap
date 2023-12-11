@@ -4,6 +4,7 @@ import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <pre>
@@ -45,7 +46,10 @@ public interface EBBEpisdService {
 	 */
 	public EBBPtcptDTO setAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
-
+	/**
+	 * 교육 참여자 출석부 목록을 호출한다.
+	 */
+	public List<EBBPtcptDTO> selectMemAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 	/**
 	 * 교육차수를 등록한다.

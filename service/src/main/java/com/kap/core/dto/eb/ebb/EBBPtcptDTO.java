@@ -138,6 +138,14 @@ public class EBBPtcptDTO extends BaseDTO {
     @Builder.Default
     private String etcNm = null;
 
+    @Schema(title = "비고(원본)", example = "출석부 수정에서 비고변경유무를 판단하기 위한 항목")
+    @Builder.Default
+    private String orgEtcNm = null;
+
+    @Schema(title = "출석부 수정시 열 삭제유무", example = "변경점이없는 출석부 내역 db수정 목록에서 제외용도")
+    @Builder.Default
+    private String deleteYn ="N";
+
     private List<EBBPtcptDTO> ptcptList;//교육 참여자 목록
 
     private List<EBBPtcptDTO> atndcList;//교육 참여자 출석목록

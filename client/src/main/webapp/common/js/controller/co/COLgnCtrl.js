@@ -18,10 +18,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		$("#id").val($.cookie('id'));
 	}
 
-	const email = ['naver.com' ,'google.com' ,'daum.net']
+	const email = ['naver.com' ,'google.com' ,'nate.com','daum.net']
 	function emailSel() {
 		email.forEach((domain) => {
-			$("#emailSelect").append(`<option value="${domain}">${domain}</option>`);
+			const emailAddr = $("#emailAddr").val();
+			const isSelected = emailAddr === domain ? "selected" : "";
+			if(isSelected == "selected") {
+				$("#emailAddr").prop("readonly" , true);
+			}
+			$("#emailSelect").append(`<option value="${domain}" ${isSelected}>${domain}</option>`);
 		});
 	}
 	// 로그인 콜백
@@ -165,6 +170,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			emailSelect : {
 				event : {
 					change : function() {
+						if($(this).val() !=''){
+							$("#emailAddr").prop('readonly' ,true);
+						} else {
+							$("#emailAddr").prop('readonly' ,false);
+						}
 						$("#emailAddr").val($(this).val());
 					}
 				}
@@ -239,6 +249,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+			emailChks : {
+				event : {
+					input : function (event) {
+						let chars = event.target.value.replace(/[^a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g, '');
+						event.target.value = chars;
+					}
+				}
+			},
 			//휴대폰 자동 하이픈
 			hpNo : {
 				event : {
@@ -306,27 +324,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$(".for-status-chk2").addClass('error');
 						return false;
 					}
-
-					// if (trgtObj.val().indexOf(loginId) > -1)
-					// {
-					// 	alert(msgCtrl.getMsg("fail.co.coc.password.includeId"));
-					// 	trgtObj.focus();
-					// 	return false;
-					// }
-					//
-					// if (/([a-zA-Z0-9!@#$%^&*()_\-+={}\[\]<>,.?\/])\1\1/.test(trgtObj.val()))
-			        // {
-					// 	alert(msgCtrl.getMsg("fail.co.coc.password.sameString"));
-					// 	trgtObj.focus();
-					// 	return false;
-			        // }
-					//
-					// if (!cmmCtrl.checkContString(trgtObj.val(), 4))
-					// {
-					// 	alert(msgCtrl.getMsg("fail.co.coc.password.contString"));
-					// 	trgtObj.focus();
-					// 	return false;
-					// }
 
 					return true;
 				},
@@ -402,6 +399,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						alert(msgCtrl.getMsg("fail.co.login.find.day"));
 						return false;
 					}
+					let email = $("#email-first").val();
+					let emailRegex = /^\S{0,64}$/;
+					if(!emailRegex.test(email)) {
+						alert(msgCtrl.getMsg("fail.mp.join.al_023"));
+						$("#email-first").focus();
+						return false;
+					}
+					let emailAddr = $("#emailAddr").val();
+
+					let emailAddrRegex = /\./;
+					if(!emailAddrRegex.test(emailAddr)) {
+						alert(msgCtrl.getMsg("fail.mp.join.al_023"));
+						return false;
+					}
+
 					return true;
 				},
 				async : {

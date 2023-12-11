@@ -73,4 +73,7 @@ public class EBGExamAppctnMstDTO extends BaseDTO {
     private String modDtm;
     @Schema(title = "전달받을 파일 리스트")
     private List<COFileDTO> fileList;
+
+    @Schema(title = "참여순번")
+    private Integer ptcptSeq;
 }

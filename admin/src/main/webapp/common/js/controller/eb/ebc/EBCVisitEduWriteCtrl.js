@@ -156,11 +156,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             bsnmNoBtn : {
                 event : {
                     click : function() {
-                        cmmCtrl.getPartsCompanyMemberLayerPop(function(data){
-                            console.log(data.seq);
-                            var updatedSeq = $("#memName").data("updatedMemSeq");
-                            updatedSeq.val(data.seq);
-                            $("#memName").val(data.titl);
+                        cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                         });
                     }
                 }
@@ -169,6 +165,25 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 event : {
                     change : function() {
                         selectCtgryCdList(this);
+                    }
+                }
+            },
+            appctnTypeAll : {
+                event : {
+                    click : function() {
+                        //상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxSingle가 변경됨
+                        var trgtArr = $(this).closest("div").find(".checkboxSingle");
+                        if (trgtArr.length > 0)
+                        {
+                            var isChecked = false;
+                            if($(this).is(":checked"))
+                            {
+                                isChecked = true;
+                            }
+                            $.each(trgtArr, function(){
+                                $(this).prop("checked", isChecked);
+                            })
+                        }
                     }
                 }
             },
@@ -246,8 +261,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         },
         immediately : function(){
             changeAppctnFldCd();
-            //sendInformation();
-
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //부품사 우편번호와 동일하면 본사와 동일 체크 박스 checked
             var originPartsZipCode = $formObj.find("input[name=zipcode]").val();
             var originPartsBscAddr = $formObj.find("input[name=bscAddr]").val();
@@ -467,13 +481,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         actForm.ptcptHh = ptcptHh;
                         actForm.itrdcFileSeq = itrdcFileSeq;
 
-                        var appctnTypeList = new Array();
-
+                        var appctnTypeCdList = new Array();
                         $(".checkBoxArea input[type='checkbox']:checked").each(function(){
-                            appctnTypeList.push($(this).val());
+                            appctnTypeCdList.push($(this).val());
                         });
-
-                        actForm.appctnTypeList = appctnTypeList;
+                       actForm.appctnTypeCdList = appctnTypeCdList;
 
                         //교육실적
                         var cnfrmdTheme = $("#cnfrmdTheme").val();
@@ -634,7 +646,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 }
 
                             })
-                        }debugger;
+                        }
                         actForm.etcMatlsFileList = etcMatlsFileArray;
                         console.log(actForm);
                         debugger;

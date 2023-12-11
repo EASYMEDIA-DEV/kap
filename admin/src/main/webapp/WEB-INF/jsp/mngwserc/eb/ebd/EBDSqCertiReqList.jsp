@@ -106,7 +106,6 @@
 							<col width="100px">
 							<col width="100px">
 							<col width="100px">
-							<col width="150px">
 							<col width="200px">
 							<col width="100px">
 							<col width="100px">
@@ -128,7 +127,6 @@
 								<th class="text-center" rowspan="2">발급상태</th>
 								<th class="text-center" rowspan="2">년도</th>
 								<th class="text-center" rowspan="2">회차</th>
-								<th class="text-center" rowspan="2">업종</th>
 								<th class="text-center" rowspan="2">부품사명</th>
 								<th class="text-center" rowspan="2">구분</th>
 								<th class="text-center" rowspan="2">규모</th>

@@ -24,9 +24,9 @@
                 <td class="text-center">${kl:convertDate(list.hopeDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</td>
                 <td class="text-center">${list.ptcptCnt}</td>
                 <td class="text-center">${list.ptcptHhNum}</td>
-                <td class="text-center">${list.memName}<br>(${kl:idMasking(list.memId)})</td>
-                <td class="text-center">${list.memHpNo}</td>
-                <td class="text-center">${list.memEmail}</td>
+                <td class="text-center">${list.name}<br>(${kl:idMasking(list.id)})</td>
+                <td class="text-center">${list.hpNo}</td>
+                <td class="text-center">${list.email}</td>
                 <td class="text-center">${list.edctnSttsName}</td>
                 <td class="text-center">${list.cnfrmdTheme}</td>
                 <td class="text-center">${kl:convertDate(list.edctnDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</td>

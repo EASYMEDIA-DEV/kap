@@ -33,7 +33,6 @@ require.config({
 //공통 함수 불러들이기
 require(["ezCtrl"], function(_ezCtrl){
 	jQuery(document).ready(function(){
-
 		_ezCtrl.LoadControllerJS();
 	});
 });

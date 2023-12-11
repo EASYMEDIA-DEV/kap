@@ -8,7 +8,7 @@
 	<form name="form" id="form"  method="post" action="${rtnData.receivedatass.redirectUrl}">
 		<input type="hidden" id="name" name="name"  value="${rtnData.name}"/>
 		<input type="hidden" id="birthdate" name="birthdate"  value="${rtnData.birthdate}"/>
-		<input type="hidden" id="gender" name="gender"  value="${rtnData.gender}"/>
+		<input type="hidden" id="gndr" name="gndr"  value="${rtnData.gender}"/>
 		<input type="hidden" id="nationalinfo" name="nationalinfo"  value="${rtnData.nationalinfo}"/>
 		<input type="hidden" id="mobile_no" name="mobile_no"  value="${rtnData.mobile_no}"/>
 		<input type="hidden" id="ci" name="ci"  value="${rtnData.ci}"/>
@@ -18,7 +18,6 @@
 		<input type="hidden" id="param3" name="param3"  value="${rtnData.receivedatass.paramsThree}"/>
 		<input type="hidden" id="param4" name="param4"  value="${rtnData.receivedatass.paramsFour}"/>
 		<input type="hidden" id="param5" name="param5"  value="${rtnData.receivedatass.paramsFive}"/>
-		<input type="hidden" id="types" name="types"  value="3"/>
 	</form>
 	<script type="text/javascript">
 			if('${rtnData.resultcode}' == "0000") {
