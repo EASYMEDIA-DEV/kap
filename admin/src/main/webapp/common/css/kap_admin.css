@@ -2,3 +2,6 @@
 
 .table>thead>tr>th, .table>tbody>tr>td {white-space: nowrap;}
 .form-control{box-shadow:none !important}
+
+.table-disabled{position:relative;}
+.table-disabled:after{display:block; content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.2)}
