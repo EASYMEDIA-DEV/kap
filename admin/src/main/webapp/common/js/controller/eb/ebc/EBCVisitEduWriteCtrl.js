@@ -362,7 +362,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         //신청자 정보
                         var deptCd = $("#deptCd").val();
                         var deptDtlNm = $("#deptDtlNm").val();
-                        var pstnCd = $("#pstnCd").val();
+                        var pstnCd = $("#pstnCdSelect").val();
                         var deptCdNm = $("#deptCdNm").val();
                         var telNo = $("#telNo").val();
 
