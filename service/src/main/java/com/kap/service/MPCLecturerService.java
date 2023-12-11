@@ -28,11 +28,6 @@ public interface MPCLecturerService {
     public MPCLecturerDTO selectLecturerList(MPCLecturerDTO mpcLecturerDTO) throws Exception;
 
     /**
-     * 강사 수를 조회한다.
-     */
-    public int selectLecturerCnt(MPCLecturerDTO mpcLecturerDTO) throws Exception;
-
-    /**
      * 강사 상세를 조회한다.
      */
     public MPCLecturerDTO selectLecturerDtl(MPCLecturerDTO mpcLecturerDTO) throws Exception;
@@ -56,5 +51,11 @@ public interface MPCLecturerService {
      * 강사를 삭제한다.
      */
     public int deleteLecturer(MPCLecturerDTO mpcLecturerDTO) throws Exception;
+
+    /**
+     * 상생 사업 현황 목록을 조회한다.
+     */
+    public MPCLecturerDTO selectWinBusinessList(MPCLecturerDTO mpcLecturerDTO) throws Exception;
+
 
 }

@@ -60,4 +60,14 @@ public interface MPCLecturerMapper {
      * 강사 삭제
      */
     public int deleteLecturer(MPCLecturerDTO mpcLecturerDTO) throws Exception;
+
+    /**
+     * 상생 사업 현황 목록 조회
+     */
+    public List<MPCLecturerDTO> selectWinBusinessList(MPCLecturerDTO mpcLecturerDTO) throws Exception;
+
+    /**
+     * 상생 사업 현황 개수 조회
+     */
+    public int selectWinBusinessCnt(MPCLecturerDTO mpcLecturerDTO) throws Exception;
 }

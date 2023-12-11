@@ -199,6 +199,8 @@
                                 <th class="text-center">강사</th>
                                 <th class="text-center">강사 소속</th>
                                 <th class="text-center">모집방식</th>
+                                <th class="text-center">선발여부</th>
+                                <th class="text-center">교육장소</th>
                             </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->
@@ -211,7 +213,7 @@
                 <div id="win" class="tab-pane fade">
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            상생 사업 현황 (총 <span id="listContainerTotCnt">0</span> 건)
+                            상생 사업 현황 (총 <span id="winBusinessListContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
@@ -240,11 +242,11 @@
                             </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->
-                            <tbody id="listContainer"/>
+                            <tbody id="winBusinessListContainer"/>
                         </table>
                     </div>
                     <!-- 페이징 버튼 -->
-                    <div id="pagingContainer"></div>
+                    <div id="winBusinessPagingContainer"></div>
                 </div>
             </div>
         </form>

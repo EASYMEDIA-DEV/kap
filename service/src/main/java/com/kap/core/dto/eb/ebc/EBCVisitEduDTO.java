@@ -105,16 +105,6 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "방문교육신청일시", example = "yyyy-MM-dd hh:mm:ss")
     private String visitRegDtm;
 
-    @Schema(title = "방문교육수정ID", example = "")
-    private String visitModId;
-
-    @Schema(title = "방문교육수정IP", example = "127.0.0.1")
-    private String visitModIp;
-
-    @Schema(title = "방문교육수정일시", example = "yyyy-MM-dd hh:mm:ss")
-    private String visitModDtm;
-
-
     @Schema(title = "등록일시", example = "yyyy-MM-dd hh:mm:ss")
     private String regDtm;
 

@@ -80,6 +80,46 @@ public class MPCLecturerDTO extends BaseDTO {
     @Schema(title = "조회 리스트", example = "")
     private List<MPCLecturerDTO> list;
 
+
+    // 상생 사업 현황 조회
+    @Schema(title = "사업연도", example = "숫자")
+    private Integer year;
+
+    @Schema(title = "회차", example = "숫자")
+    private Integer episd;
+
+    // 확인 필요!!
+    @Schema(title = "사업구분명", example = "")
+    private String typeCdNm;
+
+    @Schema(title = "사업명", example = "")
+    private String bsnNm;
+
+    @Schema(title = "사업시작일시", example = "yyyy-MM-dd hh:mm:ss")
+    private String bsnStrtDtm;
+
+    @Schema(title = "사업종료일시", example = "yyyy-MM-dd hh:mm:ss")
+    private String bsnEndDtm;
+
+    @Schema(title = "사업자번호", example = "")
+    private String sbrdnBsnmNo;
+
+    @Schema(title = "사업신청일", example = "yyyy-MM-dd hh:mm:ss")
+    private String bsnRegDtm;
+
+    @Schema(title = "부품사명", example = "")
+    private String cmpnNm;
+
+    @Schema(title = "구분", example = "")
+    private String ctgryNm;
+
+    @Schema(title = "규모", example = "")
+    private String sizeNm;
+
+    @Schema(title = "진행상태명", example = "")
+    private String rsumeSttsNm;
+
+
     // 검색조건
     @Schema(title = "검색 등록/수정 기간 시작일자", example = "yyyy-MM-dd")
     private String dStrDt;

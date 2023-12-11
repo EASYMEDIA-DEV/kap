@@ -17,7 +17,7 @@
                 <td class="text-center">${list.ffltnNm} <c:if test="${list.isttrOutCnt ne ''}">외 ${list.isttrOutCnt}명 </c:if></td>
                 <td class="text-center">${list.rcrmtMthdCdNm}</td>
                 <td class="text-center">선발여부값</td>
-                <td class="text-center">교육장소값</td>
+                <td class="text-center">${list.placeNm}</td>
             </tr>
         </c:forEach>
     </c:when>

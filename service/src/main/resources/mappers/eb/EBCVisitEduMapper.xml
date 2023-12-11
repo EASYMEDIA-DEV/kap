@@ -138,8 +138,10 @@
 			 , A.ptcpt_trgt_cntn -- 참여대상내용
 			 , A.itrdc_file_seq -- 소개파일순번
 			 , A.reg_dtm AS visit_reg_dtm -- 방문교육신청일시
-			 , A.mod_id AS visit_mod_id -- 최종수정자
-			 , A.mod_dtm  AS visit_mod_dtm-- 최종수정일시
+			 , A.mod_id -- 최종수정자
+			 , A.mod_ip  -- 최종수정자
+			 , (select name from co_adm_mst where id = A.mod_id) as mod_name
+			 , A.mod_dtm -- 최종수정일시
 			 , B.name-- 신청자이름
 			 , B.id -- 신청자 아이디
 			 , B.hp_no -- 신청자 핸드폰번호
@@ -155,7 +157,7 @@
 			 , C.ctgry_cd
 			 , C.size_cd
 			 , C.stbsm_dt
-			 , C.tel_no
+			 , C.tel_no AS cmpn_tel_no
 			 , C.zipcode
 			 , C.bsc_addr
 			 , C.dtl_addr
@@ -201,6 +203,7 @@
 					 , itrdc_file_seq -- 소개파일순번
 					 , reg_dtm
 					 , mod_id
+					 , mod_ip
 					 , mod_dtm
 				FROM ev_edctn_vst_mst
 			)A
@@ -319,6 +322,29 @@
 	</select>
 
 	<!--
+         쿼리명 : EBCVisitEduMapper.updatePartsMemInfo
+         설  명 : 방문교육 신청자 정보를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.11   구은희       최초생성
+    -->
+	<update id="updatePartsMemInfo" parameterType="EBCVisitEduDTO">
+		update /* EBCVisitEduMapper.updatePartsMemInfo */ co_mem_mst
+		set
+			dept_cd = #{deptCd}
+		  	, dept_dtl_nm = #{deptDtlNm}
+		  	, pstn_cd = #{pstnCd}
+		  	, pstn_nm = #{deptCdNm}
+		  	, tel_no = #{telNo}
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		where 1=1
+		  and mem_cd = 'CP'
+		  and mem_seq = #{memSeq}
+	</update>
+
+	<!--
 		 쿼리명 : EBCVisitEduMapper.insertIsttrRel
 		 설  명 : 방문교육 강사관계를 등록한다.
 		  수정일     수정자       수정내용
@@ -342,7 +368,7 @@
 			(
 			#{isttrSeqList.vstSeq}
 			, #{isttrSeqList.memSeq}
-			, #{isttrSeqList.vstRsltSeq}
+			, #{vstRsltSeq}
 			, #{isttrSeqList.isttrSeq}
 			, #{regId}
 			, #{regIp}

@@ -26,7 +26,20 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/mp/mpc/select-tab-two", $formObj, "POST", "html",'',false);
+        }, "/mngwserc/mp/mpc/selectEduList", $formObj, "GET", "html",'',false);
+    }
+
+    var tabThree = function () {
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#winBusinessListContainer").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#winBusinessListContainerTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "winBusinessListContainer", "winBusinessPagingContainer");
+        }, "/mngwserc/mp/mpc/selectWinBusinessList", $formObj, "GET", "html",'',false);
     }
 
 
@@ -34,6 +47,8 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
 
         if(type == 'edu') {
             tabTwo();
+        } else if(type == 'win') {
+            tabThree();
         }
     }
     // set model
@@ -125,6 +140,7 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
             tabTwo();
+            tabThree();
 
             $excelObj.find("button.down").on('click', function(){
                 var rsn = $excelObj.find("#rsn").val().trim();
