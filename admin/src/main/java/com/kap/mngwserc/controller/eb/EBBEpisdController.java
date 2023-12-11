@@ -322,7 +322,31 @@ public class EBBEpisdController {
 
             temoDto = eBBEpisdService.setPtcptInfo(eBBPtcptDTO);
 
-            System.out.println("@@@ temoDto = " + temoDto);
+            modelMap.addAttribute("rtnData", temoDto);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    @Operation(summary = "교육차수 차수변경", tags = "교육차수 신청자 등록", description = "")
+    @PostMapping(value="/ptcpt/changeEpisd")
+    public String changeEpisd(EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap) throws Exception
+    {
+
+        //교육차수 신청자를 등록한다. 등록할때 이미 회원이 있으면 취소
+        EBBPtcptDTO temoDto = new EBBPtcptDTO();
+        try {
+
+            temoDto = eBBEpisdService.changeEpisd(eBBPtcptDTO);
 
             modelMap.addAttribute("rtnData", temoDto);
 
@@ -437,6 +461,30 @@ public class EBBEpisdController {
             return tempDto;
         }
 
+        @Operation(summary = "교육차수 강제 종강처리", tags = "교육차수 중복체크", description = "")
+        @PostMapping(value="/endEdu")
+        public EBBEpisdDTO setEndEdu(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+            EBBEpisdDTO tempDto = new EBBEpisdDTO();
+            int actCnt = 0;
+            try {
+
+                actCnt = eBBEpisdService.updateEpisdEndEdu(eBBEpisdDTO);
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return tempDto;
+        }
+
+
 
         @Operation(summary = "교육차수 신청자 정원체크", tags = "교육차수 중복체크", description = "")
         @PostMapping(value="/fxnumChk")
@@ -486,6 +534,26 @@ public class EBBEpisdController {
             return rtnCnt;
         }
 
+    }
+
+
+    @Operation(summary = "설문 초기화", tags = "", description = "")
+    @PostMapping(value="/deleteSurveyRspn")
+    public String deleteSurveyRspn(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", eBBEpisdService.deleteSurveyRspn(eBBEpisdDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
     }
 
 

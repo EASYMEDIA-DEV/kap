@@ -72,6 +72,12 @@ public interface EBBEpisdService {
 	public EBBEpisdDTO selectEpisdChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 강제 종강처리
+	 */
+	public int updateEpisdEndEdu(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+	/**
 	 * 교육차수 신청자 정원체크
 	 */
 	public EBBEpisdDTO selectFxnumChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
@@ -83,10 +89,20 @@ public interface EBBEpisdService {
 	public EBBPtcptDTO setPtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 	/**
+	 * 교육차수 신청자 차수변경
+	 */
+	public EBBPtcptDTO changeEpisd(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+
+	/**
 	 * 교육차수 신청자 출석부 수정
 	 */
 	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 설문초기화 한다.
+	 */
+	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
 
