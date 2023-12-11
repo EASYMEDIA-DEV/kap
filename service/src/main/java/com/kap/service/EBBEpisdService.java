@@ -87,6 +87,10 @@ public interface EBBEpisdService {
 	 */
 	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 설문초기화 한다.
+	 */
+	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
 

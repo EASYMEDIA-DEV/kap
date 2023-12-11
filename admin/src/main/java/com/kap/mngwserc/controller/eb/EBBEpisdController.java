@@ -489,5 +489,25 @@ public class EBBEpisdController {
     }
 
 
+    @Operation(summary = "설문 초기화", tags = "", description = "")
+    @PostMapping(value="/deleteSurveyRspn")
+    public String deleteSurveyRspn(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", eBBEpisdService.deleteSurveyRspn(eBBEpisdDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+
 }
 

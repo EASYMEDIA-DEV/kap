@@ -164,6 +164,10 @@ public interface EBBEpisdMapper {
 	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
+	/**
+	 * 교육차수 - 설문초기화
+	 */
+	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
 

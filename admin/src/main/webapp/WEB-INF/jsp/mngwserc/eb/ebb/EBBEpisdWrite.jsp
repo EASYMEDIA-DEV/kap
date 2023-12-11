@@ -584,9 +584,11 @@
 
                                             </td>
                                             <td>
+                                                <c:if test="${rtnDto.srvSeq != null}">
                                                 <button type="button" class="btn btn-inverse btn-sm srvReset">
                                                     설문 초기화
                                                 </button>
+                                                </c:if>
                                             </td>
                                         </tr>
                                     <%--<tr data-total-count="0">

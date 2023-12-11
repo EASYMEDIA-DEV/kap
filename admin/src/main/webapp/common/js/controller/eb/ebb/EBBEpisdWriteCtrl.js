@@ -844,6 +844,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					click : function(){
 						if(confirm("응답 내용이 즉시 삭제됩니다. 초기화 하시겠습니까?")){
 
+							var srvSeq = $("#srvSeq").val();
+
+							if (srvSeq!=''){
+								var svMst = {};
+								svMst.srvSeq = srvSeq;
+								svMst.edctnSeq = $("#edctnSeq").val();
+								svMst.episdYear = $("#episdYear").val();
+								svMst.episdSeq = $("#episdSeq").val();
+
+								cmmCtrl.jsonAjax(function(data){
+									var rtn = JSON.parse(data);
+									if(rtn.respCnt > -1 ){
+										alert('설문 응답이 초기화되었습니다.');
+										location.reload();
+									}
+								}, './deleteSurveyRspn', svMst, "text")
+
+							}
 						}
 					}
 				}

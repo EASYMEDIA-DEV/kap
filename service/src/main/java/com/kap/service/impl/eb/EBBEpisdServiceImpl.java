@@ -568,10 +568,13 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	}
 
 
-
-
-
-
-
-
+	/**
+	 * 설문초기화 삭제한다.
+	 */
+	@Transactional
+	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+		int rtnCnt = eBBEpisdMapper.deleteSurveyRspn(eBBEpisdDTO);
+		return rtnCnt;
+	}
 }
