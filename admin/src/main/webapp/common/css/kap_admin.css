@@ -3,4 +3,4 @@
 .table>thead>tr>th, .table>tbody>tr>td {white-space: nowrap;}
 .form-control{box-shadow:none !important}
 
-.table-disabled table tbody tr{background:rgba(0,0,0,0.2)}
+.table-disabled tbody tr{background:rgba(0,0,0,0.2)}
