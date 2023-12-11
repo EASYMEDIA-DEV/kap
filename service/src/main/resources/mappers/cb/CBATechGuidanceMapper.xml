@@ -516,6 +516,7 @@
         WHERE 1=1
           AND CNSTG_SEQ = #{cnstgSeq}
     </select>
+
     <!--
      쿼리명 : CBATechGuidanceMapper.deleteCnstgAppctnType
      설  명 : 신청 분야 상세 삭제

@@ -203,82 +203,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         return pCBATechGuidanceInsertDTO.getRespCnt();
     }
 
-    void updateSubTechGuidanceInfo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
-
-        // 고객사 비율 상세 정보 등록 있으면 수정
-        String[] dlvryCmpnNm =  pCBATechGuidanceInsertDTO.getDlvryCmpnNm().split(",");
-        String[] dlvryRate = pCBATechGuidanceInsertDTO.getDlvryRate().split(",");
-        HashMap cnstgDlyvMap = new HashMap();
-        for(int i=0; i < dlvryCmpnNm.length; i++) {
-            cnstgDlyvMap.put("cnstgSeq", pCBATechGuidanceInsertDTO.getCnstgSeq());
-            cnstgDlyvMap.put("cmpnDlvrySeq",dlvrySeqIdgen.getNextIntegerId());
-            cnstgDlyvMap.put("dlvryCmpnNm", dlvryCmpnNm[i]);
-            cnstgDlyvMap.put("dlvryRate", dlvryRate[i]);
-            cnstgDlyvMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
-            cnstgDlyvMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
-
-            List dlvryInfoList = cBATechGuidanceMapper.selectCnstgDlvryInfo(pCBATechGuidanceInsertDTO.getCnstgSeq());
-            if(dlvryInfoList.size() > 0){
-                cBATechGuidanceMapper.updateCnstgDlvryInfo(cnstgDlyvMap);
-            }else{
-                cBATechGuidanceMapper.insertCnstgDlvryInfo(cnstgDlyvMap);
-            }
-
-        }
-        // 완성차 의존율 상세 정보 등록 있으면 수정
-        String[] dpbdnCmpnNm =  pCBATechGuidanceInsertDTO.getDpndnCmpnNm().split(",");
-        String[] dpbdnRate = pCBATechGuidanceInsertDTO.getDpndnRate().split(",");
-        HashMap dpndnMap = new HashMap();
-        for(int i=0; i < dpbdnCmpnNm.length; i++){
-            dpndnMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
-            dpndnMap.put("dpndnSeq",dpndnSeqIdgen.getNextIntegerId());
-            dpndnMap.put("cmpnNm", dpbdnCmpnNm[i]);
-            dpndnMap.put("dpndnRate", dpbdnRate[i]);
-            dpndnMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
-            dpndnMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
-
-            List dpndnInfoList = cBATechGuidanceMapper.selectCnstgDpndnInfo(pCBATechGuidanceInsertDTO.getCnstgSeq());
-            if(dpndnInfoList.size() > 0){
-                cBATechGuidanceMapper.updateCnstgDpndnInfo(dpndnMap);
-            }else{
-                cBATechGuidanceMapper.insertCnstgDpndnInfo(dpndnMap);
-            }
-        }
-        // 부품사 업종 상세 등록 있으면 수정
-        HashMap cbsnCdMap = new HashMap();
-        cbsnCdMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
-        cbsnCdMap.put("cbsnCd",  pCBATechGuidanceInsertDTO.getCbsnCd());
-        cbsnCdMap.put("etcNm", pCBATechGuidanceInsertDTO.getEtcNm());
-        cbsnCdMap.put("regIp", pCBATechGuidanceInsertDTO.getRegId());
-        cbsnCdMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
-        cbsnCdMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
-
-        int cnt = cBATechGuidanceMapper.selectCnstgDpndnInfoCnt(cbsnCdMap);
-        if(cnt > 0){
-            cBATechGuidanceMapper.updateCbsnDtl(cbsnCdMap);
-        }else{
-            cBATechGuidanceMapper.insertCbsnDtl(cbsnCdMap);
-        }
-
-        // 신청 분야 상세
-        String[] appctnTypeCd =  pCBATechGuidanceInsertDTO.getAppctnTypeCd().split(",");
-        HashMap appctnTypeMap = new HashMap();
-        appctnTypeMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
-        cBATechGuidanceMapper.deleteCnstgAppctnType(appctnTypeMap);
-
-        for(int i=0; i < appctnTypeCd.length; i++){
-            appctnTypeMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
-            appctnTypeMap.put("regIp", pCBATechGuidanceInsertDTO.getRegId());
-            appctnTypeMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
-            appctnTypeMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
-            appctnTypeMap.put("appctnTypeCd", appctnTypeCd[i]);
-
-            int cnstgSeq = pCBATechGuidanceInsertDTO.getCnstgSeq();
-
-            cBATechGuidanceMapper.insertCnstgAppctnType(appctnTypeMap);
-        }
-    }
-
     /**
      * 부품사 회원 정보 수정
      */
@@ -301,6 +225,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             mpaUserService.updateUserDtl(mPAUserDto);
         }
     }
+
     /**
      * 부품사 정보 수정
      */
@@ -380,6 +305,86 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
         mpePartsCompanyMapper.updatePartsCompany(mPEPartsCompanyDTO);
     }
+
+    /**
+     * 컨설팅 서브 정보 수정
+     */
+    void updateSubTechGuidanceInfo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
+
+        // 고객사 비율 상세 정보 등록, 있으면 수정
+        String[] dlvryCmpnNm =  pCBATechGuidanceInsertDTO.getDlvryCmpnNm().split(",");
+        String[] dlvryRate = pCBATechGuidanceInsertDTO.getDlvryRate().split(",");
+        HashMap cnstgDlyvMap = new HashMap();
+        for(int i=0; i < dlvryCmpnNm.length; i++) {
+            cnstgDlyvMap.put("cnstgSeq", pCBATechGuidanceInsertDTO.getCnstgSeq());
+            cnstgDlyvMap.put("cmpnDlvrySeq",dlvrySeqIdgen.getNextIntegerId());
+            cnstgDlyvMap.put("dlvryCmpnNm", dlvryCmpnNm[i]);
+            cnstgDlyvMap.put("dlvryRate", dlvryRate[i]);
+            cnstgDlyvMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
+            cnstgDlyvMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
+
+            List dlvryInfoList = cBATechGuidanceMapper.selectCnstgDlvryInfo(pCBATechGuidanceInsertDTO.getCnstgSeq());
+            if(dlvryInfoList.size() > 0){
+                cBATechGuidanceMapper.updateCnstgDlvryInfo(cnstgDlyvMap);
+            }else{
+                cBATechGuidanceMapper.insertCnstgDlvryInfo(cnstgDlyvMap);
+            }
+
+        }
+        // 완성차 의존율 상세 정보 등록 있으면 수정
+        String[] dpbdnCmpnNm =  pCBATechGuidanceInsertDTO.getDpndnCmpnNm().split(",");
+        String[] dpbdnRate = pCBATechGuidanceInsertDTO.getDpndnRate().split(",");
+        HashMap dpndnMap = new HashMap();
+        for(int i=0; i < dpbdnCmpnNm.length; i++){
+            dpndnMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
+            dpndnMap.put("dpndnSeq",dpndnSeqIdgen.getNextIntegerId());
+            dpndnMap.put("cmpnNm", dpbdnCmpnNm[i]);
+            dpndnMap.put("dpndnRate", dpbdnRate[i]);
+            dpndnMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
+            dpndnMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
+
+            List dpndnInfoList = cBATechGuidanceMapper.selectCnstgDpndnInfo(pCBATechGuidanceInsertDTO.getCnstgSeq());
+            if(dpndnInfoList.size() > 0){
+                cBATechGuidanceMapper.updateCnstgDpndnInfo(dpndnMap);
+            }else{
+                cBATechGuidanceMapper.insertCnstgDpndnInfo(dpndnMap);
+            }
+        }
+        // 부품사 업종 상세 등록 있으면 수정
+        HashMap cbsnCdMap = new HashMap();
+        cbsnCdMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
+        cbsnCdMap.put("cbsnCd",  pCBATechGuidanceInsertDTO.getCbsnCd());
+        cbsnCdMap.put("etcNm", pCBATechGuidanceInsertDTO.getEtcNm());
+        cbsnCdMap.put("regIp", pCBATechGuidanceInsertDTO.getRegId());
+        cbsnCdMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
+        cbsnCdMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
+
+        int cnt = cBATechGuidanceMapper.selectCnstgDpndnInfoCnt(cbsnCdMap);
+        if(cnt > 0){
+            cBATechGuidanceMapper.updateCbsnDtl(cbsnCdMap);
+        }else{
+            cBATechGuidanceMapper.insertCbsnDtl(cbsnCdMap);
+        }
+
+        // 신청 분야 상세
+        String[] appctnTypeCd =  pCBATechGuidanceInsertDTO.getAppctnTypeCd().split(",");
+        HashMap appctnTypeMap = new HashMap();
+        appctnTypeMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
+        cBATechGuidanceMapper.deleteCnstgAppctnType(appctnTypeMap);
+
+        for(int i=0; i < appctnTypeCd.length; i++){
+            appctnTypeMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
+            appctnTypeMap.put("regIp", pCBATechGuidanceInsertDTO.getRegId());
+            appctnTypeMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
+            appctnTypeMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
+            appctnTypeMap.put("appctnTypeCd", appctnTypeCd[i]);
+
+            int cnstgSeq = pCBATechGuidanceInsertDTO.getCnstgSeq();
+
+            cBATechGuidanceMapper.insertCnstgAppctnType(appctnTypeMap);
+        }
+    }
+
     /**
      * 컨설팅 기술 지도 삭제
      */
@@ -438,10 +443,16 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         return pCBATechGuidanceInsertDTO.getRespCnt();
     }
 
+    /**
+     * 부품 회사 정보 조회
+     */
     public List<MPEPartsCompanyDTO> selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
         return mpePartsCompanyMapper.selectPartsCompanyDtl(mpePartsCompanyDTO);
     }
 
+    /**
+     * 컨설팅 이관 내역 조회
+     */
     public CBATechGuidanceInsertDTO selectTrsfGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception
     {
 

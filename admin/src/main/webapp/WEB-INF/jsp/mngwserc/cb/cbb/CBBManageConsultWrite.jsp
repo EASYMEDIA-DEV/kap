@@ -10,7 +10,7 @@
 <c:set var="appctnTypeList" value="${rtnDto.appctnTypeList}"/>
 
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/cb/cba/CBATechGuidanceWriteCtrl">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/cb/cbb/CBBManageConsultWriteCtrl">
         <h6 class="mt0">신청부품사 등록</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -89,7 +89,7 @@
                     </div>
                     <label class="col-sm-1 control-label">전화번호</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired"  name="telNo" value="${rtnDto.telNo}" title="전화번호"/>
+                        <input type="number" class="form-control input-sm notRequired"  name="telNo" value="${rtnDto.telNo}" title="전화번호"/>
                     </div>
                 </div>
             </fieldset>
@@ -120,7 +120,7 @@
                     </div>
                     <label class="col-sm-1 control-label">규모</label>
                     <div class="col-sm-4">
-                        <select class="form-control input-sm listRowSizeContainer" name="sizeCd" id="sizeCdSelect">
+                        <select class="form-control input-sm listRowSizeContainer notRequired" name="sizeCd" id="sizeCdSelect">
                             <c:forEach var="cpSize" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                 <c:if test="${fn:contains(cpSize.cd,'COMPANY02') && cpSize.cd ne 'COMPANY02'}">
                                     <option value="${cpSize.cd}">${cpSize.cdNm}</option>
@@ -182,7 +182,7 @@
                     </div>
                     <label class="col-sm-1 control-label">억원</label>
                     <div class="col-sm-1">
-                        <select class="form-control input-sm listRowSizeContainer" name="slsYear">
+                        <select class="form-control input-sm listRowSizeContainer notRequired" name="slsYear">
                             <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                 <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
                                     <option value="${yearList.cd}" <c:if test="${rtnDto.slsYear eq yearList.cd}">selected</c:if>>${yearList.cdNm} </option>
@@ -299,10 +299,10 @@
                             <input type="text" class="form-control input-sm notRequired"  name="score" id="score" value="${sqInfoList[1]}"/>
                         </div>
                         <div class="col-sm-2">
-                            <select class="form-control input-sm listRowSizeContainer" name="year" id="yearSelect">
+                            <select class="form-control input-sm listRowSizeContainer notRequired" name="year" id="yearSelect">
                                 <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                     <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
-                                        <option value="${yearList.cd}"<c:if test="${sqInfoList[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm} </option>
+                                        <option class="notRequired" value="${yearList.cd}"<c:if test="${sqInfoList[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm} </option>
                                         </label>
                                     </c:if>
                                 </c:forEach>
@@ -325,7 +325,7 @@
                                         <input type="text" class="form-control input-sm notRequired"  name="score" id="score${i}" value="${sqInfoList1[1]}"/>
                                     </div>
                                     <div class="col-sm-2">
-                                        <select class="form-control input-sm listRowSizeContainer" name="year" id="yearSelect${i}">
+                                        <select class="form-control input-sm listRowSizeContainer notRequired" name="year" id="yearSelect${i}">
                                             <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                                 <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
                                                     <option value="${yearList.cd}" <c:if test="${sqInfoList1[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm} </option>
@@ -349,7 +349,7 @@
                                         <input type="text" class="form-control input-sm notRequired"  name="score" id="score${i}" value="${sqInfoList2[1]}"/>
                                     </div>
                                     <div class="col-sm-2">
-                                        <select class="form-control input-sm listRowSizeContainer" name="year" id="yearSelect${i}">
+                                        <select class="form-control input-sm listRowSizeContainer notRequired" name="year" id="yearSelect${i}">
                                             <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                                 <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
                                                     <option value="${yearList.cd}" <c:if test="${sqInfoList2[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm} </option>
@@ -372,11 +372,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">이름<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="picName" placeholder="이름 입력"/>
+                        <input type="text" class="form-control input-sm" name="picName" title="이름" placeholder="이름 입력"/>
                     </div>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="picEmail" placeholder="이메일 입력"/>
+                        <input type="text" class="form-control input-sm" name="picEmail" title="이메일" placeholder="이메일 입력"/>
                     </div>
                 </div>
             </fieldset>
@@ -384,11 +384,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="picDeptNm" placeholder="부서 입력"/>
+                        <input type="text" class="form-control input-sm" name="picDeptNm" title="부서" placeholder="부서 입력"/>
                     </div>
                     <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="picPstnNm" placeholder="직급 입력"/>
+                        <input type="text" class="form-control input-sm" name="picPstnNm" title="직급" placeholder="직급 입력"/>
                     </div>
                 </div>
             </fieldset>
@@ -396,11 +396,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="cmssrHpNo" placeholder="휴대폰번호 입력"/>
+                        <input type="number" class="form-control input-sm" name="cmssrHpNo" title="휴대폰번호" placeholder="휴대폰번호 입력"/>
                     </div>
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="cmssrCmpnTelNo" placeholder="회사 전화번호 입력"/>
+                        <input type="number" class="form-control input-sm" name="cmssrCmpnTelNo" title="회사전화번호" placeholder="회사 전화번호 입력"/>
                     </div>
                 </div>
             </fieldset>
@@ -469,7 +469,7 @@
                         <c:forEach var="cpSize" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                             <c:if test="${fn:contains(cpSize.cd,'COMPANY02') && cpSize.cd ne 'COMPANY02' && cpSize.cd ne 'COMPANY02004'}">
                                 <label class="radio-inline c-radio">
-                                    <input type="radio" name="cpSize" value="${cpSize.cd}" title="신청사유" <c:if test="${cpSize.cd eq cdList.cd}">checked</c:if>/>
+                                    <input type="radio" name="cpSize" value="${cpSize.cd}" title="부품사 규모" <c:if test="${cpSize.cd eq cdList.cd}">checked</c:if>/>
                                     <span class="ion-record"></span> ${cpSize.cdNm}
                                 </label>
                             </c:if>
@@ -570,11 +570,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">해외의존율<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="picName" placeholder="매출액 입력"/>
+                        <input type="text" class="form-control input-sm" name="frgnDpndnRate" placeholder="매출액 입력" title="비율" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                     <label class="col-sm-1 control-label">전체 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="picEmail" placeholder="매출액 입력"/>
+                        <input type="text" class="form-control input-sm" name="ttlSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                 </div>
             </fieldset>
@@ -582,11 +582,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">국내 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="picDeptNm" placeholder="매출액 입력"/>
+                        <input type="text" class="form-control input-sm" name="dmstcSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                     <label class="col-sm-1 control-label">해외 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="picPstnNm" placeholder="매출액 입력"/>
+                        <input type="text" class="form-control input-sm" name="frgnSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                 </div>
             </fieldset>
@@ -594,11 +594,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">자동차부품 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="cmssrHpNo" placeholder="매출액 입력"/>
+                        <input type="text" class="form-control input-sm" name="carPartSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                     <label class="col-sm-1 control-label">자동차 부품 외 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" name="cmssrCmpnTelNo" placeholder="매출액 입력"/>
+                        <input type="text" class="form-control input-sm" name="carPartXcludSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                 </div>
             </fieldset>
@@ -650,7 +650,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">홈페이지 주소</label>
                     <div class="col-sm-5">
-                        <input type="number" class="form-control input-sm notRequired urlChk" name="qltyPicCnt" value="${rtnDto.qltyPicCnt}"/>
+                        <input type="text" class="form-control input-sm notRequired urlChk" name="hmpgeUrl" value="${rtnDto.hmpgeUrl}"/>
                     </div>
                 </div>
             </fieldset>
@@ -673,7 +673,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">품질담당인원<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control input-sm notRequired" name="qltyPicCnt" value="${rtnDto.qltyPicCnt}" placeholder="인원수 입력"/>
+                        <input type="number" class="form-control input-sm" name="qltyPicCnt" value="${rtnDto.qltyPicCnt}" placeholder="인원수 입력"/>
                     </div>
                 </div>
             </fieldset>
@@ -693,7 +693,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">컨설팅요청 세부내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" title="컨설팅요청 세부내용" placeholder="세부내용 입력" maxlength="500">${rtnDto.admMemo}</textarea>
+                        <textarea class="form-control input-sm" id="rqstCntn" name="rqstCntn" title="컨설팅요청 세부내용" placeholder="세부내용 입력" maxlength="500">${rtnDto.rqstCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
@@ -703,7 +703,7 @@
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="itrdcFileSeq" data-file-extn="${fileExtns}" data-max-file-size="104857600" data-max-file-cnt="1" data-title="첨부파일">
+                        <div class="dropzone attachFile" data-file-field-nm="itrdcFileSeq" data-file-extn="${fileExtns}" data-max-file-size="104857600" data-max-file-cnt="1" data-title="첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
@@ -720,7 +720,7 @@
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="impvmFileSeq" data-file-extn="${fileExtns}" data-max-file-size="104857600" data-max-file-cnt="1" data-title="첨부파일">
+                        <div class="dropzone attachFile" data-file-field-nm="impvmFileSeq" data-file-extn="${fileExtns}" data-max-file-size="104857600" data-max-file-cnt="1" data-title="첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
