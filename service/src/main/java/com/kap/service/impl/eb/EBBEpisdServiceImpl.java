@@ -401,6 +401,36 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	}
 
 	/**
+	 * 교육차수 강제 종강처리
+	 */
+	@Transactional
+	public int updateEpisdEndEdu(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+		int actCnt = 0;
+		try{
+
+			//참여한 회원 전부 교육 취소상태로 변경 EDU_STTS_CD06
+			eBBEpisdMapper.updatePtcptStatus(eBBEpisdDTO);
+
+
+
+			//선택한 교육차수의 상태를 종강(폐강)으로 변경 EDCTN_STTS_CD02
+			eBBEpisdMapper.updateEpisdStatus(eBBEpisdDTO);
+
+
+			EBBEpisdDTO tempDto = new EBBEpisdDTO();
+			tempDto = eBBEpisdMapper.selectEpisdChk(eBBEpisdDTO);
+
+		}catch (Exception e){
+
+		}
+
+		return actCnt;
+	}
+
+
+
+	/**
 	 * 교육차수 신청자 정원체크
 	 */
 	@Transactional
@@ -448,12 +478,33 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			eBBEpisdMapper.insertPtcptDtl(eBBPtcptDTO);
 			setAtndcList(eBBPtcptDTO);//교육참여 출석 상세 목록을 등록한다.
+
 			eBBPtcptDTO.setRegStat("S");
 		}
 
 
 		return eBBPtcptDTO;
 
+	}
+
+	/*
+	 * 교육차수 신청자(참여) 출석 상세 생성
+	 * */
+	public EBBPtcptDTO changeEpisd(EBBPtcptDTO eBBPtcptDTO){
+
+		try{
+
+			//전달받은 회원번호로 반복문 돌림
+			//상태값이 F인경우 반환중지함
+
+			setPtcptInfo(eBBPtcptDTO);
+		}catch (Exception e){
+
+		}
+
+
+
+		return eBBPtcptDTO;
 	}
 
 

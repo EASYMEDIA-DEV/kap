@@ -95,6 +95,16 @@
                 <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>> <a data-toggle="tab" href="#accsList">참여자 목록</a></li>
                 <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
                 <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#bdget">예산/지출</a></li>
+
+                <div class="pull-right">
+                    <c:choose>
+                        <c:when test="${ not empty rtnDto}">
+                            <button type="button" class="btn btn-sm btn-danger" id="btn_end_edu">강제종강</button>
+                        </c:when>
+                    </c:choose>
+                </div>
+
+
             </ul>
 
             <div class="tab-content">
@@ -619,6 +629,7 @@
                                 </label>
 
                                 <table class="table table-hover table-striped">
+
                                     <thead>
                                     <tr>
                                         <th class="text-center" colspan="4">제목</th>
@@ -634,7 +645,7 @@
                                         </td>
                                     </tr>
                                     <tr class="setExg" <c:if test="${rtnDto.examNm eq ''}">style="display: none;"</c:if>>
-                                        <td class="text-center examNmForm" colspan="4">${rtnDto.examNm}</td>
+                                        <td class="text-center examNmForm" colspan="4" style="min-width: 200px;">${rtnDto.examNm}</td>
                                         <td colspan="6">
                                             <div class="input-group form-date-group mr-sm">
                                                 <input type="text" class="form-control input-sm datetimepicker_strtDt" name="examStrtDtm" id="examStrtDtm" value="${ kl:convertDate(rtnDto.examStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시험시작일시" readonly="readonly"/>
@@ -679,6 +690,24 @@
                             </div>
                         </div>
                     </fieldset>
+
+                    <fieldset class="last-child">
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
+                            <div class="col-sm-11">
+                                <c:set var="expsYn" value="${kl:nvl(rtnDto.expsYn, 'Y')}" />
+                                <label class="radio-inline c-radio">
+                                    <input type="radio" name="expsYn" value="Y" title="노출여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
+                                    <span class="ion-record"></span> 노출
+                                </label>
+                                <label class="radio-inline c-radio">
+                                    <input type="radio" name="expsYn" value="N" title="노출여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
+                                    <span class="ion-record"></span> 미노출
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+
                 </div>
 
                 <!-- 참여자 목록-->
@@ -754,7 +783,11 @@
                         </div>
                     </fieldset>
 
-
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-info btn-default" id="changeEpisd">차수 변경</button>
+                        </div>
+                    </div>
 
 
                 </div>
@@ -1089,22 +1122,6 @@
                 </div>
             </div>
 
-            <fieldset class="last-child">
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
-                    <div class="col-sm-11">
-                        <c:set var="expsYn" value="${kl:nvl(rtnDto.expsYn, 'Y')}" />
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="expsYn" value="Y" title="노출여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
-                            <span class="ion-record"></span> 노출
-                        </label>
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="expsYn" value="N" title="노출여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
-                            <span class="ion-record"></span> 미노출
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
             <hr />
             <div class="clearfix">
                 <div class="pull-left">
@@ -1176,3 +1193,4 @@
 
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업-->
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBMemAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업 - 개인별 -->
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBChangeEpisdLayer.jsp"></jsp:include><!-- 차수변경 레이어팝업-->
