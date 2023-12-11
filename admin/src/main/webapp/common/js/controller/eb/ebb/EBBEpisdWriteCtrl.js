@@ -92,12 +92,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$("#examSeq").addClass("notRequired");
 			$("input:radio[name='cmptnAutoYn']:radio[value='N']").prop("checked", true);//오프라인평가 진행시 수료자동화여부 무조건 수동 고정
 			$(".examNmForm").text("");
-			$(".setExg").addClass("table-disabled");
+			$(".jdgmtYn").find("table").addClass("table-disabled");
 		}else{
 			//alert("평가 선택 해제");
 			$("#examSeq").prop("disabled", true);
 			$("#examSeq").removeClass("notRequired");
-			$(".setExg").removeClass("table-disabled");
+			$(".jdgmtYn").find("table").removeClass("table-disabled");
 		}
 
 	}
