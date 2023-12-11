@@ -92,11 +92,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$("#examSeq").addClass("notRequired");
 			$("input:radio[name='cmptnAutoYn']:radio[value='N']").prop("checked", true);//오프라인평가 진행시 수료자동화여부 무조건 수동 고정
 			$(".examNmForm").text("");
-
+			$(".setExg").addClass("table-disabled");
 		}else{
 			//alert("평가 선택 해제");
 			$("#examSeq").prop("disabled", true);
 			$("#examSeq").removeClass("notRequired");
+			$(".setExg").removeClass("table-disabled");
 		}
 
 	}
@@ -425,6 +426,88 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// set model
 	ctrl.model = {
 		id : {
+			btn_end_edu : {
+				event : {
+					click : function() {
+						//강제 종강 클릭
+						var seqObj = {};
+						seqObj.edctnSeq = $("#edctnSeq").val();
+						seqObj.episdYear = $("#episdYear").val();
+						seqObj.episdOrd = $("#episdOrd").val();
+						seqObj.episdSeq = $("#episdSeq").val();
+
+
+						if(confirm("강제 종강처리하시겠습니까?")){
+							//현재 신청한 참여인원 데이터 전부 교육취소 상태로 바꿈, + 교육차수상태를 종강(폐강)으로 변경
+							cmmCtrl.jsonAjax(function(data){
+								if(data !=""){
+									var rtn = JSON.parse(data);
+									alert("저장되었습니다.");
+
+									location.href="./list"
+
+								}
+							}, "./endEdu", seqObj, "text");
+						}
+
+
+					}
+				}
+			},
+
+			changeEpisd : {
+				event : {
+					click : function() {
+						//강제 종강 클릭
+						var seqObj = {};
+						seqObj.edctnSeq = $("#edctnSeq").val();
+						seqObj.episdYear = $("#episdYear").val();
+						seqObj.episdOrd = $("#episdOrd").val();
+						seqObj.episdSeq = $("#episdSeq").val();
+
+						//체크한 회원정보 전부 가져옴
+						var seqList = new Array();
+						$("#ptcptListContainer").find("input:checkbox[name='delValueList']:checked").each(function(){
+							seqList.push($(this).val());
+						});
+
+
+						if(seqList.length<1){
+							alert("회원을 선택해주세요.");
+							return false;
+
+						}
+						seqObj.memSeq = seqList;
+
+
+						//출석부 레이어 팝업 호출
+						$(".ebbChageEpisdLayer").one('show.bs.modal', function() {
+							$(".ebbChageEpisdLayer").find("#chan_edctnSeq").val(seqObj.edctnSeq);
+							$(".ebbChageEpisdLayer").find("#chan_episdYear").val(seqObj.episdYear);
+							$(".ebbChageEpisdLayer").find("#chan_episdOrd").val(seqObj.episdOrd);
+							$(".ebbChageEpisdLayer").find("#chan_episdSeq").val(seqObj.episdSeq);
+							$(".ebbChageEpisdLayer").find("#chan_memSeq").val(seqObj.memSeq);
+							//$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
+							//$(this).find("button.tempBtn").trigger("click");
+
+							var modal = $(this);
+							modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+						}).one('hidden.bs.modal', function() {
+							// Remove class for soft backdrop (if not will affect future modals)
+						}).one('choice', function(data, param) {
+							var obj = param;
+							$("#listContainer3").find("td").eq(0).text(obj.typeNm);
+							$("#listContainer3").find("td").eq(1).text(obj.titl);
+							$("#srvSeq").val(obj.seq);
+						}).modal();
+
+
+					}
+				}
+			},
+
+
 			btnSearch : {
 				event : {
 					click : function() {

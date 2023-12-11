@@ -36,10 +36,12 @@
 					END  AS accs_status_nm
 				, edctn_strt_dtm
 				, edctn_end_dtm
-				, case
-					when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-					when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
-					when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
+				, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+						case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+								when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+								when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
+						end
+						when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 				END  AS edctn_status_nm
 				, (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
 				, (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
@@ -81,6 +83,7 @@
 				, a.accs_end_dtm
 				, a.edctn_strt_dtm
 				, a.edctn_end_dtm
+			   	, a.edctn_stts_cd
 				, (SELECT min(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS min_isttr_seq
 				, (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
 				, a.fxnum_cnt
@@ -521,6 +524,40 @@
 		and episd_year = #{episdYear}
 		and episd_ord = #{episdOrd}
 	</select>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.updatePtcptStatus
+      설  명 : 교육차수 참여자 교육취소처리
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.12.11   김학규       최초생성
+ 	-->
+	<update id="updatePtcptStatus" parameterType="EBBEpisdDTO" >
+
+		UPDATE ep_edctn_ptcpt_mst SET /* EBBEpisdMapper.updatePtcptStatus */
+			stts_cd = 'EDU_STTS_CD06'
+		WHERE 1=1
+		  and edctn_seq = #{edctnSeq}
+		  and episd_year = #{episdYear}
+		  and episd_ord = #{episdOrd}
+	</update>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.updateEpisdStatus
+      설  명 : 교육차수 차수 종강(폐강처리)
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.12.11   김학규       최초생성
+ 	-->
+	<update id="updateEpisdStatus" parameterType="EBBEpisdDTO" >
+
+		UPDATE ed_edctn_episd_mst SET /* EBBEpisdMapper.updateEpisdStatus */
+			edctn_stts_cd = 'EDCTN_STTS_CD02'
+			WHERE 1=1
+				and edctn_seq = #{edctnSeq}
+				and episd_year = #{episdYear}
+				and episd_ord = #{episdOrd}
+	</update>
 
 	<!--
          쿼리명 : EBBEpisdMapper.insertEpisd
@@ -1282,6 +1319,47 @@
 			)
 		</foreach>
 	</insert>
+
+	<!--
+		 쿼리명 : EBBEpisdMapper.insertEdctnLctrDtl
+		 설  명 : 교육차수 - 신청자  참여강의 상세 등록(온라인 강의)
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.11   김학규       최초생성
+	-->
+
+	<insert id="insertEdctnLctrDtl" parameterType="EBBEpisdDTO">
+		insert into /*EBBEpisdMapper.insertEdctnLctrDtl*/ ep_edctn_lctr_dtl (
+			ptcpt_seq
+			, lctr_seq
+			, edctn_seq
+			, episd_ord
+			, episd_year
+			, episd_seq
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		) VALUES
+			(
+			#{ptcptList.ptcptSeq}
+			, #{ptcptList.lctrSeq}
+			, #{ptcptList.edctnSeq}
+			, #{ptcptList.episdOrd}
+			, #{ptcptList.episdYear}
+			, #{ptcptList.episdSeq}
+			, #{ptcptList.regId}
+			, #{ptcptList.regIp}
+			, now()
+			, #{ptcptList.modId}
+			, #{ptcptList.modIp}
+			, now()
+			)
+	</insert>
+
+
 
 	<!--
              쿼리명 : EBBEpisdMapper.updateAtndcList
