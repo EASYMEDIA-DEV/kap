@@ -416,7 +416,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         updateTechCompanyInfo(pCBATechGuidanceInsertDTO);
         // 신청 서브 정보 수정
         updateSubTechGuidanceInfo(pCBATechGuidanceInsertDTO);
-
+        // 부품사 업종 상세 수정
         cBATechGuidanceMapper.updateCbsnDtl(pCBATechGuidanceInsertDTO);
 
         int cnstgSeq = pCBATechGuidanceInsertDTO.getCnstgSeq();
@@ -431,8 +431,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
         String bfreMemSeq = pCBATechGuidanceInsertDTO.getBfreMemSeq();
         String aftrMemSeq = pCBATechGuidanceInsertDTO.getMemSeq();
-        System.err.println("bfreMemSeq::"+bfreMemSeq);
-        System.err.println("aftrMemSeq::"+aftrMemSeq);
         if(!bfreMemSeq.equals(aftrMemSeq)){
             pCBATechGuidanceInsertDTO.setTrnsfSeq(consTrnsfSeqIdgen.getNextIntegerId());
             pCBATechGuidanceInsertDTO.setAftrMemSeq(aftrMemSeq);

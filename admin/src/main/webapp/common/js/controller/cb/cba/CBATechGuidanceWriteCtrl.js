@@ -164,7 +164,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
     }
     var callbackAjaxAddrList = function (data) {
         var detailList = JSON.parse(data);
-        var selectHtml = "<option value=''>전체</option>";
+        var selectHtml = "<option value=''>선택</option>";
 
         for (var i = 0; i < detailList.length; i++) {
 
@@ -513,6 +513,20 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
+            srvResult : {
+                event : {
+                    click : function(){
+                        var pstnText = $("#pstnCdSelect option:selected").text();
+                        $(".pstnText").text(pstnText);
+                        var cbsnText = $("input[name='cbsnCd']:checked").parent().text().trim();
+                        $(".cbsnText").text(cbsnText);
+                        var guideTypeText = $("#guideTypeCd option:selected").text();
+                        $(".guideTypeText").text(guideTypeText);
+                        var cmssrName = $("input[name='cmssrName']").val();
+                        $(".cmssrName").text(cmssrName);
+                    }
+                }
+            }
 
         },
         immediately: function () {
