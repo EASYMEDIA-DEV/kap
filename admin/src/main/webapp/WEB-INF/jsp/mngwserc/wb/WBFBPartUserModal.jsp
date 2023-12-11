@@ -24,6 +24,7 @@
                     <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
                     <input type="hidden" id="selPartUser" name="selPartUser" value="" />
+                    <input type="hidden" id="memCd" name="memCd" value="" />
 
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
@@ -32,7 +33,7 @@
                         <jsp:param name="selPer" value="select" />
                     </jsp:include>
                     <!--기간 검색 종료-->
-                    <fieldset>
+                    <fieldset id="cdList" style="display: none">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">구분</label>
                             <div class="col-sm-5">
@@ -41,7 +42,7 @@
                                     <span class="ion-checkmark-round"></span> 전체
                                 </label>
                                 <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                    <c:if test="${fn:contains(cdList, 'COMPANY010')}">
+                                    <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
                                         <label class="checkbox-inline c-checkbox">
                                             <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
                                             <span class="ion-checkmark-round"></span> ${cdList.cdNm}
@@ -57,15 +58,8 @@
                             <div class="col-sm-4">
                                 <div class="row">
                                     <div class="col-sm-3 pr0">
+                                        <%-- 검색어 옵션 --%>
                                         <select class="form-control input-sm" data-name="f">
-                                            <option value="">전체</option>
-                                            <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
-                                            <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
-                                            <option value="2" <c:if test="${rtnData.f eq '6'}">selected</c:if>>부품사명</option>
-                                            <option value="2" <c:if test="${rtnData.f eq '7'}">selected</c:if>>사업자등록번호</option>
-                                            <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>휴대폰번호</option>
-                                            <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>이메일</option>
-                                            <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종수정자</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-9 pr0">
@@ -75,7 +69,7 @@
                             </div>
                             <div class="pull-left ml-sm">
                                 <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                                <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
+                                <button type="button" class="btn btn-default btn-sm" id="btnModalRefresh">초기화</button>
                             </div>
                         </div>
                     </fieldset>
@@ -94,29 +88,15 @@
                                 </jsp:include>
                             </select>
                         </div>
-                        <div class="pull-right">
-                            <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
-                        </div>
                     </div>
                     <!--VUE 영역 시작 -->
                     <div class="table-responsive col-sm-12 p0 m0" id="vueList">
                         <table class="table table-hover table-striped" >
                             <thead>
-                            <tr>
-                                <th class="text-center"></th>
-                                <th class="text-center">번호</th>
-                                <th class="text-center">아이디</th>
-                                <th class="text-center">이름</th>
-                                <th class="text-center">부품사명</th>
-                                <th class="text-center">구분</th>
-                                <th class="text-center">규모</th>
-                                <th class="text-center">사업자등록번호</th>
-                                <th class="text-center">휴대폰번호</th>
-                                <th class="text-center">이메일</th>
-                                <th class="text-center">가입일</th>
-                                <th class="text-center">최종 수정자</th>
-                                <th class="text-center">수정 일시</th>
-                            </tr>
+                                <%-- Table Head --%>
+                                <tr>
+
+                                </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->
                             <tbody id="listContainer"/>

@@ -119,7 +119,7 @@
                                 <span class="ion-checkmark-round"></span>
                             </label>
                         </th>
-                        <th class="text-center">선택</th>
+                        <th class="text-center">번호</th>
                         <th class="text-center">대표자명</th>
                         <th class="text-center">부품사명</th>
                         <th class="text-center">사업자등록번호</th>
@@ -128,8 +128,11 @@
                         <th class="text-center">부품사코드</th>
                         <th class="text-center">매출액(억원)</th>
                         <th class="text-center">직원수</th>
-                        <th class="text-center">전화번호</th>
+                        <th class="text-center">회사 전화번호</th>
                         <th class="text-center">최초 등록자</th>
+                        <th class="text-center">최초 등록일시</th>
+                        <th class="text-center">최초 수정자</th>
+                        <th class="text-center">최초 수정일시</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

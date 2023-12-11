@@ -295,9 +295,6 @@ public class EBCVisitEduController {
             }
             return detailList;
         }
-
-
     }
-
 }
 

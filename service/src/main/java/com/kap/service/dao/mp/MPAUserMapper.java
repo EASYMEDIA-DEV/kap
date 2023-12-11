@@ -62,4 +62,10 @@ public interface MPAUserMapper {
 
     int updatePwdInit(MPPwdInitDto mpPwdInitDto);
 
+    void insertUser(MPAUserDto mpaUserDto);
+
+    int selectCiCnt(MPAUserDto mpaUserDto);
+
+    void insertUserDtl(MPAUserDto mpaUserDto);
+
 }

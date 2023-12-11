@@ -174,7 +174,7 @@
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">납입5스타</label>
                                 <div class="col-sm-5">
-                                    <select class="form-control input-sm notRequired" id="pay5StarCd" name="pay5StarCd" title="납입5스타등급" style="width: 100px;">
+                                    <select class="form-control input-sm notRequired" id="pay5StarCd" name="pay5StarCd" title="납입5스타등급">
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                             <c:if test="${fn:contains(cdList, 'COMPANY030')}">
@@ -199,7 +199,7 @@
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">기술5스타</label>
                                 <div class="col-sm-5">
-                                    <select class="form-control input-sm notRequired" id="tchlg5StarCd" name="tchlg5StarCd" title="기술5스타등급" style="width:100px;">
+                                    <select class="form-control input-sm notRequired" id="tchlg5StarCd" name="tchlg5StarCd" title="기술5스타등급">
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                             <c:if test="${fn:contains(cdList, 'COMPANY030')}">
@@ -314,7 +314,7 @@
                         <hr />
                         <c:if test="${ not empty rtnInfo }">
                             <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
-                            <div class="table-responsive ">
+                            <div class="table-responsive">
                                 <table class="table text-sm">
                                     <tbody>
                                     <tr>
@@ -351,161 +351,170 @@
                 </div>
                 <div id="edu" class="tab-pane fade">
                     <h6 class="mt-lg">종합현황</h6>
-                    <div class="table table-hover table-striped">
+                    <div class="table-responsive">
                         <table class="table">
                             <colgroup>
-                                <col style="width:30%;">
-                                <col style="width:30%;">
-                                <col style="width:30%;">
+                                <col style="width:20%;">
+                                <col style="width:20%;">
+                                <col style="width:20%;">
+                                <col style="width:20%;">
                             </colgroup>
                             <tbody>
                             <tr>
-                                <th class="bg-gray-lighter">교육사업</th>
+                                <th class="bg-gray-lighter">교육/세미나</th>
                                 <th class="bg-gray-lighter">컨설팅사업</th>
                                 <th class="bg-gray-lighter">상생사업</th>
+                                <th class="bg-gray-lighter">자동차부품산업대상</th>
                             </tr>
                             <tr>
                                 <td class="text-center">${eduCnt}</td>
                                 <td class="text-center">${consultCnt}</td>
                                 <td class="text-center">${winBusinessCnt}</td>
+                                <td class="text-center">${carPartsCnt}</td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            교육사업
+                            교육참여
                         </h6>
                     </div>
-                    <table class="table table-hover table-striped" >
-                        <thead>
-                        <tr>
-                            <th class="text-center">구분</th>
-                            <th class="text-center">누계</th>
-                            <th class="text-center">2023년</th>
-                            <th class="text-center">2022년</th>
-                            <th class="text-center">2021년</th>
-                            <th class="text-center">2020년</th>
-                            <th class="text-center">2019년 이전</th>
-                        </tr>
-                        <tbody>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" >
+                            <thead>
                             <tr>
-                                <td class="text-center">품질아카데미</td>
+                                <th class="text-center">구분</th>
+                                <th class="text-center">누계</th>
+                                <th class="text-center">2023년</th>
+                                <th class="text-center">2022년</th>
+                                <th class="text-center">2021년</th>
+                                <th class="text-center">2020년</th>
+                                <th class="text-center">2019년 이전</th>
                             </tr>
-                            <tr>
-                                <td class="text-center">제조/경영혁신</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">세미나</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">방문교육</td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">소계</td>
-                            </tr>
-                        </tbody>
-                        </thead>
-                        <!-- 리스트 목록 결과 -->
-                        <tbody id="eduListContainer"/>
-                        <%--<c:forEach var="list" items="${eduTotalCntList.list}" varStatus="status">
-                            <tr data-total-count="${list.totalCount}">
-                                    ${list.prntCdNm}
-                                            ${list.groupCnt}
-                            </tr>
-                        </c:forEach>--%>
-                    </table>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">품질아카데미</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">제조/경영혁신</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">세미나</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">방문교육</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">소계</td>
+                                </tr>
+                            </tbody>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="eduListContainer"/>
+                            <%--<c:forEach var="list" items="${eduTotalCntList.list}" varStatus="status">
+                                <tr data-total-count="${list.totalCount}">
+                                        ${list.prntCdNm}
+                                                ${list.groupCnt}
+                                </tr>
+                            </c:forEach>--%>
+                        </table>
+                    </div>
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            기술지도
+                            상주기술지도
                         </h6>
                     </div>
-                    <table class="table table-hover table-striped" >
-                        <thead>
-                        <tr>
-                            <th class="text-center">번호</th>
-                            <th class="text-center">업종</th>
-                            <th class="text-center">지도위원</th>
-                            <th class="text-center">지도기간</th>
-                            <th class="text-center">초도방문자료</th>
-                            <th class="text-center">킥오프자료</th>
-                            <th class="text-center">랩업자</th>
-                            <th class="text-center">회사소개자료</th>
-                            <th class="text-center">공정개선율</th>
-                        </tr>
-                        </thead>
-                        <!-- 리스트 목록 결과 -->
-                        <tbody id="techListContainer"/>
-                    </table>
-
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">번호</th>
+                                <th class="text-center">업종</th>
+                                <th class="text-center">지도위원</th>
+                                <th class="text-center">지도기간</th>
+                                <th class="text-center">초도방문자료</th>
+                                <th class="text-center">킥오프자료</th>
+                                <th class="text-center">랩업자</th>
+                                <th class="text-center">회사소개자료</th>
+                                <th class="text-center">공정개선율</th>
+                            </tr>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="techListContainer"/>
+                        </table>
+                    </div>
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            경영컨설팅
+                            상주경영컨설팅
                         </h6>
                     </div>
-                    <table class="table table-hover table-striped" >
-                        <thead>
-                        <tr>
-                            <th class="text-center">번호</th>
-                            <th class="text-center">업종</th>
-                            <th class="text-center">지도위원</th>
-                            <th class="text-center">지도기간</th>
-                            <th class="text-center">초도방문자료</th>
-                            <th class="text-center">킥오프자료</th>
-                            <th class="text-center">랩업자</th>
-                            <th class="text-center">회사소개자료</th>
-                            <th class="text-center">공정개선율</th>
-                        </tr>
-                        </thead>
-                        <!-- 리스트 목록 결과 -->
-                        <tbody id="consultListContainer"/>
-                    </table>
-
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">번호</th>
+                                <th class="text-center">업종</th>
+                                <th class="text-center">지도위원</th>
+                                <th class="text-center">지도기간</th>
+                                <th class="text-center">초도방문자료</th>
+                                <th class="text-center">킥오프자료</th>
+                                <th class="text-center">랩업자</th>
+                                <th class="text-center">회사소개자료</th>
+                                <th class="text-center">공정개선율</th>
+                            </tr>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="consultListContainer"/>
+                        </table>
+                    </div>
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
                             자금지원
                         </h6>
                     </div>
-                    <table class="table table-hover table-striped" >
-                        <thead>
-                        <tr>
-                            <th class="text-center">구분</th>
-                            <th class="text-center">추천위원</th>
-                            <th class="text-center">재단지원금</th>
-                            <th class="text-center">총투자비</th>
-                            <th class="text-center">실지급일</th>
-                            <th class="text-center">장비명</th>
-                        </tr>
-                        </thead>
-                        <!-- 리스트 목록 결과 -->
-                        <tbody id="fundingListContainer"/>
-                    </table>
-
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">구분</th>
+                                <th class="text-center">추천위원</th>
+                                <th class="text-center">재단지원금</th>
+                                <th class="text-center">총투자비</th>
+                                <th class="text-center">실지급일</th>
+                                <th class="text-center">장비명</th>
+                            </tr>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="fundingListContainer"/>
+                        </table>
+                    </div>
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
                             자동차부품산업대상
                         </h6>
                     </div>
-                    <table class="table table-hover table-striped" >
-                        <thead>
-                        <tr>
-                            <th class="text-center">년도</th>
-                            <th class="text-center">지원결과</th>
-                            <th class="text-center">훈격</th>
-                            <th class="text-center">포상부문</th>
-                            <th class="text-center">포상금액(만원)</th>
-                            <th class="text-center">부품사명</th>
-                            <th class="text-center">수상자명</th>
-                            <th class="text-center">직급</th>
-                        </tr>
-                        </thead>
-                        <!-- 리스트 목록 결과 -->
-                        <tbody id="kapTargetListContainer"/>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">년도</th>
+                                <th class="text-center">지원결과</th>
+                                <th class="text-center">훈격</th>
+                                <th class="text-center">포상부문</th>
+                                <th class="text-center">포상금액(만원)</th>
+                                <th class="text-center">부품사명</th>
+                                <th class="text-center">수상자명</th>
+                                <th class="text-center">직급</th>
+                            </tr>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="carTargetListContainer"/>
+                        </table>
+                    </div>
                 </div>
             </div>
-
         </form>
     </div>
 </div>

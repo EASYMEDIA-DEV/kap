@@ -1,5 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 만족도종합결과(Modal) -->
+<c:set var="today" value="<%=new java.util.Date()%>" />
+<fmt:formatDate value="${today}" pattern="yyyy" var="start"/>
 <div class="modal fade consultSuveyRsltLayer" tabindex="-1" role="dialog" data-controller="controller/cb/cbb/CBBConsultSuveyRsltLayertCtrl">
   <div class="modal-dialog modal-lg modal-center" role="document" style="width:1500px;">
     <div class="modal-content">
@@ -29,10 +31,9 @@
                     <div class="col-sm-3 pr0">
                       <select class="form-control input-sm" name="rtnBsnYear">
                         <option value="">선택</option>
-                          <option value="2023">2023</option>
-                        <%--<c:forEach var="cdList" items="${cdDtlList.MNGCNSLT_STATUS}" varStatus="status">
-                          <option value="${cdList.cd}" <c:if test="${rtnData.resumeSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
-                        </c:forEach>--%>
+                        <c:forEach begin="0" end="${start-2013}" var="result" step="1">
+                           <option value="${start-result}" >${start-result}</option>
+                        </c:forEach>
                       </select>
                     </div>
                     <div class="col-sm-4">

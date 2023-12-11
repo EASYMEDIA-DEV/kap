@@ -8,11 +8,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	};
 
 	// get controller object
-	var ctrl = new ezCtrl.controller(exports.controller);
+	var ctrlHeaderSearch = new ezCtrl.controller(exports.controller);
 	// create object
-	var $formObj = ctrl.obj.find("form").eq(0);
+	var $formObj = ctrlHeaderSearch.obj.find("form").eq(0);
 	// set model
-	ctrl.model = {
+	ctrlHeaderSearch.model = {
 		id : {
 			// do something...
 			totalSearchButton : {
@@ -61,6 +61,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		}
 	};
 	// execute model
-	ctrl.exec();
-	return ctrl;
+	ctrlHeaderSearch.exec();
+	return ctrlHeaderSearch;
 });

@@ -435,6 +435,61 @@
     </select>
 
     <!--
+         쿼리명 : MPEPartsCompanyMapper.selectCarTargetList
+         설  명 : 자동차부품산업대상 정보를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.07   구은희       최초생성
+    -->
+    <select id="selectCarTargetList" parameterType="MPEPartsCompanyDTO">
+        SELECT B.year AS cart_target_year -- 년도
+             , C.prize_pmt -- 포상금액
+             , C.mrts_name -- 훈격명
+             , C.pmt_name -- 포상부문명
+             , D.cmpn_nm -- 부품사명
+             , E.name AS winner_name -- 수상자명
+             , E.pstn_nm AS winner_pstn_nm -- 수상자 직급
+        from
+            (
+                select appctn_seq, episd_seq, mem_seq, appctn_bsnm_no
+                from cx_appctn_mst
+            ) A
+                left join
+            (
+                select episd_seq, bsn_cd,YEAR
+                from cx_episd_mst
+            ) B
+            on A.episd_seq = B.episd_seq
+                left join
+            (
+                select prize_seq
+                     ,episd_seq
+                     ,mrts_cd
+                     ,prize_cd
+                     ,prize_pmt
+                     , (select cd_nm from co_code_mst where cd = mrts_cd) as mrts_name
+                     , (select cd_nm from co_code_mst where cd = prize_cd) as pmt_name
+                from cx_episd_prize_dtl
+            ) C
+            on B.episd_seq = C.episd_seq
+                LEFT JOIN
+            (
+                SELECT bsnm_no, cmpn_nm
+                FROM cp_cmpn_mst
+            ) D
+            ON A.appctn_bsnm_no = D.bsnm_no
+                LEFT JOIN
+            (
+                SELECT name, pstn_nm, mem_seq
+                FROM co_mem_mst
+            ) E
+            ON A.mem_seq = E.mem_seq
+        WHERE B.bsn_cd = "INQ07010" -- 사업코드가 자동차부품산업대상
+        AND A.appctn_bsnm_no = "123456714"-- 나중에 수정할 부분!
+    </select>
+
+
+    <!--
 		쿼리명 : selectPartsComListwhereSql
 		설  명 : 부품사 관리 where Sql
 	      수정일      수정자       수정내용

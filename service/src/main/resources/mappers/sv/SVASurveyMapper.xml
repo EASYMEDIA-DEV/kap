@@ -576,14 +576,90 @@
 					  , (@grp := ctgry_cd) as dum
 					  , (select count(*) from sv_qstn_dtl c where c.srv_seq = #{detailsKey} and c.parnt_qstn_seq = b.qstn_seq  ) as qstn_cnt
 				 FROM
-					 co_code_mst a left join (select * from sv_qstn_dtl where srv_seq = #{detailsKey}) b on a.cd = b.ctgry_cd
+					 co_code_mst a left join (select * from sv_qstn_dtl where srv_seq = #{detailsKey} AND ctgry_cd !='EDU05') b on a.cd = b.ctgry_cd
 					, (select @rownum:=0, @grp:='') r
-				 WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd} AND b.qstn_seq is not null
+				 WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd}  AND b.qstn_seq is not null
 				 ORDER BY
 					 lft_val , qstn_ord
 			 ) T
 
 	</select>
+
+	<!--
+	쿼리명 : SVASurveyMapper.selectSurveyIsttrQstnTypeDtlList
+	설  명 : 강사 설문 질문 내용 조회
+	  수정일      수정자       수정내용
+	==========   ========   ==============
+	2023.12.07    박준희       최초생성
+	-->
+	<select id="selectSurveyIsttrQstnTypeDtlList" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyQstnDtlDTO">
+
+		SELECT 		/* SVASurveyMapper.selectSurveyIsttrQstnTypeDtlList */
+			cd_id
+			 , cd
+			 , cd_nm
+			 , qstn_seq
+			 , ctgry_cd
+			 , srv_type_cd
+			 , parnt_qstn_seq
+			 , case when dpth is null then 0 else dpth end dpth
+			 , qstn_nm
+			 , ncs_yn
+			 , qstn_ord
+			 , exmpl_cnt
+			 , qstn_grp_ord
+			 , qstn_cnt
+			 , srv_type_nm
+			 , isttr_seq
+			 , isttr_name
+
+		FROM (
+				 SELECT
+					 cd_id
+					  , cd
+					  , cd_nm
+					  , b.qstn_seq
+					  , b.ctgry_cd
+					  , b.srv_type_cd
+					  , (select cd_nm from co_code_mst where cd_id = 'QUESTION_TYPE' and cd = b.srv_type_cd) as srv_type_nm
+					  , b.parnt_qstn_seq
+					  , b.dpth
+					  , b.qstn_nm
+					  , b.ncs_yn
+					  , b.qstn_ord
+					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
+					  , case when @grp collate utf8mb4_general_ci = b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
+					  , (@grp := ctgry_cd) as dum
+					  , (select count(*) from sv_qstn_dtl c where c.srv_seq = #{detailsKey} and c.parnt_qstn_seq = b.qstn_seq  ) as qstn_cnt
+				      , b.isttr_seq
+				 	  , b.isttr_name
+				 FROM
+					 co_code_mst a left join (
+						 select
+						b.isttr_seq
+						,(select name from cp_isttr_mst where isttr_seq = b.isttr_seq) as isttr_name
+						, a.srv_seq
+						, c.qstn_seq
+						, c.ctgry_cd
+						, c.srv_type_cd
+						, c.parnt_qstn_seq
+						, c.dpth
+						, c.qstn_nm
+						, c.ncs_yn
+						, c.qstn_ord
+						 from ed_edctn_episd_mst a
+							 inner join ed_edctn_isttr_rel b on a.episd_year= b.episd_year and a.episd_ord = b.episd_ord
+						 inner join sv_qstn_dtl c on a.srv_seq = c.srv_seq
+						 where a.episd_seq = #{episdSeq} and a.srv_seq = #{detailsKey} and c.ctgry_cd ='EDU05'
+					 ) b on a.cd = b.ctgry_cd
+					, (select @rownum:=0, @grp:='') r
+				 WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd}  AND b.qstn_seq is not null
+				 ORDER BY
+					 lft_val , qstn_ord
+			 ) T
+
+	</select>
+
 
 
 	<!--
@@ -606,6 +682,57 @@
 			 ,a.mod_dtm
 			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = #{srvRspnSeq} and svmd.exmpl_seq = a.exmpl_seq) as win_answer
 			 , (select sbjct_rply from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where svm.srv_rspn_seq = #{srvRspnSeq} and svsd.qstn_seq = a.qstn_seq) as win_answer_text
+		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
+		where a.qstn_seq = #{qstnSeq}
+		order by a.qstn_seq asc, a.exmpl_ord asc
+
+	</select>
+
+	<!--
+		쿼리명 : SVASurveyMapper.selectSurveyExmplEduDtlList
+		설  명 : 응답 조회(교육)
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.07    박준희       최초생성
+    -->
+	<select id="selectSurveyExmplEduDtlList" parameterType="SVASurveyQstnDtlDTO" resultType="SVASurveyExmplDtlDTO">
+		select /* SVASurveyMapper.selectSurveyExmplEduDtlList */
+			a.exmpl_seq
+			 ,a.qstn_seq
+			 ,a.exmpl_nm
+			 ,a.exmpl_ord
+			 ,a.next_no
+			 ,a.reg_id
+			 ,a.reg_dtm
+			 ,a.mod_id
+			 ,a.mod_dtm
+			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svmd.exmpl_seq = a.exmpl_seq) as win_answer
+			 , (select group_concat(sbjct_rply) from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svsd.qstn_seq = a.qstn_seq) as win_answer_text
+		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
+		where a.qstn_seq = #{qstnSeq}
+		order by a.qstn_seq asc, a.exmpl_ord asc
+
+	</select>
+
+	<!--
+		쿼리명 : SVASurveyMapper.selectSurveyIsttrExmplEduDtlList
+		설  명 : 응답 조회(교육-강사)
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.07    박준희       최초생성
+    -->
+	<select id="selectSurveyIsttrExmplEduDtlList" parameterType="SVASurveyQstnDtlDTO" resultType="SVASurveyExmplDtlDTO">
+		select /* SVASurveyMapper.selectSurveyIsttrExmplEduDtlList */
+			a.exmpl_seq
+			 ,a.qstn_seq
+			 ,a.exmpl_nm
+			 ,a.exmpl_ord
+			 ,a.next_no
+			 ,a.reg_id
+			 ,a.reg_dtm
+			 ,a.mod_id
+			 ,a.mod_dtm
+			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svmd.exmpl_seq = a.exmpl_seq and svmd.isttr_seq = #{isttrSeq}) as win_answer
 		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
 		where a.qstn_seq = #{qstnSeq}
 		order by a.qstn_seq asc, a.exmpl_ord asc

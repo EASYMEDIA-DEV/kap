@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<title>KAP</title>
+    <link rel="shortcut icon" href="/common/images/favicon.ico" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="keywords" content="KAP"/>
+		<meta name="description" content="KAP"/>
+		<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+		<meta property="og:type" content="website" id="og-type-value"/>
+		<meta property="og:url" content="URL" id="og-url-value"/>
+		<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
+		<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
+		<meta property="og:image" content="img URL" id="og-image-value"/>
+		<!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
+		<meta name="twitter:title" content="Main" id="twitter-title-value"/>
+		<meta name="twitter:image" content="img URL" />
+		<meta name="twitter:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="twitter-discription-value"/> -->
+		<link rel="stylesheet" href="/common/css/swiper.css" />
+		<link rel="stylesheet" href="/common/css/fonts.css" />
+		<link rel="stylesheet" href="/common/css/common.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
+		<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" src="/common/js/gsap.min.js"></script>
+		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+    <script type="text/javascript" src="/common/js/script.js"></script>
+	</head>
+	<body>
+    <div id="wrap">
+      <!-- 자료 업로드 팝업 -->
+      <div class="layer-popup paymentInfoManagPopup first-show"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
+        <div class="for-center">
+          <div class="pop-wrap">
+            <div class="pop-con-area">
+              <div class="tit-area">
+                <p class="f-title1">자료 업로드</p>
+              </div>
+              <div class="con-area">
+                <div class="scroll-area">
+                  <div class="p-cont-sec">
+                    <div class="sec-tit-area">
+                      <p class="f-head">파일을 첨부해주세요</p>
+                    </div>
+                    <div class="sec-con-area">
+                      <div class="data-enter-form">
+                        <div class="row">
+                          <div class="th">
+                            <p class="title f-head">지도부품사</p>
+                          </div>
+                          <div class="td">
+                            <div class="data-line-w">
+                              <div class="data-line">
+                                <div class="form-group">
+                                  <div class="form-select">
+                                    <select id="" title="선택">
+                                      <option value="" selected>선택</option>
+                                      <option value="">선택1</option>
+                                      <option value="">선택2</option>
+                                      <option value="">선택3</option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="th">
+                            <p class="title f-head">킥오프자료</p><!-- 2023-12-06 필수 표시 마크 삭제 -->
+                          </div>
+                          <div class="td">
+                            <div class="data-line-w">
+                              <div class="data-line">
+                                <div class="inner-line">
+                                  <div class="form-group">
+                                    <div class="file-list-area w-longer"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                      <p class="empty-txt">선택된 파일 없음</p>
+                                    </div>
+                                    <div class="file-btn-area">
+                                      <input type="file" id="searchFile">
+                                      <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="th">
+                            <p class="title f-head">랩업자료</p><!-- 2023-12-06 필수 표시 마크 삭제 -->
+                          </div>
+                          <div class="td">
+                            <div class="data-line-w">
+                              <div class="data-line">
+                                <div class="inner-line">
+                                  <div class="form-group">
+                                    <div class="file-list-area w-longer"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                      <p class="empty-txt">선택된 파일 없음</p>
+                                    </div>
+                                    <div class="file-btn-area">
+                                      <input type="file" id="searchFile">
+                                      <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="inner-line">
+                                  <div class="noti-txt-w">
+                                    <p class="bullet-noti-txt f-caption2">* jpg,jpeg,gif,png,bmp,mp4,webm,wmv,avi,mkv,pdf,ppt,pptx,xls,xlsx,doc,docx,hwp,hwpx,txt,zip 파일만 등록 가능합니다. (100MB 이하, 최대 1개 파일 등록 가능)</p><!-- 2023-12-06 텍스트 수정 -->
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="bot-fix-btn-area">
+                <div class="btn-wrap align-right">
+                  <button class="btn-solid small black-bg btn-role-close btn-agree" type="button"><span>저장</span></button>
+                </div>
+              </div>
+              <div class="user-opt-area">
+                <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="dimd"></div>
+    </div>
+	</body>
+</html>

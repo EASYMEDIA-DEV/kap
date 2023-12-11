@@ -75,6 +75,7 @@ public class COLgnServiceImpl  implements COLgnService {
 				// 암호화 비밀번호
 				log.error(COSeedCipherUtil.encryptPassword(cOLoginDTO.getPassword(), cOLoginDTO.getId()));
 				rtnCOAAdmDTO.setPasswordConfirm(COSeedCipherUtil.encryptPassword(cOLoginDTO.getPassword(), cOLoginDTO.getId()));
+				log.error("rtnCOAAdmDTO : {}", rtnCOAAdmDTO);
 				// 로그인 오류 횟수 확인
 				if (rtnCOAAdmDTO.getLgnFailCnt() < 5)
 				{

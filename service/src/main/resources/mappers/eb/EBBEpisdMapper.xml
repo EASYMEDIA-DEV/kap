@@ -1173,6 +1173,29 @@
 	</select>
 
 	<!--
+      쿼리명 : EBBEpisdMapper.selectMemAtndcDtl
+      설  명 : 교육차수 - 개인별 출석부
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.12.08   김학규       최초생성
+ 	-->
+	<select id="selectMemAtndcDtl" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
+		SELECT
+
+			a.ptcpt_seq
+			 , a.mem_seq
+			 , (SELECT id FROM co_mem_mst WHERE mem_seq = a.mem_seq ) AS id
+			 , (SELECT name FROM co_mem_mst WHERE mem_seq = a.mem_seq ) AS name
+			 , b.edctn_dt
+			 , b.atndc_dtm
+			 , b.lvgrm_dtm
+			 , b.etc_nm
+		FROM ep_edctn_ptcpt_mst a, ep_edctn_atndc_dtl b
+		WHERE a.ptcpt_seq = #{ptcptSeq}
+		  AND a.ptcpt_seq = b.ptcpt_seq
+	</select>
+
+	<!--
              쿼리명 : EBBEpisdMapper.insertPtcptDtl
              설  명 : 교육차수 - 신청자 등록
               수정일     수정자       수정내용
@@ -1269,25 +1292,34 @@
         -->
 	<update id="updateAtndcList" parameterType="EBBEpisdDTO" >
 		<foreach collection="ptcptList" item="ptcptList" index="index" separator=";" open="" close=";">
-			update ep_edctn_atndc_dtl set /* EBBEpisdMapper.updateAtndcList */
+			<choose>
+				<when test='ptcptList.deleteYn =="N"  '>
+					update ep_edctn_atndc_dtl set /* EBBEpisdMapper.updateAtndcList */
 
-			mod_id = #{ptcptList.modId}
-			, mod_ip = #{ptcptList.modIp}
-			, mod_dtm = now()
+					mod_id = #{ptcptList.modId}
+					, mod_ip = #{ptcptList.modIp}
+					, mod_dtm = now()
 
-			<if test="ptcptList.atndcDtm != null and ptcptList.atndcDtm != ''">
-				, atndc_dtm = #{ptcptList.atndcDtm}
-			</if>
-			<if test="ptcptList.lvgrmDtm != null and ptcptList.lvgrmDtm != ''">
-				, lvgrm_dtm = #{ptcptList.lvgrmDtm}
-			</if>
-			<if test="ptcptList.etcNm != null and ptcptList.etcNm != ''">
-				, etc_nm = #{ptcptList.etcNm}
-			</if>
+					<if test="ptcptList.atndcDtm != null and ptcptList.atndcDtm != ''">
+						, atndc_dtm = #{ptcptList.atndcDtm}
+					</if>
+					<if test="ptcptList.lvgrmDtm != null and ptcptList.lvgrmDtm != ''">
+						, lvgrm_dtm = #{ptcptList.lvgrmDtm}
+					</if>
 
-			where 1=1
-			and ptcpt_seq = #{ptcptList.ptcptSeq}
-			and edctn_dt = #{ptcptList.edctnDt}
+					, etc_nm = #{ptcptList.etcNm}
+
+
+					where 1=1
+					and ptcpt_seq = #{ptcptList.ptcptSeq}
+					and edctn_dt = #{ptcptList.edctnDt}
+				</when>
+				<otherwise>
+
+				</otherwise>
+
+			</choose>
+
 		</foreach>
 	</update>
 

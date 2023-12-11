@@ -802,4 +802,42 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 상생신청지원금액
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxAppctnSpprtDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CX_APPCTN_SPPRT_DTL_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 상생참여이관로그 
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxAppctnTrnsfDtlIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CX_APPCTN_TRNSF_DTL_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** SQ 평가원 신청
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl sqCertiApplyIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SQ_CT_AP_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }

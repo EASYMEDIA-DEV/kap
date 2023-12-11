@@ -202,30 +202,44 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		ptcptList = eBBEpisdMapper.selectEpisdPtcptList(ebbDto);
 		int ptcptCnt = eBBEpisdMapper.selectEpisdPtcptListCnt(ebbDto);
 
-
-
+		dto.setFirstIndex( page.getFirstRecordIndex() );
+		dto.setRecordCountPerPage( page.getRecordCountPerPage() );
 		dto.setPtcptList(ptcptList);
 		dto.setTotalCount(ptcptCnt);
-		List<EBBPtcptDTO> ptcptAtndcList = new ArrayList();
-		ptcptAtndcList = eBBEpisdMapper.selectPtcptAtndcList(dto);
 
-		for(EBBPtcptDTO orgDto: ptcptList){
-			List<EBBPtcptDTO> tempList = new ArrayList();
-			for(EBBPtcptDTO atndcDto : ptcptAtndcList){
-				//원본 참여자 목록 반복문 돌리면서 출석데이터와 매칭, 매칭하면서 같으면 리스트안에 리스트 넣어줌
-				if(atndcDto.getPtcptSeq() == orgDto.getPtcptSeq()){
-					tempList.add(atndcDto);
+		//참여자가 있을때만 불러옴
+		if(ptcptList.size()>0){
+			List<EBBPtcptDTO> ptcptAtndcList = new ArrayList();
+			ptcptAtndcList = eBBEpisdMapper.selectPtcptAtndcList(dto);
+
+			for(EBBPtcptDTO orgDto: ptcptList){
+				List<EBBPtcptDTO> tempList = new ArrayList();
+				for(EBBPtcptDTO atndcDto : ptcptAtndcList){
+					//원본 참여자 목록 반복문 돌리면서 출석데이터와 매칭, 매칭하면서 같으면 리스트안에 리스트 넣어줌
+					if(atndcDto.getPtcptSeq() == orgDto.getPtcptSeq()){
+						tempList.add(atndcDto);
+					}
 				}
+				orgDto.setAtndcList(tempList);
 			}
-			orgDto.setAtndcList(tempList);
+			dto.setPtcptList(ptcptList);
 		}
-		dto.setPtcptList(ptcptList);
-
-
 
 		return dto;
 	}
 
+	/**
+	 * 교육차수 개인별 출석부를 호출한다.
+	 */
+	public List<EBBPtcptDTO> selectMemAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception
+	{
+		List<EBBPtcptDTO> memAtndcList = new ArrayList();
+
+		memAtndcList = eBBEpisdMapper.selectMemAtndcDtl(eBBPtcptDTO);
+
+
+		return memAtndcList;
+	}
 
 	/**
 	 * 교육차수를  등록한다.
@@ -520,8 +534,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		List<EBBPtcptDTO> ptcptList= eBBEpisdDTO.getPtcptList();
 
 
-		for(EBBPtcptDTO tempDto : ptcptList){
+		List<EBBPtcptDTO> removeList = new ArrayList();
+		for(int i=0; i < ptcptList.size(); i ++){
 
+			EBBPtcptDTO tempDto = ptcptList.get(i);
+
+			int removeStack = 0;
 			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 			tempDto.setRegId( cOUserDetailsDTO.getId() );
 			tempDto.setRegName( cOUserDetailsDTO.getName() );
@@ -534,13 +552,18 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			if(tempDto.getAtndcHour() != null){
 				tempDto.setAtndcDtm(tempDto.getEdctnDt()+" "+tempDto.getAtndcHour());
 			}
+
 			if(tempDto.getLvgrmHour() != null){
 				tempDto.setLvgrmDtm(tempDto.getEdctnDt()+" "+tempDto.getLvgrmHour());
 			}
-		}
-		eBBEpisdDTO.setPtcptList(ptcptList);
 
-		rtnCnt = eBBEpisdMapper.updateAtndcList(eBBEpisdDTO);
+		}
+
+		if(ptcptList.size()>0){
+			eBBEpisdDTO.setPtcptList(ptcptList);
+			rtnCnt = eBBEpisdMapper.updateAtndcList(eBBEpisdDTO);
+		}
+
 		return rtnCnt;
 	}
 

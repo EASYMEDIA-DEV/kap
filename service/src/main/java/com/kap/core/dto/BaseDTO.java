@@ -2,6 +2,7 @@ package com.kap.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kap.core.utility.PropertiesSiteProfileType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -74,5 +75,5 @@ public class BaseDTO {
     //전달받을 파일 리스트
     private List<COFileDTO> fileList;
 
-    private String siteGubun = ""; //admin , front
+    private String siteGubun = PropertiesSiteProfileType.getSiteProfile(); //admin , front
 }

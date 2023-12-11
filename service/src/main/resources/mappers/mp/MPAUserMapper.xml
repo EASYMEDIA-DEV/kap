@@ -9,7 +9,7 @@
         2023.11.09    양현우       최초생성
     -->
     <select id="selectUserList" parameterType="MPAUserDto" resultType="MPAUserDto">
-        SELECT MEM_SEQ
+        SELECT MEM_SEQ /* MPAUserMapper.selectUserList */
         , ID
         , NAME
         , HP_NO
@@ -126,7 +126,7 @@
     2023.11.09    양현우       최초생성
 -->
     <select id="selectUserCompanyInfoList" parameterType="MPAUserDto" resultType="MPAUserDto">
-        SELECT mem_seq,
+        SELECT mem_seq, /* MPAUserMapper.selectUserCompanyInfoList */
         id,
         name,
         hp_no,
@@ -211,7 +211,7 @@
 2023.11.09    양현우       최초생성
 -->
     <select id="selectUserListCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
-        select count(*)
+        select count(*) /* MPAUserMapper.selectUserListCnt */
         from (select mem.mem_seq
         , mem.id
         , mem.name
@@ -501,7 +501,7 @@
     2023.11.10    양현우       최초생성
 -->
     <select id="selectDupEmail" parameterType="MPAUserDto" resultType="java.lang.Integer">
-        select count(*)
+        select count(*) /* MPAUserMapper.selectDupEmail */
         from co_mem_mst
         where 1=1
         <if test="detailsKey != null and detailsKey != ''.toString() ">
@@ -518,7 +518,7 @@
 2023.11.21    양현우       최초생성
 -->
     <select id="selectDupId" parameterType="MPAUserDto" resultType="java.lang.Integer">
-        select count(*)
+        select count(*)  /* MPAUserMapper.selectDupId */
         from co_mem_mst
         where id =#{id}
     </select>
@@ -569,7 +569,7 @@
     </update>
 
     <!--
-    쿼리명 : insertUserDtlHistory.insertUserDtlHistory
+    쿼리명 : MPAUserMapper.insertUserDtlHistory
     설  명 :  [일반 , 부품 , 위원 ] 사용자 수정  이력
       수정일      수정자       수정내용
     ==========   ========   ==============
@@ -701,7 +701,7 @@
 2023.11.13    양현우       최초생성
 -->
     <select id="selectInqrListCnt" parameterType="MPAInqrDto" resultType="java.lang.Integer">
-        select count(*)
+        select count(*)  /* MPAUserMapper.selectInqrListCnt */
         from bd_qa_mst qa_mst
                  inner join bd_qa_ctgry_dtl ctgry_dtl
                             on qa_mst.qa_seq = ctgry_dtl.qa_seq
@@ -711,14 +711,14 @@
     </select>
 
     <!--
-  쿼리명 : CommonMapper.selectMemEmail
+  쿼리명 : selectMemDtl.selectMemEmail
   설  명 : 회원 이메일 , 코드 검색
   수정일      수정자       수정내용
   ==========   ========   ==============
   2023.11.15    양현우       최초생성
   -->
     <select id="selectMemDtl" parameterType="MPPwdInitDto" resultType="MPPwdInitDto">
-        SELECT /* CommonMapper.selectMemDtl */
+        SELECT  /* MPAUserMapper.selectMemDtl */
             email
              , mem_cd
         from co_mem_mst
@@ -727,14 +727,14 @@
 
 
     <!--
-쿼리명 : CommonMapper.updatePwdInit
+쿼리명 : MPAUserMapper.updatePwdInit
 설  명 : 회원 비밀번호 초기화
 수정일      수정자       수정내용
 ==========   ========   ==============
 2023.11.15    양현우       최초생성
 -->
     <update id="updatePwdInit" parameterType="MPPwdInitDto">
-        update co_mem_mst
+        update co_mem_mst /* MPAUserMapper.updatePwdInit */
         set pwd = #{newEncPwd}
           , pwd_chng_dtm = now()
           , lgn_fail_cnt = 0
@@ -746,6 +746,149 @@
 
     </update>
 
+
+    <!--
+       쿼리명 : MPAUserMapper.insertUser
+       설  명 :  [일반 , 부품  ] 사용자 등록
+         수정일      수정자       수정내용
+       ==========   ========   ==============
+       2023.12.08    양현우       최초생성
+       -->
+    <insert id="insertUser" parameterType="MPAUserDto">
+        insert into co_mem_mst  /*  MPAUserMapper.insertUser */
+        (  mem_seq
+        , mem_cd
+        , id
+        , name
+        , pwd
+        , birth
+        , gndr
+        , hp_no
+        , email
+        , tel_no
+        , zipcode
+        , bsc_addr
+        , dtl_addr
+        , ntfy_sms_rcv_yn
+        , ntfy_sms_rcv_chng_dtm
+        , ntfy_email_rcv_yn
+        , ntfy_email_rcv_chng_dtm
+        , lgn_fail_cnt
+        , pwd_chng_dtm
+        , chng_xtnsn_cnt
+        , tmp_pwd_yn
+        , wthdrw_yn
+        , reg_id
+        , reg_ip
+        , reg_dtm
+        , mod_id
+        , mod_ip
+        , mod_dtm
+        <if test="memCd == 'CP' ">
+            , dept_cd
+            , dept_dtl_nm
+            , pstn_cd
+            , pstn_nm
+            , work_bsnm_no
+        </if>
+        )
+        values(
+        #{memSeq}
+        , #{memCd}
+        , #{id}
+        , #{name}
+        , #{encPwd}
+        , #{birth}
+        , #{gndr}
+        , #{hpNo}
+        , #{email}
+        , #{telNo}
+        , #{zipcode}
+        , #{bscAddr}
+        , #{dtlAddr}
+        , #{ntfySmsRcvYn}
+        , now()
+        , #{ntfyEmailRcvYn}
+        , now()
+        , 0
+        , now()
+        , 0
+        , 'N'
+        , 'Y'
+        , #{regId}
+        , #{regIp}
+        , now()
+        , #{regId}
+        , #{regIp}
+        , now()
+        -- 부품사
+        <if test="memCd == 'CP' ">
+            , #{deptCd}
+            , #{deptDtlNm}
+            , #{pstnCd}
+            , #{pstnNm}
+            , #{workBsnmNo}
+        </if>
+        )
+    </insert>
+
+    <!--
+          쿼리명 : MPAUserMapper.insertUserDtl
+          설  명 :  [일반 , 부품  ] 사용자 상세 등록
+            수정일      수정자       수정내용
+          ==========   ========   ==============
+          2023.12.08    양현우       최초생성
+          -->
+    <insert id="insertUserDtl" parameterType="MPAUserDto">
+        insert into co_mem_dtl /*  MPAUserMapper.insertUserDtl */
+        (  mem_seq
+        , ci
+        , trms_agmnt_yn
+        , psnif_agmnt_yn
+        , psnif_3_agmnt_yn
+        , fndn_ntfy_rcv_yn
+        , reg_id
+        , reg_ip
+        , reg_dtm
+        , mod_id
+        , mod_ip
+        ,mod_dtm
+        )
+        values (
+                   #{memSeq}
+               , #{ci}
+               , #{trmsAgmntYn}
+               , #{psnifAgmntYn}
+               , #{psnif3AgmntYn}
+               , #{fndnNtfyRcvYn}
+               , #{regId}
+               , #{regIp}
+               , now()
+               , #{regId}
+               , #{regIp}
+               , now() )
+    </insert>
+
+
+
+    <!--
+쿼리명 : MPAUserMapper.selectCiCnt
+설  명 : 사용자 ci 개수 조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.12.08    양현우       최초생성
+-->
+    <select id="selectCiCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
+        select /* MPAUserMapper.selectCiCnt */
+        count(*)
+        from
+        co_mem_mst a
+        inner join co_mem_dtl b
+        on a.mem_seq = b.mem_seq
+        where 1=1
+            and b.ci = #{ci}
+
+    </select>
 
 
 </mapper>

@@ -39,6 +39,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			$(".ptcptField").validation({});
 
+			$(".ptcptField").find(".btnMemAtndc").on("click", function(){
+				memAtndcLayer(this);
+
+			});
+
+
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "ptcptListContainer", "ptcptPagingContainer");
 
@@ -50,25 +56,42 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "GET", "html");
 
+	}
 
 
+	var memAtndcLayer = function(e){
+
+		var ptcptSeq =  $(e).data("ptcptseq");
+
+		//출석부 레이어 팝업 호출
+		$(".ebbMemAtndcSrchLayer").one('show.bs.modal', function() {
+			$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
+			$(this).find("button.tempBtn").trigger("click");
+
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+		}).one('hidden.bs.modal', function() {
+			// Remove class for soft backdrop (if not will affect future modals)
+		}).one('choice', function(data, param) {
+			var obj = param;
+			$("#listContainer3").find("td").eq(0).text(obj.typeNm);
+			$("#listContainer3").find("td").eq(1).text(obj.titl);
+			$("#srvSeq").val(obj.seq);
+		}).modal();
 
 	}
 
 
-
-
-
-
-
-
 	//오프라인평가 체크시 실행
-	var setSelectBox = function(arg){
+	var setOtsdSelectBox = function(arg){
 
 		if($("input[name='otsdExamPtcptYn']").is(":checked")){
 			//alert("평가 선택");
 			$("#examSeq").val(null).prop("disabled", false);
 			$("#examSeq").addClass("notRequired");
+			$("input:radio[name='cmptnAutoYn']:radio[value='N']").prop("checked", true);//오프라인평가 진행시 수료자동화여부 무조건 수동 고정
+			$(".examNmForm").text("");
 
 		}else{
 			//alert("평가 선택 해제");
@@ -299,8 +322,104 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		$(".jdgmtYn").find("input:hidden").each(function(){
 			$(this).removeClass("notRequired");
 		});
-		$("#examSeq").prop("disabled", false);
+
+		//오프라인평가면 평가 시퀀스 사용안함
+		if($("input[name='otsdExamPtcptYn']:checked").val() =="Y"){
+			$("#examSeq").addClass("notRequired").prop("disabled", true);
+		}else{
+			$("#examSeq").prop("disabled", false);
+		}
+
 	}
+	}
+
+	//질문 번호 셋팅,점수 셋팅
+	var questionSet = function(){
+
+		$(".surveyList").each(function(){
+			var surveyTypeData = $(this).data('survey-type');
+			var cnt = 1;
+			var subCnt = 1;
+			$("."+surveyTypeData).each(function(index){                         // 질문, 하위질문 번호를 구분하고 순서를 셋팅
+				if ($(this).find('input[name=dpth]').val() == '2'){
+					$("."+surveyTypeData+"questionTxt:eq("+index+")").text("└질문"+eval(cnt-1)+"-"+subCnt);
+					subCnt = subCnt + 1;
+				}else{
+					$("."+surveyTypeData+"questionTxt:eq("+index+")").text("질문"+cnt);
+					cnt = cnt+1;
+					subCnt = 1;
+				}
+			});
+		});
+
+		var EDU01Score =0;
+		var EDU02Score =0;
+		var EDU03Score =0;
+		var EDU04Score =0;
+		var EDU05Score =0;
+		var totalScore = 0;
+		var EDU01Cnt =0;
+		var EDU02Cnt =0;
+		var EDU03Cnt =0;
+		var EDU04Cnt =0;
+		var EDU05Cnt =0;
+		var totalCnt = 0;
+
+		$("input[name=qstnCd]").each(function(index){
+
+			if ($(this).val()=="EDU01"){
+				EDU01Score = EDU01Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU01Cnt = EDU01Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU02"){
+				EDU02Score = EDU02Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU02Cnt = EDU02Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU03"){
+				EDU03Score = EDU03Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU03Cnt = EDU03Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU04"){
+				EDU04Score = EDU04Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU04Cnt = EDU04Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU05"){
+				EDU05Score = EDU05Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU05Cnt = EDU05Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}
+
+			totalScore = totalScore + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+			totalCnt = totalCnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+
+		})
+
+		if (EDU01Cnt == 0) {
+			$("#EDU01Score").text(0);
+		}else{
+			$("#EDU01Score").text((EDU01Score/EDU01Cnt).toFixed(1));
+		}
+		if (EDU02Cnt == 0) {
+			$("#EDU02Score").text(0);
+		}else{
+			$("#EDU02Score").text((EDU02Score/EDU02Cnt).toFixed(1));
+		}
+		if (EDU03Cnt == 0) {
+			$("#EDU03Score").text(0);
+		}else{
+			$("#EDU03Score").text((EDU03Score/EDU03Cnt).toFixed(1));
+		}
+		if (EDU04Cnt == 0) {
+			$("#EDU04Score").text(0);
+		}else{
+			$("#EDU04Score").text((EDU04Score/EDU04Cnt).toFixed(1));
+		}
+		if (EDU05Cnt == 0) {
+			$("#EDU05Score").text(0);
+		}else{
+			$("#EDU05Score").text((EDU05Score/EDU05Cnt).toFixed(1));
+		}
+		if (totalCnt == 0) {
+			$("#totalScore").text(0);
+		}else{
+			$("#totalScore").text((totalScore/totalCnt).toFixed(1));
+		}
+
 	}
 
 	// set model
@@ -733,7 +852,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			otsdExamPtcptYn : {
 				event : {
 					change : function() {
-						setSelectBox(this);
+						setOtsdSelectBox(this);
+					}
+				}
+			},
+			cmptnAutoYn : {
+				event : {
+					change : function() {
+
+						if($(this).val() == "Y" && $("input[name='otsdExamPtcptYn']:checked").val() == "Y"){
+							alert("오프라인평가를 선택하면 수료자동화여부 '자동'을 선택할수 없습니다.");
+							$("input:radio[name='cmptnAutoYn']:radio[value='N']").prop("checked", true);//오프라인평가 진행시 수료자동화여부 무조건 수동 고정
+							return false;
+						}
+
 					}
 				}
 			},
@@ -747,7 +879,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			if($(".card-body").data("actiontype") == "update"){
 				search();
 			}
-
+			
+			//질문 번호 셋팅,점수 셋팅
+			questionSet();
 
 
 			//폼 데이터 처리
@@ -961,7 +1095,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actForm.examSeq = $("#examSeq").val();//시험순번
 						actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
-						actForm.cmptnAutoYn = $("input[name='expsYn']:checked").val();//수료자동여부
+						actForm.cmptnAutoYn = $("input[name='cmptnAutoYn']:checked").val();//수료자동여부
 						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
 
 

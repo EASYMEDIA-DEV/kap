@@ -31,9 +31,18 @@ public class COFrontDummyUserDetailsServiceImpl implements COUserDetailsService
 		cOLoginUserDTO.setSeq(1);
 		cOLoginUserDTO.setId("hyumain1");
 		cOLoginUserDTO.setName("TBD");
+		cOLoginUserDTO.setAuthCd("CP");
 		cOLoginUserDTO.setLastLgnDtm("2023-11-16 00:00:00");
 		cOLoginUserDTO.setLoginIp("127.0.0.1");
 		cOLoginUserDTO.setConSessionId("11111");
+		cOLoginUserDTO.setEmail("dev@easymedia.net");
+		cOLoginUserDTO.setHpNo("010000000");
+		cOLoginUserDTO.setPstnCd("ED_TARGET04003");
+		cOLoginUserDTO.setPstnCdNm("부장(팀장)");
+		cOLoginUserDTO.setPstnNm("직위코드가 ED_TARGET04007일때 등록");
+		cOLoginUserDTO.setCmpnNm("이지미디어");
+		cOLoginUserDTO.setTelNo("020000000");
+		cOLoginUserDTO.setBsnmNo("000000000");
 		RequestContextHolder.getRequestAttributes().setAttribute("loginMap", cOLoginUserDTO, RequestAttributes.SCOPE_SESSION);
 		return cOLoginUserDTO;
 	}

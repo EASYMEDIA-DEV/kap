@@ -66,6 +66,7 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     private final EgovIdGnrService memModSeqIdgen;
 
+    private final EgovIdGnrService memSeqIdgen;
 
     /**
      * 일반 사용자 조회
@@ -217,6 +218,36 @@ public class MPAUserServiceImpl implements MPAUserService {
 
 
         return mpaUserMapper.updatePwdInit(mpPwdInitDto);
+    }
+
+    /**
+     * ci 중복 검사
+     * @param mpaUserDto
+     * @return
+     */
+    public int selectCiCnt(MPAUserDto mpaUserDto) {
+        return mpaUserMapper.selectCiCnt(mpaUserDto);
+    }
+
+    /**
+     * 사용자 부품사 등록
+     * @param mpaUserDto
+     * @throws Exception
+     */
+    @Override
+    public void insertUser(MPAUserDto mpaUserDto) throws Exception {
+        int dupIdCnt = selectDupId(mpaUserDto);
+        int dupCiCnt = selectCiCnt(mpaUserDto);
+
+        if(dupCiCnt == 0 && dupIdCnt == 0) {
+            mpaUserDto.setEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getPwd(), mpaUserDto.getId()));
+            mpaUserDto.setMemSeq(memSeqIdgen.getNextIntegerId());
+            mpaUserMapper.insertUser(mpaUserDto);
+            mpaUserMapper.insertUserDtl(mpaUserDto);
+            mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
+            mpaUserMapper.insertUserDtlHistory(mpaUserDto);
+        }
+
     }
 
 
