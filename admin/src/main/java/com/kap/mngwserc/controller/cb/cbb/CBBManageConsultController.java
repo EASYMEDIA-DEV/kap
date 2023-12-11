@@ -1,21 +1,28 @@
 package com.kap.mngwserc.controller.cb.cbb;
 
+import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.service.CBATechGuidanceService;
 import com.kap.service.CBBManageConsultService;
 import com.kap.service.COCodeService;
+import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.mp.mpa.MPAUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -91,6 +98,9 @@ public class CBBManageConsultController {
             cdDtlList.add("BF_JDGMT_RSLT"); // 사전심사결과 코드
             cdDtlList.add("GUIDE_TYPE_CD"); // 지도 구분 코드
             cdDtlList.add("GUIDE_PSCND"); // 지도 현황 코드
+            cdDtlList.add("MNG_CONS_CD"); // 신청 분야 코드
+            cdDtlList.add("INIT_VST_RSLT"); // 초도방문결과
+            cdDtlList.add("CNSTG_PSCND"); // 컨설팅 현황 코드
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
         if (!"".equals(cBBManageConsultInsertDTO.getDetailsKey()) && cBBManageConsultInsertDTO.getDetailsKey() != null) {
@@ -105,6 +115,27 @@ public class CBBManageConsultController {
 
 
         return "mngwserc/cb/cbb/CBBManageConsultWrite.admin";
+    }
+
+    /**
+     * 컨설팅 사업 기술 지도 등록
+     */
+    @RequestMapping(value = "/insert", method= RequestMethod.POST)
+    public String insertManageConsult(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, ModelMap modelMap) throws Exception {
+        try {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            cBBManageConsultInsertDTO.setRegId(cOUserDetailsDTO.getId());
+            cBBManageConsultInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+
+            modelMap.addAttribute("respCnt", cBBManageConsultService.insertManageConsult(cBBManageConsultInsertDTO));
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
     }
 
     /**
@@ -187,6 +218,49 @@ public class CBBManageConsultController {
         }
     }
 
+@RestController
+@RequiredArgsConstructor
+@RequestMapping(value="/mngwserc/cb/cbb")
+public class CBBManageConsultRestController {
 
+    private final CBATechGuidanceService cBATechGuidanceService;
+    private final MPAUserService mPAUserService;
+    private final COCodeService cOCodeService;
 
+    /**
+     * 사업자 번호에 따른 회사 정보 호출
+     */
+    @PostMapping(value = "/bsnmNoSearch")
+    @ResponseBody
+    public List<MPEPartsCompanyDTO> bsnmNoSearch(@Valid @RequestBody MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+        List<MPEPartsCompanyDTO> list = new ArrayList<>();
+        try {
+            list = cBATechGuidanceService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return list;
+    }
+
+    /**
+     * 지역 코드에 따른 하위 지역 코드 호출
+     */
+    @PostMapping(value = "/subAddrSelect")
+    @ResponseBody
+    public List<COCodeDTO> selectSubAddr(@RequestBody COCodeDTO cOCodeDTO) throws Exception {
+        List<COCodeDTO> detailList = null;
+        try {
+            detailList = cOCodeService.getCdIdList(cOCodeDTO);
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return detailList;
+    }
+}
 }

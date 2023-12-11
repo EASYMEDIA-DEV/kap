@@ -429,5 +429,107 @@
         <!--AND guide_pscnd_cd = 'GUIDE_PSCND04'-->
     </select>
 
+    <!--
+     쿼리명 : CBBManageConsultMapper.selectCnstgDlvryInfo
+     설  명 :  고객사 비율 상세 조회
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectCnstgDlvryInfo" parameterType="java.lang.Integer" resultType="CBBManageConsultInsertDTO">
+        SELECT /* CBBManageConsultMapper.selectCnstgDlvryInfo */
+            CNSTG_SEQ,
+            CMPN_DLVRY_SEQ,
+            CMPN_NM AS DLVRY_CMPN_NM,
+            RATE AS DLVRY_RATE
+        FROM
+            CP_CNSTG_DLVRY_DTL
+        WHERE
+            CNSTG_SEQ =  #{cnstgSeq}
+    </select>
+
+    <!--
+     쿼리명 : CBBManageConsultMapper.selectCnstgDpndnInfo
+     설  명 :  완성차 의존 비율 상세 조회
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectCnstgDpndnInfo" parameterType="java.lang.Integer" resultType="CBBManageConsultInsertDTO">
+        SELECT /* CBBManageConsultMapper.selectCnstgDpndnInfo */
+            CNSTG_SEQ,
+            DPNDN_SEQ,
+            CMPN_NM as DPNDN_CMPN_NM,
+            RATE as DPNDN_RATE
+        FROM
+            CP_CNSTG_DPNDN_DTL
+        WHERE
+            CNSTG_SEQ =  #{cnstgSeq}
+    </select>
+
+    <!--
+     쿼리명 : CBBManageConsultMapper.selectCnstgAppctnType
+     설  명 :  신청 분야 상세
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectCnstgAppctnType" parameterType="java.util.HashMap" resultType="CBBManageConsultInsertDTO">
+        SELECT /* CBBManageConsultMapper.selectCmpnCbsnInfoCnt */
+            CNSTG_SEQ,
+            CD AS APPCTN_TYPE_CD,
+            REG_ID,
+            REG_IP,
+            REG_DTM
+        FROM
+            CP_CNSTG_APPCTN_TYPE_DTL
+        WHERE 1=1
+          AND CNSTG_SEQ = #{cnstgSeq}
+    </select>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.selectTechGuidanceRsume
+     설  명 : 컨설팅 진행 사항
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+-->
+    <select id="selectTechGuidanceRsume" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceUpdateDTO">
+        SELECT /* CBATechGuidanceMapper.selectTechGuidanceRsume */
+            CNSTG_SEQ
+             , BFRE_JDGMT_RSLT_CD
+             , BFRE_JDGMT_RSLT_CNTN
+             , VST_DT
+             , VSTR_NM
+             , NTRVR_NM
+             , INIT_VST_RSLT_CD
+             , INIT_VST_RSLT_CNTN
+             , INIT_VST_OPNN_CNTN
+             , CMSSR_SEQ
+             , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.CMSSR_SEQ) CMSSR_NAME
+             , GUIDE_TYPE_CD
+             , GUIDE_PSCND_CD
+             , GUIDE_PSCND_DT
+             , GUIDE_BGN_DT
+             , GUIDE_KICKF_DT
+             , XTNSN_CNCL_RSN
+             , FLTY_IMPVM_BFRE_RATE
+             , FLTY_IMPVM_AFTR_RATE
+             , FLTY_IMPVM_RATE
+             , INIT_VST_FILE_SEQ
+             , KICKF_FILE_SEQ
+             , LVLUP_FILE_SEQ
+             , ETC_FILE_SEQ
+             , SRV_SEQ
+             , (SELECT CD_ID FROM CO_CODE_MST WHERE CD_ID = 'SURVEY_TYPE' AND CD = (SELECT TYPE_CD FROM SV_MST WHERE SRV_SEQ = A.SRV_SEQ)) AS TYPE_NM
+             , (SELECT TITL FROM SV_MST WHERE SRV_SEQ = A.SRV_SEQ) AS SRV_NM
+             , SRV_STRT_DTM
+             , SRV_END_DTM
+             , REG_ID
+             , REG_IP
+             , REG_DTM
+        FROM CP_CNSTG_RSUME_MST A
+        WHERE CNSTG_SEQ = #{cnstgSeq}
+    </select>
 
 </mapper>

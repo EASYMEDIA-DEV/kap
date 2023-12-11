@@ -3,23 +3,33 @@ package com.kap.service.impl.cb.cbb;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultListDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.*;
+import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
 import com.kap.service.dao.cb.cbb.CBBManageConsultMapper;
+import com.kap.service.dao.mp.MPAUserMapper;
+import com.kap.service.dao.mp.MPEPartsCompanyMapper;
+import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -44,6 +54,22 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
     /* 파일 서비스 */
     private final COFileService cOFileService;
+
+    private final MPEPartsCompanyService mPEPartsCompanyService;
+
+    private final MPAUserService mpaUserService;
+
+    /* 컨설팅 기술 지도 시퀀스 */
+    private final EgovIdGnrService cosultSeqIdgen;
+    private final EgovIdGnrService dpndnSeqIdgen;
+    private final EgovIdGnrService dlvrySeqIdgen;
+    private final EgovIdGnrService mpePartsCompanyDtlIdgen;
+    private final EgovIdGnrService consTrnsfSeqIdgen;
+
+    private final CBATechGuidanceMapper cBATechGuidanceMapper;
+    private final MPEPartsCompanyMapper mpePartsCompanyMapper;
+    private final MPAUserMapper mpaUserMapper;
+
 
     /*로그 서비스*/
     private final COSystemLogService cOSystemLogService;
@@ -71,48 +97,47 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
      * 만족도 종합 결과 리스트 조회
      */
     public CBBConsultSuveyRsltListDTO selectConsultSuveyRsltList(CBBConsultSuveyRsltListDTO cBBConsultSuveyRsltListDTO) throws Exception{
-        COPaginationUtil page = new COPaginationUtil();
-        page.setCurrentPageNo(cBBConsultSuveyRsltListDTO.getPageIndex());
-        page.setRecordCountPerPage(cBBConsultSuveyRsltListDTO.getListRowSize());
-        page.setPageSize(cBBConsultSuveyRsltListDTO.getPageRowSize());
-        cBBConsultSuveyRsltListDTO.setFirstIndex(page.getFirstRecordIndex());
-        cBBConsultSuveyRsltListDTO.setRecordCountPerPage(page.getRecordCountPerPage());
-        cBBConsultSuveyRsltListDTO.setTotalCount(cBBManageConsultMapper.getConsultSuveyRsltCnt(cBBConsultSuveyRsltListDTO));
-        cBBConsultSuveyRsltListDTO.setList(cBBManageConsultMapper.selectConsultSuveyRsltList(cBBConsultSuveyRsltListDTO));
+            COPaginationUtil page = new COPaginationUtil();
+            page.setCurrentPageNo(cBBConsultSuveyRsltListDTO.getPageIndex());
+            page.setRecordCountPerPage(cBBConsultSuveyRsltListDTO.getListRowSize());
+            page.setPageSize(cBBConsultSuveyRsltListDTO.getPageRowSize());
+            cBBConsultSuveyRsltListDTO.setFirstIndex(page.getFirstRecordIndex());
+            cBBConsultSuveyRsltListDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+            cBBConsultSuveyRsltListDTO.setTotalCount(cBBManageConsultMapper.getConsultSuveyRsltCnt(cBBConsultSuveyRsltListDTO));
+            cBBConsultSuveyRsltListDTO.setList(cBBManageConsultMapper.selectConsultSuveyRsltList(cBBConsultSuveyRsltListDTO));
         return cBBConsultSuveyRsltListDTO;
     }
     /**
-     * 컨설팅 기술 지도 상세 조회
+     * 컨설팅 기술 지도 등록
      */
     public CBBManageConsultInsertDTO selectManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
-       /* MPEPartsCompanyDTO companyInfo = new MPEPartsCompanyDTO();
+        MPEPartsCompanyDTO companyInfo = new MPEPartsCompanyDTO();
 
-        if (!"".equals(pCBATechGuidanceInsertDTO.getDetailsKey()))
+        if (!"".equals(pCBBManageConsultInsertDTO.getDetailsKey()))
         {
-            pCBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectTechGuidanceDtl(pCBATechGuidanceInsertDTO);
+            pCBBManageConsultInsertDTO = cBBManageConsultMapper.selectManageConsultList(pCBBManageConsultInsertDTO);
             MPEPartsCompanyDTO mPEPartsCompanyDTO = new MPEPartsCompanyDTO();
-            mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replace("-", ""));
+            mPEPartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo().replace("-", ""));
             companyInfo = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
 
             for(int i =0; i<1; i++){
-                pCBATechGuidanceInsertDTO.setCmpnNm(companyInfo.getList().get(i).getCmpnNm());
-                pCBATechGuidanceInsertDTO.setRprsntNm(companyInfo.getList().get(i).getRprsntNm());
-                pCBATechGuidanceInsertDTO.setStbsmDt(companyInfo.getList().get(i).getStbsmDt());
-                pCBATechGuidanceInsertDTO.setTelNo(companyInfo.getList().get(i).getTelNo());
-                pCBATechGuidanceInsertDTO.setCtgryCd(companyInfo.getList().get(i).getCtgryCd());
-                pCBATechGuidanceInsertDTO.setBscAddr(companyInfo.getList().get(i).getBscAddr());
-                pCBATechGuidanceInsertDTO.setDtlAddr(companyInfo.getList().get(i).getDtlAddr());
-                pCBATechGuidanceInsertDTO.setZipcode(companyInfo.getList().get(i).getZipcode());
-                pCBATechGuidanceInsertDTO.setSlsPmt(companyInfo.getList().get(i).getSlsPmt());
-                pCBATechGuidanceInsertDTO.setSlsYear(companyInfo.getList().get(i).getSlsYear());
-                pCBATechGuidanceInsertDTO.setMpleCnt(companyInfo.getList().get(i).getMpleCnt());
-                pCBATechGuidanceInsertDTO.setMjrPrdct1(companyInfo.getList().get(i).getMjrPrdct1());
-                pCBATechGuidanceInsertDTO.setMjrPrdct2(companyInfo.getList().get(i).getMjrPrdct2());
-                pCBATechGuidanceInsertDTO.setMjrPrdct3(companyInfo.getList().get(i).getMjrPrdct3());
-                pCBATechGuidanceInsertDTO.setCmpnTelNo(companyInfo.getList().get(i).getTelNo());
+                pCBBManageConsultInsertDTO.setCmpnNm(companyInfo.getList().get(i).getCmpnNm());
+                pCBBManageConsultInsertDTO.setRprsntNm(companyInfo.getList().get(i).getRprsntNm());
+                pCBBManageConsultInsertDTO.setStbsmDt(companyInfo.getList().get(i).getStbsmDt());
+                pCBBManageConsultInsertDTO.setTelNo(companyInfo.getList().get(i).getTelNo());
+                pCBBManageConsultInsertDTO.setCtgryCd(companyInfo.getList().get(i).getCtgryCd());
+                pCBBManageConsultInsertDTO.setBscAddr(companyInfo.getList().get(i).getBscAddr());
+                pCBBManageConsultInsertDTO.setDtlAddr(companyInfo.getList().get(i).getDtlAddr());
+                pCBBManageConsultInsertDTO.setZipcode(companyInfo.getList().get(i).getZipcode());
+                pCBBManageConsultInsertDTO.setSlsPmt(companyInfo.getList().get(i).getSlsPmt());
+                pCBBManageConsultInsertDTO.setSlsYear(companyInfo.getList().get(i).getSlsYear());
+                pCBBManageConsultInsertDTO.setMpleCnt(companyInfo.getList().get(i).getMpleCnt());
+                pCBBManageConsultInsertDTO.setMjrPrdct1(companyInfo.getList().get(i).getMjrPrdct1());
+                pCBBManageConsultInsertDTO.setMjrPrdct2(companyInfo.getList().get(i).getMjrPrdct2());
+                pCBBManageConsultInsertDTO.setMjrPrdct3(companyInfo.getList().get(i).getMjrPrdct3());
+                pCBBManageConsultInsertDTO.setCmpnTelNo(companyInfo.getList().get(i).getTelNo());
             }
 
-            System.err.println("companyInfo:::"+companyInfo.getList().size());
             for(int j=0; j<companyInfo.getList().size(); j++){
                 List sqlInfoList = new ArrayList();
                 sqlInfoList.add(0,companyInfo.getList().get(j).getNm());
@@ -121,53 +146,50 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
                 sqlInfoList.add(3,companyInfo.getList().get(j).getCrtfnCmpnNm());
                 sqlInfoList.add(4,companyInfo.getList().get(j).getCbsnSeq());
                 if(j==0){
-                    pCBATechGuidanceInsertDTO.setSqInfoList(sqlInfoList);
+                    pCBBManageConsultInsertDTO.setSqInfoList(sqlInfoList);
                 }else if(j==1){
-                    pCBATechGuidanceInsertDTO.setSqInfoList1(sqlInfoList);
+                    pCBBManageConsultInsertDTO.setSqInfoList1(sqlInfoList);
                 }else{
-                    pCBATechGuidanceInsertDTO.setSqInfoList2(sqlInfoList);
+                    pCBBManageConsultInsertDTO.setSqInfoList2(sqlInfoList);
                 }
             }
-            int cnstgSeq = pCBATechGuidanceInsertDTO.getCnstgSeq();
+            int cnstgSeq = pCBBManageConsultInsertDTO.getCnstgSeq();
 
-            List<CBATechGuidanceInsertDTO> dlvryInfo = cBATechGuidanceMapper.selectCnstgDlvryInfo(cnstgSeq);
+            List<CBBManageConsultInsertDTO> dlvryInfo = cBBManageConsultMapper.selectCnstgDlvryInfo(cnstgSeq);
             List dlvryInfoList = new ArrayList();
             for(int i=0; i<dlvryInfo.size(); i++){
-                CBATechGuidanceInsertDTO dlvryDto = new CBATechGuidanceInsertDTO();
+                CBBManageConsultInsertDTO dlvryDto = new CBBManageConsultInsertDTO();
                 dlvryDto.setDlvryCmpnNm(dlvryInfo.get(i).getDlvryCmpnNm());
                 dlvryDto.setDlvryRate(dlvryInfo.get(i).getDlvryRate());
                 dlvryDto.setCmpnDlvrySeq(dlvryInfo.get(i).getCmpnDlvrySeq());
                 dlvryInfoList.add(dlvryDto);
             }
-            pCBATechGuidanceInsertDTO.setDlvryCmpnList(dlvryInfoList);
+            pCBBManageConsultInsertDTO.setDlvryCmpnList(dlvryInfoList);
 
-            List<CBATechGuidanceInsertDTO> dpndnInfo = cBATechGuidanceMapper.selectCnstgDpndnInfo(cnstgSeq);
+            List<CBBManageConsultInsertDTO> dpndnInfo = cBBManageConsultMapper.selectCnstgDpndnInfo(cnstgSeq);
             List dpndnInfoList = new ArrayList();
             for(int i=0; i<dpndnInfo.size(); i++){
-                CBATechGuidanceInsertDTO dpndnDto = new CBATechGuidanceInsertDTO();
+                CBBManageConsultInsertDTO dpndnDto = new CBBManageConsultInsertDTO();
                 dpndnDto.setDpndnCmpnNm(dpndnInfo.get(i).getDpndnCmpnNm());
                 dpndnDto.setDpndnRate(dpndnInfo.get(i).getDpndnRate());
                 dpndnDto.setDpndnSeq(dpndnInfo.get(i).getDpndnSeq());
                 dpndnInfoList.add(dpndnDto);
             }
-            pCBATechGuidanceInsertDTO.setDpndCmpnList(dpndnInfoList);
+            pCBBManageConsultInsertDTO.setDpndCmpnList(dpndnInfoList);
 
-            List<CBATechGuidanceInsertDTO> appctnTypeInfo = cBATechGuidanceMapper.selectCnstgAppctnType(cnstgSeq);
+            List<CBBManageConsultInsertDTO> appctnTypeInfo = cBBManageConsultMapper.selectCnstgAppctnType(cnstgSeq);
             List appctnTypeList = new ArrayList();
             for(int i=0; i<appctnTypeInfo.size(); i++){
-                CBATechGuidanceInsertDTO appctnDto = new CBATechGuidanceInsertDTO();
+                CBBManageConsultInsertDTO appctnDto = new CBBManageConsultInsertDTO();
                 appctnDto.setAppctnTypeCd(appctnTypeInfo.get(i).getAppctnTypeCd());
                 appctnTypeList.add(appctnDto);
             }
-            pCBATechGuidanceInsertDTO.setAppctnTypeList(appctnTypeList);
+            pCBBManageConsultInsertDTO.setAppctnTypeList(appctnTypeList);
 
         }
         CBATechGuidanceUpdateDTO CBATechGuidanceUpdateDTO = new CBATechGuidanceUpdateDTO();
-        pCBATechGuidanceInsertDTO.setRsumeList(cBATechGuidanceMapper.selectTechGuidanceRsume(pCBATechGuidanceInsertDTO));
+        pCBBManageConsultInsertDTO.setRsumeList(cBBManageConsultMapper.selectTechGuidanceRsume(pCBBManageConsultInsertDTO));
 
-        System.err.println("pCBATechGuidanceInsertDTO"+pCBATechGuidanceInsertDTO.getRsumeList());
-
-        return pCBATechGuidanceInsertDTO;*/
         return pCBBManageConsultInsertDTO;
     }
 
@@ -176,25 +198,190 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
      */
     public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
 
-       /* HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCBATechGuidanceInsertDTO.getFileList());
-        pCBATechGuidanceInsertDTO.setItrdcFileSeq(fileSeqMap.get("itrdcFileSeq"));
-        pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("impvmFileSeq"));
-        pCBATechGuidanceInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCBBManageConsultInsertDTO.getFileList());
+        pCBBManageConsultInsertDTO.setItrdcFileSeq(fileSeqMap.get("itrdcFileSeq"));
+        pCBBManageConsultInsertDTO.setImpvmFileSeq(fileSeqMap.get("impvmFileSeq"));
+        pCBBManageConsultInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
 
         // 신청 회원 정보
-        updateTechMemberInfo(pCBATechGuidanceInsertDTO);
+        updateMngConMemberInfo(pCBBManageConsultInsertDTO);
 
         // 부품사 정보
-        updateTechCompanyInfo(pCBATechGuidanceInsertDTO);
+        updateTechCompanyInfo(pCBBManageConsultInsertDTO);
 
         // 컨설팅 서브 정보 수정
-        updateSubTechGuidanceInfo(pCBATechGuidanceInsertDTO);
+        updateSubMngConInfo(pCBBManageConsultInsertDTO);
 
-        pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO));
-        pCBATechGuidanceInsertDTO.getRespCnt();*/
-        return 1;
+        pCBBManageConsultInsertDTO.setRespCnt(cBBManageConsultMapper.insertManageConsult(pCBBManageConsultInsertDTO));
+        pCBBManageConsultInsertDTO.getRespCnt();
+
+        return  pCBBManageConsultInsertDTO.getRespCnt();
     }
 
+    /**
+     * 부품사 회원 정보 수정
+     */
+    void updateMngConMemberInfo(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
+
+        MPAUserDto mPAUserDto = new MPAUserDto();
+        mPAUserDto.setDetailsKey(pCBBManageConsultInsertDTO.getMemSeq());
+
+        mPAUserDto = mpaUserService.selectUserDtlTab(mPAUserDto);
+
+        if(mPAUserDto != null){
+            mPAUserDto.setRegId(pCBBManageConsultInsertDTO.getRegId());
+            mPAUserDto.setRegIp(pCBBManageConsultInsertDTO.getRegIp());
+            mPAUserDto.setMemSeq(Integer.valueOf(pCBBManageConsultInsertDTO.getMemSeq()));
+            mPAUserDto.setDeptCd(pCBBManageConsultInsertDTO.getDeptCd());
+            mPAUserDto.setDeptDtlNm(pCBBManageConsultInsertDTO.getDeptDtlNm());
+            mPAUserDto.setPstnCd(pCBBManageConsultInsertDTO.getPstnCd());
+            mPAUserDto.setTelNo(pCBBManageConsultInsertDTO.getTelNo());
+            mPAUserDto.setHpNo(pCBBManageConsultInsertDTO.getHpNo());
+            mpaUserService.updateUserDtl(mPAUserDto);
+        }
+    }
+    
+    /**
+     * 부품사 정보 수정
+     */
+    void updateTechCompanyInfo(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
+
+        MPEPartsCompanyDTO mPEPartsCompanyDTO = new MPEPartsCompanyDTO();
+        mPEPartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo().replace("-", ""));
+        mPEPartsCompanyDTO = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
+
+        // 회사 업종 상세 등록
+        String[] cbsnSeq =  pCBBManageConsultInsertDTO.getCbsnSeq().split(",");
+        String[] nm =  pCBBManageConsultInsertDTO.getNm().split(",");
+        String[] score = pCBBManageConsultInsertDTO.getScore().split(",");
+        String[] year = pCBBManageConsultInsertDTO.getYear().split(",");
+        String[] crtfnCmpnNm = pCBBManageConsultInsertDTO.getCrtfnCmpnNm().split(",");
+
+        MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+
+        String ctgryCd = pCBBManageConsultInsertDTO.getCtgryCd();
+        // 1차사 - 5스타
+        if(ctgryCd.equals("COMPANY01001")){
+            mPEPartsCompanyDTO.setQlty5StarCd(pCBBManageConsultInsertDTO.getQlty5StarCd());
+            mPEPartsCompanyDTO.setQlty5StarYear(pCBBManageConsultInsertDTO.getQlty5StarYear());
+            mPEPartsCompanyDTO.setPay5StarCd(pCBBManageConsultInsertDTO.getPay5StarCd());
+            mPEPartsCompanyDTO.setPay5StarYear(pCBBManageConsultInsertDTO.getPay5StarYear());
+            mPEPartsCompanyDTO.setTchlg5StarCd(pCBBManageConsultInsertDTO.getTchlg5StarCd());
+            mPEPartsCompanyDTO.setTchlg5StarCd(pCBBManageConsultInsertDTO.getTchlg5StarCd());
+        } else if(ctgryCd.equals("COMPANY01002")){ // 2차사 - SQ 정보
+
+            HashMap cbsnCdMap = new HashMap();
+
+            for(int i=0; i < cbsnCdMap.size(); i++) {
+                mpePartsCompanyDTO.setNm(nm[i]);
+                mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(cbsnSeq[i]));
+                mpePartsCompanyDTO.setScore(Integer.valueOf(score[i]));
+                mpePartsCompanyDTO.setYear(Integer.valueOf(year[i]));
+                mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmpnNm[i]);
+                mpePartsCompanyDTO.setBsnmNo(mPEPartsCompanyDTO.getBsnmNo());
+
+                int cnt = cBBManageConsultMapper.selectCmpnCbsnInfoCnt(Integer.valueOf(cbsnSeq[i]));
+
+                if(cnt > 1){
+                    mpePartsCompanyDTO.setModId(pCBBManageConsultInsertDTO.getRegId());
+                    mpePartsCompanyDTO.setModId(pCBBManageConsultInsertDTO.getRegIp());
+                    mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
+                }else if(cnt == 0){
+                    mpePartsCompanyDtlIdgen.getNextIntegerId();
+                    mpePartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegId());
+                    mpePartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegIp());
+                    mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
+                }
+            }
+        }
+        mPEPartsCompanyDTO.setModId(pCBBManageConsultInsertDTO.getRegId());
+        mPEPartsCompanyDTO.setModIp(pCBBManageConsultInsertDTO.getRegIp());
+        mPEPartsCompanyDTO.setRprsntNm(pCBBManageConsultInsertDTO.getRprsntNm());
+        mPEPartsCompanyDTO.setCmpnNm(pCBBManageConsultInsertDTO.getCmpnNm());
+        mPEPartsCompanyDTO.setCmpnNfrmlNm(pCBBManageConsultInsertDTO.getCmpnNfrmlNm());
+        mPEPartsCompanyDTO.setCmpnCd(pCBBManageConsultInsertDTO.getCmpnCd());
+        mPEPartsCompanyDTO.setTelNo(pCBBManageConsultInsertDTO.getCmpnTelNo()); // 부품사 일반 전화번호
+        mPEPartsCompanyDTO.setCtgryCd(pCBBManageConsultInsertDTO.getCtgryCd());
+        mPEPartsCompanyDTO.setSizeCd(pCBBManageConsultInsertDTO.getSizeCd());
+        mPEPartsCompanyDTO.setStbsmDt(pCBBManageConsultInsertDTO.getStbsmDt());
+        mPEPartsCompanyDTO.setZipcode(pCBBManageConsultInsertDTO.getZipcode());
+        mPEPartsCompanyDTO.setBscAddr(pCBBManageConsultInsertDTO.getBscAddr());
+        mPEPartsCompanyDTO.setDtlAddr(pCBBManageConsultInsertDTO.getDtlAddr());
+        mPEPartsCompanyDTO.setSlsPmt(pCBBManageConsultInsertDTO.getSlsPmt());
+        mPEPartsCompanyDTO.setSlsYear(pCBBManageConsultInsertDTO.getSlsYear());
+        mPEPartsCompanyDTO.setMpleCnt(pCBBManageConsultInsertDTO.getMpleCnt());
+        mPEPartsCompanyDTO.setMjrPrdct1(pCBBManageConsultInsertDTO.getMjrPrdct1());
+        mPEPartsCompanyDTO.setMjrPrdct2(pCBBManageConsultInsertDTO.getMjrPrdct2());
+        mPEPartsCompanyDTO.setMjrPrdct3(pCBBManageConsultInsertDTO.getMjrPrdct3());
+        mPEPartsCompanyDTO.setMjrPrdct3(pCBBManageConsultInsertDTO.getMjrPrdct3());
+        mPEPartsCompanyDTO.setMjrPrdct3(pCBBManageConsultInsertDTO.getMjrPrdct3());
+        mPEPartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegId());
+        mPEPartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegIp());
+
+        mpePartsCompanyMapper.updatePartsCompany(mPEPartsCompanyDTO);
+    }
+    
+    /**
+     * 컨설팅 서브 정보 수정
+     */
+    void updateSubMngConInfo(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
+
+        // 고객사 비율 상세 정보 등록, 있으면 수정
+        String[] dlvryCmpnNm =  pCBBManageConsultInsertDTO.getDlvryCmpnNm().split(",");
+        String[] dlvryRate = pCBBManageConsultInsertDTO.getDlvryRate().split(",");
+        HashMap cnstgDlyvMap = new HashMap();
+        for(int i=0; i < dlvryCmpnNm.length; i++) {
+            cnstgDlyvMap.put("cnstgSeq", pCBBManageConsultInsertDTO.getCnstgSeq());
+            cnstgDlyvMap.put("cmpnDlvrySeq",dlvrySeqIdgen.getNextIntegerId());
+            cnstgDlyvMap.put("dlvryCmpnNm", dlvryCmpnNm[i]);
+            cnstgDlyvMap.put("dlvryRate", dlvryRate[i]);
+            cnstgDlyvMap.put("regId", pCBBManageConsultInsertDTO.getRegId());
+            cnstgDlyvMap.put("regIp", pCBBManageConsultInsertDTO.getRegIp());
+
+            List dlvryInfoList = cBBManageConsultMapper.selectCnstgDlvryInfo(pCBBManageConsultInsertDTO.getCnstgSeq());
+            if(dlvryInfoList.size() > 0){
+                cBBManageConsultMapper.updateCnstgDlvryInfo(cnstgDlyvMap);
+            }else{
+                cBBManageConsultMapper.insertCnstgDlvryInfo(cnstgDlyvMap);
+            }
+
+        }
+        // 완성차 의존율 상세 정보 등록 있으면 수정
+        String[] dpbdnCmpnNm =  pCBBManageConsultInsertDTO.getDpndnCmpnNm().split(",");
+        String[] dpbdnRate = pCBBManageConsultInsertDTO.getDpndnRate().split(",");
+        HashMap dpndnMap = new HashMap();
+        for(int i=0; i < dpbdnCmpnNm.length; i++){
+            dpndnMap.put("cnstgSeq",pCBBManageConsultInsertDTO.getCnstgSeq());
+            dpndnMap.put("dpndnSeq",dpndnSeqIdgen.getNextIntegerId());
+            dpndnMap.put("cmpnNm", dpbdnCmpnNm[i]);
+            dpndnMap.put("dpndnRate", dpbdnRate[i]);
+            dpndnMap.put("regId", pCBBManageConsultInsertDTO.getRegId());
+            dpndnMap.put("regIp", pCBBManageConsultInsertDTO.getRegIp());
+
+            List dpndnInfoList = cBBManageConsultMapper.selectCnstgDpndnInfo(pCBBManageConsultInsertDTO.getCnstgSeq());
+            if(dpndnInfoList.size() > 0){
+                cBBManageConsultMapper.updateCnstgDpndnInfo(dpndnMap);
+            }else{
+                cBBManageConsultMapper.insertCnstgDpndnInfo(dpndnMap);
+            }
+        }
+        // 부품사 업종 상세 등록 있으면 수정
+        HashMap cbsnCdMap = new HashMap();
+        cbsnCdMap.put("cnstgSeq",pCBBManageConsultInsertDTO.getCnstgSeq());
+        cbsnCdMap.put("cbsnCd",  pCBBManageConsultInsertDTO.getCbsnCd());
+        cbsnCdMap.put("etcNm", pCBBManageConsultInsertDTO.getEtcNm());
+        cbsnCdMap.put("regIp", pCBBManageConsultInsertDTO.getRegId());
+        cbsnCdMap.put("regId", pCBBManageConsultInsertDTO.getRegId());
+        cbsnCdMap.put("regIp", pCBBManageConsultInsertDTO.getRegIp());
+
+        int cnt = cBBManageConsultMapper.selectCnstgDpndnInfoCnt(cbsnCdMap);
+        if(cnt > 0){
+            cBBManageConsultMapper.updateCbsnDtl(cbsnCdMap);
+        }else{
+            cBBManageConsultMapper.insertCbsnDtl(cbsnCdMap);
+        }
+
+    }
 
     /**
      * 엑셀 생성

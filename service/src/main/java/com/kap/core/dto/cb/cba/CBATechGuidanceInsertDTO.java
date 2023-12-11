@@ -38,6 +38,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String name;
     @Schema(title = "신청자 순번")
     private String memSeq;
+    private String appctnFidCd;
+    private String resumeSttsCd;
 
     @Schema(title = "이관 전 신청자 순번")
     private String bfreMemSeq;

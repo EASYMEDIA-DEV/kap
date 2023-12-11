@@ -200,7 +200,8 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
 
     @Schema(title = "관리자 메모")
     private String admMemo;
-
+    @Schema(title = "컨설팅 현황 코드")
+    private String cnstgPscndCd;
     @Schema(title = "소개파일순번")
     private Integer itrdcFileSeq;
     @Schema(title = "개선파일순번")
@@ -212,6 +213,7 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private List<String> dpndCmpnList;
     private List<String> rsumeList;
     private List<String> appctnTypeList;
+    private List<String> mngConsCdList;
 
     // 사업진행 상세
     @Schema(title = "불량개선이전율")
