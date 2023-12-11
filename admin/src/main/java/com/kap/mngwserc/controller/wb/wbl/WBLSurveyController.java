@@ -236,11 +236,11 @@ public class WBLSurveyController<sVASurveyMstDTO> {
      */
     @Operation(summary = "회차 삭제", tags = "상생협력체감도조사", description = "")
     @PostMapping(value="/deleteEpisd")
-    public String deleteEpisdList(@Valid @RequestBody WBLEpisdMstDTO wBLEpisdMstDTO , ModelMap modelMap) throws Exception
+    public String deleteEpisdList(@Valid @RequestBody WBLEpisdMstDTO wBLEpisdMstDTO , ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            modelMap.addAttribute("respCnt", wLSurveyService.deleteEpisdList(wBLEpisdMstDTO));
+            modelMap.addAttribute("respCnt", wLSurveyService.deleteEpisdList(wBLEpisdMstDTO,request));
         }
         catch (Exception e)
         {

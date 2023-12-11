@@ -430,6 +430,34 @@
 		</where>
 	</select>
 
+
+	<!--
+		쿼리명 : SVASurveyMapper.getSurveyCmpnEpisdCnt
+		설  명 : 상생협력체감도 설문 매핑 여부
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.11    박준희       최초생성
+    -->
+	<select id="getSurveyCmpnEpisdCnt" parameterType="SVASurveyMstSearchDTO" resultType="java.lang.Integer">
+		select /* SVASurveyMapper.getSurveyCmpnEpisdCnt */
+		count(*) recp_cnt
+		from sv_mst sv_mst join cx_cmpn_episd_mst episd_mst
+		on episd_mst.srv_seq = sv_mst.srv_seq
+		<where>
+			<choose>
+				<when test="delValueList != null and delValueList.size() > 0">
+					sv_mst.srv_seq in
+					<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+						#{delValueList}
+					</foreach>
+				</when>
+				<otherwise>
+					sv_mst.srv_seq = #{detailsKey}
+				</otherwise>
+			</choose>
+		</where>
+	</select>
+
 	<!--
 		쿼리명 : SVASurveyMapper.selectSurveyDtl
 		설  명 : 설문 마스터 조회

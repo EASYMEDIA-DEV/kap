@@ -342,6 +342,22 @@
 		</if>
 	</select>
 
+	<!--
+         쿼리명 : WBLSurveyMapper.selectCxstnEpisdListCnt
+         설  명 : 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    박준희       최초생성
+    -->
+	<select id="selectCxstnEpisdListCnt" parameterType="WBLEpisdMstDTO" resultType="java.lang.Integer">
+		SELECT /* WBLSurveyMapper.selectCxstnEpisdListCnt*/
+		COUNT(a.cxstn_cmpn_episd_seq)
+		FROM
+		cx_cmpn_episd_mst a inner join cx_appctn_rsume_srv_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
+		<if test="cxstnCmpnEpisdSeq != null and cxstnCmpnEpisdSeq != ''.toString() ">
+			where a.cxstn_cmpn_episd_seq = #{cxstnCmpnEpisdSeq}
+		</if>
+	</select>
 
 	<!--
          쿼리명 : WBLSurveyMapper.deleteEpisdList
@@ -357,6 +373,7 @@
 			cxstn_cmpn_episd_seq = #{detailsKey}
 		</where>
 	</delete>
+
 
 
 	<!--

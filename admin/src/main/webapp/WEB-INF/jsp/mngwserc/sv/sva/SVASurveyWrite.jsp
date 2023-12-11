@@ -9,9 +9,9 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.srvSeq}" />
+            <input type="hidden" class="notRequired" id="posbChg" name="posbChg" value="${rtnDto.posbChg}" />
 
             <h5 class="ml mb-xl"><em class="ion-play mr-sm"></em>설문 기본정보</h5>
-
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">설문유형<span class="star"> *</span></label>
@@ -291,7 +291,9 @@
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnDto}">
+                            <c:if test="${rtnDto.posbChg ne 'false'}">
                             <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                            </c:if>
                             <button type="submit" class="btn btn-sm btn-success">수정</button>
                         </c:when>
                         <c:otherwise>

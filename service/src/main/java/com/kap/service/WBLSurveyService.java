@@ -57,7 +57,7 @@ public interface WBLSurveyService {
 	/**
 	 * 리스트 삭제
 	 */
-	public int deleteEpisdList(WBLEpisdMstDTO wBLEpisdMstDTO) throws Exception;
+	public int deleteEpisdList(WBLEpisdMstDTO wBLEpisdMstDTO , HttpServletRequest request) throws Exception;
 
 	/**
 	 * 리스트 등록

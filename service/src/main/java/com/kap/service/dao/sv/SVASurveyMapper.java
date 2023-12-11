@@ -77,6 +77,12 @@ public interface SVASurveyMapper {
     public int getSurveyCnstgRsumeCnt(SVASurveyMstSearchDTO sVASurveyDTO);
 
     /**
+     * 상생체감도 매핑 여부
+     */
+    public int getSurveyCmpnEpisdCnt(SVASurveyMstSearchDTO sVASurveyDTO);
+
+        
+    /**
      * 설문 삭제
      */
     public int deleteSurveyMst(SVASurveyMstSearchDTO sVASurveyDTO);
