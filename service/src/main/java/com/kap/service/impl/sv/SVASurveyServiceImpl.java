@@ -108,7 +108,7 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 
 		respCnt = edctnEpisdCnt+cnstgRsumeCnt+cmpnEpisdCnt;
 		if(respCnt == 0) {
-			//삭제하려는 데이터가 교육회차마스터,컨설팅진행마스터에 매핑되어있지 않음.
+			//삭제하려는 데이터가 교육회차마스터,컨설팅진행마스터,상생체감도에 매핑되어있지 않음.
 			respCnt = sVASurveyMapper.deleteSurveyMst(sVASurveyDTO);
 		}else{
 			respCnt = -1;
