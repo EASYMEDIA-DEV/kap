@@ -104,8 +104,9 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 		int respCnt = 0 ;
 		int edctnEpisdCnt = sVASurveyMapper.getSurveyEdctnEpisdCnt(sVASurveyDTO);
 		int cnstgRsumeCnt = sVASurveyMapper.getSurveyCnstgRsumeCnt(sVASurveyDTO);
+		int cmpnEpisdCnt = sVASurveyMapper.getSurveyCmpnEpisdCnt(sVASurveyDTO);
 
-		respCnt = edctnEpisdCnt+cnstgRsumeCnt;
+		respCnt = edctnEpisdCnt+cnstgRsumeCnt+cmpnEpisdCnt;
 		if(respCnt == 0) {
 			//삭제하려는 데이터가 교육회차마스터,컨설팅진행마스터에 매핑되어있지 않음.
 			respCnt = sVASurveyMapper.deleteSurveyMst(sVASurveyDTO);
@@ -197,7 +198,9 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 		sVASurveyMstSearchDTO.setDetailsKey( sVASurveyMstInsertDTO.getDetailsKey() );
 		int edctnEpisdCnt = sVASurveyMapper.getSurveyEdctnEpisdCnt(sVASurveyMstSearchDTO);
 		int cnstgRsumeCnt = sVASurveyMapper.getSurveyCnstgRsumeCnt(sVASurveyMstSearchDTO);
-		int respCnt = edctnEpisdCnt+cnstgRsumeCnt ;
+		int cmpnEpisdCnt = sVASurveyMapper.getSurveyCmpnEpisdCnt(sVASurveyMstSearchDTO);
+
+		int respCnt = edctnEpisdCnt+cnstgRsumeCnt+cmpnEpisdCnt ;
 
 		if(respCnt > 0)
 		{
@@ -230,11 +233,13 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 
 		sVASurveyMstInsertDTO.setSvSurveyQstnDtlList( surveyQstnDtlList );
 
-		//컨설팅 , 시험 매핑 여부
+		//컨설팅 , 시험  ,체감도 매핑 여부
 		int edctnEpisdCnt = sVASurveyMapper.getSurveyEdctnEpisdCnt(sVASurveyDTO);
 		int cnstgRsumeCnt = sVASurveyMapper.getSurveyCnstgRsumeCnt(sVASurveyDTO);
+		int cmpnEpisdCnt = sVASurveyMapper.getSurveyCmpnEpisdCnt(sVASurveyDTO);
 
-		sVASurveyMstInsertDTO.setPosbChg( (edctnEpisdCnt+cnstgRsumeCnt) > 0 ? false : true );
+
+		sVASurveyMstInsertDTO.setPosbChg( (edctnEpisdCnt+cnstgRsumeCnt+cmpnEpisdCnt) > 0 ? false : true );
 
 		return sVASurveyMstInsertDTO;
 	}
