@@ -12,7 +12,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 	// form Object
-	var $formObj = jQuery("#frmMemAtndcData").eq(0);
+	var $formObj = jQuery("#frmChangeEpisdData").eq(0);
 
 
 	// set model
@@ -75,10 +75,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						var resultFlag = true;
 
-						actionForm.edctnSeq = $("#chan_edctnSeq").val();//교육순번
-						actionForm.episdSeq = $("#chan_episdSeq").val();//회차순번
-						actionForm.episdYear =$("#chan_episdYear").val();//연도
-						actionForm.episdOrd = $("#chan_episdOrd").val();//회차정렬
+						actionForm.edctnSeq = $("#edctnSeq").val();//교육순번
+						actionForm.episdSeq = $("#episdSeq").val();//회차순번
+						actionForm.episdYear =$("#next_episdYear").val();//연도
+						actionForm.episdOrd = $("#next_episdOrd").val();//회차정렬
 
 
 						var memSeq = $("#chan_memSeq").val();
@@ -91,10 +91,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 								var memForm = {};
 
-								memForm.edctnSeq = $("#chan_edctnSeq").val();
-								memForm.episdSeq = $("#chan_episdSeq").val();
-								memForm.episdYear = $("#chan_episdYear").val();
-								memForm.episdOrd = $("#chan_episdOrd").val();
+								memForm.edctnSeq = $("#edctnSeq").val();
+								memForm.episdSeq = $("#episdSeq").val();
+
+								memForm.episdYear = $("#prev_episdYear").val();
+								memForm.episdOrd = $("#prev_episdOrd").val();
 
 								memForm.ptcptSeq = memArray[i];
 
@@ -104,10 +105,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 							var memForm = {};
 
-							memForm.edctnSeq = $("#chan_edctnSeq").val();
-							memForm.episdSeq = $("#chan_episdSeq").val();
-							memForm.episdYear = $("#chan_episdYear").val();
-							memForm.episdOrd = $("#chan_episdOrd").val();
+							memForm.edctnSeq = $("#edctnSeq").val();
+							memForm.episdSeq = $("#episdSeq").val();
+
+							memForm.episdYear = $("#prev_episdYear").val();
+							memForm.episdOrd = $("#prev_episdOrd").val();
 
 							memForm.ptcptSeq = memSeq;
 
@@ -117,11 +119,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actionForm.ptcptList = memList;
 
+						if($("#prev_episdYear").val() == $("#next_episdYear").val() && $("#prev_episdOrd").val() == $("#next_episdOrd").val()){
+							alert("다른 년도,회차를 선택해주세요");
+							resultFlag = false;
+						}
 
 
-						debugger;
+
+
 						if(resultFlag){
-
+							debugger;
 							cmmCtrl.jsonAjax(function(data){
 								alert("저장되었습니다.");
 								location.href = "./list";

@@ -91,7 +91,7 @@ public interface EBBEpisdService {
 	/**
 	 * 교육차수 신청자 차수변경
 	 */
-	public EBBPtcptDTO changeEpisd(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+	public int changeEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
 	/**

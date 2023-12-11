@@ -14,12 +14,14 @@
             <form name="frmChangeEpisdData" id="frmChangeEpisdData">
 
                 <!-- CSRF KEY -->
-                <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <input type="hidden" id="chan_edctnSeq" name="edctnSeq" value="" />
-                <input type="hidden" id="chan_episdYear" name="episdYear" value="" />
-                <input type="hidden" id="chan_episdOrd" name="episdOrd" value="" />
-                <input type="hidden" id="chan_episdSeq" name="episdSeq" value="" />
-                <input type="hidden" id="chan_memSeq" name="memSeq" value="" />
+                <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <input type="hidden" class="notRequired" id="edctnSeq" name="edctnSeq" value="" />
+                <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="" />
+
+                <input type="hidden" class="notRequired" id="prev_episdYear" name="episdYear" value="" />
+                <input type="hidden" class="notRequired" id="prev_episdOrd" name="episdOrd" value="" />
+
+                <input type="hidden" class="notRequired" id="chan_memSeq" name="memSeq" value="" />
 
                 <!-- 레이어 여부 -->
                 <input type="hidden" name="srchLayer" value="Y" />
@@ -28,14 +30,14 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">연도<span class="star text-danger"> *</span></label>
                             <div class="col-sm-6 form-inline">
-                                <select class="form-control input-sm wd-sm" name="episdYear" id="episdYear" title="년도" style="min-width: 100px;">
+                                <select class="form-control input-sm wd-sm" name="episdYear" id="next_episdYear" title="년도" style="min-width: 100px;">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${episdCdList.CO_YEAR_CD}" varStatus="status">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.episdYear eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                     </c:forEach>
                                 </select>
 
-                                <select class="form-control input-sm wd-sm" name="episdOrd" id="episdOrd" title="회차" style="min-width: 100px;">
+                                <select class="form-control input-sm wd-sm" name="episdOrd" id="next_episdOrd" title="회차" style="min-width: 100px;">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${episdCdList.ROUND_CD}" varStatus="status">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.episdOrd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>

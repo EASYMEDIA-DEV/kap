@@ -458,7 +458,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			changeEpisd : {
 				event : {
 					click : function() {
-						//강제 종강 클릭
+						//차수변경 클릭
 						var seqObj = {};
 						seqObj.edctnSeq = $("#edctnSeq").val();
 						seqObj.episdYear = $("#episdYear").val();
@@ -480,12 +480,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						seqObj.memSeq = seqList;
 
 
-						//출석부 레이어 팝업 호출
+						//차수변경 레이어팝업 호출
 						$(".ebbChageEpisdLayer").one('show.bs.modal', function() {
-							$(".ebbChageEpisdLayer").find("#chan_edctnSeq").val(seqObj.edctnSeq);
-							$(".ebbChageEpisdLayer").find("#chan_episdYear").val(seqObj.episdYear);
-							$(".ebbChageEpisdLayer").find("#chan_episdOrd").val(seqObj.episdOrd);
-							$(".ebbChageEpisdLayer").find("#chan_episdSeq").val(seqObj.episdSeq);
+							$(".ebbChageEpisdLayer").find("#edctnSeq").val(seqObj.edctnSeq);
+							$(".ebbChageEpisdLayer").find("#episdSeq").val(seqObj.episdSeq);
+							$(".ebbChageEpisdLayer").find("#prev_episdYear").val(seqObj.episdYear);
+							$(".ebbChageEpisdLayer").find("#prev_episdOrd").val(seqObj.episdOrd);
+
 							$(".ebbChageEpisdLayer").find("#chan_memSeq").val(seqObj.memSeq);
 							//$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
 							//$(this).find("button.tempBtn").trigger("click");

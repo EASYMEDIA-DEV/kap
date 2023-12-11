@@ -88,7 +88,7 @@
 				, (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
 				, a.fxnum_cnt
 				, a.fxnum_impsb_yn
-				, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord) AS accs_cnt
+				, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
 				, a.rcrmt_mthd_cd
 				, (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
 				, a.pic_nm
@@ -527,7 +527,7 @@
 
 	<!--
       쿼리명 : EBBEpisdMapper.updatePtcptStatus
-      설  명 : 교육차수 참여자 교육취소처리
+      설  명 : 교육차수 참여자 교육취소처리 - 전체
        수정일     수정자       수정내용
      ==========   ======    ==============
      2023.12.11   김학규       최초생성
@@ -536,10 +536,33 @@
 
 		UPDATE ep_edctn_ptcpt_mst SET /* EBBEpisdMapper.updatePtcptStatus */
 			stts_cd = 'EDU_STTS_CD06'
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
 		WHERE 1=1
 		  and edctn_seq = #{edctnSeq}
 		  and episd_year = #{episdYear}
 		  and episd_ord = #{episdOrd}
+	</update>
+	<!--
+	쿼리명 : EBBEpisdMapper.updatePtcptStatus
+	설  명 : 교육차수 참여자 차수변경을 통한 교육취소처리 - 개인
+	수정일     수정자       수정내용
+	==========   ======    ==============
+	2023.12.11   김학규       최초생성
+	-->
+	<update id="updatePtcptStatusInfo" parameterType="EBBPtcptDTO" >
+
+		UPDATE ep_edctn_ptcpt_mst SET /* EBBEpisdMapper.updatePtcptStatus */
+			stts_cd = 'EDU_STTS_CD06'
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		WHERE 1=1
+			and edctn_seq = #{edctnSeq}
+			and episd_year = #{episdYear}
+			and episd_ord = #{episdOrd}
+			and ptcpt_seq = #{ptcptSeq}
 	</update>
 
 	<!--
@@ -553,6 +576,9 @@
 
 		UPDATE ed_edctn_episd_mst SET /* EBBEpisdMapper.updateEpisdStatus */
 			edctn_stts_cd = 'EDCTN_STTS_CD02'
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
 			WHERE 1=1
 				and edctn_seq = #{edctnSeq}
 				and episd_year = #{episdYear}
@@ -1069,6 +1095,7 @@
 									when d.edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
 							end
 							when a.stts_cd = 'EDU_STTS_CD02' then '신청취소'
+						 when a.stts_cd = 'EDU_STTS_CD06' then '교육취소'
 					end
 
 			when d.edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
@@ -1200,13 +1227,22 @@
 			, episd_year
 			, episd_ord
 			, mem_seq
+			, ptcpt_bsnm_no
 			, gpc_id
 			from ep_edctn_ptcpt_mst
 			  WHERE 1=1
 				and edctn_seq = #{edctnSeq}
 				and episd_year = #{episdYear}
 				and episd_ord = #{episdOrd}
-				and mem_seq = #{memSeq}
+			    <choose>
+					<when test="memSeq != null and  memSeq != ''">
+						and mem_seq = #{memSeq}
+					</when>
+					<otherwise>
+						and ptcpt_seq = #{ptcptSeq}
+					</otherwise>
+				</choose>
+
 	</select>
 
 	<!--

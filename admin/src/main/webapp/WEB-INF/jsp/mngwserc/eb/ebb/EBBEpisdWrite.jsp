@@ -628,7 +628,7 @@
                                     <span class="ion-checkmark-round"></span> 오프라인평가
                                 </label>
 
-                                <table class="table table-hover table-striped">
+                                <table class="table table-striped">
 
                                     <thead>
                                     <tr>

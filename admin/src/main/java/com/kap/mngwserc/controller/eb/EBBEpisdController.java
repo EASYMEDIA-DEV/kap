@@ -337,31 +337,7 @@ public class EBBEpisdController {
         return "jsonView";
     }
 
-    @Operation(summary = "교육차수 차수변경", tags = "교육차수 신청자 등록", description = "")
-    @PostMapping(value="/ptcpt/changeEpisd")
-    public String changeEpisd(EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap) throws Exception
-    {
 
-        //교육차수 신청자를 등록한다. 등록할때 이미 회원이 있으면 취소
-        EBBPtcptDTO temoDto = new EBBPtcptDTO();
-        try {
-
-            temoDto = eBBEpisdService.changeEpisd(eBBPtcptDTO);
-
-            modelMap.addAttribute("rtnData", temoDto);
-
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-
-        return "jsonView";
-    }
 
     /**
      * 교육참여자 개인 출석부를 호출한다.
@@ -436,6 +412,31 @@ public class EBBEpisdController {
                 throw new Exception(e.getMessage());
             }
             return eBBEpisdDTO;
+        }
+
+        @Operation(summary = "교육차수 차수변경", tags = "교육차수 신청자 등록", description = "")
+        @PostMapping(value="/changeEpisd")
+        public EBBPtcptDTO changeEpisd(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap) throws Exception
+        {
+
+            int rtnCnt = 0;
+            //교육차수 신청자를 등록한다. 등록할때 이미 회원이 있으면 취소
+            EBBPtcptDTO temoDto = new EBBPtcptDTO();
+            try {
+
+                rtnCnt = eBBEpisdService.changeEpisd(eBBEpisdDTO);
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return temoDto;
         }
 
         @Operation(summary = "교육차수 중복체크", tags = "교육차수 중복체크", description = "")

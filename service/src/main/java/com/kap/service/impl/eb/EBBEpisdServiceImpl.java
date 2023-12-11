@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -409,10 +410,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		int actCnt = 0;
 		try{
 
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			eBBEpisdDTO.setModId( cOUserDetailsDTO.getId() );
+			eBBEpisdDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
 			//참여한 회원 전부 교육 취소상태로 변경 EDU_STTS_CD06
 			eBBEpisdMapper.updatePtcptStatus(eBBEpisdDTO);
-
-
 
 			//선택한 교육차수의 상태를 종강(폐강)으로 변경 EDCTN_STTS_CD02
 			eBBEpisdMapper.updateEpisdStatus(eBBEpisdDTO);
@@ -488,23 +491,66 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	}
 
 	/*
-	 * 교육차수 신청자(참여) 출석 상세 생성
+	 * 교육차수 차수변경
 	 * */
-	public EBBPtcptDTO changeEpisd(EBBPtcptDTO eBBPtcptDTO){
+	public int changeEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception{
 
-		try{
+		int rtnCnt = 0;
+
 
 			//전달받은 회원번호로 반복문 돌림
-			//상태값이 F인경우 반환중지함
+			//상태값이 F인경우 반환중지함?
+			List<EBBPtcptDTO> ptcptList = eBBEpisdDTO.getPtcptList();
 
-			setPtcptInfo(eBBPtcptDTO);
-		}catch (Exception e){
+			for(EBBPtcptDTO ptcptDto : ptcptList){
+				System.out.println("@@@ ptcptDto = " + ptcptDto.getMemSeq());
+				System.out.println("@@@ ptcptDto = " + ptcptDto.getPtcptSeq());
+				//변경전 정보를 받아온다
+				EBBPtcptDTO prevPtcptDto = eBBEpisdMapper.selectPtcptDtl(ptcptDto);
 
-		}
+				//새 dto에 넣는다 차수정렬,차수년도, 회원번호, 사업자번호
+
+				EBBPtcptDTO nextPtcptDto = new EBBPtcptDTO();
+
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				nextPtcptDto.setRegId( cOUserDetailsDTO.getId() );
+				nextPtcptDto.setRegName( cOUserDetailsDTO.getName() );
+				nextPtcptDto.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+				nextPtcptDto.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+				nextPtcptDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				nextPtcptDto.setModId( cOUserDetailsDTO.getId() );
+				nextPtcptDto.setModIp( cOUserDetailsDTO.getLoginIp() );
 
 
 
-		return eBBPtcptDTO;
+				int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
+				nextPtcptDto.setPtcptSeq(firstEdctnPtcptIdgen);
+
+				nextPtcptDto.setEdctnSeq(eBBEpisdDTO.getEdctnSeq());//과정 순번
+				nextPtcptDto.setEpisdSeq(eBBEpisdDTO.getEpisdSeq());//회차순번
+
+				nextPtcptDto.setEpisdYear(eBBEpisdDTO.getEpisdYear());//신규 회차년도
+				nextPtcptDto.setEpisdOrd(eBBEpisdDTO.getEpisdOrd());//신규 회차정렬
+
+
+
+
+				nextPtcptDto.setMemSeq(prevPtcptDto.getMemSeq()); //회원번호
+				nextPtcptDto.setPtcptBsnmNo(prevPtcptDto.getPtcptBsnmNo());//회원 사업자번호
+
+				eBBEpisdMapper.insertPtcptDtl(nextPtcptDto);
+				setAtndcList(nextPtcptDto);//교육참여 출석 상세 목록을 등록한다.
+
+
+				//이전차수의 참여정보 내역 교육취소 처리
+				ptcptDto.setModId( cOUserDetailsDTO.getId() );
+				ptcptDto.setModIp( cOUserDetailsDTO.getLoginIp() );
+				eBBEpisdMapper.updatePtcptStatusInfo(ptcptDto);
+
+			}
+
+
+		return rtnCnt;
 	}
 
 
