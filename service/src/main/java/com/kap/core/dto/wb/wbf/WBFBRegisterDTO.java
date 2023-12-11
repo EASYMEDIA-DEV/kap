@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
+import com.kap.core.dto.wb.WBOrderMstDto;
+import com.kap.core.dto.wb.WBSpprtDtlDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Getter
 @Setter
@@ -23,15 +23,31 @@ import java.util.Map;
 @Schema(title = "스마트공장구축 신청업체관리 검색")
 public class WBFBRegisterDTO extends BaseDTO {
 
+
+    /* 공통 - 컬럼명 동일 */
+    @Schema(title = "신청상태", example = "")
+    private String appctnSttsCd;
+    @Schema(title = "신청상태명", example = "")
+    private String appctnSttsCdNm;
+    @Schema(title = "관리자상태코드", example = "")
+    private String mngSttsCd;
+    @Schema(title = "관리자상태명", example = "")
+    private String mngSttsCdNm;
+
+
     /* 상생 */
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
     @Schema(title = "회차순번", example = "")
-    private String episdSeq;
+    private Integer episdSeq;
     @Schema(title = "회차순번", example = "")
     private String optnCd;
     @Schema(title = "신청순번", example = "숫자")
     private Integer appctnSeq;
+    @Schema(title = "신청순번", example = "숫자")
+    private Integer appctnSpprtSeq;
+    @Schema(title = "신청순번", example = "숫자")
+    private String giveType;
     @Schema(title = "과제명 코드", example = "")
     private String taskCd;
     @Schema(title = "사업 유형 코드", example = "")
@@ -44,7 +60,6 @@ public class WBFBRegisterDTO extends BaseDTO {
     private String sbrdnBsnmNo;
     @Schema(title = "상세 진행상태 코드", example = "")
     private String rsumeSttsCd;
-
     @Schema(title = "상생상세 진행순번", example = "숫자")
     private Integer rsumeSeq;
     @Schema(title = "상생상세 진행정렬", example = "숫자")
@@ -58,20 +73,11 @@ public class WBFBRegisterDTO extends BaseDTO {
     @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;
 
-
     /* 상생 Data */
     @Schema(title = "사업년도", example = "YYYY")
     private String year;
     @Schema(title = "회차", example = "1")
     private String episd;
-    @Schema(title = "진행상태코드", example = "")
-    private String appctnSttsCd;
-    @Schema(title = "진행상태", example = "")
-    private String appctnSttsCdNm;
-    @Schema(title = "관리자상태값코드", example = "")
-    private String mngSttsCd;
-    @Schema(title = "관리자상태값", example = "")
-    private String mngSttsCdNm;
 
     /* 신청자 정보 */
     @Schema(title = "신청자 이름", example = "")
@@ -144,15 +150,22 @@ public class WBFBRegisterDTO extends BaseDTO {
     private String tchlg5starCd;
     @Schema(title = "기술5스타년도", example = "")
     private String tchlg5starYear;
-
-    /* Detail */
+    @Schema(title = "선급금액여부", example = "")
+    private Character pmndvPmtYn;
     @Schema(title = "담당위원코드", example = "")
     private String picCmssrSeq;
     @Schema(title = "담당위원이름", example = "")
     private String picName;
-    @Schema(title = "공급업체명", example = "")
-    private String offerCmpnCdNm;
-    @Schema(title = "공급업체 사업자등록번호", example = "")
-    private String offerBsnmNo;
+
+    /* Detail */
+    @Schema(title = "관리자메모", example = "")
+    private String admMemo;
+
+    /* 상생신청지원금 상세 DTO */
+    List<WBSpprtDtlDTO> spprtDtlList;
+
+    /* 스마트 공장 상세 DTO */
+    List<WBFBRsumeTaskDtlDTO> rsumeTaskDtlList;
+
 
 }

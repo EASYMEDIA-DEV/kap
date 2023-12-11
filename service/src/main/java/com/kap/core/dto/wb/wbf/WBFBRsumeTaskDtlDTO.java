@@ -1,12 +1,12 @@
-package com.kap.core.dto.wb;
+package com.kap.core.dto.wb.wbf;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import com.kap.core.dto.wb.WBRsumeFileDtlDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -19,22 +19,29 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "스마트공장구축 - 상생신청진행 진행/스마트 상세")
-public class WBRsumeTaskDtlDTO extends BaseDTO {
+public class WBFBRsumeTaskDtlDTO extends BaseDTO {
 
-    /* Key */
+    /* Primary Key */
     @Schema(title = "상생상세 진행순번", example = "숫자")
     private Integer rsumeSeq;
     @Schema(title = "상생상세 진행정렬", example = "숫자")
     private Integer rsumeOrd;
+    /* 진행상세테이블 FK */
+    @Schema(title = "진행상태코드", example = "")
+    private String rsumeSttsCd;
 
     @Schema(title = "신청상태", example = "")
     private String appctnSttsCd;
     @Schema(title = "신청상태명", example = "")
     private String appctnSttsCdNm;
+    @Schema(title = "신청상태변경일시", example = "")
+    private String appctnSttsChngDtm;
     @Schema(title = "관리자상태코드", example = "")
     private String mngSttsCd;
     @Schema(title = "관리자상태명", example = "")
     private String mngSttsCdNm;
+    @Schema(title = "관리상태변경일시", example = "")
+    private String mngSttsChngDtm;
 
     /* 상생 상세 */
     @Schema(title = "출연회사코드", example = "")
@@ -81,13 +88,13 @@ public class WBRsumeTaskDtlDTO extends BaseDTO {
     @Schema(title = "스마트화목표코드", example = "")
     private String smtfnTrgtCd;
 
-    /* 파일 저장시 사용 정보 */
-    List<HashMap<String, Object>> appctnFileInfo;
-
     @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;
 
     /* List */
-    List<WBRsumeTaskDtlDTO> list;
+    List<WBFBRsumeTaskDtlDTO> list;
+
+    /* 파일 사용 정보 */
+    List<WBRsumeFileDtlDTO> appctnFileInfo;
 
 }
