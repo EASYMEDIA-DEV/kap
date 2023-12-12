@@ -34,6 +34,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+
+
+
             // do something...
             ctgryCd : {
                 event : {
@@ -62,7 +65,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 return false;
                             }
                             if(!bsnmOldNewChk) {
-                                if ($("#ctgryCd").val().trim() == '' || $("#ctgryCd").val() == undefined) {
+                                if ($("#ctgryCd").val().trim() == '' || $("#ctgryCd").val() == undefined ) {
                                     alert(msgCtrl.getMsg("fail.mp.join.al_027"));
                                     $("#ctgryCd").focus();
                                     return false;
@@ -72,7 +75,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     $("#sizeCd").focus();
                                     return false;
                                 }
-                                if ($("#stbsmDt").val().trim() == '' || $("#stbsmDt").val() == undefined) {
+                                if ($("#stbsmDt").val().trim() == '' || $("#stbsmDt").val() == undefined || $("#stbsmDt").val().length != 10) {
                                     alert(msgCtrl.getMsg("fail.mp.join.al_029"));
                                     $("#stbsmDt").focus();
                                     return false;
@@ -138,8 +141,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnBack : {
                 event : {
                     click : function () {
-                        history.back();
-
+                        if (confirm(msgCtrl.getMsg("confirm.backChk"))) {
+                            history.back();
+                        }
                     }
                 }
             },

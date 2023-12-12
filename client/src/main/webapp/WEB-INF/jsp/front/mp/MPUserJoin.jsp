@@ -390,7 +390,7 @@
                 <div class="page-bot-btn-sec">
                     <div class="btn-wrap">
                         <div class="btn-set">
-                            <button class="btn-solid small gray-bg btnBack" ><span>이전</span></button>
+                            <a class="btn-solid small gray-bg btnBack" href="javascript:"><span>이전</span></a>
                         </div>
                         <div class="btn-set">
                             <button class="btn-solid small black-bg" type="submit"><span>회원가입</span></button>

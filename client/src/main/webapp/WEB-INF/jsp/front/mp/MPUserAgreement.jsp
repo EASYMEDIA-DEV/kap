@@ -1,22 +1,35 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
+<%
+    response.setHeader("Cache-Control","no-store");
+    response.setHeader("Pragma","no-cache");
+    response.setDateHeader("Expires",0);
+%>
+
 <script type="text/javascript">
+
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            $("#allAgreeChk").prop("checked",false)
+            $("#agreeChk1").prop("checked",false);
+            $("#agreeChk2").prop("checked",false);
+            $("#agreeChk3").prop("checked",false);
+            $("#agreeChk4").prop("checked",false);
+            $("#marketingChk1").prop("checked",false);
+            $("#marketingChk2").prop("checked",false);
+        }
+    }
+
     if('${data}' != '') {
         alert("이미 가입된 회원입니다. 로그인 페이지로 이동합니다.");
         location.href = "/login";
     }
 </script>
-<%
-    response.setHeader("Cache-Control","no-store");
-    response.setHeader("Pragma","no-cache");
-    response.setDateHeader("Expires",0);
-    if (request.getProtocol().equals("HTTP/1.1"))
-        response.setHeader("Cache-Control", "no-cache");
-%>
+
 
 
 <div id="wrap" class="member" data-controller="controller/mp/MPUserController"><!-- 로그인, 회원가입 페이지 member 클래스 추가 -->
-    <form name="formNextOne" id="formNextOne"  method="post"  >
+    <form name="formNextOne" id="formNextOne"  method="get"  >
             <input type="hidden" id="name" name="name" value="${verificationData.name}">
             <input type="hidden" id="birthdate" name="birthdate" value="${verificationData.birthdate}">
             <input type="hidden" id="mobile_no" name="mobile_no" value="${verificationData.mobile_no}">

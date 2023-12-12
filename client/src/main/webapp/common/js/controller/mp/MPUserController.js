@@ -308,8 +308,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnBack : {
                 event : {
                     click : function () {
-                        history.back();
-
+                        if (confirm(msgCtrl.getMsg("confirm.backChk"))) {
+                            history.back();
+                        }
                     }
                 }
             },
