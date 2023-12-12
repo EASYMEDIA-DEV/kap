@@ -32,17 +32,6 @@ public class MPJoinDto extends BaseDTO {
     private MPAUserDto mpaUserDto;
     private MPEPartsCompanyDTO mpePartsCompanyDTO;
 
-    @Schema(title = "회사우편번호", example = "1")
-    private String cmpnZipcode;
-
-    @Schema(title = "회사주소", example = "1")
-    private String cmpnBscAddr ; //회사 주소
-
-    @Schema(title = "회사상세주소", example = "1")
-    private String cmpnDtlAddr ;
-
-    @Schema(title = "회사번호", example = "1")
-    private String cmpnTel;
 
     @Schema(title = "사업자번호", example = "1")
     private String bsnmNo;

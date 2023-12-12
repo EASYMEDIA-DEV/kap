@@ -89,7 +89,7 @@
         <input type="hidden" id="bsnmNo" name="bsnmNo" value="<%=nullChk(bsnmNo)%>" class="notRequired"/>
         <input type="hidden" id="cmpnNm" name="mpePartsCompanyDTO.cmpnNm" value="<%=nullChk(bsnmNm)%>" class="notRequired"/>
         <input type="hidden" id="rprsntNm" name="mpePartsCompanyDTO.rprsntNm" value="<%=nullChk(rprsntNm)%>" class="notRequired"/>
-        <input type="hidden" id="cmpnTel" name="mpePartsCompanyDTO.cmpnTel" value="<%=nullChk(cmpnTel)%>" class="notRequired"/>
+        <input type="hidden" id="cmpnTel" name="mpePartsCompanyDTO.telNo" value="<%=nullChk(cmpnTel)%>" class="notRequired"/>
         <input type="hidden" id="cmpnZipcode" name="mpePartsCompanyDTO.zipcode" value="<%=nullChk(cmpnZipcode)%>" class="notRequired"/>
         <input type="hidden" id="cmpnBscAddr" name="mpePartsCompanyDTO.bscAddr" value="<%=nullChk(cmpnBscAddr)%>" class="notRequired"/>
         <input type="hidden" id="cmpnDtlAddr" name="mpePartsCompanyDTO.dtlAddr" value="<%=nullChk(cmpnDtlAddr)%>" class="notRequired"/>
