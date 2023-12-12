@@ -28,8 +28,8 @@ public class COFrontDummyUserDetailsServiceImpl implements COUserDetailsService
 	public COUserDetailsDTO getAuthenticatedUser()
 	{
 		COUserDetailsDTO cOLoginUserDTO = COUserDetailsDTO.builder().build();
-		cOLoginUserDTO.setSeq(1);
-		cOLoginUserDTO.setId("hyumain1");
+		cOLoginUserDTO.setSeq(-20);
+		cOLoginUserDTO.setId("hyumain");
 		cOLoginUserDTO.setName("TBD");
 		cOLoginUserDTO.setAuthCd("CP");
 		cOLoginUserDTO.setLastLgnDtm("2023-11-16 00:00:00");

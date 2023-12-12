@@ -21,7 +21,7 @@
         <td class="text-center">${kl:bsnmNoConvert(list.workBsnmNo)}</td>
         <td class="text-center">${list.ctgryCdNm}</td>
         <td class="text-center">${list.sizeCdNm}</td>
-        <td class="text-center">${list.deptCdNm}(${list.deptDtlNm})</td>
+        <td class="text-center">${list.deptCdNm} ${list.deptDtlNm == '' ? '' : '('+=list.deptDtlNm+=')'} </td>
         <td class="text-center">${list.pstnCdNm}</td>
         <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
         <td class="text-center">${kl:emailMasking(list.email)}</td>

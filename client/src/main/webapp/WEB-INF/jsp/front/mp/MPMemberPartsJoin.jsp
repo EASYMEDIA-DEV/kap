@@ -20,7 +20,7 @@
     String hpNo = "010-1234-5678";
 
 %>
-<form name="formNextSubmit" id="formNextSubmit"  method="post"  >
+<form name="formNextSubmit" id="formNextSubmit"  method="get"  >
     <input type="hidden" id="name" name="name" value="<%=name%>" />
     <input type="hidden" id="birthdate" name="birthdate" value="<%=birthdate%>" />
     <input type="hidden" id="gender" name="gender" value="<%=gender%>" />
@@ -458,7 +458,7 @@
 
                                 <div class="row gubunTwo"  style="display: none;">
                                     <div class="th">
-                                        <p class="title f-head">SQ정보<span class="essential-mark color-sky">*</span></p>
+                                        <p class="title f-head">SQ정보</p>
                                     </div>
                                     <div class="td">
                                         <div class="data-line-w">
@@ -553,7 +553,8 @@
                 <div class="page-bot-btn-sec">
                     <div class="btn-wrap">
                         <div class="btn-set">
-                            <a class="btn-solid small gray-bg" href="javascript:"><span>이전</span></a>
+
+                            <a class="btn-solid small gray-bg btnBack" href="javascript:"><span>이전</span></a>
                         </div>
                         <div class="btn-set">
                             <button class="btn-solid small black-bg" id="nextBtn"><span>다음</span></button>

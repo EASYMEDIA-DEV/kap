@@ -5,7 +5,7 @@
 		<meta charset="UTF-8">
 	</head>
 	<body>
-	<form name="form" id="form"  method="post" action="${rtnData.receivedatass.redirectUrl}">
+	<form name="form" id="form"  method="get" action="${rtnData.receivedatass.redirectUrl}">
 		<input type="hidden" id="name" name="name"  value="${rtnData.name}"/>
 		<input type="hidden" id="birthdate" name="birthdate"  value="${rtnData.birthdate}"/>
 		<input type="hidden" id="gndr" name="gndr"  value="${rtnData.gender}"/>

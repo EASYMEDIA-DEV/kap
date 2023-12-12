@@ -60,7 +60,7 @@
                 <label class="col-sm-1 control-label">생년월일</label>
                 <p class="col-sm-5 form-control-static">${ rtnDtl.birth}</p>
                 <label class="col-sm-1 control-label">성별</label>
-                <p class="col-sm-5 form-control-static">${rtnDtl.gndr}</p>
+                <p class="col-sm-5 form-control-static">${rtnDtl.gndr == '1' ? '남' : '여'} </p>
             </div>
         </fieldset>
 

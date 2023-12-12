@@ -25,7 +25,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             issueCd : {
                 event : {
                     change : function() {
-                        if($(this).val() == "EBD_SQ_C"){
+                        if($(this).val() == "EBD_SQ_R"){
+                            ctrl.obj.find(".rtrnRsnContainer").hide();
+                            ctrl.obj.find(".jdgmtNoContainer").hide();
+                        }else if($(this).val() == "EBD_SQ_C"){
                             ctrl.obj.find(".rtrnRsnContainer").show();
                             ctrl.obj.find(".jdgmtNoContainer").hide();
                         }else{

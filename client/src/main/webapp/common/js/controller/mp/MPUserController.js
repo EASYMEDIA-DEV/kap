@@ -308,8 +308,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnBack : {
                 event : {
                     click : function () {
-                        history.back();
-
+                        if (confirm(msgCtrl.getMsg("confirm.backChk"))) {
+                            history.back();
+                        }
                     }
                 }
             },
@@ -388,10 +389,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     if($("#memCd").val() =='CP') {
                         if($("#deptCd").val() == '') {
                             alert(msgCtrl.getMsg("fail.mp.join.al_032"));
-                            return false;
-                        }
-                        if($("#deptDtlNm").val() == '') {
-                            alert(msgCtrl.getMsg("fail.mp.join.al_033"));
                             return false;
                         }
                         if($("#pstnCd").val() =='') {

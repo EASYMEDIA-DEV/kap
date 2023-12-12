@@ -73,12 +73,14 @@ public class MPUserController {
         return "/front/mp/MPUserVerification.front";
     }
 
-    @RequestMapping("/agreement")
+    @RequestMapping( "/agreement")
     public String getAgreement(ModelMap modelMap, COIdFindDto coIdFindDto) throws Exception {
         modelMap.addAttribute("data", cOUserLgnService.getIdFind(coIdFindDto));
         modelMap.addAttribute("verificationData", coIdFindDto);
+
         return "/front/mp/MPUserAgreement.front";
     }
+
 
     @RequestMapping("/mp-user-join")
     public String getMemberJoin(ModelMap modelMap) throws Exception {
