@@ -229,10 +229,11 @@
         2023.11.09    김학규       최초생성
     -->
 	<select id="selectExamAppctnMst" parameterType="EBDSqCertiSearchDTO" resultType="EBGExamAppctnMstDTO">
-		SELECT /*EBDSqCertiReqMapper.selectExamAppctnMst*/
+		select /*EBDSqCertiReqMapper.selectExamAppctnMst*/
 			   appctn_mst.exam_appctn_seq
 			 , appctn_mst.mem_seq
 			 , appctn_mst.exam_cd
+			 , (select cd_nm from co_code_mst where cd = appctn_mst.exam_cd and cd_id = 'EBD_SQ_TP') exam_cd_nm
 			 , appctn_mst.issue_cd
 			 , appctn_mst.rtrn_rsn
 			 , appctn_mst.acqsn_dtm
@@ -249,7 +250,11 @@
 			 , appctn_mst.mod_dtm
 			 , appctn_mst.mem_seq
 		     , cmpn_mst.cmpn_nm
-		FROM sq_exam_appctn_mst appctn_mst left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = appctn_mst.bsnm_no
+		     , mem_mst.name
+		     , mem_mst.birth
+		     , (select web_path from co_file_dtl where file_seq = appctn_mst.idntfn_photo_file_seq and use_yn = 'Y' order by reg_dtm desc limit 1) as idntfnPhotoFileSeqUrl
+		FROM sq_exam_appctn_mst appctn_mst join co_mem_mst mem_mst on mem_mst.mem_seq = appctn_mst.mem_seq
+		    left join cp_cmpn_mst cmpn_mst on cmpn_mst.bsnm_no = appctn_mst.bsnm_no
 		WHERE
 		<choose>
 			<when test="siteGubun == 'admin'">
@@ -332,6 +337,7 @@
 		  exam_cd = #{examCd}
 		, idntfn_photo_file_seq = #{idntfnPhotoFileSeq}
 		, bsnm_no = #{bsnmNo}
+		, use_yn = #{useYn}
 		, mod_id = #{modId}
 		, mod_ip = #{modIp}
 		, mod_dtm = now()
@@ -560,6 +566,42 @@
 			, now()
 			)
 	</insert>
+
+	<!--
+         쿼리명 : EBDSqCertiReqMapper.updateCerti
+         설  명 : 신청서 사진 및 상태 변경
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<update id="updateCerti" parameterType="EBGExamAppctnMstDTO">
+		update /* EBDSqCertiReqMapper.updateCerti */ sq_exam_appctn_mst
+		set
+		idntfn_photo_file_seq = #{idntfnPhotoFileSeq}
+		<if test="issueCd eq 'EBD_SQ_C'">
+			, issue_cd = 'EBD_SQ_R'
+		</if>
+		, mod_ip = #{modIp}
+		, mod_dtm = now()
+		WHERE exam_appctn_seq = #{examAppctnSeq}
+	</update>
+
+	<!--
+         쿼리명 : EBDSqCertiReqMapper.updateCertiRenewal
+         설  명 : 자격증 만료 갱신
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<update id="updateCertiRenewal" parameterType="EBGExamAppctnMstDTO">
+		update /* EBDSqCertiReqMapper.updateCertiRenewal */ sq_exam_appctn_mst
+		set
+		  rfrsh_dtm = now()
+		, valid_strt_dt = now()
+		, valid_end_dt =  date_add(now(), INTERVAL 3 YEAR)
+		, mod_dtm = now()
+		WHERE exam_appctn_seq = #{examAppctnSeq}
+	</update>
 
 </mapper>
 

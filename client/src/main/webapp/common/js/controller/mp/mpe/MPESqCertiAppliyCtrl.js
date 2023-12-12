@@ -1,4 +1,4 @@
-define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
+define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
     "use strict";
     // set controller name
     var exports = {
@@ -13,43 +13,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     ctrl.model = {
         id : {
             // 페이징 처리
-            idntfnPhotoFileSeq : {
-                event : {
-                    change : function() {
-                        //파일정보
-                        var fileName = ctrl.obj.find("input[type=file][name="+$(this).prop("name")+"]")[0].files[0].name;
-                        var fileSize = ctrl.obj.find("input[type=file][name="+$(this).prop("name")+"]")[0].files[0].size;
-                        var fileExtn = fileName.substring(fileName.lastIndexOf(".")+1, fileName.length).toLowerCase();
-                        var maxSize = $(this).data("maxSize");
-                        var accept  = $(this).data("accept");
-                        //확장자 체크
-                        if(accept.indexOf(fileExtn) == -1){
-                            cmmCtrl.inputFileInit( ctrl.obj.find("input[type=file][name="+$(this).prop("name")+"]") );
-                            alert(msgCtrl.getMsg("fail.file.extn"));
-                            return false;
-                        }
-                        //파일명 길이 체크
-                        var orgnFileLength = fileName.substring(1, fileName.lastIndexOf(".")+1).length;
-                        if(orgnFileLength > 20){
-                            cmmCtrl.inputFileInit( $("input[type=file][name="+$(this).prop("name")+"]") );
-                            alert(msgCtrl.getMsg("fail.file.length"));
-                            return false;
-                        }
-                        //파일명 사이즈
-                        if(fileSize > maxSize || fileSize == 0){
-                            var msg = msgCtrl.getMsg("fail.file.size");
-                            cmmCtrl.inputFileInit( ctrl.obj.find("input[type=file][name="+$(this).prop("name")+"]") );
-                            if(fileSize == 0){
-                                msg = msgCtrl.getMsg("fail.file.no_size");
-                            }
-                            alert(msg);
-                            return false;
-                        }
-                        ctrl.obj.find(".file-list-area .empty-txt").text(fileName);
-                    }
-                }
-            },
-            // 페이징 처리
             submitBtn : {
                 event : {
                     click : function() {
@@ -59,9 +22,40 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             },
         },
         classname : {
-
+            fileRequired :{
+                event : {
+                    change : function() {
+                        console.log("1111")
+                    }
+                }
+            }
         },
         immediately : function() {
+            //모달 열릴때
+            ctrl.obj.on("onModalOpen", function(data){
+                //파일 초기화
+                $formObj.find("input[type=file]").fileInit();
+                ctrl.obj.find(".file-list-area .empty-txt").text("");
+            })
+            //파일 설정
+            $formObj.find("input[type=file]").fileUpload({
+                loading:true,
+                sync:true
+            },function(data){
+                //해당 input file 객체에 data(tempFileData) 응답 값이 저장
+                if(data != undefined && data.length > 0){
+                    if(ctrl.obj.find(".idntfnPhotoFileSeqImage").size() > 0){
+                        //이미지 보여주기
+                        ctrl.obj.find(".idntfnPhotoFileSeqImage").prop("src", data[0].webPath)
+                    }else{
+                    ctrl.obj.find(".file-list-area .empty-txt").text(data[0].orgnFileNm);
+                    }
+                }
+            });
+            var actionUrl = "./complete/insert";
+            if($formObj.find("input[type=file]").data("value") != undefined){
+                actionUrl = "./complete/update";
+            }
             $formObj.validation({
                 msg : {
                     confirm: {
@@ -88,7 +82,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 alert(msgCtrl.getMsg("fail.act"));
                             }
                             location.reload();
-                        }, "./complete/insert", $formObj, "json", true , true);
+                        }, actionUrl, $formObj, "json", true , true);
                     }
                 }
             });

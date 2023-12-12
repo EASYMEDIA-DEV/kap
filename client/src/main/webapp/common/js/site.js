@@ -25,6 +25,7 @@ require.config({
         //뒤에 js 확장자는 생략한다.
 		"ezCtrl" : "lib/ezController/jquery.ez.controller-0.4.0",
 		"ezVald" : "lib/ezValidation/jquery.ez.validation-1.3.6",
+		"ezFile" : "lib/ezFile/jquery.ez.file-0.1.0",
     },
 });
 

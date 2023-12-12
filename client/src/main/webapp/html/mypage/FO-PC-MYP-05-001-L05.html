@@ -32,13 +32,13 @@
 	<body>
     <div id="wrap">
       <!-- SQ평가원 자격증 팝업 -->
-      <div class="layer-popup estiCertiPop first-show"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
+      <div class="layer-popup estiCertiPop unavailable first-show"><!-- SQ평가원 자격증이 만료 혹은 사용 중지 됐을 경우 unavailable class 추가 -->
         <div class="for-center">
           <div class="pop-wrap">
             <div class="pop-con-area">
               <div class="flow-area">
                 <div class="flow-wrap">
-                  <div class="flow-list"><p class="img"><img src="/common/images/img-logo-certificate-prevention-of-theft.svg" alt=""></p></div>
+                  <div class="flow-list"><p class="img"><img src="/common/images/img-logo-certificate-prevention-of-theft-unavailable.svg" alt=""></p></div>
                 </div>
               </div>
               <div class="tit-area">
@@ -48,6 +48,13 @@
                 <div class="scroll-area">
                   <div class="p-cont-sec">
                     <div class="cont-sec-w">
+                      <!-- 사용불가일 때 추가되는 영역 -->
+                      <div class="no-data-area certificate"><!-- certificate 클래스 추가 시, 자격증 아이콘 -->
+                        <div class="txt-box">
+                          <p class="txt f-body1">자격증 발급 예정입니다.</p>
+                        </div>
+                      </div>
+                      <!-- // 사용불가일 때 추가되는 영역 -->
                       <div class="divide-area">
                         <div class="txt-con">
                           <div class="type-div">
@@ -61,7 +68,19 @@
                                   <p class="name f-head">홍길동</p>
                                 </div>
                                 <div class="infos">
-                                  <dl class="info">
+                                  <!-- 만료 후 -->
+                                  <div class="info">
+                                    <span></span>
+                                  </div>
+                                  <div class="info">
+                                    <span></span>
+                                  </div>
+                                  <div class="info">
+                                    <span></span>
+                                  </div>
+                                  <!-- // 만료 후 -->
+                                  <!-- 만료 전 -->
+                                  <!-- <dl class="info">
                                     <dt class="f-body2">자격증 번호</dt>
                                     <dd class="f-body2">KAP-SQE-202300001</dd>
                                   </dl>
@@ -84,7 +103,8 @@
                                   <dl class="info">
                                     <dt class="f-body2">유효기간</dt>
                                     <dd class="f-body2">2023.01.01 ~ 2026.12.31</dd>
-                                  </dl>
+                                  </dl> -->
+                                  <!-- // 만료 전 -->
                                 </div>
                               </div>
                             </li>
@@ -92,15 +112,12 @@
                         </div>
                         <div class="img-con">
                           <div class="img"><img src="/common/images/@img-evaluator-certificate.jpg" alt=""></div>
-                          <div class="btn-wrap">
-                            <!-- 2023-12-11 수정 -->
-                            <div class="file-btn-area">
-                              <input type="file" id="modify">
-                              <label class="btn-solid gray-bg" for="modify">수정</label>
-                            </div>
-                            <!-- // 2023-12-11 수정 -->
+                          <!-- 만료 전 -->
+                          <!-- <div class="btn-wrap">
+                            <button class="btn-solid small gray-bg" type="button"><span>수정</span></button>
                             <button class="btn-solid small black-bg" type="button"><span>변경 저장</span></button>
-                          </div>
+                          </div> -->
+                          <!-- // 만료 전 -->
                           <p class="modify-info f-caption2">최근 수정일시<span class="date-time f-caption1">2023.01.01 10:00</span></p>
                         </div>
                       </div>
@@ -120,13 +137,11 @@
                           </div>
                         </div>
                       </div>
-                      <div class="cont-sec s-margin">
-                        <div class="seal-div">
-                          <p class="f-head">
-                            <span class="txt">자동차부품산업진흥재단 이사장 안정구</span>
-                            <span class="img"><img src="/common/images/img-chariman-seal.png" alt=""></span>
-                          </p>
-                        </div>
+                      <div class="seal-div">
+                        <p class="f-head">
+                          <span class="txt">자동차부품산업진흥재단 이사장 안정구</span>
+                          <span class="img"><img src="/common/images/img-chariman-seal.png" alt=""></span>
+                        </p>
                       </div>
                     </div>
                   </div>

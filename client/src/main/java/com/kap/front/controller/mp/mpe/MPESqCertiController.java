@@ -21,14 +21,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.validation.ValidationException;
 import java.util.List;
 import java.util.Map;
@@ -82,10 +80,20 @@ public class MPESqCertiController {
             eBDSqCertiSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
             //SQ자격증 보기 버튼
             //SQ자격증이 중지 상태이면 아무것도 할 수 없다
-            modelMap.addAttribute("sqCerti", eBDSqCertiReqService.selectExamAppctnMst(eBDSqCertiSearchDTO));
+            EBGExamAppctnMstDTO sqCertiMst = eBDSqCertiReqService.selectExamAppctnMst(eBDSqCertiSearchDTO);
+            modelMap.addAttribute("sqCertiMst", sqCertiMst);
+            if(sqCertiMst != null){
+                //업종 조회
+                eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT02");
+                eBDSqCertiSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+                modelMap.addAttribute("rtnCompletePrcsList", eBDSqCertiReqService.getEducationCompleteList(eBDSqCertiSearchDTO));
+            }
             //SQ자격증 신청 버튼
             modelMap.addAttribute("posibleSqCertiCnt", eBDSqCertiReqService.getPosibleSqCertiCnt(eBDSqCertiSearchDTO));
             modelMap.addAttribute("educationCompleteListCnt", eBDSqCertiReqService.selectEducationCompleteListCnt(eBDSqCertiSearchDTO));
+
+            modelMap.addAttribute("imageExtns", imageExtns);
+            modelMap.addAttribute("atchUploadMaxSize", atchUploadMaxSize);
 
             modelMap.addAttribute("rtnData", eBDSqCertiSearchDTO);
         }
@@ -158,8 +166,7 @@ public class MPESqCertiController {
             {
                 throw new Exception("NOT PERMIT");
             }
-            modelMap.addAttribute("imageExtns", imageExtns);
-            modelMap.addAttribute("atchUploadMaxSize", atchUploadMaxSize);
+
         }
         catch (Exception e)
         {
@@ -190,7 +197,7 @@ public class MPESqCertiController {
          * SQ평가원 자격증 신청
          */
         @PostMapping(value="/complete/insert")
-        public EBDSqCertiSearchDTO setSqCertiInsert(MultipartHttpServletRequest multiRequest) throws Exception
+        public EBDSqCertiSearchDTO setSqCertiInsert(@Valid EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception
         {
             EBDSqCertiSearchDTO eBDSqCertiSearchDTO = null;
             try
@@ -199,23 +206,45 @@ public class MPESqCertiController {
                 eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT02");
                 COUserDetailsDTO coUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
                 eBDSqCertiSearchDTO.setMemSeq(coUserDetailsDTO.getSeq());
+                //조건 체크
                 int posibleSqCertiCnt = eBDSqCertiReqService.getPosibleSqCertiCnt(eBDSqCertiSearchDTO);
                 if("CP".equals(coUserDetailsDTO.getAuthCd()) && posibleSqCertiCnt == 1)
                 {
-                    Map<String, MultipartFile> files = multiRequest.getFileMap();
-                    if (!files.isEmpty())
-                    {
-                        eBDSqCertiSearchDTO.setRespCnt(eBDSqCertiReqService.insert(multiRequest));
-                    }
-                    else
-                    {
-                        throw new BusinessException(ErrorCode.CANNOT_CREATED);
-                    }
+                    eBDSqCertiSearchDTO.setRespCnt(eBDSqCertiReqService.insert(eBGExamAppctnMstDTO, request));
                 }
                 else
                 {
                     throw new BusinessException(ErrorCode.ACCESS_DENIED);
                 }
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                /** Restcontroller는 BusinessException **/
+                ErrorCode eErrorCode = ErrorCode.INTERNAL_SERVER_ERROR;
+                if(e instanceof ValidationException)
+                {
+                    eErrorCode = ErrorCode.INVALID_INPUT_VALUE;
+                }
+                throw new BusinessException(eErrorCode);
+            }
+            return eBDSqCertiSearchDTO;
+        }
+
+        /**
+         * SQ평가원 자격증 신청
+         */
+        @PostMapping(value="/complete/update")
+        public EBDSqCertiSearchDTO setSqCertiUpdate(@Valid EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception
+        {
+            EBDSqCertiSearchDTO eBDSqCertiSearchDTO = null;
+            try
+            {
+                eBDSqCertiSearchDTO = new EBDSqCertiSearchDTO();
+                eBDSqCertiSearchDTO.setRespCnt(eBDSqCertiReqService.updateCerti(eBGExamAppctnMstDTO, request));
             }
             catch (Exception e)
             {

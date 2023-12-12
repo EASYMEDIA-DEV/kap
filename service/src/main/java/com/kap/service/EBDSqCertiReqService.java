@@ -81,5 +81,15 @@ public interface EBDSqCertiReqService {
     /**
      * SQ 평가원 자격증 신청
      */
-    public int insert(MultipartHttpServletRequest multiRequest) throws Exception;
+    public int insert(EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * SQ 평가원 자격증 변경
+     */
+    public int updateCerti(EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * SQ 평가원 자격증 갱신
+     */
+    public int updateCertiValid(int edctnSeq) throws Exception;
 }

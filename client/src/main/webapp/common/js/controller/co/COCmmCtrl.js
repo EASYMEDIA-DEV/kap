@@ -34,7 +34,7 @@ var cmmCtrl = (function(){
 			cache : false,
 			beforeSend : function(){
 				if (loading) {
-					jQuery(".loadingbar").stop().fadeIn(200);
+					jQuery("loading-area").stop().fadeIn(200);
 				}
 			},
 			success : function(data, status, xhr){
@@ -54,7 +54,7 @@ var cmmCtrl = (function(){
 			},
 			complete : function(){
 				if (loading) {
-					jQuery(".loadingbar").stop().fadeOut(200);
+					jQuery("loading-area").stop().fadeOut(200);
 				}
 			}
 		});
@@ -88,7 +88,7 @@ var cmmCtrl = (function(){
 				beforeSend : function(){
 					formObj.data("submitFlag", "Y");
 					if (loading) {
-						jQuery(".loadingbar").stop().fadeIn(200);
+						jQuery("loading-area").stop().fadeIn(200);
 					}
 				},
 				success : function(data, status, xhr){
@@ -113,7 +113,7 @@ var cmmCtrl = (function(){
 				},
 				complete : function(){
 					if (loading) {
-						jQuery(".loadingbar").stop().fadeOut(200);
+						jQuery("loading-area").stop().fadeOut(200);
 					}
 				}
 			});
@@ -189,7 +189,7 @@ var cmmCtrl = (function(){
 				beforeSend : function(){
 					formObj.data("submitFlag", "Y");
 					if (loading) {
-						jQuery(".loadingbar").stop().fadeIn(200);
+						jQuery("loading-area").stop().fadeIn(200);
 					}
 				},
 				success : function(data, status, xhr){
@@ -214,7 +214,7 @@ var cmmCtrl = (function(){
 				},
 				complete : function(){
 					if (loading) {
-						jQuery(".loadingbar").stop().fadeOut(200);
+						jQuery("loading-area").stop().fadeOut(200);
 					}
 				}
 			});
@@ -245,7 +245,7 @@ var cmmCtrl = (function(){
 			cache : false,
 			beforeSend : function() {
 				if (loading) {
-					jQuery(".loadingbar").stop().fadeIn(200);
+					jQuery("loading-area").stop().fadeIn(200);
 				}
 			},
 			success : function(data, status, xhr) {
@@ -265,7 +265,7 @@ var cmmCtrl = (function(){
 			},
 			complete : function() {
 				if (loading) {
-					jQuery(".loadingbar").stop().fadeOut(200);
+					jQuery("loading-area").stop().fadeOut(200);
 				}
 			}
 		});
@@ -281,6 +281,7 @@ var cmmCtrl = (function(){
 		if (typeof sync == "undefined") {
 			sync = false;
 		}
+		var jsonStrData = JSON.stringify(paramData);
 		jQuery.ajax({
 			headers: {
 				'X-Requested-With': 'XMLHttpRequest',
@@ -289,13 +290,13 @@ var cmmCtrl = (function(){
 			url : url,
 			type : "POST",
 			timeout: 300000,
-			data : JSON.stringify(paramData),
+			data : jsonStrData,
 			dataType : dataType,
 			async: sync,
 			contentType: "application/json; charset=utf-8",
 			beforeSend : function() {
 				if (loading) {
-					jQuery(".loadingbar").stop().fadeIn(200);
+					jQuery("loading-area").stop().fadeIn(200);
 				}
 			},
 			success : function(data, status, xhr) {
@@ -314,7 +315,7 @@ var cmmCtrl = (function(){
 			},
 			complete : function() {
 				if (loading) {
-					jQuery(".loadingbar").stop().fadeOut(200);
+					jQuery("loading-area").stop().fadeOut(200);
 				}
 			}
 		});
@@ -532,299 +533,6 @@ var cmmCtrl = (function(){
 		});
 	};
 
-	/* Set CKEditor */
-	var fn_set_editor = function(options)
-	{
-		if (typeof options.editor == "undefined")
-		{
-			options.editor = "editor";
-		}
-
-		if (typeof options.height == "undefined")
-		{
-			options.height = 500;
-		}
-
-		if (typeof options.readOnly == "undefined")
-		{
-			options.readOnly = false;
-		}
-
-		var trgtObj = CKEDITOR.replace(options.editor, { height : options.height });
-
-		trgtObj.on("instanceReady", function(){
-			// Output self-closing tags the HTML4 way, like <br>.
-			this.dataProcessor.writer.selfClosingEnd = "/>";
-
-			// Use line breaks for block elements, tables, and lists.
-			var dtd = CKEDITOR.dtd;
-
-			for (var e in CKEDITOR.tools.extend({}, dtd.$nonBodyContent, dtd.$block, dtd.$listItem, dtd.$tableContent))
-			{
-				this.dataProcessor.writer.setRules(e, {
-					indent: true,
-					breakBeforeOpen: true,
-					breakAfterOpen: true,
-					breakBeforeClose: true,
-					breakAfterClose: true
-				});
-			}
-
-			this.setReadOnly(options.readOnly);
-		});
-
-		trgtObj.on("mode", function(){
-			if (this.mode === "source")
-			{
-				jQuery(".cke_contents").find("textarea").addClass("notRequired");
-			}
-		});
-	};
-
-	/* Set Dropzone */
-	var fn_set_dropzone = function(tObj, tOption){
-		var _maxFileSize = 5, _maxFileCnt = 10, _fileExtn = null, _fileFieldNm = null;
-		var _required = true;
-		if (tOption.maxFileSize)
-		{
-			_maxFileSize = tOption.maxFileSize / 1024 / 1024;
-		}
-
-		if (tOption.maxFileCnt)
-		{
-			_maxFileCnt = tOption.maxFileCnt;
-		}
-
-		if (tOption.fileExtn)
-		{
-			_fileExtn = tOption.fileExtn;
-		}
-
-		if (tOption.fileFieldNm)
-		{
-			_fileFieldNm = tOption.fileFieldNm;
-		}
-
-		$(tObj).dropzone({
-			url : "/mngwserc/dropzone/upload",
-			maxFilesize : _maxFileSize,
-			maxThumbnailFilesize : _maxFileSize,
-			filesizeBase : 1024,
-			thumbnailWidth : 140,
-			maxFiles : _maxFileCnt,
-			acceptedFiles : _fileExtn,
-			addRemoveLinks: true,
-			dictRemoveFile: "삭제",
-			dictFileTooBig : "errorMaxSize",					// 파일크기오류
-			dictInvalidFileType : "errorAcceptedExtension",		// 파일확장자오류
-			dictMaxFilesExceeded : "errorMaxCount",				// 파일개수오류
-			init : function(){
-				var $dropZone = this;
-				var fielFieldValue = $(tObj).closest("form").find("input[name="+_fileFieldNm+"]").val();
-				//첨부파일 키가 있으면 이미지 조회
-				if(fielFieldValue != undefined && fielFieldValue != "")
-				{
-					//Drop Files 문구 지우기
-					$(tObj).addClass("dz-started");
-					cmmCtrl.paramAjax(function(data){
-						if(data != null)
-						{
-							$.each(data, function(indx, rowData)
-							{
-								var file = {
-									url : rowData.webPath,
-									name: rowData.orgnFileNm,
-									size: rowData.fileSize,
-									fileSeq: rowData.fileSeq,
-									fileOrd: rowData.fileOrd,
-									fileDsc: rowData.fileDsc,
-									type: rowData.fileExtn,
-									webPath: rowData.webPath,
-									fieldNm: _fileFieldNm,
-									status : "addedfile"
-								};
-
-								$dropZone.emit("addedfile", file);
-								$dropZone.emit("thumbnail", file, file.webPath);
-								$dropZone.emit("complete", file);
-								$(file.previewElement).width($dropZone.options.thumbnailWidth)
-								$(file.previewElement).find("img").width("100%");
-
-								/*if (!(rowData.fileExtn.indexOf("jp") > -1 || rowData.fileExtn.indexOf("png") > -1)) {
-									$(file.previewElement).find(".dz-image img").attr("src", "/common/images/clipboard.svg");
-								}*/
-
-								// 대체 텍스트
-								var altInput = $("<input />", {
-									type : "text",
-									class : "form-control input-sm notRequired",
-									name : "fileAlt",
-									title : file.fileDsc,
-									placeholder : "대체 텍스트",
-									value : file.fileDsc,
-									maxlength : 10
-								});
-								$(altInput).insertBefore(file._removeLink);
-
-								// 파일 순번
-								var inputFileSeq = $("<input />", {
-									type : "hidden",
-									class : "form-notRequired",
-									name : "fileSeq",
-									value : file.fileSeq
-								});
-								$(inputFileSeq).insertBefore(file._removeLink);
-
-								// 파일 정렬
-								var inputFileOrd = $("<input />", {
-									type : "hidden",
-									class : "form-notRequired",
-									name : "fileOrd",
-									value : file.fileOrd
-								});
-								$(inputFileOrd).insertBefore(file._removeLink);
-
-								// 파일 타입
-								var inputFileExtn = $("<input />", {
-									type : "hidden",
-									class : "form-notRequired",
-									name : "type",
-									value : file.type
-								});
-								$(inputFileExtn).insertBefore(file._removeLink);
-
-								// 다운로드 <a> 태그를 <div dz-filename><span> 태그 안에 넣기
-								var imgDownloadTag = $("<a />", {
-									href : "/mngwserc/file/view?fileSeq=" + file.fileSeq + "&fileOrd=" + file.fileOrd
-								});
-								var dzFileNameDiv = $(file.previewElement).find(".dz-filename");
-								dzFileNameDiv.append(imgDownloadTag);
-								dzFileNameDiv.find("a").append(dzFileNameDiv.find("span"));
-
-								$dropZone.files.push(file)
-							})
-						}
-					}, "/mngwserc/file/list", { fileSeq : fielFieldValue }, "json");
-				}
-
-				//파일 등록
-				this.on("addedfiles", function(file) {
-					jQuery(tObj).closest("form").find("#btnOneDelete, button[type='submit']").prop("disabled", true);
-				});
-
-				//등록 성공
-				this.on("success", function(file, response) {
-					if(response != null && response.length > 0){
-						var rtnData = response[0];
-						if (rtnData.respCd == "00")
-						{
-							$(file.previewElement).width(this.options.thumbnailWidth)
-							$(file.previewElement).find("img").width("100%");
-							// 대체 텍스트 추가
-							var fileAlt  = rtnData.orgnFileNm.replace("."+rtnData.fileExtn, "");
-							var altInput = jQuery("<input />", {
-								type : "text",
-								class : "form-control input-sm notRequired",
-								name : "fileAlt",
-								title : fileAlt,
-								placeholder : "대체 텍스트",
-								value : fileAlt.length > 10 ? fileAlt.substr(0, 10) : fileAlt,
-								maxlength : 10
-							});
-							file.webPath = rtnData.webPath
-							file.fileSeq = fielFieldValue
-							file.fieldNm = _fileFieldNm
-							file.orgnFileNm = rtnData.orgnFileNm;
-
-							$(altInput).insertBefore(file._removeLink);
-						}
-						else {
-							var message = rtnData.respMsg;
-
-							if (message) {
-								alert(message);
-							}
-							this.removeFile(file);
-						}
-					}
-				});
-
-				//에러
-				this.on("error", function(file, code, response) {
-					//debugger
-					jQuery(tObj).closest("form").data(code, true);
-					this.removeFile(file);
-
-					// 세션 끊김 처리
-					if(typeof response != "undefined" && (response.status == 401 || response.status == 406)){
-						fn_ajax_error(response, null, null);
-					}
-				});
-
-				// 파일 선택했을 때
-				this.on("queuecomplete", function() {
-					var trgtObj = jQuery(tObj).closest("form");
-
-					if (trgtObj.data("errorMaxSize")) {
-						alert("첨부파일은 최대 " + _maxFileSize + "MB까지만 등록가능합니다.");
-					}
-					else if (trgtObj.data("errorAcceptedExtension")) {
-						alert("등록가능한 확장자가 아닙니다.");
-					}
-					else if (trgtObj.data("errorMaxCount")) {
-						alert("첨부파일은 최대 " + _maxFileCnt + "개까지만 등록가능합니다.");
-					}
-					trgtObj.removeData();
-
-					jQuery(tObj).closest("form").find("#btnOneDelete, button[type='submit']").prop("disabled", false);
-				});
-
-				// 파일 삭제할 때
-				this.on("removedfile", function(file){
-					//DB에서 조회한 파일만 삭제 시 인풋값 삽입
-					if(file.status == "addedfile") {
-						var delFile = {
-							fieldNm: _fileFieldNm,
-							fileSeq: file.fileSeq,
-							fileOrd: file.fileOrd,
-							status: "delfile"
-						};
-						$dropZone.files.push(delFile);
-					}
-				})
-			}
-		});
-	};
-
-	//DROPZONE 파일 등록 여부 확인
-	var fn_chk_dropzone = function(formObj){
-		var notRequired = true;
-		var fileCnt = 0;
-		var trgtTit = "";
-		var isSend = true;
-		formObj.find(".dropzone").each(function(){
-			notRequired = $(this).hasClass("notRequired");
-			fileCnt     = 0;
-			trgtTit     = $(this).data("title");
-			if($(this).get(0).dropzone.files != undefined && $(this).get(0).dropzone.files.length > 0){
-				$.each($(this).get(0).dropzone.files, function(idx, data){
-					if(data.status == "addedfile" || data.status == "success"){
-						fileCnt = 1;
-					}
-				})
-			}
-			if(!notRequired && fileCnt == 0){
-				//첨부파일이 필요하다.
-				var lastChar = trgtTit.charAt(trgtTit.length - 1);
-				var josa = (lastChar.charCodeAt(0) - 44032) % 28 ? "을" : "를";
-				alert(trgtTit + josa + " 등록하세요.");
-				isSend = false;
-				$(this).focus();
-				return false;
-			}
-		});
-		return isSend;
-	}
 
 	//파일 정보 송신
 	var fn_ajax_file_data = function(callbackAjax, url, formObj, dataType, sync, loading){
@@ -834,18 +542,39 @@ var cmmCtrl = (function(){
 		if (typeof sync == "undefined") {
 			sync = true;
 		}
-		if (formObj.data("submitFlag") != "Y") {
+		if (formObj.data("submitFlag") != "Y")
+		{
+			var frmData = formObj.serializeArray();
+			var fileIndex = 0;
+			formObj.find("input[type=file]").each(function(){
+				if($(this).data("tempSuccessFileData") != undefined)
+				{
+					$.each($(this).data("tempSuccessFileData"), function(idx, data){
+						//alt값  data에 넣어주기.
+						for (let i in data) {
+							if (data.hasOwnProperty(i)) {
+								frmData.push({
+									name: "fileList["+(fileIndex)+"]." + i, value: data[i]
+								});
+							}
+						}
+						fileIndex = fileIndex + 1;
+					})
+				}
+			});
+			fileIndex = 0;
 			jQuery.ajax({
+				headers: {
+					'X-Requested-With': 'XMLHttpRequest',
+					'X-CSRF-TOKEN': $('meta[name=X-CSRF-TOKEN]').attr('content')
+				},
 				url : url,
 				type : "POST",
-				enctype: 'multipart/form-data',
 				timeout: 30000,
-				data : new FormData(formObj[0]),
+				data : frmData,
 				dataType : dataType,
 				async: sync,
 				cache : false,
-				contentType: false,
-				processData: false,
 				beforeSend : function() {
 					formObj.data("submitFlag", "Y");
 					if (loading) {
@@ -882,6 +611,7 @@ var cmmCtrl = (function(){
 		{
 			fileObj.val("");
 		}
+		return fileObj;
 	}
 
 	/* Set Popup */
@@ -930,176 +660,6 @@ var cmmCtrl = (function(){
 		return true;
 	};
 
-	//Vuew 페이지 리스트
-	var fn_vue_page_list = function(form, pageTagNm)
-	{
-		Vue.component(pageTagNm, {
-			props: ['total'],
-			data: function () {
-				const pageRowSize	 = parseInt(form.find("#listRowSize").val()); // 한 페이지에 보여지는 데이터의 수
-				const pageButtonSize = parseInt(form.find("#pageRowSize").val()); // 한 번에 보여질 페이지 버튼의 수 (홀수여야만 함)
-				const totalCount = Number(this.total); // 전체 데이터 수
-				const totalPage = parseInt((totalCount-1)/pageRowSize) + 1; // 전체 페이지 수
-				let data = {
-					pageRowSize: pageRowSize,
-					pageButtonSize: pageButtonSize,
-
-					totalCount: totalCount,
-					totalPage: totalPage,
-
-					now:1,
-					prev:1,
-					next:2,
-
-					start: 1,
-					end: this.start + (this.pageButtonSize > this.totalPage) ? this.totalPage : this.start + this.pageButtonSize - 1,
-					pageArray: [],
-				};
-
-				for(var i=data.start; i<=data.end; i++){
-					data.pageArray.push(i);
-				}
-				return data;
-			},
-			methods:{
-				movePage: function(no){
-					this.now = parseInt( no );
-
-					this.totalCount = this.$root.totalCount;
-					this.totalPage = Math.ceil(this.totalCount / this.pageRowSize);
-
-					this.prev = (this.now  > 1) ? this.now - 1 : null
-					this.next = (this.totalPage !== this.now) ? this.now + 1 : null
-
-					this.start =  (Math.ceil(this.now / this.pageButtonSize) - 1) * this.pageButtonSize + 1;
-					this.end = ((this.start + this.pageButtonSize) > this.totalPage ? this.totalPage : (this.start + this.pageButtonSize - 1))
-
-					// Set - page number
-					this.pageArray = [];
-					for(var i=this.start; i<=this.end; i++){
-						this.pageArray.push(i);
-					}
-					// Ajax ...
-				},
-				prevPage: function(){
-					if(this.prev){
-						this.pageSearch(this.prev);
-					}
-				},
-				nextPage: function(){
-					if(this.next){
-						this.pageSearch(this.next);
-					}
-				},
-				pageSearch : function(i){
-					this.$root.search(i);
-				}
-			},
-			template:
-				'<div class="text-center">' +
-				'<div class="col-sm-12">' +
-				'<ul class="pagination">' +
-				'<li class="prev"><a  @click=prevPage(prev) data-page="prev" class="button">&lt;</a></li>' +
-				'<li v-for="i in pageArray" :class="i == now ? \'active\' : \'\'"  aria-disabled="false"  aria-selected="false"><a href="javascript:" @click=pageSearch(i) :data-page="i">{{ i }}</a></li>' +
-				'<li class="next"><a @click=nextPage(next) data-page="next" class="button">&gt;</a></li>' +
-				'</ul>' +
-				'</div>' +
-				'</div>'
-		})
-	}
-
-	//Vuew 페이지 리스트
-	var fn_vue = function(form, id, sendUrl, sendCallBack)
-	{
-		var vueList = new Vue({
-			el: '#' + id,
-			data: {
-				lists: []
-				, totalCount: 1
-			},
-			created() {
-
-			},
-			methods:{
-				convertDtm: fn_vue_convert_dtm
-				, search: function(){
-					//비동기 통신
-					cmmCtrl.frmAjax(function(respObj) {
-						if(respObj != undefined)
-						{
-							vueList.lists = respObj.list;
-							vueList.totalCount = respObj.totalCount;
-							vueList.$children[0].movePage( Number(form.find("#pageIndex").val()));
-						}
-						else
-						{
-							alert(msgCtrl.getMsg("fail.act"));
-						}
-						if (sendCallBack) {
-							sendCallBack(respObj);
-						}
-					}, sendUrl, form, "GET", "json");
-				}
-			}
-		});
-		return  vueList
-	}
-
-	//VUE 날짜 패턴 변경
-	var fn_vue_convert_dtm = function(dtm, currentPattrn, convertPattrn){
-		var regX = null;
-		var convertX = null;
-		if(dtm != undefined && dtm != null)
-		{
-			//현재 패턴
-			if(currentPattrn.toLowerCase() == "yyyy-mm-dd")
-			{
-				regX = /(\d{4})-(\d{2})-(\d{2})/g;
-			}
-			else if(currentPattrn.toLowerCase() == "yyyy-mm-dd hh")
-			{
-				regX = /(\d{4})-(\d{2})-(\d{2}) (\d{2})/g;
-			}
-			else if(currentPattrn.toLowerCase() == "yyyy-mm-dd hh:mm")
-			{
-				regX = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})/g;
-			}
-			else if(currentPattrn.toLowerCase() == "yyyy-mm-dd hh:mm:ss")
-			{
-				regX = /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2}):(\d{2})/g;
-			}
-			else
-			{
-				return false;
-			}
-			//변경 패턴
-			if(convertPattrn.toLowerCase() == "yyyy-mm-dd")
-			{
-				convertX = '$1-$2-$3';
-			}
-			else if(convertPattrn.toLowerCase() == "yyyy-mm-dd hh")
-			{
-				convertX = '$1-$2-$3 $4';
-			}
-			else if(convertPattrn.toLowerCase() == "yyyy-mm-dd hh:mm")
-			{
-				convertX = '$1-$2-$3 $4:$5';
-			}
-			else if(convertPattrn.toLowerCase() == "yyyy-mm-dd hh:mm:ss")
-			{
-				convertX = '$1-$2-$3 $4:$5:$6';
-			}
-			else
-			{
-				return false;
-			}
-			return dtm.replace(regX, convertX);
-		}
-		else
-		{
-			return "-";
-		}
-	}
 
 	// 자릿수 만큼 0 붙이기
 	var fn_pad = function(num, size){
@@ -1123,53 +683,6 @@ var cmmCtrl = (function(){
 			return false;
 		}
 	}
-
-	/* Dropzone File Remove */
-	jQuery(document).on("click", ".dropzone_remove", function(){
-		var dropzone = jQuery(this).closest(".dropzone");
-		var fileSeq  = jQuery(this).data("fileSeq");
-
-		if (typeof fileSeq != "undefined")
-		{
-			var trgtObj = dropzone.find("input[name='" + dropzone.data("delFileNm") + "']");
-			var trgtVal = trgtObj.val();
-
-			if (trgtVal)
-			{
-				trgtObj.val(trgtVal + "," + fileSeq);
-			}
-			else
-			{
-				trgtObj.val(fileSeq);
-			}
-		}
-
-		jQuery(this).closest(".dz-preview").remove();
-
-		if (dropzone.children(".dz-preview").length == 0)
-		{
-			dropzone.removeClass("dz-started");
-		}
-	});
-
-	/***
-	 * 페이지 로드
-	 ***/
-	jQuery(document).ready(function(){
-		/* 목록 페이지 이동 */
-		jQuery("#btnList").on("click", function(e){
-			if (confirm(msgCtrl.getMsg("confirm.list")))
-			{
-				if (sessionStorage.getItem("pageIndex")) {
-					var pageIndex = sessionStorage.getItem("pageIndex");
-					location.href = "./list?" + jQuery(this).data("strPam") + "&pageIndex=" + pageIndex;
-
-				} else {
-					location.href = "./list?" + jQuery(this).data("strPam");
-				}
-			}
-		});
-	});
 
 	// Back/forward cache(뒤로/앞으로 가기) 체크
 	window.onpageshow = function(event){
@@ -1381,129 +894,6 @@ var cmmCtrl = (function(){
 		}
 	}
 
-	/* Grid Record Count */
-	var fn_grid_record_count = function()
-	{
-		return 10;
-	};
-
-	/* Grid Paging Object */
-	var fn_grid_paging_object = function()
-	{
-		var rtnObj = {
-			pageSizes : [10, 30, 50],
-			buttonCount : 5,
-			info : true,
-			messages : {
-				first : "첫 페이지",
-				previous : "이전 페이지",
-				next : "다음 페이지",
-				last : "마지막 페이지",
-				of : "from {0}",
-				itemsPerPage : "건씩 보기",
-				page : "페이지 선택",
-				empty : "데이터 없음",
-				display : "총 {2}건 중 {0}-{1} 건"
-			}
-		};
-
-		return rtnObj;
-	};
-
-	/* Grid Pagination */
-	var fn_grid_pagination = function(data)
-	{
-		jQuery("#pageIndex").val(data.page);
-
-		var paramArr = jQuery("#frmSearch").data("strPam").split("&").map(function(value){
-			return value.indexOf("pageIndex=") < 0 ? value : "pageIndex=" + data.page;
-		});
-
-		history.replaceState("", "", location.pathname + "?" + paramArr.join("&"));
-	};
-
-	/* Grid Request Start */
-	var fn_grid_request_start = function(gridObj)
-	{
-		if (gridObj)
-		{
-			gridObj.data("kendoGrid").thead.find(".checkbox_all").prop("checked", false);
-		}
-	};
-
-	/* Grid Request End */
-	var fn_grid_request_end = function(gridObj)
-	{
-		if (gridObj && gridObj.data("kendoGrid").tbody)
-		{
-			gridObj.data("kendoGrid").tbody.closest(".k-auto-scrollable").scrollTop(0);
-		}
-	};
-
-	/* Grid Message Object */
-	var fn_grid_no_data_message = function()
-	{
-		var rtnObj = {
-			template : "<div style=\"position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);\">검색 결과가 없습니다.<br />(등록된 데이터가 없습니다.)</div>"
-		};
-
-		return rtnObj;
-	};
-
-	/* 체크박스 선택 삭제 */
-	var fn_grid_remove_row = function(gridObj)
-	{
-		var trgtObj = gridObj.data("kendoGrid");
-		var rowsObj = trgtObj.tbody.find("input[name='detailsKey']:checked");
-
-		if (rowsObj.length == 0)
-		{
-			alert(msgCtrl.getMsg("fail.target"));
-		}
-		else
-		{
-			if (confirm(msgCtrl.getMsg("confirm.del")))
-			{
-				var dataSource = trgtObj.dataSource;
-
-				jQuery(rowsObj).each(function(){
-					dataSource.remove(dataSource.get(jQuery(this).val()));
-				});
-
-				trgtObj.saveChanges();
-
-				alert(msgCtrl.getMsg("success.del"));
-			}
-		}
-	};
-
-	/* 노출 미노출 선택 */
-	var fn_grid_update = function(gridObj)
-	{
-		var trgtObj = gridObj.data("kendoGrid");
-		var rowsObj = trgtObj.tbody.find("input[name='detailsKey']:checked");
-
-		if (rowsObj.length == 0)
-		{
-			alert(msgCtrl.getMsg("fail.target"));
-		}
-		else
-		{
-			if (confirm(msgCtrl.getMsg("confirm.del")))
-			{
-				var dataSource = trgtObj.dataSource;
-
-				jQuery(rowsObj).each(function(){
-					dataSource.remove(dataSource.get(jQuery(this).val()));
-				});
-
-				trgtObj.saveChanges();
-
-				alert(msgCtrl.getMsg("success.del"));
-			}
-		}
-	};
-
 	//카카오 주소 호출
 	var fn_postData = function(width , height , zipcode ,bscAddr , dtlAddr){
 		new daum.Postcode({
@@ -1554,36 +944,6 @@ var cmmCtrl = (function(){
 		});
 	}
 
-	//교육 평가지 매핑
-	//getExamLayerPop(function(data){data 객체를 받아서 처리});
-	var fn_exam_layer_pop = function(fnc){
-		$(".exgExamSrchLayer").one('show.bs.modal', function() {
-			// Add class for soft backdrop
-			$(".exgExamSrchLayer").find("#btnRefresh").click();
-			$(".exgExamSrchLayer").find("#btnSearch").click();
-		}).one('hidden.bs.modal', function() {
-			// Remove class for soft backdrop (if not will affect future modals)
-		}).one('choice', function(data, param) {
-			// Remove class for soft backdrop (if not will affect future modals)
-			fnc(param);
-		}).modal();
-	}
-
-	//부품사 검색 매핑
-	//getPartsCompanyLayerPop(function(data){data 객체를 받아서 처리});
-	var fn_parts_layer_pop = function(fnc){
-		$(".mpePartsCompanySrchLayer").one('show.bs.modal', function() {
-			// Add class for soft backdrop
-			$(".mpePartsCompanySrchLayer").find("#btnRefresh").click();
-			$(".mpePartsCompanySrchLayer").find("#btnSearch").click();
-		}).one('hidden.bs.modal', function() {
-			// Remove class for soft backdrop (if not will affect future modals)
-		}).one('choice', function(data, param) {
-			// Remove class for soft backdrop (if not will affect future modals)
-			fnc(param);
-		}).modal();
-	}
-
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1593,17 +953,11 @@ var cmmCtrl = (function(){
 		errorAjax : fn_ajax_error,
 		setPeriod: fn_set_period,
 		initCode : fn_init_code,
-		setEditor: fn_set_editor,
-		setDropzone : fn_set_dropzone,
-		chkDropzone : fn_chk_dropzone,
 		fileFrmAjax: fn_ajax_file_data,
 		inputFileInit: fn_input_file_init,
 		setPopup : fn_set_popup,
 		checkMaxlength : fn_check_maxlength,
 		checkContString : check_cont_string,
-		vuePageList: fn_vue_page_list,
-		vueConvertDtm: fn_vue_convert_dtm,
-		vueContainer: fn_vue,
 		listPaging : fn_paging,
 		morePaging : fn_more_paging,
 		setFormData: fn_list_frm_set_data,
@@ -1611,19 +965,9 @@ var cmmCtrl = (function(){
 		checkUrl: fn_check_url,
 		initCalendar: fn_init_calendar,
 
-		gridRecordCount : fn_grid_record_count,
-		gridPagingObject : fn_grid_paging_object,
-		gridPagination: fn_grid_pagination,
-		gridNoDataMessage : fn_grid_no_data_message,
-		gridRequestStart : fn_grid_request_start,
-		gridRequestEnd : fn_grid_request_end,
-		gridRemoveRow : fn_grid_remove_row,
 		searchPostCode : fn_postData,
 
 		//json형식의 데이터를 문자열로 변환 후 자바 컨트롤러에서 @RequestBody BaseDTO baseDto 로 받는다
 		jsonAjax : fn_json_ajax_data,
-		//교육 평가지 매핑
-		getExamLayerPop : fn_exam_layer_pop,
-		getPartsCompanyLayerPop : fn_parts_layer_pop,
 	}
 }());

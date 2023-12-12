@@ -253,11 +253,30 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold ">업종</label>
                     <div class="col-sm-10">
-
+                        <c:set var="cbsnCdNm" value="" />
+                        <c:choose>
+                            <c:when test="${ not empty rtnCompletePrcsList}">
+                                <c:forEach var="list" items="${rtnCompletePrcsList.educationList}" varStatus="status">
+                                    <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
+                                        <c:choose>
+                                            <c:when test="${ empty cbsnCdNm }">
+                                                <c:set var="cbsnCdNm" value="${ list.cbsnCdNm }" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="cbsnCdNm">
+                                                    ${ cbsnCdNm}, ${list.cbsnCdNm}
+                                                </c:set>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                </c:forEach>
+                            </c:when>
+                        </c:choose>
+                        ${ cbsnCdNm }
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="">
+            <fieldset>
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold ">자격증 최초 취득일</label>
                     <div class="col-sm-4">
@@ -269,7 +288,50 @@
                     </div>
                 </div>
             </fieldset>
-            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>수정이력</h7>
+            <fieldset class="">
+                <div class="form-group text-sm">
+                    <label class="col-sm-2 control-label">사용 여부</label>
+                    <div class="col-sm-10">
+                        <label class="radio-inline c-radio">
+                            <input type="radio" name="useYn" value="Y" title="사용 여부" <c:if test="${rtnDto.useYn eq 'Y' or rtnDto.useYn eq null}">checked</c:if>/>
+                            <span class="ion-record"></span> 사용
+                        </label>
+                        <label class="radio-inline c-radio">
+                            <input type="radio" name="useYn" value="N" title="사용 여부" <c:if test="${rtnDto.useYn eq 'N'}">checked</c:if>/>
+                            <span class="ion-record"></span> 미사용
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <h7 class="text-bold mt"><em class="ion-android-arrow-dropright mr-sm "></em>수정이력</h7>
+            <fieldset class="last-child mt">
+                <div class="table-responsive ">
+                    <table class="table text-sm">
+                        <tbody>
+                        <tr>
+                            <th>최종 수정자</th>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
+                                        ${ rtnDto.modName }(${ rtnDto.modId })
+                                    </c:when>
+                                    <c:otherwise>-</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <th>최종 수정일</th>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
+                                        ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                    </c:when>
+                                    <c:otherwise>-</c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
             <hr />
             <div class="clearfix">
                 <div class="pull-left">

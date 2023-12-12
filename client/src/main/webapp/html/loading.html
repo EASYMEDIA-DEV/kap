@@ -28,6 +28,7 @@
 		<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
 		<script type="text/javascript" src="/common/js/Draggable.min.js"></script>
 		<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+		<script type="text/javascript" src="/common/js/lottie-player.js"></script>
 		<script type="text/javascript" src="/common/js/bezier-easing.min.js"></script>
     <script type="text/javascript" src="/common/js/script.js"></script>
     <script type="text/javascript" src="/common/js/main.js"></script>
@@ -1800,11 +1801,15 @@
           </div>
         </div>
       </div>
-			<!-- intro -->
-			<div class="intro-motion">
-				<div class="viedeo-area">
-					<div class="for-masking">
-						<video src="/common/videos/intro.mp4" id="introVideo" muted preload="auto" autoplay playsinline></video>
+
+			<div class="loading-area">
+				<div class="for-center">
+					<div class="lottie-area">
+						<lottie-player src="/common/images/loading.json" background="transparent" style="width: 48rem; height: 48rem;" speed="1" loop autoplay></lottie-player>
+					</div>
+					<div class="txt-area">
+						<p class="tit">로딩 중 입니다.</p>
+						<p class="txt">잠시만 기다려주세요.</p>
 					</div>
 				</div>
 			</div>

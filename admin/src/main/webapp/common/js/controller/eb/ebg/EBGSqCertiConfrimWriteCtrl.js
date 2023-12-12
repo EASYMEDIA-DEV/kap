@@ -69,7 +69,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         cmmCtrl.fileFrmAjax(function(data){
                             //콜백함수. 페이지 이동
                             if(data.respCnt > 0){
-                                //location.replace("./list");
+                                alert(msgCtrl.getMsg("success.upd"));
+                                location.replace("./list");
                             }else if(data.respCnt == '-1'){
                                 alert(data.SMBMainVslDTO.respMsg);
                             }

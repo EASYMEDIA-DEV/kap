@@ -82,6 +82,8 @@ public class COFileServiceImpl implements COFileService {
         }
         int atchFileSeq = 0;
         COFileDTO mstCOFileDTO = cFileDTOList.get(0);
+        mstCOFileDTO.setRegId(cOUserDetailsDTO.getId());
+        mstCOFileDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOFileMapper.insertFileMaster(mstCOFileDTO);
         atchFileSeq = mstCOFileDTO.getFileSeq();
         for(int q = 0 ; q < cFileDTOList.size() ; q++){
