@@ -521,7 +521,7 @@
 					  , b.ncs_yn
 					  , b.qstn_ord
 					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
-					  , case when @grp = b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
+					  , case when @grp = binary  b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
 					  , (@grp := ctgry_cd) as dum
 					  , (select count(*) from sv_qstn_dtl c where c.srv_seq = #{detailsKey} and c.parnt_qstn_seq = b.qstn_seq  ) as qstn_cnt
 				 FROM
@@ -600,7 +600,7 @@
 					  , b.ncs_yn
 					  , b.qstn_ord
 					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
-					  , case when @grp  = b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
+					  , case when @grp = binary b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
 					  , (@grp := ctgry_cd) as dum
 					  , (select count(*) from sv_qstn_dtl c where c.srv_seq = #{detailsKey} and c.parnt_qstn_seq = b.qstn_seq  ) as qstn_cnt
 				 FROM
@@ -656,7 +656,7 @@
 					  , b.ncs_yn
 					  , b.qstn_ord
 					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
-					  , case when @grp = b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
+					  , case when @grp = binary b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
 					  , (@grp := ctgry_cd) as dum
 					  , (select count(*) from sv_qstn_dtl c where c.srv_seq = #{detailsKey} and c.parnt_qstn_seq = b.qstn_seq  ) as qstn_cnt
 				      , b.isttr_seq
