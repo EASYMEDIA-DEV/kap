@@ -1,6 +1,7 @@
 package com.kap.core.dto.mp.mpa;
 
 import com.kap.core.dto.BaseDTO;
+import com.kap.core.dto.MPBSanDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -29,7 +30,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MPAUserDto extends BaseDTO  {
+public class MPAUserDto extends BaseDTO {
 
     @Schema(title = "회원순번", example = "1")
     private Integer memSeq;
@@ -242,5 +243,26 @@ public class MPAUserDto extends BaseDTO  {
 
     @Schema(title = "비밀번호 변경 타입 " , example = "new")
     private String pwdChngType;
+
+
+    @Schema(title="약관동의")
+    private String trmsAgmntYn;
+
+    @Schema(title="개인정보")
+    private String psnifAgmntYn;
+
+    @Schema(title="3자정보")
+    private String psnif3AgmntYn;
+
+    @Schema(title="마케팅")
+    private String fndnNtfyRcvYn;
+
+
+
+
+
+
+
+
 
 }

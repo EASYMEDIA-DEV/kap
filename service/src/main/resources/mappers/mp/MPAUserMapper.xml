@@ -9,7 +9,7 @@
         2023.11.09    양현우       최초생성
     -->
     <select id="selectUserList" parameterType="MPAUserDto" resultType="MPAUserDto">
-        SELECT MEM_SEQ
+        SELECT MEM_SEQ /* MPAUserMapper.selectUserList */
         , ID
         , NAME
         , HP_NO
@@ -72,14 +72,17 @@
         , MEM.BSC_ADDR
         , MEM.DTL_ADDR
         , MEM.CMSSR_TYPE_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_TYPE_CD ) AS CMSSR_TYPE_CD_NM
+        , CASE WHEN MEM.CMSSR_TYPE_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_TYPE_CD )
+              ELSE '' END as CMSSR_TYPE_CD_NM
         , MEM.CMSSR_CBSN_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_CBSN_CD ) AS CMSSR_CBSN_CD_NM
+        , CASE WHEN MEM.CMSSR_CBSN_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_CBSN_CD )
+              ELSE '' END as CMSSR_CBSN_CD_NM
         , MEM.CMSSR_WORK_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_WORK_CD ) AS CMSSR_WORK_CD_NM
+        , CASE WHEN MEM.CMSSR_WORK_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_WORK_CD )
+                ELSE '' END as CMSSR_WORK_CD_NM
         , CASE WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) > 0 THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MEM.REG_ID)
-        WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.REG_ID)
-        ELSE NULL END AS CMT_MOD_NAME
+               WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.REG_ID)
+                 ELSE NULL END AS CMT_MOD_NAME
         , MEM.BIRTH
         , MEM.CMSSR_MPLMN_DT
         , MEM.CMSSR_RSGNT_DT
@@ -110,7 +113,7 @@
         ON MEM.MEM_SEQ = CMPN_REL.MEM_SEQ
         AND MEM.WORK_BSNM_NO = CMPN_REL.BSNM_NO
         LEFT OUTER JOIN CP_CMPN_MST CMPN_MST
-        ON CMPN_MST.BSNM_NO  = CMPN_REL.BSNM_NO) AS MA
+        ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO) AS MA
         <include refid="selectUserListWhereSql" />
         ORDER BY MA.REG_DTM DESC
         <if test="excelYn != 'Y'.toString() ">
@@ -126,7 +129,7 @@
     2023.11.09    양현우       최초생성
 -->
     <select id="selectUserCompanyInfoList" parameterType="MPAUserDto" resultType="MPAUserDto">
-        SELECT mem_seq,
+        SELECT mem_seq, /* MPAUserMapper.selectUserCompanyInfoList */
         id,
         name,
         hp_no,
@@ -195,7 +198,7 @@
         ON mem.mem_seq = cmpn_rel.mem_seq
         AND mem.work_bsnm_no = cmpn_rel.bsnm_no
         LEFT OUTER JOIN cp_cmpn_mst cmpn_mst
-        ON cmpn_mst.bsnm_no = cmpn_rel.bsnm_no) AS ma
+         ON mem.work_bsnm_no  = cmpn_mst.bsnm_no) AS ma
         <include refid="selectUserListWhereSql" />
         order by ma.reg_dtm desc
         <if test="excelYn != 'Y'.toString() ">
@@ -211,7 +214,7 @@
 2023.11.09    양현우       최초생성
 -->
     <select id="selectUserListCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
-        select count(*)
+        select count(*) /* MPAUserMapper.selectUserListCnt */
         from (select mem.mem_seq
         , mem.id
         , mem.name
@@ -234,11 +237,14 @@
         , mem.bsc_addr
         , mem.dtl_addr
         , mem.cmssr_type_cd
-        , (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd ) as cmssr_type_cd_nm
+        , case when mem.cmssr_type_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd )
+              else '' end as cmssr_type_cd_nm
         , mem.cmssr_cbsn_cd
-        , (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd ) as cmssr_cbsn_cd_nm
+        , case when mem.cmssr_cbsn_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd )
+        else '' end as cmssr_cbsn_cd_nm
         , mem.cmssr_work_cd
-        , (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd ) as cmssr_work_cd_nm
+        ,  case when mem.cmssr_work_cd != ''  then  (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd )
+        else '' end as cmssr_work_cd_nm
         , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
         when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
         else null end as cmt_mod_name
@@ -263,7 +269,7 @@
         on mem.mem_seq = cmpn_rel.mem_seq
         and mem.work_bsnm_no = cmpn_rel.bsnm_no
         left outer join cp_cmpn_mst cmpn_mst
-        on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no ) as ma
+        on mem.work_bsnm_no  =cmpn_mst.bsnm_no ) as ma
         <include refid="selectUserListWhereSql" />
     </select>
 
@@ -388,9 +394,12 @@
              , mem.mod_dtm
              , mem.last_lgn_dtm
              , mem.mem_cd
-             , (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd ) as cmssr_type_cd_nm
-             , (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd ) as cmssr_cbsn_cd_nm
-             , (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd ) as cmssr_work_cd_nm
+             , case when mem.cmssr_type_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd )
+                    else '' end as cmssr_type_cd_nm
+             , case when mem.cmssr_cbsn_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd )
+                    else '' end as cmssr_cbsn_cd_nm
+             ,  case when mem.cmssr_work_cd != ''  then  (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd )
+                     else '' end as cmssr_work_cd_nm
              , cmpn_mst.cmpn_nm
              , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
              , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
@@ -414,7 +423,8 @@
                                  on mem.mem_seq = cmpn_rel.mem_seq
                                      and mem.work_bsnm_no = cmpn_rel.bsnm_no
                  left outer join cp_cmpn_mst cmpn_mst
-                                 on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
+                                 ON mem.work_bsnm_no  = cmpn_mst.bsnm_no
+--                                  on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
         where mem.mem_seq = #{detailsKey}
     </select>
 
@@ -488,7 +498,8 @@
                                  on mem.mem_seq = cmpn_rel.mem_seq
                                      and mem.work_bsnm_no = cmpn_rel.bsnm_no
                  left outer join cp_cmpn_mst cmpn_mst
-                                 on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
+                                 ON mem.work_bsnm_no  = cmpn_mst.bsnm_no
+--                                  on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
         where mem.mem_seq = #{detailsKey}
     </select>
 
@@ -501,7 +512,7 @@
     2023.11.10    양현우       최초생성
 -->
     <select id="selectDupEmail" parameterType="MPAUserDto" resultType="java.lang.Integer">
-        select count(*)
+        select count(*) /* MPAUserMapper.selectDupEmail */
         from co_mem_mst
         where 1=1
         <if test="detailsKey != null and detailsKey != ''.toString() ">
@@ -518,7 +529,7 @@
 2023.11.21    양현우       최초생성
 -->
     <select id="selectDupId" parameterType="MPAUserDto" resultType="java.lang.Integer">
-        select count(*)
+        select count(*)  /* MPAUserMapper.selectDupId */
         from co_mem_mst
         where id =#{id}
     </select>
@@ -569,7 +580,7 @@
     </update>
 
     <!--
-    쿼리명 : insertUserDtlHistory.insertUserDtlHistory
+    쿼리명 : MPAUserMapper.insertUserDtlHistory
     설  명 :  [일반 , 부품 , 위원 ] 사용자 수정  이력
       수정일      수정자       수정내용
     ==========   ========   ==============
@@ -701,7 +712,7 @@
 2023.11.13    양현우       최초생성
 -->
     <select id="selectInqrListCnt" parameterType="MPAInqrDto" resultType="java.lang.Integer">
-        select count(*)
+        select count(*)  /* MPAUserMapper.selectInqrListCnt */
         from bd_qa_mst qa_mst
                  inner join bd_qa_ctgry_dtl ctgry_dtl
                             on qa_mst.qa_seq = ctgry_dtl.qa_seq
@@ -711,14 +722,14 @@
     </select>
 
     <!--
-  쿼리명 : CommonMapper.selectMemEmail
+  쿼리명 : selectMemDtl.selectMemEmail
   설  명 : 회원 이메일 , 코드 검색
   수정일      수정자       수정내용
   ==========   ========   ==============
   2023.11.15    양현우       최초생성
   -->
     <select id="selectMemDtl" parameterType="MPPwdInitDto" resultType="MPPwdInitDto">
-        SELECT /* CommonMapper.selectMemDtl */
+        SELECT  /* MPAUserMapper.selectMemDtl */
             email
              , mem_cd
         from co_mem_mst
@@ -727,14 +738,14 @@
 
 
     <!--
-쿼리명 : CommonMapper.updatePwdInit
+쿼리명 : MPAUserMapper.updatePwdInit
 설  명 : 회원 비밀번호 초기화
 수정일      수정자       수정내용
 ==========   ========   ==============
 2023.11.15    양현우       최초생성
 -->
     <update id="updatePwdInit" parameterType="MPPwdInitDto">
-        update co_mem_mst
+        update co_mem_mst /* MPAUserMapper.updatePwdInit */
         set pwd = #{newEncPwd}
           , pwd_chng_dtm = now()
           , lgn_fail_cnt = 0
@@ -746,6 +757,196 @@
 
     </update>
 
+
+    <!--
+       쿼리명 : MPAUserMapper.insertUser
+       설  명 :  [일반 , 부품  ] 사용자 등록
+         수정일      수정자       수정내용
+       ==========   ========   ==============
+       2023.12.08    양현우       최초생성
+       -->
+    <insert id="insertUser" parameterType="MPAUserDto">
+        insert into co_mem_mst  /*  MPAUserMapper.insertUser */
+        (  mem_seq
+        , mem_cd
+        , id
+        , name
+        , pwd
+        , birth
+        , gndr
+        , hp_no
+        , email
+        , tel_no
+        , zipcode
+        , bsc_addr
+        , dtl_addr
+        , ntfy_sms_rcv_yn
+        , ntfy_sms_rcv_chng_dtm
+        , ntfy_email_rcv_yn
+        , ntfy_email_rcv_chng_dtm
+        , lgn_fail_cnt
+        , pwd_chng_dtm
+        , chng_xtnsn_cnt
+        , tmp_pwd_yn
+        , wthdrw_yn
+        , reg_id
+        , reg_ip
+        , reg_dtm
+        , mod_id
+        , mod_ip
+        , mod_dtm
+        <if test="memCd == 'CP' ">
+            , dept_cd
+            , dept_dtl_nm
+            , pstn_cd
+            , pstn_nm
+            , work_bsnm_no
+        </if>
+        )
+        values(
+        #{memSeq}
+        , #{memCd}
+        , #{id}
+        , #{name}
+        , #{encPwd}
+        , #{birth}
+        , #{gndr}
+        , #{hpNo}
+        , #{email}
+        , #{telNo}
+        , #{zipcode}
+        , #{bscAddr}
+        , #{dtlAddr}
+        , #{ntfySmsRcvYn}
+        , now()
+        , #{ntfyEmailRcvYn}
+        , now()
+        , 0
+        , now()
+        , 0
+        , 'N'
+        , 'Y'
+        , #{regId}
+        , #{regIp}
+        , now()
+        , #{regId}
+        , #{regIp}
+        , now()
+        -- 부품사
+        <if test="memCd == 'CP' ">
+            , #{deptCd}
+            , #{deptDtlNm}
+            , #{pstnCd}
+            , #{pstnNm}
+            , #{workBsnmNo}
+        </if>
+        )
+    </insert>
+
+    <!--
+          쿼리명 : MPAUserMapper.insertUserDtl
+          설  명 :  [일반 , 부품  ] 사용자 상세 등록
+            수정일      수정자       수정내용
+          ==========   ========   ==============
+          2023.12.08    양현우       최초생성
+          -->
+    <insert id="insertUserDtl" parameterType="MPAUserDto">
+        insert into co_mem_dtl /*  MPAUserMapper.insertUserDtl */
+        (  mem_seq
+        , ci
+        , trms_agmnt_yn
+        , psnif_agmnt_yn
+        , psnif_3_agmnt_yn
+        , fndn_ntfy_rcv_yn
+        , reg_id
+        , reg_ip
+        , reg_dtm
+        , mod_id
+        , mod_ip
+        ,mod_dtm
+        )
+        values (
+                   #{memSeq}
+               , #{ci}
+               , #{trmsAgmntYn}
+               , #{psnifAgmntYn}
+               , #{psnif3AgmntYn}
+               , #{fndnNtfyRcvYn}
+               , #{regId}
+               , #{regIp}
+               , now()
+               , #{regId}
+               , #{regIp}
+               , now() )
+    </insert>
+
+
+
+    <!--
+쿼리명 : MPAUserMapper.selectCiCnt
+설  명 : 사용자 ci 개수 조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.12.08    양현우       최초생성
+-->
+    <select id="selectCiCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
+        select /* MPAUserMapper.selectCiCnt */
+        count(*)
+        from
+        co_mem_mst a
+        inner join co_mem_dtl b
+        on a.mem_seq = b.mem_seq
+        where 1=1
+            and b.ci = #{ci}
+
+    </select>
+
+    <!--
+쿼리명 : MPAUserMapper.selectcmpnMst
+설  명 : 부품사 회사 개수 조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.12.08    양현우       최초생성
+-->
+    <select id="selectcmpnMst" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
+        select /* MPAUserMapper.selectcmpnMst */
+            count(*)
+        from cp_cmpn_mst
+        where 1=1
+          and bsnm_no = #{bsnmNo}
+
+    </select>
+
+
+    <!--
+          쿼리명 : MPAUserMapper.insertUserCmpnRel
+          설  명 :  부품사 회원회사관계 등록
+            수정일      수정자       수정내용
+          ==========   ========   ==============
+          2023.12.08    양현우       최초생성
+          -->
+    <insert id="insertUserCmpnRel" parameterType="MPAUserDto">
+        insert into co_mem_cmpn_rel /* MPAUserMapper.insertUserCmpnRel */
+            (  mem_seq
+            , bsnm_no
+            , reg_id
+            , reg_ip
+            , reg_dtm
+            , mod_id
+            , mod_ip
+            , mod_dtm
+            )
+        values(
+            #{memSeq}
+          , #{workBsnmNo}
+          , #{regId}
+          , #{regIp}
+          , now()
+          , #{regId}
+          , #{regIp}
+          , now()
+            )
+    </insert>
 
 
 </mapper>

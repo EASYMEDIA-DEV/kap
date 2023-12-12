@@ -104,12 +104,22 @@ public class MPCLecturerController {
     /**
      *  교육 사업 현황 리스트 조회
      */
-    @PostMapping(value = "/select-tab-two")
-    public String selectLecturerListPageTabTwoAjax(EBBEpisdDTO eBBEpisdDTO, MPCLecturerDTO mpcLecturerDTO, ModelMap modelMap) throws Exception {
+    @GetMapping(value = "/selectEduList")
+    public String selectTabTwoEduListAjax(EBBEpisdDTO eBBEpisdDTO, MPCLecturerDTO mpcLecturerDTO, ModelMap modelMap) throws Exception {
 
         eBBEpisdDTO.setIsttrSeq(mpcLecturerDTO.getIsttrSeq());
         modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
-        return "mngwserc/mp/mpc/MPCLecturerTabTwoAjax";
+        return "mngwserc/mp/mpc/MPCLecturerEduListAjax";
+    }
+
+    /**
+     *  상생 사업 현황 리스트 조회
+     */
+    @GetMapping(value = "/selectWinBusinessList")
+    public String selectTabTwoWinBusinessListAjax(MPCLecturerDTO mpcLecturerDTO, ModelMap modelMap) throws Exception {
+
+        modelMap.addAttribute("rtnData", mpcLecturerService.selectWinBusinessList(mpcLecturerDTO));
+        return "mngwserc/mp/mpc/MPCLecturerWinBusinessListAjax";
     }
 
     /**

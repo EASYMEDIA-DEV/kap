@@ -17,17 +17,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var tabTwo = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
-            ctrl.obj.find("#eduListContainer").html(respObj);
-            //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            //총 건수
-            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "eduListContainer", "pagingContainer");
-        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false)
-
-        cmmCtrl.listFrmAjax(function(respObj) {
-            //CALLBACK 처리
             ctrl.obj.find("#techListContainer").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
@@ -39,6 +28,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
+            ctrl.obj.find("#eduStatisticsListContainer").html(respObj);
+        }, "/mngwserc/mp/mpe/selectEduStatisticsCntList", $formObj, "POST", "html",'',false);
+
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
             ctrl.obj.find("#consultListContainer").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
@@ -47,6 +41,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "consultListContainer", "pagingContainer");
         }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
+
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리

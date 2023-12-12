@@ -4,6 +4,7 @@ import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <pre>
@@ -45,7 +46,10 @@ public interface EBBEpisdService {
 	 */
 	public EBBPtcptDTO setAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
-
+	/**
+	 * 교육 참여자 출석부 목록을 호출한다.
+	 */
+	public List<EBBPtcptDTO> selectMemAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 	/**
 	 * 교육차수를 등록한다.
@@ -68,6 +72,12 @@ public interface EBBEpisdService {
 	public EBBEpisdDTO selectEpisdChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 강제 종강처리
+	 */
+	public int updateEpisdEndEdu(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+	/**
 	 * 교육차수 신청자 정원체크
 	 */
 	public EBBEpisdDTO selectFxnumChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
@@ -79,10 +89,20 @@ public interface EBBEpisdService {
 	public EBBPtcptDTO setPtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 	/**
+	 * 교육차수 신청자 차수변경
+	 */
+	public int changeEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+	/**
 	 * 교육차수 신청자 출석부 수정
 	 */
 	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 설문초기화 한다.
+	 */
+	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
 

@@ -5,12 +5,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>퍼블리싱 스타일 가이드</title>
-  <link rel="stylesheet" href="/common/css/fonts.css">
-  <link rel="stylesheet" href="/common/css/common.css">
-  <link rel="stylesheet" href="../assets/css/index.css">
   <link rel="stylesheet" href="../assets/styles/shCore.css"/>
 	<link rel="Stylesheet" href="../assets/styles/shCoreEclipse.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="/common/css/fonts.css">
+  <link rel="stylesheet" href="/common/css/common.css">
   <script src="../assets/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
 	<script src="../assets/scripts/shCore.js"></script>
 	<script src="../assets/scripts/shBrushJScript.js"></script>
@@ -18,6 +18,10 @@
 	<script src="../assets/scripts/shBrushCss.js"></script>
   <script type="text/javascript">SyntaxHighlighter.all();</script>
   <style>
+    .content-area {width: 1133rem; box-sizing: border-box;}
+    @media all and (max-width: 1023px) {
+      .content-area {width: 100%;}
+    }
     .ex-box ~ .ex-box {margin-top: 20px;} 
     .ex-box > p {margin-bottom: 10px;}
     .exs ~ .exs {margin-top: 40px;}
@@ -44,7 +48,7 @@
           <li><a href="/html/styleguide/guide/typography.html">TYPOGRAPHY</a></li>
           <li><a href="/html/styleguide/guide/button.html">BUTTON</a></li>
           <li><a href="/html/styleguide/guide/popup.html">POPUP</a></li>
-          <li><a href="/html/styleguide/guide/accordion.html">ACCORDION</a></li>
+          <li><a href="/html/styleguide/guide/navigation.html">NAVIGATION</a></li>
           <li><a href="/html/styleguide/guide/tab.html">TAB</a></li>
           <li><a href="/html/styleguide/guide/table.html" class="active">TABLE</a></li>
           <li><a href="/html/styleguide/guide/list.html">LIST</a></li>
@@ -58,111 +62,391 @@
         <br/>
         <section>
           <div class="ex-box">
-            <h3>Basic table</h3>
-            <p class="info">기본적인 테이블 스타일입니다. *타이틀 하위 테이블이 2개인 경우 테이블 간 간격은 40px입니다.</p>
-            <div class="ex">
-              <div class="table-sec">
-                <div class="table-box">
-                  <table class="basic-table">
-                    <caption>업체 기본정보</caption>
-                    <colgroup>
-                      <col style="width: 25%;">
-                      <col style="width: 75%;">
-                    </colgroup>
-                    <tbody>
-                      <tr>
-                        <th>업체명</th>
-                        <td>㈜만도</td>
-                      </tr>
-                      <tr>
-                        <th>업체구분</th>
-                        <td>2차</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="table-box">
-                  <table class="basic-table">
-                    <caption>업체 기본정보</caption>
-                    <colgroup>
-                      <col style="width: 25%;">
-                      <col style="width: 75%;">
-                    </colgroup>
-                    <tbody>
-                      <tr>
-                        <th>업체명</th>
-                        <td>㈜만도</td>
-                      </tr>
-                      <tr>
-                        <th>업체구분</th>
-                        <td>2차</td>
-                      </tr>
-                    </tbody>
-                  </table>
+            <h3>table</h3>
+            <div class="exs">
+              <h4>Basic table</h4>
+              <p class="info">기본적인 테이블 스타일입니다. *타이틀 하위 테이블이 2개인 경우 테이블 간 간격은 40px입니다.</p>
+              <div class="ex">
+                <div class="table-sec">
+                  <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                    <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 25%;">
+                        <col style="width: 75%;">
+                      </colgroup>
+                      <tbody>
+                        <tr>
+                          <th>업체명</th>
+                          <td>㈜만도</td>
+                        </tr>
+                        <tr>
+                          <th>업체구분</th>
+                          <td>2차</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="table-box">
+                    <table class="basic-table">
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 25%;">
+                        <col style="width: 75%;">
+                      </colgroup>
+                      <tbody>
+                        <tr>
+                          <th>업체명</th>
+                          <td>㈜만도</td>
+                        </tr>
+                        <tr>
+                          <th>업체구분</th>
+                          <td>2차</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="table-sec">
+                  <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                    <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 25%;">
+                        <col style="width: 75%;">
+                      </colgroup>
+                      <tbody>
+                        <tr>
+                          <th>업체명</th>
+                          <td>㈜만도</td>
+                        </tr>
+                        <tr>
+                          <th>업체구분</th>
+                          <td>2차</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="table-box">
+                    <table class="basic-table">
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 25%;">
+                        <col style="width: 75%;">
+                      </colgroup>
+                      <tbody>
+                        <tr>
+                          <th>업체명</th>
+                          <td>㈜만도</td>
+                        </tr>
+                        <tr>
+                          <th>업체구분</th>
+                          <td>2차</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </script>
             </div>
-            <script type="syntaxhighlighter" class="brush: xml;">
-              <div class="table-sec">
-                <div class="table-box">
-                  <table class="basic-table">
-                    <caption>업체 기본정보</caption>
-                    <colgroup>
-                      <col style="width: 25%;">
-                      <col style="width: 75%;">
-                    </colgroup>
-                    <tbody>
-                      <tr>
-                        <th>업체명</th>
-                        <td>㈜만도</td>
-                      </tr>
-                      <tr>
-                        <th>업체구분</th>
-                        <td>2차</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div class="table-box">
-                  <table class="basic-table">
-                    <caption>업체 기본정보</caption>
-                    <colgroup>
-                      <col style="width: 25%;">
-                      <col style="width: 75%;">
-                    </colgroup>
-                    <tbody>
-                      <tr>
-                        <th>업체명</th>
-                        <td>㈜만도</td>
-                      </tr>
-                      <tr>
-                        <th>업체구분</th>
-                        <td>2차</td>
-                      </tr>
-                    </tbody>
-                  </table>
+            <div class="exs">
+              <h4>Table with Highlighted Text</h4>
+              <p class="info">좌측 테이블 제목과 본문 텍스트가 강조된 상단 테이블 조합형 스타일입니다. 시트 나누기 및 합치기</p>
+              <div class="ex">
+                <div class="table-sec">
+                  <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                    <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 22%;">
+                        <col style="width: 44%;">
+                        <col style="width: 17%;">
+                        <col style="width: 17%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>개최일자</th>
+                          <th>의안내용</th>
+                          <th colspan="2">사외이사</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th rowspan="3">1회차2022-02-10</th>
+                          <td rowspan="3">
+                            1. 2021년 4분기 경영실적 보고 및 연간 재무제표 승인의 건
+                            <br/>2. 카카오 중장기 주주환원 정책(안)
+                            <br/>3. 현금배당 (안)4. 카카오G 유상증자 참여의 건
+                            <br/>5. 임직원 인센티브 지급을 위한 자기주식 처분의 건
+                            <br/>6. 주식매수선택권 부여 취소의 건
+                            <br/>7. 임원 주식매도금지 규정 제정의 건
+                          </td>
+                          <td class="t-align-center">홍길동</td>
+                          <td class="t-align-center">홍길동</td>
+                        </tr>
+                        <tr>
+                          <td class="t-align-center">홍길동</td>
+                          <td class="t-align-center">홍길동</td>
+                        </tr>
+                        <tr>
+                          <td class="t-align-center">홍길동</td>
+                          <td class="t-align-center">홍길동</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
               </div>
-            </script>
-            <script type="syntaxhighlighter" class="brush: css;">
-              .table-box ~ .table-box {margin-top: 40rem;}
-              .table-box .basic-table {border-top: 1px solid #ECEEEF;}
-              .table-box .basic-table tr th, .table-box .basic-table tr td {padding: 20rem 30rem; font-size: max(16rem, 14px); color: #06161E; line-height: 160%; letter-spacing: -.02em; border-right: 1px solid #ECEEEF; border-bottom: 1px solid #ECEEEF;}
-              .table-box .basic-table tr th {font-family: "Pretendard_Regular", sans-serif; background-color: #F5F6F7;}
-              .table-box .basic-table tr td {font-family: "Pretendard_Medium", sans-serif; background-color: #fff;}
-              
-              .table-box .basic-table .bdl {border-left: 1px solid #ECEEEF;}
-              .table-box .basic-table .txt-center {text-align: center;}
-
-              @media all and (max-width: 1023px) {
-                .table-box {overflow-x: auto;}
-                .table-box .basic-table {width: 130%;}
-                .table-box .basic-table tr th, .table-box .basic-table tr td {padding: 10px;}
-              }
-              @media all and (max-width: 599px) {
-                .table-box .basic-table {width: 150%;}
-              }
-            </script>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                div class="table-sec">
+                  <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                    <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 22%;">
+                        <col style="width: 44%;">
+                        <col style="width: 17%;">
+                        <col style="width: 17%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>개최일자</th>
+                          <th>의안내용</th>
+                          <th colspan="2">사외이사</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th rowspan="3">1회차2022-02-10</th>
+                          <td rowspan="3">
+                            1. 2021년 4분기 경영실적 보고 및 연간 재무제표 승인의 건
+                            <br/>2. 카카오 중장기 주주환원 정책(안)
+                            <br/>3. 현금배당 (안)4. 카카오G 유상증자 참여의 건
+                            <br/>5. 임직원 인센티브 지급을 위한 자기주식 처분의 건
+                            <br/>6. 주식매수선택권 부여 취소의 건
+                            <br/>7. 임원 주식매도금지 규정 제정의 건
+                          </td>
+                          <td class="t-align-center">홍길동</td>
+                          <td class="t-align-center">홍길동</td>
+                        </tr>
+                        <tr>
+                          <td class="t-align-center">홍길동</td>
+                          <td class="t-align-center">홍길동</td>
+                        </tr>
+                        <tr>
+                          <td class="t-align-center">홍길동</td>
+                          <td class="t-align-center">홍길동</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </script>
+            </div>
+            <div class="exs">
+              <h4>Table with Blit Text </h4>
+              <p class="info">좌측 테이블 제목과 블릿 텍스트가 포함된 상단 테이블 조합형 스타일입니다. 시트 나누기 및 합치기</p>
+              <div class="ex">
+                <div class="table-sec">
+                  <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                    <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 22%;">
+                        <col style="width: 33%;">
+                        <col style="width: 45%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>구분</th>
+                          <th>이용목적</th>
+                          <th>수집항목</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th rowspan="2">홈페이지 운영</th>
+                          <td>기업윤리 상담/제보 접수 및 결과 회신</td>
+                          <td>
+                            <p class="dot-txt">필수  : 이메일 주소, 제보 내용</p>
+                            <p class="dot-txt">선택  : 이름, 연락처</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>일반 문의 접수 및 답변<br/>(제휴 및 기타 문의)</td>
+                          <td>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th rowspan="3">인재채용</th>
+                          <td rowspan="3">1. 정기 주주총회 소집 승인의 건</td>
+                          <td>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="table-sec">
+                  <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                    <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 22%;">
+                        <col style="width: 33%;">
+                        <col style="width: 45%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th>구분</th>
+                          <th>이용목적</th>
+                          <th>수집항목</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <th rowspan="2">홈페이지 운영</th>
+                          <td>기업윤리 상담/제보 접수 및 결과 회신</td>
+                          <td>
+                            <p class="dot-txt">필수  : 이메일 주소, 제보 내용</p>
+                            <p class="dot-txt">선택  : 이름, 연락처</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>일반 문의 접수 및 답변<br/>(제휴 및 기타 문의)</td>
+                          <td>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th rowspan="3">인재채용</th>
+                          <td rowspan="3">1. 정기 주주총회 소집 승인의 건</td>
+                          <td>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <p class="dot-txt">이메일 주소, 제보 내용</p>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </script>
+            </div>
+            <div class="exs">
+              <h4>Table with Two Header</h4>
+              <p class="info">상단에 두개의 타이틀이 조합된 테이블 스타일입니다.  시트 나누기</p>
+              <div class="ex">
+                <div class="table-sec">
+                  <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                    <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 50%;">
+                        <col style="width: 50%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th colspan="2">의안내용</th>
+                        </tr>
+                        <tr>
+                          <th>의안내용</th>
+                          <th>의안내용</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            1. 2021년 4분기 경영실적 보고 및 연간 재무제표 승인의 건
+                            <br/>2. 카카오 중장기 주주환원 정책(안)
+                            <br/>3. 현금배당 (안)4. 카카오G 유상증자 참여의 건
+                            <br/>5. 임직원 인센티브 지급을 위한 자기주식 처분의 건
+                            <br/>6. 주식매수선택권 부여 취소의 건
+                          </td>
+                          <td>
+                            1. 2021년 4분기 경영실적 보고 및 연간 재무제표 승인의 건
+                            <br/>2. 카카오 중장기 주주환원 정책(안)
+                            <br/>3. 현금배당 (안)4. 카카오G 유상증자 참여의 건
+                            <br/>5. 임직원 인센티브 지급을 위한 자기주식 처분의 건
+                            <br/>6. 주식매수선택권 부여 취소의 건
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="table-sec">
+                  <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                    <table class="basic-table"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                      <caption></caption>
+                      <colgroup>
+                        <col style="width: 50%;">
+                        <col style="width: 50%;">
+                      </colgroup>
+                      <thead>
+                        <tr>
+                          <th colspan="2">의안내용</th>
+                        </tr>
+                        <tr>
+                          <th>의안내용</th>
+                          <th>의안내용</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>
+                            1. 2021년 4분기 경영실적 보고 및 연간 재무제표 승인의 건
+                            <br/>2. 카카오 중장기 주주환원 정책(안)
+                            <br/>3. 현금배당 (안)4. 카카오G 유상증자 참여의 건
+                            <br/>5. 임직원 인센티브 지급을 위한 자기주식 처분의 건
+                            <br/>6. 주식매수선택권 부여 취소의 건
+                          </td>
+                          <td>
+                            1. 2021년 4분기 경영실적 보고 및 연간 재무제표 승인의 건
+                            <br/>2. 카카오 중장기 주주환원 정책(안)
+                            <br/>3. 현금배당 (안)4. 카카오G 유상증자 참여의 건
+                            <br/>5. 임직원 인센티브 지급을 위한 자기주식 처분의 건
+                            <br/>6. 주식매수선택권 부여 취소의 건
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </script>
+            </div>
           </div>
         </section>
       </div>

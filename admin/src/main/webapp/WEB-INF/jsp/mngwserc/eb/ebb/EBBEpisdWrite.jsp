@@ -95,6 +95,16 @@
                 <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>> <a data-toggle="tab" href="#accsList">참여자 목록</a></li>
                 <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
                 <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#bdget">예산/지출</a></li>
+
+                <div class="pull-right">
+                    <c:choose>
+                        <c:when test="${ not empty rtnDto}">
+                            <button type="button" class="btn btn-sm btn-danger" id="btn_end_edu">강제종강</button>
+                        </c:when>
+                    </c:choose>
+                </div>
+
+
             </ul>
 
             <div class="tab-content">
@@ -584,9 +594,11 @@
 
                                             </td>
                                             <td>
+                                                <c:if test="${rtnDto.srvSeq != null}">
                                                 <button type="button" class="btn btn-inverse btn-sm srvReset">
                                                     설문 초기화
                                                 </button>
+                                                </c:if>
                                             </td>
                                         </tr>
                                     <%--<tr data-total-count="0">
@@ -616,7 +628,8 @@
                                     <span class="ion-checkmark-round"></span> 오프라인평가
                                 </label>
 
-                                <table class="table table-hover table-striped">
+                                <table class="table table-striped">
+
                                     <thead>
                                     <tr>
                                         <th class="text-center" colspan="4">제목</th>
@@ -632,7 +645,7 @@
                                         </td>
                                     </tr>
                                     <tr class="setExg" <c:if test="${rtnDto.examNm eq ''}">style="display: none;"</c:if>>
-                                        <td class="text-center examNmForm" colspan="4">${rtnDto.examNm}</td>
+                                        <td class="text-center examNmForm" colspan="4" style="min-width: 200px;">${rtnDto.examNm}</td>
                                         <td colspan="6">
                                             <div class="input-group form-date-group mr-sm">
                                                 <input type="text" class="form-control input-sm datetimepicker_strtDt" name="examStrtDtm" id="examStrtDtm" value="${ kl:convertDate(rtnDto.examStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시험시작일시" readonly="readonly"/>
@@ -677,6 +690,24 @@
                             </div>
                         </div>
                     </fieldset>
+
+                    <fieldset class="last-child">
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
+                            <div class="col-sm-11">
+                                <c:set var="expsYn" value="${kl:nvl(rtnDto.expsYn, 'Y')}" />
+                                <label class="radio-inline c-radio">
+                                    <input type="radio" name="expsYn" value="Y" title="노출여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
+                                    <span class="ion-record"></span> 노출
+                                </label>
+                                <label class="radio-inline c-radio">
+                                    <input type="radio" name="expsYn" value="N" title="노출여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
+                                    <span class="ion-record"></span> 미노출
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+
                 </div>
 
                 <!-- 참여자 목록-->
@@ -752,7 +783,11 @@
                         </div>
                     </fieldset>
 
-
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <button type="button" class="btn btn-info btn-default" id="changeEpisd">차수 변경</button>
+                        </div>
+                    </div>
 
 
                 </div>
@@ -931,19 +966,73 @@
                                         <th>강사평가</th>
                                     </tr>
                                     <tr>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
+                                        <td class="text-center" id="totalScore">5.0</td>
+                                        <td class="text-center" id="EDU01Score">5.0</td>
+                                        <td class="text-center" id="EDU02Score">5.0</td>
+                                        <td class="text-center" id="EDU03Score">5.0</td>
+                                        <td class="text-center" id="EDU04Score">5.0</td>
+                                        <td class="text-center" id="EDU05Score">5.0</td>
 
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
                     </fieldset>
-
+                    <c:if test="${rtnSurveyData != null}">
+                        <c:forEach var="qstnList" items="${rtnSurveyData.svSurveyQstnDtlList}" varStatus="qstnStatus">
+                            <c:if test="${cd ne qstnList.cd}">
+                                <h6 class="ml mb-xl ${fn:substring(qstnList.cd,0,3)}"><em class="ion-android-checkbox-blank mr-sm"></em>${qstnList.cdNm}</h6>
+                            </c:if>
+                            <c:if test="${qstnList.cd ne 'CON01' && qstnList.cd ne 'CON02'}">
+                                <c:set var="rowspan" value="${qstnList.exmplCnt+3}" />
+                                <fieldset style="<c:if test="${qstnList.ctgryCd eq null}">display:none;</c:if>" class="surveyList ${qstnList.cd}" data-survey-type="${qstnList.cd}" >
+                                    <input type="hidden" name="dpth" value="${qstnList.dpth}">
+                                    <div class="form-group text-sm">
+                                        <table class="table">
+                                            <tr>
+                                                <th rowspan="3" class="col-md-1 ${qstnList.cd}questionTxt">질문1</th>
+                                                <th class="col-md-1">설문유형<span class="star"> *</span></th>
+                                                <td class="form-inline col-md-8" >
+                                                        ${qstnList.srvTypeNm}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>질문<span class="star"> *</span></th>
+                                                <td> <c:if test="${qstnList.cd eq 'EDU05'}"><strong>${qstnList.isttrName}</strong></c:if> ${qstnList.qstnNm}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <th>응답<span class="star"> *</span></th>
+                                                <td>
+                                                    <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
+                                                        <c:choose>
+                                                            <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
+                                                                <c:forTokens var="item" items="${exmplList.winAnswerText}" delims="," varStatus="status">
+                                                                   - ${item} <br>
+                                                                </c:forTokens>
+                                                            </c:when>
+                                                            <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
+                                                                - ${exmplList.exmplOrd} (${exmplList.winAnswer}명)
+                                                                <input type="hidden" name="qstnCd" value="${qstnList.cd}">
+                                                                <input type="hidden" name="qstnCdScore" value="${exmplList.exmplOrd}">
+                                                                <input type="hidden" name="qstnCdCount" value="${exmplList.winAnswer}">
+                                                                <br>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                - ${exmplList.exmplNm} (${exmplList.winAnswer}명) <br>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </c:if>
+                            <c:set var="cd" value="${ qstnList.cd}" />
+                        </c:forEach>
+                    </c:if>
 
 
 
@@ -1033,22 +1122,6 @@
                 </div>
             </div>
 
-            <fieldset class="last-child">
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
-                    <div class="col-sm-11">
-                        <c:set var="expsYn" value="${kl:nvl(rtnDto.expsYn, 'Y')}" />
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="expsYn" value="Y" title="노출여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
-                            <span class="ion-record"></span> 노출
-                        </label>
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="expsYn" value="N" title="노출여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
-                            <span class="ion-record"></span> 미노출
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
             <hr />
             <div class="clearfix">
                 <div class="pull-left">
@@ -1119,3 +1192,5 @@
 </jsp:include>
 
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업-->
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBMemAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업 - 개인별 -->
+<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBChangeEpisdLayer.jsp"></jsp:include><!-- 차수변경 레이어팝업-->

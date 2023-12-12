@@ -357,20 +357,17 @@
                                 <col style="width:20%;">
                                 <col style="width:20%;">
                                 <col style="width:20%;">
-                                <col style="width:20%;">
                             </colgroup>
                             <tbody>
                             <tr>
                                 <th class="bg-gray-lighter">교육/세미나</th>
                                 <th class="bg-gray-lighter">컨설팅사업</th>
                                 <th class="bg-gray-lighter">상생사업</th>
-                                <th class="bg-gray-lighter">자동차부품산업대상</th>
                             </tr>
                             <tr>
                                 <td class="text-center">${eduCnt}</td>
                                 <td class="text-center">${consultCnt}</td>
                                 <td class="text-center">${winBusinessCnt}</td>
-                                <td class="text-center">${carPartsCnt}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -392,38 +389,15 @@
                                 <th class="text-center">2020년</th>
                                 <th class="text-center">2019년 이전</th>
                             </tr>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center">품질아카데미</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">제조/경영혁신</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">세미나</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">방문교육</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">소계</td>
-                                </tr>
-                            </tbody>
                             </thead>
                             <!-- 리스트 목록 결과 -->
-                            <tbody id="eduListContainer"/>
-                            <%--<c:forEach var="list" items="${eduTotalCntList.list}" varStatus="status">
-                                <tr data-total-count="${list.totalCount}">
-                                        ${list.prntCdNm}
-                                                ${list.groupCnt}
-                                </tr>
-                            </c:forEach>--%>
+                            <tbody id="eduStatisticsListContainer"/>
                         </table>
                     </div>
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            상주기술지도
+                            기술지도
                         </h6>
                     </div>
                     <div class="table-responsive">
@@ -447,7 +421,7 @@
                     </div>
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            상주경영컨설팅
+                            경영컨설팅
                         </h6>
                     </div>
                     <div class="table-responsive">

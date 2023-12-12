@@ -12,7 +12,7 @@
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
                 <td class="text-center">교육결과값</td>
                 <td class="text-center">
-                    <a href="javascript:" class="listView" data-details-key="${list.vstSeq}" data-mem-seq="${list.memSeq}" data-vst-rslt-seq="${list.vstSeq}" data-appctn-bsnm-no="${list.appctnBsnmNo}">
+                    <a href="javascript:" class="listView" data-details-key="${list.vstSeq}" data-mem-seq="${list.memSeq}" data-vst-rslt-seq="${list.vstRsltSeq}" data-appctn-bsnm-no="${list.appctnBsnmNo}">
                             ${list.cmpnNm}
                     </a>
                 </td>

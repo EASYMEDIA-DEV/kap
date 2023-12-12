@@ -19,7 +19,7 @@
                 <jsp:param name="cmpnTitle" value="부품사" />
                 <jsp:param name="memSeq" value="${ rtnDto.memSeq }" />
             </jsp:include>
-            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>선수과목 수료내역</h7>
+            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>필수과목 수료내역</h7>
             <hr />
             <fieldset class="mb-lg">
                 <!--VUE 영역 시작 -->
@@ -41,30 +41,32 @@
                         <!-- 리스트 목록 결과 -->
                         <tbody>
                         <c:choose>
-                            <c:when test="${ not empty rtnPrePrcsList}">
-                                <c:forEach var="list" items="${rtnPrePrcsList}" varStatus="status">
-                                    <tr>
-                                        <td class="text-center" >${ list.ctgryCdNm }</td>
-                                        <td class="text-center" >${ list.nm }</td>
-                                        <td class="text-center" >${ list.stduyMthdCdNm }</td>
-                                        <td class="text-center" >${ list.stduyDdCdNm }일/${list.stduyTimeCdNm}시간</td>
-                                        <td class="text-center" >${ list.episdYear }</td>
-                                        <td class="text-center" >${ list.episdOrd }</td>
-                                        <td class="text-center" >${ list.cbsnCdNm }</td>
-                                        <td class="text-center" >
-                                                ${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                                        </td>
-                                        <td class="text-center" >
-                                            <c:choose>
-                                                <c:when test="${ list.cmptnYn eq 'Y' }">
-                                                    ${ kl:convertDate(list.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                                                </c:when>
-                                                <c:otherwise>
-                                                    -
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
+                            <c:when test="${ not empty rtnCompletePrcsList}">
+                                <c:forEach var="list" items="${rtnCompletePrcsList.educationList}" varStatus="status">
+                                    <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
+                                        <tr>
+                                            <td class="text-center" >${ list.ctgryCdNm }</td>
+                                            <td class="text-center" >${ list.nm }</td>
+                                            <td class="text-center" >${ list.stduyMthdCdNm }</td>
+                                            <td class="text-center" >${ list.stduyDdCdNm }일/${list.stduyTimeCdNm}시간</td>
+                                            <td class="text-center" >${ list.episdYear }</td>
+                                            <td class="text-center" >${ list.episdOrd }</td>
+                                            <td class="text-center" >${ list.cbsnCdNm }</td>
+                                            <td class="text-center" >
+                                                    ${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                            </td>
+                                            <td class="text-center" >
+                                                <c:choose>
+                                                    <c:when test="${ list.cmptnYn eq 'Y' }">
+                                                        ${ kl:convertDate(list.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        -
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                    </c:if>
                                 </c:forEach>
                             </c:when>
                             <c:otherwise>
@@ -128,6 +130,67 @@
             </fieldset>
             <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>SQ평가원 보수정보(갱신)</h7>
             <hr />
+            <fieldset class="mb-lg">
+                <!--VUE 영역 시작 -->
+                <div class="col-sm-12 p0 m0 table-responsive" >
+                    <table class="table table-hover table-striped text-sm ">
+                        <thead>
+                            <tr>
+                                <th class="text-center">과정분류</th>
+                                <th class="text-center">과정명</th>
+                                <th class="text-center">학습방식</th>
+                                <th class="text-center">학습시간</th>
+                                <th class="text-center">년도</th>
+                                <th class="text-center">회차</th>
+                                <th class="text-center">업종</th>
+                                <th class="text-center">교육일자</th>
+                                <th class="text-center">수료(갱신)일자</th>
+                                <th class="text-center">만료 예정일</th>
+                            </tr>
+                        </thead>
+                        <!-- 리스트 목록 결과 -->
+                        <tbody>
+                        <c:choose>
+                            <c:when test="${ not empty rtnRepairPrcsList.educationRepairList}">
+                                <c:forEach var="list" items="${rtnRepairPrcsList.educationRepairList}" varStatus="status">
+                                    <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
+                                        <tr>
+                                            <td class="text-center" >${ list.ctgryCdNm }</td>
+                                            <td class="text-center" >${ list.nm }</td>
+                                            <td class="text-center" >${ list.stduyMthdCdNm }</td>
+                                            <td class="text-center" >${ list.stduyDdCdNm }일/${list.stduyTimeCdNm}시간</td>
+                                            <td class="text-center" >${ list.episdYear }</td>
+                                            <td class="text-center" >${ list.episdOrd }</td>
+                                            <td class="text-center" >${ list.cbsnCdNm }</td>
+                                            <td class="text-center" >
+                                                    ${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                            </td>
+                                            <td class="text-center" >
+                                                <c:choose>
+                                                    <c:when test="${ list.cmptnYn eq 'Y' }">
+                                                        ${ kl:convertDate(list.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        -
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
+                            </c:when>
+                            <c:otherwise>
+                                <tr data-total-count="0">
+                                    <td colspan="10" class="text-center">
+                                        등록된 데이터가 없습니다.
+                                    </td>
+                                </tr>
+                            </c:otherwise>
+                        </c:choose>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
             <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>SQ평가원 자격증 정보</h7>
             <hr />
             <fieldset class="">
@@ -190,11 +253,30 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold ">업종</label>
                     <div class="col-sm-10">
-
+                        <c:set var="cbsnCdNm" value="" />
+                        <c:choose>
+                            <c:when test="${ not empty rtnCompletePrcsList}">
+                                <c:forEach var="list" items="${rtnCompletePrcsList.educationList}" varStatus="status">
+                                    <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
+                                        <c:choose>
+                                            <c:when test="${ empty cbsnCdNm }">
+                                                <c:set var="cbsnCdNm" value="${ list.cbsnCdNm }" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="cbsnCdNm">
+                                                    ${ cbsnCdNm}, ${list.cbsnCdNm}
+                                                </c:set>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </c:if>
+                                </c:forEach>
+                            </c:when>
+                        </c:choose>
+                        ${ cbsnCdNm }
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="">
+            <fieldset>
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold ">자격증 최초 취득일</label>
                     <div class="col-sm-4">
@@ -206,7 +288,50 @@
                     </div>
                 </div>
             </fieldset>
-            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>수정이력</h7>
+            <fieldset class="">
+                <div class="form-group text-sm">
+                    <label class="col-sm-2 control-label">사용 여부</label>
+                    <div class="col-sm-10">
+                        <label class="radio-inline c-radio">
+                            <input type="radio" name="useYn" value="Y" title="사용 여부" <c:if test="${rtnDto.useYn eq 'Y' or rtnDto.useYn eq null}">checked</c:if>/>
+                            <span class="ion-record"></span> 사용
+                        </label>
+                        <label class="radio-inline c-radio">
+                            <input type="radio" name="useYn" value="N" title="사용 여부" <c:if test="${rtnDto.useYn eq 'N'}">checked</c:if>/>
+                            <span class="ion-record"></span> 미사용
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <h7 class="text-bold mt"><em class="ion-android-arrow-dropright mr-sm "></em>수정이력</h7>
+            <fieldset class="last-child mt">
+                <div class="table-responsive ">
+                    <table class="table text-sm">
+                        <tbody>
+                        <tr>
+                            <th>최종 수정자</th>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
+                                        ${ rtnDto.modName }(${ rtnDto.modId })
+                                    </c:when>
+                                    <c:otherwise>-</c:otherwise>
+                                </c:choose>
+                            </td>
+                            <th>최종 수정일</th>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
+                                        ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                    </c:when>
+                                    <c:otherwise>-</c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
             <hr />
             <div class="clearfix">
                 <div class="pull-left">

@@ -74,6 +74,7 @@
              , A.CMPN_NFRML_NM
              , A.CMPN_CD
              , A.CTGRY_CD
+             , (select cd_nm from co_code_mst where  cd=A.CTGRY_CD ) as CTGRY_NM
              , A.SIZE_CD
              , A.STBSM_DT
              , A.TEL_NO
@@ -255,7 +256,9 @@
         </if>
           , SIZE_CD = #{sizeCd}
           , STBSM_DT = #{stbsmDt}
-          , TEL_NO = #{telNo}
+        <if test="telNo != null and telNo != ''.toString() ">
+            , TEL_NO = #{telNo}
+        </if>
           , ZIPCODE = #{zipcode}
           , BSC_ADDR = #{bscAddr}
           , DTL_ADDR = #{dtlAddr}
@@ -356,51 +359,69 @@
 
     <!--
          쿼리명 : MPEPartsCompanyMapper.selectEduCnt
-         설  명 : 부품사 실적정보에서 교육사업 개수를 조회한다.
+         설  명 : 실적정보 종합현황에서 교육사업 개수를 조회한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.23   구은희       최초생성
+        2023.12.11   구은희       최초생성
     -->
     <select id="selectEduCnt" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
         SELECT /* MPEPartsCompanyMapper.selectEduCnt */
-            COUNT(A.EDCTN_SEQ)
+            SUM(total_cnt) AS edu_total_cnt
         FROM
-        (
-            SELECT
-                EDCTN_SEQ
-                 , EPISD_YEAR
-                 , EPISD_ORD
-            FROM ED_EDCTN_EPISD_MST
-        )A
-        INNER JOIN
-        (
-            SELECT
-                EDCTN_SEQ
-                 , EPISD_YEAR
-                 , EPISD_ORD
-                 , ISTTR_SEQ
-            FROM ED_EDCTN_ISTTR_REL
-        )B
-        ON A.EDCTN_SEQ = B.EDCTN_SEQ
-         AND A.EPISD_YEAR = B.EPISD_YEAR
-         AND A.EPISD_ORD = B.EPISD_ORD
-        INNER JOIN
-        (
-            SELECT
-                ISTTR_SEQ
-               , FFLTN_NM
-                FROM CP_ISTTR_MST
-        )C
-        ON B.ISTTR_SEQ = C.ISTTR_SEQ
-         AND C.FFLTN_NM = #{cmpnNm}
+            (
+                SELECT
+                    COUNT(B.ptcpt_seq) AS total_cnt
+                FROM
+                    (
+                        SELECT
+                            edctn_seq
+                             , episd_year
+                             , episd_ord
+                             , episd_seq
+                        FROM ed_edctn_episd_mst
+                        WHERE 1=1
+                          AND edctn_stts_cd = 'EDCTN_STTS_CD01' -- 교육코드가 개강인 경우
+                    )A
+                        INNER JOIN
+                    (
+                        SELECT
+                            ptcpt_seq
+                             , edctn_seq
+                             , episd_year
+                             , episd_ord
+                             , episd_seq
+                             , mem_seq
+                        FROM ep_edctn_ptcpt_mst
+                        WHERE 1=1
+                          AND stts_cd = 'EDU_STTS_CD01' -- 상태코드가 신청인 경우
+                    )B
+                    ON A.edctn_seq = B.edctn_seq
+                        AND A.episd_year = B.episd_year
+                        AND A.episd_ord = B.episd_ord
+                        AND A.episd_seq = B.episd_seq
+                        INNER JOIN
+                    (
+                        SELECT mem_seq, work_bsnm_no
+                        FROM co_mem_mst
+                        WHERE 1=1
+                          AND mem_cd = 'CP'
+                          AND work_bsnm_no = #{bsnmNo}
+                    ) C
+                    ON B.mem_seq = C.mem_seq
+                UNION ALL
+                SELECT COUNT(vst_seq) AS total_cnt FROM ev_edctn_vst_mst
+                WHERE 1=1
+                 AND appctn_bsnm_no = #{bsnmNo}
+            ) AA
+
     </select>
 
     <!--
          쿼리명 : MPEPartsCompanyMapper.selectConsultingCnt
-         설  명 : 부품사 실적정보에서 컨설팅사업 개수를 조회한다.
+         설  명 : 실적정보 종합현황에서 컨설팅사업 개수를 조회한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.23   구은희       최초생성
+        2023.12.11   구은희       최초생성
     -->
     <select id="selectConsultingCnt" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
         SELECT /* MPEPartsCompanyMapper.selectConsultingCnt */
@@ -411,13 +432,13 @@
 
     <!--
          쿼리명 : MPEPartsCompanyMapper.selectWinBusinessCnt
-         설  명 : 부품사 실적정보에서 상생사업 개수를 조회한다.
+         설  명 : 실적정보 종합현황에서 상생사업 개수를 조회한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.23   구은희       최초생성
+        2023.12.11   구은희       최초생성
     -->
     <select id="selectWinBusinessCnt" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
-        SELECT COUNT(A.EPISD_SEQ)
+        SELECT /* MPEPartsCompanyMapper.selectWinBusinessCnt */ COUNT(A.EPISD_SEQ)
         FROM
         (
             SELECT EPISD_SEQ
@@ -432,6 +453,277 @@
         )B
         ON A.EPISD_SEQ = B.EPISD_SEQ
           AND B.APPCTN_BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : MPEPartsCompanyMapper.selectEduStatisticsCntList
+         설  명 : 실적정보 교육사업 연도별 개수 목록을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.11   구은희       최초생성
+    -->
+    <select id="selectEduStatisticsCntList" parameterType="MPEPartsCompanyDTO">
+        SELECT /* MPEPartsCompanyMapper.selectEduStatisticsCntList */ '누계' AS std,
+                                                                      @edu1 :=IFNULL(SUM(CASE WHEN AA.edu_name = '품질아카데미' THEN 1 ELSE 0 END), 0) AS edu1,
+            @edu2 :=IFNULL(SUM(CASE WHEN AA.edu_name = '제조/경영혁신' THEN 1 ELSE 0 END), 0) AS edu2,
+            @edu3 :=IFNULL(SUM(CASE WHEN AA.edu_name = '세미나' THEN 1 ELSE 0 END), 0) AS edu3,
+            @edu4 :=IFNULL(SUM(CASE WHEN AA.edu_name = '방문교육' THEN 1 ELSE 0 END), 0) AS edu4,
+            ROUND(@edu1 + @edu2 + @edu3 + @edu4, 0) AS sumedu
+        FROM
+            (
+            SELECT
+            (select cd_nm from co_code_mst where cd_seq = D.parnt_seq) AS edu_name
+                , (select cd_nm from co_code_mst where cd = D.ctgry_cd) AS ctgry_name
+                , A.episd_year
+            FROM ed_edctn_episd_mst A
+            INNER JOIN ep_edctn_ptcpt_mst B
+            ON A.EDCTN_SEQ = B.EDCTN_SEQ
+            AND A.EPISD_YEAR = B.EPISD_YEAR
+            AND A.EPISD_ORD = B.EPISD_ORD
+            AND A.EPISD_SEQ = B.EPISD_SEQ
+            -- AND A.EDCTN_STTS_CD = 'EDCTN_STTS_CD01' -- 교육코드가 개강인 경우
+            -- AND B.STTS_CD = 'EDU_STTS_CD01' -- 상태코드가 신청인 경우
+            INNER JOIN co_mem_mst C
+            ON B.mem_seq = C.mem_seq
+            AND c.mem_cd = 'CP'
+
+            INNER JOIN
+            (
+            SELECT
+            edctn_seq
+                , ctgry_cd
+                , (select parnt_seq from co_code_mst where cd = ctgry_cd) AS parnt_seq
+            FROM ed_edctn_prcs_mst
+            )D
+            ON A.edctn_seq = D.edctn_seq
+            UNION ALL
+            SELECT '방문교육' AS edu_name
+                , '' AS ctgry_name
+                , DATE_FORMAT(reg_dtm, '%Y') AS episd_year
+            FROM ev_edctn_vst_mst
+            WHERE 1=1
+            AND appctn_bsnm_no = #{bsnmNo}
+            )AA
+        UNION ALL
+        SELECT '2023년도' AS std,
+               @edu1 :=IFNULL(SUM(CASE WHEN AA.edu_name = '품질아카데미' THEN 1 ELSE 0 END), 0) AS edu1,
+        @edu2 :=IFNULL(SUM(CASE WHEN AA.edu_name = '제조/경영혁신' THEN 1 ELSE 0 END), 0) AS edu2,
+        @edu3 :=IFNULL(SUM(CASE WHEN AA.edu_name = '세미나' THEN 1 ELSE 0 END), 0) AS edu3,
+        @edu4 :=IFNULL(SUM(CASE WHEN AA.edu_name = '방문교육' THEN 1 ELSE 0 END), 0) AS edu4,
+        ROUND(@edu1 + @edu2 + @edu3 + @edu4, 0) AS sumedu
+        FROM
+            (
+            SELECT
+            (select cd_nm from co_code_mst where cd_seq = D.parnt_seq) AS edu_name
+                , (select cd_nm from co_code_mst where cd = D.ctgry_cd) AS ctgry_name
+                , A.episd_year
+            FROM ed_edctn_episd_mst A
+            INNER JOIN ep_edctn_ptcpt_mst B
+            ON A.EDCTN_SEQ = B.EDCTN_SEQ
+            AND A.EPISD_YEAR = B.EPISD_YEAR
+            AND A.EPISD_ORD = B.EPISD_ORD
+            AND A.EPISD_SEQ = B.EPISD_SEQ
+            -- AND A.EDCTN_STTS_CD = 'EDCTN_STTS_CD01' -- 교육코드가 개강인 경우
+            -- AND B.STTS_CD = 'EDU_STTS_CD01' -- 상태코드가 신청인 경우
+            AND A.episd_year = 2023
+            INNER JOIN co_mem_mst C
+            ON B.mem_seq = C.mem_seq
+            AND c.mem_cd = 'CP'
+
+            INNER JOIN
+            (
+            SELECT
+            edctn_seq
+                , ctgry_cd
+                , (select parnt_seq from co_code_mst where cd = ctgry_cd) AS parnt_seq
+            FROM ed_edctn_prcs_mst
+            )D
+            ON A.edctn_seq = D.edctn_seq
+            UNION ALL
+            SELECT '방문교육' AS edu_name
+                , '' AS ctgry_name
+                , DATE_FORMAT(reg_dtm, '%Y') AS episd_year
+            FROM ev_edctn_vst_mst
+            WHERE 1=1
+            AND DATE_FORMAT(reg_dtm, '%Y') = 2023
+
+            )AA
+        UNION ALL
+        SELECT '2022년도' AS std,
+               @edu1 :=IFNULL(SUM(CASE WHEN AA.edu_name = '품질아카데미' THEN 1 ELSE 0 END), 0) AS edu1,
+        @edu2 :=IFNULL(SUM(CASE WHEN AA.edu_name = '제조/경영혁신' THEN 1 ELSE 0 END), 0) AS edu2,
+        @edu3 :=IFNULL(SUM(CASE WHEN AA.edu_name = '세미나' THEN 1 ELSE 0 END), 0) AS edu3,
+        @edu4 :=IFNULL(SUM(CASE WHEN AA.edu_name = '방문교육' THEN 1 ELSE 0 END), 0) AS edu4,
+        ROUND(@edu1 + @edu2 + @edu3 + @edu4, 0) AS sumedu
+        FROM
+            (
+            SELECT
+            (select cd_nm from co_code_mst where cd_seq = D.parnt_seq) AS edu_name
+                , (select cd_nm from co_code_mst where cd = D.ctgry_cd) AS ctgry_name
+                , A.episd_year
+            FROM ed_edctn_episd_mst A
+            INNER JOIN ep_edctn_ptcpt_mst B
+            ON A.EDCTN_SEQ = B.EDCTN_SEQ
+            AND A.EPISD_YEAR = B.EPISD_YEAR
+            AND A.EPISD_ORD = B.EPISD_ORD
+            AND A.EPISD_SEQ = B.EPISD_SEQ
+            -- AND A.EDCTN_STTS_CD = 'EDCTN_STTS_CD01' -- 교육코드가 개강인 경우
+            -- AND B.STTS_CD = 'EDU_STTS_CD01' -- 상태코드가 신청인 경우
+            AND A.episd_year = 2022
+            INNER JOIN co_mem_mst C
+            ON B.mem_seq = C.mem_seq
+            AND c.mem_cd = 'CP'
+
+            INNER JOIN
+            (
+            SELECT
+            edctn_seq
+                , ctgry_cd
+                , (select parnt_seq from co_code_mst where cd = ctgry_cd) AS parnt_seq
+            FROM ed_edctn_prcs_mst
+            )D
+            ON A.edctn_seq = D.edctn_seq
+            UNION ALL
+            SELECT '방문교육' AS edu_name
+                , '' AS ctgry_name
+                , DATE_FORMAT(reg_dtm, '%Y') AS episd_year
+            FROM ev_edctn_vst_mst
+            WHERE 1=1
+            AND DATE_FORMAT(reg_dtm, '%Y') = 2022
+
+            )AA
+        UNION ALL
+        SELECT '2021년도' AS std,
+               @edu1 :=IFNULL(SUM(CASE WHEN AA.edu_name = '품질아카데미' THEN 1 ELSE 0 END), 0) AS edu1,
+        @edu2 :=IFNULL(SUM(CASE WHEN AA.edu_name = '제조/경영혁신' THEN 1 ELSE 0 END), 0) AS edu2,
+        @edu3 :=IFNULL(SUM(CASE WHEN AA.edu_name = '세미나' THEN 1 ELSE 0 END), 0) AS edu3,
+        @edu4 :=IFNULL(SUM(CASE WHEN AA.edu_name = '방문교육' THEN 1 ELSE 0 END), 0) AS edu4,
+        ROUND(@edu1 + @edu2 + @edu3 + @edu4, 0) AS sumedu
+        FROM
+            (
+            SELECT
+            (select cd_nm from co_code_mst where cd_seq = D.parnt_seq) AS edu_name
+                , (select cd_nm from co_code_mst where cd = D.ctgry_cd) AS ctgry_name
+                , A.episd_year
+            FROM ed_edctn_episd_mst A
+            INNER JOIN ep_edctn_ptcpt_mst B
+            ON A.EDCTN_SEQ = B.EDCTN_SEQ
+            AND A.EPISD_YEAR = B.EPISD_YEAR
+            AND A.EPISD_ORD = B.EPISD_ORD
+            AND A.EPISD_SEQ = B.EPISD_SEQ
+            -- AND A.EDCTN_STTS_CD = 'EDCTN_STTS_CD01' -- 교육코드가 개강인 경우
+            -- AND B.STTS_CD = 'EDU_STTS_CD01' -- 상태코드가 신청인 경우
+            AND A.episd_year = 2021
+            INNER JOIN co_mem_mst C
+            ON B.mem_seq = C.mem_seq
+            AND c.mem_cd = 'CP'
+
+            INNER JOIN
+            (
+            SELECT
+            edctn_seq
+                , ctgry_cd
+                , (select parnt_seq from co_code_mst where cd = ctgry_cd) AS parnt_seq
+            FROM ed_edctn_prcs_mst
+            )D
+            ON A.edctn_seq = D.edctn_seq
+            UNION ALL
+            SELECT '방문교육' AS edu_name
+                , '' AS ctgry_name
+                , DATE_FORMAT(reg_dtm, '%Y') AS episd_year
+            FROM ev_edctn_vst_mst
+            WHERE 1=1
+            AND DATE_FORMAT(reg_dtm, '%Y') = 2021
+
+            )AA
+        UNION ALL
+        SELECT '2020년도' AS std,
+               @edu1 :=IFNULL(SUM(CASE WHEN AA.edu_name = '품질아카데미' THEN 1 ELSE 0 END), 0) AS edu1,
+        @edu2 :=IFNULL(SUM(CASE WHEN AA.edu_name = '제조/경영혁신' THEN 1 ELSE 0 END), 0) AS edu2,
+        @edu3 :=IFNULL(SUM(CASE WHEN AA.edu_name = '세미나' THEN 1 ELSE 0 END), 0) AS edu3,
+        @edu4 :=IFNULL(SUM(CASE WHEN AA.edu_name = '방문교육' THEN 1 ELSE 0 END), 0) AS edu4,
+        ROUND(@edu1 + @edu2 + @edu3 + @edu4, 0) AS sumedu
+        FROM
+            (
+            SELECT
+            (select cd_nm from co_code_mst where cd_seq = D.parnt_seq) AS edu_name
+                , (select cd_nm from co_code_mst where cd = D.ctgry_cd) AS ctgry_name
+                , A.episd_year
+            FROM ed_edctn_episd_mst A
+            INNER JOIN ep_edctn_ptcpt_mst B
+            ON A.EDCTN_SEQ = B.EDCTN_SEQ
+            AND A.EPISD_YEAR = B.EPISD_YEAR
+            AND A.EPISD_ORD = B.EPISD_ORD
+            AND A.EPISD_SEQ = B.EPISD_SEQ
+            -- AND A.EDCTN_STTS_CD = 'EDCTN_STTS_CD01' -- 교육코드가 개강인 경우
+            -- AND B.STTS_CD = 'EDU_STTS_CD01' -- 상태코드가 신청인 경우
+            AND A.episd_year = 2020
+            INNER JOIN co_mem_mst C
+            ON B.mem_seq = C.mem_seq
+            AND c.mem_cd = 'CP'
+
+            INNER JOIN
+            (
+            SELECT
+            edctn_seq
+                , ctgry_cd
+                , (select parnt_seq from co_code_mst where cd = ctgry_cd) AS parnt_seq
+            FROM ed_edctn_prcs_mst
+            )D
+            ON A.edctn_seq = D.edctn_seq
+            UNION ALL
+            SELECT '방문교육' AS edu_name
+                , '' AS ctgry_name
+                , DATE_FORMAT(reg_dtm, '%Y') AS episd_year
+            FROM ev_edctn_vst_mst
+            WHERE 1=1
+            AND DATE_FORMAT(reg_dtm, '%Y') = 2020
+
+            )AA
+        UNION ALL
+        SELECT '2019년도 이전' AS std,
+               @edu1 :=IFNULL(SUM(CASE WHEN AA.edu_name = '품질아카데미' THEN 1 ELSE 0 END), 0) AS edu1,
+        @edu2 :=IFNULL(SUM(CASE WHEN AA.edu_name = '제조/경영혁신' THEN 1 ELSE 0 END), 0) AS edu2,
+        @edu3 :=IFNULL(SUM(CASE WHEN AA.edu_name = '세미나' THEN 1 ELSE 0 END), 0) AS edu3,
+        @edu4 :=IFNULL(SUM(CASE WHEN AA.edu_name = '방문교육' THEN 1 ELSE 0 END), 0) AS edu4,
+        ROUND(@edu1 + @edu2 + @edu3 + @edu4, 0) AS sumedu
+        FROM
+            (
+            SELECT
+            (select cd_nm from co_code_mst where cd_seq = D.parnt_seq) AS edu_name
+                , (select cd_nm from co_code_mst where cd = D.ctgry_cd) AS ctgry_name
+                , A.episd_year
+            FROM ed_edctn_episd_mst A
+            INNER JOIN ep_edctn_ptcpt_mst B
+            ON A.EDCTN_SEQ = B.EDCTN_SEQ
+            AND A.EPISD_YEAR = B.EPISD_YEAR
+            AND A.EPISD_ORD = B.EPISD_ORD
+            AND A.EPISD_SEQ = B.EPISD_SEQ
+            -- AND A.EDCTN_STTS_CD = 'EDCTN_STTS_CD01' -- 교육코드가 개강인 경우
+            -- AND B.STTS_CD = 'EDU_STTS_CD01' -- 상태코드가 신청인 경우
+            AND A.episd_year <![CDATA[ <= ]]> 2019
+            INNER JOIN co_mem_mst C
+            ON B.mem_seq = C.mem_seq
+            AND c.mem_cd = 'CP'
+
+            INNER JOIN
+            (
+            SELECT
+            edctn_seq
+                , ctgry_cd
+                , (select parnt_seq from co_code_mst where cd = ctgry_cd) AS parnt_seq
+            FROM ed_edctn_prcs_mst
+            )D
+            ON A.edctn_seq = D.edctn_seq
+            UNION ALL
+            SELECT '방문교육' AS edu_name
+                , '' AS ctgry_name
+                , DATE_FORMAT(reg_dtm, '%Y') AS episd_year
+            FROM ev_edctn_vst_mst
+            WHERE 1=1
+            AND DATE_FORMAT(reg_dtm, '%Y') <![CDATA[ <= ]]> 2019
+
+            )AA
     </select>
 
     <!--

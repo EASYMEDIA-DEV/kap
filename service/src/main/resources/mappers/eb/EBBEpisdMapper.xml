@@ -36,10 +36,12 @@
 					END  AS accs_status_nm
 				, edctn_strt_dtm
 				, edctn_end_dtm
-				, case
-					when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-					when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
-					when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
+				, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+						case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+								when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+								when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
+						end
+						when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 				END  AS edctn_status_nm
 				, (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
 				, (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
@@ -81,11 +83,12 @@
 				, a.accs_end_dtm
 				, a.edctn_strt_dtm
 				, a.edctn_end_dtm
+			   	, a.edctn_stts_cd
 				, (SELECT min(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS min_isttr_seq
 				, (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
 				, a.fxnum_cnt
 				, a.fxnum_impsb_yn
-				, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord) AS accs_cnt
+				, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
 				, a.rcrmt_mthd_cd
 				, (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
 				, a.pic_nm
@@ -521,6 +524,66 @@
 		and episd_year = #{episdYear}
 		and episd_ord = #{episdOrd}
 	</select>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.updatePtcptStatus
+      설  명 : 교육차수 참여자 교육취소처리 - 전체
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.12.11   김학규       최초생성
+ 	-->
+	<update id="updatePtcptStatus" parameterType="EBBEpisdDTO" >
+
+		UPDATE ep_edctn_ptcpt_mst SET /* EBBEpisdMapper.updatePtcptStatus */
+			stts_cd = 'EDU_STTS_CD06'
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		WHERE 1=1
+		  and edctn_seq = #{edctnSeq}
+		  and episd_year = #{episdYear}
+		  and episd_ord = #{episdOrd}
+	</update>
+	<!--
+	쿼리명 : EBBEpisdMapper.updatePtcptStatus
+	설  명 : 교육차수 참여자 차수변경을 통한 교육취소처리 - 개인
+	수정일     수정자       수정내용
+	==========   ======    ==============
+	2023.12.11   김학규       최초생성
+	-->
+	<update id="updatePtcptStatusInfo" parameterType="EBBPtcptDTO" >
+
+		UPDATE ep_edctn_ptcpt_mst SET /* EBBEpisdMapper.updatePtcptStatus */
+			stts_cd = 'EDU_STTS_CD06'
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		WHERE 1=1
+			and edctn_seq = #{edctnSeq}
+			and episd_year = #{episdYear}
+			and episd_ord = #{episdOrd}
+			and ptcpt_seq = #{ptcptSeq}
+	</update>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.updateEpisdStatus
+      설  명 : 교육차수 차수 종강(폐강처리)
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.12.11   김학규       최초생성
+ 	-->
+	<update id="updateEpisdStatus" parameterType="EBBEpisdDTO" >
+
+		UPDATE ed_edctn_episd_mst SET /* EBBEpisdMapper.updateEpisdStatus */
+			edctn_stts_cd = 'EDCTN_STTS_CD02'
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+			WHERE 1=1
+				and edctn_seq = #{edctnSeq}
+				and episd_year = #{episdYear}
+				and episd_ord = #{episdOrd}
+	</update>
 
 	<!--
          쿼리명 : EBBEpisdMapper.insertEpisd
@@ -1032,6 +1095,7 @@
 									when d.edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
 							end
 							when a.stts_cd = 'EDU_STTS_CD02' then '신청취소'
+						 when a.stts_cd = 'EDU_STTS_CD06' then '교육취소'
 					end
 
 			when d.edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
@@ -1163,13 +1227,45 @@
 			, episd_year
 			, episd_ord
 			, mem_seq
+			, ptcpt_bsnm_no
 			, gpc_id
 			from ep_edctn_ptcpt_mst
 			  WHERE 1=1
 				and edctn_seq = #{edctnSeq}
 				and episd_year = #{episdYear}
 				and episd_ord = #{episdOrd}
-				and mem_seq = #{memSeq}
+			    <choose>
+					<when test="memSeq != null and  memSeq != ''">
+						and mem_seq = #{memSeq}
+					</when>
+					<otherwise>
+						and ptcpt_seq = #{ptcptSeq}
+					</otherwise>
+				</choose>
+
+	</select>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectMemAtndcDtl
+      설  명 : 교육차수 - 개인별 출석부
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.12.08   김학규       최초생성
+ 	-->
+	<select id="selectMemAtndcDtl" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
+		SELECT
+
+			a.ptcpt_seq
+			 , a.mem_seq
+			 , (SELECT id FROM co_mem_mst WHERE mem_seq = a.mem_seq ) AS id
+			 , (SELECT name FROM co_mem_mst WHERE mem_seq = a.mem_seq ) AS name
+			 , b.edctn_dt
+			 , b.atndc_dtm
+			 , b.lvgrm_dtm
+			 , b.etc_nm
+		FROM ep_edctn_ptcpt_mst a, ep_edctn_atndc_dtl b
+		WHERE a.ptcpt_seq = #{ptcptSeq}
+		  AND a.ptcpt_seq = b.ptcpt_seq
 	</select>
 
 	<!--
@@ -1261,6 +1357,47 @@
 	</insert>
 
 	<!--
+		 쿼리명 : EBBEpisdMapper.insertEdctnLctrDtl
+		 설  명 : 교육차수 - 신청자  참여강의 상세 등록(온라인 강의)
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.11   김학규       최초생성
+	-->
+
+	<insert id="insertEdctnLctrDtl" parameterType="EBBEpisdDTO">
+		insert into /*EBBEpisdMapper.insertEdctnLctrDtl*/ ep_edctn_lctr_dtl (
+			ptcpt_seq
+			, lctr_seq
+			, edctn_seq
+			, episd_ord
+			, episd_year
+			, episd_seq
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		) VALUES
+			(
+			#{ptcptList.ptcptSeq}
+			, #{ptcptList.lctrSeq}
+			, #{ptcptList.edctnSeq}
+			, #{ptcptList.episdOrd}
+			, #{ptcptList.episdYear}
+			, #{ptcptList.episdSeq}
+			, #{ptcptList.regId}
+			, #{ptcptList.regIp}
+			, now()
+			, #{ptcptList.modId}
+			, #{ptcptList.modIp}
+			, now()
+			)
+	</insert>
+
+
+
+	<!--
              쿼리명 : EBBEpisdMapper.updateAtndcList
              설  명 : 교육차수관리 - 참여자 목록 출석부 수정
               수정일     수정자       수정내용
@@ -1269,32 +1406,53 @@
         -->
 	<update id="updateAtndcList" parameterType="EBBEpisdDTO" >
 		<foreach collection="ptcptList" item="ptcptList" index="index" separator=";" open="" close=";">
-			update ep_edctn_atndc_dtl set /* EBBEpisdMapper.updateAtndcList */
+			<choose>
+				<when test='ptcptList.deleteYn =="N"  '>
+					update ep_edctn_atndc_dtl set /* EBBEpisdMapper.updateAtndcList */
 
-			mod_id = #{ptcptList.modId}
-			, mod_ip = #{ptcptList.modIp}
-			, mod_dtm = now()
+					mod_id = #{ptcptList.modId}
+					, mod_ip = #{ptcptList.modIp}
+					, mod_dtm = now()
 
-			<if test="ptcptList.atndcDtm != null and ptcptList.atndcDtm != ''">
-				, atndc_dtm = #{ptcptList.atndcDtm}
-			</if>
-			<if test="ptcptList.lvgrmDtm != null and ptcptList.lvgrmDtm != ''">
-				, lvgrm_dtm = #{ptcptList.lvgrmDtm}
-			</if>
-			<if test="ptcptList.etcNm != null and ptcptList.etcNm != ''">
-				, etc_nm = #{ptcptList.etcNm}
-			</if>
+					<if test="ptcptList.atndcDtm != null and ptcptList.atndcDtm != ''">
+						, atndc_dtm = #{ptcptList.atndcDtm}
+					</if>
+					<if test="ptcptList.lvgrmDtm != null and ptcptList.lvgrmDtm != ''">
+						, lvgrm_dtm = #{ptcptList.lvgrmDtm}
+					</if>
 
-			where 1=1
-			and ptcpt_seq = #{ptcptList.ptcptSeq}
-			and edctn_dt = #{ptcptList.edctnDt}
+					, etc_nm = #{ptcptList.etcNm}
+
+
+					where 1=1
+					and ptcpt_seq = #{ptcptList.ptcptSeq}
+					and edctn_dt = #{ptcptList.edctnDt}
+				</when>
+				<otherwise>
+
+				</otherwise>
+
+			</choose>
+
 		</foreach>
 	</update>
 
 
-
-
-
+	<!--
+         쿼리명 : EBBEpisdMapper.deleteSurveyRspn
+         설  명 : 응답 삭제(초기화)
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.11   박준희       최초생성
+    -->
+	<delete id="deleteSurveyRspn" parameterType="EBBEpisdDTO">
+		delete /* EBBEpisdMapper.deleteSurveyRspn */
+		sv_rspn_mst , sv_sbjct_rspn_dtl , sv_mtlcc_rspn_dtl
+		from sv_rspn_mst
+		left join sv_sbjct_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_sbjct_rspn_dtl.srv_rspn_seq
+		left join sv_mtlcc_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_mtlcc_rspn_dtl.srv_rspn_seq
+		where sv_rspn_mst.srv_seq = #{srvSeq}
+	</delete>
 
 
 </mapper>

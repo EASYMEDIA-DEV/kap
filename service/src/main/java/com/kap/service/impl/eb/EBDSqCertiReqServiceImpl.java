@@ -2,25 +2,32 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.MPBEduDto;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdSqCertDTO;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
-import com.kap.service.COCommService;
-import com.kap.service.COFileService;
-import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.EBDSqCertiReqService;
+import com.kap.core.utility.COFileUtil;
+import com.kap.service.*;
 import com.kap.service.dao.eb.EBDSqCertiReqMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * SQ평가원 자격증 신청관리
@@ -38,12 +45,22 @@ import java.util.List;
 public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
     //Mapper
     private final EBDSqCertiReqMapper eBDSqCertiReqMapper;
-
     /** 공통 서비스 **/
     private final COCommService cOCommService;
-
     /* 파일 서비스 */
     private final COFileService cOFileService;
+    private final COFileUtil cOFileUtil;
+    // 파일 확장자
+    @Value("${app.file.imageExtns}")
+    private String imageExtns;
+    //파일 업로드 사이즈
+    @Value("${app.file.max-size}")
+    private int atchUploadMaxSize;
+    /* SQ 평가원 시퀀스 */
+    private final EgovIdGnrService sqCertiApplyIdgen;
+
+    /** 서비스 **/
+    public final EBACouseService eBACouseService;
 
     /**
      * 리스트 조회
@@ -73,7 +90,11 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
      * 자격증 상세
      */
     public EBGExamAppctnMstDTO selectExamAppctnMst(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception{
-        return eBDSqCertiReqMapper.selectExamAppctnMst(eBDSqCertiSearchDTO);
+        EBGExamAppctnMstDTO eBGExamAppctnMstDTO = eBDSqCertiReqMapper.selectExamAppctnMst(eBDSqCertiSearchDTO);
+        if(eBGExamAppctnMstDTO != null) {
+            eBGExamAppctnMstDTO.setFileList(cOFileService.getFileInfs(eBGExamAppctnMstDTO.getIdntfnPhotoFileSeq()));
+        }
+        return eBGExamAppctnMstDTO;
     }
 
     /**
@@ -139,6 +160,21 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
     }
 
     /**
+     * 사용자 MY-PAGE 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 보수 과목
+     */
+    public EBDSqCertiSearchDTO getEducationRepairList(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception {
+        COPaginationUtil page = new COPaginationUtil();
+        page.setCurrentPageNo(eBDSqCertiSearchDTO.getPageIndex());
+        page.setRecordCountPerPage(eBDSqCertiSearchDTO.getListRowSize());
+        page.setPageSize(eBDSqCertiSearchDTO.getPageRowSize());
+        eBDSqCertiSearchDTO.setFirstIndex( page.getFirstRecordIndex() );
+        eBDSqCertiSearchDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+        eBDSqCertiSearchDTO.setRepairTotalCount( eBDSqCertiReqMapper.selectEducationCompleteListCnt(eBDSqCertiSearchDTO));
+        eBDSqCertiSearchDTO.setEducationRepairList( eBDSqCertiReqMapper.selectEducationCompleteList(eBDSqCertiSearchDTO) );
+        return eBDSqCertiSearchDTO;
+    }
+
+    /**
      * 사용자 MY-PAGE 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 갯수
      */
     public int selectEducationCompleteListCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception{
@@ -150,5 +186,83 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
      */
     public int getPosibleSqCertiCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception{
         return eBDSqCertiReqMapper.getPosibleSqCertiCnt(eBDSqCertiSearchDTO);
+    }
+
+    /**
+     * SQ 평가원 자격증 신청
+     */
+    public int insert(EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception{
+        int respCnt = 0;
+        COUserDetailsDTO coUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        eBGExamAppctnMstDTO.setExamAppctnSeq(sqCertiApplyIdgen.getNextIntegerId());
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBGExamAppctnMstDTO.getFileList());
+        eBGExamAppctnMstDTO.setIdntfnPhotoFileSeq(fileSeqMap.get("idntfnPhotoFileSeq"));
+        //회원번호
+        eBGExamAppctnMstDTO.setMemSeq(coUserDetailsDTO.getSeq());
+        eBGExamAppctnMstDTO.setBsnmNo(coUserDetailsDTO.getBsnmNo());
+        //일반
+        eBGExamAppctnMstDTO.setExamCd("EBD_SQ_TP_D");
+        //발급 대기
+        eBGExamAppctnMstDTO.setIssueCd("EBD_SQ_R");
+        eBGExamAppctnMstDTO.setRegId(coUserDetailsDTO.getId());
+        eBGExamAppctnMstDTO.setRegIp(CONetworkUtil.getMyIPaddress(request));
+        respCnt = eBDSqCertiReqMapper.insert(eBGExamAppctnMstDTO);
+
+        EBDSqCertiSearchDTO eBDSqCertiSearchDTO= new EBDSqCertiSearchDTO();
+        eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT02");
+        eBDSqCertiSearchDTO.setMemSeq(coUserDetailsDTO.getSeq());
+        List<EBBEpisdSqCertDTO> list = eBDSqCertiReqMapper.getEducationCompleteLcnsCnnct(eBDSqCertiSearchDTO);
+        eBGExamAppctnMstDTO.setPtcptSeq( list.get(0).getPtcptSeq() );
+        eBDSqCertiReqMapper.insertPtcptMst(eBGExamAppctnMstDTO);
+        return respCnt;
+    }
+
+    /**
+     * SQ 평가원 자격증 변경
+     */
+    public int updateCerti(EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception{
+        int respCnt = 0;
+        //증명사진의 값이 꼭 있어야 변경이 가능
+        if(eBGExamAppctnMstDTO.getFileList() != null && eBGExamAppctnMstDTO.getFileList().size() > 0){
+            COUserDetailsDTO coUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            EBDSqCertiSearchDTO eBDSqCertiSearchDTO = new EBDSqCertiSearchDTO();
+            //자격증 조회(반려일경우는 발급대기로 변경)
+            eBDSqCertiSearchDTO.setMemSeq(coUserDetailsDTO.getSeq());
+            EBGExamAppctnMstDTO rtnAppctnMstDTO = this.selectExamAppctnMst(eBDSqCertiSearchDTO);
+            //파일 삭제
+            cOFileService.deleteFile(eBGExamAppctnMstDTO.getFileList());
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBGExamAppctnMstDTO.getFileList());
+            rtnAppctnMstDTO.setIdntfnPhotoFileSeq(fileSeqMap.get("idntfnPhotoFileSeq"));
+            //발급 대기
+            rtnAppctnMstDTO.setRegIp(CONetworkUtil.getMyIPaddress(request));
+            respCnt = eBDSqCertiReqMapper.updateCerti(rtnAppctnMstDTO);
+        }
+        return respCnt;
+    }
+
+    /**
+     * SQ 평가원 자격증 갱신
+     * 교육 과정 마스터
+     */
+    public int updateCertiValid(int edctnSeq) throws Exception{
+        int respCnt = 0;
+        EBDSqCertiSearchDTO eBDSqCertiSearchDTO = new EBDSqCertiSearchDTO();
+        eBDSqCertiSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+        EBGExamAppctnMstDTO eBGExamAppctnMstDTO = eBDSqCertiReqMapper.selectExamAppctnMst(eBDSqCertiSearchDTO);
+        if(eBGExamAppctnMstDTO != null) {
+            EBACouseDTO eBACouseDTO = new EBACouseDTO();
+            eBACouseDTO.setDetailsKey(String.valueOf(edctnSeq));
+            HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
+            EBACouseDTO ebaDto = (EBACouseDTO) rtnMap.get("rtnData");
+            if (ebaDto == null) {
+                throw new Exception("NO DATA");
+            }
+            log.error("ebaDto : {}", ebaDto);
+            if ("LCNS_CNNCT03".equals(ebaDto.getLcnsCnnctCd())) {
+                //자격증 갱신
+                eBDSqCertiReqMapper.updateCertiRenewal(eBGExamAppctnMstDTO);
+            }
+        }
+        return respCnt;
     }
 }

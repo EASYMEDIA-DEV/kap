@@ -4,6 +4,7 @@ package com.kap.service.dao.mp;
  import com.kap.core.dto.mp.mpa.MPAInqrDto;
  import com.kap.core.dto.mp.mpa.MPAUserDto;
  import com.kap.core.dto.MPPwdInitDto;
+ import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
  import org.apache.ibatis.annotations.Mapper;
 
  import java.util.List;
@@ -61,5 +62,15 @@ public interface MPAUserMapper {
     MPPwdInitDto selectMemDtl(MPPwdInitDto mpPwdInitDto);
 
     int updatePwdInit(MPPwdInitDto mpPwdInitDto);
+
+    void insertUser(MPAUserDto mpaUserDto);
+
+    int selectCiCnt(MPAUserDto mpaUserDto);
+
+    int selectcmpnMst(MPEPartsCompanyDTO mpePartsCompanyDTO);
+
+    void insertUserDtl(MPAUserDto mpaUserDto);
+
+    void insertUserCmpnRel(MPAUserDto mpaUserDto);
 
 }

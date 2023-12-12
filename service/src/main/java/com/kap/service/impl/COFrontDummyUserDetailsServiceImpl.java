@@ -28,8 +28,8 @@ public class COFrontDummyUserDetailsServiceImpl implements COUserDetailsService
 	public COUserDetailsDTO getAuthenticatedUser()
 	{
 		COUserDetailsDTO cOLoginUserDTO = COUserDetailsDTO.builder().build();
-		cOLoginUserDTO.setSeq(1);
-		cOLoginUserDTO.setId("hyumain1");
+		cOLoginUserDTO.setSeq(-20);
+		cOLoginUserDTO.setId("hyumain");
 		cOLoginUserDTO.setName("TBD");
 		cOLoginUserDTO.setAuthCd("CP");
 		cOLoginUserDTO.setLastLgnDtm("2023-11-16 00:00:00");
@@ -42,6 +42,7 @@ public class COFrontDummyUserDetailsServiceImpl implements COUserDetailsService
 		cOLoginUserDTO.setPstnNm("직위코드가 ED_TARGET04007일때 등록");
 		cOLoginUserDTO.setCmpnNm("이지미디어");
 		cOLoginUserDTO.setTelNo("020000000");
+		cOLoginUserDTO.setBsnmNo("000000000");
 		RequestContextHolder.getRequestAttributes().setAttribute("loginMap", cOLoginUserDTO, RequestAttributes.SCOPE_SESSION);
 		return cOLoginUserDTO;
 	}

@@ -61,6 +61,11 @@ public interface WBLSurveyMapper {
      */
     public int selectEpisdListCnt(WBLEpisdMstDTO wBLEpisdMstDTO) throws Exception;
 
+    /**
+     * 목록개수를 조회
+     */
+    public int selectCxstnEpisdListCnt(WBLEpisdMstDTO wBLEpisdMstDTO) throws Exception;
+
 
     /**
      * 설문 삭제

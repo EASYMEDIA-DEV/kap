@@ -92,6 +92,26 @@ public interface EBBEpisdMapper {
 	public EBBEpisdDTO selectEpisdChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 참여자 교육취소처리 - 차수내 전체인원
+	 */
+	public int updatePtcptStatus(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 참여자 교육취소처리 차수변경을 통한 변경 - 개인
+	 */
+	public int updatePtcptStatusInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+
+
+	/**
+	 * 교육차수 차수 종강(폐강처리)
+	 */
+	public int updateEpisdStatus(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+
+
+	/**
 	 * 교육차수 - 교육 참여자 목록 카운트
 	 */
 	public int selectEpisdPtcptListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
@@ -105,6 +125,11 @@ public interface EBBEpisdMapper {
 	 * 교육차수 - 교육 참여자 출석정보 목록
 	 */
 	public List<EBBPtcptDTO> selectPtcptAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 교육 참여자 개인별 출석정보
+	 */
+	public List<EBBPtcptDTO> selectMemAtndcDtl(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 
 	/**
@@ -159,6 +184,10 @@ public interface EBBEpisdMapper {
 	public int updateAtndcList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
+	/**
+	 * 교육차수 - 설문초기화
+	 */
+	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
 

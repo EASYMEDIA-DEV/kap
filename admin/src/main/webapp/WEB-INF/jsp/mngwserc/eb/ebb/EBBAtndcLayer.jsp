@@ -181,23 +181,23 @@
                         <table class="table table-hover table-striped" data-atndcSize="${fn:length(tableAtndcList) * 3}">
                             <thead>
                             <tr>
-                                <th class="text-center" rowspan="3">
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">
                                     <label class="checkbox-inline c-checkbox">
                                         <input type="checkbox" class="checkboxAll notRequired" title="전체선택" name="ptcptChk"/>
                                         <span class="ion-checkmark-round"></span>
                                     </label>
                                 </th>
-                                <th class="text-center" rowspan="3">번호</th>
-                                <th class="text-center" rowspan="3">아이디</th>
-                                <th class="text-center" rowspan="3">이름</th>
-                                <th class="text-center" rowspan="3">부품사명</th>
-                                <th class="text-center" rowspan="3">구분</th>
-                                <th class="text-center" rowspan="3">사업자등록번호</th>
-                                <th class="text-center" rowspan="3">휴대폰번호</th>
-                                <th class="text-center" rowspan="3">이메일</th>
-                                <th class="text-center" rowspan="3">교육신청일</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">번호</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">아이디</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">이름</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">부품사명</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">구분</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">사업자등록번호</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">휴대폰번호</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">이메일</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">교육신청일</th>
 
-                                <th class="text-center" colspan="${fn:length(tableAtndcList) * 3}">교육기간</th>
+                                <th class="text-center" style="vertical-align:middle;" colspan="${fn:length(tableAtndcList) * 3}">교육기간</th>
                                 <!--교육기간-->
                                 <!--동적으로 늘어나야됨-->
                                 <!--교육기간-->

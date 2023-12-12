@@ -87,4 +87,28 @@ public interface EBDSqCertiReqMapper {
      */
     public int getPosibleSqCertiCnt(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
 
+    /**
+     * SQ 평가원 자격증 신청
+     */
+    public int insert(EBGExamAppctnMstDTO eBGExamAppctnMstDTO);
+
+    /**
+     * SQ 평가원 자격증 신청
+     */
+    public int insertPtcptMst(EBGExamAppctnMstDTO eBGExamAppctnMstDTO);
+
+    /**
+     * 참여한 교육중 자격증연계코드의 값이 LCNS_CNNCT02이고 수료 완료인 경우
+     */
+    public List<EBBEpisdSqCertDTO> getEducationCompleteLcnsCnnct(EBDSqCertiSearchDTO eBDSqCertiSearchDTO);
+
+    /**
+     * 신청서 사진 변경
+     */
+    public int updateCerti(EBGExamAppctnMstDTO eBGExamAppctnMstDTO);
+
+    /**
+     * 자격증 만료 갱신
+     */
+    public int updateCertiRenewal(EBGExamAppctnMstDTO eBGExamAppctnMstDTO);
 }

@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
-<div class="cont-wrap" data-controller="controller/co/COLgnCtrl">
+<div id="wrap" class="member"><!-- 로그인, 회원가입 페이지 member 클래스 추가 -->
+    <div class="cont-wrap" data-controller="controller/co/COLgnCtrl">
     <div class="inner">
         <div class="sub-top-vis-area">
             <div class="page-tit-area t-align-center">
@@ -122,5 +122,6 @@
         </c:choose>
 
     </div>
+</div>
 </div>
 <!-- content 영역 end -->

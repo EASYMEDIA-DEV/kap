@@ -160,9 +160,28 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 	}
 
 	@Override
-	public int deleteEpisdList(WBLEpisdMstDTO wBLEpisdMstDTO) throws Exception {
+	public int deleteEpisdList(WBLEpisdMstDTO wBLEpisdMstDTO, HttpServletRequest request) throws Exception {
 
-		int	respCnt = wBLSurveyMapper.deleteEpisdList(wBLEpisdMstDTO);
+		int Cnt = 0;
+		int	respCnt = 0;
+
+		Cnt = wBLSurveyMapper.selectCxstnEpisdListCnt(wBLEpisdMstDTO);
+
+		if (Cnt > 0 ){		// 매핑된 업체가 있으면 설문 번호만 지움
+
+			String regId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+			String regIp = CONetworkUtil.getMyIPaddress(request);
+
+			wBLEpisdMstDTO.setRegIp(regIp);
+			wBLEpisdMstDTO.setRegId(regId);
+			wBLEpisdMstDTO.setModIp(regIp);
+			wBLEpisdMstDTO.setModId(regId);
+			wBLEpisdMstDTO.setSrvSeq(0);
+			wBLEpisdMstDTO.setCxstnCmpnEpisdSeq(Integer.parseInt(wBLEpisdMstDTO.getDetailsKey()));
+			respCnt = wBLSurveyMapper.updateEpisdMst( wBLEpisdMstDTO );
+		}else{
+			respCnt = wBLSurveyMapper.deleteEpisdList(wBLEpisdMstDTO);
+		}
 
 		return respCnt;
 

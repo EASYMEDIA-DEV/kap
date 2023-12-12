@@ -78,7 +78,7 @@ public class COFileUtil {
 		Tika tika = new Tika();
 		Calendar cal = Calendar.getInstance();
 		String folderType = "";
-		String firstFolder = "temp";
+		String firstFolder = "upload/temp";
 		if("EDITOR_".equals(KeyStr)){
 			firstFolder = "upload";
 		}
@@ -88,7 +88,7 @@ public class COFileUtil {
 		while (itr.hasNext()) {
 			Entry<String, MultipartFile> entry = itr.next();
 			file = entry.getValue();
-			if (file.getName().indexOf(formName) > -1)
+			if (file.getName().toLowerCase().indexOf(formName) > -1)
 			{
 				TikaInputStream tikaInputStream = TikaInputStream.get(file.getInputStream());
 				String mimeType = tika.detect(tikaInputStream);

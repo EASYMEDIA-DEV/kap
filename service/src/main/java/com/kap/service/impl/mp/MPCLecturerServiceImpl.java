@@ -102,4 +102,26 @@ public class MPCLecturerServiceImpl implements MPCLecturerService {
     public int deleteLecturer(MPCLecturerDTO mpcLecturerDTO) throws Exception {
         return mpcLecturerMapper.deleteLecturer(mpcLecturerDTO);
     }
+
+    /**
+     * 상생 사업 현황 목록을 조회한다.
+     */
+    public MPCLecturerDTO selectWinBusinessList(MPCLecturerDTO mpcLecturerDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(mpcLecturerDTO.getPageIndex());
+        page.setRecordCountPerPage(mpcLecturerDTO.getListRowSize());
+
+        page.setPageSize(mpcLecturerDTO.getPageRowSize());
+
+        mpcLecturerDTO.setFirstIndex(page.getFirstRecordIndex());
+        mpcLecturerDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        mpcLecturerDTO.setList(mpcLecturerMapper.selectWinBusinessList(mpcLecturerDTO));
+        mpcLecturerDTO.setTotalCount(mpcLecturerMapper.selectWinBusinessCnt(mpcLecturerDTO));
+
+        return mpcLecturerDTO;
+    }
+
 }

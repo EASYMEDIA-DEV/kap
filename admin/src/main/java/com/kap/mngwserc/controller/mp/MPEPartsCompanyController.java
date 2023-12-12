@@ -196,9 +196,9 @@ public class MPEPartsCompanyController {
     /**
      *  부품사 실적정보 조회 - 교육참여 연도별 개수 조회
      */
-    @PostMapping(value = "/selectEduList")
-    public String selectEduListAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap) throws Exception {
-        modelMap.addAttribute("eduList", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
+    @PostMapping(value = "/selectEduStatisticsCntList")
+    public String selectEduStatisticsCntListAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
+        modelMap.addAttribute("eduList", mpePartsCompanyService.selectEduStatisticsCntList(mpePartsCompanyDTO));
         return "mngwserc/mp/mpe/MPEPartsCompanyEduListAjax";
     }
 

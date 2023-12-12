@@ -82,7 +82,7 @@ public interface CBATechGuidanceMapper {
     public int updateTechGuidanceRsume(CBATechGuidanceUpdateDTO pCBATechGuidanceupUpdateDTO) throws Exception;
 
     /**
-     * 고객사 비율 상세 조회
+     * 컨설팅 진행 사항
      */
     public List<String> selectTechGuidanceRsume(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
@@ -129,6 +129,7 @@ public interface CBATechGuidanceMapper {
      * 거래처별 매출 비중 등록
      */
     public int insertTechcnstgDlyvInfo(HashMap cnstgDlyvMap);
+
     /**
      * 부품사 업종 상세 등록
      */

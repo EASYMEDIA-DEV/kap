@@ -51,7 +51,7 @@
                             </div>
                             <div class="pull-left ml-sm">
                                 <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                                <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
+                                <button type="button" class="btn btn-default btn-sm" id="btnLayerRefresh">초기화</button>
                             </div>
                         </div>
                     </fieldset>
@@ -79,7 +79,7 @@
                             <tr>
                                 <th class="text-center">
                                     <label class="checkbox-inline c-checkbox">
-                                        <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
+                                        <input type="checkbox" class="checkboxAll layerLecturerAll notRequired" title="전체선택" />
                                         <span class="ion-checkmark-round"></span>
                                     </label>
                                 </th>

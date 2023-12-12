@@ -6,6 +6,7 @@ import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
 import com.kap.service.COCodeService;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBDSqCertiReqService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -106,10 +107,18 @@ public class EBGSqCertiConfrimController {
             // 코드 set
             cdDtlList.add("EBD_SQ_TP");
             cdDtlList.add("EBD_SQ");
-            modelMap.addAttribute("rtnData", eBDSqCertiReqService.selectExamAppctnMst(eBDSqCertiSearchDTO));
+            EBGExamAppctnMstDTO rtnData = eBDSqCertiReqService.selectExamAppctnMst(eBDSqCertiSearchDTO);
+            modelMap.addAttribute("rtnData", rtnData);
             modelMap.addAttribute("rtnDataSqReqData", eBDSqCertiReqService.selectView(eBDSqCertiSearchDTO));
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            modelMap.addAttribute("rtnPrePrcsList", eBDSqCertiReqService.getPrePrcsList(eBDSqCertiSearchDTO));
+            eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT02");
+            eBDSqCertiSearchDTO.setMemSeq(rtnData.getMemSeq());
+            eBDSqCertiSearchDTO.setListRowSize(99999);
+            modelMap.addAttribute("rtnCompletePrcsList", eBDSqCertiReqService.getEducationCompleteList(eBDSqCertiSearchDTO));
+            eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT03");
+            eBDSqCertiSearchDTO.setMemSeq(rtnData.getMemSeq());
+            eBDSqCertiSearchDTO.setListRowSize(99999);
+            modelMap.addAttribute("rtnRepairPrcsList", eBDSqCertiReqService.getEducationRepairList(eBDSqCertiSearchDTO));
             modelMap.addAttribute("srchData", eBDSqCertiSearchDTO);
         }
         catch (Exception e)

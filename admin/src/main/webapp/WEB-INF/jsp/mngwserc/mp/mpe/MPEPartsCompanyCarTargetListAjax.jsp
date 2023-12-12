@@ -3,8 +3,8 @@
     <c:when test="${ not empty carTargetList.list}">
         <c:forEach var="list" items="${carTargetList.list}" varStatus="status">
             <tr>
-                <td class="text-center">지원결과값</td>
                 <td class="text-center">${list.cartTargetYear}</td>
+                <td class="text-center">지원결과값</td>
                 <td class="text-center">${list.prizePmt}</td>
                 <td class="text-center">${list.mrtsName}</td>
                 <td class="text-center">${list.pmtName}</td>

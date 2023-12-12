@@ -3,6 +3,7 @@ package com.kap.core.dto.wb.wbf;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import com.kap.core.dto.wb.*;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -33,7 +34,7 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     @Schema(title = "회차", example = "1")
     private String episd;
     @Schema(title = "사업년도", example = "YYYY")
-    private String appctnSeq;
+    private Integer appctnSeq;
     @Schema(title = "신청상태코드", example = "")
     private String appctnSttsCd;
     @Schema(title = "신청상태코드 명", example = "") /* 코드 값 nm */
@@ -74,21 +75,14 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     private String modId;
     @Schema(title = "수정일시", example = "yyyy-MM-dd")
     private String modDtm;
-
     @Schema(title = "담당위원코드", example = "")
     private String picCmssrSeq;
     @Schema(title = "담당위원이름", example = "")
     private String picName;
-
     @Schema(title = "공급업체명", example = "")
     private String offerCmpnCdNm;
     @Schema(title = "공급업체 사업자등록번호", example = "")
     private String offerBsnmNo;
-
-
-    @Schema(title = "검색 리스트", example = "")
-    List<WBFBRegisterSearchDTO> list;
-
 
     /* 검색 관련 코드 */
     @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")
@@ -97,4 +91,26 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
 
+    @Schema(title = "검색 리스트", example = "")
+    List<WBFBRegisterSearchDTO> list;
+
+    /* 회차, 신청자, 부품사 정보 */
+    WBFBRegisterDTO registerDtl;
+
+    /* 회차 옵션 DTO */
+    WBRoundMstDTO roundMstDTO;
+
+    List<String> episdList;
+
+    /* 상생신청지원금 상세 DTO */
+    List<WBSpprtDtlDTO> spprtDtlList;
+
+    /* 스마트 공장 상세 DTO */
+    List<WBFBRsumeTaskDtlDTO> rsumeTaskDtlList;
+
+    @Schema(title = "SQ 리스트 - 회사업종상세 테이블")
+    private List<WBCompanyDetailMstDTO> searchSqInfoList;
+
+    @Schema(title = "지급차수 List")
+    private List<WBOrderMstDto> orderList;
 }

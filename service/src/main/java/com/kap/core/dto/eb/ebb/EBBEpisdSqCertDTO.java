@@ -55,4 +55,15 @@ public class EBBEpisdSqCertDTO extends BaseDTO {
     private String cmptnDtm;
     @Schema(title = "자격증연계코드", example = "LCNS_CNNCT02")
     private String lcnsCnnctCd;
+
+    @Schema(title = "참여순번", example = "숫자")
+    private Integer ptcptSeq;
+    @Schema(title = "학습방식")
+    private String stduyMthdCdNm;
+    @Schema(title = "학습시간")
+    private String stduyDdCdNm;
+    @Schema(title = "학습시간")
+    private String stduyTimeCdNm;
+    @Schema(title = "수료여부")
+    private String cmptnYn;
 }

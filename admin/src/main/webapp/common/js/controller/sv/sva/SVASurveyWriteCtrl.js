@@ -162,6 +162,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .end()
                             .find(".answer").css("width","80%")
                             .end()
+                            .find(".addAnswer").show()
+                            .end()
+                            .find(".delAnswer").show()
+                            .end()
                             .find(".answerForm").show()
                             .end()
                             .find('.answerForm:not(:eq(0))').remove()
@@ -205,6 +209,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .find(".subNumber").hide()
                             .end()
                             .find(".answer").css("width","100%")
+                            .end()
+                            .find(".addAnswer").show()
+                            .end()
+                            .find(".delAnswer").show()
                             .end()
                             .find('.delQuestion').css("display","block")
                             .end()
@@ -558,14 +566,33 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 questionSet(typeCd);
             }
 
-            /* Editor Setting */
-            jQuery("textarea[id^='cntn']").each(function(){
-                cmmCtrl.setEditor({
-                    editor : jQuery(this).attr("id"),
-                    height : 400
-                });
-            });
 
+            if($("#posbChg").val()=='false'){
+                $('div *').find('input, textarea ,select').prop("disabled",true);
+                $('.addQuestion').hide();
+                $('.addSubQuestion').hide();
+                $('.delQuestion').hide();
+                $('.addAnswer').hide();
+                $('.delAnswer').hide();
+                $("input[name=expsYn]").prop("disabled",false);
+                /* Editor Setting */
+                jQuery("textarea[id^='cntn']").each(function(){
+                    cmmCtrl.setEditor({
+                        editor : jQuery(this).attr("id"),
+                        height : 400,
+                        readOnly : true
+                    });
+                });
+
+            }else{
+                /* Editor Setting */
+                jQuery("textarea[id^='cntn']").each(function(){
+                    cmmCtrl.setEditor({
+                        editor : jQuery(this).attr("id"),
+                        height : 400
+                    });
+                });
+            }
 
             // 유효성 검사
             $formObj.validation({

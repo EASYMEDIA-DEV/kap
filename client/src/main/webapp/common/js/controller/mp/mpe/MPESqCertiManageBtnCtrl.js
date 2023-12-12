@@ -12,14 +12,26 @@ define(["ezCtrl"], function(ezCtrl) {
     // set model
     ctrl.model = {
         id : {
-            // 페이징 처리
+            // 평가원 신청
             paymentInfoManagPopupBtn : {
                 event : {
                     click : function() {
                         cmmCtrl.frmAjax(function(data) {
-                            $(".paymentInfoManagPopup").html(data);
+                            $("#paymentInfoManagPopupFrm").html(data);
                             openPopup('paymentInfoManagPopup')
                         }, "./complete/apply", $formObj, "GET", "html");
+                    }
+                }
+            },
+            // 평가원 보기
+            paymentInfoViewPopupBtn : {
+                event : {
+                    click : function() {
+                        openPopup('paymentInfoViewPopupFrm');
+                        $(".paymentInfoViewPopupFrm").on("onModalOpenComplete", function(){
+                            flowTxtImgFn();
+                        })
+
                     }
                 }
             },

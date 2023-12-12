@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </fieldset>
-            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>선수과목 수료내역</h7>
+            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>필수과목 수료내역</h7>
             <hr />
             <fieldset class="mb-lg">
                 <!--VUE 영역 시작 -->
@@ -164,29 +164,31 @@
                         <tbody>
                             <c:choose>
                                 <c:when test="${ not empty rtnPrePrcsList}">
-                                    <c:forEach var="list" items="${rtnPrePrcsList}" varStatus="status">
-                                        <tr>
-                                            <td class="text-center" >${ list.ctgryCdNm }</td>
-                                            <td class="text-center" >${ list.nm }</td>
-                                            <td class="text-center" >${ list.stduyMthdCdNm }</td>
-                                            <td class="text-center" >${ list.stduyDdCdNm }일/${list.stduyTimeCdNm}시간</td>
-                                            <td class="text-center" >${ list.episdYear }</td>
-                                            <td class="text-center" >${ list.episdOrd }</td>
-                                            <td class="text-center" >${ list.cbsnCdNm }</td>
-                                            <td class="text-center" >
-                                                    ${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                                            </td>
-                                            <td class="text-center" >
-                                                <c:choose>
-                                                    <c:when test="${ list.cmptnYn eq 'Y' }">
-                                                        ${ kl:convertDate(list.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        -
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </td>
-                                        </tr>
+                                    <c:forEach var="list" items="${rtnPrePrcsList.educationList}" varStatus="status">
+                                        <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
+                                            <tr>
+                                                <td class="text-center" >${ fn:replace(list.ctgryCdNm, '|', '>') }</td>
+                                                <td class="text-center" >${ list.nm }</td>
+                                                <td class="text-center" >${ list.stduyMthdCdNm }</td>
+                                                <td class="text-center" >${ list.stduyDdCdNm }일/${list.stduyTimeCdNm}시간</td>
+                                                <td class="text-center" >${ list.episdYear }</td>
+                                                <td class="text-center" >${ list.episdOrd }</td>
+                                                <td class="text-center" >${ list.cbsnCdNm }</td>
+                                                <td class="text-center" >
+                                                        ${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                                </td>
+                                                <td class="text-center" >
+                                                    <c:choose>
+                                                        <c:when test="${ list.cmptnYn eq 'Y' }">
+                                                            ${ kl:convertDate(list.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                            </tr>
+                                       </c:if>
                                     </c:forEach>
                                 </c:when>
                                 <c:otherwise>
@@ -207,7 +209,7 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold">SQ평가원 구분<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm" name="examCd" ${ kl:decode(rtnDto.examCd, 'EBD_SQ_R', '', 'disabled') }>
+                        <select class="form-control input-sm" name="examCd" ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', 'disabled', '') }>
                             <c:forEach var="cdList" items="${cdDtlList.EBD_SQ_TP}" varStatus="status">
                                 <option value="${cdList.cd}" ${ kl:decode(rtnDto.examCd, cdList.cd, 'selected', '') }>
                                         ${cdList.cdNm}
@@ -221,7 +223,7 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold ">발급상태<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm issueCd" name="issueCd" ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_R', '', 'disabled') }>
+                        <select class="form-control input-sm issueCd" name="issueCd" ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', 'disabled', '') }>
                             <c:forEach var="cdList" items="${cdDtlList.EBD_SQ}" varStatus="status">
                                 <option value="${cdList.cd}" ${ kl:decode(rtnDto.issueCd, cdList.cd, 'selected', '') }>
                                         ${cdList.cdNm}
@@ -240,11 +242,11 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="last-child jdgmtNoContainer" style="display:none;">
+            <fieldset class="last-child jdgmtNoContainer" style="display:${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', '', 'none') };">
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold">자격증 번호<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="jdgmtNo" value="${ rtnDto.jdgmtNo }" maxlength="20" title="자격증 번호" placeholder="자격증 번호 입력"  ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_R', '', 'readonly') } />
+                        <input type="text" class="form-control input-sm" name="jdgmtNo" value="${ rtnDto.jdgmtNo }" maxlength="20" title="자격증 번호" placeholder="자격증 번호 입력"  ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', 'readonly', '') } />
                     </div>
                 </div>
             </fieldset>

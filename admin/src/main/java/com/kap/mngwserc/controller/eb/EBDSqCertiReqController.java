@@ -6,6 +6,7 @@ import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COCommService;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBDSqCertiReqService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -100,15 +101,19 @@ public class EBDSqCertiReqController {
     {
         try
         {
-
+            log.error("eBDSqCertiSearchDTO : {}", eBDSqCertiSearchDTO);
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("EBD_SQ_TP");
             cdDtlList.add("EBD_SQ");
-            modelMap.addAttribute("rtnData", eBDSqCertiReqService.selectView(eBDSqCertiSearchDTO));
+            EBDEdctnEdisdDTO rtnData = eBDSqCertiReqService.selectView(eBDSqCertiSearchDTO);
+            modelMap.addAttribute("rtnData", rtnData);
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            modelMap.addAttribute("rtnPrePrcsList", eBDSqCertiReqService.getPrePrcsList(eBDSqCertiSearchDTO));
+            eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT02");
+            eBDSqCertiSearchDTO.setMemSeq(rtnData.getMemSeq());
+            eBDSqCertiSearchDTO.setRecordCountPerPage(99999);
+            modelMap.addAttribute("rtnPrePrcsList", eBDSqCertiReqService.getEducationCompleteList(eBDSqCertiSearchDTO));
             modelMap.addAttribute("srchData", eBDSqCertiSearchDTO);
         }
         catch (Exception e)

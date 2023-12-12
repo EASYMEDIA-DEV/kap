@@ -18,9 +18,13 @@
         <td class="text-center">${ptcptList.hpNo}</td>
         <td class="text-center">${ptcptList.email}</td>
         <td class="text-center">${ empty ptcptList.regDtm ? '-' : kl:convertDate(ptcptList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>
-        <td class="text-center">${ptcptList.eduDtm}</td>
-        <td class="text-center">${ptcptList.eduStat}</td>
-        <td class="text-center">${ptcptList.eduAtndc}%</td>
+        <td class="text-center">
+            ${ empty ptcptList.eduDtm ? '-' : kl:convertDate(ptcptList.eduDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+        </td><!-- 교육신청일 -->
+        <td class="text-center">${ptcptList.eduStat}</td><!-- 교육상태 -->
+        <td class="text-center">
+            <a href="#" class="btnMemAtndc" data-ptcptSeq="${ptcptList.ptcptSeq}">${ptcptList.eduAtndc}%</a>
+        </td><!-- 출석 -->
         <td class="text-center  form-inline">
           <!--오프라인 평가인경우 입력창과 버튼출력, 일반 평가인경우 점수가 표기 -->
           <c:if test="${ptcptList.otsdExamPtcptYn eq 'Y'}">

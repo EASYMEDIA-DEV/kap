@@ -165,6 +165,11 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     private List<MPEPartsCompanyDTO> list;
 
     //부품사 실적정보
+
+    // 종합현황
+    @Schema(title = "교육사업 개수", example = "숫자")
+    private Integer eduTotalCnt;
+    
     //자동차부품산업대상 목록 조회
     @Schema(title = "수상년도", example = "숫자")
     private Integer cartTargetYear;
@@ -184,6 +189,21 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     @Schema(title = "수상자 직급", example = "")
     private String winnerPstnNm;
 
+    //교육사업 통계
+    @Schema(title = "품질아카데미 개수", example = "")
+    private String edu1;
+
+    @Schema(title = "제조/경영혁신 개수", example = "")
+    private String edu2;
+
+    @Schema(title = "세미나 개수", example = "")
+    private String edu3;
+
+    @Schema(title = "방문교육 개수", example = "")
+    private String edu4;
+
+    @Schema(title = "교육별 소계", example = "")
+    private String sumedu;
 
     // 검색조건
     // 검색 등록/수정 기간 시작일

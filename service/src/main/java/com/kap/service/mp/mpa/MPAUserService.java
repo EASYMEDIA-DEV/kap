@@ -4,6 +4,8 @@ import com.kap.core.dto.mp.mpa.MPAInqrDto;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.MPPwdInitDto;
 import com.kap.core.dto.mp.mpa.MPAAttctnDto;
+import com.kap.core.dto.mp.mpa.MPJoinDto;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -87,4 +89,13 @@ public interface MPAUserService {
      * @throws Exception
      */
     int updatePwdInit(MPPwdInitDto mpPwdInitDto) throws Exception;
+
+    /**
+     * 사용자 , 부품사 등록
+     * @param mpaUserDto
+     * @throws Exception
+     */
+    void insertUser(MPAUserDto mpaUserDto , MPEPartsCompanyDTO mpePartsCompanyDTO , MPJoinDto mpJoinDto) throws Exception;
+
+
 }

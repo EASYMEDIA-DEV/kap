@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -202,8 +203,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		ptcptList = eBBEpisdMapper.selectEpisdPtcptList(ebbDto);
 		int ptcptCnt = eBBEpisdMapper.selectEpisdPtcptListCnt(ebbDto);
 
-		System.out.println("@@ ptcptList = " + ptcptList.size());
-
+		dto.setFirstIndex( page.getFirstRecordIndex() );
+		dto.setRecordCountPerPage( page.getRecordCountPerPage() );
 		dto.setPtcptList(ptcptList);
 		dto.setTotalCount(ptcptCnt);
 
@@ -225,12 +226,21 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			dto.setPtcptList(ptcptList);
 		}
 
-
-
-
 		return dto;
 	}
 
+	/**
+	 * 교육차수 개인별 출석부를 호출한다.
+	 */
+	public List<EBBPtcptDTO> selectMemAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception
+	{
+		List<EBBPtcptDTO> memAtndcList = new ArrayList();
+
+		memAtndcList = eBBEpisdMapper.selectMemAtndcDtl(eBBPtcptDTO);
+
+
+		return memAtndcList;
+	}
 
 	/**
 	 * 교육차수를  등록한다.
@@ -392,6 +402,38 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	}
 
 	/**
+	 * 교육차수 강제 종강처리
+	 */
+	@Transactional
+	public int updateEpisdEndEdu(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+		int actCnt = 0;
+		try{
+
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			eBBEpisdDTO.setModId( cOUserDetailsDTO.getId() );
+			eBBEpisdDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+			//참여한 회원 전부 교육 취소상태로 변경 EDU_STTS_CD06
+			eBBEpisdMapper.updatePtcptStatus(eBBEpisdDTO);
+
+			//선택한 교육차수의 상태를 종강(폐강)으로 변경 EDCTN_STTS_CD02
+			eBBEpisdMapper.updateEpisdStatus(eBBEpisdDTO);
+
+
+			EBBEpisdDTO tempDto = new EBBEpisdDTO();
+			tempDto = eBBEpisdMapper.selectEpisdChk(eBBEpisdDTO);
+
+		}catch (Exception e){
+
+		}
+
+		return actCnt;
+	}
+
+
+
+	/**
 	 * 교육차수 신청자 정원체크
 	 */
 	@Transactional
@@ -439,12 +481,76 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			eBBEpisdMapper.insertPtcptDtl(eBBPtcptDTO);
 			setAtndcList(eBBPtcptDTO);//교육참여 출석 상세 목록을 등록한다.
+
 			eBBPtcptDTO.setRegStat("S");
 		}
 
 
 		return eBBPtcptDTO;
 
+	}
+
+	/*
+	 * 교육차수 차수변경
+	 * */
+	public int changeEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception{
+
+		int rtnCnt = 0;
+
+
+			//전달받은 회원번호로 반복문 돌림
+			//상태값이 F인경우 반환중지함?
+			List<EBBPtcptDTO> ptcptList = eBBEpisdDTO.getPtcptList();
+
+			for(EBBPtcptDTO ptcptDto : ptcptList){
+				System.out.println("@@@ ptcptDto = " + ptcptDto.getMemSeq());
+				System.out.println("@@@ ptcptDto = " + ptcptDto.getPtcptSeq());
+				//변경전 정보를 받아온다
+				EBBPtcptDTO prevPtcptDto = eBBEpisdMapper.selectPtcptDtl(ptcptDto);
+
+				//새 dto에 넣는다 차수정렬,차수년도, 회원번호, 사업자번호
+
+				EBBPtcptDTO nextPtcptDto = new EBBPtcptDTO();
+
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				nextPtcptDto.setRegId( cOUserDetailsDTO.getId() );
+				nextPtcptDto.setRegName( cOUserDetailsDTO.getName() );
+				nextPtcptDto.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+				nextPtcptDto.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+				nextPtcptDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				nextPtcptDto.setModId( cOUserDetailsDTO.getId() );
+				nextPtcptDto.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+
+
+				int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
+				nextPtcptDto.setPtcptSeq(firstEdctnPtcptIdgen);
+
+				nextPtcptDto.setEdctnSeq(eBBEpisdDTO.getEdctnSeq());//과정 순번
+				nextPtcptDto.setEpisdSeq(eBBEpisdDTO.getEpisdSeq());//회차순번
+
+				nextPtcptDto.setEpisdYear(eBBEpisdDTO.getEpisdYear());//신규 회차년도
+				nextPtcptDto.setEpisdOrd(eBBEpisdDTO.getEpisdOrd());//신규 회차정렬
+
+
+
+
+				nextPtcptDto.setMemSeq(prevPtcptDto.getMemSeq()); //회원번호
+				nextPtcptDto.setPtcptBsnmNo(prevPtcptDto.getPtcptBsnmNo());//회원 사업자번호
+
+				eBBEpisdMapper.insertPtcptDtl(nextPtcptDto);
+				setAtndcList(nextPtcptDto);//교육참여 출석 상세 목록을 등록한다.
+
+
+				//이전차수의 참여정보 내역 교육취소 처리
+				ptcptDto.setModId( cOUserDetailsDTO.getId() );
+				ptcptDto.setModIp( cOUserDetailsDTO.getLoginIp() );
+				eBBEpisdMapper.updatePtcptStatusInfo(ptcptDto);
+
+			}
+
+
+		return rtnCnt;
 	}
 
 
@@ -525,8 +631,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		List<EBBPtcptDTO> ptcptList= eBBEpisdDTO.getPtcptList();
 
 
-		for(EBBPtcptDTO tempDto : ptcptList){
+		List<EBBPtcptDTO> removeList = new ArrayList();
+		for(int i=0; i < ptcptList.size(); i ++){
 
+			EBBPtcptDTO tempDto = ptcptList.get(i);
+
+			int removeStack = 0;
 			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 			tempDto.setRegId( cOUserDetailsDTO.getId() );
 			tempDto.setRegName( cOUserDetailsDTO.getName() );
@@ -539,21 +649,29 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			if(tempDto.getAtndcHour() != null){
 				tempDto.setAtndcDtm(tempDto.getEdctnDt()+" "+tempDto.getAtndcHour());
 			}
+
 			if(tempDto.getLvgrmHour() != null){
 				tempDto.setLvgrmDtm(tempDto.getEdctnDt()+" "+tempDto.getLvgrmHour());
 			}
-		}
-		eBBEpisdDTO.setPtcptList(ptcptList);
 
-		rtnCnt = eBBEpisdMapper.updateAtndcList(eBBEpisdDTO);
+		}
+
+		if(ptcptList.size()>0){
+			eBBEpisdDTO.setPtcptList(ptcptList);
+			rtnCnt = eBBEpisdMapper.updateAtndcList(eBBEpisdDTO);
+		}
+
 		return rtnCnt;
 	}
 
 
-
-
-
-
-
-
+	/**
+	 * 설문초기화 삭제한다.
+	 */
+	@Transactional
+	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+		int rtnCnt = eBBEpisdMapper.deleteSurveyRspn(eBBEpisdDTO);
+		return rtnCnt;
+	}
 }

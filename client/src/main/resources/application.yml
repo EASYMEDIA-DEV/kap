@@ -28,7 +28,7 @@ spring:
 
 #강제 로그인 여부
 app:
-  is-login: false
+  is-login: true
   #사이트 구분
   site-gubun: front
   #발신자 이메일

@@ -65,7 +65,7 @@
                             <a class="btn-text-icon gray-txt" href="/pwd-find"><span>비밀번호 찾기</span></a>
                         </div>
                         <div class="btn-set">
-                            <a class="btn-text-icon" href="javascript:"><span>회원가입</span></a>
+                            <a class="btn-text-icon" href="/member/join"><span>회원가입</span></a>
                         </div>
                     </div>
                 </form>

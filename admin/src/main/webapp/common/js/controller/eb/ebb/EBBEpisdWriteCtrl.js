@@ -39,6 +39,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			$(".ptcptField").validation({});
 
+			$(".ptcptField").find(".btnMemAtndc").on("click", function(){
+				memAtndcLayer(this);
+
+			});
+
+
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "ptcptListContainer", "ptcptPagingContainer");
 
@@ -50,20 +56,35 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "GET", "html");
 
+	}
 
 
+	var memAtndcLayer = function(e){
+
+		var ptcptSeq =  $(e).data("ptcptseq");
+
+		//출석부 레이어 팝업 호출
+		$(".ebbMemAtndcSrchLayer").one('show.bs.modal', function() {
+			$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
+			$(this).find("button.tempBtn").trigger("click");
+
+			var modal = $(this);
+			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+		}).one('hidden.bs.modal', function() {
+			// Remove class for soft backdrop (if not will affect future modals)
+		}).one('choice', function(data, param) {
+			var obj = param;
+			$("#listContainer3").find("td").eq(0).text(obj.typeNm);
+			$("#listContainer3").find("td").eq(1).text(obj.titl);
+			$("#srvSeq").val(obj.seq);
+		}).modal();
 
 	}
 
 
-
-
-
-
-
-
 	//오프라인평가 체크시 실행
-	var setSelectBox = function(arg){
+	var setOtsdSelectBox = function(arg){
 
 		if($("input[name='otsdExamPtcptYn']").is(":checked")){
 			//alert("평가 선택");
@@ -71,11 +92,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$("#examSeq").addClass("notRequired");
 			$("input:radio[name='cmptnAutoYn']:radio[value='N']").prop("checked", true);//오프라인평가 진행시 수료자동화여부 무조건 수동 고정
 			$(".examNmForm").text("");
-
+			$(".jdgmtYn").find("table").addClass("table-disabled");
 		}else{
 			//alert("평가 선택 해제");
 			$("#examSeq").prop("disabled", true);
 			$("#examSeq").removeClass("notRequired");
+			$(".jdgmtYn").find("table").removeClass("table-disabled");
 		}
 
 	}
@@ -312,9 +334,181 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	}
 	}
 
+	//질문 번호 셋팅,점수 셋팅
+	var questionSet = function(){
+
+		$(".surveyList").each(function(){
+			var surveyTypeData = $(this).data('survey-type');
+			var cnt = 1;
+			var subCnt = 1;
+			$("."+surveyTypeData).each(function(index){                         // 질문, 하위질문 번호를 구분하고 순서를 셋팅
+				if ($(this).find('input[name=dpth]').val() == '2'){
+					$("."+surveyTypeData+"questionTxt:eq("+index+")").text("└질문"+eval(cnt-1)+"-"+subCnt);
+					subCnt = subCnt + 1;
+				}else{
+					$("."+surveyTypeData+"questionTxt:eq("+index+")").text("질문"+cnt);
+					cnt = cnt+1;
+					subCnt = 1;
+				}
+			});
+		});
+
+		var EDU01Score =0;
+		var EDU02Score =0;
+		var EDU03Score =0;
+		var EDU04Score =0;
+		var EDU05Score =0;
+		var totalScore = 0;
+		var EDU01Cnt =0;
+		var EDU02Cnt =0;
+		var EDU03Cnt =0;
+		var EDU04Cnt =0;
+		var EDU05Cnt =0;
+		var totalCnt = 0;
+
+		$("input[name=qstnCd]").each(function(index){
+
+			if ($(this).val()=="EDU01"){
+				EDU01Score = EDU01Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU01Cnt = EDU01Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU02"){
+				EDU02Score = EDU02Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU02Cnt = EDU02Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU03"){
+				EDU03Score = EDU03Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU03Cnt = EDU03Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU04"){
+				EDU04Score = EDU04Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU04Cnt = EDU04Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}else if ($(this).val()=="EDU05"){
+				EDU05Score = EDU05Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+				EDU05Cnt = EDU05Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+			}
+
+			totalScore = totalScore + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
+			totalCnt = totalCnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
+
+		})
+
+		if (EDU01Cnt == 0) {
+			$("#EDU01Score").text(0);
+		}else{
+			$("#EDU01Score").text((EDU01Score/EDU01Cnt).toFixed(1));
+		}
+		if (EDU02Cnt == 0) {
+			$("#EDU02Score").text(0);
+		}else{
+			$("#EDU02Score").text((EDU02Score/EDU02Cnt).toFixed(1));
+		}
+		if (EDU03Cnt == 0) {
+			$("#EDU03Score").text(0);
+		}else{
+			$("#EDU03Score").text((EDU03Score/EDU03Cnt).toFixed(1));
+		}
+		if (EDU04Cnt == 0) {
+			$("#EDU04Score").text(0);
+		}else{
+			$("#EDU04Score").text((EDU04Score/EDU04Cnt).toFixed(1));
+		}
+		if (EDU05Cnt == 0) {
+			$("#EDU05Score").text(0);
+		}else{
+			$("#EDU05Score").text((EDU05Score/EDU05Cnt).toFixed(1));
+		}
+		if (totalCnt == 0) {
+			$("#totalScore").text(0);
+		}else{
+			$("#totalScore").text((totalScore/totalCnt).toFixed(1));
+		}
+
+	}
+
 	// set model
 	ctrl.model = {
 		id : {
+			btn_end_edu : {
+				event : {
+					click : function() {
+						//강제 종강 클릭
+						var seqObj = {};
+						seqObj.edctnSeq = $("#edctnSeq").val();
+						seqObj.episdYear = $("#episdYear").val();
+						seqObj.episdOrd = $("#episdOrd").val();
+						seqObj.episdSeq = $("#episdSeq").val();
+
+
+						if(confirm("강제 종강처리하시겠습니까?")){
+							//현재 신청한 참여인원 데이터 전부 교육취소 상태로 바꿈, + 교육차수상태를 종강(폐강)으로 변경
+							cmmCtrl.jsonAjax(function(data){
+								if(data !=""){
+									var rtn = JSON.parse(data);
+									alert("저장되었습니다.");
+
+									location.href="./list"
+
+								}
+							}, "./endEdu", seqObj, "text");
+						}
+
+
+					}
+				}
+			},
+
+			changeEpisd : {
+				event : {
+					click : function() {
+						//차수변경 클릭
+						var seqObj = {};
+						seqObj.edctnSeq = $("#edctnSeq").val();
+						seqObj.episdYear = $("#episdYear").val();
+						seqObj.episdOrd = $("#episdOrd").val();
+						seqObj.episdSeq = $("#episdSeq").val();
+
+						//체크한 회원정보 전부 가져옴
+						var seqList = new Array();
+						$("#ptcptListContainer").find("input:checkbox[name='delValueList']:checked").each(function(){
+							seqList.push($(this).val());
+						});
+
+
+						if(seqList.length<1){
+							alert("회원을 선택해주세요.");
+							return false;
+
+						}
+						seqObj.memSeq = seqList;
+
+
+						//차수변경 레이어팝업 호출
+						$(".ebbChageEpisdLayer").one('show.bs.modal', function() {
+							$(".ebbChageEpisdLayer").find("#edctnSeq").val(seqObj.edctnSeq);
+							$(".ebbChageEpisdLayer").find("#episdSeq").val(seqObj.episdSeq);
+							$(".ebbChageEpisdLayer").find("#prev_episdYear").val(seqObj.episdYear);
+							$(".ebbChageEpisdLayer").find("#prev_episdOrd").val(seqObj.episdOrd);
+
+							$(".ebbChageEpisdLayer").find("#chan_memSeq").val(seqObj.memSeq);
+							//$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
+							//$(this).find("button.tempBtn").trigger("click");
+
+							var modal = $(this);
+							modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+						}).one('hidden.bs.modal', function() {
+							// Remove class for soft backdrop (if not will affect future modals)
+						}).one('choice', function(data, param) {
+							var obj = param;
+							$("#listContainer3").find("td").eq(0).text(obj.typeNm);
+							$("#listContainer3").find("td").eq(1).text(obj.titl);
+							$("#srvSeq").val(obj.seq);
+						}).modal();
+
+
+					}
+				}
+			},
+
+
 			btnSearch : {
 				event : {
 					click : function() {
@@ -734,6 +928,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					click : function(){
 						if(confirm("응답 내용이 즉시 삭제됩니다. 초기화 하시겠습니까?")){
 
+							var srvSeq = $("#srvSeq").val();
+
+							if (srvSeq!=''){
+								var svMst = {};
+								svMst.srvSeq = srvSeq;
+								svMst.edctnSeq = $("#edctnSeq").val();
+								svMst.episdYear = $("#episdYear").val();
+								svMst.episdSeq = $("#episdSeq").val();
+
+								cmmCtrl.jsonAjax(function(data){
+									var rtn = JSON.parse(data);
+									if(rtn.respCnt > -1 ){
+										alert('설문 응답이 초기화되었습니다.');
+										location.reload();
+									}
+								}, './deleteSurveyRspn', svMst, "text")
+
+							}
 						}
 					}
 				}
@@ -742,7 +954,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			otsdExamPtcptYn : {
 				event : {
 					change : function() {
-						setSelectBox(this);
+						setOtsdSelectBox(this);
 					}
 				}
 			},
@@ -769,7 +981,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			if($(".card-body").data("actiontype") == "update"){
 				search();
 			}
-
+			
+			//질문 번호 셋팅,점수 셋팅
+			questionSet();
 
 
 			//폼 데이터 처리

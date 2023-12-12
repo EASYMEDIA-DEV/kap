@@ -60,9 +60,13 @@ public interface SVASurveyService {
 	public SVASurveyMstInsertDTO selectSurveyDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
 
 	/**
-	 * 응답 상세
+	 * 응답 상세(상생)
 	 */
 	public SVASurveyMstInsertDTO selectSurveyTypeWinDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
 
+	/**
+	 * 응답 상세(교육)
+	 */
+	public SVASurveyMstInsertDTO selectSurveyTypeEduDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
 
 }

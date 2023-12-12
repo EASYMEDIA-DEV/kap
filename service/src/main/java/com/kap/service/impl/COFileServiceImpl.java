@@ -73,6 +73,31 @@ public class COFileServiceImpl implements COFileService {
     }
 
     /**
+     * cOFileUtil로 바로 저장된 파일 DB 저장
+     */
+    public Integer insertFiles(List<COFileDTO> cFileDTOList) throws Exception {
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        if(cFileDTOList.size() == 0){
+            return null;
+        }
+        int atchFileSeq = 0;
+        COFileDTO mstCOFileDTO = cFileDTOList.get(0);
+        mstCOFileDTO.setRegId(cOUserDetailsDTO.getId());
+        mstCOFileDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+        cOFileMapper.insertFileMaster(mstCOFileDTO);
+        atchFileSeq = mstCOFileDTO.getFileSeq();
+        for(int q = 0 ; q < cFileDTOList.size() ; q++){
+            cFileDTOList.get(q).setFileSeq(atchFileSeq);
+            cFileDTOList.get(q).setFileOrd(q);
+            cFileDTOList.get(q).setRegId(cOUserDetailsDTO.getId());
+            cFileDTOList.get(q).setRegIp(cOUserDetailsDTO.getLoginIp());
+            //파일 상세를 등록한다.
+            cOFileMapper.insertFileDetail(cFileDTOList.get(q));
+        }
+        return atchFileSeq;
+    }
+
+    /**
      * 여러 개의 파일에 대한 정보(속성 및 상세)를 등록한다.
      */
     public int insertFileInfs(List<COFileDTO> fvoList) throws Exception {
