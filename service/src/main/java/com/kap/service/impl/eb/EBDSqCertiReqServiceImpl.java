@@ -91,7 +91,9 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
      */
     public EBGExamAppctnMstDTO selectExamAppctnMst(EBDSqCertiSearchDTO eBDSqCertiSearchDTO) throws Exception{
         EBGExamAppctnMstDTO eBGExamAppctnMstDTO = eBDSqCertiReqMapper.selectExamAppctnMst(eBDSqCertiSearchDTO);
-        eBGExamAppctnMstDTO.setFileList( cOFileService.getFileInfs( eBGExamAppctnMstDTO.getIdntfnPhotoFileSeq() ) );
+        if(eBGExamAppctnMstDTO != null) {
+            eBGExamAppctnMstDTO.setFileList(cOFileService.getFileInfs(eBGExamAppctnMstDTO.getIdntfnPhotoFileSeq()));
+        }
         return eBGExamAppctnMstDTO;
     }
 

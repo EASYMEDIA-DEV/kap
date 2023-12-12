@@ -311,15 +311,15 @@
                                                                     <div class="infos">
                                                                         <dl class="info">
                                                                             <dt class="f-body2">자격증 번호</dt>
-                                                                            <dd class="f-body2">${ sqCertiMst.jdgmtNo }</dd>
+                                                                            <dd class="f-body2">${ empty sqCertiMst.jdgmtNo ? '-' : sqCertiMst.jdgmtNo }</dd>
                                                                         </dl>
                                                                         <dl class="info">
                                                                             <dt class="f-body2">생년월일</dt>
-                                                                            <dd class="f-body2">${ kl:convertDate(sqCertiMst.birth, 'yyyy-MM-dd', 'yyyy.MM.dd', '') }</dd>
+                                                                            <dd class="f-body2">${ empty sqCertiMst.birth ? '-' : kl:convertDate(sqCertiMst.birth, 'yyyy-MM-dd', 'yyyy.MM.dd', '') }</dd>
                                                                         </dl>
                                                                         <dl class="info">
                                                                             <dt class="f-body2">소속</dt>
-                                                                            <dd class="f-body2">${ sqCertiMst.cmpnNm }</dd>
+                                                                            <dd class="f-body2">${ empty sqCertiMst.cmpnNm ? '-' : sqCertiMst.cmpnNm }</dd>
                                                                         </dl>
                                                                         <dl class="info">
                                                                             <dt class="f-body2">업종</dt>
@@ -343,12 +343,12 @@
                                                                                         </c:forEach>
                                                                                     </c:when>
                                                                                 </c:choose>
-                                                                                    ${ cbsnCdNm }
+                                                                                    ${ empty cbsnCdNm ? '-' :  cbsnCdNm}
                                                                             </dd>
                                                                         </dl>
                                                                         <dl class="info">
                                                                             <dt class="f-body2">최초취득일</dt>
-                                                                            <dd class="f-body2">${ kl:convertDate(sqCertiMst.acqsnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</dd>
+                                                                            <dd class="f-body2">${ empty sqCertiMst.acqsnDtm ? '-' : kl:convertDate(sqCertiMst.acqsnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</dd>
                                                                         </dl>
                                                                         <dl class="info">
                                                                             <dt class="f-body2">유효기간</dt>
@@ -368,7 +368,8 @@
                                                                                                            data-max-size="${atchUploadMaxSize}"
                                                                                                            data-accept="${imageExtns}"
                                                                                                            data-value="${sqCertiMst.idntfnPhotoFileSeq}"
-                                                                                                           data-ord="${fileOrd}">
+                                                                                                           data-ord="${fileOrd}"
+                                                                                                            title="자격증 사진">
                                                                 <label class="btn-solid gray-bg" for="idntfnPhotoFileSeq">수정</label>
                                                             </div>
                                                             <button class="btn-solid small black-bg" type="submit"><span>변경 저장</span></button>

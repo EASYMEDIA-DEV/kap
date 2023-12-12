@@ -111,10 +111,12 @@ public class MPESqCertiController {
     {
         try
         {
+            //수료 교육
             eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT02");
             eBDSqCertiSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
             modelMap.addAttribute("rtnData", eBDSqCertiReqService.getEducationCompleteList(eBDSqCertiSearchDTO));
             modelMap.addAttribute("searchDto", eBDSqCertiSearchDTO);
+            modelMap.addAttribute("searchType", "complete");
         }
         catch (Exception e)
         {
@@ -130,10 +132,12 @@ public class MPESqCertiController {
     {
         try
         {
+            //보수 교육
             eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT03");
             eBDSqCertiSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
             modelMap.addAttribute("rtnData", eBDSqCertiReqService.getEducationCompleteList(eBDSqCertiSearchDTO));
             modelMap.addAttribute("searchDto", eBDSqCertiSearchDTO);
+            modelMap.addAttribute("searchType", "repair");
         }
         catch (Exception e)
         {
