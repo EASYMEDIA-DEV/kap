@@ -1449,8 +1449,8 @@
 		delete /* EBBEpisdMapper.deleteSurveyRspn */
 		sv_rspn_mst , sv_sbjct_rspn_dtl , sv_mtlcc_rspn_dtl
 		from sv_rspn_mst
-		inner join sv_sbjct_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_sbjct_rspn_dtl.srv_rspn_seq
-		inner join sv_mtlcc_rspn_dtl on sv_sbjct_rspn_dtl.srv_rspn_seq = sv_mtlcc_rspn_dtl.srv_rspn_seq
+		left join sv_sbjct_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_sbjct_rspn_dtl.srv_rspn_seq
+		left join sv_mtlcc_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_mtlcc_rspn_dtl.srv_rspn_seq
 		where sv_rspn_mst.srv_seq = #{srvSeq}
 	</delete>
 
