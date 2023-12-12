@@ -727,10 +727,10 @@
                                 <em class="ion-play mr-sm"></em>교육 참여자 목록 (총 <span id="ptcptListContainerTotCnt">0</span> 건)
                             </h6>
                             <!-- 현재 페이징 번호 -->
-                            <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+                            <input type="hidden" id="pageIndex" name="pageIndex" class="notRequired" value="${ rtnData.pageIndex }" />
                             <!-- 페이징 버튼 사이즈 -->
-                            <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
-                            <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+                            <input type="hidden" id="pageRowSize" name="pageRowSize" class="notRequired" value="${ rtnData.pageRowSize }" />
+                            <input type="hidden" id="listRowSize" name="listRowSize" class="notRequired" value="${ rtnData.listRowSize }" />
 
                             <div class="pull-right ml-sm">
                                 <select class="form-control input-sm listRowSizeContainer" >

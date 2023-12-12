@@ -40,9 +40,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						cmmCtrl.frmAjax(function(respObj) {
 
-							ctrl.obj.find(".memAtndcContainer").html(respObj);
+							ctrl.obj.find("#changeEpisdListContainer").html(respObj);
 
-						}, "/mngwserc/eb/ebb/memAtndcList", $formObj, "POST", "html");
+						}, "/mngwserc/eb/ebb/selectChangeList", $formObj, "POST", "html");
 					}
 				}
 			},
@@ -77,8 +77,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actionForm.edctnSeq = $("#edctnSeq").val();//교육순번
 						actionForm.episdSeq = $("#episdSeq").val();//회차순번
-						actionForm.episdYear =$("#next_episdYear").val();//연도
-						actionForm.episdOrd = $("#next_episdOrd").val();//회차정렬
+						actionForm.episdYear =$("#changeEpisdListContainer").find("input[name='delValueList']:checked").data("episdyear");//연도
+						actionForm.episdOrd =$("#changeEpisdListContainer").find("input[name='delValueList']:checked").data("episdord");//회차정렬
 
 
 						var memSeq = $("#chan_memSeq").val();

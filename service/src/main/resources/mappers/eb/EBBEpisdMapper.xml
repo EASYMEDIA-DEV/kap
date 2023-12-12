@@ -11,6 +11,7 @@
 	<select id="selectEpisdList" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
 		SELECT /*EBBEpisdMapper.selectEpisdList*/
 				edctn_seq
+				, episd_seq
 				, episd_year
 				, episd_ord
 				, parnt_seq
@@ -66,6 +67,7 @@
 				, exps_yn
 			FROM (SELECT
 				b.edctn_seq
+				, a.episd_seq
 				, b.ctgry_cd
 				, a.cbsn_cd
 				, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
@@ -128,7 +130,9 @@
 			count(*)
 		FROM (SELECT
 		b.edctn_seq
+		, a.episd_seq
 		, b.ctgry_cd
+		, a.cbsn_cd
 		, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
 		, (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
 		, b.nm
@@ -136,7 +140,7 @@
 		, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
 		, b.stduy_dd_cd
 		, (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) as stduy_dd_cd_nm
-		, stduy_time_cd
+		, b.stduy_time_cd
 		, (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm
 		, a.episd_year
 		, a.episd_ord
@@ -144,11 +148,12 @@
 		, a.accs_end_dtm
 		, a.edctn_strt_dtm
 		, a.edctn_end_dtm
+		, a.edctn_stts_cd
 		, (SELECT min(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS min_isttr_seq
 		, (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
 		, a.fxnum_cnt
 		, a.fxnum_impsb_yn
-		, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord) AS accs_cnt
+		, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
 		, a.rcrmt_mthd_cd
 		, (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
 		, a.pic_nm
@@ -156,13 +161,13 @@
 		, a.pic_tel_no
 		, a.place_seq
 		, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
-		, a.exps_yn
 		, a.reg_id
 		, (select name from co_adm_mst where id = a.reg_id) as reg_name
 		, a.reg_dtm
 		, a.mod_id
 		, (select name from co_adm_mst where id = a.reg_id) as mod_name
 		, a.mod_dtm
+		, a.exps_yn
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 		<include refid="selectLecturerEpisdListSql" />
@@ -269,6 +274,14 @@
 					</choose>
 				</foreach>
 				)
+			</if>
+
+			<!--차수변경일때만 사용-->
+			<if test='changeListYn == "Y" '>
+				and edctn_stts_cd = 'EDCTN_STTS_CD01'
+				and NOW() <![CDATA[<]]>  edctn_strt_dtm
+				and edctn_seq =#{edctnSeq}
+				and episd_seq != #{episdSeq}
 			</if>
 
 			<!--노출여부-->

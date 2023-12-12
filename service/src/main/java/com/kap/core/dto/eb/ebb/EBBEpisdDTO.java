@@ -277,6 +277,9 @@ public class EBBEpisdDTO extends BaseDTO {
     private String sqnm;
     private String sqscore;
 
+    @Schema(title = "차수변경용 차수목록 플래그", example = "Y/N")
+    @Builder.Default
+    private String changeListYn = "N";
 
     private String srchLayer;
     private List<EBBPtcptDTO> ptcptList;//참여자 목록

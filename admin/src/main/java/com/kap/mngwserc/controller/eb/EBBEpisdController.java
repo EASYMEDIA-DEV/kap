@@ -116,6 +116,29 @@ public class EBBEpisdController {
     }
 
     /**
+     * 교육회차관리 목록을 조회한다. (교육차수관리 차수변경용 버전)
+     */
+    @RequestMapping(value = "/selectChangeList")
+    public String getEpisdChangePageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            eBBEpisdDTO.setChangeListYn("Y");
+            modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
+            modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/eb/ebb/EBBEpisdChangeListAjax";
+    }
+
+    /**
      * 교육차수관리  상세를 조회한다.
      */
     @GetMapping(value="/write")
@@ -191,12 +214,15 @@ public class EBBEpisdController {
                 tableAtndcList.add(tableAtndcDto);
 
                 startDate = startDate.plusDays(1); // 다음 날짜로 이동
-                if(startDate.isAfter(endDate)){
-                    tableAtndcDto.setEdctnDt(String.valueOf(startDate));
-                    tableAtndcList.add(tableAtndcDto);
-                }
             }
             modelMap.addAttribute("tableAtndcList", tableAtndcList);
+            //교육 참여자 출석부 th부분 날짜 세팅용 종료
+
+
+                    for(EBBPtcptDTO aa : tableAtndcList){
+
+                        System.out.println("@@@ getEdctnDt = " + aa.getEdctnDt());
+                    }
 
 
 
@@ -218,7 +244,7 @@ public class EBBEpisdController {
 
 
 
-        //교육 참여자 출석부 th부분 날짜 세팅용 종료
+
 
 
 

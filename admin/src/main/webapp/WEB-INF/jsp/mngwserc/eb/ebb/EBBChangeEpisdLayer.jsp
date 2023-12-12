@@ -2,7 +2,7 @@
 <!-- 사유 레이어 팝업(Modal) -->
 <div class="modal fade ebbChageEpisdLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/eb/ebb/EBBChangeEpisdWriteCtrl">
     <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
-    <div class="modal-dialog modal-lg modal-center" role="document" style="width:20%;">
+    <div class="modal-dialog modal-lg modal-center" role="document" style="width:60%;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" >▣ 차수 변경
@@ -26,27 +26,43 @@
                 <!-- 레이어 여부 -->
                 <input type="hidden" name="srchLayer" value="Y" />
                 <div class="modal-body">
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">연도<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-6 form-inline">
-                                <select class="form-control input-sm wd-sm" name="episdYear" id="next_episdYear" title="년도" style="min-width: 100px;">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${episdCdList.CO_YEAR_CD}" varStatus="status">
-                                        <option value="${cdList.cd}" <c:if test="${rtnDto.episdYear eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
-                                    </c:forEach>
-                                </select>
+                        <!--VUE 영역 시작 -->
+                        <div class="table-responsive col-sm-12 p0 m0" id="vueList">
+                            <table class="table table-hover table-striped" >
+                                <thead>
+                                <tr>
+                                    <th class="text-center">
+                                        <label class="checkbox-inline c-checkbox">
+                                            <input type="checkbox" class="checkboxAll notRequired" title="전체선택" name="changeChk"/>
+                                            <span class="ion-checkmark-round"></span>
+                                        </label>
+                                    </th>
+                                    <th class="text-center">번호</th>
+                                    <th class="text-center">과정분류</th>
+                                    <th class="text-center">과정명</th>
+                                    <th class="text-center">년도</th>
+                                    <th class="text-center">회차</th>
+                                    <th class="text-center">정원</th>
+                                    <th class="text-center">신청자</th>
 
-                                <select class="form-control input-sm wd-sm" name="episdOrd" id="next_episdOrd" title="회차" style="min-width: 100px;">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${episdCdList.ROUND_CD}" varStatus="status">
-                                        <option value="${cdList.cd}" <c:if test="${rtnDto.episdOrd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
+                                    <th class="text-center">학습방식</th>
+                                    <th class="text-center">학습시간</th>
+
+                                    <th class="text-center">접수기간</th>
+                                    <th class="text-center">접수상태</th>
+                                    <th class="text-center">교육기간</th>
+                                    <th class="text-center">교육상태</th>
+
+                                </tr>
+
+                                </thead>
+                                <!-- 리스트 목록 결과 -->
+                                <tbody id="changeEpisdListContainer"/>
+                            </table>
+                            <!-- 페이징 버튼 -->
+                            <div id="pagingContainer"/>
                         </div>
-                    </fieldset>
-
+                        <!--리스트 종료 -->
 
 
                 </div>
