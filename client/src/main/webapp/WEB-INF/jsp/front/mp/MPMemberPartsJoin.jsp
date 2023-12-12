@@ -458,7 +458,7 @@
 
                                 <div class="row gubunTwo"  style="display: none;">
                                     <div class="th">
-                                        <p class="title f-head">SQ정보<span class="essential-mark color-sky">*</span></p>
+                                        <p class="title f-head">SQ정보</p>
                                     </div>
                                     <div class="td">
                                         <div class="data-line-w">

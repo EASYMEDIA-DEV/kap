@@ -72,14 +72,17 @@
         , MEM.BSC_ADDR
         , MEM.DTL_ADDR
         , MEM.CMSSR_TYPE_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_TYPE_CD ) AS CMSSR_TYPE_CD_NM
+        , CASE WHEN MEM.CMSSR_TYPE_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_TYPE_CD )
+              ELSE '' END as CMSSR_TYPE_CD_NM
         , MEM.CMSSR_CBSN_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_CBSN_CD ) AS CMSSR_CBSN_CD_NM
+        , CASE WHEN MEM.CMSSR_CBSN_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_CBSN_CD )
+              ELSE '' END as CMSSR_CBSN_CD_NM
         , MEM.CMSSR_WORK_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_WORK_CD ) AS CMSSR_WORK_CD_NM
+        , CASE WHEN MEM.CMSSR_WORK_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_WORK_CD )
+                ELSE '' END as CMSSR_WORK_CD_NM
         , CASE WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) > 0 THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MEM.REG_ID)
-        WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.REG_ID)
-        ELSE NULL END AS CMT_MOD_NAME
+               WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.REG_ID)
+                 ELSE NULL END AS CMT_MOD_NAME
         , MEM.BIRTH
         , MEM.CMSSR_MPLMN_DT
         , MEM.CMSSR_RSGNT_DT
@@ -110,7 +113,7 @@
         ON MEM.MEM_SEQ = CMPN_REL.MEM_SEQ
         AND MEM.WORK_BSNM_NO = CMPN_REL.BSNM_NO
         LEFT OUTER JOIN CP_CMPN_MST CMPN_MST
-        ON CMPN_MST.BSNM_NO  = CMPN_REL.BSNM_NO) AS MA
+        ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO) AS MA
         <include refid="selectUserListWhereSql" />
         ORDER BY MA.REG_DTM DESC
         <if test="excelYn != 'Y'.toString() ">
@@ -195,7 +198,7 @@
         ON mem.mem_seq = cmpn_rel.mem_seq
         AND mem.work_bsnm_no = cmpn_rel.bsnm_no
         LEFT OUTER JOIN cp_cmpn_mst cmpn_mst
-        ON cmpn_mst.bsnm_no = cmpn_rel.bsnm_no) AS ma
+         ON mem.work_bsnm_no  = cmpn_mst.bsnm_no) AS ma
         <include refid="selectUserListWhereSql" />
         order by ma.reg_dtm desc
         <if test="excelYn != 'Y'.toString() ">
@@ -234,11 +237,14 @@
         , mem.bsc_addr
         , mem.dtl_addr
         , mem.cmssr_type_cd
-        , (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd ) as cmssr_type_cd_nm
+        , case when mem.cmssr_type_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd )
+              else '' end as cmssr_type_cd_nm
         , mem.cmssr_cbsn_cd
-        , (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd ) as cmssr_cbsn_cd_nm
+        , case when mem.cmssr_cbsn_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd )
+        else '' end as cmssr_cbsn_cd_nm
         , mem.cmssr_work_cd
-        , (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd ) as cmssr_work_cd_nm
+        ,  case when mem.cmssr_work_cd != ''  then  (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd )
+        else '' end as cmssr_work_cd_nm
         , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
         when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
         else null end as cmt_mod_name
@@ -263,7 +269,7 @@
         on mem.mem_seq = cmpn_rel.mem_seq
         and mem.work_bsnm_no = cmpn_rel.bsnm_no
         left outer join cp_cmpn_mst cmpn_mst
-        on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no ) as ma
+        on mem.work_bsnm_no  =cmpn_mst.bsnm_no ) as ma
         <include refid="selectUserListWhereSql" />
     </select>
 
@@ -388,9 +394,12 @@
              , mem.mod_dtm
              , mem.last_lgn_dtm
              , mem.mem_cd
-             , (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd ) as cmssr_type_cd_nm
-             , (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd ) as cmssr_cbsn_cd_nm
-             , (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd ) as cmssr_work_cd_nm
+             , case when mem.cmssr_type_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd )
+                    else '' end as cmssr_type_cd_nm
+             , case when mem.cmssr_cbsn_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd )
+                    else '' end as cmssr_cbsn_cd_nm
+             ,  case when mem.cmssr_work_cd != ''  then  (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd )
+                     else '' end as cmssr_work_cd_nm
              , cmpn_mst.cmpn_nm
              , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
              , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
@@ -414,7 +423,8 @@
                                  on mem.mem_seq = cmpn_rel.mem_seq
                                      and mem.work_bsnm_no = cmpn_rel.bsnm_no
                  left outer join cp_cmpn_mst cmpn_mst
-                                 on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
+                                 ON mem.work_bsnm_no  = cmpn_mst.bsnm_no
+--                                  on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
         where mem.mem_seq = #{detailsKey}
     </select>
 
@@ -488,7 +498,8 @@
                                  on mem.mem_seq = cmpn_rel.mem_seq
                                      and mem.work_bsnm_no = cmpn_rel.bsnm_no
                  left outer join cp_cmpn_mst cmpn_mst
-                                 on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
+                                 ON mem.work_bsnm_no  = cmpn_mst.bsnm_no
+--                                  on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
         where mem.mem_seq = #{detailsKey}
     </select>
 

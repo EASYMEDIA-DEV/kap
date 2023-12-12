@@ -391,10 +391,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             alert(msgCtrl.getMsg("fail.mp.join.al_032"));
                             return false;
                         }
-                        if($("#deptDtlNm").val() == '') {
-                            alert(msgCtrl.getMsg("fail.mp.join.al_033"));
-                            return false;
-                        }
                         if($("#pstnCd").val() =='') {
                             alert(msgCtrl.getMsg("fail.mp.join.al_034"));
                             return false;
