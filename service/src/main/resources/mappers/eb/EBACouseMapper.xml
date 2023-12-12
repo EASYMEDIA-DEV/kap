@@ -9,35 +9,21 @@
         2023.11.02    김학규       최초생성
     -->
 	<select id="selectCouseList" parameterType="EBACouseDTO" resultType="EBACouseDTO">
-		SELECT /* EBACouseMapper.selectCouseList */
-			edctn_seq
-			, nm
-			, parnt_seq
-			, (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
-			, ctgry_cd
-			, ctgry_cd_nm
-			, stduy_mthd_cd
-			, stduy_mthd_cd_nm
-			, stduy_dd_cd
-			, stduy_dd_cd_nm
-			, stduy_time_cd
-			, stduy_time_cd_nm
-		    , jdgmt_yn
-			, reg_id
-			, reg_name
-			, reg_dtm
-			, mod_id
-			, mod_name
-		    , mod_dtm
-			, exps_yn
-		, reg_dtm
-			FROM
-			(select
+		select /* EBACouseMapper.selectCouseList */
 				edctn_seq
 				, nm
 				, a.ctgry_cd
 				, (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
 				, (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
+				, (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
+				WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
+				(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+				AND dpth =  2 AND dpth <![CDATA[>]]> 1) prnt_cd
+
+				, (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
+				WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
+				(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+				AND dpth <![CDATA[<]]> 4 AND dpth <![CDATA[>]]> 1) prnt_cd_nm
 				, stduy_mthd_cd
 				, (select cd_nm from co_code_mst where cd=a.stduy_mthd_cd) as stduy_mthd_cd_nm
 				, stduy_dd_cd
@@ -53,7 +39,7 @@
 				, exps_yn
 			 	, mod_dtm
 				from
-			ed_edctn_prcs_mst a) aa
+			ed_edctn_prcs_mst a
 
 		<include refid="selectCouseListwhereSql" />
 
@@ -175,37 +161,7 @@
      2023.11.02   김학규       최초생성
  	-->
 	<select id="selectCouseDtl" parameterType="EBACouseDTO" resultType="EBACouseDTO">
-		SELECT /* EBACouseMapper.selectCouseDtl */
-			edctn_seq
-			 , nm
-		     , smmry_nm
-			 , itrdc_cntn
-			 , stduy_trgt_cntn
-			 , parnt_seq
-			 , (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
-			 , ctgry_cd
-			 , ctgry_cd_nm
-			 , stduy_mthd_cd
-			 , stduy_mthd_cd_nm
-			 , cmptn_stnd_cd
-		     , cmptn_jdgmt_cd
-		     , jdgmt_yn
-			 , stduy_dd_cd
-			 , stduy_dd_cd_nm
-			 , stduy_time_cd
-			 , stduy_time_cd_nm
-		     , stduy_supls_nm
-			 , pc_stduy_cntn
-			 , mbl_stduy_cntn
-		     , lcns_cnnct_cd
-		     , thnl_file_seq
-			 , reg_id
-			 , reg_name
-			 , reg_dtm
-			 , mod_id
-			 , exps_yn
-		FROM
-			(select
+		select /* EBACouseMapper.selectCouseDtl */
 				 edctn_seq
 				  , nm
 			      , smmry_nm
@@ -214,6 +170,17 @@
 				  , a.ctgry_cd
 				  , (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
 				  , (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
+
+				  , (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
+					  	WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
+					  	(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+					  	AND dpth =  2 AND dpth <![CDATA[>]]> 1) prnt_cd
+
+				  , (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
+					 WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
+																											  (SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+					   AND dpth <![CDATA[<]]> 4 AND dpth <![CDATA[>]]> 1) prnt_cd_nm
+
 				  , stduy_mthd_cd
 				  , (select cd_nm from co_code_mst where cd=a.stduy_mthd_cd) as stduy_mthd_cd_nm
 				  , stduy_dd_cd
@@ -235,7 +202,7 @@
 				  , mod_id
 				  , exps_yn
 			 from
-				 ed_edctn_prcs_mst a) aa
+				 ed_edctn_prcs_mst a
 		where
 			edctn_seq = #{detailsKey}
 	</select>

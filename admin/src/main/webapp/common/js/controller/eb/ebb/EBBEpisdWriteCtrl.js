@@ -63,9 +63,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		var ptcptSeq =  $(e).data("ptcptseq");
 
+		/*console.log(ptcptSeq);*/
+
 		//출석부 레이어 팝업 호출
 		$(".ebbMemAtndcSrchLayer").one('show.bs.modal', function() {
-			$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
+			/*$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);*/
+			$(".ebbMemAtndcSrchLayer").find("#ptcptSeq").val(ptcptSeq);
+
 			$(this).find("button.tempBtn").trigger("click");
 
 			var modal = $(this);
@@ -458,8 +462,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			changeEpisd : {
 				event : {
 					click : function() {
+
+
 						//차수변경 클릭
 						var seqObj = {};
+
+
+
 						seqObj.edctnSeq = $("#edctnSeq").val();
 						seqObj.episdYear = $("#episdYear").val();
 						seqObj.episdOrd = $("#episdOrd").val();
@@ -477,31 +486,49 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 
 						}
-						seqObj.memSeq = seqList;
+
+						var resultFlag = true;
+						//선택한 참여자 목록중 교육취소가 하나라도 있으면 전부 취소
+						$("#ptcptListContainer").find("input:checkbox[name='delValueList']:checked").each(function(){
+
+							var eduStatus = $(this).closest("tr").find("td").eq(11).text();
+							if(eduStatus == "교육취소"){
+								alert("교육취소 상태인 참여자는 선택할수 없습니다.");
+								resultFlag = false;
+							}
+						});
 
 
-						//차수변경 레이어팝업 호출
-						$(".ebbChageEpisdLayer").one('show.bs.modal', function() {
-							$(".ebbChageEpisdLayer").find("#edctnSeq").val(seqObj.edctnSeq);
-							$(".ebbChageEpisdLayer").find("#episdSeq").val(seqObj.episdSeq);
-							$(".ebbChageEpisdLayer").find("#prev_episdYear").val(seqObj.episdYear);
-							$(".ebbChageEpisdLayer").find("#prev_episdOrd").val(seqObj.episdOrd);
+						if(resultFlag){
+							seqObj.memSeq = seqList;
 
-							$(".ebbChageEpisdLayer").find("#chan_memSeq").val(seqObj.memSeq);
-							//$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
-							//$(this).find("button.tempBtn").trigger("click");
 
-							var modal = $(this);
-							modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+							//차수변경 레이어팝업 호출
+							$(".ebbChageEpisdLayer").one('show.bs.modal', function() {
+								$(".ebbChageEpisdLayer").find("#edctnSeq").val(seqObj.edctnSeq);
+								$(".ebbChageEpisdLayer").find("#episdSeq").val(seqObj.episdSeq);
+								$(".ebbChageEpisdLayer").find("#prev_episdYear").val(seqObj.episdYear);
+								$(".ebbChageEpisdLayer").find("#prev_episdOrd").val(seqObj.episdOrd);
 
-						}).one('hidden.bs.modal', function() {
-							// Remove class for soft backdrop (if not will affect future modals)
-						}).one('choice', function(data, param) {
-							var obj = param;
-							$("#listContainer3").find("td").eq(0).text(obj.typeNm);
-							$("#listContainer3").find("td").eq(1).text(obj.titl);
-							$("#srvSeq").val(obj.seq);
-						}).modal();
+								$(".ebbChageEpisdLayer").find("#chan_memSeq").val(seqObj.memSeq);
+								//$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
+								$(this).find("button.tempBtn").trigger("click");
+
+								var modal = $(this);
+								modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+							}).one('hidden.bs.modal', function() {
+								// Remove class for soft backdrop (if not will affect future modals)
+							}).one('choice', function(data, param) {
+								var obj = param;
+								$("#listContainer3").find("td").eq(0).text(obj.typeNm);
+								$("#listContainer3").find("td").eq(1).text(obj.titl);
+								$("#srvSeq").val(obj.seq);
+							}).modal();
+						}
+
+
+
 
 
 					}
@@ -778,27 +805,40 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 								if(data.choiceCnt>1){
 									var trObjList = data.trObjList;
-									for(var i=0; i<trObjList.length; i++){
-										var exIsttr = $(".setIsttr").clone(true);
-										name = trObjList[i].name//이름
-										ffltnNm= trObjList[i].titl//소속
-										spclCntn= trObjList[i].spclCntn//약력(특이사항)
-										seq= trObjList[i].seq;//삭제(시퀀스값)
 
-										//다중등록할때 시퀀스 체크해서 중복값이면 패스함
-										var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 append목록에 추가하지 않는다.
-										$("#isttrContainer").find("tr").find("input:hidden").each(function(){
-											if($(this).val() == seq) passYn = true;
-										});
+									//현재 추가된 강사수
+									var nowRow = $("#isttrContainer").find("tr:not(.notIsttr):not(.setIsttr)").size();
 
-										if(!passYn){
-											exIsttr.find("td").eq(1).text(name);
-											exIsttr.find("td").eq(2).text(ffltnNm);
-											exIsttr.find("td").eq(3).text(spclCntn);
-											exIsttr.find("input:hidden").val(seq);
-											$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+									if((trObjList.length+nowRow)>6){
+										alert("강사는 6명까지만 입력 가능합니다.");
+									}else{
+
+										for(var i=0; i<trObjList.length; i++){
+											var exIsttr = $(".setIsttr").clone(true);
+											name = trObjList[i].name//이름
+											ffltnNm= trObjList[i].titl//소속
+											spclCntn= trObjList[i].spclCntn//약력(특이사항)
+											seq= trObjList[i].seq;//삭제(시퀀스값)
+
+											//다중등록할때 시퀀스 체크해서 중복값이면 패스함
+											var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 append목록에 추가하지 않는다.
+											$("#isttrContainer").find("tr").find("input:hidden").each(function(){
+												if($(this).val() == seq) passYn = true;
+											});
+
+											if(!passYn){
+												exIsttr.find("td").eq(1).text(name);
+												exIsttr.find("td").eq(2).text(ffltnNm);
+												exIsttr.find("td").eq(3).text(spclCntn);
+												exIsttr.find("input:hidden").val(seq);
+												$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+											}
 										}
+
 									}
+
+
+
 
 								}else{
 									var exIsttr = $(".setIsttr").clone(true);
@@ -819,10 +859,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 										exIsttr.find("td").eq(2).text(ffltnNm);
 										exIsttr.find("td").eq(3).text(spclCntn);
 										exIsttr.find("input:hidden").val(seq);
-										$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+
+
+										//현재 추가된 강사수
+										var nowRow = $("#isttrContainer").find("tr:not(.notIsttr):not(.setIsttr)").size();
+
+										//앞으로 추가될 강사수
+										var nextRow = 1;
+
+										if((nextRow+nowRow)>6){
+											alert("강사는 6명까지만 입력 가능합니다.");
+										}else{
+											$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+										}
+
+
+
 									}
 
 								}
+
+
+
 
 								$(".notIsttr").css("display", "none");
 								$(".setIsttr").css("display", "none");

@@ -503,8 +503,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			List<EBBPtcptDTO> ptcptList = eBBEpisdDTO.getPtcptList();
 
 			for(EBBPtcptDTO ptcptDto : ptcptList){
-				System.out.println("@@@ ptcptDto = " + ptcptDto.getMemSeq());
-				System.out.println("@@@ ptcptDto = " + ptcptDto.getPtcptSeq());
 				//변경전 정보를 받아온다
 				EBBPtcptDTO prevPtcptDto = eBBEpisdMapper.selectPtcptDtl(ptcptDto);
 
@@ -533,13 +531,18 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				nextPtcptDto.setEpisdOrd(eBBEpisdDTO.getEpisdOrd());//신규 회차정렬
 
 
-
+				eBBEpisdDTO.setDetailsKey(String.valueOf(eBBEpisdDTO.getEdctnSeq()));
+				EBBEpisdDTO targetDto = eBBEpisdMapper.selectEpisdDtl(eBBEpisdDTO);
 
 				nextPtcptDto.setMemSeq(prevPtcptDto.getMemSeq()); //회원번호
 				nextPtcptDto.setPtcptBsnmNo(prevPtcptDto.getPtcptBsnmNo());//회원 사업자번호
 
+				nextPtcptDto.setEdctnStrtDtm(targetDto.getEdctnStrtDtm());
+				nextPtcptDto.setEdctnEndDtm(targetDto.getEdctnEndDtm());
+
+
 				eBBEpisdMapper.insertPtcptDtl(nextPtcptDto);
-				setAtndcList(nextPtcptDto);//교육참여 출석 상세 목록을 등록한다.
+				this.setAtndcList(nextPtcptDto);//교육참여 출석 상세 목록을 등록한다.
 
 
 				//이전차수의 참여정보 내역 교육취소 처리
@@ -557,65 +560,64 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	/*
 	* 교육차수 신청자(참여) 출석 상세 생성
 	* */
-	public void setAtndcList(EBBPtcptDTO eBBPtcptDTO){
+	public void setAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception{
 
-		try {
-			String getEdctnStrtDtm= eBBPtcptDTO.getEdctnStrtDtm();
-			String getEdctnEndDtm= eBBPtcptDTO.getEdctnEndDtm();
+		String getEdctnStrtDtm= eBBPtcptDTO.getEdctnStrtDtm();
+		String getEdctnEndDtm= eBBPtcptDTO.getEdctnEndDtm();
 
-			// 시작 날짜와 종료 날짜 설정
-			String startDateString = getEdctnStrtDtm.substring(0, 10);
-			String endDateString = getEdctnEndDtm.substring(0, 10);
+		// 시작 날짜와 종료 날짜 설정
+		String startDateString = getEdctnStrtDtm.substring(0, 10);
+		String endDateString = getEdctnEndDtm.substring(0, 10);
 
-			// 시작 날짜와 종료 날짜를 LocalDate 객체로 변환
-			LocalDate startDate = LocalDate.parse(startDateString);
-			LocalDate endDate = LocalDate.parse(endDateString);
+		// 시작 날짜와 종료 날짜를 LocalDate 객체로 변환
+		LocalDate startDate = LocalDate.parse(startDateString);
+		LocalDate endDate = LocalDate.parse(endDateString);
 
-			// 날짜 출력 형식 지정
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		// 날짜 출력 형식 지정
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+		System.out.println("@@ startDate = " + startDate);
+		System.out.println("@@ endDate = " + endDate);
 
-			List<EBBPtcptDTO> atndcDtoList = new ArrayList<>();
-			// 반복문을 통해 날짜 출력
-			while (!startDate.isAfter(endDate)) {
-				EBBPtcptDTO atndcDto = new EBBPtcptDTO();
+		List<EBBPtcptDTO> atndcDtoList = new ArrayList<>();
+		// 반복문을 통해 날짜 출력
+		while (!startDate.isAfter(endDate)) {
+			EBBPtcptDTO atndcDto = new EBBPtcptDTO();
 
-				atndcDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
-				atndcDto.setEdctnDt(String.valueOf(startDate));
-				atndcDto.setAtndcDtm(null);
-				atndcDto.setLvgrmDtm(null);
-				atndcDto.setEtcNm(null);
-				atndcDto.setRegId(eBBPtcptDTO.getRegId());
-				atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
-				atndcDto.setModId(eBBPtcptDTO.getModId());
-				atndcDto.setModIp(eBBPtcptDTO.getModIp());
-				atndcDtoList.add(atndcDto);
+			atndcDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
+			atndcDto.setEdctnDt(String.valueOf(startDate));
+			atndcDto.setAtndcDtm(null);
+			atndcDto.setLvgrmDtm(null);
+			atndcDto.setEtcNm(null);
+			atndcDto.setRegId(eBBPtcptDTO.getRegId());
+			atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
+			atndcDto.setModId(eBBPtcptDTO.getModId());
+			atndcDto.setModIp(eBBPtcptDTO.getModIp());
+			atndcDtoList.add(atndcDto);
 
-				startDate = startDate.plusDays(1); // 다음 날짜로 이동
-			}
-			//마지막날은 while에서 안되서서 따로 추가해줌
-			if(startDate.isAfter(endDate)){
-				EBBPtcptDTO atndcDto = new EBBPtcptDTO();
+			System.out.println("@@@startDate = " + startDate);
 
-				atndcDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
-				atndcDto.setEdctnDt(String.valueOf(startDate));
-				atndcDto.setAtndcDtm(null);
-				atndcDto.setLvgrmDtm(null);
-				atndcDto.setEtcNm(null);
-				atndcDto.setRegId(eBBPtcptDTO.getRegId());
-				atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
-				atndcDto.setModId(eBBPtcptDTO.getModId());
-				atndcDto.setModIp(eBBPtcptDTO.getModIp());
-				atndcDto.setEdctnDt(String.valueOf(startDate));
-				atndcDtoList.add(atndcDto);
-			}
-
-			eBBPtcptDTO.setPtcptList(atndcDtoList);
-			eBBEpisdMapper.insertAtndcList(eBBPtcptDTO);
-		}catch (Exception e){
-			System.out.println("e = " + e);
+			startDate = startDate.plusDays(1); // 다음 날짜로 이동
 		}
+		//마지막날은 while에서 안되서서 따로 추가해줌
+		/*if(startDate.isAfter(endDate)){
+			EBBPtcptDTO atndcDto = new EBBPtcptDTO();
 
+			atndcDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
+			atndcDto.setEdctnDt(String.valueOf(startDate));
+			atndcDto.setAtndcDtm(null);
+			atndcDto.setLvgrmDtm(null);
+			atndcDto.setEtcNm(null);
+			atndcDto.setRegId(eBBPtcptDTO.getRegId());
+			atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
+			atndcDto.setModId(eBBPtcptDTO.getModId());
+			atndcDto.setModIp(eBBPtcptDTO.getModIp());
+			atndcDto.setEdctnDt(String.valueOf(startDate));
+			atndcDtoList.add(atndcDto);
+		}*/
+
+		eBBPtcptDTO.setPtcptList(atndcDtoList);
+		eBBEpisdMapper.insertAtndcList(eBBPtcptDTO);
 
 	}
 

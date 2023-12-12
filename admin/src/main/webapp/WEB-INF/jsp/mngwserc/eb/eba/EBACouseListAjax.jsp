@@ -14,11 +14,11 @@
 
           <c:choose>
             <c:when test="${ eBACouseDTO.srchLayer eq 'Y'}">
-              ${list.prntCdNm} > ${list.ctgryCdNm}
+              ${list.prntCdNm}
             </c:when>
             <c:otherwise>
               <a href="javascript:" class="listView" data-details-key="${list.edctnSeq}">
-                  ${list.prntCdNm} > ${list.ctgryCdNm}
+                  ${list.prntCdNm}
               </a>
             </c:otherwise>
           </c:choose>
