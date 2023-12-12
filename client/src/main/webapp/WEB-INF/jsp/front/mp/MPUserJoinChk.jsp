@@ -23,14 +23,14 @@
                         <p class="title f-title2">부품사회원 가입</p>
                         <p class="txt">재단에서 주관하는 각종 사업 및 교육 신청을 하실 수 있습니다.</p>
                         <div class="btn-wrap">
-                            <a class="btn-text-icon black-circle" href="/member/verification/cp"><span>가입하기</span></a>
+                            <a class="btn-text-icon black-circle" href="/member/verification/CP"><span>가입하기</span></a>
                         </div>
                     </div>
                     <div class="btn-list">
                         <p class="title f-title2">일반회원 가입</p>
                         <p class="txt">부품사회원이 아닌 일반 대중을 위한 서비스를 이용하실 수 있습니다.</p>
                         <div class="btn-wrap">
-                            <a class="btn-text-icon black-circle" href="/member/verification/co"><span>가입하기</span></a>
+                            <a class="btn-text-icon black-circle" href="/member/verification/CO"><span>가입하기</span></a>
                         </div>
                     </div>
                 </div>

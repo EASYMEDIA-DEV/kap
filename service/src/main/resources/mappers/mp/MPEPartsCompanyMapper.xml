@@ -74,6 +74,7 @@
              , A.CMPN_NFRML_NM
              , A.CMPN_CD
              , A.CTGRY_CD
+             , (select cd_nm from co_code_mst where  cd=A.CTGRY_CD ) as CTGRY_NM
              , A.SIZE_CD
              , A.STBSM_DT
              , A.TEL_NO

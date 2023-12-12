@@ -13,7 +13,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     //아이디 중복확인 여부
     let dupIdChk = false;
     var $formObj = $("#formUserSubmit");
-
     let timeSecond =""; // 남은 시간 변수
     var intervalVar = "";
 
@@ -98,10 +97,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         $("#ntfySmsRcvYn").val($("#marketingChk1").prop('checked') ? 'Y' : 'N'); // 마케팅 이메일
                         $("#ntfyEmailRcvYn").val($("#marketingChk2").prop('checked') ? 'Y' : 'N'); // 마케팅 SMS
                         let targetPage;
-                        if($("#param1").val() == 'co') {
+                        if($("#param1").val() == 'CO') {
                              targetPage = "/member/mp-user-join";
-                        } else if($("#param1").val() == 'cp') {
-                            targetPage = "/member/mp-user-join";
+                        } else if($("#param1").val() == 'CP') {
+                            targetPage = "/member/mp-member-parts-join";
                         }
                         document.getElementById("formNextOne").action = targetPage; // form의 action 속성 변경
                         document.getElementById("formNextOne").submit(); // form 제출
@@ -184,6 +183,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         }
 
                         $("#email").val($("#email-first").val()+"@"+$("#emailAddr").val());
+                        $("#email-auth").val($("#email-first").val()+"@"+$("#emailAddr").val());
 
 
                         var $formObj5 = $("#formUserSubmit");
@@ -193,7 +193,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 $("#emailAuthChk").show();
                                 $(".for-status-chk-email").show();
                                 $(".authName").text("재인증");
-                                timeSecond = 70;
+                                timeSecond = 300;
                                 $('#timer span').text(getTimeString(timeSecond));
                                 cmmCtrl.frmAjax(function (data){
                                     secretEmailAuth = data;
@@ -289,6 +289,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            pstnCd : {
+                    event : {
+                        change : function() {
+                            $(".pstnNm").val('');
+                            if($("#pstnCd").val()!='MEM_CD01007') {
+                                $(".pstnNmDis").hide();
+                            } else {
+                                $(".pstnNmDis").show();
+                            }
+                        }
+                    }
+            },
 
         },
         classname : {
@@ -368,10 +380,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         return false;
                     }
 
-
                     if(!EmailChk) {
                         alert(msgCtrl.getMsg("fail.mp.join.al_015"));
                         return false;
+                    }
+
+                    if($("#memCd").val() =='CP') {
+                        if($("#deptCd").val() == '') {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_032"));
+                            return false;
+                        }
+                        if($("#deptDtlNm").val() == '') {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_033"));
+                            return false;
+                        }
+                        if($("#pstnCd").val() =='') {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_034"));
+                            return false;
+                        }
+                        if($("#pstnCd").val() =='MEM_CD01007' && $(".pstnNm").val() =='') {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_035"));
+                            return false;
+                        }
                     }
 
                     $("#email").val($("#email-first").val()+"@"+$("#emailAddr").val());
