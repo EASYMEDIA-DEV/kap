@@ -1202,7 +1202,7 @@
                                             </span>
                                     </div>
                                 </div>
-                                <label class="col-sm-1 control-label">컨설팅 현황${rsumeList}</label>
+                                <label class="col-sm-1 control-label">컨설팅 현황</label>
                                 <div class="col-sm-2">
                                     <select class="form-control input-sm listRowSizeContainer notRequired" name="guidePscndCd" id="guidePscndCd" >
                                         <option value="">선택</option>
