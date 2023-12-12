@@ -159,7 +159,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star text-danger"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" maxlength="50" placeholder="회사 전화번호 입력" style="width: 200px;"/>
+                        <input type="text" class="form-control input-sm" id="cmpnTelNo" name="cmpnTelNo" value="${rtnInfo.cmpnTelNo}" title="회사 전화번호" maxlength="50" placeholder="회사 전화번호 입력" style="width: 200px;"/>
                     </div>
                     <label class="col-sm-1 control-label">사업자등록번호<span class="star text-danger"> *</span></label>
                     <div class="col-sm-5">
@@ -778,7 +778,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${ not empty rtnInfo.modName }">
-                                        ${ rtnInfo.modName }
+                                        ${ rtnInfo.modName }(${ rtnInfo.modId })
                                     </c:when>
                                     <c:otherwise>-</c:otherwise>
                                 </c:choose>
@@ -801,5 +801,5 @@
     </div>
 </div>
 
-<jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include><!--회원검색-->
 <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpc/MPCLecturerSrchLayer.jsp"></jsp:include><!--강사검색-->

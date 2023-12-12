@@ -3,7 +3,6 @@ package com.kap.service.impl.eb;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
-import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -144,22 +143,9 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
             ebcVisitEduDTO.setVstRsltSeq(edctnVstRsltSeqIdgen.getNextIntegerId());
             ebcVisitEduMapper.insertEdctnVstRslt(ebcVisitEduDTO);
         }
-        //신청자 정보 수정
-        MPAUserDto mPAUserDto = new MPAUserDto();
-        mPAUserDto.setDetailsKey(String.valueOf(ebcVisitEduDTO.getMemSeq()));
-        mPAUserDto = mpaUserService.selectUserDtlTab(mPAUserDto);
 
-        if(mPAUserDto != null){
-            mPAUserDto.setRegId(ebcVisitEduDTO.getRegId());
-            mPAUserDto.setRegIp(ebcVisitEduDTO.getRegIp());
-            mPAUserDto.setMemSeq(Integer.valueOf(ebcVisitEduDTO.getMemSeq()));
-            mPAUserDto.setDeptCd(ebcVisitEduDTO.getDeptCd());
-            mPAUserDto.setDeptDtlNm(ebcVisitEduDTO.getDeptDtlNm());
-            mPAUserDto.setPstnCd(ebcVisitEduDTO.getPstnCd());
-            mPAUserDto.setTelNo(ebcVisitEduDTO.getTelNo());
-            mPAUserDto.setHpNo(ebcVisitEduDTO.getHpNo());
-            mpaUserService.updateUserDtl(mPAUserDto);
-        }
+        //신청자 정보 수정
+        ebcVisitEduMapper.updatePartsMemInfo(ebcVisitEduDTO);
 
         //부품사 정보 수정
         MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
@@ -168,7 +154,7 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         mpePartsCompanyDTO.setCtgryCd(ebcVisitEduDTO.getCtgryCd());
         mpePartsCompanyDTO.setSizeCd(ebcVisitEduDTO.getSizeCd());
         mpePartsCompanyDTO.setStbsmDt(ebcVisitEduDTO.getStbsmDt());
-        mpePartsCompanyDTO.setTelNo(ebcVisitEduDTO.getTelNo());
+        mpePartsCompanyDTO.setTelNo(ebcVisitEduDTO.getCmpnTelNo());
         mpePartsCompanyDTO.setZipcode(ebcVisitEduDTO.getZipcode());
         mpePartsCompanyDTO.setBscAddr(ebcVisitEduDTO.getBscAddr());
         mpePartsCompanyDTO.setDtlAddr(ebcVisitEduDTO.getDtlAddr());
@@ -217,9 +203,12 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
             ebcVisitEduDTO.setRsltOptnSeq(edctnVstOptnSeqIdgen.getNextIntegerId());
             ebcVisitEduDTO.setVstSeq(dto.getVstSeq());
-            ebcVisitEduDTO.setVstSeq(dto.getVstSeq());
+            if(dto.getVstRsltSeq() == null) {
+                ebcVisitEduDTO.setVstRsltSeq(ebcVisitEduDTO.getVstRsltSeq());
+            } else {
+                ebcVisitEduDTO.setVstRsltSeq(dto.getVstRsltSeq());
+            }
             ebcVisitEduDTO.setMemSeq(dto.getMemSeq());
-            ebcVisitEduDTO.setVstRsltSeq(dto.getVstRsltSeq());
             ebcVisitEduDTO.setRsltTypeCd(dto.getRsltTypeCd());
             ebcVisitEduDTO.setOptnCd(dto.getOptnCd());
             ebcVisitEduDTO.setRsltVal(dto.getRsltVal());

@@ -134,11 +134,26 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     @Schema(title = "인증주관사")
     private String  crtfnCmpnNm;
 
+    // 담당 임원
+    @Schema(title = "담당 임원 시퀀스")
+    private String picSeq;
+    @Schema(title = "담당 임원 이름")
+    private String picName;
+    @Schema(title = "담당 임원 메일")
+    private String picEmail;
+    @Schema(title = "담당 임원 부서")
+    private String picDeptNm;
+    @Schema(title = "담당 임원 직급")
+    private String picPstnNm;
+    @Schema(title = "담당 임원 휴대폰 번호")
+    private String cmssrHpNo;
+    @Schema(title = "담당 임원 회사 번호")
+    private String cmssrCmpnTelNo;
+
     private List<MPEPartsCompanyDTO> list;
 
     // SQ 리스트
     private List<String> sqInfoList;
-
     // SQ 리스트1
     private List<String> sqInfoList1;
     // SQ 리스트2
@@ -154,6 +169,8 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String appctnDt;
     @Schema(title = "회사규모코드")
     private String sizeCd;
+    @Schema(title = "부품사 규모")
+    private String cpSize;
 
     @Schema(title = "회사주소동일여부")
     private String cmpnAddrSameYn;
@@ -197,10 +214,13 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String appctnTypeCd;
     @Schema(title = "요청내용, 신청사항")
     private String rqstCntn;
+    @Schema(title = "홈페이지 url")
+    private String hmpgeUrl;
 
     @Schema(title = "관리자 메모")
     private String admMemo;
-
+    @Schema(title = "컨설팅 현황 코드")
+    private String cnstgPscndCd;
     @Schema(title = "소개파일순번")
     private Integer itrdcFileSeq;
     @Schema(title = "개선파일순번")
@@ -208,10 +228,25 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     @Schema(title = "파일순번")
     private Integer fileSeq;
 
+    @Schema(title = "해외의존율")
+    private Integer frgnDpndnRate;
+    @Schema(title = "전체 매출액")
+    private Integer ttlSlsPmt;
+    @Schema(title = "국내 매출액")
+    private Integer dmstcSlsPmt;
+    @Schema(title = "해외 매출액")
+    private Integer frgnSlsPmt;
+    @Schema(title = "자동차부품 매출액")
+    private Integer carPartSlsPmt;
+    @Schema(title = "자동차부품 외 매출액")
+    private Integer carPartXcludSlsPmt;
+
     private List<String> dlvryCmpnList;
     private List<String> dpndCmpnList;
     private List<String> rsumeList;
     private List<String> appctnTypeList;
+    private List<String> mngConsCdList;
+    private List<String> ctgryCdList;
 
     // 사업진행 상세
     @Schema(title = "불량개선이전율")
@@ -230,9 +265,14 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String srvStrtDtm;
     @Schema(title = "설문종료일자")
     private String srvEndDtm;
-    @Schema(title = "설문종료일자")
+    @Schema(title = "설문 타입")
     private String typeNm;
+    @Schema(title = "신청분야코드")
+    private String appctnFldCd;
+    @Schema(title = "진행상태코드")
+    private String resumeSttsCd;
 
     // 이관 이력 리스트
     List<CBBManageConsultInsertDTO> trsfGuidanceList;
+    List<CBBManageConsultInsertDTO> PicInfoLIst;
 }

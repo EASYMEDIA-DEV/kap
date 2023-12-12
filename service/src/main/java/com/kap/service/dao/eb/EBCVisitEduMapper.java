@@ -62,6 +62,11 @@ public interface EBCVisitEduMapper {
 	public int insertEdctnVstRslt(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
 	/**
+	 * 방문교육 신청자 정보를 수정
+	 */
+	public int updatePartsMemInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+	/**
 	 * 방문교육 강사관계 등록
 	 */
 	public int insertIsttrRel(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
