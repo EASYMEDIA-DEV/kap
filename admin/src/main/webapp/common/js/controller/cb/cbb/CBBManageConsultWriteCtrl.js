@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
     // set controller name
     var exports = {
-        controller: "controller/cb/cba/CBATechGuidanceWriteCtrl"
+        controller: "controller/cb/cbb/CBBManageConsultWriteCtrl"
     };
 
     var $formObj = jQuery("#frmData");
@@ -40,7 +40,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
 
-        }, "/mngwserc/cb/cba/trsfList", $formObj, "GET", "html");
+        }, "/mngwserc/cb/cbb/trsfList", $formObj, "GET", "html");
     }
 
     var callbackAjaxDelete = function (data) {
@@ -272,7 +272,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             },
             allSelector : {
                 event : {
-                        click : function(){
+                    click : function(){
                         var cdVal = $(this).children("input[name='appctnTypeCd']").val();
                         if (cdVal == "TEC_GUIDE_APPCTN00") {
                             if($(this).children("input[name='appctnTypeCd']").is(":checked"))
@@ -285,6 +285,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
+            cnstgCmpltnSchdlDt : {
+                event : {
+                    change : function(){
+                        var bfCmplDt = $("#cnstgCmpltnSchdlDt").val().split("-");
+                        var bfRegDt = $("#regDtm").val().split("-");
+
+                        var afCmplDt = new Date(bfCmplDt[0], bfCmplDt[1], bfCmplDt[2]);
+                        var afRegDt = new Date(bfRegDt[0], bfRegDt[1], bfRegDt[2]);
+                        var difDt =  afCmplDt - afRegDt;
+                        var cDay = 24*60*60*1000;
+                        var cMonth = cDay*30;
+                        $(".cnstgTerm").val(parseInt(difDt/cMonth));
+                    }
+                }
+            }
         },
         classname: {
             searchPostCode: {
@@ -504,28 +519,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         search(1);
                     }
                 }
-            },
-            appctnPdfDownload : {
-                event : {
-                    click : function(){
-                        var fileName = "TechGuide.pdf";
-                        cmmCtrl.getAppctnPdfDownload(fileName);
-                    }
-                }
-            },
-            srvResult : {
-                event : {
-                    click : function(){
-                        var pstnText = $("#pstnCdSelect option:selected").text();
-                        $(".pstnText").text(pstnText);
-                        var cbsnText = $("input[name='cbsnCd']:checked").parent().text().trim();
-                        $(".cbsnText").text(cbsnText);
-                        var guideTypeText = $("#guideTypeCd option:selected").text();
-                        $(".guideTypeText").text(guideTypeText);
-                        var cmssrName = $("input[name='cmssrName']").val();
-                        $(".cmssrName").text(cmssrName);
-                    }
-                }
             }
 
         },
@@ -578,12 +571,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         }
                     })
                 }
-                var initVstRsltCd = $("#initVstRsltCd").val();
-                if (initVstRsltCd == "BF_JDGMT_RSLT02") {
-                    $(".rsltCntn").show();
-                } else {
-                    $(".rsltCntn").hide();
-                }
 
                 $(".tempRow").eq(0).find(".close").hide();
                 $(".dpTempRow").eq(0).find(".close").hide();
@@ -626,6 +613,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     func: function () {
                         var actionUrl = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update");
                         var actionMsg = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd"));
+
                         var cmpnNm = $("#cmpnNmText").text();
                         var bsnmNo = $("#bsnmNoText").text();
                         var emailTxt = $("#emailTxt").text();
@@ -662,7 +650,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         $("#email").val(emailTxt);
                         $("#rprsntNm").val(rprsntNmTxt);
                         $("#cbsnCd").val(cbsnCd);
-
 
                         if ($formObj.find(".dropzone").size() > 0) {
                             cmmCtrl.fileFrmAjax(function (data) {

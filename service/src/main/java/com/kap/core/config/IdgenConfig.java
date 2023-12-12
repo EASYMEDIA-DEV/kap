@@ -840,4 +840,17 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 컨설팅 관리 담당 임원
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl picSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CONS_PIC_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }

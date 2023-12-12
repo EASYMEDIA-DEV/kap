@@ -244,7 +244,21 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
     }
 
     /**
-     * 부품사 목록을 조회한다.
+     * 교육사업 연도별 개수 목록을 조회한다.
+     */
+    public MPEPartsCompanyDTO selectEduStatisticsCntList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+        COPaginationUtil page = new COPaginationUtil();
+        page.setCurrentPageNo(mpePartsCompanyDTO.getPageIndex());
+        page.setRecordCountPerPage(mpePartsCompanyDTO.getListRowSize());
+        page.setPageSize(mpePartsCompanyDTO.getPageRowSize());
+        mpePartsCompanyDTO.setFirstIndex(page.getFirstRecordIndex());
+        mpePartsCompanyDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        mpePartsCompanyDTO.setList(mpePartsCompanyMapper.selectEduStatisticsCntList(mpePartsCompanyDTO));
+        return mpePartsCompanyDTO;
+    }
+
+    /**
+     * 자동차부품산업대상 목록을 조회한다.
      */
     public MPEPartsCompanyDTO selectCarTargetList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
 

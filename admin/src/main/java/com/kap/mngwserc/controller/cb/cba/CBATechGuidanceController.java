@@ -104,6 +104,7 @@ public class CBATechGuidanceController {
         cdDtlList.add("BF_JDGMT_RSLT"); // 사전심사결과 코드
         cdDtlList.add("GUIDE_TYPE_CD"); // 지도 구분 코드
         cdDtlList.add("GUIDE_PSCND"); // 지도 현황 코드
+        cdDtlList.add("INIT_VST_RSLT"); // 초도방문결과
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
         if (!"".equals(cBATechGuidanceInsertDTO.getDetailsKey()) && cBATechGuidanceInsertDTO.getDetailsKey() != null) {

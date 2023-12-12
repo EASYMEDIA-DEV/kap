@@ -194,7 +194,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         cmmCtrl.getLecturerLayerPop(function(data){
                             if(data.choiceCnt  == 0){
                                 alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));
-                            }else{
+                            }else if(data.choiceCnt > 6) {
+                                alert("선택할 수 있는 강사 최대 수는 6명입니다.");
+                            }else {
                                 var name, ffltnNm, spclCntn, seq;
                                 if(data.choiceCnt>1){
                                     var trObjList = data.trObjList;
@@ -241,6 +243,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                         exIsttr.find("input:hidden").val(seq);
                                         $("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
                                     }
+
+                                    $("#checkButton").on("click", function () {
+                                        var checkedCount = $(".checkbox:checked").length;
+
+                                        if (checkedCount >= 6) {
+                                            alert("6개 이상의 체크박스가 선택되었습니다!");
+                                        }
+                                    });
                                 }
                                 $(".notIsttr").css("display", "none");
                                 $(".setIsttr").css("display", "none");
@@ -350,25 +360,23 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         actForm.vstRsltSeq = vstRsltSeq;
 
                         //신청자 정보
-                        var memName = $("#memName").val();
-                        var memDeptCd = $("#memDeptCd").val();
-                        var memDeptDtlNm = $("#memDeptDtlNm").val();
-                        var memPstnCd = $("#memPstnCd").val();
-                        var memPstnNm = $("#memPstnNm").val();
-                        var memTelNo = $("#memTelNo").val();
+                        var deptCd = $("#deptCd").val();
+                        var deptDtlNm = $("#deptDtlNm").val();
+                        var pstnCd = $("#pstnCdSelect").val();
+                        var deptCdNm = $("#deptCdNm").val();
+                        var telNo = $("#telNo").val();
 
-                        actForm.memName = memName;
-                        actForm.memDeptCd = memDeptCd;
-                        actForm.memDeptDtlNm = memDeptDtlNm;
-                        actForm.memPstnCd = memPstnCd;
-                        actForm.memPstnNm = memPstnNm;
-                        actForm.memTelNo = memTelNo;
+                        actForm.deptCd = deptCd;
+                        actForm.deptDtlNm = deptDtlNm;
+                        actForm.pstnCd = pstnCd;
+                        actForm.deptCdNm = deptCdNm;
+                        actForm.telNo = telNo;
 
                         //부품사 정보
                         var ctgryCd = $("#ctgryCd").val();
                         var sizeCd = $("#sizeCd").val();
                         var stbsmDt = $("#stbsmDt").val();
-                        var telNo = $("#telNo").val();
+                        var cmpnTelNo = $("#cmpnTelNo").val();
                         var zipcode = $("#zipcode").val();
                         var bscAddr = $("#bscAddr").val();
                         var dtlAddr = $("#dtlAddr").val();
@@ -388,7 +396,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         actForm.ctgryCd = ctgryCd;
                         actForm.sizeCd = sizeCd;
                         actForm.stbsmDt = stbsmDt;
-                        actForm.telNo = telNo;
+                        actForm.cmpnTelNo = cmpnTelNo;
                         actForm.zipcode = zipcode;
                         actForm.bscAddr = bscAddr;
                         actForm.dtlAddr = dtlAddr;
