@@ -8,6 +8,7 @@
 <c:set var="dpndCmpnList" value="${rtnDto.dpndCmpnList}"/>
 <c:set var="dlvryCmpnList" value="${rtnDto.dlvryCmpnList}"/>
 <c:set var="appctnTypeList" value="${rtnDto.appctnTypeList}"/>
+<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/cb/cba/CBATechGuidanceWriteCtrl">
@@ -761,7 +762,7 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">초도방문일</label>
                                     <div class="input-group col-md-2" style="z-index:0;">
-                                        <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="" title="초도방문일"/>
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${today}" title="초도방문일"/>
                                         <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -830,7 +831,7 @@
                                         </select>
                                     </div>
                                     <div class="input-group col-md-2" style="z-index:0;">
-                                        <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="" title="초도방문일" />
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="${today}" title="지도현황" />
                                         <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -844,7 +845,7 @@
                                     <label class="col-sm-1 control-label">지도착수일</label>
                                     <div class="col-sm-5">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="" title="지도착수일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${today}" title="지도착수일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -855,7 +856,7 @@
                                     <label class="col-sm-1 control-label">킥오프일</label>
                                     <div class="col-sm-5">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="" title="킥오프일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${today}" title="킥오프일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -978,14 +979,15 @@
                                                 <td class="text-center"></td>
                                                 <td class="text-center">
                                                     <div class="input-group form-date-group mr-sm">
-                                                        <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="srvStrtDtm" id="srvStrtDtm" title="설문시작일시" readonly="readonly"/>
+                                                        <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" value="${rsumeList.srvSeq}">
+                                                        <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="srvStrtDtm" id="srvStrtDtm" value="${today}" title="설문시작일시" readonly="readonly"/>
                                                         <span class="input-group-btn" style="z-index:0;">
                                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                                 <em class="ion-calendar"></em>
                                                             </button>
                                                         </span>
                                                         <span class="input-group-addon bg-white b0">~</span>
-                                                        <input type="text" class="form-control input-sm datetimepicker_endDt notRequired" name="srvEndDtm" id="srvEndDtm" title="설문종료일시" readonly="readonly"/>
+                                                        <input type="text" class="form-control input-sm datetimepicker_endDt notRequired" name="srvEndDtm" id="srvEndDtm" value="${today}" title="설문종료일시" readonly="readonly"/>
                                                         <span class="input-group-btn" style="z-index:0;">
                                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                                 <em class="ion-calendar"></em>
@@ -1006,7 +1008,6 @@
                                                         (등록된 데이터가 없습니다.)
                                                     </td>
                                                 </tr>--%>
-                                            <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" disabled="true">
                                             </tbody>
                                         </table>
                                     </div>
@@ -1030,9 +1031,9 @@
                                         </div>
                                         <label class="col-sm-1 control-label"></label>
                                         <div class="col-sm-11" style="padding-left: 30px;">
-                                                    <textarea class="form-control input-sm notRequired" id="bfreJdgmtRsltCntn" name="bfreJdgmtRsltCntn" title="사전심사결과 의견" placeholder="사전심사결과 의견 입력" maxlength="500">
-                                                            ${rsumeList.bfreJdgmtRsltCntn}
-                                                    </textarea>
+                                            <textarea class="form-control input-sm notRequired" id="bfreJdgmtRsltCntn" name="bfreJdgmtRsltCntn" title="사전심사결과 의견" placeholder="사전심사결과 의견 입력" maxlength="500">
+                                                    ${rsumeList.bfreJdgmtRsltCntn}
+                                            </textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1269,6 +1270,7 @@
                                                     <td class="text-center">${rsumeList.typeNm}</td>
                                                     <td class="text-center">
                                                         <div class="input-group form-date-group mr-sm">
+                                                            <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" value="${rsumeList.srvSeq}">
                                                             <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="srvStrtDtm" id="srvStrtDtm" value="${ kl:convertDate(rsumeList.srvStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="설문시작일시" readonly="readonly"/>
                                                             <span class="input-group-btn" style="z-index:0;">
                                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
@@ -1297,7 +1299,6 @@
                                                             (등록된 데이터가 없습니다.)
                                                         </td>
                                                     </tr>--%>
-                                                <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" value="${rsumeList.srvSeq}">
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1330,136 +1331,137 @@
                         </tbody>
                     </table>
                 </div>
-
                 <!-- 만족도 결과 -->
                 <div id="svResult" class="tab-pane fade">
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <div class="col-sm-11">
-                                <h6 class="mt0"><em class="ion-play mr-sm"></em>설문정보</h6>
-                            </div>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <div class="col-sm-11">
+                            <h6 class="mt0"><em class="ion-play mr-sm"></em>설문정보</h6>
                         </div>
-                    </fieldset>
-                    <c:forEach var="rsumeList" items="${rtnDto.rsumeList}" varStatus="status">
-                        <fieldset>
-                            <div class="form-group text-sm">
-                                <label class="col-sm-1 control-label">설문명<span class="star text-danger"> *</span></label>
-                                <div class="col-sm-5">
-                                    <p class="form-control-static">
-                                            ${rsumeList.srvNm}
-                                    </p>
+                    </div>
+                </fieldset>
+                <c:forEach var="rsumeList" items="${rtnDto.rsumeList}" varStatus="status">
+                    <c:if test="${not empty rsumeList}">
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">설문명<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">
+                                                ${rsumeList.srvNm}
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-1 control-label">설문기간<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">
+                                               ${kl:convertDate(rsumeList.srvStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')} ~ ${kl:convertDate(rsumeList.srvEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')}
+                                        </p>
+                                    </div>
                                 </div>
-                                <label class="col-sm-1 control-label">설문기간<span class="star text-danger"> *</span></label>
-                                <div class="col-sm-5">
-                                    <p class="form-control-static">
-                                           ${kl:convertDate(rsumeList.srvStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')} ~ ${kl:convertDate(rsumeList.srvEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')}
-                                    </p>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </c:forEach>
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">신청자<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static">${rtnDto.name}
-                                </p>
-                            </div>
-                            <label class="col-sm-1 control-label">설문 참여자<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static">
-                                </p>
-                            </div>
-                        </div>
-                    </fieldset>
+                            </fieldset>
+                            <fieldset>
 
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">참여자 연락처<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static">${rtnDto.hpNo}
-                                </p>
-                            </div>
-                            <label class="col-sm-1 control-label">참여자 직급<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static pstnText">
-                                </p>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">담당위원<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static cmssrName">
-                                </p>
-                            </div>
-                            <label class="col-sm-1 control-label">신청 분야/업종<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static cbsnText">
-                                </p>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">지도구분<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static guideTypeText">
-                                </p>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <div class="table-responsive ">
-                                <table class="table text-sm">
-                                    <tbody>
-                                    <tr>
-                                        <th>종합 점수</th>
-                                        <th>지도실적(50)</th>
-                                        <th>의사소통 능력(5)</th>
-                                        <th>기획력(10)</th>
-                                        <th>실행력(15)</th>
-                                        <th>마인드(5)</th>
-                                        <th>전문지식(15)</th>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">100.0</td>
-                                        <td class="text-center">50.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">10.0</td>
-                                        <td class="text-center">15.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">15.0</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </fieldset>
-            </div>
-    </div>
-    </c:when>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">신청자<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">${rtnDto.name}
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-1 control-label">설문 참여자<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">참여자 연락처<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">${rtnDto.hpNo}
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-1 control-label">참여자 직급<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static pstnText">
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">담당위원<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static cmssrName">
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-1 control-label">신청 분야/업종<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static cbsnText">
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">지도구분<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static guideTypeText">
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <div class="table-responsive ">
+                                        <table class="table text-sm">
+                                            <tbody>
+                                            <tr>
+                                                <th>종합 점수</th>
+                                                <th>지도실적(50)</th>
+                                                <th>의사소통 능력(5)</th>
+                                                <th>기획력(10)</th>
+                                                <th>실행력(15)</th>
+                                                <th>마인드(5)</th>
+                                                <th>전문지식(15)</th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">100.0</td>
+                                                <td class="text-center">50.0</td>
+                                                <td class="text-center">5.0</td>
+                                                <td class="text-center">10.0</td>
+                                                <td class="text-center">15.0</td>
+                                                <td class="text-center">5.0</td>
+                                                <td class="text-center">15.0</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                              </fieldset>
+                            </c:if>
+                    </c:forEach>
+                </div>
+           </div>
+        </c:when>
     </c:choose>
-    <div class="clearfix">
-        <div class="pull-left">
-            <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
+        <div class="clearfix">
+            <div class="pull-left">
+                <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
+            </div>
+            <div class="pull-right">
+                <c:choose>
+                    <c:when test="${not empty rtnDto}">
+                        <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                        <button type="submit" class="btn btn-sm btn-success">수정</button>
+                    </c:when>
+                    <c:otherwise>
+                        <button type="submit" class="btn btn-sm btn-success">등록</button>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
-        <div class="pull-right">
-            <c:choose>
-                <c:when test="${not empty rtnDto}">
-                    <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                    <button type="submit" class="btn btn-sm btn-success">수정</button>
-                </c:when>
-                <c:otherwise>
-                    <button type="submit" class="btn btn-sm btn-success">등록</button>
-                </c:otherwise>
-            </c:choose>
-        </div>
-    </div>
     </form>
-</div>
+   </div>
 </div>
 <jsp:include page="/WEB-INF/jsp/mngwserc/sv/sva/SVASurveySrchLayer.jsp">
     <jsp:param name="typeCd" value="CON" />

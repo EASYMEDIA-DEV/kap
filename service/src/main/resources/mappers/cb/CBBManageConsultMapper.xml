@@ -541,7 +541,7 @@
     ==========   ======    ==============
     2023.11.14   임서화      최초생성
 -->
-    <select id="selectTechGuidanceRsume" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceUpdateDTO">
+    <select id="selectTechGuidanceRsume" parameterType="CBBManageConsultInsertDTO" resultType="CBBManageConsultUpdateDTO">
         SELECT /* CBBManageConsultMapper.selectTechGuidanceRsume */
             CNSTG_SEQ
              , BFRE_JDGMT_RSLT_CD
@@ -550,7 +550,6 @@
              , VSTR_NM
              , NTRVR_NM
              , INIT_VST_RSLT_CD
-             , INIT_VST_RSLT_CNTN
              , INIT_VST_OPNN_CNTN
              , CMSSR_SEQ
              , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.CMSSR_SEQ) CMSSR_NAME
@@ -560,9 +559,10 @@
              , GUIDE_BGN_DT
              , GUIDE_KICKF_DT
              , XTNSN_CNCL_RSN
-             , FLTY_IMPVM_BFRE_RATE
-             , FLTY_IMPVM_AFTR_RATE
-             , FLTY_IMPVM_RATE
+             , CNSTG_CMPLTN_SCHDL_DT
+             , CNSTG_XTNSN_RSLT_CNT
+             , CNSTG_XTNSN_RSLT_MNTH
+             , CNSTG_TERM
              , INIT_VST_FILE_SEQ
              , KICKF_FILE_SEQ
              , LVLUP_FILE_SEQ
@@ -604,7 +604,7 @@
     <insert id="insertCnstgDpndnInfo" parameterType="java.util.HashMap">
         INSERT /* CBBManageConsultMapper.insertCnstgDpndnInfo */ INTO CP_CNSTG_DPNDN_DTL
         (
-            CNSTG_SEQ
+         CNSTG_SEQ
         , DPNDN_SEQ
         , CMPN_NM
         , RATE
@@ -613,14 +613,14 @@
         , REG_DTM
         )
         VALUES(
-                  #{cnstgSeq}
-              , #{dpndnSeq}
-              , #{cmpnNm}
-              , #{dpndnRate}
-              , #{regId}
-              , #{regIp}
-              , now()
-              )
+         #{cnstgSeq}
+          , #{dpndnSeq}
+          , #{cmpnNm}
+          , #{dpndnRate}
+          , #{regId}
+          , #{regIp}
+          , now()
+          )
     </insert>
 
     <!--
@@ -633,7 +633,7 @@
     <insert id="insertCnstgPicInfo" parameterType="java.util.HashMap">
         INSERT /* CBBManageConsultMapper.insertCnstgPicInfo */ INTO CP_CNSTG_PIC_DTL
         (
-            CNSTG_SEQ
+         CNSTG_SEQ
         , PIC_SEQ
         , NAME
         , EMAIL
@@ -646,18 +646,18 @@
         , REG_DTM
         )
         VALUES(
-                  #{cnstgSeq}
-              , #{picSeq}
-              , #{name}
-              , #{email}
-              , #{deptNm}
-              , #{pstnNm}
-              , #{hpNo}
-              , #{cmpnTelNo}
-              , #{regId}
-              , #{regIp}
-              , now()
-              )
+          #{cnstgSeq}
+          , #{picSeq}
+          , #{name}
+          , #{email}
+          , #{deptNm}
+          , #{pstnNm}
+          , #{hpNo}
+          , #{cmpnTelNo}
+          , #{regId}
+          , #{regIp}
+          , now()
+          )
     </insert>
 
     <!--
@@ -699,80 +699,119 @@
     </update>
 
     <!--
-     쿼리명 : CBBManageConsultMapper.insertTechGuidanceRsume
+     쿼리명 : CBBManageConsultMapper.insertManageConsultRsume
      설  명 :  컨설팅 진행 마스터
       수정일     수정자       수정내용
     ==========   ======    ==============
     2023.11.14   임서화      최초생성
     -->
-    <insert id="insertTechGuidanceRsume" parameterType="CBBManageConsultUpdateDTO">
-        INSERT /* CBBManageConsultMapper.insertTechGuidanceRsume */ INTO CP_CNSTG_RSUME_MST(
-                                                                                             CNSTG_SEQ
-                                                                                           , BFRE_JDGMT_RSLT_CD
-                                                                                           , BFRE_JDGMT_RSLT_CNTN
-                                                                                           , VST_DT
-                                                                                           , CNSTG_CMPLTN_SCHDL_DT
-                                                                                           , VSTR_NM
-                                                                                           , NTRVR_NM
-                                                                                           , GUIDE_BGN_DT
-                                                                                           , INIT_VST_RSLT_CD
-                                                                                           , INIT_VST_OPNN_CNTN
-                                                                                           , CMSSR_SEQ
-                                                                                           , CNSTG_KICKF_DT
-                                                                                           , CNSTG_PSCND_DT
-                                                                                           , CNSTG_XTNSN_RSLT_CNT
-                                                                                           , CNSTG_XTNSN_RSLT_MNTH
-                                                                                           , GUIDE_TYPE_CD
-                                                                                           , GUIDE_PSCND_CD
-                                                                                           , GUIDE_PSCND_DT
-                                                                                           , GUIDE_BGN_DT
-                                                                                           , GUIDE_KICKF_DT
-                                                                                           , XTNSN_CNCL_RSN
-                                                                                           , INIT_VST_FILE_SEQ
-                                                                                           , KICKF_FILE_SEQ
-                                                                                           , LVLUP_FILE_SEQ
-                                                                                           , ETC_FILE_SEQ
-                                                                                           , SRV_SEQ
-                                                                                           , SRV_STRT_DTM
-                                                                                           , SRV_END_DTM
-                                                                                           , REG_ID
-                                                                                           , REG_IP
-                                                                                           , REG_DTM
+    <insert id="insertManageConsultRsume" parameterType="CBBManageConsultUpdateDTO">
+        INSERT /* CBBManageConsultMapper.insertManageConsultRsume */ INTO CP_CNSTG_RSUME_MST(
+              CNSTG_SEQ
+            , BFRE_JDGMT_RSLT_CD
+            , BFRE_JDGMT_RSLT_CNTN
+            , CNSTG_CMPLTN_SCHDL_DT
+            , VST_DT
+            , VSTR_NM
+            , NTRVR_NM
+            , INIT_VST_RSLT_CD
+            , INIT_VST_OPNN_CNTN
+            , CMSSR_SEQ
+            , CNSTG_KICKF_DT
+            , CNSTG_PSCND_DT
+            , CNSTG_XTNSN_RSLT_CNT
+            , CNSTG_XTNSN_RSLT_MNTH
+            , GUIDE_TYPE_CD
+            , GUIDE_PSCND_CD
+            , GUIDE_PSCND_DT
+            , GUIDE_KICKF_DT
+            , CNSTG_TERM
+            , XTNSN_CNCL_RSN
+            , INIT_VST_FILE_SEQ
+            , KICKF_FILE_SEQ
+            , LVLUP_FILE_SEQ
+            , ETC_FILE_SEQ
+            , SRV_SEQ
+            , SRV_STRT_DTM
+            , SRV_END_DTM
+            , REG_ID
+            , REG_IP
+            , REG_DTM
         )
         VALUES(
-                  #{detailsKey} ,
-                  #{bfreJdgmtRsltCd},
-                  #{bfreJdgmtRsltCntn},
-                  #{vstDt},
-                  #{cnstgCmpltnSchdlDt},
-                  #{vstrNm} ,
-                  #{ntrvrNm} ,
-                  #{guideBgnDt},
-                  #{initVstRsltCd} ,
-                  #{initVstOpnnCntn} ,
-                  #{cmssrSeq},
-                  #{cnstgKickfDt},
-                  #{cnstgPscndDt},
-                  #{cnstgXtnsnRsltCnt},
-                  #{cnstgXtnsnRsltMnth},
-                  #{guideTypeCd} ,
-                  #{guidePscndCd} ,
-                  #{guidePscndDt} ,
-                  #{guideBgnDt} ,
-                  #{guideKickfDt} ,
-                  #{xtnsnCnclRsn} ,
-                  #{initVstFileSeq} ,
-                  #{kickfFileSeq} ,
-                  #{lvlupFileSeq} ,
-                  #{etcFileSeq},
-                  #{srvSeq},
-                  #{srvStrtDtm},
-                  #{srvEndDtm},
-                  #{regId},
-                  #{regIp},
-                  now()
+              #{detailsKey} ,
+              #{bfreJdgmtRsltCd},
+              #{bfreJdgmtRsltCntn},
+              #{cnstgCmpltnSchdlDt},
+              #{vstDt},
+              #{vstrNm} ,
+              #{ntrvrNm} ,
+              #{initVstRsltCd} ,
+              #{initVstOpnnCntn} ,
+              #{cmssrSeq},
+              #{guideKickfDt},
+              #{cnstgPscndDt},
+              #{cnstgXtnsnRsltCnt},
+              #{cnstgXtnsnRsltMnth},
+              #{guideTypeCd} ,
+              #{guidePscndCd} ,
+              #{guidePscndDt} ,
+              #{guideKickfDt} ,
+              #{cnstgTerm} ,
+              #{xtnsnCnclRsn} ,
+              #{initVstFileSeq} ,
+              #{kickfFileSeq} ,
+              #{lvlupFileSeq} ,
+              #{etcFileSeq},
+              #{srvSeq},
+              #{srvStrtDtm},
+              #{srvEndDtm},
+              #{regId},
+              #{regIp},
+              now()
               )
     </insert>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.updateManageConsultRsume
+     설  명 :  컨설팅 진행 마스터 업데이트
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.20   임서화      최초생성
+    -->
+    <update id="updateManageConsultRsume" parameterType="CBATechGuidanceUpdateDTO">
+        UPDATE /* CBATechGuidanceMapper.updateManageConsultRsume */ CP_CNSTG_RSUME_MST
+        SET
+            BFRE_JDGMT_RSLT_CD =  #{bfreJdgmtRsltCd},
+            BFRE_JDGMT_RSLT_CNTN =  #{bfreJdgmtRsltCntn},
+            CNSTG_CMPLTN_SCHDL_DT = #{cnstgCmpltnSchdlDt},
+            VST_DT =  #{vstDt},
+            VSTR_NM = #{vstrNm},
+            NTRVR_NM =  #{ntrvrNm},
+            INIT_VST_RSLT_CD = #{initVstRsltCd},
+            INIT_VST_OPNN_CNTN = #{initVstOpnnCntn},
+            CMSSR_SEQ =  #{cmssrSeq},
+            CNSTG_XTNSN_RSLT_CNT = #{cnstgXtnsnRsltCnt},
+            CNSTG_XTNSN_RSLT_MNTH = #{cnstgXtnsnRsltMnth},
+            GUIDE_TYPE_CD = #{guideTypeCd},
+            GUIDE_PSCND_CD =  #{guidePscndCd},
+            GUIDE_PSCND_DT =  #{guidePscndDt},
+            GUIDE_BGN_DT =  #{guideBgnDt},
+            GUIDE_KICKF_DT =  #{guideKickfDt},
+            CNSTG_TERM = #{cnstgTerm},
+            XTNSN_CNCL_RSN =  #{xtnsnCnclRsn},
+            INIT_VST_FILE_SEQ =  #{initVstFileSeq},
+            KICKF_FILE_SEQ =  #{kickfFileSeq},
+            LVLUP_FILE_SEQ =  #{lvlupFileSeq},
+            ETC_FILE_SEQ =  #{etcFileSeq} ,
+            SRV_SEQ = #{srvSeq},
+            SRV_STRT_DTM = #{srvStrtDtm},
+            SRV_END_DTM = #{srvEndDtm},
+            MOD_ID =  #{regId},
+            MOD_IP =  #{regIp},
+            MOD_DTM = NOW()
+        WHERE CNSTG_SEQ =  #{cnstgSeq}
+    </update>
 
     <!--
         쿼리명 : CBBManageConsultMapper.selectRsumeTotCnt
@@ -855,36 +894,36 @@
     -->
     <insert id="insertManageConsult" parameterType="CBBManageConsultInsertDTO">
         INSERT /* CBBManageConsultMapper.insertManageConsult */ INTO CP_CNSTG_APPCTN_MST (
-                                                                                           CNSTG_SEQ
-                                                                                         , APPCTN_BSNM_NO
-                                                                                         , APPCTN_MEM_SEQ
-                                                                                         , CNSTG_CD
-                                                                                         , APPCTN_DT
-                                                                                         , CMPN_SIZE_CD
-                                                                                         , FRGN_DPNDN_RATE
-                                                                                         , TTL_SLS_PMT
-                                                                                         , DMSTC_SLS_PMT
-                                                                                         , FRGN_SLS_PMT
-                                                                                         , CAR_PART_SLS_PMT
-                                                                                         , CAR_PART_XCLUD_SLS_PMT
-                                                                                         , CMPN_ADDR_SAME_YN
-                                                                                         , FCTRY_ZIPCODE
-                                                                                         , FCTRY_BSC_ADDR
-                                                                                         , FCTRY_DTL_ADDR
-                                                                                         , FIRST_RGNS_CD
-                                                                                         , SCND_RGNS_CD
-                                                                                         , HMPGE_URL
-                                                                                         , QLTY_PIC_CNT
-                                                                                         , APPCTN_RSN_CD
-                                                                                         , RQST_CNTN
-                                                                                         , ITRDC_FILE_SEQ
-                                                                                         , IMPVM_FILE_SEQ
-                                                                                         , REG_ID
-                                                                                         , REG_IP
-                                                                                         , REG_DTM
-        )
+                   CNSTG_SEQ
+                 , APPCTN_BSNM_NO
+                 , APPCTN_MEM_SEQ
+                 , CNSTG_CD
+                 , APPCTN_DT
+                 , CMPN_SIZE_CD
+                 , FRGN_DPNDN_RATE
+                 , TTL_SLS_PMT
+                 , DMSTC_SLS_PMT
+                 , FRGN_SLS_PMT
+                 , CAR_PART_SLS_PMT
+                 , CAR_PART_XCLUD_SLS_PMT
+                 , CMPN_ADDR_SAME_YN
+                 , FCTRY_ZIPCODE
+                 , FCTRY_BSC_ADDR
+                 , FCTRY_DTL_ADDR
+                 , FIRST_RGNS_CD
+                 , SCND_RGNS_CD
+                 , HMPGE_URL
+                 , QLTY_PIC_CNT
+                 , APPCTN_RSN_CD
+                 , RQST_CNTN
+                 , ITRDC_FILE_SEQ
+                 , IMPVM_FILE_SEQ
+                 , REG_ID
+                 , REG_IP
+                 , REG_DTM
+                )
         VALUES (
-                   #{cnstgSeq}
+                #{cnstgSeq}
                , #{bsnmNo}
                , #{memSeq}
                , "CONSULT_GB02"
@@ -978,6 +1017,71 @@
           AND A.CNSTG_SEQ = #{detailsKey}
           AND A.APPCTN_BSNM_NO = B.WORK_BSNM_NO
           AND A.APPCTN_MEM_SEQ = B.MEM_SEQ
+    </select>
+
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.selectTrsfGuidanceList
+         설  명 : 컨설팅 참여 이관 로그
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초생성
+    -->
+    <select id="selectTrsfGuidanceList" parameterType="CBBManageConsultInsertDTO" resultType="CBBManageConsultInsertDTO">
+        SELECT /* CBBManageConsultMapper.selectTrsfGuidanceList */
+            CNSTG_SEQ,
+            BFRE_MEM_SEQ,
+            AFTR_MEM_SEQ,
+            REG_DTM,
+            REG_ID,
+            (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) REG_NAME
+        FROM CP_CNSTG_APPCTN_TRNSF_DTL A
+        WHERE CNSTG_SEQ = #{detailsKey}
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.insertTrsfGuidanceList
+         설  명 : 컨설팅 참여 이관 로그
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초생성
+    -->
+    <insert id="insertTrsfGuidanceList" parameterType="CBBManageConsultInsertDTO" >
+        INSERT /* CBBManageConsultMapper.insertTrsfGuidanceList */ INTO CP_CNSTG_APPCTN_TRNSF_DTL
+        ( TRNSF_SEQ,
+          CNSTG_SEQ,
+          BFRE_MEM_SEQ,
+          AFTR_MEM_SEQ,
+          REG_ID,
+          REG_IP,
+          REG_DTM
+        )
+        VALUES(
+          #{trnsfSeq},
+          #{cnstgSeq},
+          #{bfreMemSeq},
+          #{aftrMemSeq},
+          #{regId},
+          #{regIp},
+          NOW()
+              )
+    </insert>
+
+    <!--
+     쿼리명 : CBBManageConsultMapper.selectTrsfGuidanceCnt
+     설  명 :  컨설팅 기술 관리 이관 내역 카운트
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.11.14   임서화      최초생성
+    -->
+    <select id="selectTrsfGuidanceCnt" parameterType="CBBManageConsultInsertDTO" resultType="java.lang.Integer">
+        SELECT /*CBATechGuidanceMapper.selectTrsfGuidanceCnt*/
+            count(*)
+        FROM
+            CP_CNSTG_APPCTN_TRNSF_DTL
+        WHERE
+            CNSTG_SEQ = #{detailsKey}
     </select>
 
 </mapper>
