@@ -241,12 +241,12 @@ public class CBBManageConsultController {
      * 컨설팅 이관 내역을 조회한다.
      */
     @GetMapping(value = "/trsfList")
-    public String getTrsfListPageAjax(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getTrsfListPageAjax(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, CBBManageConsultSearchDTO cBBManageConsultSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            /*modelMap.addAttribute("rtnData", cBBManageConsultService.selectTrsfGuidanceList(cBATechGuidanceInsertDTO));
-            modelMap.addAttribute("CBATechGuidanceInsertDTO", cBATechGuidanceInsertDTO);*/
+            modelMap.addAttribute("rtnData", cBBManageConsultService.selectTrsfGuidanceList(cBBManageConsultInsertDTO, cBBManageConsultSearchDTO));
+            modelMap.addAttribute("CBATechGuidanceInsertDTO", cBBManageConsultInsertDTO);
         }
         catch (Exception e)
         {

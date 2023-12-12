@@ -43,12 +43,10 @@ public class CBBManageConsultUpdateDTO extends BaseDTO {
     private String vstrNm;
     @Schema(title = "면담자")
     private String ntrvrNm;
-    @Schema(title = "초도방문일")
+    @Schema(title = "방문일")
     private String vstDt;
     @Schema(title = "초도방문결과")
     private String initVstRsltCd;
-    @Schema(title = "초도방문탈락사유")
-    private String initVstRsltCntn;
     @Schema(title = "초도방문의견")
     private String initVstOpnnCntn;
     @Schema(title = "초도방문코드")
@@ -69,14 +67,16 @@ public class CBBManageConsultUpdateDTO extends BaseDTO {
     private String guideKickfDt;
     @Schema(title = "연기/취소 사유")
     private String xtnsnCnclRsn;
-
-    // 사업진행 상세
-    @Schema(title = "불량개선이전율")
-    private Integer fltyImpvmBfreRate;
-    @Schema(title = "불량개선이후률")
-    private Integer fltyImpvmAftrRate;
-    @Schema(title = "불량개선율")
-    private Integer fltyImpvmRate;
+    @Schema(title = "컨설팅완료예정일")
+    private String cnstgCmpltnSchdlDt;
+    @Schema(title = "컨설팅 연장 실적 횟수")
+    private String cnstgXtnsnRsltCnt;
+    @Schema(title = "컨설팅 연장 실적 개월 수")
+    private String cnstgXtnsnRsltMnth;
+    @Schema(title = "컨설팅 기간")
+    private String cnstgTerm;
+    @Schema(title = "컨설팅 현황 날짜")
+    private String cnstgPscndDt;
 
     @Schema(title = "초도방문자료")
     private Integer initVstFileSeq;

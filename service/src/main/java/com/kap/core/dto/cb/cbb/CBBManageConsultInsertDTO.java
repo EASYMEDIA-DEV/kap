@@ -240,6 +240,10 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private Integer carPartSlsPmt;
     @Schema(title = "자동차부품 외 매출액")
     private Integer carPartXcludSlsPmt;
+    @Schema(title = "컨설팅 연장 실적 횟수")
+    private String cnstgXtnsnRsltCnt;
+    @Schema(title = "컨설팅 연장 실적 개월 수")
+    private String cnstgXtnsnRsltMnth;
 
     private List<String> dlvryCmpnList;
     private List<String> dpndCmpnList;
@@ -247,14 +251,6 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private List<String> appctnTypeList;
     private List<String> mngConsCdList;
     private List<String> ctgryCdList;
-
-    // 사업진행 상세
-    @Schema(title = "불량개선이전율")
-    private Integer fltyImpvmBfreRate;
-    @Schema(title = "불량개선이후률")
-    private Integer fltyImpvmAftrRate;
-    @Schema(title = "불량개선율")
-    private Integer fltyImpvmRate;
 
     // 만족도 설문
     @Schema(title = "설문순번")
