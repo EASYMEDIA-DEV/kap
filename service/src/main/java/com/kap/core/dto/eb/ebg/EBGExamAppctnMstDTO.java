@@ -2,12 +2,15 @@ package com.kap.core.dto.eb.ebg;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.COFileDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,6 +40,8 @@ public class EBGExamAppctnMstDTO extends BaseDTO {
     private Integer memSeq;
     @Schema(title = "SQ 평가원 구분 코드")
     private String examCd;
+    @Schema(title = "SQ 평가원 구분 코드명")
+    private String examCdNm;
     @Schema(title = "발급상태 코드")
     private String issueCd;
     @Schema(title = "반려 사유")
@@ -76,4 +81,33 @@ public class EBGExamAppctnMstDTO extends BaseDTO {
 
     @Schema(title = "참여순번")
     private Integer ptcptSeq;
+
+    @Schema(title = "회원 명")
+    private String name;
+    @Schema(title = "회원 생년월일")
+    private String birth;
+    @Schema(title = "회원 이미지 web url")
+    private String idntfnPhotoFileSeqUrl;
+
+    @Schema(title = "회원 이미지 web url")
+    private boolean expiration;
+
+    @Schema(title = "만료 여부")
+    public boolean getExpiration(){
+        if(validStrtDt != null && validEndDt != null){
+            try{
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String now = CODateUtil.getCurrentDate("yyyy-MM-dd");
+                Date endDt = formatter.parse(validEndDt);
+                Date nowDt = formatter.parse(now);
+                if(nowDt.after(endDt)){
+                    return true;
+                }
+            }
+            catch (Exception e){
+                return false;
+            }
+        }
+        return false;
+    }
 }

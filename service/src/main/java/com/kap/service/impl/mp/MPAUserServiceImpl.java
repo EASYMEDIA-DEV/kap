@@ -6,11 +6,15 @@ import com.kap.core.dto.*;
 import com.kap.core.dto.mp.mpa.MPAAttctnDto;
 import com.kap.core.dto.mp.mpa.MPAInqrDto;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpa.MPJoinDto;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.COFileService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.MPEPartsCompanyService;
 import com.kap.service.dao.cm.CommonMapper;
 import com.kap.service.dao.mp.MPAUserMapper;
+import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,6 +32,7 @@ import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -59,6 +64,8 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     private final COSystemLogService cOSystemLogService;
 
+    private final MPEPartsCompanyService mpePartsCompanyService;
+
     private final CommonMapper commonMapper;
 
     private final COFileService cOFileService;
@@ -67,6 +74,11 @@ public class MPAUserServiceImpl implements MPAUserService {
     private final EgovIdGnrService memModSeqIdgen;
 
     private final EgovIdGnrService memSeqIdgen;
+
+    /* SQ정보 테이블 시퀀스 */
+    private final EgovIdGnrService mpePartsCompanySqInfoDtlIdgen;
+
+    private final MPEPartsCompanyMapper mpePartsCompanyMapper;
 
     /**
      * 일반 사용자 조회
@@ -229,21 +241,33 @@ public class MPAUserServiceImpl implements MPAUserService {
         return mpaUserMapper.selectCiCnt(mpaUserDto);
     }
 
+    public int selectcmpnMst(MPEPartsCompanyDTO mpePartsCompanyDTO) {
+        return mpaUserMapper.selectcmpnMst(mpePartsCompanyDTO);
+    }
+
     /**
      * 사용자 부품사 등록
      * @param mpaUserDto
      * @throws Exception
      */
     @Override
-    public void insertUser(MPAUserDto mpaUserDto) throws Exception {
+    public void insertUser(MPAUserDto mpaUserDto , MPEPartsCompanyDTO mpePartsCompanyDTO , MPJoinDto mpJoinDto) throws Exception {
         int dupIdCnt = selectDupId(mpaUserDto);
         int dupCiCnt = selectCiCnt(mpaUserDto);
+        int dupCmpnCnt = selectcmpnMst(mpePartsCompanyDTO);
 
-        if(dupCiCnt == 0 && dupIdCnt == 0) {
+        if(dupCiCnt == 0 && dupIdCnt == 0 ) {
             mpaUserDto.setEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getPwd(), mpaUserDto.getId()));
             mpaUserDto.setMemSeq(memSeqIdgen.getNextIntegerId());
             mpaUserMapper.insertUser(mpaUserDto);
             mpaUserMapper.insertUserDtl(mpaUserDto);
+            if(mpaUserDto.getMemCd().equals("CP")) {
+                mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+                if(mpJoinDto.getBsnmChk().equals("true") && dupCmpnCnt == 0) {
+                    mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
+                }
+            }
+
             mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
             mpaUserMapper.insertUserDtlHistory(mpaUserDto);
         }

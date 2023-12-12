@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>퍼블리싱 스타일 가이드</title>
+  <link rel="stylesheet" href="/common/css/swiper.css" />
+  <link rel="stylesheet" href="/common/css/style.css" />
+  <link rel="stylesheet" href="../assets/styles/shCore.css"/>
+	<link rel="Stylesheet" href="../assets/styles/shCoreEclipse.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="../assets/css/index.css">
+  <link rel="stylesheet" href="/common/css/fonts.css" />
+  <link rel="stylesheet" href="/common/css/common.css" />
+  <script src="../assets/scripts/XRegExp.js"></script> <!-- XRegExp is bundled with the final shCore.js during build -->
+	<script src="../assets/scripts/shCore.js"></script>
+	<script src="../assets/scripts/shBrushJScript.js"></script>
+	<script src="../assets/scripts/shBrushXml.js"></script>
+	<script src="../assets/scripts/shBrushCss.js"></script>
+  <script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
+  <script type="text/javascript" src="/common/js/gsap.min.js"></script>
+  <script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
+  <script type="text/javascript" src="/common/js/Draggable.min.js"></script>
+  <script type="text/javascript" src="/common/js/script.js"></script>
+  <script type="text/javascript">SyntaxHighlighter.all();</script>
+  <script type="text/javascript" src="/common/js/swiper.min.js"></script>
+  <style>
+    .content-area {width: 1133rem; box-sizing: border-box;}
+    @media all and (max-width: 1023px) {
+      .content-area {width: 100%;}
+    }
+    .ex-box ~ .ex-box {margin-top: 20px;} 
+    .ex-box > p {margin-bottom: 10px;}
+    .exs ~ .exs {margin-top: 40px;}
+    .ex ~ .ex {margin-top: 40px;}
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <header>
+      <h1>KAP 가이드</h1>
+      <div class="btn-wrap">
+        <a href="/html/worklist.html">작업현황판  <i class="fas fa-angle-right"></i></a>
+      </div>
+    </header>
+    <div id="contents">
+      <aside>
+        <a href="/html/styleguide/guide-intro.html">기본 정책 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-markup.html">마크업 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-css.html">CSS 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="/html/styleguide/guide-naming.html">네이밍 규칙 <i class="fas fa-angle-right"></i></a>
+        <a href="javascript:" class="active">스타일 가이드 <i class="fas fa-angle-right"></i></a>
+        <ul class="guide-list">
+          <li><a href="/html/styleguide/guide/form.html">FORM</a></li>
+          <li><a href="/html/styleguide/guide/typography.html">TYPOGRAPHY</a></li>
+          <li><a href="/html/styleguide/guide/button.html">BUTTON</a></li>
+          <li><a href="/html/styleguide/guide/popup.html">POPUP</a></li>
+          <li><a href="/html/styleguide/guide/navigation.html" class="active">NAVIGATION</a></li>
+          <li><a href="/html/styleguide/guide/tab.html">TAB</a></li>
+          <li><a href="/html/styleguide/guide/table.html">TABLE</a></li>
+          <li><a href="/html/styleguide/guide/list.html">LIST</a></li>
+          <li><a href="/html/styleguide/guide/layout.html">LAYOUT</a></li>
+          <li><a href="/html/styleguide/guide/label.html">LABEL</a></li>
+        </ul>
+      </aside>
+      <!-- 가이드 Start -->
+      <div class="content-area">
+        <h2>네비게이션 가이드</h2>
+        <br/>
+        <section>
+          <div class="ex-box">
+            <h3>subpage 네비게이션</h3>
+            <div class="exs">
+              <!-- <h4></h4> -->
+              <p class="info">스크롤시, 왼쪽 고정 네비게이션입니다.</p>
+              <p class="info">하위메뉴(3depth)가 없을 경우, single-menu 클래스를 추가합니다.</p>
+              <div class="ex">
+                <div class="divide-con-area">
+                  <div class="lnb-area">
+                    <div class="lnb-list">
+                      <a class="btn-two-depth" href="javascript:"><span>menu1</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                      <div class="three-depth-wrap">
+                        <a class="btn-three-depth" href="javascript:"><span>menu1-1</span></a>
+                        <a class="btn-three-depth" href="javascript:"><span>menu1-2</span></a>
+                        <a class="btn-three-depth" href="javascript:"><span>menu1-3</span></a>
+                      </div>
+                    </div>
+                    <div class="lnb-list">
+                      <a class="btn-two-depth active" href="javascript:"><span>menu2</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                      <div class="three-depth-wrap">
+                        <a class="btn-three-depth active" href="javascript:"><span>menu2-1</span></a>
+                        <a class="btn-three-depth active" href="javascript:"><span>menu2-2</span></a>
+                      </div>
+                    </div>
+                    <div class="lnb-list">
+                      <a class="btn-two-depth single-menu" href="javascript:"><span>menu3</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                    </div>
+                  </div>
+                  <div class="right-con-area">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur, omnis. Dolores similique obcaecati culpa magnam animi, consectetur ullam quia voluptatibus sunt nulla rerum vitae omnis cum enim cumque iusto corporis perferendis illum totam et vel, sint porro reiciendis? Impedit eum aut ipsum tempora deserunt vero, totam voluptatibus error ullam quam, tempore rerum harum? Incidunt, nulla quidem. Incidunt ea esse quia voluptatibus nemo ipsum excepturi, quod a harum, et porro optio, aut officia placeat vero debitis adipisci autem dolorum eos voluptatum magni obcaecati sit vitae cum. Corporis, ea. Deserunt impedit doloribus repudiandae libero perspiciatis molestiae nostrum aperiam, ipsum aliquam aut iure dolore quaerat mollitia nihil quibusdam veritatis alias quam accusamus pariatur temporibus asperiores excepturi nesciunt, ex eos. Quo exercitationem dolore ut perferendis, facilis velit laboriosam excepturi totam dicta placeat accusamus, consectetur ratione expedita sit at rem dolor odit. Aspernatur aut, eligendi asperiores odio dolorem ipsum nemo nobis inventore itaque dolore vitae quidem voluptatibus veritatis facilis perferendis voluptatem expedita nisi minus fugit rerum. Suscipit tenetur illo necessitatibus totam, tempore pariatur. Suscipit eveniet quos, ullam blanditiis neque explicabo perferendis fugiat voluptate dolore quaerat labore harum quam inventore laboriosam optio aperiam ut exercitationem minus debitis nemo quasi fuga? Totam, eius quasi ipsa ab earum dolorum provident unde autem, eaque nesciunt animi beatae aliquam voluptate odio maiores eos minima sit fugit voluptatibus. Odit iure dignissimos voluptate dicta eveniet temporibus sed explicabo, laudantium debitis, cupiditate, dolor beatae eos. At aperiam quod incidunt eum magni nam minus corporis nostrum tempora quaerat deserunt quae vero, doloremque quas! Porro, libero eaque! Ea consectetur similique labore praesentium laborum id ducimus ipsa eveniet. Praesentium pariatur, optio velit quisquam dolorem illum aut et tempore, incidunt voluptatibus a labore inventore! Optio eligendi dolores, ipsam quasi sunt rerum sed debitis odio officiis distinctio iste iure magni iusto vero, ab repellat suscipit nulla, commodi provident beatae ipsa? Unde, deserunt. Similique voluptas, laudantium quam autem eveniet facere ad expedita fugit ut porro mollitia asperiores adipisci atque nihil nemo iure cumque aut totam, aperiam suscipit quis fuga. Laboriosam blanditiis laborum error vel doloribus commodi, eius labore perspiciatis nostrum excepturi soluta aut. Et consequuntur quidem cumque! Officiis quod nesciunt doloribus, consequuntur asperiores culpa, obcaecati ipsa nam iure error nostrum perspiciatis eum impedit repudiandae officia dolore. Debitis qui vitae officia quod, est, ad molestias quia, consectetur dolore cumque recusandae quibusdam ab illum accusantium beatae voluptas iure suscipit. Perspiciatis ea earum aperiam consequuntur delectus quisquam enim rerum voluptatibus iure aspernatur.
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur, omnis. Dolores similique obcaecati culpa magnam animi, consectetur ullam quia voluptatibus sunt nulla rerum vitae omnis cum enim cumque iusto corporis perferendis illum totam et vel, sint porro reiciendis? Impedit eum aut ipsum tempora deserunt vero, totam voluptatibus error ullam quam, tempore rerum harum? Incidunt, nulla quidem. Incidunt ea esse quia voluptatibus nemo ipsum excepturi, quod a harum, et porro optio, aut officia placeat vero debitis adipisci autem dolorum eos voluptatum magni obcaecati sit vitae cum. Corporis, ea. Deserunt impedit doloribus repudiandae libero perspiciatis molestiae nostrum aperiam, ipsum aliquam aut iure dolore quaerat mollitia nihil quibusdam veritatis alias quam accusamus pariatur temporibus asperiores excepturi nesciunt, ex eos. Quo exercitationem dolore ut perferendis, facilis velit laboriosam excepturi totam dicta placeat accusamus, consectetur ratione expedita sit at rem dolor odit. Aspernatur aut, eligendi asperiores odio dolorem ipsum nemo nobis inventore itaque dolore vitae quidem voluptatibus veritatis facilis perferendis voluptatem expedita nisi minus fugit rerum. Suscipit tenetur illo necessitatibus totam, tempore pariatur. Suscipit eveniet quos, ullam blanditiis neque explicabo perferendis fugiat voluptate dolore quaerat labore harum quam inventore laboriosam optio aperiam ut exercitationem minus debitis nemo quasi fuga? Totam, eius quasi ipsa ab earum dolorum provident unde autem, eaque nesciunt animi beatae aliquam voluptate odio maiores eos minima sit fugit voluptatibus. Odit iure dignissimos voluptate dicta eveniet temporibus sed explicabo, laudantium debitis, cupiditate, dolor beatae eos. At aperiam quod incidunt eum magni nam minus corporis nostrum tempora quaerat deserunt quae vero, doloremque quas! Porro, libero eaque! Ea consectetur similique labore praesentium laborum id ducimus ipsa eveniet. Praesentium pariatur, optio velit quisquam dolorem illum aut et tempore, incidunt voluptatibus a labore inventore! Optio eligendi dolores, ipsam quasi sunt rerum sed debitis odio officiis distinctio iste iure magni iusto vero, ab repellat suscipit nulla, commodi provident beatae ipsa? Unde, deserunt. Similique voluptas, laudantium quam autem eveniet facere ad expedita fugit ut porro mollitia asperiores adipisci atque nihil nemo iure cumque aut totam, aperiam suscipit quis fuga. Laboriosam blanditiis laborum error vel doloribus commodi, eius labore perspiciatis nostrum excepturi soluta aut. Et consequuntur quidem cumque! Officiis quod nesciunt doloribus, consequuntur asperiores culpa, obcaecati ipsa nam iure error nostrum perspiciatis eum impedit repudiandae officia dolore. Debitis qui vitae officia quod, est, ad molestias quia, consectetur dolore cumque recusandae quibusdam ab illum accusantium beatae voluptas iure suscipit. Perspiciatis ea earum aperiam consequuntur delectus quisquam enim rerum voluptatibus iure aspernatur.
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aspernatur, omnis. Dolores similique obcaecati culpa magnam animi, consectetur ullam quia voluptatibus sunt nulla rerum vitae omnis cum enim cumque iusto corporis perferendis illum totam et vel, sint porro reiciendis? Impedit eum aut ipsum tempora deserunt vero, totam voluptatibus error ullam quam, tempore rerum harum? Incidunt, nulla quidem. Incidunt ea esse quia voluptatibus nemo ipsum excepturi, quod a harum, et porro optio, aut officia placeat vero debitis adipisci autem dolorum eos voluptatum magni obcaecati sit vitae cum. Corporis, ea. Deserunt impedit doloribus repudiandae libero perspiciatis molestiae nostrum aperiam, ipsum aliquam aut iure dolore quaerat mollitia nihil quibusdam veritatis alias quam accusamus pariatur temporibus asperiores excepturi nesciunt, ex eos. Quo exercitationem dolore ut perferendis, facilis velit laboriosam excepturi totam dicta placeat accusamus, consectetur ratione expedita sit at rem dolor odit. Aspernatur aut, eligendi asperiores odio dolorem ipsum nemo nobis inventore itaque dolore vitae quidem voluptatibus veritatis facilis perferendis voluptatem expedita nisi minus fugit rerum. Suscipit tenetur illo necessitatibus totam, tempore pariatur. Suscipit eveniet quos, ullam blanditiis neque explicabo perferendis fugiat voluptate dolore quaerat labore harum quam inventore laboriosam optio aperiam ut exercitationem minus debitis nemo quasi fuga? Totam, eius quasi ipsa ab earum dolorum provident unde autem, eaque nesciunt animi beatae aliquam voluptate odio maiores eos minima sit fugit voluptatibus. Odit iure dignissimos voluptate dicta eveniet temporibus sed explicabo, laudantium debitis, cupiditate, dolor beatae eos. At aperiam quod incidunt eum magni nam minus corporis nostrum tempora quaerat deserunt quae vero, doloremque quas! Porro, libero eaque! Ea consectetur similique labore praesentium laborum id ducimus ipsa eveniet. Praesentium pariatur, optio velit quisquam dolorem illum aut et tempore, incidunt voluptatibus a labore inventore! Optio eligendi dolores, ipsam quasi sunt rerum sed debitis odio officiis distinctio iste iure magni iusto vero, ab repellat suscipit nulla, commodi provident beatae ipsa? Unde, deserunt. Similique voluptas, laudantium quam autem eveniet facere ad expedita fugit ut porro mollitia asperiores adipisci atque nihil nemo iure cumque aut totam, aperiam suscipit quis fuga. Laboriosam blanditiis laborum error vel doloribus commodi, eius labore perspiciatis nostrum excepturi soluta aut. Et consequuntur quidem cumque! Officiis quod nesciunt doloribus, consequuntur asperiores culpa, obcaecati ipsa nam iure error nostrum perspiciatis eum impedit repudiandae officia dolore. Debitis qui vitae officia quod, est, ad molestias quia, consectetur dolore cumque recusandae quibusdam ab illum accusantium beatae voluptas iure suscipit. Perspiciatis ea earum aperiam consequuntur delectus quisquam enim rerum voluptatibus iure aspernatur.
+                  </div>
+                </div>
+              </div>
+              <script type="syntaxhighlighter" class="brush: xml;">
+                <div class="lnb-area">
+                  <div class="lnb-list">
+                    <a class="btn-two-depth" href="javascript:"><span>menu1</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                    <div class="three-depth-wrap">
+                      <a class="btn-three-depth" href="javascript:"><span>menu1-1</span></a>
+                      <a class="btn-three-depth" href="javascript:"><span>menu1-2</span></a>
+                      <a class="btn-three-depth" href="javascript:"><span>menu1-3</span></a>
+                    </div>
+                  </div>
+                  <div class="lnb-list">
+                    <a class="btn-two-depth active" href="javascript:"><span>menu2</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                    <div class="three-depth-wrap">
+                      <a class="btn-three-depth active" href="javascript:"><span>menu2-1</span></a>
+                      <a class="btn-three-depth active" href="javascript:"><span>menu2-2</span></a>
+                    </div>
+                  </div>
+                  <div class="lnb-list">
+                    <a class="btn-two-depth single-menu" href="javascript:"><span>menu3</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                  </div>
+                </div>
+              </script>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -37,6 +37,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             },
         },
         immediately : function(){
+
+            //반려사유, 자격증 번호 노출
+            ctrl.obj.find("select[name=issueCd]").change();
+
             // 유효성 검사
             $formObj.validation({
                 before: function(){

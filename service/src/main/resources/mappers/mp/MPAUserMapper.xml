@@ -890,5 +890,52 @@
 
     </select>
 
+    <!--
+쿼리명 : MPAUserMapper.selectcmpnMst
+설  명 : 부품사 회사 개수 조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.12.08    양현우       최초생성
+-->
+    <select id="selectcmpnMst" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
+        select /* MPAUserMapper.selectcmpnMst */
+            count(*)
+        from cp_cmpn_mst
+        where 1=1
+          and bsnm_no = #{bsnmNo}
+
+    </select>
+
+
+    <!--
+          쿼리명 : MPAUserMapper.insertUserCmpnRel
+          설  명 :  부품사 회원회사관계 등록
+            수정일      수정자       수정내용
+          ==========   ========   ==============
+          2023.12.08    양현우       최초생성
+          -->
+    <insert id="insertUserCmpnRel" parameterType="MPAUserDto">
+        insert into co_mem_cmpn_rel /* MPAUserMapper.insertUserCmpnRel */
+            (  mem_seq
+            , bsnm_no
+            , reg_id
+            , reg_ip
+            , reg_dtm
+            , mod_id
+            , mod_ip
+            , mod_dtm
+            )
+        values(
+            #{memSeq}
+          , #{workBsnmNo}
+          , #{regId}
+          , #{regIp}
+          , now()
+          , #{regId}
+          , #{regIp}
+          , now()
+            )
+    </insert>
+
 
 </mapper>

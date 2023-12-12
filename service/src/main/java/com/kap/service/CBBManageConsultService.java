@@ -61,4 +61,6 @@ public interface CBBManageConsultService {
      * 컨설팅 기술 지도 관리 수정
      */
     public int updateManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception;
+
+    public CBBManageConsultInsertDTO selectTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultSearchDTO pCBBManageConsultSearchDTO) throws Exception;
 }

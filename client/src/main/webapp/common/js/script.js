@@ -3,6 +3,7 @@ var _isScrollTop;          // scrollTop 변수
 var comeBackElement;
 let kvTitleChangeMotion;
 var _isPlanMove = false; // 전체 교육 일정 해당 월로 위치 한번만 이동하기 위한 변수
+var _flowInterval;
 
 var commonScript = (function(){
   return {
@@ -70,6 +71,8 @@ var commonScript = (function(){
                 //commonScript.scrollFn();
               });
             });
+          }
+          if($(".only-vertical-view").html() == '') {
             $(".only-vertical-view").empty().load("/html/vertical-view.html");
           }
         }        
@@ -260,35 +263,6 @@ var commonScript = (function(){
 
       // [재단정보 > 재단소개 > 연혁], history
       if($(".year-wrap").size() > 0){
-        // $(window).resize(function() {
-        //   if($(window).innerWidth() > 1500 && isPc) {
-        //     isPc = !isPc;
-        //     isPc2 = true;
-        //     isMobile = true;
-        //     headerH = $($header).innerHeight();
-        //   } else if($(window).innerWidth() < 1500 && $(window).innerWidth() > 1024 && isPc2) {
-        //     isPc2 = !isPc2;
-        //     isPc = true;
-        //     isMobile = true;
-        //     headerH = $($header).innerHeight();
-        //   } else if($(window).innerWidth() < 1024 && isMobile) {
-        //     isMobile = !isMobile;
-        //     isPc = true;
-        //     isPc2 = true;
-        //     headerH = $($header).innerHeight();
-        //   }
-        // }
-                // $(window).resize(function() {
-        //   historyHeaderHeight = $("#header").height();
-
-        //   console.log($("#header").height());
-
-        //   $(".history-item").each((idx, item) => {
-        //       gsap.scrollTrigger.update(item, {
-        //           start: `top ${$("#header").height()}`
-        //       });
-        //   });
-        // });
         let isHistoryScroll = true;
         let historyHeaderHeight = $("#header").height();
         let yearValue;
@@ -791,12 +765,6 @@ var commonScript = (function(){
             $(".notice-rolling li:first-child").addClass("current");
             $(".notice-rolling li:nth-child(2)").addClass("next");
             $(".notice-rolling li:last-child").addClass("prev");
-
-            // if($(window).width() >= 1024) {
-            //   if(!$("#header").hasClass("srch-open")) {
-            //     $("body").removeClass("stop-scroll");
-            //   }
-            // }
           }
         });
         $("#header .all-menu .gnb .two-pack > li").off().on("mouseenter focusin", function() {
@@ -814,7 +782,13 @@ var commonScript = (function(){
         });
 
         // 유틸 - 전체메뉴, 탭이동 포커스 조정
-        const $allMenuLastLi = $($("#header .all-menu .gnb").find(".three-pack > li a").last());
+        let $allMenuLastLi;
+
+        if($(".non-member-apply").size() > 0) { // non-member-apply 있으면
+          $allMenuLastLi = $(".non-member-apply");
+        } else { // non-member-apply 없으면
+          $allMenuLastLi = $($("#header .all-menu .gnb").find(".three-pack > li a").last());
+        }
 
         $($allMenuLastLi).focus().on("keydown", function(e) {
           if ((e.keyCode || e.which) == 9 && !e.shiftKey) {
@@ -1177,7 +1151,7 @@ var commonScript = (function(){
             let kvTitleChangeMotion = gsap.timeline({
               scrollTrigger: {
                 trigger: $(".sub-top-vis-area.basic-page .page-tit-area"),
-                start: "top " + $(".sub-top-vis-area.basic-page").offset().top,
+                start: "top-=1px " + $(".sub-top-vis-area.basic-page").offset().top,
                 endTrigger: ".sub-top-vis-area.basic-page .img-area",
                 //end:"top-=50% top",
                 end:"top top",
@@ -1240,6 +1214,10 @@ var commonScript = (function(){
 
         if($(this).parents(".layer-popup").hasClass("allTrainingSchedulePopup")){
           $(this).parents(".layer-popup").removeClass("open");
+        }
+
+        if($(this).parents(".layer-popup").hasClass("estiCertiPop")){
+          clearInterval(_flowInterval)
         }
       });
 
@@ -1460,6 +1438,10 @@ function openPopup(popName, comebackEl) {
     $(".accepting-fixed-area").css("z-index", dimdIdxNum);
   }
 
+  // 모달 오픈 사용자 이벤트 발생
+  var event = $.Event("onModalOpen");
+  designatedPopup.trigger(event);
+
   gsap.delayedCall(0.1, function () {
     if(!$(comeBackElement).hasClass("agree")){ // 뉴스레터 수신 동의 구별 위한 if문 추가
       if(window.innerWidth > 1023){
@@ -1481,9 +1463,12 @@ function openPopup(popName, comebackEl) {
         })
       }
       
-        $(".dimd").css("z-index", `${ dimdIdxNum + $(".layer-popup:visible").length }`).stop(true, true).fadeIn(300);
+      $(".dimd").css("z-index", `${ dimdIdxNum + $(".layer-popup:visible").length }`).stop(true, true).fadeIn(300);
       designatedPopup.attr("tabindex", 0).focus();
       $("body").addClass("stop-scroll");
+      // 모달 오픈 사용자 이벤트 발생
+      event = $.Event("onModalOpenComplete");
+      designatedPopup.trigger(event);
     }
   });
 
@@ -1518,7 +1503,7 @@ function swiperInitFn(){
 var subTrainingSwiper = [];
 function trainingSwperInitFn(){
   // [공통 - 교육/세미나] swiper
-  if (window.innerWidth > 1023) {
+  // if (window.innerWidth > 1023) {
     if(!$("#wrap").hasClass("main")){
       if($(".training-swiper-area").size() > 0){
         $(".training-swiper-area.swiper-role .training-swiper").each(function(index, item){
@@ -1542,17 +1527,18 @@ function trainingSwperInitFn(){
         });
       }
     }
-  }else if(window.innerWidth <= 1023) {
-    if(!$("#wrap").hasClass("main")){
-      $(".training-swiper-area.swiper-role .training-swiper").each(function(index, item){
-        if(subTrainingSwiper[index] != undefined){
-          console.log(subTrainingSwiper[index]);
-          subTrainingSwiper[index].destroy();
-          subTrainingSwiper[index] = undefined;
-        }
-      });
-    }
-  }
+  // }
+  // else if(window.innerWidth <= 1023) {
+  //   if(!$("#wrap").hasClass("main")){
+  //     $(".training-swiper-area.swiper-role .training-swiper").each(function(index, item){
+  //       if(subTrainingSwiper[index] != undefined){
+  //         console.log(subTrainingSwiper[index]);
+  //         subTrainingSwiper[index].destroy();
+  //         subTrainingSwiper[index] = undefined;
+  //       }
+  //     });
+  //   }
+  // }
 }
 
 // 전체 교육 일정 레이어 팝업 관련 함수
@@ -1595,21 +1581,25 @@ function schedulePopupFn(){
 // 흐르는 텍스트 함수
 function flowTxtImgFn(){
   if($(".flow-wrap").size() > 0){
-    let fontWidthSum = $(".flow-wrap .flow-list").outerWidth(true);
+    if($(".flow-wrap").parents().hasClass("layer-popup")){
+      if($(".flow-wrap").parents(".layer-popup").is(":visible")){
+        let fontWidthSum = $(".flow-wrap .flow-list").outerWidth(true);
 
-    while(fontWidthSum < window.innerWidth + $(".flow-wrap .flow-list").eq(0).outerWidth(true)){
-      const repeatObject = document.querySelector(".flow-wrap .flow-list");
-      const newNode = repeatObject.cloneNode(true);
-      repeatObject.after(newNode);
-      fontWidthSum = fontWidthSum + $(".flow-wrap .flow-list").eq(-1).outerWidth(true);
-    };
-  
-    setInterval(function() {
-      if(parseInt($(".flow-wrap").css("left").split("p")[0]) < -$(".flow-wrap .flow-list").eq(0).outerWidth(true)) {
-        $(".flow-wrap").css("left", 0);
+        while(fontWidthSum < window.innerWidth + $(".flow-wrap .flow-list").eq(0).outerWidth(true)){
+          const repeatObject = document.querySelector(".flow-wrap .flow-list");
+          const newNode = repeatObject.cloneNode(true);
+          repeatObject.after(newNode);
+          fontWidthSum = fontWidthSum + $(".flow-wrap .flow-list").eq(-1).outerWidth(true);
+        };
+      
+        _flowInterval = setInterval(function() {
+          if(parseInt($(".flow-wrap").css("left").split("p")[0]) < -$(".flow-wrap .flow-list").eq(0).outerWidth(true)) {
+            $(".flow-wrap").css("left", 0);
+          }
+          $(".flow-wrap").css("left", parseInt($(".flow-wrap").css("left").split("p")[0]) - 2);
+        }, 20);
       }
-      $(".flow-wrap").css("left", parseInt($(".flow-wrap").css("left").split("p")[0]) - 2);
-    }, 20);
+    }
   }
 }
 
@@ -1672,3 +1662,76 @@ function printFn(){
 
   return false;*/	
 }
+
+
+
+
+// 세로 최적화 안내
+function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올라왔는지 아닌지 체크 후  only-vertical-view 노출,미노출 체크 
+	var agent = navigator.userAgent.toLowerCase();
+		
+	var mobileArr = new Array("iPhone", "iPod", "Android");
+	var mobileNum;
+	for(var txt in mobileArr){
+		if(navigator.userAgent.match(mobileArr[txt]) != null){
+			mobileNum = txt;
+			//alert(txt);
+			break;
+		}
+	}
+
+  if(agent.indexOf('nexus 5 build/mra58n') > -1 || agent.indexOf('Windows') > -1){
+  }else{
+    if(mobileNum > 1){ // ios 외 다른 기종 				
+      if(window.matchMedia("(orientation: portrait)").matches){
+        // 세로 모드 (평소 사용하는 각도)
+        if(typeof focusEle != "undefined"){// 키패드 올라왔을 때
+          $("body").addClass("only-vertical-view");
+          $(".only-vertical-view").addClass("on");
+        }else{
+          $("body").removeClass("only-vertical-view");
+          $(".only-vertical-view").removeClass("on");
+        }		
+        
+      }else if(window.matchMedia("(orientation: landscape)").matches){
+        // 가로 모드 (동영상 볼때 사용하는 각도)
+        $("body").addClass("only-vertical-view");
+        $(".only-vertical-view").addClass("on");
+      }
+    }else{	// ios 
+      if(agent.indexOf("version") != -1){
+        if(window.matchMedia("(orientation: portrait)").matches){
+          // 세로 모드 (평소 사용하는 각도)
+          $("body").removeClass("only-vertical-view");
+          $(".only-vertical-view").removeClass("on");
+        }else if(window.matchMedia("(orientation: landscape)").matches){
+          if(window.innerHeight < 512){
+            // 가로 모드 (동영상 볼때 사용하는 각도)
+            $("body").addClass("only-vertical-view");
+            $(".only-vertical-view").addClass("on");
+          }
+        }
+      }else{			
+        if(window.matchMedia("(orientation: portrait)").matches){
+          // 세로 모드 (평소 사용하는 각도)
+          $("body").addClass("only-vertical-view");
+          $(".only-vertical-view").addClass("on");
+        }else if(window.matchMedia("(orientation: landscape)").matches){
+          if(window.innerHeight < 512){
+            // 가로 모드 (동영상 볼때 사용하는 각도)
+            $("body").removeClass("only-vertical-view");
+            $(".only-vertical-view").removeClass("on");
+          }
+        }
+      }
+    }
+  }
+}
+
+$(window).on("orientationchange", function(event){
+  var focusEle = document.activeElement.name;
+  $("input:focus, textarea:focus").blur();
+  setTimeout(function(){
+    showBack(focusEle);
+  },280)
+});

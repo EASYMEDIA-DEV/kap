@@ -173,9 +173,19 @@ public interface CBBManageConsultMapper {
     public CBBManageConsultInsertDTO selectManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
     /**
+     * 컨설팅 이관 내역 카운트
+     */
+    public int selectTrsfGuidanceCnt(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+
+    /**
      * 컨설팅 이관 내역 등록
      */
     public int insertTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅 이관 목록 조회
+     */
+    public  List<CBBManageConsultInsertDTO> selectTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
 
 }

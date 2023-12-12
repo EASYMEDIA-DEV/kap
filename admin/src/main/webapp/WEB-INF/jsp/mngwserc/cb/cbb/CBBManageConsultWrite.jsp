@@ -22,10 +22,10 @@
             <input type="hidden" class="notRequired" id="itrdcFileSeq" name="itrdcFileSeq" value="${rtnDto.itrdcFileSeq}" />
             <input type="hidden" class="notRequired" id="impvmFileSeq" name="impvmFileSeq" value="${rtnDto.impvmFileSeq}" />
             <c:forEach var="rsumeList" items="${rtnDto.rsumeList}" varStatus="status">
-            <input type="hidden" class="notRequired" id="initVstFileSeq" name="initVstFileSeq" value="${rsumeList.initVstFileSeq}" />
-            <input type="hidden" class="notRequired" id="kickfFileSeq" name="kickfFileSeq" value="${rsumeList.kickfFileSeq}" />
-            <input type="hidden" class="notRequired" id="lvlupFileSeq" name="lvlupFileSeq" value="${rsumeList.lvlupFileSeq}" />
-            <input type="hidden" class="notRequired" id="etcFileSeq" name="etcFileSeq" value="${rsumeList.etcFileSeq}" />
+                <input type="hidden" class="notRequired" id="initVstFileSeq" name="initVstFileSeq" value="${rsumeList.initVstFileSeq}" />
+                <input type="hidden" class="notRequired" id="kickfFileSeq" name="kickfFileSeq" value="${rsumeList.kickfFileSeq}" />
+                <input type="hidden" class="notRequired" id="lvlupFileSeq" name="lvlupFileSeq" value="${rsumeList.lvlupFileSeq}" />
+                <input type="hidden" class="notRequired" id="etcFileSeq" name="etcFileSeq" value="${rsumeList.etcFileSeq}" />
             </c:forEach>
             <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${rtnDto.memSeq}" />
             <input type="hidden" class="notRequired" id="bfreMemSeq" name="bfreMemSeq" value="${rtnDto.memSeq}" />
@@ -727,7 +727,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청분야<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm listRowSizeContainer" id="" name="appctnFldCd" title="신청분야">
+                        <select class="form-control input-sm listRowSizeContainer" id="cbsnCdSelect" name="appctnFldCd" title="신청분야">
                             <c:forEach var="mngConsCdList" items="${cdDtlList.MNG_CONS_CD}" varStatus="status">
                                 <option value="${mngConsCdList.cd}" <c:if test="${rtnDto.appctnFldCd eq mngConsCdList.cd}">selected</c:if>>${mngConsCdList.cdNm} </option>
                             </c:forEach>
@@ -790,7 +790,7 @@
             </fieldset>
             <ul class="nav nav-tabs" id="myTabs">
                 <li class="active tabClick"><a data-toggle="tab" href="#techGuidance">사업진행 상세</a></li>
-                <li class="tabClick"><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
+                <li class="tabClick srvResult"><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
             </ul>
             <div class="tab-content">
                 <!-- 진행 정보 -->
@@ -860,19 +860,6 @@
                             </fieldset>
                             <fieldset>
                                 <div class="form-group text-sm">
-                                    <label class="col-sm-1 control-label">초도방문일</label>
-                                    <div class="input-group col-md-2" style="z-index:0;">
-                                        <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${today}" title="초도방문일"/>
-                                        <span class="input-group-btn" style="z-index:0;">
-                                            <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-                                                <em class="ion-calendar"></em>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">초도방문결과</label>
                                     <div class="col-sm-11">
                                         <div class="col-sm-2">
@@ -937,7 +924,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${today}"title="지도착수일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guidePscndDt" id="guidePscndDt" value="${today}"title="컨설팅현황일자" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1064,14 +1051,15 @@
                                                 <td class="text-center"></td>
                                                 <td class="text-center">
                                                     <div class="input-group form-date-group mr-sm">
-                                                        <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="srvStrtDtm" id="srvStrtDtm" title="설문시작일시" readonly="readonly"/>
+                                                        <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq">
+                                                        <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="srvStrtDtm" id="srvStrtDtm" value="${today}" title="설문시작일시" readonly="readonly"/>
                                                         <span class="input-group-btn" style="z-index:0;">
                                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                                 <em class="ion-calendar"></em>
                                                             </button>
                                                         </span>
                                                         <span class="input-group-addon bg-white b0">~</span>
-                                                        <input type="text" class="form-control input-sm datetimepicker_endDt notRequired" name="srvEndDtm" id="srvEndDtm" title="설문종료일시" readonly="readonly"/>
+                                                        <input type="text" class="form-control input-sm datetimepicker_endDt notRequired" name="srvEndDtm" id="srvEndDtm" value="${today}" title="설문종료일시" readonly="readonly"/>
                                                         <span class="input-group-btn" style="z-index:0;">
                                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                                 <em class="ion-calendar"></em>
@@ -1099,7 +1087,297 @@
                                 </div>
                             </fieldset>
                         </c:when>
-                    </c:choose>
+                    <c:otherwise>
+                       <c:forEach var="rsumeList" items="${rtnDto.rsumeList}" varStatus="status">
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">사전심사결과</label>
+                                <div class="col-sm-11">
+                                    <div class="col-sm-2">
+                                        <select class="form-control input-sm listRowSizeContainer notRequired" id="bfJdgmtRslt" name="bfreJdgmtRsltCd" title="사전심사결과">
+                                            <option value="">선택</option>
+                                            <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
+                                                <option value="${bfJdgmtRsltList.cd}" <c:if test="${rsumeList.bfreJdgmtRsltCd eq bfJdgmtRsltList.cd}">selected</c:if> >${bfJdgmtRsltList.cdNm} </option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 control-label"></label>
+                                <div class="col-sm-11" style="padding-left: 30px;">
+                                    <textarea class="form-control input-sm notRequired" id="bfreJdgmtRsltCntn" name="bfreJdgmtRsltCntn" title="사전심사결과 의견" placeholder="사전심사결과 의견 입력" maxlength="500">${rsumeList.bfreJdgmtRsltCntn}</textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label" style="z-index:0;">방문일</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group" style="z-index:0;width: 220px;">
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="vstDt" id="vstDt" value="${rsumeList.vstDt}" title="방문일" />
+                                        <span class="input-group-btn" style="z-index:0;">
+                                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 control-label">컨설팅 완료 예정일</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group" style="z-index:0;width: 220px;">
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="cnstgCmpltnSchdlDt" id="cnstgCmpltnSchdlDt" value="${rsumeList.cnstgCmpltnSchdlDt}" title="컨설팅 완료예정일" />
+                                        <span class="input-group-btn" style="z-index:0;">
+                                            <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                <em class="ion-calendar"></em>
+                                            </button>
+                                        </span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label" style="z-index:0;">방문자</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control input-sm notRequired" name="vstrNm" id="vstrNm" value="${rsumeList.vstrNm}" placeholder="방문자 입력"/>
+                                </div>
+                                <label class="col-sm-1 control-label">면담자</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control input-sm notRequired" name="ntrvrNm" id="ntrvrNm" value="${rsumeList.ntrvrNm}" placeholder="면담자 입력"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">초도방문결과</label>
+                                <div class="col-sm-11">
+                                    <div class="col-sm-2">
+                                        <select class="form-control input-sm listRowSizeContainer initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과">
+                                            <option value="">선택</option>
+                                            <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
+                                                <option value="${bfJdgmtRsltList.cd}" <c:if test="${rsumeList.initVstRsltCd eq bfJdgmtRsltList.cd}">selected</c:if>>${bfJdgmtRsltList.cdNm} </option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label"></label>
+                                    <div class="col-sm-6" style="padding-left: 30px;">
+                                        <textarea class="form-control input-sm notRequired" id="initVstOpnnCntn" name="initVstOpnnCntn" placeholder="초도방문의견 입력" maxlength="500">${rsumeList.initVstOpnnCntn}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">담당위원</label>
+                                <div class="col-sm-3">
+                                    <input type="hidden" class="notRequired" name="cmssrSeq" value="${rsumeList.cmssrSeq}">
+                                    <input type="text" class="form-control input-sm notRequired" readonly="readonly" name="cmssrName" value="${rsumeList.cmssrName}">
+                                </div>
+                                <div class="col-sm-1">
+                                    <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
+                                </div>
+                                <label class="col-sm-1 control-label">지도구분</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control input-sm listRowSizeContainer notRequired" name="guideTypeCd" id="guideTypeCd">
+                                        <option value="">선택</option>
+                                        <c:forEach var="guideTypeCd" items="${cdDtlList.GUIDE_TYPE_CD}" varStatus="status">
+                                            <option value="${guideTypeCd.cd}" <c:if test="${rsumeList.guideTypeCd eq guideTypeCd.cd}">selected</c:if>>${guideTypeCd.cdNm}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">킥오프일</label>
+                                <div class="col-sm-4">
+                                    <div class="input-group" style="z-index:0;width: 220px;">
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired" value="${rsumeList.guideKickfDt}" name="guideKickfDt" value="" title="킥오프일" />
+                                        <span class="input-group-btn" style="z-index:0;">
+                                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
+                                    </div>
+                                </div>
+                                <label class="col-sm-1 control-label">컨설팅 현황</label>
+                                <div class="col-sm-2">
+                                    <select class="form-control input-sm listRowSizeContainer notRequired" name="guidePscndCd" id="guidePscndCd" >
+                                        <option value="">선택</option>
+                                        <c:forEach var="cnstgPscndCd" items="${cdDtlList.CNSTG_PSCND}" varStatus="status">
+                                            <option value="${cnstgPscndCd.cd}" <c:if test="${rsumeList.guidePscndCd eq cnstgPscndCd.cd}">selected</c:if> >${cnstgPscndCd.cdNm}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="input-group" style="z-index:0;width: 220px;">
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guidePscndDt" id="guidePscndDt" value="${rsumeList.guidePscndDt}"title="컨설팅현황일자" />
+                                        <span class="input-group-btn" style="z-index:0;">
+                                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">컨설팅 연장실적</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltCnt" placeholder="횟수 입력" value="${rsumeList.cnstgXtnsnRsltCnt}">
+                                </div>
+                                <label class="col-sm-1 control-label" style="width: 40px; padding-left: 9px;padding-right: 9px;">회 /</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltMnth" placeholder="개월 수 입력" value="${rsumeList.cnstgXtnsnRsltMnth}">
+                                </div>
+                                <label class="col-sm-1 control-label" style="width: 60px; padding-left: 9px;padding-right: 9px;">개월</label>
+                                <label class="col-sm-1 control-label">컨설팅 기간</label>
+                                <div class="col-sm-2">
+                                    <input type="text" class="form-control input-sm notRequired cnstgTerm" readonly="readonly" name="cnstgTerm" value="${rsumeList.cnstgTerm}">
+                                </div>
+                                <label class="col-sm-2 control-label" style="width: 60px; padding-left: 9px;padding-right: 9px;">개월</label>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">연기/취소 사유</label>
+                                <div class="col-sm-5">
+                                    <textarea class="form-control input-sm notRequired" id="xtnsnCnclRsn" name="xtnsnCnclRsn" placeholder="연기/취소 사유 입력" maxlength="500">${rsumeList.xtnsnCnclRsn}</textarea>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">초도방문자료 첨부파일</label>
+                                <div class="col-sm-10 col-md-11">
+                                    <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                    <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                    <div class="dropzone attachFile notRequired" data-file-field-nm="initVstFileSeq" data-file-extn="${fileExtns}" data-max-file-size="104857600" data-max-file-cnt="1" data-title="첨부파일">
+                                        <div class="dz-default dz-message">
+                                            <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-bold mt">
+                                        ※  파일 확장자(${fileExtns}) / 최대 용량(<fmt:formatNumber value="${104857600 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">킥오프자료 첨부파일</label>
+                                <div class="col-sm-10 col-md-11">
+                                    <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                    <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                    <div class="dropzone attachFile notRequired" data-file-field-nm="kickfFileSeq" data-file-extn="${fileExtns}" data-max-file-size="104857600" data-max-file-cnt="1" data-title="첨부파일">
+                                        <div class="dz-default dz-message">
+                                            <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-bold mt">
+                                        ※  파일 확장자(${fileExtns}) / 최대 용량(<fmt:formatNumber value="${104857600 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">랩업자료 첨부파일</label>
+                                <div class="col-sm-10 col-md-11">
+                                    <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                    <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                    <div class="dropzone attachFile notRequired" data-file-field-nm="lvlupFileSeq" data-file-extn="${fileExtns}" data-max-file-size="104857600" data-max-file-cnt="1" data-title="첨부파일">
+                                        <div class="dz-default dz-message">
+                                            <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-bold mt">
+                                        ※ 파일 확장자(${fileExtns}) / 최대 용량(<fmt:formatNumber value="${104857600 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">기타사업자료 첨부파일</label>
+                                <div class="col-sm-10 col-md-11">
+                                    <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                    <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                    <div class="dropzone attachFile notRequired" data-file-field-nm="etcFileSeq" data-file-extn="${fileExtns}" data-max-file-size="104857600" data-max-file-cnt="1" data-title="첨부파일">
+                                        <div class="dz-default dz-message">
+                                            <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                        </div>
+                                    </div>
+                                    <p class="text-bold mt">
+                                        ※  파일 확장자(${fileExtns}) / 최대 용량(<fmt:formatNumber value="${104857600 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">만족도조사<span class="star text-danger"> *</span></label>
+                                <div class="col-sm-11">
+                                    <button type="button" class="btn btn-inverse btn-sm srvSearch">
+                                        설문 검색
+                                    </button>
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">설문유형</th>
+                                            <th class="text-center">제목</th>
+                                            <th class="text-center">설문기간</th>
+                                            <th class="text-center"></th>
+                                        </tr>
+                                        </thead>
+                                        <!-- 리스트 목록 결과 -->
+                                        <tbody id="listContainer3">
+                                        <tr>
+                                            <td class="text-center">컨설팅 만족도 조사</td>
+                                            <td class="text-center">${rsumeList.srvNm}</td>
+                                            <td class="text-center">
+                                                <div class="input-group form-date-group mr-sm">
+                                                    <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" value="${rsumeList.srvSeq}">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="srvStrtDtm" id="srvStrtDtm" value="${ kl:convertDate(rsumeList.srvStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="설문시작일시" readonly="readonly"/>
+                                                    <span class="input-group-btn" style="z-index:0;">
+                                                            <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
+                                                                <em class="ion-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                    <span class="input-group-addon bg-white b0">~</span>
+                                                    <input type="text" class="form-control input-sm datetimepicker_endDt notRequired" name="srvEndDtm" id="srvEndDtm" value="${ kl:convertDate(rsumeList.srvEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="설문종료일시" readonly="readonly"/>
+                                                    <span class="input-group-btn" style="z-index:0;">
+                                                            <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
+                                                                <em class="ion-calendar"></em>
+                                                            </button>
+                                                        </span>
+                                                </div>
+
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-inverse btn-sm srvReset">
+                                                    설문 초기화
+                                                </button>
+                                            </td>
+                                        </tr>
+                                            <%--<tr data-total-count="0">
+                                                <td colspan="4" class="text-center">
+                                                    검색결과가 없습니다.<br>
+                                                    (등록된 데이터가 없습니다.)
+                                                </td>
+                                            </tr>--%>
+                                        <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" disabled="true">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </fieldset>
+                       </c:forEach>
+                    </c:otherwise>
+                </c:choose>
 
                     <h5>등록/수정이력</h5>
                     <table class="table">
@@ -1127,9 +1405,118 @@
                 </div>
 
                 <!-- 만족도 결과 -->
-                <div id="svResult" class="tab-pane fade">
+                    <div id="svResult" class="tab-pane fade">
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <div class="col-sm-11">
+                                    <h6 class="mt0"><em class="ion-play mr-sm"></em>설문정보</h6>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <c:forEach var="rsumeList" items="${rtnDto.rsumeList}" varStatus="status">
+                            <c:if test="${not empty rsumeList}">
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">설문명<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static">
+                                                    ${rsumeList.srvNm}
+                                            </p>
+                                        </div>
+                                        <label class="col-sm-1 control-label">설문기간<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static">
+                                                    ${kl:convertDate(rsumeList.srvStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')} ~ ${kl:convertDate(rsumeList.srvEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">신청자<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static">${rtnDto.name}
+                                            </p>
+                                        </div>
+                                        <label class="col-sm-1 control-label">설문 참여자<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">참여자 연락처<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static">${rtnDto.hpNo}
+                                            </p>
+                                        </div>
+                                        <label class="col-sm-1 control-label">참여자 직급<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static pstnText">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">담당위원<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static cmssrName">
+                                            </p>
+                                        </div>
+                                        <label class="col-sm-1 control-label">신청 분야/업종<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static cbsnText">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">지도구분<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static guideTypeText">
+                                            </p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <div class="table-responsive ">
+                                            <table class="table text-sm">
+                                                <tbody>
+                                                <tr>
+                                                    <th>종합 점수</th>
+                                                    <th>지도실적(50)</th>
+                                                    <th>의사소통 능력(5)</th>
+                                                    <th>기획력(10)</th>
+                                                    <th>실행력(15)</th>
+                                                    <th>마인드(5)</th>
+                                                    <th>전문지식(15)</th>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">100.0</td>
+                                                    <td class="text-center">50.0</td>
+                                                    <td class="text-center">5.0</td>
+                                                    <td class="text-center">10.0</td>
+                                                    <td class="text-center">15.0</td>
+                                                    <td class="text-center">5.0</td>
+                                                    <td class="text-center">15.0</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </c:if>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
+        </div>
     </div>
     </c:when>
     </c:choose>

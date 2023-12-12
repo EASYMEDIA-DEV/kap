@@ -24,14 +24,14 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         //사용자 권한 체크
         registry.addInterceptor(cOAuthenticInterceptor()).addPathPatterns("/my-page/**")
-                .excludePathPatterns("/**/*.*")
-                .excludePathPatterns("/error")
+                .excludePathPatterns("/my-page/**/*.*")
                 .order(1);
 
-        //web, mbl jsp
+        //web, mbl jsp(header, footer)
         registry.addInterceptor(cOViewInterceptor()).addPathPatterns("/**").order(2)
                 .excludePathPatterns("/**/*.*")
                 .excludePathPatterns("/my-page/sq-license/complete/insert")
+                .excludePathPatterns("/file/upload")
                 .excludePathPatterns("/error");
 
         //뒤로가기 쿠키 삭제

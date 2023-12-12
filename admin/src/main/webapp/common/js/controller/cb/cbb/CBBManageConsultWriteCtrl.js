@@ -25,7 +25,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $formObj.find("#pageIndex").val(page);
         }
 
-        cmmCtrl.listFrmAjax(function(respObj) {
+        /*cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
             ctrl.obj.find("#trsfListContainer").html(respObj);
@@ -40,7 +40,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
 
-        }, "/mngwserc/cb/cbb/trsfList", $formObj, "GET", "html");
+        }, "/mngwserc/cb/cbb/trsfList", $formObj, "GET", "html");*/
     }
 
     var callbackAjaxDelete = function (data) {
@@ -519,8 +519,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         search(1);
                     }
                 }
+            },
+            srvResult : {
+                event : {
+                    click : function(){
+                        var pstnText = $("#pstnCdSelect option:selected").text();
+                        $(".pstnText").text(pstnText);
+                        var cbsnText =  $("#cbsnCdSelect option:selected").text();
+                        $(".cbsnText").text(cbsnText);
+                        var guideTypeText = $("#guideTypeCd option:selected").text();
+                        $(".guideTypeText").text(guideTypeText);
+                        var cmssrName = $("input[name='cmssrName']").val();
+                        $(".cmssrName").text(cmssrName);
+                    }
+                }
             }
-
         },
         immediately: function () {
 
@@ -643,6 +656,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var srvEndDtm = $("input[name='srvEndDtm']").val();
                         if (!srvEndDtm) {
                             $("input[name='srvEndDtm']").prop("disabled", true);
+                        }
+                        var cnstgXtnsnRsltCnt = $("input[name='cnstgXtnsnRsltCnt']").val();
+                        if (!cnstgXtnsnRsltCnt) {
+                            $("input[name='cnstgXtnsnRsltCnt']").prop("disabled", true);
+                        }
+                        var cnstgXtnsnRsltMnth = $("input[name='cnstgXtnsnRsltMnth']").val();
+                        if (!cnstgXtnsnRsltMnth) {
+                            $("input[name='cnstgXtnsnRsltMnth']").prop("disabled", true);
+                        }
+                        var cnstgTerm = $("input[name='cnstgTerm']").val();
+                        if (!cnstgTerm) {
+                            $("input[name='cnstgTerm']").prop("disabled", true);
                         }
 
                         $("#cmpnNm").val(cmpnNm);

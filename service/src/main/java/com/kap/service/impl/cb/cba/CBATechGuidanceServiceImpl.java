@@ -174,7 +174,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             pCBATechGuidanceInsertDTO.setAppctnTypeList(appctnTypeList);
 
         }
-        CBATechGuidanceUpdateDTO CBATechGuidanceUpdateDTO = new CBATechGuidanceUpdateDTO();
         pCBATechGuidanceInsertDTO.setRsumeList(cBATechGuidanceMapper.selectTechGuidanceRsume(pCBATechGuidanceInsertDTO));
 
         return pCBATechGuidanceInsertDTO;

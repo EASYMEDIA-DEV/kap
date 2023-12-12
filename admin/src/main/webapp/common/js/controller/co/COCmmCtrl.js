@@ -621,6 +621,7 @@ var cmmCtrl = (function(){
 			dictInvalidFileType : "errorAcceptedExtension",		// 파일확장자오류
 			dictMaxFilesExceeded : "errorMaxCount",				// 파일개수오류
 			init : function(){
+
 				var $dropZone = this;
 				var fielFieldValue = $(tObj).closest("form").find("input[name="+_fileFieldNm+"]").val();
 				//첨부파일 키가 있으면 이미지 조회

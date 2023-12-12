@@ -3,7 +3,6 @@ package com.kap.service.impl.cb.cbb;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.cb.cbb.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
@@ -201,7 +200,6 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             pCBBManageConsultInsertDTO.setPicInfoLIst(picInfoList);
 
         }
-        CBATechGuidanceUpdateDTO CBATechGuidanceUpdateDTO = new CBATechGuidanceUpdateDTO();
         pCBBManageConsultInsertDTO.setRsumeList(cBBManageConsultMapper.selectTechGuidanceRsume(pCBBManageConsultInsertDTO));
 
         return pCBBManageConsultInsertDTO;
@@ -947,6 +945,34 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+    }
+
+    /**
+     * 컨설팅 이관 내역 조회
+     */
+    public CBBManageConsultInsertDTO selectTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultSearchDTO pCBBManageConsultSearchDTO) throws Exception
+    {
+
+        List<CBBManageConsultInsertDTO> trsfGuidanceList = new ArrayList();
+        CBBManageConsultInsertDTO trsfDto = new CBBManageConsultInsertDTO();
+
+        COPaginationUtil page = new COPaginationUtil();
+        page.setCurrentPageNo(pCBBManageConsultInsertDTO.getPageIndex());
+        page.setRecordCountPerPage(pCBBManageConsultInsertDTO.getListRowSize());
+
+        page.setPageSize(pCBBManageConsultInsertDTO.getPageRowSize());
+
+        pCBBManageConsultInsertDTO.setFirstIndex( page.getFirstRecordIndex() );
+        pCBBManageConsultInsertDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+        page.setRecordCountPerPage(cBBManageConsultMapper.getManageConsultListCnt(pCBBManageConsultSearchDTO));
+        trsfGuidanceList = cBBManageConsultMapper.selectTrsfGuidanceList(pCBBManageConsultInsertDTO);
+        int trsfCnt = cBBManageConsultMapper.selectTrsfGuidanceCnt(pCBBManageConsultInsertDTO);
+
+        trsfDto.setTrsfGuidanceList(trsfGuidanceList);
+        trsfDto.setTotalCount(trsfCnt);
+
+        return trsfDto;
     }
 
 }

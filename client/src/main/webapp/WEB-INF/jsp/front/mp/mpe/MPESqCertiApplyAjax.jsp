@@ -1,47 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div class="scroll-area">
-    <div class="p-info-sec">
-        <p class="f-sub-head">SQ평가원 자격증은 담당자가 SQ평가원 양성과정 및 업종별 기술이해, SQ품질지도 과정에 대한 내용을 확인 후 발급 처리되므로, 업무일 기준 최대 5일까지 소요될 수 있으니, 이 점 양해 바랍니다.</p>
-    </div>
-    <div class="p-cont-sec">
-        <div class="noti-txt-w t-align-right">
-            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
-        </div>
-        <div class="sec-tit-area">
-            <p class="f-head">신청자 증명사진<span class="essential-mark color-sky">*</span></p>
-        </div>
-        <div class="sec-con-area">
-            <div class="data-enter-form">
-                <div class="row">
-                    <!-- <div class="th">
-                      <p class="title f-body1">신청자 증명사진<span class="essential-mark color-sky">*</span></p>
-                    </div> -->
-                    <div class="td">
-                        <div class="data-line-w">
-                            <div class="data-line">
-                                <div class="inner-line">
-                                    <div class="form-group">
-                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                            <p class="empty-txt">선택된 파일 없음</p>
-                                        </div>
-                                        <div class="file-btn-area">
-                                            <input type="file"  id="idntfnPhotoFileSeq" title="신청자 증명사진" name="idntfnPhotoFileSeq" data-max-size="${atchUploadMaxSize}" data-accept="${imageExtns}">
-                                            <label class="btn-solid gray-bg" for="idntfnPhotoFileSeq">파일 찾기</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="inner-line">
-                                    <div class="noti-txt-w">
-                                        <p class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(${imageExtns}) / 용량(최대${atchUploadMaxSize / 1024 / 1024}MB) / 최대개수(1개)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
     <div class="p-cont-sec">
         <div class="sec-tit-area">
             <p class="f-head">신청자 기본정보</p>
@@ -144,5 +102,4 @@
             </div>
         </div>
     </div>
-</div>
 
