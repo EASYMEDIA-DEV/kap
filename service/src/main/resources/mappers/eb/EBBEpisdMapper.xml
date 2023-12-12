@@ -1014,7 +1014,7 @@
 				FROM ED_EDCTN_EPISD_MST A
 						 LEFT JOIN (
 					SELECT MEM_SEQ, srv_seq, rfnc_seq, rfnc_cd FROM SV_RSPN_MST
-				) B ON A.srv_seq = B.srv_seq AND b.rfnc_seq = A.episd_ord
+				) B ON A.srv_seq = B.srv_seq AND b.rfnc_seq = A.episd_seq
 
 						 LEFT JOIN
 					 (

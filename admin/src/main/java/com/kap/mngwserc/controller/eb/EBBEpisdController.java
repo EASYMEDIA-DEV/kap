@@ -349,7 +349,6 @@ public class EBBEpisdController {
         List<EBBPtcptDTO> eBBPtcptList = new ArrayList();
         try
         {
-
             //개인별 출석부를 호출한다. 데이터 양식은 리스트지만 화면 출력은 단건임
             eBBPtcptList = eBBEpisdService.selectMemAtndcList(eBBPtcptDTO);
             modelMap.addAttribute("rtnData", eBBPtcptList);
@@ -398,9 +397,6 @@ public class EBBEpisdController {
         public EBBEpisdDTO updateEpisd(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
         {
             try{
-
-                System.out.println("eBBEpisdDTO = " + eBBEpisdDTO);
-
                 eBBEpisdService.updateEpisd(eBBEpisdDTO);
             }
             catch (Exception e)

@@ -34,15 +34,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				event : {
 					click : function() {
 
-						var ptcptSeq = $("button.tempBtn").data("ptcptseq");
-						console.log("@@@@ptcptSeq = " + ptcptSeq);
-						$(".ebbMemAtndcSrchLayer").find("#ptcptSeq").val(ptcptSeq);
-
+						/*var ptcptSeq = $("button.tempBtn").data("ptcptseq");*/
 						cmmCtrl.frmAjax(function(respObj) {
 
 							ctrl.obj.find(".memAtndcContainer").html(respObj);
+							console.log($formObj);
 
-						}, "/mngwserc/eb/ebb/memAtndcList", $formObj, "POST", "html");
+						}, "./memAtndcList", $formObj, "POST", "html");
 					}
 				}
 			},
