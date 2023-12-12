@@ -8,6 +8,9 @@
 <c:set var="dpndCmpnList" value="${rtnDto.dpndCmpnList}"/>
 <c:set var="dlvryCmpnList" value="${rtnDto.dlvryCmpnList}"/>
 <c:set var="appctnTypeList" value="${rtnDto.appctnTypeList}"/>
+<c:set var="picInfoLIst" value="${rtnDto.picInfoLIst}"/>
+<c:set var="date" value="<%=new java.util.Date( )%>" />
+<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/cb/cbb/CBBManageConsultWriteCtrl">
@@ -31,6 +34,7 @@
             <input type="hidden" class="notRequired" id="cmpnNfrmlNm" name="cmpnNfrmlNm" value="${rtnDto.cmpnNfrmlNm}" />
             <input type="hidden" class="notRequired" id="cmpnCd" name="cmpnCd" value="${rtnDto.cmpnCd}" />
             <input type="hidden" class="notRequired" id="cnstgCd" name="cnstgCd" value="CONSULT_GB02" />
+            <input type="hidden" class="notRequired" id="regDtm" name="regDtm" value="${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '-')}" />
             <fieldset>
                 <span class="dtl-tab" style="float:right"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
@@ -369,16 +373,57 @@
             </fieldset>
             <fieldset><h6 class="mt0"><em class="ion-play mr-sm"></em>담당임원 정보</h6></fieldset>
             <fieldset>
+                <c:choose>
+                <c:when test="${not empty picInfoLIst}">
+                <c:forEach var="picInfoLIst" items="${picInfoLIst}" varStatus="status">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">이름<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="picName" title="이름" placeholder="이름 입력"/>
+                        <input type="text" class="form-control input-sm" name="picName" title="이름" value="${picInfoLIst.picName}" placeholder="이름 입력"/>
                     </div>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="picEmail" title="이메일" placeholder="이메일 입력"/>
+                        <input type="text" class="form-control input-sm" name="picEmail" title="이메일" value="${picInfoLIst.picEmail}" placeholder="이메일 입력"/>
                     </div>
                 </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm" name="picDeptNm" title="부서" value="${picInfoLIst.picDeptNm}" placeholder="부서 입력"/>
+                    </div>
+                    <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm" name="picPstnNm" title="직급" value="${picInfoLIst.picPstnNm}" placeholder="직급 입력"/>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control input-sm" name="cmssrHpNo" title="휴대폰번호" value="${picInfoLIst.cmssrHpNo}"  placeholder="휴대폰번호 입력"/>
+                    </div>
+                    <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
+                    <div class="col-sm-4">
+                        <input type="number" class="form-control input-sm" name="cmssrCmpnTelNo" title="회사전화번호" value="${picInfoLIst.cmssrCmpnTelNo}"  placeholder="회사 전화번호 입력"/>
+                    </div>
+                </div>
+            </fieldset>
+            </c:forEach>
+            </c:when>
+            <c:otherwise>
+            <div class="form-group text-sm">
+                <label class="col-sm-1 control-label">이름<span class="star"> *</span></label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control input-sm" name="picName" title="이름" placeholder="이름 입력"/>
+                </div>
+                <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control input-sm" name="picEmail" title="이메일" placeholder="이메일 입력"/>
+                </div>
+            </div>
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
@@ -404,46 +449,47 @@
                     </div>
                 </div>
             </fieldset>
-
+            </c:otherwise>
+            </c:choose>
             <c:choose>
-                <c:when test="${not empty rtnDto}">
-                <fieldset class="ptcptField">
-                    <div class="clearfix">
-                        <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>신청자 변경 이력
-                            <input type="hidden" id="trnsfListContainerTotCnt" value="0">
-                        </h6>
-                        <!-- 현재 페이징 번호 -->
-                        <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
-                        <!-- 페이징 버튼 사이즈 -->
-                        <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
-                    </div>
-                    <div class="pull-right ml-sm">
-                        <select class="form-control input-sm listRowSizeContainer" >
-                            <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
-                                <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
-                            </jsp:include>
-                        </select>
-                    </div>
-                    <div class="table-responsive col-sm-12 p0 m0" id="vueList">
-                        <table class="table table-hover table-striped" >
-                            <thead>
-                            <tr>
-                                <th class="text-center">이전 신청자</th>
-                                <th class="text-center">변경 신청자</th>
-                                <th class="text-center">변경일 / 변경자</th>
-                            </tr>
-                            </thead>
+            <c:when test="${not empty rtnDto}">
+            <fieldset class="ptcptField">
+                <div class="clearfix">
+                    <h6 class="pull-left mt0">
+                        <em class="ion-play mr-sm"></em>신청자 변경 이력
+                        <input type="hidden" id="trnsfListContainerTotCnt" value="0">
+                    </h6>
+                    <!-- 현재 페이징 번호 -->
+                    <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+                    <!-- 페이징 버튼 사이즈 -->
+                    <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
+                </div>
+                <div class="pull-right ml-sm">
+                    <select class="form-control input-sm listRowSizeContainer" >
+                        <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                            <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                        </jsp:include>
+                    </select>
+                </div>
+                <div class="table-responsive col-sm-12 p0 m0" id="vueList">
+                    <table class="table table-hover table-striped" >
+                        <thead>
+                        <tr>
+                            <th class="text-center">이전 신청자</th>
+                            <th class="text-center">변경 신청자</th>
+                            <th class="text-center">변경일 / 변경자</th>
+                        </tr>
+                        </thead>
 
-                            <!-- 리스트 목록 결과 -->
-                            <tbody id="trsfListContainer"/>
+                        <!-- 리스트 목록 결과 -->
+                        <tbody id="trsfListContainer"/>
 
-                        </table>
-                        <!-- 페이징 버튼 -->
-                        <div id="trsfPagingContainer"/>
-                    </div>
-                </fieldset>
-                </c:when>
+                    </table>
+                    <!-- 페이징 버튼 -->
+                    <div id="trsfPagingContainer"/>
+                </div>
+            </fieldset>
+            </c:when>
             </c:choose>
             <fieldset>
                 <span class="dtl-tab" style="float:right"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
@@ -469,7 +515,7 @@
                         <c:forEach var="cpSize" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                             <c:if test="${fn:contains(cpSize.cd,'COMPANY02') && cpSize.cd ne 'COMPANY02' && cpSize.cd ne 'COMPANY02004'}">
                                 <label class="radio-inline c-radio">
-                                    <input type="radio" name="cpSize" value="${cpSize.cd}" title="부품사 규모" <c:if test="${cpSize.cd eq cdList.cd}">checked</c:if>/>
+                                    <input type="radio" name="cpSize" value="${cpSize.cd}" title="부품사 규모" <c:if test="${cpSize.cd eq rtnDto.cpSize}">checked</c:if>/>
                                     <span class="ion-record"></span> ${cpSize.cdNm}
                                 </label>
                             </c:if>
@@ -570,11 +616,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">해외의존율<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="frgnDpndnRate" placeholder="매출액 입력" title="비율" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        <input type="text" class="form-control input-sm" name="frgnDpndnRate" value="${rtnDto.frgnDpndnRate}" placeholder="의존율 입력" title="비율" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                     <label class="col-sm-1 control-label">전체 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="ttlSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        <input type="text" class="form-control input-sm" name="ttlSlsPmt" value="${rtnDto.ttlSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                 </div>
             </fieldset>
@@ -582,11 +628,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">국내 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="dmstcSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        <input type="text" class="form-control input-sm" name="dmstcSlsPmt" value="${rtnDto.dmstcSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                     <label class="col-sm-1 control-label">해외 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="frgnSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        <input type="text" class="form-control input-sm" name="frgnSlsPmt" value="${rtnDto.frgnSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                 </div>
             </fieldset>
@@ -594,11 +640,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">자동차부품 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="carPartSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        <input type="text" class="form-control input-sm" name="carPartSlsPmt" value="${rtnDto.carPartSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                     <label class="col-sm-1 control-label">자동차 부품 외 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="carPartXcludSlsPmt" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                        <input type="text" class="form-control input-sm" name="carPartXcludSlsPmt" value="${rtnDto.carPartXcludSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
                     </div>
                 </div>
             </fieldset>
@@ -615,8 +661,8 @@
                     </div>
                     <div class="col-sm-1">
                         <label class="checkbox-inline c-checkbox">
-                            <c:set var="rprsntApprvYn" value="${kl:nvl(rtnDto.rprsntApprvYn, 'N')}" />
-                            <input type="checkbox" class="notRequired addrSame"  name="cmpnAddrSameYn" value="${rprsntApprvYn}"<c:if test="${rprsntApprvYn eq 'Y'}">checked</c:if> title="주소 동일 여부"/>
+                            <c:set var="cmpnAddrSameYn" value="${kl:nvl(rtnDto.cmpnAddrSameYn, 'N')}" />
+                            <input type="checkbox" class="notRequired addrSame"  name="cmpnAddrSameYn" value="${cmpnAddrSameYn}"<c:if test="${cmpnAddrSameYn eq 'Y'}">checked</c:if> title="주소 동일 여부"/>
                             <span class="ion-checkmark-round"></span> 본사와 동일
                         </label>
                     </div>
@@ -627,6 +673,7 @@
                     <label class="col-sm-1 control-label">소재지역<span class="star"> *</span></label>
                     <div class="col-sm-2">
                         <select class="form-control input-sm listRowSizeContainer mainAddr" id="mainAddr" name="firstRgnsCd" title="소재지역">
+                            <option>선택</option>
                             <c:forEach var="addrList" items="${cdDtlList.ADDR_CD}" varStatus="status">
                                 <c:if test="${fn:contains(addrList.cd,'MAIN')}">
                                     <option value="${addrList.cd}" <c:if test="${rtnDto.firstRgnsCd eq addrList.cd}">selected</c:if>>${addrList.cdNm} </option>
@@ -636,7 +683,6 @@
                     </div>
                     <div class="col-sm-2">
                         <select class="form-control input-sm listRowSizeContainer subAddr" id="subAddr" name="scndRgnsCd" data-subAddr="${rtnDto.scndRgnsCd}" title="소재지역">
-                            <option value="">전체</option>
                             <c:forEach var="addrList" items="${cdDtlList.ADDR_CD}" varStatus="status">
                                 <c:if test="${!fn:contains(addrList.cd,'MAIN') && fn:contains(addrList.cd,'CD01')}">
                                     <option value="${addrList.cd}" <c:if test="${rtnDto.scndRgnsCd eq addrList.cd}">selected</c:if>>${addrList.cdNm}</option>
@@ -650,7 +696,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">홈페이지 주소</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm notRequired urlChk" name="hmpgeUrl" value="${rtnDto.hmpgeUrl}"/>
+                        <input type="text" class="form-control input-sm notRequired urlChk" name="hmpgeUrl" value="${rtnDto.hmpgeUrl}" placeholder="홈페이지 주소 입력"/>
                     </div>
                 </div>
             </fieldset>
@@ -659,10 +705,10 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청사유<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <c:forEach var="cdList" items="${cdDtlList.APPCTN_RSN_CD}" varStatus="status">
+                        <c:forEach var="appctnRsnCd" items="${cdDtlList.APPCTN_RSN_CD}" varStatus="status">
                             <label class="radio-inline c-radio">
-                                <input type="radio" name="appctnRsnCd" value="${cdList.cd}" title="신청사유" <c:if test="${appctnRsnCd.cd eq cdList.cd}">checked</c:if>/>
-                                <span class="ion-record"></span> ${cdList.cdNm}
+                                <input type="radio" name="appctnRsnCd" value="${appctnRsnCd.cd}" title="신청사유" <c:if test="${rtnDto.appctnRsnCd eq appctnRsnCd.cd}">checked</c:if>/>
+                                <span class="ion-record"></span> ${appctnRsnCd.cdNm}
                             </label>
                         </c:forEach>
                     </div>
@@ -683,7 +729,7 @@
                     <div class="col-sm-2">
                         <select class="form-control input-sm listRowSizeContainer" id="" name="appctnFldCd" title="신청분야">
                             <c:forEach var="mngConsCdList" items="${cdDtlList.MNG_CONS_CD}" varStatus="status">
-                                    <option value="${mngConsCdList.cd}" <c:if test="${rtnDto.mngConsCdList eq addrList.cd}">selected</c:if>>${mngConsCdList.cdNm} </option>
+                                <option value="${mngConsCdList.cd}" <c:if test="${rtnDto.appctnFldCd eq mngConsCdList.cd}">selected</c:if>>${mngConsCdList.cdNm} </option>
                             </c:forEach>
                         </select>
                     </div>
@@ -777,11 +823,26 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label" style="z-index:0;">방문일</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control input-sm notRequired"  name="vstrNm" id="vstrNm" value=""/>
+                                        <div class="input-group" style="z-index:0;width: 220px;">
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="vstDt" id="vstDt" value="${today}" title="방문일" />
+                                            <span class="input-group-btn" style="z-index:0;">
+                                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </div>
                                     </div>
                                     <label class="col-sm-1 control-label">컨설팅 완료예정일</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control input-sm notRequired"  name="ntrvrNm" id="ntrvrNm" value=""/>
+                                        <div class="input-group" style="z-index:0;width: 220px;">
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="cnstgCmpltnSchdlDt" id="cnstgCmpltnSchdlDt" value="${today}" title="컨설팅 완료예정일" />
+                                            <span class="input-group-btn" style="z-index:0;">
+                                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
+                                        </div>
+
                                     </div>
                                 </div>
                             </fieldset>
@@ -789,11 +850,11 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label" style="z-index:0;">방문자</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control input-sm notRequired"  name="vstrNm" id="vstrNm" value="" placeholder="방문자 입력"/>
+                                        <input type="text" class="form-control input-sm notRequired" name="vstrNm" id="vstrNm" value="" placeholder="방문자 입력"/>
                                     </div>
                                     <label class="col-sm-1 control-label">면담자</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control input-sm notRequired"  name="ntrvrNm" id="ntrvrNm" value="" placeholder="면담자 입력"/>
+                                        <input type="text" class="form-control input-sm notRequired" name="ntrvrNm" id="ntrvrNm" value="" placeholder="면담자 입력"/>
                                     </div>
                                 </div>
                             </fieldset>
@@ -801,7 +862,7 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">초도방문일</label>
                                     <div class="input-group col-md-2" style="z-index:0;">
-                                        <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="" title="초도방문일"/>
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${today}" title="초도방문일"/>
                                         <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
@@ -857,7 +918,7 @@
                                     <label class="col-sm-1 control-label">킥오프일</label>
                                     <div class="col-sm-4">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="" title="킥오프일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" value="${today}" name="guideKickfDt" value="" title="킥오프일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -867,7 +928,7 @@
                                     </div>
                                     <label class="col-sm-1 control-label">컨설팅 현황</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control input-sm listRowSizeContainer notRequired" name="guideTypeCd" id="guideTypeCd">
+                                        <select class="form-control input-sm listRowSizeContainer notRequired" name="guideTypeCd" id="guideTypeCd" >
                                             <option value="">선택</option>
                                             <c:forEach var="cnstgPscndCd" items="${cdDtlList.CNSTG_PSCND}" varStatus="status">
                                                 <option value="${cnstgPscndCd.cd}" >${cnstgPscndCd.cdNm}</option>
@@ -876,7 +937,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="" title="지도착수일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${today}"title="지도착수일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -889,18 +950,19 @@
                             <fieldset>
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">컨설팅 연장실적</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control input-sm notRequired" name="cmssrName" value="">
-                                        </div>
-                                        <label class="col-sm-1 control-label" style="width: 22px; padding-left: 9px;padding-right: 9px;">/</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control input-sm notRequired" name="cmssrName" value="">
-                                        </div>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltCnt" placeholder="횟수 입력" value="">
+                                    </div>
+                                    <label class="col-sm-1 control-label" style="width: 40px; padding-left: 9px;padding-right: 9px;">회 /</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltMnth" placeholder="개월 수 입력" value="">
+                                    </div>
+                                    <label class="col-sm-1 control-label" style="width: 60px; padding-left: 9px;padding-right: 9px;">개월</label>
                                     <label class="col-sm-1 control-label">컨설팅 기간</label>
-                                        <div class="col-sm-2">
-                                            <input type="text" class="form-control input-sm notRequired" readonly="readonly" name="cmssrName" value="">
-                                        </div>
-                                        <label class="col-sm-2 control-label" style="width: 60px; padding-left: 9px;padding-right: 9px;">개월</label>
+                                    <div class="col-sm-2">
+                                        <input type="text" class="form-control input-sm notRequired cnstgTerm" readonly="readonly" name="cnstgTerm" value="">
+                                    </div>
+                                    <label class="col-sm-2 control-label" style="width: 60px; padding-left: 9px;padding-right: 9px;">개월</label>
                                 </div>
                             </fieldset>
                             <fieldset>

@@ -1340,24 +1340,24 @@
                             </div>
                         </div>
                     </fieldset>
-
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">설문명<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static">
-                                        <%--${rtnDto.srvNm}--%>
-                                </p>
+                    <c:forEach var="rsumeList" items="${rtnDto.rsumeList}" varStatus="status">
+                        <fieldset>
+                            <div class="form-group text-sm">
+                                <label class="col-sm-1 control-label">설문명<span class="star text-danger"> *</span></label>
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">
+                                            ${rsumeList.srvNm}
+                                    </p>
+                                </div>
+                                <label class="col-sm-1 control-label">설문기간<span class="star text-danger"> *</span></label>
+                                <div class="col-sm-5">
+                                    <p class="form-control-static">
+                                           ${kl:convertDate(rsumeList.srvStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')} ~ ${kl:convertDate(rsumeList.srvEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')}
+                                    </p>
+                                </div>
                             </div>
-                            <label class="col-sm-1 control-label">설문기간<span class="star text-danger"> *</span></label>
-                            <div class="col-sm-5">
-                                <p class="form-control-static">
-                                        <%--${kl:convertDate(rtnDto.srvStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(rtnDto.srvEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}--%>
-                                </p>
-                            </div>
-                        </div>
-                    </fieldset>
-
+                        </fieldset>
+                    </c:forEach>
                     <fieldset>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">신청자<span class="star text-danger"> *</span></label>

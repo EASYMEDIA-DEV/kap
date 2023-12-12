@@ -164,7 +164,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
     }
     var callbackAjaxAddrList = function (data) {
         var detailList = JSON.parse(data);
-        var selectHtml = "<option value=''>전체</option>";
+        var selectHtml = "<option value=''>선택</option>";
 
         for (var i = 0; i < detailList.length; i++) {
 
@@ -272,7 +272,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             },
             allSelector : {
                 event : {
-                        click : function(){
+                    click : function(){
                         var cdVal = $(this).children("input[name='appctnTypeCd']").val();
                         if (cdVal == "TEC_GUIDE_APPCTN00") {
                             if($(this).children("input[name='appctnTypeCd']").is(":checked"))
@@ -282,6 +282,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                 $("input[name=appctnTypeCd]").prop("checked", false);
                             }
                         }
+                    }
+                }
+            },
+            cnstgCmpltnSchdlDt : {
+                event : {
+                    change : function(){
+                        var bfCmplDt = $("#cnstgCmpltnSchdlDt").val().split("-");
+                        var bfRegDt = $("#regDtm").val().split("-");
+
+                        var afCmplDt = new Date(bfCmplDt[0], bfCmplDt[1], bfCmplDt[2]);
+                        var afRegDt = new Date(bfRegDt[0], bfRegDt[1], bfRegDt[2]);
+                        var difDt =  afCmplDt - afRegDt;
+                        var cDay = 24*60*60*1000;
+                        var cMonth = cDay*30;
+                        $(".cnstgTerm").val(parseInt(difDt/cMonth));
                     }
                 }
             }
@@ -555,12 +570,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                             $(this).prop("checked", true);
                         }
                     })
-                }
-                var initVstRsltCd = $("#initVstRsltCd").val();
-                if (initVstRsltCd == "BF_JDGMT_RSLT02") {
-                    $(".rsltCntn").show();
-                } else {
-                    $(".rsltCntn").hide();
                 }
 
                 $(".tempRow").eq(0).find(".close").hide();
