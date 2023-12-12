@@ -23,8 +23,10 @@
 	<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="/common/js/gsap.min.js"></script>
 	<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
-	<script type="text/javascript" src="/common/js/jquery.cookies.js"></script>
+	<script type="text/javascript" src="/common/js/Draggable.min.js"></script>
 	<script type="text/javascript" src="/common/js/swiper.min.js"></script>
+	<script type="text/javascript" src="/common/js/lottie-player.js"></script>
+	<script type="text/javascript" src="/common/js/bezier-easing.min.js"></script>
 	<script type="text/javascript" src="/common/js/script.js"></script>
 	<c:set var="now" value="<%=new java.util.Date()%>" />
 	<c:set var="curtDt"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
