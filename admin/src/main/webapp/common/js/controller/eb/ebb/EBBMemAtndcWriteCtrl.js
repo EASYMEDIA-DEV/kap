@@ -35,8 +35,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					click : function() {
 
 						var ptcptSeq = $("button.tempBtn").data("ptcptseq");
-
-						$("#ptcptSeq").val(ptcptSeq);
+						console.log("@@@@ptcptSeq = " + ptcptSeq);
+						$(".ebbMemAtndcSrchLayer").find("#ptcptSeq").val(ptcptSeq);
 
 						cmmCtrl.frmAjax(function(respObj) {
 

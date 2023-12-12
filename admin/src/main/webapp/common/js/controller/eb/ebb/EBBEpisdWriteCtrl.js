@@ -63,6 +63,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		var ptcptSeq =  $(e).data("ptcptseq");
 
+		console.log(ptcptSeq);
+
 		//출석부 레이어 팝업 호출
 		$(".ebbMemAtndcSrchLayer").one('show.bs.modal', function() {
 			$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
