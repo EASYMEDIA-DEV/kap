@@ -1,9 +1,6 @@
 package com.kap.service.dao.cb.cbb;
 
-import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
-import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
-import com.kap.core.dto.cb.cbb.CBBManageConsultListDTO;
-import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
+import com.kap.core.dto.cb.cbb.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -70,7 +67,25 @@ public interface CBBManageConsultMapper {
      * 컨설팅 기술 지도 등록
      */
     public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+    /**
+     * 컨설팅 기술 지도 수정
+     */
+    public int updateManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
+    /**
+     * 컨설팅 기술 지도 등록
+     */
+    public int updateManageConsultRsume(CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception;
+
+    /**
+     * 컨설팅 기술 지도 등록
+     */
+    public int insertManageConsultRsume(CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception;
+
+    /**
+     * 신청 부품사 카운트
+     */
+    public int selectRsumeTotCnt(Integer cnstgSeq) throws Exception;
 
     /**
      *  부품사 업종 카운트
@@ -133,8 +148,34 @@ public interface CBBManageConsultMapper {
     public int insertCbsnDtl(HashMap cbstgCdMap);
 
     /**
+     * 담당 임원 상세 등록
+     */
+    public int insertCnstgPicInfo(HashMap picInfoMap);
+
+    /**
+     * 고객사 비율 상세 조회
+     */
+    public List<CBBManageConsultInsertDTO> selectCnstgPicInfo(Integer cnstgSeq) throws Exception;
+
+    /**
+     * 담당 임원 상세 삭제
+     */
+    public int deleteCnstgPicInfo(HashMap picInfoMap);
+
+    /**
      * 완성차 의존 비율 상세 조회
      */
     public List<CBBManageConsultInsertDTO> selectCnstgDpndnInfo(Integer cnstgSeq) throws Exception;
+
+    /**
+     * 컨설팅 경영 컨설팅 상세 조회
+     */
+    public CBBManageConsultInsertDTO selectManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅 이관 내역 등록
+     */
+    public int insertTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+
 
 }
