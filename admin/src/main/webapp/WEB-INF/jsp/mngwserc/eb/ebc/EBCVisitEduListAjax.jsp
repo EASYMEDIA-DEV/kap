@@ -10,7 +10,7 @@
                     </label>
                 </td>
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
-                <td class="text-center">교육결과값</td>
+                <td class="text-center">${list.edctnSttsName}</td>
                 <td class="text-center">
                     <a href="javascript:" class="listView" data-details-key="${list.vstSeq}" data-mem-seq="${list.memSeq}" data-vst-rslt-seq="${list.vstRsltSeq}" data-appctn-bsnm-no="${list.appctnBsnmNo}">
                             ${list.cmpnNm}
@@ -27,12 +27,26 @@
                 <td class="text-center">${list.name}<br>(${kl:idMasking(list.id)})</td>
                 <td class="text-center">${list.hpNo}</td>
                 <td class="text-center">${list.email}</td>
-                <td class="text-center">${list.edctnSttsName}</td>
+                <td class="text-center">실적마감여부</td>
                 <td class="text-center">${list.cnfrmdTheme}</td>
                 <td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                 <td class="text-center">${list.cmptnCnt}</td>
-                <td class="text-center">${list.modName}(${kl:idMasking(list.modId)})</td>
-                <td class="text-center">${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.modId }">
+                            ${list.modName}(${list.modId})
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.modDtm }">
+                            ${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
             </tr>
         </c:forEach>
     </c:when>

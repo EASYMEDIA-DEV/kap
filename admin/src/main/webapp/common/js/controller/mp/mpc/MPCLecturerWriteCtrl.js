@@ -12,7 +12,7 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-    var $excelObj = ctrl.obj.parent().find(".excel-down");
+    var $excelObj = $(".excel-down");
 
     var dupEmailChk = true;
 
@@ -24,6 +24,7 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
             var totCnt = $(respObj).eq(0).data("totalCount");
             //총 건수
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
         }, "/mngwserc/mp/mpc/selectEduList", $formObj, "GET", "html",'',false);
@@ -93,8 +94,8 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
                 event : {
                     click: function () {
                         //사유입력 레이어팝업 활성화
-                        $excelObj.find("#rsn").val('');
-                        $excelObj.modal("show");
+                        $(".excel-down").find("#rsn").val('');
+                        $(".excel-down").modal("show");
                     }
                 }
             }
@@ -106,6 +107,7 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
                         console.log(e.target.getAttribute('href').substr(1));
                         if(e.target.getAttribute('href').substr(1)!='dtl') {
                             $(".dtl-tab").hide();
+                            $(".excel-area").hide();
                         } else {
                             $(".dtl-tab").show();
                         }
@@ -152,7 +154,7 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
                     frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
 
                     //파라미터를 물고 가야함.
-                    location.href = "/mngwserc/mp/mpb/excel-down?" + frmDataObj.serialize();
+                    location.href = "/mngwserc/mp/mpc/excel-down?" + frmDataObj.serialize();
 
                 } else {
                     alert(msgCtrl.getMsg("fail.reason"));

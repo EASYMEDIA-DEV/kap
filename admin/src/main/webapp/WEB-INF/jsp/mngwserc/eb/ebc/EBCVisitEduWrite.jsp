@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </fieldset>
-
+            <br><br>
             <fieldset>
                 <span class="dtl-tab" style="float:right"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>부품사 정보</h6>
@@ -361,9 +361,10 @@
                     </div>
                 </div>
             </fieldset>
-            <hr />
-
-            <h6 class="mt-lg"> 신청내용 </h6>
+            <br><br>
+            <fieldset>
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>신청내용</h6>
+            </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청사유<span class="star"> *</span></label>
@@ -481,148 +482,199 @@
                     </div>
                 </div>
             </fieldset>
-            <h6 class="mt-lg"> 교육실적 </h6>
+            <br><br>
+            <fieldset>
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>신청내용</h6>
+            </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">개요</label>
                     <div class="col-sm-11">
-                        <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">확정주제</label>
-                            <input type="text" class="form-control input-sm notRequired" id="cnfrmdTheme" name="cnfrmdTheme" value="${rtnInfo.cnfrmdTheme}" title="확정주제" maxlength="50" style="width: 220px;"/>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">교육상태</label>
-                            <div class="input-group">
-                                <select class="form-control input-sm" id="edctnSttsCd" name="edctnSttsCd" title="교육상태" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.EBC_VISIT_CD}" varStatus="status">
-                                        <c:if test="${fn:contains(cdList, 'EBC_VISIT_CD02')}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnInfo.edctnSttsCd eq cdList.cd}">selected</c:if>>
-                                                    ${cdList.cdNm}
-                                            </option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row vertical" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">년도</label>
-                            <div class="col-sm-10 form-inline">
-                                <input type="text" class="form-control input-sm" id="edctnYear" name="edctnYear" value="${rtnInfo.edctnYear}" title="교육년도" maxlength="50"/>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">교육 시작일</label>
-                            <div class="col-sm-5">
-                                <div class="input-group" style="z-index:0;width: 220px;">
-                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" id="edctnStrtDtm" name="edctnStrtDtm" value="${kl:convertDate(rtnInfo.edctnStrtDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy-MM-dd', '')}" title="교육시작일" />
-                                    <span class="input-group-btn" style="z-index:0;">
-                                <button type="button" class="btn btn-inverse input-sm" onclick="jQuery(this).parent().prev().focus();">
-                                    <em class="ion-calendar"></em>
-                                </button>
-                            </span>
+                        <fieldset>
+                            <div class="row">
+                                <label class="col-sm-1 control-label">실적마감여부</label>
+                                <div class="col-sm-11">
+                                    <c:set var="expsYn" value="${kl:nvl(rtnDto.expsYn, 'Y')}" />
+                                    <label class="radio-inline c-radio">
+                                        <input type="radio" name="expsYn" value="Y" title="실적마감여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
+                                        <span class="ion-record"></span> 미마감
+                                    </label>
+                                    <label class="radio-inline c-radio">
+                                        <input type="radio" name="expsYn" value="N" title="실적마감여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
+                                        <span class="ion-record"></span> 마감
+                                    </label>
+                                    <label class="radio-inline c-radio">
+                                        <input type="radio" name="expsYn" value="N" title="실적마감여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
+                                        <span class="ion-record"></span> 교육취소
+                                    </label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">교육 종료일</label>
-                            <div class="col-sm-5">
-                                <div class="input-group" style="z-index:0;width: 220px;">
-                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" id="edctnEndDtm" name="edctnEndDtm" value="${kl:convertDate(rtnInfo.edctnEndDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy-MM-dd', '')}" title="교육종료일" />
-                                    <span class="input-group-btn" style="z-index:0;">
-                                <button type="button" class="btn btn-inverse input-sm" onclick="jQuery(this).parent().prev().focus();">
-                                    <em class="ion-calendar"></em>
-                                </button>
-                            </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">교육장소</label>
-                            <div class="col-sm-10 form-inline">
-                                <input type="text" class="form-control input-sm " id="edctnPlace" name="edctnPlace" value="${rtnInfo.edctnPlace}" title="교육장소" maxlength="50" />
-                            </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">강사</label>
-                            <div class="col-sm-11">
-                                <button type="button" class="btn btn-inverse btn-sm eduIsttrSearch">
-                                    강사검색
-                                </button>
-                                <table class="table table-hover table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th class="text-center">번호</th>
-                                        <th class="text-center">이름</th>
-                                        <th class="text-center">소속</th>
-                                        <th class="text-center">약력(특이사항)</th>
-                                        <th class="text-center">삭제</th>
-                                    </tr>
-                                    </thead>
-                                    <!-- 리스트 목록 결과 -->
-                                    <tbody id="isttrContainer">
-                                    <tr data-total-count="0" class="notIsttr">
-                                        <td colspan="5" class="text-center" <c:if test="${isttrList.size() ne 0}">style="display:none;"</c:if>>
-                                            검색결과가 없습니다.<br>
-                                            (등록된 데이터가 없습니다.)
-                                        </td>
-                                    </tr>
-                                    <tr class="setIsttr" data-total-count="0" style="display:none;">
-                                        <td class="text-center">
-                                        </td>
-                                        <td class="text-center">
-                                        </td>
-                                        <td class="text-center">
-                                        </td>
-                                        <td class="text-center">
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
-                                        </td>
-                                        <input type="hidden" class="notRequired" name="isttrSeq" id="isttrSeq" value="" disabled="true" titlle="강사번호">
-                                    </tr>
-                                    <c:choose>
-                                        <c:when test="${isttrList.size() ne 0}">
-                                            <c:forEach var="list" items="${isttrList}" varStatus="status">
-                                                <tr>
-                                                    <td class="text-center">
-                                                            ${isttrList.size() - status.index}
-                                                    </td>
-                                                    <td class="text-center">
-                                                            ${list.name} - 이름
-                                                    </td>
-                                                    <td class="text-center">
-                                                            ${list.ffltnNm} - 소속
-                                                    </td>
-                                                    <td class="text-center">
-                                                            ${list.spclCntn} - 약력
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
-                                                    </td>
-                                                    <input type="hidden" class="notRequired" name="isttrSeq" value="${list.isttrSeq}" disabled="true" titlle="강사번호">
-                                                </tr>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <label class="col-sm-1 control-label">교육상태</label>
+                                <div class="col-sm-10 form-inline">
+                                    <div class="input-group">
+                                        <select class="form-control input-sm" id="edctnSttsCd" name="edctnSttsCd" title="교육상태" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
+                                            <option value="">선택</option>
+                                            <c:forEach var="cdList" items="${cdDtlList.EBC_VISIT_CD}" varStatus="status">
+                                                <c:if test="${fn:contains(cdList, 'EBC_VISIT_CD02') and cdList.cd ne 'EBC_VISIT_CD02'}">
+                                                    <option value="${cdList.cd}" <c:if test="${rtnInfo.edctnSttsCd eq cdList.cd}">selected</c:if>>
+                                                            ${cdList.cdNm}
+                                                    </option>
+                                                </c:if>
                                             </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <label class="col-sm-1 control-label">확정주제</label>
+                                <div class="col-sm-10 form-inline">
+                                    <input type="text" class="form-control input-sm notRequired" id="cnfrmdTheme" name="cnfrmdTheme" value="${rtnInfo.cnfrmdTheme}" title="확정주제" maxlength="50" style="width: 220px;"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <label class="col-sm-1 control-label">년도</label>
+                                <div class="col-sm-10 form-inline">
+                                    <input type="text" class="form-control input-sm" id="edctnYear" name="edctnYear" value="${rtnInfo.edctnYear}" title="교육년도" maxlength="50"/>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row form-inline">
+                                <label class="col-sm-1 control-label">교육기간</label>
+                                <div class="col-sm-10">
+                                    <div class="form-inline">
+                                        <div class="input-group form-date-group mr-sm">
+                                            <input type="text" class="form-control notRequired input-sm datetimepicker_strtDt" id="edctnStrtDtm" name="edctnStrtDtm" value="${kl:convertDate(rtnInfo.edctnStrtDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy-MM-dd', '')}" title="교육시작일"/>
+                                            <span class="input-group-btn" style="z-index:0;">
+                                            <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
+                                                <em class="ion-calendar"></em>
+                                            </button>
+                                        </span>
+                                            <select class="form-control input-sm wd-sm" name="edctnStrtHour" id="edctnStrtHour" title="교육 시작시간">
+                                                <option value="">선택</option>
+                                                <c:forEach var="cdList" items="${cdDtlList.SYSTEM_HOUR}" varStatus="status">
+                                                    <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnInfo.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                                </c:forEach>
+                                            </select>
+                                            <span class="input-group-addon bg-white b0">~</span>
+                                            <input type="text" class="form-control notRequired input-sm datetimepicker_endDt" id="edctnEndDtm" name="edctnEndDtm" value="${kl:convertDate(rtnInfo.edctnEndDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy-MM-dd', '')}" title="교육종료일"/>
+                                            <span class="input-group-btn" style="z-index:0;">
+                                            <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
+                                                <em class="ion-calendar"></em>
+                                            </button>
+                                        </span>
+                                            <select class="form-control input-sm wd-sm" name="edctnEndHour" id="edctnEndHour" title="교육 종료시간">
+                                                <option value="">선택</option>
+                                                <c:forEach var="cdList" items="${cdDtlList.SYSTEM_HOUR}" varStatus="status">
+                                                    <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnInfo.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <label class="col-sm-1 control-label">교육장소</label>
+                                <div class="col-sm-10 form-inline">
+                                    <input type="text" class="form-control input-sm " id="edctnPlace" name="edctnPlace" value="${rtnInfo.edctnPlace}" title="교육장소" maxlength="50" />
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <label class="col-sm-1 control-label">강사</label>
+                                <div class="col-sm-11">
+                                    <button type="button" class="btn btn-inverse btn-sm eduIsttrSearch">
+                                        강사검색
+                                    </button>
+                                    <table class="table table-hover table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th class="text-center">번호</th>
+                                            <th class="text-center">이름</th>
+                                            <th class="text-center">소속</th>
+                                            <th class="text-center">약력(특이사항)</th>
+                                            <th class="text-center">삭제</th>
+                                        </tr>
+                                        </thead>
+                                        <!-- 리스트 목록 결과 -->
+                                        <tbody id="isttrContainer">
+                                        <tr data-total-count="0" class="notIsttr">
+                                            <td colspan="5" class="text-center" <c:if test="${isttrList.size() ne 0}">style="display:none;"</c:if>>
+                                                검색결과가 없습니다.<br>
+                                                (등록된 데이터가 없습니다.)
+                                            </td>
+                                        </tr>
+                                        <tr class="setIsttr" data-total-count="0" style="display:none;">
+                                            <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
+                                            </td>
+                                            <input type="hidden" class="notRequired" name="isttrSeq" id="isttrSeq" value="" disabled="true" titlle="강사번호">
+                                        </tr>
+                                        <c:choose>
+                                            <c:when test="${isttrList.size() ne 0}">
+                                                <c:forEach var="list" items="${isttrList}" varStatus="status">
+                                                    <tr>
+                                                        <td class="text-center">
+                                                                ${isttrList.size() - status.index}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${list.name}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${list.ffltnNm}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${list.spclCntn}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
+                                                        </td>
+                                                        <input type="hidden" class="notRequired" name="isttrSeq" value="${list.isttrSeq}" disabled="true" titlle="강사번호">
+                                                    </tr>
+                                                </c:forEach>
 
-                                        </c:when>
-                                    </c:choose>
+                                            </c:when>
+                                        </c:choose>
 
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">수료인원(명)</label>
-                            <div class="col-sm-10 form-inline">
-                                <input type="text" class="form-control input-sm " id="cmptnCnt" name="cmptnCnt" value="${rtnInfo.cmptnCnt}" title="수료인원" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <label class="col-sm-1 control-label">수료인원(명)</label>
+                                <div class="col-sm-10 form-inline">
+                                    <input type="text" class="form-control input-sm " id="cmptnCnt" name="cmptnCnt" value="${rtnInfo.cmptnCnt}" title="수료인원" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">참석률(%)</label>
-                            <div class="col-sm-10 form-inline">
-                                <input type="text" class="form-control input-sm " id="ptcptRate" name="ptcptRate" value="${rtnInfo.ptcptRate}" title="참석률(%)" maxlength="50" />
+                        </fieldset>
+                        <fieldset>
+                            <div class="row">
+                                <label class="col-sm-1 control-label">참석률(%)</label>
+                                <div class="col-sm-10 form-inline">
+                                    <input type="text" class="form-control input-sm" id="ptcptRate" name="ptcptRate" value="${rtnInfo.ptcptRate}" title="참석률(%)" maxlength="50" />
+                                </div>
                             </div>
-                        </div>
+                        </fieldset>
                     </div>
                 </div>
             </fieldset>

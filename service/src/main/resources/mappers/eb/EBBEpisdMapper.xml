@@ -114,8 +114,9 @@
 
 		order by
 			reg_dtm desc
-
+		<if test="excelYn != 'Y'.toString() ">
 			limit #{firstIndex}, #{recordCountPerPage}
+		</if>
 	</select>
 
 	<!--
