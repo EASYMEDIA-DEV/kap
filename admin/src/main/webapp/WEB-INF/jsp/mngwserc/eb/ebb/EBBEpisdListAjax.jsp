@@ -30,6 +30,7 @@
         <td class="text-center">${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--접수기간-->
         <td class="text-center">${list.accsStatusNm}</td><!--접수상태-->
         <td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--교육기간-->
+        <td class="text-center">${list.bdgetExpnsNm}</td><!--실적마감여부-->
         <td class="text-center">${list.edctnStatusNm}</td><!--교육상태-->
         <td class="text-center">${list.isttrName} </td><!--이름-->
         <td class="text-center">${list.ffltnNm} <c:if test="${list.isttrOutCnt ne ''}">외 ${list.isttrOutCnt}명 </c:if></td> <!--소속-->

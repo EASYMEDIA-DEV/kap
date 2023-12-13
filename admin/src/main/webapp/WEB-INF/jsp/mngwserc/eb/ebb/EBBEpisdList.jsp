@@ -309,6 +309,7 @@
 								<th class="text-center" rowspan="2">접수기간</th>
 								<th class="text-center" rowspan="2">접수상태</th>
 								<th class="text-center" rowspan="2">교육기간</th>
+								<th class="text-center" rowspan="2">실적마감여부</th>
 								<th class="text-center" rowspan="2">교육상태</th>
 								<th class="text-center" colspan="2">강사</th>
 

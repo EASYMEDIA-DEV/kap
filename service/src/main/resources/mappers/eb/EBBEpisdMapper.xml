@@ -58,6 +58,12 @@
 				, pic_tel_no
 				, place_seq
 		     	, place_nm
+		     	, bdget_expns_yn
+		     	, case bdget_expns_yn
+		     	    when 'Y' then '마감'
+					when 'N' then '미마감'
+					when 'C' then '교육취소'
+				end bdget_expns_nm
 				, reg_id
 				, reg_name
 				, reg_dtm
@@ -98,6 +104,7 @@
 				, a.pic_tel_no
 				, a.place_seq
 				, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
+			   	, a.bdget_expns_yn
 				, a.reg_id
 				, (select name from co_adm_mst where id = a.reg_id) as reg_name
 				, a.reg_dtm
@@ -460,6 +467,9 @@
 			 , mod_name
 		     , bdget_expns_yn
 		     , cmptn_auto_yn
+		     , expns_cprtn_instt_nm
+		     , expns_cprtn_instt_seq
+		     , expns_pmt
 			 , exps_yn
 		FROM (SELECT
 				  b.edctn_seq
@@ -517,6 +527,9 @@
 				   , a.mod_dtm
 		           , a.bdget_expns_yn
 		           , a.cmptn_auto_yn
+				   , a.expns_cprtn_instt_seq
+				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.expns_cprtn_instt_seq) as expns_cprtn_instt_nm
+		           , a.expns_pmt
 				   , a.exps_yn
 			  FROM ed_edctn_episd_mst a
 					   LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq) AA
@@ -639,6 +652,8 @@
 			, cprtn_instt_seq
 			, cmptn_auto_yn
 			, edctn_stts_cd
+			, expns_cprtn_instt_seq
+			, expns_pmt
 			, bdget_expns_yn
 			, exps_yn
 			, reg_id
@@ -675,6 +690,8 @@
 				, #{cprtnInsttSeq}
 				, #{cmptnAutoYn}
 				, #{edctnSttsCd}
+				, #{expnsCprtnInsttSeq}
+				, #{expnsPmt}
 				, #{bdgetExpnsYn}
 				, #{expsYn}
 				, #{regId}
@@ -863,6 +880,8 @@
 			, cmptn_auto_yn = #{cmptnAutoYn}
 			, otsd_exam_ptcpt_yn = #{otsdExamPtcptYn}
 			, bdget_expns_yn = #{bdgetExpnsYn}
+			, expns_cprtn_instt_seq = #{expnsCprtnInsttSeq}
+			, expns_pmt = #{expnsPmt}
 			, exps_yn = #{expsYn}
 			, mod_id = #{modId}
 			, mod_ip = #{modIp}
