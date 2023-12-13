@@ -1513,6 +1513,56 @@
                                 </fieldset>
                             </c:if>
                         </c:forEach>
+
+                        <c:if test="${rtnSurveyData != null}">
+                            <c:forEach var="qstnList" items="${rtnSurveyData.svSurveyQstnDtlList}" varStatus="qstnStatus">
+                                <c:if test="${cd ne qstnList.cd}">
+                                    <h6 class="ml mb-xl ${fn:substring(qstnList.cd,0,3)}"><em class="ion-android-checkbox-blank mr-sm"></em>${qstnList.cdNm}</h6>
+                                </c:if>
+                                <c:if test="${qstnList.cd ne 'CON01' && qstnList.cd ne 'CON02'}">
+                                    <c:set var="rowspan" value="${qstnList.exmplCnt+3}" />
+                                    <fieldset style="<c:if test="${qstnList.ctgryCd eq null}">display:none;</c:if>" class="surveyList ${qstnList.cd}" data-survey-type="${qstnList.cd}" >
+                                        <input type="hidden" name="dpth" value="${qstnList.dpth}">
+                                        <div class="form-group text-sm">
+                                            <table class="table">
+                                                <tr>
+                                                    <th rowspan="3" class="col-md-1 ${qstnList.cd}questionTxt">질문1</th>
+                                                    <th class="col-md-1">설문유형<span class="star"> *</span></th>
+                                                    <td class="form-inline col-md-8" >
+                                                            ${qstnList.srvTypeNm}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>질문<span class="star"> *</span></th>
+                                                    <td>${qstnList.qstnNm}</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>응답<span class="star"> *</span></th>
+                                                    <td>
+                                                        <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
+                                                            <c:choose>
+                                                                <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
+                                                                    ${exmplList.winAnswerText}
+                                                                </c:when>
+                                                                <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
+                                                                    - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    - ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:forEach>
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </fieldset>
+                                </c:if>
+                                <c:set var="cd" value="${ qstnList.cd}" />
+                            </c:forEach>
+                        </c:if>
                     </div>
                 </div>
             </div>

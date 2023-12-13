@@ -143,7 +143,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input">
-                                                        <input type="text" placeholder="부품사명 입력" title="부품사명" name="cmpn_nm_new" readonly class="cmpn_nm_new">
+                                                        <input type="text" placeholder="부품사명 입력" title="부품사명" name="cmpn_nm_new" class="cmpn_nm_new">
                                                     </div>
                                                 </div>
                                             </div>

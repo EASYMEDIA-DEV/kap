@@ -7,9 +7,12 @@ import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.service.CBATechGuidanceService;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.SVASurveyService;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +52,8 @@ public class CBATechGuidanceController {
     private final CBATechGuidanceService cBATechGuidanceService;
 
     private final COCodeService cOCodeService;
+
+    private final SVASurveyService sVSurveyService;
 
     /**
      * 컨설팅 사업 기술 지도 목록 페이지
@@ -108,7 +113,24 @@ public class CBATechGuidanceController {
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
         if (!"".equals(cBATechGuidanceInsertDTO.getDetailsKey()) && cBATechGuidanceInsertDTO.getDetailsKey() != null) {
-            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
+
+            CBATechGuidanceInsertDTO rtnData = cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO);
+            modelMap.addAttribute("rtnData", rtnData);
+
+            if ( rtnData.getRsumeList().size() > 0){
+
+                SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
+                sVASurveyDTO.setDetailsKey(cBATechGuidanceInsertDTO.getDetailsKey());
+
+                sVASurveyDTO.setTypeCd("CON");
+                SVASurveyMstInsertDTO sVASurveyMstInsertDTO = sVSurveyService.selectSurveyTypeConDtl(sVASurveyDTO);
+                if (sVASurveyMstInsertDTO != null){
+                    modelMap.addAttribute("rtnSurveyData", sVASurveyMstInsertDTO);
+                }
+
+            }
+
+
         }
         /*} catch (Exception e) {
             if (log.isErrorEnabled()) {

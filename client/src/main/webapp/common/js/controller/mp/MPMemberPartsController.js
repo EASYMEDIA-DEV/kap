@@ -64,6 +64,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 $("#bsnmNo").focus();
                                 return false;
                             }
+                            if($(".cmpn_nm_new").val().trim() =='' || $(".cmpn_nm_new").val() == undefined) {
+                                alert(msgCtrl.getMsg("fail.mp.join.al_037"));
+                                $("#cmpn_nm_new").focus();
+                                return false;
+                            }
                             if(!bsnmOldNewChk) {
                                 if ($("#ctgryCd").val().trim() == '' || $("#ctgryCd").val() == undefined ) {
                                     alert(msgCtrl.getMsg("fail.mp.join.al_027"));

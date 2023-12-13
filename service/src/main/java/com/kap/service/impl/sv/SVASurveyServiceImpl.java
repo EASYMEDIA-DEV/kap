@@ -306,4 +306,32 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 
 		return sVASurveyMstInsertDTO;
 	}
+
+	@Override
+	public SVASurveyMstInsertDTO selectSurveyTypeConDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception {
+
+		SVASurveyMstInsertDTO sVASurveyMstInsertDTO = sVASurveyMapper.selectSurveyConDtl(sVASurveyDTO);
+
+		String detailKey = sVASurveyDTO.getDetailsKey();
+
+		if (sVASurveyMstInsertDTO != null){
+			sVASurveyDTO.setDetailsKey(Integer.toString(sVASurveyMstInsertDTO.getSrvSeq()));
+			List<SVASurveyQstnDtlDTO> surveyQstnDtlList = sVASurveyMapper.selectSurveyQstnTypeDtlList(sVASurveyDTO);
+			SVASurveyQstnDtlDTO sVASurveyQstnDtlDTO = new SVASurveyQstnDtlDTO();
+
+			if(surveyQstnDtlList != null && surveyQstnDtlList.size() > 0) {
+				for (int i = 0; i < surveyQstnDtlList.size(); i++) {
+					sVASurveyQstnDtlDTO.setRfncSeq(Integer.valueOf(detailKey));
+					sVASurveyQstnDtlDTO.setQstnSeq(surveyQstnDtlList.get(i).getQstnSeq());
+					List<SVASurveyExmplDtlDTO> surveyExmplDtlList = sVASurveyMapper.selectSurveyExmplConDtlList(sVASurveyQstnDtlDTO);
+					surveyQstnDtlList.get(i).setSvSurveyExmplDtlList(surveyExmplDtlList);
+				}
+			}
+
+			sVASurveyMstInsertDTO.setSvSurveyQstnDtlList( surveyQstnDtlList );
+		}
+
+		return sVASurveyMstInsertDTO;
+	}
+
 }

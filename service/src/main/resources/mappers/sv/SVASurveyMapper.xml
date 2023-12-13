@@ -606,7 +606,7 @@
 				 FROM
 					 co_code_mst a left join (select * from sv_qstn_dtl where srv_seq = #{detailsKey} AND ctgry_cd !='EDU05') b on a.cd = b.ctgry_cd
 					, (select @rownum:=0, @grp:='') r
-				 WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd}  AND b.qstn_seq is not null
+				 WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd}
 				 ORDER BY
 					 lft_val , qstn_ord
 			 ) T
@@ -766,4 +766,57 @@
 		order by a.qstn_seq asc, a.exmpl_ord asc
 
 	</select>
+
+	<!--
+		쿼리명 : SVASurveyMapper.selectSurveyExmplConDtlList
+		설  명 : 응답 조회(컨설팅)
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.13    박준희       최초생성
+    -->
+	<select id="selectSurveyExmplConDtlList" parameterType="SVASurveyQstnDtlDTO" resultType="SVASurveyExmplDtlDTO">
+		select /* SVASurveyMapper.selectSurveyExmplConDtlList */
+			a.exmpl_seq
+			 ,a.qstn_seq
+			 ,a.exmpl_nm
+			 ,a.exmpl_ord
+			 ,a.next_no
+			 ,a.reg_id
+			 ,a.reg_dtm
+			 ,a.mod_id
+			 ,a.mod_dtm
+			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'CON' and rfnc_seq = #{rfncSeq}  and svmd.exmpl_seq = a.exmpl_seq) as win_answer
+			 , (select sbjct_rply from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'CON' and rfnc_seq = #{rfncSeq}  and svsd.qstn_seq = a.qstn_seq) as win_answer_text
+		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
+		where a.qstn_seq = #{qstnSeq}
+		order by a.qstn_seq asc, a.exmpl_ord asc
+
+	</select>
+
+	<!--
+		쿼리명 : SVASurveyMapper.selectSurveyConDtl
+		설  명 : 설문 마스터 조회 (컨설팅)
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.13    박준희       최초생성
+    -->
+	<select id="selectSurveyConDtl" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyMstInsertDTO">
+		select /* SVASurveyMapper.selectSurveyConDtl */
+			a.srv_seq
+			 ,a.type_cd
+			 ,a.titl
+			 ,a.rspn_mm
+			 ,a.cntn
+			 ,a.exps_yn
+			 ,a.msr_stnd_cd
+			 ,a.msr_yn
+			 ,a.reg_id
+			 ,a.reg_dtm
+			 ,a.mod_id
+			 ,a.mod_dtm
+		from sv_mst a inner join cp_cnstg_rsume_mst b on a.srv_seq = b.srv_seq
+		where b.cnstg_seq = #{detailsKey}
+	</select>
+
+
 </mapper>

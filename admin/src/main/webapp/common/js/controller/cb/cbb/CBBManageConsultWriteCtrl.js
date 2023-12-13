@@ -184,6 +184,24 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
     }
 
+    var questionSet = function(){
+
+        $(".surveyList").each(function(){
+            var surveyTypeData = $(this).data('survey-type');
+            var cnt = 1;
+            var subCnt = 1;
+            $("."+surveyTypeData).each(function(index){                         // 질문, 하위질문 번호를 구분하고 순서를 셋팅
+                if ($(this).find('input[name=dpth]').val() == '2'){
+                    $("."+surveyTypeData+"questionTxt:eq("+index+")").text("└질문"+eval(cnt-1)+"-"+subCnt);
+                    subCnt = subCnt + 1;
+                }else{
+                    $("."+surveyTypeData+"questionTxt:eq("+index+")").text("질문"+cnt);
+                    cnt = cnt+1;
+                    subCnt = 1;
+                }
+            });
+        });
+    }
     // set model
     ctrl.model = {
         id: {
@@ -536,6 +554,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             }
         },
         immediately: function () {
+
+            questionSet();
 
             /* Editor Setting */
             jQuery("textarea[id^='cntn']").each(function () {

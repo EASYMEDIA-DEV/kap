@@ -7,10 +7,9 @@ import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultUpdateDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
-import com.kap.service.CBATechGuidanceService;
-import com.kap.service.CBBManageConsultService;
-import com.kap.service.COCodeService;
-import com.kap.service.COUserDetailsHelperService;
+import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
+import com.kap.service.*;
 import com.kap.service.mp.mpa.MPAUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +54,7 @@ public class CBBManageConsultController {
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
 
+    private final SVASurveyService sVSurveyService;
     /**
      * 컨설팅 사업 경영컨설팅 목록 페이지
      */
@@ -105,8 +105,23 @@ public class CBBManageConsultController {
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
         if (!"".equals(cBBManageConsultInsertDTO.getDetailsKey()) && cBBManageConsultInsertDTO.getDetailsKey() != null) {
-            modelMap.addAttribute("rtnData", cBBManageConsultService.selectManageConsultDtl(cBBManageConsultInsertDTO));
-            System.err.println("modelMap:::"+modelMap.get("rtnData"));
+
+            CBBManageConsultInsertDTO rtnData =  cBBManageConsultService.selectManageConsultDtl(cBBManageConsultInsertDTO);
+            modelMap.addAttribute("rtnData", rtnData);
+
+            if ( rtnData.getRsumeList().size() > 0){
+
+                SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
+                sVASurveyDTO.setDetailsKey(cBBManageConsultInsertDTO.getDetailsKey());
+
+                sVASurveyDTO.setTypeCd("CON");
+                SVASurveyMstInsertDTO sVASurveyMstInsertDTO = sVSurveyService.selectSurveyTypeConDtl(sVASurveyDTO);
+                if (sVASurveyMstInsertDTO != null){
+                    modelMap.addAttribute("rtnSurveyData", sVASurveyMstInsertDTO);
+                }
+
+            }
+
         }
         /*} catch (Exception e) {
             if (log.isErrorEnabled()) {
