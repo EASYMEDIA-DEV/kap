@@ -1,7 +1,10 @@
 package com.kap.mngwserc.controller.eb;
 
+import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.ebh.EBHEduApplicantMstDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.EBHEduApplicantService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -120,9 +123,10 @@ public class EBHEduApplicantController {
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
-            cdDtlList.add("MEM_CD");
-            cdDtlList.add("COMPANY_TYPE");
-            cdDtlList.add("CO_YEAR_CD");
+            cdDtlList.add("MEM_CD"); //회원 코드 (직급, 부서 등)
+            cdDtlList.add("COMPANY_TYPE"); //부품사 코드 (구분, 규모 등)
+            cdDtlList.add("CO_YEAR_CD"); //공통 년도 코드
+            cdDtlList.add("EDU_STTS_CD"); //선발 상태(교육참여 교육상태) 구분 코드
 
             modelMap.addAttribute("rtnData", eBHEduApplicantService.selectView(pEBHEduApplicantMstDTO));
 //            modelMap.addAttribute("rtnDataEduApplicantReqData", eBHEduApplicantService.selectView(pEBHEduApplicantMstDTO));
@@ -157,23 +161,24 @@ public class EBHEduApplicantController {
         /** 서비스 **/
         private final EBHEduApplicantService eBHEduApplicantService;
 
-        /*@Operation(summary = "신청자, 부품사 정보 조회", tags = "회원", description = "신청자, 부품사 정보 조회")
+        @Operation(summary = "신청자, 부품사 정보 조회", tags = "회원", description = "신청자, 부품사 정보 조회")
         @PostMapping(value="/update")
-        public BaseDTO updateEduApplicantCertiConfrim(@Valid COUserCmpnDto cOUserCmpnDto, @Valid EBGExamAppctnMstDTO pEBGExamAppctnMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+        public BaseDTO updateEduApplicant(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, MPEPartsCompanyDTO pMPEPartsCompanyDTO, MPAUserDto pMPAUserDto, HttpServletRequest request) throws Exception
         {
-            log.error("COUserCmpnDto : {}", cOUserCmpnDto.toString());
-            log.error("EBDEdctnEdisdDTO : {}", eBGExamAppctnMstDTO.toString());
+            log.error("pEBHEduApplicantMstDTO : {}", pEBHEduApplicantMstDTO.toString());
+            log.error("pMPEPartsCompanyDTO : {}", pMPEPartsCompanyDTO.toString());
+            log.error("pMPAUserDto : {}", pMPAUserDto.toString());
             BaseDTO baseDTO = new BaseDTO();
             try
             {
-                baseDTO.setRespCnt( eBHEduApplicantService.updateConfirmInfo(cOUserCmpnDto, eBGExamAppctnMstDTO, request));
+                baseDTO.setRespCnt( eBHEduApplicantService.update(pEBHEduApplicantMstDTO, pMPEPartsCompanyDTO, pMPAUserDto));
             }
             catch (Exception e)
             {
                 throw new Exception(e.getMessage());
             }
             return baseDTO;
-        }*/
+        }
 
         @Operation(summary = "교육 신청자 선발 상태 변경", tags = "교육 신청자", description = "교육 신청자 선발 상태 변경")
         @PostMapping(value="/stts-update")

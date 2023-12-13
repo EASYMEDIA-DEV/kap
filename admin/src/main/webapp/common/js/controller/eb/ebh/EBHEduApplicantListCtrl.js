@@ -102,12 +102,22 @@ define(["ezCtrl"], function(ezCtrl) {
                                 return false;
                             }
 
-                            console.log("선발 데이터 ajax 전송");
+                            // 가져온 배열의 값들 중 '04'라는 단어가 포함되지 않은 단어가 있는지 확인 (선발대기가 아닌 데이터)
+                            var containsNotValue = checkedValues.some(function(value) {
+                                return !value.includes('04');
+                            });
+
+                            // 선발대기여부 확인
+                            if(containsNotValue) {
+                                alert("선발대기 상태의 회원만 선택 가능합니다.");
+                                return false;
+                            }
+
                             if(confirm("선택한 회원을 선발하시겠습니까?")) {
                                 var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
                                     return $(this).val();
                                 }).get();
-                                console.log(delValueList);
+
                                 jQuery.ajax({
                                     type : "post",
                                     url : "./stts-update",
@@ -144,7 +154,7 @@ define(["ezCtrl"], function(ezCtrl) {
             btnNotChoice : {
                 event : {
                     click : function() {
-                        if(isChecked("비선발할 게시물을 선택해주세요.")) {
+                        if(isChecked("미선발할 게시물을 선택해주세요.")) {
                             // 체크된 체크박스의 data-stts-cd 값들을 배열로 추출
                             var checkedValues = $("input:checkbox[name='delValueList']:checked").map(function() {
                                 return $(this).data('stts-cd');
@@ -161,12 +171,22 @@ define(["ezCtrl"], function(ezCtrl) {
                                 return false;
                             }
 
-                            console.log("선발 데이터 ajax 전송");
-                            if(confirm("선택한 회원을 비선발하시겠습니까?")) {
+                            // 가져온 배열의 값들 중 '04'라는 단어가 포함되지 않은 단어가 있는지 확인 (선발대기가 아닌 데이터)
+                            var containsNotValue = checkedValues.some(function(value) {
+                                return !value.includes('04');
+                            });
+
+                            // 선발대기여부 확인
+                            if(containsNotValue) {
+                                alert("선발대기 상태의 회원만 선택 가능합니다.");
+                                return false;
+                            }
+
+                            if(confirm("선택한 회원을 미선발하시겠습니까?")) {
                                 var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
                                     return $(this).val();
                                 }).get();
-                                console.log(delValueList);
+
                                 jQuery.ajax({
                                     type : "post",
                                     url : "./stts-update",
@@ -197,6 +217,15 @@ define(["ezCtrl"], function(ezCtrl) {
                                 });
                             }
                         }
+                    }
+                }
+            },
+            btnRefresh : {
+                event : {
+                    click : function () {
+                        $(".cdListContainer").css("display","none");
+                        $(".cdListContainer").attr("disabled", true);
+                        $(".cdListContainer").find("input:checkbox").prop("checked", false);
                     }
                 }
             }
