@@ -73,4 +73,8 @@ public interface MPAUserMapper {
 
     void insertUserCmpnRel(MPAUserDto mpaUserDto);
 
+    void updateUserDtlMod(MPAUserDto mpaUserDto);
+
+    void updateUserDtlModS(MPAUserDto mpaUserDto);
+
 }
