@@ -116,7 +116,6 @@ public class CBATechGuidanceController {
 
             CBATechGuidanceInsertDTO rtnData = cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO);
             modelMap.addAttribute("rtnData", rtnData);
-            System.out.println("rtnData.getRsumeList().size()===" + rtnData.getRsumeList().size());
 
             if ( rtnData.getRsumeList().size() > 0){
 
