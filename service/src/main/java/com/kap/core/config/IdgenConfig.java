@@ -853,4 +853,17 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 사업신청자격
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxAppctnValidMstIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("CX_APPCTN_VALID_MST_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }
