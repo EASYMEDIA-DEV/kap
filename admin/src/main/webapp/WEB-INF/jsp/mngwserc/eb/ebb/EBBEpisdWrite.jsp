@@ -421,8 +421,12 @@
                     <fieldset>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">협력기관</label>
-                            <div class="col-sm-11">
-                                <input type="text" class="form-control input-sm notRequired" id="cprtnInsttNm" name="cprtnInsttNm" value="${rtnDto.cprtnInsttNm}" title="협력기관" maxlength="200" placeholder="협력기관 입력" />
+                            <div class="col-sm-11 form-inline">
+                                <input type="text" class="form-control input-sm notRequired" id="cprtnInsttNm" value="${rtnDto.cprtnInsttNm}" title="협력기관" maxlength="50" placeholder="협력기관 입력"  readonly style="width: 250px;" />
+                                <input type="hidden" class="form-control input-sm notRequired" name="cprtnInsttSeq" id="cprtnInsttSeq" value="${rtnDto.cprtnInsttSeq}" title="협력기관" maxlength="50" placeholder="협력기관 입력" />
+                                <button type="button" class="btn btn-inverse btn-sm cprtnInsttSearch">
+                                    협력기관 검색
+                                </button>
                             </div>
                         </div>
                     </fieldset>
@@ -1049,6 +1053,26 @@
                 <!-- 예산/지출 -->
                 <div id="bdget" class="tab-pane fade">
 
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">마감여부<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-11">
+                                <label class="radio-inline c-radio">
+                                    <input type="radio" name="bdgetExpnsYn" value="Y" title="예산지출교육여부" <c:if test="${rtnDto.bdgetExpnsYn eq 'Y'}">checked</c:if>/>
+                                    <span class="ion-record"></span> 마감
+                                </label>
+                                <label class="radio-inline c-radio">
+                                    <input type="radio" name="bdgetExpnsYn" value="N" title="예산지출교육여부" <c:if test="${rtnDto.bdgetExpnsYn eq 'N' or empty rtnDto}">checked</c:if>/>
+                                    <span class="ion-record"></span> 미마감
+                                </label>
+                                <label class="radio-inline c-radio">
+                                    <input type="radio" name="bdgetExpnsYn" value="C" title="예산지출교육여부" <c:if test="${rtnDto.bdgetExpnsYn eq 'C'}">checked</c:if>/>
+                                    <span class="ion-record"></span> 교육취소
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+
                     <!--공통코드 데이터 + 입력된 데이터-->
                     <div class="bdgetTargetData" style="display:none;" data-type="bdget01">
                         <c:forEach var="cdList" items="${ED_BDGET_CD01}" varStatus="status">
@@ -1119,6 +1143,53 @@
                     <!-- 협력기관 지출내역 -->
 
                     <!-- 강사 강의시간 -->
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <div class="col-sm-12">
+                                <h6 class="mt0"><em class="ion-play mr-sm"></em><span class="title">강사 강의시간<span></h6>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">강사 강의시간</label>
+                            <div class="col-sm-11">
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">강사1</label>
+                                        <div class="col-sm-3 form-inline">
+                                            <input type="text" class="form-control input-sm notRequired" name="ED_BDGET_CD03001" value="" title="강사1" maxlength="50" placeholder="강사 시간 입력" style="max-width: 150px;"/> H
+                                        </div>
+                                        <label class="col-sm-1 control-label">강사2</label>
+                                        <div class="col-sm-3 form-inline">
+                                            <input type="text" class="form-control input-sm notRequired" name="ED_BDGET_CD03002" value="" title="강사2" maxlength="50" placeholder="강사 시간 입력" style="max-width: 150px;"/> H
+                                        </div>
+                                        <label class="col-sm-1 control-label">강사3</label>
+                                        <div class="col-sm-3 form-inline">
+                                            <input type="text" class="form-control input-sm notRequired" name="ED_BDGET_CD03003" value="" title="강사3" maxlength="50" placeholder="강사 시간 입력" style="max-width: 150px;"/> H
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">강사4</label>
+                                        <div class="col-sm-3 form-inline">
+                                            <input type="text" class="form-control input-sm notRequired" name="ED_BDGET_CD03004" value="" title="강사4" maxlength="50" placeholder="강사 시간 입력" style="max-width: 150px;"/> H
+                                        </div>
+                                        <label class="col-sm-1 control-label">강사5</label>
+                                        <div class="col-sm-3 form-inline">
+                                            <input type="text" class="form-control input-sm notRequired" name="ED_BDGET_CD03005" value="" title="강사5" maxlength="50" placeholder="강사 시간 입력" style="max-width: 150px;"/> H
+                                        </div>
+                                        <label class="col-sm-1 control-label">강사6</label>
+                                        <div class="col-sm-3 form-inline">
+                                            <input type="text" class="form-control input-sm notRequired" name="ED_BDGET_CD03006" value="" title="강사6" maxlength="50" placeholder="강사 시간 입력" style="max-width: 150px;"/> H
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
                 </div>
             </div>
 

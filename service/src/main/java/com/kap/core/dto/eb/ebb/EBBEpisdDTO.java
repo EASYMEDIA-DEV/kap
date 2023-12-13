@@ -238,6 +238,9 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "회차번호 강의순번", example = "숫자")
     private Integer lctrSeq;
 
+    @Schema(title = "협업기관명", example = "숫자")
+    private Integer cprtnInsttSeq;
+
     @Schema(title = "협업기관명", example = "텍스트")
     private String cprtnInsttNm;
 
@@ -247,6 +250,10 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "교육차수 상태(개강, 종강)", example = "Y/N")
     @Builder.Default
     private String edctnSttsCd = "EDCTN_STTS_CD01";
+
+    @Schema(title = "예산지출 마감여부", example = "마감:Y, 미마감:N, 교육취소:C")
+    @Builder.Default
+    private String bdgetExpnsYn = "N";
 
 
     //오프라인여부

@@ -667,6 +667,44 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+			//리스트 전체 체크박스 선택시
+			checkboxAll : {
+				event : {
+					click : function() {
+						//상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxSingle가 변경됨
+						var trgtArr = $(this).closest("div").find(".checkboxSingle");
+						if (trgtArr.length > 0)
+						{
+							var isChecked = false;
+							if($(this).is(":checked"))
+							{
+								isChecked = true;
+							}
+							$.each(trgtArr, function(){
+								$(this).prop("checked", isChecked);
+							})
+						}
+					}
+				}
+			},
+			checkboxSingle : {
+				event : {
+					click : function() {
+						//상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxAll이 변경됨
+						var trgtObj = $(this).closest("div");
+						var allCbxCnt = trgtObj.find(".checkboxSingle").length;
+						var selCbxCnt = trgtObj.find(".checkboxSingle:checked").length;
+						if (allCbxCnt == selCbxCnt)
+						{
+							trgtObj.find(".checkboxAll").prop("checked", true);
+						}
+						else
+						{
+							trgtObj.find(".checkboxAll").prop("checked", false);
+						}
+					}
+				}
+			},
 
 			//페이징 목록 갯수
 
@@ -729,6 +767,26 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								$("tr.notPlace").css("display", "none");
 								$("tr.setPlace").css("display", "");
 
+							}
+
+
+						});
+					}
+				}
+			},
+			cprtnInsttSearch : {
+				event : {
+					click : function(){
+						cmmCtrl.getEduRoomLayerPop(function(data){
+							if(data.choiceCnt > 1){
+								alert(msgCtrl.getMsg("fail.eb.ebf.notSrchPlaceCom1"));
+							}else{
+
+								var placeSeq = data.seq;
+								var titl= data.titl;//교육장명
+
+								$("#cprtnInsttSeq").val(placeSeq);
+								$("#cprtnInsttNm").val(titl);
 							}
 
 
@@ -1235,7 +1293,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.picTelNo = $("#picTelNo").val()//담당자전화번호
 						actForm.placeSeq = $("#placeSeq").val();//교육장소순번
 
-						actForm.cprtnInsttNm = $("#cprtnInsttNm").val();//협력기관
+						//actForm.cprtnInsttNm = $("#cprtnInsttNm").val();//협력기관
+						actForm.cprtnInsttSeq = $("#cprtnInsttSeq").val();//협력기관
 
 
 						actForm.srvSeq = $("#srvSeq").val();//설문순번

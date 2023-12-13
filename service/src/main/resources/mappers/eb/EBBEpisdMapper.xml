@@ -450,6 +450,7 @@
 			 , exam_strt_dtm
 			 , exam_end_dtm
 		     , otsd_exam_ptcpt_yn
+		     , cprtn_instt_seq
 		     , cprtn_instt_nm
 			 , place_nm
 			 , reg_id
@@ -457,6 +458,7 @@
 			 , reg_dtm
 			 , mod_id
 			 , mod_name
+		     , bdget_expns_yn
 		     , cmptn_auto_yn
 			 , exps_yn
 		FROM (SELECT
@@ -504,7 +506,8 @@
 		           , a.exam_end_dtm
 		           , a.otsd_exam_ptcpt_yn
 				   , (SELECT titl FROM ex_exam_mst WHERE exam_seq = A.exam_seq) as exam_nm
-		           , cprtn_instt_nm
+		           , cprtn_instt_seq
+				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.cprtn_instt_seq) as cprtn_instt_nm
 				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
 				   , a.reg_id
 				   , (select name from co_adm_mst where id = a.reg_id) as reg_name
@@ -512,6 +515,7 @@
 				   , a.mod_id
 				   , (select name from co_adm_mst where id = a.reg_id) as mod_name
 				   , a.mod_dtm
+		           , a.bdget_expns_yn
 		           , a.cmptn_auto_yn
 				   , a.exps_yn
 			  FROM ed_edctn_episd_mst a
@@ -589,6 +593,7 @@
 
 		UPDATE ed_edctn_episd_mst SET /* EBBEpisdMapper.updateEpisdStatus */
 			edctn_stts_cd = 'EDCTN_STTS_CD02'
+			, bdget_expns_yn = 'C'
 			, mod_id = #{modId}
 			, mod_ip = #{modIp}
 			, mod_dtm = now()
@@ -631,9 +636,10 @@
 		  	, exam_strt_dtm
 		  	, exam_end_dtm
 			, otsd_exam_ptcpt_yn
-			, cprtn_instt_nm
+			, cprtn_instt_seq
 			, cmptn_auto_yn
 			, edctn_stts_cd
+			, bdget_expns_yn
 			, exps_yn
 			, reg_id
 			, reg_ip
@@ -666,9 +672,10 @@
 				,#{ examStrtDtm}
 				, #{examEndDtm}
 				, #{otsdExamPtcptYn}
-				, #{cprtnInsttNm}
+				, #{cprtnInsttSeq}
 				, #{cmptnAutoYn}
 				, #{edctnSttsCd}
+				, #{bdgetExpnsYn}
 				, #{expsYn}
 				, #{regId}
 				, #{regIp}
@@ -844,7 +851,7 @@
 			, pic_nm = #{picNm}
 			, pic_email = #{picEmail}
 			, pic_tel_no = #{picTelNo}
-			, cprtn_instt_nm = #{cprtnInsttNm}
+			, cprtn_instt_seq = #{cprtnInsttSeq}
 			, edctn_ntctn_file_seq = #{edctnNtctnFileSeq}
 			, place_seq = #{placeSeq}
 			, srv_seq = #{srvSeq}
@@ -855,6 +862,7 @@
 			, exam_end_dtm = #{examEndDtm}
 			, cmptn_auto_yn = #{cmptnAutoYn}
 			, otsd_exam_ptcpt_yn = #{otsdExamPtcptYn}
+			, bdget_expns_yn = #{bdgetExpnsYn}
 			, exps_yn = #{expsYn}
 			, mod_id = #{modId}
 			, mod_ip = #{modIp}
