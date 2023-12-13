@@ -23,6 +23,7 @@
             <input type="hidden" class="notRequired" id="etcMatlsFileSeq" name="etcMatlsFileSeq" value="${rtnInfo.etcMatlsFileSeq}" />
             <input type="hidden" class="notRequired" id="selectCtgryCd" name="selectCtgryCd" value="${rtnInfo.selectCtgryCd}" />
             <input type="hidden" class="notRequired" id="edctnPlaceAddr" name="edctnPlaceAddr" value="${rtnInfo.edctnPlaceAddr}"/>
+            <input type="hidden" id="bsnmNo" name="bsnmNo" value="${rtnInfo.appctnBsnmNo}"/>
 
             <fieldset>
                 <span class="dtl-tab" style="float:right"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
@@ -184,7 +185,7 @@
                 <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">매출액</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${rtnInfo.slsPmt}" title="매출액" placeholder="매출액 입력" style="width: 220px;"/> 억 원
+                        <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${rtnInfo.slsPmt}" title="매출액" placeholder="매출액 입력" style="width: 220px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/> 억 원
                         <select class="form-control input-sm notRequired" id="slsYear" name="slsYear" title="선택" style="width: 100px;">
                             <option value="">연도 선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
@@ -196,7 +197,7 @@
                     </div>
                     <label class="col-sm-1 control-label">직원수</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm notRequired" id="mpleCnt" name="mpleCnt" value="${rtnInfo.mpleCnt}" title="직원수" maxlength="50" placeholder="직원수 입력" style="width: 220px;"/> 명
+                        <input type="text" class="form-control input-sm notRequired" id="mpleCnt" name="mpleCnt" value="${rtnInfo.mpleCnt}" title="직원수" maxlength="50" placeholder="직원수 입력" style="width: 220px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/> 명
                     </div>
                 </div>
             </fieldset>
@@ -292,7 +293,7 @@
                         <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">${sqInfoList.sqInfoList}
                             <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>
                             <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="${list.nm}" title="SQ 업종" placeholder="SQ 업종입력"/>
-                            <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="점수" placeholder="SQ 점수입력"/>
+                            <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="점수" placeholder="SQ 점수입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                             <select class="form-control input-sm notRequired" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도" style="width:auto;">
                                 <option value="">SQ 평가년도 선택</option>
                                 <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
@@ -309,7 +310,7 @@
                                 <c:forEach var="i" begin="1" end="${3 - sqInfoListCnt}" varStatus="status">
                                     <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value=""/>
                                     <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
-                                    <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="" title="점수" placeholder="SQ 점수입력" maxlength="50"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="" title="점수" placeholder="SQ 점수입력" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                     <select class="form-control input-sm notRequired" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도" style="width:auto;">
                                         <option value="">SQ 평가년도 선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
@@ -326,7 +327,7 @@
                                 <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
                                     <input type="hidden" class="notRequired" id="cbsnSeq${status.count + 1}" name="sqInfoList${status.count + 1}" value=""/>
                                     <input type="text" class="form-control input-sm notRequired" id="nm${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
-                                    <input type="text" class="form-control input-sm notRequired" id="score${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="점수" placeholder="SQ 점수입력" maxlength="50"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="score${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="점수" placeholder="SQ 점수입력" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                     <select class="form-control input-sm notRequired" id="year${status.count + 1}" name="sqInfoList${status.count + 1}" title="평가년도" style="width:auto;">
                                         <option value="">SQ 평가년도 선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
@@ -343,7 +344,7 @@
                                 <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
                                     <input type="hidden" class="notRequired" id="cbsnSeq${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value=""/>
                                     <input type="text" class="form-control input-sm notRequired" id="nm${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
-                                    <input type="text" class="form-control input-sm notRequired" id="score${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="점수" placeholder="SQ 점수입력" maxlength="50"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="score${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="점수" placeholder="SQ 점수입력" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                     <select class="form-control input-sm notRequired" id="year${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" title="평가년도" style="width:auto;">
                                         <option value="">SQ 평가년도 선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
@@ -442,7 +443,7 @@
                 <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">교육인원</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm notRequired" id="ptcptCnt" name="ptcptCnt" value="${rtnInfo.ptcptCnt}" title="교육인원" maxlength="50" style="width:100px;"/> 명
+                        <input type="text" class="form-control input-sm notRequired" id="ptcptCnt" name="ptcptCnt" value="${rtnInfo.ptcptCnt}" title="교육인원" maxlength="50" style="width:100px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/> 명
                     </div>
                 </div>
             </fieldset>
@@ -511,10 +512,23 @@
                             </div>
                         </div>
                         <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">교육일<span class="star"> *</span></label>
+                            <label class="col-sm-1 control-label">교육 시작일</label>
                             <div class="col-sm-5">
                                 <div class="input-group" style="z-index:0;width: 220px;">
-                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" id="edctnDtm" name="edctnDtm" value="${kl:convertDate(rtnInfo.edctnDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy-MM-dd', '')}" title="교육일" />
+                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" id="edctnStrtDtm" name="edctnStrtDtm" value="${kl:convertDate(rtnInfo.edctnStrtDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy-MM-dd', '')}" title="교육시작일" />
+                                    <span class="input-group-btn" style="z-index:0;">
+                                <button type="button" class="btn btn-inverse input-sm" onclick="jQuery(this).parent().prev().focus();">
+                                    <em class="ion-calendar"></em>
+                                </button>
+                            </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 20px;">
+                            <label class="col-sm-1 control-label">교육 종료일</label>
+                            <div class="col-sm-5">
+                                <div class="input-group" style="z-index:0;width: 220px;">
+                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" id="edctnEndDtm" name="edctnEndDtm" value="${kl:convertDate(rtnInfo.edctnEndDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy-MM-dd', '')}" title="교육종료일" />
                                     <span class="input-group-btn" style="z-index:0;">
                                 <button type="button" class="btn btn-inverse input-sm" onclick="jQuery(this).parent().prev().focus();">
                                     <em class="ion-calendar"></em>
@@ -600,7 +614,7 @@
                         <div class="row" style="margin-bottom: 20px;">
                             <label class="col-sm-1 control-label">수료인원(명)</label>
                             <div class="col-sm-10 form-inline">
-                                <input type="text" class="form-control input-sm " id="cmptnCnt" name="cmptnCnt" value="${rtnInfo.cmptnCnt}" title="수료인원" maxlength="50" />
+                                <input type="text" class="form-control input-sm " id="cmptnCnt" name="cmptnCnt" value="${rtnInfo.cmptnCnt}" title="수료인원" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                             </div>
                         </div>
                         <div class="row" style="margin-bottom: 20px;">
@@ -625,7 +639,7 @@
                         </c:forEach>
                         <label class="col-sm-1 control-label">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03001">
-                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                         </div>
                     </c:forEach>
                 </div>
@@ -643,7 +657,7 @@
                         </c:forEach>
                         <label class="col-sm-1 control-label">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03002">
-                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                         </div>
                     </c:forEach>
                 </div>
@@ -661,7 +675,7 @@
                         </c:forEach>
                         <label class="col-sm-1 control-label">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03003">
-                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                         </div>
                     </c:forEach>
                 </div>
@@ -679,7 +693,7 @@
                         </c:forEach>
                         <label class="col-sm-1 control-label">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03004">
-                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                         </div>
                     </c:forEach>
                 </div>
@@ -697,7 +711,7 @@
                         </c:forEach>
                         <label class="col-sm-1 control-label">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03005">
-                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                         </div>
                     </c:forEach>
                 </div>
@@ -716,7 +730,7 @@
                         </c:forEach>
                         <label class="col-sm-1 control-label">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03006">
-                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                         </div>
                     </c:forEach>
                 </div>

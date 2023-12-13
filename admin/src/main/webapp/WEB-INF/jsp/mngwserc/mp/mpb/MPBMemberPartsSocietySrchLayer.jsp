@@ -19,7 +19,9 @@
                 <!-- CSRF KEY -->
                 <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <!-- 검색 여부 -->
-                <input type="hidden" name="srchLayer" value="Y" />
+                <input type="hidden" id="srchLayer" name="srchLayer" value="Y" />
+                <input type="hidden" id="workBsnmNo" name="workBsnmNo" value="" />
+
                 <div class="modal-body">
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">

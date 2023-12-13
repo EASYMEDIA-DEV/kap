@@ -20,6 +20,7 @@
 			 , A.ptcpt_hh -- 교육시간
 			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.ptcpt_hh) AS ptcpt_hh_num
 			 , A.edctn_place AS edctn_place_addr -- 교육장소 hidden값
+	 		 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.edctn_stts_cd) AS edctn_stts_name -- 교육상태명
 			 , A.reg_dtm AS visit_reg_dtm -- 방문교육신청일시
 			 , A.mod_id AS visit_mod_id -- 최종수정자
 			 , A.mod_dtm  AS visit_mod_dtm-- 최종수정일시
@@ -34,10 +35,9 @@
 			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = C.size_cd) AS size_name
 			 , D.vst_rslt_seq -- 방문결과순번
 			 , D.cnfrmd_theme -- 확정주제
-			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = D.edctn_stts_cd) AS edctn_stts_name -- 교육상태명
-			 , D.edctn_dtm -- 교육일시
 			 , D.cmptn_cnt -- 수료인원
-
+			 , D.edctn_strt_dtm -- 교육시작일시
+			 , D.edctn_end_dtm -- 교육종료일시
 		FROM
 			(
 				SELECT vst_seq
@@ -48,6 +48,7 @@
 					 , ptcpt_cnt
 					 , ptcpt_hh
 					 , edctn_place
+ 					 , edctn_stts_cd
 					 , reg_dtm
 					 , mod_id
 					 , mod_dtm
@@ -78,9 +79,9 @@
 					 , vst_seq
 					 , mem_seq
 					 , cnfrmd_theme
-					 , edctn_stts_cd
-					 , edctn_dtm
 					 , cmptn_cnt
+					 , edctn_strt_dtm
+					 , edctn_end_dtm
 				FROM ev_edctn_vst_rslt_dtl
 			)D
 			ON A.vst_seq = D.vst_seq
@@ -137,6 +138,7 @@
 			 , A.edctn_place AS edctn_place_addr -- 교육장소 hidden값
 			 , A.ptcpt_trgt_cntn -- 참여대상내용
 			 , A.itrdc_file_seq -- 소개파일순번
+			 , A.edctn_stts_cd -- 교육상태코드
 			 , A.reg_dtm AS visit_reg_dtm -- 방문교육신청일시
 			 , A.mod_id -- 최종수정자
 			 , A.mod_ip  -- 최종수정자
@@ -175,8 +177,8 @@
 			 , C.tchlg_5_star_year
 			 , D.vst_rslt_seq -- 방문결과순번
 			 , D.cnfrmd_theme -- 확정주제
-			 , D.edctn_stts_cd -- 교육상태코드
-			 , D.edctn_dtm -- 교육일시
+			 , D.edctn_strt_dtm -- 교육시작일시
+			 , D.edctn_end_dtm -- 교육종료일시
 			 , D.cmptn_cnt -- 수료인원
 			 , D.edctn_year -- 교육년도
 			 , D.edctn_place -- 교육장소
@@ -201,6 +203,7 @@
 					 , ptcpt_cnt
 					 , ptcpt_hh
 					 , itrdc_file_seq -- 소개파일순번
+					 , edctn_stts_cd
 					 , reg_dtm
 					 , mod_id
 					 , mod_ip
@@ -259,10 +262,10 @@
 					 , vst_seq
 					 , mem_seq
 					 , cnfrmd_theme
-					 , edctn_stts_cd
 					 , edctn_year -- 교육년도
-					 , edctn_dtm
 					 , edctn_place -- 교육장소
+					 , edctn_strt_dtm -- 교육시작일시
+					 , edctn_end_dtm -- 교육종료일시
 					 , cmptn_cnt
 					 , ptcpt_rate -- 참석률
 					 , lctr_file_seq
@@ -488,9 +491,9 @@
 		   , vst_seq
 		   , mem_seq
 		   , cnfrmd_theme
-		   , edctn_stts_cd
 		   , edctn_year
-		   , edctn_dtm
+		   , edctn_strt_dtm
+		   , edctn_end_dtm
 		   , edctn_place
 		   , cmptn_cnt
 		   , ptcpt_rate
@@ -505,9 +508,9 @@
 			, #{vstSeq}
 			, #{memSeq}
 			, #{cnfrmdTheme}
-			, #{edctnSttsCd}
 			, #{edctnYear}
-			, #{edctnDtm}
+			, #{edctnStrtDtm}
+			, #{edctnEndDtm}
 			, #{edctnPlace}
 			, #{cmptnCnt}
 			, #{ptcptRate}
@@ -531,9 +534,9 @@
 		set
 			mem_seq = #{memSeq}
 		  , cnfrmd_theme = #{cnfrmdTheme}
-		  , edctn_stts_cd = #{edctnSttsCd}
 		  , edctn_year = #{edctnYear}
-		  , edctn_dtm = #{edctnDtm}
+		  , edctn_strt_dtm = #{edctnStrtDtm}
+		  , edctn_end_dtm = #{edctnEndDtm}
 		  , edctn_place = #{edctnPlace}
 		  , cmptn_cnt = #{cmptnCnt}
 		  , ptcpt_rate = #{ptcptRate}

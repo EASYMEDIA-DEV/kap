@@ -155,7 +155,7 @@
                         <th class="text-center">이메일</th>
                         <th class="text-center">교육상태</th>
                         <th class="text-center">확정주제</th>
-                        <th class="text-center">교육일</th>
+                        <th class="text-center">교육기간</th>
                         <th class="text-center">수료인원(명)</th>
                         <th class="text-center">최종 수정자</th>
                         <th class="text-center">최종 수정일시</th>

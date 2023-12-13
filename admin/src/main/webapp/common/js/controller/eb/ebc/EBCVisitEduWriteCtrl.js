@@ -499,7 +499,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var cnfrmdTheme = $("#cnfrmdTheme").val();
                         var edctnSttsCd = $("#edctnSttsCd").val();
                         var edctnYear = $("#edctnYear").val();
-                        var edctnDtm = $("#edctnDtm").val();
+                        var edctnStrtDtm = $("#edctnStrtDtm").val();
+                        var edctnEndDtm = $("#edctnEndDtm").val();
                         var edctnPlace = $("#edctnPlace").val();
 
                         //강사정보
@@ -530,7 +531,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         actForm.cnfrmdTheme = cnfrmdTheme;
                         actForm.edctnSttsCd = edctnSttsCd;
                         actForm.edctnYear = edctnYear;
-                        actForm.edctnDtm = edctnDtm;
+                        actForm.edctnStrtDtm = edctnStrtDtm;
+                        actForm.edctnEndDtm = edctnEndDtm;
                         actForm.edctnPlace = edctnPlace;
                         actForm.cmptnCnt = cmptnCnt;
                         actForm.ptcptRate = ptcptRate;

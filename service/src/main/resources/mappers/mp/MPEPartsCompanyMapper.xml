@@ -275,17 +275,11 @@
           , MJR_PRDCT_2 = #{mjrPrdct2}
           , MJR_PRDCT_3 = #{mjrPrdct3}
           , QLTY_5_STAR_CD = #{qlty5StarCd}
-        <if test="qlty5StarYear != null and qlty5StarYear != ''.toString() ">
           , QLTY_5_STAR_YEAR = #{qlty5StarYear}
-        </if>
           , PAY_5_STAR_CD = #{pay5StarCd}
-        <if test="pay5StarYear != null and pay5StarYear != ''.toString() ">
           , PAY_5_STAR_YEAR = #{pay5StarYear}
-        </if>
           , TCHLG_5_STAR_CD = #{tchlg5StarCd}
-        <if test="tchlg5StarYear != null and tchlg5StarYear != ''.toString() ">
           , TCHLG_5_STAR_YEAR = #{tchlg5StarYear}
-        </if>
         <if test="admMemo != null and admMemo != ''.toString() ">
             , ADM_MEMO = #{admMemo}
         </if>
@@ -746,13 +740,13 @@
                 select appctn_seq, episd_seq, mem_seq, appctn_bsnm_no
                 from cx_appctn_mst
             ) A
-                left join
+                inner join
             (
                 select episd_seq, bsn_cd,YEAR
                 from cx_episd_mst
             ) B
             on A.episd_seq = B.episd_seq
-                left join
+                inner join
             (
                 select prize_seq
                      ,episd_seq
@@ -764,13 +758,13 @@
                 from cx_episd_prize_dtl
             ) C
             on B.episd_seq = C.episd_seq
-                LEFT JOIN
+                inner join
             (
                 SELECT bsnm_no, cmpn_nm
                 FROM cp_cmpn_mst
             ) D
             ON A.appctn_bsnm_no = D.bsnm_no
-                LEFT JOIN
+                inner join
             (
                 SELECT name, pstn_nm, mem_seq
                 FROM co_mem_mst

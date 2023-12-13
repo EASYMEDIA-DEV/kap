@@ -29,7 +29,7 @@
                 <td class="text-center">${list.email}</td>
                 <td class="text-center">${list.edctnSttsName}</td>
                 <td class="text-center">${list.cnfrmdTheme}</td>
-                <td class="text-center">${kl:convertDate(list.edctnDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</td>
+                <td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                 <td class="text-center">${list.cmptnCnt}</td>
                 <td class="text-center">${list.modName}(${kl:idMasking(list.modId)})</td>
                 <td class="text-center">${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}</td>

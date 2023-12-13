@@ -1,7 +1,6 @@
 package com.kap.core.dto.mp.mpa;
 
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.MPBSanDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -258,11 +257,7 @@ public class MPAUserDto extends BaseDTO {
     private String fndnNtfyRcvYn;
 
 
-
-
-
-
-
-
+    @Schema(title = "회원검색 레이어 여부", example = "Y")
+    private String srchLayer;
 
 }

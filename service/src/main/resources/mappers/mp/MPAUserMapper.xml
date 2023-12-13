@@ -322,6 +322,11 @@
                 </foreach>
                 )
             </if>
+            <if test="srchLayer == 'Y'.toString() "> /* 회원검색 레이어일 경우 특정 부품사의 회원들만 조회되도록 */
+                <if test="workBsnmNo != null and workBsnmNo != ''.toString() ">
+                    and ma.work_bsnm_no = #{workBsnmNo}
+                </if>
+            </if>
             <if test="q != null and q != ''.toString() ">
                 <choose>
                     <when test="f == 1">

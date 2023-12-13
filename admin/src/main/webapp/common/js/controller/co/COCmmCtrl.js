@@ -1708,11 +1708,15 @@ var cmmCtrl = (function(){
 		$(".mpbMemberPartsSocietySrchLayer").one('show.bs.modal', function() {
 			// 2023-12-05 컨설팅 사업관리 관련하여 검색 제외 dto 추가
 			var cnstgSeq = $("#detailsKey").val();
+			var workBsnmNo = $("#bsnmNo").val();
 			var modal = $(this);
 			modal.appendTo("body");
 			// Add class for soft backdrop
 			if(cnstgSeq != null || cnstgSeq != ""){
 				$(".mpbMemberPartsSocietySrchLayer").find("#cnstgSeq").val(cnstgSeq);
+			}
+			if(workBsnmNo != null || workBsnmNo != ""){
+				$(".mpbMemberPartsSocietySrchLayer").find("#workBsnmNo").val(workBsnmNo);
 			}
 			$(".mpbMemberPartsSocietySrchLayer").find("#btnRefresh").click();
 			$(".mpbMemberPartsSocietySrchLayer").find("#btnSearch").click();
