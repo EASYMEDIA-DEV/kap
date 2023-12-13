@@ -1,6 +1,8 @@
 package com.kap.service;
 
 import com.kap.core.dto.eb.ebh.EBHEduApplicantMstDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 
 /**
  * 교육 신청자 관리 Service
@@ -27,7 +29,7 @@ public interface EBHEduApplicantService {
     /**
      * 수정
      */
-    public int update(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception;
+    public int update(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, MPEPartsCompanyDTO pMPEPartsCompanyDTO, MPAUserDto pMPAUserDto) throws Exception;
 
     /**
      * 선발 상태 수정

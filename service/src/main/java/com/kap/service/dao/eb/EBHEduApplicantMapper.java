@@ -1,6 +1,7 @@
 package com.kap.service.dao.eb;
 
 import com.kap.core.dto.eb.ebh.EBHEduApplicantMstDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -55,5 +56,20 @@ public interface EBHEduApplicantMapper {
      * 선발 상태 변경
      */
     public int updateStts(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO);
+
+    /**
+     * 신청자 정보 변경
+     */
+    public int updateUser(MPAUserDto pMPAUserDto);
+
+    /**
+     * 부품사 정보 변경
+     */
+    public int updateCmpn(MPEPartsCompanyDTO pMPEPartsCompanyDTO);
+
+    /**
+     * 참여 정보 변경
+     */
+    public int updateApplicant(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO);
 
 }

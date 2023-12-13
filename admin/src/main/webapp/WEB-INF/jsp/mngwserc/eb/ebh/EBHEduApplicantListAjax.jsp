@@ -12,26 +12,11 @@
                     </label>
                 </td>
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center">
-                    <c:choose>
-                        <c:when test="${fn:contains(list.sttsCd, '01')}">
-                            선발
-                        </c:when>
-                        <c:when test="${fn:contains(list.sttsCd, '02')}">
-                            신청취소
-                        </c:when>
-                        <c:when test="${fn:contains(list.sttsCd, '04')}">
-                            선발대기
-                        </c:when>
-                        <c:otherwise>
-                            미선발
-                        </c:otherwise>
-                    </c:choose>
-                </td>
+                <td class="text-center">${ list.sttsName }</td>
                 <td class="text-center">${ list.stdPrtCateNm } > ${ list.stdCateNm }</td>
                 <td class="text-center" >
                     <a href="javascript:" class="listView"  data-details-key="${list.ptcptSeq}">
-                            ${ list.nm }
+                            ${ list.stdName }
                     </a>
                 </td>
                 <td class="text-center">${ list.stduyMthdNm }</td>

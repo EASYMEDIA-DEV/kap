@@ -119,12 +119,12 @@
 			<fieldset>
 				<div class="form-group text-sm">
 					<label class="col-sm-1 control-label">학습시간</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<div class="row">
-							<div class="col-sm-1 pr0">
+							<div class="col-sm-1 pr0" style="padding-top: 7px">
 								학습일
 							</div>
-							<div class="col-sm-3 pr0">
+							<div class="col-sm-3 pl0">
 								<select class="form-control input-sm" name="stduyDdCd">
 									<option value="">전체</option>
 									<c:forEach var="cdList" items="${classTypeList.STDUY_DD}" varStatus="status">
@@ -132,10 +132,10 @@
 									</c:forEach>
 								</select>
 							</div>
-							<div class="col-sm-1 pr0">
+							<div class="col-sm-1 pr0" style="padding-top: 7px">
 								학습시간
 							</div>
-							<div class="col-sm-3 pr0">
+							<div class="col-sm-3 pl0">
 								<select class="form-control input-sm" name="stduyTimeCd">
 									<option value="">전체</option>
 									<c:forEach var="cdList" items="${classTypeList.STDUY_TIME}" varStatus="status">
@@ -190,11 +190,20 @@
 								<c:when test="${fn:contains(cdList.cd, '02')}">
 									<c:set var="cdName" value="신청취소"/>
 								</c:when>
+								<c:when test="${fn:contains(cdList.cd, '03')}">
+									<c:set var="cdName" value="신청양도"/>
+								</c:when>
 								<c:when test="${fn:contains(cdList.cd, '04')}">
 									<c:set var="cdName" value="선발대기"/>
 								</c:when>
-								<c:otherwise>
+								<c:when test="${fn:contains(cdList.cd, '05')}">
 									<c:set var="cdName" value="미선발"/>
+								</c:when>
+								<c:when test="${fn:contains(cdList.cd, '06')}">
+									<c:set var="cdName" value="교육취소"/>
+								</c:when>
+								<c:otherwise>
+									<c:set var="cdName" value="알 수 없음"/>
 								</c:otherwise>
 							</c:choose>
 							<label class="checkbox-inline c-checkbox">
