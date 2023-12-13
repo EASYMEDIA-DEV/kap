@@ -95,6 +95,15 @@
                             <th class="text-center">과정명</th>
                             <th class="text-center">학습방식</th>
                             <th class="text-center">학습시간</th>
+                            <th class="text-center">교육기간</th>
+                            <th class="text-center">강사</th>
+                            <th class="text-center">강사 소속</th>
+                            <th class="text-center">모집방식</th>
+                            <th class="text-center">선발여부</th>
+                            <th class="text-center">교육장소</th>
+                            <th class="text-center">수료여부</th>
+                            <th class="text-center">수료일자</th>
+                            <th class="text-center">신청일시</th>
                         </tr>
                         </thead>
                         <!-- 리스트 목록 결과 -->

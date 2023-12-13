@@ -51,6 +51,9 @@
              , ctgry_cd_cp_nm
              , size_cd_nm
              , work_bsnm_no
+             , reg_day
+             , cmptn_dtm
+             , stts_cd_nm
         from (select parnt_seq
                   , (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
                   , ctgry_cd
@@ -102,10 +105,16 @@
                   , ctgry_cd_cp_nm
                   , size_cd_nm
                   , work_bsnm_no
-               FROM (SELECT b.ctgry_cd
+                  , reg_day
+                  , cmptn_dtm
+                  , stts_cd_nm
+              FROM (SELECT b.ctgry_cd
                           , (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
                           , (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
                          , b.nm
+                         , ptcpt_mst.reg_dtm as reg_day
+                         , ptcpt_mst.cmptn_dtm
+                         , (select cd_nm from co_code_mst WHERE cd = ptcpt_mst.stts_cd) as stts_cd_nm
                          , b.stduy_mthd_cd
                          , (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
                          , b.stduy_dd_cd

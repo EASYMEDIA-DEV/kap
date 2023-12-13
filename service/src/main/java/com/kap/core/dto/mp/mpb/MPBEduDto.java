@@ -70,6 +70,14 @@ public class MPBEduDto extends BaseDTO {
     @Schema(title = "학습방식 코드 명", example = "")
     private String stduyMthdCdNm;
 
+    @Schema(title = "신청일", example = "")
+    private String regDay;
+
+    @Schema(title = "수료일", example = "")
+    private String cmptnDtm;
+
+    @Schema(title = "신청상태", example = "")
+    private String sttsCdNm;
 
     @Schema(title = "회차정렬", example = "숫자")
     private String stduyDdCdNm;
@@ -80,9 +88,33 @@ public class MPBEduDto extends BaseDTO {
     @Schema(title = "학습시간 코드 명", example = "숫자")
     private String stduyTimeCdNm;
 
+    @Schema(title = "교육시간 시작", example = "")
+    private String edctnStrtDtm;
+
+    @Schema(title = "교육시간 종료", example = "")
+    private String edctnEndDtm;
+
+    @Schema(title = "강사", example = "")
+    private String isttrName;
+
+    @Schema(title = "모집방법코드명", example = "숫자")
+    private String rcrmtMthdCdNm;
+
+    @Schema(title = "회차정렬", example = "텍스트")
+    private String ffltnNm;
+
+    @Schema(title = "강사수(외 x명)", example = "숫자")
+    private String isttrOutCnt;
 
     @Schema(title = "교육상태", example = "교육대기/교육중/마감")
     private String edctnStatus;
+
+    @Schema(title = "교육장소명", example = "")
+    private String placeNm;
+
+    @Schema(title = "수료자동여부", example = "Y/N")
+    private String cmptnAutoYn;
+
 
 
     @Schema(title = "교육상태 명", example = "교육대기/교육중/마감")
