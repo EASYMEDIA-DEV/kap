@@ -43,7 +43,7 @@
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">대표자명<span class="star text-danger"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="rprsntNm" name="rprsntNm" value="${rtnInfo.rprsntNm}" readonly title="대표자명" style="width: 200px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="rprsntNm" name="rprsntNm" value="${rtnInfo.rprsntNm}" title="대표자명" style="width: 200px;"/>
                                 </div>
 
                                 <label class="col-sm-1 control-label">부품사코드</label>

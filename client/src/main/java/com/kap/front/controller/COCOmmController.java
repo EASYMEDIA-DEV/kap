@@ -144,10 +144,14 @@ public class COCOmmController {
      */
     @GetMapping(value = "/nice/my-idnttvrfct-confirm")
     public String idnttvrfctConfirm(HttpServletRequest request , ModelMap modelMap) throws Exception {
+        COCNiceMyResDto cocNiceMyResDto = cOCommService.idnttvrfctConfirm(request.getParameter("enc_data"), request);
+        modelMap.addAttribute("rtnData",cocNiceMyResDto);
 
-        modelMap.addAttribute("rtnData", cOCommService.idnttvrfctConfirm(request.getParameter("enc_data") , request));
-
-        return  "/front/co/CONicePopUp";
+        if(cocNiceMyResDto.getReceivedatass().getRedirectUrl().equals("no")) {
+            return "/front/co/CONiceUserPopUp";
+        } else {
+            return  "/front/co/CONicePopUp";
+        }
     }
 
     /**

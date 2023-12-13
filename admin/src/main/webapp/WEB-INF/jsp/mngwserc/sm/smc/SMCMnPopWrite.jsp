@@ -24,10 +24,10 @@
                         <div class="input-group col-md-2" style="z-index:0;">
                             <input type="text" class="form-control datetimepicker_strtDt ${kl:decode(rtnDto.odtmYn, 'Y', 'notRequired', '')}" id="expsStrtDtm" name="expsStrtDtm" value="${kl:convertDate(rtnDto.expsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd', '')}" ${kl:decode(rtnDto.odtmYn, 'Y', 'disabled', '')} readonly="readonly" title="시작일" />
                             <span class="input-group-btn" style="z-index:0;">
-					<button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-						<em class="ion-calendar"></em>
-					</button>
-				</span>
+                            <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                <em class="ion-calendar"></em>
+                            </button>
+                        </span>
                         </div>
                         <select class="form-control" id="ptupStrtHh" name="ptupStrtHh" title="시작일(시)">
                             <c:set var="ptupStrtHh" value="${kl:convertDate(rtnDto.expsStrtDtm, 'yyyy-MM-dd HH:mm', 'HH', '')}" />
@@ -61,10 +61,10 @@
                         <div class="input-group col-md-2" style="z-index:0;">
                             <input type="text" class="form-control datetimepicker_endDt ${kl:decode(rtnDto.odtmYn, 'Y', 'notRequired', '')}" id="expsEndDtm" name="expsEndDtm" value="${kl:convertDate(rtnDto.expsEndDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd', '')}" ${kl:decode(rtnDto.odtmYn, 'Y', 'disabled', '')} readonly="readonly" title="종료일" />
                             <span class="input-group-btn" style="z-index:0;">
-                            <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-                                <em class="ion-calendar"></em>
-                            </button>
-                        </span>
+                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                    <em class="ion-calendar"></em>
+                                </button>
+                            </span>
                         </div>
                         <select class="form-control" id="ptupEndHh" name="ptupEndHh" title="종료일(시)">
                             <c:set var="ptupEndHh" value="${kl:convertDate(rtnDto.expsEndDtm, 'yyyy-MM-dd HH:mm', 'HH', '')}" />

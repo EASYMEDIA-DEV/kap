@@ -98,4 +98,11 @@ public interface MPAUserService {
     void insertUser(MPAUserDto mpaUserDto , MPEPartsCompanyDTO mpePartsCompanyDTO , MPJoinDto mpJoinDto) throws Exception;
 
 
+    /**
+     * 사용자 , 부품사 수정
+     * @param mpaUserDto
+     * @throws Exception
+     */
+    void updateUser(MPAUserDto mpaUserDto , MPEPartsCompanyDTO mpePartsCompanyDTO , MPJoinDto mpJoinDto) throws Exception;
+
 }

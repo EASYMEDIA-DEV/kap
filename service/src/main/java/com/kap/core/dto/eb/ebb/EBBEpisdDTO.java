@@ -310,7 +310,10 @@ public class EBBEpisdDTO extends BaseDTO {
 
     private List<EBBBdgetDTO> bdgetList;//예산지출내역 목록
 
+    @Schema(title = "엑셀다운로드 여부", example = "Y")
+    private String excelYn;
 
-
+    @Schema(title = "변경사유", example = "이유")
+    private String rsn;
 
 }

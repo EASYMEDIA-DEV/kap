@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <pre>
@@ -225,6 +226,30 @@ public class MPCLecturerController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    /**
+     * 교육 사업 현황 리스트 엑셀 다운로드
+     */
+    @GetMapping(value = "/excel-down")
+    public void selectEpisdListExcel(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            eBBEpisdDTO.setExcelYn("Y");
+            // 목록 조회
+            EBBEpisdDTO newEBBEpisdDTO = eBBEpisdService.selectEpisdList(eBBEpisdDTO);
+            //엑셀 생성
+            mpcLecturerService.excelDownload(newEBBEpisdDTO, response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
     }
 
 }

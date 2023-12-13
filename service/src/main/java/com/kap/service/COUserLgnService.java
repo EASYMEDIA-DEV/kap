@@ -55,4 +55,7 @@ public interface COUserLgnService {
 	 * @throws Exception
 	 */
 	MPAUserDto getIdFind(COIdFindDto coIdFindDto) throws Exception;
+
+	MPAUserDto getPasswordChk(COLoginDTO cOLoginDTO) throws Exception;
+
 }

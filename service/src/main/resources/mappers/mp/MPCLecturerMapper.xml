@@ -236,7 +236,7 @@
             ON B.appctn_seq = D.appctn_seq
                 LEFT JOIN cx_episd_bsn_optn_dtl F ON A.episd_seq  = F.episd_seq
                 INNER JOIN cp_isttr_mst E ON B.pic_cmssr_seq = E.isttr_seq
-            -- WHERE E.isttr_seq = #{isttrSeq}
+            WHERE E.isttr_seq = #{isttrSeq}
         ORDER BY year DESC, episd DESC
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>

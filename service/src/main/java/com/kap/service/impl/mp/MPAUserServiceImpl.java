@@ -274,6 +274,27 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     }
 
+    @Override
+    public void updateUser(MPAUserDto mpaUserDto, MPEPartsCompanyDTO mpePartsCompanyDTO, MPJoinDto mpJoinDto) throws Exception {
+
+        String pwdChg = "N";
+        if(!mpaUserDto.getPwd().isEmpty()) {
+            mpaUserDto.setEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getPwd(), mpaUserDto.getId()));
+            pwdChg ="Y";
+        }
+
+        mpaUserDto.setChngPwd(pwdChg);
+        mpaUserMapper.updateUserDtlMod(mpaUserDto);
+
+        if(mpaUserDto.getChngFndn().equals("Y")){
+            mpaUserMapper.updateUserDtlModS(mpaUserDto);
+        }
+
+        mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
+        mpaUserMapper.insertUserDtlHistory(mpaUserDto);
+
+    }
+
 
     @Override
     public void excelDownload(MPAUserDto mpaUserDto, HttpServletResponse response) throws Exception {
