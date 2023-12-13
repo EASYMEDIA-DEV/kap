@@ -138,5 +138,14 @@ public interface SVASurveyMapper {
      */
     public List<SVASurveyExmplDtlDTO> selectSurveyIsttrExmplEduDtlList(SVASurveyQstnDtlDTO sVASurveyQstnDtlDTO);
 
+    /**
+     * 설문질문 보기 조회(컨설팅응답)
+     */
+    public List<SVASurveyExmplDtlDTO> selectSurveyExmplConDtlList(SVASurveyQstnDtlDTO sVASurveyQstnDtlDTO);
+
+    /**
+     * 설문 마스터 조회 (컨설팅)
+     */
+    public SVASurveyMstInsertDTO selectSurveyConDtl(SVASurveyMstSearchDTO sVASurveyDTO);
 
 }
