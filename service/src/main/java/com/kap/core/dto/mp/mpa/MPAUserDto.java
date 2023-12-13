@@ -260,4 +260,7 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title = "회원검색 레이어 여부", example = "Y")
     private String srchLayer;
 
+    @Schema(title="참/거짓")
+    private Boolean passwordChk;
+
 }
