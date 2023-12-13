@@ -1872,7 +1872,7 @@ var cmmCtrl = (function(){
 		getCmtSrchPop : fn_cmt_srch_layer_pop,
 		//컨설팅 만족도종합결과
 		getConsultSuveyRsltPop : fn_consult_suvey_rslt_layer_pop,
-
+		// pdf 다운로드 관련
 		getAppctnPdfDownload : fn_appctn_pdf_download
 	}
 }());
