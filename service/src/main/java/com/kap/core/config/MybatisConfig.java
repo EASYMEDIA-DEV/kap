@@ -1,6 +1,5 @@
 package com.kap.core.config;
 
-import jdk.nashorn.internal.objects.annotations.Property;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -13,9 +12,9 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -41,7 +40,6 @@ import javax.sql.DataSource;
  */
 @Configuration
 @Slf4j
-@Profile({"local", "stg", "dev"})
 //JAVA 파일 SCAN 위치
 @MapperScan(basePackages= {"com.kap.service.dao"}, sqlSessionFactoryRef = "SqlSessionFactory", sqlSessionTemplateRef = "SessionTemplate")
 //트랜젝션 사용
@@ -54,11 +52,28 @@ public class MybatisConfig {
     @Value("${mybatis-config.mapper-location}")
     private String mapperLocation;
 
+    @Value("${spring.db.datasource.jndi-name}")
+    private String jndiName;
+
     //DATABASE
     @Bean(name = "dataSource")
+    @Profile("local")
     @ConfigurationProperties(prefix = "spring.db.datasource")
     public DataSource DataSource() {
         return DataSourceBuilder.create().build();
+    }
+
+    /**
+     * dataSource 생성
+     * @return
+     */
+    //DATABASE
+    @Bean(name = "dataSource")
+    @Profile("!local")
+    public DataSource jndiDataSource() {
+        JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
+        DataSource dataSource = dataSourceLookup.getDataSource(jndiName);
+        return dataSource;
     }
 
     @Bean(name = "SqlSessionFactory")

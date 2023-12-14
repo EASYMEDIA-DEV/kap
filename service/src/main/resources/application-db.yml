@@ -5,29 +5,8 @@ mybatis-config:
   mapper-location: classpath*:mappers/**/*.xml
   config-location: classpath:mybatis.xml
   transaction-package-nm: execution(* egovframework.com..*Impl.*(..)) or execution(* com.kap..*Impl.*(..))
-
-logging:
-  level:
-    root: info
-    jdbc:
-      connection: off
-      sqlonly: off
-      sqltiming: debug
-      audit: off
-      resultset: off
-      resultsettable: off
-  pattern:
-    console: "%clr(%d{HH:mm:ss.SSS}){faint} %clr(%5p) %clr(%-60(%logger{0}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
-    #console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr([%10t]){faint} %clr(%-60(%logger{39}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
-    #console: "%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\\(%L\\) : %m%n"
-
-log4jdbc:
-  dump:
-    sql:
-      maxlinelength: 0
-
 ---
-spring.config.activate.on-profile: local, dev
+spring.config.activate.on-profile: local
 spring:
   db:
     datasource:
@@ -35,18 +14,19 @@ spring:
       jdbc-url: jdbc:log4jdbc:mysql://192.168.0.12:3306/kap?serverTimezone=UTC&useUnicode=true&charcterEncoding=utf8&useSSL=false&allowMultiQueries=true
       username: kap
       password: dnfntk1##
+      ##Db jndi 명
+      jndi-name:
 ---
-spring.config.activate.on-profile: stg
+spring.config.activate.on-profile: dev
 spring:
   db:
     datasource:
-      driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-      jdbc-url: jdbc:log4jdbc:mysql://192.168.0.12:3306/kap?serverTimezone=UTC&useUnicode=true&charcterEncoding=utf8&useSSL=false
-      username: kap
-      password: dnfntk1##
+      ##Db jndi 명
+
 ---
 spring.config.activate.on-profile: prod
 spring:
   db:
     datasource:
-      jndi-name: kapDS
+      #Db jndi 명
+

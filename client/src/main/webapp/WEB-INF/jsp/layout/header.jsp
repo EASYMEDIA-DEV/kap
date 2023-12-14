@@ -195,15 +195,15 @@
                                         <ul class="counts">
                                             <li class="count">
                                                 <span class="f-sub-head">교육사업</span>
-                                                <a class="f-title1" href="javascript:">5</a>
+                                                <a class="f-title1" href="javascript:">목록갯수</a>
                                             </li>
                                             <li class="count">
                                                 <span class="f-sub-head">컨설팅사업</span>
-                                                <a class="f-title1" href="javascript:">21</a>
+                                                <a class="f-title1" href="javascript:">목록갯수</a>
                                             </li>
                                             <li class="count">
                                                 <span class="f-sub-head">상생사업</span>
-                                                <a class="f-title1" href="javascript:">0</a>
+                                                <a class="f-title1" href="javascript:">목록갯수</a>
                                             </li>
                                         </ul>
                                         <div class="pc btn-wrap">
