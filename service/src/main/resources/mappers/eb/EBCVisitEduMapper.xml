@@ -659,6 +659,18 @@
 							AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
 						</if>
 					</when>
+					<when test="srchDate == 3">
+						<if test="dEndDt != null and dEndDt != ''.toString() ">
+							AND edctn_strt_dtm <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
+							AND edctn_strt_dtm <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						</if>
+					</when>
+					<when test="srchDate == 4">
+						<if test="dEndDt != null and dEndDt != ''.toString() ">
+							AND edctn_end_dtm <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
+							AND edctn_end_dtm <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						</if>
+					</when>
 					<otherwise>
 
 					</otherwise>
@@ -678,6 +690,13 @@
 				</foreach>
 				)
 			</if>
+			<if test="edctnSttsCdList != null and edctnSttsCdList.size() > 0">
+				and (
+				<foreach collection="edctnSttsCdList" item="edctnSttsCdList" index="index" open="" close="" separator=" or ">
+					A.edctn_stts_cd = #{edctnSttsCdList}
+				</foreach>
+				)
+			</if>
 			<if test="firstRgnsCd != null and firstRgnsCd != ''.toString()">
 				AND A.edctn_place LIKE CONCAT('%', (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = #{firstRgnsCd}), '%')
 				OR A.edctn_place LIKE CONCAT('%', (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = #{scndRgnsCd}), '%')
@@ -691,21 +710,15 @@
 						AND A.appctn_bsnm_no LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 3">
-						AND (
-						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
-						)
-					</when>
-					<when test="f == 4">
 						AND B.name LIKE CONCAT('%', #{q}, '%')
 					</when>
-					<when test="f == 5">
+					<when test="f == 4">
 						AND B.hp_no LIKE CONCAT('%', #{q}, '%')
 					</when>
-					<when test="f == 6">
+					<when test="f == 5">
 						AND B.email LIKE CONCAT('%', #{q}, '%')
 					</when>
-					<when test="f == 7">
+					<when test="f == 6">
 						AND (
 						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
 						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)

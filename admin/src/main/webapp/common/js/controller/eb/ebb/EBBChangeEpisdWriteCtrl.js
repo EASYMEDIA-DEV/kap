@@ -38,6 +38,25 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						$("#ptcptSeq").val(ptcptSeq);
 
+
+						//선택된인원 명수 세팅
+						var memList = new Array();
+						var memSeq = $("#chan_memSeq").val();
+						if(memSeq.indexOf(",")>-1){
+							var memArray= memSeq.split(",");
+
+							for(var i=0; i<memArray.length; i++){
+								var memForm = {};
+								memList.push(memForm);
+							}
+						}else{
+							var memForm = {};
+							memList.push(memForm);
+						}
+						var memCnt = memList.length;
+
+						$(".selectChangeMemCnt").text(memCnt);
+
 						cmmCtrl.frmAjax(function(respObj) {
 
 							ctrl.obj.find("#changeEpisdListContainer").html(respObj);
@@ -79,6 +98,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actionForm.episdSeq = $("#episdSeq").val();//회차순번
 						actionForm.episdYear =$("#changeEpisdListContainer").find("input[name='delValueList']:checked").data("episdyear");//연도
 						actionForm.episdOrd =$("#changeEpisdListContainer").find("input[name='delValueList']:checked").data("episdord");//회차정렬
+						var fxnumCnt = $("#changeEpisdListContainer").find("input[name='delValueList']:checked").closest("tr").find("td").eq(6).text();//정원수
+						var accsCnt = $("#changeEpisdListContainer").find("input[name='delValueList']:checked").closest("tr").find("td").eq(7).text();//신청자
 
 
 						var memSeq = $("#chan_memSeq").val();
@@ -125,10 +146,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						}
 
 
+						var addMemLength= memList.length;//선택한 인원의 수
 
-
+						//현재신청자+변경할 인원수>정원수가 참이면 변경불가 알럿
+						if((addMemLength+ Number(accsCnt)) > Number(fxnumCnt)){
+							alert("정원이 초과하였습니다.");
+							resultFlag = false;
+						}
+						debugger;
 						if(resultFlag){
-							debugger;
+
 							cmmCtrl.jsonAjax(function(data){
 								alert("저장되었습니다.");
 								location.href = "./list";

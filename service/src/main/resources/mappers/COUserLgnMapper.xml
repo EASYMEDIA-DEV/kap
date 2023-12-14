@@ -186,5 +186,23 @@
 		  and wthdrw_yn = 'Y'
 	</select>
 
+	<!--
+     쿼리명 : COUserLgnMapper.getPasswordChk
+     설  명 : 로그인갯수  찾기
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.12.06   양현우       최초생성
+-->
+	<select id="getPasswordChk" parameterType="MPAUserDto" resultType="java.lang.Integer">
+		select /* COLgnMapper.actionLoginCnt */
+			count(*)
+		from
+			co_mem_mst a
+		where 1=1
+		  and id = #{id}
+		  and pwd = #{pwd}
+		  and wthdrw_yn = 'Y'
+	</select>
+
 
 </mapper>

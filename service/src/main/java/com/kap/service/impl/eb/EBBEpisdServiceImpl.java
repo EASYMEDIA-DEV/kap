@@ -421,6 +421,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			eBBEpisdMapper.updateEpisdStatus(eBBEpisdDTO);
 
 
+
+
 			EBBEpisdDTO tempDto = new EBBEpisdDTO();
 			tempDto = eBBEpisdMapper.selectEpisdChk(eBBEpisdDTO);
 

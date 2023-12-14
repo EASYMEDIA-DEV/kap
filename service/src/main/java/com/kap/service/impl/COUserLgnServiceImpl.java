@@ -329,4 +329,20 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 
 		return cOUserLgnMapper.getIdFind(coIdFindDto);
 	}
+
+	@Override
+	public MPAUserDto getPasswordChk(COLoginDTO cOLoginDTO) throws Exception {
+
+		MPAUserDto rtnCOUserDto = cOUserLgnMapper.getLoginInfo(cOLoginDTO);
+		rtnCOUserDto.setPwd(COSeedCipherUtil.encryptPassword(cOLoginDTO.getPassword(), cOLoginDTO.getId()));
+		int passwordChk = cOUserLgnMapper.getPasswordChk(rtnCOUserDto);
+		if(passwordChk == 1) {
+			 rtnCOUserDto.setPasswordChk(true);
+		} else {
+			rtnCOUserDto.setPasswordChk(false);
+		}
+		rtnCOUserDto.setPwd("");
+
+		return rtnCOUserDto;
+	}
 }

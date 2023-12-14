@@ -332,9 +332,11 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "검색 등록/수정 기간 종료일자", example = "yyyy-MM-dd")
     private String dEndDt;
 
-    // 검색
     @Schema(title = "신청분야코드 리스트", example = "")
     private List<String> appctnFldList;
+
+    @Schema(title = "교육현황코드 리스트", example = "")
+    private List<String> edctnSttsCdList;
 
     @Schema(title = "부품사구분 리스트", example = "")
     private List<String> ctgryCdList;
@@ -357,7 +359,7 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
     private String srchLayer;
 
-    // 첨부파일
+    // 첨부파일 리스트
     @Schema(title = "회사소개서 파일 리스트", example = "")
     private List<COFileDTO> itrdcFileList;
 

@@ -11,12 +11,9 @@
 			<input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
 			<!-- CSRF KEY -->
 			<input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-			<!--복사유무-->
-			<input type="hidden" id="copyYn" name="copyYn" value="N" />
-
 			<!-- 상세로 이동시 시퀀스 -->
 			<input type="hidden" id="detailsKey" name="detailsKey" value="" />
+
 			<!--기간 검색 시작-->
 			<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 				<jsp:param name="srchText" value="기간검색" />
@@ -119,12 +116,12 @@
 			<fieldset>
 				<div class="form-group text-sm">
 					<label class="col-sm-1 control-label">학습시간</label>
-					<div class="col-sm-4">
+					<div class="col-sm-6">
 						<div class="row">
-							<div class="col-sm-1 pr0">
+							<div class="col-sm-1 pr0" style="padding-top: 7px">
 								학습일
 							</div>
-							<div class="col-sm-3 pr0">
+							<div class="col-sm-3 pl0">
 								<select class="form-control input-sm" name="stduyDdCd">
 									<option value="">전체</option>
 									<c:forEach var="cdList" items="${classTypeList.STDUY_DD}" varStatus="status">
@@ -132,10 +129,10 @@
 									</c:forEach>
 								</select>
 							</div>
-							<div class="col-sm-1 pr0">
+							<div class="col-sm-1 pr0" style="padding-top: 7px">
 								학습시간
 							</div>
-							<div class="col-sm-3 pr0">
+							<div class="col-sm-3 pl0">
 								<select class="form-control input-sm" name="stduyTimeCd">
 									<option value="">전체</option>
 									<c:forEach var="cdList" items="${classTypeList.STDUY_TIME}" varStatus="status">
@@ -190,11 +187,20 @@
 								<c:when test="${fn:contains(cdList.cd, '02')}">
 									<c:set var="cdName" value="신청취소"/>
 								</c:when>
+								<c:when test="${fn:contains(cdList.cd, '03')}">
+									<c:set var="cdName" value="신청양도"/>
+								</c:when>
 								<c:when test="${fn:contains(cdList.cd, '04')}">
 									<c:set var="cdName" value="선발대기"/>
 								</c:when>
-								<c:otherwise>
+								<c:when test="${fn:contains(cdList.cd, '05')}">
 									<c:set var="cdName" value="미선발"/>
+								</c:when>
+								<c:when test="${fn:contains(cdList.cd, '06')}">
+									<c:set var="cdName" value="교육취소"/>
+								</c:when>
+								<c:otherwise>
+									<c:set var="cdName" value="알 수 없음"/>
 								</c:otherwise>
 							</c:choose>
 							<label class="checkbox-inline c-checkbox">
@@ -251,8 +257,8 @@
 					</select>
 				</div>
 				<div class="pull-right">
-					<button type="button" class="btn btn-success btn-sm mb-sm" id="btnChoice" style="width: 60px">선발</button>
-					<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnNotChoice" style="width: 60px">미선발</button>
+					<button type="button" class="btn btn-success btn-sm mb-sm btnStts" style="width: 60px" data-stts-val="Y">선발</button>
+					<button type="button" class="btn btn-danger btn-sm mb-sm btnStts" style="width: 60px" data-stts-val="N">미선발</button>
 				</div>
 			</div>
 			<!--VUE 영역 시작 -->

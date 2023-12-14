@@ -1,6 +1,9 @@
 package com.kap.service;
 
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * <pre>
@@ -57,5 +60,8 @@ public interface MPCLecturerService {
      */
     public MPCLecturerDTO selectWinBusinessList(MPCLecturerDTO mpcLecturerDTO) throws Exception;
 
-
+    /**
+     * 엑셀 생성
+     */
+    public void excelDownload(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response) throws Exception;
 }

@@ -444,7 +444,6 @@ var commonScript = (function(){
 
       $(window).resize(function () {
         if (window.innerWidth >= 1024) {
-          //console.log("pc");
           if($(".tooltip-box:visible").size() >= 1) {
             $(".tooltip-box:visible").each((idx, item) => {
               tooltipPosCalcu($(item));
@@ -452,7 +451,6 @@ var commonScript = (function(){
             })
           }
         } else {
-          //console.log("mobile");
           if($(".tooltip-box:visible").size() >= 1) {
             $(".tooltip-box:visible").each((idx, item) => {
               tooltipPosMobCalcu($(item));

@@ -82,121 +82,12 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-            btnChoice : {
+            btnRefresh : {
                 event : {
-                    click : function() {
-                        if(isChecked("선발할 게시물을 선택해주세요.")) {
-                            // 체크된 체크박스의 data-stts-cd 값들을 배열로 추출
-                            var checkedValues = $("input:checkbox[name='delValueList']:checked").map(function() {
-                                return $(this).data('stts-cd');
-                            }).get();
-
-                            // 가져온 배열의 값들 중 '02'라는 단어가 포함된 단어가 있는지 확인 (신청취소 데이터)
-                            var containsValue02 = checkedValues.some(function(value) {
-                                return value.includes('02');
-                            });
-
-                            // 신청취소 확인
-                            if(containsValue02) {
-                                alert("교육 신청을 취소한 회원이 존재합니다.");
-                                return false;
-                            }
-
-                            console.log("선발 데이터 ajax 전송");
-                            if(confirm("선택한 회원을 선발하시겠습니까?")) {
-                                var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
-                                    return $(this).val();
-                                }).get();
-                                console.log(delValueList);
-                                jQuery.ajax({
-                                    type : "post",
-                                    url : "./stts-update",
-                                    data :
-                                        {
-                                            "delValueList" : delValueList
-                                            , "stts" : "Y"
-                                            , "_csrf": $("#csrfKey").val()
-                                        },
-                                    dataType : "json",
-                                    success : function(r)
-                                    {
-                                        console.log(r);
-                                        if (r.respCnt > 0)
-                                        {
-                                            alert("처리되었습니다.");
-                                            location.reload();
-                                        }
-                                        else
-                                        {
-                                            alert("잘못된 접근입니다.");
-                                        }
-                                    },
-                                    error : function(xhr, ajaxSettings, thrownError)
-                                    {
-                                        alert("잠시후 다시 시도 바랍니다.");
-                                    }
-                                });
-                            }
-                        }
-                    }
-                }
-            },
-            btnNotChoice : {
-                event : {
-                    click : function() {
-                        if(isChecked("비선발할 게시물을 선택해주세요.")) {
-                            // 체크된 체크박스의 data-stts-cd 값들을 배열로 추출
-                            var checkedValues = $("input:checkbox[name='delValueList']:checked").map(function() {
-                                return $(this).data('stts-cd');
-                            }).get();
-
-                            // 가져온 배열의 값들 중 '02'라는 단어가 포함된 단어가 있는지 확인 (신청취소 데이터)
-                            var containsValue02 = checkedValues.some(function(value) {
-                                return value.includes('02');
-                            });
-
-                            // 신청취소 확인
-                            if(containsValue02) {
-                                alert("교육 신청을 취소한 회원이 존재합니다.");
-                                return false;
-                            }
-
-                            console.log("선발 데이터 ajax 전송");
-                            if(confirm("선택한 회원을 비선발하시겠습니까?")) {
-                                var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
-                                    return $(this).val();
-                                }).get();
-                                console.log(delValueList);
-                                jQuery.ajax({
-                                    type : "post",
-                                    url : "./stts-update",
-                                    data :
-                                        {
-                                            "delValueList" : delValueList
-                                            , "stts" : "N"
-                                            , "_csrf": $("#csrfKey").val()
-                                        },
-                                    dataType : "json",
-                                    success : function(r)
-                                    {
-                                        if (r.respCnt > 0)
-                                        {
-                                            console.log(r);
-                                            alert("처리되었습니다.");
-                                            location.reload();
-                                        }
-                                        else
-                                        {
-                                            alert("잘못된 접근입니다.");
-                                        }
-                                    },
-                                    error : function(xhr, ajaxSettings, thrownError)
-                                    {
-                                        alert("잠시후 다시 시도 바랍니다.");
-                                    }
-                                });
-                            }
-                        }
+                    click : function () {
+                        $(".cdListContainer").css("display","none");
+                        $(".cdListContainer").attr("disabled", true);
+                        $(".cdListContainer").find("input:checkbox").prop("checked", false);
                     }
                 }
             }
@@ -332,6 +223,79 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             ctrl.obj.trigger("choice", [clickObj])
                             ctrl.obj.find(".close").click();
+                        }
+                    }
+                }
+            },
+            btnStts : {
+                event : {
+                    click : function() {
+                        if(isChecked("선발할 게시물을 선택해주세요.")) {
+                            // 체크된 체크박스의 data-stts-cd 값들을 배열로 추출
+                            var checkedValues = $("input:checkbox[name='delValueList']:checked").map(function() {
+                                return $(this).data('stts-cd');
+                            }).get();
+
+                            // 가져온 배열의 값들 중 '02'라는 단어가 포함된 단어가 있는지 확인 (신청취소 데이터)
+                            var containsValue02 = checkedValues.some(function(value) {
+                                return value.includes('02');
+                            });
+
+                            // 신청취소 확인
+                            if(containsValue02) {
+                                alert("교육 신청을 취소한 회원이 존재합니다.");
+                                return false;
+                            }
+
+                            // 가져온 배열의 값들 중 '04'라는 단어가 포함되지 않은 단어가 있는지 확인 (선발대기가 아닌 데이터)
+                            var containsNotValue = checkedValues.some(function(value) {
+                                return !value.includes('04');
+                            });
+
+                            // 선발대기여부 확인
+                            if(containsNotValue) {
+                                alert("선발대기 상태의 회원만 선택 가능합니다.");
+                                return false;
+                            }
+
+                            // 선발/미선발 버튼 분류
+                            var sttsVal = $(this).data("sttsVal");
+                            var conMsg = sttsVal == "Y" ? "선택한 회원을 선발하시겠습니까?" : "선택한 회원을 미선발하시겠습니까?";
+
+                            if(confirm(conMsg)) {
+                                var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                    return $(this).val();
+                                }).get();
+
+                                jQuery.ajax({
+                                    type : "post",
+                                    url : "./stts-update",
+                                    data :
+                                        {
+                                            "delValueList" : delValueList
+                                            , "stts" : sttsVal
+                                            , "_csrf": $("#csrfKey").val()
+                                        },
+                                    dataType : "json",
+                                    success : function(r)
+                                    {
+                                        console.log(r);
+                                        if (r.respCnt > 0)
+                                        {
+                                            alert("처리되었습니다.");
+                                            location.reload();
+                                        }
+                                        else
+                                        {
+                                            alert("잘못된 접근입니다.");
+                                        }
+                                    },
+                                    error : function(xhr, ajaxSettings, thrownError)
+                                    {
+                                        alert("잠시후 다시 시도 바랍니다.");
+                                    }
+                                });
+                            }
                         }
                     }
                 }

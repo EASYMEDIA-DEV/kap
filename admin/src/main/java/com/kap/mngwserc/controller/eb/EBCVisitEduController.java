@@ -105,6 +105,7 @@ public class EBCVisitEduController {
             cdDtlList.add("MEM_CD");
             cdDtlList.add("ADDR_CD");
             cdDtlList.add("EBC_VISIT_CD");
+            cdDtlList.add("SYSTEM_HOUR");
 
             mpePartsCompanyDTO.setBsnmNo(ebcVisitEduDTO.getAppctnBsnmNo());
             MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);

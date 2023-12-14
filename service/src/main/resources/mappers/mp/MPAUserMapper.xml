@@ -485,6 +485,8 @@
              , mst.reg_id as mod_id
              , mem.reg_id as reg_id
              , mem.pstn_nm
+             , dtl.ci
+             , dtl.fndn_ntfy_rcv_yn
         from co_mem_mst mem
                  inner join ( select mem_mod_seq
                                    , mem_seq
@@ -499,6 +501,8 @@
                                              group by mem_seq )
         ) mst
                             on mem.mem_seq = mst.mem_seq
+        inner join co_mem_dtl dtl
+            on mem.mem_seq = dtl.mem_seq
                  left outer join co_mem_cmpn_rel cmpn_rel
                                  on mem.mem_seq = cmpn_rel.mem_seq
                                      and mem.work_bsnm_no = cmpn_rel.bsnm_no
@@ -542,7 +546,7 @@
 
     <!--
       쿼리명 : MPAUserMapper.updateUserDtl
-      설  명 :  [일반 , 부품 , 위원 ] 사용자  수정
+      설  명 :  [위원 ] 사용자  수정
         수정일      수정자       수정내용
       ==========   ========   ==============
       2023.11.10    양현우       최초생성
@@ -952,6 +956,67 @@
           , now()
             )
     </insert>
+
+    <!--
+     쿼리명 : MPAUserMapper.updateUserDtlMod
+     설  명 :  [일반 , 부품  ] 사용자  수정
+       수정일      수정자       수정내용
+     ==========   ========   ==============
+     2023.12.13    양현우       최초생성
+  -->
+    <update id="updateUserDtlMod" parameterType="MPAUserDto">
+        update co_mem_mst  /* MPAUserMapper.updateUserDtlMod */
+            set mem_cd =#{memCd}
+              , name=#{name}
+              , birth =#{birth}
+              , gndr =#{gndr}
+              , hp_no =#{hpNo}
+              , email =#{email}
+              , tel_no =#{telNo}
+              , zipcode =#{zipcode}
+              , bsc_addr =#{bscAddr}
+              , dtl_addr =#{dtlAddr}
+        <if test="chngSms != 'N'.toString() ">
+              , ntfy_sms_rcv_yn =#{ntfySmsRcvYn}
+              , ntfy_sms_rcv_chng_dtm = now()
+        </if>
+        <if test="chngEmail != 'N'.toString() ">
+              , ntfy_email_rcv_yn =#{ntfyEmailRcvYn}
+              , ntfy_email_rcv_chng_dtm =now()
+        </if>
+        <if test="chngPwd != 'N'.toString() ">
+              , pwd =#{encPwd}
+              , pwd_chng_dtm = now()
+              , chng_xtnsn_cnt = 0
+        </if>
+              , mod_id =#{modId}
+              , mod_ip =#{modIp}
+              , mod_dtm = now()
+        <if test="memCd != 'CO'.toString() ">
+              , dept_cd=#{deptCd}
+              , dept_dtl_nm=#{deptDtlNm}
+              , pstn_cd =#{pstnCd}
+              , pstn_nm =#{pstnNm}
+              , work_bsnm_no =#{workBsnmNo}
+        </if>
+          where mem_seq =#{memSeq}
+    </update>
+
+    <!--
+ 쿼리명 : MPAUserMapper.updateUserDtlModS
+ 설  명 :  [일반 , 부품  ] 사용자  수정
+   수정일      수정자       수정내용
+ ==========   ========   ==============
+ 2023.12.13    양현우       최초생성
+-->
+    <update id="updateUserDtlModS" parameterType="MPAUserDto">
+        update co_mem_dtl
+        set fndn_ntfy_rcv_yn = #{fndnNtfyRcvYn}
+          , mod_id =#{modId}
+          , mod_ip=#{modIp}
+          , mod_dtm=now()
+        where mem_seq = #{memSeq}
+    </update>
 
 
 </mapper>

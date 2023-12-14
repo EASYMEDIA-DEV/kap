@@ -191,18 +191,32 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		//인풋 뭉치들 삽입
 		copyTitle.css("display", "");
-		$("#bdget").append(copyTitle.html());
-		$("#bdget").append(lastForm);
+		console.log(idx);
+		var classNm = "bdgetForm"+(idx+1);
+		var totalForm = "<div class="+classNm+" style='width:100%;order:"+(idx+1)+" '>"+copyTitle.html()+lastForm+"</div>";
+		$("#bdget").append(totalForm);
+		/*$("#bdget").append(copyTitle.html());
+		$("#bdget").append(lastForm);*/
+
 
 	});
 
 	}
+	//협력기관 지출내역 자동계산
+
+	var expnsPmt = function(){
+
+		 var rtnVal = $("#expnsPmt").val();
+		rtnVal = (rtnVal ===undefined || rtnVal == null) ? 0 : rtnVal;
+		rtnVal = rtnVal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+		$("div.bdgetForm3").find("span.title").find("span").text(rtnVal);
+	}
 
 	//예산 지출내역 자동계산
-	var totPmtSet = function(data){
+	var totPmtSet = function(){
 
 		//입력한 인풋의 최상단 폼 찾아감
-		var parentForm = data.closest("fieldset");
+
 
 		var totPmt1 =0;
 		$(".calPmtForm.bdget01.numberChk").each(function(idx){
@@ -667,6 +681,44 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+			//리스트 전체 체크박스 선택시
+			checkboxAll : {
+				event : {
+					click : function() {
+						//상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxSingle가 변경됨
+						var trgtArr = $(this).closest("div").find(".checkboxSingle");
+						if (trgtArr.length > 0)
+						{
+							var isChecked = false;
+							if($(this).is(":checked"))
+							{
+								isChecked = true;
+							}
+							$.each(trgtArr, function(){
+								$(this).prop("checked", isChecked);
+							})
+						}
+					}
+				}
+			},
+			checkboxSingle : {
+				event : {
+					click : function() {
+						//상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxAll이 변경됨
+						var trgtObj = $(this).closest("div");
+						var allCbxCnt = trgtObj.find(".checkboxSingle").length;
+						var selCbxCnt = trgtObj.find(".checkboxSingle:checked").length;
+						if (allCbxCnt == selCbxCnt)
+						{
+							trgtObj.find(".checkboxAll").prop("checked", true);
+						}
+						else
+						{
+							trgtObj.find(".checkboxAll").prop("checked", false);
+						}
+					}
+				}
+			},
 
 			//페이징 목록 갯수
 
@@ -729,6 +781,45 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								$("tr.notPlace").css("display", "none");
 								$("tr.setPlace").css("display", "");
 
+							}
+
+
+						});
+					}
+				}
+			},
+			cprtnInsttSearch : {
+				event : {
+					click : function(){
+						cmmCtrl.getEduRoomLayerPop(function(data){
+							if(data.choiceCnt > 1){
+								alert(msgCtrl.getMsg("fail.eb.ebf.notSrchPlaceCom1"));
+							}else{
+
+								var placeSeq = data.seq;
+								var titl= data.titl;//교육장명
+
+								$("#cprtnInsttSeq").val(placeSeq);
+								$("#cprtnInsttNm").val(titl);
+							}
+
+
+						});
+					}
+				}
+			},
+			expnsCprtnInsttSearch : {
+				event : {
+					click : function(){
+						cmmCtrl.getEduRoomLayerPop(function(data){
+							if(data.choiceCnt > 1){
+								alert(msgCtrl.getMsg("fail.eb.ebf.notSrchPlaceCom1"));
+							}else{
+
+								var titl= data.titl;//교육장명
+								var seq = data.seq;
+								$("#expnsCprtnInsttNm").val(titl);
+								$("#expnsCprtnInsttSeq").val(seq);
 							}
 
 
@@ -1052,10 +1143,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//예산지출내역 폼 조립
 			bdgetSet();
 
+			//페이지 로드시 예산지출내역, 협력기관지출내역 한번 계산하고 시작
+			totPmtSet();
+			expnsPmt();
+
 			//예산지출내역 자동계산 함수 실행
 			$(".calPmtForm").blur(function(){
-				totPmtSet(this);
+				totPmtSet();
 			});
+
+			//협력기관 지출내역 자동계산 함수 실행
+			$("#expnsPmt").blur(function(){
+				expnsPmt();
+			});
+
+
 
 
 			var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
@@ -1235,7 +1337,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.picTelNo = $("#picTelNo").val()//담당자전화번호
 						actForm.placeSeq = $("#placeSeq").val();//교육장소순번
 
-						actForm.cprtnInsttNm = $("#cprtnInsttNm").val();//협력기관
+						//actForm.cprtnInsttNm = $("#cprtnInsttNm").val();//협력기관
+						actForm.cprtnInsttSeq = $("#cprtnInsttSeq").val();//협력기관
 
 
 						actForm.srvSeq = $("#srvSeq").val();//설문순번
@@ -1378,6 +1481,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						var bdgetList = new Array();
 
+						//예산 지출내역 배열에 담기
+
+
 						$("input.calPmtForm").each(function(){
 							var temp = {};
 
@@ -1398,7 +1504,39 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 							bdgetList.push(temp);
 						});
-						 actForm.bdgetList = bdgetList;
+
+						//강사 강의시간 배열에 담기
+						$("div.bdgetForm4").find("input").each(function(){
+							var temp = {};
+							temp.edctnSeq =  actForm.edctnSeq;
+							temp.episdOrd = actForm.episdOrd;
+							temp.episdYear = actForm.episdYear;
+
+							temp.cd = $(this).attr("name");
+
+							var pmt = ($(this).val() ===undefined || $(this).val() == "") ? 0 : $(this).val();
+							temp.pmt = pmt;
+
+							bdgetList.push(temp);
+
+						});
+
+						actForm.bdgetList = bdgetList;
+
+						if($("#expnsCprtnInsttNm").val() !="" &&  $("#expnsPmt").val() == ""){
+							alert("협력기관 지출금액을 입력하세요.");
+							resultFlag = false;
+						}
+
+						if($("#expnsPmt").val() !="" &&  $("#expnsCprtnInsttNm").val() == ""){
+							alert("협력기관을 입력하세요.");
+							resultFlag = false;
+						}
+
+						actForm.bdgetExpnsYn = $("input[name='bdgetExpnsYn']:checked").val();
+						actForm.expnsCprtnInsttNm = $("#expnsCprtnInsttNm").val(); //지출 협업기관명
+						actForm.expnsCprtnInsttSeq = $("#expnsCprtnInsttSeq").val(); //지출 협업기관 번호
+						actForm.expnsPmt = $("#expnsPmt").val();//지출 협업기관 금액
 
 						 //오프라인평가 관련 데이터 세팅
 						if(actForm.otsdExamPtcptYn != undefined && actForm.otsdExamPtcptYn == "Y"){
@@ -1437,7 +1575,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//오프라인평가 관련 데이터 세팅끝
 
 						//수료여부
-
+						debugger;
 						if(resultFlag){
 							//debugger;
 							cmmCtrl.jsonAjax(function(data){

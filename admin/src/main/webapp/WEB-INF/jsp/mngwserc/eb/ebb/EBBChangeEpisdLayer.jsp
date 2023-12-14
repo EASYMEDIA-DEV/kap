@@ -10,6 +10,11 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </h5>
+                <h5>선택된 회원
+                    <span class="selectChangeMemCnt"></span>명
+                </h5>
+                <h5>변경할 차수 선택
+                </h5>
             </div>
             <form name="frmChangeEpisdData" id="frmChangeEpisdData">
 
@@ -26,6 +31,7 @@
                 <!-- 레이어 여부 -->
                 <input type="hidden" name="srchLayer" value="Y" />
                 <div class="modal-body">
+
                         <!--VUE 영역 시작 -->
                         <div class="table-responsive col-sm-12 p0 m0" id="vueList">
                             <table class="table table-hover table-striped" >
@@ -43,15 +49,15 @@
                                     <th class="text-center">년도</th>
                                     <th class="text-center">회차</th>
                                     <th class="text-center">정원</th>
-                                    <th class="text-center">신청자</th>
+                                    <th class="text-center">신청인원</th>
 
-                                    <th class="text-center">학습방식</th>
+                                    <%--<th class="text-center">학습방식</th>
                                     <th class="text-center">학습시간</th>
 
                                     <th class="text-center">접수기간</th>
                                     <th class="text-center">접수상태</th>
                                     <th class="text-center">교육기간</th>
-                                    <th class="text-center">교육상태</th>
+                                    <th class="text-center">교육상태</th>--%>
 
                                 </tr>
 

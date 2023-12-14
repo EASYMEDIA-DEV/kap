@@ -499,9 +499,29 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var cnfrmdTheme = $("#cnfrmdTheme").val();
                         var edctnSttsCd = $("#edctnSttsCd").val();
                         var edctnYear = $("#edctnYear").val();
-                        var edctnStrtDtm = $("#edctnStrtDtm").val();
-                        var edctnEndDtm = $("#edctnEndDtm").val();
+                        var edctnStrtDt = $("#edctnStrtDtm").val();
+                        var edctnStrtHour = $("#edctnStrtHour").val();
+                        var edctnEndDt = $("#edctnEndDtm").val();
+                        var edctnEndHour = $("#edctnEndHour").val();
                         var edctnPlace = $("#edctnPlace").val();
+
+
+                        var edctnStrtDtm = edctnStrtDt + " " + edctnStrtHour + ":00:00";
+                        var edctnEndDtm = edctnEndDt + " " + edctnEndHour + ":59:59";
+
+                        //교육기간 유효성 체크
+                        if(edctnStrtDtm > edctnEndDtm){
+                            alert("교육 시작일이 교육 종료일보다 이전날짜로 입력 해주세요.");
+                            $("#edctnStrtDt").focus();
+                            return false;
+                        }
+                        if(edctnStrtDt == edctnEndDt){
+                            if(edctnStrtHour > edctnEndHour){
+                                alert("교육 시작시간이 더 클 수 없습니다.");
+                                $("#edctnStrtHour").focus();
+                                return false;
+                            }
+                        }
 
                         //강사정보
                         var isttrSeqList= new Array();
@@ -531,8 +551,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         actForm.cnfrmdTheme = cnfrmdTheme;
                         actForm.edctnSttsCd = edctnSttsCd;
                         actForm.edctnYear = edctnYear;
-                        actForm.edctnStrtDtm = edctnStrtDtm;
-                        actForm.edctnEndDtm = edctnEndDtm;
+                        actForm.edctnStrtDtm = edctnStrtDtm;//교육시작일시
+                        actForm.edctnEndDtm = edctnEndDtm;//교육종료일시
                         actForm.edctnPlace = edctnPlace;
                         actForm.cmptnCnt = cmptnCnt;
                         actForm.ptcptRate = ptcptRate;

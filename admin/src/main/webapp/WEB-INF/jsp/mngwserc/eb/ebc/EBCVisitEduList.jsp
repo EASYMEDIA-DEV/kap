@@ -65,6 +65,25 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">교육현황</label>
+                    <div class="col-sm-5">
+                        <label class="checkbox-inline c-checkbox">
+                            <input type="checkbox" class="checkboxAll" />
+                            <span class="ion-checkmark-round"></span> 전체
+                        </label>
+                        <c:forEach var="cdList" items="${cdDtlList.EBC_VISIT_CD}" varStatus="status">
+                            <c:if test="${fn:contains(cdList, 'EBC_VISIT_CD02') and cdList.cd ne 'EBC_VISIT_CD02'}">
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxSingle" data-name="edctnSttsCdList" value="${cdList.cd}" />
+                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                </label>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청 소재지</label>
                     <div class="col-sm-4">
                         <div class="row">
@@ -133,18 +152,31 @@
                 <table class="table table-hover table-striped" >
                     <thead>
                     <tr>
-                        <th class="text-center">
+                        <th class="text-center" rowspan="3">
                             <label class="checkbox-inline c-checkbox">
                                 <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
                                 <span class="ion-checkmark-round"></span>
                             </label>
                         </th>
-                        <th class="text-center">번호</th>
-                        <th class="text-center">교육결과</th>
+                        <th class="text-center" rowspan="3">번호</th>
+                        <th class="text-center" rowspan="3">교육상태</th>
+                        <th class="text-center" colspan="13">신청정보</th>
+                        <th class="text-center" colspan="4">교육실적</th>
+
+                        <th class="text-center" rowspan="3">최종 수정자</th>
+                        <th class="text-center" rowspan="3">최종 수정일시</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center" colspan="4">부품사정보</th>
+                        <th class="text-center" colspan="8">신청내용</th>
+                        <th class="text-center" colspan="4">개요</th>
+                    </tr>
+                    <tr>
                         <th class="text-center">부품사명</th>
                         <th class="text-center">사업자등록번호</th>
                         <th class="text-center">구분</th>
                         <th class="text-center">규모</th>
+
                         <th class="text-center">신청일시</th>
                         <th class="text-center">신청분야</th>
                         <th class="text-center">교육희망일</th>
@@ -153,12 +185,11 @@
                         <th class="text-center">이름(아이디)</th>
                         <th class="text-center">휴대폰번호</th>
                         <th class="text-center">이메일</th>
-                        <th class="text-center">교육상태</th>
+
+                        <th class="text-center">실적마감여부</th>
                         <th class="text-center">확정주제</th>
                         <th class="text-center">교육기간</th>
                         <th class="text-center">수료인원(명)</th>
-                        <th class="text-center">최종 수정자</th>
-                        <th class="text-center">최종 수정일시</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

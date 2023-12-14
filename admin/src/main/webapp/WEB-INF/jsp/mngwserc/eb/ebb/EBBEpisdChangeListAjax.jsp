@@ -27,18 +27,18 @@
         </td><!--회차-->
         <td class="text-center">${list.fxnumCnt}</td><!--정원-->
         <td class="text-center">${list.accsCnt}</td><!--신청자수-->
-        <td class="text-center">${list.stduyMthdCdNm}</td><!--학습방식-->
-        <td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td><!--학습시간-->
-        <td class="text-center">${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--접수기간-->
-        <td class="text-center">${list.accsStatusNm}</td><!--접수상태-->
-        <td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--교육기간-->
-        <td class="text-center">${list.edctnStatusNm}</td><!--교육상태-->
+        <%--<td class="text-center">${list.stduyMthdCdNm}</td>--%><!--학습방식-->
+        <%--<td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td>--%><!--학습시간-->
+        <%--<td class="text-center">${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>--%><!--접수기간-->
+        <%--<td class="text-center">${list.accsStatusNm}</td>--%><!--접수상태-->
+        <%--<td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>--%><!--교육기간-->
+        <%--<td class="text-center">${list.edctnStatusNm}</td>--%><!--교육상태-->
       </tr>
     </c:forEach>
   </c:when>
   <c:otherwise>
     <tr data-total-count="0">
-      <td colspan="14" class="text-center">
+      <td colspan="7" class="text-center">
         검색결과가 없습니다.<br>
         (등록된 데이터가 없습니다.)
       </td>

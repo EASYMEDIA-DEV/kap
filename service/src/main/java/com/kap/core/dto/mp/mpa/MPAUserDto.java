@@ -263,4 +263,29 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title="참/거짓")
     private Boolean passwordChk;
 
+    @Schema(title="이메일")
+    private String emailName;
+
+    @Schema(title="이메일주소")
+    private String emailAddr;
+
+    @Schema(title="이전이메일여부")
+    private String oldEmailRcv;
+
+
+    @Schema(title="이전sms여부")
+    private String oldSmsRcv;
+
+    @Schema(title="이전sms여부YN")
+    private String chngEmail;
+
+    @Schema(title="이전sms여부YN")
+    private String chngSms;
+
+    @Schema(title="패스워드변경여부")
+    private String chngPwd;
+
+    @Schema(title="재단공지변경여부")
+    private String chngFndn;
+
 }

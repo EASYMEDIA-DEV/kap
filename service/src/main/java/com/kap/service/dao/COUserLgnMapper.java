@@ -64,4 +64,10 @@ public interface COUserLgnMapper {
 	 */
 
 	MPAUserDto getIdFind(COIdFindDto coIdFindDto) throws Exception;
+
+
+	/**
+	 * 패스워드를 비교 한다.
+	 */
+	int getPasswordChk(MPAUserDto mpaUserDto) throws Exception;
 }
