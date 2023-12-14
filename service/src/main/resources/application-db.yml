@@ -20,13 +20,15 @@ spring:
 spring.config.activate.on-profile: dev
 spring:
   db:
-    datasource: jdbc/kapDS
+    datasource:
       ##Db jndi 명
+      jndi-name: jdbc/kapDS
 
 ---
 spring.config.activate.on-profile: prod
 spring:
   db:
-    datasource: jdbc/kapDS
+    datasource:
       #Db jndi 명
+      jndi-name: jdbc/kapDS
 
