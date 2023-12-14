@@ -11,12 +11,9 @@
 			<input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
 			<!-- CSRF KEY -->
 			<input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
-			<!--복사유무-->
-			<input type="hidden" id="copyYn" name="copyYn" value="N" />
-
 			<!-- 상세로 이동시 시퀀스 -->
 			<input type="hidden" id="detailsKey" name="detailsKey" value="" />
+
 			<!--기간 검색 시작-->
 			<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 				<jsp:param name="srchText" value="기간검색" />
@@ -260,8 +257,8 @@
 					</select>
 				</div>
 				<div class="pull-right">
-					<button type="button" class="btn btn-success btn-sm mb-sm" id="btnChoice" style="width: 60px">선발</button>
-					<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnNotChoice" style="width: 60px">미선발</button>
+					<button type="button" class="btn btn-success btn-sm mb-sm btnStts" style="width: 60px" data-stts-val="Y">선발</button>
+					<button type="button" class="btn btn-danger btn-sm mb-sm btnStts" style="width: 60px" data-stts-val="N">미선발</button>
 				</div>
 			</div>
 			<!--VUE 영역 시작 -->

@@ -420,7 +420,6 @@
                     <label class="col-sm-1 control-label">SQ 정보</label>
                     <div class="col-sm-9">
                         <c:forEach var="sqData" varStatus="status" begin="0" end="2">
-                            <span>${i}</span>
                             <div class="row">
                                 <input type="hidden" class="notRequired" name="sqInfoList${ status.count }" value="${rtnDto.sqList[status.index].cbsnSeq}" />
                                 <div class="col-sm-3 pr0">

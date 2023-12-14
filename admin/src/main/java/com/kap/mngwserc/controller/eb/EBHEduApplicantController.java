@@ -165,9 +165,9 @@ public class EBHEduApplicantController {
         @PostMapping(value="/update")
         public BaseDTO updateEduApplicant(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO, MPEPartsCompanyDTO pMPEPartsCompanyDTO, MPAUserDto pMPAUserDto, HttpServletRequest request) throws Exception
         {
-            log.error("pEBHEduApplicantMstDTO : {}", pEBHEduApplicantMstDTO.toString());
-            log.error("pMPEPartsCompanyDTO : {}", pMPEPartsCompanyDTO.toString());
-            log.error("pMPAUserDto : {}", pMPAUserDto.toString());
+//            log.error("pEBHEduApplicantMstDTO : {}", pEBHEduApplicantMstDTO.toString());
+//            log.error("pMPEPartsCompanyDTO : {}", pMPEPartsCompanyDTO.toString());
+//            log.error("pMPAUserDto : {}", pMPAUserDto.toString());
             BaseDTO baseDTO = new BaseDTO();
             try
             {
