@@ -32,6 +32,10 @@
 					className : "numberChk",
 					regExr : "^[0-9]+$"
 				},
+				priceChk : {
+					className : "priceChk",
+					regExr : "^[0-9\\,]+$"
+				},
 				floatChk : {
 					className : "floatChk",
 					regExr : "^[0-9\\.]+$"
@@ -92,7 +96,8 @@
 				passChk : "8~15자 이내 영문+특수문자+숫자 조합으로 입력하세요.",
 				passEqualChk : "비밀번호가 일치하지 않습니다.",
 				emailChk : "이메일 주소를 확인해주세요.",
-				numberChk : "숫자만 입력가능합니다.",
+				numberChk : "숫자만 입력ㄴㄴ가능합니다.",
+				priceChk : "숫자만 입력가능합니다.",
 				lengthLimitChk : "길이가 조건에 맞지 않습니다.",
 				mobileNumChk : "휴대폰번호는 010-1234-5678 형식으로 입력되어야 합니다.",
 				phoneNumChk : "연락처는 02(010)-1234-5678 또는 15XX-XXXX 형식으로 입력되어야 합니다.",
@@ -556,6 +561,7 @@
 			passEqualChk : "",
 			emailChk : "",
 			numberChk : "",
+			priceChk : "",
 			floatChk : "",
 			lengthLimitChk : "",
 			mobileNumChk : "",
@@ -584,6 +590,7 @@
 		regExrs.passExr = settings.validateType.passChk.regExr;
 		regExrs.emailExr = settings.validateType.emailChk.regExr;
 		regExrs.numberExr = settings.validateType.numberChk.regExr;
+		regExrs.priceExr = settings.validateType.priceChk.regExr;
 		regExrs.floatExr = settings.validateType.floatChk.regExr;
 		regExrs.mobileExr = settings.validateType.mobileNumChk.regExr;
 		regExrs.phoneExr = settings.validateType.phoneNumChk.regExr;
@@ -610,6 +617,7 @@
 		msg.passEqualChk = settings.msg.passEqualChk;
 		msg.emailChk = settings.msg.emailChk;
 		msg.numberChk = settings.msg.numberChk;
+		msg.priceChk = settings.msg.priceChk;
 		msg.floatChk = settings.msg.floatChk;
 		msg.lengthLimitChk = settings.msg.lengthLimitChk + "(" + settings.validateType.lengthLimitChk.min + "자리)";
 		msg.mobileNumChk = settings.msg.mobileNumChk;
@@ -650,6 +658,7 @@
 				Pass : msg.passChk,
 				Email : msg.emailChk,
 				Number : msg.numberChk,
+				Price : msg.priceChk,
 				Float : msg.floatChk,
 				Mobile : msg.mobileNumChk,
 				Phone : msg.phoneNumChk,
@@ -906,6 +915,17 @@
 						}
 					});
 				}
+
+				/* 금액 검사 (숫자 + ,)*/
+				if ($(this).hasClass(settings.validateType.priceChk.className))
+				{
+					$(this).keyup(function(event){
+						if ($(this).val() != "")
+						{
+							Feel.Validation.method.RegExrCheck($(this), regExrs.priceExr, msg.priceChk, GenerateMsg);
+						}
+					});
+				}
 				
 				// 실수 검사
 				if ($(this).hasClass(settings.validateType.floatChk.className))
@@ -1111,6 +1131,7 @@
 								}
 								if (isOk && $(this).hasClass(settings.validateType.emailChk.className)) validationType.CommonChk($(this), regExrs.emailExr, msg.emailChk);
 								if (isOk && $(this).hasClass(settings.validateType.numberChk.className)) validationType.CommonChk($(this), regExrs.numberExr, msg.numberChk);
+								if (isOk && $(this).hasClass(settings.validateType.priceChk.className)) validationType.CommonChk($(this), regExrs.priceExr, msg.priceChk);
 								if (isOk && $(this).hasClass(settings.validateType.floatChk.className)) validationType.CommonChk($(this), regExrs.floatExr, msg.floatChk);
 								if (isOk && $(this).hasClass(settings.validateType.lengthLimitChk.className)) validationType.LengthLimitChk($(this), settings.validateType.lengthLimitChk, msg.lengthLimitChk);
 								if (isOk && $(this).hasClass(settings.validateType.mobileNumChk.className)) validationType.CommonChk($(this), regExrs.mobileExr, msg.mobileNumChk);
