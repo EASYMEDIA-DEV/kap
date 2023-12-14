@@ -23,7 +23,7 @@
 				<!--기간 검색 시작-->
 				<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 					<jsp:param name="srchText" value="등록/수정기간" />
-					<jsp:param name="srchOption" value="등록일,수정일" />
+					<jsp:param name="srchOption" value="등록일,수정일,접수기간,교육기간" />
 					<jsp:param name="srchType" value="edctn" />
 				</jsp:include>
 

@@ -14,7 +14,9 @@
         <td class="text-center">${ptcptList.name}</td>
         <td class="text-center">${ptcptList.cmpnNm}</td>
         <td class="text-center">${ptcptList.ctgryNm}</td>
-        <td class="text-center">${ptcptList.ptcptBsnmNo}</td>
+        <td class="text-center">${kl:bsnmNoConvert(ptcptList.ptcptBsnmNo)}</td><!--사업자등록번호-->
+        <td class="text-center">${ptcptList.deptCdNm} ${ptcptList.deptDtlNm == '' ? '' : '('+=ptcptList.deptDtlNm+=')'} </td><!-- 부서 -->
+        <td class="text-center">${ptcptList.pstnCdNm}</td><!-- 직급 -->
         <td class="text-center">${ptcptList.hpNo}</td>
         <td class="text-center">${ptcptList.email}</td>
         <td class="text-center">${ptcptList.eduDtm}</td>

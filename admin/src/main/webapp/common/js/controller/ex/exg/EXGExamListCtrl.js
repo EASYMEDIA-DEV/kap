@@ -124,7 +124,35 @@ define(["ezCtrl"], function(ezCtrl) {
                         jQuery(trgtObj).find(".datetimepicker_endDt").datetimepicker("reset").val("");
                     }
                 }
-            }
+            },
+
+            //검색 초기화
+            btnRefresh : {
+                event : {
+                    click : function() {
+                        //FORM 데이터 전체 삭제
+                        var pageIndex 	= $formObj.find("#pageIndex").val();
+                        var listRowSize = $formObj.find("#listRowSize").val();
+                        var pageRowSize = $formObj.find("#pageRowSize").val();
+                        var csrfKey 	= $formObj.find("#csrfKey").val();
+                        var srchLayer 	= $formObj.find("input[name=srchLayer]").val();
+                        $formObj.clearForm();
+                        //FORM 전송 필수 데이터 삽입
+                        $formObj.find("#pageIndex").val( pageIndex );
+                        $formObj.find("#listRowSize").val( listRowSize );
+                        $formObj.find(".listRowSizeContainer").val( listRowSize );
+                        $formObj.find("#pageRowSize").val( pageRowSize );
+                        $formObj.find("#csrfKey").val( csrfKey );
+                        $formObj.find("input[name=srchLayer]").val( srchLayer );
+
+                        //캘린더 초기화
+                        cmmCtrl.setPeriod(this, "", "", false);
+
+                        //검색 로직 실행
+                        $formObj.find("#btnSearch").click();
+                    }
+                }
+            },
         },
         classname : {
             // 페이징 처리
@@ -174,6 +202,44 @@ define(["ezCtrl"], function(ezCtrl) {
                             clickObj.titl = titl;
                             ctrl.obj.trigger("choice", [clickObj])
                             ctrl.obj.find(".close").click();
+                        }
+                    }
+                }
+            },
+
+            checkboxAll : {
+                event : {
+                    click : function() {
+                        //상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxSingle가 변경됨
+                        var trgtArr = $(this).closest("div").find(".checkboxSingle");
+                        if (trgtArr.length > 0)
+                        {
+                            var isChecked = false;
+                            if($(this).is(":checked"))
+                            {
+                                isChecked = true;
+                            }
+                            $.each(trgtArr, function(){
+                                $(this).prop("checked", isChecked);
+                            })
+                        }
+                    }
+                }
+            },
+            checkboxSingle : {
+                event : {
+                    click : function() {
+                        //상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxAll이 변경됨
+                        var trgtObj = $(this).closest("div");
+                        var allCbxCnt = trgtObj.find(".checkboxSingle").length;
+                        var selCbxCnt = trgtObj.find(".checkboxSingle:checked").length;
+                        if (allCbxCnt == selCbxCnt)
+                        {
+                            trgtObj.find(".checkboxAll").prop("checked", true);
+                        }
+                        else
+                        {
+                            trgtObj.find(".checkboxAll").prop("checked", false);
                         }
                     }
                 }

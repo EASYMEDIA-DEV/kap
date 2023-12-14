@@ -34,6 +34,27 @@ public class EXGExamMstInsertDTO extends BaseDTO {
     @Schema(title = "시험순번", example = "숫자")
     private Integer examSeq;
 
+    //카테고리코드 소분류
+    @Schema(title = "카테고리코드 소분류", example = "")
+    private String ctgryCd;
+
+    //카테고리코드 소분류명
+    @Schema(title = "카테고리코드 소분류명", example = "")
+    private String ctgryCdNm;
+
+
+    //카테고리코드 대분류
+    @Schema(title = "카테고리코드 대분류", example = "")
+    private String prntCd;
+
+    //카테고리코드 대분류명
+    @Schema(title = "카테고리코드 대분류명", example = "")
+    private String prntCdNm;
+
+    //교육과정 명
+    @Schema(title = "교육과정 명", example = "텍스트")
+    private String nm;
+
     @Schema(title = "제목")
     @NotNull
     private String titl;

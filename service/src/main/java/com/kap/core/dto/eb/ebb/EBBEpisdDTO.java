@@ -304,6 +304,8 @@ public class EBBEpisdDTO extends BaseDTO {
     private String srchLayer;
     private List<EBBPtcptDTO> ptcptList;//참여자 목록
 
+    private List<String> episdSeqList; //차수 번호 리스트
+
     private List<EBBLctrDTO> lctrList;//온라인강의 목록
 
     private List<EBBisttrDTO> isttrSeqList;//강사목록

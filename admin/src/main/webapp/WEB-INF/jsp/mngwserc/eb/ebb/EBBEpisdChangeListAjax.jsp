@@ -26,7 +26,7 @@
           </c:choose>
         </td><!--회차-->
         <td class="text-center">${list.fxnumCnt}</td><!--정원-->
-        <td class="text-center">${list.accsCnt}</td><!--신청자수-->
+        <td class="text-center" data-fxnum_impsb_yn="${list.fxnumImpsbYn}">${list.accsCnt}</td><!--신청자수-->
         <%--<td class="text-center">${list.stduyMthdCdNm}</td>--%><!--학습방식-->
         <%--<td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td>--%><!--학습시간-->
         <%--<td class="text-center">${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>--%><!--접수기간-->

@@ -669,6 +669,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		},
 		classname : {
 
+			tabClick : {
+				event : {
+					click : function(e) {
+
+						if($(e.target).attr("href") == "#bdget"){
+							$("#bdget").css({"display" : "flex", "flex-wrap" : "wrap"});
+						}else{
+							$("#bdget").css({"display" : "", "flex-wrap" : ""});
+						}
+					}
+				}
+			},
+
 			//페이징 처리
 			pageSet : {
 				event : {
@@ -1126,8 +1139,38 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 },
 		immediately : function(event) {
 
+			//교육 시작일 이전에 수정가능한 목록 제어
+			var updateEdDt = $("#edctnStrtDt").val();
+			if(updateEdDt != ""){
+				var eduDate = new Date(updateEdDt);//교육 시작일
+				var nowDate = new Date();//현재날짜
+				if(nowDate>=eduDate){
+
+					$(".eduIsttrSearch").attr("disabled", true);//강사 추가버튼 사용 불가
+					$(".btnOneTrRemove").attr("disabled", true);//강사 삭제버튼 사용불가
+					$(".eduSrvSearch").attr("disabled", true);//만족도조사 추가버튼 사용불가
+					$(".srvReset").attr("disabled", true);//설문 초기화버튼 사용불가
+					$(".eduExamSearch").attr("disabled", true);//평가버튼 사용 불가
+					$(".otsdExamPtcptYn ").attr("disabled", true);//오프라인평가버튼 사용불가
+
+					//설문, 시험 달력 사용불가
+					$("#srvStrtDtm, #srvEndDtm, #srvEndDtm, #examEndDtm").attr("disabled", true);
+
+					$(".jdgmtYn").find("input").each(function(e){
+						$(this).click(function(e){
+							console.log('1');
+							e.stopImmediatePropagation();
+						});
+
+					});
+
+				}
+			}
+
+
+
 			//교육 참여자목록 조회
-			if($(".card-body").data("actiontype") == "update"){
+			if($("#detailsKey").val() != ""){
 				search();
 			}
 			

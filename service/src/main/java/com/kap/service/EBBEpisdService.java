@@ -64,7 +64,7 @@ public interface EBBEpisdService {
 	/**
 	 * 교육차수를 삭제한다.
 	 */
-	public int deleteEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+	public EBBEpisdDTO deleteEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
 	 * 교육차수 중복 체크

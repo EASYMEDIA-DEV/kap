@@ -151,9 +151,9 @@ public class EBBEpisdController {
         List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
         List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
         List<EBBBdgetDTO> bdgetList = (List<EBBBdgetDTO>) rtnMap.get("bdgetList");//예산/지출관리 목록
-        System.out.println("@@@@@1");
+
         EBBSrvRstDTO srvRstDtl = (EBBSrvRstDTO)rtnMap.get("srvRstDtl");//만족도 결과 부서, 직급별 인원 통계
-        System.out.println("@@@@@2");
+
         List<EBBPtcptDTO> ptcptList = (List<EBBPtcptDTO>) rtnMap.get("ptcptList");//교육참여자 목록
 
 
@@ -218,14 +218,6 @@ public class EBBEpisdController {
             modelMap.addAttribute("tableAtndcList", tableAtndcList);
             //교육 참여자 출석부 th부분 날짜 세팅용 종료
 
-
-                    for(EBBPtcptDTO aa : tableAtndcList){
-
-                        System.out.println("@@@ getEdctnDt = " + aa.getEdctnDt());
-                    }
-
-
-
             //만족도 조사(설문)
             if (!"".equals(rtnDto.getSrvSeq()) && rtnDto.getSrvSeq() != null){
                 SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
@@ -244,11 +236,34 @@ public class EBBEpisdController {
 
 
 
+        //복사유무
+        if(eBBEpisdDTO.getCopyYn().equals("Y")) {
+
+            rtnDto.setCopyYn("Y");
+            rtnDto.setExpsYn("N");
+            rtnDto.setEpisdSeq(null);
+            rtnDto.setEpisdYear(null);
+            rtnDto.setEpisdOrd(null);
+            rtnDto.setEdctnNtctnFileSeq(null);
+
+            rtnDto.setExpnsPmt(null);
+            rtnDto.setExpnsCprtnInsttNm(null);
+            rtnDto.setBdgetExpnsYn("N");
+
+            for (EBBLctrDTO temp : lctrDtoList){
+                temp.setThnlFileSeq(null);
+            }
+
+            modelMap.addAttribute("lctrDtoList", lctrDtoList);//온라인강의
+            modelMap.addAttribute("tableAtndcList", null);
+            modelMap.addAttribute("rtnSurveyData", null);//설문데이터
+
+            modelMap.addAttribute("bdgetList", null);//예산지출목록
+            modelMap.addAttribute("srvRstDtl", null);//만족도 결과 부서, 직급별 인원 통계
+            modelMap.addAttribute("ptcptList", null);//교육 참여자 목록
 
 
-
-
-
+        }
 
 
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
@@ -405,6 +420,8 @@ public class EBBEpisdController {
         public EBBEpisdDTO insertEpisd(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
         {
             try{
+
+                System.out.println("@@@온닷!!!");
                 eBBEpisdService.insertEpisd(eBBEpisdDTO);
             }
             catch (Exception e)
@@ -423,6 +440,7 @@ public class EBBEpisdController {
         public EBBEpisdDTO updateEpisd(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
         {
             try{
+                System.out.println("@@@여기오면 안됨");
                 eBBEpisdService.updateEpisd(eBBEpisdDTO);
             }
             catch (Exception e)
@@ -519,6 +537,34 @@ public class EBBEpisdController {
             try {
 
                 tempDto = eBBEpisdService.selectFxnumChk(eBBEpisdDTO);
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return tempDto;
+        }
+
+        @Operation(summary = "교육차수 삭제 체크", tags = "교육차수 삭제 체크", description = "")
+        @PostMapping(value="/episdDeleteChk")
+        public EBBEpisdDTO episdDeleteChk(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+
+            EBBEpisdDTO tempDto = new EBBEpisdDTO();
+
+            try {
+
+                //선택한 차수가 참여자가 있는지 체크한다
+                //없으면 삭제 진행
+                //있으면 삭제불가 메시지 반환 삭제성공 :S, 삭제불가(참여자존재) : F
+
+                tempDto = eBBEpisdService.deleteEpisd(eBBEpisdDTO);
 
             }
             catch (Exception e)

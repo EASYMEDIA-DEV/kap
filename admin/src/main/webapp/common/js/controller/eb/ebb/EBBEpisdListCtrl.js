@@ -128,37 +128,40 @@ define(["ezCtrl"], function(ezCtrl) {
 						}
 						//복사
 						$("#copyYn").val("Y");
-						valList.closest("tr").find("td:eq(2) > a").trigger("click")
+						valList.closest("tr").find("td:eq(7) > a").trigger("click")
 					}
 				}
 			},
 			btnEdDelete : {
 				event : {
 					click : function() {
+						//선택삭제 진행
 
-						var $this = this;
+						var actionForm = {};
 
-						var delList = new Array();
-						$("#listContainer").find("input:checkbox[name='delValueList']:checked").each(function(){
-							delList.push($(this).val());
-						})
-						var seqObj = {};
-						seqObj['edctnSeqList'] = delList;
+						var seqList = new Array();
+						$("#vueList").find("input:checkbox[name='delValueList']:checked").each(function(){
+							seqList.push($(this).data("episdseq"));
+						});
+
+						actionForm.edctnSeq = 0;
+						actionForm.episdOrd = 0;
+						actionForm.episdYear = 0;
+						actionForm.episdSeqList = seqList;
+
 						cmmCtrl.jsonAjax(function(data){
-							var rtn = JSON.parse(data);
-							if(rtn.respCnt>0){
-								console.log('회차가 등록된 게시물이 존재하여 삭제 할 수 없습니다.');
-							}else{
-								console.log('등록된 회차 없음');
-								delCallback($this);
+							if(data !=""){
+								var rtn = JSON.parse(data);
+
+								if(rtn.rsn == "F"){
+									alert("교육 참여자가 존재합니다.");
+								}else{
+									alert("삭제되었습니다.");
+									location.reload;
+								}
 							}
 
-
-						}, "./deleteChk", seqObj, "text");
-
-						//delCallback(this);
-
-
+						}, "./episdDeleteChk", actionForm, "text");
 					}
 				}
 			},

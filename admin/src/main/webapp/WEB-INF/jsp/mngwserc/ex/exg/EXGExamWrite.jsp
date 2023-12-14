@@ -11,6 +11,37 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.examSeq}" />
             <input type="hidden" class="notRequired" id="posbChg" name="posbChg" value="${ kl:decode(rtnDto.posbChg, false, 'false', 'true') }" />
             <input type="hidden" class="notRequired" id="gubun" name="gubun" value="${gubun}" />
+
+
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">과정분류<span class="star"> *</span></label>
+                    <div class="col-sm-11" style="margin-left: -15px">
+                        <div class="col-sm-1">
+                            <select class="form-control input-sm wd-sm classType" name="cd" id="cd" title="과정분류-대분류${rtnDto.prntCd}">
+                                <option value="">선택</option>
+                                <c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.prntCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="col-sm-1">
+                            <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="권한" data-ctgrycd="${rtnDto.ctgryCd}">
+                                <option value="">선택</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">과정명<span class="star"> *</span></label>
+                    <div class="col-sm-11">
+                        <input type="text" class="form-control input-sm" id="nm" name="nm" value="${rtnDto.nm}" title="제목" maxlength="50" placeholder="과정명 입력" />
+                    </div>
+                </div>
+            </fieldset>
+
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>

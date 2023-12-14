@@ -12,6 +12,44 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
+    //과정분류 조회
+    var selectCtgryCdList = function(arg){
+
+        if(arg === undefined){
+            arg = $("#ctgryCd").data("ctgrycd");
+        }
+
+        var cdMst= {};
+        cdMst.cd = $(arg).val();
+
+        cmmCtrl.jsonAjax(function(data){
+            callbackAjaxCtgryCdList(data);
+        }, './classTypeList', cdMst, "text");
+    }
+
+    //과정분류 2뎁스 세팅
+    var callbackAjaxCtgryCdList = function(data){
+
+        var detailList = JSON.parse(data);
+        var selectHtml = "<option value=''>전체</option>";
+
+        for(var i =0; i < detailList.length; i++){
+
+            var cd = detailList[i].cd;
+            var cdNm = detailList[i].cdNm;
+
+            selectHtml += "<option value='"+cd+"' >"+cdNm+"</option>";
+        }
+
+        $("#ctgryCd option").remove();
+
+        $("#ctgryCd").append(selectHtml);
+
+        var ctgrycd = $("#ctgryCd").data("ctgrycd");
+
+        $("#ctgryCd").val(ctgrycd).prop("selected", true);//조회된 과정분류값 자동선택
+    }
+
 
     var callbackAjaxInsert = function(data){
         if (parseInt(data.actCnt, 10) > 0)
@@ -65,8 +103,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         },
         classname : {
 
+            classType : {
+                event : {
+                    change : function() {
+                        selectCtgryCdList(this);
+                    }
+                }
+            },
+
         },
         immediately : function(){
+
+            $(".classType").trigger("change");
 
             /* Editor Setting */
             var isSmmryCntn = false;
@@ -170,6 +218,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var exExamMst = {};
                         exExamMst.detailsKey = ctrl.obj.find("#detailsKey").val();
                         exExamMst.titl = ctrl.obj.find("#titl").val();
+
+                        exExamMst.nm = ctrl.obj.find("#nm").val();
+                        exExamMst.ctgryCd = ctrl.obj.find("#ctgryCd").val();
+
+
                         exExamMst.smmryCntn = ctrl.obj.find("#smmryCntn").val();
                         exExamMst.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
                         exExamMst.exExamQstnDtlList = new Array();

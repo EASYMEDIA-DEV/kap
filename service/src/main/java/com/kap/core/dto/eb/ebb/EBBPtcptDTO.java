@@ -134,6 +134,25 @@ public class EBBPtcptDTO extends BaseDTO {
     @Builder.Default
     private String lvgrmHour = null;
 
+    @Schema(title = "부서코드", example = "")
+    private String deptCd;
+
+    @Schema(title = "부서코드명", example = "")
+    private String deptCdNm;
+
+    @Schema(title = "부서상세명", example = "")
+    private String deptDtlNm;
+
+    @Schema(title = "직급코드", example = "")
+    private String pstnCd;
+
+    @Schema(title = "직급코드명", example = "")
+    private String pstnCdNm;
+
+    @Schema(title = "직급명", example = "")
+    private String pstnNm;
+
+
     @Schema(title = "비고", example = "텍스트")
     @Builder.Default
     private String etcNm = null;

@@ -11,6 +11,19 @@
 	<select id="selectExamList" parameterType="EXGExamMstSearchDTO" resultType="EXGExamMstSearchDTO">
 		select /* EXGExamMapper.selectExamList */
 		      exam_seq
+			, a.ctgry_cd
+			, (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
+			, (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
+			, (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
+			WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
+			(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+			AND dpth =  2 AND dpth <![CDATA[>]]> 1) prnt_cd
+
+			, (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
+			WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
+			(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+			AND dpth <![CDATA[<]]> 4 AND dpth <![CDATA[>]]> 1) prnt_cd_nm
+		 	, nm
 			, titl
 			, exps_yn
 			, reg_id
@@ -80,13 +93,19 @@
 					<when test="f == 1">
 						and titl like concat('%', #{q}, '%')
 					</when>
-					<when test="f == 2">
+					<!--<when test="f == 2">
 						and name like concat('%', #{q}, '%')
+					</when>-->
+					<when test="f == 2"><!-- 과정명 -->
+						and nm like concat('%', #{q}, '%')
 					</when>
-					<when test="f == 3 ">
-						and exists(select id from co_adm_mst where id = a.reg_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')))
+					<when test="f == 3"><!-- 과정분류 -->
+						and (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) like concat('%', #{q}, '%')
 					</when>
 					<when test="f == 4 ">
+						and exists(select id from co_adm_mst where id = a.reg_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')))
+					</when>
+					<when test="f == 5">
 						and exists(select id from co_adm_mst where id = a.mod_id and (name like concat('%', #{q}, '%') or id like concat('%', #{q}, '%')))
 					</when>
 					<otherwise>
@@ -220,7 +239,9 @@
 	<insert id="insertExamMst" parameterType="EXGExamMstInsertDTO">
 		insert /* EXGExamMapper.insertExamMst */ into ex_exam_mst
 		(
-			  exam_seq
+		  	exam_seq
+			, ctgry_cd
+			, nm
 			, titl
 			, smmry_cntn
 			, exps_yn
@@ -234,6 +255,8 @@
 		values
 			(
 			  #{examSeq}
+			, #{ctgryCd}
+			, #{nm}
 			, #{titl}
 			, #{smmryCntn}
 			, #{expsYn}
@@ -340,6 +363,20 @@
 	<select id="selectExamDtl" parameterType="EXGExamMstSearchDTO" resultType="EXGExamMstInsertDTO">
 		select /* EXGExamMapper.selectExamDtl */
 			 exam_seq
+			, ctgry_cd
+			, (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
+			, (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
+
+			, (SELECT GROUP_CONCAT(cd SEPARATOR ' > ') FROM co_code_mst
+			   WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
+																										(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+				 AND dpth =  2 AND dpth <![CDATA[>]]> 1) prnt_cd
+
+			, (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
+			   WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
+																										(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+				 AND dpth <![CDATA[<]]> 4 AND dpth <![CDATA[>]]> 1) prnt_cd_nm
+			, nm
 			,titl
 			,smmry_cntn
 			,exps_yn
@@ -347,7 +384,7 @@
 			,reg_dtm
 			,mod_id
 			,mod_dtm
-		from ex_exam_mst
+		from ex_exam_mst a
 		where exam_seq = #{detailsKey}
 	</select>
 
@@ -452,11 +489,13 @@
 		update /* EXGExamMapper.updateExamMst */ ex_exam_mst
 		set
 			 exps_yn = #{expsYn}
-		    ,titl = #{titl}
-		    ,smmry_cntn = #{smmryCntn}
-		    ,mod_id = #{modId}
-		    ,mod_ip = #{modIp}
-		    ,mod_dtm = now()
+		    , titl = #{titl}
+		  	, ctgry_cd =#{ctgryCd}
+		  	, nm = #{nm}
+		    , smmry_cntn = #{smmryCntn}
+		    , mod_id = #{modId}
+		    , mod_ip = #{modIp}
+		    , mod_dtm = now()
 		where
 			exam_seq = #{detailsKey}
 	</update>

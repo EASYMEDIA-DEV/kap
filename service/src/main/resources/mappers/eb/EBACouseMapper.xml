@@ -14,7 +14,6 @@
 				, nm
 				, a.ctgry_cd
 				, (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
-				, (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
 				, (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
 				WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
 				(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
@@ -171,7 +170,7 @@
 				  , (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
 				  , (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
 
-				  , (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
+				  , (SELECT GROUP_CONCAT(cd SEPARATOR ' > ') FROM co_code_mst
 					  	WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
 					  	(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
 					  	AND dpth =  2 AND dpth <![CDATA[>]]> 1) prnt_cd

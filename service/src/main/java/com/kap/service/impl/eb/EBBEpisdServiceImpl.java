@@ -380,12 +380,26 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	 * 교육차수를 삭제한다.
 	 */
 	@Transactional
-	public int deleteEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	public EBBEpisdDTO deleteEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
-		int actCnt = 0;
+
+		EBBEpisdDTO resultDto = new EBBEpisdDTO();
 
 
-		return actCnt;
+
+		int ptcptCnt = eBBEpisdMapper.selectEpisdDeletePrevChk(eBBEpisdDTO);
+
+		if(ptcptCnt>0){
+			resultDto.setRsn("F");
+		}else{
+			eBBEpisdMapper.deleteEpisdDtl(eBBEpisdDTO);
+			resultDto.setRsn("S");
+		}
+
+
+
+
+		return resultDto;
 	}
 
 	/**
@@ -527,7 +541,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				nextPtcptDto.setPtcptSeq(firstEdctnPtcptIdgen);
 
 				nextPtcptDto.setEdctnSeq(eBBEpisdDTO.getEdctnSeq());//과정 순번
-				nextPtcptDto.setEpisdSeq(eBBEpisdDTO.getEpisdSeq());//회차순번
+
 
 				nextPtcptDto.setEpisdYear(eBBEpisdDTO.getEpisdYear());//신규 회차년도
 				nextPtcptDto.setEpisdOrd(eBBEpisdDTO.getEpisdOrd());//신규 회차정렬
@@ -541,7 +555,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 				nextPtcptDto.setEdctnStrtDtm(targetDto.getEdctnStrtDtm());
 				nextPtcptDto.setEdctnEndDtm(targetDto.getEdctnEndDtm());
-
+				nextPtcptDto.setEpisdSeq(targetDto.getEpisdSeq());//회차순번
 
 				eBBEpisdMapper.insertPtcptDtl(nextPtcptDto);
 				this.setAtndcList(nextPtcptDto);//교육참여 출석 상세 목록을 등록한다.

@@ -17,7 +17,7 @@
 
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">과정분류<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">과정분류${rtnDto.prntCd}<span class="star"> *</span></label>
                     <div class="col-sm-11" style="margin-left: -15px">
                         <div class="col-sm-1">
                             <select class="form-control input-sm wd-sm classType" name="cd" id="cd" title="과정분류-대분류">
@@ -124,7 +124,7 @@
                                             </c:if>
                                             <c:if test="${targetList.cdNm eq '기타' && targetList.cd eq 'ED_TARGET05001'}">
                                                 <div class="col-sm-5">
-                                                    <input type="text" class="form-control input-sm notRequired" id="etcNm" name="etcNm" value="${rtnTrgtData[rtnTrgtData.size()-1].etcNm}" title="기타" maxlength="200" placeholder="기타 입력"/>
+                                                    <input type="text" class="form-control input-sm notRequired" id="etcNm" name="etcNm" value="${rtnTrgtData[rtnTrgtData.size()-1].etcNm}" title="기타" maxlength="200" placeholder="미입력 시 사용자 사이트에 하이픈(-)으로 표시"/>
                                                 </div>
                                             </c:if>
 
@@ -266,7 +266,7 @@
                         </div>
 
                         <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">선수과목</label>
+                            <label class="col-sm-1 control-label">선수과정</label>
                             <div class="col-sm-10 relForm1">
                                 <c:forEach var="relList" items="${relList}" varStatus="status">
                                     <c:if test="${relList.cnnctCd eq 'EDCTN_REL01'}">
@@ -282,7 +282,7 @@
                         </div>
 
                         <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">후속과목</label>
+                            <label class="col-sm-1 control-label">후속과정</label>
                             <div class="col-sm-10 relForm2">
                                 <c:forEach var="relList" items="${relList}" varStatus="status">
                                     <c:if test="${relList.cnnctCd eq 'EDCTN_REL02'}">
@@ -317,15 +317,15 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">썸네일 이미지</label>
                     <div class="col-sm-10 col-md-11">
-                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                        <spring:eval var="atchUploadMaxSize" expression="5242880" />
                         <div class="dropzone attachFile notRequired" data-file-field-nm="thnlFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="썸네일이미지">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
                         </div>
                         <p class="text-bold mt">
-                            ※ jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
+                            ※ jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
                         </p>
                     </div>
                 </div>

@@ -81,6 +81,12 @@ public interface EBBEpisdMapper {
 	 */
 	public int deleteLctrDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+
+	/**
+	 * 교육차수 삭제 전 참여자 체크
+	 */
+	public int selectEpisdDeletePrevChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
 	/**
 	 * 교육차수를 삭제한다.
 	 */

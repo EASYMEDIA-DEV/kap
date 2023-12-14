@@ -11,13 +11,15 @@
         </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td class="text-center">${ptcptList.id}</td>
-        <td class="text-center">${ptcptList.name}</td>
-        <td class="text-center">${ptcptList.cmpnNm}</td>
-        <td class="text-center">${ptcptList.ctgryNm}</td>
-        <td class="text-center">${ptcptList.ptcptBsnmNo}</td>
-        <td class="text-center">${ptcptList.hpNo}</td>
-        <td class="text-center">${ptcptList.email}</td>
-        <td class="text-center">${ empty ptcptList.regDtm ? '-' : kl:convertDate(ptcptList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>
+        <td class="text-center">${ptcptList.name}</td><!--이름-->
+        <td class="text-center">${ptcptList.cmpnNm}</td><!--부품사명-->
+        <td class="text-center">${ptcptList.ctgryNm}</td><!--구분-->
+        <td class="text-center">${kl:bsnmNoConvert(ptcptList.ptcptBsnmNo)}</td><!--사업자등록번호-->
+        <td class="text-center">${ptcptList.deptCdNm} ${ptcptList.deptDtlNm == '' ? '' : '('+=ptcptList.deptDtlNm+=')'} </td><!-- 부서 -->
+        <td class="text-center">${ptcptList.pstnCdNm}</td><!-- 직급 -->
+        <td class="text-center">${ptcptList.hpNo}</td><!-- 휴대폰번호 -->
+        <td class="text-center">${ptcptList.email}</td><!-- 이메일 -->
+        <td class="text-center">${ empty ptcptList.regDtm ? '-' : kl:convertDate(ptcptList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!-- 가입일 -->
         <td class="text-center">
             ${ empty ptcptList.eduDtm ? '-' : kl:convertDate(ptcptList.eduDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
         </td><!-- 교육신청일 -->

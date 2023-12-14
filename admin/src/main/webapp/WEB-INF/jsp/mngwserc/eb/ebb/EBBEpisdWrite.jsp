@@ -11,13 +11,38 @@
     }
 </script>
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
-<c:set var="actionType" value="${not empty rtnDto ? 'update' : 'write'}"/>
+<c:set var="actionType" value=""/>
+<!-- actionType은 기본적으로 수정일경우 update이지만 복사버튼을 통해서 들어온경우 write로 변경해줌  -->
+
+
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/ebb/EBBEpisdWriteCtrl" data-actionType="${actionType}">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.edctnSeq}" />
+
+            <c:choose>
+                <c:when test="${not empty rtnDto}">
+                    <c:choose>
+                        <c:when test="${rtnDto.copyYn eq'Y'}">
+                            <c:set var="actionType" value="write"/>
+                            <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="" />
+                        </c:when>
+                        <c:when test="${rtnDto.copyYn eq'N'}">
+                            <c:set var="actionType" value="update"/>
+                            <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.edctnSeq}" />
+                        </c:when>
+                    </c:choose>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="actionType" value="write"/>
+                    <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.edctnSeq}" />
+                </c:otherwise>
+            </c:choose>
+
+
+
+
             <input type="hidden" class="notRequired" id="edctnSeq" name="edctnSeq" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="orgEpisdYear" name="orgEpisdYear" value="${rtnDto.episdYear}" />
             <input type="hidden" class="notRequired" id="orgEpisdOrd" name="orgEpisdOrd" value="${rtnDto.episdOrd}" />
@@ -92,9 +117,9 @@
 
             <ul class="nav nav-tabs" id="myTabs">
                 <li class="active tabClick"><a data-toggle="tab" href="#episdList">회차정보</a></li>
-                <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>> <a data-toggle="tab" href="#accsList">참여자 목록</a></li>
-                <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
-                <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#bdget">예산/지출</a></li>
+                <li class="tabClick" <c:if test="${actionType ne 'update' && rtnDto.copyYn eq 'Y' }">style="display:none"</c:if>> <a data-toggle="tab" href="#accsList">참여자 목록</a></li>
+                <li class="tabClick" <c:if test="${actionType ne 'update' && rtnDto.copyYn eq 'Y' }">style="display:none"</c:if>><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
+                <li class="tabClick" <c:if test="${actionType ne 'update' && rtnDto.copyYn eq 'Y' }">style="display:none"</c:if>><a data-toggle="tab" href="#bdget">예산/지출</a></li>
 
                 <div class="pull-right">
                     <c:choose>
@@ -110,7 +135,7 @@
             <div class="tab-content">
 
                 <!-- 회차정보 -->
-                <div id="episdList" class="tab-pane fade in active">
+                <div id="episdList" class="tab-pane fade in active" style="flex-wrap:wrap;">
                     <fieldset>
                         <div class="form-group text-sm">
                             <div class="col-sm-12">
@@ -466,15 +491,15 @@
                                     </tr>
                                     <tr class="examTr" style="display: none;">
                                         <td class="text-center" colspan="4">
-                                            <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                            <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                            <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                            <spring:eval var="atchUploadMaxSize" expression="5242880" />
                                             <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
                                                 <div class="dz-default dz-message">
                                                     <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                 </div>
                                             </div>
                                             <p class="text-bold mt">
-                                                ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                             </p>
                                         </td>
                                     </tr>
@@ -501,15 +526,15 @@
                                                 </tr>
                                                 <tr>
                                                     <td class="text-center" colspan="4">
-                                                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                                        <spring:eval var="atchUploadMaxSize" expression="5242880" />
                                                         <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq${lctrDtoList.thnlFileSeq}" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
                                                             <div class="dz-default dz-message">
                                                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                             </div>
                                                         </div>
                                                         <p class="text-bold mt">
-                                                            ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                            ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -537,15 +562,15 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-center" colspan="4">
-                                                    <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                    <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                    <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                                    <spring:eval var="atchUploadMaxSize" expression="5242880" />
                                                     <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
                                                         <div class="dz-default dz-message">
                                                             <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                         </div>
                                                     </div>
                                                     <p class="text-bold mt">
-                                                        ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                        ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                     </p>
                                                 </td>
                                             </tr>
@@ -715,7 +740,7 @@
                 </div>
 
                 <!-- 참여자 목록-->
-                <div id="accsList" class="tab-pane fade">
+                <div id="accsList" class="tab-pane fade" style="flex-wrap:wrap;">
 
                     <fieldset>
                         <div class="form-group text-sm">
@@ -766,6 +791,8 @@
                                     <th class="text-center">부품사명</th>
                                     <th class="text-center">구분</th>
                                     <th class="text-center">사업자등록번호</th>
+                                    <th class="text-center">부서</th>
+                                    <th class="text-center">직급</th>
                                     <th class="text-center">휴대폰번호</th>
                                     <th class="text-center">이메일</th>
                                     <th class="text-center">가입일</th>
@@ -797,7 +824,7 @@
                 </div>
 
                 <!-- 만족도 결과 -->
-                <div id="svResult" class="tab-pane fade">
+                <div id="svResult" class="tab-pane fade" style="flex-wrap:wrap;">
 
                     <fieldset>
                         <div class="form-group text-sm">
@@ -1051,7 +1078,7 @@
                 </div>
 
                 <!-- 예산/지출 -->
-                <div id="bdget" class="tab-pane fade" style="display:flex; flex-wrap:wrap;">
+                <div id="bdget" class="tab-pane fade" style="flex-wrap:wrap;">
                     <div class="bdgetForm0" style="width:100%;order:0">
                         <fieldset>
                             <div class="form-group text-sm">

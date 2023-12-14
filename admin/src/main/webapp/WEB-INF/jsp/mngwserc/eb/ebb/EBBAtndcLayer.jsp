@@ -193,6 +193,8 @@
                                 <th class="text-center" style="vertical-align:middle;" rowspan="3">부품사명</th>
                                 <th class="text-center" style="vertical-align:middle;" rowspan="3">구분</th>
                                 <th class="text-center" style="vertical-align:middle;" rowspan="3">사업자등록번호</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">부서</th>
+                                <th class="text-center" style="vertical-align:middle;" rowspan="3">직급</th>
                                 <th class="text-center" style="vertical-align:middle;" rowspan="3">휴대폰번호</th>
                                 <th class="text-center" style="vertical-align:middle;" rowspan="3">이메일</th>
                                 <th class="text-center" style="vertical-align:middle;" rowspan="3">교육신청일</th>

@@ -100,6 +100,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actionForm.episdOrd =$("#changeEpisdListContainer").find("input[name='delValueList']:checked").data("episdord");//회차정렬
 						var fxnumCnt = $("#changeEpisdListContainer").find("input[name='delValueList']:checked").closest("tr").find("td").eq(6).text();//정원수
 						var accsCnt = $("#changeEpisdListContainer").find("input[name='delValueList']:checked").closest("tr").find("td").eq(7).text();//신청자
+						var fxnumImpsbYn = $("#changeEpisdListContainer").find("input[name='delValueList']:checked").closest("tr").find("td").eq(7).data("fxnum_impsb_yn");//신청자
 
 
 						var memSeq = $("#chan_memSeq").val();
@@ -148,11 +149,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						var addMemLength= memList.length;//선택한 인원의 수
 
-						//현재신청자+변경할 인원수>정원수가 참이면 변경불가 알럿
-						if((addMemLength+ Number(accsCnt)) > Number(fxnumCnt)){
-							alert("정원이 초과하였습니다.");
-							resultFlag = false;
+						//정원 제한없으면 그냥 통과 정원제한없음:N,   정원제한임:Y
+						if(fxnumImpsbYn !="N"){
+							//현재신청자+변경할 인원수>정원수가 참이면 변경불가 알럿
+							if((addMemLength+ Number(accsCnt)) > Number(fxnumCnt)){
+								alert("정원이 초과하였습니다.");
+								resultFlag = false;
+							}
 						}
+
+
+
 						debugger;
 						if(resultFlag){
 

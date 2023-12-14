@@ -10,6 +10,8 @@
                     </label>
                 </td>
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
+                <td class="text-center">${list.prntCdNm}</td>
+                <td class="text-center">${list.nm}</td>
                 <td class="text-center srchListView">
                     <c:choose>
                         <c:when test="${ searchDto.srchLayer eq 'Y'}">

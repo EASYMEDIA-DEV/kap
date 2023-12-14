@@ -1,5 +1,6 @@
 package com.kap.mngwserc.controller.eb;
 
+import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.service.COCodeService;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -87,6 +89,11 @@ public class EBEExamController {
             cdDtlList.add("EXG");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             modelMap.addAttribute("rtnSrchData", eXGExamMstSearchDTO);
+
+            // 코드 set
+            cdDtlList.add("CLASS_TYPE");
+
+            modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
             if(detailsKey != null){
                 //상세조회
                 modelMap.addAttribute("rtnData", eBEExamService.selectExamDtl( eXGExamMstSearchDTO ));
@@ -196,6 +203,26 @@ public class EBEExamController {
                 throw new Exception(e.getMessage());
             }
             return eXGExamMstTO;
+        }
+
+        /**
+         * 교육과정 분류 3뎁스 호출
+         */
+        @PostMapping(value = "/classTypeList")
+        public List<COCodeDTO> classTypeList(@RequestBody COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+            List<COCodeDTO> detailList = null;
+            try
+            {
+                detailList = cOCodeService.getCdIdList(cOCodeDTO);
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return detailList;
         }
 
     }
