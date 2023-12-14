@@ -20,6 +20,7 @@
     String hpNo = "010-1234-5678";
 
 %>
+
 <form name="formNextSubmit" id="formNextSubmit"  method="get"  >
     <input type="hidden" id="name" name="name" value="<%=name%>" />
     <input type="hidden" id="birthdate" name="birthdate" value="<%=birthdate%>" />
@@ -143,7 +144,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input">
-                                                        <input type="text" placeholder="부품사명 입력" title="부품사명" name="cmpn_nm_new" class="cmpn_nm_new">
+                                                        <input type="text" placeholder="부품사명 입력" readonly title="부품사명" name="cmpn_nm_new" class="cmpn_nm_new">
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,7 +160,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input">
-                                                        <input type="text" placeholder="대표자명 입력" title="부품사명" name="rprsnt_nm" readonly class="rprsnt_nm">
+                                                        <input type="text" placeholder="대표자명 입력" title="대표자명" name="rprsnt_nm"  class="rprsnt_nm">
                                                     </div>
                                                 </div>
                                             </div>

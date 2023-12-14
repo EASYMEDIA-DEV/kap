@@ -263,7 +263,7 @@ public class MPAUserServiceImpl implements MPAUserService {
             mpaUserMapper.insertUserDtl(mpaUserDto);
             if(mpaUserDto.getMemCd().equals("CP")) {
                 mpaUserMapper.insertUserCmpnRel(mpaUserDto);
-                if(mpJoinDto.getBsnmChk().equals("true") && dupCmpnCnt == 0) {
+                if(mpJoinDto.getBsnmChk().equals("false") && dupCmpnCnt == 0) {
                     mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
                 }
             }
@@ -276,7 +276,7 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     @Override
     public void updateUser(MPAUserDto mpaUserDto, MPEPartsCompanyDTO mpePartsCompanyDTO, MPJoinDto mpJoinDto) throws Exception {
-
+        int dupCmpnCnt = selectcmpnMst(mpePartsCompanyDTO);
         String pwdChg = "N";
         if(!mpaUserDto.getPwd().isEmpty()) {
             mpaUserDto.setEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getPwd(), mpaUserDto.getId()));
@@ -288,6 +288,12 @@ public class MPAUserServiceImpl implements MPAUserService {
 
         if(mpaUserDto.getChngFndn().equals("Y")){
             mpaUserMapper.updateUserDtlModS(mpaUserDto);
+        }
+        if(mpaUserDto.getMemCd().equals("CP")) {
+            mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+            if(mpJoinDto.getBsnmChk().equals("false") && dupCmpnCnt == 0) {
+                mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
+            }
         }
 
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());

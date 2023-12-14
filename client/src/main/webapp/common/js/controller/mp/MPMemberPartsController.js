@@ -20,6 +20,84 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     let $formObj = $("#formNextSubmit");
 
+    function init() {
+        if($("#formMemCd").val() == "CP") {
+            $(".partDtl").css("display","block");
+        }
+    }
+
+    function validationCmpn() {
+        if(!bsnmChk) {
+            alert(msgCtrl.getMsg("fail.mp.join.al_036"));
+            return false;
+        }
+        if($("#bsnmNo").val().trim() =='' || $("#bsnmNo").val() == undefined) {
+            alert(msgCtrl.getMsg("fail.mp.join.al_018"));
+            $("#bsnmNo").focus();
+            return false;
+        }
+        if(!bsnmOldNewChk) {
+            if ($("#ctgryCd").val().trim() == '' || $("#ctgryCd").val() == undefined ) {
+                alert(msgCtrl.getMsg("fail.mp.join.al_027"));
+                $("#ctgryCd").focus();
+                return false;
+            }
+            if($(".rprsnt_nm").val().trim() =='' || $(".rprsnt_nm").val() == undefined) {
+                alert(msgCtrl.getMsg("fail.mp.join.al_037"));
+                $(".rprsnt_nm").focus();
+                return false;
+            }
+            if ($("#sizeCd").val().trim() == '' || $("#sizeCd").val() == undefined) {
+                alert(msgCtrl.getMsg("fail.mp.join.al_028"));
+                $("#sizeCd").focus();
+                return false;
+            }
+            if ($("#stbsmDt").val().trim() == '' || $("#stbsmDt").val() == undefined || $("#stbsmDt").val().length != 10) {
+                alert(msgCtrl.getMsg("fail.mp.join.al_029"));
+                $("#stbsmDt").focus();
+                return false;
+            }
+            if($("#telNo").val().trim() == '' || $("#telNo").val() == undefined) {
+                alert(msgCtrl.getMsg("fail.mp.join.al_030"));
+                $("#telNo").focus();
+                return false;
+            }
+            if ($("#zipcode").val().trim() == '' || $("#zipcode").val() == undefined ||
+                $("#bscAddr").val().trim() == '' || $("#bscAddr").val() == undefined ||
+                $("#dtlAddr").val().trim() == '' || $("#dtlAddr").val() == undefined) {
+                alert(msgCtrl.getMsg("fail.mp.join.al_031"));
+                $("#dtlAddr").focus();
+                return false;
+            }
+        }
+        var list1 = [];
+        list1.push("");
+        list1.push($("#nm1").val());
+        list1.push($("#score1").val());
+        list1.push($("#year1").val());
+        list1.push($("#crtfnCmpnNm1").val());
+
+        var list2 = [];
+        list2.push("");
+        list2.push($("#nm2").val());
+        list2.push($("#score2").val());
+        list2.push($("#year2").val());
+        list2.push($("#crtfnCmpnNm2").val());
+
+        var list3 = [];
+        list3.push("");
+        list3.push($("#nm3").val());
+        list3.push($("#score3").val());
+        list3.push($("#year3").val());
+        list3.push($("#crtfnCmpnNm3").val());
+
+        $(".sqInfoList1").val(list1);
+        $(".sqInfoList2").val(list2);
+        $(".sqInfoList3").val(list3);
+        $(".bsnmChk").val(bsnmOldNewChk);
+        return true;
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -34,8 +112,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
-
-
 
             // do something...
             ctgryCd : {
@@ -55,77 +131,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             nextBtn : {
                 event : {
                     click : function() {
-                            if(!bsnmChk) {
-                                alert(msgCtrl.getMsg("fail.mp.join.al_036"));
-                                return false;
-                            }
-                            if($("#bsnmNo").val().trim() =='' || $("#bsnmNo").val() == undefined) {
-                                alert(msgCtrl.getMsg("fail.mp.join.al_018"));
-                                $("#bsnmNo").focus();
-                                return false;
-                            }
-                            if($(".cmpn_nm_new").val().trim() =='' || $(".cmpn_nm_new").val() == undefined) {
-                                alert(msgCtrl.getMsg("fail.mp.join.al_037"));
-                                $("#cmpn_nm_new").focus();
-                                return false;
-                            }
-                            if(!bsnmOldNewChk) {
-                                if ($("#ctgryCd").val().trim() == '' || $("#ctgryCd").val() == undefined ) {
-                                    alert(msgCtrl.getMsg("fail.mp.join.al_027"));
-                                    $("#ctgryCd").focus();
-                                    return false;
-                                }
-                                if ($("#sizeCd").val().trim() == '' || $("#sizeCd").val() == undefined) {
-                                    alert(msgCtrl.getMsg("fail.mp.join.al_028"));
-                                    $("#sizeCd").focus();
-                                    return false;
-                                }
-                                if ($("#stbsmDt").val().trim() == '' || $("#stbsmDt").val() == undefined || $("#stbsmDt").val().length != 10) {
-                                    alert(msgCtrl.getMsg("fail.mp.join.al_029"));
-                                    $("#stbsmDt").focus();
-                                    return false;
-                                }
-                                if($("#telNo").val().trim() == '' || $("#telNo").val() == undefined) {
-                                    alert(msgCtrl.getMsg("fail.mp.join.al_030"));
-                                    $("#telNo").focus();
-                                    return false;
-                                }
-                                if ($("#zipcode").val().trim() == '' || $("#zipcode").val() == undefined ||
-                                    $("#bscAddr").val().trim() == '' || $("#bscAddr").val() == undefined ||
-                                    $("#dtlAddr").val().trim() == '' || $("#dtlAddr").val() == undefined) {
-                                    alert(msgCtrl.getMsg("fail.mp.join.al_031"));
-                                    $("#dtlAddr").focus();
-                                    return false;
-                                }
-                            }
-                        var list1 = [];
-                        list1.push("");
-                        list1.push($("#nm1").val());
-                        list1.push($("#score1").val());
-                        list1.push($("#year1").val());
-                        list1.push($("#crtfnCmpnNm1").val());
-
-                        var list2 = [];
-                        list2.push("");
-                        list2.push($("#nm2").val());
-                        list2.push($("#score2").val());
-                        list2.push($("#year2").val());
-                        list2.push($("#crtfnCmpnNm2").val());
-
-                        var list3 = [];
-                        list3.push("");
-                        list3.push($("#nm3").val());
-                        list3.push($("#score3").val());
-                        list3.push($("#year3").val());
-                        list3.push($("#crtfnCmpnNm3").val());
-
-                        $(".sqInfoList1").val(list1);
-                        $(".sqInfoList2").val(list2);
-                        $(".sqInfoList3").val(list3);
-                        $(".bsnmChk").val(bsnmChk);
-                        let targetPage= "/member/mp-user-join";
-                        document.getElementById("formNextSubmit").action = targetPage; // form의 action 속성 변경
-                        document.getElementById("formNextSubmit").submit(); // form 제출
+                        if(validationCmpn()) {
+                            let targetPage = "/member/mp-user-join";
+                            document.getElementById("formNextSubmit").action = targetPage; // form의 action 속성 변경
+                            document.getElementById("formNextSubmit").submit(); // form 제출
+                        }
                     }
                 }
             },
@@ -133,9 +143,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             searchPostCode : {
                 event : {
                     click : function() {
-                        // searchPostCode();
                         cmmCtrl.searchPostCode(500,500,"zipcode","bscAddr","dtlAddr");
 
+                    }
+                }
+            },
+
+            pstnCd : {
+                event : {
+                    change : function() {
+                        $(".pstnNm").val('');
+                        if($("#pstnCd").val()!='MEM_CD01007') {
+                            $(".pstnNmDis").hide();
+                        } else {
+                            $(".pstnNmDis").show();
+                        }
                     }
                 }
             },
@@ -148,6 +170,108 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function () {
                         if (confirm(msgCtrl.getMsg("confirm.backChk"))) {
                             history.back();
+                        }
+                    }
+                }
+            },
+            btnPopClose : {
+                event : {
+                    click : function () {
+                        if (confirm(msgCtrl.getMsg("confirm.cancleBtn"))) {
+                            $(".cleanInit").val("");
+                            $(".new").show();
+                            $(".old").hide();
+                            $(".for-status-chk").removeClass("satisfy");
+                            $(".switchingMemberPopup").css('display','none');
+                            $(".dimd").css('display','none');
+                            $("body").removeClass("stop-scroll");
+                        }
+                    }
+                }
+            },
+
+
+            btnSave : {
+                event : {
+                    click : function () {
+                        if(validationCmpn()) {
+                            if (!bsnmOldNewChk) {
+                                if ($("#deptCd").val() == '') {
+                                    alert(msgCtrl.getMsg("fail.mp.join.al_032"));
+                                    return false;
+                                }
+                                if ($("#pstnCd").val() == '') {
+                                    alert(msgCtrl.getMsg("fail.mp.join.al_034"));
+                                    return false;
+                                }
+                                if ($("#pstnCd").val() == 'MEM_CD01007' && $(".pstnNm").val() == '') {
+                                    alert(msgCtrl.getMsg("fail.mp.join.al_035"));
+                                    return false;
+                                }
+                            }
+                            //new
+                            if ($(".new").css("display") == 'block') {
+                                $(".cmpnNm").text($(".cmpn_nm_new").val());
+                                $(".rprsntNm").text($(".rprsnt_nm").val());
+                                $(".ctgryNm").text($("#ctgryCd").val()=='COMPANY01001' ? '1차' : '2차');
+                                $(".addrNm").text($("#bscAddr").val() + " " + $("#dtlAddr").val());
+                                $(".cmpnNm").val($(".cmpn_nm_new").val());
+                                $(".rprsntNm").val($(".rprsnt_nm").val());
+                            } else {
+                                //old
+                                $(".cmpnNm").text($(".cmpn_nm").text());
+                                $(".rprsntNm").text($(".rsNm").text());
+                                $(".ctgryNm").text($(".gubun ").text());
+                                $(".addrNm").text($(".addr").text());
+                                $(".cmpnNm").val($(".cmpn_nm").text());
+                                $(".rprsntNm").val($(".rsNm").text());
+                            }
+                            $("#btnParts span").text("부품사정보 변경");
+                            //form 데이터 넣기
+                            $("#bsnmNos").val($("#bsnmNo").val());
+                            $(".ctgryCd").val($("#ctgryCd").val());
+                            $(".sizeCd").val($("#sizeCd").val())
+                            $(".stbsmDt").val($("#stbsmDt").val());
+                            $(".cmpnTel").val($("#telNo").val());
+                            $(".cmpnZipcode").val($("#zipcode").val());
+                            $(".cmpnBscAddr").val($("#bscAddr").val());
+                            $(".cmpnDtlAddr").val($("#dtlAddr").val());
+                            $(".slsPmt").val($("#slsPmt").val());
+                            $(".slsYear").val($("#slsYear").val());
+                            $(".mpleCnt").val($("#mpleCnt").val());
+                            $(".mjrPrdct1").val($("#mjrPrdct1").val());
+                            $(".mjrPrdct2").val($("#mjrPrdct2").val());
+                            $(".mjrPrdct3").val($("#mjrPrdct3").val());
+                            $(".qlty5StarCd").val($("#qlty5StarCd").val());
+                            $(".qlty5StarYear").val($("#qlty5StarYear").val());
+                            $(".pay5StarCd").val($("#pay5StarCd").val());
+                            $(".pay5StarYear").val($("#pay5StarYear").val());
+                            $(".tchlg5StarCd").val($("#tchlg5StarCd").val());
+                            $(".tchlg5StarYear").val($("#tchlg5StarYear").val());
+                            $(".sqInfoList1").val($(".sqInfoList1").val());
+                            $(".sqInfoList2").val($(".sqInfoList2").val());
+                            $(".sqInfoList3").val($(".sqInfoList3").val());
+                            $(".deptCd").val($("#deptCd").val());
+                            $(".deptDtlNm").val($("#deptDtlNm").val());
+                            $(".pstnNm").val($(".pstnNm").val());
+                            $(".pstnCd").val($("#pstnCd").val());
+
+
+
+
+
+                            $(".bsnmNoNum").text($("#bsnmNo").val().substring(0, 3) + "-" + $("#bsnmNo").val().substring(3, 5) + "-" + $("#bsnmNo").val().substring(5));
+                            // $("#bsnmChk").val(bsnmOldNewChk);
+                            $("#stbsmDt").val($("#stbsmDt").val())
+                            $("#formMemCd").val("CP");
+                            $(".partDtl").show();
+                            $(".switchingMemberPopup").css('display', 'none');
+                            $(".dimd").css('display', 'none');
+                            $("body").removeClass("stop-scroll");
+                            // $(".cleanInit").val("");
+                            // $(".new").show();
+                            // $(".old").hide();
+                            $(".for-status-chk").removeClass("satisfy");
                         }
                     }
                 }
@@ -310,6 +434,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             },
         },
         immediately : function() {
+            init();
             btnSqInit();
         }
 

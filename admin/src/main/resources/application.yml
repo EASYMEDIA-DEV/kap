@@ -90,7 +90,7 @@ logging:
     #console: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr([%10t]){faint} %clr(%-60(%logger{39}.%M\\(%L\\))){cyan} %clr(:){faint} %m%n%wEx"
     #console: "%d{yyyy-MM-dd HH:mm:ss} [%-5p] [%F]%M\\(%L\\) : %m%n"
 ---
-spring.config.activate.on-profile: stg, prod
+spring.config.activate.on-profile: stg, dev
 logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%10t] %-60(%logger{39}.%M\\(%L\\)) : %m%n%wEx"

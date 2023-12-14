@@ -1,5 +1,7 @@
 package com.kap.service.impl.wb.wbl;
 
+import lombok.Cleanup;
+import org.apache.poi.util.IOUtils;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COSystemLogDTO;
@@ -386,10 +388,12 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		@SuppressWarnings("resource")
 		XSSFWorkbook workbook = null;
 		OPCPackage opcPackage = null;
-		try {
-			opcPackage = OPCPackage.open(file.getInputStream());
-			workbook = new XSSFWorkbook(opcPackage);
+		InputStream stream = null;
 
+		try {
+			stream = file.getInputStream();
+			opcPackage = OPCPackage.open(stream);
+			workbook = new XSSFWorkbook(opcPackage);
 			// 첫번째 시트
 			XSSFSheet sheet = workbook.getSheetAt(0);
 
@@ -420,13 +424,15 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			if (workbook != null){
-				workbook.close();
+			if (stream != null){
+				stream.close();
 			}
 			if (opcPackage != null){
 				opcPackage.close();
 			}
-			file.getInputStream().close();
+			if (workbook != null){
+				workbook.close();
+			}
 		}
 
 		return excelList;

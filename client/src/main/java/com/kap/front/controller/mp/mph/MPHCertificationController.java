@@ -6,22 +6,14 @@ import com.kap.core.dto.mp.mpa.MPJoinDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.*;
 import com.kap.service.mp.mpa.MPAUserService;
-import com.sun.org.apache.bcel.internal.generic.FNEG;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+
 
 /**
  * <pre>
@@ -51,6 +43,8 @@ public class MPHCertificationController {
 
     private final MPAUserService mpaUserService;
 
+    //코드 서비스
+    private final COCodeService cOCodeService;
 
     /**
      * 정보 수정 비밀번호 페이지
@@ -75,6 +69,16 @@ public class MPHCertificationController {
         MPAUserDto mpaUserDto = new MPAUserDto();
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         mpaUserDto.setDetailsKey(String.valueOf(cOUserDetailsDTO.getSeq()));
+
+        // 공통코드 배열 셋팅
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+        cdDtlList.add("COMPANY_TYPE");
+        cdDtlList.add("CO_YEAR_CD");
+        cdDtlList.add("MEM_CD");
+
+
+        modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
 
 
         if (!"".equals(mpaUserDto.getDetailsKey())) {
@@ -116,7 +120,7 @@ public class MPHCertificationController {
 
 
     /**
-     * 회원 등록
+     * 회원 수정
      */
     @PostMapping(value="/update")
     public String insertCmt(MPJoinDto mpJoinDto ,
@@ -141,8 +145,8 @@ public class MPHCertificationController {
 
             if(fndnNtfyRcvYn.equals("Y")) {
                 if(mpaUserDto.getNtfyEmailRcvYn().equals('N') && mpaUserDto.getNtfySmsRcvYn().equals('N')) {
-                     fndnChk = "Y";
-                     mpaUserDto.setFndnNtfyRcvYn("N");
+                    fndnChk = "Y";
+                    mpaUserDto.setFndnNtfyRcvYn("N");
                 }
             }
             if(fndnNtfyRcvYn.equals("N")) {
@@ -167,6 +171,7 @@ public class MPHCertificationController {
 
             MPEPartsCompanyDTO mpePartsCompanyDTO = mpJoinDto.getMpePartsCompanyDTO();
             if(mpaUserDto.getMemCd().equals("CP")){
+                mpaUserDto.setWorkBsnmNo(mpJoinDto.getBsnmNo());
                 mpePartsCompanyDTO.setBsnmNo(mpJoinDto.getBsnmNo());
                 mpePartsCompanyDTO.setRegId(cOUserDetailsDTO.getId());
                 mpePartsCompanyDTO.setRegIp(cOUserDetailsDTO.getLoginIp());

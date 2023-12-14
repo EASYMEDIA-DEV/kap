@@ -67,6 +67,7 @@ subprojects {
 
         implementation 'org.springframework.boot:spring-boot-starter-aop'
         implementation 'org.springframework.boot:spring-boot-starter-webflux'
+        implementation 'org.springframework.boot:spring-boot-starter-jdbc'
         implementation 'org.apache.commons:commons-collections4:4.1'
         implementation 'com.integralblue:log4jdbc-spring-boot-starter:2.0.0'
         implementation 'com.googlecode.json-simple:json-simple:1.1.1'

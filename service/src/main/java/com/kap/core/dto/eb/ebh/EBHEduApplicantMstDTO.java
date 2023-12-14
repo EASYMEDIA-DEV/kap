@@ -55,7 +55,7 @@ public class EBHEduApplicantMstDTO extends BaseDTO {
     private String stdCateNm;
 
     @Schema(title = "과정명")
-    private String nm;
+    private String stdName;
 
     @Schema(title = "학습 방식 코드")
     private String stduyMthdCd;
@@ -235,15 +235,14 @@ public class EBHEduApplicantMstDTO extends BaseDTO {
     @Schema(title = "선발 상태 코드")
     private String sttsCd;
 
-
-    /*@Schema(title = "선발 상태명")
-    private String sttsNm;*/
+    @Schema(title = "선발 상태명")
+    private String sttsName;
 
     @Schema(title = "지역")
     private String addr;
 
 
-    @Schema(title = "선발/비선발 상태 변경 구분값")
+    @Schema(title = "선발/미선발 상태 변경 구분값")
     @Hidden
     private String stts;
 
@@ -253,7 +252,11 @@ public class EBHEduApplicantMstDTO extends BaseDTO {
 
 
     /* 목록 검색 s */
-    @Schema(title = "과정 분류 검색 항목")
+    @Schema(title = "상위 과정 분류 검색 항목")
+    @Hidden
+    private List<String> prntCdList;
+
+    @Schema(title = "하위 과정 분류 검색 항목")
     @Hidden
     private List<String> ctgryCdList;
 
