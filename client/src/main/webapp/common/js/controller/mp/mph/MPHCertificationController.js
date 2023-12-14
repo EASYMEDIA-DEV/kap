@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // set controller name
     var exports = {
-        controller : "controller/mp/mph/MPHCertification"
+        controller : "controller/mp/mph/MPHCertificationController"
     };
 
     let timeSecond =""; // 남은 시간 변수
@@ -48,6 +48,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             myRegister : {
                 event : {
                     click : function (){
+
                         jQuery.ajax({
                             url : "/nice/my-idnttvrfct",
                             type : "post",
@@ -57,7 +58,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 },
                             success : function(data)
                             {
-                                const { form } = document;
+                                const {form} = document;
+
                                 const option = `status=no, menubar=no, toolbar=no, resizable=no, width=500, height=600`;
                                 document.getElementById('enc_data').value = data.enc_data; // enc_data 값을 설정
                                 document.getElementById('integrity_value').value = data.integrity_value; // integrity_value 값을 설정
@@ -202,7 +204,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         if(timeSecond > 0) {
                             if($("#emailAuthNum").val() == secretEmailAuth) {
-                                 emailChk = true;
+                                emailChk = true;
                                 $("#emailAuthChk").hide();
                                 $("#timer").hide();
                                 $(".for-status-chk-email").addClass("satisfy");
@@ -263,13 +265,23 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            btnParts : {
+                event : {
+                    click : function() {
+
+                        openPopup('switchingMemberPopup',this);
+
+                    }
+                }
+            },
+
         },
         classname : {
-            // do something...
 
         },
 
         immediately : function() {
+
             emailSel();
 
             var $formObj = $("#formPasswordConfirm");
@@ -288,7 +300,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             });
 
             var $formObj6 = $("#formUserSubmit");
-            console.log($formObj6);
             $formObj6.validation({
                 msg : {
                     confirm : {
@@ -296,7 +307,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 },
                 after : function(){
-                    console.log(emailChk);
                     var trgtObj = jQuery("#pwd");
                     var passwordRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?])([a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]){8,16}$/;
                     if ($("#pwd").val().trim() != "" || $("#pwdConfirm").val().trim() != "") {
@@ -370,7 +380,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 location.reload();
                             }, "/my-page/member/update", $formObj6, "POST", "json",'',false);
                         }
-                     }
+                    }
                 }
             });
         }

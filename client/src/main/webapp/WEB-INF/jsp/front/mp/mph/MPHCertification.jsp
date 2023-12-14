@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" class="mypage"><!-- 마이페이지 mypage 클래스 추가 -->
+<div id="wrap" class="mypage" data-controller="controller/mp/mph/MPHCertificationController"><!-- 마이페이지 mypage 클래스 추가 -->
     <!-- content 영역 start MPHCertification -->
-    <div class="cont-wrap" data-controller="controller/mp/mph/MPHCertification" >
+    <div class="cont-wrap"  >
         <form name="formPasswordConfirm" id="formPasswordConfirm" method="post">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
