@@ -1,27 +1,23 @@
 package com.kap.front.controller.mp.mph;
 
-import com.kap.core.dto.*;
+import com.kap.core.dto.COLoginDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpa.MPJoinDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
-import com.kap.service.*;
+import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.COUserLgnService;
 import com.kap.service.mp.mpa.MPAUserService;
-import com.sun.org.apache.bcel.internal.generic.FNEG;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
 
 /**
  * <pre>
