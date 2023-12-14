@@ -96,7 +96,7 @@
 				passChk : "8~15자 이내 영문+특수문자+숫자 조합으로 입력하세요.",
 				passEqualChk : "비밀번호가 일치하지 않습니다.",
 				emailChk : "이메일 주소를 확인해주세요.",
-				numberChk : "숫자만 입력ㄴㄴ가능합니다.",
+				numberChk : "숫자만 입력가능합니다.",
 				priceChk : "숫자만 입력가능합니다.",
 				lengthLimitChk : "길이가 조건에 맞지 않습니다.",
 				mobileNumChk : "휴대폰번호는 010-1234-5678 형식으로 입력되어야 합니다.",
