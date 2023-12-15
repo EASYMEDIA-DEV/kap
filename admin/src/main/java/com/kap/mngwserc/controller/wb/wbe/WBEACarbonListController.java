@@ -116,7 +116,7 @@ public class WBEACarbonListController {
             {
                 log.debug(e.getMessage());
             }
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
         return "mngwserc/wb/wbe/WBEACarbonWrite.admin";
     }
@@ -230,6 +230,27 @@ public class WBEACarbonListController {
         try
         {
             modelMap.addAttribute("respCnt", wBEACarbonListService.carbonDeleteList(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 회차 중복 체크
+     */
+    @PostMapping(value="/episdChk")
+    public String episdChk(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBEACarbonListService.episdChk(wBRoundMstDTO));
         }
         catch (Exception e)
         {

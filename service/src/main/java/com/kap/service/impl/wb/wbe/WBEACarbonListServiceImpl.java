@@ -165,6 +165,15 @@ public class WBEACarbonListServiceImpl implements WBEACarbonListService {
 
         return respCnt;
     }
+
+    /**
+     * 회차 중복 체크
+     */
+    public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception {
+
+        int respCnt = wBEACarbonListMapper.episdChk(wBRoundMstDTO);
+        return respCnt;
+    }
     
     
 }

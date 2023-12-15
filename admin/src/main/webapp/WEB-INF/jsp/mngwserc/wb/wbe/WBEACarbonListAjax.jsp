@@ -18,12 +18,12 @@
                 <td class="text-center">${ kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
                 <td class="text-center">${ kl:convertDate(list.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
                 <td class="text-center">${ list.dateState}</td>
-                <td class="text-center">${ list.regName}</td>
+                <td class="text-center">${kl:nameMasking(list.regName)}<br>(${kl:idMasking(list.regId)})</td>
                 <td class="text-center">${ list.regDtm}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modDtm}">
-                            ${ list.modName }
+                            ${kl:nameMasking(list.modName)}(${kl:idMasking(list.modId)})
                         </c:when>
                         <c:otherwise>
                             -

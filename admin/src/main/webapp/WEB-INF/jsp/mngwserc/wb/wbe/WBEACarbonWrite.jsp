@@ -103,7 +103,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">진행상태<span class="star"> *</span></label>
                         <div class="col-sm-11">
-                                ${ rtnDto.dateState}
+                            <p class="form-control-static">${ rtnDto.dateState}</p>
                         </div>
                     </div>
                 </fieldset>
@@ -153,7 +153,7 @@
                             </div>
                         </div>
                         <input type="hidden" class="giveRowHid" name="giveOrd" value="1">
-                        <button type="button" class="btn btn-info insertLow" onclick="cmmCtrl.test();">+</button>
+                        <button type="button" class="btn btn-info insertLow">+</button>
                     </div>
                 </div>
                 </c:when>

@@ -72,4 +72,9 @@ public interface WBEACarbonListMapper {
      */
     public int carbonDeleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 
+    /**
+     * 회차 중복 체크
+     */
+    public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
 }

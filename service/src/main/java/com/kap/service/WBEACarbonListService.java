@@ -47,4 +47,9 @@ public interface WBEACarbonListService {
      * 회차 리스트 삭제
      */
     public int carbonDeleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 회차 중복 체크
+     */
+    public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 }
