@@ -1,6 +1,7 @@
 package com.kap.service.dao.cb.cbb;
 
 import com.kap.core.dto.cb.cbb.*;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -11,18 +12,18 @@ import java.util.List;
  * 경영컨설팅 Mapper
  * </pre>
  *
- * @ClassName		: CBBManageConsultMapper.java
- * @Description		: 경영컨설팅 Mapper
  * @author 이옥정
- * @since 2023.11.24
  * @version 1.0
- * @see
+ * @ClassName : CBBManageConsultMapper.java
+ * @Description : 경영컨설팅 Mapper
  * @Modification Information
  * <pre>
  * 		 since		  author	            description
  *    ==========    ==========    ==============================
  *    2023.11.24	  이옥정	             최초 생성
  * </pre>
+ * @see
+ * @since 2023.11.24
  */
 
 @Mapper
@@ -33,7 +34,7 @@ public interface CBBManageConsultMapper {
     public List<CBBManageConsultListDTO> selectManageConsultList(CBBManageConsultSearchDTO cBBManageConsultSearchDTO);
 
     /**
-     *  상세 조회
+     * 상세 조회
      */
     public CBBManageConsultInsertDTO selectManageConsultList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO);
 
@@ -67,6 +68,7 @@ public interface CBBManageConsultMapper {
      * 컨설팅 기술 지도 등록
      */
     public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+
     /**
      * 컨설팅 기술 지도 수정
      */
@@ -88,12 +90,12 @@ public interface CBBManageConsultMapper {
     public int selectRsumeTotCnt(Integer cnstgSeq) throws Exception;
 
     /**
-     *  부품사 업종 카운트
+     * 부품사 업종 카운트
      */
     public int selectCnstgDpndnInfoCnt(HashMap cbsnCdMap);
 
     /**
-     *  고객사 비율 수정
+     * 고객사 비율 수정
      */
     public int updateCnstgDlvryInfo(HashMap cnstgDlyvMap);
 
@@ -138,7 +140,7 @@ public interface CBBManageConsultMapper {
     public int updateCbsnDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO);
 
     /**
-     *  부품사 업종 수정
+     * 부품사 업종 수정
      */
     public int updateCbsnDtl(HashMap cbsnCdMap);
 
@@ -185,7 +187,51 @@ public interface CBBManageConsultMapper {
     /**
      * 컨설팅 이관 목록 조회
      */
-    public  List<CBBManageConsultInsertDTO> selectTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+    public List<CBBManageConsultInsertDTO> selectTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
+    /**
+     * 컨설팅사업 신청마스터 테이블 삭제
+     */
+    public int deleteManageConsult(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 진행마스터 테이블 삭제
+     */
+    public int deleteConsultRsumeMst(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 담당임원 테이블 삭제
+     */
+    public int deleteConsultPicDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 부품사 업종 상세 테이블 삭제
+     */
+    public int deleteConsultCbsnDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 고객사비율 상세 테이블 삭제
+     */
+    public int deleteConsultDlvryDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 완성차의존율 상세 테이블 삭제
+     */
+    public int deleteConsultDpndnDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 신청분야 상세 테이블 삭제
+     */
+    public int deleteConsultAppctnTypeDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 만족도 결과 상세 테이블 삭제
+     */
+    public int deleteConsultSrvRsltDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 참여이관로그 테이블 삭제
+     */
+    public int deleteConsultAppctnTrnsfDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
 
 }

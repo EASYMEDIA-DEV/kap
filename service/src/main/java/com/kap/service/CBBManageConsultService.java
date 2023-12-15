@@ -4,6 +4,7 @@ import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultUpdateDTO;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -63,4 +64,10 @@ public interface CBBManageConsultService {
     public int updateManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception;
 
     public CBBManageConsultInsertDTO selectTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultSearchDTO pCBBManageConsultSearchDTO) throws Exception;
+
+
+    /**
+     * 컨설팅사업 경영컨설팅 삭제
+     */
+    public int deleteManageConsult(CBBManageConsultSearchDTO CBBManageConsultSearchDTO) throws Exception;
 }

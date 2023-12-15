@@ -6,6 +6,7 @@ import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultUpdateDTO;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
@@ -250,6 +251,27 @@ public class CBBManageConsultController {
             }
             throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     * 컨설팅사업 경영컨설팅 삭제 (연결된 테이블 전체 삭제)
+     */
+    @PostMapping(value="/delete")
+    public String deleteManageConsult(CBBManageConsultSearchDTO cBManageConsultSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", cBBManageConsultService.deleteManageConsult(cBManageConsultSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
     }
 
     /**

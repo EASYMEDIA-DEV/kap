@@ -51,7 +51,7 @@ define(["ezCtrl"], function(ezCtrl) {
                 }
             },
             //데이터 삭제
-            btnDeleteExam : {
+            btnDeleteConsult : {
                 event : {
                     click : function() {
                         var frmDataObj    = $(this).closest("form");
@@ -59,30 +59,24 @@ define(["ezCtrl"], function(ezCtrl) {
                         var delType = frmDataObj.data("delType");
                         if (delActCnt > 0)
                         {
-                            //삭제 전송
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    alert(msgCtrl.getMsg("fail.ex.deleteCheck"));
-                                }else{
-                                    if(confirm(msgCtrl.getMsg("confirm.del")))
-                                    {
-                                        //삭제 전송
-                                        cmmCtrl.frmAjax(function(respObj){
-                                            if(respObj != undefined && respObj.respCnt > 0){
-                                                var msg = msgCtrl.getMsg("success.del.target.none");
-                                                if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
-                                                    msg = msgCtrl.getMsg("success.del.target." + delType);
-                                                }
-                                                alert(msg);
-                                                $formObj.find("#btnSearch").click();
-                                            }
-                                            else{
-                                                alert(msgCtrl.getMsg("fail.act"));
-                                            }
-                                        }, "./delete", frmDataObj, "POST", "json");
+                            // 계정은 최고 관리자 및 본인 계정은 삭제 불가
+                            if(confirm(msgCtrl.getMsg("confirm.del")))
+                            {
+                                //삭제 전송
+                                cmmCtrl.frmAjax(function(respObj){
+                                    if(respObj != undefined && respObj.respCnt > 0){
+                                        var msg = msgCtrl.getMsg("success.del.target.none");
+                                        if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
+                                            msg = msgCtrl.getMsg("success.del.target." + delType);
+                                        }
+                                        alert(msg);
+                                        $formObj.find("#btnSearch").click();
                                     }
-                                }
-                            }, "./getExamEdctnEpisdCnt", frmDataObj, "POST", "json");
+                                    else{
+                                        alert(msgCtrl.getMsg("fail.act"));
+                                    }
+                                }, "./delete", frmDataObj, "POST", "json");
+                            }
                         }
                         else
                         {
@@ -94,7 +88,6 @@ define(["ezCtrl"], function(ezCtrl) {
                             {
                                 alert(msgCtrl.getMsg("fail.targetBoard"));
                             }
-
                             return;
                         }
                     }
