@@ -45,8 +45,6 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td class="text-center">${kl:nameMasking(list.regNm) }<br>(${kl:idMasking(list.regId)})</td>
-                <td class="text-center">${list.regDtm }</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modId}">
