@@ -9,7 +9,7 @@
 <c:set var="todayYear"><fmt:formatDate value="${date}" pattern="yyyy" /></c:set>
 
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/wb/wbe/WBEBCarbonCompanyWriteCtrl">
+    <div class="card-body" data-controller="controller/wb/wbc/WBCBSecurityWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>관리자 등록</h6>
 
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
@@ -25,7 +25,7 @@
                             <select class="form-control input-sm" id="episdYear" name="year" title="연도">
                                 <option value="">선택</option>
                                 <c:forEach var="rtnYear" items="${rtnYear}" varStatus="status">
-                                    <option value="${rtnYear}" >${rtnYear}</option>
+                                    <option value="${rtnYear}">${rtnYear}</option>
                                 </c:forEach>
                             </select>
                         </div>

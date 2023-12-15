@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
     // set controller name
     var exports = {
-        controller : "controller/wb/wbe/WBEBCarbonCompanyWriteCtrl"
+        controller : "controller/wb/wbc/WBCBSecurityWriteCtrl"
     };
 
     // get controller object
