@@ -96,17 +96,26 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     @Schema(title = "품질5스타코드", example = "")
     private String qlty5StarCd;
 
+    @Schema(title = "품질5스타코드명", example = "")
+    private String qlty5StarCdNm;
+
     @Schema(title = "품질5스타년도", example = "")
     private Integer qlty5StarYear;
 
     @Schema(title = "납입5스타코드", example = "")
     private String pay5StarCd;
 
+    @Schema(title = "납입5스타코드명", example = "")
+    private String pay5StarCdNm;
+
     @Schema(title = "납입5스타년도", example = "")
     private Integer pay5StarYear;
 
     @Schema(title = "기술5스타코드", example = "")
     private String tchlg5StarCd;
+
+    @Schema(title = "기술5스타코드명", example = "")
+    private String tchlg5StarCdNm;
 
     @Schema(title = "기술5스타년도", example = "")
     private Integer tchlg5StarYear;
@@ -218,10 +227,12 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     // 기업규모 구분
     private List<String> sizeCdList;
 
-    //엑셀여부
-    private String excelYn;
-
-    // 검색 레이어에서 호출 여부
+    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
     private String srchLayer;
 
+    @Schema(title = "엑셀여부", example = "Y")
+    private String excelYn;
+
+    @Schema(title = "변경사유", example = "이유")
+    private String rsn;
 }

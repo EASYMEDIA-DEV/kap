@@ -496,6 +496,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                        actForm.appctnTypeCdList = appctnTypeCdList;
 
                         //교육실적
+                        var rsltEndYn = $("input[name='rsltEndYn']:checked").val();
                         var cnfrmdTheme = $("#cnfrmdTheme").val();
                         var edctnSttsCd = $("#edctnSttsCd").val();
                         var edctnYear = $("#edctnYear").val();
@@ -504,7 +505,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var edctnEndDt = $("#edctnEndDtm").val();
                         var edctnEndHour = $("#edctnEndHour").val();
                         var edctnPlace = $("#edctnPlace").val();
-
 
                         var edctnStrtDtm = edctnStrtDt + " " + edctnStrtHour + ":00:00";
                         var edctnEndDtm = edctnEndDt + " " + edctnEndHour + ":59:59";
@@ -536,11 +536,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 isttrSeqList.push(tempForm);
                             }
                         });
-
-                        /*if(isttrSeqList.length == 0){
-                            alert("강사를 추가 해주세요.");
-                            return false;
-                        }*/
                         actForm.isttrSeqList = isttrSeqList;
 
                         var cmptnCnt = $("#cmptnCnt").val();
@@ -548,6 +543,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var lctrFileSeq = $("#lctrFileSeq").val();
                         var etcMatlsFileSeq = $("#etcMatlsFileSeq").val();
 
+                        actForm.rsltEndYn = rsltEndYn;
                         actForm.cnfrmdTheme = cnfrmdTheme;
                         actForm.edctnSttsCd = edctnSttsCd;
                         actForm.edctnYear = edctnYear;
@@ -680,33 +676,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         actForm.etcMatlsFileList = etcMatlsFileArray;
                         console.log(actForm);
                         debugger;
+
                         cmmCtrl.jsonAjax(function(data){
                             alert("저장되었습니다.");
                             location.href = "./list";
                         }, "./update", actForm, "text");
-
-                        /* if($formObj.find(".dropzone.dz-started").size() > 0)
-                        {
-                            cmmCtrl.fileFrmAjax(function(data){
-                                $formObj.find("input[name=data]").val(dataSet);
-                                //콜백함수. 페이지 이동
-                                if(data.respCnt > 0){
-                                    alert(actionMsg);
-                                    location.replace("./list");
-                                }
-                            }, actionUrl, $formObj, "json");
-                        }
-                        else
-                        {
-                            cmmCtrl.frmAjax(function(data){
-                                $formObj.find("input[name=data]").val(dataSet);
-                                if(data.respCnt > 0){
-                                    alert(actionMsg);
-                                    location.replace("./list");
-                                }
-                                actionUrl = "./list";
-                            }, actionUrl, $formObj, "post", "json")
-                        } */
                     }
                 },
                 msg : {

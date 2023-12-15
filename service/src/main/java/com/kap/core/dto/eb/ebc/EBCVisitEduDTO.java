@@ -303,6 +303,12 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "기타자료파일순번", example = "숫자")
     private Integer etcMatlsFileSeq;
 
+    @Schema(title = "실적마감여부", example = "Y")
+    private Character rsltEndYn;
+
+    @Schema(title = "실적마감여부명", example = "")
+    private String rsltEndYnNm;
+
     //방문교육 결과 옵션 상세
     @Schema(title = "결과옵션순번", example = "")
     private Integer rsltOptnSeq;
@@ -353,11 +359,6 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "신청 소재지 두번째지역명", example = "")
     private String scndRgnsName;
 
-    @Schema(title = "엑셀 다운로드 여부", example = "Y")
-    private String excelYn;
-
-    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
-    private String srchLayer;
 
     // 첨부파일 리스트
     @Schema(title = "회사소개서 파일 리스트", example = "")
@@ -369,5 +370,12 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "기타자료 파일 리스트", example = "")
     private List<COFileDTO> etcMatlsFileList;
 
+    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
+    private String srchLayer;
 
+    @Schema(title = "엑셀여부", example = "Y")
+    private String excelYn;
+
+    @Schema(title = "변경사유", example = "이유")
+    private String rsn;
 }

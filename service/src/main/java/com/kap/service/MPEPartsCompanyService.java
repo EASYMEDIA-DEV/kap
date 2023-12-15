@@ -2,6 +2,8 @@ package com.kap.service;
 
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <pre>
  * 부품사 관리를 위한 Service
@@ -81,4 +83,9 @@ public interface MPEPartsCompanyService {
      * 자동차부품산업대상 목록을 조회
      */
     public MPEPartsCompanyDTO selectCarTargetList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 엑셀 생성
+     */
+    public void excelDownload(MPEPartsCompanyDTO mpePartsCompanyDTO, HttpServletResponse response) throws Exception;
 }

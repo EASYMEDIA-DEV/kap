@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.eb;
 
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.COCodeService;
@@ -13,6 +14,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -265,6 +267,30 @@ public class EBCVisitEduController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    /**
+     * 엑셀 다운로드
+     */
+    @GetMapping(value = "/excel-down")
+    public void selectVisitEduListExcel(EBCVisitEduDTO ebcVisitEduDTO, HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            ebcVisitEduDTO.setExcelYn("Y");
+            // 목록 조회
+            EBCVisitEduDTO newEbcVisitEduDTO = ebcVisitEduService.selectVisitEduList(ebcVisitEduDTO);
+            //엑셀 생성
+            ebcVisitEduService.excelDownload(newEbcVisitEduDTO, response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
     }
 
     @RestController

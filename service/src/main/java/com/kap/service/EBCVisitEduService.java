@@ -3,6 +3,7 @@ package com.kap.service;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -60,5 +61,10 @@ public interface EBCVisitEduService {
      * 부품사 정보 조회
      */
     public List<MPEPartsCompanyDTO> selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 엑셀 생성
+     */
+    public void excelDownload(EBCVisitEduDTO ebcVisitEduDTO, HttpServletResponse response) throws Exception;
 
 }

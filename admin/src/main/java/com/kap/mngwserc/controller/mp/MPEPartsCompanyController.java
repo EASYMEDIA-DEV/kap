@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
 /**
@@ -285,5 +286,29 @@ public class MPEPartsCompanyController {
         }
 
         return "jsonView";
+    }
+
+    /**
+     * 엑셀 다운로드
+     */
+    @GetMapping(value = "/excel-down")
+    public void selectPartsCompanyListExcel(MPEPartsCompanyDTO mpePartsCompanyDTO, HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            mpePartsCompanyDTO.setExcelYn("Y");
+            // 목록 조회
+            MPEPartsCompanyDTO newMpePartsCompanyDTO = mpePartsCompanyService.selectPartsCompanyList(mpePartsCompanyDTO);
+            //엑셀 생성
+            mpePartsCompanyService.excelDownload(newMpePartsCompanyDTO, response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
     }
 }
