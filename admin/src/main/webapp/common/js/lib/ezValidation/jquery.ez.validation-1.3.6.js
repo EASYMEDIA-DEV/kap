@@ -307,7 +307,31 @@
 			GetByteLenth : function(s, b, i, c){
 				for (b=i=0; c=s.charCodeAt(i++); b+=c>>11?3:c>>7?2:1);
 				return b;
-			}
+			},
+			AutoCommaPrice : function(obj, regexr, msg, returnType){
+				var patten, regResult;
+
+				patten = eval("/" + regexr + "/g");
+
+				regResult = patten.test(obj.val());
+
+				if (typeof returnType === "function")
+				{
+					if (!regResult)
+					{
+						returnType(obj, msg);
+					} else {
+						var replacePrice = obj.val().replaceAll(",", "");
+						if(replacePrice != null && replacePrice != undefined) {
+							obj.val(Number(replacePrice).toLocaleString('ko-KR'));
+						}
+					}
+				}
+				else
+				{
+					return regResult;
+				}
+			},
 		},
 		async : {
 			use : false,
@@ -922,7 +946,7 @@
 					$(this).keyup(function(event){
 						if ($(this).val() != "")
 						{
-							Feel.Validation.method.RegExrCheck($(this), regExrs.priceExr, msg.priceChk, GenerateMsg);
+							Feel.Validation.method.AutoCommaPrice($(this), regExrs.priceExr, msg.priceChk, GenerateMsg);
 						}
 					});
 				}
