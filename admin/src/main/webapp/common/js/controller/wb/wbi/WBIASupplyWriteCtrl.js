@@ -21,12 +21,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     click : function() {
                         //삭제
                         if(confirm("선택한 게시물을 " + msgCtrl.getMsg("confirm.del"))){
-                            cmmCtrl.frmAjax(function(data){
-                                if(data.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.del.target.none"));
-                                    location.replace("./list");
+                            cmmCtrl.frmAjax(function(respObj) {
+                                if(respObj.optEpisdCnt == '0'){
+                                    cmmCtrl.frmAjax(function(data){
+                                        if(data.respCnt > 0){
+                                            alert(msgCtrl.getMsg("success.del.target.none"));
+                                            location.replace("./list");
+                                        }
+                                    }, "./delete", $formObj, "post", "json")
+                                }else{
+                                    alert("신청정보가 존재하여 삭제할 수 없습니다.");
                                 }
-                            }, "./delete", $formObj, "post", "json")
+                            }, "/mngwserc/wb/wbia/getRsumeCnt", $formObj, "post", "json")
                         }
                     }
                 }
@@ -85,11 +91,30 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         wbRoundMstDTO.giveList = new Array();
 
-                        cmmCtrl.jsonAjax(function(data){
-                            alert(actionMsg);
-                            location.href = "./list";
-                        }, actionUrl, wbRoundMstDTO, "text")
+                        var yearDtl = $("#yearDtl").val();
+                        cmmCtrl.frmAjax(function(respObj) {
+                            var episdCnt = respObj.optEpisdCnt[0];
 
+                            if(actionUrl.indexOf('update') != -1 ){
+                                if(episdCnt >= 1 && yearDtl != wbRoundMstDTO.year){
+                                    alert("이미 등록된 회차입니다.");
+                                }else{
+                                    cmmCtrl.jsonAjax(function(data){
+                                        alert(actionMsg);
+                                        location.href = "./list";
+                                    }, actionUrl, wbRoundMstDTO, "text")
+                                }
+                            }else{
+                                if(episdCnt >= 1){
+                                    alert("이미 등록된 회차입니다.");
+                                }else{
+                                    cmmCtrl.jsonAjax(function(data){
+                                        alert(actionMsg);
+                                        location.href = "./list";
+                                    }, actionUrl, wbRoundMstDTO, "text")
+                                }
+                            }
+                        }, "/mngwserc/wb/wbia/getEpisdCnt", $formObj, "post", "json")
                     }
                 },
                 msg : {

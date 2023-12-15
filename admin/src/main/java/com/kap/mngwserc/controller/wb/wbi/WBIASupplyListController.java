@@ -200,14 +200,14 @@ public class WBIASupplyListController {
     }
 
     /**
-     * 회차 매핑 여부 확인
+     * 회차 리스트 삭제
      */
-    @PostMapping(value="/getAppctnCnt")
-    public String getAppctnCnt(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    @PostMapping(value="/deleteList")
+    public String SupplyDeleteList(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            modelMap.addAttribute("respCnt", wBIASupplyListService.getAppctnCnt(wBRoundMstDTO));
+            modelMap.addAttribute("respCnt", wBIASupplyListService.SupplyDeleteList(wBRoundMstDTO));
         }
         catch (Exception e)
         {
@@ -221,14 +221,36 @@ public class WBIASupplyListController {
     }
 
     /**
-     * 회차 리스트 삭제
+     * 선택 연도 값에 따른
+     * 회차 SELECT Ajax
      */
-    @PostMapping(value="/deleteList")
-    public String SupplyDeleteList(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    @PostMapping(value="/getEpisdCnt")
+    public String getEpisdAjax(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap) throws Exception
     {
-        try
+        try {
+            wBRoundMstDTO.setBsnCd("INQ07009");
+            modelMap.addAttribute("optEpisdCnt", wBIASupplyListService.roundCnt(wBRoundMstDTO));
+        }
+        catch (Exception e)
         {
-            modelMap.addAttribute("respCnt", wBIASupplyListService.SupplyDeleteList(wBRoundMstDTO));
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 선택 연도 값에 따른
+     * 회차 SELECT Ajax
+     */
+    @PostMapping(value="/getRsumeCnt")
+    public String getRsumeAjax(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap) throws Exception
+    {
+        try {
+            modelMap.addAttribute("optEpisdCnt", wBIASupplyListService.episdCnt(wBRoundMstDTO));
         }
         catch (Exception e)
         {

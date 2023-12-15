@@ -43,13 +43,19 @@ public interface WBIASupplyListMapper {
     public WBRoundMstDTO selectYearDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
     /**
-     * 회차 삭제
-     */
-    public int getAppctnCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
-
-    /**
      * 회차 리스트 삭제
      */
     public int SupplyDeleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 
+    /**
+     *  선택 연도 값에 따른 episdCnt 값 가져오기
+     *
+     */
+    public List<String> roundCnt(WBRoundMstDTO wBRoundMstDTO);
+
+    /**
+     *  해당 년도 회차 신청 갯수
+     *
+     */
+    public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO);
 }

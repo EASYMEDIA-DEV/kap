@@ -17,6 +17,7 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
             <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07009" />
+            <input type="hidden" class="notRequired" id="yearDtl" name="yearDtl" value="${rtnInfo.year}" />
 
             <fieldset>
                 <div class="form-group text-sm">

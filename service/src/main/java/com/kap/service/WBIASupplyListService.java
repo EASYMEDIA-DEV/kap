@@ -5,6 +5,7 @@ import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 public interface WBIASupplyListService {
 
@@ -39,12 +40,19 @@ public interface WBIASupplyListService {
     public WBRoundMstDTO selectYearDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
     /**
-     * 회차 삭제
-     */
-    public int getAppctnCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
-
-    /**
      * 회차 리스트 삭제
      */
     public int SupplyDeleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 선택 연도 값에 따른
+     * episdCnt 값 가져오기
+     */
+    public List<String> roundCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 회차 신청 갯수
+     *
+     */
+    public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 }
