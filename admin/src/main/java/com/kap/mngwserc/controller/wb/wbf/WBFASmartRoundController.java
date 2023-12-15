@@ -80,6 +80,7 @@ public class WBFASmartRoundController {
     public String getSmartRoundListAjax(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap) throws Exception {
         try {
             modelMap.addAttribute("rtnData", wBFASmartRoundService.selApplyCompanyList(wBRoundMstSearchDTO));
+            System.err.println(modelMap.getAttribute("rtnData"));
         }
         catch (Exception e)
         {
@@ -138,7 +139,7 @@ public class WBFASmartRoundController {
             wBRoundMstDTO.setRegId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
-            wBFASmartRoundService.insertRound(wBRoundMstDTO, request);
+            wBRoundMstDTO = wBFASmartRoundService.insertRound(wBRoundMstDTO, request);
         }
         catch (Exception e)
         {
@@ -164,7 +165,7 @@ public class WBFASmartRoundController {
             wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
-            wBFASmartRoundService.updateRound(wBRoundMstDTO, request);
+            wBRoundMstDTO = wBFASmartRoundService.updateRound(wBRoundMstDTO, request);
         }
         catch (Exception e)
         {

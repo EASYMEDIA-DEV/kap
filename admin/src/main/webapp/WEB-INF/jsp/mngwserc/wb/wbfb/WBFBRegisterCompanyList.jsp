@@ -13,11 +13,11 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
-            <input type="hidden" id="bsnmNo" name="bsnmNo" value="" />
+            <input type="hidden" id="bsnmNo" name="bsnmNo" value="${ rtnData.bsnCd }" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                <jsp:param name="srchText" value="기간" />
-                <jsp:param name="srchType" value="wbeb" />
+                <jsp:param name="srchText" value="등록/수정기간" />
+                <jsp:param name="srchOption" value="등록일,수정일" />
             </jsp:include>
             <!--기간 검색 종료-->
 
@@ -29,8 +29,8 @@
                             <input type="checkbox" class="checkboxAll" />
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
-                        <c:forEach var="cdList" items="${cdDtlList.PRO_STATE_TYPE}" varStatus="status">
-                            <c:if test="${fn:contains(cdList, 'PRO_STATE_TYPE020')}">
+                        <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                            <c:if test="${fn:contains(cdList, 'PRO_TYPE0200')}">
                                 <label class="checkbox-inline c-checkbox">
                                     <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
@@ -45,7 +45,7 @@
                     <label class="col-sm-1 control-label">구분</label>
                     <div class="col-sm-5">
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <select class="form-control input-sm" id="optYear" name="year">
                                     <option value="">연도 전체</option>
                                     <c:forEach var="optYear" items="${optYearList}" varStatus="status">
@@ -53,12 +53,9 @@
                                     </c:forEach>
                                 </select>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-3">
                                 <select class="form-control input-sm" id="optEpisd" name="episd">
-                                    <option>회차 전체</option>
-                                    <c:forEach var="optEpisd" items="${optEpisdList}" varStatus="status">
-                                        <option value="${optEpisd}">${optEpisd}</option>
-                                    </c:forEach>
+                                    <option value="">회차 전체</option>
                                 </select>
                             </div>
                         </div>
@@ -70,7 +67,7 @@
                     <label class="col-sm-1 control-label">검색키워드</label>
                     <div class="col-sm-4">
                         <div class="row">
-                            <div class="col-sm-3 pr0">
+                            <%--<div class="col-sm-3 pr0">
                                 <select class="form-control input-sm" data-name="f">
                                     <option value="">전체</option>
                                     <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>대표자명</option>
@@ -79,7 +76,7 @@
                                     <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>아이디</option>
                                     <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>휴대폰번호</option>
                                 </select>
-                            </div>
+                            </div>--%>
                             <div class="col-sm-9 pr0">
                                 <input type="text" class="form-control input-sm" id="q" data-name="q" value="${rtnData.q}" maxlength="50" />
                             </div>
@@ -108,6 +105,12 @@
                 <table class="table table-hover table-striped" >
                     <thead>
                     <tr>
+                        <th class="text-center">
+                            <label class="checkbox-inline c-checkbox">
+                                <input type="checkbox" class="checkboxAll notRequired" title="전체선택">
+                                <span class="ion-checkmark-round"></span>
+                            </label>
+                        </th>
                         <th class="text-center">번호</th>
                         <th class="text-center">사업연도</th>
                         <th class="text-center">회차</th>
@@ -134,6 +137,9 @@
                 <div id="pagingContainer"/>
             </div>
             <!--리스트 종료 -->
+            <div class="pull-left">
+                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnDeleteList">선택삭제</button>
+            </div>
             <div class="pull-right">
                 <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">관리자 등록</button>
             </div>

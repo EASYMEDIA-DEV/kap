@@ -25,8 +25,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         }
 
         cmmCtrl.listFrmAjax(function(respObj) {
-            console.log(respObj);
-            $formObj.find("table").eq(0).find(".").prop("checked", false);
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
             ctrl.obj.find("#listContainer").html(respObj);
             //전체 갯수
@@ -59,6 +58,22 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            btnDelete : {
+                event : {
+                    click : function() {
+                        cmmCtrl.frmAjax(function(respObj){
+                            if(respObj != undefined && respObj.respCnt < 0){
+                                alert(msgCtrl.getMsg("신청정보가 존재하여 삭제할 수 없습니다."));
+                            } else if(respObj != undefined && respObj.respCnt > 0){
+                                alert(msgCtrl.getMsg("success.del.target.board"));
+                                $formObj.find("#btnSearch").click();
+                            } else {
+                                alert(msgCtrl.getMsg("fail.act"));
+                            }
+                        }, "./delete", $formObj, "POST", "json");
+                    }
+                }
+            },
         },
         classname : {
             //페이징 처리
@@ -67,7 +82,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         //페이징 이동
                         if( $(this).attr("value") != "null" ){
-                            search($formObj.find("input[name=pageIndex]").val($(this).attr("value")));
+                            search($(this).attr("value"));
                         }
                     }
                 }
@@ -92,7 +107,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         search(1);
                     }
                 }
-            }
+            },
         },
         immediately : function() {
             //리스트 조회

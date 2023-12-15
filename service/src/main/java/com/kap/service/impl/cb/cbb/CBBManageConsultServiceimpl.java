@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cbb.*;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.*;
@@ -19,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
@@ -460,6 +462,36 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         }*/
 
         return pCBBManageConsultInsertDTO.getRespCnt();
+    }
+
+    /**
+     * 컨설팅사업 경영컨설팅 삭제
+     */
+    @Transactional
+    public int deleteManageConsult(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception
+    {
+        int actCnt = 0;
+
+        // 참여이관로그 테이블 삭제
+        cBBManageConsultMapper.deleteConsultAppctnTrnsfDtl(cBBManageConsultSearchDTO);
+        // 만족도 결과 상세 테이블 삭제
+        cBBManageConsultMapper.deleteConsultSrvRsltDtl(cBBManageConsultSearchDTO);
+        // 신청분야 상세 테이블 삭제 (경영컨설팅에서는 안씀)
+        //cBBManageConsultMapper.deleteConsultAppctnTypeDtl(cBBManageConsultSearchDTO);
+        // 완성차의존율 상세 테이블 삭제
+        cBBManageConsultMapper.deleteConsultDpndnDtl(cBBManageConsultSearchDTO);
+        // 고객사비율 상세 테이블 삭제
+        cBBManageConsultMapper.deleteConsultDlvryDtl(cBBManageConsultSearchDTO);
+        // 부품사 업종 상세 테이블 삭제 (경영컨설팅에서는 안씀)
+        //cBBManageConsultMapper.deleteConsultCbsnDtl(cBBManageConsultSearchDTO);
+        // 담당임원 테이블 삭제
+        cBBManageConsultMapper.deleteConsultPicDtl(cBBManageConsultSearchDTO);
+        // 진행마스터 테이블 삭제
+        cBBManageConsultMapper.deleteConsultRsumeMst(cBBManageConsultSearchDTO);
+
+        actCnt = cBBManageConsultMapper.deleteManageConsult(cBBManageConsultSearchDTO);
+
+        return actCnt;
     }
 
     /**

@@ -21,6 +21,41 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     //modalForm
     var $modalFormObj = $modalObj.find("form").eq(0);
 
+    /* 팝업 옵션 */
+    let optVal = {
+        '1' : '아이디',
+        '2' : '이름',
+        '3' : '휴대폰번호',
+        '4' : '이메일',
+        '5' : '최종수정자',
+        '6' : '부품사명',
+        '7' : '사업자등록번호',
+    }
+
+    let fnRefresh = function() {
+        //FORM 데이터 전체 삭제
+        let pageIndex 	= $modalObj.find("#pageIndex").val();
+        let listRowSize = $modalObj.find("#listRowSize").val();
+        let pageRowSize = $modalObj.find("#pageRowSize").val();
+        let csrfKey 	= $modalObj.find("#csrfKey").val();
+        let srchLayer 	= $modalObj.find("input[name=srchLayer]").val();
+        let memCd 	= $modalObj.find("input[name=memCd]").val();
+        $modalObj.clearForm();
+        //FORM 전송 필수 데이터 삽입
+        $modalObj.find("#pageIndex").val( pageIndex );
+        $modalObj.find("#listRowSize").val( listRowSize );
+        $modalObj.find(".listRowSizeContainer").val( listRowSize );
+        $modalObj.find("#pageRowSize").val( pageRowSize );
+        $modalObj.find("#csrfKey").val( csrfKey );
+        $modalObj.find("input[name=srchLayer]").val( srchLayer );
+        $modalObj.find("input[name=memCd]").val( memCd );
+        //캘린더 초기화
+        cmmCtrl.setPeriod($modalObj.find('.datetimepicker_strtDt, .datetimepicker_endDt'), "", "", false);
+
+        //검색 로직 실행
+        $modalObj.find("#btnSearch").click();
+    }
+
     // 목록 조회
     var search = function (page){
 
@@ -70,8 +105,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 if(target !== undefined) {
                     let tagName = target.prop('tagName');
                     /* SELECT || INPUT || P 태그 공통화 */
-                    if(tagName === 'SELECT' || tagName === 'INPUT') target.val(rtnData[el]);
-                    if(tagName === 'P') target.html(rtnData[el]);
+                    if(tagName === 'SELECT' || tagName === 'INPUT') target.val((rtnData[el] || ''));
+                    if(tagName === 'P') target.html((rtnData[el] || ''));
                 }
             }
         });
@@ -196,9 +231,30 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 }
             },
             // 회원검색 모달
+            // 회원검색 모달
             btnPartUserModal : {
                 event : {
                     click: function () {
+                        $modalObj.find("input[name=memCd]").val('CP');
+                        $modalObj.find("#cdList").show();
+
+                        $modalObj.find("select[data-name=f]").empty();
+                        let selOpt = ['1','2','6','7','3','4','5'];
+                        let opt = '<option value="">전체</option>';
+                        selOpt.forEach(function(el, idx) {
+                            opt += `<option value="${el}">${optVal[el]}</option>`
+                        });
+                        $modalObj.find("select[data-name=f]").append(opt);
+
+                        $modalObj.find("thead tr").empty();
+                        let tableHead = ['번호','아이디','이름','부품사명','구분'
+                            ,'규모','사업자등록번호','휴대폰번호','이메일','가입일','최종 수정자','수정 일시'];
+                        let html = '<th class="text-center"></th>';
+                        tableHead.forEach(function(el, idx) {
+                            html += `<th class="text-center">${el}</th>`;
+                        });
+                        $modalObj.find("thead tr").append(html);
+                        fnRefresh();
                         search(1);
                         $modalObj.modal("show");
                     }
@@ -213,17 +269,42 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
+            btnModalRefresh : {
+                event: {
+                    click: function () {
+                        //FORM 데이터 전체 삭제
+                        let pageIndex 	= $modalObj.find("#pageIndex").val();
+                        let listRowSize = $modalObj.find("#listRowSize").val();
+                        let pageRowSize = $modalObj.find("#pageRowSize").val();
+                        let csrfKey 	= $modalObj.find("#csrfKey").val();
+                        let srchLayer 	= $modalObj.find("input[name=srchLayer]").val();
+                        let memCd 	= $modalObj.find("input[name=memCd]").val();
+                        $modalObj.clearForm();
+                        //FORM 전송 필수 데이터 삽입
+                        $modalObj.find("#pageIndex").val( pageIndex );
+                        $modalObj.find("#listRowSize").val( listRowSize );
+                        $modalObj.find(".listRowSizeContainer").val( listRowSize );
+                        $modalObj.find("#pageRowSize").val( pageRowSize );
+                        $modalObj.find("#csrfKey").val( csrfKey );
+                        $modalObj.find("input[name=srchLayer]").val( srchLayer );
+                        $modalObj.find("input[name=memCd]").val( memCd );
+                        //캘린더 초기화
+                        cmmCtrl.setPeriod(this, "", "", false);
+
+                        //검색 로직 실행
+                        $modalObj.find("#btnSearch").click();
+                    }
+                }
+            },
             btnModalSelect : {
                 event: {
                     click: function() {
-                        let trArea = $modalFormObj.find("#listContainer input[type=checkbox]:checked").parents("tr");
-
+                        let trArea = $modalFormObj.find("#listContainer input[type=checkbox]:checked");
                         if(trArea.length !== 0 || trArea != undefined){
-                            selPartUser = trArea.find('[data-point=id]').html();
+                            selPartUser = trArea.val();
                             $modalFormObj.find("#selPartUser").val(selPartUser);
                             selPartUserData();
                         }
-
                     }
                 }
             },

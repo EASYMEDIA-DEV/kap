@@ -72,4 +72,24 @@ public class WBPartCompanyController {
         return "jsonView";
     }
 
+    /**
+     * 부품사회원 / 담당위원 Detail Ajax
+     */
+    @PostMapping(value = "/partUserChk")
+    public String selectPartUserChkAjax(WBPartCompanyDTO wBPartCompanyDTO , ModelMap modelMap ) throws Exception {
+        try
+        {
+            modelMap.addAttribute("rtnData", wBPartCompanyService.selectPartUserChkAjax(wBPartCompanyDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
 }

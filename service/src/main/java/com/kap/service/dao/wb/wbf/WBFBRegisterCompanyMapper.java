@@ -1,10 +1,9 @@
 package com.kap.service.dao.wb.wbf;
 
-import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
-import com.kap.core.dto.wb.WBRoundMstDTO;
-import com.kap.core.dto.wb.WBRoundOptnMstDTO;
+import com.kap.core.dto.wb.*;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRsumeTaskDtlDTO;
 
 import java.util.List;
 
@@ -36,12 +35,6 @@ public interface WBFBRegisterCompanyMapper {
 
     /**
      *  List Page
-     *  신청부품사 목록 Sub List Get
-     */
-    public WBFBRegisterSearchDTO getRegisterCompanySubList(WBFBRegisterSearchDTO wbApplyMstSearchDTO);
-
-    /**
-     *  List Page
      *  신청부품사 목록 Count
      */
     public int getRegisterCompanyCount(WBFBRegisterSearchDTO wbApplyMstSearchDTO);
@@ -57,7 +50,7 @@ public interface WBFBRegisterCompanyMapper {
      *  사업회차 연도 기준 회차 검색
      */
     public List<String> getOptEpisdList(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
-    
+
     /**
      *  Write Page
      *  사업회차 연도 기준 회차 순번 검색
@@ -75,12 +68,24 @@ public interface WBFBRegisterCompanyMapper {
      *  신청부품사 등록 - 신청 마스터
      */
     public int putAppctnMst(WBFBRegisterDTO wBFBRegisterDTO);
-    
+
     /**
      *  Write Page
      *  신청부품사 등록 - 신청 파일 상세
      */
-    public int putAppctnFileDtl(WBFBRegisterDTO wBFBRegisterDTO);
+    public int putAppctnSpprtDtl(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     *  Write Page
+     *  신청부품사 등록 - 신청 파일 상세
+     */
+    public int putAppctnFileDtl(WBRsumeFileDtlDTO wBRsumeFileDtlDTO);
+
+    /**
+     *  Write Page
+     *  신청부품사 - 첨부파일 삭제
+     */
+    public int delAppctnFileDtl(WBFBRsumeTaskDtlDTO wBFBRsumeTaskDtlDTO);
 
     /**
      *  Write Page
@@ -90,9 +95,14 @@ public interface WBFBRegisterCompanyMapper {
 
     /**
      *  Write Page
-     *  신청부품사 등록 - 스마트 싱세
+     *  신청부품사 등록 - 스마트 상세
      */
     public int putAppctnRsumeTaskDtl(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     *  스마트 상세 - 다음 단계 초기값 세팅
+     */
+    public int putInitNextAppctnRsumeTask(WBFBRegisterDTO wBFBRegisterDTO);
 
     /**
      *  Write Page
@@ -117,5 +127,131 @@ public interface WBFBRegisterCompanyMapper {
      *  회사업종 상세 Insert
      */
     public int insCmpnCbsnDtl(WBCompanyDetailMstDTO wBCompanyDetailMstDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 지급차수 Select
+     */
+    public List<WBOrderMstDto> getGiveList(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 지급차수 Select
+     */
+    public List<WBFBRegisterSearchDTO> getAppctnTrnsfDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 지급차수 Select
+     */
+    public int getAppctnTrnsfDtlCnt(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 상세 Select
+     */
+    public WBFBRegisterDTO getRegisterDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
+     *  Edit Page
+     *  사업자등록번호 Check
+     */
+    public WBFBRegisterSearchDTO getBsnmNoCheck(String offerBsnmNo);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 회사 SQ 정보 Select
+     */
+    public List<WBCompanyDetailMstDTO> getRegisterDtlSQ(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 상세 Select Sub - 상생신청지원금액상세
+     */
+    public List<WBSpprtDtlDTO> getSpprtDtlList(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 상세 Select Sub - 상생신청진행스마트상세
+     */
+    public List<WBFBRsumeTaskDtlDTO> getRsumeTaskDtlList(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 상세 Select Sub - 상생신청진행스마트상세 파일정보
+     */
+    public List<WBRsumeFileDtlDTO> getDtlFileList(WBFBRsumeTaskDtlDTO wBFBRsumeTaskDtlDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 상생신청지원금액상세
+     */
+    public int updSpprtDtl(WBSpprtDtlDTO wBSpprtDtlDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 상생신청마스터
+     */
+    public int updAppctnMst(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 상생신청진행상세
+     */
+    public int updRsumeDtl(WBFBRsumeTaskDtlDTO wBFBRsumeTaskDtlDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 상생신청지원금액상세 별도
+     */
+    public int updRsumeTaskDtlSub(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 상생신청진행스마트상세
+     */
+    public int updRsumeTaskDtl(WBFBRsumeTaskDtlDTO wBFBRsumeTaskDtlDTO);
+
+    /**
+     *  Edit Page
+     *  상생참여이관로그
+     */
+    public int insAppctnTrnsfDtl(WBAppctnTrnsfDtlDTO wBAppctnTrnsfDtlDTO);
+
+    /**
+     *  Delete 순서 1
+     *  상생신청파일진행상세 Delete
+     */
+    public int delAppctnRsumeFileDtl(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     *  Delete 순서 2
+     *  상생신청진행스마트상세 Delete
+     */
+    public int delAppctnRsumeTaskDtl(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     *  Delete 순서 3
+     *  상생참여이관로그 Delete
+     */
+    public int delAppctnTrnsfDtl(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     * Delete 순서 4
+     *  상생신청지원금액상세 Delete
+     */
+    public int delAppctnSpprtDtl(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     * Delete 순서 5
+     *  상생신청진행상세 Delete
+     */
+    public int delAppctnRsumeDtl(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     * Delete 순서 6
+     *  상생신청마스터 Delete
+     */
+    public int delAppctnMdst(WBFBRegisterDTO wBFBRegisterDTO);
 
 }

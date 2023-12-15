@@ -399,7 +399,7 @@
         AND cpr_mst.cnstg_pscnd_cd = 'CNSTG_PSCND03'-->
 
         <!--AND guide_pscnd_cd = 'GUIDE_PSCND04'-->
-        ORDER BY cp_mst.regdtm desc
+        ORDER BY cp_mst.reg_dtm desc
         <!-- limit #{firstIndex}, #{recordCountPerPage}-->
     </select>
 
@@ -1083,5 +1083,214 @@
         WHERE
             CNSTG_SEQ = #{detailsKey}
     </select>
+
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteManageConsult
+         설  명 : 컨설팅사업 경영컨설팅 신청마스터 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.14   이옥정       최초생성
+    -->
+    <delete id="deleteManageConsult" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteManageConsult */
+        from
+        cp_cnstg_appctn_mst
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultRsumeMst
+         설  명 : 컨설팅사업 진행마스터 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultRsumeMst" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultRsumeMst */
+        from
+        cp_cnstg_rsume_mst
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultPicDtl
+         설  명 : 컨설팅사업 담당임원 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultPicDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultPicDtl */
+        from
+        cp_cnstg_pic_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultCbsnDtl
+         설  명 : 컨설팅사업 부품사 업종 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultCbsnDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultCbsnDtl */
+        from
+        cp_cnstg_cbsn_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultDlvryDtl
+         설  명 : 컨설팅사업 고객사비율 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultDlvryDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultDlvryDtl */
+        from
+        cp_cnstg_dlvry_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultDpndnDtl
+         설  명 : 컨설팅사업 완성차의존율 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultDpndnDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultDpndnDtl */
+        from
+        cp_cnstg_dpndn_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultAppctnTypeDtl
+         설  명 : 컨설팅사업 신청분야 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultAppctnTypeDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultAppctnTypeDtl */
+        from
+        cp_cnstg_appctn_type_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultSrvRsltDtl
+         설  명 : 컨설팅사업 만족도 결과 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultSrvRsltDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultSrvRsltDtl */
+        from
+        cp_cnstg_srv_rslt_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultAppctnTrnsfDtl
+         설  명 : 컨설팅사업 참여이관로그 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultAppctnTrnsfDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultAppctnTrnsfDtl */
+        from
+        cp_cnstg_appctn_trnsf_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
 
 </mapper>

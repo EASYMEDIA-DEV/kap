@@ -100,8 +100,9 @@
 			 , seo_kwrd
 			 , seo_cntn
 			 , use_yn
+			 , ( select menu_nm from co_menu_mst b where a.parnt_seq = b.menu_seq ) parntName
 		from
-			co_menu_mst
+			co_menu_mst a
 		where
 			menu_seq = #{menuSeq}
 	</select>
@@ -703,4 +704,35 @@
 			menu_type = 'menu'
 		order by lft_val
 	</select>
+
+	<!--
+        쿼리명 : COBUserMenuMapper.updateMenuUrl
+        설  명 : 메뉴 URL을 수정한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2023.11.21   김태훈       최초생성
+   -->
+	<update id="updateMenuUrl" parameterType ="COMenuDTO">
+		update /* COBUserMenuMapper.updateMenuUrl */ co_menu_mst
+		set
+			user_url = #{userUrl}
+			, adm_url = #{admUrl}
+		where
+			menu_seq = #{menuSeq}
+	</update>
+
+	<!--
+        쿼리명 : COBUserMenuMapper.updateMenuUseYn
+        설  명 : 메뉴를 미노출 처리한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2023.11.21   김태훈       최초생성
+   -->
+	<update id="updateMenuUseYn" parameterType ="COMenuDTO">
+		update /* COBUserMenuMapper.updateMenuUseYn */ co_menu_mst
+		set
+			USE_YN = 'N'
+		where
+			menu_seq = #{menuSeq}
+	</update>
 </mapper>

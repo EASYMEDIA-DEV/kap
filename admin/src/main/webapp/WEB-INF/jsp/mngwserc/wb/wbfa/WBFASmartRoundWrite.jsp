@@ -17,6 +17,7 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
             <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07006" />
+            <input type="hidden" class="notRequired" id="delValueList" name="delValueList" value="${rtnDto.episdSeq}" />
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -137,19 +138,19 @@
                                                value="${today}"
                                                title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
                                         <span class="input-group-btn" style="z-index:0;">
-                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                    <em class="ion-calendar"></em>
-                                                                </button>
-                                                            </span>
+                                            <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                <em class="ion-calendar"></em>
+                                            </button>
+                                        </span>
                                         <span class="input-group-addon bg-white b0">~</span>
                                         <input type="text" class="form-control input-sm datetimepicker_endDt" name="giveEndDtList"
                                                value="${today}"
                                                title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
                                         <span class="input-group-btn" style="z-index:0;">
-                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                    <em class="ion-calendar"></em>
-                                                                </button>
-                                                            </span>
+                                            <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                <em class="ion-calendar"></em>
+                                            </button>
+                                        </span>
                                     </div>
                                 </div>
                                 <input type="hidden" class="giveRowHid" name="giveOrd" value="1">
@@ -170,20 +171,20 @@
                                             <input type="text" class="form-control input-sm datetimepicker_strtDt" name="giveStrtDtList"
                                                    value="<c:if test="${not empty rtnDto}">${kl:convertDate(list.strtDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if>"
                                                    title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                            <span class="input-group-btn" style="z-index:0;">
-                                                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                            <em class="ion-calendar"></em>
-                                                                        </button>
-                                                                    </span>
-                                            <span class="input-group-addon bg-white b0">~</span>
-                                            <input type="text" class="form-control input-sm datetimepicker_endDt" name="giveEndDtList"
-                                                   value="<c:if test="${not empty rtnDto}">${kl:convertDate(list.endDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if>"
-                                                   title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                            <span class="input-group-btn" style="z-index:0;">
-                                                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                            <em class="ion-calendar"></em>
-                                                                        </button>
-                                                                    </span>
+                                                <span class="input-group-btn" style="z-index:0;">
+                                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                        <em class="ion-calendar"></em>
+                                                    </button>
+                                                </span>
+                                                <span class="input-group-addon bg-white b0">~</span>
+                                                <input type="text" class="form-control input-sm datetimepicker_endDt" name="giveEndDtList"
+                                                       value="<c:if test="${not empty rtnDto}">${kl:convertDate(list.endDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if>"
+                                                       title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+                                                <span class="input-group-btn" style="z-index:0;">
+                                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                        <em class="ion-calendar"></em>
+                                                    </button>
+                                                </span>
                                         </div>
                                     </div>
                                     <input type="hidden" class="giveRowHid" name="giveOrd" value="${status.index +1}">
@@ -320,7 +321,6 @@
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnDto}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
                             <button type="submit" class="btn btn-sm btn-success">저장</button>
                         </c:when>
                         <c:otherwise>

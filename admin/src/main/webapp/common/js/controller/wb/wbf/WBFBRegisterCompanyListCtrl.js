@@ -49,7 +49,27 @@ define(["ezCtrl"], function(ezCtrl) {
                         $excelObj.modal("show");
                     }
                 }
-            }
+            },
+            btnDeleteList : {
+                event : {
+                    click : function() {
+                        let delActCnt = $("input:checkbox[name='delValueList']:checked");
+                        if(delActCnt.length > 0){
+                            cmmCtrl.frmAjax(function(respObj){
+                                if(respObj != undefined && respObj.respCnt > 0){
+                                    alert(msgCtrl.getMsg("success.del.target.board"));
+                                    $formObj.find("#btnSearch").click();
+                                }
+                                else{
+                                    alert(msgCtrl.getMsg("fail.act"));
+                                }
+                            }, "./delete", $formObj, "POST", "json");
+                        } else {
+                            alert(msgCtrl.getMsg("fail.del.target.board"));
+                        }
+                    }
+                }
+            },
         },
         classname : {
             pageSet : {
@@ -67,7 +87,7 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
-                        $formObj.find("input[name=appctnSeq]").val(detailsKey);
+                        $formObj.find("input[name=detailsKey]").val(detailsKey);
                         location.href = "./edit?" + $formObj.serialize();
                     }
                 }
@@ -135,7 +155,8 @@ define(["ezCtrl"], function(ezCtrl) {
     /* 회차 검색 Ajax */
     let selEpisdList = () => {
         let target = $formObj.find('#optEpisd');
-        if($formObj.find('#optYear').val == ''){
+
+        if($formObj.find('#optYear').val() != ''){
             cmmCtrl.frmAjax(function(respObj) {
                 /* return data input */
                 let html = '<option value="">회차 전체</option>';
@@ -148,7 +169,6 @@ define(["ezCtrl"], function(ezCtrl) {
             let html = '<option value="">회차 전체</option>';
             target.empty().append(html);
         }
-
     }
 
     ctrl.exec();

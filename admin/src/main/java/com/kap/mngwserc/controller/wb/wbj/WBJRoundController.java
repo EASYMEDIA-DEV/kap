@@ -161,8 +161,8 @@ public class WBJRoundController {
         try
         {
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBRoundMstDTO.setRegId(cOUserDetailsDTO.getId());
-            wBRoundMstDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+            wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
+            wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             wBJARoundListService.updateRound(wBRoundMstDTO, request);
         }

@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.wb.wba.WBAManagementMapper">
+    <!--
+         쿼리명 : WBAManagementMapper.selectPartsCompanyList
+         설  명 : 부품사 목록을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.10   김태훈       최초생성
+    -->
+    <select id="selectManagementList" parameterType="WBAManageSearchDTO">
+        SELECT /* WBAManagementMapper.selectManagementList */
+               ( SELECT CD_NM FROM CO_CODE_MST CO WHERE CO.CD = A.BSN_CD ) MANAGE_NAME,
+                BSN_CD,
+               USER_MENU_SEQ,
+               ADM_EPISD_MENU_SEQ,
+               ADM_APPCTN_MENU_SEQ,
+               REG_ID,
+              (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME,
+               REG_IP,
+               REG_DTM,
+               MOD_ID,
+               (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME,
+               MOD_IP,
+               MOD_DTM
+        FROM CX_MST A
+        <include refid="selectManagementwhereSql" />
+    </select>
+
+    <!--
+         쿼리명 : WBAManagementMapper.selectBusinessManagementCnt
+         설  명 : 상생사업 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.10    김태훈       최초생성
+    -->
+    <select id="selectManagementCnt" parameterType="WBAManageSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBAManagementMapper.selectManagementCnt*/
+            COUNT(BSN_CD)
+        FROM CX_MST A
+        <include refid="selectManagementwhereSql" />
+    </select>
+
+    <!--
+         쿼리명 : WBAManagementMapper.selectManagementMst
+         설  명 : 상생사업 마스터 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.10   김태훈       최초생성
+    -->
+    <select id="selectManagementMst" parameterType="WBAManageSearchDTO" resultType="WBAManageInsertDTO">
+        SELECT /* WBAManagementMapper.selectManagementDtl */
+            BSN_CD,
+            USER_MENU_SEQ,
+            (SELECT MENU_NM FROM CO_MENU_MST MENU WHERE MENU_SEQ = USER_MENU_SEQ) USER_MENU_NAME,
+            ADM_EPISD_MENU_SEQ,
+            (SELECT MENU_NM FROM CO_MENU_MST MENU WHERE MENU_SEQ = ADM_EPISD_MENU_SEQ) ADM_EPISD_MENU_NAME,
+            ADM_APPCTN_MENU_SEQ,
+            (SELECT MENU_NM FROM CO_MENU_MST MENU WHERE MENU_SEQ = ADM_APPCTN_MENU_SEQ) ADM_APPCTN_MENU_NAME,
+            REG_ID,
+            (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME,
+            REG_IP,
+            REG_DTM,
+            MOD_ID,
+            (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME,
+            MOD_IP,
+            MOD_DTM
+        FROM CX_MST A
+        WHERE A.BSN_CD = #{detailsKey}
+    </select>
+
+    <!--
+         쿼리명 : WBAManagementMapper.selectStepDtlList
+         설  명 : 상생사업 단계를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.10   김태훈       최초생성
+    -->
+    <select id="selectStepDtlList" parameterType="WBAManageSearchDTO" resultType="WBAManagementDtlDTO">
+        SELECT /* WBAManagementMapper.selectStepDtlList */
+               STAGE_SEQ,
+               BSN_CD,
+               STAGE_ORD,
+               FILE_YN,
+               STAGE_NM,
+               REG_ID,
+               REG_IP,
+               REG_DTM,
+               MOD_ID,
+               MOD_IP,
+               MOD_DTM
+        FROM CX_STAGE_DTL A
+        WHERE A.BSN_CD = #{detailsKey}
+        ORDER BY STAGE_ORD ASC
+    </select>
+
+    <!--
+         쿼리명 : WBAManagementMapper.selectOptnDtlList
+         설  명 : 상생사업 옵션을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.10   김태훈       최초생성
+    -->
+    <select id="selectOptnDtlList" parameterType="WBAManagementDtlDTO" resultType="WBAManagementOptnDTO">
+        SELECT /* WBAManagementMapper.selectOptnDtlList */
+               OPTN_SEQ,
+               STAGE_SEQ,
+               OPTN_ORD,
+               OPTN_NM,
+               FILE_SEQ,
+               REG_ID,
+               REG_IP,
+               REG_DTM,
+               MOD_ID,
+               MOD_IP,
+               MOD_DTM
+        FROM CX_OPTN_DTL A
+        WHERE A.STAGE_SEQ = #{stageSeq}
+        ORDER BY STAGE_SEQ, OPTN_ORD ASC
+    </select>
+
+    <select id="getStepDtl" parameterType="WBAManageSearchDTO" resultType="WBAManagementDtlDTO">
+        SELECT /* WBAManagementMapper.selectStepDtlList */
+            STAGE_SEQ,
+            BSN_CD,
+            STAGE_ORD,
+            FILE_YN,
+            STAGE_NM,
+            REG_ID,
+            REG_IP,
+            REG_DTM,
+            MOD_ID,
+            MOD_IP,
+            MOD_DTM
+        FROM CX_STAGE_DTL A
+        WHERE A.BSN_CD = #{bsnCd} AND STAGE_ORD = #{searchOrd}
+    </select>
+
+    <!--
+         쿼리명 : WBAManagementMapper.insertManagementMst
+         설  명 : 상생사업 마스터 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.11    김태훈       최초생성
+    -->
+    <insert id="insertManagementMst" parameterType="WBAManageInsertDTO">
+        INSERT /* WBAManagementMapper.insertManagementMst */ into cx_mst
+        (
+            bsn_cd
+        , user_menu_seq
+        , adm_episd_menu_seq
+        , adm_appctn_menu_Seq
+        , reg_id
+        , reg_ip
+        , reg_dtm
+        , mod_id
+        , mod_ip
+        , mod_dtm
+        )
+        VALUES
+            (
+            #{bsnCd}
+            , #{userMenuSeq}
+            , #{admEpisdMenuSeq}
+            , #{admAppctnMenuSeq}
+            , #{regId}
+            , #{regIp}
+            , now()
+            , #{regId}
+            , #{regIp}
+            , now()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : WBAManagementMapper.insertManagementDtl
+         설  명 : 상생사업 단계상세 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.11    김태훈       최초생성
+    -->
+    <insert id="insertManagementDtl" parameterType="WBAManageInsertDTO">
+        INSERT /* WBAManagementMapper.insertManagementDtl */ into cx_stage_dtl
+        (
+            stage_seq
+        , bsn_Cd
+        , stage_ord
+        , file_yn
+        , stage_nm
+        , reg_id
+        , reg_ip
+        , reg_dtm
+        , mod_id
+        , mod_ip
+        , mod_dtm
+        )
+        VALUES
+            (
+                #{stageSeq}
+            , #{bsnCd}
+            , #{stageOrd}
+            , #{fileYn}
+            , #{stageNm}
+            , #{regId}
+            , #{regIp}
+            , now()
+            , #{regId}
+            , #{regIp}
+            , now()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : WBAManagementMapper.insertManagementOptn
+         설  명 : 상생사업 단계 옵션 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.11    김태훈       최초생성
+    -->
+    <insert id="insertManagementOptn" parameterType="WBAManageInsertDTO">
+        INSERT /* WBAManagementMapper.insertManagementOptn */ into cx_optn_dtl
+        (
+            optn_seq
+        , stage_seq
+        , optn_ord
+        , optn_nm
+        , file_seq
+        , reg_id
+        , reg_ip
+        , reg_dtm
+        , mod_id
+        , mod_ip
+        , mod_dtm
+        )
+        VALUES
+            (
+                #{optnSeq}
+            , #{stageSeq}
+            , #{optnOrd}
+            , #{optnNm}
+            , #{fileSeq}
+            , #{regId}
+            , #{regIp}
+            , now()
+            , #{regId}
+            , #{regIp}
+            , now()
+            )
+    </insert>
+
+
+    <!--
+         쿼리명 : WBAManagementMapper.updateManagementMst
+         설  명 : 상생사업 마스터 수정
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.11    김태훈       최초생성
+    -->
+    <update id="updateManagementMst" parameterType="WBAManageInsertDTO">
+        UPDATE  /* WBAManagementMapper.updateManagementMst */ CX_MST
+        SET
+            bsn_cd = #{bsnCd}
+            , user_menu_seq = #{userMenuSeq}
+            , adm_episd_menu_seq = #{admEpisdMenuSeq}
+            , adm_appctn_menu_Seq = #{admAppctnMenuSeq}
+            , mod_id = #{modId}
+            , mod_ip = #{regId}
+            , mod_dtm = now()
+        WHERE bsn_cd = #{detailsKey}
+    </update>
+
+    <!--
+         쿼리명 : WBAManagementMapper.deleteManagementMst
+         설  명 : 상생사업 마스터 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.11    김태훈       최초생성
+    -->
+    <delete id="deleteManagementMst" parameterType="WBAManageInsertDTO">
+        DELETE /* WBAManagementMapper.deleteManagementMst */
+        FROM cx_mst
+        WHERE bsn_cd = #{detailsKey}
+    </delete>
+
+    <!--
+         쿼리명 : WBAManagementMapper.deleteManagementDtl
+         설  명 : 상생사업 단계상세 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.11    김태훈       최초생성
+    -->
+    <delete id="deleteManagementDtl" parameterType="WBAManageInsertDTO">
+        DELETE /* WBAManagementMapper.deleteManagementDtl */
+        FROM cx_stage_dtl
+        WHERE bsn_cd = #{detailsKey}
+    </delete>
+
+    <!--
+         쿼리명 : WBAManagementMapper.deleteManagementOptn
+         설  명 : 상생사업 단계 옵션 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.11    김태훈       최초생성
+    -->
+    <delete id="deleteManagementOptn" parameterType="WBAManageInsertDTO">
+        DELETE /* WBAManagementMapper.deleteManagementOptn */
+        FROM cx_optn_dtl
+        WHERE
+              stage_seq in
+        <foreach collection="managementDtlList" item="managementDtlList" index="index" separator=", " open="(" close=")">
+             #{managementDtlList.stageSeq}
+        </foreach>
+    </delete>
+
+    <!--
+         쿼리명 : WBAManagementMapper.deleteRound
+         설  명 : 상생사업 회차 삭제
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.10    김태훈       최초생성
+    -->
+    <delete id="deleteRound" parameterType="WBAManageInsertDTO">
+        DELETE /* WBAManagementMapper.deleteRound */
+        FROM CX_EPISD_MST
+        WHERE BSN_CD = #{detailsKey}
+    </delete>
+
+    <!--
+         쿼리명 : WBAManagementMapper.updateFileInfo
+         설  명 : 상생 사업 첨부파일 변경
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.17    김태훈       최초생성
+    -->
+    <update id="updateFileInfo" parameterType="WBAManageInsertDTO">
+        update /* WBAManagementMapper.updateFileInfo */ cx_optn_dtl
+        set
+            file_seq = #{fileSeq}
+        where
+           optn_seq  = #{optnSeq}
+    </update>
+
+    <!--
+         쿼리명 : WBAManagementMapper.getApplyUserCount
+         설  명 : 사업 참여자 카운트
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.10    김태훈       최초생성
+    -->
+    <select id="getApplyUserCount" parameterType="WBAManageInsertDTO" resultType="java.lang.Integer">
+        SELECT COUNT(*) /* WBAManagementMapper.getApplyUserCount*/
+        FROM
+            (SELECT EPISD_SEQ FROM CX_EPISD_MST
+             WHERE bsn_cd = #{detailsKey}) A
+                INNER JOIN CX_APPCTN_MST B
+        WHERE A.EPISD_SEQ = B.EPISD_SEQ
+    </select>
+
+    <!--
+		쿼리명 : selectManagementwhereSql
+		설  명 : 상생사업 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.10    김태훈       최초생성
+    -->
+    <sql id="selectManagementwhereSql">
+        <where>
+            <if test="srchDate != null and srchDate != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                            AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <when test="srchDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <otherwise>
+
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="bsnCd != null and bsnCd != ''.toString() ">
+                AND BSN_CD = #{bsnCd}
+            </if>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 1">
+                        AND (
+                        BSN_CD LIKE CONCAT('%', #{q}, '%') OR
+                        ( SELECT CD_NM FROM CO_CODE_MST CO WHERE CO.CD = BSN_CD ) LIKE CONCAT('%', #{q}, '%')
+                        )
+                    </when>
+                    <when test="f == 2">
+                        AND (
+                        INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <when test="f == 3">
+                        AND (
+                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <otherwise>
+                        AND (
+                        INSTR(#{q}, BSN_CD) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+</mapper>

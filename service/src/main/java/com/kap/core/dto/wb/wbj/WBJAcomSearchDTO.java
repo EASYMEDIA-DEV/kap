@@ -26,10 +26,20 @@ public class WBJAcomSearchDTO extends BaseDTO {
     private String optnCd;
     @Schema(title = "회차순번", example = "")
     private Integer episdSeq;
+    @Schema(title = "진행순번", example = "")
+    private Integer rsumeSeq;
+
+    /*상생 파일 상세*/
+    @Schema(title = "파일순번", example = "숫자")
+    private String fileCd;
+    @Schema(title = "파일순번", example = "숫자")
+    private Integer fileSeq;
 
     /* List Data */
     @Schema(title = "사업년도", example = "YYYY")
     private String year;
+    @Schema(title = "사업년도", example = "YYYY")
+    private String optYear;
     @Schema(title = "회차", example = "1")
     private String episd;
 
@@ -96,8 +106,12 @@ public class WBJAcomSearchDTO extends BaseDTO {
     private String modDtm;
     @Schema(title = "훈격", example = "")
     private String prizeCdNm;
+    @Schema(title = "훈격코드", example = "")
+    private String prizeCd;
     @Schema(title = "포상", example = "")
     private String mrtsCdNm;
+    @Schema(title = "포상코드", example = "")
+    private String mrtsCd;
 
     @Schema(title = "담당위원코드", example = "")
     private String picCmssrSeq;
@@ -113,13 +127,20 @@ public class WBJAcomSearchDTO extends BaseDTO {
     @Schema(title = "검색 리스트", example = "")
     List<WBJAcomSearchDTO> list;
 
-
     /* 검색 관련 코드 */
     @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")
     private String carbonDate;
 
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
+    @Schema(title = "포상 코드 리스트")
+    private List mrtsCdList;
+    @Schema(title = "훈격 코드 리스트")
+    private List prizeCdList;
+    @Schema(title = "1차결과 리스트")
+    private List appctnSttsCdList;
+    @Schema(title = "최종결과 리스트")
+    private List mngSttsCdList;
 
     @Schema(title = "진행상태 코드 리스트")
     private List carbonCdList;

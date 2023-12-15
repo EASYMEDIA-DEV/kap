@@ -23,38 +23,34 @@ public class WBFASmartRoundSearchDTO extends BaseDTO {
 
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
-
     @Schema(title = "회차순번", example = "숫자")
     private Integer episdSeq;
-
     @Schema(title = "년도", example = "숫자")
     private Integer year;
     @Schema(title = "회차", example = "숫자")
     private Integer episd;
-
     @Schema(title = "접수시작일시", example = "yyyy-MM-dd hh:mm:ss")
     private String accsStrtDtm;
     @Schema(title = "접수종료일시", example = "yyyy-MM-dd hh:mm:ss")
     private String accsEndDtm;
-
     @Schema(title = "사업시작일시", example = "yyyy-MM-dd hh:mm:ss")
     private String bsnStrtDtm;
     @Schema(title = "사업종료일시", example = "yyyy-MM-dd hh:mm:ss")
     private String bsnEndDtm;
-
     @Schema(title = "진행상태", example = "")
     private String dateState;
-
     @Schema(title = "노출 여부")
     private String expsYn;
-
     @Schema(title = "검색조건", example = "yyyy-MM-dd hh:mm:ss")
     private String carbonDate;
-
     @Schema(title = "진행상태 코드 리스트")
     private List CdList;
     @Schema(title = "노출여부 리스트")
     private List expsYnList;
+    @Schema(title = "유형 옵션 구분")
+    private String optnCd;
+    @Schema(title = "진행상태 코드 리스트")
+    private List carbonCdList;
 
     @Schema(title = "조회 리스트")
     private List<WBFASmartRoundSearchDTO> list;

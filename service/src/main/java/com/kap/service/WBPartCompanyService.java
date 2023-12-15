@@ -3,6 +3,7 @@ package com.kap.service;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import com.kap.core.dto.wb.WBPartCompanyDTO;
+import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
 
 /**
  * 스마트공장구축 > 신청업체관리 Service
@@ -28,5 +29,7 @@ public interface WBPartCompanyService {
     public WBPartCompanyDTO selPartUserDetail(WBPartCompanyDTO wBPartCompanyDTO);
 
     public WBCompanyDetailMstDTO selectPartUserCompDetailAjax(WBPartCompanyDTO wBPartCompanyDTO);
+
+    public int selectPartUserChkAjax(WBPartCompanyDTO wBPartCompanyDTO);
 
 }

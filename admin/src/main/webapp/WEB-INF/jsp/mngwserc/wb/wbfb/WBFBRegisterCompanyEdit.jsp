@@ -1,21 +1,29 @@
-
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
+<c:set var="startId" value="strtDt" />
+<c:set var="endId" value="endDt" />
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/wb/wbf/WBFBRegisterCompanyEditCtrl controller/co/COFormCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>신청부품사 상세/수정</h6><hr>
 
+        <%-- rtnData target Set - 신청자 정보 관련 DTO --%>
+        <c:set var="registerDtl" value="${rtnBasicData.registerDtl}"/>
+
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <div id="basicData">
                 <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="" />
-                <input type="hidden" class="notRequired" name="id" value="" />
-                <input type="hidden" class="notRequired" name="bsnmNo" value="" />
-                <input type="hidden" class="notRequired" name="appctnSeq" value="" />
+                <input type="hidden" class="notRequired" name="beforeMemSeq" value="${registerDtl.memSeq}" />
+                <input type="hidden" class="notRequired" name="beforeId" value="${registerDtl.id}" />
+                <%-- 현재 신청자 id --%>
+                <input type="hidden" class="notRequired" name="memSeq" value="${registerDtl.memSeq}" />
+                <input type="hidden" class="notRequired" name="id" value="${registerDtl.id}" />
+                <%-- 변형 전 사업자번호 --%>
+                <input type="hidden" class="notRequired" name="bsnmNo" value="${registerDtl.bsnmNo}" />
+                <input type="hidden" class="notRequired" name="appctnSeq" value="${rtnBasicData.appctnSeq}" />
 
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>회차 정보</h6>
-
                 <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">연도<span class="star"> *</span></label>
@@ -24,7 +32,9 @@
                                 <select class="form-control input-sm" id="optYear" name="year" title="연도">
                                     <option value="">연도 전체</option>
                                     <c:forEach var="optYear" items="${optYearList}" varStatus="status">
-                                        <option value="${optYear}">${optYear}</option>
+                                        <option value="${optYear}" <c:if test="${registerDtl.year eq optYear}">selected</c:if> >
+                                                ${optYear}
+                                        </option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -34,6 +44,11 @@
                         <div class="col-sm-2">
                             <select class="form-control input-sm" id="optEpisd" name="episd" title="회차">
                                 <option value="">회차 전체</option>
+                                <c:forEach var="optEpisd" items="${rtnBasicData.episdList}" varStatus="status" >
+                                    <option value="${optEpisd}" <c:if test="${registerDtl.episd eq optEpisd}">selected</c:if> >
+                                            ${optEpisd}
+                                    </option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -46,7 +61,7 @@
                         <label class="col-sm-1 control-label">신청자(아이디)<span class="star"> *</span></label>
                         <div class="col-sm-5" style="margin-left: -15px">
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" id="id" value="" title="신청자" maxlength="50" disabled/>
+                                <input type="text" class="form-control" id="id" value="${registerDtl.id}" title="신청자" maxlength="50" disabled/>
                             </div>
                             <div class="col-sm-1">
                                 <button type="button" id="btnPartUserModal" class="btn btn-sm btn-info">회원검색</button>
@@ -55,7 +70,7 @@
 
                         <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                         <div class="col-sm-2">
-                            <p class="form-control-static" id="email"></p>
+                            <p class="form-control-static" id="email">${registerDtl.email}</p>
                         </div>
                     </div>
                 </fieldset>
@@ -69,14 +84,16 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                         <c:if test="${fn:contains(cdList.cd, 'MEM_CD020')}">
-                                            <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                            <option value="${cdList.cd}" <c:if test="${registerDtl.deptCd eq cdList.cd}">selected</c:if> >
+                                                    ${cdList.cdNm}
+                                            </option>
                                         </c:if>
                                     </c:forEach>
                                 </select>
 
                             </div>
                             <div class="col-sm-4" style="margin-left: -15px">
-                                <input type="text" class="form-control " id="deptDtlNm" name="deptDtlNm" value="" title="부서 상세" maxlength="50"/>
+                                <input type="text" class="form-control " id="deptDtlNm" name="deptDtlNm" value="${registerDtl.deptDtlNm}" title="부서 상세" maxlength="50"/>
                             </div>
                         </div>
 
@@ -87,13 +104,15 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                         <c:if test="${fn:contains(cdList.cd, 'MEM_CD010')}">
-                                            <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                            <option value="${cdList.cd}" <c:if test="${registerDtl.pstnCd eq cdList.cd}">selected</c:if> >
+                                                    ${cdList.cdNm}
+                                            </option>
                                         </c:if>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="col-sm-4" style="margin-left: -15px">
-                                <input type="text" class="form-control " id="pstnNm" name="pstnNm" value="" title="직급 상세" maxlength="50"/>
+                                <input type="text" class="form-control " id="pstnNm" name="pstnNm" value="${registerDtl.pstnNm}" title="직급 상세" maxlength="50"/>
                             </div>
                         </div>
                     </div>
@@ -104,12 +123,12 @@
                         <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                         <div class="col-sm-5"style="margin-left: -15px">
                             <div class="col-sm-6">
-                                <p class="form-control-static" id="hpNo"></p>
+                                <p class="form-control-static" id="hpNo">${registerDtl.hpNo}</p>
                             </div>
                         </div>
                         <label class="col-sm-1 control-label">일반 전화번호</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control notRequired" id="telNo" name="telNo" value="" title="전화번호" maxlength="50"/>
+                            <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="${registerDtl.telNo}" title="전화번호" maxlength="50"/>
                         </div>
                     </div>
                 </fieldset>
@@ -121,7 +140,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">부품사명<span class="star"> *</span></label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="cmpnNm"></p>
+                            <p class="form-control-static" id="cmpnNm">${registerDtl.cmpnNm}</p>
                         </div>
                     </div>
                 </fieldset>
@@ -135,7 +154,7 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                         <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnInfo.ctgryCd eq cdList.cd}">selected</c:if>>
+                                            <option value="${cdList.cd}" <c:if test="${registerDtl.ctgryCd eq cdList.cd}">selected</c:if> >
                                                     ${cdList.cdNm}
                                             </option>
                                         </c:if>
@@ -151,7 +170,9 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                         <c:if test="${fn:contains(cdList.cd, 'COMPANY020')}">
-                                            <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                            <option value="${cdList.cd}" <c:if test="${registerDtl.sizeCd eq cdList.cd}">selected</c:if> >
+                                                    ${cdList.cdNm}
+                                            </option>
                                         </c:if>
                                     </c:forEach>
                                 </select>
@@ -165,7 +186,7 @@
                         <label class="col-sm-1 control-label">대표자명<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="col-sm-6" style="margin-left: -15px">
-                                <p class="form-control-static" id="rprsntNm"></p>
+                                <p class="form-control-static" id="rprsntNm">${registerDtl.rprsntNm}</p>
                             </div>
                         </div>
 
@@ -174,7 +195,7 @@
                             <div class="col-sm-6" style="margin-left: -15px">
                                 <div class="input-group">
                                     <input type="text" class="form-control input-sm datetimepicker_strtDt" id="stbsmDt" name="stbsmDt"
-                                           value=""
+                                           value="${registerDtl.stbsmDt}"
                                            title="설립일자" readonly onclick="cmmCtrl.initCalendar(this);"/>
                                     <span class="input-group-btn" style="z-index:0;">
                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
@@ -192,13 +213,19 @@
                         <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="col-sm-6" style="margin-left: -15px">
-                                <input type="text" class="form-control input-sm" id="compTel" name="compTel" value="" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
+                                <input type="text" class="form-control phoneChk input-sm" id="compTel" name="compTel" value="${registerDtl.compTel}" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
                             </div>
                         </div>
 
                         <label class="col-sm-1 control-label">사업자등록<br/>번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="bsnmNo" title="재직 회사사업자번호"></p>
+                            <p class="form-control-static" id="bsnmNo" title="재직 회사사업자번호">
+                                ${fn:substring(registerDtl.bsnmNo, 0, 3)}
+                                -
+                                ${fn:substring(registerDtl.bsnmNo, 3, 5)}
+                                -
+                                ${fn:substring(registerDtl.bsnmNo, 5, -1)}
+                            </p>
                         </div>
                     </div>
                 </fieldset>
@@ -210,11 +237,11 @@
                             <input type="button" class="btn btn-sm btn-primary" id="searchPostCode" value="우편번호 검색"><br>
                             <br>
                             <div style="display: flex; gap: 10px;">
-                                <input type="text" class="form-control input-sm" id="zipCode" name="zipCode" value="" readonly placeholder="우편번호" style="width: 95px;" title="주소">
-                                <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="" readonly placeholder="기본주소" style="width: 295px;" title="주소">
+                                <input type="text" class="form-control input-sm" id="zipCode" name="zipCode" value="${registerDtl.zipCode}" readonly placeholder="우편번호" style="width: 95px;" title="주소">
+                                <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${registerDtl.bscAddr}" readonly placeholder="기본주소" style="width: 295px;" title="주소">
                             </div>
                             <br>
-                            <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="" placeholder="상세주소" style="width: 400px;" maxlength="50" title="주소">
+                            <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${registerDtl.dtlAddr}" placeholder="상세주소" style="width: 400px;" maxlength="50" title="주소">
                         </div>
                     </div>
                 </fieldset>
@@ -223,11 +250,13 @@
                     <div class="form-group text-sm form-inline">
                         <label class="col-sm-1 control-label">매출액(연도)</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="" title="매출액" maxlength="50" placeholder="매출액"/>
+                            <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${registerDtl.slsPmt}" title="매출액" maxlength="50" placeholder="매출액"/>
                             &nbsp;억원&nbsp;
                             <select class="form-control input-sm notRequired" id="slsYear" name="slsYear">
                                 <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                    <option value="${cdList.cd}" >${cdList.cdNm}</option>
+                                    <option value="${cdList.cd}" <c:if test="${registerDtl.slsYear eq cdList.cd}">selected</c:if>>
+                                            ${cdList.cdNm}
+                                    </option>
                                 </c:forEach>
                             </select>
                             &nbsp;년&nbsp;
@@ -235,7 +264,7 @@
 
                         <label class="col-sm-1 control-label">직원수</label>
                         <div class="col-sm-5">
-                            <input type="text" class="form-control input-sm notRequired" id="mpleCnt" name="mpleCnt" value="" title="직원수" maxlength="50" placeholder="직원수 입력"/>
+                            <input type="text" class="form-control input-sm notRequired" id="mpleCnt" name="mpleCnt" value="${registerDtl.mpleCnt}" title="직원수" maxlength="50" placeholder="직원수 입력"/>
                         </div>
                     </div>
                 </fieldset>
@@ -244,9 +273,9 @@
                     <div class="form-group text-sm form-inline">
                         <label class="col-sm-1 control-label">주생산품</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="" title="주생산품(1)" maxlength="50" placeholder="주생산품(1)을 입력해주세요."/>
-                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="" title="주생산품(2)" maxlength="50" placeholder="주생산품(2)을 입력해주세요."/>
-                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="" title="주생산품(3)" maxlength="50" placeholder="주생산품(3)을 입력해주세요."/>
+                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="${registerDtl.mjrPrdct1}" title="주생산품(1)" maxlength="50" placeholder="주생산품(1)을 입력해주세요."/>
+                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="${registerDtl.mjrPrdct2}" title="주생산품(2)" maxlength="50" placeholder="주생산품(2)을 입력해주세요."/>
+                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="${registerDtl.mjrPrdct3}" title="주생산품(3)" maxlength="50" placeholder="주생산품(3)을 입력해주세요."/>
                         </div>
                     </div>
                 </fieldset>
@@ -260,7 +289,7 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                         <c:if test="${fn:contains(cdList, 'COMPANY030')}">
-                                            <option value="${cdList.cd}" >
+                                            <option value="${cdList.cd}" <c:if test="${registerDtl.qlty5starCd eq cdList.cd}">selected</c:if> >
                                                     ${cdList.cdNm}
                                             </option>
                                         </c:if>
@@ -269,7 +298,7 @@
                                 <select class="form-control input-sm notRequired" id="qlty5starYear" name="qlty5starYear" title="품질5스타연도">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                        <option value="${cdList.cd}" >
+                                        <option value="${cdList.cd}" <c:if test="${registerDtl.qlty5starYear eq cdList.cd}">selected</c:if> >
                                                 ${cdList.cdNm}
                                         </option>
                                     </c:forEach>
@@ -285,7 +314,7 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                         <c:if test="${fn:contains(cdList, 'COMPANY030')}">
-                                            <option value="${cdList.cd}" >
+                                            <option value="${cdList.cd}" <c:if test="${registerDtl.pay5starCd eq cdList.cd}">selected</c:if> >
                                                     ${cdList.cdNm}
                                             </option>
                                         </c:if>
@@ -294,7 +323,7 @@
                                 <select class="form-control input-sm notRequired" id="pay5starYear" name="pay5starYear" title="납입5스타연도">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                        <option value="${cdList.cd}" >
+                                        <option value="${cdList.cd}" <c:if test="${registerDtl.pay5starYear eq cdList.cd}">selected</c:if> >
                                                 ${cdList.cdNm}
                                         </option>
                                     </c:forEach>
@@ -310,7 +339,7 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                         <c:if test="${fn:contains(cdList, 'COMPANY030')}">
-                                            <option value="${cdList.cd}">
+                                            <option value="${cdList.cd}" <c:if test="${registerDtl.tchlg5starCd eq cdList.cd}">selected</c:if> >
                                                     ${cdList.cdNm}
                                             </option>
                                         </c:if>
@@ -319,7 +348,7 @@
                                 <select class="form-control input-sm notRequired" id="tchlg5starYear" name="tchlg5starYear" title="기술5스타연도">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                        <option value="${cdList.cd}">
+                                        <option value="${cdList.cd}" <c:if test="${registerDtl.tchlg5starYear eq cdList.cd}">selected</c:if> >
                                                 ${cdList.cdNm}
                                         </option>
                                     </c:forEach>
@@ -334,19 +363,19 @@
                         <label class="col-sm-1 control-label">SQ 정보</label>
                         <div class="col-sm-10">
                             <c:forEach var="i" begin="1" end="3" varStatus="status">
-                                <div class="col-sm-12" id="sqInfoArea${status.index-1}">
-                                    <input type="hidden" class="notRequired" id="cbsnSeq" name="sqInfoList[${status.index-1}].cbsnSeq" value="" />
-                                    <input type="text" class="form-control input-sm notRequired" id="nm" name="sqInfoList[${status.index-1}].nm" value="" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
-                                    <input type="text" class="form-control input-sm notRequired" id="score" name="sqInfoList[${status.index-1}].score" value="" title="점수" placeholder="SQ 점수입력" maxlength="50"/>
+                                <div class="col-sm-12 sqInfoArea" id="sqInfoArea${status.index-1}">
+                                    <input type="hidden" class="notRequired" id="cbsnSeq" name="sqInfoList[${status.index-1}].cbsnSeq" value="${rtnBasicData.searchSqInfoList[status.index-1].cbsnSeq}" />
+                                    <input type="text" class="form-control input-sm notRequired" id="nm" name="sqInfoList[${status.index-1}].nm" value="${rtnBasicData.searchSqInfoList[status.index-1].nm}" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="score" name="sqInfoList[${status.index-1}].score" value="${rtnBasicData.searchSqInfoList[status.index-1].score}" title="점수" placeholder="SQ 점수입력" maxlength="50"/>
                                     <select class="form-control input-sm notRequired" id="year" name="sqInfoList[${status.index-1}].year" title="평가년도" style="width:auto;">
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                            <option value="${cdList.cd}" >
+                                            <option value="${cdList.cd}" <c:if test="${rtnBasicData.searchSqInfoList[status.index-1].year eq cdList.cd}">selected</c:if> >
                                                     ${cdList.cdNm}
                                             </option>
                                         </c:forEach>
                                     </select>
-                                    <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm" name="sqInfoList[${status.index-1}].crtfnCmpnNm" value="" title="인증주관사명" placeholder="SQ 인증주관사 입력" maxlength="50"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm" name="sqInfoList[${status.index-1}].crtfnCmpnNm" value="${rtnBasicData.searchSqInfoList[status.index-1].crtfnCmpnNm}" title="인증주관사명" placeholder="SQ 인증주관사 입력" maxlength="50"/>
                                 </div>
                             </c:forEach>
                         </div>
@@ -354,31 +383,40 @@
                 </fieldset>
 
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 변경 이력</h6>
-                <fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">담당위원명</label>
-                        <div class="col-sm-5" style="margin-left: -15px">
+                <fieldset id="trnsfField">
+                    <div class="clearfix">
+                        <!-- 현재 페이징 번호 -->
+                        <input type="hidden" id="pageIndex" name="pageIndex" value="${ registerDtl.pageIndex }" />
+                        <!-- 페이징 버튼 사이즈 -->
+                        <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ registerDtl.pageRowSize }" />
+                        <input type="hidden" id="listRowSize" name="listRowSize" value="${ registerDtl.listRowSize }" />
 
+                        <div class="pull-right ml-sm" data-html2canvas-ignore="true">
+                            <select class="form-control input-sm trsfListRowSizeContainer" >
+                                <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                    <jsp:param name="listRowSize" value="${ rtnDto.listRowSize }" />
+                                </jsp:include>
+                            </select>
                         </div>
+                    </div>
+                    <div class="table-responsive col-sm-12 p0 m0" id="vueList">
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">이전 신청자</th>
+                                <th class="text-center">변경 신청자</th>
+                                <th class="text-center">변경일 / 변경자</th>
+                            </tr>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="trsfListContainer"/>
 
-                        <label class="col-sm-1 control-label">이메일</label>
-                        <div class="col-sm-2">
-                        </div>
+                        </table>
+                        <!-- 페이징 버튼 -->
+                        <div id="trsfPagingContainer"/>
                     </div>
                 </fieldset>
 
-                <fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">담당위원명</label>
-                        <div class="col-sm-5" style="margin-left: -15px">
-
-                        </div>
-
-                        <label class="col-sm-1 control-label">이메일</label>
-                        <div class="col-sm-2">
-                        </div>
-                    </div>
-                </fieldset>
 
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>담당위원 정보</h6>
                 <fieldset>
@@ -386,16 +424,18 @@
                         <label class="col-sm-1 control-label">담당위원명</label>
                         <div class="col-sm-5" style="margin-left: -15px">
                             <div class="col-sm-6" style="margin-left: -15px">
-                                <p class="form-control-static" ></p>
-                            </div>
-                            <div class="col-sm-1">
-                                <button type="button" id="btnPartCsModal" class="btn btn-sm btn-info">검색</button>
+                                <p class="form-control-static" >
+                                    <c:if test="${empty registerDtl.picCmssrNm}">-</c:if>
+                                    <c:if test="${not empty registerDtl.picCmssrNm}">${registerDtl.picCmssrNm}</c:if>
+                                </p>
                             </div>
                         </div>
-
                         <label class="col-sm-1 control-label">이메일</label>
                         <div class="col-sm-2">
-                            <p class="form-control-static" ></p>
+                            <p class="form-control-static" >
+                                <c:if test="${empty registerDtl.picCmssrEmail}">-</c:if>
+                                <c:if test="${not empty registerDtl.picCmssrEmail}">${registerDtl.picCmssrEmail}</c:if>
+                            </p>
                         </div>
                     </div>
                 </fieldset>
@@ -404,13 +444,18 @@
                         <label class="col-sm-1 control-label">휴대폰번호</label>
                         <div class="col-sm-5" style="margin-left: -15px">
                             <div class="col-sm-6" style="margin-left: -15px">
-                                <p class="form-control-static" ></p>
+                                <p class="form-control-static" >
+                                    <c:if test="${empty registerDtl.picCmssrHpNo}">-</c:if>
+                                    <c:if test="${not empty registerDtl.picCmssrHpNo}">${registerDtl.picCmssrHpNo}</c:if>
+                                </p>
                             </div>
                         </div>
-
                         <label class="col-sm-1 control-label">업체명</label>
                         <div class="col-sm-2">
-                            <p class="form-control-static" ></p>
+                            <p class="form-control-static">
+                                <c:if test="${empty registerDtl.picCmssrCmpnNm}">-</c:if>
+                                <c:if test="${not empty registerDtl.picCmssrCmpnNm}">${registerDtl.picCmssrCmpnNm}</c:if>
+                            </p>
                         </div>
                     </div>
                 </fieldset>
@@ -421,7 +466,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">종된사업장번호</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control input-sm notRequired" id="sbrdnBsnmNo" name="sbrdnBsnmNo" value="" title="종된사업장번호" maxlength="4" placeholder="종된사업장번호">
+                            <input type="text" class="form-control input-sm notRequired" id="sbrdnBsnmNo" name="sbrdnBsnmNo" value="${registerDtl.sbrdnBsnmNo}" title="종된사업장번호" maxlength="4" placeholder="종된사업장번호">
                         </div>
                     </div>
                 </fieldset>
@@ -431,6 +476,11 @@
                         <div class="col-sm-6" style="margin-left: -15px">
                             <select class="form-control input-sm" id="optAsigt" name="taskCd" title="과제명">
                                 <option value="">선택</option>
+                                <c:forEach var="cdList" items="${rtnBasicData.roundMstDTO.asigtList}" varStatus="status">
+                                    <option value="${cdList.bsnOptnSeq}" <c:if test="${registerDtl.taskCd eq cdList.bsnOptnSeq}" >selected</c:if>>
+                                            ${cdList.optnNm}
+                                    </option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -440,6 +490,11 @@
                         <div class="col-sm-6" style="margin-left: -15px">
                             <select class="form-control input-sm " id="optBsin" name="bsnTypeCd" title="사업 유형">
                                 <option value="">선택</option>
+                                <c:forEach var="cdList" items="${rtnBasicData.roundMstDTO.bsinList}" varStatus="status">
+                                    <option value="${cdList.bsnOptnSeq}" <c:if test="${registerDtl.bsnTypeCd eq cdList.bsnOptnSeq}" >selected</c:if>>
+                                            ${cdList.optnNm}
+                                    </option>
+                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -451,7 +506,9 @@
                             <select class="form-control input-sm" name="smtfnPrsntCd" title="스마트화 현재 수준">
                                 <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
                                     <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
-                                        <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                        <option value="${cdList.cd}" <c:if test="${registerDtl.smtfnPrsntCd eq cdList.cd}" >selected</c:if>>
+                                                ${cdList.cdNm}
+                                        </option>
                                     </c:if>
                                 </c:forEach>
                             </select>
@@ -464,7 +521,9 @@
                             <select class="form-control input-sm " name="smtfnTrgtCd">
                                 <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
                                     <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
-                                        <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                        <option value="${cdList.cd}" <c:if test="${registerDtl.smtfnTrgtCd eq cdList.cd}" >selected</c:if>>
+                                                ${cdList.cdNm}
+                                        </option>
                                     </c:if>
                                 </c:forEach>
                             </select>
@@ -479,11 +538,11 @@
                     <label class="col-sm-1 control-label">선급금 해당 여부<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3">
-                            <input type="radio" id="applicable" class="pmndvPmtYn" name="pmndvPmtYn" value="Y" checked/>
+                            <input type="radio" id="applicable" class="pmndvPmtYn" name="pmndvPmtYn" value="Y" <c:if test="${registerDtl.pmndvPmtYn eq 'Y'}" >checked</c:if>/>
                             <label for="applicable">해당</label>
                         </div>
                         <div class="col-sm-3">
-                            <input type="radio" id="notApplicable" class="pmndvPmtYn" name="pmndvPmtYn" value="N"/>
+                            <input type="radio" id="notApplicable" class="pmndvPmtYn" name="pmndvPmtYn" value="N" <c:if test="${registerDtl.pmndvPmtYn eq 'N' or empty registerDtl.pmndvPmtYn }" >checked</c:if>/>
                             <label for="notApplicable">미해당</label>
                         </div>
                     </div>
@@ -491,6 +550,7 @@
             </div>
 
             <div id="frmDataSpprt">
+
                 <div class="container-fluid">
                     <div class="panel-group" id="accRoot" role="tablist">
                         <%-- 영역 1 --%>
@@ -500,13 +560,15 @@
                             </div>
                             <div id="addLow1" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
+                                    <input type="hidden" class="notRequired" data-name="appctnSpprtSeq" name="defaultSpprtDtl.appctnSpprtSeq" value="">
+
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">접수일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="spprtDtl.accsDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="defaultSpprtDtl.accsDt" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -521,7 +583,7 @@
                                             <label class="col-sm-2 control-label">정부지원금(①)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.gvmntSpprtPmt" value="" title="정부지원금" maxlength="50" placeholder="정부지원금">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" data-name="gvmntSpprtPmt" name="defaultSpprtDtl.gvmntSpprtPmt" value="" title="정부지원금" maxlength="50" placeholder="정부지원금">
                                                 </div>
                                             </div>
                                         </div>
@@ -531,7 +593,7 @@
                                             <label class="col-sm-2 control-label">대기업출연금액(②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.mjcmnAprncPmt" value="" title="정부지원금" maxlength="50" placeholder="대기업출연금액">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" data-name="mjcmnAprncPmt" name="defaultSpprtDtl.mjcmnAprncPmt" value="" title="대기업출연금액" maxlength="50" placeholder="대기업출연금액">
                                                 </div>
                                             </div>
                                         </div>
@@ -541,8 +603,7 @@
                                             <label class="col-sm-2 control-label">총금액(①+②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired" name="spprtDtl.ttlPmt" value="" />
-                                                    <input type="text" class="form-control input-sm notRequired" value="" title="총금액" maxlength="50" placeholder="총금액" disabled>
+                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="defaultSpprtDtl.ttlPmt" value="" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -552,7 +613,7 @@
                                             <label class="col-sm-2 control-label">은행명</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.bankNm" value="" title="은행명" maxlength="50" placeholder="은행명">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="bankNm" name="defaultSpprtDtl.bankNm" value="" title="은행명" maxlength="50" placeholder="은행명">
                                                 </div>
                                             </div>
                                         </div>
@@ -562,7 +623,7 @@
                                             <label class="col-sm-2 control-label">계좌번호</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.acntNo" value="" title="계좌번호" maxlength="50" placeholder="계좌번호">
+                                                    <input type="text" class="form-control numberChk input-sm notRequired" data-name="acntNo" name="defaultSpprtDtl.acntNo" value="" title="계좌번호" maxlength="50" placeholder="계좌번호">
                                                 </div>
                                             </div>
                                         </div>
@@ -572,7 +633,7 @@
                                             <label class="col-sm-2 control-label">예금주</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.dpsitNm" value="" title="예금주" maxlength="50" placeholder="예금주">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="dpsitNm" name="defaultSpprtDtl.dpsitNm" value="" title="예금주" maxlength="50" placeholder="예금주">
                                                 </div>
                                             </div>
                                         </div>
@@ -581,10 +642,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="spprtDtl.appctnSttsCd" title="사용자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="appctnSttsCd" name="defaultSpprtDtl.appctnSttsCd" title="사용자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03001_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03001_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -598,7 +658,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static"><c:out value="" /></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -609,7 +669,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="spprtDtl.giveDt" value="" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="defaultSpprtDtl.giveDt" value="" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -623,10 +683,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">지급차수</label>
                                             <div class="col-sm-6 form-inline" >
-                                                <select class="form-control input-sm" name="spprtDtl.giveSeq" title="지급차수">
+                                                <select class="form-control input-sm notRequired" data-name="giveSeq" name="defaultSpprtDtl.giveSeq" title="지급차수">
                                                     <option value="">지급차수</option>
-                                                    <c:forEach var="orderList" items="${rtnData.orderList}" varStatus="status">
-                                                        <option value="${orderList.giveSeq}">${status.index +1} 차수</option>
+                                                    <c:forEach var="orderList" items="${rtnBasicData.orderList}" varStatus="status">
+                                                        <option value="${orderList.giveSeq}" >${orderList.giveOrd} 차수</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -636,10 +696,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="spprtDtl.mngSttsCd" title="관리자 상태값/결과">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="defaultSpprtDtl.mngSttsCd" title="관리자 상태값/결과">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03001_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03001_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -653,7 +712,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static"><c:out value="" /></p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -662,11 +721,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE05">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[0].seqNm" value="spprtAppctnFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile1" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' data-name="spprtAppctnFileSeq" data-fileType='ATTACH_FILE_TYPE05' name="spprtAppctnFile1" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -681,11 +739,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">계좌이체약정서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[1].type" value="ATTACH_FILE_TYPE06">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[1].seqNm" value="acntFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="acntFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="계좌이체약정서">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile2" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="계좌이체약정서">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' data-name="acntFileSeq" data-fileType='ATTACH_FILE_TYPE06' name="spprtAppctnFile2" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -700,11 +757,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">통장사본<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[2].type" value="ATTACH_FILE_TYPE07">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[2].seqNm" value="bnkbkFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="bnkbkFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' data-name="bnkbkFileSeq" data-fileType='ATTACH_FILE_TYPE07' name="spprtAppctnFile3" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -726,14 +782,14 @@
                             </div>
                             <div id="addLow2" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
-
+                                    <input type="hidden" class="notRequired" data-name="appctnSpprtSeq" name="spprtDtl.appctnSpprtSeq" value="">
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">접수일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="spprtDtl.accsDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" data-name="accsDt" name="spprtDtl.accsDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -748,7 +804,7 @@
                                             <label class="col-sm-2 control-label">정부지원금(①)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.gvmntSpprtPmt" value="" title="정부지원금" maxlength="50" placeholder="정부지원금">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" data-name="gvmntSpprtPmt" name="spprtDtl.gvmntSpprtPmt" value="" title="정부지원금" maxlength="50" placeholder="정부지원금">
                                                 </div>
                                             </div>
                                         </div>
@@ -758,7 +814,7 @@
                                             <label class="col-sm-2 control-label">대기업출연금액(②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.mjcmnAprncPmt" value="" title="정부지원금" maxlength="50" placeholder="대기업출연금액">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" data-name="mjcmnAprncPmt" name="spprtDtl.mjcmnAprncPmt" value="" title="정부지원금" maxlength="50" placeholder="대기업출연금액">
                                                 </div>
                                             </div>
                                         </div>
@@ -768,8 +824,7 @@
                                             <label class="col-sm-2 control-label">총금액(①+②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired" name="spprtDtl.ttlPmt" value="" />
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.ttlPmt" value="" title="총금액" maxlength="50" placeholder="총금액" disabled>
+                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="spprtDtl.ttlPmt" value="" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -779,7 +834,7 @@
                                             <label class="col-sm-2 control-label">은행명</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.bankNm" value="" title="은행명" maxlength="50" placeholder="은행명">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="bankNm" name="spprtDtl.bankNm" value="" title="은행명" maxlength="50" placeholder="은행명">
                                                 </div>
                                             </div>
                                         </div>
@@ -789,7 +844,7 @@
                                             <label class="col-sm-2 control-label">계좌번호</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.acntNo" value="" title="계좌번호" maxlength="50" placeholder="계좌번호">
+                                                    <input type="text" class="form-control input-sm numberChk notRequired" data-name="acntNo" name="spprtDtl.acntNo" value="" title="계좌번호" maxlength="50" placeholder="계좌번호">
                                                 </div>
                                             </div>
                                         </div>
@@ -799,7 +854,7 @@
                                             <label class="col-sm-2 control-label">예금주</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.dpsitNm" value="" title="예금주" maxlength="50" placeholder="예금주">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="dpsitNm" name="spprtDtl.dpsitNm" value="" title="예금주" maxlength="50" placeholder="예금주">
                                                 </div>
                                             </div>
                                         </div>
@@ -808,10 +863,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="spprtDtl.appctnSttsCd" title="사용자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="appctnSttsCd" name="spprtDtl.appctnSttsCd" title="사용자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03002_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03002_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -825,7 +879,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static appctnSttsChngDtm " ></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -836,7 +890,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="spprtDtl.giveDt" value="" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtl.giveDt" value="" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -850,8 +904,11 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">지급차수</label>
                                             <div class="col-sm-6 form-inline" >
-                                                <select class="form-control input-sm" id="giveSeq" name="spprtDtl.giveSeq" title="지급차수">
-                                                    <option value="">연도 전체</option>
+                                                <select class="form-control input-sm notRequired" id="giveSeq" data-name="giveSeq" name="spprtDtl.giveSeq" title="지급차수">
+                                                    <option value="">지급차수</option>
+                                                    <c:forEach var="orderList" items="${rtnBasicData.orderList}" varStatus="status">
+                                                        <option value="${orderList.giveSeq}">${orderList.giveOrd} 차수</option>
+                                                    </c:forEach>
                                                 </select>
                                             </div>
                                         </div>
@@ -860,10 +917,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="spprtDtl.mngSttsCd" title="관리자 상태값/결과">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtl.mngSttsCd" title="관리자 상태값/결과">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03002_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03002_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -877,7 +933,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -886,11 +942,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE05">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[0].seqNm" value="spprtAppctnFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' data-name="spprtAppctnFileSeq" data-fileType='ATTACH_FILE_TYPE05' name="spprtAppctnFile4" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -905,11 +960,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">계좌이체약정서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[1].type" value="ATTACH_FILE_TYPE06">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[1].seqNm" value="acntFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="계좌이체약정서">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile5" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="계좌이체약정서">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-name="acntFileSeq" name="spprtAppctnFile5" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -924,11 +978,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">통장사본<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[2].type" value="ATTACH_FILE_TYPE07">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[2].seqNm" value="bnkbkFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile6" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-name="bnkbkFileSeq" name="spprtAppctnFile6" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -950,14 +1003,14 @@
                             </div>
                             <div id="addLow3" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
-
+                                    <input type="hidden" class="notRequired" data-name="appctnSpprtSeq" name="spprtDtl.appctnSpprtSeq" value="">
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">접수일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="spprtDtl.accsDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="spprtDtl.accsDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -972,7 +1025,7 @@
                                             <label class="col-sm-2 control-label">수수료</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.cmssnPmt" value="" title="수수료" maxlength="50" placeholder="수수료">
+                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="cmssnPmt" name="spprtDtl.cmssnPmt" value="" title="수수료" maxlength="50" placeholder="수수료">
                                                 </div>
                                             </div>
                                         </div>
@@ -981,10 +1034,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="spprtDtl.appctnSttsCd" title="사용자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="appctnSttsCd" name="spprtDtl.appctnSttsCd" title="사용자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03003_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03003_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -998,7 +1050,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1009,7 +1061,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="spprtDtl.giveDt" value="" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtl.giveDt" value="" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1023,10 +1075,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">지급차수</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="spprtDtl.giveSeq" title="지급차수">
+                                                <select class="form-control input-sm notRequired" data-name="giveSeq" name="spprtDtl.giveSeq" title="지급차수">
                                                     <option value="">지급차수</option>
-                                                    <c:forEach var="orderList" items="${rtnData.orderList}" varStatus="status">
-                                                        <option value="${orderList.giveSeq}">${status.index +1} 차수</option>
+                                                    <c:forEach var="orderList" items="${rtnBasicData.orderList}" varStatus="status">
+                                                        <option value="${orderList.giveSeq}">${orderList.giveOrd} 차수</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -1036,10 +1088,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="spprtDtl.mngSttsCd" title="관리자 상태값/결과">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtl.mngSttsCd" title="관리자 상태값/결과">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03003_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03003_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1053,7 +1104,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ><c:out value="" /></p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm" ></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1062,11 +1113,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE05">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[0].seqNm" value="spprtAppctnFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile7" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-name="spprtAppctnFileSeq" name="spprtAppctnFile7" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1081,11 +1131,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">기술임치증<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[1].type" value="ATTACH_FILE_TYPE05">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[1].seqNm" value="spprtAppctnFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="tchlgLseFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="기술임치증">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile8" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="기술임치증">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-name="tchlgLseFileSeq" name="spprtAppctnFile8" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1100,11 +1149,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">임치료 납입 영수증<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[2].type" value="ATTACH_FILE_TYPE05">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnFileInfo[2].seqNm" value="spprtAppctnFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="lsePayFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="임치료 납입 영수증">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile9" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="임치료 납입 영수증">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-name="lsePayFileSeq" name="spprtAppctnFile9" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1123,7 +1171,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">관리자메모</label>
                             <div class="col-sm-11">
-                                <textarea class="form-control input-sm" name="admMemo" rows="10" maxlength="2000" title="관리자메모" placeholder="관리자메모를 입력하세요."></textarea>
+                                <textarea class="form-control input-sm" name="admMemo" rows="10" maxlength="2000" title="관리자메모" placeholder="관리자메모를 입력하세요.">${registerDtl.admMemo}</textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -1135,7 +1183,7 @@
                         <div>
                             <div class="text-left mb-xl"><h5>부품사 관리 등록</h5></div>
                             <hr>
-                            <h6 class="mt0"><em class="ion-play mr-sm"></em>전체 진행상태 : 잔급지급(지급완료)</h6>
+                            <h6 class="mt0"><em class="ion-play mr-sm"></em>전체 진행상태 : <span id="rsuemTitle" class=""></span></h6>
                         </div>
 
                         <!-- 영역 1 -->
@@ -1145,16 +1193,16 @@
                             </div>
                             <div id="addEx1" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
-
+                                    <input type="hidden" class="notRequired" data-name="rsumeSeq" name="rsumeTaskDtl.rsumeSeq" value="">
+                                    <input type="hidden" class="notRequired" data-name="rsumeOrd" name="rsumeTaskDtl.rsumeOrd" value="">
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="사용자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="appctnSttsCd" name="rsumeTaskDtl.appctnSttsCd" title="사용자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1168,7 +1216,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1178,9 +1226,12 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">출연기업</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" name="rsumeTaskDtl.aprncCmpnCd" title="출연기업">
-                                                    <c:forEach var="cdList" items="${classTypeList.STTS_CD}" varStatus="status">
-                                                        <option value="${cdList.cdNm}" <c:if test="${rtnDto.episd eq cdList.cdNm}">selected</c:if> >${cdList.cdNm}</option>
+                                                <select class="form-control input-sm notRequired" data-name="aprncCmpnCd" name="rsumeTaskDtl.aprncCmpnCd" title="출연기업">
+                                                    <option value="">선택</option>
+                                                    <c:forEach var="cdList" items="${cdDtlList.APRNC_CMPN_CD}" varStatus="status">
+                                                        <option value="${cdList.cd}" >
+                                                                ${cdList.cdNm}
+                                                        </option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -1190,10 +1241,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1208,7 +1258,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" id="tes" data-name="mngSttsChngDtm" ></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1217,11 +1267,12 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">신청서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE05">
-                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].seqNm" value="spprtAppctnFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="신청서">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile1" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="신청서">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE01">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].seqNm" value="rsumeTaskFile1">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="1" data-fileType='ATTACH_FILE_TYPE01' name="rsumeTaskFile1" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1236,11 +1287,12 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">보안서약서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].type" value="ATTACH_FILE_TYPE05">
-                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].seqNm" value="spprtAppctnFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="보안서약서">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile2" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="보안서약서">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].type" value="ATTACH_FILE_TYPE02">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].seqNm" value="rsumeTaskFile2">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="2" data-fileType='ATTACH_FILE_TYPE02' name="rsumeTaskFile2" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1255,11 +1307,12 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">중소기업확인서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].type" value="ATTACH_FILE_TYPE05">
-                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].seqNm" value="spprtAppctnFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="중소기업확인서">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="중소기업확인서">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].type" value="ATTACH_FILE_TYPE03">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].seqNm" value="rsumeTaskFile3">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="3" data-fileType='ATTACH_FILE_TYPE03' name="rsumeTaskFile3" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1274,11 +1327,12 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">사업자등록증<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].type" value="ATTACH_FILE_TYPE05">
-                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].seqNm" value="spprtAppctnFileSeq">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="사업자등록증">
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="사업자등록증">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].type" value="ATTACH_FILE_TYPE04">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].seqNm" value="rsumeTaskFile4">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="4" data-fileType='ATTACH_FILE_TYPE04' name="rsumeTaskFile4" value="">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1301,14 +1355,16 @@
                             </div>
                             <div id="addEx2" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
+                                    <input type="hidden" class="notRequired" data-name="rsumeSeq" name="rsumeTaskDtl.rsumeSeq" value="">
+                                    <input type="hidden" class="notRequired" data-name="rsumeOrd" name="rsumeTaskDtl.rsumeOrd" value="">
 
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">공급기업명</label>
                                             <div class="col-sm-6 form-inline">
-                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.offerCmpnNm" value="" />
-                                                <input type="text" class="form-control input-sm notRequired" value="" title="공급기업명" maxlength="50" placeholder="공급기업명" disabled>
+                                                <input type="hidden" class="notRequired" data-name="offerCmpnNm" name="rsumeTaskDtl.offerCmpnNm" value="" />
+                                                <input type="text" class="form-control input-sm notRequired" data-name="offerCmpnNm" value="" title="공급기업명" maxlength="50" placeholder="공급기업명" disabled>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1317,10 +1373,10 @@
                                             <label class="col-sm-2 control-label">공급기업 사업자등록번호</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.offerBsnmNo" value="" title="공급기업 사업자등록번호" maxlength="50" placeholder="공급기업 사업자등록번호">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="offerBsnmNo" name="rsumeTaskDtl.offerBsnmNo" value="" title="공급기업 사업자등록번호" maxlength="50" placeholder="공급기업 사업자등록번호">
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <button type="button" id="" class="btn btn-sm btn-info">인증</button>
+                                                    <button type="button" id="bsnmNoAuth" class="btn btn-sm btn-info">인증</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1330,7 +1386,7 @@
                                             <label class="col-sm-2 control-label">공급기업 담당자명</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.offerPicNm" value="" title="공급기업 담당자명" maxlength="50" placeholder="공급기업 담당자명">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="offerPicNm" name="rsumeTaskDtl.offerPicNm" value="" title="공급기업 담당자명" maxlength="50" placeholder="공급기업 담당자명">
                                                 </div>
                                             </div>
                                         </div>
@@ -1340,7 +1396,7 @@
                                             <label class="col-sm-2 control-label">공급기업 담당자 휴대폰</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.offerPicHpNo" value="" title="공급기업 담당자 휴대폰" maxlength="50" placeholder="공급기업 담당자 휴대폰">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="offerPicHpNo" name="rsumeTaskDtl.offerPicHpNo" value="" title="공급기업 담당자 휴대폰" maxlength="50" placeholder="공급기업 담당자 휴대폰">
                                                 </div>
                                             </div>
                                         </div>
@@ -1350,7 +1406,7 @@
                                             <label class="col-sm-2 control-label">공급기업 담당자 이메일</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.offerPicEmail" value="" title="공급기업 담당자 이메일" maxlength="50" placeholder="공급기업 담당자 이메일">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="offerPicEmail" name="rsumeTaskDtl.offerPicEmail" value="" title="공급기업 담당자 이메일" maxlength="50" placeholder="공급기업 담당자 이메일">
                                                 </div>
                                             </div>
                                         </div>
@@ -1360,7 +1416,7 @@
                                             <label class="col-sm-2 control-label">총 사업비</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.ttlBsnPmt" value="" title="총 사업비" maxlength="50" placeholder="총 사업비">
+                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlBsnPmt" name="rsumeTaskDtl.ttlBsnPmt" value="" title="총 사업비" maxlength="50" placeholder="총 사업비">
                                                 </div>
                                             </div>
                                         </div>
@@ -1369,10 +1425,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="appctnSttsCd" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02002_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02002_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1386,7 +1441,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm" ></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1396,7 +1451,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">과제번호</label>
                                             <div class="col-sm-6 form-inline">
-                                                <input type="text" class="form-control input-sm notRequired" id="taskNo" name="rsumeTaskDtl.taskNo" value="" title="과제번호" maxlength="50" placeholder="과제번호">
+                                                <input type="text" class="form-control input-sm notRequired" data-name="taskNo" name="rsumeTaskDtl.taskNo" value="" title="과제번호" maxlength="50" placeholder="과제번호">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1404,10 +1459,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02002_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02002_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1419,9 +1473,9 @@
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">관리자 상태값/결과</label>
+                                            <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1437,15 +1491,17 @@
                             </div>
                             <div id="accEx3" class="panel-collapse collapse " role="tabpanel">
                                 <div class="panel-body">
+                                    <input type="hidden" class="notRequired" data-name="rsumeSeq" name="rsumeTaskDtl.rsumeSeq" value="">
+                                    <input type="hidden" class="notRequired" data-name="rsumeOrd" name="rsumeTaskDtl.rsumeOrd" value="">
+
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="신청자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="appctnSttsCd" name="rsumeTaskDtl.appctnSttsCd" title="신청자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02003_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02003_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1459,7 +1515,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1470,11 +1526,11 @@
                                             <label class="col-sm-2 control-label">점검위원</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.chkCmssrSeq" value="">
-                                                    <input type="text" class="form-control input-sm notRequired" value="" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                    <input type="hidden" class="notRequired" data-name="chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="chkCmssrNm" value="" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <button type="button" class="btn btn-sm btn-info">위원검색</button>
+                                                    <button type="button" class="btn btn-sm btn-info btnCommUserModal">위원검색</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1484,7 +1540,7 @@
                                             <label class="col-sm-2 control-label">점검계획일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.chkPlanDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkPlanDt" name="rsumeTaskDtl.chkPlanDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -1499,7 +1555,7 @@
                                             <label class="col-sm-2 control-label">점검실시일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.chkImplmnDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkImplmnDt" name="rsumeTaskDtl.chkImplmnDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -1513,7 +1569,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">평점</label>
                                             <div class="col-sm-6 form-inline">
-                                                <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.examScore" value="" title="평점" maxlength="50" placeholder="평점">
+                                                <input type="text" class="form-control numberChk input-sm notRequired" data-name="examScore" name="rsumeTaskDtl.examScore" value="" title="평점" maxlength="50" placeholder="평점">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1521,10 +1577,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02003_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02003_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1538,7 +1593,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm" ></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1553,16 +1608,17 @@
                             </div>
                             <div id="accEx4" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
+                                    <input type="hidden" class="notRequired" data-name="rsumeSeq" name="rsumeTaskDtl.rsumeSeq" value="">
+                                    <input type="hidden" class="notRequired" data-name="rsumeOrd" name="rsumeTaskDtl.rsumeOrd" value="">
 
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="신청자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="appctnSttsCd" name="rsumeTaskDtl.appctnSttsCd" title="신청자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1576,7 +1632,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm" ></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1587,11 +1643,11 @@
                                             <label class="col-sm-2 control-label">점검위원</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.chkCmssrSeq" value="" />
-                                                    <input type="text" class="form-control input-sm notRequired" value="" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                    <input type="hidden" class="notRequired" data-name="chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="" />
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="chkCmssrNm" value="" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <button type="button" class="btn btn-sm btn-info">검색</button>
+                                                    <button type="button" class="btn btn-sm btn-info btnCommUserModal">위원검색</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1601,7 +1657,7 @@
                                             <label class="col-sm-2 control-label">점검계획일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.chkPlanDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkPlanDt" name="rsumeTaskDtl.chkPlanDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1616,7 +1672,7 @@
                                             <label class="col-sm-2 control-label">점검실시일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.chkImplmnDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkImplmnDt" name="rsumeTaskDtl.chkImplmnDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1630,10 +1686,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1647,7 +1702,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm" ></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1662,16 +1717,17 @@
                             </div>
                             <div id="accEx5" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
+                                    <input type="hidden" class="notRequired" data-name="rsumeSeq" name="rsumeTaskDtl.rsumeSeq" value="">
+                                    <input type="hidden" class="notRequired" data-name="rsumeOrd" name="rsumeTaskDtl.rsumeOrd" value="">
 
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="appctnSttsCd" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1685,7 +1741,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1696,7 +1752,7 @@
                                             <label class="col-sm-2 control-label">원가계산기관</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.prmcstClcltnInstt" value="" title="원가계산기관" maxlength="50" placeholder="원가계산기관">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="prmcstClcltnInstt" name="rsumeTaskDtl.prmcstClcltnInstt" value="" title="원가계산기관" maxlength="50" placeholder="원가계산기관">
                                                 </div>
                                             </div>
                                         </div>
@@ -1706,7 +1762,7 @@
                                             <label class="col-sm-2 control-label">의뢰일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.rqstDt" value="" title="의뢰일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="rqstDt" name="rsumeTaskDtl.rqstDt" value="" title="의뢰일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1721,7 +1777,7 @@
                                             <label class="col-sm-2 control-label">회신일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.rplyDt" value="" title="회신일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="rplyDt" name="rsumeTaskDtl.rplyDt" value="" title="회신일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1736,7 +1792,7 @@
                                             <label class="col-sm-2 control-label">정부지원금(①)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.gvmntSpprtPmt" value="" title="정부지원금" maxlength="50" placeholder="정부지원금">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" data-name="gvmntSpprtPmt" name="rsumeTaskDtl.gvmntSpprtPmt" value="" title="정부지원금" maxlength="50" placeholder="정부지원금">
                                                 </div>
                                             </div>
                                         </div>
@@ -1746,7 +1802,7 @@
                                             <label class="col-sm-2 control-label">대기업출연금(②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.mjcmnAprncPmt" value="" title="대기업출연금" maxlength="50" placeholder="대기업출연금">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" data-name="mjcmnAprncPmt" name="rsumeTaskDtl.mjcmnAprncPmt" value="" title="대기업출연금" maxlength="50" placeholder="대기업출연금">
                                                 </div>
                                             </div>
                                         </div>
@@ -1756,7 +1812,7 @@
                                             <label class="col-sm-2 control-label">도입기업부담금(③)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.ntdcnCmpnBrdnPmt" value="" title="도입기업부담금" maxlength="50" placeholder="도입기업부담금">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" data-name="ntdcnCmpnBrdnPmt" name="rsumeTaskDtl.ntdcnCmpnBrdnPmt" title="도입기업부담금" maxlength="50" placeholder="도입기업부담금">
                                                 </div>
                                             </div>
                                         </div>
@@ -1766,8 +1822,7 @@
                                             <label class="col-sm-2 control-label">총금액(①+②+③)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.ttlPmt" value="" />
-                                                    <input type="text" class="form-control input-sm notRequired" value="" title="총금액" maxlength="50" placeholder="총금액" disabled>
+                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="rsumeTaskDtl.ttlPmt" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -1776,10 +1831,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1793,7 +1847,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1809,16 +1863,17 @@
                             </div>
                             <div id="accEx6" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
+                                    <input type="hidden" class="notRequired" data-name="rsumeSeq" name="rsumeTaskDtl.rsumeSeq" value="">
+                                    <input type="hidden" class="notRequired" data-name="rsumeOrd" name="rsumeTaskDtl.rsumeOrd" value="">
 
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" data-name="appctnSttsCd" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02006_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02006_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1832,7 +1887,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1843,7 +1898,7 @@
                                             <label class="col-sm-2 control-label">협약일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.agrmtDt" value="" title="협약일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="agrmtDt" name="rsumeTaskDtl.agrmtDt"  title="협약일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1858,7 +1913,7 @@
                                             <label class="col-sm-2 control-label">기간</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.agrmtTermDt" value="" title="기간" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="agrmtTermDt" name="rsumeTaskDtl.agrmtTermDt" title="기간" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1872,10 +1927,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm" name="rsumeTaskDtl.mngSttsCd notRequired" data-name="mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02006_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02006_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1889,7 +1943,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm" ></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1904,16 +1958,17 @@
                             </div>
                             <div id="accEx7" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
+                                    <input type="hidden" class="notRequired" data-name="rsumeSeq" name="rsumeTaskDtl.rsumeSeq" value="">
+                                    <input type="hidden" class="notRequired" data-name="rsumeOrd" name="rsumeTaskDtl.rsumeOrd" value="">
 
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" name="rsumeTaskDtl.appctnSttsCd" data-name="appctnSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_01')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_01_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -1927,7 +1982,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="appctnSttsChngDtm"></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1938,11 +1993,11 @@
                                             <label class="col-sm-2 control-label">점검위원</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.chkCmssrSeq" value="" />
-                                                    <input type="text" class="form-control input-sm notRequired" value="" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                    <input type="hidden" class="notRequired" data-name="chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="" />
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="chkCmssrNm" value="" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <button type="button" class="btn btn-sm btn-info">검색</button>
+                                                    <button type="button" class="btn btn-sm btn-info">위원검색</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1952,7 +2007,7 @@
                                             <label class="col-sm-2 control-label">점검계획일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.chkPlanDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkPlanDt" name="rsumeTaskDtl.chkPlanDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -1967,7 +2022,7 @@
                                             <label class="col-sm-2 control-label">점검실시일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt" name="rsumeTaskDtl.chkImplmnDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkImplmnDt" name="rsumeTaskDtl.chkImplmnDt" value="" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -1981,7 +2036,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">스마트화 수준확인</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.smtfnPrsntCd" title="스마트화 현재 수준">
+                                                <select class="form-control input-sm" name="rsumeTaskDtl.smtfnPrsntCd notRequired" data-name="smtfnPrsntCd" title="스마트화 현재 수준">
                                                     <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
                                                             <option value="${cdList.cd}">${cdList.cdNm}</option>
@@ -1995,10 +2050,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.appctnSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
+                                                <select class="form-control input-sm notRequired" name="rsumeTaskDtl.appctnSttsCd" data-name="mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_02')}">
+                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_02_')}">
                                                             <option value="${cdList.cd}" >
                                                                     ${cdList.cdNm}
                                                             </option>
@@ -2012,7 +2066,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" ></p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm" ></p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -2028,16 +2082,17 @@
                     <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
                 </div>
                 <div class="pull-right">
-                    <%--<button type="submit" class="btn btn-sm btn-success">저장</button>--%>
-                    <button type="button" id="btnTest" class="btn btn-sm btn-success">저장</button>
+                    <button type="submit" class="btn btn-sm btn-success">저장</button>
                 </div>
             </div>
         </form>
 
+        <form id="sendForm" style="display: none">
+            <input type="hidden" class="notRequired" name="nowSpprtCd" value="" />
+            <input type="hidden" class="notRequired" name="nowRsumeTaskCd" value="" />
+        </form>
+
         <hr />
-
-
-
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/wb/WBFBPartUserModal.jsp" />
 

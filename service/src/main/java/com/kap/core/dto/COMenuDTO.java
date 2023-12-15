@@ -80,6 +80,9 @@ public class COMenuDTO extends BaseDTO {
     //관리자 수정 여부 (관리자 등록 및 수정에서 로그관리 메뉴는 숨김처리를 위함)
     private String isAdmUdt;
 
+    //상생관리 사업트리를 위한 subSeq
+    private Integer subSeq;
+
     //메뉴 이동 참조
     private int nodeParntSeq;
     private int nodePstn;
@@ -91,4 +94,6 @@ public class COMenuDTO extends BaseDTO {
     private int refInd;
     private int idif;
     private int ldif;
+
+    private String parntName;
 }

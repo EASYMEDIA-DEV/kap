@@ -187,45 +187,37 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     fileFieldNm : trgtObj.data("fileFieldNm")
                 })
             });
+
             // 유효성 검사
             $formObj.validation({
                 after : function() {
-                    var isValid = true, editorChk = true;
+                    
+                    var chk = true;
 
-                    $formObj.find(".ckeditorRequired").each(function() {
-                        jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-                        jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
-                        jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
-                        jQuery(this).val(jQuery(this).val().split("\'").join("~!singlecomma!~"));
-                        jQuery(this).val(jQuery(this).val().split("\"").join("~!doublecomma!~"));
-
-                        var editorVal = jQuery(this).val().length;
-
-                        if (editorVal < 1)
-                        {
-                            editorChk = false;
-
-                            alert(msgCtrl.getMsg("fail.co.cog.cnts"));
-
-                            CKEDITOR.instances[jQuery(this).prop("id")].focus();
-
-                            // 에디터 최상단으로 스크롤 이동
-                            jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
-
-                            return false;
+                    jQuery.ajax({
+                        url : "./episdChk",
+                        type : "POST",
+                        timeout: 30000,
+                        data : $formObj.serializeArray(),
+                        dataType : "json",
+                        async: false,
+                        cache : false,
+                        success : function(data, status, xhr){
+                            if(data.respCnt > 0 ){
+                                alert("이미 등록된 회차가 존재합니다.");
+                                chk = false;
+                            }
                         }
                     });
 
-                    if (!editorChk)
-                    {
-                        isValid = false;
-                    }
-
-                    return isValid;
+                    return chk;
+                },
+                before : function (){
                 },
                 async : {
                     use : true,
                     func : function (){
+
                         var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
                         var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 

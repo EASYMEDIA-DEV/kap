@@ -3,6 +3,12 @@
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
+                <td class="text-center">
+                    <label class="checkbox-inline c-checkbox">
+                        <input type="checkbox" value="${list.appctnSeq}" name="delValueList" class="checkboxSingle notRequired" />
+                        <span class="ion-checkmark-round"></span>
+                    </label>
+                </td>
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
                 <td class="text-center">${list.year}</td>
                 <td class="text-center">${list.episd}</td>
@@ -25,7 +31,7 @@
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
-            <td colspan="16" class="text-center">
+            <td colspan="18" class="text-center">
                 검색결과가 없습니다.<br>
                 (등록된 데이터가 없습니다.)
             </td>

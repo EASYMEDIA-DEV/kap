@@ -40,10 +40,10 @@ public class WBCompanyDetailMstDTO extends BaseDTO {
     private String nm;
 
     @Schema(title = "점수")
-    private int score;
+    private Integer score;
 
     @Schema(title = "년도")
-    private int year;
+    private Integer year;
 
     @Schema(title = "인증회사명")
     private String crtfnCmpnNm;

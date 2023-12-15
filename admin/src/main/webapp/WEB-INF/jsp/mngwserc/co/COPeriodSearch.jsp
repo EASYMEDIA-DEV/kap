@@ -60,13 +60,37 @@
 				<c:if test="${param.srchType eq 'wbeb'}">
 					<select class="form-control input-sm" data-name="carbonDate">
 						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>신청일</option>
-						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>사업기간</option>
+						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>최초등록일시</option>
+						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최종수정일시</option>
 					</select>
 				</c:if>
 				<c:if test="${param.srchType eq 'wbia'}">
 					<select class="form-control input-sm" data-name="carbonDate">
 						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>접수기간</option>
-						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>진행상태</option>
+						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>최초 등록일시</option>
+						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최종 수정일시</option>
+					</select>
+				</c:if>
+				<c:if test="${param.srchType eq 'wbib' or param.srchType eq 'wbjb'}">
+					<select class="form-control input-sm" data-name="carbonDate">
+						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>신청일</option>
+						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>최초 등록일시</option>
+						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최종 수정일시</option>
+					</select>
+				</c:if>
+				<c:if test="${param.srchType eq 'wbja'}">
+					<select class="form-control input-sm" data-name="carbonDate">
+						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>접수기간</option>
+						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>사업기간</option>
+						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최초 등록일시</option>
+						<option value="4" <c:if test="${rtnData.carbonDate eq '4'}">selected</c:if>>최종 수정일시</option>
+					</select>
+				</c:if>
+				<c:if test="${param.srchType eq 'wbbb'}">
+					<select class="form-control input-sm" data-name="carbonDate">
+						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>신청일</option>
+						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>최초등록일시</option>
+						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최종수정일시</option>
 					</select>
 				</c:if>
 				<div class="input-group">
