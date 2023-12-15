@@ -69,6 +69,13 @@
 						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>진행상태</option>
 					</select>
 				</c:if>
+				<c:if test="${param.srchType eq 'wbbb'}">
+					<select class="form-control input-sm" data-name="carbonDate">
+						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>신청일</option>
+						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>최초등록일시</option>
+						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최종수정일시</option>
+					</select>
+				</c:if>
 				<div class="input-group">
 					<%--교육 및 컨설팅은 날짜 기본값이 30일전 그 외에는 1년전 처리 관련--%>
 					<c:choose>

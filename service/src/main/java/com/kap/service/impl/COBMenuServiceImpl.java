@@ -46,6 +46,9 @@ public class COBMenuServiceImpl implements COBMenuService {
 	public List<COMenuDTO> getMenuList(COMenuDTO cOMenuDTO) throws Exception
 	{
 		if(!"Y".equals(cOMenuDTO.getIsMenu())){
+			if (cOMenuDTO.getSubSeq() != null) {
+				cOMenuDTO.setMenuSeq(cOMenuDTO.getSubSeq());
+			}
 			cOMenuDTO.setUserMenuList( cOBMenuMapper.getUserMenuList(cOMenuDTO) );
 		}
 		return cOBMenuMapper.getMenuList(cOMenuDTO);

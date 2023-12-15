@@ -866,4 +866,58 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 상생단계 상세 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl stepDtlSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("STEP_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 상생 옵션 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl stepOptnSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("STEP_OPTN_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /**
+     * 상샌신청옵션 ID Generation  Strategy Config
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl fileApplyIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SBMSN_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /**
+     * 검교정 대상장비 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl cxAppctnTchlgSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("TCHLG_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }

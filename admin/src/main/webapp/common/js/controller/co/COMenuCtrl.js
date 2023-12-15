@@ -46,6 +46,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                         "admSeq": ctrl.ctgrInfo.uid,
                         "roleCd": ctrl.ctgrInfo.did,
                         "isMenu": ctrl.ctgrInfo.isMenu,
+                        "subSeq" : ctrl.ctgrInfo.sub,
                         "Ran": Math.random(),
                         "_csrf": $("#csrfKey").val(),
                     };
@@ -161,6 +162,14 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
             if (typeof tCtgrInfo.isMenu != "undefined") {
                 ctrl.ctgrInfo.isMenu = tCtgrInfo.isMenu;
             }
+
+            if (typeof tCtgrInfo.sub != "undefined") {
+                ctrl.ctgrInfo.sub = tCtgrInfo.sub;
+            }
+
+            if (typeof tCtgrInfo.sub != "undefined") {
+                ctrl.ctgrInfo.sub = tCtgrInfo.sub;
+            }
         }
 
         if (typeof tUrl != "undefined") {
@@ -192,7 +201,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                 });
             }
         });
-
+        
         if (isEvent) {
             var $formObj = jQuery("#frmData");
 
@@ -219,7 +228,6 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                             if (typeof rtnData != "undefined") {
                                 var menuType = rtnData.menuType;
                                 var userUrl = rtnData.userUrl;
-
                                 jQuery("#menuSeq").val(rtnData.menuSeq);
                                 jQuery("#pMenuSeq").text(rtnData.menuSeq);
                                 jQuery("#pMenuNm").html(rtnData.menuNm);
@@ -285,7 +293,7 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                         jQuery.jstree.rollback(data.rlbk);
 
                         return true;
-                    //하위생성일때
+                        //하위생성일때
                     }else{
                         alert('메뉴생성을 취소하시겠습니까?');
 

@@ -201,4 +201,14 @@ public interface COBUserMenuMapper {
 	 * 사용자 탑노드 조회.
 	 */
 	public Integer selectUserTopNode(COMenuDTO cOMenuDTO) throws Exception;
+
+	/**
+	 * 사용 url 수정
+	 */
+	public void updateMenuUrl(COMenuDTO cOMenuDTO) throws Exception;
+
+	/**
+	 * 사용 url 수정
+	 */
+	public void updateMenuUseYn(COMenuDTO cOMenuDTO) throws Exception;
 }
