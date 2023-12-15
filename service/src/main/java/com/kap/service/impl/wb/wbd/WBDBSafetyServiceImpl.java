@@ -1,4 +1,4 @@
-package com.kap.service.impl.wb.wbe;
+package com.kap.service.impl.wb.wbd;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserDetailsDTO;
@@ -6,8 +6,8 @@ import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.wbe.*;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.WBEBCarbonCompanyService;
-import com.kap.service.dao.wb.wbe.WBEBCarbonCompanyMapper;
+import com.kap.service.WBDBSafetyService;
+import com.kap.service.dao.wb.wbd.WBDBSafetyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -28,11 +28,11 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
+public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 
 
     //Mapper
-    private final WBEBCarbonCompanyMapper wBEBCarbonCompanyMapper;
+    private final WBDBSafetyMapper wBDBSafetyMapper;
 
     /* 상생사업관리 마스터 시퀀스 */
     private final EgovIdGnrService cxAppctnMstSeqIdgen;
@@ -66,8 +66,8 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanySearchDTO.setFirstIndex(page.getFirstRecordIndex());
         wBEBCarbonCompanySearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
 
-        wBEBCarbonCompanySearchDTO.setList(wBEBCarbonCompanyMapper.selectCarbonCompanyList(wBEBCarbonCompanySearchDTO));
-        wBEBCarbonCompanySearchDTO.setTotalCount(wBEBCarbonCompanyMapper.getCarbonCompanyListTotCnt(wBEBCarbonCompanySearchDTO));
+        wBEBCarbonCompanySearchDTO.setList(wBDBSafetyMapper.selectCarbonCompanyList(wBEBCarbonCompanySearchDTO));
+        wBEBCarbonCompanySearchDTO.setTotalCount(wBDBSafetyMapper.getCarbonCompanyListTotCnt(wBEBCarbonCompanySearchDTO));
 
         return wBEBCarbonCompanySearchDTO;
     }
@@ -76,14 +76,14 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
      * 연도 상세 조회
      */
     public List<String> selectYearDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
-        return wBEBCarbonCompanyMapper.selectYearDtl(wBEBCarbonCompanySearchDTO);
+        return wBDBSafetyMapper.selectYearDtl(wBEBCarbonCompanySearchDTO);
     }
 
     /**
      * 회차 리스트 조회
      */
     public WBEBCarbonCompanySearchDTO getYearSelect(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
-        wBEBCarbonCompanySearchDTO.setEpisdList(wBEBCarbonCompanyMapper.getYearSelect(wBEBCarbonCompanySearchDTO));
+        wBEBCarbonCompanySearchDTO.setEpisdList(wBDBSafetyMapper.getYearSelect(wBEBCarbonCompanySearchDTO));
 
         return wBEBCarbonCompanySearchDTO;
     }
@@ -94,47 +94,47 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
     public WBEBCarbonCompanyMstInsertDTO selectCarbonCompanyDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
 
         //MST
-        WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
+        WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
 
         //DTL
-        wBEBCarbonCompanyMstInsertDTO.setRsumeDtlList(wBEBCarbonCompanyMapper.selectCarbonCompanyDtlDetail(wBEBCarbonCompanySearchDTO));
+        wBEBCarbonCompanyMstInsertDTO.setRsumeDtlList(wBDBSafetyMapper.selectCarbonCompanyDtlDetail(wBEBCarbonCompanySearchDTO));
 
         wBEBCarbonCompanySearchDTO.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getMemSeq());
         wBEBCarbonCompanySearchDTO.setBsnmNo(wBEBCarbonCompanyMstInsertDTO.getAppctnBsnmNo());
 
         //MEM
-        wBEBCarbonCompanyMstInsertDTO.setMemList(wBEBCarbonCompanyMapper.selectCarbonCompanyMember(wBEBCarbonCompanySearchDTO));
+        wBEBCarbonCompanyMstInsertDTO.setMemList(wBDBSafetyMapper.selectCarbonCompanyMember(wBEBCarbonCompanySearchDTO));
 
         //CMSSR
         if(wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq() != null){
             wBEBCarbonCompanySearchDTO.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq());
-            wBEBCarbonCompanyMstInsertDTO.getMemList().add(wBEBCarbonCompanyMapper.selectCarbonCompanyMember(wBEBCarbonCompanySearchDTO).get(0));
+            wBEBCarbonCompanyMstInsertDTO.getMemList().add(wBDBSafetyMapper.selectCarbonCompanyMember(wBEBCarbonCompanySearchDTO).get(0));
         }
 
         //COMPANY
-        WBEBCompanyDTO wBEBCompanyList = wBEBCarbonCompanyMapper.selectCarbonCompany(wBEBCarbonCompanySearchDTO);
+        WBEBCompanyDTO wBEBCompanyList = wBDBSafetyMapper.selectCarbonCompany(wBEBCarbonCompanySearchDTO);
         wBEBCompanyList.setDtlList(new ArrayList<>());
 
         //SQ
-        List<WBEBCompanyDtlDTO> wBEBCompanyDtlList = wBEBCarbonCompanyMapper.selectCarbonCompanySQ(wBEBCarbonCompanySearchDTO);
+        List<WBEBCompanyDtlDTO> wBEBCompanyDtlList = wBDBSafetyMapper.selectCarbonCompanySQ(wBEBCarbonCompanySearchDTO);
 
         //RSUME_PBSN_DTL
-        wBEBCarbonCompanyMstInsertDTO.setPbsnDtlList(wBEBCarbonCompanyMapper.selectCarbonCompanyPbsn(wBEBCarbonCompanySearchDTO));
+        wBEBCarbonCompanyMstInsertDTO.setPbsnDtlList(wBDBSafetyMapper.selectCarbonCompanyPbsn(wBEBCarbonCompanySearchDTO));
         for(WBEBCompanyDtlDTO wBEBCompanyDtlDTO : wBEBCompanyDtlList){
             wBEBCompanyList.getDtlList().add(wBEBCompanyDtlDTO);
         }
         wBEBCarbonCompanyMstInsertDTO.setCompanyDtl(wBEBCompanyList);
 
         //지원금액 조회
-        List<WBEBCarbonCompanySpprtDTO> wBEBCarbonCompanySpprtDTO = wBEBCarbonCompanyMapper.selectAppctnSpprt(wBEBCarbonCompanySearchDTO);
+        List<WBEBCarbonCompanySpprtDTO> wBEBCarbonCompanySpprtDTO = wBDBSafetyMapper.selectAppctnSpprt(wBEBCarbonCompanySearchDTO);
 
         wBEBCarbonCompanyMstInsertDTO.setSpprtList(wBEBCarbonCompanySpprtDTO);
 
         //file
-        wBEBCarbonCompanyMstInsertDTO.setFileDtlList(wBEBCarbonCompanyMapper.selectFileDtl(wBEBCarbonCompanySearchDTO));
+        wBEBCarbonCompanyMstInsertDTO.setFileDtlList(wBDBSafetyMapper.selectFileDtl(wBEBCarbonCompanySearchDTO));
 
         //지급 차수 조회
-        wBEBCarbonCompanyMstInsertDTO.setGiveOrdList(wBEBCarbonCompanyMapper.getGiveOrdList(wBEBCarbonCompanySearchDTO));
+        wBEBCarbonCompanyMstInsertDTO.setGiveOrdList(wBDBSafetyMapper.getGiveOrdList(wBEBCarbonCompanySearchDTO));
 
         return wBEBCarbonCompanyMstInsertDTO;
     }
@@ -147,7 +147,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
         int respCnt = 0;
 
-        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
+        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
 
         COUserDetailsDTO coaAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
         wBEBCarbonCompanyMstInsertDTO.setRegId(coaAdmDTO.getId());
@@ -157,7 +157,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyMstInsertDTO.setAppctnSeq(firstAppctnMstSeqIdgen);
 
         //신청 MST
-        respCnt = wBEBCarbonCompanyMapper.insertAppctnMst(wBEBCarbonCompanyMstInsertDTO);
+        respCnt = wBDBSafetyMapper.insertAppctnMst(wBEBCarbonCompanyMstInsertDTO);
 
         //신청 DTL
         WBEBCarbonCompanyDtlDTO wBEBCarbonCompanyDtlDTO = new WBEBCarbonCompanyDtlDTO();
@@ -174,14 +174,14 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
         wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
         wBEBCarbonCompanyDtlDTO.setRsumeOrd(1);
-        wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+        wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
         WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO= wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList().get(0);
         wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
         wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(1);
         wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
         wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-        wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+        wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
 
         //상생 신청 파일 상세
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBEBCarbonCompanyMstInsertDTO.getOptnFileList());
@@ -194,24 +194,24 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyFileDtlDTO.setRegId(coaAdmDTO.getId());
         wBEBCarbonCompanyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-        wBEBCarbonCompanyMapper.insertAppctnFileDtl(wBEBCarbonCompanyFileDtlDTO);
+        wBDBSafetyMapper.insertAppctnFileDtl(wBEBCarbonCompanyFileDtlDTO);
 
         //회원
         MPAUserDto mPAUserDto= wBEBCarbonCompanyMstInsertDTO.getMemList().get(0);
         mPAUserDto.setModId(coaAdmDTO.getId());
         mPAUserDto.setModIp(coaAdmDTO.getLoginIp());
-        wBEBCarbonCompanyMapper.updateAppctnMember(mPAUserDto);
+        wBDBSafetyMapper.updateAppctnMember(mPAUserDto);
 
         //부품사
         WBEBCompanyDTO wBEBCompanyDTO= wBEBCarbonCompanyMstInsertDTO.getCompanyDtl();
         wBEBCompanyDTO.setModId(coaAdmDTO.getId());
         wBEBCompanyDTO.setModIp(coaAdmDTO.getLoginIp());
-        wBEBCarbonCompanyMapper.updateAppctnCompany(wBEBCompanyDTO);
+        wBDBSafetyMapper.updateAppctnCompany(wBEBCompanyDTO);
 
         //부품사 SQ
 
         if(wBEBCompanyDTO.getCtgryCd().equals("COMPANY01002")){
-            wBEBCarbonCompanyMapper.deleteCarbonCompanySQ(wBEBCompanyDTO);
+            wBDBSafetyMapper.deleteCarbonCompanySQ(wBEBCompanyDTO);
             for(int i=0; i < wBEBCompanyDTO.getDtlList().size(); i++){
                 WBEBCompanyDtlDTO wBEBCompanyDtlDTO = wBEBCompanyDTO.getDtlList().get(i);
 
@@ -219,7 +219,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
                 wBEBCompanyDtlDTO.setCbsnSeq(firstMpePartsCompanyDtlSeqIdgen);
 
-                wBEBCarbonCompanyMapper.insertCarbonCompanySQ(wBEBCompanyDtlDTO);
+                wBDBSafetyMapper.insertCarbonCompanySQ(wBEBCompanyDtlDTO);
             }
         }
 
@@ -240,7 +240,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
             wBEBCarbonCompanySpprtDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanySpprtDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBEBCarbonCompanyMapper.insertAppctnSpprt(wBEBCarbonCompanySpprtDTO);
+            wBDBSafetyMapper.insertAppctnSpprt(wBEBCarbonCompanySpprtDTO);
         }
 
         wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
@@ -265,7 +265,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         //참여 이관 추가
         WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
-        WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
+        WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
 
         if(wBEBTrnsfDTO.getMemSeq() != wBEBCarbonCompanyMstInsertDTO.getMemSeq())
         {
@@ -277,11 +277,11 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanyTrnsfDTO.setAftrMemSeq(wBEBCarbonCompanyMstInsertDTO.getMemSeq());
             wBEBCarbonCompanyTrnsfDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyTrnsfDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBEBCarbonCompanyMapper.insertAppctnTrnsf(wBEBCarbonCompanyTrnsfDTO);
+            wBDBSafetyMapper.insertAppctnTrnsf(wBEBCarbonCompanyTrnsfDTO);
         }
 
         //신청 MST ○
-        respCnt = wBEBCarbonCompanyMapper.updateAppctnMst(wBEBCarbonCompanyMstInsertDTO);
+        respCnt = wBDBSafetyMapper.updateAppctnMst(wBEBCarbonCompanyMstInsertDTO);
 
         //신청 DTL ○
         WBEBCarbonCompanyDtlDTO wBEBCarbonCompanyDtlDTO = wBEBCarbonCompanyMstInsertDTO.getRsumeDtlList().get(rsumeOrd);
@@ -292,7 +292,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyDtlDTO.setModId(coaAdmDTO.getId());
         wBEBCarbonCompanyDtlDTO.setModIp(coaAdmDTO.getLoginIp());
 
-        wBEBCarbonCompanyMapper.updateAppctnDtl(wBEBCarbonCompanyDtlDTO);
+        wBDBSafetyMapper.updateAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
         //Pbsn ○
         WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO = wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList().get(rsumeOrd);
@@ -316,7 +316,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
         wBEBCarbonCompanyPbsnDtlDTO.setModId(coaAdmDTO.getId());
         wBEBCarbonCompanyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
-        wBEBCarbonCompanyMapper.updateAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+        wBDBSafetyMapper.updateAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
 
         //상생 신청 파일 상세
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBEBCarbonCompanyMstInsertDTO.getFileList());
@@ -327,24 +327,24 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"+rsumeOrd));
         wBEBCarbonCompanyFileDtlDTO.setRegId(coaAdmDTO.getId());
         wBEBCarbonCompanyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-        wBEBCarbonCompanyMapper.insertAppctnFileDtl(wBEBCarbonCompanyFileDtlDTO);
+        wBDBSafetyMapper.insertAppctnFileDtl(wBEBCarbonCompanyFileDtlDTO);
 
         //회원○
         MPAUserDto mPAUserDto= wBEBCarbonCompanyMstInsertDTO.getMemList().get(0);
         mPAUserDto.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getMemSeq());
         mPAUserDto.setModId(coaAdmDTO.getId());
         mPAUserDto.setModIp(coaAdmDTO.getLoginIp());
-        wBEBCarbonCompanyMapper.updateAppctnMember(mPAUserDto);
+        wBDBSafetyMapper.updateAppctnMember(mPAUserDto);
 
         //부품사○
         WBEBCompanyDTO wBEBCompanyDTO= wBEBCarbonCompanyMstInsertDTO.getCompanyDtl();
         wBEBCompanyDTO.setModId(coaAdmDTO.getId());
         wBEBCompanyDTO.setModIp(coaAdmDTO.getLoginIp());
-        wBEBCarbonCompanyMapper.updateAppctnCompany(wBEBCompanyDTO);
+        wBDBSafetyMapper.updateAppctnCompany(wBEBCompanyDTO);
 
         //부품사 SQ○
         if(wBEBCompanyDTO.getCtgryCd().equals("COMPANY01002")){
-            wBEBCarbonCompanyMapper.deleteCarbonCompanySQ(wBEBCompanyDTO);
+            wBDBSafetyMapper.deleteCarbonCompanySQ(wBEBCompanyDTO);
             for(int i=0; i < wBEBCompanyDTO.getDtlList().size(); i++){
                 WBEBCompanyDtlDTO wBEBCompanyDtlDTO = wBEBCompanyDTO.getDtlList().get(i);
 
@@ -359,7 +359,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
                 int firstMpePartsCompanyDtlSeqIdgen = mpePartsCompanyDtlIdgen.getNextIntegerId();
                 wBEBCompanyDtlDTO.setBsnmNo(wBEBCompanyDTO.getBsnmNo());
                 wBEBCompanyDtlDTO.setCbsnSeq(firstMpePartsCompanyDtlSeqIdgen);
-                wBEBCarbonCompanyMapper.insertCarbonCompanySQ(wBEBCompanyDtlDTO);
+                wBDBSafetyMapper.insertCarbonCompanySQ(wBEBCompanyDtlDTO);
             }
         }
 
@@ -391,7 +391,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
 
             if(wBEBCarbonCompanySpprtDTO.getAccsDt() != "" ){
-                wBEBCarbonCompanyMapper.updateAppctnSpprt(wBEBCarbonCompanySpprtDTO);
+                wBDBSafetyMapper.updateAppctnSpprt(wBEBCarbonCompanySpprtDTO);
             }
         }
 
@@ -411,7 +411,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
             wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
             wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
             wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
             wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
@@ -419,7 +419,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
         }
         //사업계획 적합
         else if(maxRsumeOrd == 2 && "PRO_TYPE01002_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
@@ -433,7 +433,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
             wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
             wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
             wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
             wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
@@ -441,7 +441,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
         }
         //최초점검 적합
         else if(maxRsumeOrd == 3 && "PRO_TYPE01003_02_003".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
@@ -455,7 +455,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
             wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
             wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
             wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
             wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
@@ -463,7 +463,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
         }
         //완료 보고 적합
         else if(maxRsumeOrd == 4 && "PRO_TYPE01004_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
@@ -477,14 +477,14 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
             wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
             wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
             wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
             wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
             wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
             wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
         }
         //최종점검 적합
         else if(maxRsumeOrd == 5 && "PRO_TYPE01005_02_003".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
@@ -498,14 +498,14 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
             wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
             wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
             wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
             wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
             wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
             wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
         }
 
 
@@ -523,18 +523,18 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
         List<String> appctnSeqList = wBEBCarbonCompanySearchDTO.getDelValueList();
 
-        wBEBCarbonCompanyMapper.carbonCompanyDeleteTrnsf(wBEBCarbonCompanySearchDTO);
-        wBEBCarbonCompanyMapper.carbonCompanyDeleteSpprt(wBEBCarbonCompanySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeleteTrnsf(wBEBCarbonCompanySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeleteSpprt(wBEBCarbonCompanySearchDTO);
 
-        wBEBCarbonCompanySearchDTO.setDelValueList(wBEBCarbonCompanyMapper.selectRsumeSeq(wBEBCarbonCompanySearchDTO));
+        wBEBCarbonCompanySearchDTO.setDelValueList(wBDBSafetyMapper.selectRsumeSeq(wBEBCarbonCompanySearchDTO));
 
-        wBEBCarbonCompanyMapper.carbonCompanyDeletePbsn(wBEBCarbonCompanySearchDTO);
-        wBEBCarbonCompanyMapper.carbonCompanyDeleteRsumeFile(wBEBCarbonCompanySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeletePbsn(wBEBCarbonCompanySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeleteRsumeFile(wBEBCarbonCompanySearchDTO);
 
         wBEBCarbonCompanySearchDTO.setDelValueList(appctnSeqList);
 
-        wBEBCarbonCompanyMapper.carbonCompanyDeleteRsume(wBEBCarbonCompanySearchDTO);
-        int respCnt = wBEBCarbonCompanyMapper.carbonCompanyDeleteMst(wBEBCarbonCompanySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeleteRsume(wBEBCarbonCompanySearchDTO);
+        int respCnt = wBDBSafetyMapper.carbonCompanyDeleteMst(wBEBCarbonCompanySearchDTO);
 
         return respCnt;
 
@@ -554,8 +554,8 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyTrnsfDTO.setFirstIndex(page.getFirstRecordIndex());
         wBEBCarbonCompanyTrnsfDTO.setRecordCountPerPage(page.getRecordCountPerPage());
 
-        wBEBCarbonCompanyTrnsfDTO.setList(wBEBCarbonCompanyMapper.getTrnsfList(wBEBCarbonCompanyTrnsfDTO));
-        wBEBCarbonCompanyTrnsfDTO.setTotalCount(wBEBCarbonCompanyMapper.getTrnsfListTotCnt(wBEBCarbonCompanyTrnsfDTO));
+        wBEBCarbonCompanyTrnsfDTO.setList(wBDBSafetyMapper.getTrnsfList(wBEBCarbonCompanyTrnsfDTO));
+        wBEBCarbonCompanyTrnsfDTO.setTotalCount(wBDBSafetyMapper.getTrnsfListTotCnt(wBEBCarbonCompanyTrnsfDTO));
 
         return wBEBCarbonCompanyTrnsfDTO;
     }
@@ -720,7 +720,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
         for (int i=0; i<list.size(); i++) {
             row = sheet.createRow(rowNum++);
-            pbsnList = wBEBCarbonCompanyMapper.selectExcelPbsn(wBEBCarbonCompanySearchDTO.getList().get(i));
+            pbsnList = wBDBSafetyMapper.selectExcelPbsn(wBEBCarbonCompanySearchDTO.getList().get(i));
             length = pbsnList.size();
             maxOrd = pbsnList.get(length-1).getMaxRsumeOrd();
 

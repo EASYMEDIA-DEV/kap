@@ -6,7 +6,7 @@ import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.WBEACarbonListService;
+import com.kap.service.WBDASafetyListService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * 안전설비구축 회차관리를 위한 Controller
  * </pre>
  *
- * @ClassName		: WBEACarbonListController.java
+ * @ClassName		: WBDASafetyListController.java
  * @Description		: 안전설비구축 회차관리를 위한 Controller
  * @author 김대성
  * @since 2023.11.08
@@ -44,7 +44,7 @@ import java.util.ArrayList;
 public class WBDASafetyListController {
 
     /** 서비스 **/
-    public final WBEACarbonListService wBEACarbonListService;
+    public final WBDASafetyListService wBDASafetyListService;
     public final COCodeService cOCodeService;
 
     /**
@@ -59,10 +59,10 @@ public class WBDASafetyListController {
         cdDtlList.add("STATE_TYPE");
 
         modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
-        modelMap.addAttribute("rtnData", wBEACarbonListService.selectCarbonList(wBRoundMstSearchDTO));
+        modelMap.addAttribute("rtnData", wBDASafetyListService.selectCarbonList(wBRoundMstSearchDTO));
 
 
-        return "mngwserc/wb/wbe/WBEACarbonList.admin";
+        return "mngwserc/wb/wbd/WBDASafetyList.admin";
     }
 
     /**
@@ -73,7 +73,7 @@ public class WBDASafetyListController {
     {
         try
         {
-            modelMap.addAttribute("rtnData", wBEACarbonListService.selectCarbonList(wBRoundMstSearchDTO));
+            modelMap.addAttribute("rtnData", wBDASafetyListService.selectCarbonList(wBRoundMstSearchDTO));
         }
         catch (Exception e)
         {
@@ -83,7 +83,7 @@ public class WBDASafetyListController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbe/WBEACarbonListAjax";
+        return "mngwserc/wb/wbd/WBDASafetyListAjax";
     }
 
     /**
@@ -102,10 +102,10 @@ public class WBDASafetyListController {
 
             modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 
-            modelMap.addAttribute("rtnYear", wBEACarbonListService.selectYearDtl(wBRoundMstSearchDTO));
+            modelMap.addAttribute("rtnYear", wBDASafetyListService.selectYearDtl(wBRoundMstSearchDTO));
 
             if(wBRoundMstSearchDTO.getDetailsKey() != null){
-                modelMap.addAttribute("rtnInfo", wBEACarbonListService.selectCarbonDtl(wBRoundMstSearchDTO));
+                modelMap.addAttribute("rtnInfo", wBDASafetyListService.selectCarbonDtl(wBRoundMstSearchDTO));
             }
 
         }
@@ -117,7 +117,7 @@ public class WBDASafetyListController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbe/WBEACarbonWrite.admin";
+        return "mngwserc/wb/wbd/WBDASafetyWrite.admin";
     }
 
     /**
@@ -133,7 +133,7 @@ public class WBDASafetyListController {
             wBRoundMstDTO.setRegId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
-            wBEACarbonListService.insertCarbon(wBRoundMstDTO, request);
+            wBDASafetyListService.insertCarbon(wBRoundMstDTO, request);
         }
         catch (Exception e)
         {
@@ -159,7 +159,7 @@ public class WBDASafetyListController {
             wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
-            wBEACarbonListService.updateCarbon(wBRoundMstDTO, request);
+            wBDASafetyListService.updateCarbon(wBRoundMstDTO, request);
         }
         catch (Exception e)
         {
@@ -186,7 +186,7 @@ public class WBDASafetyListController {
             wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
-            modelMap.addAttribute("respCnt", wBEACarbonListService.deleteCarbon(wBRoundMstDTO));
+            modelMap.addAttribute("respCnt", wBDASafetyListService.deleteCarbon(wBRoundMstDTO));
         }
         catch (Exception e)
         {
@@ -207,7 +207,7 @@ public class WBDASafetyListController {
     {
         try
         {
-            modelMap.addAttribute("respCnt", wBEACarbonListService.getAppctnCnt(wBRoundMstDTO));
+            modelMap.addAttribute("respCnt", wBDASafetyListService.getAppctnCnt(wBRoundMstDTO));
         }
         catch (Exception e)
         {
@@ -228,7 +228,7 @@ public class WBDASafetyListController {
     {
         try
         {
-            modelMap.addAttribute("respCnt", wBEACarbonListService.carbonDeleteList(wBRoundMstDTO));
+            modelMap.addAttribute("respCnt", wBDASafetyListService.carbonDeleteList(wBRoundMstDTO));
         }
         catch (Exception e)
         {
@@ -249,7 +249,7 @@ public class WBDASafetyListController {
     {
         try
         {
-            modelMap.addAttribute("respCnt", wBEACarbonListService.episdChk(wBRoundMstDTO));
+            modelMap.addAttribute("respCnt", wBDASafetyListService.episdChk(wBRoundMstDTO));
         }
         catch (Exception e)
         {

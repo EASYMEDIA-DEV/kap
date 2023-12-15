@@ -299,6 +299,19 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         if(wBEBCarbonCompanyPbsnDtlDTO.getBsnPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getBsnPmt().equals("")){
             wBEBCarbonCompanyPbsnDtlDTO.setBsnPmt(null);
         }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getBsnPlanDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getBsnPlanDt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setBsnPlanDt(null);
+        }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getSpprtPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getSpprtPmt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setSpprtPmt(null);
+        }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getPhswPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getPhswPmt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setPhswPmt(null);
+        }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setTtlPmt(null);
+        }
+
         wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(wBEBCarbonCompanyMstInsertDTO.getRsumeSeq());
         wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
         wBEBCarbonCompanyPbsnDtlDTO.setModId(coaAdmDTO.getId());
