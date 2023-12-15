@@ -32,10 +32,6 @@
 					className : "numberChk",
 					regExr : "^[0-9]+$"
 				},
-				priceChk : {
-					className : "priceChk",
-					regExr : "^[0-9\\,]+$"
-				},
 				floatChk : {
 					className : "floatChk",
 					regExr : "^[0-9\\.]+$"
@@ -62,8 +58,8 @@
 					regExr : "^[가-힣]+$"
 				},
 				dateTypeChk :{
-				    className : "dateTypeChk",
-				    regExr : "^(19[0-9][0-9]|20[0-9][0-9])-(0[0-9]|1[0-2])-(0[1-9)]|[1-2][0-9]|3[0-1])$"
+					className : "dateTypeChk",
+					regExr : "^(19[0-9][0-9]|20[0-9][0-9])-(0[0-9]|1[0-2])-(0[1-9)]|[1-2][0-9]|3[0-1])$"
 				},
 				urlChk : {
 					className : "urlChk",
@@ -89,7 +85,7 @@
 					select : " 선택하세요.",
 					textarea : " 입력하세요.",
 					names : {
-						
+
 					}
 				},
 				idChk : "6~12자 이내 영문, 영문&숫자 조합으로 입력하세요.",
@@ -97,7 +93,6 @@
 				passEqualChk : "비밀번호가 일치하지 않습니다.",
 				emailChk : "이메일 주소를 확인해주세요.",
 				numberChk : "숫자만 입력가능합니다.",
-				priceChk : "숫자만 입력가능합니다.",
 				lengthLimitChk : "길이가 조건에 맞지 않습니다.",
 				mobileNumChk : "휴대폰번호는 010-1234-5678 형식으로 입력되어야 합니다.",
 				phoneNumChk : "연락처는 02(010)-1234-5678 또는 15XX-XXXX 형식으로 입력되어야 합니다.",
@@ -138,7 +133,7 @@
 				patten = eval("/" + regexr + "/g");
 
 				regResult = patten.test(obj.val());
-				
+
 				if (regResult && obj.hasClass("passChk"))
 				{
 					if (obj.val().indexOf(" ") > -1)
@@ -190,8 +185,8 @@
 			},
 			AutoHypenPhone : function(str){
 				var tmp = ""
-				  , lens1 = 4, lens2 = 7, lens3 = 11
-				  , cutlen1 = 3, cutlen2 = 3;
+					, lens1 = 4, lens2 = 7, lens3 = 11
+					, cutlen1 = 3, cutlen2 = 3;
 
 				str = str.replace(/[^0-9]/g, "");
 
@@ -199,7 +194,7 @@
 				{
 					lens1 = 3; lens2 = 6; lens3 = 10; cutlen1 = 2;
 				}
-				
+
 				if (str.substr(0, 1) == "1")
 				{
 					if (str.length < 5)
@@ -250,88 +245,64 @@
 				return str;
 			},
 			AutoHypenDate : function(str){
-                var tmp = ""
-                  , lens1 = 5, lens2 = 7, lens3 = 8
-                  , cutlen1 = 4, cutlen2 = 2;
+				var tmp = ""
+					, lens1 = 5, lens2 = 7, lens3 = 8
+					, cutlen1 = 4, cutlen2 = 2;
 
-                str = str.replace(/[^0-9]/g, "");
+				str = str.replace(/[^0-9]/g, "");
 
-                if (str.length < lens1)
-                {
-                    return str;
-                }
-                else if (str.length < lens2)
-                {
-                    tmp += str.substr(0, cutlen1);
-                    tmp += "-";
-                    tmp += str.substr(cutlen1);
-                    return tmp;
-                }
-                else if(str.length < lens3)
-                {
-                    tmp += str.substr(0, cutlen1);
-                    tmp += "-";
-                    tmp += str.substr(cutlen1, cutlen2);
-                    tmp += "-";
-                    tmp += str.substr(cutlen1 + cutlen2);
-                    return tmp;
-                }
-                else
-                {
-                    tmp += str.substr(0, cutlen1);
-                    tmp += "-";
-                    tmp += str.substr(cutlen1, cutlen2);
-                    tmp += "-";
-                    tmp += str.substr(cutlen1 + cutlen2);
-                    return tmp;
-                }
+				if (str.length < lens1)
+				{
+					return str;
+				}
+				else if (str.length < lens2)
+				{
+					tmp += str.substr(0, cutlen1);
+					tmp += "-";
+					tmp += str.substr(cutlen1);
+					return tmp;
+				}
+				else if(str.length < lens3)
+				{
+					tmp += str.substr(0, cutlen1);
+					tmp += "-";
+					tmp += str.substr(cutlen1, cutlen2);
+					tmp += "-";
+					tmp += str.substr(cutlen1 + cutlen2);
+					return tmp;
+				}
+				else
+				{
+					tmp += str.substr(0, cutlen1);
+					tmp += "-";
+					tmp += str.substr(cutlen1, cutlen2);
+					tmp += "-";
+					tmp += str.substr(cutlen1 + cutlen2);
+					return tmp;
+				}
 
-                return str;
-            },
+				return str;
+			},
 			Indicator : function(ptarget, target){
 				var indicator
-				  , documentHeight = $(document).height();
+					, documentHeight = $(document).height();
 
-			  	if ($(target).size() > 0)
-			  	{
-			  		indicator = $(target).remove();
+				if ($(target).size() > 0)
+				{
+					indicator = $(target).remove();
 
-			  		indicator.css("position", "absolute").css("top", "0px").css("left", "0px").css("background-color", "#000").css("z-index", 1001).css("opacity", 0.7).width("100%").height(documentHeight);
+					indicator.css("position", "absolute").css("top", "0px").css("left", "0px").css("background-color", "#000").css("z-index", 1001).css("opacity", 0.7).width("100%").height(documentHeight);
 
-			  		indicator.find("img").css("top", ($(window).height() - indicator.find("img").outerHeight()) / 2 + $(window).scrollTop() / 2);
-			  		indicator.find("img").css("left", ($(window).width()- indicator.find("img").outerWidth()) / 2 + $(window).scrollLeft() / 2);
+					indicator.find("img").css("top", ($(window).height() - indicator.find("img").outerHeight()) / 2 + $(window).scrollTop() / 2);
+					indicator.find("img").css("left", ($(window).width()- indicator.find("img").outerWidth()) / 2 + $(window).scrollLeft() / 2);
 
 					ptarget.after(indicator.show());
-			  	}
+				}
 			},
 			GetByteLenth : function(s, b, i, c){
 				for (b=i=0; c=s.charCodeAt(i++); b+=c>>11?3:c>>7?2:1);
 				return b;
-			},
-			AutoCommaPrice : function(obj, regexr, msg, returnType){
-				var patten, regResult;
-
-				patten = eval("/" + regexr + "/g");
-
-				regResult = patten.test(obj.val());
-
-				if (typeof returnType === "function")
-				{
-					if (!regResult)
-					{
-						returnType(obj, msg);
-					} else {
-						var replacePrice = obj.val().replaceAll(",", "");
-						if(replacePrice != null && replacePrice != undefined) {
-							obj.val(Number(replacePrice).toLocaleString('ko-KR'));
-						}
-					}
-				}
-				else
-				{
-					return regResult;
-				}
-			},
+			}
 		},
 		async : {
 			use : false,
@@ -353,7 +324,7 @@
 				type = "",
 				valChk = false,
 				dupMsg = "";
-			
+
 			if (typeof option !== "undefined" && option.use == true)
 			{
 				this.use = option.use;
@@ -369,12 +340,12 @@
 							if (typeof $("#" + option.type[obj].textboxId).val() !== "undefined" && $("#" + option.type[obj].textboxId).val() != "")
 							{
 								$("#" + option.type[obj].textboxId).data("state", true)
-																   .data("val", $("#" + option.type[obj].textboxId).val());
+									.data("val", $("#" + option.type[obj].textboxId).val());
 							}
 
 							buttonIdObj = $("#" + option.type[obj].buttonId).data("type", option.type[obj].type)
-									   										.data("url", option.type[obj].url)
-									   										.data("textboxId", option.type[obj].textboxId);
+								.data("url", option.type[obj].url)
+								.data("textboxId", option.type[obj].textboxId);
 
 							buttonIdObj.click(function(e){
 								e.preventDefault();
@@ -552,7 +523,7 @@
 			regResult,
 			submitBtnClass,
 			action = $this.attr("action");
-		
+
 		var regExrs = {
 			idExr : "",
 			passExr : "",
@@ -585,7 +556,6 @@
 			passEqualChk : "",
 			emailChk : "",
 			numberChk : "",
-			priceChk : "",
 			floatChk : "",
 			lengthLimitChk : "",
 			mobileNumChk : "",
@@ -598,7 +568,7 @@
 			confirm : "",
 			ipChk : ""
 		};
-	
+
 		var func = {
 			customFunc : "",
 			beforeFunc : "",
@@ -614,7 +584,6 @@
 		regExrs.passExr = settings.validateType.passChk.regExr;
 		regExrs.emailExr = settings.validateType.emailChk.regExr;
 		regExrs.numberExr = settings.validateType.numberChk.regExr;
-		regExrs.priceExr = settings.validateType.priceChk.regExr;
 		regExrs.floatExr = settings.validateType.floatChk.regExr;
 		regExrs.mobileExr = settings.validateType.mobileNumChk.regExr;
 		regExrs.phoneExr = settings.validateType.phoneNumChk.regExr;
@@ -624,7 +593,7 @@
 		regExrs.urlExr = settings.validateType.urlChk.regExr;
 		regExrs.nameExr = settings.validateType.nameChk.regExr;
 		regExrs.ipExr = settings.validateType.ipChk.regExr;
-		
+
 		func.customFunc = settings.customfunc;
 		func.beforeFunc = settings.before;
 		func.afterFunc = settings.after;
@@ -641,7 +610,6 @@
 		msg.passEqualChk = settings.msg.passEqualChk;
 		msg.emailChk = settings.msg.emailChk;
 		msg.numberChk = settings.msg.numberChk;
-		msg.priceChk = settings.msg.priceChk;
 		msg.floatChk = settings.msg.floatChk;
 		msg.lengthLimitChk = settings.msg.lengthLimitChk + "(" + settings.validateType.lengthLimitChk.min + "자리)";
 		msg.mobileNumChk = settings.msg.mobileNumChk;
@@ -682,7 +650,6 @@
 				Pass : msg.passChk,
 				Email : msg.emailChk,
 				Number : msg.numberChk,
-				Price : msg.priceChk,
 				Float : msg.floatChk,
 				Mobile : msg.mobileNumChk,
 				Phone : msg.phoneNumChk,
@@ -766,7 +733,7 @@
 				}
 			}
 		};
-		
+
 		// 설정된 메시지를 발생시키고 해당 객체로 포커스를 이동시킨다.
 		var GenerateMsg = function(obj, msg)
 		{
@@ -836,7 +803,7 @@
 			}
 			isOk = false;
 		};
-		
+
 		// 필수 입력이 아닌 경우 체크
 		var NotRequiredCheck = function(obj, single, name)
 		{
@@ -863,7 +830,7 @@
 
 			return rtnFlag;
 		};
-		
+
 		// 사용자 정의 함수 실행
 		var UserDefineFunc = function(func, obj, tagid, okval, msg)
 		{
@@ -908,22 +875,22 @@
 				}
 			});
 		}();
-		
+
 		var ConvertDate = function()
 		{
-		    $("input").each(function(){
-                if ($(this).hasClass(settings.validateType.dateTypeChk.className))
-                {
-                    $(this).keyup(function(event){
-                        event = event || window.event;
-                        //var _val = this.value.trim();
-                        var _val = $.trim(this.value);
+			$("input").each(function(){
+				if ($(this).hasClass(settings.validateType.dateTypeChk.className))
+				{
+					$(this).keyup(function(event){
+						event = event || window.event;
+						//var _val = this.value.trim();
+						var _val = $.trim(this.value);
 
-                        this.value = Feel.Validation.method.AutoHypenDate(_val);
+						this.value = Feel.Validation.method.AutoHypenDate(_val);
 
-                    });
-                }
-            });
+					});
+				}
+			});
 		}();
 
 		var CheckKeyup = function()
@@ -940,17 +907,6 @@
 					});
 				}
 
-				/* 금액 검사 (숫자 + ,)*/
-				if ($(this).hasClass(settings.validateType.priceChk.className))
-				{
-					$(this).keyup(function(event){
-						if ($(this).val() != "")
-						{
-							Feel.Validation.method.AutoCommaPrice($(this), regExrs.priceExr, msg.priceChk, GenerateMsg);
-						}
-					});
-				}
-				
 				// 실수 검사
 				if ($(this).hasClass(settings.validateType.floatChk.className))
 				{
@@ -961,7 +917,7 @@
 						}
 					});
 				}
-				
+
 				// 한글 검사
 				if ($(this).hasClass(settings.validateType.koreanChk.className))
 				{
@@ -983,7 +939,7 @@
 						}
 					});
 				}
-				
+
 				// maxLength 검사
 				if ($(this).is("[maxlength]"))
 				{
@@ -996,7 +952,7 @@
 				}
 			});
 		}();
-		
+
 		var hasMaxlengthCheck = function(obj){
 			if (Feel.Validation.developmentMode == "dev")
 			{
@@ -1012,7 +968,7 @@
 		{
 			Feel.Validation.method.Comma($("." + settings.comma.className));
 		}
-		
+
 		// submit btn event mapping
 		if (typeof submitBtnClass != "undefined")
 		{
@@ -1021,7 +977,7 @@
 				$this.submit();
 			});
 		}
-		
+
 		// 값 또는 태그의 상태에 대한 확인 모음
 		var validationType = {
 			Empty : function(obj, msg){
@@ -1105,7 +1061,7 @@
 
 		// 중복 검사 기능
 		duplication.check(settings.duplication, regExrs, msg);
-		
+
 		$this.submit(function(e){
 			window.onbeforeunload = null;
 
@@ -1155,7 +1111,6 @@
 								}
 								if (isOk && $(this).hasClass(settings.validateType.emailChk.className)) validationType.CommonChk($(this), regExrs.emailExr, msg.emailChk);
 								if (isOk && $(this).hasClass(settings.validateType.numberChk.className)) validationType.CommonChk($(this), regExrs.numberExr, msg.numberChk);
-								if (isOk && $(this).hasClass(settings.validateType.priceChk.className)) validationType.CommonChk($(this), regExrs.priceExr, msg.priceChk);
 								if (isOk && $(this).hasClass(settings.validateType.floatChk.className)) validationType.CommonChk($(this), regExrs.floatExr, msg.floatChk);
 								if (isOk && $(this).hasClass(settings.validateType.lengthLimitChk.className)) validationType.LengthLimitChk($(this), settings.validateType.lengthLimitChk, msg.lengthLimitChk);
 								if (isOk && $(this).hasClass(settings.validateType.mobileNumChk.className)) validationType.CommonChk($(this), regExrs.mobileExr, msg.mobileNumChk);
@@ -1299,13 +1254,13 @@
 				}
 			}
 		});
-		
+
 		if (mod == "dev")
 		{
 			$this.css("position", "relative").css("border", "1px dashed red").append("<button type=\"button\" class=\"btn btn-primary validationLabel\">ezValidation " + ver + " 예제 보기</button>").find(".validationLabel")
-										     .css("position", "absolute")
-										     .css("top", 0)
-										     .css("left", 0);
+				.css("position", "absolute")
+				.css("top", 0)
+				.css("left", 0);
 
 			$(".validationLabel").click(function(e){
 				window.open("/common/js/lib/ezValidation/example/index.html", "사용 예제", "top=100,left=0,width=1200,height=800");
