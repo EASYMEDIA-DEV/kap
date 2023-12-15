@@ -40,7 +40,7 @@ import java.util.ArrayList;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/wb/wbea")
+@RequestMapping(value="/mngwserc/wb/wbda")
 public class WBDASafetyListController {
 
     /** 서비스 **/
