@@ -292,6 +292,10 @@
 				)
 			</if>
 
+			<if test='edctnSeq !=null and edctnSeq != "" '>
+			AND 	edctn_seq = #{edctnSeq}
+			</if>
+
 			<!--차수변경일때만 사용-->
 			<if test='changeListYn == "Y" '>
 				and edctn_stts_cd = 'EDCTN_STTS_CD01'

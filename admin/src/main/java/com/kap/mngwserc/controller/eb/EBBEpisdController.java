@@ -1,5 +1,6 @@
 package com.kap.mngwserc.controller.eb;
 
+import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
@@ -18,6 +19,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -113,6 +115,32 @@ public class EBBEpisdController {
             throw new Exception(e.getMessage());
         }
         return "mngwserc/eb/ebb/EBBEpisdListAjax";
+    }
+
+    /**
+     * 교육차수관리 목록을 excel 다운로드한다.
+     */
+    @GetMapping(value = "/excel-down")
+    public void getEpisdPageExcel(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            System.out.println("@@@@ 여기 아닌가?");
+            eBBEpisdDTO.setExcelYn("Y");
+            // 목록 조회
+            EBBEpisdDTO ebbExcelListDto = eBBEpisdService.selectEpisdList(eBBEpisdDTO);
+
+            //엑셀 생성
+            eBBEpisdService.excelDownload1(ebbExcelListDto, response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
     }
 
     /**

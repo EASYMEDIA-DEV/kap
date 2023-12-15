@@ -13,7 +13,35 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	// form Object
 	var $formObj = jQuery("#frmData");
 
+	// 과정에 소속된 차수 조회
+	var search = function (page){
 
+		if(page != undefined){
+			$formObj.find("#pageIndex").val(page);
+		}
+
+		$("#stduyMthdCd").attr("disabled", true);
+		$("#stduyTimeCd").attr("disabled", true);
+		$("#stduyDdCd").attr("disabled", true);
+
+
+		cmmCtrl.listFrmAjax(function(respObj) {
+			$formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+			//CALLBACK 처리
+			ctrl.obj.find("#listContainer").html(respObj);
+			//전체 갯수
+			var totCnt = $(respObj).eq(0).data("totalCount");
+			//총 건수
+			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+			//페이징 처리
+			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
+		}, "/mngwserc/eb/ebb/select", $formObj, "POST", "html");
+
+		$("#stduyMthdCd").attr("disabled", false);
+		$("#stduyTimeCd").attr("disabled", false);
+		$("#stduyDdCd").attr("disabled", false);
+
+	}
 
 	//과정분류 조회
 	var selectCtgryCdList = function(arg){
@@ -188,6 +216,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			//리스트 조회
 			//폼 데이터 처리
 			//cmmCtrl.setFormData($formObj);
+			search();
 
 
 			$(".classType").trigger("change");

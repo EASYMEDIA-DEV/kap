@@ -205,7 +205,7 @@
                         <select class="form-control input-sm wd-sm" name="stduyTimeCd" id="stduyTimeCd" title="학습시간">
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${studyCdList.STDUY_TIME}" varStatus="status">
-                                <option value="${cdList.cd}" <c:if test="${rtnDto.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                <option value="${cdList.cd}" <c:if test="${rtnDto.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}일</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -364,7 +364,7 @@
                     </c:choose>
                 </div>
             </div>
-            <c:if test="${ not empty rtnInfo }">
+            <c:if test="${ not empty rtnDto }">
                 <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
                 <div class="table-responsive ">
                     <table class="table text-sm">
@@ -399,6 +399,62 @@
                     </table>
                 </div>
             </c:if>
+
+            <!--VUE 영역 시작 -->
+            <div class="table-responsive col-sm-12 p0 m0" id="vueList">
+                <table class="table table-hover table-striped" >
+                    <thead>
+                    <tr>
+                        <th class="text-center" rowspan="2">
+                            <label class="checkbox-inline c-checkbox">
+                                <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
+                                <span class="ion-checkmark-round"></span>
+                            </label>
+                        </th>
+                        <th class="text-center" rowspan="2">번호</th>
+                        <th class="text-center" rowspan="2">과정분류</th>
+                        <th class="text-center" rowspan="2">과정명</th>
+                        <th class="text-center" rowspan="2">학습방식</th>
+                        <th class="text-center" rowspan="2">학습시간</th>
+
+                        <th class="text-center" rowspan="2">년도</th>
+                        <th class="text-center" rowspan="2">회차</th>
+                        <th class="text-center" rowspan="2">접수기간</th>
+                        <th class="text-center" rowspan="2">접수상태</th>
+                        <th class="text-center" rowspan="2">교육기간</th>
+                        <th class="text-center" rowspan="2">실적마감여부</th>
+                        <th class="text-center" rowspan="2">교육상태</th>
+                        <th class="text-center" colspan="2">강사</th>
+
+                        <th class="text-center" rowspan="2">정원</th>
+                        <th class="text-center" rowspan="2">신청자</th>
+                        <th class="text-center" rowspan="2">모집 방식</th>
+                        <th class="text-center" colspan="3">문의담당자</th>
+                        <th class="text-center" rowspan="2">교육장소</th>
+
+
+                        <th class="text-center" rowspan="2">최초 등록자</th>
+                        <th class="text-center" rowspan="2">최초 등록일시</th>
+                        <th class="text-center" rowspan="2">최종 수정자</th>
+                        <th class="text-center" rowspan="2">최종 수정일시</th>
+                        <th class="text-center" rowspan="2">노출여부</th>
+                    </tr>
+                    <tr>
+                        <th class="text-center">이름</th>
+                        <th class="text-center">소속</th>
+
+                        <th class="text-center">이름</th>
+                        <th class="text-center">이메일</th>
+                        <th class="text-center">전화번호</th>
+                    </tr>
+                    </thead>
+                    <!-- 리스트 목록 결과 -->
+                    <tbody id="listContainer"/>
+                </table>
+                <!-- 페이징 버튼 -->
+                <div id="pagingContainer"/>
+            </div>
+            <!--리스트 종료 -->
         </form>
     </div>
 </div>

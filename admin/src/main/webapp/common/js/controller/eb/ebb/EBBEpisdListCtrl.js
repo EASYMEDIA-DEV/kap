@@ -110,6 +110,16 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
+
+			btnExcel : {
+				event : {
+					click : function() {
+						//사유입력 레이어팝업 활성화
+						$excelObj.find("#rsn").val('');
+						$excelObj.modal("show");
+					}
+				}
+			},
 			btnCopy : {
 				event :{
 					click : function() {
