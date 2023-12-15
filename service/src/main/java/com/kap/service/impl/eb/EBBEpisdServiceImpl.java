@@ -10,7 +10,9 @@ import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.eb.EBBEpisdMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -726,7 +728,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		Row row = null;
 		Cell cell = null;
-		int rowNum = 0;
+		int rowNum = 3;
 
 		//Cell Alignment 지정
 		style_header.setAlignment(HorizontalAlignment.CENTER);
@@ -754,16 +756,18 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		//57~80 : 예산/지출
 
 
+		//셀 병합 관련해서 만든 리스트
+		List<CellRangeAddress> cellList = new ArrayList<>();
+
 		//헤더 1층 기본정보, 교육실적, 교육실적2, 예산/지출
 		row = sheet.createRow(0);
 
 		cell = row.createCell(0);
-		cell.setCellValue("기본정보");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(1);
 		cell.setCellValue("기본정보1");
 		cell.setCellStyle(style_header);
+
+
+
 
 		cell = row.createCell(20);
 		cell.setCellValue("교육실적");
@@ -771,6 +775,200 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		cell = row.createCell(57);
 		cell.setCellValue("예산/지출");
 		cell.setCellStyle(style_header);
+
+		// 셀 병합
+		CellRangeAddress row1cols0 = new CellRangeAddress(0, 0, 0, 19);//기본정보 병합 0~19
+		CellRangeAddress row1cols20 = new CellRangeAddress(0, 0, 20, 56);//교육실적 병합 병합 20~56
+		CellRangeAddress row1cols57 = new CellRangeAddress(0, 0, 57, 80);//예산/지출 병합 57~80
+		sheet.addMergedRegion(row1cols0); sheet.addMergedRegion(row1cols20); sheet.addMergedRegion(row1cols57);
+		cellList.add(row1cols0); cellList.add(row1cols20); cellList.add(row1cols57);
+
+
+
+		//헤더 2층 과정분류1, 과정분류2, 과정명, 학습방식, 학습시간, 업종 년도 차수 교육일 교육기간(2), 교육장소 협력기관 정원(명) 강사1 강사2 강사3 강사4 강사5 강사6
+		//개요, 회사별 수료인원(명), 분야별 수료인원(명), 직급별 수료인원(명), 출석/평가, 만족도, 교육시간, 예산, 지출
+		row = sheet.createRow(1);
+
+		//2층 기본정보 시작
+		cell = row.createCell(0); cell.setCellValue("과정분류1"); cell.setCellStyle(style_header);
+		cell = row.createCell(1); cell.setCellValue("과정분류2"); cell.setCellStyle(style_header);
+		cell = row.createCell(2); cell.setCellValue("과정명"); cell.setCellStyle(style_header);
+		cell = row.createCell(3); cell.setCellValue("학습방식"); cell.setCellStyle(style_header);
+		cell = row.createCell(4); cell.setCellValue("학습시간"); cell.setCellStyle(style_header);
+		cell = row.createCell(5); cell.setCellValue("업종"); cell.setCellStyle(style_header);
+		cell = row.createCell(6); cell.setCellValue("년도"); cell.setCellStyle(style_header);
+		cell = row.createCell(7); cell.setCellValue("차수"); cell.setCellStyle(style_header);
+		cell = row.createCell(8); cell.setCellValue("교육일"); cell.setCellStyle(style_header);
+		cell = row.createCell(9); cell.setCellValue("교육기간"); cell.setCellStyle(style_header);
+
+		cell = row.createCell(11); cell.setCellValue("교육장소"); cell.setCellStyle(style_header);
+		cell = row.createCell(12); cell.setCellValue("협력기관"); cell.setCellStyle(style_header);
+		cell = row.createCell(13); cell.setCellValue("정원(명"); cell.setCellStyle(style_header);
+		cell = row.createCell(14); cell.setCellValue("강사1"); cell.setCellStyle(style_header);
+		cell = row.createCell(15); cell.setCellValue("강사2"); cell.setCellStyle(style_header);
+		cell = row.createCell(16); cell.setCellValue("강사3"); cell.setCellStyle(style_header);
+		cell = row.createCell(17); cell.setCellValue("강사4"); cell.setCellStyle(style_header);
+		cell = row.createCell(18); cell.setCellValue("강사5"); cell.setCellStyle(style_header);
+		cell = row.createCell(19); cell.setCellValue("강사6"); cell.setCellStyle(style_header);
+		//2층 기본정보 끝
+
+		//2층 교육실적1 시작
+		cell = row.createCell(20); cell.setCellValue("개요"); cell.setCellStyle(style_header);//개요 20~23
+		cell = row.createCell(24); cell.setCellValue("회사별 수료인원(명)"); cell.setCellStyle(style_header);//회사별 수료인원(명) 24~27
+		cell = row.createCell(28); cell.setCellValue("분야별 수료인원(명)"); cell.setCellStyle(style_header);//분야별 수료인원(명) 28~36
+		//2층 교육실적1 끝
+
+		//2층 교육실적2 시작
+		cell = row.createCell(37); cell.setCellValue("직급별 수료인원(명)"); cell.setCellStyle(style_header);//직급별 수료인원(명) 37~42
+		cell = row.createCell(43); cell.setCellValue("출석/평가"); cell.setCellStyle(style_header);//출석/평가 43~44
+		cell = row.createCell(45); cell.setCellValue("만족도"); cell.setCellStyle(style_header);//만족도 45~50
+		cell = row.createCell(51); cell.setCellValue("교육 시간"); cell.setCellStyle(style_header);//교육 시간 51~56
+		//2층 교육실적2 끝
+
+		//2층 예산지출 시작
+		cell = row.createCell(57); cell.setCellValue("예산"); cell.setCellStyle(style_header);//예산 57~68
+		cell = row.createCell(69); cell.setCellValue("지출"); cell.setCellStyle(style_header);//지출 69~80
+
+		//2층 예산지출 끝
+
+		// 셀 병합
+
+		//2층 기본정보 시작
+		CellRangeAddress row2cols0 = new CellRangeAddress(1, 2, 0, 0);//과정분류1
+		CellRangeAddress row2cols1 = new CellRangeAddress(1, 2, 1, 1);//과정분류2
+		CellRangeAddress row2cols2 = new CellRangeAddress(1, 2, 2, 2);//과정명
+		CellRangeAddress row2cols3 = new CellRangeAddress(1, 2, 3, 3);//학습방식
+		CellRangeAddress row2cols4 = new CellRangeAddress(1, 2, 4, 4);//학습시간
+		CellRangeAddress row2cols5 = new CellRangeAddress(1, 2, 5, 5);//업종
+		CellRangeAddress row2cols6 = new CellRangeAddress(1, 2, 6, 6);//년도
+		CellRangeAddress row2cols7 = new CellRangeAddress(1, 2, 7, 7);//차수
+		CellRangeAddress row2cols8 = new CellRangeAddress(1, 2, 8, 8);//교육일
+		CellRangeAddress row2cols9 = new CellRangeAddress(1, 2, 9, 10);//교육기간
+		CellRangeAddress row2cols11 = new CellRangeAddress(1, 2, 11, 11);//교육장소
+		CellRangeAddress row2cols12 = new CellRangeAddress(1, 2, 12, 12);//협력기관
+		CellRangeAddress row2cols13 = new CellRangeAddress(1, 2, 13, 13);//정원(명)
+		CellRangeAddress row2cols14 = new CellRangeAddress(1, 2, 14, 14);//강사1
+		CellRangeAddress row2cols15 = new CellRangeAddress(1, 2, 15, 15);//강사2
+		CellRangeAddress row2cols16 = new CellRangeAddress(1, 2, 16, 16);//강사3
+		CellRangeAddress row2cols17 = new CellRangeAddress(1, 2, 17, 17);//강사4
+		CellRangeAddress row2cols18 = new CellRangeAddress(1, 2, 18, 18);//강사5
+		CellRangeAddress row2cols19 = new CellRangeAddress(1, 2, 19, 19);//강사6
+		sheet.addMergedRegion(row2cols0); 	sheet.addMergedRegion(row2cols1);		sheet.addMergedRegion(row2cols2);		sheet.addMergedRegion(row2cols3);
+		sheet.addMergedRegion(row2cols4);		sheet.addMergedRegion(row2cols5);		sheet.addMergedRegion(row2cols6);		sheet.addMergedRegion(row2cols7);
+		sheet.addMergedRegion(row2cols8);		sheet.addMergedRegion(row2cols9);		sheet.addMergedRegion(row2cols11);		sheet.addMergedRegion(row2cols12);
+		sheet.addMergedRegion(row2cols13);		sheet.addMergedRegion(row2cols14);		sheet.addMergedRegion(row2cols15);		sheet.addMergedRegion(row2cols16);
+		sheet.addMergedRegion(row2cols17);		sheet.addMergedRegion(row2cols18);		sheet.addMergedRegion(row2cols19);
+		//2층 기본정보 끝
+
+		//2층 교육실적1 시작
+		CellRangeAddress row2cols20 = new CellRangeAddress(1, 1, 20, 23);//개요
+		CellRangeAddress row2cols24 = new CellRangeAddress(1, 1, 24, 27);//회사별 수료인원(명)
+		CellRangeAddress row2cols28 = new CellRangeAddress(1, 1, 28, 36);//분야별 수료인원(명)
+		sheet.addMergedRegion(row2cols20); sheet.addMergedRegion(row2cols24); sheet.addMergedRegion(row2cols28);
+		//2층 교육실적1 끝
+
+		//2층 교육실적2 시작
+		CellRangeAddress row2cols37 = new CellRangeAddress(1, 1, 37, 42);//직급별 수료인원(명)
+		CellRangeAddress row2cols43 = new CellRangeAddress(1, 1, 43, 44);//출석/평가
+		CellRangeAddress row2cols45 = new CellRangeAddress(1, 1, 45, 50);//만족도
+		CellRangeAddress row2cols51 = new CellRangeAddress(1, 1, 51, 56);//교육 시간
+		sheet.addMergedRegion(row2cols37); sheet.addMergedRegion(row2cols43); sheet.addMergedRegion(row2cols45); sheet.addMergedRegion(row2cols51);
+		//2층 교육실적2 끝
+
+		//2층 예산지출 시작
+		CellRangeAddress row2cols57 = new CellRangeAddress(1, 1, 57, 68);//예산
+		CellRangeAddress row2cols69 = new CellRangeAddress(1, 1, 69, 80);//지출
+		sheet.addMergedRegion(row2cols57); sheet.addMergedRegion(row2cols69);
+		//2층 예산지출 끝
+
+		cellList.add(row2cols0); cellList.add(row2cols1); cellList.add(row2cols2); cellList.add(row2cols3); cellList.add(row2cols4); cellList.add(row2cols5);
+		cellList.add(row2cols6); cellList.add(row2cols7); cellList.add(row2cols8); cellList.add(row2cols9); cellList.add(row2cols11); cellList.add(row2cols12);
+		cellList.add(row2cols14); cellList.add(row2cols15); cellList.add(row2cols16); cellList.add(row2cols17); cellList.add(row2cols18); cellList.add(row2cols19);
+
+		cellList.add(row2cols20); cellList.add(row2cols24); cellList.add(row2cols28); cellList.add(row2cols37); cellList.add(row2cols43); cellList.add(row2cols45);
+		cellList.add(row2cols51); cellList.add(row2cols57); cellList.add(row2cols69);
+
+
+		//헤더 3층
+		//교육상태 신청인원(명) 신청인원(명) 수료인원(명), 참석율(%), 완성차(명), 1차사(명), 2차사(명), 기타(명), 품질(명), 생산(명), 구매(명), 경영지원(명), 업체평가(명), 안전(명), ESG(명), 기타(명)
+		//대표(명) 임원(명) 부장(팀장)(명) 과장/차장(명) 사원/대리(명) 조장/반장(명) 출석률(%) 평가점수(점) 종합 평균 전체(공통) 교육환경 교육지원 교육내용 강사 강사1(시간) 강사1(시간) 강사1(시간)강사1(시간) 강사1(시간) 강사1(시간)
+		//예산 총계(원), 부담금/대관비(원), 강사비(원), 교재비(원), 식대(원) 다과비(원) 소모품비(원) 발송비(원) 재료비(원) 집행비(원) 기타(원) 비고(원) 지출(원) 총계(원) 부담금/대관비(원) 강사비(원) 교재비(원) 식대(원) 다과비(원) 소모품비(원) 발송비(원) 재료비(원) 집행비(원) 기타(원) 비고
+		row = sheet.createRow(2);
+		cell = row.createCell(20); cell.setCellValue("교육상태"); cell.setCellStyle(style_header);//교육상태 20
+		cell = row.createCell(21); cell.setCellValue("신청인원(명)"); cell.setCellStyle(style_header);//신청인원(명) 21
+		cell = row.createCell(22); cell.setCellValue("수료인원(명)"); cell.setCellStyle(style_header);//수료인원(명) 22
+		cell = row.createCell(23); cell.setCellValue("참석율(%)"); cell.setCellStyle(style_header);//참석율(%) 23
+		cell = row.createCell(24); cell.setCellValue("완성차(명)"); cell.setCellStyle(style_header);//완성차(명) 24
+		cell = row.createCell(25); cell.setCellValue("1차사(명)"); cell.setCellStyle(style_header);//1차사(명) 25
+		cell = row.createCell(26); cell.setCellValue("2차사(명)"); cell.setCellStyle(style_header);//2차사(명) 26
+		cell = row.createCell(27); cell.setCellValue("기타(명)"); cell.setCellStyle(style_header);//기타(명) 27
+		cell = row.createCell(28); cell.setCellValue("품질(명)"); cell.setCellStyle(style_header);//품질(명) 28
+		cell = row.createCell(29); cell.setCellValue("생산(명)"); cell.setCellStyle(style_header);//생산(명) 29
+		cell = row.createCell(30); cell.setCellValue("구매(명)"); cell.setCellStyle(style_header);//구매(명) 30
+		cell = row.createCell(31); cell.setCellValue("경영지원(명)"); cell.setCellStyle(style_header);//경영지원(명) 31
+		cell = row.createCell(32); cell.setCellValue("업체평가(명)"); cell.setCellStyle(style_header);//업체평가(명) 32
+		cell = row.createCell(33); cell.setCellValue("안전(명)"); cell.setCellStyle(style_header);//안전(명) 33
+		cell = row.createCell(34); cell.setCellValue("ESG(명)"); cell.setCellStyle(style_header);//ESG(명) 34
+		cell = row.createCell(35); cell.setCellValue("기타(명)"); cell.setCellStyle(style_header);//기타(명) 35
+
+		cell = row.createCell(36); cell.setCellValue("대표(명)"); cell.setCellStyle(style_header);//대표(명) 36
+		cell = row.createCell(37); cell.setCellValue("임원(명)"); cell.setCellStyle(style_header);//임원(명) 37
+		cell = row.createCell(38); cell.setCellValue("부장(팀장)(명)"); cell.setCellStyle(style_header);//부장(팀장)(명) 38
+		cell = row.createCell(39); cell.setCellValue("부과장/차장(명)"); cell.setCellStyle(style_header);//부과장/차장(명) 39
+		cell = row.createCell(40); cell.setCellValue("사원/대리(명)"); cell.setCellStyle(style_header);//사원/대리(명) 40
+		cell = row.createCell(41); cell.setCellValue("조장/반장(명)"); cell.setCellStyle(style_header);//조장/반장(명) 41
+		cell = row.createCell(42); cell.setCellValue("출석률(%)"); cell.setCellStyle(style_header);//출석률(%) 42
+		cell = row.createCell(43); cell.setCellValue("평가점수(점)"); cell.setCellStyle(style_header);//평가점수(점) 43
+		cell = row.createCell(44); cell.setCellValue("종합 평균 "); cell.setCellStyle(style_header);//종합 평균 44
+		cell = row.createCell(45); cell.setCellValue("전체(공통)"); cell.setCellStyle(style_header);//전체(공통) 45
+		cell = row.createCell(46); cell.setCellValue("교육환경"); cell.setCellStyle(style_header);//교육환경 46
+		cell = row.createCell(47); cell.setCellValue("교육지원"); cell.setCellStyle(style_header);//교육지원 47
+		cell = row.createCell(48); cell.setCellValue("교육내용"); cell.setCellStyle(style_header);//교육내용 48
+		cell = row.createCell(49); cell.setCellValue("강사"); cell.setCellStyle(style_header);//강사 49
+		cell = row.createCell(50); cell.setCellValue("강사1(시간)"); cell.setCellStyle(style_header);//강사1(시간) 50
+		cell = row.createCell(51); cell.setCellValue("강사2(시간)"); cell.setCellStyle(style_header);//강사2(시간) 51
+		cell = row.createCell(52); cell.setCellValue("강사3(시간)"); cell.setCellStyle(style_header);//강사3(시간) 52
+		cell = row.createCell(53); cell.setCellValue("강사4(시간)"); cell.setCellStyle(style_header);//강사4(시간) 53
+		cell = row.createCell(54); cell.setCellValue("강사5(시간)"); cell.setCellStyle(style_header);//강사5(시간) 54
+		cell = row.createCell(55); cell.setCellValue("강사6(시간)"); cell.setCellStyle(style_header);//강사6(시간) 55
+
+		cell = row.createCell(56); cell.setCellValue("예산 총계(원)"); cell.setCellStyle(style_header);//예산 총계(원)
+		cell = row.createCell(57); cell.setCellValue("부담금/대관비(원)"); cell.setCellStyle(style_header);//부담금/대관비(원)
+		cell = row.createCell(58); cell.setCellValue("강사비(원)"); cell.setCellStyle(style_header);//강사비(원)
+		cell = row.createCell(59); cell.setCellValue("교재비(원)"); cell.setCellStyle(style_header);//교재비(원)
+		cell = row.createCell(60); cell.setCellValue("식대(원)"); cell.setCellStyle(style_header);//식대(원)
+		cell = row.createCell(61); cell.setCellValue("다과비(원)"); cell.setCellStyle(style_header);//다과비(원)
+		cell = row.createCell(62); cell.setCellValue("소모품비(원)"); cell.setCellStyle(style_header);//소모품비(원)
+		cell = row.createCell(63); cell.setCellValue("발송비(원)"); cell.setCellStyle(style_header);//발송비(원)
+		cell = row.createCell(64); cell.setCellValue("재료비(원)"); cell.setCellStyle(style_header);//재료비(원)
+		cell = row.createCell(65); cell.setCellValue("집행비(원)"); cell.setCellStyle(style_header);//집행비(원)
+		cell = row.createCell(66); cell.setCellValue("기타(원)"); cell.setCellStyle(style_header);//기타(원)
+		cell = row.createCell(67); cell.setCellValue("비고"); cell.setCellStyle(style_header);//비고
+		cell = row.createCell(68); cell.setCellValue("지출(원)"); cell.setCellStyle(style_header);//지출(원)
+		cell = row.createCell(69); cell.setCellValue("총계(원)"); cell.setCellStyle(style_header);//총계(원)
+		cell = row.createCell(70); cell.setCellValue("부담금/대관비(원)"); cell.setCellStyle(style_header);//부담금/대관비(원)
+		cell = row.createCell(71); cell.setCellValue("강사비(원)"); cell.setCellStyle(style_header);//강사비(원)
+		cell = row.createCell(72); cell.setCellValue("교재비(원)"); cell.setCellStyle(style_header);//교재비(원)
+		cell = row.createCell(73); cell.setCellValue("식대(원)"); cell.setCellStyle(style_header);//식대(원)
+		cell = row.createCell(74); cell.setCellValue("다과비(원)"); cell.setCellStyle(style_header);//다과비(원)
+		cell = row.createCell(75); cell.setCellValue("소모품비(원)"); cell.setCellStyle(style_header);//소모품비(원)
+		cell = row.createCell(76); cell.setCellValue("발송비(원)"); cell.setCellStyle(style_header);//발송비(원)
+		cell = row.createCell(77); cell.setCellValue("재료비(원)"); cell.setCellStyle(style_header);//재료비(원)
+		cell = row.createCell(78); cell.setCellValue("집행비(원)"); cell.setCellStyle(style_header);//집행비(원)
+		cell = row.createCell(79); cell.setCellValue("기타(원)"); cell.setCellStyle(style_header);//기타(원)
+		cell = row.createCell(80); cell.setCellValue("비고"); cell.setCellStyle(style_header);//비고
+
+
+		// 병합된 영역의 각 셀에 스타일을 적용
+		for(CellRangeAddress call : cellList){
+			for (int i = call.getFirstRow(); i <= call.getLastRow(); i++) {
+				Row tempRow = sheet.getRow(i);
+				for (int colNum = call.getFirstColumn(); colNum <= call.getLastColumn(); colNum++) {
+					Cell tempCel = tempRow.getCell(colNum, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+					tempCel.setCellStyle(style_header);
+				}
+			}
+		}
 
 		// Header
 		/*row = sheet.createRow(rowNum++);
@@ -802,6 +1000,101 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		// Body
 		List<EBBEpisdDTO> list = eBBEpisdDTO.getList();
+		for(EBBEpisdDTO dto: list){
+			row = sheet.createRow(rowNum++);
+			cell = row.createCell(0); cell.setCellValue(dto.getPrntCdNm()); cell.setCellStyle(style_header);//과정분류
+			cell = row.createCell(1); cell.setCellValue(dto.getCtgryCdNm()); cell.setCellStyle(style_header);//과정분류2
+			cell = row.createCell(2); cell.setCellValue(dto.getNm()); cell.setCellStyle(style_header);//과정명
+			cell = row.createCell(3); cell.setCellValue(dto.getStduyMthdCdNm()); cell.setCellStyle(style_header);//학습방식
+			cell = row.createCell(4); cell.setCellValue(dto.getStduyTimeCdNm()); cell.setCellStyle(style_header);//학습시간
+			cell = row.createCell(5); cell.setCellValue(dto.getCbsnCdNm()); cell.setCellStyle(style_header);//업종
+			cell = row.createCell(6); cell.setCellValue(dto.getEpisdYear()); cell.setCellStyle(style_header);//년도
+			cell = row.createCell(7); cell.setCellValue(dto.getEpisdOrd()); cell.setCellStyle(style_header);//차수
+			cell = row.createCell(8); cell.setCellValue(dto.getStduyDdCd()); cell.setCellStyle(style_header);//교육일
+			cell = row.createCell(9); cell.setCellValue(dto.getEdctnStrtDtm()); cell.setCellStyle(style_header);//교육기간 시작
+			cell = row.createCell(10); cell.setCellValue(dto.getEdctnEndDtm()); cell.setCellStyle(style_header);//교육기간 종료
+			cell = row.createCell(11); cell.setCellValue(dto.getPlaceNm()); cell.setCellStyle(style_header);//교육장소
+			cell = row.createCell(12); cell.setCellValue(dto.getCprtnInsttNm()); cell.setCellStyle(style_header);//협력기관
+			cell = row.createCell(13); cell.setCellValue(dto.getFxnumCnt()); cell.setCellStyle(style_header);//정원(명)
+
+			//강사 반복문 시작
+			cell = row.createCell(14); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사1
+			cell = row.createCell(15); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사2
+			cell = row.createCell(16); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사3
+			cell = row.createCell(17); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사4
+			cell = row.createCell(18); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사5
+			cell = row.createCell(19); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사6
+			//강사 반복문 종료
+
+			cell = row.createCell(20); cell.setCellValue(dto.getEdctnStatusNm()); cell.setCellStyle(style_header);//교육상태
+			cell = row.createCell(21); cell.setCellValue(dto.getAccsCnt()); cell.setCellStyle(style_header);//신청인원(명)
+			cell = row.createCell(22); cell.setCellValue("@@"); cell.setCellStyle(style_header);//수료인원(명)
+			cell = row.createCell(23); cell.setCellValue("@@"); cell.setCellStyle(style_header);//참석율(%)
+			cell = row.createCell(24); cell.setCellValue("@@"); cell.setCellStyle(style_header);//완성차(명)
+			cell = row.createCell(25); cell.setCellValue("@@"); cell.setCellStyle(style_header);//1차사(명)
+			cell = row.createCell(26); cell.setCellValue("@@"); cell.setCellStyle(style_header);//2차사(명)
+			cell = row.createCell(27); cell.setCellValue("@@"); cell.setCellStyle(style_header);//기타(명)
+
+			cell = row.createCell(28); cell.setCellValue("@@"); cell.setCellStyle(style_header);//품질(명)
+			cell = row.createCell(29); cell.setCellValue("@@"); cell.setCellStyle(style_header);//생산(명)
+			cell = row.createCell(30); cell.setCellValue("@@"); cell.setCellStyle(style_header);//구매(명)
+			cell = row.createCell(31); cell.setCellValue("@@"); cell.setCellStyle(style_header);//경영지원(명)
+			cell = row.createCell(32); cell.setCellValue("@@"); cell.setCellStyle(style_header);//업체평가(명)
+			cell = row.createCell(33); cell.setCellValue("@@"); cell.setCellStyle(style_header);//안전(명)
+			cell = row.createCell(34); cell.setCellValue("@@"); cell.setCellStyle(style_header);//ESG(명)
+			cell = row.createCell(35); cell.setCellValue("@@"); cell.setCellStyle(style_header);//기타(명)
+			cell = row.createCell(36); cell.setCellValue("@@"); cell.setCellStyle(style_header);//대표(명)
+			cell = row.createCell(37); cell.setCellValue("@@"); cell.setCellStyle(style_header);//임원(명)
+			cell = row.createCell(38); cell.setCellValue("@@"); cell.setCellStyle(style_header);//부장(팀장)(명)
+			cell = row.createCell(39); cell.setCellValue("@@"); cell.setCellStyle(style_header);//과장/차장(명)
+			cell = row.createCell(40); cell.setCellValue("@@"); cell.setCellStyle(style_header);//사원/대리(명)
+			cell = row.createCell(41); cell.setCellValue("@@"); cell.setCellStyle(style_header);//조장/반장(명)
+			cell = row.createCell(42); cell.setCellValue("@@"); cell.setCellStyle(style_header);//출석률(%)
+			cell = row.createCell(43); cell.setCellValue("@@"); cell.setCellStyle(style_header);//평가점수(점)
+			cell = row.createCell(44); cell.setCellValue("@@"); cell.setCellStyle(style_header);//종합 평균
+			cell = row.createCell(45); cell.setCellValue("@@"); cell.setCellStyle(style_header);//전체(공통)
+			cell = row.createCell(46); cell.setCellValue("@@"); cell.setCellStyle(style_header);//교육환경
+			cell = row.createCell(47); cell.setCellValue("@@"); cell.setCellStyle(style_header);//교육지원
+			cell = row.createCell(48); cell.setCellValue("@@"); cell.setCellStyle(style_header);//교육내용
+			cell = row.createCell(49); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사
+			cell = row.createCell(50); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사1(시간)
+			cell = row.createCell(51); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사2(시간)
+			cell = row.createCell(52); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사3(시간)
+			cell = row.createCell(53); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사4(시간)
+			cell = row.createCell(54); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사5(시간)
+			cell = row.createCell(55); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사6(시간)
+
+			cell = row.createCell(56); cell.setCellValue("@@"); cell.setCellStyle(style_header);//예산 총계(원)
+			cell = row.createCell(57); cell.setCellValue("@@"); cell.setCellStyle(style_header);//부담금/대관비(원)
+			cell = row.createCell(58); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사비(원)
+			cell = row.createCell(59); cell.setCellValue("@@"); cell.setCellStyle(style_header);//교재비(원)
+			cell = row.createCell(60); cell.setCellValue("@@"); cell.setCellStyle(style_header);//식대(원)
+			cell = row.createCell(61); cell.setCellValue("@@"); cell.setCellStyle(style_header);//다과비(원)
+			cell = row.createCell(62); cell.setCellValue("@@"); cell.setCellStyle(style_header);//소모품비(원)
+			cell = row.createCell(63); cell.setCellValue("@@"); cell.setCellStyle(style_header);//발송비(원)
+			cell = row.createCell(64); cell.setCellValue("@@"); cell.setCellStyle(style_header);//재료비(원)
+			cell = row.createCell(65); cell.setCellValue("@@"); cell.setCellStyle(style_header);//집행비(원)
+			cell = row.createCell(66); cell.setCellValue("@@"); cell.setCellStyle(style_header);//기타(원)
+			cell = row.createCell(67); cell.setCellValue("@@"); cell.setCellStyle(style_header);//비고(원)
+			cell = row.createCell(68); cell.setCellValue("@@"); cell.setCellStyle(style_header);//지출(원)
+			cell = row.createCell(69); cell.setCellValue("@@"); cell.setCellStyle(style_header);//총계(원)
+			cell = row.createCell(70); cell.setCellValue("@@"); cell.setCellStyle(style_header);//부담금/대관비(원)
+			cell = row.createCell(71); cell.setCellValue("@@"); cell.setCellStyle(style_header);//강사비(원)
+			cell = row.createCell(72); cell.setCellValue("@@"); cell.setCellStyle(style_header);//교재비(원)
+			cell = row.createCell(73); cell.setCellValue("@@"); cell.setCellStyle(style_header);//식대(원)
+			cell = row.createCell(74); cell.setCellValue("@@"); cell.setCellStyle(style_header);//다과비(원)
+			cell = row.createCell(75); cell.setCellValue("@@"); cell.setCellStyle(style_header);//소모품비(원)
+			cell = row.createCell(76); cell.setCellValue("@@"); cell.setCellStyle(style_header);//발송비(원)
+			cell = row.createCell(77); cell.setCellValue("@@"); cell.setCellStyle(style_header);//재료비(원)
+			cell = row.createCell(78); cell.setCellValue("@@"); cell.setCellStyle(style_header);//집행비(원)
+			cell = row.createCell(79); cell.setCellValue("@@"); cell.setCellStyle(style_header);//기타(원)
+			cell = row.createCell(80); cell.setCellValue("@@"); cell.setCellStyle(style_header);//비고
+
+
+
+		}
+
+
 		/*for (int i=0; i<list.size(); i++) {
 			row = sheet.createRow(rowNum++);
 
