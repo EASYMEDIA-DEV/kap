@@ -42,6 +42,33 @@
             ,MOD_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
             ,MOD_DTM
+            ,(SELECT
+                COUNT(*)
+            FROM CX_APPCTN_RSUME_PRIZE_PART_DTL A INNER JOIN CX_APPCTN_RSUME_DTL B
+                                                        ON A.RSUME_SEQ = B.RSUME_SEQ
+                                                    INNER JOIN CX_APPCTN_MST C
+                                                        ON B.APPCTN_SEQ = C.APPCTN_SEQ
+                                                    INNER JOIN CX_EPISD_MST D
+                                                        ON C.EPISD_SEQ = D.EPISD_SEQ
+            WHERE D.YEAR = A.YEAR	) AS NOM_CNT
+            ,(SELECT
+                COUNT(*)
+            FROM(
+                SELECT
+                    A.APPCTN_SEQ
+                    , A.EPISD_SEQ
+                    , A.MNG_STTS_CD
+                    , B.YEAR
+                FROM(
+                    SELECT
+                        A.APPCTN_SEQ
+                        , B.EPISD_SEQ
+                        , A.MNG_STTS_CD
+                    FROM CX_APPCTN_RSUME_DTL A INNER JOIN CX_APPCTN_MST B
+                                                    ON A.APPCTN_SEQ = B.APPCTN_SEQ
+                    WHERE A.MNG_STTS_CD = 'PRO_TYPE05002_02_003') A INNER JOIN CX_EPISD_MST B
+                                                                            ON A.EPISD_SEQ = B.EPISD_SEQ) RARA
+                WHERE RARA.YEAR = A.YEAR) AS REG_CNT
             FROM CX_EPISD_MST A
         ) A
         <include refid="selectRoundListwhereSql" />

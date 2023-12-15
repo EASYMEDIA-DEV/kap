@@ -6,7 +6,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var exports = {
         controller : "controller/wb/wbj/WBJRoundWriteCtrl"
     };
-
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = jQuery("#frmData");
@@ -15,6 +14,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var examInitHtml = "";
     //설문지 순차 순번
     var examListSize = 0;
+
+    examInitHtml = ctrl.obj.find(".examListContainer").html();
 
     var callbackAjaxDelete = function(data){
 
@@ -31,56 +32,70 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // set model
     ctrl.model = {
         id : {
+
         },
         classname : {
+            room :{
+                event :{
+                    click: function(){
+                        cmmCtrl.getEduRoomLayerPop(function(data){
+                        console.log(data);
+
+                            var seq = data.seq
+                            var titl = data.titl // 장소명
+                            var rgnsNm = data.rgnsNm // 지역
+                            var bscAddr = data.addr; // 주소
+                            var rprsntTelNo = data.rprsntTelNo; // 대표번호
+
+                            $("input[name=placeSeq]").val(seq);
+
+                            var tc = new Array(); // 배열 생성
+                            tc.push({titl : titl, rgnsName : rgnsNm, bscAddr : bscAddr ,rprsntTelNo : rprsntTelNo }); // 배열 값 넣기
+
+                            // 해당 지역 선택 시 테이블 td 그리기
+                            var html = '';
+
+                            for(var i = 0; i < 1; i++){
+                                html += '<tr>';
+                                html += '<td class=\"text-center\">'+tc[i].titl+'</td>';
+                                html += '<td class=\"text-center\">'+tc[i].rgnsName+'</td>';
+                                html += '<td class=\"text-center\">'+tc[i].bscAddr+'</td>';
+                                html += '<td class=\"text-center\">'+tc[i].rprsntTelNo+'</td>';
+                                html += '</tr>';
+                            }
+
+                            $("#listContainer").empty();
+                            $("#listContainer").append(html);
+                    });
+
+                    }
+                }
+            },
             btnExamWrite :{
                 event :{
                     click: function(){
-                        ctrl.obj.append(examInitHtml);
+                        $(".examListContainer").append(examInitHtml);
                         // .examList의 마지막 자식 요소(.examQstnNm)를 선택하고 텍스트 설정
-                        ctrl.obj.find(".examList").last().find(".examQstnNm").text("포상종류/포상금");
-
-                        // <span> 요소 생성 및 추가
-                        var starElement = $("<span/>", {
-                            class: "star",
-                            html: " *"
-                        });
-
-                        ctrl.obj.find(".examList").last().find(".examQstnNm").append(starElement);
+                        ctrl.obj.find(".examList").last().find(".examQstnNm").text();
                     }
                 }
             },
             btnExamDelete :{
                 event :{
                     click: function(){
-                        $(this).parents(".examList").remove();
-                        ctrl.obj.find(".examList").each(function(index, row){
-                            $(this).find(".examQstnNm").text("포상종류/포상금");
-                        })
+                        if(examListSize == 1){
+                            alert("삭제할수없음");
+                        }else{
+                            $(this).parents(".examList").remove();
+                            ctrl.obj.find(".examList").each(function(index, row){
+                                $(this).find(".examQstnNm").text("포상종류/포상금");
+                            })
+                        }
                     }
                 }
             },
         },
         immediately : function() {
-
-            examInitHtml = ctrl.obj.find(".examHtmlTemplage").html();
-            ctrl.obj.find(".examHtmlTemplage").remove();
-            if($.trim($("input[name=detailsKey]").val()) == ""){
-                var writeHtml = ctrl.obj.append(examInitHtml);
-                var examQstnElement = writeHtml.find(".examQstnNm");
-                // 텍스트 설정
-                examQstnElement.text("포상종류/포상금");
-
-                // <span> 요소 생성 및 추가
-                var starElement = $("<span/>", {
-                    class: "star",
-                    html: " *"
-                });
-
-                examQstnElement.append(starElement);
-                writeHtml.find(".btnExamDelete").remove();
-            }
-            ctrl.obj.show();
 
             examListSize = $(".examList").size();
 

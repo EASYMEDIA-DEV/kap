@@ -69,7 +69,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             //삭제 전송
                             cmmCtrl.frmAjax(function(respObj){
 
-                                if(respObj != undefined && respObj.respCnt > 0){
+                                if(respObj.optEpisdCnt != '0'){
                                     alert("신청정보가 존재하여 삭제할 수 없습니다.");
                                 }else{
                                     if(confirm('삭제하시겠습니까?'))
@@ -86,7 +86,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                         }, "./deleteList", frmDataObj, "POST", "json");
                                     }
                                 }
-                            }, "./getAppctnCnt", frmDataObj, "POST", "json");
+                            }, "/mngwserc/wb/wbia/getRsumeCnt", $formObj, "post", "json")
                         }
                         else
                         {

@@ -89,14 +89,52 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset id="rowInsert">
-                <div class="form-group text-sm examListContainer" data-controller="controller/wb/wbj/WBJRoundWriteCtrl" style="display:none;">
-                <c:choose>
-                    <c:when test="${ rtnInfo.episdSeq != null }">
-                        <c:forEach var="prizeList" items="${rtnInfo.prizeList}" varStatus="qstnStatus">
-                            <div class="col-sm-12 examList mt-sm pl0 pr0">
+            <fieldset id="test">
+                <div class="form-group text-sm examListContainer">
+                    <c:choose>
+                        <c:when test="${ rtnInfo.episdSeq != null }">
+                            <c:forEach var="prizeList" items="${rtnInfo.prizeList}" varStatus="qstnStatus">
+                                <div class="col-sm-12 examList mt-sm pl0 pr0 examHtmlTemplage">
+                                    <label class="col-sm-1 control-label examQstnNm">포상종류/포상금 <span class="star"> *</span></label>
+                                    <input type="hidden" name="prizeSeq" title="너냐" value="${prizeList.prizeSeq}" />
+                                    <div class="col-sm-11 pl0 pr0 prizeText">
+                                        <div class="col-sm-12">
+                                            <div>
+                                                <label class="col-sm-1 control-label">훈격<span class="star"> *</span></label>
+                                                <div class="col-sm-2">
+                                                    <select class="form-control input-sm srvTypeCd mrtsCd" name="mrtsCd" title="훈격" >
+                                                        <option >훈격선택</option>
+                                                        <c:forEach var="cdList" items="${cdList.MNGCNSLT_DIS}" varStatus="status">
+                                                            <option value="${cdList.cd}" ${ kl:decode(prizeList.mrtsCd, cdList.cd, 'selected', '') }>${cdList.cdNm}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <label class="col-sm-1 control-label">포상부문<span class="star"> *</span></label>
+                                                <div class="col-sm-2">
+                                                    <select class="form-control input-sm srvTypeCd prizeCd" name="prizeCd" title="포상부문" >
+                                                        <option >포상부문 선택</option>
+                                                        <c:forEach var="cdList" items="${cdList.MNGCNSLT_REW}" varStatus="status">
+                                                            <option value="${cdList.cd}" ${ kl:decode(prizeList.prizeCd, cdList.cd, 'selected', '') }>${cdList.cdNm}</option>
+                                                        </c:forEach>
+                                                    </select>
+                                                </div>
+                                                <label class="col-sm-1 control-label">포상금<span class="star"> *</span></label>
+                                                <div class="col-sm-2">
+                                                    <input type="text" name="prizePmt" title="포상금"  value="${prizeList.prizePmt}">만원
+                                                </div>
+                                                <div class="col-sm-2 pl0">
+                                                    <button type="button" class="btn btn-sm btn-inverse btnExamWrite">포상종류 추가</button>
+                                                    <button type="button" class="btn btn-sm btn-danger btnExamDelete">포상종류 삭제</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="col-sm-12 examList mt-sm pl0 pr0 examHtmlTemplage">
                                 <label class="col-sm-1 control-label examQstnNm">포상종류/포상금 <span class="star"> *</span></label>
-                                <input type="hidden" name="prizeSeq" value="${prizeList.prizeSeq}" />
                                 <div class="col-sm-11 pl0 pr0 prizeText">
                                     <div class="col-sm-12">
                                         <div>
@@ -105,7 +143,7 @@
                                                 <select class="form-control input-sm srvTypeCd mrtsCd" name="mrtsCd" title="훈격" >
                                                     <option >훈격선택</option>
                                                     <c:forEach var="cdList" items="${cdList.MNGCNSLT_DIS}" varStatus="status">
-                                                        <option value="${cdList.cd}" ${ kl:decode(prizeList.mrtsCd, cdList.cd, 'selected', '') }>${cdList.cdNm}</option>
+                                                        <option value="${cdList.cd}">${cdList.cdNm}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -114,13 +152,13 @@
                                                 <select class="form-control input-sm srvTypeCd prizeCd" name="prizeCd" title="포상부문" >
                                                     <option >포상부문 선택</option>
                                                     <c:forEach var="cdList" items="${cdList.MNGCNSLT_REW}" varStatus="status">
-                                                        <option value="${cdList.cd}" ${ kl:decode(prizeList.prizeCd, cdList.cd, 'selected', '') }>${cdList.cdNm}</option>
+                                                        <option value="${cdList.cd}">${cdList.cdNm}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
                                             <label class="col-sm-1 control-label">포상금<span class="star"> *</span></label>
                                             <div class="col-sm-2">
-                                                <input type="text" name="prizePmt" title="포상금"  value="${prizeList.prizePmt}">만원
+                                                <input type="text" name="prizePmt" title="포상금" >만원
                                             </div>
                                             <div class="col-sm-2 pl0">
                                                 <button type="button" class="btn btn-sm btn-inverse btnExamWrite">포상종류 추가</button>
@@ -130,56 +168,16 @@
                                     </div>
                                 </div>
                             </div>
-                        </c:forEach>
-                    </c:when>
-                </c:choose>
-                    <div class="examHtmlTemplage">
-                        <div class="col-sm-12 examList mt-sm pl0 pr0">
-                            <label class="col-sm-1 control-label examQstnNm"></label>
-                            <div class="col-sm-11 pl0 pr0 prizeText">
-                                <div class="col-sm-12">
-                                    <div>
-                                        <label class="col-sm-1 control-label">훈격<span class="star"> *</span></label>
-                                        <div class="col-sm-2">
-                                            <select class="form-control input-sm srvTypeCd mrtsCd" name="mrtsCd" title="훈격" >
-                                                <option >훈격선택</option>
-                                                <c:forEach var="cdList" items="${cdList.MNGCNSLT_DIS}" varStatus="status">
-                                                    <option value="${cdList.cd}">${cdList.cdNm}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-1 control-label">포상부문<span class="star"> *</span></label>
-                                        <div class="col-sm-2">
-                                            <select class="form-control input-sm srvTypeCd prizeCd" name="prizeCd" title="포상부문" >
-                                                <option >포상부문 선택</option>
-                                                <c:forEach var="cdList" items="${cdList.MNGCNSLT_REW}" varStatus="status">
-                                                    <option value="${cdList.cd}">${cdList.cdNm}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                        <label class="col-sm-1 control-label">포상금<span class="star"> *</span></label>
-                                        <div class="col-sm-2">
-                                            <input type="text" name="prizePmt" title="포상금" >만원
-                                        </div>
-                                        <div class="col-sm-2 pl0">
-                                            <button type="button" class="btn btn-sm btn-inverse btnExamWrite">포상종류 추가</button>
-                                            <button type="button" class="btn btn-sm btn-danger btnExamDelete">포상종류 삭제</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </fieldset>
 
             <fieldset>
-                <div class="form-group text-sm">
+                <div class="form-group text-sm" >
                     <label class="col-sm-1 control-label">장소</label>
-                    <input type="hidden" name="placeSeq" class="notRequired" id="placeSeq" value="${rtnInfo.placeSeq}"/>
-                    <button type="button" class="btn btn-inverse btn-sm mb-sm" onclick="cmmCtrl.getEduRoomLayerPop(function(data){
-                      console.log(data);
-                     })">장소 검색</button>
+                    <input type="hidden" name="placeSeq" class="notRequired" id="placeSeq" title="장소" value="${rtnInfo.placeSeq}"/>
+                    <button type="button" class="btn btn-inverse btn-sm mb-sm room" >장소 검색</button>
                 </div>
                 <table class="table table-hover table-striped">
                     <thead>
@@ -193,26 +191,26 @@
                     <!-- 리스트 목록 결과 -->
                     <tbody id="listContainer">
                     <c:choose>
-                    <c:when test="${ rtnInfo.episdSeq != null }">
-                        <c:forEach var="roomList" items="${rtnInfo.roomList}" varStatus="qstnStatus">
-                            <tr data-total-count="0">
-                                <td class="text-center">${roomList.nm}</td>
-                                <td class="text-center">${roomList.rgnsName}</td>
-                                <td class="text-center">
-                                    <c:if test="${not empty roomList.zipcode}">(${roomList.zipcode})</c:if> ${roomList.bscAddr}<c:if test="${not empty roomList.dtlAddr}">, ${roomList.dtlAddr}</c:if>
-                                </td>
-                                <td class="text-center">${roomList.rprsntTelNo}</td>
-                            </tr>
-                        </c:forEach>
-                    </c:when>
-                            <c:otherwise>
+                        <c:when test="${ rtnInfo.episdSeq != null }">
+                            <c:forEach var="roomList" items="${rtnInfo.roomList}" varStatus="qstnStatus">
                                 <tr data-total-count="0">
-                                    <td colspan="4" class="text-center">
-                                        검색결과가 없습니다.<br>
-                                        (등록된 데이터가 없습니다.)
+                                    <td class="text-center">${roomList.nm}</td>
+                                    <td class="text-center">${roomList.rgnsName}</td>
+                                    <td class="text-center">
+                                        <c:if test="${not empty roomList.zipcode}">(${roomList.zipcode})</c:if> ${roomList.bscAddr}<c:if test="${not empty roomList.dtlAddr}">, ${roomList.dtlAddr}</c:if>
                                     </td>
+                                    <td class="text-center">${roomList.rprsntTelNo}</td>
                                 </tr>
-                            </c:otherwise>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <tr data-total-count="0">
+                                <td colspan="4" class="text-center">
+                                    검색결과가 없습니다.<br>
+                                    (등록된 데이터가 없습니다.)
+                                </td>
+                            </tr>
+                        </c:otherwise>
                     </c:choose>
                     </tbody>
                 </table>
@@ -240,7 +238,7 @@
                     <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
                     <div class="col-sm-11">
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="expsYn" value="Y" title="노출여부"  <c:if test="${rtnInfo.expsYn eq 'Y'}">checked</c:if> />
+                            <input type="radio" name="expsYn" value="Y" title="노출여부"  <c:if test="${empty rtnInfo}">checked</c:if> <c:if test="${rtnInfo.expsYn eq 'Y'}">checked</c:if> />
                             <span class="ion-record"></span> 노출
                         </label>
                         <label class="radio-inline c-radio">

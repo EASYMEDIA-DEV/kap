@@ -1,6 +1,7 @@
 package com.kap.service.impl.wb.wbi;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
@@ -12,6 +13,7 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -111,20 +113,6 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
     }
 
     /**
-     * 회차 매핑 여부 확인
-     */
-    public int getAppctnCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception {
-
-        int respCnt = 0;
-
-        respCnt = wBIASupplyListMapper.getAppctnCnt(wBRoundMstDTO);
-
-        wBRoundMstDTO.setRespCnt(respCnt);
-
-        return respCnt;
-    }
-
-    /**
      * 회차 삭제
      */
     public int SupplyDeleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception {
@@ -133,6 +121,24 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
 
         return respCnt;
     }
-    
+
+    /**
+     *  선택 연도 값에 따른 episdCnt 값 가져오기
+     */
+    public List<String> roundCnt(WBRoundMstDTO wBRoundMstDTO)  throws Exception
+    {
+        return wBIASupplyListMapper.roundCnt(wBRoundMstDTO);
+    }
+
+    /**
+     *  해당년도 신청 갯수
+     */
+    public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO)  throws Exception
+    {
+        EXGExamQstnDtlDTO eXGExamQstnDtlDTO = new EXGExamQstnDtlDTO();
+        eXGExamQstnDtlDTO.setDelValueList( wBRoundMstDTO.getDelValueList() );
+
+        return wBIASupplyListMapper.episdCnt(wBRoundMstDTO);
+    }
     
 }

@@ -182,4 +182,20 @@ public class WBPartCompanyDTO extends BaseDTO {
     private List<String> ctgryCdList; // 카테고리 구분
 
     private List<WBPartCompanyDTO> list;
+
+    @Schema(title = "상생단계 상세 리스트")
+    private WBPartCompanyDTO applyDtl;
+
+    @Schema(title = "상생단계 상세 리스트")
+    private List<WBPartCompanyDTO> applyList;
+
+    @Schema(title = "상생단계옵션 상세 리스트")
+    private List<WBPartCompanyDTO> applyTempOptnList;
+
+    @Schema(title = "상생단계옵션 상세 리스트")
+    private List<WBPartCompanyDTO> applyOptnList;
+
+    @Schema(title = "sq정보")
+    private List<WBPartCompanyDTO> sqInfoList;
+
 }

@@ -1,4 +1,4 @@
-package com.kap.core.dto.wb.wbj;
+package com.kap.core.dto.wb.wbi;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,8 +17,11 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper=false)
-@Schema(title = "자동차부품산업 신청업체관리 검색")
-public class WBJAcomSearchDTO extends BaseDTO {
+@Schema(title = "스마트공장구축 신청업체관리 검색")
+public class WBIBSupplySearchDTO extends BaseDTO {
+
+    @Schema(title = "회원순번")
+    private Integer memSeq;
 
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
@@ -26,44 +29,18 @@ public class WBJAcomSearchDTO extends BaseDTO {
     private String optnCd;
     @Schema(title = "회차순번", example = "")
     private Integer episdSeq;
-    @Schema(title = "진행순번", example = "")
-    private Integer rsumeSeq;
-
-    /*상생 파일 상세*/
-    @Schema(title = "파일순번", example = "숫자")
-    private String fileCd;
-    @Schema(title = "파일순번", example = "숫자")
-    private Integer fileSeq;
+    @Schema(title = "신청순번", example = "")
+    private String rsumeSeq;
 
     /* List Data */
     @Schema(title = "사업년도", example = "YYYY")
     private String year;
-    @Schema(title = "사업년도", example = "YYYY")
-    private String optYear;
     @Schema(title = "회차", example = "1")
     private String episd;
-
     @Schema(title = "사업년도", example = "YYYY")
     private String appctnSeq;
     @Schema(title = "신청상태코드", example = "")
     private String appctnSttsCd;
-
-    @Schema(title = "접수시작일시", example = "yyyy-MM-dd hh:mm:ss")
-    private String accsStrtDtm;
-    @Schema(title = "접수종료일시", example = "yyyy-MM-dd hh:mm:ss")
-    private String accsEndDtm;
-
-    @Schema(title = "사업시작일시", example = "yyyy-MM-dd hh:mm:ss")
-    private String bsnStrtDtm;
-    @Schema(title = "사업종료일시", example = "yyyy-MM-dd hh:mm:ss")
-    private String bsnEndDtm;
-
-    @Schema(title = "진행상태", example = "")
-    private String dateState;
-
-    @Schema(title = "노출 여부")
-    private String expsYn;
-
     @Schema(title = "신청상태코드 명", example = "") /* 코드 값 nm */
     private String appctnSttsCdNm;
     @Schema(title = "관리자상태값코드", example = "")
@@ -72,8 +49,6 @@ public class WBJAcomSearchDTO extends BaseDTO {
     private String mngSttsCdNm;
     @Schema(title = "부품사명", example = "")
     private String cmpnNm;
-    @Schema(title = "부품사명", example = "")
-    private String cmpnSeqNm;
     @Schema(title = "구분 코드 값", example = "")
     private String ctgryCd;
     @Schema(title = "구분", example = "") /* 코드 값 nm */
@@ -84,6 +59,8 @@ public class WBJAcomSearchDTO extends BaseDTO {
     private String sizeCdNm;
     @Schema(title = "사업자등록번호", example = "")
     private String bsnmNo;
+    @Schema(title = "사업자등록번호", example = "")
+    private String workBsnmNo;
     @Schema(title = "신청자 이름", example = "")
     private String name;
     @Schema(title = "신청자 ID", example = "")
@@ -104,14 +81,6 @@ public class WBJAcomSearchDTO extends BaseDTO {
     private String modId;
     @Schema(title = "수정일시", example = "yyyy-MM-dd")
     private String modDtm;
-    @Schema(title = "훈격", example = "")
-    private String prizeCdNm;
-    @Schema(title = "훈격코드", example = "")
-    private String prizeCd;
-    @Schema(title = "포상", example = "")
-    private String mrtsCdNm;
-    @Schema(title = "포상코드", example = "")
-    private String mrtsCd;
 
     @Schema(title = "담당위원코드", example = "")
     private String picCmssrSeq;
@@ -125,7 +94,8 @@ public class WBJAcomSearchDTO extends BaseDTO {
 
 
     @Schema(title = "검색 리스트", example = "")
-    List<WBJAcomSearchDTO> list;
+    List<WBIBSupplySearchDTO> list;
+
 
     /* 검색 관련 코드 */
     @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")
@@ -133,18 +103,5 @@ public class WBJAcomSearchDTO extends BaseDTO {
 
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
-    @Schema(title = "포상 코드 리스트")
-    private List mrtsCdList;
-    @Schema(title = "훈격 코드 리스트")
-    private List prizeCdList;
-    @Schema(title = "1차결과 리스트")
-    private List appctnSttsCdList;
-    @Schema(title = "최종결과 리스트")
-    private List mngSttsCdList;
-
-    @Schema(title = "진행상태 코드 리스트")
-    private List carbonCdList;
-    @Schema(title = "노출여부 리스트")
-    private List expsYnList;
 
 }

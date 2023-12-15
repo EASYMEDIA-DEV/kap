@@ -1,0 +1,1062 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.wb.wbj.WBJBAcomListMapper">
+    <!--
+        쿼리명 : wBJBAcomListMapper.getRegisterCompanyList
+        설  명 : List Data Select
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.30  오병호     최초 생성
+   -->
+    <select id="getRegisterCompanyList" parameterType="WBJAcomSearchDTO" resultType="WBJAcomSearchDTO">
+        SELECT
+        DISTINCT YEAR(A.year) as year
+        , B.appctn_seq
+        , B.reg_id
+        , B.reg_dtm
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.REG_ID) AS REG_NAME
+        , F.mod_id
+        , F.mod_dtm
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.MOD_ID) AS MOD_NAME
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = F.PRIZE_CD) as PRIZE_CD_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = G.APPCTN_STTS_CD) as MNG_STTS_CD_nm
+        , (SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ) AS CMPN_SEQ_NM
+        , C.BSNM_NO
+        , F.NAME
+        , F.HP_NO
+        FROM
+        (
+        SELECT * FROM cx_episd_mst
+        WHERE bsn_cd = 'INQ07010'
+        ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+        INNER JOIN
+        (
+        SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
+        FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+        ) C /* 회원-회사 JOIN 테이블 */
+        ON C.mem_seq = B.mem_seq
+        INNER JOIN
+        (
+        SELECT EPISD_SEQ,MRTS_CD, PRIZE_CD FROM CX_EPISD_PRIZE_DTL
+        )D
+        ON A.EPISD_SEQ = D.EPISD_SEQ
+        INNER JOIN
+        (
+        SELECT APPCTN_SEQ, RSUME_SEQ, RSUME_STTS_CD, APPCTN_STTS_CD, MNG_STTS_CD, RSUME_ORD FROM CX_APPCTN_RSUME_DTL
+        WHERE RSUME_STTS_CD = 'PRO_TYPE05001'
+        )E
+        ON B.APPCTN_SEQ = E.APPCTN_SEQ
+        INNER JOIN
+        (
+        SELECT RSUME_SEQ, NAME, DEPT_NM, PSTN_CD, AGE, YRSSV_YEAR_CNT, HP_NO, CMPN_TEL_NO, EMAIL, CMPN_SEQ, REG_ID, REG_IP, MOD_ID, MOD_IP, MOD_DTM, MRTS_CD, PRIZE_CD
+        FROM CX_APPCTN_RSUME_PRIZE_PART_DTL
+        )F
+        ON E.RSUME_SEQ = F.RSUME_SEQ
+        LEFT JOIN
+        (
+        SELECT APPCTN_SEQ, RSUME_SEQ, RSUME_STTS_CD, APPCTN_STTS_CD, MNG_STTS_CD, RSUME_ORD FROM CX_APPCTN_RSUME_DTL
+        WHERE RSUME_STTS_CD = 'PRO_TYPE05002'
+        )G
+        ON B.APPCTN_SEQ = G.APPCTN_SEQ
+        <include refid="selectAcomListWhereSql" />
+        GROUP BY APPCTN_SEQ
+        ORDER BY year DESC, episd DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : WBRoundMstSearchDTO.getAcomListTotCnt
+         설  명 : 게시판 총 갯수
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.20  오병호     최초 생성
+    -->
+    <select id="getAcomListTotCnt" parameterType="wBJAcomSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBJBAcomListMapper.getAcomListTotCnt*/ COUNT(*)
+        FROM (
+        SELECT
+        DISTINCT YEAR(A.year) as year
+        , B.appctn_seq
+        , B.reg_id
+        , B.reg_dtm
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.REG_ID) AS REG_NAME
+        , F.mod_id
+        , F.mod_dtm
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.MOD_ID) AS MOD_NAME
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = F.PRIZE_CD) as PRIZE_CD_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = G.APPCTN_STTS_CD) as MNG_STTS_CD_nm
+        , (SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ) AS CMPN_SEQ_NM
+        , C.BSNM_NO
+        , F.NAME
+        , F.HP_NO
+        , F.MRTS_CD AS MRTS_CD
+        , F.PRIZE_CD AS PRIZE_CD
+        , E.APPCTN_STTS_CD AS APPCTN_STTS_CD
+        , G.APPCTN_STTS_CD AS MNG_STTS_CD
+        FROM
+        (
+        SELECT * FROM cx_episd_mst
+        WHERE bsn_cd = 'INQ07010'
+        ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+        INNER JOIN
+        (
+        SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
+        FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+        ) C /* 회원-회사 JOIN 테이블 */
+        ON C.mem_seq = B.mem_seq
+        INNER JOIN
+        (
+        SELECT EPISD_SEQ,MRTS_CD, PRIZE_CD FROM CX_EPISD_PRIZE_DTL
+        )D
+        ON A.EPISD_SEQ = D.EPISD_SEQ
+        INNER JOIN
+        (
+        SELECT APPCTN_SEQ, RSUME_SEQ, RSUME_STTS_CD, APPCTN_STTS_CD, MNG_STTS_CD, RSUME_ORD FROM CX_APPCTN_RSUME_DTL
+        WHERE RSUME_STTS_CD = 'PRO_TYPE05001'
+        )E
+        ON B.APPCTN_SEQ = E.APPCTN_SEQ
+        INNER JOIN
+        (
+        SELECT RSUME_SEQ, NAME, DEPT_NM, PSTN_CD, AGE, YRSSV_YEAR_CNT, HP_NO, CMPN_TEL_NO, EMAIL, CMPN_SEQ, REG_ID, REG_IP, MOD_ID, MOD_IP, MOD_DTM, MRTS_CD, PRIZE_CD
+        FROM CX_APPCTN_RSUME_PRIZE_PART_DTL
+        )F
+        ON E.RSUME_SEQ = F.RSUME_SEQ
+        LEFT JOIN
+        (
+        SELECT APPCTN_SEQ, RSUME_SEQ, RSUME_STTS_CD, APPCTN_STTS_CD, MNG_STTS_CD, RSUME_ORD FROM CX_APPCTN_RSUME_DTL
+        WHERE RSUME_STTS_CD = 'PRO_TYPE05002'
+        )G
+        ON B.APPCTN_SEQ = G.APPCTN_SEQ
+        <include refid="selectAcomListWhereSql" />
+        GROUP BY APPCTN_SEQ
+        ORDER BY year DESC, episd DESC
+        ) A
+    </select>
+
+    <!--
+         쿼리명 : WBJAcomMapper.putAppctnMst
+         설  명 : 회차신청 마스터 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <insert id="putAppctnMst" parameterType="wBJAcomDTO" >
+        INSERT /* WBJAcomMapper.putAppctnMst */ INTO cx_appctn_mst
+        (
+            appctn_seq,
+            episd_seq,
+            mem_seq,
+            appctn_bsnm_no,
+            sbrdn_bsnm_no,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+            (
+                #{appctnSeq},
+                #{episdSeq},
+                #{memSeq},
+                #{bsnmNo},
+                #{sbrdnBsnmNo},
+                #{regId},
+                #{regIp},
+                now()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.updCmpnCbsnMst
+         설  명 : 회사 마스터 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <update id="updCmpnCbsnMst" parameterType="wBJAcomDTO">
+        UPDATE /* WBJBAcomListMapper.updCmpnCbsnMst */ cp_cmpn_mst
+        SET
+            ctgry_cd = #{ctgryCd},
+            size_cd = #{sizeCd},
+            stbsm_dt = #{stbsmDt},
+            tel_no = #{compTel},
+            zipcode = #{zipCode},
+            bsc_addr = #{bscAddr},
+            dtl_addr = #{dtlAddr},
+            sls_pmt = #{slsPmt},
+            sls_year = #{slsYear},
+            mple_cnt = #{mpleCnt},
+            mjr_prdct_1 = #{mjrPrdct1},
+            mjr_prdct_2 = #{mjrPrdct2},
+            mjr_prdct_3 = #{mjrPrdct3},
+            qlty_5_star_cd = #{qlty5StarCd},
+            qlty_5_star_year = #{qlty5StarYear},
+            pay_5_star_cd = #{pay5StarCd},
+            pay_5_star_year = #{pay5StarYear},
+            tchlg_5_star_cd = #{tchlg5StarCd},
+            tchlg_5_star_year = #{tchlg5StarYear},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE bsnm_no = #{bsnmNo}
+    </update>
+
+    <!--
+         쿼리명 : WBJAcomMapper.putAppctnFileDtl
+         설  명 : 회차신청 마스터 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <insert id="putAppctnFileDtl" parameterType="wBJAcomDTO" >
+        INSERT /* WBJAcomMapper.putAppctnFileDtl */ INTO cx_appctn_file_dtl
+        (
+            appctn_seq,
+            file_cd,
+            file_seq,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+            (
+                #{appctnSeq},
+                #{fileCd},
+                #{fileSeq},
+                #{regId},
+                #{regIp},
+                now()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.delAppctnFileDtl
+         설  명 : 회사 마스터 delete
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <update id="delAppctnFileDtl" parameterType="wBJAcomDTO">
+        DELETE FROM CX_APPCTN_FILE_DTL
+        WHERE APPCTN_SEQ = #{appctnSeq}
+    </update>
+
+    <!--
+         쿼리명 : WBJAcomMapper.putAppctnRsumeDtl
+         설  명 : 회차신청 상세 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <insert id="putAppctnRsumeDtl" parameterType="wBJAcomDTO" >
+        INSERT /* WBJAcomMapper.putAppctnRsumeDtl */ INTO cx_appctn_rsume_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            appctn_seq,
+            rsume_stts_cd,
+            appctn_stts_cd,
+            appctn_stts_chng_dtm,
+            mng_stts_cd,
+            mng_stts_chng_dtm,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+            (
+                #{rsumeSeq},
+                #{rsumeOrd},
+                #{appctnSeq},
+                #{rsumeSttsCd},
+                #{appctnSttsCd},
+                now(),
+                #{mngSttsCd},
+                now(),
+                #{regId},
+                #{regIp},
+                now()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : WBJAcomMapper.putAppctnRsumePizePartDtl
+         설  명 : 회차신청 자동차부품산업 상세 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <insert id="putAppctnRsumePizePartDtl" parameterType="wBJAcomDTO"  >
+        INSERT /* WBJAcomMapper.putAppctnRsumePizePartDtl */ INTO cx_appctn_rsume_prize_part_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            rcmnd_name,
+            rcmnd_hp_no,
+            rcmnd_cmpn_nm,
+            rcmnd_dept_nm,
+            rcmnd_pstn_nm,
+            prize_cd,
+            cmpn_seq,
+            name,
+            dept_nm,
+            pstn_cd,
+            pstn_nm,
+            age,
+            yrssv_year_cnt,
+            hp_no,
+            cmpn_tel_no,
+            email,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+            (
+                #{rsumeSeq},
+                1,
+                #{rcmndName},
+                #{rcmndHpNo},
+                #{rcmndCmpnNm},
+                #{rcmndDeptNm},
+                #{rcmndPstnNm},
+                #{prizeCd},
+                #{cmpnSeq},
+                #{newName},
+                #{deptNm},
+                #{newPstnCd},
+                #{newPstnNm},
+                #{age},
+                #{yrssvYearCnt},
+                #{newHpNo},
+                #{newCmpnTelNo},
+                #{newEmail},
+                #{regId},
+                #{regIp},
+                now()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : wBJBAcomListMapper.updCoMemMst
+         설  명 : 회원 마스터 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <update id="updCoMemMst" parameterType="wBJAcomDTO">
+        UPDATE /* wBJBAcomListMapper.updCoMemMst*/ co_mem_mst
+        SET
+            tel_no = #{telNo},
+            dept_cd = #{deptCd},
+            dept_dtl_nm = #{deptDtlNm},
+            pstn_cd = #{pstnCd},
+            pstn_nm = #{pstnNm},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE mem_seq = #{memSeq}
+          AND id = #{id}
+    </update>
+
+    <!--
+         쿼리명 : wBJBAcomListMapper.updCmpnCbsnDtl
+         설  명 : 회사 상세 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <update id="updCmpnCbsnDtl" parameterType="wBJAcomDTO">
+        UPDATE /* wBJBAcomListMapper.updCmpnCbsnDtl */ cp_cmpn_cbsn_dtl
+        SET
+            nm = #{nm},
+            score = #{score},
+            year = #{year},
+            crtfn_cmpn_nm = #{crtfnCmpnNm},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE bsnm_no = #{bsnmNo}
+          AND cbsn_seq = #{cbsnSeq}
+    </update>
+
+    <!--
+         쿼리명 : wBJBAcomListMapper.insCmpnCbsnDtl
+         설  명 : 회사 상세 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <insert id="insCmpnCbsnDtl" parameterType="wBJAcomDTO">
+        INSERT /* wBJBAcomListMapper.insCmpnCbsnDtl */ cp_cmpn_cbsn_dtl
+        (
+            bsnm_no,
+            cbsn_seq,
+            nm,
+            score,
+            year,
+            crtfn_cmpn_nm,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+        (
+        #{bsnCd},
+        #{cbsnSeq},
+        #{nm},
+        #{score},
+        #{year},
+        #{crtfnCmpnNm},
+        #{regId},
+        #{regIp},
+        now()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : wBJBAcomListMapper.getOptEpisdList
+         설  명 : 연도 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <select id="getOptEpisdList" parameterType="WBJAcomSearchDTO">
+        SELECT DISTINCT episd_seq
+        FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
+                  AND year = #{year}
+        ORDER BY episd_seq DESC
+    </select>
+
+    <!--
+         쿼리명 : WBJBAcomMapper.getOptPrizeList
+         설  명 : 포상 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <select id="getOptPrizeList" parameterType="WBJAcomSearchDTO" resultType="WBJAcomSearchDTO">
+        SELECT
+                (SELECT cd_nm FROM co_code_mst WHERE cd = A.PRIZE_CD) as PRIZE_CD_NM,
+                (SELECT cd_nm FROM co_code_mst WHERE cd = A.MRTS_CD) as MRTS_CD_NM,
+                A.EPISD_SEQ,
+                A.PRIZE_CD,
+                A.MRTS_CD,
+                A.PRIZE_PMT,
+                B.YEAR
+        FROM CX_EPISD_PRIZE_DTL A INNER JOIN CX_EPISD_MST B
+                                             ON A.EPISD_SEQ = B.EPISD_SEQ
+        WHERE b.bsn_cd = #{bsnCd}
+          AND B.year = #{year}
+        ORDER BY A.PRIZE_SEQ DESC
+    </select>
+
+    <!--
+         쿼리명 : WBJBAcomMapper.getOptMrtsList
+         설  명 : 훈격 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <select id="getOptMrtsList" parameterType="wBJAcomSearchDTO" resultType="WBJAcomDTO">
+        select
+            a.prize_cd,
+            a.mrts_cd,
+            (select cd_nm from co_code_mst where cd = a.mrts_cd) as MRTS_CD_NM
+        from cx_episd_prize_dtl a inner join cx_episd_mst b
+                                             on a.episd_seq = b.episd_seq
+                                  inner join cx_appctn_mst c
+                                             on b.episd_seq = c.episd_seq
+                                  inner join cx_appctn_rsume_dtl d
+                                             on c.appctn_seq = d.appctn_seq
+                                  inner join cx_appctn_rsume_prize_part_dtl e
+                                             on d.rsume_seq = e.rsume_seq
+        where c.appctn_seq = #{detailsKey}
+          and a.prize_cd = e.prize_cd
+    </select>
+
+    <!--
+         쿼리명 : wBJBAcomListMapper.getRegisterCompanyCount
+         설  명 : List Data Select
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <select id="getRegisterCompanyCount" parameterType="WBJAcomSearchDTO" resultType="WBJAcomSearchDTO">
+        SELECT /*wBJBAcomListMapper.getRegisterCompanyCount*/
+            count(*)
+        FROM
+            (
+                SELECT * FROM cx_episd_mst
+                WHERE bsn_cd = #{bsnCd}
+            ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+    </select>
+
+    <!--
+         쿼리명 : wBJBAcomListMapper.getOptYearList
+         설  명 : 연도 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <select id="getOptYearList" parameterType="WBJAcomSearchDTO">
+        SELECT DISTINCT YEAR(year) /*wBJBAcomListMapper.getOptYearList*/
+        FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
+        ORDER BY year ASC
+    </select>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.selectAcomDtl
+         설  명 : 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.12.04  오병호     최초 생성
+    -->
+    <select id="selectAcomDtl" parameterType="wBJAcomSearchDTO" resultType="WBJAcomDTO">
+        SELECT /* WBJBAcomListMapper.selectAcomDtl */
+            A.APPCTN_SEQ,
+            A.mem_seq,
+            F.rsume_seq,
+            C.ID, C.NAME, C.EMAIL,
+            C.DEPT_CD,
+            C.DEPT_DTL_NM,
+            C.PSTN_CD,
+            C.DEPT_DTL_NM,
+            C.PSTN_NM,
+            C.HP_NO,
+            C.TEL_NO,
+            D.YEAR,
+            D.EPISD,
+            B.*,
+            E.APPCTN_STTS_CD,
+            E.APPCTN_STTS_CHNG_DTM,
+            E.MNG_STTS_CD,
+            E.MNG_STTS_CHNG_DTM,
+            F.RCMND_NAME,
+            F.RCMND_HP_NO,
+            F.RCMND_CMPN_NM,
+            F.RCMND_DEPT_NM,
+            F.RCMND_PSTN_NM,
+            F.prize_cd,
+            (select cd_nm from co_code_mst where cd = f.prize_cd) ctgry_Nm,
+            F.CMPN_SEQ,
+            (select cmpn_nm from CP_CMPN_MST where bsnm_no = f.cmpn_seq) BSNM_NO_NM,
+            (select ctgry_cd from CP_CMPN_MST where bsnm_no = f.cmpn_seq) new_ctgry_cd,
+            F.name as new_name,
+            F.dept_nm,
+            F.age,
+            F.yrssv_year_cnt,
+            f.hp_no as new_hp_no,
+            f.cmpn_tel_no as new_cmpn_tel_no,
+            f.email as new_email,
+            f.pstn_cd as new_pstn_cd,
+            f.pstn_nm as new_pstn_nm,
+            e.rsume_ord,
+            f.mrts_cd,
+            (select cd_nm from co_code_mst where cd = f.mrts_cd) mrts_cd_nm,
+            (SELECT FILE_SEQ FROM CX_APPCTN_FILE_DTL WHERE APPCTN_SEQ = A.APPCTN_SEQ) AS APPCTN_FILE_SEQ
+        FROM CX_APPCTN_MST A INNER JOIN CP_CMPN_MST B
+                                        ON A.APPCTN_BSNM_NO = B.BSNM_NO
+                             INNER JOIN CO_MEM_MST C
+                                        ON A.MEM_SEQ = C.MEM_SEQ
+                             INNER JOIN CX_EPISD_MST D
+                                        ON A.EPISD_SEQ = D.EPISD_SEQ
+                             INNER JOIN CX_APPCTN_RSUME_DTL E
+                                        ON A.APPCTN_SEQ = E.APPCTN_SEQ
+                             INNER JOIN CX_APPCTN_RSUME_PRIZE_PART_DTL F
+                                        ON E.RSUME_SEQ = F.RSUME_SEQ
+        WHERE A.APPCTN_SEQ = #{detailsKey}
+    </select>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.updAppctnRsumePrizeDtl
+         설  명 : 회사 마스터 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <update id="updAppctnRsumePrizeDtl" parameterType="wBJAcomDTO">
+        UPDATE /* WBJBAcomListMapper.updAppctnRsumePrizeDtl */ cx_appctn_rsume_prize_part_dtl
+        SET
+            rcmnd_name = #{rcmndName},
+            RCMND_HP_NO = #{rcmndHpNo},
+            RCMND_CMPN_NM = #{rcmndCmpnNm},
+            RCMND_DEPT_NM = #{rcmndDeptNm},
+            RCMND_PSTN_NM = #{rcmndPstnNm},
+            prize_cd = #{prizeCd},
+            cmpn_seq = #{cmpnSeq},
+            name = #{newName},
+            dept_nm = #{deptNm},
+            pstn_cd = #{newPstnCd},
+            pstn_nm = #{newPstnNm},
+            age = #{age},
+            yrssv_year_cnt = #{yrssvYearCnt},
+            hp_no = #{newHpNo},
+            cmpn_tel_no = #{newCmpnTelNo},
+            email = #{newEmail},
+            mrts_cd = #{mrtsCd},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE rsume_seq = #{rsumeSeq}
+    </update>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.updAppctnRsumeDtl
+         설  명 : 회차 신청 마스터 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.12.04  오병호     최초 생성
+    -->
+    <update id="updAppctnRsumeDtl" parameterType="wBJAcomDTO">
+        UPDATE /* WBJBAcomListMapper.updAppctnRsumeDtl */ cx_appctn_rsume_dtl
+        SET
+            appctn_stts_cd = #{appctnSttsCd},
+            appctn_stts_chng_dtm = now(),
+            mng_stts_cd = #{mngSttsCd},
+            mng_stts_chng_dtm = now(),
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE appctn_seq = #{detailsKey}
+    </update>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.updAppctnMst
+         설  명 : 회차 신청 마스터 관리자 메모 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.12.04  오병호     최초 생성
+    -->
+    <update id="updAppctnMst" parameterType="wBJAcomDTO">
+        UPDATE /* WBIBSupplyCompanyMapper.updAppctnMst */ cx_appctn_mst
+        SET
+            mem_seq = #{memSeq},
+            appctn_bsnm_no = #{bsnmNo},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE appctn_seq = #{detailsKey}
+    </update>
+
+    <!--
+     쿼리명 : WBJBAcomListMapper.insertApplyDtl
+     설  명 : 상생 신청 상세 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.12.04  오병호     최초 생성
+    -->
+    <insert id="insertApplyDtl" parameterType="wBJBAcomDtlDTO">
+        INSERT /* WBIBSupplyCompanyMapper.insertApplyDtl */ INTO CX_APPCTN_RSUME_DTL
+        (
+            RSUME_SEQ
+        , RSUME_ORD
+        , APPCTN_SEQ
+        , RSUME_STTS_CD
+        , APPCTN_STTS_CD
+        , APPCTN_STTS_CHNG_DTM
+        , MNG_STTS_CD
+        , MNG_STTS_CHNG_DTM
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        )
+            VALUE
+            (
+            #{rsumeSeq}
+            ,#{rsumeOrd}
+            ,#{appctnSeq}
+            ,#{rsumeSttsCd}
+            ,#{appctnSttsCd}
+            ,NOW()
+            ,#{mngSttsCd}
+            ,NOW()
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+            )
+    </insert>
+
+    <!--
+        쿼리명 : WBJBAcomListMapper.updateApplyStatus
+        설  명 : 단계결과 수정
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2023.12.04   오병호       최초생성
+   -->
+    <update id="updateApplyStatus" parameterType="wBJBAcomMstDTO">
+        UPDATE /* WBIBSupplyCompanyMapper.updateApplyStatus */ CX_APPCTN_RSUME_DTL
+        SET
+            APPCTN_STTS_CD = #{appctnSttsCd},
+            APPCTN_STTS_CHNG_DTM = NOW(),
+            MNG_STTS_CD = #{mngSttsCd},
+            MNG_STTS_CHNG_DTM = NOW(),
+            RTRN_RSN_CNTN = #{rtrnRsnCntn},
+            MOD_ID = #{modId},
+            MOD_IP = #{modIp},
+            MOD_DTM = NOW()
+        WHERE APPCTN_SEQ = #{appctnSeq}
+          AND RSUME_SEQ = #{rsumeSeq}
+          AND RSUME_ORD = #{rsumeOrd}
+    </update>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.selectApplyFinalDtlList
+         설  명 : 부품사관리 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.12.04  오병호     최초 생성
+    -->
+    <select id="selectApplyFinalDtlList" parameterType="wBJAcomSearchDTO" resultType="wBJBAcomDtlDTO">
+        SELECT /* WBJBAcomListMapper.selectApplyFinalDtlList */
+            RSUME_SEQ,
+            RSUME_ORD,
+            APPCTN_SEQ,
+            RSUME_STTS_CD,
+            APPCTN_STTS_CD,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = APPCTN_STTS_CD) AS APPCTN_STTS_NM,
+            APPCTN_STTS_CHNG_DTM,
+            MNG_STTS_CD,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = MNG_STTS_CD) AS MNG_STTS_NM,
+            MNG_STTS_CHNG_DTM,
+            RTRN_RSN_CNTN,
+            REG_ID,
+            REG_IP,
+            REG_DTM
+        FROM CX_APPCTN_RSUME_DTL
+        WHERE APPCTN_SEQ = #{detailsKey}
+        AND RSUME_ORD = '2'
+        ORDER BY RSUME_ORD ASC
+    </select>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.selectApplyDtlList
+         설  명 : 부품사관리 전체 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.12.04  오병호     최초 생성
+    -->
+    <select id="selectApplyDtlList" parameterType="wBJAcomSearchDTO" resultType="wBJBAcomDtlDTO">
+        SELECT /* WBJBAcomListMapper.selectApplyDtlList */
+            RSUME_SEQ,
+            RSUME_ORD,
+            APPCTN_SEQ,
+            RSUME_STTS_CD,
+            APPCTN_STTS_CD,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = APPCTN_STTS_CD) AS APPCTN_STTS_NM,
+            APPCTN_STTS_CHNG_DTM,
+            MNG_STTS_CD,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = MNG_STTS_CD) AS MNG_STTS_NM,
+            MNG_STTS_CHNG_DTM,
+            RTRN_RSN_CNTN,
+            REG_ID,
+            REG_IP,
+            REG_DTM
+        FROM CX_APPCTN_RSUME_DTL
+        WHERE APPCTN_SEQ = #{detailsKey}
+        AND RSUME_ORD = '2'
+        ORDER BY RSUME_ORD ASC
+    </select>
+
+    <!--
+        쿼리명 : WBJBAcomListMapper.selectApplyMst
+        설  명 : 부품사관리 마스터 조회
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.12.04  오병호     최초 생성
+   -->
+    <select id="selectApplyMst" parameterType="wBJAcomSearchDTO" resultType="wBJBAcomMstDTO">
+        SELECT /* WBJBAcomListMapper.selectApplyMst */
+            APPCTN_SEQ,
+            EPISD_SEQ,
+            (SELECT DATE_FORMAT(YEAR,'%Y') FROM CX_EPISD_MST B WHERE A.EPISD_SEQ = B.EPISD_SEQ ) YEAR,
+            (SELECT EPISD FROM CX_EPISD_MST B WHERE A.EPISD_SEQ = B.EPISD_SEQ ) EPISD,
+            MEM_SEQ,
+            APPCTN_BSNM_NO,
+            ADM_MEMO,
+            REG_ID,
+            REG_IP,
+            REG_DTM,
+            MOD_ID,
+            MOD_IP,
+            MOD_DTM
+        FROM CX_APPCTN_MST A
+        WHERE APPCTN_SEQ = #{detailsKey}
+    </select>
+
+    <!--
+        쿼리명 : WBJBAcomListMapper.updateFinalApplyStatus
+        설  명 : 단계 수정
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2023.12.04   오병호       최초생성
+   -->
+    <update id="updateFinalApplyStatus" parameterType="wBJBAcomMstDTO">
+        UPDATE /* WBIBSupplyCompanyMapper.updateFinalApplyStatus */ CX_APPCTN_RSUME_DTL
+        SET
+            APPCTN_STTS_CD = #{finalAppctnSttsCd},
+            APPCTN_STTS_CHNG_DTM = NOW(),
+            MNG_STTS_CD = #{finalMngSttsCd},
+            MNG_STTS_CHNG_DTM = NOW(),
+            MOD_ID = #{modId},
+            MOD_IP = #{modIp},
+            MOD_DTM = NOW()
+        WHERE APPCTN_SEQ = #{appctnSeq}
+          AND RSUME_SEQ = #{finalRsumeSeq}
+          AND RSUME_ORD = 2
+    </update>
+
+    <!--
+     쿼리명 : WBJBAcomListMapper.deleteApplyMst
+     설  명 : 상생참여자 마스터 삭제
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.12.04  오병호     최초 생성
+    -->
+    <delete id="deleteApplyMst" parameterType="wBJAcomSearchDTO">
+        DELETE /* WBJBAcomListMapper.deleteApplyMst */
+        FROM CX_APPCTN_MST
+        <where>
+            APPCTN_SEQ IN
+            <foreach collection="delValueList" item="item" index="index" separator=", " open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+
+    <!--
+     쿼리명 : WBJBAcomListMapper.deleteApplyDtl
+     설  명 : 상생참여자 상세 삭제
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.12.04  오병호     최초 생성
+    -->
+    <delete id="deleteApplyDtl" parameterType="wBJAcomSearchDTO">
+        DELETE /* WBJBAcomListMapper.deleteApplyDtl */
+        FROM CX_APPCTN_RSUME_DTL
+        <where>
+            APPCTN_SEQ IN
+            <foreach collection="delValueList" item="item" index="index" separator=", " open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+
+    <!--
+     쿼리명 : WBJBAcomListMapper.deleteTrans
+     설  명 : 상생참여자 이관정보 삭제
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.12.04  오병호     최초 생성
+    -->
+    <delete id="deleteTrans" parameterType="wBJAcomSearchDTO">
+        DELETE /* WBJBAcomListMapper.deleteTrans */
+        FROM CX_APPCTN_TRNSF_DTL
+        <where>
+            APPCTN_SEQ IN
+            <foreach collection="delValueList" item="item" index="index" separator=", " open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+    </delete>
+
+    <!--
+     쿼리명 : WBJBAcomListMapper.deleteOptnDtl
+     설  명 : 상생참여자 옵션 삭제
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.12.04  오병호     최초 생성
+    -->
+    <delete id="deleteOptnDtl" parameterType="wBJAcomSearchDTO">
+        DELETE /* WBJBAcomListMapper.deleteOptnDtl */
+        FROM CX_APPCTN_RSUME_PRIZE_PART_DTL
+        <where>
+            RSUME_SEQ = #{rsumeSeq}
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.getChangeList
+         설  명 : 상생사업 이관로그 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.12.04  오병호     최초 생성
+    -->
+    <select id="getChangeList" parameterType="wBJBAcomChangeDTO" resultType="wBJBAcomChangeDTO">
+        SELECT /* WBJBAcomListMapper.getChangeList */
+            TRNSF_SEQ,
+            APPCTN_SEQ,
+            BFRE_MEM_SEQ,
+            ( SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = BFRE_MEM_SEQ ) BFRE_MEM_NM,
+            ( SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = BFRE_MEM_SEQ ) BFRE_MEM_ID,
+            AFTR_MEM_SEQ,
+            ( SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = AFTR_MEM_SEQ ) AFTR_MEM_NM,
+            ( SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = AFTR_MEM_SEQ ) AFTR_MEM_ID,
+            (SELECT NAME FROM CO_ADM_MST WHERE ID = REG_ID) REG_NAME,
+            REG_ID,
+            REG_IP,
+            REG_DTM
+        FROM CX_APPCTN_TRNSF_DTL
+        WHERE APPCTN_SEQ = #{detailsKey}
+        ORDER BY REG_DTM DESC
+    </select>
+
+    <!--
+         쿼리명 : WBJBAcomListMapper.getChangeCount
+         설  명 : 상생사업 이관로그 개수 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.12.04  오병호     최초 생성
+    -->
+    <select id="getChangeCount" parameterType="wBJBAcomChangeDTO" resultType="java.lang.Integer">
+        SELECT /* WBJBAcomListMapper.getChangeCount */
+            COUNT(*)
+        FROM CX_APPCTN_TRNSF_DTL
+        WHERE APPCTN_SEQ = #{detailsKey}
+    </select>
+
+    <!--
+     쿼리명 : WBJBAcomListMapper.insertChangeLog
+     설  명 : 상생참여이관로그 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.12.04  오병호     최초 생성
+    -->
+    <insert id="insertChangeLog" parameterType="wBJBAcomChangeDTO">
+        INSERT /* WBJBAcomListMapper.insertChangeLog */ INTO CX_APPCTN_TRNSF_DTL
+        (
+            TRNSF_SEQ
+        , APPCTN_SEQ
+        , BFRE_MEM_SEQ
+        , AFTR_MEM_SEQ
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        )
+            VALUE
+            (
+            #{trnsfSeq}
+            ,#{appctnSeq}
+            ,#{bfreMemSeq}
+            ,#{aftrMemSeq}
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+            )
+    </insert>
+
+    <!--
+		쿼리명 : selectAcomListWhereSql
+		설  명 : 게시판 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.01    오병호       최초생성
+    -->
+    <sql id="selectAcomListWhereSql">
+        <where>
+            AND BSN_CD = 'INQ07010'
+            <if test="carbonDate != null and carbonDate != ''.toString() ">
+                <choose>
+                    <when test="carbonDate == 1 or carbonDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                            B.REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            )
+                        </if>
+                    </when>
+                    <when test="carbonDate == 3">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                            B.MOD_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            )
+                        </if>
+                    </when>
+                </choose>
+            </if>
+
+            <if test="year != null and year != ''">
+                AND
+                (
+                A.YEAR = #{optYear}
+                )
+            </if>
+
+            <if test="ctgryCdList != null and ctgryCdList.size() > 0">
+                AND (
+                <foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="" close="" separator=" or ">
+                    C.CTGRY_CD = #{ctgryCdList}
+                </foreach>
+                )
+            </if>
+
+            <if test="prizeCdList != null and prizeCdList.size() > 0">
+                AND (
+                <foreach collection="prizeCdList" item="prizeCdList" index="index" open="" close="" separator=" or ">
+                    F.PRIZE_CD = #{prizeCdList}
+                </foreach>
+                )
+            </if>
+            <if test="mrtsCdList != null and mrtsCdList.size() > 0">
+                AND (
+                <foreach collection="mrtsCdList" item="mrtsCdList" index="index" open="" close="" separator=" or ">
+                    F.MRTS_CD = #{mrtsCdList}
+                </foreach>
+                )
+            </if>
+
+            <if test="appctnSttsCdList != null and appctnSttsCdList != ''">
+                AND (
+                <foreach collection="appctnSttsCdList" item="appctnSttsCdList" index="index" open="" close="" separator=" or ">
+                    E.APPCTN_STTS_CD = #{appctnSttsCdList}
+                </foreach>
+                )
+            </if>
+
+            <if test="mngSttsCdList != null and mngSttsCdList != ''">
+                AND (
+                <foreach collection="mngSttsCdList" item="mngSttsCdList" index="index" open="" close="" separator=" or ">
+                    G.APPCTN_STTS_CD = #{mngSttsCdList}
+                </foreach>
+                )
+            </if>
+
+
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 2">
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 3">
+                        AND PLACE_NM LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <otherwise>
+                        AND (
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        OR
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        OR
+                        PLACE_NM LIKE CONCAT('%', #{q}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+</mapper>
+
+
+

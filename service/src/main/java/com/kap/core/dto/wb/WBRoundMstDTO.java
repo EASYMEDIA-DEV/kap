@@ -97,4 +97,9 @@ public class WBRoundMstDTO extends BaseDTO {
     @Schema(title = "회차 갯수", example = "숫자")
     private Integer episdCnt;
 
+    @Schema(title = "수상인원", example = "숫자")
+    private int nomCnt;
+
+    @Schema(title = "접수인원", example = "숫자")
+    private int regCnt;
 }
