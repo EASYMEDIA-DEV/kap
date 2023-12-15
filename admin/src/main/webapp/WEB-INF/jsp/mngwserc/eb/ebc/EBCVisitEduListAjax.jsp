@@ -16,21 +16,50 @@
                             ${list.cmpnNm}
                     </a>
                 </td>
-                <td class="text-center">${list.appctnBsnmNo}</td>
+                <td class="text-center">${kl:bsnmNoConvert(list.appctnBsnmNo)}</td>
                 <td class="text-center">${list.ctgryName}</td>
                 <td class="text-center">${list.sizeName}</td>
                 <td class="text-center">${kl:convertDate(list.visitRegDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}</td>
                 <td class="text-center">${list.appctnFldName}</td>
                 <td class="text-center">${kl:convertDate(list.hopeDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</td>
                 <td class="text-center">${list.ptcptCnt}</td>
+                <td class="text-center">${list.edctnPlaceAddr}</td>
                 <td class="text-center">${list.ptcptHhNum}</td>
                 <td class="text-center">${list.name}<br>(${kl:idMasking(list.id)})</td>
                 <td class="text-center">${list.hpNo}</td>
                 <td class="text-center">${list.email}</td>
-                <td class="text-center">실적마감여부</td>
-                <td class="text-center">${list.cnfrmdTheme}</td>
-                <td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
-                <td class="text-center">${list.cmptnCnt}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.rsltEndYnNm }">
+                            ${list.rsltEndYnNm}
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.cnfrmdTheme }">
+                            ${list.cnfrmdTheme}
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.edctnStrtDtm and not empty list.edctnEndDtm}">
+                            ${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.cmptnCnt }">
+                            ${list.cmptnCnt}
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${ not empty list.modId }">

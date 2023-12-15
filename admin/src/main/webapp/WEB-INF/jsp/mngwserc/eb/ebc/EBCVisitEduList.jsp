@@ -146,6 +146,9 @@
                         </jsp:include>
                     </select>
                 </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
+                </div>
             </div>
             <!--VUE 영역 시작 -->
             <div class="table-responsive col-sm-12 p0 m0" id="vueList">
@@ -168,7 +171,7 @@
                     </tr>
                     <tr>
                         <th class="text-center" colspan="4">부품사정보</th>
-                        <th class="text-center" colspan="8">신청내용</th>
+                        <th class="text-center" colspan="9">신청내용</th>
                         <th class="text-center" colspan="4">개요</th>
                     </tr>
                     <tr>
@@ -180,6 +183,7 @@
                         <th class="text-center">신청일시</th>
                         <th class="text-center">신청분야</th>
                         <th class="text-center">교육희망일</th>
+                        <th class="text-center">교육장소</th>
                         <th class="text-center">교육인원</th>
                         <th class="text-center">교육시간</th>
                         <th class="text-center">이름(아이디)</th>
@@ -200,5 +204,32 @@
             </div>
             <!--리스트 종료 -->
         </form>
+    </div>
+</div>
+<!-- 사유 레이어 팝업(Modal) -->
+<div class="modal fade excel-down" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg modal-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" >▣ 엑셀 다운로드
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group ">
+                    <p><em class="ion-play mr-sm"></em>사유입력</p>
+                    <div class="col-sm-12">
+                        <textarea maxlength="30" class="col-sm-12 pv" style="resize: vertical;" rows="10" placeholder="사유를 입력하세요." id="rsn" title="사유" oninput="cmmCtrl.checkMaxlength(this);"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer row">
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary down mt">다운로드</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

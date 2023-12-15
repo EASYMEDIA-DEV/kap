@@ -38,6 +38,11 @@
 			 , D.cmptn_cnt -- 수료인원
 			 , D.edctn_strt_dtm -- 교육시작일시
 			 , D.edctn_end_dtm -- 교육종료일시
+			 , D.rslt_end_yn -- 실적마감여부
+			, (case when D.rslt_end_yn = 'Y' then '마감'
+					when D.rslt_end_yn = 'N' then '미마감'
+					when D.rslt_end_yn = 'C' then '교육취소'
+			   end) AS rslt_end_yn_nm -- 실적마감여부명
 		FROM
 			(
 				SELECT vst_seq
@@ -82,6 +87,7 @@
 					 , cmptn_cnt
 					 , edctn_strt_dtm
 					 , edctn_end_dtm
+					 , rslt_end_yn
 				FROM ev_edctn_vst_rslt_dtl
 			)D
 			ON A.vst_seq = D.vst_seq
@@ -89,7 +95,9 @@
 		<include refid="selectVisitEduListwhereSql" />
 		ORDER BY
 			A.reg_dtm DESC
+		<if test="excelYn != 'Y'.toString() ">
 			LIMIT #{firstIndex}, #{recordCountPerPage}
+		</if>
 	</select>
 
 	<!--
@@ -270,6 +278,7 @@
 					 , ptcpt_rate -- 참석률
 					 , lctr_file_seq
 					 , etc_matls_file_seq
+					 , rslt_end_yn
 				FROM ev_edctn_vst_rslt_dtl
 			)D
 			ON A.vst_seq = D.vst_seq
@@ -467,6 +476,7 @@
 		  , ptcpt_trgt_cntn = #{ptcptTrgtCntn}
 		  , ptcpt_cnt = #{ptcptCnt}
 		  , ptcpt_hh = #{ptcptHh}
+		  , edctn_place = #{edctnPlaceAddr}
 		<if test="itrdcFileSeq != null and itrdcFileSeq != ''.toString() ">
 			, itrdc_file_seq = #{itrdcFileSeq}
 		</if>
@@ -499,6 +509,7 @@
 		   , ptcpt_rate
 		   , lctr_file_seq
 		   , etc_matls_file_seq
+		   , rslt_end_yn
 		   , reg_id
 		   , reg_ip
 		   , reg_dtm
@@ -516,6 +527,7 @@
 			, #{ptcptRate}
 			, #{lctrFileSeq}
 			, #{etcMatlsFileSeq}
+			, #{rsltEndYn}
 			, #{regId}
 			, #{regIp}
 			, now()
@@ -542,6 +554,7 @@
 		  , ptcpt_rate = #{ptcptRate}
 		  , lctr_file_seq = #{lctrFileSeq}
 		  , etc_matls_file_seq = #{etcMatlsFileSeq}
+		  , rslt_end_yn = #{rsltEndYn}
 		  , mod_id = #{modId}
 		  , mod_ip = #{modIp}
 		  , mod_dtm = now()

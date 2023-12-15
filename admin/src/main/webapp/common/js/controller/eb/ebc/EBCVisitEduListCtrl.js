@@ -12,6 +12,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
+    var $excelObj = ctrl.obj.parent().find(".excel-down");
 
     //소재지역 분류 조회
     var selectCtgryCdList = function(arg){
@@ -69,30 +70,13 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-            btn_delete : {
-                event: {
+            //엑셀다운로드
+            btnExcelDown : {
+                event : {
                     click: function () {
-                        var frmDataObj    = $(this).closest("form");
-                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-                        if (delActCnt !== 0) {
-                            if(confirm("선택한 게시물을 " + msgCtrl.getMsg("confirm.del")))
-                            {
-                                //삭제 전송
-                                cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
-                                        var msg = "삭제되었습니다.";
-
-                                        alert(msg);
-                                        $formObj.find("#btnSearch").click();
-                                    }
-                                    else{
-                                        alert(msgCtrl.getMsg("fail.act"));
-                                    }
-                                }, "./delete", frmDataObj, "POST", "json");
-                            }
-                        } else {
-                            alert(msgCtrl.getMsg("fail.sm.smc.target"));
-                        }
+                        //사유입력 레이어팝업 활성화
+                        $excelObj.find("#rsn").val('');
+                        $excelObj.modal("show");
                     }
                 }
             }
@@ -141,9 +125,25 @@ define(["ezCtrl"], function(ezCtrl) {
         immediately : function() {
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
-
             search($formObj.find("input[name=pageIndex]").val());
 
+            $excelObj.find("button.down").on('click', function(){
+                var rsn = $excelObj.find("#rsn").val().trim();
+                var frmDataObj    = $formObj.closest("form");
+
+                frmDataObj.find("input[name='rsn']").remove();
+
+                if (rsn != "") {
+                    frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+
+                    //파라미터를 물고 가야함.
+                    location.href = "./excel-down?" + frmDataObj.serialize();
+
+                } else {
+                    alert(msgCtrl.getMsg("fail.reason"));
+                    return;
+                }
+            });
         }
     };
 

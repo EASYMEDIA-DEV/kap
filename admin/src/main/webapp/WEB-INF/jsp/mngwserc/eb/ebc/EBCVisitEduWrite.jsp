@@ -63,9 +63,9 @@
                         <input type="text" class="form-control input-sm" id="deptDtlNm" name="deptDtlNm" value="${rtnInfo.deptDtlNm}" title="부서상세명" />
                     </div>
 
-                    <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">직급</label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm" id="pstnCdSelect" name="pstnCd" title="직급" >
+                        <select class="form-control input-sm notRequired" id="pstnCdSelect" name="pstnCd" title="직급" >
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                 <c:if test="${fn:contains(cdList, 'MEM_CD01') and cdList.cd ne 'COMPANY01'}">
@@ -89,7 +89,7 @@
                     </div>
                     <label class="col-sm-1 control-label">전화번호</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" />
+                        <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" />
                     </div>
                 </div>
             </fieldset>
@@ -141,7 +141,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">대표자명<span class="star text-danger"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm notRequired" id="rprsntNm" name="rprsntNm" value="${rtnInfo.rprsntNm}" title="대표자명" style="width: 200px;"/>
+                        <p class="form-control-static">${rtnInfo.rprsntNm}</p>
                     </div>
                     <label class="col-sm-1 control-label">설립일자<span class="star"> *</span></label>
                     <div class="col-sm-5">
@@ -168,23 +168,25 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset>
-                <div class="form-group text-sm form-inline">
+            <fieldset class="mb-lg">
+                <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
-                    <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" style="width: 130px;"/>
-                        <input type="button" class="btn btn-sm btn-primary" id="searchPostCode" value="우편번호 검색"><br>
+                    <div class="col-sm-9">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" style="width: 130px;"/>
+                            <input type="button" class="btn btn-sm btn-primary" id="searchPostCode" value="우편번호 검색"><br>
+                        </div>
                         <br>
-                        <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" style="width: 400px;"/><br>
+                        <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" style="width: 400px;"/>
                         <br>
                         <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnInfo.dtlAddr}" title="우편번호" placeholder="상세주소 입력" maxlength="50" style="width: 400px;"/>
                     </div>
                 </div>
             </fieldset>
-            <fieldset>
+            <fieldset class="mb-lg">
                 <div class="form-group text-sm form-inline">
-                    <label class="col-sm-1 control-label">매출액</label>
-                    <div class="col-sm-5">
+                    <label class="col-sm-1 control-label">매출액(연도)</label>
+                    <div class="col-sm-4">
                         <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${rtnInfo.slsPmt}" title="매출액" placeholder="매출액 입력" style="width: 220px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/> 억 원
                         <select class="form-control input-sm notRequired" id="slsYear" name="slsYear" title="선택" style="width: 100px;">
                             <option value="">연도 선택</option>
@@ -205,9 +207,9 @@
                 <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">주생산품</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="${rtnInfo.mjrPrdct1}" title="주생산품1" maxlength="50" placeholder="주생산품(1) 입력" style="width: 200px;"/>
-                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="${rtnInfo.mjrPrdct2}" title="주생산품2" maxlength="50" placeholder="주생산품(2) 입력" style="width: 200px;"/>
-                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="${rtnInfo.mjrPrdct3}" title="주생산품3" maxlength="50" placeholder="주생산품(3) 입력" style="width: 200px;"/>
+                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="${rtnInfo.mjrPrdct1}" title="주생산품(1)" maxlength="50" placeholder="주생산품(1)을 입력해주세요." style="width: 200px;"/>
+                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="${rtnInfo.mjrPrdct2}" title="주생산품(2)" maxlength="50" placeholder="주생산품(2)을 입력해주세요." style="width: 200px;"/>
+                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="${rtnInfo.mjrPrdct3}" title="주생산품(3)" maxlength="50" placeholder="주생산품(3)을 입력해주세요." style="width: 200px;"/>
                     </div>
                 </div>
             </fieldset>
@@ -494,17 +496,17 @@
                             <div class="row">
                                 <label class="col-sm-1 control-label">실적마감여부</label>
                                 <div class="col-sm-11">
-                                    <c:set var="expsYn" value="${kl:nvl(rtnDto.expsYn, 'Y')}" />
+                                    <c:set var="rsltEndYn" value="${kl:nvl(rtnInfo.rsltEndYn, 'N')}" />
                                     <label class="radio-inline c-radio">
-                                        <input type="radio" name="expsYn" value="Y" title="실적마감여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
+                                        <input type="radio" name="rsltEndYn" value="N" title="실적마감여부" <c:if test="${rsltEndYn eq 'N'}">checked</c:if> />
                                         <span class="ion-record"></span> 미마감
                                     </label>
                                     <label class="radio-inline c-radio">
-                                        <input type="radio" name="expsYn" value="N" title="실적마감여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
+                                        <input type="radio" name="rsltEndYn" value="Y" title="실적마감여부" <c:if test="${rsltEndYn eq 'Y'}">checked</c:if> />
                                         <span class="ion-record"></span> 마감
                                     </label>
                                     <label class="radio-inline c-radio">
-                                        <input type="radio" name="expsYn" value="N" title="실적마감여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
+                                        <input type="radio" name="rsltEndYn" value="C" title="실적마감여부" <c:if test="${rsltEndYn eq 'C'}">checked</c:if> />
                                         <span class="ion-record"></span> 교육취소
                                     </label>
                                 </div>
@@ -741,7 +743,6 @@
                             <c:if test="${cdList.cd eq resultOpList.optnCd}">
                                 <c:set var="tempPmt" value="${resultOpList.rsltVal}" />
                             </c:if>
-
                         </c:forEach>
                         <label class="col-sm-1 control-label">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03004">
@@ -759,7 +760,6 @@
                             <c:if test="${cdList.cd eq resultOpList.optnCd}">
                                 <c:set var="tempPmt" value="${resultOpList.rsltVal}" />
                             </c:if>
-
                         </c:forEach>
                         <label class="col-sm-1 control-label">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03005">
@@ -778,7 +778,6 @@
                             <c:if test="${cdList.cd eq resultOpList.optnCd}">
                                 <c:set var="tempPmt" value="${resultOpList.rsltVal}" />
                             </c:if>
-
                         </c:forEach>
                         <label class="col-sm-1 control-label">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03006">

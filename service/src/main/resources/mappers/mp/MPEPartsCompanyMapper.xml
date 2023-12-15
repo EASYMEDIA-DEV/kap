@@ -24,6 +24,21 @@
             , SLS_PMT
             , MPLE_CNT
             , TEL_NO
+            , STBSM_DT
+            , ZIPCODE
+            , TEL_NO
+            , MJR_PRDCT_1
+            , MJR_PRDCT_2
+            , MJR_PRDCT_3
+            , QLTY_5_STAR_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.QLTY_5_STAR_CD) AS QLTY_5_STAR_CD_NM
+            , QLTY_5_STAR_YEAR
+            , PAY_5_STAR_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.PAY_5_STAR_CD) AS PAY_5_STAR_CD_NM
+            , PAY_5_STAR_YEAR
+            , TCHLG_5_STAR_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_CD_NM
+            , TCHLG_5_STAR_YEAR
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
             , REG_IP
@@ -32,9 +47,15 @@
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
             , MOD_IP
             , MOD_DTM
+        <if test="srchDate != null and srchDate != ''.toString() ">
             , #{srchDate} AS 'srchDate'
+        </if>
+        <if test="dStrDt != null and dStrDt != ''.toString() ">
             , #{dStrDt} AS 'dStrDt'
+        </if>
+        <if test="dEndDt != null and dEndDt != ''.toString() ">
             , #{dEndDt} AS 'dEndDt'
+        </if>
         FROM CP_CMPN_MST A
         <include refid="selectPartsComListwhereSql" />
         ORDER BY
