@@ -176,7 +176,7 @@
             cm.mjr_prdct_3
         FROM (SELECT mem_seq, id, name, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, hp_no, tel_no, work_bsnm_no
                 FROM co_mem_mst
-                WHERE id = #{selPartUser} AND mem_cd = #{memCd} ) as mm
+                WHERE mem_seq = #{selPartUser} AND mem_cd = #{memCd} ) as mm
         INNER JOIN cp_cmpn_mst cm ON mm.work_bsnm_no = cm.bsnm_no;
     </select>
 
@@ -193,6 +193,21 @@
         WHERE bsnm_no = #{workBsnmNo}
         ORDER BY cbsn_seq;
     </select>
+
+    <!--
+         쿼리명 : WBPartCompanyMapper.selPartCompanyUserListCnt
+         설  명 : 부품사 회원 회사 SQ 정보
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selectPartUserChkAjax" parameterType="WBPartCompanyDTO" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM cx_appctn_trnsf_dtl /*WBPartCompanyMapper.selPartCompanyUserListCnt*/
+        WHERE appctn_seq = #{appctnSeq}
+        AND (bfre_mem_seq = #{selPartUser} OR aftr_mem_seq = #{selPartUser})
+    </select>
+
+
 
     <!-- 사용자 공통 검색 조건 -->
     <sql id="selectUserListWhereSql">

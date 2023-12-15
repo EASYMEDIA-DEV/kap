@@ -23,6 +23,7 @@
                     <!-- CSRF KEY -->
                     <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
+                    <input type="hidden" id="modalAppctnSeq" name="appctnSeq" value="" />
                     <input type="hidden" id="selPartUser" name="selPartUser" value="" />
                     <input type="hidden" id="memCd" name="memCd" value="" />
 

@@ -34,7 +34,14 @@ public class WBFBRegisterDTO extends BaseDTO {
     @Schema(title = "관리자상태명", example = "")
     private String mngSttsCdNm;
 
+    @Schema(title = "이관번호", example = "")
+    private Integer trnsfSeq;
+    @Schema(title = "이전회원순번", example = "")
+    private String bfreMemSeq;
+    @Schema(title = "이후회원순번", example = "")
+    private String aftrMemSeq;
 
+    /* Detail */
     /* 상생 */
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
@@ -78,6 +85,11 @@ public class WBFBRegisterDTO extends BaseDTO {
     private String year;
     @Schema(title = "회차", example = "1")
     private String episd;
+
+    @Schema(title = "신청자 이름", example = "")
+    private String beforeMemSeq;
+    @Schema(title = "신청자 이름", example = "")
+    private String beforeId;
 
     /* 신청자 정보 */
     @Schema(title = "신청자 이름", example = "")
@@ -127,11 +139,11 @@ public class WBFBRegisterDTO extends BaseDTO {
     @Schema(title = "우편변호", example = "")
     private String dtlAddr;
     @Schema(title = "매출액 - 금액", example = "100")
-    private int slsPmt;
+    private Integer slsPmt;
     @Schema(title = "매출액 - 년도", example = "yyyy")
     private String slsYear;
     @Schema(title = "직원 수", example = "100")
-    private int mpleCnt;          // 직원 수
+    private Integer mpleCnt;          // 직원 수
     @Schema(title = "주요생산품 1", example = "")
     private String mjrPrdct1;
     @Schema(title = "주요생산품 2", example = "")
@@ -151,21 +163,51 @@ public class WBFBRegisterDTO extends BaseDTO {
     @Schema(title = "기술5스타년도", example = "")
     private String tchlg5starYear;
     @Schema(title = "선급금액여부", example = "")
-    private Character pmndvPmtYn;
+    private String pmndvPmtYn;
+
     @Schema(title = "담당위원코드", example = "")
     private String picCmssrSeq;
-    @Schema(title = "담당위원이름", example = "")
-    private String picName;
 
-    /* Detail */
+    @Schema(title = "담당위원이름", example = "")
+    private String picCmssrNm;
+    @Schema(title = "담당위원이메일", example = "")
+    private String picCmssrEmail;
+    @Schema(title = "담당위원 핸드폰번호", example = "")
+    private String picCmssrHpNo;
+    @Schema(title = "담당위원 회사명", example = "")
+    private String picCmssrCmpnNm;
+
     @Schema(title = "관리자메모", example = "")
     private String admMemo;
+    @Schema(title = "등록ID", example = "")
+    private String regId;
+    @Schema(title = "등록IP", example = "")
+    private String regIp;
+    @Schema(title = "등록일시", example = "")
+    private String regDtm;
+    @Schema(title = "수정ID", example = "")
+    private String modId;
+    @Schema(title = "수정IP", example = "")
+    private String modIp;
+    @Schema(title = "수정일시", example = "")
+    private String modDtm;
+
+    List<String> delList;
+    List<String> delMarkRsumeSeq;
+
+    /* 현재 지원금상세 지급 구분 */
+    private String nowSpprtCd;
+    /* 현재 스마트상세 진행상태 */
+    private String nowRsumeTaskCd;
+
+    /* 상생신청지원금 상세 DTO 고정 - 선급금지급 */
+    WBSpprtDtlDTO defaultSpprtDtl;
 
     /* 상생신청지원금 상세 DTO */
-    List<WBSpprtDtlDTO> spprtDtlList;
+    WBSpprtDtlDTO spprtDtl;
 
     /* 스마트 공장 상세 DTO */
-    List<WBFBRsumeTaskDtlDTO> rsumeTaskDtlList;
+    WBFBRsumeTaskDtlDTO rsumeTaskDtl;
 
 
 }

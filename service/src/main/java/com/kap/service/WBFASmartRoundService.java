@@ -43,12 +43,12 @@ public interface WBFASmartRoundService {
     /**
      * 회차 관리 글 등록
      */
-    public int insertRound(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception;
+    public WBRoundMstDTO insertRound(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception;
 
     /**
      * 회차 관리 글 수정
      */
-    public int updateRound(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception;
+    public WBRoundMstDTO updateRound(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception;
 
     /**
      * 회차 관리 글 삭제

@@ -29,4 +29,6 @@ public interface WBPartCompanyService {
 
     public WBCompanyDetailMstDTO selectPartUserCompDetailAjax(WBPartCompanyDTO wBPartCompanyDTO);
 
+    public int selectPartUserChkAjax(WBPartCompanyDTO wBPartCompanyDTO);
+
 }

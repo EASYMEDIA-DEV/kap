@@ -3,6 +3,8 @@ package com.kap.mngwserc.controller.wb.wbf;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
+import com.kap.core.dto.wb.WBAppctnTrnsfDtlDTO;
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
@@ -10,16 +12,18 @@ import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBFBRegisterCompanyService;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -63,16 +67,14 @@ public class WBFBRegisterCompanyController {
     public String getRegisterCompanyListPage(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
+            wBFBRegisterSearchDTO.setBsnCd("INQ07006");
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
-            cdDtlList.add("PRO_STATE_TYPE"); // 신청 진행상태
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-
+            cdDtlList.add("PRO_TYPE"); // 신청 진행상태
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
             modelMap.addAttribute("optYearList", wBFBRegisterCompanyService.getOptYearList(wBFBRegisterSearchDTO));
-            modelMap.addAttribute("optEpisdList", wBFBRegisterCompanyService.getOptEpisdList(wBFBRegisterSearchDTO));
             modelMap.addAttribute("rtnData", wBFBRegisterSearchDTO);
-
         }
         catch (Exception e)
         {
@@ -158,6 +160,8 @@ public class WBFBRegisterCompanyController {
     public String getRegisterCompanyWritePage(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
+            wBFBRegisterSearchDTO.setBsnCd("INQ07006");
+
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
 
@@ -169,7 +173,6 @@ public class WBFBRegisterCompanyController {
             cdDtlList.add("BGN_REG_INF");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-            wBFBRegisterSearchDTO.setBsnCd("INQ07006");
             modelMap.addAttribute("optYearList", wBFBRegisterCompanyService.getOptYearList(wBFBRegisterSearchDTO));
         }
         catch (Exception e)
@@ -189,34 +192,22 @@ public class WBFBRegisterCompanyController {
         try {
             COUserDetailsDTO coaAdmDTO = (COUserDetailsDTO) COUserDetailsHelperService.getAuthenticatedUser();
             wBFBRegisterDTO.setRegId( coaAdmDTO.getId() );
+            wBFBRegisterDTO.setRegIp( coaAdmDTO.getLoginIp() );
             wBFBRegisterDTO.setRegName( coaAdmDTO.getName() );
             wBFBRegisterDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
             wBFBRegisterDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
-            wBFBRegisterDTO.setRegIp( coaAdmDTO.getLoginIp() );
             wBFBRegisterDTO.setModId( coaAdmDTO.getId() );
             wBFBRegisterDTO.setModIp( coaAdmDTO.getLoginIp() );
 
             wBFBRegisterDTO.setBsnCd("INQ07006"); /* 스마트 공장 */
-
-            COCodeDTO cOCodeDTO = new COCodeDTO();
             /* 스마트 공장 구축 - 신청 코드 값*/
-            cOCodeDTO.setCd("PRO_TYPE02");
-            String rsumeSttsCd = cOCodeService.getCdIdList(cOCodeDTO).get(0).getCd();
-            wBFBRegisterDTO.setRsumeSttsCd(rsumeSttsCd);
-
+            wBFBRegisterDTO.setRsumeSttsCd("PRO_TYPE02001");
             /* 스마트 신청 신청자 최초 상태값 - 접수완료 */
-            cOCodeDTO.setCd(rsumeSttsCd + "_01");
-            List<COCodeDTO> getCode = cOCodeService.getCdIdList(cOCodeDTO);
-            wBFBRegisterDTO.setAppctnSttsCd(getCode.get(0).getCd());
-
+            wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02001_01_001");
             /* 스마트 신청 관리자 최초 상태값 - 미확인 */
-            cOCodeDTO.setCd(rsumeSttsCd + "_02");
-            getCode = cOCodeService.getCdIdList(cOCodeDTO);
-            wBFBRegisterDTO.setMngSttsCd(getCode.get(0).getCd());
-
+            wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02001_02_001");
             /* 신청진행상세 진행 정렬 초기 값 */
             wBFBRegisterDTO.setRsumeOrd(1);
-
 
             modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.putRegisterCompany(wBFBRegisterDTO));
         }catch (Exception e)
@@ -232,12 +223,17 @@ public class WBFBRegisterCompanyController {
     }
 
     /**
-     * 신청부품사 수정
+     * 신청부품사 수정 페이지
      */
     @GetMapping(value="/edit")
-    public String getRegisterCompanyEditPage(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
+    public String getRegisterCompanyEditPage(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap
+            ,@Parameter(description = "회차 순번", required = false) @RequestParam(required = false) String detailsKey) throws Exception
     {
         try {
+
+            wBFBRegisterSearchDTO.setBsnCd("INQ07006"); /* 스마트 공장 */
+            wBFBRegisterSearchDTO.setAppctnSeq(Integer.parseInt(detailsKey));
+
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
@@ -248,8 +244,11 @@ public class WBFBRegisterCompanyController {
             cdDtlList.add("COMPANY_TYPE");
             cdDtlList.add("CO_YEAR_CD");
             cdDtlList.add("BGN_REG_INF");
-
+            cdDtlList.add("PRO_TYPE"); /* 상생 관련 코드 */
+            cdDtlList.add("APRNC_CMPN_CD"); /* 출연기업 */
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            modelMap.addAttribute("optYearList", wBFBRegisterCompanyService.getOptYearList(wBFBRegisterSearchDTO));
+            modelMap.addAttribute("rtnBasicData", wBFBRegisterCompanyService.getRegisterDtl(wBFBRegisterSearchDTO));
 
         }
         catch (Exception e)
@@ -260,6 +259,133 @@ public class WBFBRegisterCompanyController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbfb/WBEBRegisterCompanyEdit.admin";
+        return "mngwserc/wb/wbfb/WBFBRegisterCompanyEdit.admin";
     }
+    /**
+     * 컨설팅 이관 내역을 조회한다.
+     */
+    @GetMapping(value = "/getTrnsf")
+    public String getTrnsf(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getAppctnTrnsfDtl(wBFBRegisterSearchDTO));
+            modelMap.addAttribute("wBFBRegisterSearchDTO", wBFBRegisterSearchDTO);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/wb/wbfb/WBFBRegisterCompanyTrsfListAjax";
+    }
+
+    /**
+     * Edit 페이지 등록 정보 Get Ajax
+     *
+     * @param wBFBRegisterSearchDTO - appctnSeq == detailKey
+     */
+    @PostMapping(value = "/getEditInfo")
+    public String getEditPageInfoAjax(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
+    {
+        try {
+
+            wBFBRegisterSearchDTO.setBsnCd("INQ07006"); /* 스마트 공장 */
+            modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getEditInfo(wBFBRegisterSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * Edit 페이지 등록 정보 Get Ajax
+     *
+     * @param wBFBRegisterSearchDTO - appctnSeq == detailKey
+     */
+    @PostMapping(value = "/getBsnmNoCheck")
+    public String getBsnmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
+    {
+        try {
+
+            wBFBRegisterSearchDTO.setBsnCd("INQ07006"); /* 스마트 공장 */
+            modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getBsnmNoCheck(wBFBRegisterSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 신청부품사 수정 기능
+     */
+    @PostMapping(value="/update")
+    public String getRegisterCompanyEditPage(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap) throws Exception
+    {
+        try {
+
+            COUserDetailsDTO coaAdmDTO = (COUserDetailsDTO) COUserDetailsHelperService.getAuthenticatedUser();
+            wBFBRegisterDTO.setBsnCd("INQ07006"); /* 스마트 공장 */
+
+            wBFBRegisterDTO.setRegId( coaAdmDTO.getId() );
+            wBFBRegisterDTO.setRegIp( coaAdmDTO.getLoginIp() );
+            wBFBRegisterDTO.setRegName( coaAdmDTO.getName() );
+            wBFBRegisterDTO.setRegDeptCd( coaAdmDTO.getDeptCd() );
+            wBFBRegisterDTO.setRegDeptNm( coaAdmDTO.getDeptNm() );
+            wBFBRegisterDTO.setModId( coaAdmDTO.getId() );
+            wBFBRegisterDTO.setModIp( coaAdmDTO.getLoginIp() );
+
+            wBFBRegisterCompanyService.updRegisterCompany(wBFBRegisterDTO);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 신청부품사 삭제
+     */
+    @PostMapping(value="/delete")
+    public String DeletedeleteRegisterCompany(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
+            wBFBRegisterDTO.setModId(cOUserDetailsDTO.getId());
+            wBFBRegisterDTO.setModIp(cOUserDetailsDTO.getLoginIp());
+
+            modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.deleteRegisterCompany(wBFBRegisterDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
 }

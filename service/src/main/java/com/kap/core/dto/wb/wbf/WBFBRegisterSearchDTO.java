@@ -29,6 +29,20 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     private Integer episdSeq;
 
     /* List Data */
+    @Schema(title = "이관번호", example = "")
+    private String trnsfSeq;
+    @Schema(title = "이전회원순번", example = "")
+    private String bfreMemSeq;
+    @Schema(title = "이전회원순번", example = "")
+    private String bfreMemNm;
+    @Schema(title = "이전회원순번", example = "")
+    private String bfreMemId;
+    @Schema(title = "이후회원순번", example = "")
+    private String aftrMemSeq;
+    @Schema(title = "이후회원순번", example = "")
+    private String aftrMemNm;
+    @Schema(title = "이후회원순번", example = "")
+    private String aftrMemId;
     @Schema(title = "사업년도", example = "YYYY")
     private String year;
     @Schema(title = "회차", example = "1")
@@ -78,11 +92,13 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     @Schema(title = "담당위원코드", example = "")
     private String picCmssrSeq;
     @Schema(title = "담당위원이름", example = "")
-    private String picName;
+    private String picCmssrNm;
     @Schema(title = "공급업체명", example = "")
     private String offerCmpnCdNm;
     @Schema(title = "공급업체 사업자등록번호", example = "")
     private String offerBsnmNo;
+
+    private Integer cmpnCount;
 
     /* 검색 관련 코드 */
     @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")
@@ -94,6 +110,9 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     @Schema(title = "검색 리스트", example = "")
     List<WBFBRegisterSearchDTO> list;
 
+    /* 상생참여이관로그 */
+    WBAppctnTrnsfDtlDTO TrnsfDtl;
+
     /* 회차, 신청자, 부품사 정보 */
     WBFBRegisterDTO registerDtl;
 
@@ -104,6 +123,9 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
 
     /* 상생신청지원금 상세 DTO */
     List<WBSpprtDtlDTO> spprtDtlList;
+
+    /* 스마트 공장 상세 DTO */
+    WBFBRsumeTaskDtlDTO rsumeTaskDtl;
 
     /* 스마트 공장 상세 DTO */
     List<WBFBRsumeTaskDtlDTO> rsumeTaskDtlList;

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -102,119 +103,141 @@ public class WBFASmartRoundServiceImpl implements WBFASmartRoundService {
     /**
      * 회차 등록
      */
-    public int insertRound(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception {
+    @Transactional
+    public WBRoundMstDTO insertRound(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception {
         int respCnt = 0;
 
-        int firstEpisdGiveSeqIdgen = 0;
-        int firstEpisdBsnOptnSeqIdgen = 0;
-        int firstEpisdSeqIdgen = cxEpisdSeqIdgen.getNextIntegerId();
-        wBRoundMstDTO.setEpisdSeq(firstEpisdSeqIdgen);
+        int RoundCount = wBFASmartRoundMapper.selectRoundCheck(wBRoundMstDTO);
+        if(RoundCount > 0) {
+            wBRoundMstDTO.setRespCnt(-1);
+            return wBRoundMstDTO;
+        } else {
+            int firstEpisdGiveSeqIdgen = 0;
+            int firstEpisdBsnOptnSeqIdgen = 0;
+            int firstEpisdSeqIdgen = cxEpisdSeqIdgen.getNextIntegerId();
+            wBRoundMstDTO.setEpisdSeq(firstEpisdSeqIdgen);
 
-        respCnt = wBFASmartRoundMapper.insertRound(wBRoundMstDTO);
+            respCnt = wBFASmartRoundMapper.insertRound(wBRoundMstDTO);
 
-        for(int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++){
+            for(int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++){
 
-            firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
+                firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
 
-            WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getGiveList().get(i);
+                WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getGiveList().get(i);
 
-            wBOrderMstDto.setEpisdSeq(firstEpisdSeqIdgen);
-            wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
+                wBOrderMstDto.setEpisdSeq(firstEpisdSeqIdgen);
+                wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
 
-            wBFASmartRoundMapper.insertGiveList(wBOrderMstDto);
+                wBFASmartRoundMapper.insertGiveList(wBOrderMstDto);
+            }
+
+            /* 사업 옵션 - 사업 유형 */
+            for(WBRoundOptnMstDTO list : wBRoundMstDTO.getBsinList()){
+                firstEpisdBsnOptnSeqIdgen = cxEpisdBsnOptnSeqIdgen.getNextIntegerId();
+                list.setOptnCd("BGN_REG_INF01001");
+                list.setEpisdSeq(firstEpisdSeqIdgen);
+                list.setBsnOptnSeq(firstEpisdBsnOptnSeqIdgen);
+                wBFASmartRoundMapper.insertBsnOptnList(list);
+            }
+
+            /* 사업 옵션 - 과제명 */
+            for(WBRoundOptnMstDTO list : wBRoundMstDTO.getAsigtList()){
+                firstEpisdBsnOptnSeqIdgen = cxEpisdBsnOptnSeqIdgen.getNextIntegerId();
+                list.setOptnCd("BGN_REG_INF01002");
+                list.setEpisdSeq(firstEpisdSeqIdgen);
+                list.setBsnOptnSeq(firstEpisdBsnOptnSeqIdgen);
+                wBFASmartRoundMapper.insertBsnOptnList(list);
+            }
+
+            wBRoundMstDTO.setRespCnt(respCnt);
+
+            return wBRoundMstDTO;
         }
-
-        /* 사업 옵션 - 사업 유형 */
-        for(WBRoundOptnMstDTO list : wBRoundMstDTO.getBsinList()){
-            firstEpisdBsnOptnSeqIdgen = cxEpisdBsnOptnSeqIdgen.getNextIntegerId();
-            list.setOptnCd("BGN_REG_INF01001");
-            list.setEpisdSeq(firstEpisdSeqIdgen);
-            list.setBsnOptnSeq(firstEpisdBsnOptnSeqIdgen);
-            wBFASmartRoundMapper.insertBsinList(list);
-        }
-        
-        /* 사업 옵션 - 과제명 */
-        for(WBRoundOptnMstDTO list : wBRoundMstDTO.getBsinList()){
-            firstEpisdBsnOptnSeqIdgen = cxEpisdBsnOptnSeqIdgen.getNextIntegerId();
-            list.setOptnCd("BGN_REG_INF01002");
-            list.setEpisdSeq(firstEpisdSeqIdgen);
-            list.setBsnOptnSeq(firstEpisdBsnOptnSeqIdgen);
-            wBFASmartRoundMapper.insertBsinList(list);
-        }
-
-        wBRoundMstDTO.setRespCnt(respCnt);
-
-        return respCnt;
     }
 
     /**
      * 회차 수정
      */
     @Override
-    public int updateRound(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception {
+    @Transactional
+    public WBRoundMstDTO updateRound(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception {
         int respCnt = 0;
 
         String detailsKey = wBRoundMstDTO.getDetailsKey();
-        int firstEpisdGiveSeqIdgen = 0;
-        int firstEpisdBsnOptnSeqIdgen = 0;
 
-        wBFASmartRoundMapper.deleteGiveList(wBRoundMstDTO);
-        wBRoundMstDTO.setOptnCd("BGN_REG_INF01001");
-        wBFASmartRoundMapper.deleteBsinList(wBRoundMstDTO);
-        wBRoundMstDTO.setOptnCd("BGN_REG_INF01002");
-        wBFASmartRoundMapper.deleteAsigtList(wBRoundMstDTO);
+        /* 업데이트 전 확인 */
+        int registerCnt = wBFASmartRoundMapper.updateRoundChk(wBRoundMstDTO);
 
-        for(int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++){
-            firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
+        if(registerCnt > 0) {
+            respCnt = -1;
+        } else {
+            int firstEpisdGiveSeqIdgen = 0;
+            int firstEpisdBsnOptnSeqIdgen = 0;
 
-            WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getGiveList().get(i);
+            wBFASmartRoundMapper.deleteGiveList(wBRoundMstDTO);
+            wBRoundMstDTO.setOptnCd("BGN_REG_INF01001");
+            wBFASmartRoundMapper.deleteBsinList(wBRoundMstDTO);
+            wBRoundMstDTO.setOptnCd("BGN_REG_INF01002");
+            wBFASmartRoundMapper.deleteAsigtList(wBRoundMstDTO);
 
-            wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
-            wBOrderMstDto.setDetailsKey(detailsKey);
+            for (int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++) {
+                firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
 
-            wBFASmartRoundMapper.updateGiveList(wBOrderMstDto);
+                WBOrderMstDto wBOrderMstDto = wBRoundMstDTO.getGiveList().get(i);
+
+                wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
+                wBOrderMstDto.setDetailsKey(detailsKey);
+
+                wBFASmartRoundMapper.updateGiveList(wBOrderMstDto);
+            }
+
+            /* 사업 옵션 - 사업 유형 */
+            for (WBRoundOptnMstDTO list : wBRoundMstDTO.getBsinList()) {
+                firstEpisdBsnOptnSeqIdgen = cxEpisdBsnOptnSeqIdgen.getNextIntegerId();
+                list.setOptnCd("BGN_REG_INF01001");
+                list.setEpisdSeq(Integer.parseInt(detailsKey));
+                list.setBsnOptnSeq(firstEpisdBsnOptnSeqIdgen);
+                wBFASmartRoundMapper.insertBsnOptnList(list);
+            }
+
+            /* 사업 옵션 - 과제명 */
+            for (WBRoundOptnMstDTO list : wBRoundMstDTO.getAsigtList()) {
+                firstEpisdBsnOptnSeqIdgen = cxEpisdBsnOptnSeqIdgen.getNextIntegerId();
+                list.setOptnCd("BGN_REG_INF01002");
+                list.setEpisdSeq(Integer.parseInt(detailsKey));
+                list.setBsnOptnSeq(firstEpisdBsnOptnSeqIdgen);
+                wBFASmartRoundMapper.insertBsnOptnList(list);
+            }
+
+            respCnt = wBFASmartRoundMapper.updateRound(wBRoundMstDTO);
+
         }
-
-        /* 사업 옵션 - 사업 유형 */
-        for(WBRoundOptnMstDTO list : wBRoundMstDTO.getBsinList()){
-            firstEpisdBsnOptnSeqIdgen = cxEpisdBsnOptnSeqIdgen.getNextIntegerId();
-            list.setOptnCd("BGN_REG_INF01001");
-            list.setEpisdSeq(Integer.parseInt(detailsKey));
-            list.setBsnOptnSeq(firstEpisdBsnOptnSeqIdgen);
-            wBFASmartRoundMapper.insertBsinList(list);
-        }
-
-        /* 사업 옵션 - 과제명 */
-        for(WBRoundOptnMstDTO list : wBRoundMstDTO.getAsigtList()){
-            firstEpisdBsnOptnSeqIdgen = cxEpisdBsnOptnSeqIdgen.getNextIntegerId();
-            list.setOptnCd("BGN_REG_INF01002");
-            list.setEpisdSeq(Integer.parseInt(detailsKey));
-            list.setBsnOptnSeq(firstEpisdBsnOptnSeqIdgen);
-            wBFASmartRoundMapper.insertBsinList(list);
-        }
-
-        respCnt = wBFASmartRoundMapper.updateRound(wBRoundMstDTO);
-
         wBRoundMstDTO.setRespCnt(respCnt);
 
-        return respCnt;
+        return wBRoundMstDTO;
     }
 
     /**
      * 회차 삭제
      */
     @Override
+    @Transactional
     public int deleteRound(WBRoundMstDTO wBRoundMstDTO) throws Exception {
         int respCnt = 0;
 
-        respCnt = wBFASmartRoundMapper.deleteRound(wBRoundMstDTO);
-        wBFASmartRoundMapper.deleteGiveList(wBRoundMstDTO);
-        wBRoundMstDTO.setOptnCd("BGN_REG_INF01001");
-        wBFASmartRoundMapper.deleteBsinList(wBRoundMstDTO);
-        wBRoundMstDTO.setOptnCd("BGN_REG_INF01002");
-        wBFASmartRoundMapper.deleteAsigtList(wBRoundMstDTO);
+        /* 삭제 전 확인 */
+        int registerCnt = wBFASmartRoundMapper.updateRoundChk(wBRoundMstDTO);
 
-        wBRoundMstDTO.setRespCnt(respCnt);
+        if(registerCnt > 0) {
+            respCnt = -1;
+        } else {
+            respCnt = wBFASmartRoundMapper.deleteRound(wBRoundMstDTO);
+            wBFASmartRoundMapper.deleteGiveList(wBRoundMstDTO);
+            wBRoundMstDTO.setOptnCd("BGN_REG_INF01001");
+            wBFASmartRoundMapper.deleteBsinList(wBRoundMstDTO);
+            wBRoundMstDTO.setOptnCd("BGN_REG_INF01002");
+            wBFASmartRoundMapper.deleteAsigtList(wBRoundMstDTO);
+        }
 
         return respCnt;
     }

@@ -357,7 +357,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">종된사업장번호</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control input-sm notRequired" id="sbrdnBsnmNo" name="sbrdnBsnmNo" value="" title="종된사업장번호" maxlength="4" placeholder="종된사업장번호">
+                        <input type="text" class="form-control input-sm notRequired numberChk" id="sbrdnBsnmNo" name="sbrdnBsnmNo" value="" title="종된사업장번호" maxlength="4" placeholder="종된사업장번호">
                     </div>
                 </div>
             </fieldset>

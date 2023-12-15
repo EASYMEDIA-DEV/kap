@@ -49,6 +49,7 @@ public class WBPartCompanyServiceImpl implements WBPartCompanyService {
         wBPartCompanyDTO.setFirstIndex( page.getFirstRecordIndex() );
         wBPartCompanyDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
 
+        wBPartCompanyDTO.setMemCd(wBPartCompanyDTO.getMemCd());
         wBPartCompanyDTO.setList(wBPartCompanyMapper.selPartCompanyUserList(wBPartCompanyDTO));
         wBPartCompanyDTO.setTotalCount(wBPartCompanyMapper.selPartCompanyUserListCnt(wBPartCompanyDTO));
 
@@ -70,4 +71,10 @@ public class WBPartCompanyServiceImpl implements WBPartCompanyService {
         wBCompanyDetailMstDTO.setList(wBPartCompanyMapper.selPartUserCompDetail(wBPartCompanyDTO));
         return wBCompanyDetailMstDTO;
     }
+
+    public int selectPartUserChkAjax(WBPartCompanyDTO wBPartCompanyDTO) {
+        /* 이관 로그 Count > 0 내역 있음 */
+        return wBPartCompanyMapper.selectPartUserChkAjax(wBPartCompanyDTO);
+    }
+
 }

@@ -89,21 +89,26 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // set model
     ctrl.model = {
         id : {
-            btn_delete : {
+            /*btn_delete : {
                 event : {
                     click : function() {
-                        //삭제
-                        if(confirm("선택한 게시물을 " + msgCtrl.getMsg("confirm.del"))){
-                            cmmCtrl.frmAjax(function(data){
-                                if(data.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.del.target.none"));
-                                    location.replace("./list");
+                        let delActCnt = $("input:checkbox[name='delValueList']:checked");
+                        if(delActCnt.length > 0){
+                            cmmCtrl.frmAjax(function(respObj){
+                                if(respObj != undefined && respObj.respCnt > 0){
+                                    alert(msgCtrl.getMsg("success.del.target.board"));
+                                    $formObj.find("#btnSearch").click();
                                 }
-                            }, "./delete", $formObj, "post", "json")
+                                else{
+                                    alert(msgCtrl.getMsg("fail.act"));
+                                }
+                            }, "./delete", $formObj, "POST", "json");
+                        } else {
+                            alert(msgCtrl.getMsg("fail.del.target.board"));
                         }
                     }
                 }
-            }
+            },*/
         },
         classname : {
             insertLow : {
@@ -126,7 +131,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         var day = year+'-'+month+'-'+date;
 
-                        console.log(giveRow);
                         //차수
                         var giveRow = giveLength+1;
                         var rowItem = '<div class="form-inline text-sm give-row">';
@@ -371,8 +375,16 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         });
 
                         cmmCtrl.jsonAjax(function(data){
-                            alert(actionMsg);
-                            location.href = "./list";
+                            if(actionUrl == "./insert" && JSON.parse(data).respCnt == -1) {
+                                alert("이미 등록된 회차입니다.")
+                                return;
+                            } else if(actionUrl == "./update" && JSON.parse(data).respCnt == -1) {
+                                alert("신청정보가 존재하여 수정할 수 없습니다.")
+                                return;
+                            } else {
+                                alert(actionMsg);
+                                location.href = "./list";
+                            }
                         }, actionUrl, wbRoundMstDTO, "text")
 
                     }

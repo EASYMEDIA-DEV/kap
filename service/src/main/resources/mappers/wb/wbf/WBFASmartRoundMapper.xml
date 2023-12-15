@@ -200,6 +200,20 @@
         ORDER BY bsn_optn_seq ASC
     </select>
 
+    <!---->
+    <!--
+     쿼리명 : WBFASmartRoundMapper.selectRoundCheck
+     설  명 : 회차 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  김동현     최초 생성
+    -->
+    <select id="selectRoundCheck" parameterType="wBRoundMstDTO">
+        SELECT COUNT(*) /* WBFASmartRoundMapper.selectRoundCheck */ FROM CX_EPISD_MST
+        WHERE bsn_cd = #{bsnCd}
+        AND year = #{year} AND episd = #{episd}
+    </select>
+
     <!--
      쿼리명 : WBFASmartRoundMapper.insertRound
      설  명 : 회차 생성
@@ -273,14 +287,14 @@
     </insert>
 
     <!--
-     쿼리명 : WBFASmartRoundMapper.insertBsinList
+     쿼리명 : WBFASmartRoundMapper.insertBsnOptnList
      설  명 : 지급차수 생성
      수정일     수정자     수정내용
     ==========  ======  ==============
     2023.11.16  김동현     최초 생성
     -->
-    <insert id="insertBsinList" parameterType="WBRoundOptnMstDTO">
-        INSERT /* WBFASmartRoundMapper.insertBsinList */ INTO cx_episd_bsn_optn_dtl
+    <insert id="insertBsnOptnList" parameterType="WBRoundOptnMstDTO">
+        INSERT /* WBFASmartRoundMapper.insertBsnOptnList */ INTO cx_episd_bsn_optn_dtl
         (
             bsn_optn_seq
             ,episd_seq
@@ -305,36 +319,17 @@
     </insert>
 
     <!--
-     쿼리명 : WBFASmartRoundMapper.insertAsigtList
-     설  명 : 지급차수 생성
+     쿼리명 : WBFASmartRoundMapper.insertGiveList
+     설  명 : 회차 수정
      수정일     수정자     수정내용
     ==========  ======  ==============
     2023.11.16  김동현     최초 생성
     -->
-    <insert id="insertAsigtList" parameterType="WBRoundOptnMstDTO">
-        INSERT /* WBFASmartRoundMapper.insertAsigtList */ INTO cx_episd_bsn_optn_dtl
-        (
-            bsn_optn_seq
-        ,episd_seq
-        ,optn_cd
-        ,optn_nm
-        ,optn_ord
-        ,reg_id
-        ,reg_ip
-        ,reg_dtm
-        )
-        VALUES
-            (
-            #{bsnOptnSeq}
-            ,#{episdSeq}
-            ,#{optnCd}
-            ,#{optnNm}
-            ,#{optnOrd}
-            ,#{regId}
-            ,#{regIp}
-            ,#{regDtm}
-            )
-    </insert>
+    <update id="updateRoundChk" parameterType="wBRoundMstDTO">
+        SELECT COUNT(*)
+        FROM cx_appctn_mst
+        WHERE episd_seq  = #{detailsKey}
+    </update>
 
     <!--
      쿼리명 : WBFASmartRoundMapper.insertGiveList
@@ -400,7 +395,10 @@
     <delete id="deleteGiveList" parameterType="wBRoundMstDTO">
         DELETE /* WBFASmartRoundMapper.deleteGiveList */
         FROM CX_EPISD_GIVE_DTL
-        WHERE EPISD_SEQ = #{detailsKey}
+        WHERE EPISD_SEQ IN
+        <foreach collection="delValueList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
     <!--
@@ -413,8 +411,11 @@
     <delete id="deleteBsinList" parameterType="wBRoundMstDTO">
         DELETE /* WBFASmartRoundMapper.deleteBsinList */
         FROM cx_episd_bsn_optn_dtl
-        WHERE EPISD_SEQ = #{detailsKey}
-        AND optn_cd = #{optnCd}
+        WHERE optn_cd = #{optnCd}
+        AND EPISD_SEQ IN
+        <foreach collection="delValueList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
     <!--
@@ -427,8 +428,11 @@
     <delete id="deleteAsigtList" parameterType="wBRoundMstDTO">
         DELETE /* WBFASmartRoundMapper.deleteAsigtList */
         FROM cx_episd_bsn_optn_dtl
-        WHERE EPISD_SEQ = #{detailsKey}
-        AND optn_cd = #{optnCd}
+        WHERE optn_cd = #{optnCd}
+        AND EPISD_SEQ IN
+        <foreach collection="delValueList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
     <!--
@@ -441,7 +445,10 @@
     <delete id="deleteRound" parameterType="wBRoundMstDTO">
         DELETE /* WBFASmartRoundMapper.deleteRound */
         FROM CX_EPISD_MST
-        WHERE EPISD_SEQ = #{detailsKey}
+        WHERE EPISD_SEQ IN
+        <foreach collection="delValueList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
     <!--

@@ -27,11 +27,17 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     @Schema(title = "상생상세 진행정렬", example = "숫자")
     private Integer rsumeOrd;
     /* 진행상세테이블 FK */
+    @Schema(title = "신청순번", example = "")
+    private Integer appctnSeq;
+
     @Schema(title = "진행상태코드", example = "")
     private String rsumeSttsCd;
-
+    @Schema(title = "진행상태코드", example = "")
+    private String rsumeSttsCdNm;
     @Schema(title = "신청상태", example = "")
     private String appctnSttsCd;
+    @Schema(title = "신청상태", example = "")
+    private String appctnSttsNm;
     @Schema(title = "신청상태명", example = "")
     private String appctnSttsCdNm;
     @Schema(title = "신청상태변경일시", example = "")
@@ -44,8 +50,12 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     private String mngSttsChngDtm;
 
     /* 상생 상세 */
+    @Schema(title = "과제코드", example = "")
+    private String taskCd;
+    @Schema(title = "사업유형", example = "")
+    private String bsnTypeCd;
     @Schema(title = "출연회사코드", example = "")
-    private Integer aprncCmpnCd;
+    private String aprncCmpnCd;
     @Schema(title = "공급업체명", example = "")
     private String offerCmpnCdNm;
     @Schema(title = "공급업체 사업자등록번호", example = "")
@@ -62,6 +72,8 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     private String taskNo;
     @Schema(title = "점검위원순번", example = "")
     private Integer chkCmssrSeq;
+    @Schema(title = "점검위원이름", example = "")
+    private String chkCmssrNm;
     @Schema(title = "점검계획일자", example = "")
     private String chkPlanDt;
     @Schema(title = "점검실시일자", example = "")
@@ -80,13 +92,31 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     private Integer mjcmnAprncPmt;
     @Schema(title = "도입기업부담금액", example = "")
     private Integer ntdcnCmpnBrdnPmt;
+    @Schema(title = "협약일", example = "")
+    private String agrmtDt;
+    @Schema(title = "협약일", example = "")
+    private String agrmtTermDt;
     @Schema(title = "총금액", example = "")
     private Integer ttlPmt;
+    @Schema(title = "등록ID", example = "숫자")
+    private String regId;
+    @Schema(title = "등록IP", example = "숫자")
+    private String regIp;
+    @Schema(title = "등록일시", example = "숫자")
+    private String regDtm;
+    @Schema(title = "수정ID", example = "숫자")
+    private String modId;
+    @Schema(title = "수정IP", example = "숫자")
+    private String modIp;
+    @Schema(title = "수정일시", example = "숫자")
+    private String modDtm;
 
     @Schema(title = "스마트화현재코드", example = "")
     private String smtfnPrsntCd;
     @Schema(title = "스마트화목표코드", example = "")
     private String smtfnTrgtCd;
+    @Schema(title = "스마트화수준확인코드", example = "")
+    private String smtfnLvlChkCd;
 
     @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;

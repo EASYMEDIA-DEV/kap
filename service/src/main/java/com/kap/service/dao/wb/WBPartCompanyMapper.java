@@ -44,4 +44,9 @@ public interface WBPartCompanyMapper {
      *   부품사 회원 - 회사 SQ Detail
      */
     public List<WBCompanyDetailMstDTO> selPartUserCompDetail(WBPartCompanyDTO wBPartCompanyDTO);
+
+    /**
+     *   이관 내역 확인 - 위원
+     */
+    public int selectPartUserChkAjax(WBPartCompanyDTO wBPartCompanyDTO);
 }

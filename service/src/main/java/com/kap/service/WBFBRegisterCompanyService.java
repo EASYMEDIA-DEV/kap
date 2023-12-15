@@ -1,7 +1,7 @@
 package com.kap.service;
 
+import com.kap.core.dto.wb.WBAppctnTrnsfDtlDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
-import com.kap.core.dto.wb.WBRoundOptnMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 
@@ -47,5 +47,35 @@ public interface WBFBRegisterCompanyService {
      *   신청 부품사 등록 Insert
      */
     public int putRegisterCompany(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+
+    /**
+     *   신청 부품사 Get Detail
+     */
+    public WBFBRegisterSearchDTO getRegisterDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception;
+
+    /**
+     *   신청 부품사 연관 RsumDtl 테이블 Get Detail
+     */
+    public WBFBRegisterSearchDTO getEditInfo(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception;
+
+    /**
+     *  신청자 변경 이력 Get
+     */
+    public WBFBRegisterSearchDTO getAppctnTrnsfDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception;
+
+    /**
+     *  사업자등록번호 Check
+     */
+    public WBFBRegisterSearchDTO getBsnmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception;
+
+    /**
+     *   신청 부품사 연관 RsumDtl 테이블 Get Detail
+     */
+    public int updRegisterCompany(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+
+    /**
+     *  신청 부품사 삭제
+     */
+    public int deleteRegisterCompany(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
 
 }
