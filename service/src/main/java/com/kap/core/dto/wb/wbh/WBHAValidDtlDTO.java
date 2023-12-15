@@ -1,19 +1,22 @@
 package com.kap.core.dto.wb.wbh;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.util.List;
+
 /**
- *  검교정 대장장비 상세 DTO
+ *  상생사업관리 부품사
  * <pre>
  * << 개정이력(Modification Information) >>
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2023.12.11  김태훈         최초 생성
+ *   2023.11.08  김대성         최초 생성
  * </pre>
  */
 @Getter
@@ -25,21 +28,24 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper=false)
-@Schema(title = "검교정 대상장비 마스터")
-public class WBHAEuipmentDTO extends BaseDTO {
+@Schema(title = "사업관리 상세")
+public class WBHAValidDtlDTO extends BaseDTO {
 
-    @Schema(title = "신청순번")
-    private Integer appctnSeq;
+    @Schema(title = "유효순번", example = "숫자")
+    private Integer validSeq;
 
-    @Schema(title = "장비순번")
-    private Integer tchlgSeq;
+    @Schema(title = "옵션코드", example = "")
+    private String optnCd;
 
-    @Schema(title = "장비정렬")
-    private Integer tchlgOrd;
+    @Schema(title = "옵션코드 리스트", example = "")
+    private List optnCdList;
 
-    @Schema(title = "장비명")
-    private String tchlgNm;
+    @Schema(title = "옵션명", example = "")
+    private String optnNm;
+    
+    @Schema(title = "옵션순서", example = "숫자")
+    private int optnOrd;
 
-    @Schema(title = "장비수")
-    private Integer tchlgCnt;
+    
+
 }

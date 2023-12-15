@@ -1,12 +1,12 @@
 package com.kap.service;
 
-import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
+import com.kap.core.dto.wb.wbg.WBGAValidDTO;
 import com.kap.core.dto.wb.wbh.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * <pre>
@@ -27,6 +27,37 @@ import javax.servlet.http.HttpServletRequest;
  * </pre>
  */
 public interface WBHACalibrationService {
+
+    /**
+     * 신청 목록을 조회한다.
+     */
+    public WBHACalibrationSearchDTO selectCalibrationList(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 연도 상세 조회한다.
+     */
+    public List<String> selectYearDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+
+    /**
+     * 신청 리스트 삭제
+     */
+    public int carbonCompanyDeleteList(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 자격 옵션을 조회한다.
+     */
+    public WBGAValidDTO selectExamValid(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 자격 옵션을 수정.
+     */
+    public int examValidUpdate(WBGAValidDTO wBGAValidDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * 엑셀 다운로드
+     */
+    public void excelDownload(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, HttpServletResponse response) throws Exception;
 
     /**
      * 부품사관리 상세 조회한다.

@@ -1,9 +1,7 @@
 package com.kap.mngwserc.controller.wb.wbh;
 
-import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
+import com.kap.core.dto.wb.wbg.WBGAValidDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.service.COCodeService;
 import com.kap.service.WBHACalibrationService;
@@ -12,12 +10,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 /**
@@ -50,6 +47,115 @@ public class WBHACalibrationController {
      **/
     public final COCodeService cOCodeService;
     public final WBHACalibrationService wbhaCalibrationService;
+
+    /**
+     *  시험계측장비 신청 목록으로 이동한다.
+     */
+    @GetMapping(value="/list")
+    public String getExamList(WBHACalibrationSearchDTO wBHACalibrationSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        // 공통코드 배열 셋팅
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+        cdDtlList.add("PRO_TYPE");
+        cdDtlList.add("TEC_GUIDE_INDUS");
+        cdDtlList.add("MNGCNSLT_APP_AREA");
+        modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+        modelMap.addAttribute("classList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
+
+        modelMap.addAttribute("rtnYear", wbhaCalibrationService.selectYearDtl(wBHACalibrationSearchDTO));
+        modelMap.addAttribute("rtnData", wbhaCalibrationService.selectCalibrationList(wBHACalibrationSearchDTO));
+
+        modelMap.addAttribute("rtnValid", wbhaCalibrationService.selectExamValid(wBHACalibrationSearchDTO));
+
+        return "mngwserc/wb/wbh/WBHACalibrationList.admin";
+    }
+
+    /**
+     * 시험계측장비 신청 목록을 조회한다.
+     */
+    @RequestMapping(value = "/select")
+    public String getExamListPageAjax(WBHACalibrationSearchDTO wBHACalibrationSearchDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", wbhaCalibrationService.selectCalibrationList(wBHACalibrationSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/wb/wbh/WBHACalibrationListAjax";
+    }
+
+    /**
+     * 시험계측장비 리스트 삭제
+     */
+    @PostMapping(value="/deleteList")
+    public String examDeleteList(WBHACalibrationSearchDTO wBHACalibrationSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wbhaCalibrationService.carbonCompanyDeleteList(wBHACalibrationSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 시험계측장비 신청 옵션 수정
+     */
+    @PostMapping(value="/validUpdate")
+    public String validUpdate(@Valid @RequestBody WBGAValidDTO wBGAValidDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wbhaCalibrationService.examValidUpdate(wBGAValidDTO, request));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * 시험계측장비 엑셀
+     */
+    @GetMapping(value = "/excel-down")
+    public void selectUserListExcel(WBHACalibrationSearchDTO wBHACalibrationSearchDTO , HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            //엑셀 생성
+            wbhaCalibrationService.excelDownload(wbhaCalibrationService.selectCalibrationList(wBHACalibrationSearchDTO), response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+    }
+
 
     /**
      * 공통 부품사관리 상세 페이지

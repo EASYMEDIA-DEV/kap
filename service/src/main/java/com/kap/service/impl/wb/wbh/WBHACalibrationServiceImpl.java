@@ -3,8 +3,11 @@ package com.kap.service.impl.wb.wbh;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.*;
+import com.kap.core.dto.wb.wbg.WBGAValidDTO;
+import com.kap.core.dto.wb.wbg.WBGAValidDtlDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -12,12 +15,17 @@ import com.kap.service.WBHACalibrationService;
 import com.kap.service.dao.wb.wbh.WBHACalibrationMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.egovframe.rte.fdl.cmmn.exception.FdlException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +71,8 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
     private final EgovIdGnrService cxAppctnRsumeDtlSeqIdgen;
     //참여이관 시퀀스
     private final EgovIdGnrService cxAppctnTrnsfDtlIdgen;
+    /* 사업신청자격 시퀀스 */
+    private final EgovIdGnrService cxAppctnValidMstIdgen;
 
     @Override
     public WBHAConsultingDTO getConsultingList(WBHAConsultingDTO wbaConsultingDTO) throws Exception {
@@ -81,6 +91,363 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         wbaConsultingDTO.setTotalCount(wbhaCalibrationMapper.getConsultingCount(wbaConsultingDTO));
 
         return wbaConsultingDTO;
+    }
+
+    /**
+     * 신청 목록
+     */
+    public WBHACalibrationSearchDTO selectCalibrationList(WBHACalibrationSearchDTO wBHACalibrationSearchDTO) throws Exception {
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(wBHACalibrationSearchDTO.getPageIndex());
+        page.setRecordCountPerPage(wBHACalibrationSearchDTO.getListRowSize());
+
+        page.setPageSize(wBHACalibrationSearchDTO.getPageRowSize());
+
+        wBHACalibrationSearchDTO.setFirstIndex(page.getFirstRecordIndex());
+        wBHACalibrationSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        wBHACalibrationSearchDTO.setList(wbhaCalibrationMapper.selectCalibrationList(wBHACalibrationSearchDTO));
+        wBHACalibrationSearchDTO.setTotalCount(wbhaCalibrationMapper.getCalibrationListTotCnt(wBHACalibrationSearchDTO));
+
+        return wBHACalibrationSearchDTO;
+    }
+
+    /**
+     * 연도 상세 조회
+     */
+    public List<String> selectYearDtl(WBHACalibrationSearchDTO wBHACalibrationSearchDTO) throws Exception {
+        return wbhaCalibrationMapper.selectYearDtl(wBHACalibrationSearchDTO);
+    }
+
+
+    /**
+     * 신청 리스트 삭제
+     */
+    public int carbonCompanyDeleteList(WBHACalibrationSearchDTO wBHACalibrationSearchDTO) throws Exception {
+
+
+        List<String> appctnSeqList = wBHACalibrationSearchDTO.getDelValueList();
+
+        wBHACalibrationSearchDTO.setDelValueList(appctnSeqList);
+
+        //이관삭제
+        wbhaCalibrationMapper.carbonCompanyDeleteTrnsf(wBHACalibrationSearchDTO);
+        //장비삭제
+        wbhaCalibrationMapper.carbonCompanyDeleteTchlg(wBHACalibrationSearchDTO);
+
+
+        wBHACalibrationSearchDTO.setDelValueList(wbhaCalibrationMapper.selectRsumeSeq(wBHACalibrationSearchDTO));
+
+        //신청진행계측 삭제
+        wbhaCalibrationMapper.carbonCompanyDeleteRsumeTchlg(wBHACalibrationSearchDTO);
+        //신청파일 삭제
+        wbhaCalibrationMapper.carbonCompanyDeleteRsumeFile(wBHACalibrationSearchDTO);
+
+
+        wBHACalibrationSearchDTO.setDelValueList(appctnSeqList);
+        //신청진행상세 삭제
+        wbhaCalibrationMapper.carbonCompanyDeleteRsume(wBHACalibrationSearchDTO);
+
+        int respCnt = wbhaCalibrationMapper.carbonCompanyDeleteMst(wBHACalibrationSearchDTO);
+
+        return respCnt;
+
+    }
+
+    /**
+     * 옵션 목록
+     */
+    public WBGAValidDTO selectExamValid(WBHACalibrationSearchDTO wBHACalibrationSearchDTO) throws Exception {
+        WBGAValidDTO wBGAValidDTO = new WBGAValidDTO();
+        wBGAValidDTO = wbhaCalibrationMapper.selectExamValid(wBHACalibrationSearchDTO);
+
+        List<WBGAValidDtlDTO>  wBGAValidDtlDTO = wbhaCalibrationMapper.selectExamValidDtlList(wBHACalibrationSearchDTO);
+        if(wBGAValidDtlDTO.size() > 0){
+            wBGAValidDTO.setDtlList(wBGAValidDtlDTO);
+        }
+
+        return wBGAValidDTO;
+    }
+
+    /**
+     * 옵션 수정
+     */
+    public int examValidUpdate(WBGAValidDTO wBGAValidDTO, HttpServletRequest request) throws Exception {
+
+        int respCnt = 0;
+
+        int appctnValidSeqIdgen;
+
+        COUserDetailsDTO coaAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+
+        if(wBGAValidDTO.getValidSeq() != null && !"".equals(wBGAValidDTO.getValidSeq())){
+            appctnValidSeqIdgen = wBGAValidDTO.getValidSeq();
+            wBGAValidDTO.setModId(coaAdmDTO.getId());
+            wBGAValidDTO.setModIp(coaAdmDTO.getLoginIp());
+            respCnt = wbhaCalibrationMapper.examValidUpdate(wBGAValidDTO);
+        }else{
+            appctnValidSeqIdgen = cxAppctnValidMstIdgen.getNextIntegerId();
+            wBGAValidDTO.setValidSeq(appctnValidSeqIdgen);
+            wBGAValidDTO.setRegId(coaAdmDTO.getId());
+            wBGAValidDTO.setRegIp(coaAdmDTO.getLoginIp());
+            respCnt = wbhaCalibrationMapper.examValidInsert(wBGAValidDTO);
+        }
+
+
+        wbhaCalibrationMapper.deleteValidDtl(wBGAValidDTO);
+
+        for(int i=0; i < wBGAValidDTO.getDtlList().size(); i++){
+            WBGAValidDtlDTO wBGAValidDtlDTO = wBGAValidDTO.getDtlList().get(i);
+            wBGAValidDtlDTO.setValidSeq(appctnValidSeqIdgen);
+            wBGAValidDtlDTO.setRegId(coaAdmDTO.getId());
+            wBGAValidDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+            wbhaCalibrationMapper.examValidDtlInsert(wBGAValidDtlDTO);
+        }
+
+        return respCnt;
+    }
+
+    /**
+     * 엑셀 다운로드
+     */
+    @Override
+    public void excelDownload(WBHACalibrationSearchDTO wBHACalibrationSearchDTO, HttpServletResponse response) throws Exception {
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFCellStyle style_header = workbook.createCellStyle();
+        XSSFCellStyle style_body = workbook.createCellStyle();
+        Sheet sheet = workbook.createSheet();
+
+        Row row = null;
+        Cell cell = null;
+        int rowNum = 0;
+
+        //Cell Alignment 지정
+        style_header.setAlignment(HorizontalAlignment.CENTER);
+        style_header.setVerticalAlignment(VerticalAlignment.CENTER);
+        style_body.setAlignment(HorizontalAlignment.CENTER);
+        style_body.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        // Border Color 지정
+        style_header.setBorderTop(BorderStyle.THIN);
+        style_header.setBorderLeft(BorderStyle.THIN);
+        style_header.setBorderRight(BorderStyle.THIN);
+        style_header.setBorderBottom(BorderStyle.THIN);
+        style_body.setBorderTop(BorderStyle.THIN);
+        style_body.setBorderLeft(BorderStyle.THIN);
+        style_body.setBorderRight(BorderStyle.THIN);
+        style_body.setBorderBottom(BorderStyle.THIN);
+
+        //BackGround Color 지정
+        style_header.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style_header.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        // Header
+        row = sheet.createRow(rowNum++);
+
+        cell = row.createCell(0);
+        cell.setCellValue("번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(1);
+        cell.setCellValue("사업연도");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(2);
+        cell.setCellValue("진행상태");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(3);
+        cell.setCellValue("관리자상태값");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(4);
+        cell.setCellValue("부품사명");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(5);
+        cell.setCellValue("사업자등록번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(6);
+        cell.setCellValue("구분");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(7);
+        cell.setCellValue("규모");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(8);
+        cell.setCellValue("신청자(아이디)");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(9);
+        cell.setCellValue("휴대폰번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(10);
+        cell.setCellValue("이메일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(11);
+        cell.setCellValue("전년도 매출액");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(12);
+        cell.setCellValue("담당위원");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(13);
+        cell.setCellValue("장비내역");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(14);
+        cell.setCellValue("수량");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(15);
+        cell.setCellValue("투자금액");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(16);
+        cell.setCellValue("재단지원금");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(17);
+        cell.setCellValue("실지급일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(18);
+        cell.setCellValue("관리자등록일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(19);
+        cell.setCellValue("사용자수정일");
+        cell.setCellStyle(style_header);
+
+
+        // Body
+        List<WBHACalibrationSearchDTO> list = wBHACalibrationSearchDTO.getList();
+
+        for (int i=0; i<list.size(); i++) {
+            row = sheet.createRow(rowNum++);
+
+            //번호
+            cell = row.createCell(0);
+            cell.setCellValue(wBHACalibrationSearchDTO.getTotalCount() - i);
+            cell.setCellStyle(style_body);
+
+            //사업연도
+            cell = row.createCell(1);
+            cell.setCellValue(list.get(i).getYear());
+            cell.setCellStyle(style_body);
+
+            //진행상태
+            cell = row.createCell(2);
+            cell.setCellValue(list.get(i).getRsumeSttsNm());
+            cell.setCellStyle(style_body);
+
+            //관리자 상태값
+            cell = row.createCell(3);
+            cell.setCellValue(list.get(i).getMngSttsNm());
+            cell.setCellStyle(style_body);
+
+            //부품사명
+            cell = row.createCell(4);
+            cell.setCellValue(list.get(i).getCmpnNm());
+            cell.setCellStyle(style_body);
+
+            //사업자등록번호
+            cell = row.createCell(5);
+            cell.setCellValue(list.get(i).getBsnmNo());
+            cell.setCellStyle(style_body);
+
+            //구분
+            cell = row.createCell(6);
+            cell.setCellValue(list.get(i).getCtgryNm());
+            cell.setCellStyle(style_body);
+
+            //규모
+            cell = row.createCell(7);
+            cell.setCellValue(list.get(i).getSizeNm());
+            cell.setCellStyle(style_body);
+
+            //신청자
+            cell = row.createCell(8);
+            cell.setCellValue(list.get(i).getName() +"("+ list.get(i).getId() +")");
+            cell.setCellStyle(style_body);
+
+            //휴대폰
+            cell = row.createCell(9);
+            cell.setCellValue(list.get(i).getHpNo());
+            cell.setCellStyle(style_body);
+
+            //이메일
+            cell = row.createCell(10);
+            cell.setCellValue(list.get(i).getEmail());
+            cell.setCellStyle(style_body);
+
+            //매출액
+            cell = row.createCell(11);
+            cell.setCellValue(list.get(i).getSlsPmt());
+            cell.setCellStyle(style_body);
+
+            //담당위원
+            cell = row.createCell(12);
+            cell.setCellValue(list.get(i).getPicCmssrNm());
+            cell.setCellStyle(style_body);
+
+            //장비내역
+            cell = row.createCell(13);
+            if(list.get(i).getTchlgOrdMax() > 1){
+                cell.setCellValue(list.get(i).getTchlgNm()+ " 등 " + (list.get(i).getTchlgOrdMax() -1));
+            }else{
+                cell.setCellValue(list.get(i).getTchlgNm());
+            }
+            cell.setCellStyle(style_body);
+
+            //수량
+            cell = row.createCell(14);
+            cell.setCellValue(list.get(i).getTchlgCntSum());
+            cell.setCellStyle(style_body);
+
+            //투자금액
+            cell = row.createCell(15);
+            cell.setCellValue(list.get(i).getNvstmPmt());
+            cell.setCellStyle(style_body);
+
+            //재단지원금
+            cell = row.createCell(16);
+            cell.setCellValue(list.get(i).getFndnSpprtPmt());
+            cell.setCellStyle(style_body);
+
+            //실지급일
+            cell = row.createCell(17);
+            cell.setCellValue(list.get(i).getRealGiveDt());
+            cell.setCellStyle(style_body);
+
+            //관리자 등록일
+            cell = row.createCell(18);
+            cell.setCellValue(list.get(i).getRegDtm());
+            cell.setCellStyle(style_body);
+
+            //사용자 수정일
+            cell = row.createCell(19);
+            cell.setCellValue(list.get(i).getModDtm());
+            cell.setCellStyle(style_body);
+        }
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
+
+        //컨텐츠 타입 및 파일명 지정
+        response.setContentType("ms-vnd/excel");
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_신청부품사관리_", "UTF-8") + timeStamp +".xlsx");
+
+        // Excel File Output
+        workbook.write(response.getOutputStream());
+        workbook.close();
     }
 
     /**

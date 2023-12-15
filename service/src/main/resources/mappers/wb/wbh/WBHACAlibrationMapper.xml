@@ -2,6 +2,485 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.kap.service.dao.wb.wbh.WBHACalibrationMapper">
 
+
+    <!--
+         쿼리명 : WBHACalibrationMapper.selectCalibrationList
+         설  명 : 게시판 리스트
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="selectCalibrationList" parameterType="wBHACalibrationSearchDTO" resultType="wBHACalibrationSearchDTO">
+        SELECT /* WBHACalibrationMapper.selectCalibrationList */
+        B.APPCTN_SEQ
+        ,YEAR(A.YEAR) AS YEAR
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = C.RSUME_STTS_CD) AS RSUME_STTS_NM
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = C.MNG_STTS_CD) AS MNG_STTS_NM
+        ,F.CMPN_NM
+        ,F.BSNM_NO
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.CTGRY_CD ) AS CTGRY_NM
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.SIZE_CD) AS SIZE_NM
+        ,D.NAME
+        ,D.ID
+        ,D.HP_NO
+        ,D.EMAIL
+        ,(SELECT SLS_PMT FROM CP_CMPN_MST WHERE BSNM_NO = F.BSNM_NO AND SLS_YEAR = A.YEAR) AS SLS_PMT
+        ,(SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = PIC_CMSSR_SEQ) AS PIC_CMSSR_NM
+        ,(SELECT TCHLG_NM FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ AND TCHLG_ORD = 1) AS TCHLG_NM
+        ,(SELECT SUM(TCHLG_CNT) FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ) AS  TCHLG_CNT_SUM
+        ,(SELECT MAX(TCHLG_ORD) FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ) AS  TCHLG_ORD_MAX
+        ,V.NVSTM_PMT
+        ,V.FNDN_SPPRT_PMT
+        ,V.REAL_GIVE_DT
+        ,B.REG_ID
+        ,(SELECT NAME FROM CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NM
+        ,B.REG_DTM
+        ,B.MOD_ID
+        ,(SELECT NAME FROM CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NM
+        ,B.MOD_DTM
+        ,B.MEM_SEQ
+        FROM CX_EPISD_MST A
+        JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+        JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+        JOIN CO_MEM_MST D ON B.MEM_SEQ = D.MEM_SEQ
+        JOIN CP_CMPN_MST F ON  D.WORK_BSNM_NO = F.BSNM_NO
+        LEFT JOIN CX_APPCTN_RSUME_TCHLG_DTL V ON C.RSUME_SEQ = V.RSUME_SEQ
+        INNER JOIN (
+        SELECT C.APPCTN_SEQ, MAX(C.RSUME_ORD) AS RSUME_ORD
+        FROM CX_EPISD_MST A
+        JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+        JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+        WHERE BSN_CD = 'INQ07008'
+        GROUP BY APPCTN_SEQ
+        ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
+        <include refid="selectCarbonListwhereSql" />
+        ORDER BY B.APPCTN_SEQ DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : WBHACalibrationMapper.getCalibrationListTotCnt
+         설  명 : 게시판 총 갯수
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="getCalibrationListTotCnt" parameterType="wBHACalibrationSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBHACalibrationMapper.getCalibrationListTotCnt */ COUNT(*)
+        FROM (
+        SELECT
+        B.APPCTN_SEQ
+        ,YEAR(A.YEAR) AS YEAR
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = C.RSUME_STTS_CD) AS RSUME_STTS_NM
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = C.MNG_STTS_CD) AS MNG_STTS_NM
+        ,F.CMPN_NM
+        ,F.BSNM_NO
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.CTGRY_CD ) AS CTGRY_NM
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.SIZE_CD) AS SIZE_NM
+        ,D.NAME
+        ,D.ID
+        ,D.HP_NO
+        ,D.EMAIL
+        ,(SELECT SLS_PMT FROM CP_CMPN_MST WHERE BSNM_NO = F.BSNM_NO AND SLS_YEAR = A.YEAR) AS SLS_PMT
+        ,(SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = PIC_CMSSR_SEQ) AS PIC_CMSSR_NM
+        ,V.NVSTM_PMT
+        ,V.FNDN_SPPRT_PMT
+        ,V.REAL_GIVE_DT
+        ,B.REG_ID
+        ,(SELECT NAME FROM CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NM
+        ,B.REG_DTM
+        ,B.MOD_ID
+        ,(SELECT NAME FROM CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NM
+        ,B.MOD_DTM
+        FROM CX_EPISD_MST A
+        JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+        JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+        JOIN CO_MEM_MST D ON B.MEM_SEQ = D.MEM_SEQ
+        JOIN CP_CMPN_MST F ON  D.WORK_BSNM_NO = F.BSNM_NO
+        LEFT JOIN CX_APPCTN_RSUME_TCHLG_DTL V ON C.RSUME_SEQ = V.RSUME_SEQ
+        INNER JOIN (
+        SELECT C.APPCTN_SEQ, MAX(C.RSUME_ORD) AS RSUME_ORD
+        FROM CX_EPISD_MST A
+        JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+        JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+        WHERE BSN_CD = 'INQ07008'
+        GROUP BY APPCTN_SEQ
+        ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
+        <include refid="selectCarbonListwhereSql" />
+        ) A
+    </select>
+
+    <!--
+		쿼리명 : selectCarbonListwhereSql
+		설  명 : 게시판 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.08    김대성       최초생성
+    -->
+    <sql id="selectCarbonListwhereSql">
+        <where>
+            AND BSN_CD = 'INQ07008'
+            <if test="carbonDate != null and carbonDate != ''.toString() ">
+                <choose>
+                    <when test="carbonDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND B.REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND B.REG_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        </if>
+                    </when>
+                    <when test="carbonDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND B.REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND B.REG_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        </if>
+                    </when>
+                    <when test="carbonDate == 3">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND B.MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND B.MOD_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        </if>
+                    </when>
+                </choose>
+            </if>
+
+            <if test="yearSearch != null and yearSearch != ''.toString() ">
+                AND YEAR(A.YEAR) = #{yearSearch}
+            </if>
+
+            <if test="carbonCdList != null and carbonCdList.size() > 0">
+                AND (
+                <foreach collection="carbonCdList" item="carbonCdList" index="index" open="(" close=")" separator=" or ">
+                    RSUME_STTS_CD = #{carbonCdList}
+                </foreach>
+                )
+            </if>
+
+            <if test="q != null and q != ''.toString() ">
+                AND (
+                EXISTS (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = B.MEM_SEQ AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%') OR HP_NO LIKE CONCAT('%', #{q}, '%') ))
+                OR
+                EXISTS (SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = D.WORK_BSNM_NO AND (CMPN_NM LIKE CONCAT('%', #{q}, '%') OR BSNM_NO LIKE CONCAT('%', #{q}, '%')))
+                OR
+                EXISTS (SELECT TCHLG_NM FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = B.APPCTN_SEQ AND (TCHLG_NM LIKE CONCAT('%', #{q}, '%')))
+                )
+            </if>
+        </where>
+    </sql>
+
+    <!--
+         쿼리명 : WBHACalibrationMapper.selectExamValid
+         설  명 : 옵션 마스터 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="selectExamValid" parameterType="wBHACalibrationSearchDTO" resultType="wBGAValidDTO">
+        SELECT /* WBHACalibrationMapper.selectExamValid */
+            VALID_SEQ
+             ,STND_SLS_PMT
+        FROM CX_APPCTN_VALID_MST
+        WHERE BSN_CD = 'INQ07008'
+    </select>
+
+    <!--
+         쿼리명 : WBHACalibrationMapper.selectExamValidDtlList
+         설  명 : 옵션 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="selectExamValidDtlList" parameterType="wBHACalibrationSearchDTO" resultType="wBGAValidDtlDTO">
+        SELECT /* WBHACalibrationMapper.selectExamValidDtlList */
+            B.OPTN_CD
+             ,B.OPTN_NM
+             ,B.OPTN_ORD
+        FROM CX_APPCTN_VALID_MST A
+                 JOIN CX_APPCTN_VALID_OPTN_DTL B ON A.VALID_SEQ = B.VALID_SEQ
+        WHERE BSN_CD = 'INQ07008'
+
+    </select>
+
+    <!--
+     쿼리명 : WBHACalibrationMapper.examValidUpdate
+     설  명 : 옵션 마스터 입력
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.08  김대성     최초 생성
+    -->
+    <update id="examValidInsert" parameterType="wBGAValidDTO">
+        INSERT INTO /* WBHACalibrationMapper.examValidInsert */ CX_APPCTN_VALID_MST
+        (
+            VALID_SEQ
+        ,BSN_CD
+        ,STND_SLS_PMT
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
+        )
+        VALUES
+            (
+                #{validSeq}
+            ,'INQ07008'
+            ,#{stndSlsPmt}
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+            )
+    </update>
+
+    <!--
+     쿼리명 : WBHACalibrationMapper.examValidUpdate
+     설  명 : 옵션 마스터 수정
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.08  김대성     최초 생성
+    -->
+    <update id="examValidUpdate" parameterType="wBGAValidDTO">
+        UPDATE /* WBHACalibrationMapper.examValidUpdate */ CX_APPCTN_VALID_MST
+        SET
+            VALID_SEQ = #{validSeq}
+          ,STND_SLS_PMT = #{stndSlsPmt}
+          ,MOD_ID = #{modId}
+          ,MOD_IP = #{modIp}
+          ,MOD_DTM = NOW()
+        WHERE BSN_CD = 'INQ07008'
+    </update>
+
+    <!--
+     쿼리명 : WBHACalibrationMapper.examValidDtlInsert
+     설  명 : 옵션 상세 추가
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.08  김대성     최초 생성
+    -->
+    <insert id="examValidDtlInsert" parameterType="wBGAValidDtlDTO">
+        INSERT /* WBHACalibrationMapper.examValidDtlInsert */  INTO CX_APPCTN_VALID_OPTN_DTL
+        (
+            VALID_SEQ
+        ,OPTN_CD
+        ,OPTN_NM
+        ,OPTN_ORD
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
+        )
+        VALUES
+            (
+                #{validSeq}
+            ,#{optnCd}
+            ,#{optnNm}
+            ,#{optnOrd}
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+            )
+    </insert>
+
+    <!--
+       쿼리명 : WBHACalibrationMapper.deleteValidDtl
+       설  명 : 상생신청 진행 리스트 삭제
+        수정일	 수정자     수정내용
+       ==========   ======   =============
+       2023.11.08  김대성     최초 생성
+   -->
+    <delete id="deleteValidDtl" parameterType="wBGAValidDTO">
+        DELETE /* WBHACalibrationMapper.carbonCompanyDeleteRsume */
+        FROM CX_APPCTN_VALID_OPTN_DTL
+        WHERE VALID_SEQ = #{validSeq}
+    </delete>
+
+    <!--
+         쿼리명 : WBHACalibrationMapper.selectYearDtl
+         설  명 : 연도 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="selectYearDtl" parameterType="wBHACalibrationSearchDTO" resultType="java.lang.String">
+        SELECT /* WBHACalibrationMapper.selectYearDtl */
+            DISTINCT(YEAR(YEAR)) AS YEAR
+        FROM CX_EPISD_MST
+        WHERE BSN_CD = 'INQ07008'
+        ORDER BY YEAR ASC
+    </select>
+
+
+
+    <!--
+       쿼리명 : WBHACalibrationMapper.carbonCompanyDeleteTrnsf
+       설  명 : 참여이관 로그 리스트 삭제
+        수정일	 수정자     수정내용
+       ==========   ======   =============
+       2023.11.08  김대성     최초 생성
+   -->
+    <delete id="carbonCompanyDeleteTrnsf" parameterType="wBHACalibrationSearchDTO">
+        DELETE /* WBHACalibrationMapper.carbonCompanyDeleteTrnsf */
+        FROM CX_APPCTN_TRNSF_DTL
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    APPCTN_SEQ in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    APPCTN_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+       쿼리명 : WBHACalibrationMapper.carbonCompanyDeleteTchlg
+       설  명 : 리스트 삭제
+        수정일	 수정자     수정내용
+       ==========   ======   =============
+       2023.11.08  김대성     최초 생성
+   -->
+    <delete id="carbonCompanyDeleteTchlg" parameterType="wBHACalibrationSearchDTO">
+        DELETE /* WBHACalibrationMapper.carbonCompanyDeleteTchlg */
+        FROM CX_APPCTN_TCHLG_DTL
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    APPCTN_SEQ in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    APPCTN_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : WBHACalibrationMapper.selectRsumeSeq
+         설  명 : 진행순번 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="selectRsumeSeq" parameterType="wBHACalibrationSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBHACalibrationMapper.selectRsumeSeq */ RSUME_SEQ
+        FROM CX_APPCTN_RSUME_DTL
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    APPCTN_SEQ in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    APPCTN_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+    <!--
+       쿼리명 : WBHACalibrationMapper.carbonCompanyDeletePbsn
+       설  명 : 상생신청 진행 상세 리스트 삭제
+        수정일	 수정자     수정내용
+       ==========   ======   =============
+       2023.11.08  김대성     최초 생성
+   -->
+    <delete id="carbonCompanyDeleteRsumeTchlg" parameterType="wBHACalibrationSearchDTO">
+        DELETE /* WBHACalibrationMapper.carbonCompanyDeletePbsn */
+        FROM CX_APPCTN_RSUME_TCHLG_DTL
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    RSUME_SEQ in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    RSUME_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+       쿼리명 : WBHACalibrationMapper.carbonCompanyDeleteRsumeFile
+       설  명 : 상생신청 진행 파일 리스트 삭제
+        수정일	 수정자     수정내용
+       ==========   ======   =============
+       2023.11.08  김대성     최초 생성
+   -->
+    <delete id="carbonCompanyDeleteRsumeFile" parameterType="wBHACalibrationSearchDTO">
+        DELETE /* WBHACalibrationMapper.carbonCompanyDeleteRsumeFile */
+        FROM CX_APPCTN_RSUME_FILE_DTL
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    RSUME_SEQ in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    RSUME_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+       쿼리명 : WBHACalibrationMapper.carbonCompanyDeleteRsume
+       설  명 : 상생신청 진행 리스트 삭제
+        수정일	 수정자     수정내용
+       ==========   ======   =============
+       2023.11.08  김대성     최초 생성
+   -->
+    <delete id="carbonCompanyDeleteRsume" parameterType="wBHACalibrationSearchDTO">
+        DELETE /* WBHACalibrationMapper.carbonCompanyDeleteRsume */
+        FROM CX_APPCTN_RSUME_DTL
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    APPCTN_SEQ in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    APPCTN_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+       쿼리명 : WBHACalibrationMapper.carbonDeleteList
+       설  명 : 신청 마스터 리스트 삭제
+        수정일	 수정자     수정내용
+       ==========   ======   =============
+       2023.11.08  김대성     최초 생성
+   -->
+    <delete id="carbonCompanyDeleteMst" parameterType="wBHACalibrationSearchDTO">
+        DELETE /* WBHACalibrationMapper.carbonCompanyDeleteMst */
+        FROM CX_APPCTN_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    APPCTN_SEQ in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    APPCTN_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
     <!--
          쿼리명 : WBHACalibrationMapper.selectApplyMst
          설  명 : 신청업체관리 마스터 조회
