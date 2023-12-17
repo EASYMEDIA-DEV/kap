@@ -174,7 +174,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectExamValid" parameterType="wBHACalibrationSearchDTO" resultType="wBGAValidDTO">
+    <select id="selectExamValid" parameterType="wBHACalibrationSearchDTO" resultType="wBHAValidDTO">
         SELECT /* WBHACalibrationMapper.selectExamValid */
             VALID_SEQ
              ,STND_SLS_PMT
@@ -189,7 +189,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectExamValidDtlList" parameterType="wBHACalibrationSearchDTO" resultType="wBGAValidDtlDTO">
+    <select id="selectExamValidDtlList" parameterType="wBHACalibrationSearchDTO" resultType="wBHAValidDtlDTO">
         SELECT /* WBHACalibrationMapper.selectExamValidDtlList */
             B.OPTN_CD
              ,B.OPTN_NM
@@ -207,7 +207,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <update id="examValidInsert" parameterType="wBGAValidDTO">
+    <update id="examValidInsert" parameterType="wBHAValidDTO">
         INSERT INTO /* WBHACalibrationMapper.examValidInsert */ CX_APPCTN_VALID_MST
         (
             VALID_SEQ
@@ -235,7 +235,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <update id="examValidUpdate" parameterType="wBGAValidDTO">
+    <update id="examValidUpdate" parameterType="wBHAValidDTO">
         UPDATE /* WBHACalibrationMapper.examValidUpdate */ CX_APPCTN_VALID_MST
         SET
             VALID_SEQ = #{validSeq}
@@ -253,7 +253,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <insert id="examValidDtlInsert" parameterType="wBGAValidDtlDTO">
+    <insert id="examValidDtlInsert" parameterType="wBHAValidDtlDTO">
         INSERT /* WBHACalibrationMapper.examValidDtlInsert */  INTO CX_APPCTN_VALID_OPTN_DTL
         (
             VALID_SEQ
@@ -283,7 +283,7 @@
        ==========   ======   =============
        2023.11.08  김대성     최초 생성
    -->
-    <delete id="deleteValidDtl" parameterType="wBGAValidDTO">
+    <delete id="deleteValidDtl" parameterType="wBHAValidDTO">
         DELETE /* WBHACalibrationMapper.carbonCompanyDeleteRsume */
         FROM CX_APPCTN_VALID_OPTN_DTL
         WHERE VALID_SEQ = #{validSeq}

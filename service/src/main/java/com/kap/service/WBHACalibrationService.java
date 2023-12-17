@@ -1,7 +1,6 @@
 package com.kap.service;
 
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
-import com.kap.core.dto.wb.wbg.WBGAValidDTO;
 import com.kap.core.dto.wb.wbh.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,12 +46,12 @@ public interface WBHACalibrationService {
     /**
      * 자격 옵션을 조회한다.
      */
-    public WBGAValidDTO selectExamValid(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+    public WBHAValidDTO selectExamValid(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 
     /**
      * 자격 옵션을 수정.
      */
-    public int examValidUpdate(WBGAValidDTO wBGAValidDTO, HttpServletRequest request) throws Exception;
+    public int examValidUpdate(WBHAValidDTO wBGAValidDTO, HttpServletRequest request) throws Exception;
 
     /**
      * 엑셀 다운로드

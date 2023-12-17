@@ -6,8 +6,6 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.*;
-import com.kap.core.dto.wb.wbg.WBGAValidDTO;
-import com.kap.core.dto.wb.wbg.WBGAValidDtlDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -158,22 +156,22 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
     /**
      * 옵션 목록
      */
-    public WBGAValidDTO selectExamValid(WBHACalibrationSearchDTO wBHACalibrationSearchDTO) throws Exception {
-        WBGAValidDTO wBGAValidDTO = new WBGAValidDTO();
-        wBGAValidDTO = wbhaCalibrationMapper.selectExamValid(wBHACalibrationSearchDTO);
+    public WBHAValidDTO selectExamValid(WBHACalibrationSearchDTO wBHACalibrationSearchDTO) throws Exception {
+        WBHAValidDTO wBHAValidDTO = new WBHAValidDTO();
+        wBHAValidDTO = wbhaCalibrationMapper.selectExamValid(wBHACalibrationSearchDTO);
 
-        List<WBGAValidDtlDTO>  wBGAValidDtlDTO = wbhaCalibrationMapper.selectExamValidDtlList(wBHACalibrationSearchDTO);
+        List<WBHAValidDtlDTO>  wBGAValidDtlDTO = wbhaCalibrationMapper.selectExamValidDtlList(wBHACalibrationSearchDTO);
         if(wBGAValidDtlDTO.size() > 0){
-            wBGAValidDTO.setDtlList(wBGAValidDtlDTO);
+            wBHAValidDTO.setDtlList(wBGAValidDtlDTO);
         }
 
-        return wBGAValidDTO;
+        return wBHAValidDTO;
     }
 
     /**
      * 옵션 수정
      */
-    public int examValidUpdate(WBGAValidDTO wBGAValidDTO, HttpServletRequest request) throws Exception {
+    public int examValidUpdate(WBHAValidDTO wBHAValidDTO, HttpServletRequest request) throws Exception {
 
         int respCnt = 0;
 
@@ -182,29 +180,29 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         COUserDetailsDTO coaAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
 
-        if(wBGAValidDTO.getValidSeq() != null && !"".equals(wBGAValidDTO.getValidSeq())){
-            appctnValidSeqIdgen = wBGAValidDTO.getValidSeq();
-            wBGAValidDTO.setModId(coaAdmDTO.getId());
-            wBGAValidDTO.setModIp(coaAdmDTO.getLoginIp());
-            respCnt = wbhaCalibrationMapper.examValidUpdate(wBGAValidDTO);
+        if(wBHAValidDTO.getValidSeq() != null && !"".equals(wBHAValidDTO.getValidSeq())){
+            appctnValidSeqIdgen = wBHAValidDTO.getValidSeq();
+            wBHAValidDTO.setModId(coaAdmDTO.getId());
+            wBHAValidDTO.setModIp(coaAdmDTO.getLoginIp());
+            respCnt = wbhaCalibrationMapper.examValidUpdate(wBHAValidDTO);
         }else{
             appctnValidSeqIdgen = cxAppctnValidMstIdgen.getNextIntegerId();
-            wBGAValidDTO.setValidSeq(appctnValidSeqIdgen);
-            wBGAValidDTO.setRegId(coaAdmDTO.getId());
-            wBGAValidDTO.setRegIp(coaAdmDTO.getLoginIp());
-            respCnt = wbhaCalibrationMapper.examValidInsert(wBGAValidDTO);
+            wBHAValidDTO.setValidSeq(appctnValidSeqIdgen);
+            wBHAValidDTO.setRegId(coaAdmDTO.getId());
+            wBHAValidDTO.setRegIp(coaAdmDTO.getLoginIp());
+            respCnt = wbhaCalibrationMapper.examValidInsert(wBHAValidDTO);
         }
 
 
-        wbhaCalibrationMapper.deleteValidDtl(wBGAValidDTO);
+        wbhaCalibrationMapper.deleteValidDtl(wBHAValidDTO);
 
-        for(int i=0; i < wBGAValidDTO.getDtlList().size(); i++){
-            WBGAValidDtlDTO wBGAValidDtlDTO = wBGAValidDTO.getDtlList().get(i);
-            wBGAValidDtlDTO.setValidSeq(appctnValidSeqIdgen);
-            wBGAValidDtlDTO.setRegId(coaAdmDTO.getId());
-            wBGAValidDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+        for(int i=0; i < wBHAValidDTO.getDtlList().size(); i++){
+            WBHAValidDtlDTO wBHAValidDtlDTO = wBHAValidDTO.getDtlList().get(i);
+            wBHAValidDtlDTO.setValidSeq(appctnValidSeqIdgen);
+            wBHAValidDtlDTO.setRegId(coaAdmDTO.getId());
+            wBHAValidDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wbhaCalibrationMapper.examValidDtlInsert(wBGAValidDtlDTO);
+            wbhaCalibrationMapper.examValidDtlInsert(wBHAValidDtlDTO);
         }
 
         return respCnt;

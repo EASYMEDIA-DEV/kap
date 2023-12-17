@@ -1,7 +1,6 @@
 package com.kap.mngwserc.controller.wb.wbh;
 
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
-import com.kap.core.dto.wb.wbg.WBGAValidDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.service.COCodeService;
 import com.kap.service.WBHACalibrationService;
@@ -117,11 +116,11 @@ public class WBHACalibrationController {
      * 시험계측장비 신청 옵션 수정
      */
     @PostMapping(value="/validUpdate")
-    public String validUpdate(@Valid @RequestBody WBGAValidDTO wBGAValidDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    public String validUpdate(@Valid @RequestBody WBHAValidDTO wBHAValidDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
     {
         try
         {
-            modelMap.addAttribute("respCnt", wbhaCalibrationService.examValidUpdate(wBGAValidDTO, request));
+            modelMap.addAttribute("respCnt", wbhaCalibrationService.examValidUpdate(wBHAValidDTO, request));
         }
         catch (Exception e)
         {

@@ -4,7 +4,6 @@ package com.kap.core.dto.wb.wbh;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.wb.wbg.WBGAValidDtlDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -42,7 +41,7 @@ public class WBHAValidDTO extends BaseDTO {
     private int stndSlsPmt;
 
     @Schema(title = "상세 리스트", example = "")
-    List<WBGAValidDtlDTO> dtlList;
+    List<WBHAValidDtlDTO> dtlList;
 
 
 }

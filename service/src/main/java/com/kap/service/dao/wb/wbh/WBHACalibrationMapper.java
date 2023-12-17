@@ -2,8 +2,6 @@ package com.kap.service.dao.wb.wbh;
 
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.*;
-import com.kap.core.dto.wb.wbg.WBGAValidDTO;
-import com.kap.core.dto.wb.wbg.WBGAValidDtlDTO;
 import com.kap.core.dto.wb.wbh.*;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -44,32 +42,32 @@ public interface WBHACalibrationMapper {
     /**
      * 옵션마스터 조회
      */
-    public WBGAValidDTO selectExamValid(WBHACalibrationSearchDTO wBHACalibrationSearchDTO);
+    public WBHAValidDTO selectExamValid(WBHACalibrationSearchDTO wBHACalibrationSearchDTO);
 
     /**
      * 옵션 상세 조회
      */
-    public List<WBGAValidDtlDTO> selectExamValidDtlList(WBHACalibrationSearchDTO wBHACalibrationSearchDTO);
+    public List<WBHAValidDtlDTO> selectExamValidDtlList(WBHACalibrationSearchDTO wBHACalibrationSearchDTO);
 
     /**
      * 옵션 마스터 입력
      */
-    public int examValidInsert(WBGAValidDTO wBGAValidDTO) throws Exception;
+    public int examValidInsert(WBHAValidDTO wBGAValidDTO) throws Exception;
 
     /**
      * 옵션 마스터 수정
      */
-    public int examValidUpdate(WBGAValidDTO wBGAValidDTO) throws Exception;
+    public int examValidUpdate(WBHAValidDTO wBHAValidDTO) throws Exception;
 
     /**
      * 옵션 상세 수정
      */
-    public int examValidDtlInsert(WBGAValidDtlDTO wBGAValidDtlDTO) throws Exception;
+    public int examValidDtlInsert(WBHAValidDtlDTO wBHAValidDtlDTO) throws Exception;
 
     /**
      * 옵션 상세 삭제
      */
-    public int deleteValidDtl(WBGAValidDTO wBGAValidDTO);
+    public int deleteValidDtl(WBHAValidDTO wBHAValidDTO);
 
     /**
      * 연도 상세 조회
