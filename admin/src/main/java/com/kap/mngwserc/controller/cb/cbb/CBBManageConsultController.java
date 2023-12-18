@@ -99,14 +99,13 @@ public class CBBManageConsultController {
         cdDtlList.add("BF_JDGMT_RSLT"); // 사전심사결과 코드
         cdDtlList.add("GUIDE_TYPE_CD"); // 지도 구분 코드
         cdDtlList.add("GUIDE_PSCND"); // 지도 현황 코드
-        cdDtlList.add("MNG_CONS_CD"); // 신청 분야 코드
+        cdDtlList.add("MNGCNSLT_APP_AREA"); // 신청 분야 코드
         cdDtlList.add("INIT_VST_RSLT"); // 초도방문결과
         cdDtlList.add("CNSTG_PSCND"); // 컨설팅 현황 코드
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
         if (!"".equals(cBBManageConsultInsertDTO.getDetailsKey()) && cBBManageConsultInsertDTO.getDetailsKey() != null) {
             modelMap.addAttribute("rtnData", cBBManageConsultService.selectManageConsultDtl(cBBManageConsultInsertDTO));
-            System.err.println("modelMap:::"+modelMap.get("rtnData"));
         }
         /*} catch (Exception e) {
             if (log.isErrorEnabled()) {
@@ -124,12 +123,31 @@ public class CBBManageConsultController {
      */
     @RequestMapping(value = "/insert", method= RequestMethod.POST)
     public String insertManageConsult(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, ModelMap modelMap) throws Exception {
-        try {
+        /*try {*/
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBBManageConsultInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBBManageConsultInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             modelMap.addAttribute("respCnt", cBBManageConsultService.insertManageConsult(cBBManageConsultInsertDTO));
+        /*} catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }*/
+
+        return "jsonView";
+    }
+
+    @RequestMapping(value = "/update", method= RequestMethod.POST)
+    public String updateTechGuidance(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, CBBManageConsultUpdateDTO cBBManageConsultUpdateDTO, ModelMap modelMap) throws Exception {
+        try {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            cBBManageConsultInsertDTO.setRegId(cOUserDetailsDTO.getId());
+            cBBManageConsultInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+            cBBManageConsultUpdateDTO.setBsnmNo(cBBManageConsultUpdateDTO.getBsnmNo().replace("-", ""));
+
+            modelMap.addAttribute("respCnt", cBBManageConsultService.updateManageConsultDtl(cBBManageConsultInsertDTO, cBBManageConsultUpdateDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -157,24 +175,7 @@ public class CBBManageConsultController {
 
         return "mngwserc/cb/cbb/CBBManageConsultListAjax";
     }
-    @RequestMapping(value = "/update", method= RequestMethod.POST)
-    public String updateTechGuidance(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, CBBManageConsultUpdateDTO cBBManageConsultUpdateDTO, ModelMap modelMap) throws Exception {
-        try {
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            cBBManageConsultInsertDTO.setRegId(cOUserDetailsDTO.getId());
-            cBBManageConsultInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
-            cBBManageConsultUpdateDTO.setBsnmNo(cBBManageConsultUpdateDTO.getBsnmNo().replace("-", ""));
 
-            modelMap.addAttribute("respCnt", cBBManageConsultService.updateManageConsultDtl(cBBManageConsultInsertDTO, cBBManageConsultUpdateDTO));
-        } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-
-        return "jsonView";
-    }
     /**
      * 컨설팅 사업 경영컨설팅 엑셀다운로드 관련
      */
@@ -243,11 +244,11 @@ public class CBBManageConsultController {
     @GetMapping(value = "/trsfList")
     public String getTrsfListPageAjax(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, CBBManageConsultSearchDTO cBBManageConsultSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-        try
-        {
+       /* try
+        {*/
             modelMap.addAttribute("rtnData", cBBManageConsultService.selectTrsfGuidanceList(cBBManageConsultInsertDTO, cBBManageConsultSearchDTO));
             modelMap.addAttribute("CBATechGuidanceInsertDTO", cBBManageConsultInsertDTO);
-        }
+       /* }
         catch (Exception e)
         {
             if (log.isDebugEnabled())
@@ -255,7 +256,7 @@ public class CBBManageConsultController {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }
+        }*/
         return "mngwserc/cb/cbb/CBBManageConsultsTrsfListAjax";
     }
 

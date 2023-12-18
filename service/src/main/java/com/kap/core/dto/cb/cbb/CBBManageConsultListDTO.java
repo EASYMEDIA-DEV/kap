@@ -33,7 +33,7 @@ public class CBBManageConsultListDTO extends BaseDTO {
     private Integer bsnYear;
     @Schema(title = "진행상태코드")
     private String resumeSttsCd;
-    @Schema(title = "진행상태코드명")
+    @Schema(title = "진행상태 텍스트")
     private String resumeSttsNm;
     @Schema(title = "부품사명")
     private String cmpnNm;

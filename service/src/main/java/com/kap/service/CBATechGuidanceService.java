@@ -1,10 +1,12 @@
 package com.kap.service;
 
+import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -28,7 +30,7 @@ public interface CBATechGuidanceService {
     /**
      * 컨설팅 기술 지도 관리 리스트
      */
-    public CBATechGuidanceDTO selectTechGuidanceList(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public CBATechGuidanceInsertDTO selectTechGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
     /**
      * 컨설팅 기술 지도 상세
      */
@@ -49,10 +51,25 @@ public interface CBATechGuidanceService {
      */
     public int updateTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, CBATechGuidanceUpdateDTO cBATechGuidanceUpdateDTO) throws Exception;
 
+    /**
+     * 부품사 상세 정보 조회
+     */
     public List<MPEPartsCompanyDTO> selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
+    /**
+     * 만족도 종합 결과 리스트 조회
+     */
+    public CBAConsultSuveyRsltListDTO selectConsultSuveyRsltList(CBAConsultSuveyRsltListDTO pCBAConsultSuveyRsltListDTO) throws Exception;
 
+    /**
+     * 이관 내역 조회
+     */
     public CBATechGuidanceInsertDTO selectTrsfGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 엑셀 생성
+     */
+    void excelDownload(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, HttpServletResponse response) throws Exception;
 
 
 }

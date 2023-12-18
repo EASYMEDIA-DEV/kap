@@ -1,7 +1,6 @@
 package com.kap.core.dto.cb.cba;
 
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,12 +38,20 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     @Schema(title = "신청자 순번")
     private String memSeq;
     private String appctnFidCd;
-    private String resumeSttsCd;
 
     @Schema(title = "이관 전 신청자 순번")
     private String bfreMemSeq;
     @Schema(title = "이관 후 신청자 순번")
     private String aftrMemSeq;
+    @Schema(title = "이관 후 신청자 이름")
+    private String afName;
+    @Schema(title = "이관 후 신청자 아이디")
+    private String afId;
+    @Schema(title = "이관 전 신청자 이름")
+    private String bfName;
+    @Schema(title = "이관 전 신청자 아이디")
+    private String bfId;
+
     @Schema(title = "신청자 이메일")
     private String email;
     @Schema(title = "신청자 아이디")
@@ -77,6 +84,7 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String cmpnNfrmlNm;
     @Schema(title = "신청사업자번호")
     private String bsnmNo;
+    private String appctnBsnmNo;
     @Schema(title = "신청회원순번")
     private Integer appctnMemNo;
     @Schema(title = "업종")
@@ -109,6 +117,10 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String mjrPrdct2;
     @Schema(title = "주생산품3")
     private String mjrPrdct3;
+    @Schema(title = "부품사 구분")
+    private String ctgryNm;
+    @Schema(title = "규모")
+    private String sizeNm;
 
     // 5스타 폼
     @Schema(title = "품질5스타")
@@ -135,12 +147,15 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String year;
     @Schema(title = "인증주관사")
     private String  crtfnCmpnNm;
-
-    private List<MPEPartsCompanyDTO> list;
-
+    @Schema(title = "담당위원")
+    private String  cmssrNm;
+    @Schema(title = "초도방문일")
+    private String vstDt;
+    private List<CBATechGuidanceInsertDTO> list;
+    @Schema(title = "킥오프일")
+    private String guideKickfDt;
     // SQ 리스트
     private List<String> sqInfoList;
-
     // SQ 리스트1
     private List<String> sqInfoList1;
     // SQ 리스트2
@@ -157,6 +172,23 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     @Schema(title = "회사규모코드")
     private String sizeCd;
 
+    @Schema(title = "초도방문자료")
+    private Integer initVstFileSeq;
+    @Schema(title = "킥오프자료")
+    private Integer kickfFileSeq;
+    @Schema(title = "킥오프파일ord")
+    private Integer kickfFileOrd;
+    @Schema(title = "랩업자료")
+    private Integer lvlupFileSeq;
+    @Schema(title = "렙업자료ord")
+    private Integer lvlupFileOrd;
+    @Schema(title = "렙업일")
+    private String lvlupDt;
+    @Schema(title = "기타사업자료")
+    private Integer etcFileSeq;
+    @Schema(title = "지도착수일")
+    private String guideBgnDt;
+
     @Schema(title = "회사주소동일여부")
     private String cmpnAddrSameYn;
     @Schema(title = "공장우편번호")
@@ -167,8 +199,16 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String fctryDtlAddr;
     @Schema(title = "첫번째 지역 코드")
     private String firstRgnsCd;
+    @Schema(title = "첫번째 지역 이름")
+    private String firstRgnsNm;
     @Schema(title = "두번째 지역 코드")
     private String scndRgnsCd;
+    @Schema(title = "두번째 지역 이름")
+    private String scndRgnsNm;
+    @Schema(title = "신청분야")
+    private String appctnFldNm;
+    @Schema(title = "방문횟수")
+    private String vstCnt;
 
     @Schema(title="고객사 비율 순번")
     private Integer cmpnDlvrySeq;
@@ -182,15 +222,18 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String dpndnCmpnNm;
     @Schema(title="완성차 의존율 매출비중")
     private String dpndnRate;
-
+    @Schema(title = "지도현황일자")
+    private String guidePscndDt;
+    @Schema(title = "신청업종")
+    private String cbsnNm;
     @Schema(title = "품질담당자수")
     private Integer qltyPicCnt;
     @Schema(title = "FAX번호")
     private String faxNo;
-
     @Schema(title = "진행상태코드")
-    private String rsumeSttsCd;
-
+    private String resumeSttsCd;
+    @Schema(title = "진행상태 텍스트")
+    private String resumeSttsNm;
     @Schema(title = "대표자승인여부")
     private String rprsntApprvYn;
     @Schema(title = "신청사유코드")
@@ -199,10 +242,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String appctnTypeCd;
     @Schema(title = "요청내용, 신청사항")
     private String rqstCntn;
-
     @Schema(title = "관리자 메모")
     private String admMemo;
-
     @Schema(title = "소개파일순번")
     private Integer itrdcFileSeq;
     @Schema(title = "개선파일순번")
@@ -237,4 +278,24 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
 
     // 이관 이력 리스트
     List<CBATechGuidanceInsertDTO> trsfGuidanceList;
+    // 만족도 상세
+    List<CBATechGuidanceInsertDTO> surveyInfoList;
+    private List<String> ctgryCdList;
+
+    // 검색조건
+    @Schema(title = "검색 등록/수정 기간 시작일자", example = "yyyy-MM-dd")
+    private String dStrDt;
+    @Schema(title = "검색 등록/수정 기간 종료일자", example = "yyyy-MM-dd")
+    private String dEndDt;
+    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
+    private String srchLayer;
+    @Schema(title = "컨설팅 구분")
+    private String rtnBsnGubun;
+    private List<CBATechGuidanceInsertDTO> rsList;
+    @Schema(title = "엑셀 다운로드 여부")
+    private String excelYn;
+    @Schema(title = "엑셀 리스트")
+    private List<CBATechGuidanceInsertDTO> excelList;
+    @Schema(title = "엑셀 다운로드 이유")
+    private String rsn;
 }
