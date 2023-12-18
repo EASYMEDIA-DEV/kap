@@ -101,5 +101,5 @@ public class CBATechGuidanceDTO extends BaseDTO {
     private String cmpnNm;
 
     @Schema(title = "진행 상태 코드")
-    private String rsumeSttsCd;
+    private String resumeSttsCd;
 }
