@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" class="mypage" data-controller="controller/mp/MPMemberPartsController"><!-- 마이페이지 mypage 클래스 추가 -->
+<div id="wrap" class="mypage" data-controller="controller/mp/MPMemberPartsController "><!-- 마이페이지 mypage 클래스 추가 -->
+
 
     <!-- 부품사회원 전환 정보 팝업 -->
     <div class="layer-popup switchingMemberPopup"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
@@ -199,11 +200,11 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input">
-                                                                <input type="text" class="notRequired" placeholder="매출액 입력" class="cleanInit" id="slsPmt" name="slsPmt" title="매출액"  oninput="this.value=this.value.replace(/[^0-9]/g, '')">
+                                                                <input type="text" class="notRequired cleanInit" placeholder="매출액 입력"  id="slsPmt" name="slsPmt" title="매출액"  oninput="this.value=this.value.replace(/[^0-9]/g, '')">
                                                                 <p class="unit-txt">억 원</p>
                                                             </div>
                                                             <div class="form-select">
-                                                                <select id="slsYear" class="notRequired" name="slsYear" title="연도 선택" title="매출액" class="cleanInit">
+                                                                <select id="slsYear" class="notRequired cleanInit" name="slsYear" title="연도 선택" title="매출액" >
                                                                     <option value="">연도 선택</option>
                                                                     <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
                                                                         <option value="${cdList.cd}" <c:if test="${rtnInfo.slsYear eq cdList.cd}">selected</c:if>>
@@ -368,10 +369,10 @@
                                             <div class="td">
                                                 <div class="data-line-w">
                                                     <c:forEach var="i" begin="1" end="3">
-                                                        <div class="data-line data-line${i} lastindex${i}" style="display:none;">
+                                                        <div class="data-line sqCount data-line${i} lastindex${i}" style="display:none;">
                                                             <div class="form-group">
                                                                 <div class="form-input w-shorter">
-                                                                    <input type="text" class="notRequired cleanInit" placeholder="SQ 업종입력"  id="nm${i}" name="sqInfoList${i}">
+                                                                    <input type="text" class="notRequired cleanInit " placeholder="SQ 업종입력"  id="nm${i}" name="sqInfoList${i}">
                                                                 </div>
                                                                 <div class="form-select">
                                                                     <select class="notRequired cleanInit" id="year${i}" name="sqInfoList${i}" title="평가년도" title="SQ 평가 연도 선택">
@@ -399,7 +400,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row chng">
                                             <div class="th">
                                                 <p class="title f-head">부서<span class="essential-mark color-sky">*</span></p>
                                             </div>
@@ -425,7 +426,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        <div class="row chng">
                                             <div class="th">
                                                 <p class="title f-head">직급<span class="essential-mark color-sky">*</span></p>
                                             </div>
@@ -503,6 +504,58 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="row old chng" style="display: none;">
+                                                <div class="th">
+                                                    <p class="title f-head">부서<span class="essential-mark color-sky">*</span></p>
+                                                </div>
+                                                <div class="td">
+                                                    <div class="data-line-w">
+                                                        <div class="data-line">
+                                                            <div class="form-group">
+                                                                <div class="form-select">
+                                                                    <select id="deptCdOld" name="mpaUserDto.deptCd" title="부서" class="notRequired cleanInit deptCd">
+                                                                        <option value="" selected>선택</option>
+                                                                        <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status" >
+                                                                            <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
+                                                                                <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                                                            </c:if>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-input">
+                                                                    <input type="text" id="deptDtlNmOld" title="부서상세" name="mpaUserDto.deptDtlNm" placeholder="부서 상세 입력" class="notRequired cleanInit" >
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row old chng" style="display: none;">
+                                                <div class="th">
+                                                    <p class="title f-head">직급<span class="essential-mark color-sky">*</span></p>
+                                                </div>
+                                                <div class="td">
+                                                    <div class="data-line-w">
+                                                        <div class="data-line">
+                                                            <div class="form-group">
+                                                                <div class="form-select">
+                                                                    <select id="pstnCdOld" name="mpaUserDto.pstnCd" title="직급" class="notRequired cleanInit" title="직급" >
+                                                                        <option value="" selected>선택</option>
+                                                                        <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                                                            <c:if test="${fn:contains(cdList, 'MEM_CD010')}">
+                                                                                <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                                                            </c:if>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </div>
+                                                                <div class="form-input pstnNmDisOld" style="display: none;" >
+                                                                    <input type="text" placeholder="기타 직급 입력" class="pstnNmOld notRequired cleanInit" title="기타" name="mpaUserDto.pstnNm">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -526,6 +579,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <style>

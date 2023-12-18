@@ -1,12 +1,13 @@
 package com.kap.core.dto.mp.mpa;
 
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.util.List;
+
 /**
- *  일반사용자
+ *  상생
  *
  * @author 양현우
  * @since 2023.11.09
@@ -18,7 +19,7 @@ import lombok.*;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2023.11.09  일반사용자         최초 생성
+ *   2023.11.09  상생         최초 생성
  * </pre>
  */
 @Getter
@@ -28,18 +29,21 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MPJoinDto extends BaseDTO {
-    private MPAUserDto mpaUserDto;
-    private MPEPartsCompanyDTO mpePartsCompanyDTO;
+public class MPAPartDto extends BaseDTO {
 
+    @Schema(title = "상태코드")
+    private String rsumeSttsCd;
 
-    @Schema(title = "사업자번호", example = "1")
-    private String bsnmNo;
+    @Schema(title = "순번")
+    private String rsumeSeq;
 
-    @Schema(title = "등록여부", example = "1")
-    private String bsnmChk;
+    @Schema(title = "번호")
+    private String memSeq;
 
+    private Boolean chk;
 
-    @Schema(title = "부품사 변경 여부", example = "1")
-    private String partTypeChg;
+    private int count;
+
+    private List<MPAPartDto> list;
+
 }

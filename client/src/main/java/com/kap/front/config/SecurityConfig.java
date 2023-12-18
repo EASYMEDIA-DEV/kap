@@ -59,6 +59,8 @@ public class SecurityConfig {
                         ,"/**/*index*"
                         ,"/**/*select*"
                         ,"/nice/**"
+                        ,"/my-page/member/update-company-chg"
+                        ,"/my-page/member/confirm-comp"
                         , "/**/*write*")
                 .and()
                 .exceptionHandling()

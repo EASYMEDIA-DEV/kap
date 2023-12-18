@@ -46,6 +46,8 @@ public class MPHCertificationController {
     //코드 서비스
     private final COCodeService cOCodeService;
 
+    private final MPEPartsCompanyService mpePartsCompanyService;
+
     /**
      * 정보 수정 비밀번호 페이지
      * @return
@@ -63,8 +65,8 @@ public class MPHCertificationController {
      * @return
      * @throws Exception
      */
-    @RequestMapping("/modify-page/{type}")
-    public String getMemberJoinChk(@PathVariable String type, ModelMap modelMap) throws Exception {
+    @RequestMapping("/modify-page")
+    public String getMemberJoinChk(ModelMap modelMap) throws Exception {
         String url = "";
         MPAUserDto mpaUserDto = new MPAUserDto();
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
@@ -88,13 +90,7 @@ public class MPHCertificationController {
             mpaUserDtos.setEmailAddr(split[1]);
             modelMap.addAttribute("rtnDtl", mpaUserDtos);
         }
-
-        if (type.equals("CO")) {
-            url = "/front/mp/mph/MPHUserModify.front";
-        } else {
-            url = "/front/mp/mph/MPHCertification.front"; //TODO 양현우 CP로 변경
-        }
-        return url;
+        return "/front/mp/mph/MPHUserModify.front";
     }
 
     /**
@@ -187,6 +183,122 @@ public class MPHCertificationController {
         {
             if (log.isDebugEnabled())
             {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+
+    /**
+     * 부품사를 수정한다.
+     *
+     */
+    @RequestMapping(value="/update-company")
+    public String updatePartsCompany(MPJoinDto mpJoinDto ,ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            MPEPartsCompanyDTO mpePartsCompanyDTO = mpJoinDto.getMpePartsCompanyDTO();
+            mpePartsCompanyDTO.setBsnmNo(mpJoinDto.getBsnmNo());
+            modelMap.addAttribute("respCnt", mpePartsCompanyService.updatePartsCompany(mpePartsCompanyDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isErrorEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * 부품사를 이직한다..
+     *
+     */
+    @RequestMapping(value="/update-company-chg")
+    public String updateUserCompanyChg(MPJoinDto mpJoinDto ,ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            MPAUserDto mpaUserDto = mpJoinDto.getMpaUserDto();
+            mpaUserDto.setRegIp(cOUserDetailsDTO.getLoginIp());
+            mpaUserDto.setRegId(cOUserDetailsDTO.getId());
+            mpaUserDto.setModId(cOUserDetailsDTO.getId());
+            mpaUserDto.setModIp(cOUserDetailsDTO.getLoginIp());
+            mpaUserDto.setMemSeq(cOUserDetailsDTO.getSeq());
+            mpaUserDto.setId(cOUserDetailsDTO.getId());
+            mpaUserDto.setModCd("CO");
+            mpaUserDto.setWorkBsnmNo(mpJoinDto.getBsnmNo());
+            MPEPartsCompanyDTO mpePartsCompanyDTO = mpJoinDto.getMpePartsCompanyDTO();
+            mpePartsCompanyDTO.setBsnmNo(mpJoinDto.getBsnmNo());
+            mpePartsCompanyDTO.setRegId(cOUserDetailsDTO.getId());
+            mpePartsCompanyDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+            mpePartsCompanyDTO.setModId(cOUserDetailsDTO.getId());
+            mpePartsCompanyDTO.setModIp(cOUserDetailsDTO.getLoginIp());
+
+            mpaUserService.updateUserCompanyChg(mpaUserDto , mpePartsCompanyDTO , mpJoinDto);
+        }
+        catch (Exception e)
+        {
+            if (log.isErrorEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * 부품사 상세 조회
+     */
+    @GetMapping(value="/{bsnmNo}")
+    public String getPartsCompanyWritePage(@PathVariable String bsnmNo, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+            mpePartsCompanyDTO.setBsnmNo(bsnmNo);
+            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+            if (originList.getList().size() != 0) {
+                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+            }
+            modelMap.addAttribute("sqInfoList", originList);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * 이직 가능 여부 확인
+     */
+    @PostMapping(value = "/confirm-comp")
+    public String selectConfirmComp(ModelMap modelMap) throws Exception {
+        try {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            MPAUserDto mpaUserDto = new MPAUserDto();
+            mpaUserDto.setMemSeq(cOUserDetailsDTO.getSeq());
+            modelMap.addAttribute("data", mpaUserService.selectConfirmComp(mpaUserDto));
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
