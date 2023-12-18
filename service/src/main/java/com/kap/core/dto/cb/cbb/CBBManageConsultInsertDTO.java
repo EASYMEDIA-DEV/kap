@@ -43,6 +43,14 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String bfreMemSeq;
     @Schema(title = "이관 후 신청자 순번")
     private String aftrMemSeq;
+    @Schema(title = "이관 후 신청자 이름")
+    private String afName;
+    @Schema(title = "이관 후 신청자 아이디")
+    private String afId;
+    @Schema(title = "이관 전 신청자 이름")
+    private String bfName;
+    @Schema(title = "이관 전 신청자 아이디")
+    private String bfId;
     @Schema(title = "신청자 이메일")
     private String email;
     @Schema(title = "신청자 아이디")
@@ -203,9 +211,6 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     @Schema(title = "FAX번호")
     private String faxNo;
 
-    @Schema(title = "진행상태코드")
-    private String rsumeSttsCd;
-
     @Schema(title = "대표자승인여부")
     private String rprsntApprvYn;
     @Schema(title = "신청사유코드")
@@ -265,8 +270,11 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String typeNm;
     @Schema(title = "신청분야코드")
     private String appctnFldCd;
+
     @Schema(title = "진행상태코드")
     private String resumeSttsCd;
+    @Schema(title = "진행상태 텍스트")
+    private String resumeSttsNm;
 
     // 이관 이력 리스트
     List<CBBManageConsultInsertDTO> trsfGuidanceList;

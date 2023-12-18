@@ -27,9 +27,6 @@ public interface CBBManageConsultService {
 
     /**
      * 엑셀 생성
-     * @param CBBManageConsultSearchDTO
-     * @param response
-     * @throws Exception
      */
     void excelDownload(CBBManageConsultSearchDTO CBBManageConsultSearchDTO, HttpServletResponse response) throws Exception;
 
@@ -45,24 +42,27 @@ public interface CBBManageConsultService {
 
     /**
      * 만족도 종합 결과 엑셀 생성
-     * @param CBBConsultSuveyRsltListDTO
-     * @param response
-     * @throws Exception
      */
     void srvRsltExcelDownload(CBBConsultSuveyRsltListDTO CBBConsultSuveyRsltListDTO, HttpServletResponse response) throws Exception;
 
+    /**
+     * 경영 컨설팅 관리 수정
+     */
     public CBBManageConsultInsertDTO selectManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
     /**
-     * 컨설팅 기술 지도 관리 등록
+     * 경영 컨설팅 관리 등록
      */
     public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
     /**
-     * 컨설팅 기술 지도 관리 수정
+     * 경영 컨설팅 관리 수정
      */
     public int updateManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception;
-
+    
+    /**
+     * 이관 내역 리스트
+     */
     public CBBManageConsultInsertDTO selectTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultSearchDTO pCBBManageConsultSearchDTO) throws Exception;
 
 

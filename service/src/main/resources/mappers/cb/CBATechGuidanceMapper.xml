@@ -6,45 +6,109 @@
          설  명 :  컨설팅 기술 관리 목록 조회.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.14   임서화      최초생성
+        2023.11.14   임서화      최초 생성
     -->
-    <select id="selectTechGuidanceList" parameterType="CBATechGuidanceDTO" resultType="CBATechGuidanceDTO">
+    <select id="selectTechGuidanceList" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /* CBATechGuidanceMapper.selectTechGuidanceList */
-            A.CNSTG_SEQ,
-            A.APPCTN_BSNM_NO,
-            A.APPCTN_MEM_SEQ,
-            A.CNSTG_CD,
-            A.APPCTN_DT,
-            A.CMPN_SIZE_CD,
-            A.CMPN_ADDR_SAME_YN,
-            A.FCTRY_ZIPCODE,
-            A.FCTRY_BSC_ADDR,
-            A.FCTRY_DTL_ADDR,
-            A.FIRST_RGNS_CD,
-            A.SCND_RGNS_CD,
-            A.FAX_NO,
-            A.RPRSNT_APPRV_YN,
-            A.APPCTN_RSN_CD,
-            A.APPCTN_FLD_CD,
-            A.ITRDC_FILE_SEQ,
-            A.IMPVM_FILE_SEQ,
-            B.MEM_SEQ,
-            B.ID,
-            B.NAME,
-            B.HP_NO,
-            B.EMAIL,
-            B.TEL_NO,
-            B.DEPT_CD,
-            B.DEPT_DTL_NM,
-            B.PSTN_CD,
-            B.PSTN_NM
-        FROM
-            CP_CNSTG_APPCTN_MST A
-        LEFT JOIN
-            CO_MEM_MST B
-        ON A.APPCTN_BSNM_NO = B.WORK_BSNM_NO
-        AND A.APPCTN_MEM_SEQ = B.MEM_SEQ
-        <include refid="selectTechGuidancewhereSql" />
+            CNSTG_SEQ					/* 컨설팅순번 */
+            , CNSTG_CD                  /* 컨설팅코드 */
+            , BSN_YEAR					/* 사엽연도 */
+            , RSUME_STTS_CD			    /* 진행상태코드 */
+            , RESUME_STTS_NM			/* 진행상태코드명 */
+            , CMPN_NM					/* 부품사명 */
+            , CTGRY_CD					/* 부품사구분코드 */
+            , CTGRY_NM					/* 부품사구분코드명 */
+            , SIZE_CD					/* 부품사규모코드 */
+            , SIZE_NM					/* 부품사큐모코드명 */
+            , APPCTN_BSNM_NO			/* 신청당시 사업자번호 */
+            , SLS_PMT					/* 매출액(억원) */
+            , MPLE_CNT					/* 부품사 직원수 */
+            , CBSN_NM                   /* 신청 업종 */
+            , FIRST_RGNS_CD			    /* 첫번째 지역 코드 */
+            , FIRST_RGNS_NM			    /* 첫번째 지역 코드명 */
+            , SCND_RGNS_CD				/* 두번째 지역 코드 */
+            , SCND_RGNS_NM				/* 첫번째 지역 코드명 */
+            , CRTFN_CMPN_NM			    /* SQ 인증 주관사 */
+            , MN_CMPN_NM				/* 주고객사 */
+            , VST_DT					/* 방문일 */
+            , CMSSR_SEQ					/* 위원순번 */
+            , CMSSR_NM					/* 위원이름 */
+            , VST_CNT                   /* 방문 횟수 */
+            , CMSSR_CBSN_CD			    /* 담당위원지도분야 코드 */
+            , CMSSR_CBSN_NM			    /* 담당위원지도분야 코드명 */
+            , GUIDE_KICKF_DT			/* 킥오프시작일 */
+            , KICKF_FILE_SEQ			/* 킥오프파일순번 */
+            , KICKF_FILE_ORD            /* 킥오프파일ORD */
+            , CNSTG_PSCND_CD			/* 컨설팅현황코드 */
+            , CNSTG_PSCND_NM			/* 컨설팅현황코드명 */
+            , CNSTG_PSCND_DT			/* 컨설팅현황일자 */
+            , GUIDE_PSCND_DT            /* 렙업일 */
+            , GUIDE_BGN_DT              /* 지도착수일 */
+            , LVLUP_FILE_SEQ			/* 렙업파일순번 */
+            , LVLUP_FILE_ORD			/* 렙업파일ORD */
+            , APPCTN_DT					/* 신청일 */
+            , REG_ID					/* 등록자ID */
+            , REG_NAME					/* 등록자이름 */
+            , REG_DTM					/* 등록일 */
+            , MOD_ID					/* 수정자ID */
+            , MOD_NAME					/* 수정자이름 */
+            , MOD_DTM					/* 수정일 */
+        FROM(
+            SELECT
+                CP_MST.CNSTG_SEQ
+                , CP_MST.CNSTG_CD
+                , CP_MST.BSN_YEAR
+                , CP_MST.RSUME_STTS_CD
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGTECH_STATUS') RESUME_STTS_NM
+                , CMPN_MST.CMPN_NM
+                , CMPN_MST.CTGRY_CD
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.CTGRY_CD AND CD_ID = 'COMPANY_TYPE') CTGRY_NM
+                , CMPN_MST.SIZE_CD
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.SIZE_CD AND CD_ID = 'COMPANY_TYPE') SIZE_NM
+                , CP_MST.APPCTN_BSNM_NO
+                , CMPN_MST.SLS_PMT
+                , CMPN_MST.MPLE_CNT
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_NM
+                , CP_MST.FIRST_RGNS_CD
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.FIRST_RGNS_CD AND CD_ID = 'ADDR_CD') FIRST_RGNS_NM
+                , CP_MST.SCND_RGNS_CD
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.SCND_RGNS_CD AND CD_ID = 'ADDR_CD') SCND_RGNS_NM
+                , (SELECT CRTFN_CMPN_NM FROM CP_CMPN_CBSN_DTL CMPNDTL WHERE BSNM_NO = CP_MST.APPCTN_BSNM_NO ORDER BY CMPNDTL.YEAR DESC, CMPNDTL.REG_DTM DESC LIMIT 1) CRTFN_CMPN_NM
+                , (SELECT CMPN_NM FROM CP_CNSTG_DLVRY_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ORDER BY RATE DESC LIMIT 1) MN_CMPN_NM
+                , CPR_MST.VST_DT
+                , CPR_MST.CMSSR_SEQ
+                , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM
+                , (SELECT COUNT(*) FROM CO_CMSSR_ATNDC_MST WHERE CNSTG_SEQ_1 = CP_MST.CNSTG_SEQ OR CNSTG_SEQ_2 = CP_MST.CNSTG_SEQ) VST_CNT
+                , (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_CBSN_CD
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'MEM_CD' AND CD = (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ))) CMSSR_CBSN_NM
+                , CPR_MST.GUIDE_KICKF_DT
+                , CPR_MST.KICKF_FILE_SEQ
+                , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.KICKF_FILE_SEQ AND USE_YN = 'Y') KICKF_FILE_ORD
+                , CPR_MST.CNSTG_PSCND_CD
+                , CPR_MST.GUIDE_PSCND_DT
+                , CPR_MST.GUIDE_BGN_DT
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.CNSTG_PSCND_CD AND CD_ID = 'CNSTG_PSCND') CNSTG_PSCND_NM
+                , CPR_MST.CNSTG_PSCND_DT
+                , CPR_MST.LVLUP_FILE_SEQ
+                , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.LVLUP_FILE_SEQ AND USE_YN = 'Y') LVLUP_FILE_ORD
+                , CP_MST.APPCTN_DT
+                , CP_MST.REG_ID
+                , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = CP_MST.APPCTN_MEM_SEQ) REG_NAME
+                , CP_MST.REG_DTM
+                , CPR_MST.MOD_ID
+                , (SELECT NAME FROM CO_ADM_MST WHERE ID = CPR_MST.MOD_ID) MOD_NAME
+                , CPR_MST.MOD_DTM
+            FROM CP_CNSTG_APPCTN_MST CP_MST
+                JOIN CO_MEM_MST MEM_MST
+                    ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+                LEFT JOIN CP_CMPN_MST CMPN_MST
+                        ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+                LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
+                        ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+            ) MST
+       <!-- <include refid="selectTechGuidancewhereSql" />-->
+        ORDER BY
+            REG_DTM DESC
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
     <!--
@@ -52,13 +116,19 @@
          설  명 :  컨설팅 기술 관리 목록 카운트.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.14   임서화      최초생성
+        2023.11.14   임서화      최초 생성
     -->
-    <select id="selectTechGuidanceTotCnt" parameterType="CBATechGuidanceDTO" resultType="java.lang.Integer">
-        SELECT
-            count(*)
+    <select id="selectTechGuidanceTotCnt" parameterType="CBATechGuidanceInsertDTO" resultType="java.lang.Integer">
+        SELECT /* CBATechGuidanceMapper.getManageConsultListCnt */
+            COUNT(*)
         FROM
-            CP_CNSTG_APPCTN_MST A
+            CP_CNSTG_APPCTN_MST CP_MST
+            JOIN CO_MEM_MST MEM_MST
+                ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+            LEFT JOIN CP_CMPN_MST CMPN_MST
+                ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+            LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
+                ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
         <include refid="selectTechGuidancewhereSql" />
     </select>
 
@@ -67,7 +137,7 @@
          설  명 :  컨설팅 기술 관리 상세 조회
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.14   임서화      최초생성
+        2023.11.14   임서화      최초 생성
     -->
     <select id="selectTechGuidanceDtl" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /* CBATechGuidanceMapper.selectTechGuidanceDtl */
@@ -82,7 +152,7 @@
             A.FCTRY_ZIPCODE,
             A.FCTRY_BSC_ADDR,
             A.FCTRY_DTL_ADDR,
-            A.APPCTN_FLD_CD,
+            A.QLTY_PIC_CNT,
             A.FAX_NO,
             A.RPRSNT_APPRV_YN,
             A.FIRST_RGNS_CD,
@@ -110,10 +180,10 @@
             A.ADM_MEMO,
             A.REG_DTM,
             A.REG_ID,
-            (SELECT NAME CO_MEM_MST WHERE ID = B.REG_ID) AS REG_NAME,
+            (SELECT NAME CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-                                        (SELECT NAME CO_MEM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
+            (SELECT NAME CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
@@ -127,7 +197,7 @@
      설  명 :  고객사 비율 상세 조회
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <select id="selectCnstgDlvryInfo" parameterType="java.lang.Integer" resultType="CBATechGuidanceInsertDTO">
         SELECT /* CBATechGuidanceMapper.selectCnstgDlvryInfo */
@@ -146,7 +216,7 @@
      설  명 :  완성차 의존 비율 상세 조회
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <select id="selectCnstgDpndnInfo" parameterType="java.lang.Integer" resultType="CBATechGuidanceInsertDTO">
         SELECT /* CBATechGuidanceMapper.selectCnstgDpndnInfo */
@@ -166,15 +236,17 @@
      설  명 :  컨설팅 기술 관리 등록
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <insert id="insertTechGuidance" parameterType="CBATechGuidanceInsertDTO">
         INSERT /* CBATechGuidanceMapper.insertTechGuidance */ INTO CP_CNSTG_APPCTN_MST (
              CNSTG_SEQ
            , APPCTN_BSNM_NO
            , APPCTN_MEM_SEQ
+           , RSUME_STTS_CD
            , CNSTG_CD
            , APPCTN_DT
+           , BSN_YEAR
            , CMPN_SIZE_CD
            , CMPN_ADDR_SAME_YN
            , FCTRY_ZIPCODE
@@ -197,8 +269,10 @@
                 #{cnstgSeq}
                , #{bsnmNo}
                , #{memSeq}
+               , #{resumeSttsCd}
                , "CONSULT_GB01"
                , #{appctnDt}
+               , DATE_FORMAT(#{appctnDt}, '%Y')
                , #{sizeCd}
                , #{cmpnAddrSameYn}
                , #{fctryZipcode}
@@ -224,12 +298,13 @@
      설  명 :  컨설팅 기술 관리 수정
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <update id="updateTechGuidance" parameterType="CBATechGuidanceInsertDTO">
         UPDATE CP_CNSTG_APPCTN_MST  /*CBATechGuidanceMapper.updateTechGuidance*/
         SET
             APPCTN_MEM_SEQ = #{memSeq},
+            RSUME_STTS_CD = #{resumeSttsCd},
             APPCTN_DT = #{appctnDt},
             CMPN_SIZE_CD = #{sizeCd},
             CMPN_ADDR_SAME_YN = #{cmpnAddrSameYn},
@@ -258,11 +333,11 @@
      설  명 :  부품사 업종 카운트
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <select id="selectCnstgDpndnInfoCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         SELECT /* CBATechGuidanceMapper.selectCnstgDpndnInfoCnt */
-            count(*)
+            COUNT(*)
         FROM
             CP_CNSTG_CBSN_DTL
         WHERE CNSTG_SEQ = #{cnstgSeq}
@@ -273,7 +348,7 @@
      설  명 :  부품사 업종 상세 등록
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <insert id="insertCbsnDtl" parameterType="java.util.HashMap">
         Insert /* CBATechGuidanceMapper.insertCbsnDtl */ INTO CP_CNSTG_CBSN_DTL(
@@ -299,15 +374,15 @@
      설  명 :  부품사 업종 상세 수정
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <update id="updateCbsnDtl" parameterType="java.util.HashMap">
         UPDATE CP_CNSTG_CBSN_DTL /*CBATechGuidanceMapper.updateCbsnDtl*/
         SET
             CD = #{cbsnCd},
             ETC_NM = #{etcNm},
-            mod_id = #{regId},
-            mod_ip = #{regIp}
+            MOD_ID = #{regId},
+            MOD_IP = #{regIp}
         WHERE CNSTG_SEQ = #{cnstgSeq}
     </update>
 
@@ -316,7 +391,7 @@
      설  명 :  신청자 정보 업데이트
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.20   임서화      최초생성
+    2023.11.20   임서화      최초 생성
     -->
     <update id="updateTechMemberInfo" parameterType="java.util.HashMap">
         UPDATE /* CBATechGuidanceMapper.updateTechMemberInfo */ CO_MEM_MST
@@ -337,7 +412,7 @@
      설  명 :  신청 부품사 정보 업데이트
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.20   임서화      최초생성
+    2023.11.20   임서화      최초 생성
     -->
     <update id="updateTechCompanyInfo" parameterType="java.util.HashMap">
         UPDATE /* CBATechGuidanceMapper.updateTechCompanyInfo */ CP_CMPN_MST
@@ -385,7 +460,7 @@
      설  명 :  고객사 비율 비율 등록
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <insert id="insertCnstgDlvryInfo" parameterType="java.util.HashMap">
         INSERT /* CBATechGuidanceMapper.insertCnstgDlvryInfo */ INTO CP_CNSTG_DLVRY_DTL(
@@ -413,7 +488,7 @@
      설  명 :  고객사 비율 비율 수정
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <update id="updateCnstgDlvryInfo" parameterType="java.util.HashMap">
         UPDATE /* CBATechGuidanceMapper.updateCnstgDlvryInfo */ CP_CNSTG_DLVRY_DTL
@@ -432,11 +507,11 @@
      설  명 :  회사 업종 카운트
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <select id="selectCmpnCbsnInfoCnt" parameterType="java.lang.Integer" resultType="java.lang.Integer">
         SELECT /* CBATechGuidanceMapper.selectCmpnCbsnInfoCnt */
-            count(*)
+            COUNT(*)
         FROM
             CP_CMPN_CBSN_DTL
         WHERE 1=1
@@ -448,18 +523,18 @@
      설  명 :  완성차 의존 비율 등록
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <insert id="insertCnstgDpndnInfo" parameterType="java.util.HashMap">
         INSERT /* CBATechGuidanceMapper.insertCnstgDpndnInfo */ INTO CP_CNSTG_DPNDN_DTL
         (
             CNSTG_SEQ
-        , DPNDN_SEQ
-        , CMPN_NM
-        , RATE
-        , REG_ID
-        , REG_IP
-        , REG_DTM
+            , DPNDN_SEQ
+            , CMPN_NM
+            , RATE
+            , REG_ID
+            , REG_IP
+            , REG_DTM
         )
         VALUES(
             #{cnstgSeq}
@@ -477,24 +552,24 @@
      설  명 :  신청 분야 상세
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <insert id="insertCnstgAppctnType" parameterType="java.util.HashMap">
         INSERT /* CBATechGuidanceMapper.insertCnstgAppctnType */INTO CP_CNSTG_APPCTN_TYPE_DTL
         (
-        CNSTG_SEQ
-        , CD
-        , REG_ID
-        , REG_IP
-        , REG_DTM
+            CNSTG_SEQ
+            , CD
+            , REG_ID
+            , REG_IP
+            , REG_DTM
         )
         VALUES(
             #{cnstgSeq}
-          , #{appctnTypeCd}
-          , #{regId}
-          , #{regIp}
-          , now()
-              )
+            , #{appctnTypeCd}
+            , #{regId}
+            , #{regIp}
+            , now()
+          )
     </insert>
 
     <!--
@@ -502,7 +577,7 @@
      설  명 :  신청 분야 상세
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <select id="selectCnstgAppctnType" parameterType="java.util.HashMap" resultType="CBATechGuidanceInsertDTO">
         SELECT /* CBATechGuidanceMapper.selectCmpnCbsnInfoCnt */
@@ -522,7 +597,7 @@
      설  명 : 신청 분야 상세 삭제
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <delete id="deleteCnstgAppctnType" parameterType="java.util.HashMap">
         DELETE /*CBATechGuidanceMapper.deleteCnstgAppctnType*/
@@ -537,7 +612,7 @@
      설  명 :  고객사 비율 비율 수정
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <update id="updateCnstgDpndnInfo" parameterType="java.util.HashMap">
         UPDATE /* CBATechGuidanceMapper.updateCnstgDpndnInfo */ CP_CNSTG_DPNDN_DTL
@@ -556,7 +631,7 @@
      설  명 :  컨설팅 진행 마스터
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+    2023.11.14   임서화      최초 생성
     -->
     <insert id="insertTechGuidanceRsume" parameterType="CBATechGuidanceUpdateDTO">
         INSERT /* CBATechGuidanceMapper.insertTechGuidanceRsume */ INTO CP_CNSTG_RSUME_MST(
@@ -590,7 +665,7 @@
               , REG_IP
               , REG_DTM
             )
-            VALUES(
+        VALUES(
               #{detailsKey} ,
               #{bfreJdgmtRsltCd},
               #{bfreJdgmtRsltCntn},
@@ -628,7 +703,7 @@
      설  명 :  컨설팅 진행 마스터 업데이트
       수정일     수정자       수정내용
     ==========   ======    ==============
-    2023.11.20   임서화      최초생성
+    2023.11.20   임서화      최초 생성
     -->
     <update id="updateTechGuidanceRsume" parameterType="CBATechGuidanceUpdateDTO">
         UPDATE /* CBATechGuidanceMapper.updateTechGuidanceRsume */ CP_CNSTG_RSUME_MST
@@ -668,7 +743,7 @@
          설  명 : 컨설팅 진행 사항
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.14   임서화      최초생성
+        2023.11.14   임서화      최초 생성
     -->
     <select id="selectTechGuidanceRsume" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceUpdateDTO">
         SELECT /* CBATechGuidanceMapper.selectTechGuidanceRsume */
@@ -708,50 +783,52 @@
         WHERE CNSTG_SEQ = #{cnstgSeq}
     </select>
 
-
     <!--
-     쿼리명 : CBATechGuidanceMapper.selectRsumeTotCnt
-     설  명 :  컨설팅 기술 관리 목록 카운트.
-      수정일     수정자       수정내용
-    ==========   ======    ==============
-    2023.11.14   임서화      최초생성
--->
+        쿼리명 : CBATechGuidanceMapper.selectRsumeTotCnt
+        설  명 :  컨설팅 기술 관리 목록 카운트.
+        수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초 생성
+    -->
     <select id="selectRsumeTotCnt" parameterType="CBATechGuidanceInsertDTO" resultType="java.lang.Integer">
         SELECT /*CBATechGuidanceMapper.selectRsumeTotCnt*/
-            count(*)
+            COUNT(*)
         FROM
             CP_CNSTG_RSUME_MST
         WHERE
             CNSTG_SEQ = #{cnstgSeq}
     </select>
 
-
     <!--
-         쿼리명 : CBATechGuidanceMapper.selectTrsfGuidanceList
-         설  명 : 컨설팅 참여 이관 로그
-          수정일     수정자       수정내용
+        쿼리명 : CBATechGuidanceMapper.selectTrsfGuidanceList
+        설  명 : 컨설팅 참여 이관 로그
+        수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.14   임서화      최초생성
+        2023.11.14   임서화      최초 생성
     -->
     <select id="selectTrsfGuidanceList" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /* CBATechGuidanceMapper.selectTrsfGuidanceList */
             CNSTG_SEQ,
+            (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.BFRE_MEM_SEQ) BF_NAME,
+            (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = A.BFRE_MEM_SEQ) BF_ID,
+            (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.AFTR_MEM_SEQ) AF_NAME,
+            (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = A.AFTR_MEM_SEQ) AF_ID,
             BFRE_MEM_SEQ,
             AFTR_MEM_SEQ,
             REG_DTM,
             REG_ID,
-            (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) REG_NAME
+            (SELECT NAME FROM CO_ADM_MST WHERE ID=A.REG_ID) REG_NAME
         FROM CP_CNSTG_APPCTN_TRNSF_DTL A
         WHERE CNSTG_SEQ = #{detailsKey}
             LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
-         쿼리명 : CBATechGuidanceMapper.insertTrsfGuidanceList
-         설  명 : 컨설팅 참여 이관 로그
-          수정일     수정자       수정내용
+        쿼리명 : CBATechGuidanceMapper.insertTrsfGuidanceList
+        설  명 : 컨설팅 참여 이관 로그
+        수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.11.14   임서화      최초생성
+        2023.11.14   임서화      최초 생성
     -->
     <insert id="insertTrsfGuidanceList" parameterType="CBATechGuidanceInsertDTO" >
         INSERT /* CBATechGuidanceMapper.insertTrsfGuidanceList */ INTO CP_CNSTG_APPCTN_TRNSF_DTL
@@ -775,11 +852,11 @@
     </insert>
 
     <!--
-     쿼리명 : CBATechGuidanceMapper.deleteTechGuidance
-     설  명 :  컨설팅 기술 관리 삭제
-      수정일     수정자       수정내용
-    ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+        쿼리명 : CBATechGuidanceMapper.deleteTechGuidance
+        설  명 :  컨설팅 기술 관리 삭제
+        수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초 생성
     -->
     <delete id="deleteTechGuidance" parameterType="CBATechGuidanceDTO">
         DELETE /* CBATechGuidanceMapper.deleteTechGuidance */
@@ -801,79 +878,288 @@
     </delete>
 
     <!--
-     쿼리명 : CBATechGuidanceMapper.selectTrsfGuidanceCnt
-     설  명 :  컨설팅 기술 관리 이관 내역 카운트
-      수정일     수정자       수정내용
-    ==========   ======    ==============
-    2023.11.14   임서화      최초생성
+        쿼리명 : CBATechGuidanceMapper.selectTrsfGuidanceCnt
+        설  명 :  컨설팅 기술 관리 이관 내역 카운트
+        수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.14   임서화      최초 생성
     -->
     <select id="selectTrsfGuidanceCnt" parameterType="CBATechGuidanceUpdateDTO" resultType="java.lang.Integer">
         SELECT /*CBATechGuidanceMapper.selectTrsfGuidanceCnt*/
-            count(*)
+            COUNT(*)
         FROM
             CP_CNSTG_APPCTN_TRNSF_DTL
         WHERE
             CNSTG_SEQ = #{detailsKey}
     </select>
 
-
+    <!--
+        쿼리명 : CBATechGuidanceMapper.selectTechGuidanceSurvey
+        설  명 :  컨설팅 기술 관리 만족도 결과
+        수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   임서화      최초 생성
+    -->
+    <select id="selectTechGuidanceSurvey"  parameterType="java.lang.Integer" resultType="CBAConsultSuveyRsltListDTO">
+        SELECT /* CBATechGuidanceMapper.selectTechGuidanceSurvey */
+            PTCPT_NAME,
+            PTCPT_TELNO,
+            PTCPT_PSTN,
+            TTL_SCORE,
+            GUIDE_RSLT_SCORE,
+            MND_SCORE,
+            CMMNCTN_SCORE,
+            PLNNGABLT_SCORE,
+            EXCTVABLT_SCORE,
+            EXPRTS_SCORE
+        FROM
+            CP_CNSTG_SRV_RSLT_DTL
+        WHERE
+            CNSTG_SEQ = #{detailsKey}
+    </select>
 
     <!--
 		쿼리명 : selectTechGuidancewhereSql
 		설  명 : 비주얼 관리 where Sql
 	      수정일      수정자       수정내용
         ==========   ========   ==============
-        2023.11.14    임서화       최초생성
+        2023.11.14    임서화       최초 생성
     -->
     <sql id="selectTechGuidancewhereSql">
         <where>
-            CNSTG_CD = #{cnstgCd}
-            <if test="srchDate != null and srchDate != ''.toString() ">
+            and CNSTG_CD = 'CONSULT_GB02'
+            <!--기간검색 -->
+            <if test="strtDt != null and strtDt != ''.toString() ">
                 <choose>
                     <when test="srchDate == 1">
-                        <if test="dStrDt != null and dStrDt != ''.toString() ">
-                            AND REG_DTM <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
-                            AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-                        </if>
+                        AND APPCTN_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 2">
-                        <if test="dEndDt != null and dEndDt != ''.toString() ">
-                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
-                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-                        </if>
+                        AND VST_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
-                    <otherwise>
-
-                    </otherwise>
+                    <when test="srchDate == 3">
+                        AND CNSTG_KICKF_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 4">
+                        AND GUIDE_PSCND_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 5">
+                        AND REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 6">
+                        AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                    </when>
                 </choose>
             </if>
-            <if test="q != null and q != ''">
+            <if test="endDt != null and endDt != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        AND APPCTN_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 2">
+                        AND VST_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 3">
+                        AND CNSTG_KICKF_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 4">
+                        AND GUIDE_PSCND_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 5">
+                        AND REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 6">
+                        AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                </choose>
+            </if>
+            <!-- 구분 -->
+            <if test="ctgryCdList != null and ctgryCdList.size() > 0">
+                AND
+                <foreach collection="ctgryCdList" item="list" index="index" open="(" close=")" separator=" or ">
+                    CTGRY_CD = #{list}
+                </foreach>
+            </if>
+            <!-- 신청업종 -->
+            <if test="cbsnNm != null and cbsnNm != ''">
+                AND CBSN_NM = #{cbsnNm}
+            </if>
+            <!-- 진행상태 -->
+            <if test="resumeSttsCd != null and resumeSttsCd != ''">
+                AND RSUME_STTS_CD = #{resumeSttsCd}
+            </if>
+
+            <if test="q != null and q != ''.toString() ">
                 <choose>
                     <when test="f == 1">
-                        AND TITL LIKE CONCAT('%', #{q}, '%')
+                        <!-- 부품사명 -->
+                        AND EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND CMPN_NM LIKE CONCAT('%', #{q}, '%'))
                     </when>
-                    <when test="f == 2">
+                    <when test="f == 2 ">
+                        <!-- 사업자등록번호 -->
+                        AND EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND BSNM_NO LIKE CONCAT('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 3 ">
+                        <!-- 매출액 -->
+                        AND EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND SLS_PMT LIKE CONCAT('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 4 ">
+                        <!-- 직원수 -->
+                        AND EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND MPLE_CNT LIKE CONCAT('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 5 ">
+                        <!-- 신청소재지 -->
+                        AND EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND (INSTR(#{q}, FIRST_RGNS_NM) <![CDATA[>]]> 0 or INSTR(#{q}, SCND_RGNS_NM) <![CDATA[>]]> 0 ))
+                    </when>
+                    <when test="f == 6 ">
+                        <!-- SQ인증주관사 -->
+                        AND EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND CRTFN_CMPN_NM LIKE CONCAT('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 7 ">
+                        <!-- 담당위원 -->
+                        AND EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE MEM_SEQ = MST.CMSSR_SEQ AND NAME LIKE CONCAT('%', #{q}, '%'))
+                    </when>
+                    <when test="f == 8 ">
+                        <!-- 최초등록자 -->
                         AND (
-                        INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                            INSTR(#{q}, MST.REG_ID) <![CDATA[>]]> 0
+                            OR EXISTS(SELECT MEM_SEQ FROM CO_ADM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                            OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </when>
-                    <when test="f == 3">
+                    <when test="f == 9 ">
+                        <!-- 최종등록자 -->
                         AND (
-                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                            INSTR(#{q}, AA.MOD_ID) <![CDATA[>]]> 0
+                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </when>
                     <otherwise>
                         AND (
-                        INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
-                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                            EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND CMPN_NM LIKE CONCAT('%', #{q}, '%'))
+                            OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND BSNM_NO LIKE CONCAT('%', #{q}, '%'))
+                            OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND SLS_PMT LIKE CONCAT('%', #{q}, '%'))
+                            OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND MPLE_CNT LIKE CONCAT('%', #{q}, '%'))
+                            OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND (INSTR(#{q}, FIRST_RGNS_NM) <![CDATA[>]]> 0 or INSTR(#{q}, SCND_RGNS_NM) <![CDATA[>]]> 0 ))
+                            OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND CRTFN_CMPN_NM LIKE CONCAT('%', #{q}, '%'))
+                            OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE MEM_SEQ = MST.CMSSR_SEQ AND NAME LIKE CONCAT('%', #{q}, '%'))
+                            or INSTR(#{q}, MST.REG_ID) <![CDATA[>]]> 0
+                            OR EXISTS(SELECT MEM_SEQ FROM CO_ADM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                            OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                            OR INSTR(#{q}, AA.MOD_ID) <![CDATA[>]]> 0
+                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </otherwise>
                 </choose>
             </if>
         </where>
     </sql>
+
+    <!--
+        쿼리명 : CBATechGuidanceMapper.getManageConsultListCnt
+        설  명 : 만족도 종합결과 목록 전체 갯수
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.04    이옥정       최초 생성
+    -->
+    <select id="getConsultSuveyRsltCnt" parameterType="CBAConsultSuveyRsltListDTO" resultType="java.lang.Integer">
+        SELECT /* CBATechGuidanceMapper.getConsultSuveyRsltCnt */
+            COUNT(*)
+        FROM(
+            SELECT
+                BSN_YEAR
+            FROM (
+                SELECT
+                    CP_MST.BSN_YEAR
+                    , CP_MST.APPCTN_BSNM_NO
+                    , (SELECT COUNT(TTL_SCORE) FROM CP_CNSTG_SRV_RSLT_DTL CCSR WHERE CP_MST.CNSTG_SEQ = CCSR.CNSTG_SEQ ) SRV_CMPLT_CMPN_CNT
+                    , (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD01' ) SHRT_CMPN_CNT
+                    , (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD02' ) RGLR_CMPN_CNT
+                    , (SELECT COUNT(CMSSR_SEQ) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ ) CMSSR_CNT
+                    , CPSR.TTL_SCORE
+                    , (SELECT TTL_SCORE FROM CP_CNSTG_SRV_RSLT_DTL WHERE CNSTG_SEQ = (SELECT CNSTG_SEQ FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD01' )) SHRT_SCORE
+                    , (SELECT TTL_SCORE FROM CP_CNSTG_SRV_RSLT_DTL WHERE CNSTG_SEQ = (SELECT CNSTG_SEQ FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD02' )) RGLR_SCORE
+                FROM
+                    CP_CNSTG_APPCTN_MST CP_MST
+                    JOIN CO_MEM_MST MEM_MST
+                        ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+                    LEFT JOIN CP_CMPN_MST CMPN_MST
+                            ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+                    LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
+                            ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+                    LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
+                            ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
+                WHERE 1=1
+                <if test="rtnBsnGubun != null and rtnBsnGubun != ''">
+                    AND CP_MST.CNSTG_CD = '${rtnBsnGubun}'
+                </if>
+                    AND CP_MST.CNSTG_CD = 'CONSULT_GB01'
+                    AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
+                    AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
+                    AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
+                    AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
+                ) MST
+            GROUP BY MST.BSN_YEAR
+        ) AA
+    </select>
+
+    <!--
+        쿼리명 : CBATechGuidanceMapper.selectConsultSuveyRsltList
+        설  명 : 만족도 종합결과 리스트 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.04    이옥정       최초 생성
+    -->
+    <select id="selectConsultSuveyRsltList" parameterType="CBAConsultSuveyRsltListDTO" resultType="CBAConsultSuveyRsltListDTO">
+        SELECT /* CBATechGuidanceMapper.selectConsultSuveyRsltList */
+            BSN_YEAR                                                                           <!-- 사업연도 -->
+            , COUNT(APPCTN_BSNM_NO) CMPN_CNT                                                   <!-- 대상부품사 -->
+            , SUM(SRV_CMPLT_CMPN_CNT) SRV_CMPLT_CMPN_CNT                                       <!-- 설문완료 부품사 -->
+            , SUM(RGLR_CMPN_CNT) RGLR_CMPN_CNT                                                 <!-- 정규 부품사 -->
+            , SUM(SHRT_CMPN_CNT) SHRT_CMPN_CNT                                                 <!-- 단기 부품사 -->
+            , SUM(CMSSR_CNT) CMSSR_CNT                                                         <!-- 위원 -->
+            , IFNULL(ROUND((SUM(TTL_SCORE) / SUM(SRV_CMPLT_CMPN_CNT)),1),0) TTL_AVG_SCORE      <!-- 총합점수평균 -->
+            , IFNULL(ROUND((SUM(RGLR_SCORE) / SUM(RGLR_CMPN_CNT)),1),0) RGLR_AVG_SCORE         <!-- 정규점수평균 -->
+            , IFNULL(ROUND((SUM(SHRT_SCORE) / SUM(SHRT_CMPN_CNT)),1),0) SHRT_AVG_SCORE         <!-- 단기점수평균 -->
+        FROM (
+            SELECT
+                CP_MST.BSN_YEAR
+                , CP_MST.APPCTN_BSNM_NO
+                , (SELECT COUNT(TTL_SCORE) FROM CP_CNSTG_SRV_RSLT_DTL CCSR WHERE CP_MST.CNSTG_SEQ = CCSR.CNSTG_SEQ ) SRV_CMPLT_CMPN_CNT
+                , (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD01' ) SHRT_CMPN_CNT
+                , (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD02' ) RGLR_CMPN_CNT
+                , (SELECT COUNT(CMSSR_SEQ) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ ) CMSSR_CNT
+                , CPSR.TTL_SCORE
+                , (SELECT TTL_SCORE FROM CP_CNSTG_SRV_RSLT_DTL WHERE CNSTG_SEQ = (SELECT CNSTG_SEQ FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD01' )) SHRT_SCORE
+                , (SELECT TTL_SCORE FROM CP_CNSTG_SRV_RSLT_DTL WHERE CNSTG_SEQ = (SELECT CNSTG_SEQ FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD02' )) RGLR_SCORE
+            FROM
+                CP_CNSTG_APPCTN_MST CP_MST
+            JOIN CO_MEM_MST MEM_MST
+                ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+            LEFT JOIN CP_CMPN_MST CMPN_MST
+                    ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+            LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
+                    ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+            LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
+                    ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
+            WHERE 1=1
+            <if test="rtnBsnGubun != null and rtnBsnGubun != ''">
+                AND CP_MST.CNSTG_CD = '${rtnBsnGubun}'
+            </if>
+                AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
+                AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
+                AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
+                AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
+            ) MST
+        <if test="rtnBsnYear != null and rtnBsnYear != ''">
+        WHERE
+            BSN_YEAR = ${rtnBsnYear}
+        </if>
+        GROUP BY
+            MST.BSN_YEAR
+        ORDER BY
+            MST.BSN_YEAR DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
 </mapper>

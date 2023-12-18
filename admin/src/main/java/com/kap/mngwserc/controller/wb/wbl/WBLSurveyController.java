@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -298,12 +299,11 @@ public class WBLSurveyController<sVASurveyMstDTO> {
 
     @Operation(summary = "대상자 등록", tags = "", description = "")
     @PostMapping(value="/insertExcel")
-    public String insertExcelWinAplnList(@Valid @ModelAttribute WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    public String insertExcelWinAplnList(@Valid @ModelAttribute WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, @RequestParam("wblListExcel") MultipartFile excelFile, HttpServletRequest request, ModelMap modelMap) throws Exception
     {
         try
         {
-
-            modelMap.addAttribute("respCnt", wLSurveyService.insertSurveyExcelList(wBLSurveyMstInsertDTO, request ));
+            modelMap.addAttribute("respCnt", wLSurveyService.insertSurveyExcelList(wBLSurveyMstInsertDTO, request , excelFile ));
 
         }
         catch (Exception e)

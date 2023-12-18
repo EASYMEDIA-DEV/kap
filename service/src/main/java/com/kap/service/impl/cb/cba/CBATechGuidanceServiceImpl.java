@@ -1,25 +1,32 @@
 package com.kap.service.impl.cb.cba;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COSystemLogDTO;
+import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
-import com.kap.service.CBATechGuidanceService;
-import com.kap.service.COFileService;
-import com.kap.service.COSystemLogService;
-import com.kap.service.MPEPartsCompanyService;
+import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
 import com.kap.service.dao.mp.MPAUserMapper;
 import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletResponse;
+import java.net.URLEncoder;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +65,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     private final EgovIdGnrService cosultSeqIdgen;
     private final EgovIdGnrService dpndnSeqIdgen;
     private final EgovIdGnrService dlvrySeqIdgen;
-    private final EgovIdGnrService mpePartsCompanyDtlIdgen;
+    /* SQ정보 테이블 시퀀스 */
+    private final EgovIdGnrService mpePartsCompanySqInfoDtlIdgen;
     private final EgovIdGnrService consTrnsfSeqIdgen;
 
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
@@ -78,20 +86,20 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     /**
      * 컨설팅 기술 지도 목록 조회
      */
-    public CBATechGuidanceDTO selectTechGuidanceList(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception {
+    public CBATechGuidanceInsertDTO selectTechGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
 
-        page.setCurrentPageNo(pCBATechGuidanceDTO.getPageIndex());
-        page.setRecordCountPerPage(pCBATechGuidanceDTO.getListRowSize());
+        page.setCurrentPageNo(pCBATechGuidanceInsertDTO.getPageIndex());
+        page.setRecordCountPerPage(pCBATechGuidanceInsertDTO.getListRowSize());
 
-        page.setPageSize(pCBATechGuidanceDTO.getPageRowSize());
+        page.setPageSize(pCBATechGuidanceInsertDTO.getPageRowSize());
 
-        pCBATechGuidanceDTO.setFirstIndex(page.getFirstRecordIndex());
-        pCBATechGuidanceDTO.setRecordCountPerPage(page.getRecordCountPerPage());
-        pCBATechGuidanceDTO.setTotalCount(cBATechGuidanceMapper.selectTechGuidanceTotCnt(pCBATechGuidanceDTO));
-        pCBATechGuidanceDTO.setList(cBATechGuidanceMapper.selectTechGuidanceList(pCBATechGuidanceDTO));
+        pCBATechGuidanceInsertDTO.setFirstIndex(page.getFirstRecordIndex());
+        pCBATechGuidanceInsertDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        pCBATechGuidanceInsertDTO.setTotalCount(cBATechGuidanceMapper.selectTechGuidanceTotCnt(pCBATechGuidanceInsertDTO));
+        pCBATechGuidanceInsertDTO.setList(cBATechGuidanceMapper.selectTechGuidanceList(pCBATechGuidanceInsertDTO));
 
-        return pCBATechGuidanceDTO;
+        return pCBATechGuidanceInsertDTO;
     }
 
     /**
@@ -172,6 +180,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                 appctnTypeList.add(appctnDto);
             }
             pCBATechGuidanceInsertDTO.setAppctnTypeList(appctnTypeList);
+
+            pCBATechGuidanceInsertDTO.setSurveyInfoList(cBATechGuidanceMapper.selectTechGuidanceSurvey(cnstgSeq));
 
         }
         pCBATechGuidanceInsertDTO.setRsumeList(cBATechGuidanceMapper.selectTechGuidanceRsume(pCBATechGuidanceInsertDTO));
@@ -256,7 +266,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
             HashMap cbsnCdMap = new HashMap();
 
-            for(int i=0; i < cbsnCdMap.size(); i++) {
+            for(int i=0; i < 3; i++) {
                 mpePartsCompanyDTO.setNm(nm[i]);
                 mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(cbsnSeq[i]));
                 mpePartsCompanyDTO.setScore(Integer.valueOf(score[i]));
@@ -271,7 +281,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                     mpePartsCompanyDTO.setModId(pCBATechGuidanceInsertDTO.getRegIp());
                     mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
                 }else if(cnt == 0){
-                    mpePartsCompanyDtlIdgen.getNextIntegerId();
+                    mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
                     mpePartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegId());
                     mpePartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegIp());
                     mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
@@ -423,6 +433,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         int totCnt = cBATechGuidanceMapper.selectRsumeTotCnt(cnstgSeq);
         pCBATechGuidanceupUpdateDTO.setCnstgSeq(cnstgSeq);
         if(totCnt>0){
+            pCBATechGuidanceupUpdateDTO.setModIp(pCBATechGuidanceInsertDTO.getRegIp());
+            pCBATechGuidanceupUpdateDTO.setModId(pCBATechGuidanceInsertDTO.getRegId());
             cBATechGuidanceMapper.updateTechGuidanceRsume(pCBATechGuidanceupUpdateDTO);
         }else if(totCnt == 0){
             cBATechGuidanceMapper.insertTechGuidanceRsume(pCBATechGuidanceupUpdateDTO);
@@ -472,6 +484,264 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         trsfDto.setTotalCount(trsfCnt);
 
         return trsfDto;
+    }
+
+    /**
+     * 만족도 종합 결과 리스트 조회
+     */
+    public CBAConsultSuveyRsltListDTO selectConsultSuveyRsltList(CBAConsultSuveyRsltListDTO pCBAConsultSuveyRsltListDTO) throws Exception{
+        COPaginationUtil page = new COPaginationUtil();
+        page.setCurrentPageNo(pCBAConsultSuveyRsltListDTO.getPageIndex());
+        page.setRecordCountPerPage(pCBAConsultSuveyRsltListDTO.getListRowSize());
+        page.setPageSize(pCBAConsultSuveyRsltListDTO.getPageRowSize());
+        pCBAConsultSuveyRsltListDTO.setFirstIndex(page.getFirstRecordIndex());
+        pCBAConsultSuveyRsltListDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        pCBAConsultSuveyRsltListDTO.setTotalCount(cBATechGuidanceMapper.getConsultSuveyRsltCnt(pCBAConsultSuveyRsltListDTO));
+        pCBAConsultSuveyRsltListDTO.setList(cBATechGuidanceMapper.selectConsultSuveyRsltList(pCBAConsultSuveyRsltListDTO));
+        return pCBAConsultSuveyRsltListDTO;
+    }
+
+    /**
+     * 엑셀 생성
+     */
+    public void excelDownload(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, HttpServletResponse response) throws Exception{
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+        XSSFCellStyle style_header = workbook.createCellStyle();
+        XSSFCellStyle style_body = workbook.createCellStyle();
+        Sheet sheet = workbook.createSheet();
+
+        Row row = null;
+        Cell cell = null;
+        int rowNum = 0;
+
+        //Cell Alignment 지정
+        style_header.setAlignment(HorizontalAlignment.CENTER);
+        style_header.setVerticalAlignment(VerticalAlignment.CENTER);
+        style_body.setAlignment(HorizontalAlignment.CENTER);
+        style_body.setVerticalAlignment(VerticalAlignment.CENTER);
+
+        // Border Color 지정
+        style_header.setBorderTop(BorderStyle.THIN);
+        style_header.setBorderLeft(BorderStyle.THIN);
+        style_header.setBorderRight(BorderStyle.THIN);
+        style_header.setBorderBottom(BorderStyle.THIN);
+        style_body.setBorderTop(BorderStyle.THIN);
+        style_body.setBorderLeft(BorderStyle.THIN);
+        style_body.setBorderRight(BorderStyle.THIN);
+        style_body.setBorderBottom(BorderStyle.THIN);
+
+        //BackGround Color 지정
+        style_header.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+        style_header.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        // Header
+        row = sheet.createRow(rowNum++);
+
+        cell = row.createCell(0);
+        cell.setCellValue("번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(1);
+        cell.setCellValue("사업연도");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(2);
+        cell.setCellValue("진행상태");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(3);
+        cell.setCellValue("부품사명");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(4);
+        cell.setCellValue("사업자등록번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(5);
+        cell.setCellValue("구분");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(6);
+        cell.setCellValue("규모");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(7);
+        cell.setCellValue("매출액(억원)");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(8);
+        cell.setCellValue("직원수");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(9);
+        cell.setCellValue("신청업종");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(10);
+        cell.setCellValue("신청 소재지");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(11);
+        cell.setCellValue("SQ 인증 주관사");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(12);
+        cell.setCellValue("방문일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(13);
+        cell.setCellValue("담당위원");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(14);
+        cell.setCellValue("방문횟수");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(15);
+        cell.setCellValue("지도착수일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(16);
+        cell.setCellValue("킥오프일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(17);
+        cell.setCellValue("렙업일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(18);
+        cell.setCellValue("신청일");
+        cell.setCellStyle(style_header);
+
+        // Body
+        List<CBATechGuidanceInsertDTO> excelList = pCBATechGuidanceInsertDTO.getList();
+        for (int i=0; i<excelList.size(); i++) {
+            row = sheet.createRow(rowNum++);
+
+            //번호
+            cell = row.createCell(0);
+            cell.setCellValue(pCBATechGuidanceInsertDTO.getTotalCount() - i);
+            cell.setCellStyle(style_body);
+
+            //사업연도
+            cell = row.createCell(1);
+            cell.setCellValue(excelList.get(i).getBsnYear());
+            cell.setCellStyle(style_body);
+
+            //진행상태
+            cell = row.createCell(2);
+            cell.setCellValue(excelList.get(i).getResumeSttsNm());
+            cell.setCellStyle(style_body);
+
+            //부품사명
+            cell = row.createCell(3);
+            cell.setCellValue(excelList.get(i).getCmpnNm());
+            cell.setCellStyle(style_body);
+
+            //사업자등록번호
+            cell = row.createCell(4);
+            cell.setCellValue(excelList.get(i).getAppctnBsnmNo());
+            cell.setCellStyle(style_body);
+
+            //구분
+            cell = row.createCell(5);
+            cell.setCellValue(excelList.get(i).getCtgryNm());
+            cell.setCellStyle(style_body);
+
+            //규모
+            cell = row.createCell(6);
+            cell.setCellValue(excelList.get(i).getSizeNm());
+            cell.setCellStyle(style_body);
+
+            //매출액(억원)
+            cell = row.createCell(7);
+            cell.setCellValue(excelList.get(i).getSlsPmt() == null ? 0 : excelList.get(i).getSlsPmt());
+            cell.setCellStyle(style_body);
+
+            //직원수
+            cell = row.createCell(8);
+            cell.setCellValue(excelList.get(i).getMpleCnt() == null ? 0 : excelList.get(i).getMpleCnt());
+            cell.setCellStyle(style_body);
+
+            //신청업종
+            cell = row.createCell(9);
+            cell.setCellValue(excelList.get(i).getCbsnNm());
+            cell.setCellStyle(style_body);
+
+            //신청소재지
+            cell = row.createCell(10);
+            cell.setCellValue(excelList.get(i).getFirstRgnsNm() +" "+ excelList.get(i).getScndRgnsNm());
+            cell.setCellStyle(style_body);
+
+            //SQ 인증 주관사
+            cell = row.createCell(11);
+            cell.setCellValue(excelList.get(i).getCrtfnCmpnNm());
+            cell.setCellStyle(style_body);
+
+            //방문일
+            cell = row.createCell(12);
+            cell.setCellValue(excelList.get(i).getVstDt() == null ? "-" : excelList.get(i).getVstDt());
+            cell.setCellStyle(style_body);
+
+            //담당위원
+            cell = row.createCell(13);
+            cell.setCellValue(excelList.get(i).getCmssrNm() == null ? "-" : excelList.get(i).getCmssrNm());
+            cell.setCellStyle(style_body);
+
+            //방문횟수
+            cell = row.createCell(14);
+            cell.setCellValue(excelList.get(i).getVstCnt() == null ? "-" : excelList.get(i).getVstCnt());
+            cell.setCellStyle(style_body);
+
+            //지도착수일
+            cell = row.createCell(15);
+            cell.setCellValue(excelList.get(i).getGuideBgnDt() == null ? "-" : excelList.get(i).getGuideBgnDt());
+            cell.setCellStyle(style_body);
+
+            //킥오프일
+            cell = row.createCell(16);
+            cell.setCellValue(excelList.get(i).getGuideKickfDt() == null ? "-" : excelList.get(i).getGuideKickfDt());
+            cell.setCellStyle(style_body);
+
+            //렙업일
+            cell = row.createCell(17);
+            cell.setCellValue(excelList.get(i).getGuidePscndDt() == null ? "-" : excelList.get(i).getGuidePscndDt());
+            cell.setCellStyle(style_body);
+
+            //신청일
+            cell = row.createCell(18);
+            cell.setCellValue(excelList.get(i).getAppctnDt());
+            cell.setCellStyle(style_body);
+        }
+
+        // 열 너비 설정
+       /* for(int i =0; i < 8; i++){
+            sheet.autoSizeColumn(i);
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
+        }*/
+
+        String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
+
+        //컨텐츠 타입 및 파일명 지정
+        response.setContentType("ms-vnd/excel");
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("기술지도_", "UTF-8") + timeStamp +".xlsx");
+
+        // Excel File Output
+        workbook.write(response.getOutputStream());
+        workbook.close();
+
+        //다운로드 사유 입력
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
+        pCoSystemLogDTO.setTrgtMenuNm("컨설팅사업관리 > 기술지도");
+        pCoSystemLogDTO.setSrvcNm("mngwserc.cb.cba.service.impl.CBATechGuidanceServiceImpl");
+        pCoSystemLogDTO.setFncNm("selectManageConsultList");
+        pCoSystemLogDTO.setPrcsCd("DL");
+        pCoSystemLogDTO.setRsn(pCBATechGuidanceInsertDTO.getRsn());
+        pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+        pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+        cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
     }
 
 }

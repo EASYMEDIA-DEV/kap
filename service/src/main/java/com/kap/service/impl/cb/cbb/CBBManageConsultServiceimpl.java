@@ -57,7 +57,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
     private final MPAUserService mpaUserService;
 
-    /* 컨설팅 기술 지도 시퀀스 */
+    /* 경영 컨설팅 시퀀스 */
     private final EgovIdGnrService cosultSeqIdgen;
     private final EgovIdGnrService dpndnSeqIdgen;
     private final EgovIdGnrService dlvrySeqIdgen;
@@ -208,7 +208,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
     }
 
     /**
-     * 컨설팅 기술 지도 등록
+     * 경영 컨설팅 등록
      */
     public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
 
@@ -411,7 +411,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
     }
 
     /**
-     * 컨설팅 기술 지도 수정
+     * 경영 컨설팅 수정
      */
     public int updateManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception {
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCBBManageConsultInsertDTO.getFileList());
@@ -448,18 +448,20 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         int totCnt = cBBManageConsultMapper.selectRsumeTotCnt(cnstgSeq);
         pCBBManageConsultUpdateDTO.setCnstgSeq(cnstgSeq);
         if(totCnt>0){
+            pCBBManageConsultInsertDTO.setModIp(pCBBManageConsultInsertDTO.getRegIp());
+            pCBBManageConsultInsertDTO.setModId(pCBBManageConsultInsertDTO.getRegId());
             cBBManageConsultMapper.updateManageConsultRsume(pCBBManageConsultUpdateDTO);
         }else if(totCnt == 0){
             cBBManageConsultMapper.insertManageConsultRsume(pCBBManageConsultUpdateDTO);
         }
-/*
+
         String bfreMemSeq = pCBBManageConsultInsertDTO.getBfreMemSeq();
         String aftrMemSeq = pCBBManageConsultInsertDTO.getMemSeq();
         if(!bfreMemSeq.equals(aftrMemSeq)){
             pCBBManageConsultInsertDTO.setTrnsfSeq(consTrnsfSeqIdgen.getNextIntegerId());
             pCBBManageConsultInsertDTO.setAftrMemSeq(aftrMemSeq);
             cBBManageConsultMapper.insertTrsfGuidanceList(pCBBManageConsultInsertDTO);
-        }*/
+        }
 
         return pCBBManageConsultInsertDTO.getRespCnt();
     }
@@ -613,6 +615,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
         // Body
         List<CBBManageConsultListDTO> list = cBBManageConsultSearchDTO.getList();
+        System.err.println("list.size():::"+list.size());
         for (int i=0; i<list.size(); i++) {
             row = sheet.createRow(rowNum++);
 

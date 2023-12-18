@@ -21,7 +21,7 @@
                 <!-- 검색 여부 -->
                 <input type="hidden" id="srchLayer" name="srchLayer" value="Y" />
                 <input type="hidden" id="workBsnmNo" name="workBsnmNo" value="" />
-
+                <input type="hidden" name="cnstgSeq" id="cnstgSeq" value="" />
                 <div class="modal-body">
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">

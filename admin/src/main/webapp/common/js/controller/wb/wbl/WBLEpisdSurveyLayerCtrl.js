@@ -104,8 +104,9 @@ define(["ezCtrl" ,"ezVald"], function(ezCtrl , ezVald) {
                             contentType: false,
                         })
                             .done(function(r) {
-                                alert(r.rtnMsg);
-                                $(".close").click();
+                                alert("엑셀업로드가 완료되었습니다.");
+                                location.reload();
+
                             })
                             .fail(function() {
                                 alert("잠시후 다시 시도 바랍니다.");
