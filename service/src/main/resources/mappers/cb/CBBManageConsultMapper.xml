@@ -118,6 +118,31 @@
     </select>
 
     <!--
+    쿼리명 : CBBManageConsultMapper.selectTechGuidanceSurvey
+    설  명 :  컨설팅 기술 관리 만족도 결과
+    수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.12.15   임서화      최초 생성
+-->
+    <select id="selectTechGuidanceSurvey"  parameterType="java.lang.Integer" resultType="CBBConsultSuveyRsltListDTO">
+        SELECT /* CBBManageConsultMapper.selectTechGuidanceSurvey */
+            PTCPT_NAME,
+            PTCPT_TELNO,
+            PTCPT_PSTN,
+            TTL_SCORE,
+            GUIDE_RSLT_SCORE,
+            MND_SCORE,
+            CMMNCTN_SCORE,
+            PLNNGABLT_SCORE,
+            EXCTVABLT_SCORE,
+            EXPRTS_SCORE
+        FROM
+            CP_CNSTG_SRV_RSLT_DTL
+        WHERE
+            CNSTG_SEQ = #{detailsKey}
+    </select>
+
+    <!--
         쿼리명 : CBBManageConsultMapper.getManageConsultListCnt
         설  명 : 목록 전체 갯수
           수정일      수정자       수정내용

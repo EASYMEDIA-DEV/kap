@@ -279,4 +279,5 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     // 이관 이력 리스트
     List<CBBManageConsultInsertDTO> trsfGuidanceList;
     List<CBBManageConsultInsertDTO> PicInfoLIst;
+    List<CBBManageConsultInsertDTO> surveyInfoList;
 }
