@@ -6,15 +6,10 @@ import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultUpdateDTO;
-import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.service.*;
-import com.kap.service.CBATechGuidanceService;
-import com.kap.service.CBBManageConsultService;
-import com.kap.service.COCodeService;
-import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.mp.mpa.MPAUserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -158,24 +153,6 @@ public class CBBManageConsultController {
         }*/
 
         return "jsonView";
-    }
-
-    /**
-     * 컨설팅 사업 경영컨설팅 목록 조회
-     */
-    @GetMapping(value = "/select")
-    public String selectManageConsultList(CBBManageConsultSearchDTO cBBManageConsultSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        try {
-            modelMap.addAttribute("rtnData", cBBManageConsultService.selectManageConsultList(cBBManageConsultSearchDTO));
-            modelMap.addAttribute("searchDto", cBBManageConsultSearchDTO);
-        } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-
-        return "mngwserc/cb/cbb/CBBManageConsultListAjax";
     }
 
     @RequestMapping(value = "/update", method= RequestMethod.POST)
