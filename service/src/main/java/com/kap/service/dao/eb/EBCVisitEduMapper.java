@@ -1,6 +1,7 @@
 package com.kap.service.dao.eb;
 
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
+import com.kap.core.dto.eb.ebc.EBCVisitEduExcelDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -110,4 +111,17 @@ public interface EBCVisitEduMapper {
 	 * 방문교육 교육실적 삭제
 	 */
 	public int deleteResultOp(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+	/**
+	 * 방문교육 엑셀 목록을 조회
+	 */
+	public List<EBCVisitEduExcelDTO> selectExcelList(EBCVisitEduExcelDTO ebcVisitEduExcelDTO) throws Exception;
+
+	/**
+	 * 방문교육 엑셀 강사 목록을 조회
+	 */
+	public List<EBCVisitEduExcelDTO> selectIsttrExcelList(EBCVisitEduExcelDTO ebcVisitEduExcelDTO) throws Exception;
+
+
+
 }

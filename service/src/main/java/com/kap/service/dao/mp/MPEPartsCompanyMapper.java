@@ -42,6 +42,12 @@ public interface MPEPartsCompanyMapper {
     public List<MPEPartsCompanyDTO> selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
     /**
+     * 부품사 SQ정보 목록을 조회
+     */
+    public List<MPEPartsCompanyDTO> selectPartsComSQInfo(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+
+    /**
      * 부품사 사업자등록번호 등록여부를 확인
      */
     public MPEPartsCompanyDTO checkBsnmNo(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;

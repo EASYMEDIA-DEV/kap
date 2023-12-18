@@ -11,6 +11,7 @@ import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -87,6 +88,26 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
     @Override
     public int selectPartsCompanyCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
         return mpePartsCompanyMapper.selectPartsCompanyCnt(mpePartsCompanyDTO);
+    }
+
+    /**
+     * 부품사 목록을 조회한다.
+     */
+    public MPEPartsCompanyDTO selectPartsComSQInfo(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(mpePartsCompanyDTO.getPageIndex());
+        page.setRecordCountPerPage(mpePartsCompanyDTO.getListRowSize());
+
+        page.setPageSize(mpePartsCompanyDTO.getPageRowSize());
+
+        mpePartsCompanyDTO.setFirstIndex(page.getFirstRecordIndex());
+        mpePartsCompanyDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        mpePartsCompanyDTO.setList(mpePartsCompanyMapper.selectPartsComSQInfo(mpePartsCompanyDTO));
+
+        return mpePartsCompanyDTO;
     }
 
     /**
@@ -293,6 +314,9 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFCellStyle style_header = workbook.createCellStyle();
         XSSFCellStyle style_body = workbook.createCellStyle();
+        XSSFCellStyle style_body_sqInfo = workbook.createCellStyle();
+        CreationHelper createHelper = workbook.getCreationHelper();
+
         Sheet sheet = workbook.createSheet();
 
         Row row = null;
@@ -394,7 +418,9 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         cell.setCellValue("SQ 정보");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(18);
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 18));
+
+        cell = row.createCell(19);
         cell.setCellValue("가입일");
         cell.setCellStyle(style_header);
 
@@ -421,7 +447,7 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
             //사업자등록번호
             cell = row.createCell(3);
 
-            String bsnmNo = list.get(i).getBsnmNo(); // 주어진 숫자
+            String bsnmNo = list.get(i).getBsnmNo();
             StringBuilder newBsnmNo = new StringBuilder();
 
             // '-' 추가
@@ -544,17 +570,75 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
             }
             cell.setCellStyle(style_body);
 
-            //SQ 정보
-            cell = row.createCell(17);
-            if (list.get(i).getCtgryCd().equals("COMPANY01001")) {
-                cell.setCellValue("-");
-            } else if (list.get(i).getCtgryCd().equals("COMPANY01002")) {
-                cell.setCellValue("SQ 정보");
-            }
-            cell.setCellStyle(style_body);
+            mpePartsCompanyDTO.setBsnmNo(list.get(i).getBsnmNo());
+            MPEPartsCompanyDTO sqDto = selectPartsComSQInfo(mpePartsCompanyDTO);
+            List<MPEPartsCompanyDTO> sqList = sqDto.getList();
 
+            int index = 1;
+            String sqInfo1 = "";
+            String sqInfo2 = "";
+            String sqInfo3 = "";
+
+            String nm = "";
+            String year = "";
+            String score = "";
+            String crtfnCmpnNm = "";
+            String sqInfo = "";
+
+            for (MPEPartsCompanyDTO dto : sqList) {
+                if (dto == null) {
+                    break;
+                } else {
+                    nm = dto.getNm();
+                    year = String.valueOf(dto.getYear());
+                    score = String.valueOf(dto.getScore());
+                    crtfnCmpnNm = dto.getCrtfnCmpnNm();
+
+                    if ("null".equals(nm)) { nm = ""; }
+                    if ("null".equals(year)) { year = "";}
+                    if ("null".equals(score)) { score = ""; }
+                    if ("null".equals(crtfnCmpnNm)) { crtfnCmpnNm = ""; }
+
+                    System.err.println("nm: " + nm);
+                    System.err.println("score: " + score);
+                    System.err.println("year: " + year);
+                    System.err.println("crtfnCmpnNm: " + crtfnCmpnNm);
+
+                    sqInfo = nm + "/" + score + "/" + year + "년/" + crtfnCmpnNm;
+
+                    if (index == 1) {
+                        sqInfo1 = sqInfo + "\n";
+                    } else if (index == 2) {
+                        sqInfo2 = sqInfo + "\n";
+                    } else if (index == 3) {
+                        sqInfo3 = sqInfo;
+                    }
+                    index++;
+                }
+
+            }
+            System.err.println("sqInfo1::::" + sqInfo1);
+            System.err.println("sqInfo2::::" + sqInfo2);
+            System.err.println("sqInfo3::::" + sqInfo3);
+
+            //SQ 정보
+            Cell sqCell = row.createCell(17);
+
+            if (list.get(i).getCtgryCd().equals("COMPANY01001")) {
+                sqCell.setCellValue("-");
+            } else if (list.get(i).getCtgryCd().equals("COMPANY01002")) {
+
+                RichTextString newSqInfoText = createHelper.createRichTextString(sqInfo1 + sqInfo2 + sqInfo3);
+                sqCell.setCellValue(newSqInfoText);
+                style_body_sqInfo.setAlignment(HorizontalAlignment.LEFT);
+                style_body_sqInfo.setWrapText(true);
+            }
+            sqCell.setCellStyle(style_body_sqInfo);
+            sheet.addMergedRegion(new CellRangeAddress(i + 1, i + 1, 17, 18));
+
+            
             //가입일
-            cell = row.createCell(18);
+            cell = row.createCell(19);
             cell.setCellValue(list.get(i).getRegDtm().substring(0, list.get(i).getRegDtm().lastIndexOf(":")));
             cell.setCellStyle(style_body);
 
@@ -581,5 +665,15 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+    }
+
+    private static int countNewlines(String text) {
+        int count = 0;
+        for (char c : text.toCharArray()) {
+            if (c == '\n') {
+                count++;
+            }
+        }
+        return count;
     }
 }

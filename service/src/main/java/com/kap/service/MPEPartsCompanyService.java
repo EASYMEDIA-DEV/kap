@@ -35,6 +35,11 @@ public interface MPEPartsCompanyService {
     public int selectPartsCompanyCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
     /**
+     * 부품사 SQ목록을 조회한다.
+     */
+    public MPEPartsCompanyDTO selectPartsComSQInfo(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
      * 부품사 상세를 조회한다.
      */
     public MPEPartsCompanyDTO selectPartsCompanyDtl(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;

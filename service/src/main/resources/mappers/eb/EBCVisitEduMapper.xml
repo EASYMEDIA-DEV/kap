@@ -650,6 +650,322 @@
 	</delete>
 
 	<!--
+         쿼리명 : EBCVisitEduMapper.selectExcelList
+         설  명 : 방문교육 정보목록 출력(엑셀용)
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.18   구은희       최초생성
+    -->
+	<select id="selectExcelList" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduExcelDTO">
+		select /*EBCVisitEduMapper.selectExcelList*/
+			vst_seq -- 방문순번
+			 , mem_seq -- 회원순번
+			 , edctn_stts_cd -- 교육상태코드
+			 , edctn_stts_name -- 교육상태명
+			 , mod_id -- 최종수정자 id
+			 , mod_name -- 최종수정자 이름
+			 , mod_dtm-- 최종수정일시
+			 , reg_dtm -- 신청일시
+			 , cmpn_nm -- 부품사명
+			 , ctgry_cd -- 부품사구분코드
+			 , ctgry_name -- 구분명
+			 , size_cd -- 부품사규모
+			 , size_name -- 규모명
+			 , appctn_bsnm_no -- 신청당시 사업자등록번호
+			 , appctn_fld_cd -- 신청분야 코드
+			 , appctn_fld_name -- 신청분야명
+			 , hope_dt -- 교육희망일
+			 , edctn_place_addr -- 교육장소 hidden값
+			 , ptcpt_cnt -- 교육인원
+			 , ptcpt_hh -- 교육시간코드
+			 , ptcpt_hh_num -- 교육시간
+			 , name-- 신청자이름
+			 , id -- 신청자 아이디
+			 , hp_no -- 신청자 핸드폰번호
+			 , email -- 신청자이메일
+			 , edctn_year -- 교육년도
+			 -- 교육일??
+			 , edctn_strt_dtm -- 교육시작일시
+			 , edctn_end_dtm -- 교육종료일시
+			 , place_bsc_addr -- 방문교육 기본주소
+			 , place_dtl_addr -- 방문교육 상세주소
+			 -- 정원??
+			 , rslt_end_yn_nm -- 실적마감여부명
+			 , cnfrmd_theme -- 확정주제
+			 -- 신청인원?
+			 , cmptn_cnt -- 수료인원
+			 , ptcpt_rate -- 참석률
+			 , edctn_place -- 교육장소
+			 , EDUCNT1 /* 회사별 수료 인원 - 완성차(명) */
+			 , EDUCNT2 /* 회사별 수료 인원 - 1차사(명) */
+			 , EDUCNT3 /* 회사별 수료 인원 - 2차사(명) */
+			 , EDUCNT4 /* 회사별 수료 인원 - 기타(명) */
+			 , FIELDCNT1 /* 분야별 수료 인원 - 품질 */
+			 , FIELDCNT2 /* 분야별 수료 인원 - RnD */
+			 , FIELDCNT3 /* 분야별 수료 인원 - 생산 */
+			 , FIELDCNT4 /* 분야별 수료 인원 - 구매 */
+			 , FIELDCNT5 /* 분야별 수료 인원 - 경영지원 */
+			 , FIELDCNT6 /* 분야별 수료 인원 - 업체평가 */
+			 , FIELDCNT7 /* 분야별 수료 인원 - 안전 */
+			 , FIELDCNT8 /* 분야별 수료 인원 - ESG */
+			 , FIELDCNT9 /* 분야별 수료 인원 - 기타 */
+			 , POSITIONCNT1 /* 직급별 수료 인원 - 대표 */
+			 , POSITIONCNT2 /* 직급별 수료 인원 - 임원 */
+			 , POSITIONCNT3 /* 직급별 수료 인원 - 부장 */
+			 , POSITIONCNT4 /* 직급별 수료 인원 - 과장/차장 */
+			 , POSITIONCNT5 /* 직급별 수료 인원 - 사원/대리 */
+			 , POSITIONCNT6 /* 직급별 수료 인원 - 조장/반장 */
+			 , ATTENDCNT1 /* 출석/평가 - 출석률 */
+			 , ATTENDCNT2 /* 출석/평가 - 평가점수 */
+			 , SATICNT1 /* 만족도 - 종합평균 */
+			 , SATICNT2 /* 만족도 - 전체(공통) */
+			 , SATICNT3 /* 만족도 - 교육환경 */
+			 , SATICNT4 /* 만족도 - 교육지원*/
+			 , SATICNT5 /* 만족도 - 교육내용 */
+			 , SATICNT6 /* 만족도 - 강사1 */
+			 , SATICNT7 /* 만족도 - 강사2 */
+			 , SATICNT8 /* 만족도 - 강사3 */
+			 , SATICNT9 /* 만족도 - 강사4 */
+			 , SATICNT10 /* 만족도 - 강사5 */
+			 , SATICNT11 /* 만족도 - 강사6 */
+			 , EDUTIMECNT1 /* 강사1(시간) */
+			 , EDUTIMECNT2 /* 강사2(시간) */
+			 , EDUTIMECNT3 /* 강사3(시간) */
+			 , EDUTIMECNT4 /* 강사4(시간) */
+			 , EDUTIMECNT5 /* 강사5(시간) */
+			 , EDUTIMECNT6 /* 강사6(시간) */
+		from
+			(
+				SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
+					A.vst_seq -- 방문순번
+					 , A.mem_seq -- 회원순번
+					 , A.edctn_stts_cd -- 교육상태코드
+					 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.edctn_stts_cd) AS edctn_stts_name -- 교육상태명
+					 , A.mod_id -- 최종수정자 id
+					 , A.mod_ip  -- 최종수정자 ip
+					 , (select name from co_adm_mst where id = A.mod_id) as mod_name -- 최종수정자 이름
+					 , A.mod_dtm -- 최종수정일시
+					 , A.reg_dtm -- 신청일시
+					 , C.cmpn_nm -- 부품사명
+					 , C.ctgry_cd -- 부품사구분코드
+					 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = C.ctgry_cd) AS ctgry_name -- 구분명
+					 , C.size_cd -- 부품사규모
+					 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = C.size_cd) AS size_name -- 규모명
+					 , A.appctn_bsnm_no -- 신청당시 사업자등록번호
+					 , A.appctn_fld_cd -- 신청분야 코드
+					 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.appctn_fld_cd) AS appctn_fld_name -- 신청분야명
+					 , A.hope_dt -- 교육희망일
+					 , A.edctn_place AS edctn_place_addr -- 교육장소 hidden값
+					 , A.ptcpt_cnt -- 교육인원
+					 , A.ptcpt_hh -- 교육시간코드
+					 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.ptcpt_hh) AS ptcpt_hh_num -- 교육시간
+					 , B.name-- 신청자이름
+					 , B.id -- 신청자 아이디
+					 , B.hp_no -- 신청자 핸드폰번호
+					 , B.email -- 신청자이메일
+					 , D.edctn_year -- 교육년도
+					 -- 교육일??
+					 , D.edctn_strt_dtm -- 교육시작일시
+					 , D.edctn_end_dtm -- 교육종료일시
+					 , A.place_bsc_addr -- 방문교육 기본주소
+					 , A.place_dtl_addr -- 방문교육 상세주소
+					 -- 정원??
+					 , (case when D.rslt_end_yn = 'Y' then '마감'
+							 when D.rslt_end_yn = 'N' then '미마감'
+							 when D.rslt_end_yn = 'C' then '교육취소'
+					end) AS rslt_end_yn_nm -- 실적마감여부명
+					 , D.cnfrmd_theme -- 확정주제
+					 -- 신청인원?
+					 , D.cmptn_cnt -- 수료인원
+					 , D.ptcpt_rate -- 참석률
+					 , D.edctn_place -- 교육장소
+					 , E.optn_cd
+					 , E.rslt_val
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001001' THEN E.rslt_val ELSE 0 END) AS EDUCNT1 /* 회사별 수료 인원 - 완성차(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001002' THEN E.rslt_val ELSE 0 END) AS EDUCNT2 /* 회사별 수료 인원 - 1차사(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001003' THEN E.rslt_val ELSE 0 END) AS EDUCNT3 /* 회사별 수료 인원 - 2차사(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001004' THEN E.rslt_val ELSE 0 END) AS EDUCNT4 /* 회사별 수료 인원 - 기타(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002001' THEN E.rslt_val ELSE 0 END) AS FIELDCNT1 /* 분야별 수료 인원 - 품질(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002002' THEN E.rslt_val ELSE 0 END) AS FIELDCNT2 /* 분야별 수료 인원 - RnD(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002003' THEN E.rslt_val ELSE 0 END) AS FIELDCNT3 /* 분야별 수료 인원 - 생산(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002004' THEN E.rslt_val ELSE 0 END) AS FIELDCNT4 /* 분야별 수료 인원 - 구매(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002005' THEN E.rslt_val ELSE 0 END) AS FIELDCNT5 /* 분야별 수료 인원 - 경영지원(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002006' THEN E.rslt_val ELSE 0 END) AS FIELDCNT6 /* 분야별 수료 인원 - 업체평가(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002007' THEN E.rslt_val ELSE 0 END) AS FIELDCNT7 /* 분야별 수료 인원 - 안전(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002008' THEN E.rslt_val ELSE 0 END) AS FIELDCNT8 /* 분야별 수료 인원 - ESG(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002009' THEN E.rslt_val ELSE 0 END) AS FIELDCNT9 /* 분야별 수료 인원 - 기타(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003001' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT1 /* 직급별 수료 인원 - 대표 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003002' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT2 /* 직급별 수료 인원 - 임원 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003003' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT3 /* 직급별 수료 인원 - 부장 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003004' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT4 /* 직급별 수료 인원 - 과장/차장 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003005' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT5 /* 직급별 수료 인원 - 사원/대리 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003006' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT6 /* 직급별 수료 인원 - 조장/반장(계장) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03004001' THEN E.rslt_val ELSE 0 END) AS ATTENDCNT1 /* 출석률 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03004002' THEN E.rslt_val ELSE 0 END) AS ATTENDCNT2 /* 평가점수 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005001' THEN E.rslt_val ELSE 0 END) AS SATICNT1 /* 만족도 - 종합평균 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005002' THEN E.rslt_val ELSE 0 END) AS SATICNT2 /* 만족도 - 전체(공통) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005003' THEN E.rslt_val ELSE 0 END) AS SATICNT3 /* 만족도 - 교육환경 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005004' THEN E.rslt_val ELSE 0 END) AS SATICNT4 /* 만족도 - 교육지원 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005005' THEN E.rslt_val ELSE 0 END) AS SATICNT5 /* 만족도 - 교육내용 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005006' THEN E.rslt_val ELSE 0 END) AS SATICNT6 /* 만족도 - 강사1 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005007' THEN E.rslt_val ELSE 0 END) AS SATICNT7 /* 만족도 - 강사2 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005008' THEN E.rslt_val ELSE 0 END) AS SATICNT8 /* 만족도 - 강사3 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005009' THEN E.rslt_val ELSE 0 END) AS SATICNT9 /* 만족도 - 강사4 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005010' THEN E.rslt_val ELSE 0 END) AS SATICNT10 /* 만족도 - 강사5 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005011' THEN E.rslt_val ELSE 0 END) AS SATICNT11 /* 만족도 - 강사6 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006001' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT1 /* 강사1(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006002' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT2 /* 강사2(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006003' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT3 /* 강사3(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006004' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT4 /* 강사4(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006005' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT5 /* 강사5(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006006' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT6 /* 강사6(시간) */
+				FROM
+					(
+						SELECT vst_seq
+							 , mem_seq
+							 , appctn_bsnm_no
+							 , appctn_fld_cd
+							 , appctn_theme_cntn -- 신청주제내용
+							 , appctn_rsn -- 신청사유
+							 , hope_dt
+							 , place_zipcode
+							 , place_bsc_addr
+							 , place_dtl_addr
+							 , edctn_place -- 교육장소 hidden값
+							 , ptcpt_trgt_cntn -- 참여대상내용
+							 , ptcpt_cnt
+							 , ptcpt_hh
+							 , itrdc_file_seq -- 소개파일순번
+							 , edctn_stts_cd
+							 , reg_dtm
+							 , mod_id
+							 , mod_ip
+							 , mod_dtm
+						FROM ev_edctn_vst_mst
+					)A
+						INNER JOIN
+					(
+						SELECT mem_seq
+							 , name
+							 , id
+							 , hp_no
+							 , tel_no
+							 , email
+							 , dept_cd
+							 , dept_dtl_nm
+							 , pstn_cd
+							 , pstn_nm
+						FROM co_mem_mst
+					)B
+					ON A.mem_seq = B.mem_seq
+						INNER JOIN
+					(
+						SELECT  bsnm_no
+							 , cmpn_nm
+							 , rprsnt_nm
+							 , cmpn_cd
+							 , ctgry_cd
+							 , size_cd
+							 , stbsm_dt
+							 , tel_no
+							 , zipcode
+							 , bsc_addr
+							 , dtl_addr
+							 , sls_pmt
+							 , sls_year
+							 , mple_cnt
+							 , mjr_prdct_1
+							 , mjr_prdct_2
+							 , mjr_prdct_3
+							 , qlty_5_star_cd
+							 , qlty_5_star_year
+							 , pay_5_star_cd
+							 , pay_5_star_year
+							 , tchlg_5_star_cd
+							 , tchlg_5_star_year
+							 , reg_id
+							 , reg_ip
+							 , reg_dtm
+						FROM cp_cmpn_mst
+					)C
+					ON A.appctn_bsnm_no = C.bsnm_no
+						LEFT JOIN
+					(
+						SELECT vst_rslt_seq
+							 , vst_seq
+							 , mem_seq
+							 , cnfrmd_theme
+							 , edctn_year -- 교육년도
+							 , edctn_place -- 교육장소
+							 , edctn_strt_dtm -- 교육시작일시
+							 , edctn_end_dtm -- 교육종료일시
+							 , cmptn_cnt
+							 , ptcpt_rate -- 참석률
+							 , lctr_file_seq
+							 , etc_matls_file_seq
+							 , rslt_end_yn
+						FROM ev_edctn_vst_rslt_dtl
+					)D
+					ON A.vst_seq = D.vst_seq
+						AND A.mem_seq = D.mem_seq
+						LEFT JOIN
+					(
+						select
+							rslt_optn_seq
+							 , vst_seq
+							 , mem_seq
+							 , vst_rslt_seq
+							 , rslt_type_cd
+							 , optn_cd
+							 , rslt_val
+
+						from ev_edctn_vst_optn_dtl
+					)E
+					ON D.vst_rslt_seq = E.vst_rslt_seq
+						AND D.vst_seq = E.vst_seq
+						AND D.mem_seq = E.mem_seq
+				GROUP BY vst_seq
+			)AA
+	</select>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.selectExcelIsttrList
+         설  명 : 방문교육 강시목록 출력(엑셀용)
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.18   구은희       최초생성
+    -->
+	<select id="selectIsttrExcelList" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduExcelDTO">
+		SELECT /*EBCVisitEduMapper.selectIsttrExcelList*/
+			vst_rslt_seq
+			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r1) AS isttr1
+			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r2) AS isttr2
+			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r3) AS isttr3
+			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r4) AS isttr4
+			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r5) AS isttr5
+			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r6) AS isttr6
+		FROM (SELECT
+			vst_rslt_seq
+			,MAX(CASE WHEN orders = 1 THEN isttr_seq ELSE NULL END) AS r1
+			,MAX(CASE WHEN orders = 2 THEN isttr_seq ELSE NULL END) AS r2
+			,MAX(CASE WHEN orders = 3 THEN isttr_seq ELSE NULL END) AS r3
+			,MAX(CASE WHEN orders = 4 THEN isttr_seq ELSE NULL END) AS r4
+			,MAX(CASE WHEN orders = 5 THEN isttr_seq ELSE NULL END) AS r5
+			,MAX(CASE WHEN orders = 6 THEN isttr_seq ELSE NULL END) AS r6
+		FROM (
+			SELECT
+			a.vst_rslt_seq,
+			g.isttr_seq,
+			(SELECT COUNT(*) FROM ev_edctn_isttr_rel g2 WHERE g2.vst_seq = a.vst_seq AND g2.mem_seq = a.mem_seq AND g2.isttr_seq <![CDATA[<=]]> g.isttr_seq) AS orders
+			FROM ev_edctn_vst_rslt_dtl a
+			LEFT JOIN ev_edctn_vst_mst g3 ON g3.vst_seq = a.vst_seq AND g3.mem_seq = a.mem_seq
+			LEFT JOIN ev_edctn_isttr_rel g ON g.vst_seq = a.vst_seq AND g.mem_seq = a.mem_seq
+			WHERE a.vst_seq = #{vstSeq}
+		) AS isttr_tb
+		GROUP BY vst_rslt_seq) AS isttr_tb
+	</select>
+
+	<!--
 		쿼리명 : selectVisitEduListwhereSql
 		설  명 : 방문교육 관리 where Sql
 		  수정일      수정자       수정내용
