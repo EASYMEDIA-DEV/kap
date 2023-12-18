@@ -54,6 +54,10 @@ public class CBBConsultSuveyRsltListDTO extends BaseDTO {
     private String cmssrNm;
     @Schema(title = "참여자")
     private String ptcptName;
+    @Schema(title = "참여자 직급")
+    private String ptcptPstn;
+    @Schema(title = "참여자 연락처")
+    private String ptcptTelno;
     @Schema(title = "신청분야 코드")
     private String appctnFldCd;
     @Schema(title = "신청분야 코드명")

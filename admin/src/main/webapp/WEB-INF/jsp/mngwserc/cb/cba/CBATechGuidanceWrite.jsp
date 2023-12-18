@@ -1497,8 +1497,6 @@
                             <c:set var="cd" value="${ qstnList.cd}" />
                         </c:forEach>
                     </c:if>
-
-
                 </div>
            </div>
         </c:when>

@@ -4,7 +4,6 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cbb.*;
-import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.*;
@@ -201,8 +200,10 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             }
             pCBBManageConsultInsertDTO.setPicInfoLIst(picInfoList);
 
+            pCBBManageConsultInsertDTO.setSurveyInfoList(cBBManageConsultMapper.selectTechGuidanceSurvey(cnstgSeq));
         }
         pCBBManageConsultInsertDTO.setRsumeList(cBBManageConsultMapper.selectTechGuidanceRsume(pCBBManageConsultInsertDTO));
+
 
         return pCBBManageConsultInsertDTO;
     }
