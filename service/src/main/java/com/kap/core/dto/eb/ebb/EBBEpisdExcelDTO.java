@@ -47,227 +47,327 @@ public class EBBEpisdExcelDTO extends BaseDTO {
     @Schema(title = "강사순번", example = "숫자")
     private Integer isttrSeq;
 
-    @Schema(title = "강사1", example = "숫자")
-    private Integer isttr1;
-
-    @Schema(title = "강사2", example = "숫자")
-    private Integer isttr2;
-
-    @Schema(title = "강사3", example = "숫자")
-    private Integer isttr3;
-
-    @Schema(title = "강사4", example = "숫자")
-    private Integer isttr4;
-
-    @Schema(title = "강사5", example = "숫자")
-    private Integer isttr5;
-
-    @Schema(title = "강사6", example = "숫자")
-    private Integer isttr6;
-
     @Schema(title = "강사명1", example = "숫자")
-    private Integer isttrNm1;
+    @Builder.Default
+    private String isttrNm1 = "-";
 
     @Schema(title = "강사명2", example = "숫자")
-    private Integer isttrNm2;
+    @Builder.Default
+    private String isttrNm2 = "-";
 
     @Schema(title = "강사명3", example = "숫자")
-    private Integer isttrNm3;
+    @Builder.Default
+    private String isttrNm3 = "-";
 
     @Schema(title = "강사명4", example = "숫자")
-    private Integer isttrNm4;
+    @Builder.Default
+    private String isttrNm4 = "-";
 
     @Schema(title = "강사명5", example = "숫자")
-    private Integer isttrNm5;
+    @Builder.Default
+    private String isttrNm5 = "-";
 
     @Schema(title = "강사명6", example = "숫자")
-    private Integer isttrNm6;
+    @Builder.Default
+    private String isttrNm6 = "-";
 
     @Schema(title = "차수순번", example = "숫자")
     private Integer episdSeq;
 
     @Schema(title = "과정분류1", example = "문자")
-    private String prntCdNm;
+    @Builder.Default
+    private String prntCdNm = "-";
 
     @Schema(title = "과정분류2", example = "문자")
-    private String ctgryCdNm;
+    @Builder.Default
+    private String ctgryCdNm = "-";
 
     @Schema(title = "과정명", example = "문자")
-    private String nm;
+    @Builder.Default
+    private String nm = "-";
 
     @Schema(title = "학습방식", example = "문자")
-    private String stduyMthdCdNm;
+    @Builder.Default
+    private String stduyMthdCdNm = "-";
 
     @Schema(title = "학습방식", example = "문자")
-    private String stduyTimeCdNm;
+    @Builder.Default
+    private String stduyTimeCdNm = "-";
 
     @Schema(title = "업종", example = "문자")
-    private String cbsnCdNm;
+    @Builder.Default
+    private String cbsnCdNm = "-";
 
     @Schema(title = "교육일", example = "문자")
-    private String stduyDdCdNm;
+    @Builder.Default
+    private String stduyDdCdNm = "-";
 
     @Schema(title = "교육기간 시작일", example = "문자")
-    private String edctnStrtDtm;
+    @Builder.Default
+    private String edctnStrtDtm = "-";
 
     @Schema(title = "교육기간 종료일", example = "문자")
-    private String edctnEndDtm;
+    @Builder.Default
+    private String edctnEndDtm = "-";
 
     @Schema(title = "교육장소", example = "문자")
-    private String placeNm;
+    @Builder.Default
+    private String placeNm = "-";
 
     @Schema(title = "협력기관", example = "문자")
-    private String cprtnInsttNm;
+    @Builder.Default
+    private String cprtnInsttNm = "-";
 
     @Schema(title = "정원(명)", example = "숫자")
     private Integer  fxnumCnt;
 
     @Schema(title = "교육상태", example = "문자")
-    private Integer  edctnStatusNm;
+    @Builder.Default
+    private String  edctnStatusNm = "-";
 
-    @Schema(title = "신청인원)", example = "숫자")
-    private Integer  accsCnt;
+    @Schema(title = "신청인원", example = "숫자")
+    @Builder.Default
+    private String  accsCnt = "-";
 
     @Schema(title = "수료인원", example = "숫자")
-    private Integer  cmptnCnt;
+    @Builder.Default
+    private String  cmptnCnt = "-";
 
     @Schema(title = "참여율", example = "숫자")
-    private String  attedPer;
+    @Builder.Default
+    private String  attedPer = "-";
 
     @Schema(title = "완성차", example = "숫자")
-    private Integer  c1;
+    @Builder.Default
+    private String  c1 = "-";
 
     @Schema(title = "1차사", example = "숫자")
-    private Integer  c2;
+    @Builder.Default
+    private String  c2 = "-";
 
     @Schema(title = "2차사", example = "숫자")
-    private Integer  c3;
+    @Builder.Default
+    private String  c3 = "-";
 
     @Schema(title = "기타", example = "숫자")
-    private Integer  c4;
+    @Builder.Default
+    private String  c4 = "-";
 
     @Schema(title = "부서별 인원 - 품질", example = "숫자")
-    private Integer  t1;
+    @Builder.Default
+    private String  t1 = "-";
 
     @Schema(title = "부서별 인원 - R&D", example = "숫자")
-    private Integer  t2;
+    @Builder.Default
+    private String  t2 = "-";
 
     @Schema(title = "부서별 인원 - 생산", example = "숫자")
-    private Integer  t3;
+    @Builder.Default
+    private String  t3 = "-";
 
     @Schema(title = "부서별 인원 - 구매", example = "숫자")
-    private Integer  t4;
+    @Builder.Default
+    private String  t4 = "-";
 
     @Schema(title = "부서별 인원 - 경영지원", example = "숫자")
-    private Integer  t5;
+    @Builder.Default
+    private String  t5 = "-";
 
     @Schema(title = "부서별 인원 - 업체평가", example = "숫자")
-    private Integer  t6;
+    @Builder.Default
+    private String  t6 = "-";
 
     @Schema(title = "부서별 인원 - 안전", example = "숫자")
-    private Integer  t7;
+    @Builder.Default
+    private String t7 = "-";
 
     @Schema(title = "부서별 인원 - ESG" , example = "숫자")
-    private Integer  t8;
+    @Builder.Default
+    private String  t8 = "-";
 
     @Schema(title = "부서별 인원 - 기타", example = "숫자")
-    private Integer  t9;
+    @Builder.Default
+    private String  t9 = "-";
 
     @Schema(title = "부서별 인원 - 대표", example = "숫자")
-    private Integer  a1;
+    @Builder.Default
+    private String  a1 = "-";
 
     @Schema(title = "직급별 인원 - 임원", example = "숫자")
-    private Integer  a2;
+    @Builder.Default
+    private String  a2 = "-";
+
     @Schema(title = "직급별 인원 - 부장", example = "숫자")
-    private Integer  a3;
+    @Builder.Default
+    private String  a3 = "-";
+
     @Schema(title = "직급별 인원 - 과장/차장타", example = "숫자")
-    private Integer  a4;
+    @Builder.Default
+    private String  a4 = "-";
+
     @Schema(title = "급별 인원 - 사원/대리", example = "숫자")
-    private Integer  a5;
+    @Builder.Default
+    private String  a5 = "-";
+
     @Schema(title = "직급별 인원 - 조장/반창(계장)", example = "숫자")
-    private Integer  a6;
+    @Builder.Default
+    private String  a6 = "-";
+
     @Schema(title = "직급별 인원 - 기타", example = "숫자")
-    private Integer  a7;
+    @Builder.Default
+    private String  a7 = "-";
+
     @Schema(title = "출석률", example = "숫자")
-    private Integer  a11;
+    @Builder.Default
+    private String  a11 = "-";
+
     @Schema(title = "평가점수(점)", example = "숫자")
-    private Integer  avgScore;
+    @Builder.Default
+    private String  avgScore = "-";
 
     @Schema(title = "종합 평균", example = "숫자")
-    private String  a12;
+    @Builder.Default
+    private String  a12 = "-";
+
     @Schema(title = "전체(공통) ", example = "숫자")
-    private String a13;
+    @Builder.Default
+    private String a13 = "-";
+
     @Schema(title = "교육환경", example = "숫자")
-    private String a14;
+    @Builder.Default
+    private String a14 = "-";
+
     @Schema(title = "교육지원", example = "숫자")
-    private String a15;
+    @Builder.Default
+    private String a15 = "-";
+
     @Schema(title = "교육내용", example = "숫자")
-    private String a16;
+    @Builder.Default
+    private String a16 = "-";
+
     @Schema(title = "종합 평 ", example = "숫자")
-    private String a17;
+    @Builder.Default
+    private String a17 = "-";
+
     @Schema(title = "강사시간1", example = "숫자")
-    private Integer pmtC1;
+    @Builder.Default
+    private String pmtC1 = "-";
+
     @Schema(title = "강사시간2", example = "숫자")
-    private Integer pmtC2;
+    @Builder.Default
+    private String pmtC2 = "-";
+
     @Schema(title = "강사시간3", example = "숫자")
-    private Integer pmtC3;
+    @Builder.Default
+    private String pmtC3 = "-";
+
     @Schema(title = "강사시간4", example = "숫자")
-    private Integer pmtC4;
+    @Builder.Default
+    private String pmtC4 = "-";
+
     @Schema(title = "강사시간5", example = "숫자")
-    private Integer pmtC5;
+    @Builder.Default
+    private String pmtC5 = "-";
+
     @Schema(title = "강사시간6", example = "숫자")
-    private Integer pmtC6;
+    @Builder.Default
+    private String pmtC6 = "-";
 
     @Schema(title = "예산총계", example = "숫자")
-    private Integer pmtA0;
+    @Builder.Default
+    private String pmtA0 = "-";
 
     @Schema(title = "부담금/대관비(원)", example = "숫자")
-    private Integer pmtA1;
+    @Builder.Default
+    private String pmtA1 = "-";
+
     @Schema(title = "강사비(원)", example = "숫자")
-    private Integer pmtA2;
+    @Builder.Default
+    private String pmtA2 = "-";
+
     @Schema(title = "교재비(원)", example = "숫자")
-    private Integer pmtA3;
+    @Builder.Default
+    private String pmtA3 = "-";
+
     @Schema(title = "식대(원)", example = "숫자")
-    private Integer pmtA4;
+    @Builder.Default
+    private String pmtA4 = "-";
+
     @Schema(title = "다과비(원)", example = "숫자")
-    private Integer pmtA5;
+    @Builder.Default
+    private String pmtA5 = "-";
+
     @Schema(title = "소모품비(원)", example = "숫자")
-    private Integer pmtA6;
+    @Builder.Default
+    private String pmtA6 = "-";
+
     @Schema(title = "발송비(원)", example = "숫자")
-    private Integer pmtA7;
+    @Builder.Default
+    private String pmtA7 = "-";
+
     @Schema(title = "재료비(원)", example = "숫자")
-    private Integer pmtA8;
+    @Builder.Default
+    private String pmtA8 = "-";
+
     @Schema(title = "집행비(원)", example = "숫자")
-    private Integer pmtA9;
+    @Builder.Default
+    private String pmtA9 = "-";
+
     @Schema(title = "기타(원)", example = "숫자")
-    private Integer pmtA10;
+    @Builder.Default
+    private String pmtA10 = "-";
+
     @Schema(title = "비고", example = "숫자")
-    private String pmtA11;
+    @Builder.Default
+    private String pmtA11 = "-";
 
     @Schema(title = "지출총계", example = "숫자")
-    private Integer pmtB0;
+    @Builder.Default
+    private String pmtB0 = "-";
+
     @Schema(title = "부담금/대관비(원)", example = "숫자")
-    private Integer pmtB1;
+    @Builder.Default
+    private String pmtB1 = "-";
+
     @Schema(title = "강사비(원) ", example = "숫자")
-    private Integer pmtB2;
+    @Builder.Default
+    private String pmtB2 = "-";
+
     @Schema(title = "교재비(원)", example = "숫자")
-    private Integer pmtB3;
+    @Builder.Default
+    private String pmtB3 = "-";
+
     @Schema(title = "식대(원)", example = "숫자")
-    private Integer pmtB4;
+    @Builder.Default
+    private String pmtB4 = "-";
+
     @Schema(title = "다과비(원)", example = "숫자")
-    private Integer pmtB5;
+    @Builder.Default
+    private String pmtB5 = "-";
+
     @Schema(title = "소모품비(원)", example = "숫자")
-    private Integer pmtB6;
+    @Builder.Default
+    private String pmtB6 = "-";
+
     @Schema(title = "발송비(원)", example = "숫자")
-    private Integer pmtB7;
+    @Builder.Default
+    private String pmtB7 = "-";
+
     @Schema(title = "재료비(원)", example = "숫자")
-    private Integer pmtB8;
+    @Builder.Default
+    private String pmtB8 = "-";
+
     @Schema(title = "집행비(원)", example = "숫자")
-    private Integer pmtB9;
+    @Builder.Default
+    private String pmtB9 = "-";
+
     @Schema(title = "기타(원)", example = "숫자")
-    private Integer pmtB10;
-    @Schema(title = "비고", example = "숫자")
-    private String pmtB11;
+    @Builder.Default
+    private String pmtB10 = "-";
+
+    @Schema(title = "비고", example = "문자")
+    @Builder.Default
+    private String pmtB11 = "-";
 
 
 

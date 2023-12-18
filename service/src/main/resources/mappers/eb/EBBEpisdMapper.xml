@@ -1543,7 +1543,7 @@
         ==========   ======    ==============
         2023.12.18   김학규       최초생성
     -->
-	<select id="selectEpisdExelList" parameterType="EBBEpisdDTO" resultType="EBBEpisdExcelDTO">
+	<select id="selectEpisdExcelList" parameterType="EBBEpisdDTO" resultType="EBBEpisdExcelDTO">
 		SELECT
 		episd_seq
 		, prnt_cd_nm /* 과정분류1 */
@@ -1623,13 +1623,15 @@
 		, pmt_b9 /* 집행비(원) */
 		, pmt_b10 /* 기타(원) */
 		, pmt_b11 /* 비고(원) */
-		, isttr1
-		, isttr2
-		, isttr3
-		, isttr4
-		, isttr5
-		, isttr6
-
+		, isttrNm1
+		, isttrNm2
+		, isttrNm3
+		, isttrNm4
+		, isttrNm5
+		, isttrNm6
+		, reg_dtm
+		, reg_ip
+		, reg_id
 		FROM (SELECT /*EBBEpisdMapper.selectEpisdList*/
 		a.episd_seq
 		, (select cd_nm from co_code_mst WHERE cd = LEFT(b.ctgry_cd, 7)) AS prnt_cd_nm/* 과정분류1 */
@@ -1716,13 +1718,15 @@
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02009' THEN pmt ELSE NULL END) AS pmt_b9 /* 집행비 */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02010' THEN pmt ELSE NULL END) AS pmt_b10 /* 기타(원) */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02011' THEN etc_nm ELSE NULL END) AS pmt_b11 /* 비고 */
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r1) AS isttr1
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r2) AS isttr2
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r3) AS isttr3
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r4) AS isttr4
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r5) AS isttr5
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r6) AS isttr6
-
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r1) AS isttrNm1
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r2) AS isttrNm2
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r3) AS isttrNm3
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r4) AS isttrNm4
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r5) AS isttrNm5
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r6) AS isttrNm6
+		, a.reg_dtm
+		, a.reg_ip
+		, a.reg_id
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON b.edctn_seq = a.edctn_seq
 		LEFT OUTER JOIN ( SELECT CD AS bd_cd, PMT, ETC_NM, EDCTN_SEQ, EPISD_ORD, EPISD_YEAR FROM ed_edctn_bdget_expns_dtl) C ON c.EDCTN_SEQ = a.EDCTN_SEQ AND c.EPISD_ORD = a.EPISD_ORD AND c.EPISD_YEAR = a.EPISD_YEAR
@@ -1776,7 +1780,6 @@
 
 		GROUP BY a.EPISD_ORD
 		) AA
-		GROUP BY episd_seq
 		<include refid="selectEpisdListwhereSql" />
 
 		GROUP BY episd_seq
@@ -1789,7 +1792,7 @@
         ==========   ======    ==============
         2023.12.18   김학규       최초생성
     -->
-	<select id="selectEpisdExelListCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+	<select id="selectEpisdExcelListCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
 		SELECT
 			count(*)
 		FROM (SELECT /*EBBEpisdMapper.selectEpisdList*/
@@ -1842,7 +1845,7 @@
 		, CASE WHEN PSTN_CD = 'MEM_CD01007' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT07 /* 직급별 인원 - 기타 */
 
 
-		, ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 0) AS A11/*출석률*/
+		, ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 2) AS A11/*출석률*/
 		, ROUND(avg(exam_score), 2) AS AVG_score /*평가 점수*/
 		, '' AS A_12 /* 종합 평균 */
 		, '' AS A_13 /* 전체(공통) */
@@ -1878,12 +1881,15 @@
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02009' THEN pmt ELSE NULL END) AS pmt_b9 /* 집행비 */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02010' THEN pmt ELSE NULL END) AS pmt_b10 /* 기타(원) */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02011' THEN etc_nm ELSE NULL END) AS pmt_b11 /* 비고 */
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r1) AS isttr1
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r2) AS isttr2
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r3) AS isttr3
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r4) AS isttr4
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r5) AS isttr5
-		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r6) AS isttr6
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r1) AS isttrNm1
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r2) AS isttrNm2
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r3) AS isttrNm3
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r4) AS isttrNm4
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r5) AS isttrNm5
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r6) AS isttrNm6
+		, a.reg_dtm
+		, a.reg_ip
+		, a.reg_id
 
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON b.edctn_seq = a.edctn_seq
@@ -1938,11 +1944,9 @@
 
 		GROUP BY a.EPISD_ORD
 		) AA
-		GROUP BY episd_seq
 
 		<include refid="selectEpisdListwhereSql" />
 
-		GROUP BY episd_seq
 	</select>
 
 
