@@ -12,6 +12,7 @@
             <input type="hidden" class="notRequired" id="episdOrd" name="episdOrd" value="${rtnDto.episdOrd}" />
             <input type="hidden" class="notRequired" id="episdYear" name="episdYear" value="${rtnDto.episdYear}" />
             <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnDto.episdSeq}" />
+            <input type="hidden" class="notRequired" id="stduyMthdCd" name="stduyMthdCd" value="${ rtnDto.stduyMthdCd}" />
 
 
             <!-- 과정정보 -->

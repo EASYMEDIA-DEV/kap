@@ -125,10 +125,9 @@ public class EBBEpisdController {
     {
         try
         {
-            System.out.println("@@@@ 여기 아닌가?");
             eBBEpisdDTO.setExcelYn("Y");
             // 목록 조회
-            EBBEpisdDTO ebbExcelListDto = eBBEpisdService.selectEpisdList(eBBEpisdDTO);
+            EBBEpisdExcelDTO ebbExcelListDto = eBBEpisdService.selectEpisdExcelList(eBBEpisdDTO);
 
             //엑셀 생성
             eBBEpisdService.excelDownload1(ebbExcelListDto, response);

@@ -117,9 +117,9 @@
 
             <ul class="nav nav-tabs" id="myTabs">
                 <li class="active tabClick"><a data-toggle="tab" href="#episdList">회차정보</a></li>
-                <li class="tabClick" <c:if test="${actionType ne 'update' && rtnDto.copyYn eq 'Y' }">style="display:none"</c:if>> <a data-toggle="tab" href="#accsList">참여자 목록</a></li>
-                <li class="tabClick" <c:if test="${actionType ne 'update' && rtnDto.copyYn eq 'Y' }">style="display:none"</c:if>><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
-                <li class="tabClick" <c:if test="${actionType ne 'update' && rtnDto.copyYn eq 'Y' }">style="display:none"</c:if>><a data-toggle="tab" href="#bdget">예산/지출</a></li>
+                <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>> <a data-toggle="tab" href="#accsList">참여자 목록</a></li>
+                <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
+                <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#bdget">예산/지출</a></li>
 
                 <div class="pull-right">
                     <c:choose>

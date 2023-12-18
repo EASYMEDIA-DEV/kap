@@ -52,6 +52,9 @@ public class EBBPtcptDTO extends BaseDTO {
     @NotNull
     private Integer ptcptSeq;
 
+    @Schema(title = "학습방식", example = "텍스트")
+    private String stduyMthdCd;
+
     @Schema(title = "아이디", example = "텍스트")
     private String id;
 

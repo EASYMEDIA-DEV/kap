@@ -1537,88 +1537,101 @@
 	</delete>
 
 	<!--
-         쿼리명 : EBBEpisdMapper.deleteSurveyRspn
-         설  명 : 응답 삭제(초기화)
+         쿼리명 : EBBEpisdMapper.selectEpisdExelList
+         설  명 : 교육차수관리 목록 출력(엑셀용)
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.12.11   박준희       최초생성
+        2023.12.18   김학규       최초생성
     -->
 	<select id="selectEpisdExelList" parameterType="EBBEpisdDTO" resultType="EBBEpisdExcelDTO">
 		SELECT
-			episd_seq
-			, prnt_cd_nm /* 과정분류1 */
-			, ctgry_cd_nm /* 과정분류2 */
-			, nm /* 과정명 */
-			, stduy_mthd_cd_nm /* 학습방식 */
-			, stduy_time_cd_nm  /* 학습시간 */
-			, cbsn_cd_nm /*업종*/
-			, episd_year /*년도*/
-			, episd_ord /* 차수 */
-			, stduy_dd_cd_nm /*교육일*/
-			, edctn_strt_dtm /* 교육기간 시작일 */
-			, edctn_end_dtm /* 교육기간 종료일 */
-			, place_nm /* 교육장소 */
-			, cprtn_instt_nm /* 협력기관 */
-			, fxnum_cnt /* 정원(명) */
-			, edctn_status_nm /*교육상태*/
-			, accs_cnt /* 신청인원 */
-			, cmptn_cnt /*수료인원*/
-			, ROUND((cmptn_cnt/accs_cnt)*100) as atted_per /*참여율*/
-			, SUM(CNT1) AS T1 /* 부서별 인원 - 품질 */
-			, SUM(CNT2) AS T2 /* 부서별 인원 - RnD */
-			, SUM(CNT3) AS T3 /* 부서별 인원 - 생산 */
-			, SUM(CNT4) AS T4 /* 부서별 인원 - 구매 */
-			, SUM(CNT5) AS T5 /* 부서별 인원 - 경영지원 */
-			, SUM(CNT6) AS T6 /* 부서별 인원 - 업체평가 */
-			, SUM(CNT7) AS T7 /* 부서별 인원 - 안전 */
-			, SUM(CNT8) AS T8 /* 부서별 인원 - ESG */
-			, SUM(CNT9) AS T9 /* 부서별 인원 - 기타 */
-
-			, SUM(CNT01) AS A1 /* 직급별 인원 - 대표 */
-			, SUM(CNT02) AS A2 /* 직급별 인원 - 임원 */
-			, SUM(CNT03) AS A3 /* 직급별 인원 - 부장 */
-			, SUM(CNT04) AS A4 /* 직급별 인원 - 과장/차장 */
-			, SUM(CNT05) AS A5 /* 직급별 인원 - 사원/대리 */
-			, SUM(CNT06) AS A6 /* 직급별 인원 - 조장/반창(계장) */
-			, SUM(CNT07) AS A7 /* 직급별 인원 - 기타 */
-			, A_11 /*출석률*/
-			, AVG_score /*평가점수(점)*/
-			, '' AS A_12 /* 종합 평균 */
-			, '' AS A_13 /* 전체(공통) */
-			, '' AS A_14 /* 교육환경 */
-			, '' AS A_15 /* 교육지원 */
-			, '' AS A_16 /* 교육내용 */
-			, '' AS A_17 /* 강사 */
-			, pmt_c1 /* 강사시간1 */
-			, pmt_c2 /* 강사시간2 */
-			, pmt_c3 /* 강사시간3 */
-			, pmt_c4 /* 강사시간4 */
-			, pmt_c5 /* 강사시간5 */
-			, pmt_c6 /* 강사시간6 */
-			, pmt_a1 /* 부담금/대관비(원) */
-			, pmt_a2 /* 강사비(원) */
-			, pmt_a3 /* 교재비(원) */
-			, pmt_a4 /* 식대(원) */
-			, pmt_a5 /* 다과비(원) */
-			, pmt_a6 /* 소모품비(원) */
-			, pmt_a7 /* 발송비(원) */
-			, pmt_a8 /* 재료비(원) */
-			, pmt_a9 /* 집행비(원) */
-			, pmt_a10 /* 기타(원) */
-			, pmt_a11 /* 비고 */
-			, pmt_b1 /* 부담금/대관비(원) */
-			, pmt_b2 /* 강사비(원) */
-			, pmt_b3 /* 교재비(원) */
-			, pmt_b4 /* 식대(원) */
-			, pmt_b5 /* 다과비(원) */
-			, pmt_b6 /* 소모품비(원) */
-			, pmt_b7 /* 발송비(원) */
-			, pmt_b8 /* 재료비(원) */
-			, pmt_b9 /* 집행비(원) */
-			, pmt_b10 /* 기타(원) */
-			, pmt_b11 /* 비고(원) */
-		FROM (SELECT /*EBBEpisdMapper.selectEpisdList*/
 		episd_seq
+		, prnt_cd_nm /* 과정분류1 */
+		, ctgry_cd_nm /* 과정분류2 */
+		, nm /* 과정명 */
+		, stduy_mthd_cd_nm /* 학습방식 */
+		, stduy_time_cd_nm  /* 학습시간 */
+		, cbsn_cd_nm /*업종*/
+		, episd_year /*년도*/
+		, episd_ord /* 차수 */
+		, stduy_dd_cd_nm /*교육일*/
+		, edctn_strt_dtm /* 교육기간 시작일 */
+		, edctn_end_dtm /* 교육기간 종료일 */
+		, place_nm /* 교육장소 */
+		, cprtn_instt_nm /* 협력기관 */
+		, fxnum_cnt /* 정원(명) */
+		, edctn_status_nm /*교육상태*/
+		, accs_cnt /* 신청인원 */
+		, cmptn_cnt /*수료인원*/
+		, ROUND((cmptn_cnt/accs_cnt)*100, 2) as atted_per /*참석률*/
+		, c1 /*완성차*/
+		, c2 /* 1차사 */
+		, c3 /* 2차사 */
+		, c4 /* 기타 */
+		, SUM(CNT1) AS T1 /* 부서별 인원 - 품질 */
+		, SUM(CNT2) AS T2 /* 부서별 인원 - RnD */
+		, SUM(CNT3) AS T3 /* 부서별 인원 - 생산 */
+		, SUM(CNT4) AS T4 /* 부서별 인원 - 구매 */
+		, SUM(CNT5) AS T5 /* 부서별 인원 - 경영지원 */
+		, SUM(CNT6) AS T6 /* 부서별 인원 - 업체평가 */
+		, SUM(CNT7) AS T7 /* 부서별 인원 - 안전 */
+		, SUM(CNT8) AS T8 /* 부서별 인원 - ESG */
+		, SUM(CNT9) AS T9 /* 부서별 인원 - 기타 */
+
+		, SUM(CNT01) AS A1 /* 직급별 인원 - 대표 */
+		, SUM(CNT02) AS A2 /* 직급별 인원 - 임원 */
+		, SUM(CNT03) AS A3 /* 직급별 인원 - 부장 */
+		, SUM(CNT04) AS A4 /* 직급별 인원 - 과장/차장 */
+		, SUM(CNT05) AS A5 /* 직급별 인원 - 사원/대리 */
+		, SUM(CNT06) AS A6 /* 직급별 인원 - 조장/반창(계장) */
+		, SUM(CNT07) AS A7 /* 직급별 인원 - 기타 */
+		, A11 /*출석률*/
+		, AVG_score /*평가점수(점)*/
+		, '' AS A_12 /* 종합 평균 */
+		, '' AS A_13 /* 전체(공통) */
+		, '' AS A_14 /* 교육환경 */
+		, '' AS A_15 /* 교육지원 */
+		, '' AS A_16 /* 교육내용 */
+		, '' AS A_17 /* 강사 */
+		, pmt_c1 /* 강사시간1 */
+		, pmt_c2 /* 강사시간2 */
+		, pmt_c3 /* 강사시간3 */
+		, pmt_c4 /* 강사시간4 */
+		, pmt_c5 /* 강사시간5 */
+		, pmt_c6 /* 강사시간6 */
+		, SUM(pmt_a1 + pmt_a2 + pmt_a3 + pmt_a4 + pmt_a5 + pmt_a6 + pmt_a7 + pmt_a8 + pmt_a9 + pmt_a10) AS pmt_a0
+		, pmt_a1 /* 부담금/대관비(원) */
+		, pmt_a2 /* 강사비(원) */
+		, pmt_a3 /* 교재비(원) */
+		, pmt_a4 /* 식대(원) */
+		, pmt_a5 /* 다과비(원) */
+		, pmt_a6 /* 소모품비(원) */
+		, pmt_a7 /* 발송비(원) */
+		, pmt_a8 /* 재료비(원) */
+		, pmt_a9 /* 집행비(원) */
+		, pmt_a10 /* 기타(원) */
+		, pmt_a11 /* 비고 */
+		, SUM(pmt_b1 + pmt_b2 + pmt_b3 + pmt_b4 + pmt_b5 + pmt_b6 + pmt_b7 + pmt_b8 + pmt_b9 + pmt_b10) AS pmt_b0
+		, pmt_b1 /* 부담금/대관비(원) */
+		, pmt_b2 /* 강사비(원) */
+		, pmt_b3 /* 교재비(원) */
+		, pmt_b4 /* 식대(원) */
+		, pmt_b5 /* 다과비(원) */
+		, pmt_b6 /* 소모품비(원) */
+		, pmt_b7 /* 발송비(원) */
+		, pmt_b8 /* 재료비(원) */
+		, pmt_b9 /* 집행비(원) */
+		, pmt_b10 /* 기타(원) */
+		, pmt_b11 /* 비고(원) */
+		, isttr1
+		, isttr2
+		, isttr3
+		, isttr4
+		, isttr5
+		, isttr6
+
+		FROM (SELECT /*EBBEpisdMapper.selectEpisdList*/
+		a.episd_seq
 		, (select cd_nm from co_code_mst WHERE cd = LEFT(b.ctgry_cd, 7)) AS prnt_cd_nm/* 과정분류1 */
 		, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) AS ctgry_cd_nm /* 과정분류2 */
 		, b.nm /* 과정명 */
@@ -1635,7 +1648,7 @@
 		, a.fxnum_cnt/* 정원(명) */
 		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
 		case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-		when NOW() <![CDATA[>]]>  edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+		when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
 		when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
 		end
 		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
@@ -1643,6 +1656,11 @@
 		, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt /*신청인원*/
 		, (SELECT COUNT(ptcpt_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01' AND cmptn_yn = 'Y') AS cmptn_cnt/*수료인원(명)*/
 		, ''AS A_10 /*참석율(%) = 수료인원/신청인원 */
+		, CASE WHEN j.ctgry_cd = 'COMPANY01003' THEN j.ct_cnt ELSE 0 END AS c1 /*완성차*/
+		, CASE WHEN j.ctgry_cd = 'COMPANY01001' THEN j.ct_cnt ELSE 0 END AS c2 /* 1차사 */
+		, CASE WHEN j.ctgry_cd = 'COMPANY01002' THEN j.ct_cnt ELSE 0 END AS c3 /* 2차사 */
+		, CASE WHEN j.ctgry_cd = 'COMPANY01004' THEN j.ct_cnt ELSE 0 END AS c4 /* 기타 */
+
 		, CASE WHEN DEPT_CD = 'MEM_CD02002' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT1 /* 부서별 인원 - 품질 */
 		, CASE WHEN DEPT_CD = 'MEM_CD02003' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT2 /* 부서별 인원 - RnD */
 		, CASE WHEN DEPT_CD = 'MEM_CD02004' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT3 /* 부서별 인원 - 생산 */
@@ -1662,9 +1680,8 @@
 		, CASE WHEN PSTN_CD = 'MEM_CD01007' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT07 /* 직급별 인원 - 기타 */
 
 
-		, (SELECT COUNT(edctn_dt) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq =h.ptcpt_seq) AS A_a11/*출석률*/
-		, (SELECT COUNT(atndc_dtm) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq =h.ptcpt_seq AND atndc_dtm IS NOT NULL) AS A_b11/*출석률*/
-		, ROUND(avg(exam_score)) AS AVG_score /*평가 점수*/
+		, ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 0) AS A11/*출석률*/
+		, ROUND(avg(exam_score), 2) AS AVG_score /*평가 점수*/
 		, '' AS A_12 /* 종합 평균 */
 		, '' AS A_13 /* 전체(공통) */
 		, '' AS A_14 /* 교육환경 */
@@ -1699,14 +1716,182 @@
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02009' THEN pmt ELSE NULL END) AS pmt_b9 /* 집행비 */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02010' THEN pmt ELSE NULL END) AS pmt_b10 /* 기타(원) */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02011' THEN etc_nm ELSE NULL END) AS pmt_b11 /* 비고 */
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r1) AS isttr1
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r2) AS isttr2
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r3) AS isttr3
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r4) AS isttr4
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r5) AS isttr5
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r6) AS isttr6
 
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON b.edctn_seq = a.edctn_seq
-		left outer JOIN ( SELECT CD AS bd_cd, PMT, ETC_NM, EDCTN_SEQ, EPISD_ORD, EPISD_YEAR FROM ed_edctn_bdget_expns_dtl) C ON c.EDCTN_SEQ = a.EDCTN_SEQ AND c.EPISD_ORD = a.EPISD_ORD AND c.EPISD_YEAR = a.EPISD_YEAR
+		LEFT OUTER JOIN ( SELECT CD AS bd_cd, PMT, ETC_NM, EDCTN_SEQ, EPISD_ORD, EPISD_YEAR FROM ed_edctn_bdget_expns_dtl) C ON c.EDCTN_SEQ = a.EDCTN_SEQ AND c.EPISD_ORD = a.EPISD_ORD AND c.EPISD_YEAR = a.EPISD_YEAR
 
-		LEFT outer JOIN ( SELECT MEM_SEQ, srv_seq, rfnc_seq, rfnc_cd FROM sv_rspn_mst ) d ON A.srv_seq = d.srv_seq AND d.rfnc_seq = A.episd_seq AND d.rfnc_cd = 'EDU'
-		LEFT outer JOIN ( SELECT MEM_SEQ, MEM_CD, DEPT_CD, PSTN_CD FROM co_mem_mst where mem_cd = 'CP' ) e ON d.mem_seq = e.mem_seq
-		LEFT outer JOIN (
+		LEFT OUTER JOIN ( SELECT MEM_SEQ, srv_seq, rfnc_seq, rfnc_cd FROM sv_rspn_mst ) d ON A.srv_seq = d.srv_seq AND d.rfnc_seq = A.episd_seq AND d.rfnc_cd = 'EDU'
+		LEFT OUTER JOIN ( SELECT MEM_SEQ, MEM_CD, DEPT_CD, PSTN_CD FROM co_mem_mst where mem_cd = 'CP' ) e ON d.mem_seq = e.mem_seq
+		LEFT OUTER JOIN (
+		SELECT CD FROM co_code_mst
+		WHERE PARNT_SEQ IN (
+			SELECT CD_SEQ FROM CO_CODE_MST
+			WHERE CD IN ('MEM_CD01', 'MEM_CD02')
+		)
+		) T2 ON e.DEPT_CD = T2.CD
+		LEFT OUTER JOIN( SELECT exam_score, edctn_seq, episd_year, episd_ord FROM ep_edctn_ptcpt_mst) f ON f.edctn_seq = a.edctn_seq AND f.episd_year = a.episd_year AND f.episd_ord = a.episd_ord
+		LEFT JOIN (SELECT
+							isttr_tb.edctn_seq
+							,isttr_tb.episd_seq
+							,isttr_tb.episd_year
+							,isttr_tb.episd_ord
+							,isttr_tb.isttr_seq
+							,MAX(CASE WHEN orders = 1 THEN isttr_seq ELSE NULL END) AS r1
+							,MAX(CASE WHEN orders = 2 THEN isttr_seq ELSE NULL END) AS r2
+							,MAX(CASE WHEN orders = 3 THEN isttr_seq ELSE NULL END) AS r3
+							,MAX(CASE WHEN orders = 4 THEN isttr_seq ELSE NULL END) AS r4
+							,MAX(CASE WHEN orders = 5 THEN isttr_seq ELSE NULL END) AS r5
+							,MAX(CASE WHEN orders = 6 THEN isttr_seq ELSE NULL END) AS r6
+						FROM (
+							SELECT
+								aaa.edctn_seq
+								,aaa.episd_year
+								,aaa.episd_ord
+								,aaa.episd_seq
+								,b2.isttr_seq
+								,(SELECT COUNT(*) FROM ed_edctn_isttr_rel g2 WHERE g2.edctn_seq = aaa.edctn_seq AND g2.episd_year = aaa.episd_year AND g2.episd_ord = aaa.episd_ord AND g2.isttr_seq <![CDATA[<=]]> b2.isttr_seq) AS orders
+							FROM ed_edctn_episd_mst aaa
+							LEFT JOIN ed_edctn_isttr_rel b2 ON b2.edctn_seq = aaa.edctn_seq AND b2.episd_year = aaa.episd_year AND b2.episd_ord = aaa.episd_ord
+						) AS isttr_tb
+					GROUP BY isttr_tb.episd_seq) g ON g.edctn_seq = a.edctn_seq AND g.episd_year = a.episd_year AND g.episd_ord = a.episd_ord
+		LEFT JOIN (SELECT ptcpt_seq, ptcpt_bsnm_no, edctn_seq, episd_year, episd_ord, stts_cd from ep_edctn_ptcpt_mst WHERE stts_cd = 'EDU_STTS_CD01' GROUP BY ptcpt_seq) h ON h.edctn_seq = a.edctn_seq AND h.episd_year = a.episd_year AND h.episd_ord = a.episd_ord
+		LEFT JOIN (SELECT ptcpt_seq AS at_ptcpt_seq, edctn_dt, atndc_dtm FROM ep_edctn_atndc_dtl) i ON i.at_ptcpt_seq = h.ptcpt_seq
+		LEFT JOIN(
+			SELECT
+				ctgry_cd
+				, COUNT(ctgry_cd) AS ct_cnt
+				, episdmst.episd_seq
+			FROM cp_cmpn_mst cmpn
+				inner JOIN ep_edctn_ptcpt_mst ptcpt on cmpn.BSNM_NO = ptcpt.ptcpt_bsnm_no
+				inner JOIN ed_edctn_episd_mst episdmst ON episdmst.episd_seq = ptcpt.episd_seq
+			GROUP BY episd_seq, ctgry_cd
+		) j ON j.episd_seq = a.episd_seq
+
+		GROUP BY a.EPISD_ORD
+		) AA
+		GROUP BY episd_seq
+		<include refid="selectEpisdListwhereSql" />
+
+		GROUP BY episd_seq
+	</select>
+
+	<!--
+         쿼리명 : EBBEpisdMapper.selectEpisdExelListCnt
+         설  명 : 교육차수관리 엑셀 출력 카운트
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.18   김학규       최초생성
+    -->
+	<select id="selectEpisdExelListCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		SELECT
+			count(*)
+		FROM (SELECT /*EBBEpisdMapper.selectEpisdList*/
+		a.episd_seq
+		, (select cd_nm from co_code_mst WHERE cd = LEFT(b.ctgry_cd, 7)) AS prnt_cd_nm/* 과정분류1 */
+		, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) AS ctgry_cd_nm /* 과정분류2 */
+		, b.nm /* 과정명 */
+		, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm/* 학습방식 */
+		, (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm /* 학습시간 */
+		, (select cd_nm from co_code_mst where cd=a.cbsn_cd) AS cbsn_cd_nm/*업종*/
+		, a.episd_year /*년도*/
+		, a.episd_ord/*차수*/
+		, (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) AS stduy_dd_cd_nm/*교육일*/
+		, a.edctn_strt_dtm/* 교육기간 시작일 */
+		, a.edctn_end_dtm/* 교육기간 종료일 */
+		, (SELECT nm FROM ed_edctn_place_mst WHERE place_seq = a.place_seq) as place_nm/* 교육장소 */
+		, (SELECT nm FROM ed_edctn_place_mst WHERE place_seq = a.cprtn_instt_seq) as cprtn_instt_nm/* 협력기관 */
+		, a.fxnum_cnt/* 정원(명) */
+		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+		case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+		when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+		when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
+		end
+		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+		END  AS edctn_status_nm /*교육상태*/
+		, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt /*신청인원*/
+		, (SELECT COUNT(ptcpt_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01' AND cmptn_yn = 'Y') AS cmptn_cnt/*수료인원(명)*/
+		, ''AS A_10 /*참석율(%) = 수료인원/신청인원 */
+		, CASE WHEN j.ctgry_cd = 'COMPANY01003' THEN j.ct_cnt ELSE 0 END AS c1 /*완성차*/
+		, CASE WHEN j.ctgry_cd = 'COMPANY01001' THEN j.ct_cnt ELSE 0 END AS c2 /* 1차사 */
+		, CASE WHEN j.ctgry_cd = 'COMPANY01002' THEN j.ct_cnt ELSE 0 END AS c3 /* 2차사 */
+		, CASE WHEN j.ctgry_cd = 'COMPANY01004' THEN j.ct_cnt ELSE 0 END AS c4 /* 기타 */
+
+		, CASE WHEN DEPT_CD = 'MEM_CD02002' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT1 /* 부서별 인원 - 품질 */
+		, CASE WHEN DEPT_CD = 'MEM_CD02003' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT2 /* 부서별 인원 - RnD */
+		, CASE WHEN DEPT_CD = 'MEM_CD02004' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT3 /* 부서별 인원 - 생산 */
+		, CASE WHEN DEPT_CD = 'MEM_CD02005' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT4 /* 부서별 인원 - 구매 */
+		, CASE WHEN DEPT_CD = 'MEM_CD02006' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT5 /* 부서별 인원 - 경영지원 */
+		, CASE WHEN DEPT_CD = 'MEM_CD02007' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT6 /* 부서별 인원 - 업체평가 */
+		, CASE WHEN DEPT_CD = 'MEM_CD02008' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT7 /* 부서별 인원 - 안전 */
+		, CASE WHEN DEPT_CD = 'MEM_CD02009' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT8 /* 부서별 인원 - ESG */
+		, CASE WHEN DEPT_CD = 'MEM_CD02010' THEN COUNT(e.DEPT_CD) ELSE 0 END AS CNT9 /* 부서별 인원 - 기타 */
+
+		, CASE WHEN PSTN_CD = 'MEM_CD01001' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT01 /* 직급별 인원 - 대표 */
+		, CASE WHEN PSTN_CD = 'MEM_CD01002' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT02 /* 직급별 인원 - 임원 */
+		, CASE WHEN PSTN_CD = 'MEM_CD01003' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT03 /* 직급별 인원 - 부장 */
+		, CASE WHEN PSTN_CD = 'MEM_CD01004' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT04 /* 직급별 인원 - 과장/차장 */
+		, CASE WHEN PSTN_CD = 'MEM_CD01005' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT05 /* 직급별 인원 - 사원/대리 */
+		, CASE WHEN PSTN_CD = 'MEM_CD01006' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT06 /* 직급별 인원 - 조장/반창(계장) */
+		, CASE WHEN PSTN_CD = 'MEM_CD01007' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT07 /* 직급별 인원 - 기타 */
+
+
+		, ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 0) AS A11/*출석률*/
+		, ROUND(avg(exam_score), 2) AS AVG_score /*평가 점수*/
+		, '' AS A_12 /* 종합 평균 */
+		, '' AS A_13 /* 전체(공통) */
+		, '' AS A_14 /* 교육환경 */
+		, '' AS A_15 /* 교육지원 */
+		, '' AS A_16 /* 교육내용 */
+		, '' AS A_17 /* 강사 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03001' THEN pmt ELSE NULL END) AS pmt_c1/* 강사시간1 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03002' THEN pmt ELSE NULL END) AS pmt_c2/* 강사시간2 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03003' THEN pmt ELSE NULL END) AS pmt_c3/* 강사시간3 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03004' THEN pmt ELSE NULL END) AS pmt_c4/* 강사시간4 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03005' THEN pmt ELSE NULL END) AS pmt_c5/* 강사시간5 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03006' THEN pmt ELSE NULL END) AS pmt_c6/* 강사시간6 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01001' THEN pmt ELSE NULL END) AS pmt_a1 /* 부담금/대관비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01002' THEN pmt ELSE NULL END) AS pmt_a2 /* 강사비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01003' THEN pmt ELSE NULL END) AS pmt_a3 /* 교재비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01004' THEN pmt ELSE NULL END) AS pmt_a4 /* 식대 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01005' THEN pmt ELSE NULL END) AS pmt_a5 /* 다과비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01006' THEN pmt ELSE NULL END) AS pmt_a6 /* 소모품비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01007' THEN pmt ELSE NULL END) AS pmt_a7 /* 발송비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01008' THEN pmt ELSE NULL END) AS pmt_a8 /* 재료비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01009' THEN pmt ELSE NULL END) AS pmt_a9 /* 집행비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01010' THEN pmt ELSE NULL END) AS pmt_a10 /* 기타(원) */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD01011' THEN etc_nm ELSE NULL END) AS pmt_a11 /* 비고 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02001' THEN pmt ELSE NULL END) AS pmt_b1 /* 부담금/대관비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02002' THEN pmt ELSE NULL END) AS pmt_b2 /* 강사비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02003' THEN pmt ELSE NULL END) AS pmt_b3 /* 교재비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02004' THEN pmt ELSE NULL END) AS pmt_b4 /* 식대 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02005' THEN pmt ELSE NULL END) AS pmt_b5 /* 다과비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02006' THEN pmt ELSE NULL END) AS pmt_b6 /* 소모품비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02007' THEN pmt ELSE NULL END) AS pmt_b7 /* 발송비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02008' THEN pmt ELSE NULL END) AS pmt_b8 /* 재료비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02009' THEN pmt ELSE NULL END) AS pmt_b9 /* 집행비 */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02010' THEN pmt ELSE NULL END) AS pmt_b10 /* 기타(원) */
+		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD02011' THEN etc_nm ELSE NULL END) AS pmt_b11 /* 비고 */
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r1) AS isttr1
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r2) AS isttr2
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r3) AS isttr3
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r4) AS isttr4
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r5) AS isttr5
+		, (SELECT name from cp_isttr_mst WHERE isttr_seq = g.r6) AS isttr6
+
+		FROM ed_edctn_episd_mst a
+		LEFT JOIN ed_edctn_prcs_mst b ON b.edctn_seq = a.edctn_seq
+		LEFT OUTER JOIN ( SELECT CD AS bd_cd, PMT, ETC_NM, EDCTN_SEQ, EPISD_ORD, EPISD_YEAR FROM ed_edctn_bdget_expns_dtl) C ON c.EDCTN_SEQ = a.EDCTN_SEQ AND c.EPISD_ORD = a.EPISD_ORD AND c.EPISD_YEAR = a.EPISD_YEAR
+
+		LEFT OUTER JOIN ( SELECT MEM_SEQ, srv_seq, rfnc_seq, rfnc_cd FROM sv_rspn_mst ) d ON A.srv_seq = d.srv_seq AND d.rfnc_seq = A.episd_seq AND d.rfnc_cd = 'EDU'
+		LEFT OUTER JOIN ( SELECT MEM_SEQ, MEM_CD, DEPT_CD, PSTN_CD FROM co_mem_mst where mem_cd = 'CP' ) e ON d.mem_seq = e.mem_seq
+		LEFT OUTER JOIN (
 		SELECT CD FROM co_code_mst
 		WHERE PARNT_SEQ IN (
 		SELECT CD_SEQ FROM CO_CODE_MST
@@ -1714,49 +1899,52 @@
 		)
 		) T2 ON e.DEPT_CD = T2.CD
 		LEFT OUTER JOIN( SELECT exam_score, edctn_seq, episd_year, episd_ord FROM ep_edctn_ptcpt_mst) f ON f.edctn_seq = a.edctn_seq AND f.episd_year = a.episd_year AND f.episd_ord = a.episd_ord
-		LEFT JOIN ed_edctn_isttr_rel g ON g.edctn_seq = a.edctn_seq AND g.episd_year = a.episd_year AND g.episd_ord = a.episd_ord
-		LEFT JOIN (SELECT ptcpt_seq, edctn_seq, episd_year, episd_ord, stts_cd from ep_edctn_ptcpt_mst WHERE stts_cd = 'EDU_STTS_CD01' GROUP BY ptcpt_seq) h ON h.edctn_seq = a.edctn_seq AND h.episd_year = a.episd_year AND h.episd_ord = a.episd_ord
+		LEFT JOIN (SELECT
+		isttr_tb.edctn_seq
+		,isttr_tb.episd_seq
+		,isttr_tb.episd_year
+		,isttr_tb.episd_ord
+		,isttr_tb.isttr_seq
+		,MAX(CASE WHEN orders = 1 THEN isttr_seq ELSE NULL END) AS r1
+		,MAX(CASE WHEN orders = 2 THEN isttr_seq ELSE NULL END) AS r2
+		,MAX(CASE WHEN orders = 3 THEN isttr_seq ELSE NULL END) AS r3
+		,MAX(CASE WHEN orders = 4 THEN isttr_seq ELSE NULL END) AS r4
+		,MAX(CASE WHEN orders = 5 THEN isttr_seq ELSE NULL END) AS r5
+		,MAX(CASE WHEN orders = 6 THEN isttr_seq ELSE NULL END) AS r6
+		FROM (
+		SELECT
+		aaa.edctn_seq
+		,aaa.episd_year
+		,aaa.episd_ord
+		,aaa.episd_seq
+		,b2.isttr_seq
+		,(SELECT COUNT(*) FROM ed_edctn_isttr_rel g2 WHERE g2.edctn_seq = aaa.edctn_seq AND g2.episd_year = aaa.episd_year AND g2.episd_ord = aaa.episd_ord AND g2.isttr_seq <![CDATA[<=]]> b2.isttr_seq) AS orders
+		FROM ed_edctn_episd_mst aaa
+		LEFT JOIN ed_edctn_isttr_rel b2 ON b2.edctn_seq = aaa.edctn_seq AND b2.episd_year = aaa.episd_year AND b2.episd_ord = aaa.episd_ord
+		) AS isttr_tb
+		GROUP BY isttr_tb.episd_seq) g ON g.edctn_seq = a.edctn_seq AND g.episd_year = a.episd_year AND g.episd_ord = a.episd_ord
+		LEFT JOIN (SELECT ptcpt_seq, ptcpt_bsnm_no, edctn_seq, episd_year, episd_ord, stts_cd from ep_edctn_ptcpt_mst WHERE stts_cd = 'EDU_STTS_CD01' GROUP BY ptcpt_seq) h ON h.edctn_seq = a.edctn_seq AND h.episd_year = a.episd_year AND h.episd_ord = a.episd_ord
+		LEFT JOIN (SELECT ptcpt_seq AS at_ptcpt_seq, edctn_dt, atndc_dtm FROM ep_edctn_atndc_dtl) i ON i.at_ptcpt_seq = h.ptcpt_seq
+		LEFT JOIN(
+		SELECT
+		ctgry_cd
+		, COUNT(ctgry_cd) AS ct_cnt
+		, episdmst.episd_seq
+		FROM cp_cmpn_mst cmpn
+		inner JOIN ep_edctn_ptcpt_mst ptcpt on cmpn.BSNM_NO = ptcpt.ptcpt_bsnm_no
+		inner JOIN ed_edctn_episd_mst episdmst ON episdmst.episd_seq = ptcpt.episd_seq
+		GROUP BY episd_seq, ctgry_cd
+		) j ON j.episd_seq = a.episd_seq
+
 		GROUP BY a.EPISD_ORD
 		) AA
 		GROUP BY episd_seq
+
+		<include refid="selectEpisdListwhereSql" />
+
+		GROUP BY episd_seq
 	</select>
 
-	<!--
-         쿼리명 : EBBEpisdMapper.selectExelIsttrList
-         설  명 : 교육차수별 강시목록 출력(엑셀용)
-          수정일     수정자       수정내용
-        ==========   ======    ==============
-        2023.12.15   김학규       최초생성
-    -->
-	<select id="selectIsttrExelList" parameterType="EBBEpisdDTO" resultType="EBBEpisdExcelDTO">
-		SELECT
-			episd_seq
-			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r1) AS isttr1
-			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r2) AS isttr2
-			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r3) AS isttr3
-			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r4) AS isttr4
-			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r5) AS isttr5
-			, (SELECT name from cp_isttr_mst WHERE isttr_seq = isttr_tb.r6) AS isttr6
-			FROM (SELECT
-			episd_seq
-			,MAX(CASE WHEN orders = 1 THEN isttr_seq ELSE NULL END) AS r1
-			,MAX(CASE WHEN orders = 2 THEN isttr_seq ELSE NULL END) AS r2
-			,MAX(CASE WHEN orders = 3 THEN isttr_seq ELSE NULL END) AS r3
-			,MAX(CASE WHEN orders = 4 THEN isttr_seq ELSE NULL END) AS r4
-			,MAX(CASE WHEN orders = 5 THEN isttr_seq ELSE NULL END) AS r5
-			,MAX(CASE WHEN orders = 6 THEN isttr_seq ELSE NULL END) AS r6
-
-		FROM (
-			SELECT
-			a.episd_seq,
-			g.isttr_seq,
-			(SELECT COUNT(*) FROM ed_edctn_isttr_rel g2 WHERE g2.edctn_seq = a.edctn_seq AND g2.episd_year = a.episd_year AND g2.episd_ord = a.episd_ord AND g2.isttr_seq <![CDATA[<=]]> g.isttr_seq) AS orders
-			FROM ed_edctn_episd_mst a
-			LEFT JOIN ed_edctn_isttr_rel g ON g.edctn_seq = a.edctn_seq AND g.episd_year = a.episd_year AND g.episd_ord = a.episd_ord
-		) AS isttr_tb
-		GROUP BY episd_seq) AS isttr_tb
-
-	</select>
 
 
 </mapper>

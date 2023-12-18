@@ -487,6 +487,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						seqObj.episdYear = $("#episdYear").val();
 						seqObj.episdOrd = $("#episdOrd").val();
 						seqObj.episdSeq = $("#episdSeq").val();
+						seqObj.stduyMthdCd = $("#stduyMthdCd").val();
+
 
 						//체크한 회원정보 전부 가져옴
 						var seqList = new Array();
@@ -525,7 +527,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								$(".ebbChageEpisdLayer").find("#prev_episdOrd").val(seqObj.episdOrd);
 
 								$(".ebbChageEpisdLayer").find("#chan_memSeq").val(seqObj.memSeq);
-								//$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);
+
+								$(".ebbChageEpisdLayer").find("#stduyMthdCd").val(seqObj.stduyMthdCd);//학습방식
+
 								$(this).find("button.tempBtn").trigger("click");
 
 								var modal = $(this);
