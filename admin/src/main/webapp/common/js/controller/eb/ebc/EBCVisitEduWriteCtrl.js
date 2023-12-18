@@ -10,6 +10,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var $formObj = jQuery("#frmData");
     var width = 500; //팝업의 너비
     var height = 600; //팝업의 높이
+    var prevVal = "";
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
@@ -126,6 +127,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }
                         else if (selectedCtgryCd == "COMPANY01002") {
                             $(".sqInfoArea").show();
+                            $(".qlty5StarArea").hide();
+                            $(".pay5StarArea").hide();
+                            $(".tchlg5StarArea").hide();
+
+                        } else {
+                            $(".sqInfoArea").hide();
                             $(".qlty5StarArea").hide();
                             $(".pay5StarArea").hide();
                             $(".tchlg5StarArea").hide();
@@ -286,8 +293,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 $("input:checkbox[id='samePlaceBtn']").prop("checked", true);
             }
 
-            //신청분야상세코드 체크박스 checked
-
+            $('#ctgryCd').focus(function() {
+                prevVal = $(this).val();
+            }).change(function(){
+                if($(this).val() == 'COMPANY01003' || $(this).val() == 'COMPANY01004'){
+                    alert("완성차와 기타는 신청이 불가합니다.");
+                    $(this).val(prevVal);
+                    return false;
+                }
+            });
 
             var scndRgnsCd = $("#scndRgnsCd").data("scndRgnsCd");
             $("#scndRgnsCd").val(scndRgnsCd).prop("selected", true);

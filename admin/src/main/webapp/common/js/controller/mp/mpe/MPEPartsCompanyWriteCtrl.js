@@ -155,6 +155,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $(".qlty5StarArea").hide();
                             $(".pay5StarArea").hide();
                             $(".tchlg5StarArea").hide();
+
+                        } else {
+                            $(".sqInfoArea").hide();
+                            $(".qlty5StarArea").hide();
+                            $(".pay5StarArea").hide();
+                            $(".tchlg5StarArea").hide();
                         }
                     }
                 }
