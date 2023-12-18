@@ -7,6 +7,7 @@ import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.wb.WBAppctnTrnsfDtlDTO;
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.service.COCodeService;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -350,7 +352,7 @@ public class WBFBRegisterCompanyController {
             wBFBRegisterDTO.setModId( coaAdmDTO.getId() );
             wBFBRegisterDTO.setModIp( coaAdmDTO.getLoginIp() );
 
-            wBFBRegisterCompanyService.updRegisterCompany(wBFBRegisterDTO);
+            modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.updRegisterCompany(wBFBRegisterDTO));
         }
         catch (Exception e)
         {
@@ -386,6 +388,25 @@ public class WBFBRegisterCompanyController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    @GetMapping(value = "/excel-down")
+    public void getListExcel(WBFBRegisterSearchDTO wBFBRegisterSearchDTO , HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            wBFBRegisterSearchDTO.setBsnCd("INQ07006");
+            //엑셀 생성
+            wBFBRegisterCompanyService.excelDownload(wBFBRegisterCompanyService.getRegisterCompanyList(wBFBRegisterSearchDTO), response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
     }
 
 }

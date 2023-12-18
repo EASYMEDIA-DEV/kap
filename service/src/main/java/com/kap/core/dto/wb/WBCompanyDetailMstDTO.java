@@ -34,7 +34,7 @@ public class WBCompanyDetailMstDTO extends BaseDTO {
     private String bsnmNo;
 
     @Schema(title = "업종순번")
-    private int cbsnSeq;
+    private Integer cbsnSeq;
 
     @Schema(title = "명")
     private String nm;

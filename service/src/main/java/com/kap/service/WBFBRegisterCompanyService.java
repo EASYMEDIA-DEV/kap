@@ -5,6 +5,7 @@ import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -77,5 +78,10 @@ public interface WBFBRegisterCompanyService {
      *  신청 부품사 삭제
      */
     public int deleteRegisterCompany(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+
+    /**
+     *  엑셀 Download
+     */
+    public void excelDownload(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, HttpServletResponse response) throws Exception;
 
 }

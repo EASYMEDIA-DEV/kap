@@ -69,14 +69,24 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     private String sizeCdNm;
     @Schema(title = "사업자등록번호", example = "")
     private String bsnmNo;
+    @Schema(title = "종된사업자등록번호", example = "")
+    private String sbrdnBsnmNo;
     @Schema(title = "신청자 이름", example = "")
     private String name;
     @Schema(title = "신청자 ID", example = "")
     private String id;
     @Schema(title = "휴대번호", example = "")
     private String hpNo;
+    @Schema(title = "일반번호", example = "")
+    private String telNo;
     @Schema(title = "이메일", example = "")
     private String email;
+    @Schema(title = "직급", example = "")
+    private String pstnCd;
+    @Schema(title = "직급이름", example = "")
+    private String pstnCdNm;
+    @Schema(title = "직급상세", example = "")
+    private String pstnNm;
     @Schema(title = "진행상태 코드", example = "")
     private String rsumeSttsCd;
     @Schema(title = "진행상태 명", example = "")
@@ -85,6 +95,8 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     private String appctnSttsChngDtm;
     @Schema(title = "관리상태변경일시", example = "yyyy-MM-dd")
     private String mngSttsChngDtm;
+    @Schema(title = "수정ID", example = "")
+    private String modNm;
     @Schema(title = "수정ID", example = "")
     private String modId;
     @Schema(title = "수정일시", example = "yyyy-MM-dd")

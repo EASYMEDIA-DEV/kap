@@ -20,7 +20,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "상생신청지원금액 상세")
 public class WBSpprtDtlDTO extends BaseDTO {
-    
+
     /* Key */
     @Schema(title = "상생상세 진행순번", example = "숫자")
     private Integer rsumeSeq;
@@ -63,6 +63,8 @@ public class WBSpprtDtlDTO extends BaseDTO {
     private String giveDt;
     @Schema(title = "지급순번", example = "")
     private Integer giveSeq;
+    @Schema(title = "지급회차", example = "")
+    private Integer giveOrd;
     @Schema(title = "관리상태코드", example = "")
     private String mngSttsCd;
     @Schema(title = "관리상태변경일시", example = "yyyy-MM-dd hh:mm:ss")
@@ -101,6 +103,11 @@ public class WBSpprtDtlDTO extends BaseDTO {
     private String modDtm;
     @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;
+
+    @Schema(title = "접수일자 날짜 포멧", example = "MM/dd")
+    private String accsDtFmt;
+    @Schema(title = "접수일자 날짜 포멧", example = "MM/dd")
+    private String giveDtFmt;
 
     /* 파일 저장시 사용 정보 */
     List<WBRsumeFileDtlDTO> appctnFileInfo;
