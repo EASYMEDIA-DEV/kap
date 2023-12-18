@@ -353,11 +353,11 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 	}
 
 	@Override
-	public int insertSurveyExcelList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request) throws Exception {
+	public int insertSurveyExcelList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request , MultipartFile file) throws Exception {
 
 		int respCnt = 0;
 
-		List<Map<String, Object>> listMap = getListData(wBLSurveyMstInsertDTO.getWblListExcel(), 1, 8 );
+		List<Map<String, Object>> listMap = getListData(file, 1, 8 );
 
 		if (listMap.size()>0){
 			for(int i = 0 ; i < listMap.size() ; i++) {

@@ -11,7 +11,6 @@ import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -240,8 +239,8 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                 }
                 index += 1;
             }
-        } else if (mpePartsCompanyDTO.getCtgryCd().equals("COMPANY01001")) {
-            // 1차인 경우, SQ정보 빈 값 처리
+        } else {
+            // 2차사가 아닌 경우, SQ정보 빈 값 처리
             mpePartsCompanyMapper.deletePartsComSQInfo(mpePartsCompanyDTO);
         }
         return mpePartsCompanyMapper.updatePartsCompany(mpePartsCompanyDTO);
@@ -338,6 +337,10 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         style_body.setBorderLeft(BorderStyle.THIN);
         style_body.setBorderRight(BorderStyle.THIN);
         style_body.setBorderBottom(BorderStyle.THIN);
+        style_body_sqInfo.setBorderTop(BorderStyle.THIN);
+        style_body_sqInfo.setBorderLeft(BorderStyle.THIN);
+        style_body_sqInfo.setBorderRight(BorderStyle.THIN);
+        style_body_sqInfo.setBorderBottom(BorderStyle.THIN);
 
         //BackGround Color 지정
         style_header.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
@@ -418,9 +421,7 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         cell.setCellValue("SQ 정보");
         cell.setCellStyle(style_header);
 
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 17, 18));
-
-        cell = row.createCell(19);
+        cell = row.createCell(18);
         cell.setCellValue("가입일");
         cell.setCellStyle(style_header);
 
@@ -634,13 +635,23 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                 style_body_sqInfo.setWrapText(true);
             }
             sqCell.setCellStyle(style_body_sqInfo);
-            sheet.addMergedRegion(new CellRangeAddress(i + 1, i + 1, 17, 18));
 
-            
             //가입일
-            cell = row.createCell(19);
+            cell = row.createCell(18);
             cell.setCellValue(list.get(i).getRegDtm().substring(0, list.get(i).getRegDtm().lastIndexOf(":")));
             cell.setCellStyle(style_body);
+
+            // 열 크기 조정
+            sheet.setColumnWidth(0, 1000); sheet.setColumnWidth(1, 2000);
+            sheet.setColumnWidth(2, 6000); sheet.setColumnWidth(3, 4000);
+            sheet.setColumnWidth(4, 1200); sheet.setColumnWidth(5, 2400);
+            sheet.setColumnWidth(6, 4000); sheet.setColumnWidth(7, 3000);
+            sheet.setColumnWidth(8, 2400); sheet.setColumnWidth(9, 4000);
+            sheet.setColumnWidth(10, 4000); sheet.setColumnWidth(11, 10000);
+            sheet.setColumnWidth(12, 2000); sheet.setColumnWidth(13, 10000);
+            sheet.setColumnWidth(14, 5000); sheet.setColumnWidth(15, 5000);
+            sheet.setColumnWidth(16, 5000); sheet.setColumnWidth(17, 10000);
+            sheet.setColumnWidth(18, 5000);
 
         }
 

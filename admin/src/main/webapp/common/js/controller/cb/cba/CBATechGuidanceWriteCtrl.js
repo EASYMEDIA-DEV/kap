@@ -43,6 +43,59 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         }, "/mngwserc/cb/cba/trsfList", $formObj, "GET", "html");
     }
 
+    var changeStts = function(){
+        var bfJdgmtRslt = $("#bfJdgmtRslt").val();
+        var initVstRsltCd = $("#initVstRsltCd").val();
+        var guidePscndCd = $("#guidePscndCd").val();
+        var guideBgnDt = $('input[name="guideBgnDt"]').val();
+        var today = new Date();
+        var gbDt = new Date(guideBgnDt);
+        var bfGbDt = (gbDt-today)/(24*60*60*1000);
+
+        if(bfGbDt == 0 || bfGbDt < 0){
+            if(guidePscndCd){
+                $(".resumeSttsNm").text("지도중");
+                $(".resumeSttsCd").val("MNGTECH_STATUS_09");
+                if(guidePscndCd == 'GUIDE_PSCND01'){
+                    $(".resumeSttsNm").text("지도연기");
+                    $(".resumeSttsCd").val("MNGTECH_STATUS_10");
+                }else if(guidePscndCd == 'GUIDE_PSCND02'){
+                    $(".resumeSttsNm").text("재단취소");
+                    $(".resumeSttsCd").val("MNGTECH_STATUS_11");
+                }else if(guidePscndCd == 'GUIDE_PSCND03'){
+                    $(".resumeSttsNm").text("부품사취소");
+                    $(".resumeSttsCd").val("MNGTECH_STATUS_12");
+                }else if(guidePscndCd == 'GUIDE_PSCND04'){
+                    $(".resumeSttsNm").text("지도 완료");
+                    $(".resumeSttsCd").val("MNGTECH_STATUS_13");
+                }
+            }else{
+                $(".resumeSttsNm").text("지도착수");
+                $(".resumeSttsCd").val("MNGTECH_STATUS_08");
+            }
+        }else{
+            if (bfJdgmtRslt == 'BF_JDGMT_RSLT05' || initVstRsltCd == 'BF_JDGMT_RSLT05') {
+                $(".resumeSttsNm").text("사용자취소");
+                $(".resumeSttsCd").val("MNGTECH_STATUS_02");
+            }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT01') {
+                $(".resumeSttsNm").text("사전심사선정");
+                $(".resumeSttsCd").val("MNGTECH_STATUS_03");
+            }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT02') {
+                $(".resumeSttsNm").text("사전심사탈락");
+                $(".resumeSttsCd").val("MNGTECH_STATUS_04");
+            }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT03' || initVstRsltCd == 'BF_JDGMT_RSLT03') {
+                $(".resumeSttsNm").text("지원단이관");
+                $(".resumeSttsCd").val("MNGTECH_STATUS_05");
+            }else if(initVstRsltCd == 'BF_JDGMT_RSLT01'){
+                $(".resumeSttsNm").text("지도승인");
+                $(".resumeSttsCd").val("MNGTECH_STATUS_06");
+            }else if(initVstRsltCd == 'BF_JDGMT_RSLT02'){
+                $(".resumeSttsNm").text("지도불가");
+                $(".resumeSttsCd").val("MNGTECH_STATUS_07");
+            }
+        }
+    }
+
     var callbackAjaxDelete = function (data) {
 
         if (parseInt(data.respCnt, 10) > 0) {
@@ -304,6 +357,27 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
+            bfJdgmtRslt : {
+                event : {
+                    click : function(){
+                        changeStts();
+                    }
+                }
+            },
+            guidePscndCd : {
+                event : {
+                    click : function(){
+                        changeStts();
+                    }
+                }
+            },
+            initVstRsltCd : {
+                event : {
+                    click: function(){
+                        changeStts();
+                    }
+                }
+            }
         },
         classname: {
             searchPostCode: {
@@ -410,7 +484,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 event: {
                     click: function () {
                         var cbsnVal = $("input[name=cbsnCd]:checked").val();
-                        console.log(cbsnVal);
                         if (cbsnVal == "TEC_GUIDE_INDUS01") { // 기타일 때 input 활성화
                             $("input[name=etcNm]").removeClass("notRequired");
                             $("input[name=etcNm]").attr("disabled", false);
@@ -490,7 +563,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             },tabClick : {
                 event : {
                     click : function (e){
-                        console.log(e.target.getAttribute('href'));
                         if(e.target.getAttribute('href') == "#techGuidance") {
                             $("#episdList").addClass("in active");
                             $("#svResult").removeClass("in active");
@@ -546,13 +618,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             }
-
         },
         immediately: function () {
-
-
+            changeStts(); // 진행상태 변경
             questionSet();
-
             /* Editor Setting */
             jQuery("textarea[id^='cntn']").each(function () {
                 cmmCtrl.setEditor({

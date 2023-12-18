@@ -67,6 +67,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
         $('#mem').val(memId+'('+memName+')');
 
+        $("#befeCtgryCd").val(rtnData['ctgryCd']);
 
         if(rtnData['pstnCd'] == 'MEM_CD01007'){
             $("#pstnNm").css("display", "block");
@@ -152,6 +153,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $(".companyCate1").css("display", "none");
                             $(".starType").val("");
                             $(".companyCate2").css("display", "block");
+                        }else{
+                            alert("부품사 구분은 1차,2차만 등록가능합니다.");
+                            if($("#befeCtgryCd").val() == ""){
+                                $(this).val($("#befeCtgryCd").val());
+                            }else{
+                                $(this).val($("#befeCtgryCd").val()).trigger("change");
+                            }
                         }
 
                     }

@@ -1,5 +1,6 @@
 package com.kap.service.dao.cb.cba;
 
+import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
@@ -31,7 +32,7 @@ public interface CBATechGuidanceMapper {
     /**
      * 컨설팅 기술 지도 목록 조회
      */
-    public List<CBATechGuidanceDTO> selectTechGuidanceList(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public List<CBATechGuidanceInsertDTO> selectTechGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
      * 컨설팅 기술 지도 상세 조회
@@ -48,19 +49,14 @@ public interface CBATechGuidanceMapper {
     public List<CBATechGuidanceInsertDTO> selectCnstgDpndnInfo(Integer cnstgSeq) throws Exception;
 
     /**
-     * 컨설팅 기술 지도 등록
+     * 컨설팅 기술 지도 카운트
      */
-    public int selectTechGuidanceTotCnt(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public int selectTechGuidanceTotCnt(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
      * 컨설팅 기술 지도 등록
      */
     public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
-
-    /**
-     * 컨설팅 기술 지도 전체 카운트
-     */
-    public int selectMnVsldTotCnt(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
 
     /**
      * 회사 업종 상세 카운트
@@ -115,30 +111,11 @@ public interface CBATechGuidanceMapper {
      * 완성차 의존 수정
      */
     public int updateCnstgDpndnInfo(HashMap dpndnMap);
-    /**
-     * 신청자 정보 수정
-     */
-    public int updateTechMemberInfo(HashMap memberMap);
-
-    /**
-     * 부품사 정보 수정
-     */
-    public int updateTechCompanyInfo(HashMap companyMap);
-
-    /**
-     * 거래처별 매출 비중 등록
-     */
-    public int insertTechcnstgDlyvInfo(HashMap cnstgDlyvMap);
 
     /**
      * 부품사 업종 상세 등록
      */
     public int insertCbsnDtl(HashMap cbstgCdMap);
-
-    /**
-     * 회사 업종 상세 등록
-     */
-    public int insertCmpnCbsnInfoDtl(HashMap cpCbsnMap);
 
     /**
      * 고객사 비율 상세 등록
@@ -164,6 +141,11 @@ public interface CBATechGuidanceMapper {
      * 신청 분야 상세
      */
     public List<CBATechGuidanceInsertDTO> selectCnstgAppctnType(Integer cnstgSeq);
+    
+    /**
+     * 만족도 상세
+     */
+    public List<CBATechGuidanceInsertDTO> selectTechGuidanceSurvey(Integer cnstgSeq);
 
     /**
      * 신청 부품사 카운트
@@ -179,6 +161,16 @@ public interface CBATechGuidanceMapper {
      * 컨설팅 이관 내역 등록
      */
     public int insertTrsfGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 만족도 종합결과 리스트 조회
+     */
+    public List<CBAConsultSuveyRsltListDTO> selectConsultSuveyRsltList(CBAConsultSuveyRsltListDTO cBAConsultSuveyRsltListDTO);
+
+    /**
+     * 만족도 종합결과 리스트 갯수 조회
+     */
+    public int getConsultSuveyRsltCnt(CBAConsultSuveyRsltListDTO cBAConsultSuveyRsltListDTO);
 
     /**
      * 컨설팅 이관 목록 조회

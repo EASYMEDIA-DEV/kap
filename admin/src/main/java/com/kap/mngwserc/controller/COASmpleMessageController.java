@@ -123,13 +123,14 @@ public class COASmpleMessageController {
         {
             //메일 발송
             COSmsDTO smsDto = new COSmsDTO();
-            smsDto.setSubject("[ KAP ] 문의에 대한 답변 드립니다");
+            smsDto.setTitle("[ KAP ] 문의에 대한 답변 드립니다");
+            smsDto.setMessage("[$NAME]님 알림 문자 입니다. 전화번호 : [$MOBILE] 비고1 : [$NOTE1] 비고2 : [$NOTE2] 비고3 : [$NOTE3] 비고4 : [$NOTE4] 비고5 : [$NOTE5]");
             //수신자 정보
             COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
             //전화번호
-            receiverDto.setMobile("01033746727");
+            receiverDto.setMobile("01077037810");
             //이름(비필수)
-            receiverDto.setName("이옥정1");
+            receiverDto.setName("김학규1");
             //치환문자1
             receiverDto.setNote1("치환문자1");
             //치환문자2
@@ -159,7 +160,27 @@ public class COASmpleMessageController {
             receiverDto2.setNote5("치환문자5");
             //수신자 정보 등록
             smsDto.getReceiver().add(receiverDto2);
-            return cOMessageService.sendSms(smsDto, "SMSSample.txt");
+            //수신자 정보
+            COMessageReceiverDTO receiverDto3= new COMessageReceiverDTO();
+            //전화번호
+            receiverDto3.setMobile("01074471149");
+            //이름(비필수)
+            receiverDto3.setName("장두석");
+            //치환문자1
+            receiverDto3.setNote1("치환문자1");
+            //치환문자2
+            receiverDto3.setNote2("치환문자2");
+            //치환문자3
+            receiverDto3.setNote3("치환문자3");
+            //치환문자4
+            receiverDto3.setNote4("치환문자4");
+            //치환문자5
+            receiverDto3.setNote5("치환문자5");
+            //수신자 정보 등록
+            smsDto.getReceiver().add(receiverDto3);
+
+            //return cOMessageService.sendSms(smsDto, "SMSSample.txt");
+            return cOMessageService.sendSms(smsDto, "");
         }
     }
 }

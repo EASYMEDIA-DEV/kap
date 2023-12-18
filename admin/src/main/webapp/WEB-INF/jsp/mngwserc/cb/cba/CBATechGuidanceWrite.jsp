@@ -8,6 +8,7 @@
 <c:set var="dpndCmpnList" value="${rtnDto.dpndCmpnList}"/>
 <c:set var="dlvryCmpnList" value="${rtnDto.dlvryCmpnList}"/>
 <c:set var="appctnTypeList" value="${rtnDto.appctnTypeList}"/>
+<c:set var="surveyInfoList" value="${rtnDto.surveyInfoList}"/>
 <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 
 <div class="container-fluid">
@@ -445,7 +446,7 @@
                                         </label>
                                         <label class="col-sm-2 control-label" style="margin-top: 15px;">매출비중</label>
                                         <label class="col-sm-3 control-label">
-                                            <input type="number" class="form-control input-sm" data-name="dlvryRateList" name="dlvryRate" value="${dlvryCmpnList.dlvryRate}" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3"/>
+                                            <input type="text" class="form-control input-sm" data-name="dlvryRateList" name="dlvryRate" value="${dlvryCmpnList.dlvryRate}" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                                         </label>
                                         <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                         <label class="col-sm-1 control-label closeLabel" <c:if test="${empty dlvryCmpnList}">style="display: none"</c:if>>
@@ -462,7 +463,7 @@
                                     </label>
                                     <label class="col-sm-2 control-label" style="margin-top: 15px;">매출비중</label>
                                     <label class="col-sm-3 control-label">
-                                        <input type="number" class="form-control input-sm" data-name="dlvryRateList" name="dlvryRate" value="" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3"/>
+                                        <input type="text" class="form-control input-sm" data-name="dlvryRateList" name="dlvryRate" value="" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                                     </label>
                                     <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                     <label class="col-sm-1 control-label closeLabel" style="display: none">
@@ -489,7 +490,7 @@
                                         </label>
                                         <label class="col-sm-2 control-label" style="margin-top: 15px;">매출비중</label>
                                         <label class="col-sm-3 control-label">
-                                            <input type="number" class="form-control input-sm" data-name="dpndnRateList" name="dpndnRate" value="${dpndCmpnList.dpndnRate}" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3"/>
+                                            <input type="text" class="form-control input-sm" data-name="dpndnRateList" name="dpndnRate" value="${dpndCmpnList.dpndnRate}" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                                         </label>
                                         <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                         <label class="col-sm-1 control-label closeLabel" <c:if test="${empty dpndCmpnList}">style="display: none"</c:if>>
@@ -506,7 +507,7 @@
                                     </label>
                                     <label class="col-sm-2 control-label" style="margin-top: 15px;">매출비중</label>
                                     <label class="col-sm-3 control-label">
-                                        <input type="number" class="form-control input-sm" data-name="dpndnRateList" name="dpndnRate" value="" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3"/>
+                                        <input type="text" class="form-control input-sm" data-name="dpndnRateList" name="dpndnRate" value="" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                                     </label>
                                     <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                     <label class="col-sm-1 control-label closeLabel" style="display: none">
@@ -520,13 +521,13 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">품질담당인원</label>
+                    <label class="col-sm-1 control-label">품질담당인원<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control input-sm notRequired" name="qltyPicCnt" value="${rtnDto.qltyPicCnt}"/>
+                        <input type="text" class="form-control input-sm" name="qltyPicCnt" value="${rtnDto.qltyPicCnt}" title="품질담당인원"/>
                     </div>
                     <label class="col-sm-1 control-label">FAX<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control input-sm" name="faxNo" value="${rtnDto.faxNo}" title="FAX"/>
+                        <input type="text" class="form-control input-sm" name="faxNo" value="${rtnDto.faxNo}" title="FAX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                     </div>
                 </div>
             </fieldset>
@@ -539,12 +540,12 @@
                         <input type="text" class="form-control input-sm notRequired" id="dtlAddr" name="fctryDtlAddr" value="${rtnDto.fctryDtlAddr}" title="상세주소" placeholder="상세주소 입력"/>
                     </div>
                     <div class="col-sm-1" data-html2canvas-ignore="true">
-                        <button type="button" class="btn btn-sm btn-warning searchPostCode factAddr">우편번호 검색</button>
+                        <button type="button" class="btn btn-sm btn-warning searchPostCode factAddr" data-html2canvas-ignore="true">우편번호 검색</button>
                     </div>
                     <div class="col-sm-1">
                         <label class="checkbox-inline c-checkbox">
-                            <c:set var="rprsntApprvYn" value="${kl:nvl(rtnDto.rprsntApprvYn, 'N')}" />
-                            <input type="checkbox" class="notRequired addrSame"  name="cmpnAddrSameYn" value="${rprsntApprvYn}"<c:if test="${rprsntApprvYn eq 'Y'}">checked</c:if> title="주소 동일 여부"/>
+                            <c:set var="cmpnAddrSameYn" value="${kl:nvl(rtnDto.cmpnAddrSameYn, 'N')}" />
+                            <input type="checkbox" class="notRequired addrSame"  name="cmpnAddrSameYn" value="${cmpnAddrSameYn}"<c:if test="${cmpnAddrSameYn eq 'Y'}">checked</c:if> title="주소 동일 여부"/>
                             <span class="ion-checkmark-round"></span> 본사와 동일
                         </label>
                     </div>
@@ -581,11 +582,11 @@
                     <div class="col-sm-11">
                         <c:set var="rprsntApprvYn" value="${rtnDto.rprsntApprvYn}"/>
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="rprsntApprvYn" value="Y" <c:if test="${rprsntApprvYn eq 'Y'}">checked</c:if>/>
+                            <input type="radio" name="rprsntApprvYn" value="Y" <c:if test="${rprsntApprvYn eq 'Y'}">checked</c:if> title="대표자 승인여부"/>
                             <span class="ion-record"></span> 승인
                         </label>
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="rprsntApprvYn" value="N" <c:if test="${rprsntApprvYn eq 'N'}">checked</c:if>/>
+                            <input type="radio" name="rprsntApprvYn" value="N" <c:if test="${rprsntApprvYn eq 'N'}">checked</c:if> title="대표자 승인여부"/>
                             <span class="ion-record"></span> 미승인
                         </label>
                     </div>
@@ -723,7 +724,8 @@
                 <!-- 진행 정보 -->
                 <div id="episdList" class="tab-pane fade in active">
                     <fieldset>
-                        <h6 class="mt0"><em class="ion-play mr-sm"></em> 진행상태</h6>
+                        <input type="hidden" name="resumeSttsCd" class="resumeSttsCd" value="MNGTECH_STATUS_01">
+                        <h6 class="mt0"><em class="ion-play mr-sm"></em> 진행상태 : <label class="resumeSttsNm" style="color: red;">신청</label></h6>
                     </fieldset>
                     <c:choose>
                         <c:when test="${empty rtnDto.rsumeList}">
@@ -1117,7 +1119,7 @@
                                             <select class="form-control input-sm notRequired" name="guidePscndCd" id="guidePscndCd">
                                                 <option value="">선택</option>
                                                 <c:forEach var="guidePscnd" items="${cdDtlList.GUIDE_PSCND}" varStatus="status">
-                                                    <option value="${guidePscnd.cd}" <c:if test="${rsumeList.guidePscndCd}">selected</c:if>>${guidePscnd.cdNm}</option>
+                                                    <option value="${guidePscnd.cd}" <c:if test="${rsumeList.guidePscndCd eq guidePscnd.cd}">selected</c:if>>${guidePscnd.cdNm}</option>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -1366,79 +1368,84 @@
                                         <p class="form-control-static">${rtnDto.name}
                                         </p>
                                     </div>
+                        <c:forEach var="surveyInfoList" items="${surveyInfoList}" varStatus="status">
                                     <label class="col-sm-1 control-label">설문 참여자<span class="star text-danger"> *</span></label>
                                     <div class="col-sm-5">
                                         <p class="form-control-static">
+                                            ${surveyInfoList.ptcptName}
                                         </p>
                                     </div>
                                 </div>
                             </fieldset>
-                            <fieldset>
-                                <div class="form-group text-sm">
-                                    <label class="col-sm-1 control-label">참여자 연락처<span class="star text-danger"> *</span></label>
-                                    <div class="col-sm-5">
-                                        <p class="form-control-static">${rtnDto.hpNo}
-                                        </p>
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">참여자 연락처<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static">
+                                                ${surveyInfoList.ptcptTelno}
+                                            </p>
+                                        </div>
+                                        <label class="col-sm-1 control-label">참여자 직급<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static pstnText">
+                                                ${surveyInfoList.ptcptPstn}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <label class="col-sm-1 control-label">참여자 직급<span class="star text-danger"> *</span></label>
-                                    <div class="col-sm-5">
-                                        <p class="form-control-static pstnText">
-                                        </p>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">담당위원<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static cmssrName">
+                                            </p>
+                                        </div>
+                                        <label class="col-sm-1 control-label">신청 분야/업종<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static cbsnText">
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-group text-sm">
-                                    <label class="col-sm-1 control-label">담당위원<span class="star text-danger"> *</span></label>
-                                    <div class="col-sm-5">
-                                        <p class="form-control-static cmssrName">
-                                        </p>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <label class="col-sm-1 control-label">지도구분<span class="star text-danger"> *</span></label>
+                                        <div class="col-sm-5">
+                                            <p class="form-control-static guideTypeText">
+                                            </p>
+                                        </div>
                                     </div>
-                                    <label class="col-sm-1 control-label">신청 분야/업종<span class="star text-danger"> *</span></label>
-                                    <div class="col-sm-5">
-                                        <p class="form-control-static cbsnText">
-                                        </p>
+                                </fieldset>
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <div class="table-responsive ">
+                                            <table class="table text-sm">
+                                                <tbody>
+                                                <tr>
+                                                    <th>종합 점수</th>
+                                                    <th>지도실적(50)</th>
+                                                    <th>의사소통 능력(5)</th>
+                                                    <th>기획력(10)</th>
+                                                    <th>실행력(15)</th>
+                                                    <th>마인드(5)</th>
+                                                    <th>전문지식(15)</th>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">${surveyInfoList.ttlScore}</td>
+                                                    <td class="text-center">${surveyInfoList.guideRsltScore}</td>
+                                                    <td class="text-center">${surveyInfoList.cmmnctnScore}</td>
+                                                    <td class="text-center">${surveyInfoList.plnngabltScore}</td>
+                                                    <td class="text-center">${surveyInfoList.exctvabltScore}</td>
+                                                    <td class="text-center">${surveyInfoList.mndScore}</td>
+                                                    <td class="text-center">${surveyInfoList.exprtsScore}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-group text-sm">
-                                    <label class="col-sm-1 control-label">지도구분<span class="star text-danger"> *</span></label>
-                                    <div class="col-sm-5">
-                                        <p class="form-control-static guideTypeText">
-                                        </p>
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <fieldset>
-                                <div class="form-group text-sm">
-                                    <div class="table-responsive ">
-                                        <table class="table text-sm">
-                                            <tbody>
-                                            <tr>
-                                                <th>종합 점수</th>
-                                                <th>지도실적(50)</th>
-                                                <th>의사소통 능력(5)</th>
-                                                <th>기획력(10)</th>
-                                                <th>실행력(15)</th>
-                                                <th>마인드(5)</th>
-                                                <th>전문지식(15)</th>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center">100.0</td>
-                                                <td class="text-center">50.0</td>
-                                                <td class="text-center">5.0</td>
-                                                <td class="text-center">10.0</td>
-                                                <td class="text-center">15.0</td>
-                                                <td class="text-center">5.0</td>
-                                                <td class="text-center">15.0</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                              </fieldset>
-                            </c:if>
+                                  </fieldset>
+                            </c:forEach>
+                        </c:if>
                     </c:forEach>
 
                     <c:if test="${rtnSurveyData != null}">
@@ -1490,29 +1497,27 @@
                             <c:set var="cd" value="${ qstnList.cd}" />
                         </c:forEach>
                     </c:if>
-
-
                 </div>
            </div>
         </c:when>
     </c:choose>
-        <div class="clearfix">
-            <div class="pull-left">
-                <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
+            <div class="clearfix">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
+                </div>
+                <div class="pull-right">
+                    <c:choose>
+                        <c:when test="${not empty rtnDto}">
+                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                            <button type="submit" class="btn btn-sm btn-success">수정</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button type="submit" class="btn btn-sm btn-success">등록</button>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
             </div>
-            <div class="pull-right">
-                <c:choose>
-                    <c:when test="${not empty rtnDto}">
-                        <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                        <button type="submit" class="btn btn-sm btn-success">수정</button>
-                    </c:when>
-                    <c:otherwise>
-                        <button type="submit" class="btn btn-sm btn-success">등록</button>
-                    </c:otherwise>
-                </c:choose>
-            </div>
-        </div>
-    </form>
+        </form>
    </div>
 </div>
 <jsp:include page="/WEB-INF/jsp/mngwserc/sv/sva/SVASurveySrchLayer.jsp">

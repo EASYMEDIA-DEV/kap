@@ -68,6 +68,21 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title = "상세주소", example = "아파트 111호")
     private String dtlAddr;
 
+    @Schema(title = "대표자명", example = "아파트 111호")
+    private String rprsntNm;
+
+
+
+    @Schema(title = "회사우편번호", example = "12345")
+    private String cmpnZipcode;
+
+    @Schema(title = "회사기본주소", example = "서울특별시 ~~~")
+    private String cmpnBscAddr;
+
+    @Schema(title = "회사상세주소", example = "아파트 111호")
+    private String CmpnDtlAddr;
+
+
     @Schema(title = "공지sms수신여부", example = "Y")
     private Character ntfySmsRcvYn;
 
@@ -195,6 +210,7 @@ public class MPAUserDto extends BaseDTO {
     private String encPwd;
 
     private String cmpnBscDtlAddr;
+
     @Schema(title="파일순번" , example = "1")
     private Integer cmpnMpleCnt;
     @Schema(title = "전화번호", example = "022344555")

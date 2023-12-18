@@ -1,6 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<jsp:include page="/WEB-INF/jsp/front/mp/mph/MPHPartsModifySrchLayer.jsp" />
-
+<jsp:include page="/WEB-INF/jsp/front/mp/mph/MPHPartsModifySrchLayer.jsp"  />
 <script type="text/javascript">
 
 
@@ -8,7 +7,6 @@
 <div id="wrap" class="mypage" data-controller="controller/mp/mph/MPHCertificationController " ><!-- 마이페이지 mypage 클래스 추가 -->
 
     <div class="cont-wrap">
-
         <form name="formUserSubmit" id="formUserSubmit"  method="post"  >
             <input type="hidden" id="formEmail" name="mpaUserDto.email" class="notRequired" />
             <input type="hidden" id="oldEmailName"  value="${rtnDtl.emailName}" />
@@ -19,18 +17,21 @@
             <input type="hidden" name="mpaUserDto.birth" id="formBirth" class="notRequired"/>
             <input type="hidden" name="mpaUserDto.gndr" id="formGndr" class="notRequired"/>
             <input type="hidden" name="mpaUserDto.memCd" id="formMemCd" class="notRequired" value="${rtnDtl.memCd}"/>
+            <input type="hidden" name="mpaUserDto.memCdOld" id="formMemCdOld" class="notRequired" value="${rtnDtl.memCd}"/>
             <input type="hidden" name="mpaUserDto.fndnNtfyRcvYn" id="formFndnNtfyRcvYn" class="notRequired" value="${rtnDtl.fndnNtfyRcvYn}"/>
             <input type="hidden" name="mpaUserDto.hpNo" id="formHpNo" class="notRequired"/>
-            <input type="hidden" name="mpaUserDto.deptCd" id="formDeptCd" class="notRequired deptCd" />
-            <input type="hidden" name="mpaUserDto.deptDtlNm" id="formDeptDtlNm" class="notRequired deptDtlNm"/>
-            <input type="hidden" name="mpaUserDto.pstnNm" id="formpstnNm" class="notRequired pstnNm"/>
-            <input type="hidden" name="mpaUserDto.pstnCd" id="formPstnCd" class="notRequired pstnCd"/>
+            <input type="hidden" name="mpaUserDto.deptCd" id="formDeptCd" class="notRequired deptCd" value="${rtnDtl.deptCd}"/>
+            <input type="hidden" name="mpaUserDto.deptDtlNm" id="formDeptDtlNm" class="notRequired deptDtlNm" value="${rtnDtl.deptDtlNm}"/>
+            <input type="hidden" name="mpaUserDto.pstnNm" id="formpstnNm" class="notRequired pstnNm" value="${rtnDtl.pstnNm}"/>
+            <input type="hidden" name="mpaUserDto.pstnCd" id="formPstnCd" class="notRequired pstnCd" value="${rtnDtl.pstnCd}"/>
             <input type="hidden" name="mpaUserDto.ntfyEmailRcvYn" id="formNtfyEmailRcvYn" class="notRequired"/>
             <input type="hidden" name="mpaUserDto.ntfySmsRcvYn" id="formNtfySmsRcvYn" class="notRequired"/>
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" id="email-auth" name="email" class="notRequired" />
             <input type="hidden" name="ci" id="ci" value="${rtnDtl.ci}"/>
-            <input type="hidden" id="bsnmNos" name="bsnmNo" value="" class="notRequired"/>
+            <input type="hidden" id="bsnmNos" name="bsnmNo"  class="notRequired" value="${rtnDtl.workBsnmNo}"/>
+            <input type="hidden" id="bsnmNosOld" name="bsnmNoOld"  class="notRequired" value="${rtnDtl.workBsnmNo}"/>
+            <input type="hidden" id="partTypeChg" name="partTypeChg"  class="notRequired" value="no"/>
 
             <input type="hidden" id="cmpnNm" name="mpePartsCompanyDTO.cmpnNm"  class="notRequired cmpnNm"/>
             <input type="hidden" id="rprsntNm" name="mpePartsCompanyDTO.rprsntNm"  class="notRequired rprsntNm"/>
@@ -41,22 +42,22 @@
             <input type="hidden" id="bsnmChk" name="bsnmChk"  class="notRequired bsnmChk"/>
             <input type="hidden" id="ctgryCd" name="mpePartsCompanyDTO.ctgryCd"  class="notRequired ctgryCd"/>
             <input type="hidden" id="sizeCd" name="mpePartsCompanyDTO.sizeCd"  class="notRequired sizeCd"/>
-            <input type="hidden" id="stbsmDt" name="mpePartsCompanyDTO.stbsmDt" class="notRequired stbsmDt"/>
-            <input type="hidden" id="slsPmt" name="mpePartsCompanyDTO.slsPmt"  class="notRequired slsPmt"/>
-            <input type="hidden" id="slsYear" name="mpePartsCompanyDTO.slsYear"  class="notRequired slsYear"/>
-            <input type="hidden" id="mpleCnt" name="mpePartsCompanyDTO.mpleCnt"  class="notRequired mpleCnt"/>
-            <input type="hidden" id="mjrPrdct1" name="mpePartsCompanyDTO.mjrPrdct1"  class="notRequired mjrPrdct1"/>
-            <input type="hidden" id="mjrPrdct2" name="mpePartsCompanyDTO.mjrPrdct2"  class="notRequired mjrPrdct2"/>
-            <input type="hidden" id="mjrPrdct3" name="mpePartsCompanyDTO.mjrPrdct3"  class="notRequired mjrPrdct3"/>
-            <input type="hidden" id="qlty5StarCd" name="mpePartsCompanyDTO.qlty5StarCd"  class="notRequired qlty5StarCd"/>
-            <input type="hidden" id="qlty5StarYear" name="mpePartsCompanyDTO.qlty5StarYear" class="notRequired qlty5StarYear"/>
-            <input type="hidden" id="pay5StarCd" name="mpePartsCompanyDTO.pay5StarCd"  class="notRequired pay5StarCd"/>
-            <input type="hidden" id="pay5StarYear" name="mpePartsCompanyDTO.pay5StarYear" class="notRequired pay5StarYear"/>
-            <input type="hidden" id="tchlg5StarCd" name="mpePartsCompanyDTO.tchlg5StarCd"  class="notRequired tchlg5StarCd"/>
-            <input type="hidden" id="tchlg5StarYear" name="mpePartsCompanyDTO.tchlg5StarYear"  class="notRequired tchlg5StarYear"/>
-            <input type="hidden" id="sqInfoList1" name="mpePartsCompanyDTO.sqInfoList1" class="notRequired sqInfoList1"/>
-            <input type="hidden" id="sqInfoList2" name="mpePartsCompanyDTO.sqInfoList2"  class="notRequired sqInfoList2"/>
-            <input type="hidden" id="sqInfoList3" name="mpePartsCompanyDTO.sqInfoList3"  class="notRequired sqInfoList3"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.stbsmDt" class="notRequired stbsmDt"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.slsPmt"  class="notRequired slsPmt"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.slsYear"  class="notRequired slsYear"/>
+            <input type="hidden" name="mpePartsCompanyDTO.mpleCnt"  class="notRequired mpleCnt"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.mjrPrdct1"  class="notRequired mjrPrdct1"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.mjrPrdct2"  class="notRequired mjrPrdct2"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.mjrPrdct3"  class="notRequired mjrPrdct3"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.qlty5StarCd"  class="notRequired qlty5StarCd"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.qlty5StarYear" class="notRequired qlty5StarYear"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.pay5StarCd"  class="notRequired pay5StarCd"/>
+            <input type="hidden" name="mpePartsCompanyDTO.pay5StarYear" class="notRequired pay5StarYear"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.tchlg5StarCd"  class="notRequired tchlg5StarCd"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.tchlg5StarYear"  class="notRequired tchlg5StarYear"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.sqInfoList1" class="notRequired sqInfoList1"/>
+            <input type="hidden" name="mpePartsCompanyDTO.sqInfoList2"  class="notRequired sqInfoList2"/>
+            <input type="hidden"  name="mpePartsCompanyDTO.sqInfoList3"  class="notRequired sqInfoList3"/>
 
 
 
@@ -262,10 +263,10 @@
                                                             <div class="form-address">
                                                                 <div class="form-group">
                                                                     <div class="form-input">
-                                                                        <input type="text" placeholder="우편번호" readonly value="${rtnDtl.zipcode}" id="zipcode" name="mpaUserDto.zipcode" class="zipcode" title="우편번호">
+                                                                        <input type="text" placeholder="우편번호" readonly value="${rtnDtl.zipcode}" id="zipcodeMod" name="mpaUserDto.zipcode" class="zipcode" title="우편번호">
                                                                     </div>
                                                                     <div class="form-input w-longer">
-                                                                        <input type="text" placeholder="기본주소" readonly value="${rtnDtl.bscAddr}" id="bscAddr" name="mpaUserDto.bscAddr" class="bscAddr" title="기본주소">
+                                                                        <input type="text" placeholder="기본주소" readonly value="${rtnDtl.bscAddr}" id="bscAddrMod" name="mpaUserDto.bscAddr" class="bscAddr" title="기본주소">
                                                                     </div>
                                                                     <div class="btn-wrap">
                                                                         <button class="btn-solid small gray-bg" type="button" id="searchPostCode"><span>우편번호 찾기</span></button>
@@ -273,7 +274,7 @@
                                                                 </div>
                                                                 <div class="form-group">
                                                                     <div class="form-input w-longest">
-                                                                        <input type="text" placeholder="상세주소 입력" value="${rtnDtl.dtlAddr}" id="dtlAddr" name="mpaUserDto.dtlAddr" class="dtlAddr" title="상세주소">
+                                                                        <input type="text" placeholder="상세주소 입력" value="${rtnDtl.dtlAddr}" id="dtlAddrMod" name="mpaUserDto.dtlAddr" class="dtlAddr" title="상세주소">
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -330,6 +331,61 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <c:if test="${rtnDtl.memCd eq 'CP' }">
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-head">부서<span class="essential-mark color-sky">*</span></p>
+                                            </div>
+                                            <div class="td">
+                                                <div class="data-line-w">
+                                                    <div class="data-line">
+                                                        <div class="form-group">
+                                                            <div class="form-select">
+                                                                <select title="부서" class="notRequired deptCd deptCdOld">
+                                                                    <option value="" selected>선택</option>
+                                                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status" >
+                                                                        <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
+                                                                            <option value="${cdList.cd}" <c:if test="${rtnDtl.deptCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-input">
+                                                                <input type="text" placeholder="부서 상세 입력"  class="notRequired deptDtlNm" value="${rtnDtl.deptDtlNm}" >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-head">직급<span class="essential-mark color-sky">*</span></p>
+                                            </div>
+                                            <div class="td">
+                                                <div class="data-line-w">
+                                                    <div class="data-line">
+                                                        <div class="form-group">
+                                                            <div class="form-select">
+                                                                <select   title="직급" class="notRequired pstnCd pstnCdOld" title="직급">
+                                                                    <option value="" selected>선택</option>
+                                                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                                                        <c:if test="${fn:contains(cdList, 'MEM_CD010')}">
+                                                                            <option value="${cdList.cd}" <c:if test="${rtnDtl.pstnCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-input form-display" style="display:none;">
+                                                                <input type="text" placeholder="기타 직급 입력"  class="pstnNm notRequired pstnNmOld" value="${rtnDtl.pstnNm}" >
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
@@ -339,7 +395,14 @@
                                 <div class="sec-con-area">
                                     <div class="btn-wrap">
                                         <div class="btn-set">
+                                            <c:if test="${rtnDtl.memCd eq 'CO' }">
                                             <a class="btn-solid small black-bg" id="btnParts" href="javascript:"><span>부품사회원 전환</span></a>
+                                            </c:if>
+                                            <c:if test="${rtnDtl.memCd eq 'CP' }">
+                                            <a class="btn-solid small gray-bg" id="btnParts" href="javascript:"><span>부품사 정보 변경</span></a>
+                                            <a class="btn-solid small black-bg" id="btnPartsChg" href="javascript:"><span>소속부품사(이직) 변경</span></a>
+                                            </c:if>
+
                                         </div>
                                         <div class="btn-set">
                                         </div>
@@ -352,23 +415,23 @@
                                         <div class="list-txt-w">
                                             <div class="list-txt">
                                                 <p class="tit">사업자등록번호</p>
-                                                <p class="txt bsnmNoNum" ></p>
+                                                <p class="txt bsnmNoNum" >${kl:bsnmNoConvert(rtnDtl.workBsnmNo)}</p>
                                             </div>
                                             <div class="list-txt">
                                                 <p class="tit">부품사명</p>
-                                                <p class="txt cmpnNm"></p>
+                                                <p class="txt cmpnNm">${rtnDtl.cmpnNm}</p>
                                             </div>
                                             <div class="list-txt">
                                                 <p class="tit">대표자명</p>
-                                                <p class="txt rprsntNm"></p>
+                                                <p class="txt rprsntNm">${rtnDtl.rprsntNm}</p>
                                             </div>
                                             <div class="list-txt">
                                                 <p class="tit">구분</p>
-                                                <p class="txt ctgryNm"></p>
+                                                <p class="txt ctgryNm">${rtnDtl.ctgryCdNm}</p>
                                             </div>
                                             <div class="list-txt">
                                                 <p class="tit">주소</p>
-                                                <p class="txt addrNm"></p>
+                                                <p class="txt addrNm">${rtnDtl.cmpnBscAddr}  ${rtnDtl.cmpnDtlAddr}</p>
                                             </div>
                                         </div>
                                     </div>

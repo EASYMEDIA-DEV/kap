@@ -2,10 +2,10 @@ package com.kap.mngwserc.controller.cb.cba;
 
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
-import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
@@ -21,6 +21,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +60,15 @@ public class CBATechGuidanceController {
      * 컨설팅 사업 기술 지도 목록 페이지
      */
     @GetMapping(value = "/list")
-    public String getTechGuidanceListPage(CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap) throws Exception {
+    public String getTechGuidanceListPage(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
         try {
-            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceDTO));
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            cdDtlList.add("COMPANY_TYPE"); //부품사 구분 코드
+            cdDtlList.add("MNGTECH_STATUS"); // 기술지도 진행 상태값
+            cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceInsertDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -76,9 +83,9 @@ public class CBATechGuidanceController {
      * 컨설팅 사업 기술 지도 목록 조회
      */
     @PostMapping(value = "/select")
-    public String selectTechGuidanceList(CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+    public String selectTechGuidanceList(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
-            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceDTO));
+            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceInsertDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -94,8 +101,8 @@ public class CBATechGuidanceController {
      */
     @GetMapping(value = "/write")
     public String getTechGuidanceWritePage(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
-        /*try
-        {*/
+        try
+        {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
@@ -110,6 +117,7 @@ public class CBATechGuidanceController {
         cdDtlList.add("GUIDE_TYPE_CD"); // 지도 구분 코드
         cdDtlList.add("GUIDE_PSCND"); // 지도 현황 코드
         cdDtlList.add("INIT_VST_RSLT"); // 초도방문결과
+        cdDtlList.add("MNGTECH_STATUS"); // 기술지도 진행 상태값
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
         if (!"".equals(cBATechGuidanceInsertDTO.getDetailsKey()) && cBATechGuidanceInsertDTO.getDetailsKey() != null) {
@@ -132,12 +140,12 @@ public class CBATechGuidanceController {
 
 
         }
-        /*} catch (Exception e) {
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
 
         return "mngwserc/cb/cba/CBATechGuidanceWrite.admin";
@@ -234,12 +242,12 @@ public class CBATechGuidanceController {
     /**
      * 컨설팅 사업 경영컨설팅 만족도 종합결과 목록 조회
      */
-    @GetMapping(value = "/selectSuveyRslt")
-    public String selectConsultSuveyRsltList(CBBConsultSuveyRsltListDTO cBBConsultSuveyRsltListDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+    @GetMapping(value = "/selectSurveyRslt")
+    public String selectConsultSuveyRsltList(CBAConsultSuveyRsltListDTO cBAConsultSuveyRsltListDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
-            cBBConsultSuveyRsltListDTO.setRtnBsnGubun("CONSULT_GB01");
-            /*modelMap.addAttribute("rtnData", cBATechGuidanceService.selectConsultSuveyRsltList(cBBConsultSuveyRsltListDTO));
-            modelMap.addAttribute("searchDto", cBBConsultSuveyRsltListDTO);*/
+            cBAConsultSuveyRsltListDTO.setRtnBsnGubun("CONSULT_GB01");
+            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectConsultSuveyRsltList(cBAConsultSuveyRsltListDTO));
+            modelMap.addAttribute("searchDto", cBAConsultSuveyRsltListDTO);
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -247,7 +255,29 @@ public class CBATechGuidanceController {
             throw new Exception(e.getMessage());
         }
 
-        return "mngwserc/cb/cba/CBBConsultSuveyRsltLayerAjax";
+        return "mngwserc/cb/cba/CBAConsultSurveyRsltLayerAjax";
+    }
+
+    /**
+     * 컨설팅 사업 경영컨설팅 엑셀다운로드 관련
+     */
+    @GetMapping(value = "/excel-down")
+    public void selectManageConsultListExcel(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, HttpServletResponse response) throws Exception
+    {
+       /* try
+        {*/
+            cBATechGuidanceInsertDTO.setExcelYn("Y");
+            //엑셀 생성
+            cBATechGuidanceService.excelDownload(cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceInsertDTO), response);
+        /*}
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }*/
     }
 
     @RestController
@@ -260,7 +290,7 @@ public class CBATechGuidanceController {
         private final COCodeService cOCodeService;
 
         /**
-         * 교육과정 분류 3뎁스 호출
+         * 사업자 번호로 회사 정보 찾기
          */
         @PostMapping(value = "/bsnmNoSearch")
         @ResponseBody
@@ -278,7 +308,7 @@ public class CBATechGuidanceController {
         }
 
         /**
-         * 교육과정 분류 3뎁스 호출
+         *  지역 정보로 서브 지역 정보 찾기
          */
         @PostMapping(value = "/subAddrSelect")
         @ResponseBody

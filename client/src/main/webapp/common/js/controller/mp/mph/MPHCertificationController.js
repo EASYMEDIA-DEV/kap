@@ -34,7 +34,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     function callbackAjaxLogin(data) {
         if(data.data.passwordChk) {
-            location.replace('/my-page/member/modify-page/' + data.data.memCd);
+            location.replace('/my-page/member/modify-page');
         } else {
             alert(msgCtrl.getMsg("fail.mp.mph.al_002"));
             return false;
@@ -227,7 +227,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             searchPostCode : {
                 event : {
                     click : function() {
-                        cmmCtrl.searchPostCode(width,height,"zipcode","bscAddr","dtlAddr");
+                        cmmCtrl.searchPostCode(width,height,"zipcodeMod","bscAddrMod","dtlAddrMod");
 
                     }
                 }
@@ -269,7 +269,111 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
 
+                        if($("#bsnmNosOld").val()!= "") {
+                            $("#partTypeChg").val("chg");
+                            jQuery.ajax({
+                                url : "/my-page/member/"+$("#bsnmNosOld").val(),
+                                type : "get",
+                                data :
+                                    {
+                                    },
+                                success : function(data)
+                                {
+                                    let cmpn = data.rtnInfo;
+                                    let sqList = data.sqInfoList.list;
+                                    $("#bsnmNo").val(cmpn.bsnmNo);
+                                    $("#bsnmNo").prop('readonly', true);
+                                    $("#bsnmNo").attr('disabled', true);
+                                    $(".btnCmpnChk").hide();
+                                    $(".cmpn_nm_new").val(cmpn.cmpnNm);
+                                    $(".rprsnt_nm").val(cmpn.rprsntNm);
+                                    $("#ctgryCd").val(cmpn.ctgryCd);
+
+                                    $("#sizeCd").val(cmpn.sizeCd);
+                                    $("#stbsmDt").val(cmpn.stbsmDt);
+                                    $("#telNo").val(cmpn.telNo);
+                                    $("#zipcode").val(cmpn.zipcode);
+                                    $("#bscAddr").val(cmpn.bscAddr);
+                                    $("#dtlAddr").val(cmpn.dtlAddr);
+                                    $("#slsPmt").val(cmpn.slsPmt);
+                                    $("#slsYear").val(cmpn.slsYear);
+                                    $("#mpleCnt").val(cmpn.mpleCnt);
+                                    $("#mjrPrdct1").val(cmpn.mjrPrdct1);
+                                    $("#mjrPrdct2").val(cmpn.mjrPrdct2);
+                                    $("#mjrPrdct3").val(cmpn.mjrPrdct3);
+                                    $("#qlty5StarCd").val(cmpn.qlty5StarCd);
+                                    $("#qlty5StarYear").val(cmpn.qlty5StarYear);
+                                    $("#pay5StarCd").val(cmpn.pay5StarCd);
+                                    $("#pay5StarYear").val(cmpn.pay5StarYear);
+                                    $("#tchlg5StarCd").val(cmpn.tchlg5StarCd);
+                                    $("#tchlg5StarYear").val(cmpn.tchlg5StarYear);
+
+                                    if($("#ctgryCd").val() == 'COMPANY01001') {
+                                        $(".gubunOne").show();
+                                        $(".gubunTwo").hide();
+                                    } else if($("#ctgryCd").val() == 'COMPANY01002'){
+                                        $(".gubunOne").hide();
+                                        $(".gubunTwo").show();
+
+                                        for(var i = 0 ; i < sqList.length ; i++) {
+                                            $(".lastBtnIndex" + (i+1)).empty();
+                                            $(".data-line"+(i+1)).show();
+                                            $("#nm"+(i+1)).val(sqList[i].nm);
+                                            $("#year"+(i+1)).val(sqList[i].year);
+                                            $("#score"+(i+1)).val(sqList[i].score);
+                                            $("#crtfnCmpnNm"+(i+1)).val(sqList[i].crtfnCmpnNm);
+                                        }
+                                        $(".lastBtnIndex"+sqList.length).append('<button class="btn-text-icon delete btnSqInfoMinus" type="button"><span>삭제</span></button>');
+                                        $(".lastBtnIndex"+sqList.length).append('<button class="btn-solid small gray-bg btn-add-line btnSqInfoPlus" type="button"><span>SQ 정보 추가</span></button>');
+                                    }
+                                },
+                                error : function(xhr, ajaxSettings, thrownError)
+                                {
+                                    cmmCtrl.errorAjax(xhr);
+                                    jQuery.jstree.rollback(data.rlbk);
+                                }
+                            });
+                        } else {
+                            $("#partTypeChg").val("new");
+                        }
                         openPopup('switchingMemberPopup',this);
+                    }
+                }
+            },
+
+            btnPartsChg : {
+                event : {
+                    click : function() {
+
+                        //confirm-comp
+                        jQuery.ajax({
+                            url : "/my-page/member/confirm-comp",
+                            type : "post",
+                            timeout: 30000,
+                            data : {},
+                            dataType : "json",
+                            async: false,
+                            cache : false,
+                            success : function(data, status, xhr){
+                                console.log(data);
+                                if(data.data.chk) {
+                                    $("#btnPartsChg").hide();
+                                    alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
+                                } else {
+                                    $("#partTypeChg").val("turnOver");
+                                    $("#bsnmNo").prop('readonly', false);
+                                    $("#bsnmNo").attr('disabled', false);
+                                    $(".btnCmpnChk").show();
+                                    openPopup('switchingMemberPopup',this);
+                                }
+                            },
+                            error : function(data, status, xhr){
+                                return false;
+                            },
+                            complete : function(){
+                            }
+                        });
+
 
                     }
                 }
@@ -277,11 +381,52 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         },
         classname : {
+            deptCdOld : {
+                event : {
+                    change : function() {
+                        $(".deptCd").val($(this).val());
+                    }
+                }
+            },
+
+            deptDtlNm : {
+                event : {
+                    input : function() {
+                        $(".deptDtlNm").val($(this).val());
+                    }
+                }
+            },
+            pstnCdOld : {
+                event : {
+                    change : function() {
+                        $(".pstnNmOld").val("");
+                        $(".pstnCd").val($(this).val());
+                        if($(this).val() == 'MEM_CD01007') {
+                            $(".form-display").show();
+                        } else {
+                            $(".form-display").hide();
+                        }
+                    }
+                }
+            },
+
+            pstnNmOld : {
+                event : {
+                    input : function() {
+                        $(".pstnNm").val($(this).val());
+                    }
+                }
+            }
+
 
         },
 
         immediately : function() {
-
+            if($(".pstnCd").val() == "MEM_CD01007") {
+                $(".form-display").show();
+            } else {
+                $(".form-display").hide();
+            }
             emailSel();
 
             var $formObj = $("#formPasswordConfirm");
@@ -343,21 +488,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         alert(msgCtrl.getMsg("fail.mp.join.al_015"));
                         return false;
                     }
-                    // if($("#memCd").val() =='CP') {
-                    //     if($("#deptCd").val() == '') {
-                    //         alert(msgCtrl.getMsg("fail.mp.join.al_032"));
-                    //         return false;
-                    //     }
-                    //     if($("#pstnCd").val() =='') {
-                    //         alert(msgCtrl.getMsg("fail.mp.join.al_034"));
-                    //         return false;
-                    //     }
-                    //     if($("#pstnCd").val() =='MEM_CD01007' && $(".pstnNm").val() =='') {
-                    //         alert(msgCtrl.getMsg("fail.mp.join.al_035"));
-                    //         return false;
-                    //     }
-                    // }
-                    //
+                    if($("#formMemCdOld").val() =='CP') {
+                        if($(".deptCdOld").val() == '') {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_032"));
+                            return false;
+                        }
+                        if($(".pstnCdOld").val() =='') {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_034"));
+                            return false;
+                        }
+                        if($(".pstnCdOld").val() =='MEM_CD01007' && $(".pstnNmOld").val() =='') {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_035"));
+                            return false;
+                        }
+                    }
+
 
                     $("#formName").val($("#name").text());
                     $("#formBirth").val($("#birth").text());

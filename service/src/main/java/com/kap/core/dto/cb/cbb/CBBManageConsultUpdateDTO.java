@@ -99,4 +99,8 @@ public class CBBManageConsultUpdateDTO extends BaseDTO {
     @Schema(title = "설문종료일자")
     private String typeNm;
 
+    @Schema(title = "진행상태코드")
+    private String resumeSttsCd;
+    @Schema(title = "진행상태 텍스트")
+    private String resumeSttsNm;
 }

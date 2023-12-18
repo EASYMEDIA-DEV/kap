@@ -25,7 +25,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $formObj.find("#pageIndex").val(page);
         }
 
-        /*cmmCtrl.listFrmAjax(function(respObj) {
+        cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
             ctrl.obj.find("#trsfListContainer").html(respObj);
@@ -40,7 +40,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
 
-        }, "/mngwserc/cb/cbb/trsfList", $formObj, "GET", "html");*/
+        }, "/mngwserc/cb/cbb/trsfList", $formObj, "GET", "html");
     }
 
     var callbackAjaxDelete = function (data) {
@@ -184,6 +184,72 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
     }
 
+    var changeStts = function(){
+        var bfJdgmtRslt = $("#bfJdgmtRslt").val();
+        var initVstRsltCd = $("#initVstRsltCd").val();
+        var guidePscndCd = $("#guidePscndCd").val();
+        var guideKickfDt = $('input[name="guideKickfDt"]').val();
+        var vstDt = $("#vstDt").val(); // 방문일
+        var vstDtFormat = new Date(vstDt);// 방문일
+        var today = new Date();
+        var gbDt = new Date(guideKickfDt);
+        var bfGbDt = (gbDt-today)/(24*60*60*1000);
+        var vstDtFormat = (vstDtFormat - today)/(24*60*60*1000);
+        var initVstOpnnCntn = $("#initVstOpnnCntn").val();
+
+        if(bfGbDt == 0 || bfGbDt < 0) {
+            $(".resumeSttsNm").text("지도중");
+            $(".resumeSttsCd").val("MNGCNSLT_STATUS09");
+
+            if (guidePscndCd == 'GUIDE_PSCND01') {
+                $(".resumeSttsNm").text("지도연기");
+                $(".resumeSttsCd").val("MNGTECH_STATUS10");
+            } else if (guidePscndCd == 'CNSTG_PSCND01') {
+                $(".resumeSttsNm").text("재단취소");
+                $(".resumeSttsCd").val("MNGTECH_STATUS11");
+            } else if (guidePscndCd == 'CNSTG_PSCND02') {
+                $(".resumeSttsNm").text("부품사취소");
+                $(".resumeSttsCd").val("MNGTECH_STATUS12");
+            } else if (guidePscndCd == 'CNSTG_PSCND03') {
+                $(".resumeSttsNm").text("지도 완료");
+                $(".resumeSttsCd").val("MNGTECH_STATUS13");
+            }
+        }
+        else{
+            if(initVstRsltCd == ''){
+                if (bfJdgmtRslt == 'BF_JDGMT_RSLT05') {
+                    $(".resumeSttsNm").text("사용자취소");
+                    $(".resumeSttsCd").val("MNGCNSLT_STATUS02");
+                }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT01') {
+                    $(".resumeSttsNm").text("사전심사선정");
+                    $(".resumeSttsCd").val("MNGCNSLT_STATUS03");
+                }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT02') {
+                    $(".resumeSttsNm").text("사전심사탈락");
+                    $(".resumeSttsCd").val("MNGCNSLT_STATUS04");
+                }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT04') {
+                    $(".resumeSttsNm").text("봉사단이관");
+                    $(".resumeSttsCd").val("MNGCNSLT_STATUS05");
+                }
+            }else{
+                if(initVstRsltCd == 'BF_JDGMT_RSLT01'){
+                    $(".resumeSttsNm").text("지도승인");
+                    $(".resumeSttsCd").val("MNGCNSLT_STATUS07");
+                }else if(initVstRsltCd == 'BF_JDGMT_RSLT02'){
+                    $(".resumeSttsNm").text("지도불가");
+                    $(".resumeSttsCd").val("MNGCNSLT_STATUS08");
+                }else if((vstDtFormat == 0 || vstDtFormat < 0) && initVstOpnnCntn == ''){
+                    $(".resumeSttsNm").text("초도방문");
+                    $(".resumeSttsCd").val("MNGCNSLT_STATUS06");
+                }else if(initVstRsltCd == 'BF_JDGMT_RSLT04'){
+                    $(".resumeSttsNm").text("봉사단이관");
+                    $(".resumeSttsCd").val("MNGCNSLT_STATUS05");
+                }else if(initVstRsltCd == 'BF_JDGMT_RSLT05'){
+                    $(".resumeSttsNm").text("사용자취소");
+                    $(".resumeSttsCd").val("MNGCNSLT_STATUS02");
+                }
+            }
+        }
+    }
     var questionSet = function(){
 
         $(".surveyList").each(function(){
@@ -315,6 +381,27 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var cDay = 24*60*60*1000;
                         var cMonth = cDay*30;
                         $(".cnstgTerm").val(parseInt(difDt/cMonth));
+                    }
+                }
+            },
+            bfJdgmtRslt : {
+                event : {
+                    click : function(){
+                        changeStts();
+                    }
+                }
+            },
+            guidePscndCd : {
+                event : {
+                    click : function(){
+                        changeStts();
+                    }
+                }
+            },
+            initVstRsltCd : {
+                event : {
+                    click : function(){
+                        changeStts();
                     }
                 }
             }
@@ -541,8 +628,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             srvResult : {
                 event : {
                     click : function(){
-                        var pstnText = $("#pstnCdSelect option:selected").text();
-                        $(".pstnText").text(pstnText);
                         var cbsnText =  $("#cbsnCdSelect option:selected").text();
                         $(".cbsnText").text(cbsnText);
                         var guideTypeText = $("#guideTypeCd option:selected").text();
@@ -551,12 +636,20 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         $(".cmssrName").text(cmssrName);
                     }
                 }
+            },
+            appctnPdfDownload : {
+                event : {
+                    click : function(){
+                        var fileName = "TechGuide.pdf";
+                        cmmCtrl.getAppctnPdfDownload(fileName);
+                    }
+                }
             }
         },
         immediately: function () {
 
             questionSet();
-
+            changeStts();
             /* Editor Setting */
             jQuery("textarea[id^='cntn']").each(function () {
                 cmmCtrl.setEditor({
@@ -608,6 +701,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 $(".tempRow").eq(0).find(".close").hide();
                 $(".dpTempRow").eq(0).find(".close").hide();
                 search();
+
+
             }
 
             // 유효성 검사

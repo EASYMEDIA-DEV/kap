@@ -3,10 +3,7 @@ package com.kap.service.impl.mp;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.*;
-import com.kap.core.dto.mp.mpa.MPAAttctnDto;
-import com.kap.core.dto.mp.mpa.MPAInqrDto;
-import com.kap.core.dto.mp.mpa.MPAUserDto;
-import com.kap.core.dto.mp.mpa.MPJoinDto;
+import com.kap.core.dto.mp.mpa.*;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.COFileService;
 import com.kap.service.COSystemLogService;
@@ -32,7 +29,6 @@ import java.net.URLEncoder;
 import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -283,22 +279,58 @@ public class MPAUserServiceImpl implements MPAUserService {
             pwdChg ="Y";
         }
 
+
         mpaUserDto.setChngPwd(pwdChg);
         mpaUserMapper.updateUserDtlMod(mpaUserDto);
 
         if(mpaUserDto.getChngFndn().equals("Y")){
             mpaUserMapper.updateUserDtlModS(mpaUserDto);
         }
+
+        mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
+        mpaUserMapper.insertUserDtlHistory(mpaUserDto);
+
+
         if(mpaUserDto.getMemCd().equals("CP")) {
-            mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+            if(mpJoinDto.getPartTypeChg().equals("new")) {
+                mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+            }
             if(mpJoinDto.getBsnmChk().equals("false") && dupCmpnCnt == 0) {
                 mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
             }
         }
 
+
+    }
+
+
+    @Override
+    public void updateUserCompanyChg(MPAUserDto mpaUserDto, MPEPartsCompanyDTO mpePartsCompanyDTO, MPJoinDto mpJoinDto) throws Exception {
+        int dupCmpnCnt = selectcmpnMst(mpePartsCompanyDTO);
+        mpaUserMapper.updateUserDtlModBsnm(mpaUserDto);
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
+            mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+        if (mpJoinDto.getBsnmChk().equals("false") && dupCmpnCnt == 0) {
+            mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
+        }
+    }
 
+    @Override
+    public MPAPartDto selectConfirmComp(MPAUserDto mpaUserDto) throws Exception {
+        MPAPartDto mpaPartDto = new MPAPartDto();
+        int mpListCnt = mpaUserMapper.selectMPHPartList(mpaUserDto).size();
+        int conList = mpaUserMapper.selectConListCnt(mpaUserDto);
+        int totCnt = mpListCnt + conList;
+        boolean chk = false;
+        if(totCnt >= 1) {
+            chk= true;
+        } else {
+            chk= false;
+        }
+        mpaPartDto.setChk(chk);
+        mpaPartDto.setCount(totCnt);
+        return mpaPartDto;
     }
 
 

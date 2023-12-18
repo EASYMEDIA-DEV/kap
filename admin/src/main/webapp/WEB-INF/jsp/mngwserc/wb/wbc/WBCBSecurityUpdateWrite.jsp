@@ -167,12 +167,14 @@
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
                             <select class="form-control input-sm" id="ctgryCd" name="companyDtl.ctgryCd" title="구분">
+                                <option value="">선택</option>
                                 <c:forEach var="cdList" items="${classTypeList.COMPANY_TYPE}" varStatus="status">
                                     <c:if test="${fn:contains(cdList.cd, 'COMPANY01')}">
                                         <option value="${cdList.cd}" <c:if test="${rtnCompany.ctgryCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>
+                            <input type="hidden" id="befeCtgryCd" class="notRequired" value="${rtnCompany.ctgryCd}"/>
                         </div>
                     </div>
 

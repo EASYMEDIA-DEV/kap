@@ -113,5 +113,4 @@ public class WBLSurveyMstInsertDTO extends BaseDTO {
     @Schema(title = "수정ID")
     private String modId;
 
-    private MultipartFile wblListExcel;
 }

@@ -1,7 +1,6 @@
 package com.kap.service.dao.cb.cbb;
 
 import com.kap.core.dto.cb.cbb.*;
-import com.kap.core.dto.eb.eba.EBACouseDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -190,6 +189,11 @@ public interface CBBManageConsultMapper {
     public List<CBBManageConsultInsertDTO> selectTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
     /**
+     * 만족도 상세
+     */
+    public List<CBBManageConsultInsertDTO> selectTechGuidanceSurvey(Integer cnstgSeq);
+
+    /**
      * 컨설팅사업 신청마스터 테이블 삭제
      */
     public int deleteManageConsult(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
@@ -233,5 +237,6 @@ public interface CBBManageConsultMapper {
      * 컨설팅사업 참여이관로그 테이블 삭제
      */
     public int deleteConsultAppctnTrnsfDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
 
 }
