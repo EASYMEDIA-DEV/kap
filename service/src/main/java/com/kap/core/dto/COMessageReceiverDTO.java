@@ -30,16 +30,16 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper=false)
-@Schema(title="이메일 대상자 DTO")
+@Schema(title="이메일 및 SMS 대상자 DTO")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Hidden
 public class COMessageReceiverDTO {
-    @Schema(title="메일 대상자 명")
+    @Schema(title="메일 및 SMS 대상자 명")
     private String name;
     @Schema(title="메일 대상자 이메일")
     private String email;
-    @Schema(title="메일 대상자 전화번호")
+    @Schema(title="SMS 대상자 전화번호")
     private String mobile;
     @Schema(title="치환 문자 1")
     private String note1;

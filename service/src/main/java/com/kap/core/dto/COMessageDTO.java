@@ -48,6 +48,8 @@ public class COMessageDTO {
     private String username;
     @Schema(title="directsend 발급 api key")
     private String key;
+    @Schema(title="SMS 제목")
+    private String title;
     @Schema(title="메일 제목")
     private String subject;
     @Schema(title="메일 대상자들")
