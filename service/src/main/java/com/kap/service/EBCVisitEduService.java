@@ -1,6 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
+import com.kap.core.dto.eb.ebc.EBCVisitEduExcelDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 
 import javax.servlet.http.HttpServletResponse;
@@ -65,6 +66,16 @@ public interface EBCVisitEduService {
     /**
      * 엑셀 생성
      */
-    public void excelDownload(EBCVisitEduDTO ebcVisitEduDTO, HttpServletResponse response) throws Exception;
+    public void excelDownload(EBCVisitEduExcelDTO ebcVisitEduExcelDTO, HttpServletResponse response) throws Exception;
+
+    /**
+     *  엑셀 목록을 조회한다.
+     */
+    public EBCVisitEduExcelDTO selectExcelList(EBCVisitEduExcelDTO ebcVisitEduExcelDTO) throws Exception;
+
+    /**
+     * 방문교육 엑셀 강사 목록을 조회
+     */
+    public EBCVisitEduExcelDTO selectIsttrExcelList(EBCVisitEduExcelDTO ebcVisitEduExcelDTO) throws Exception;
 
 }

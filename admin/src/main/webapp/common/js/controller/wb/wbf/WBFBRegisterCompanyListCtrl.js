@@ -40,33 +40,34 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-            //엑셀다운로드
-            btnExcelDown : {
-                event : {
-                    click: function () {
-                        //사유입력 레이어팝업 활성화
-                        $excelObj.find("#rsn").val('');
-                        $excelObj.modal("show");
-                    }
-                }
-            },
             btnDeleteList : {
                 event : {
                     click : function() {
                         let delActCnt = $("input:checkbox[name='delValueList']:checked");
                         if(delActCnt.length > 0){
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.del.target.board"));
-                                    $formObj.find("#btnSearch").click();
-                                }
-                                else{
-                                    alert(msgCtrl.getMsg("fail.act"));
-                                }
-                            }, "./delete", $formObj, "POST", "json");
+                            if(confirm(msgCtrl.getMsg("confirm.del"))){
+                                cmmCtrl.frmAjax(function(respObj){
+                                    if(respObj != undefined && respObj.respCnt > 0){
+                                        alert(msgCtrl.getMsg("success.del.target.board"));
+                                        $formObj.find("#btnSearch").click();
+                                    }
+                                    else{
+                                        alert(msgCtrl.getMsg("fail.act"));
+                                    }
+                                }, "./delete", $formObj, "POST", "json");
+                            }
                         } else {
                             alert(msgCtrl.getMsg("fail.del.target.board"));
                         }
+                    }
+                }
+            },
+            //엑셀다운로드
+            btnExcelDown : {
+                event : {
+                    click: function () {
+                        //파라미터를 물고 가야함.
+                        location.href = "./excel-down?" + $formObj.serialize();
                     }
                 }
             },

@@ -12,17 +12,18 @@
     <select id="getRegisterCompanyList" parameterType="WBFBRegisterSearchDTO" resultType="WBFBRegisterSearchDTO">
         SELECT INFO.*,
             (SELECT cd_nm FROM co_code_mst WHERE cd = INFO.rsume_stts_cd) as rsume_stts_cd_nm,
-            (SELECT cd_nm FROM co_code_mst WHERE cd = INFO.mng_stts_cd) as mng_stts_cd_nm
+            (SELECT cd_nm FROM co_code_mst WHERE cd = INFO.mng_stts_cd) as mng_stts_cd_nm,
+            (SELECT name FROM co_adm_mst WHERE id = INFO.mod_id) as mod_nm
         FROM
         (
             SELECT
                 TEMP.*,
-                ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsumeOrd) as rsume_stts_cd,
-                ( SELECT mng_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsumeOrd) as mng_stts_cd,
-                ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsumeOrd) as appctn_stts_chng_dtm,
-                ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsumeOrd) as mng_stts_chng_dtm,
-                ( SELECT mod_id FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsumeOrd) as mod_id,
-                ( SELECT mod_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsumeOrd) as mod_dtm
+                ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as rsume_stts_cd,
+                ( SELECT mng_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as mng_stts_cd,
+                ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as appctn_stts_chng_dtm,
+                ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as mng_stts_chng_dtm,
+                ( SELECT mod_id FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as mod_id,
+                ( SELECT mod_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as mod_dtm
             FROM
             (
                 SELECT /*WBFBRegisterCompanyMapper.getRegisterCompanyList*/
@@ -31,7 +32,7 @@
                     C.*,
                     (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
                     (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm,
-                    (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) as rsumeOrd
+                    (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) as rsume_ord
                 FROM
                 (
                     SELECT * FROM cx_episd_mst
@@ -39,7 +40,9 @@
                 ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
                 INNER JOIN
                 (
-                    SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
+                    SELECT a.mem_seq, a.name, a.id, a.hp_no, a.tel_no, a.email, a.pstn_cd, a.pstn_nm
+                    , b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
+                    ,(SELECT cd_nm FROM co_code_mst WHERE cd = a.pstn_cd) as pstn_cd_nm
                     FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
                 ) C /* 회원-회사 JOIN 테이블 */
                 ON C.mem_seq = B.mem_seq
@@ -164,12 +167,23 @@
         2023.11.16  김동현     최초 생성
     -->
     <select id="getSpprtDtlList" parameterType="WBFBRegisterSearchDTO" >
-        SELECT /*WBFBRegisterCompanyMapper.getSpprtDtlList*/
-        appctn_spprt_seq, appctn_seq, give_type, accs_dt, gvmnt_spprt_pmt, mjcmn_aprnc_pmt, ttl_pmt,
-        bank_nm, acnt_no, dpsit_nm, cmssn_pmt, appctn_stts_cd, appctn_stts_chng_dtm, give_dt,
-        give_seq, mng_stts_cd, mng_stts_chng_dtm, spprt_appctn_file_seq, acnt_file_seq, bnkbk_file_seq, tchlg_lse_file_seq, lse_pay_file_seq
-        FROM cx_appctn_spprt_dtl
-        WHERE appctn_seq = #{appctnSeq}
+        SELECT INFO.*
+            ,(SELECT give_ord FROM cx_episd_give_dtl WHERE give_seq = INFO.give_seq) as give_ord
+            ,(SELECT cd_nm FROM co_code_mst WHERE cd = INFO.appctn_stts_cd) as appctn_stts_cd_nm
+            ,DATE_FORMAT(INFO.accs_dt, '%m/%d') AS accs_dt_fmt
+            ,DATE_FORMAT(INFO.give_dt, '%m/%d') AS give_dt_fmt
+        FROM(
+            SELECT /*WBFBRegisterCompanyMapper.getSpprtDtlList*/
+                appctn_spprt_seq, appctn_seq, give_type, accs_dt
+                ,gvmnt_spprt_pmt
+                ,mjcmn_aprnc_pmt
+                ,ttl_pmt
+                ,bank_nm, acnt_no, dpsit_nm, appctn_stts_cd
+                ,appctn_stts_chng_dtm, give_dt,give_seq
+                ,mng_stts_cd, mng_stts_chng_dtm, spprt_appctn_file_seq, acnt_file_seq, bnkbk_file_seq, tchlg_lse_file_seq, lse_pay_file_seq
+            FROM cx_appctn_spprt_dtl
+            WHERE appctn_seq = #{appctnSeq}
+        ) INFO
         ORDER BY appctn_spprt_seq ASC
     </select>
 
@@ -183,14 +197,31 @@
     <select id="getRsumeTaskDtlList" parameterType="WBFBRegisterSearchDTO" >
         SELECT /*WBFBRegisterCompanyMapper.getRsumeTaskDtlList*/
             A.*
+            ,B.task_cd,B.bsn_type_cd,B.smtfn_prsnt_cd,B.smtfn_trgt_cd,B.aprnc_cmpn_cd,B.offer_cmpn_nm,B.offer_bsnm_no,B.offer_pic_nm,B.offer_pic_hp_no,B.offer_pic_email
+            ,B.ttl_bsn_pmt,B.task_no,B.chk_cmssr_seq,B.chk_plan_dt,B.chk_implmn_dt,B.exam_score,B.smtfn_lvl_chk_cd,B.prmcst_clcltn_instt,B.rqst_dt,B.rply_dt
+            ,B.gvmnt_spprt_pmt
+            ,B.mjcmn_aprnc_pmt
+            ,B.ntdcn_cmpn_brdn_pmt
+            ,B.ttl_pmt
+            ,B.ttl_bsn_pmt
+            ,B.agrmt_dt,B.agrmt_term_dt,B.pmndv_pmt_yn,B.accs_dt,B.bank_nm,B.acnt_no,B.dpsit_nm,B.give_dt,B.give_seq,B.cmssn_pmt
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = A.rsume_stts_cd) as rsume_stts_cd_nm
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = A.appctn_stts_cd) as appctn_stts_cd_nm
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = A.mng_stts_cd) as mng_stts_cd_nm
-            ,B.*
+            ,(SELECT cd_nm FROM co_code_mst WHERE cd = B.task_cd) as task_cd_nm
+            ,(SELECT cd_nm FROM co_code_mst WHERE cd = B.bsn_type_cd) as bsn_type_cd_nm
+            ,(SELECT cd_nm FROM co_code_mst WHERE cd = B.smtfn_prsnt_cd) as smtfn_prsnt_cd_nm
+            ,(SELECT cd_nm FROM co_code_mst WHERE cd = B.smtfn_trgt_cd) as smtfn_trgt_cd_nm
             ,(SELECT name FROM co_mem_mst WHERE mem_seq = B.chk_cmssr_seq) as chk_cmssr_nm
+            ,DATE_FORMAT(B.chk_plan_dt, '%m/%d') AS chk_plan_dt_fmt
+            ,DATE_FORMAT(B.chk_implmn_dt, '%m/%d') AS chk_implmn_dt_fmt
+            ,DATE_FORMAT(B.rqst_dt, '%m/%d') AS rqst_dt_fmt
+            ,DATE_FORMAT(B.rply_dt, '%m/%d') AS rply_dt_fmt
+            ,DATE_FORMAT(B.agrmt_dt, '%m/%d') AS agrmt_dt_fmt
+            ,DATE_FORMAT(B.agrmt_term_dt, '%m/%d') AS agrmt_term_dt_fmt
         FROM (
             SELECT rsume_seq, rsume_ord, rsume_stts_cd, appctn_stts_cd, DATE_FORMAT(appctn_stts_chng_dtm, '%Y-%m-%d %H:%i') AS appctn_stts_chng_dtm
-             ,mng_stts_cd, DATE_FORMAT(mng_stts_chng_dtm, '%Y-%m-%d %H:%i') AS mng_stts_chng_dtm, mod_id, DATE_FORMAT(mod_dtm, '%Y-%m-%d %H:%i') AS mod_dtm
+             ,mng_stts_cd, rtrn_rsn_cntn, DATE_FORMAT(mng_stts_chng_dtm, '%Y-%m-%d %H:%i') AS mng_stts_chng_dtm, mod_id, DATE_FORMAT(mod_dtm, '%Y-%m-%d %H:%i') AS mod_dtm
             FROM cx_appctn_rsume_dtl
             WHERE appctn_seq = #{appctnSeq}
         )A
@@ -389,9 +420,7 @@
             appctn_seq,
             rsume_stts_cd,
             appctn_stts_cd,
-            appctn_stts_chng_dtm,
             mng_stts_cd,
-            mng_stts_chng_dtm,
             reg_id,
             reg_ip,
             reg_dtm
@@ -403,9 +432,7 @@
             #{appctnSeq},
             #{rsumeSttsCd},
             #{appctnSttsCd},
-            now(),
             #{mngSttsCd},
-            now(),
             #{regId},
             #{regIp},
             now()
@@ -435,7 +462,7 @@
         VALUES
         (
             #{rsumeSeq},
-            1,
+            #{rsumeOrd},
             #{taskCd},
             #{bsnTypeCd},
             #{smtfnPrsntCd},
@@ -482,28 +509,33 @@
     <update id="updCmpnCbsnMst" parameterType="WBFBRegisterDTO">
         UPDATE /* WBFBRegisterCompanyMapper.updCmpnCbsnMst */ cp_cmpn_mst
         SET
-            ctgry_cd = #{ctgryCd},
-            size_cd = #{sizeCd},
-            stbsm_dt = #{stbsmDt},
-            tel_no = #{compTel},
-            zipcode = #{zipCode},
-            bsc_addr = #{bscAddr},
-            dtl_addr = #{dtlAddr},
-            sls_pmt = #{slsPmt},
-            sls_year = #{slsYear},
-            mple_cnt = #{mpleCnt},
-            mjr_prdct_1 = #{mjrPrdct1},
-            mjr_prdct_2 = #{mjrPrdct2},
-            mjr_prdct_3 = #{mjrPrdct3},
-            qlty_5_star_cd = #{qlty5starCd},
-            qlty_5_star_year = #{qlty5starYear},
-            pay_5_star_cd = #{pay5starCd},
-            pay_5_star_year = #{pay5starYear},
-            tchlg_5_star_cd = #{tchlg5starCd},
-            tchlg_5_star_year = #{tchlg5starYear},
-            mod_id = #{modId},
-            mod_ip = #{modIp},
-            mod_dtm = now()
+            ctgry_cd = #{ctgryCd}
+            ,size_cd = #{sizeCd}
+            ,stbsm_dt = #{stbsmDt}
+            ,tel_no = #{compTel}
+            ,zipcode = #{zipCode}
+            ,bsc_addr = #{bscAddr}
+            ,dtl_addr = #{dtlAddr}
+            ,sls_pmt = #{slsPmt}
+            <if test="slsYear != null and slsYear != ''.toString() ">,sls_year = #{slsYear}</if>
+            <if test="slsYear == null or slsYear == ''.toString() ">,sls_year = NULL</if>
+            <if test="mpleCnt != null and mpleCnt != ''.toString() ">,mple_cnt = #{mpleCnt}</if>
+            <if test="mpleCnt == null or mpleCnt == ''.toString() ">,mple_cnt = NULL</if>
+            ,mjr_prdct_1 = #{mjrPrdct1}
+            ,mjr_prdct_2 = #{mjrPrdct2}
+            ,mjr_prdct_3 = #{mjrPrdct3}
+            ,qlty_5_star_cd = #{qlty5starCd}
+            <if test="qlty5starYear != null and qlty5starYear != ''.toString() ">,qlty_5_star_year = #{qlty5starYear}</if>
+            <if test="qlty5starYear == null or qlty5starYear == ''.toString() ">,qlty_5_star_year = NULL</if>
+            ,pay_5_star_cd = #{pay5starCd}
+            <if test="pay5starYear != null and pay5starYear != ''.toString() ">,pay_5_star_year = #{pay5starYear}</if>
+            <if test="pay5starYear == null or pay5starYear == ''.toString() ">,pay_5_star_year = NULL</if>
+            ,tchlg_5_star_cd = #{tchlg5starCd}
+            <if test="tchlg5starYear != null and tchlg5starYear != ''.toString() ">,tchlg_5_star_year = #{tchlg5starYear}</if>
+            <if test="tchlg5starYear == null or tchlg5starYear == ''.toString() ">,tchlg_5_star_year = NULL</if>
+            ,mod_id = #{modId}
+            ,mod_ip = #{modIp}
+            ,mod_dtm = now()
         WHERE bsnm_no = #{bsnmNo}
     </update>
 
@@ -517,14 +549,14 @@
     <update id="updCoMemMst" parameterType="wBFBRegisterDTO">
         UPDATE /*WBFBRegisterCompanyMapper.updCoMemMst*/ co_mem_mst
         SET
-            tel_no = #{telNo},
-            dept_cd = #{deptCd},
-            dept_dtl_nm = #{deptDtlNm},
-            pstn_cd = #{pstnCd},
-            pstn_nm = #{pstnNm},
-            mod_id = #{modId},
-            mod_ip = #{modIp},
-            mod_dtm = now()
+            tel_no = #{telNo}
+            ,dept_cd = #{deptCd}
+            ,dept_dtl_nm = #{deptDtlNm}
+            ,pstn_cd = #{pstnCd}
+            ,pstn_nm = #{pstnNm}
+            ,mod_id = #{modId}
+            ,mod_ip = #{modIp}
+            ,mod_dtm = now()
         WHERE mem_seq = #{memSeq}
         AND id = #{id}
     </update>
@@ -539,13 +571,13 @@
     <update id="updCmpnCbsnDtl" parameterType="WBCompanyDetailMstDTO">
         UPDATE /* WBFBRegisterCompanyMapper.updCmpnCbsnDtl */ cp_cmpn_cbsn_dtl
         SET
-            nm = #{nm},
-            score = #{score},
-            year = #{year},
-            crtfn_cmpn_nm = #{crtfnCmpnNm},
-            mod_id = #{modId},
-            mod_ip = #{modIp},
-            mod_dtm = now()
+            nm = #{nm}
+            ,score = #{score}
+            ,year = #{year}
+            ,crtfn_cmpn_nm = #{crtfnCmpnNm}
+            ,mod_id = #{modId}
+            ,mod_ip = #{modIp}
+            ,mod_dtm = now()
         WHERE bsnm_no = #{bsnmNo}
         AND cbsn_seq = #{cbsnSeq}
     </update>
@@ -595,32 +627,23 @@
         UPDATE cx_appctn_spprt_dtl /*WBFBRegisterCompanyMapper.updSpprtDtl*/
         SET
             accs_dt = #{accsDt}
-            <if test="gvmntSpprtPmt != null and gvmntSpprtPmt != ''.toString() ">,give_seq = #{gvmntSpprtPmt}</if>
-            <if test="gvmntSpprtPmt == null or gvmntSpprtPmt == ''.toString() ">,give_seq = null</if>
-            <if test="mjcmnAprncPmt != null and mjcmnAprncPmt != ''.toString() ">,give_seq = #{mjcmnAprncPmt}</if>
-            <if test="mjcmnAprncPmt == null or mjcmnAprncPmt == ''.toString() ">,give_seq = null</if>
+            ,gvmnt_spprt_pmt = #{gvmntSpprtPmt}
+            ,mjcmn_aprnc_pmt = #{mjcmnAprncPmt}
             ,ttl_pmt = #{ttlPmt}
             ,bank_nm = #{bankNm}
             ,acnt_no = #{acntNo}
             ,dpsit_nm = #{dpsitNm}
             ,appctn_stts_cd = #{appctnSttsCd}
             ,give_dt = #{giveDt}
-            <if test="giveSeq != null and giveSeq != ''.toString() ">,give_seq = #{giveSeq}</if>
-            <if test="giveSeq == null or giveSeq == ''.toString() ">,give_seq = null</if>
+            ,give_seq = #{giveSeq}
             ,mng_stts_cd = #{mngSttsCd}
             ,mng_stts_chng_dtm = now()
-            <if test="spprtAppctnFileSeq != null and spprtAppctnFileSeq != ''.toString() ">,spprt_appctn_file_seq = #{spprtAppctnFileSeq}</if>
-            <if test="spprtAppctnFileSeq == null or spprtAppctnFileSeq == ''.toString() ">,spprt_appctn_file_seq = null</if>
-            <if test="acntFileSeq != null and acntFileSeq != ''.toString() ">,acnt_file_seq = #{acntFileSeq}</if>
-            <if test="acntFileSeq == null or acntFileSeq == ''.toString() ">,acnt_file_seq = null</if>
-            <if test="bnkbkFileSeq != null ">,bnkbk_file_seq = #{bnkbkFileSeq}</if>
-            <if test="bnkbkFileSeq == null ">,bnkbk_file_seq = null</if>
-            <if test="tchlgLseFileSeq != null ">,tchlg_lse_file_seq = #{tchlgLseFileSeq}</if>
-            <if test="tchlgLseFileSeq == null ">,tchlg_lse_file_seq = null</if>
-            <if test="lsePayFileSeq != null ">,lse_pay_file_seq = #{lsePayFileSeq}</if>
-            <if test="lsePayFileSeq == null ">,lse_pay_file_seq = null</if>
-            <if test="cmssnPmt != null ">,cmssn_pmt = #{cmssnPmt}</if>
-            <if test="cmssnPmt == null ">,cmssn_pmt = null</if>
+            ,spprt_appctn_file_seq = #{spprtAppctnFileSeq}
+            ,acnt_file_seq = #{acntFileSeq}
+            ,bnkbk_file_seq = #{bnkbkFileSeq}
+            ,tchlg_lse_file_seq =#{tchlgLseFileSeq}
+            ,lse_pay_file_seq = #{lsePayFileSeq}
+            ,cmssn_pmt = #{cmssnPmt}
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
             ,mod_dtm = now()
@@ -635,11 +658,12 @@
         ==========  ======  ==============
         2023.11.16  김동현     최초 생성
     -->
-    <update id="updRsumeDtl" parameterType="WBFBRegisterDTO">
+    <update id="updRsumeDtl" parameterType="WBFBRsumeTaskDtlDTO">
         UPDATE cx_appctn_rsume_dtl /*WBFBRegisterCompanyMapper.updRsumeDtl*/
         SET
             appctn_stts_cd = #{appctnSttsCd}
             ,mng_stts_cd = #{mngSttsCd}
+            ,rtrn_rsn_cntn = #{rtrnRsnCntn}
             ,mng_stts_chng_dtm = now()
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
@@ -663,9 +687,6 @@
             ,pic_cmssr_seq = #{picCmssrSeq}
             ,sbrdn_bsnm_no = #{sbrdnBsnmNo}
             ,pmndv_pmt_yn = #{pmndvPmtYn}
-            <if test="picCmssrSeq != null and picCmssrSeq != ''.toString() ">
-                ,pic_cmssr_seq = #{picCmssrSeq}
-            </if>
             ,adm_memo = #{admMemo}
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
@@ -702,6 +723,7 @@
             ,mjcmn_aprnc_pmt = #{mjcmnAprncPmt}
             ,ntdcn_cmpn_brdn_pmt = #{ntdcnCmpnBrdnPmt}
             ,ttl_pmt = #{ttlPmt}
+            ,ttl_pmt = #{ttlPmt}
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
             ,mod_dtm = now()
@@ -718,7 +740,8 @@
     -->
     <update id="updRsumeTaskDtlSub" parameterType="wBFBRegisterDTO">
         UPDATE cx_appctn_rsume_task_dtl /*WBFBRegisterCompanyMapper.updRsumeTaskDtlSub*/
-        SET task_cd = #{taskCd}
+        SET
+            task_cd = #{taskCd}
             ,bsn_type_cd = #{bsnTypeCd}
             ,smtfn_prsnt_cd = #{smtfnPrsntCd}
             ,smtfn_trgt_cd = #{smtfnTrgtCd}
@@ -918,6 +941,28 @@
     </delete>
 
     <!--
+         쿼리명 : WBFBRegisterCompanyMapper.delAppctnMdst
+         설  명 : 상생신청마스터 Delete
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getExcelSpprtDtl" parameterType="WBFBRegisterDTO">
+
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.delAppctnMdst
+         설  명 : 상생신청마스터 Delete
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="getExcelRsumeTaskDtl" parameterType="WBFBRegisterDTO">
+
+    </select>
+
+    <!--
          쿼리명 : WBFASmartRoundMapper.selectListwhereSql
          설  명 : 게시판 리스트 검색 옵션
          수정일     수정자     수정내용
@@ -963,21 +1008,32 @@
             <if test="q != null and q != ''.toString() ">
                 <choose>
                     <when test="f == 1">
-                        AND EXISTS ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS INFO.cmpn_nm LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 2">
-                        AND EXISTS ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS INFO.bsnm_no LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 3">
-                        AND EXISTS ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS INFO.name LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 4">
-                        AND EXISTS ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS INFO.id LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 5">
-                        AND EXISTS ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS INFO.hp_no LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <otherwise>
+                        AND (
+                            EXISTS INFO.cmpn_nm LIKE CONCAT('%', #{q}, '%')))
+                            OR
+                            EXISTS INFO.bsnm_no LIKE CONCAT('%', #{q}, '%')))
+                            OR
+                            EXISTS INFO.name LIKE CONCAT('%', #{q}, '%')))
+                            OR
+                            EXISTS INFO.id LIKE CONCAT('%', #{q}, '%')))
+                            OR
+                            EXISTS INFO.hp_no LIKE CONCAT('%', #{q}, '%')))
+                        )
                     </otherwise>
                 </choose>
             </if>

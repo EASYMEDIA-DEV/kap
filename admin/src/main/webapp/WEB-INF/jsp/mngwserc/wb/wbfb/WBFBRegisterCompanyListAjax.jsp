@@ -17,14 +17,16 @@
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}">${list.cmpnNm}</a></td>
                 <td class="text-center">${list.ctgryCdNm}</td>
                 <td class="text-center">${list.sizeCdNm}</td>
-                <td class="text-center">${list.bsnmNo}</td>
-                <td class="text-center">${list.name}(${list.id})</td>
+                <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
+                <td class="text-center">${list.name}(${kl:idMasking(list.id)})</td>
                 <td class="text-center">${list.hpNo}</td>
                 <td class="text-center">${list.email}</td>
                 <td class="text-center">${not empty list.mngSttsChngDtm ? list.mngSttsChngDtm : "-"}</td>
                 <td class="text-center">${not empty list.appctnSttsChngDtm ? list.appctnSttsChngDtm : "-"}</td>
-                <td class="text-center">${not empty list.regDtm ? list.regDtm : "-"}</td>
-                <td class="text-center">${list.name}(${list.id})</td>
+                <td class="text-center">
+                    <c:if test="${empty modId}">-</c:if>
+                    <c:if test="${not empty modId}">${list.modNm}(${kl:idMasking(list.modId)})</c:if>
+                </td>
                 <td class="text-center">${not empty list.modDtm ? list.modDtm : "-"}</td>
             </tr>
         </c:forEach>

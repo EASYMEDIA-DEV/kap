@@ -52,8 +52,12 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     /* 상생 상세 */
     @Schema(title = "과제코드", example = "")
     private String taskCd;
+    @Schema(title = "과제코드명", example = "")
+    private String taskCdNm;
     @Schema(title = "사업유형", example = "")
     private String bsnTypeCd;
+    @Schema(title = "사업유형명", example = "")
+    private String bsnTypeCdNm;
     @Schema(title = "출연회사코드", example = "")
     private String aprncCmpnCd;
     @Schema(title = "공급업체명", example = "")
@@ -67,7 +71,7 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     @Schema(title = "공급담당자이메일", example = "")
     private String offerPicEmail;
     @Schema(title = "총사업금액", example = "")
-    private String ttlBsnPmt;
+    private Integer ttlBsnPmt;
     @Schema(title = "과제번호", example = "")
     private String taskNo;
     @Schema(title = "점검위원순번", example = "")
@@ -98,6 +102,8 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     private String agrmtTermDt;
     @Schema(title = "총금액", example = "")
     private Integer ttlPmt;
+    @Schema(title = "수수료", example = "")
+    private Integer cmssnPmt;
     @Schema(title = "등록ID", example = "숫자")
     private String regId;
     @Schema(title = "등록IP", example = "숫자")
@@ -110,13 +116,34 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     private String modIp;
     @Schema(title = "수정일시", example = "숫자")
     private String modDtm;
+    @Schema(title = "반려사유내용", example = "")
+    private String rtrnRsnCntn;
 
     @Schema(title = "스마트화현재코드", example = "")
     private String smtfnPrsntCd;
+    @Schema(title = "스마트화현재코드", example = "")
+    private String smtfnPrsntCdNm;
     @Schema(title = "스마트화목표코드", example = "")
     private String smtfnTrgtCd;
+    @Schema(title = "스마트화목표코드", example = "")
+    private String smtfnTrgtCdNm;
     @Schema(title = "스마트화수준확인코드", example = "")
     private String smtfnLvlChkCd;
+    @Schema(title = "스마트화수준확인코드", example = "")
+    private String smtfnLvlChkCdNm;
+
+    @Schema(title = "점검계획일자 날짜 포멧", example = "MM/dd")
+    private String chkPlanDtFmt;
+    @Schema(title = "점검실시일자 날짜 포멧", example = "MM/dd")
+    private String chkImplmnDtFmt;
+    @Schema(title = "의뢰일자 날짜 포멧", example = "MM/dd")
+    private String rqstDtFmt;
+    @Schema(title = "회신일자 날짜 포멧", example = "MM/dd")
+    private String rplyDtFmt;
+    @Schema(title = "협약일자 날짜 포멧", example = "MM/dd")
+    private String agrmtDtFmt;
+    @Schema(title = "협약기간일자 날짜 포멧", example = "MM/dd")
+    private String agrmtTermDtFmt;
 
     @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;

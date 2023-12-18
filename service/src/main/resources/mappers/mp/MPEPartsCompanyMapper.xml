@@ -131,6 +131,23 @@
     </select>
 
     <!--
+         쿼리명 : MPEPartsCompanyMapper.selectPartsComSQInfo
+         설  명 : 엑셀 다운로드에 사용할 SQ정보 리스트를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.15    구은희       최초생성
+    -->
+    <select id="selectPartsComSQInfo" parameterType="MPEPartsCompanyDTO">
+        SELECT /* MPEPartsCompanyMapper.selectPartsComSQInfo*/
+            nm
+            , score
+            , YEAR
+            , crtfn_cmpn_nm
+        from cp_cmpn_cbsn_dtl
+        where bsnm_no = #{bsnmNo}
+    </select>
+
+    <!--
          쿼리명 : MPEPartsCompanyMapper.checkBsnmNo
          설  명 : 부품사의 사업자번호 등록여부를 확인한다.
           수정일     수정자       수정내용

@@ -4,7 +4,7 @@ app:
   #메일 설정
   mail:
     senderMail: hagas@kapkore.org
-    senderHp: 0232712965
+    senderHp: 0232712681
     sender_name: 자동차부품산업진흥재단
     username: kapkorea
     key: 9T2r3AVGeh7rslu
@@ -16,7 +16,7 @@ app:
   #메일 설정
   mail:
     senderMail: hagas@kapkore.org
-    senderHp: 0232712965
+    senderHp: 0232712681
     sender_name: 자동차부품산업진흥재단
     username: kapkorea
     key: 9T2r3AVGeh7rslu
@@ -28,7 +28,7 @@ app:
   #메일 설정
   mail:
     senderMail: hagas@kapkore.org
-    senderHp: 0232712965
+    senderHp: 0232712681
     sender_name: 자동차부품산업진흥재단
     username: kapkorea
     key: 9T2r3AVGeh7rslu

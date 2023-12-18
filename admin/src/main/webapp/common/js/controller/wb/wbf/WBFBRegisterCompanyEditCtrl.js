@@ -246,7 +246,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }
     }
 
-
     let fnRefresh = function() {
         //FORM 데이터 전체 삭제
         let pageIndex 	= $modalObj.find("#pageIndex").val();
@@ -274,9 +273,9 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     /* 현재 단계가 아닐 경우 disable 처리 js */
     let shadow = (function() {
         let paint = function(panel) {
-            $(panel).find('.panel-body')/*
+            $(panel).find('.panel-body')
                 .css('pointer-events', 'none')
-                .css('cursor', 'default')*/
+                .css('cursor', 'default')
         }
         let disPaint = function(panel) {
             $(panel).find('.panel-body').attr('style', '');
@@ -289,10 +288,12 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }
         /* 현재 진행 단계 관리자상태 값 확인 후 show/hide */
         let optCheck = function(panel) {
-            let select = $(panel).find('select[name$=mngSttsCd]')
-            let optLeng = $(select).find('option').length;
-            let seloptLeng = $(select).find('option:selected').length;
-            if(optLeng == seloptLeng) {
+            let select = $(panel).find('select[data-name=mngSttsCd]');
+            let optLeng = select.find('option').length;
+            let lastOpt = select.find('option').eq(optLeng-1).val();
+            let selopt = select.find('option:selected').val();
+
+            if(lastOpt == selopt) {
                 paint(panel);
             } else {
                 disPaint(panel);
@@ -381,7 +382,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
             /* 현재 진행상태 관리자상태 값 check */
             shadow.check($dataRsumeTask.find(`.panel[data-sttsCd=${nowRsumeTaskCd}]`));
-            /* 현재 상태 pabel show */
+            /* 현재 상태 panel show */
             $dataRsumeTask.find(`.panel[data-sttsCd=${nowRsumeTaskCd}]`).find('a[role="button"]').click();
 
             $formObj.find(".dropzone").each(function(){
@@ -407,6 +408,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         }, "/mngwserc/wb/wbfb/getEditInfo", $formObj, "post", "json")
     }
+
 
     /* 총 가격 계산 */
     let sumPriceForTtlPmt = function(event) {
@@ -539,6 +541,20 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
+            //PDF
+            appctnPdfDownload : {
+                event : {
+                    click : function(){
+
+                        var cmpnNm = $("#cmpnNm").html();
+                        var today = new Date();
+
+                        var date = today.getFullYear() +""+ today.getMonth()+1 +""+ today.getDate();
+                        var fileName = "스마트공장구축_사업현황_"+ cmpnNm +"_"+ date + ".pdf";
+                        cmmCtrl.getAppctnPdfDownload(fileName);
+                    }
+                }
+            }
         },
         classname : {
             priceVal : {
@@ -644,7 +660,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             cmmCtrl.setFormData($modalFormObj);
 
             getPageInfo();
-
             pmndvPmtViewShowFn();
             fieldShowFn($('#ctgryCd').val());
 
@@ -655,12 +670,15 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     let nowSpprtCd = $sendFormData.find('input[type=hidden][name=nowSpprtCd]').val();
                     let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
 
-                    let dropzoneSpprt = $dataSpprt.find(`[data-sttsCd=${nowSpprtCd}]`).find(".dropzone");
-                    dropzoneSpprt.each(function(idx, el) {
-                        if($(el).find('.dz-preview').length < 1) {
-                            isValid = false;
-                        }
-                    })
+                    if(nowSpprtCd != 'PRO_TYPE03003'
+                        && $dataSpprt.find('input[name=mngSttsCd]').val() != 'PRO_TYPE03003_02_006'){
+                        let dropzoneSpprt = $dataSpprt.find(`[data-sttsCd=${nowSpprtCd}]`).find(".dropzone");
+                        dropzoneSpprt.each(function(idx, el) {
+                            if($(el).find('.dz-preview').length < 1) {
+                                isValid = false;
+                            }
+                        })
+                    }
 
                     let dropzoneTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`).find(".dropzone");
                     dropzoneTask.each(function(idx, el) {
@@ -711,18 +729,18 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             cmmCtrl.fileFrmAjax(function(data){
                                 //콜백함수. 페이지 이동
                                 if(data.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.ins"));
-                                    location.replace("./list");
+                                    alert(msgCtrl.getMsg("success.upd"));
                                 }
+                                location.replace("./list");
                             }, "./update", $sendFormData, "json");
                         }
                         else
                         {
                             cmmCtrl.frmAjax(function(data){
                                 if(data.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.ins"));
-                                    location.replace("./list");
+                                    alert(msgCtrl.getMsg("success.upd"));
                                 }
+                                location.replace("./list");
                             }, "./update", $sendFormData, "post", "json");
                         }
                     }

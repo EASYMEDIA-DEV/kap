@@ -294,8 +294,8 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "수료인원", example = "숫자")
     private Integer cmptnCnt;
 
-    @Schema(title = "참석률", example = "숫자")
-    private Integer ptcptRate;
+    @Schema(title = "참석률", example = "")
+    private Double ptcptRate;
 
     @Schema(title = "강의파일순번", example = "숫자")
     private Integer lctrFileSeq;

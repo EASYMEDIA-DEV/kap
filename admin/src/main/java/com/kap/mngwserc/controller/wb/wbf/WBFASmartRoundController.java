@@ -80,7 +80,6 @@ public class WBFASmartRoundController {
     public String getSmartRoundListAjax(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap) throws Exception {
         try {
             modelMap.addAttribute("rtnData", wBFASmartRoundService.selApplyCompanyList(wBRoundMstSearchDTO));
-            System.err.println(modelMap.getAttribute("rtnData"));
         }
         catch (Exception e)
         {
