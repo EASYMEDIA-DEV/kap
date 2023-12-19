@@ -268,16 +268,23 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         mPEPartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo().replace("-", ""));
         mPEPartsCompanyDTO = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
 
-        // 회사 업종 상세 등록
-        String[] cbsnSeq =  pCBBManageConsultInsertDTO.getCbsnSeq().split(",");
-        String[] nm =  pCBBManageConsultInsertDTO.getNm().split(",");
-        String[] score = pCBBManageConsultInsertDTO.getScore().split(",");
-        String[] year = pCBBManageConsultInsertDTO.getYear().split(",");
-        String[] crtfnCmpnNm = pCBBManageConsultInsertDTO.getCrtfnCmpnNm().split(",");
-
-        MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+        String[] cbsnSeq = {};
+        String[] nm = {};
+        String[] score = {};
+        String[] year = {};
+        String[] crtfnCmpnNm = {};
 
         String ctgryCd = pCBBManageConsultInsertDTO.getCtgryCd();
+        // 회사 업종 상세 등록
+        if(ctgryCd.equals("COMPANY01002")){
+            cbsnSeq =  pCBBManageConsultInsertDTO.getCbsnSeq().split(",");
+            nm =  pCBBManageConsultInsertDTO.getNm().split(",");
+            score = pCBBManageConsultInsertDTO.getScore().split(",");
+            year = pCBBManageConsultInsertDTO.getYear().split(",");
+            crtfnCmpnNm = pCBBManageConsultInsertDTO.getCrtfnCmpnNm().split(",");
+        }
+        MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+
         // 1차사 - 5스타
         if(ctgryCd.equals("COMPANY01001")){
             mPEPartsCompanyDTO.setQlty5StarCd(pCBBManageConsultInsertDTO.getQlty5StarCd());

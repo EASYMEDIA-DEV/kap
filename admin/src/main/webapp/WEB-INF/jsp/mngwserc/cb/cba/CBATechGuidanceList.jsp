@@ -116,7 +116,7 @@
                 <div class="pull-right">
                     <button type="button" class="btn btn-default btn-sm mb-sm" id="btnSuveyRltPop">만족도 종합결과</button>
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
-                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteExam">선택삭제</button>
+                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteConsult">선택삭제</button>
                     <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>
             </div>

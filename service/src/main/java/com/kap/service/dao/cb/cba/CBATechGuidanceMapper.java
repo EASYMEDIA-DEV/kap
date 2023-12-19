@@ -176,4 +176,51 @@ public interface CBATechGuidanceMapper {
      * 컨설팅 이관 목록 조회
      */
     public  List<CBATechGuidanceInsertDTO> selectTrsfGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+
+    /**
+     * 컨설팅사업 신청마스터 테이블 삭제
+     */
+    public int deleteManageConsult(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 진행마스터 테이블 삭제
+     */
+    public int deleteConsultRsumeMst(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 담당임원 테이블 삭제
+     */
+    public int deleteConsultPicDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 부품사 업종 상세 테이블 삭제
+     */
+    public int deleteConsultCbsnDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 고객사비율 상세 테이블 삭제
+     */
+    public int deleteConsultDlvryDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 완성차의존율 상세 테이블 삭제
+     */
+    public int deleteConsultDpndnDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 신청분야 상세 테이블 삭제
+     */
+    public int deleteConsultAppctnTypeDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 만족도 결과 상세 테이블 삭제
+     */
+    public int deleteConsultSrvRsltDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 참여이관로그 테이블 삭제
+     */
+    public int deleteConsultAppctnTrnsfDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
 }
