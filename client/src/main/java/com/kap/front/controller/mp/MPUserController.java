@@ -144,7 +144,7 @@ public class MPUserController {
     }
 
     /**
-     * TODO EDM 수정 하기
+     *
      * 이메일 인증 번호 전송
      *
      * @param
@@ -184,7 +184,7 @@ public class MPUserController {
             receiverDto.setNote2(randomNumber.toString());
             //수신자 정보 등록
             cOMailDTO.getReceiver().add(receiverDto);
-            cOMessageService.sendMail(cOMailDTO, "IdEmailEDM.html");
+            cOMessageService.sendMail(cOMailDTO, "EmailCertificationEDM.html");
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

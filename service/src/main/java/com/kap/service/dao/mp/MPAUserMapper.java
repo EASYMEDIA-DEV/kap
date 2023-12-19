@@ -2,9 +2,11 @@ package com.kap.service.dao.mp;
 
  import com.kap.core.dto.mp.mpa.MPAAttctnDto;
  import com.kap.core.dto.mp.mpa.MPAInqrDto;
+ import com.kap.core.dto.mp.mpa.MPAPartDto;
  import com.kap.core.dto.mp.mpa.MPAUserDto;
  import com.kap.core.dto.MPPwdInitDto;
  import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+ import com.kap.core.dto.mp.mpi.MPIWthdrwDto;
  import org.apache.ibatis.annotations.Mapper;
 
  import java.util.List;
@@ -77,4 +79,27 @@ public interface MPAUserMapper {
 
     void updateUserDtlModS(MPAUserDto mpaUserDto);
 
+    void updateUserDtlModBsnm(MPAUserDto mpaUserDto);
+
+    List<MPAPartDto> selectMPHPartList(MPAUserDto mpaUserDto);
+
+    int selectConListCnt(MPAUserDto mpaUserDto);
+
+    /**
+     * 탈퇴여부 N 변경
+     * @param mpiWthdrwDto
+     */
+    void updateUserWthdrw(MPIWthdrwDto mpiWthdrwDto);
+
+    /**
+     * CI값 삭제
+     * @param mpiWthdrwDto
+     */
+    void updateUserCiDel(MPIWthdrwDto mpiWthdrwDto);
+
+    /**
+     * 탈퇴 테이블 INSERT
+     * @param mpiWthdrwDto
+     */
+    void insertUserWthdrw(MPIWthdrwDto mpiWthdrwDto);
 }

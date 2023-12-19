@@ -26,8 +26,6 @@
                 <td class="text-center">${list.hpNo}</td> <%-- 핸드폰번호 --%>
                 <td class="text-center">${list.appctnSttsCdNm}</td> <%-- 1차 결과 --%>
                 <td class="text-center">${not empty list.mngSttsCdNm ? list.mngSttsCdNm : "-"}</td> <%-- 최종결과 --%>
-                <td class="text-center">${list.regName}(${list.regId})</td>
-                <td class="text-center">${not empty list.regDtm ? list.regDtm : "-"}</td> <%-- 최종등록일 --%>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modDtm}">

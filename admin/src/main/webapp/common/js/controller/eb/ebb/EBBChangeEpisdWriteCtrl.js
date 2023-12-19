@@ -98,9 +98,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actionForm.episdSeq = $("#episdSeq").val();//회차순번
 						actionForm.episdYear =$("#changeEpisdListContainer").find("input[name='delValueList']:checked").data("episdyear");//연도
 						actionForm.episdOrd =$("#changeEpisdListContainer").find("input[name='delValueList']:checked").data("episdord");//회차정렬
+						actionForm.stduyMthdCd = $("#stduyMthdCd").val();//학습방식
+
 						var fxnumCnt = $("#changeEpisdListContainer").find("input[name='delValueList']:checked").closest("tr").find("td").eq(6).text();//정원수
 						var accsCnt = $("#changeEpisdListContainer").find("input[name='delValueList']:checked").closest("tr").find("td").eq(7).text();//신청자
 						var fxnumImpsbYn = $("#changeEpisdListContainer").find("input[name='delValueList']:checked").closest("tr").find("td").eq(7).data("fxnum_impsb_yn");//신청자
+
 
 
 						var memSeq = $("#chan_memSeq").val();

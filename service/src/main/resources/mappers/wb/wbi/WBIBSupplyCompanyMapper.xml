@@ -42,7 +42,7 @@
                     ) D
                 ) F
         <include refid="selectListWhereSql" />
-        ORDER BY year DESC, episd DESC
+        ORDER BY year DESC, episd DESC, reg_dtm desc
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
@@ -359,7 +359,7 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                                REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>
@@ -367,7 +367,7 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                                REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>
@@ -375,7 +375,7 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                                MOD_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                MOD_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR MOD_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>

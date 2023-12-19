@@ -79,30 +79,4 @@
 </div>
 
 
-<div class="modal fade excel-down-month" tabindex="-1" role="dialog" >
-    <div class="modal-dialog modal-lg modal-center" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" >▣ 엑셀 다운로드
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </h5>
-            </div>
-            <div class="modal-body">
-                <div class="form-group ">
-                    <p><em class="ion-play mr-sm"></em>사유입력</p>
-                    <div class="col-sm-12">
-                        <textarea maxlength="30" class="col-sm-12 pv" style="resize: vertical;" rows="10" placeholder="사유를 입력하세요." id="rsn-month" title="사유" oninput="cmmCtrl.checkMaxlength(this);"></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer row">
-                <div class="text-center">
-                    <button type="button" class="btn btn-primary down-month mt">다운로드</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 

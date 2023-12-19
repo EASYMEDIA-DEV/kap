@@ -175,6 +175,11 @@ public interface WBHACalibrationMapper {
     public int insertApplyDtl(WBHAApplyDtlDTO wbhaApplyDtlDTO) throws Exception;
 
     /**
+     * 상생신청 다음단계 생성
+     */
+    public int insertApplyStep(WBHAApplyDtlDTO wbhaApplyDtlDTO) throws Exception;
+
+    /**
      * 대상장비 상세 생성
      */
     public int insertEuipment(WBHAEuipmentDTO wbhaEuipmentDTO) throws Exception;

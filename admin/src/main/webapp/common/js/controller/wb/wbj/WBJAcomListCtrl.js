@@ -45,36 +45,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         search(1);
                     }
                 },
-                btnDelete : {
-                    event: {
-                        click: function () {
-                            var frmDataObj    = $(this).closest("form");
-                            var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-
-                            if (delActCnt > 0)
-                            {
-                                if(confirm("삭제 처리하겠습니끼?"))
-                                {
-                                    //삭제 전송
-                                    cmmCtrl.frmAjax(function(respObj){
-                                        if(respObj != undefined && respObj.respCnt > 0){
-                                            var msg = "삭제되었습니다.";
-
-                                            alert(msg);
-                                            $formObj.find("#btnSearch").click();
-                                        }
-                                        else{
-                                            alert(msgCtrl.getMsg("fail.act"));
-                                        }
-                                    }, "./delete", frmDataObj, "POST", "json");
-                                }
-                            } else {
-                                alert("삭제대상을 선택해주세요.");
-                            }
-
-                        }
-                    }
-                },
             },
             inqFir : {
                 event : {
@@ -100,9 +70,38 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnExcelDown : {
                 event : {
                     click: function () {
-                        alert("클릭");
                         //사유입력 레이어팝업 활성화
                         location.href = "./excelDown?" + $formObj.serialize();
+                    }
+                }
+            },
+            btnChooseDelete : {
+                event: {
+                    click: function () {
+                        var frmDataObj    = $(this).closest("form");
+                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
+
+                        if (delActCnt > 0)
+                        {
+                            if(confirm("삭제 처리하겠습니끼?"))
+                            {
+                                //삭제 전송
+                                cmmCtrl.frmAjax(function(respObj){
+                                    if(respObj != undefined && respObj.respCnt > 0){
+                                        var msg = "삭제되었습니다.";
+
+                                        alert(msg);
+                                        $formObj.find("#btnSearch").click();
+                                    }
+                                    else{
+                                        alert(msgCtrl.getMsg("fail.act"));
+                                    }
+                                }, "./delete", frmDataObj, "POST", "json");
+                            }
+                        } else {
+                            alert("삭제대상을 선택해주세요.");
+                        }
+
                     }
                 }
             },

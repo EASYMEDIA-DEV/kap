@@ -217,33 +217,6 @@ public class EBCVisitEduController {
         return "mngwserc/eb/ebc/EBCVisitEduWriteCheckBoxAjax";
     }
 
-    /**
-     * 방문교육 정보를 수정한다.
-     *
-     *//*
-    @RequestMapping(value="/update")
-    public String updateVisitEdu(EBCVisitEduDTO ebcVisitEduDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap) throws Exception
-    {
-        try
-        {
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            ebcVisitEduDTO.setModId(cOUserDetailsDTO.getId());
-            ebcVisitEduDTO.setModIp(cOUserDetailsDTO.getLoginIp());
-
-            ebcVisitEduDTO.setAppctnBsnmNo(ebcVisitEduDTO.getAppctnBsnmNo());
-            modelMap.addAttribute("respCnt", ebcVisitEduService.updateVisitEdu(ebcVisitEduDTO));
-        }
-        catch (Exception e)
-        {
-            if (log.isErrorEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-
-        return "jsonView";
-    }*/
 
     /**
      * 방문교육 정보를 수정한다.
@@ -261,9 +234,6 @@ public class EBCVisitEduController {
             {
                 log.debug(e.getMessage());
             }
-            System.err.println("에러메시지1 = " + e);
-            System.err.println("에러메시지2 = " + e.getMessage());
-
             throw new Exception(e.getMessage());
         }
         return "jsonView";

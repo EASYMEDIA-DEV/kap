@@ -27,7 +27,7 @@
                     <label class="col-sm-1 control-label">연도<span class="star"> *</span></label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-6" style="margin-left: -15px">
-                            <select class="form-control input-sm" id="optYear" name="optYear" title="연도">
+                            <select class="form-control input-sm" id="optYear" name="year" title="연도">
                                 <option value="">연도 전체</option>
                                 <c:forEach var="optYear" items="${optYearList}" varStatus="status">
                                     <option value="${optYear}">${optYear}</option>
@@ -139,6 +139,7 @@
                                     </c:if>
                                 </c:forEach>
                             </select>
+                            <input type="hidden" id="befeCtgryCd" class="notRequired" value="${rtnInfo.ctgryCd}"/>
                         </div>
                     </div>
 

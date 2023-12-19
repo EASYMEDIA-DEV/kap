@@ -957,12 +957,12 @@
           , MJR_PRDCT_1 = #{mjrPrdct1}
           , MJR_PRDCT_2 = #{mjrPrdct2}
           , MJR_PRDCT_3 = #{mjrPrdct3}
-          , QLTY_5_STAR_CD = #{qlty5StarCd}
-          , QLTY_5_STAR_YEAR = #{qlty5StarYear}
-          , PAY_5_STAR_CD = #{pay5StarCd}
-          , PAY_5_STAR_YEAR = #{pay5StarYear}
-          , TCHLG_5_STAR_CD = #{tchlg5StarCd}
-          , TCHLG_5_STAR_YEAR = #{tchlg5StarYear}
+          , QLTY_5_STAR_CD = #{qlty5starCd}
+          , QLTY_5_STAR_YEAR = #{qlty5starYear}
+          , PAY_5_STAR_CD = #{pay5starCd}
+          , PAY_5_STAR_YEAR = #{pay5starYear}
+          , TCHLG_5_STAR_CD = #{tchlg5starCd}
+          , TCHLG_5_STAR_YEAR = #{tchlg5starYear}
           , MOD_ID = #{modId}
           , MOD_IP = #{modIp}
           , MOD_DTM = NOW()
@@ -1014,8 +1014,7 @@
     <update id="updatePartsComSQInfo" parameterType="wBGACompanyDTO">
         UPDATE /* WBGAExamMapper.updatePartsComSQInfo */ CP_CMPN_CBSN_DTL
         SET
-            BSNM_NO = #{bsnmNo}
-          , NM = #{nm}
+             NM = #{nm}
           , SCORE = #{score}
           , YEAR = #{year}
           , CRTFN_CMPN_NM = #{crtfnCmpnNm}
@@ -1023,7 +1022,7 @@
           , MOD_IP = #{modIp}
           , MOD_DTM = NOW()
         WHERE 1=1
-          AND CBSN_SEQ = #{cbsnSeq}
+          AND CBSN_SEQ = #{cbsnSeq} AND BSNM_NO = #{bsnmNo}
     </update>
 
     <!--

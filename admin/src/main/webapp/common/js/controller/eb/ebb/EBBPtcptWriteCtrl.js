@@ -122,6 +122,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						seqObj.episdYear = $("#episdYear").val();
 						seqObj.episdOrd = $("#episdOrd").val();
 						seqObj.episdSeq = $("#episdSeq").val();
+						seqObj.stduyMthdCd = $("#stduyMthdCd").val();//학습방식, 온라인이면 출석정보 등록 안함
+
 
 						if($("#memSeq").val() == ""){
 							alert("회원을 선택해주세요.");

@@ -64,7 +64,7 @@
         ON B.APPCTN_SEQ = G.APPCTN_SEQ
         <include refid="selectAcomListWhereSql" />
         GROUP BY APPCTN_SEQ
-        ORDER BY year DESC, episd DESC
+        ORDER BY year DESC, episd DESC, reg_dtm desc
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
@@ -763,7 +763,6 @@
             REG_DTM
         FROM CX_APPCTN_RSUME_DTL
         WHERE APPCTN_SEQ = #{detailsKey}
-        AND RSUME_ORD = '2'
         ORDER BY RSUME_ORD ASC
     </select>
 
@@ -970,7 +969,7 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                            B.REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                B.REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR B.REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>
@@ -978,7 +977,7 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                            B.MOD_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                B.MOD_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR B.MOD_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>

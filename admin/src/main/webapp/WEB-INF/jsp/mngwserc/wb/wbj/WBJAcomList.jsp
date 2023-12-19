@@ -161,7 +161,7 @@
 					</h6>
 					<div class="pull-right">
 						<button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
-						<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete">선택삭제</button>
+						<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnChooseDelete">선택삭제</button>
 						<button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
 					</div>
 				</div>
@@ -189,8 +189,6 @@
 								<th class="text-center">핸드폰번호</th>
 								<th class="text-center">1차결과</th>
 								<th class="text-center">최종결과</th>
-								<th class="text-center">최초 등록자(아이디)</th>
-								<th class="text-center">최초 등록일시</th>
 								<th class="text-center">최종 수정자(아이디)</th>
 								<th class="text-center">최종 수정일시</th>
 							</tr>

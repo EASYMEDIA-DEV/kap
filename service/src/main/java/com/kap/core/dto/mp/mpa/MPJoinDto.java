@@ -39,4 +39,7 @@ public class MPJoinDto extends BaseDTO {
     @Schema(title = "등록여부", example = "1")
     private String bsnmChk;
 
+
+    @Schema(title = "부품사 변경 여부", example = "1")
+    private String partTypeChg;
 }

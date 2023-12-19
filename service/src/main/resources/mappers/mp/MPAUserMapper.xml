@@ -474,6 +474,10 @@
              , mem.work_bsnm_no
              , cmpn_mst.cmpn_nm
              , cmpn_mst.ctgry_cd
+             , cmpn_mst.zipcode as cmpn_zipcode
+             , cmpn_mst.bsc_addr as cmpn_bsc_addr
+             , cmpn_mst.dtl_addr as cmpn_dtl_addr
+             , cmpn_mst.rprsnt_nm as rprsntNm
              , mem.dept_cd
              , mem.dept_dtl_nm
              , mem.pstn_cd
@@ -762,6 +766,7 @@
         set pwd = #{newEncPwd}
           , pwd_chng_dtm = now()
           , lgn_fail_cnt = 0
+          , chng_xtnsn_cnt = 0
           , mod_id = #{modId}
           , mod_ip = #{modIp}
           , mod_dtm = now()
@@ -1022,5 +1027,165 @@
         where mem_seq = #{memSeq}
     </update>
 
+    <!--
+ 쿼리명 : MPAUserMapper.updateUserDtlMod
+ 설  명 :  [일반 , 부품  ] 사업자등록만 변경
+   수정일      수정자       수정내용
+ ==========   ========   ==============
+ 2023.12.13    양현우       최초생성
+-->
+    <update id="updateUserDtlModBsnm" parameterType="MPAUserDto">
+        update co_mem_mst  /* MPAUserMapper.updateUserDtlMod */
+        set work_bsnm_no =#{workBsnmNo}
+           , mod_id =#{modId}
+           , mod_ip =#{modIp}
+           , mod_dtm = now()
+        where mem_seq =#{memSeq}
+    </update>
+
+    <!--
+            쿼리명 : MPAUserMapper.selectMPHPartList
+            설  명 : 사용자 상생 조회
+              수정일      수정자       수정내용
+            ==========   ========   ==============
+            2023.11.09    양현우       최초생성
+        -->
+    <select id="selectMPHPartList" parameterType="MPAUserDto" resultType="MPAPartDto">
+        select dtl.rsume_stts_cd /* MPAUserMapper.selectMPHPartList */
+             , dtl.rsume_seq
+             , mem_seq
+         from cx_appctn_mst mst
+          inner join cx_appctn_rsume_dtl dtl
+            on mst.appctn_seq = dtl.appctn_seq
+          inner join cx_appctn_rsume_prize_part_dtl part_dtl
+            on dtl.rsume_seq = part_dtl.rsume_seq
+             and dtl.rsume_ord = part_dtl.rsume_ord
+        <include refid="selectMPHPartListWhereSql" />
+        union
+        select dtl.rsume_stts_cd
+             , dtl.rsume_seq
+             , mem_seq
+         from cx_appctn_mst mst
+          inner join cx_appctn_rsume_dtl dtl
+           on mst.appctn_seq = dtl.appctn_seq
+          inner join cx_appctn_rsume_task_dtl task_dtl
+           on dtl.rsume_seq = task_dtl.rsume_seq
+           and dtl.rsume_ord = task_dtl.rsume_ord
+            <include refid="selectMPHPartListWhereSql" />
+        union
+        select dtl.rsume_stts_cd
+             , dtl.rsume_seq
+             , mem_seq
+         from cx_appctn_mst mst
+          inner join cx_appctn_rsume_dtl dtl
+           on mst.appctn_seq = dtl.appctn_seq
+          inner join cx_appctn_rsume_pbsn_dtl pbsn_dtl
+           on dtl.rsume_seq = pbsn_dtl.rsume_seq
+            and dtl.rsume_ord = pbsn_dtl.rsume_ord
+        <include refid="selectMPHPartListWhereSql" />
+        union
+        select dtl.rsume_stts_cd
+             , dtl.rsume_seq
+             , mem_seq
+         from cx_appctn_mst mst
+          inner join cx_appctn_rsume_dtl dtl
+           on mst.appctn_seq = dtl.appctn_seq
+          inner join cx_appctn_rsume_tchlg_dtl tchlg_dtl
+           on dtl.rsume_seq = tchlg_dtl.rsume_seq
+            and dtl.rsume_ord = tchlg_dtl.rsume_ord
+        <include refid="selectMPHPartListWhereSql" />
+
+
+    </select>
+
+    <!--
+        쿼리명 : MPAUserMapper.selectConListCnt
+        설  명 : 사용자 컨설팅 개수 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    양현우       최초생성
+    -->
+        <select id="selectConListCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
+        select count(*) from cp_cnstg_appctn_mst /* MPAUserMapper.selectConListCnt */
+        where appctn_mem_seq =#{memSeq}
+        and rsume_stts_cd in ( 'MNGTECH_STATUS_01'
+                             , 'MNGTECH_STATUS_03'
+                             , 'MNGTECH_STATUS_06'
+                             , 'MNGTECH_STATUS_08'
+                             , 'MNGTECH_STATUS_09' )
+
+    </select>
+
+    <sql id="selectMPHPartListWhereSql">
+    <where>
+        and mem_seq=#{memSeq}
+        and dtl.rsume_stts_cd in ('PRO_TYPE01001','PRO_TYPE02001','PRO_TYPE03001','PRO_TYPE04001','PRO_TYPE05001','PRO_TYPE06001','PRO_TYPE07001')
+
+    </where>
+    </sql>
+
+
+    <!--
+쿼리명 : MPAUserMapper.updateUserWthdrw
+설  명 :  [일반 , 부품  ] 탈퇴 여부 Y
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.12.19    양현우       최초생성
+-->
+    <update id="updateUserWthdrw" parameterType="MPIWthdrwDto">
+        update co_mem_mst  /* MPAUserMapper.updateUserWthdrw */
+         set wthdrw_yn = 'N'
+           , mod_id =#{modId}
+           , mod_ip=#{modIp}
+           , mod_dtm =now()
+          where mem_seq=#{memSeq}
+    </update>
+
+    <!--
+쿼리명 : MPAUserMapper.updateUserCiDel
+설  명 :  [일반 , 부품  ] ci값 삭제
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.12.19    양현우       최초생성
+-->
+    <update id="updateUserCiDel" parameterType="MPIWthdrwDto">
+        update co_mem_dtl  /* MPAUserMapper.updateUserCiDel */
+         set ci = ''
+           , mod_id =#{modId}
+           , mod_ip =#{modIp}
+           , mod_dtm = now()
+          where mem_seq =#{memSeq}
+    </update>
+
+
+    <!--
+      쿼리명 : MPAUserMapper.insertUserWthdrw
+      설  명 :  [일반 , 부품] 사용자 삭제
+        수정일      수정자       수정내용
+      ==========   ========   ==============
+      2023.11.10    양현우       최초생성
+      -->
+    <insert id="insertUserWthdrw" parameterType="MPIWthdrwDto">
+        insert into co_mem_wthdrw_dtl /* MPAUserMapper.insertUserWthdrw */
+        (  mem_seq
+        , wthdrw_rsn_cd
+        , wthdrw_rsn_etc_nm
+        , reg_id
+        , reg_ip
+        , reg_dtm
+        , mod_id
+        , mod_ip
+        , mod_dtm )
+        values( #{memSeq}
+              , #{wthdrwRsnCd}
+              , #{wthdrwRsnEtcNm}
+              , #{regId}
+              , #{regIp}
+              , now()
+              , #{modId}
+              , #{modIp}
+              , now()
+              )
+    </insert>
 
 </mapper>

@@ -2,6 +2,7 @@ package com.kap.service;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdExcelDTO;
 import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 
 import javax.servlet.http.HttpServletResponse;
@@ -34,9 +35,14 @@ public interface EBBEpisdService {
 	public EBBEpisdDTO selectEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 목록을 조회한다.(엑셀용)
+	 */
+	public EBBEpisdExcelDTO selectEpisdExcelList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
 	 * 엑셀 생성
 	 */
-	public void excelDownload1(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response) throws Exception;
+	public void excelDownload1(EBBEpisdExcelDTO eBBEpisdExcelDTO, HttpServletResponse response) throws Exception;
 
 	/**
 	 * 교육차수 상세를 조회한다.

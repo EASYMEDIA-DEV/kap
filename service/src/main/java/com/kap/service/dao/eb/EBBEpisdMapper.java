@@ -36,6 +36,17 @@ public interface EBBEpisdMapper {
 	 */
 	public int selectEpisdListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+
+	/**
+	 * 교육차수 목록을 조회한다.(엑셀용)
+	 */
+	public List<EBBEpisdExcelDTO> selectEpisdExcelList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 목록 갯수 조회(엑셀용)
+	 */
+	public int selectEpisdExcelListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
 	/**
 	 * 교육차수 상세를 조회한다.
 	 */

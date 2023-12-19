@@ -22,7 +22,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     function init() {
         if($("#formMemCd").val() == "CP") {
-            $(".partDtl").css("display","block");
+            if($("#bsnmNosOld").val() != "") {
+                $(".partDtl").css("display","none");
+            }
+            $(".chng").css("display", "none");
+            bsnmChk = true;
         }
     }
 
@@ -124,6 +128,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         } else if($(this).val() == 'COMPANY01002'){
                                 $(".gubunOne").hide();
                                 $(".gubunTwo").show();
+                        } else {
+                            $(".gubunOne").hide();
+                            $(".gubunTwo").hide();
                         }
                     }
                 }
@@ -196,18 +203,37 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function () {
                         if(validationCmpn()) {
                             if (!bsnmOldNewChk) {
-                                if ($("#deptCd").val() == '') {
-                                    alert(msgCtrl.getMsg("fail.mp.join.al_032"));
-                                    return false;
+                                if($("#bsnmNosOld").val() == "") {
+
+                                    if ($("#deptCd").val() == '') {
+                                        alert(msgCtrl.getMsg("fail.mp.join.al_032"));
+                                        return false;
+                                    }
+                                    if ($("#pstnCd").val() == '') {
+                                        alert(msgCtrl.getMsg("fail.mp.join.al_034"));
+                                        return false;
+                                    }
+                                    if ($("#pstnCd").val() == 'MEM_CD01007' && $(".pstnNm").val() == '') {
+                                        alert(msgCtrl.getMsg("fail.mp.join.al_035"));
+                                        return false;
+                                    }
                                 }
-                                if ($("#pstnCd").val() == '') {
-                                    alert(msgCtrl.getMsg("fail.mp.join.al_034"));
-                                    return false;
+                            } else {
+                                if($("#bsnmNosOld").val() == "") {
+                                    if ($("#deptCdOld").val() == '') {
+                                        alert(msgCtrl.getMsg("fail.mp.join.al_032"));
+                                        return false;
+                                    }
+                                    if ($("#pstnCdOld").val() == '') {
+                                        alert(msgCtrl.getMsg("fail.mp.join.al_034"));
+                                        return false;
+                                    }
+                                    if ($("#pstnCdOld").val() == 'MEM_CD01007' && $(".pstnNmOld").val() == '') {
+                                        alert(msgCtrl.getMsg("fail.mp.join.al_035"));
+                                        return false;
+                                    }
                                 }
-                                if ($("#pstnCd").val() == 'MEM_CD01007' && $(".pstnNm").val() == '') {
-                                    alert(msgCtrl.getMsg("fail.mp.join.al_035"));
-                                    return false;
-                                }
+
                             }
                             //new
                             if ($(".new").css("display") == 'block') {
@@ -217,6 +243,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 $(".addrNm").text($("#bscAddr").val() + " " + $("#dtlAddr").val());
                                 $(".cmpnNm").val($(".cmpn_nm_new").val());
                                 $(".rprsntNm").val($(".rprsnt_nm").val());
+                                $(".deptCd").val($("#deptCd").val());
+                                $(".deptDtlNm").val($("#deptDtlNm").val());
+                                $(".pstnNm").val($(".pstnNm").val());
+                                $(".pstnCd").val($("#pstnCd").val());
                             } else {
                                 //old
                                 $(".cmpnNm").text($(".cmpn_nm").text());
@@ -225,6 +255,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 $(".addrNm").text($(".addr").text());
                                 $(".cmpnNm").val($(".cmpn_nm").text());
                                 $(".rprsntNm").val($(".rsNm").text());
+                                $(".deptCd").val($("#deptCdOld").val());
+                                $(".deptDtlNm").val($("#deptDtlNmOld").val());
+                                $(".pstnNm").val($(".pstnNmOld").val());
+                                $(".pstnCd").val($("#pstnCdOld").val());
                             }
                             $("#btnParts span").text("부품사정보 변경");
                             //form 데이터 넣기
@@ -251,27 +285,41 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $(".sqInfoList1").val($(".sqInfoList1").val());
                             $(".sqInfoList2").val($(".sqInfoList2").val());
                             $(".sqInfoList3").val($(".sqInfoList3").val());
-                            $(".deptCd").val($("#deptCd").val());
-                            $(".deptDtlNm").val($("#deptDtlNm").val());
-                            $(".pstnNm").val($(".pstnNm").val());
-                            $(".pstnCd").val($("#pstnCd").val());
-
-
-
 
 
                             $(".bsnmNoNum").text($("#bsnmNo").val().substring(0, 3) + "-" + $("#bsnmNo").val().substring(3, 5) + "-" + $("#bsnmNo").val().substring(5));
-                            // $("#bsnmChk").val(bsnmOldNewChk);
+                            // $("#bsnmChkal(bsnmOldNewChk);
                             $("#stbsmDt").val($("#stbsmDt").val())
                             $("#formMemCd").val("CP");
-                            $(".partDtl").show();
+
+                            //부품사 변경 시
+                            if($("#bsnmNosOld").val() != "" && $("#partTypeChg").val()=="chg") {
+                                if (confirm(msgCtrl.getMsg("confirm.sve"))) {
+                                    var $formObj5 = $("#formUserSubmit");
+                                    cmmCtrl.frmAjax(function(respObj) {
+                                        alert(msgCtrl.getMsg("success.upd2"));
+                                        // location.reload();
+                                    }, "/my-page/member/intrduction/update-company", $formObj5, "POST", "json",'',false);
+                                }
+                            } else if($("#bsnmNosOld").val() != "" && $("#partTypeChg").val()=="turnOver"){
+                                //이직 시
+                                $(".partDtl").show();
+                                if(confirm(msgCtrl.getMsg("confirm.sve"))) {
+                                    cmmCtrl.niceCertification("no&"+$("#ci").val()+"&compChg");
+                                  }
+
+                            } else {
+                                //신규 등록 시
+                                $(".partDtl").show()
+                            }
+
+
                             $(".switchingMemberPopup").css('display', 'none');
                             $(".dimd").css('display', 'none');
                             $("body").removeClass("stop-scroll");
-                            // $(".cleanInit").val("");
-                            // $(".new").show();
-                            // $(".old").hide();
                             $(".for-status-chk").removeClass("satisfy");
+
+
                         }
                     }
                 }
@@ -301,6 +349,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     $(".rprsnt_nm").text(datas.rprsntNm);
                                     $(".gubun").text(datas.ctgryNm);
                                     $(".addr").text(datas.bscAddr+" "+datas.dtlAddr);
+
+                                    if($("#bsnmNosOld").val() != "") {
+                                        $(".chng").hide();
+                                    }
                                     bsnmChk = true;
                                     bsnmOldNewChk = true;
                                 } else {
@@ -404,6 +456,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnSqInfoPlus : {
                 event : {
                     click : function() {
+                        var blockElementsCount = $('.sqCount').filter(function() {
+                            return $(this).css('display') == 'block';
+                        }).length;
+                        clickIndex = blockElementsCount;
                         if(clickIndex >=3) {
                             alert(msgCtrl.getMsg("fail.mp.join.al_026"));
                             return false;
@@ -420,12 +476,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             //sq정보 삭제
             btnSqInfoMinus : {
                 event : {
+
                     click : function() {
+                        var blockElementsCount = $('.sqCount').filter(function() {
+                            return $(this).css('display') == 'block';
+                        }).length;
+                        clickIndex = blockElementsCount;
                         if(clickIndex <=1) {
                             return false;
                         }
                         $(".lastBtnIndex" + clickIndex).empty();
                         $(".data-line"+clickIndex).hide();
+                        $("#nm"+clickIndex).val('');
+                        $("#year"+clickIndex).val('');
+                        $("#score"+clickIndex).val('');
+                        $("#crtfnCmpnNm"+clickIndex).val('');
                         clickIndex--;
                         $(".lastBtnIndex"+clickIndex).append('<button class="btn-text-icon delete btnSqInfoMinus" type="button"><span>삭제</span></button>');
                         $(".lastBtnIndex"+clickIndex).append('<button class="btn-solid small gray-bg btn-add-line btnSqInfoPlus" type="button"><span>SQ 정보 추가</span></button>');

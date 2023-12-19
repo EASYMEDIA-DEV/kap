@@ -4,6 +4,7 @@
     <div class="cont-wrap"  >
         <form name="formPasswordConfirm" id="formPasswordConfirm" method="post">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="hidden" class="notRequired" id="typeChk"  value="${data}" />
 
             <!--
               신청 페이지: apply-page 클래스 추가
@@ -16,35 +17,9 @@
         </div>
 
         <div class="divide-con-area">
-            <div class="lnb-area">
-                <div class="for-motion">
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>교육/세미나 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>컨설팅 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>상생 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>SQ평가원 자격증</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>근태 체크</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>나의 1:1 문의</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu active" href="javascript:"><span>정보 수정</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>회원탈퇴</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                </div>
-            </div>
-
+            <!--LNB 시작-->
+            <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
+            <!--LNB 종료-->
             <div class="right-con-area">
                 <div class="cont-sec-w">
                     <div class="cont-sec no-border scroll-motion">

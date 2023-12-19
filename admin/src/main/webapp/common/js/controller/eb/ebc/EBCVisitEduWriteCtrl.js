@@ -689,7 +689,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }
                         actForm.etcMatlsFileList = etcMatlsFileArray;
                         console.log(actForm);
-                        debugger;
 
                         cmmCtrl.jsonAjax(function(data){
                             alert("저장되었습니다.");
