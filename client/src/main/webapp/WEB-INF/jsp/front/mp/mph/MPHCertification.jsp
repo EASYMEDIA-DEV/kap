@@ -4,6 +4,7 @@
     <div class="cont-wrap"  >
         <form name="formPasswordConfirm" id="formPasswordConfirm" method="post">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="hidden" class="notRequired" id="typeChk"  value="${data}" />
 
             <!--
               신청 페이지: apply-page 클래스 추가

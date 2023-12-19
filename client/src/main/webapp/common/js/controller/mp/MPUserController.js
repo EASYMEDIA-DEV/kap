@@ -44,33 +44,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             myRegister : {
                 event : {
                     click : function (){
-                        jQuery.ajax({
-                            url : "/nice/my-idnttvrfct",
-                            type : "post",
-                            data :
-                                {
-                                    "receivedata" : "/member/agreement&"+$("#joinType").val() //팝업 후 이동할 페이지 파라미터 추가 ex /id-find-res&ex1&ex2 최대 5개
-                                },
-                            success : function(data)
-                            {
-                                const { form } = document;
-                                const option = `status=no, menubar=no, toolbar=no, resizable=no, width=500, height=600`;
-                                document.getElementById('enc_data').value = data.enc_data; // enc_data 값을 설정
-                                document.getElementById('integrity_value').value = data.integrity_value; // integrity_value 값을 설정
-                                document.getElementById('token_version_id').value = data.token_version_id; // integrity_value 값을 설정
-
-                                window.open('', 'nicePopup', option);
-
-                                form.target = 'nicePopup';
-                                document.getElementById('form').submit();
-
-                            },
-                            error : function(xhr, ajaxSettings, thrownError)
-                            {
-                                cmmCtrl.errorAjax(xhr);
-                                jQuery.jstree.rollback(data.rlbk);
-                            }
-                        });
+                        cmmCtrl.niceCertification("/member/agreement&"+$("#joinType").val());
                     }
                 }
             },

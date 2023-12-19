@@ -944,6 +944,45 @@ var cmmCtrl = (function(){
 		});
 	}
 
+	/**
+	 * nice 인증 팝업
+	 * @param params
+	 * "no" ~ 시작 시 페이지 이동 x
+	 * "/id-ref-ff" : 페이지 이동
+	 * &파라미터 추가로 넘기고자하는 데이터 전송 최대 5개 /id-find-res&ex1&ex2 최대 5개
+	 */
+
+	function fn_nice_certification(params) {
+		jQuery.ajax({
+			url : "/nice/my-idnttvrfct",
+			type : "post",
+			data :
+				{
+					"receivedata" : params
+				},
+			success : function(data)
+			{
+				const {form} = document;
+
+				const option = `status=no, menubar=no, toolbar=no, resizable=no, width=500, height=600`;
+				document.getElementById('enc_data').value = data.enc_data; // enc_data 값을 설정
+				document.getElementById('integrity_value').value = data.integrity_value; // integrity_value 값을 설정
+				document.getElementById('token_version_id').value = data.token_version_id; // integrity_value 값을 설정
+
+				window.open('', 'nicePopup', option);
+
+				form.target = 'nicePopup';
+				document.getElementById('form').submit();
+
+			},
+			error : function(xhr, ajaxSettings, thrownError)
+			{
+				cmmCtrl.errorAjax(xhr);
+				jQuery.jstree.rollback(data.rlbk);
+			}
+		});
+	}
+
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -964,7 +1003,7 @@ var cmmCtrl = (function(){
 		pad: fn_pad,
 		checkUrl: fn_check_url,
 		initCalendar: fn_init_calendar,
-
+		niceCertification : fn_nice_certification,
 		searchPostCode : fn_postData,
 
 		//json형식의 데이터를 문자열로 변환 후 자바 컨트롤러에서 @RequestBody BaseDTO baseDto 로 받는다
