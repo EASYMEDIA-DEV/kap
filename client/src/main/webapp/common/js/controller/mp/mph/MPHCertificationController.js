@@ -337,17 +337,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             async: false,
                             cache : false,
                             success : function(data, status, xhr){
-                                console.log(data);
-                                // if(data.data.chk) {
-                                //     $("#btnPartsChg").hide();
-                                //     alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
-                                // } else {
+                                if(data.data.chk) {
+                                    $("#btnPartsChg").hide();
+                                    alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
+                                } else {
                                     $("#partTypeChg").val("turnOver");
                                     $("#bsnmNo").prop('readonly', false);
                                     $("#bsnmNo").attr('disabled', false);
                                     $(".btnCmpnChk").show();
                                     openPopup('switchingMemberPopup',this);
-                                // }
+                                }
                             },
                             error : function(data, status, xhr){
                                 return false;
