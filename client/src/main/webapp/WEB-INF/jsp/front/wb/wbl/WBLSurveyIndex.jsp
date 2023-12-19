@@ -19,7 +19,7 @@
         <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
         <!--LNB 종료-->
 
-        <div class="right-con-area">
+        <div class="right-con-area" data-controller="controller/wb/wbl/WBLSurveyIndexCtrl">
             <div class="cont-sec-w">
                 <div class="cont-sec no-border scroll-motion">
                     <div class="for-motion">
@@ -33,34 +33,36 @@
                                 </div>
                                 <p class="noti-txt f-caption2">* 본 조사 자료는 통계작성 목적으로만 사용되며, 개인, 법인 또는 단체 등의 정보는 통계법 제33조(비밀의 보호)에 의해 철저하게 보호됨을 알려 드립니다.</p>
                             </div>
-                            <div class="inner-con-box gray-bg">
-                                <p class="con-sub-tit f-title2">SMS 또는 E-mail로 발송된 인증번호를 입력해주세요.</p>
-                                <div class="data-enter-form">
-                                    <div class="row">
-                                        <div class="th">
-                                            <p class="title f-head">인증번호</p>
-                                        </div>
-                                        <div class="td">
-                                            <div class="data-line-w">
-                                                <div class="data-line">
-                                                    <div class="form-group">
-                                                        <div class="form-input w-longer">
-                                                            <input type="password" placeholder="인증번호 입력">
+                            <form method="post" id="f" name="f">
+                                <div class="inner-con-box gray-bg">
+                                    <p class="con-sub-tit f-title2">SMS 또는 E-mail로 발송된 인증번호를 입력해주세요.</p>
+                                    <div class="data-enter-form">
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-head">인증번호</p>
+                                            </div>
+                                            <div class="td">
+                                                <div class="data-line-w">
+                                                    <div class="data-line">
+                                                        <div class="form-group">
+                                                            <div class="form-input w-longer">
+                                                                <input type="password"  name="crtfnNo" placeholder="인증번호 입력" title="인증번호">
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="page-bot-btn-sec">
-                                    <div class="btn-wrap align-center">
-                                        <div class="btn-set">
-                                            <a class="btn-solid small black-bg" href="javascript:"><span>인증하기</span></a>
+                                    <div class="page-bot-btn-sec">
+                                        <div class="btn-wrap align-center">
+                                            <div class="btn-set">
+                                                <a class="btn-solid small black-bg" href="javascript:" id="btnSubmit"><span>인증하기</span></a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>

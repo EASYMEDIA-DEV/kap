@@ -168,6 +168,12 @@ public class EBBPtcptDTO extends BaseDTO {
     @Builder.Default
     private String deleteYn ="N";
 
+    @Schema(title = "변경사유", example = "이유")
+    private String rsn;
+
+    @Schema(title = "엑셀다운로드 여부", example = "Y")
+    private String excelYn;
+
     private List<EBBPtcptDTO> ptcptList;//교육 참여자 목록
 
     private List<EBBPtcptDTO> atndcList;//교육 참여자 출석목록

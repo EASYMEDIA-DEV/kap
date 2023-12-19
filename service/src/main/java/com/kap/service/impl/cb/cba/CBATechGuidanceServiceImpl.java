@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
@@ -244,16 +245,23 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replace("-", ""));
         mPEPartsCompanyDTO = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
 
-        // 회사 업종 상세 등록
-        String[] cbsnSeq =  pCBATechGuidanceInsertDTO.getCbsnSeq().split(",");
-        String[] nm =  pCBATechGuidanceInsertDTO.getNm().split(",");
-        String[] score = pCBATechGuidanceInsertDTO.getScore().split(",");
-        String[] year = pCBATechGuidanceInsertDTO.getYear().split(",");
-        String[] crtfnCmpnNm = pCBATechGuidanceInsertDTO.getCrtfnCmpnNm().split(",");
-
-        MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+        String[] cbsnSeq = {};
+        String[] nm = {};
+        String[] score = {};
+        String[] year = {};
+        String[] crtfnCmpnNm = {};
 
         String ctgryCd = pCBATechGuidanceInsertDTO.getCtgryCd();
+        // 회사 업종 상세 등록
+        if(ctgryCd.equals("COMPANY01002")) {
+            cbsnSeq = pCBATechGuidanceInsertDTO.getCbsnSeq().split(",");
+            nm = pCBATechGuidanceInsertDTO.getNm().split(",");
+            score = pCBATechGuidanceInsertDTO.getScore().split(",");
+            year = pCBATechGuidanceInsertDTO.getYear().split(",");
+            crtfnCmpnNm = pCBATechGuidanceInsertDTO.getCrtfnCmpnNm().split(",");
+        }
+        MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+
         // 1차사 - 5스타
         if(ctgryCd.equals("COMPANY01001")){
             mPEPartsCompanyDTO.setQlty5StarCd(pCBATechGuidanceInsertDTO.getQlty5StarCd());
@@ -392,13 +400,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
             cBATechGuidanceMapper.insertCnstgAppctnType(appctnTypeMap);
         }
-    }
-
-    /**
-     * 컨설팅 기술 지도 삭제
-     */
-    public int deleteTechGuidance(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception {
-        return cBATechGuidanceMapper.deleteTechGuidance(pCBATechGuidanceDTO);
     }
 
     /**
@@ -742,6 +743,36 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+    }
+
+    /**
+     * 컨설팅 기술 지도 삭제
+     */
+    @Transactional
+    public int deleteTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO) throws Exception
+    {
+        int actCnt = 0;
+
+        // 참여이관로그 테이블 삭제
+        cBATechGuidanceMapper.deleteConsultAppctnTrnsfDtl(cBATechGuidanceInsertDTO);
+        // 만족도 결과 상세 테이블 삭제
+        cBATechGuidanceMapper.deleteConsultSrvRsltDtl(cBATechGuidanceInsertDTO);
+        // 신청분야 상세 테이블 삭제 (경영컨설팅에서는 안씀)
+        cBATechGuidanceMapper.deleteConsultAppctnTypeDtl(cBATechGuidanceInsertDTO);
+        // 완성차의존율 상세 테이블 삭제
+        cBATechGuidanceMapper.deleteConsultDpndnDtl(cBATechGuidanceInsertDTO);
+        // 고객사비율 상세 테이블 삭제
+        cBATechGuidanceMapper.deleteConsultDlvryDtl(cBATechGuidanceInsertDTO);
+        // 부품사 업종 상세 테이블 삭제 (경영컨설팅에서는 안씀)
+        cBATechGuidanceMapper.deleteConsultCbsnDtl(cBATechGuidanceInsertDTO);
+        // 담당임원 테이블 삭제
+        cBATechGuidanceMapper.deleteConsultPicDtl(cBATechGuidanceInsertDTO);
+        // 진행마스터 테이블 삭제
+        cBATechGuidanceMapper.deleteConsultRsumeMst(cBATechGuidanceInsertDTO);
+
+        actCnt = cBATechGuidanceMapper.deleteManageConsult(cBATechGuidanceInsertDTO);
+
+        return actCnt;
     }
 
 }

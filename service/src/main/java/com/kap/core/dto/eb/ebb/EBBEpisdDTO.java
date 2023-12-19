@@ -269,6 +269,9 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "지출금액", example = "금액")
     private Integer expnsPmt;
 
+    @Schema(title = "만족도결과 순번", example = "번호")
+    private Integer rsltSeq;
+
     //오프라인여부
 
     //로그인세션ID

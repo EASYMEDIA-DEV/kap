@@ -726,6 +726,21 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 교육 차수별 만족도 결과 상세
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl edctnRsltSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EDCTN_SRV_RSLT_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+
+
     /** 방문교육 관리 결과상세 순번
      * @return
      */

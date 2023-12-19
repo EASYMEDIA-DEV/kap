@@ -56,6 +56,11 @@ public interface SMBMnVslMapper {
     public int deleteMnVsl(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
 
     /**
+     * 노출 중인 메인 비주얼 갯수
+     */
+    public int selectMnVslCnt(SMBMainVslDTO pSMBMainVslDTO) throws Exception;
+
+    /**
      * 메인 비주얼 정렬 수정
      */
     public void updateOrder(SMBMainVslDTO pSMBMainVslDTO) throws Exception;

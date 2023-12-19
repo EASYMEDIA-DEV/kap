@@ -12,6 +12,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 	// form Object
 	var $formObj = jQuery("#frmAtndcData");
+	var $excelObj = ctrl.obj.parent().find("#atndcModal");
+
 	//온라인강의 복사본 생성
 	var onlineHtml = $("#onlineList").find("tr.examTr").eq(0).clone(true);
 	var onlineFileHtml = $("#onlineList").find("tr.examTr").eq(1).clone(true);
@@ -55,6 +57,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// set model
 	ctrl.model = {
 		id : {
+
+			btnExcel : {
+				event : {
+					click : function() {
+						//사유입력 레이어팝업 활성화
+						$excelObj.find("#rsn").val('');
+						$excelObj.modal("show");
+					}
+				}
+			},
 			btnSearch : {
 				event : {
 					click : function() {
@@ -142,6 +154,26 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		},
 		immediately : function(event) {
+
+			$excelObj.find("button.atndcDown").on('click', function(){
+
+				var rsn = $("#atndcModal").find("#rsn").val().trim();
+				var frmDataObj    = $formObj.closest("form");
+
+				frmDataObj.find("input[name='rsn']").remove();
+
+				if (rsn != "") {
+					frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+
+					//파라미터를 물고 가야함.
+					location.href = "./excel-down3?" + frmDataObj.serialize();
+
+				} else {
+					alert(msgCtrl.getMsg("fail.reason"));
+					return;
+				}
+
+			});
 
 			//교육 참여자목록 조회
 			search();

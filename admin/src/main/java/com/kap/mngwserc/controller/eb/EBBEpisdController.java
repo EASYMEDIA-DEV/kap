@@ -143,6 +143,90 @@ public class EBBEpisdController {
     }
 
     /**
+     * 교육차수관리의 참여자 목록을 excel 다운로드한다.
+     */
+    @GetMapping(value = "/excel-down2")
+    public void getEpisdPtcptPageExcel(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            eBBEpisdDTO.setExcelYn("Y");
+            // 목록 조회
+            EBBPtcptDTO ebbExcelListDto = eBBEpisdService.setPtcptList(eBBEpisdDTO);
+
+            //엑셀 생성
+            eBBEpisdService.excelDownload2(ebbExcelListDto, response);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 교육차수관리의 차명자 출석부 목록을 excel 다운로드한다.
+     */
+    @GetMapping(value = "/excel-down3")
+    public void getEpisdPtcptAtndcExcel(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response) throws Exception
+    {
+        /*try
+        {*/
+            eBBEpisdDTO.setExcelYn("Y");
+            // 목록 조회
+            //목록 상단 th에 뿌려줄 날짜 리스트를 구한다.
+            EBBPtcptDTO eBBPtcptDTO = eBBEpisdService.setAtndcList(eBBEpisdDTO);
+
+            System.out.println("@@@ getEdctnStrtDtm = " + eBBEpisdDTO.getEdctnStrtDtm());
+            System.out.println("@@@ getEdctnEndDtm = " + eBBEpisdDTO.getEdctnEndDtm());
+
+                String getEdctnStrtDtm= eBBEpisdDTO.getEdctnStrtDtm();
+                String getEdctnEndDtm= eBBEpisdDTO.getEdctnEndDtm();
+                // 시작 날짜와 종료 날짜 설정
+                String startDateString = getEdctnStrtDtm.substring(0, 10);
+                String endDateString = getEdctnEndDtm.substring(0, 10);
+
+                // 시작 날짜와 종료 날짜를 LocalDate 객체로 변환
+                LocalDate startDate = LocalDate.parse(startDateString);
+                LocalDate endDate = LocalDate.parse(endDateString);
+                // 날짜 출력 형식 지정
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                // 반복문을 통해 날짜 출력
+                List<EBBPtcptDTO> tableAtndcList = new ArrayList();
+
+                while (!startDate.isAfter(endDate)) {
+                    EBBPtcptDTO tableAtndcDto = new EBBPtcptDTO();
+
+                    tableAtndcDto.setEdctnDt(String.valueOf(startDate));
+                    tableAtndcList.add(tableAtndcDto);
+
+                    startDate = startDate.plusDays(1); // 다음 날짜로 이동
+                }
+
+
+            //tableAtndcList;
+            //교육 참여자 출석부 th부분 날짜 세팅용 종료
+
+            //엑셀 생성
+            eBBEpisdService.excelDownload3(tableAtndcList, eBBPtcptDTO, response);
+        /*}
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }*/
+    }
+
+
+
+    /**
      * 교육회차관리 목록을 조회한다. (교육차수관리 차수변경용 버전)
      */
     @RequestMapping(value = "/selectChangeList")
