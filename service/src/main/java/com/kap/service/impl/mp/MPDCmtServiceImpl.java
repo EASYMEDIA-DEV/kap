@@ -555,7 +555,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPDCmtServiceImpl");
         pCoSystemLogDTO.setFncNm("selectKenMonthList");
         pCoSystemLogDTO.setPrcsCd("DL");
-        pCoSystemLogDTO.setRsn(mpdKenDto.getRsn());
+        pCoSystemLogDTO.setRsn("월 근태 엑셀 다운로드");
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
@@ -892,7 +892,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPDCmtServiceImpl");
         pCoSystemLogDTO.setFncNm("selectKenList");
         pCoSystemLogDTO.setPrcsCd("DL");
-        pCoSystemLogDTO.setRsn(mpdKenDto.getRsn());
+        pCoSystemLogDTO.setRsn("일일 근태 엑셀 다운로드");
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
