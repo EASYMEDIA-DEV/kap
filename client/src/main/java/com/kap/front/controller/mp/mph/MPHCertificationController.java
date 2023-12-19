@@ -36,7 +36,7 @@ import java.util.ArrayList;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/my-page/member")
+@RequestMapping(value="/my-page/member/intrduction")
 public class MPHCertificationController {
 
     private final COUserLgnService coUserLgnService;
