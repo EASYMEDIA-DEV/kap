@@ -65,7 +65,7 @@
               , now()
               , 'N'
               , now()
-              , 'N'
+              , 'Y'
               , '0'
               , #{regId}
               , #{regIp}
