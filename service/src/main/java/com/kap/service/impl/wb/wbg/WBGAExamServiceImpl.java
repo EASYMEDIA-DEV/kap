@@ -596,6 +596,15 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                     wBGAExamMapper.insertEuipment(wBGAEuipmentDTO);
                 }
 
+                //신청계측장비 상세 1단계생성
+                WBGAMsEuipmentDTO wbgaMsEuipmentDTO = new WBGAMsEuipmentDTO();
+                wbgaMsEuipmentDTO.setRsumeSeq(wBGAApplyDtlDTO.getRsumeSeq());
+                wbgaMsEuipmentDTO.setRsumeOrd(wBGAApplyDtlDTO.getRsumeOrd());
+                wbgaMsEuipmentDTO.setRegId(regId);
+                wbgaMsEuipmentDTO.setRegIp(regIp);
+
+                wBGAExamMapper.insertMsEuipment(wbgaMsEuipmentDTO);
+
                 //신청파일 넣기
                 for (int i = 0; i < wBGAApplyMstDTO.getFileList().size(); i++) {
 
@@ -633,12 +642,12 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                         wBGACompanyDTO.setCrtfnCmpnNm(wBGACompanyDTO.getSqInfoList().get(t).getCrtfnCmpnNm());
 
                         // 2차인 경우, 스타등급 빈 값 처리
-                        wBGACompanyDTO.setTchlg5StarCd(null);
-                        wBGACompanyDTO.setPay5StarCd(null);
-                        wBGACompanyDTO.setQlty5StarCd(null);
-                        wBGACompanyDTO.setTchlg5StarYear(null);
-                        wBGACompanyDTO.setPay5StarYear(null);
-                        wBGACompanyDTO.setQlty5StarYear(null);
+                        wBGACompanyDTO.setTchlg5starCd(null);
+                        wBGACompanyDTO.setPay5starCd(null);
+                        wBGACompanyDTO.setQlty5starCd(null);
+                        wBGACompanyDTO.setTchlg5starYear(null);
+                        wBGACompanyDTO.setPay5starYear(null);
+                        wBGACompanyDTO.setQlty5starYear(null);
 
                         if (!seq.isEmpty()) {
                             wBGACompanyDTO.setCbsnSeq(Integer.valueOf(seq));
@@ -715,7 +724,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                 }
 
                 //단계별 프로세스
-                wBGAApplyDtlDTO = stepUpdateProcess(wBGAApplyMstDTO,wBGAApplyDtlDTO, wBGAMsEuipmentDTO);
+                stepUpdateProcess(wBGAApplyMstDTO,wBGAApplyDtlDTO, wBGAMsEuipmentDTO);
 
                 //신청자 변경
                 if ("Y".equals(wBGAApplyMstDTO.getUserLogYn())) {
@@ -758,14 +767,14 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                         wBGACompanyDTO.setCrtfnCmpnNm(wBGACompanyDTO.getSqInfoList().get(t).getCrtfnCmpnNm());
 
                         // 2차인 경우, 스타등급 빈 값 처리
-                        wBGACompanyDTO.setTchlg5StarCd(null);
-                        wBGACompanyDTO.setPay5StarCd(null);
-                        wBGACompanyDTO.setQlty5StarCd(null);
-                        wBGACompanyDTO.setTchlg5StarYear(null);
-                        wBGACompanyDTO.setPay5StarYear(null);
-                        wBGACompanyDTO.setQlty5StarYear(null);
+                        wBGACompanyDTO.setTchlg5starCd(null);
+                        wBGACompanyDTO.setPay5starCd(null);
+                        wBGACompanyDTO.setQlty5starCd(null);
+                        wBGACompanyDTO.setTchlg5starYear(null);
+                        wBGACompanyDTO.setPay5starYear(null);
+                        wBGACompanyDTO.setQlty5starYear(null);
 
-                        if (!seq.isEmpty()) {
+                        if (!"null".equals(seq)) {
                             wBGACompanyDTO.setCbsnSeq(Integer.valueOf(seq));
                             wBGAExamMapper.updatePartsComSQInfo(wBGACompanyDTO);
                         } else {
@@ -820,6 +829,14 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                 wBGAApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_01_004");
                 wBGAExamMapper.updateApplyStatus(wBGAApplyDtlDTO);
             }
+
+            wBGAMsEuipmentDTO.setRegId(wBGAApplyDtlDTO.getRegId());
+            wBGAMsEuipmentDTO.setRegIp(wBGAApplyDtlDTO.getRegIp());
+
+            //계측장비상세 데이터처리
+            wBGAExamMapper.deleteMsEuipment(wBGAMsEuipmentDTO);
+            wBGAExamMapper.insertMsEuipment(wBGAMsEuipmentDTO);
+
         } else if (wBGAApplyDtlDTO.getRsumeOrd() == 2) {
             //심사단계
             if ("PRO_TYPE07001_04_006".equals(wBGAApplyDtlDTO.getMngSttsCd())) {
@@ -852,7 +869,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
             wBGAMsEuipmentDTO.setRegId(wBGAApplyDtlDTO.getRegId());
             wBGAMsEuipmentDTO.setRegIp(wBGAApplyDtlDTO.getRegIp());
 
-            //심사단계 데이터처리(PK가 없어 삭제후 재등록)
+            //계측장비상세 데이터처리
             wBGAExamMapper.deleteMsEuipment(wBGAMsEuipmentDTO);
             wBGAExamMapper.insertMsEuipment(wBGAMsEuipmentDTO);
 

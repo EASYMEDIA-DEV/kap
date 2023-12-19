@@ -852,6 +852,40 @@
     </insert>
 
     <!--
+     쿼리명 : WBHACalibrationMapper.insertApplyStep
+     설  명 : 상생 신청 다음단계 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.24  김태훈     최초 생성
+    -->
+    <insert id="insertApplyStep" parameterType="wbhaApplyDtlDTO">
+        INSERT /* WBHACalibrationMapper.insertApplyDtl */ INTO CX_APPCTN_RSUME_DTL
+        (
+            RSUME_SEQ
+        , RSUME_ORD
+        , APPCTN_SEQ
+        , RSUME_STTS_CD
+        , APPCTN_STTS_CD
+        , MNG_STTS_CD
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        )
+        VALUE
+        (
+            #{rsumeSeq}
+            ,#{rsumeOrd}
+            ,#{appctnSeq}
+            ,#{rsumeSttsCd}
+            ,#{appctnSttsCd}
+            ,#{mngSttsCd}
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+        )
+    </insert>
+
+    <!--
      쿼리명 : WBHACalibrationMapper.insertEuipment
      설  명 : 상생신청대상장비 상세 등록
      수정일     수정자     수정내용
@@ -957,12 +991,12 @@
           , MJR_PRDCT_1 = #{mjrPrdct1}
           , MJR_PRDCT_2 = #{mjrPrdct2}
           , MJR_PRDCT_3 = #{mjrPrdct3}
-          , QLTY_5_STAR_CD = #{qlty5StarCd}
-          , QLTY_5_STAR_YEAR = #{qlty5StarYear}
-          , PAY_5_STAR_CD = #{pay5StarCd}
-          , PAY_5_STAR_YEAR = #{pay5StarYear}
-          , TCHLG_5_STAR_CD = #{tchlg5StarCd}
-          , TCHLG_5_STAR_YEAR = #{tchlg5StarYear}
+          , QLTY_5_STAR_CD = #{qlty5starCd}
+          , QLTY_5_STAR_YEAR = #{qlty5starYear}
+          , PAY_5_STAR_CD = #{pay5starCd}
+          , PAY_5_STAR_YEAR = #{pay5starYear}
+          , TCHLG_5_STAR_CD = #{tchlg5starCd}
+          , TCHLG_5_STAR_YEAR = #{tchlg5starYear}
           , MOD_ID = #{modId}
           , MOD_IP = #{modIp}
           , MOD_DTM = NOW()
@@ -1014,8 +1048,7 @@
     <update id="updatePartsComSQInfo" parameterType="wbhaCompanyDTO">
         UPDATE /* WBHACalibrationMapper.updatePartsComSQInfo */ CP_CMPN_CBSN_DTL
         SET
-            BSNM_NO = #{bsnmNo}
-          , NM = #{nm}
+           NM = #{nm}
           , SCORE = #{score}
           , YEAR = #{year}
           , CRTFN_CMPN_NM = #{crtfnCmpnNm}
@@ -1023,7 +1056,7 @@
           , MOD_IP = #{modIp}
           , MOD_DTM = NOW()
         WHERE 1=1
-          AND CBSN_SEQ = #{cbsnSeq}
+          AND CBSN_SEQ = #{cbsnSeq} AND BSNM_NO = #{bsnmNo}
     </update>
 
     <!--
@@ -1081,7 +1114,6 @@
         UPDATE /* WBHACalibrationMapper.updateApplyStatus */ CX_APPCTN_RSUME_DTL
         SET
             APPCTN_STTS_CD = #{appctnSttsCd},
-            APPCTN_STTS_CHNG_DTM = NOW(),
             MNG_STTS_CD = #{mngSttsCd},
             MNG_STTS_CHNG_DTM = NOW(),
             RTRN_RSN_CNTN = #{rtrnRsnCntn},

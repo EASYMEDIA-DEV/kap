@@ -27,8 +27,6 @@
                 <td class="text-center">${list.email}</td>
                 <td class="text-center">${kl:convertDate(list.mngSttsChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-')}</td>
                 <td class="text-center">${kl:convertDate(list.appctnSttsChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-')}</td>
-                <td class="text-center">${ list.regName}(${list.regId})</td>
-                <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modDtm}">

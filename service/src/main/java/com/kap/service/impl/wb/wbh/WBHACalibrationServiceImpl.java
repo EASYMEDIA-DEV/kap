@@ -19,6 +19,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -633,14 +634,14 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                         wbhaCompanyDTO.setCrtfnCmpnNm(wbhaCompanyDTO.getSqInfoList().get(t).getCrtfnCmpnNm());
 
                         // 2차인 경우, 스타등급 빈 값 처리
-                        wbhaCompanyDTO.setTchlg5StarCd(null);
-                        wbhaCompanyDTO.setPay5StarCd(null);
-                        wbhaCompanyDTO.setQlty5StarCd(null);
-                        wbhaCompanyDTO.setTchlg5StarYear(null);
-                        wbhaCompanyDTO.setPay5StarYear(null);
-                        wbhaCompanyDTO.setQlty5StarYear(null);
+                        wbhaCompanyDTO.setTchlg5starCd(null);
+                        wbhaCompanyDTO.setPay5starCd(null);
+                        wbhaCompanyDTO.setQlty5starCd(null);
+                        wbhaCompanyDTO.setTchlg5starYear(null);
+                        wbhaCompanyDTO.setPay5starYear(null);
+                        wbhaCompanyDTO.setQlty5starYear(null);
 
-                        if (!seq.isEmpty()) {
+                        if (!"null".equals(seq)) {
                             wbhaCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
                             wbhaCalibrationMapper.updatePartsComSQInfo(wbhaCompanyDTO);
                         } else {
@@ -758,14 +759,14 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                         wbhaCompanyDTO.setCrtfnCmpnNm(wbhaCompanyDTO.getSqInfoList().get(t).getCrtfnCmpnNm());
 
                         // 2차인 경우, 스타등급 빈 값 처리
-                        wbhaCompanyDTO.setTchlg5StarCd(null);
-                        wbhaCompanyDTO.setPay5StarCd(null);
-                        wbhaCompanyDTO.setQlty5StarCd(null);
-                        wbhaCompanyDTO.setTchlg5StarYear(null);
-                        wbhaCompanyDTO.setPay5StarYear(null);
-                        wbhaCompanyDTO.setQlty5StarYear(null);
+                        wbhaCompanyDTO.setTchlg5starCd(null);
+                        wbhaCompanyDTO.setPay5starCd(null);
+                        wbhaCompanyDTO.setQlty5starCd(null);
+                        wbhaCompanyDTO.setTchlg5starYear(null);
+                        wbhaCompanyDTO.setPay5starYear(null);
+                        wbhaCompanyDTO.setQlty5starYear(null);
 
-                        if (!seq.isEmpty()) {
+                        if (!"null".equals(seq)) {
                             wbhaCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
                             wbhaCalibrationMapper.updatePartsComSQInfo(wbhaCompanyDTO);
                         } else {
@@ -779,6 +780,7 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                     wbhaCalibrationMapper.deletePartsComSQInfo(wbhaCompanyDTO);
                 }
 
+                System.out.print("wbhaCompanyDTO :: " + wbhaCompanyDTO);
                 wbhaCalibrationMapper.updatePartsCompany(wbhaCompanyDTO);
                 // 부품사 수정 End
             }
@@ -803,7 +805,7 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                 wbhaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_03_001");
                 wbhaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_04_001");
 
-                wbhaCalibrationMapper.insertApplyDtl(wbhaApplyDtlDTO);
+                wbhaCalibrationMapper.insertApplyStep(wbhaApplyDtlDTO);
 
             } else if ("PRO_TYPE07001_02_002".equals(wbhaApplyDtlDTO.getMngSttsCd()) || "PRO_TYPE07001_02_005".equals(wbhaApplyDtlDTO.getMngSttsCd())) {
                 //PRO_TYPE06001_02_002 보완요청, PRO_TYPE07001_02_005 미선정 _ 사유필요
@@ -834,7 +836,7 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                 wbhaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_05_001");
                 wbhaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_06_001");
 
-                wbhaCalibrationMapper.insertApplyDtl(wbhaApplyDtlDTO);
+                wbhaCalibrationMapper.insertApplyStep(wbhaApplyDtlDTO);
 
             } else if ("PRO_TYPE07001_04_003".equals(wbhaApplyDtlDTO.getMngSttsCd()) || "PRO_TYPE07001_04_005".equals(wbhaApplyDtlDTO.getMngSttsCd())) {
                 //PRO_TYPE07001_04_003 보완요청, PRO_TYPE07001_04_005 부적합
