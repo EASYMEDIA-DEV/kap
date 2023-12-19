@@ -677,14 +677,4 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
     }
-
-    private static int countNewlines(String text) {
-        int count = 0;
-        for (char c : text.toCharArray()) {
-            if (c == '\n') {
-                count++;
-            }
-        }
-        return count;
-    }
 }

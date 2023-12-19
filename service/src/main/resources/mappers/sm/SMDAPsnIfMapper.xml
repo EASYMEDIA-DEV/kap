@@ -27,10 +27,15 @@
             , #{dEndDt} AS 'dEndDt'
         FROM
         SM_PSNIF_MST A
+
         <include refid="selectPsnIfListwhereSql" />
         ORDER BY
             REG_DTM DESC
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        <choose>
+            <when test="siteGubun == 'admin'">
+                LIMIT #{firstIndex}, #{recordCountPerPage}
+            </when>
+        </choose>
     </select>
 
     <!--
@@ -73,6 +78,11 @@
             SM_PSNIF_MST A
         WHERE 1=1
           AND PSNIF_SEQ = #{psnifSeq}
+        <choose>
+            <when test="siteGubun == 'admin'">
+                AND EXPS_YN = "Y"
+            </when>
+        </choose>
     </select>
 
     <!--
@@ -214,6 +224,11 @@
                     </otherwise>
                 </choose>
             </if>
+            <choose>
+                <when test="siteGubun != 'admin'">
+                    AND EXPS_YN = "Y"
+                </when>
+            </choose>
         </where>
     </sql>
 </mapper>

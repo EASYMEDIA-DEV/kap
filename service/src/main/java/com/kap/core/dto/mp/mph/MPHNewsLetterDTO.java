@@ -52,9 +52,13 @@ public class MPHNewsLetterDTO extends BaseDTO {
     @Schema(title = "검색 등록/수정 기간 종료일자", example = "yyyy-MM-dd")
     private String dEndDt;
 
+    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
+    private String srchLayer;
+
+    @Schema(title = "변경사유", example = "이유")
+    private String rsn;
+
     @Schema(title = "엑셀 다운로드 여부", example = "Y")
     private String excelYn;
 
-    @Schema(title = "검색 레이어에서 호출 여부", example = "Y")
-    private String srchLayer;
 }

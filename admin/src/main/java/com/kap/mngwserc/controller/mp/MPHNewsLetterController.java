@@ -9,6 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <pre>
  * 뉴스레터 신청자 관리를 위한 Controller
@@ -65,6 +67,30 @@ public class MPHNewsLetterController {
             throw new Exception(e.getMessage());
         }
         return "mngwserc/mp/mph/MPHNewsLetterListAjax";
+    }
+
+    /**
+     * 엑셀 다운로드
+     */
+    @GetMapping(value = "/excel-down")
+    public void selectPartsCompanyListExcel(MPHNewsLetterDTO mphNewsLetterDTO, HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            mphNewsLetterDTO.setExcelYn("Y");
+            // 목록 조회
+            MPHNewsLetterDTO newMphNewsLetterDTO = mphNewsLetterService.selectNewsLetterList(mphNewsLetterDTO);
+            //엑셀 생성
+            mphNewsLetterService.excelDownload(newMphNewsLetterDTO, response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
     }
 
 }

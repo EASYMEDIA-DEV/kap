@@ -2,6 +2,8 @@ package com.kap.service;
 
 import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
 
+import javax.servlet.http.HttpServletResponse;
+
 /**
  * <pre>
  * 뉴스레터 신청자 관리를 위한 Service
@@ -26,4 +28,10 @@ public interface MPHNewsLetterService {
      * 목록을 조회한다.
      */
     public MPHNewsLetterDTO selectNewsLetterList(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception;
+
+    /**
+     * 엑셀 생성
+     */
+    public void excelDownload(MPHNewsLetterDTO mphNewsLetterDTO, HttpServletResponse response) throws Exception;
+
 }

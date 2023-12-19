@@ -68,6 +68,25 @@ define(["ezCtrl"], function(ezCtrl) {
             cmmCtrl.setFormData($formObj);
 
             search($formObj.find("input[name=pageIndex]").val());
+
+            $excelObj.find("button.down").on('click', function(){
+                var rsn = $excelObj.find("#rsn").val().trim();
+                var frmDataObj    = $formObj.closest("form");
+
+                frmDataObj.find("input[name='rsn']").remove();
+
+                if (rsn != "") {
+                    frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+
+                    //파라미터를 물고 가야함.
+                    location.href = "./excel-down?" + frmDataObj.serialize();
+
+                } else {
+                    alert(msgCtrl.getMsg("fail.reason"));
+                    return;
+                }
+
+            });
         }
     };
 

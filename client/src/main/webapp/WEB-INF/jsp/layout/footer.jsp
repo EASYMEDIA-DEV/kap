@@ -6,8 +6,8 @@
 						<img src="/common/images/icon-logo-foot.svg" alt="KAP 자동차부품산업진흥재단">
 					</figure>
 					<div class="links-box f-body2">
-						<a class="personal bold" class="active" href="javascript:">개인정보 처리방침</a>
-						<a class="terms" href="javascript:">이용약관</a>
+						<a class="personal bold" class="active" href="/utility/privacy-policy/index">개인정보 처리방침</a>
+						<a class="terms" href="/utility/terms-of-use/index">이용약관</a>
 						<a class="email" href="javascript:">이메일무단수집거부</a>
 						<a class="way" href="javascript:">오시는길</a>
 					</div>
