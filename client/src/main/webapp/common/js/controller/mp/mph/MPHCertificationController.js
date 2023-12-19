@@ -35,7 +35,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     function callbackAjaxLogin(data) {
         if(data.data.passwordChk) {
             if($("#typeChk").val() == 'modify') {
-                location.replace('/my-page/member/modify-page');
+                location.replace('/my-page/member/intrduction/modify-page');
             } else if($("#typeChk").val() == 'wthdrw') {
                 location.replace('/my-page/member/wthdrw/wthdrw-page')
             }
@@ -251,7 +251,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         if($("#bsnmNosOld").val()!= "") {
                             $("#partTypeChg").val("chg");
                             jQuery.ajax({
-                                url : "/my-page/member/"+$("#bsnmNosOld").val(),
+                                url : "/my-page/member/intrduction/"+$("#bsnmNosOld").val(),
                                 type : "get",
                                 data :
                                     {
@@ -329,7 +329,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                         //confirm-comp
                         jQuery.ajax({
-                            url : "/my-page/member/confirm-comp",
+                            url : "/my-page/member/intrduction/confirm-comp",
                             type : "post",
                             timeout: 30000,
                             data : {},
@@ -420,7 +420,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 async : {
                     use : true,
                     func : function(){
-                        cmmCtrl.frmAjax(callbackAjaxLogin, "/my-page/member/confirm-password", $formObj, "POST", "json", true);
+                        cmmCtrl.frmAjax(callbackAjaxLogin, "/my-page/member/intrduction/confirm-password", $formObj, "POST", "json", true);
                     }
                 }
             });
@@ -504,7 +504,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 //TODO 페이지 이동
                                 alert(msgCtrl.getMsg("success.upd2"));
                                 location.reload();
-                            }, "/my-page/member/update", $formObj6, "POST", "json",'',false);
+                            }, "/my-page/member/intrduction/update", $formObj6, "POST", "json",'',false);
                         }
                     }
                 }

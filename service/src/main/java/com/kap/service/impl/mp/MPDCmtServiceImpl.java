@@ -83,6 +83,12 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpaUserDto.setMemSeq(memSeqIdgen.getNextIntegerId());
         mpaUserDto.setEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getPwd(), mpaUserDto.getId()));
         int i = mpdCmtMapper.insertCmt(mpaUserDto);
+        mpaUserDto.setTrmsAgmntYn("N");
+        mpaUserDto.setPsnifAgmntYn("N");
+        mpaUserDto.setPsnif3AgmntYn("N");
+        mpaUserDto.setFndnNtfyRcvYn("N");
+        mpaUserDto.setCi("");
+        mpaUserMapper.insertUserDtl(mpaUserDto);
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
         return i;
