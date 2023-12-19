@@ -259,6 +259,22 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
+            //PDF
+            appctnPdfDownload : {
+                event : {
+                    click : function(){
+
+                        var cmpnNm = $("#cmpnNm").html();
+                        var today = new Date();
+
+                        var date = today.getFullYear() +""+ today.getMonth()+1 +""+ today.getDate();
+
+
+                        var fileName = "시험계측장비_사업현황_"+ cmpnNm +"_"+ date + ".pdf";
+                        cmmCtrl.getAppctnPdfDownload(fileName);
+                    }
+                }
+            }
         },
         classname : {
             checkboxSingle : {

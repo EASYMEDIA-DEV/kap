@@ -20,7 +20,7 @@
 
 
             <h6 class="mt0"><strong>관리자 등록</strong></h6><hr>
-
+            <div id="appctnPdfArea1">
             <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
 
             <div id="compnayDiv">
@@ -367,7 +367,9 @@
                 </div>
             </fieldset>
             </c:if>
+            </div>
 
+            <div id="appctnPdfArea2">
             <h6 class="mt0"><em class="ion-play mr-sm"></em>컨설팅 내역</h6>
             <fieldset>
                 <div class="col-sm-12 p0 mt">
@@ -428,7 +430,13 @@
                         </div>
                     </div>
                 </fieldset>
+
+                <div class="pull-right">
+                    <button type="button" class="btn btn-sm btn-default" id="appctnPdfDownload">신청정보 다운로드</button>
+                </div>
+
             </c:if>
+            </div>
 
             <div id="equipmentHtml">
                 <fieldset class="equipment">
