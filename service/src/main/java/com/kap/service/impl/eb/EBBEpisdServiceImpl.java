@@ -77,6 +77,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	/* 교육차수 - 교육참여마스터 시퀀스 */
 	private final EgovIdGnrService edctnPtcptSeqIdgen;
 
+	/* 교육차수 - 차수별 만족도 결과 상세 */
+	private final EgovIdGnrService edctnRsltSeqIdgen;
+
 	//로그인 상태값 시스템 등록
 	private final COSystemLogService cOSystemLogService;
 
@@ -317,6 +320,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		//교육차수 등록
 		respCnt = eBBEpisdMapper.insertEpisd(eBBEpisdDTO);
+
+		//교육 차수별 만족도 결과 상세
+		int firstRsltSeqIdgen = edctnRsltSeqIdgen.getNextIntegerId();
+
+		eBBEpisdDTO.setRsltSeq(firstRsltSeqIdgen);
+		respCnt = eBBEpisdMapper.insertEpisdSrvRsltDtl(eBBEpisdDTO);
 
 		//교육 강사관계 등록
 		eBBEpisdMapper.deleteIsttrRel(eBBEpisdDTO);
@@ -990,35 +999,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			}
 		}
 
-		// Header
-		/*row = sheet.createRow(rowNum++);
-
-
-		cell = row.createCell(0);
-		cell.setCellValue("번호");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(1);
-		cell.setCellValue("아이디");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(2);
-		cell.setCellValue("이름");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(3);
-		cell.setCellValue("부서");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(4);
-		cell.setCellValue("계정상태");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(5);
-		cell.setCellValue("최종접속일");
-		cell.setCellStyle(style_header);*/
-
-		//selectIsttrExelList
 
 		// Body
 		List<EBBEpisdExcelDTO> list = eBBEpisdExcelDTO.getList();
@@ -1149,56 +1129,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				}
 			}
 
-
-
 		}
-
-
-		/*for (int i=0; i<list.size(); i++) {
-			row = sheet.createRow(rowNum++);
-
-			//번호
-			cell = row.createCell(0);
-			cell.setCellValue(eBBEpisdDTO.getTotalCount() - i);
-			cell.setCellStyle(style_body);
-
-			//아이디
-			cell = row.createCell(1);
-			cell.setCellValue(list.get(i).getId());
-			cell.setCellStyle(style_body);
-
-			//이름
-			cell = row.createCell(2);
-			cell.setCellValue(list.get(i).getName());
-			cell.setCellStyle(style_body);
-
-			//부서
-			cell = row.createCell(3);
-			cell.setCellValue(list.get(i).getDeptNm());
-			cell.setCellStyle(style_body);
-
-			//권한
-		*//*	cell = row.createCell(4);
-			cell.setCellValue(list.get(i).getAuthCdNm());
-			cell.setCellStyle(style_body);*//*
-
-			//계정상태
-			cell = row.createCell(4);
-			cell.setCellValue("Y".equals(list.get(i).getUseYn()) ? "활성" : "비활성");
-			cell.setCellStyle(style_body);
-
-			//최종접속일
-			cell = row.createCell(5);
-			cell.setCellValue(list.get(i).getLastLgnDtm() == null ? "-" : list.get(i).getLastLgnDtm().substring(0, list.get(i).getLastLgnDtm().lastIndexOf(":")));
-			cell.setCellStyle(style_body);
-
-		}*/
-
-		// 열 너비 설정
-       /* for(int i =0; i < 8; i++){
-            sheet.autoSizeColumn(i);
-            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
-        }*/
 
 		String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
 
@@ -1218,6 +1149,348 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		pCoSystemLogDTO.setFncNm("selectEpisdList");
 		pCoSystemLogDTO.setPrcsCd("DL");
 		pCoSystemLogDTO.setRsn(eBBEpisdExcelDTO.getRsn());
+		pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+		pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+		cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+	}
+
+	/**
+	 * 교육차수관리-> 참여자 목록 호출 엑셀
+	 */
+	public void excelDownload2(EBBPtcptDTO eBBPtcptDTO, HttpServletResponse response) throws Exception{
+
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFCellStyle style_header = workbook.createCellStyle();
+		XSSFCellStyle style_body = workbook.createCellStyle();
+		Sheet sheet = workbook.createSheet();
+
+		Row row = null;
+		Cell cell = null;
+		int rowNum = 1;
+
+		//Cell Alignment 지정
+		style_header.setAlignment(HorizontalAlignment.CENTER);
+		style_header.setVerticalAlignment(VerticalAlignment.CENTER);
+		style_body.setAlignment(HorizontalAlignment.CENTER);
+		style_body.setVerticalAlignment(VerticalAlignment.CENTER);
+
+		// Border Color 지정
+		style_header.setBorderTop(BorderStyle.THIN);
+		style_header.setBorderLeft(BorderStyle.THIN);
+		style_header.setBorderRight(BorderStyle.THIN);
+		style_header.setBorderBottom(BorderStyle.THIN);
+		style_body.setBorderTop(BorderStyle.THIN);
+		style_body.setBorderLeft(BorderStyle.THIN);
+		style_body.setBorderRight(BorderStyle.THIN);
+		style_body.setBorderBottom(BorderStyle.THIN);
+
+		//BackGround Color 지정
+		style_header.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		style_header.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		//0~15 기본정보
+
+
+		//셀 병합 관련해서 만든 리스트
+		List<CellRangeAddress> cellList = new ArrayList<>();
+
+		//헤더 1층 기본정보, 교육실적, 교육실적2, 예산/지출
+		row = sheet.createRow(0);
+
+		cell = row.createCell(0); cell.setCellValue("번호"); cell.setCellStyle(style_header);
+		cell = row.createCell(1); cell.setCellValue("아이디"); cell.setCellStyle(style_header);
+		cell = row.createCell(2); cell.setCellValue("이름"); cell.setCellStyle(style_header);
+		cell = row.createCell(3); cell.setCellValue("부품사명"); cell.setCellStyle(style_header);
+		cell = row.createCell(4); cell.setCellValue("구분"); cell.setCellStyle(style_header);
+		cell = row.createCell(5); cell.setCellValue("사업자등록번호"); cell.setCellStyle(style_header);
+		cell = row.createCell(6); cell.setCellValue("부서"); cell.setCellStyle(style_header);
+		cell = row.createCell(7); cell.setCellValue("직급"); cell.setCellStyle(style_header);
+		cell = row.createCell(8); cell.setCellValue("휴대폰번호"); cell.setCellStyle(style_header);
+		cell = row.createCell(9); cell.setCellValue("이메일"); cell.setCellStyle(style_header);
+		cell = row.createCell(10); cell.setCellValue("가입일"); cell.setCellStyle(style_header);
+		cell = row.createCell(11); cell.setCellValue("교육신청일"); cell.setCellStyle(style_header);
+		cell = row.createCell(12); cell.setCellValue("교육상태"); cell.setCellStyle(style_header);
+		cell = row.createCell(13); cell.setCellValue("출석"); cell.setCellStyle(style_header);
+		cell = row.createCell(14); cell.setCellValue("평가"); cell.setCellStyle(style_header);
+		cell = row.createCell(15); cell.setCellValue("수료"); cell.setCellStyle(style_header);
+
+
+		// Body
+		List<EBBPtcptDTO> list = eBBPtcptDTO.getPtcptList();
+		for(int i=0; i<list.size(); i++){
+			EBBPtcptDTO dto = list.get(i);
+
+
+			row = sheet.createRow(rowNum++);
+			cell = row.createCell(0); cell.setCellValue(i+1); cell.setCellStyle(style_body);//번호
+			cell = row.createCell(1); cell.setCellValue(dto.getId()); cell.setCellStyle(style_body);//아이디
+			cell = row.createCell(2); cell.setCellValue(dto.getName()); cell.setCellStyle(style_body);//이름
+			cell = row.createCell(3); cell.setCellValue(dto.getCmpnNm()); cell.setCellStyle(style_body);//부품사명
+			cell = row.createCell(4); cell.setCellValue(dto.getCtgryNm()); cell.setCellStyle(style_body);//구분
+			cell = row.createCell(5); cell.setCellValue(COStringUtil.bsnmNoConvert(dto.getPtcptBsnmNo())); cell.setCellStyle(style_body);//사업자등록번호
+
+			String deptCdNm = dto.getDeptCdNm();
+			String deptDtlNm = (dto.getDeptDtlNm() == "") ? "" : dto.getDeptDtlNm();
+			cell = row.createCell(6); cell.setCellValue(COStringUtil.getHtmlStrCnvr(deptCdNm)+"("+deptDtlNm+")"); cell.setCellStyle(style_body);//부서
+
+			cell = row.createCell(7); cell.setCellValue(dto.getPstnCdNm()); cell.setCellStyle(style_body);//직급
+			cell = row.createCell(8); cell.setCellValue(dto.getHpNo()); cell.setCellStyle(style_body);//휴대폰번호
+
+			cell = row.createCell(9); cell.setCellValue(dto.getEmail()); cell.setCellStyle(style_body);//이메일
+
+			String regDtm = (dto.getRegDtm() == null || dto.getRegDtm().equals("")) ? "-" : COStringUtil.convertDate(dto.getRegDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "-");
+			cell = row.createCell(10); cell.setCellValue(regDtm); cell.setCellStyle(style_body);//가입일
+
+
+			String eduDtm = (dto.getEduDtm() == null || dto.getEduDtm().equals("")) ? "-" : COStringUtil.convertDate(dto.getEduDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "-");
+			cell = row.createCell(11); cell.setCellValue(eduDtm); cell.setCellStyle(style_body);//교육신청일
+			cell = row.createCell(12); cell.setCellValue(dto.getEduStat()); cell.setCellStyle(style_body);//교육상태
+			cell = row.createCell(13); cell.setCellValue(dto.getEduAtndc()+"%"); cell.setCellStyle(style_body);//출석
+			String examScore = (dto.getExamScore() == null || dto.getExamScore().equals("")) ? "0" : String.valueOf(dto.getExamScore());
+			cell = row.createCell(14); cell.setCellValue(examScore+"점"); cell.setCellStyle(style_body);//평가
+
+			String cmptnYn = (dto.getCmptnYn().equals("Y")) ?"수료" : "미수료";
+			cell = row.createCell(15); cell.setCellValue(cmptnYn); cell.setCellStyle(style_body);//수료
+
+			//셀 너비 자동맞춤 시작
+			for(int j=0; j<=15;j++){
+				sheet.autoSizeColumn(j);
+				if(j == 3){
+					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+2024 );
+				}else{
+					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+1024 );
+				}
+
+			}
+
+		}
+
+		String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
+
+		//컨텐츠 타입 및 파일명 지정
+		response.setContentType("ms-vnd/excel");
+		response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_교육차수관리 참여자 목록_", "UTF-8") + timeStamp +".xlsx");
+
+		// Excel File Output
+		workbook.write(response.getOutputStream());
+		workbook.close();
+
+		//다운로드 사유 입력
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
+		pCoSystemLogDTO.setTrgtMenuNm("시스템 관리 > 교육차수관리 참여자 목록");
+		pCoSystemLogDTO.setSrvcNm("mngwserc.co.coa.service.impl.EBBEPisdServiceImpl");
+		pCoSystemLogDTO.setFncNm("selectEpisdPtcptList");
+		pCoSystemLogDTO.setPrcsCd("DL");
+		pCoSystemLogDTO.setRsn(eBBPtcptDTO.getRsn());
+		pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+		pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+		cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+	}
+
+
+
+
+
+
+
+	/**
+	 * 교육차수관리-> 참여자 출석부 목록 호출 엑셀
+	 */
+	public void excelDownload3(List<EBBPtcptDTO> tableAtndcList, EBBPtcptDTO eBBPtcptDTO, HttpServletResponse response) throws Exception{
+
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFCellStyle style_header = workbook.createCellStyle();
+		XSSFCellStyle style_body = workbook.createCellStyle();
+		Sheet sheet = workbook.createSheet();
+
+		Row row = null;
+		Cell cell = null;
+		int rowNum = 2;
+
+		//Cell Alignment 지정
+		style_header.setAlignment(HorizontalAlignment.CENTER);
+		style_header.setVerticalAlignment(VerticalAlignment.CENTER);
+		style_body.setAlignment(HorizontalAlignment.CENTER);
+		style_body.setVerticalAlignment(VerticalAlignment.CENTER);
+
+		// Border Color 지정
+		style_header.setBorderTop(BorderStyle.THIN);
+		style_header.setBorderLeft(BorderStyle.THIN);
+		style_header.setBorderRight(BorderStyle.THIN);
+		style_header.setBorderBottom(BorderStyle.THIN);
+		style_body.setBorderTop(BorderStyle.THIN);
+		style_body.setBorderLeft(BorderStyle.THIN);
+		style_body.setBorderRight(BorderStyle.THIN);
+		style_body.setBorderBottom(BorderStyle.THIN);
+
+		//BackGround Color 지정
+		style_header.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		style_header.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+		//0~10 기본정보
+
+
+		//셀 병합 관련해서 만든 리스트
+		List<CellRangeAddress> cellList = new ArrayList<>();
+
+		//헤더 1층 기본정보들
+		row = sheet.createRow(0);
+
+		cell = row.createCell(0); cell.setCellValue("번호"); cell.setCellStyle(style_header);
+		cell = row.createCell(1); cell.setCellValue("아이디"); cell.setCellStyle(style_header);
+		cell = row.createCell(2); cell.setCellValue("이름"); cell.setCellStyle(style_header);
+		cell = row.createCell(3); cell.setCellValue("부품사명"); cell.setCellStyle(style_header);
+		cell = row.createCell(4); cell.setCellValue("구분"); cell.setCellStyle(style_header);
+		cell = row.createCell(5); cell.setCellValue("사업자등록번호"); cell.setCellStyle(style_header);
+		cell = row.createCell(6); cell.setCellValue("부서"); cell.setCellStyle(style_header);
+		cell = row.createCell(7); cell.setCellValue("직급"); cell.setCellStyle(style_header);
+		cell = row.createCell(8); cell.setCellValue("휴대폰번호"); cell.setCellStyle(style_header);
+		cell = row.createCell(9); cell.setCellValue("이메일"); cell.setCellStyle(style_header);
+		cell = row.createCell(10); cell.setCellValue("교육신청일"); cell.setCellStyle(style_header);
+
+
+
+		/*여기부터 출석부 시작*/
+		int k = 11;
+		for(EBBPtcptDTO dto : tableAtndcList){
+			String edctnDt= (dto.getEdctnDt() !=null || dto.getEdctnDt().equals("")) ? "" : dto.getEdctnDt();
+			cell = row.createCell(k); cell.setCellValue(edctnDt); cell.setCellStyle(style_header);
+			k = k+3;
+			//CellRangeAddress row1cols0 = new CellRangeAddress(0, 1, 0, 0);
+		}
+
+		/*여기부터 출석부 끝*/
+
+
+
+
+		//헤더 2층 출석일자 데이터 출석.퇴실,비고의 반복
+		row = sheet.createRow(1);
+
+		int m = 11;
+		for(EBBPtcptDTO dto : tableAtndcList){
+
+			String atndcHour = (dto.getAtndcDtm() == null || dto.getAtndcDtm().equals("")) ? "-" : COStringUtil.convertDate(dto.getAtndcDtm(), "yyyy-MM-dd HH:mm:ss", "HH:mm", "-");
+			String lvgrmHour = (dto.getLvgrmDtm() == null || dto.getLvgrmDtm().equals("")) ? "-" : COStringUtil.convertDate(dto.getLvgrmDtm(), "yyyy-MM-dd HH:mm:ss", "HH:mm", "-");
+
+			cell = row.createCell(m); cell.setCellValue("출석"); cell.setCellStyle(style_header);
+			cell = row.createCell(m+1); cell.setCellValue("퇴근"); cell.setCellStyle(style_header);
+			cell = row.createCell(m+2); cell.setCellValue("비고"); cell.setCellStyle(style_header);
+
+			CellRangeAddress row1cols10 = new CellRangeAddress(0, 0, m, m+2);//
+			sheet.addMergedRegion(row1cols10);
+			for (int i = row1cols10.getFirstRow(); i <= row1cols10.getLastRow(); i++) {
+				Row tempRow = sheet.getRow(i);
+				for (int colNum = row1cols10.getFirstColumn(); colNum <= row1cols10.getLastColumn(); colNum++) {
+					Cell tempCel = tempRow.getCell(colNum, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+					tempCel.setCellStyle(style_header);
+				}
+			}
+
+			m= m+3;
+		}
+
+		CellRangeAddress row1cols0 = new CellRangeAddress(0, 1, 0, 0);//번호
+		CellRangeAddress row1cols1 = new CellRangeAddress(0, 1, 1, 1);//아이디
+		CellRangeAddress row1cols2 = new CellRangeAddress(0, 1, 2, 2);//이름
+		CellRangeAddress row1cols3 = new CellRangeAddress(0, 1, 3, 3);//부품사명
+		CellRangeAddress row1cols4 = new CellRangeAddress(0, 1, 4, 4);//구분
+		CellRangeAddress row1cols5 = new CellRangeAddress(0, 1, 5, 5);//사업자등록번호
+		CellRangeAddress row1cols6 = new CellRangeAddress(0, 1, 6, 6);//부서
+		CellRangeAddress row1cols7 = new CellRangeAddress(0, 1, 7, 7);//직급
+		CellRangeAddress row1cols8 = new CellRangeAddress(0, 1, 8, 8);//휴대폰번호
+		CellRangeAddress row1cols9 = new CellRangeAddress(0, 1, 9, 9);//이메일
+		CellRangeAddress row1cols10 = new CellRangeAddress(0, 1, 10, 10);//교육신청일
+
+		sheet.addMergedRegion(row1cols0);	sheet.addMergedRegion(row1cols1);	sheet.addMergedRegion(row1cols2);	sheet.addMergedRegion(row1cols3);
+		sheet.addMergedRegion(row1cols4);	sheet.addMergedRegion(row1cols5);	sheet.addMergedRegion(row1cols6);	sheet.addMergedRegion(row1cols7);
+		sheet.addMergedRegion(row1cols8);	sheet.addMergedRegion(row1cols9);	sheet.addMergedRegion(row1cols10);
+		cellList.add(row1cols0);cellList.add(row1cols1);cellList.add(row1cols2);cellList.add(row1cols3);cellList.add(row1cols4);cellList.add(row1cols5);
+		cellList.add(row1cols6);cellList.add(row1cols7);cellList.add(row1cols8);cellList.add(row1cols9);cellList.add(row1cols10);
+		//여기 위는 rowspan 2로 통일
+
+		for(CellRangeAddress call : cellList){
+			for (int i = call.getFirstRow(); i <= call.getLastRow(); i++) {
+				Row tempRow = sheet.getRow(i);
+				for (int colNum = call.getFirstColumn(); colNum <= call.getLastColumn(); colNum++) {
+					Cell tempCel = tempRow.getCell(colNum, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK);
+					tempCel.setCellStyle(style_header);
+				}
+			}
+		}
+
+		// Body
+		List<EBBPtcptDTO> list = eBBPtcptDTO.getPtcptList();
+		for(int i=0; i<list.size(); i++){
+			row = sheet.createRow(rowNum++);
+
+			EBBPtcptDTO dto = list.get(i);
+
+			cell = row.createCell(0); cell.setCellValue(i+1); cell.setCellStyle(style_body);//번호
+			cell = row.createCell(1); cell.setCellValue(dto.getId()); cell.setCellStyle(style_body);//아이디
+			cell = row.createCell(2); cell.setCellValue(dto.getName()); cell.setCellStyle(style_body);//이름
+			cell = row.createCell(3); cell.setCellValue(dto.getCmpnNm()); cell.setCellStyle(style_body);//부품사명
+			cell = row.createCell(4); cell.setCellValue(dto.getCtgryNm()); cell.setCellStyle(style_body);//구분
+			cell = row.createCell(5); cell.setCellValue(COStringUtil.bsnmNoConvert(dto.getPtcptBsnmNo())); cell.setCellStyle(style_body);//사업자등록번호
+
+			String deptCdNm = dto.getDeptCdNm();
+			String deptDtlNm = (dto.getDeptDtlNm() == "") ? "" : dto.getDeptDtlNm();
+			cell = row.createCell(6); cell.setCellValue(COStringUtil.getHtmlStrCnvr(deptCdNm)+"("+deptDtlNm+")"); cell.setCellStyle(style_body);//부서
+			cell = row.createCell(7); cell.setCellValue(dto.getPstnCdNm()); cell.setCellStyle(style_body);//직급
+			cell = row.createCell(8); cell.setCellValue(dto.getHpNo()); cell.setCellStyle(style_body);//휴대폰번호
+			cell = row.createCell(9); cell.setCellValue(dto.getEmail()); cell.setCellStyle(style_body);//이메일
+			String eduDtm = (dto.getEduDtm() == null || dto.getEduDtm().equals("")) ? "-" : COStringUtil.convertDate(dto.getEduDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "-");
+
+			cell = row.createCell(10); cell.setCellValue(eduDtm); cell.setCellStyle(style_body);//교육신청일
+
+
+			/*여기부터 출석부 시작*/
+			int n = 11;
+			for(EBBPtcptDTO atndcDto : dto.getAtndcList()){
+
+				String atndcHour = (atndcDto.getAtndcDtm() == null || atndcDto.getAtndcDtm().equals("")) ? "-" : COStringUtil.convertDate(atndcDto.getAtndcDtm(), "yyyy-MM-dd HH:mm:ss", "HH:mm", "-");
+				String lvgrmHour = (atndcDto.getLvgrmDtm() == null || atndcDto.getLvgrmDtm().equals("")) ? "-" : COStringUtil.convertDate(atndcDto.getLvgrmDtm(), "yyyy-MM-dd HH:mm:ss", "HH:mm", "-");
+
+				cell = row.createCell(n); cell.setCellValue(atndcHour); cell.setCellStyle(style_body);
+				cell = row.createCell(n+1); cell.setCellValue(lvgrmHour); cell.setCellStyle(style_body);
+				cell = row.createCell(n+2); cell.setCellValue(atndcDto.getEtcNm()); cell.setCellStyle(style_body);
+
+				n= n+3;
+			}
+
+		}
+
+		for(int j=0; j<=11;j++){
+			sheet.autoSizeColumn(j);
+			if(j == 5){
+				sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+1524 );
+			}else if(j == 9){
+				sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+2024 );
+			}else{
+				sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+1024 );
+			}
+
+		}
+
+		String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
+
+		//컨텐츠 타입 및 파일명 지정
+		response.setContentType("ms-vnd/excel");
+		response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_교육차수관리 참여자 출석부 목록_", "UTF-8") + timeStamp +".xlsx");
+
+		// Excel File Output
+		workbook.write(response.getOutputStream());
+		workbook.close();
+
+		//다운로드 사유 입력
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
+		pCoSystemLogDTO.setTrgtMenuNm("시스템 관리 > 교육차수관리 참여자 출석부 목록");
+		pCoSystemLogDTO.setSrvcNm("mngwserc.co.coa.service.impl.EBBEPisdServiceImpl");
+		pCoSystemLogDTO.setFncNm("selectPtcptAtndcList");
+		pCoSystemLogDTO.setPrcsCd("DL");
+		pCoSystemLogDTO.setRsn(eBBPtcptDTO.getRsn());
 		pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
 		pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 		cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);

@@ -57,6 +57,12 @@ public interface EBBEpisdMapper {
 	 */
 	public int insertEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+
+	/**
+	 * 교육 차수별 만족도 결과 상세
+	 */
+	public int insertEpisdSrvRsltDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
 	/**
 	 * 교육차수를 수정한다.
 	 */

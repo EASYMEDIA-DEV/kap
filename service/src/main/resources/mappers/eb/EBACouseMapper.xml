@@ -12,33 +12,33 @@
 		select /* EBACouseMapper.selectCouseList */
 				edctn_seq
 				, nm
-				, a.ctgry_cd
-				, (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
+				, aa.ctgry_cd
+				, (select cd_nm from co_code_mst WHERE cd = aa.ctgry_cd) as ctgry_cd_nm
 				, (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
-				WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
-				(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+				WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = aa.ctgry_cd) AND rht_val <![CDATA[>=]]>
+				(SELECT rht_val FROM co_code_mst WHERE cd = aa.ctgry_cd)
 				AND dpth =  2 AND dpth <![CDATA[>]]> 1) prnt_cd
 
 				, (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
-				WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
-				(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+				WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = aa.ctgry_cd) AND rht_val <![CDATA[>=]]>
+				(SELECT rht_val FROM co_code_mst WHERE cd = aa.ctgry_cd)
 				AND dpth <![CDATA[<]]> 4 AND dpth <![CDATA[>]]> 1) prnt_cd_nm
 				, stduy_mthd_cd
-				, (select cd_nm from co_code_mst where cd=a.stduy_mthd_cd) as stduy_mthd_cd_nm
+				, (select cd_nm from co_code_mst where cd=aa.stduy_mthd_cd) as stduy_mthd_cd_nm
 				, stduy_dd_cd
-				, (select cd_nm from co_code_mst where cd=a.stduy_dd_cd) as stduy_dd_cd_nm
+				, (select cd_nm from co_code_mst where cd=aa.stduy_dd_cd) as stduy_dd_cd_nm
 				, stduy_time_cd
-				, (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as stduy_time_cd_nm
+				, (select cd_nm from co_code_mst where cd=aa.stduy_time_cd) as stduy_time_cd_nm
 				, jdgmt_yn
 				, reg_id
-				, (select name from co_adm_mst where id = a.reg_id) as reg_name
+				, (select name from co_adm_mst where id = aa.reg_id) as reg_name
 				, reg_dtm
 				, mod_id
-				, (select name from co_adm_mst where id = a.mod_id) as mod_name
+				, (select name from co_adm_mst where id = aa.mod_id) as mod_name
 				, exps_yn
 			 	, mod_dtm
 				from
-			ed_edctn_prcs_mst a
+			ed_edctn_prcs_mst aa
 
 		<include refid="selectCouseListwhereSql" />
 

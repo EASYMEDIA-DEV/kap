@@ -40,9 +40,19 @@ public interface EBBEpisdService {
 	public EBBEpisdExcelDTO selectEpisdExcelList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
-	 * 엑셀 생성
+	 * 엑셀 생성 - 교육차수관리 목록
 	 */
 	public void excelDownload1(EBBEpisdExcelDTO eBBEpisdExcelDTO, HttpServletResponse response) throws Exception;
+
+	/**
+	 * 엑셀 생성 - 교육차수관리 참여자 목록
+	 */
+	public void excelDownload2(EBBPtcptDTO eBBPtcptDTO, HttpServletResponse response) throws Exception;
+
+	/**
+	 * 엑셀 생성 - 교육차수관리 참여자의 출석부 목록
+	 */
+	public void excelDownload3(List<EBBPtcptDTO> tableAtndcList, EBBPtcptDTO eBBPtcptDTO, HttpServletResponse response) throws Exception;
 
 	/**
 	 * 교육차수 상세를 조회한다.

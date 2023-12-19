@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 사유 레이어 팝업(Modal) -->
-<div class="modal fade ebbMemAtndcSrchLayer" tabindex="-1" role="dialog" data-controller="controller/co/COFormCtrl controller/eb/ebb/EBBMemAtndcWriteCtrl">
+<div class="modal fade ebbMemAtndcSrchLayer" tabindex="-1" role="dialog" data-controller="controller/eb/ebb/EBBMemAtndcWriteCtrl">
     <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:40%;">
         <div class="modal-content">
