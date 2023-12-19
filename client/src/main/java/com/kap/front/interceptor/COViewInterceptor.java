@@ -74,16 +74,18 @@ public class COViewInterceptor implements HandlerInterceptor{
         request.setAttribute("gnbMenuList", gnbMenuList);
         COMenuDTO pageMenuDto = null;
         String requestURI = request.getRequestURI();
-        log.error("requestURI : {}", requestURI);
-        String userUrl = "", menuNm = "";
+        String userUrl = "", folderUrl = "";
+        folderUrl = COStringUtil.getUrlFolder(requestURI);
         for (int i = 0, size = menuList.size(); i < size; i++)
         {
             userUrl = COStringUtil.nullConvert(menuList.get(i).getUserUrl());
-            if (userUrl != null && !"".equals(userUrl) && requestURI.equals(userUrl))         //requestURI.indexOf(userUrl) > -1
+            if (userUrl != null && !"".equals(userUrl) )         //requestURI.indexOf(userUrl) > -1
             {
-                if(menuNm.equals("") || userUrl.equals(menuList.get(i-1).getUserUrl())){
-                    menuNm = menuList.get(i).getMenuNm();
-                    pageMenuDto    = menuList.get(i);
+                if(folderUrl.startsWith(userUrl)){
+                    if(userUrl.equals(menuList.get(i-1).getUserUrl())){
+                        pageMenuDto    = menuList.get(i);
+                        break;
+                    }
                 }
             }
         }

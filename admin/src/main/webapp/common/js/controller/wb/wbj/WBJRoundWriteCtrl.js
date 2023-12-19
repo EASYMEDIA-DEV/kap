@@ -10,12 +10,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = jQuery("#frmData");
 
-    //설문지 html
-    var examInitHtml = "";
     //설문지 순차 순번
     var examListSize = 0;
 
-    examInitHtml = ctrl.obj.find(".examListContainer").html();
+    examListSize = $(".examList").size();
 
     var callbackAjaxDelete = function(data){
 
@@ -74,9 +72,19 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             btnExamWrite :{
                 event :{
                     click: function(){
-                        $(".examListContainer").append(examInitHtml);
-                        // .examList의 마지막 자식 요소(.examQstnNm)를 선택하고 텍스트 설정
-                        ctrl.obj.find(".examList").last().find(".examQstnNm").text();
+                        examListSize++;
+
+                        // examList를 복제
+                        var clonedExamList = $(this).closest(".examList").clone();
+
+                        // 내부의 입력 값 초기화
+                        clonedExamList.find('input').val('');
+
+                        // 내부의 라벨 내용을 지우기 (빈 문자열로 설정)
+                        clonedExamList.find('.examQstnNm').text('');
+
+                        // 복제한 examList를 examListContainer에 추가
+                        $(".examListContainer").append(clonedExamList);
                     }
                 }
             },
@@ -87,16 +95,23 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             alert("삭제할수없음");
                         }else{
                             $(this).parents(".examList").remove();
-                            ctrl.obj.find(".examList").each(function(index, row){
-                                $(this).find(".examQstnNm").text("포상종류/포상금");
-                            })
+
+                            // examList를 복제
+                            var clonedExamList = $(this).closest(".examList").clone();
+
+                            // 내부의 입력 값 초기화
+                            clonedExamList.find('select, input').val('');
+
+                            // 내부의 라벨 내용을 지우기 (빈 문자열로 설정)
+                            clonedExamList.find('.examQstnNm').text('');
+
+                            examListSize--;
                         }
                     }
                 }
             },
         },
         immediately : function() {
-
             examListSize = $(".examList").size();
 
             var isAddNtfyCntn = false;

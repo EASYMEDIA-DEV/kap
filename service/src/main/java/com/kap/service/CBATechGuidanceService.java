@@ -1,7 +1,6 @@
 package com.kap.service;
 
 import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
-import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
@@ -44,7 +43,7 @@ public interface CBATechGuidanceService {
     /**
      * 컨설팅 기술 지도 관리 삭제
      */
-    public int deleteTechGuidance(CBATechGuidanceDTO pCBATechGuidanceDTO) throws Exception;
+    public int deleteTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
      * 컨설팅 기술 지도 관리 수정

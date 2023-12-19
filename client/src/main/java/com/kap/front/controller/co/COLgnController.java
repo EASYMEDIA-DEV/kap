@@ -1,5 +1,7 @@
 package com.kap.front.controller.co;
 
+import com.kap.common.utility.COStringUtil;
+import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.*;
@@ -51,12 +53,14 @@ public class COLgnController {
 	 * 로그인 페이지
 	 */
     @GetMapping("/login")
-	public String getLoginPage(HttpSession session) throws Exception
+	public String getLoginPage(HttpServletRequest request, HttpSession session, ModelMap modelMap) throws Exception
     {
     	try
 		{
 			// 보안 처리(로그인 세션 변경)
-		session.invalidate();
+			session.invalidate();
+			log.error("request.getAttribute(\"rtnUrl\") : {}", request.getParameter("rtnUrl"));
+			modelMap.addAttribute("rtnUrl", COWebUtil.clearXSSMinimum(COStringUtil.nullConvert(request.getParameter("rtnUrl"))));
 		}
     	catch (Exception e)
 		{

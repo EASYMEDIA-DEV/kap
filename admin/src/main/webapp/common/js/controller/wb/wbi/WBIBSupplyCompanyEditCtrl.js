@@ -298,10 +298,9 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnModalSelect : {
                 event: {
                     click: function() {
-                        let trArea = $modalFormObj.find("#listContainer input[type=checkbox]:checked").parents("tr");
-
+                        let trArea = $modalFormObj.find("#listContainer input[type=checkbox]:checked");
                         if(trArea.length !== 0 || trArea != undefined){
-                            selPartUser = trArea.find('[data-point=id]').html();
+                            selPartUser = trArea.val();
                             $modalFormObj.find("#selPartUser").val(selPartUser);
                             selPartUserData();
                         }

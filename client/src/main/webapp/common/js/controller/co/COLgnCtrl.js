@@ -32,10 +32,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// 로그인 콜백
 	var callbackAjaxLogin = function(data){
 		var code = data.respCd;
-
 		// code ="1410";
 		if(code == "0000") {
-			location.replace(data.rdctUrl);
+			//returnUrl 조회
+			if($.trim(ctrl.obj.data("rtnUrl")) != ""){
+				location.href = $.trim(ctrl.obj.data("rtnUrl"));
+			}
+			else
+			{
+				location.replace(data.rdctUrl);
+			}
 		}
 		// 계정차단
 		else if (code == "1090")

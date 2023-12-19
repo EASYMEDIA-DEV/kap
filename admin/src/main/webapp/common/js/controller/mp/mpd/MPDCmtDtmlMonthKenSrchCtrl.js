@@ -12,7 +12,6 @@ var exports = {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-    var $excelObj = ctrl.obj.parent().find(".excel-down-month");
 
     function init() {
         var Month = new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)
@@ -69,8 +68,10 @@ var exports = {
             event : {
                 click: function () {
                     //사유입력 레이어팝업 활성화
-                    $excelObj.find("#rsn-month").val('');
-                    $excelObj.modal("show");
+                    var frmDataObj    = $formObj.closest("form");
+                    frmDataObj.find("input[name='rsn']").remove();
+                    location.href = "./excel-ken-down?excelType=M&" + frmDataObj.serialize();
+
                 }
             }
         },
@@ -142,26 +143,6 @@ var exports = {
     },
     immediately : function() {
         init();
-
-
-        $excelObj.find("button.down-month").on('click', function(){
-            var rsn = $excelObj.find("#rsn-month").val().trim();
-            var frmDataObj    = $formObj.closest("form");
-
-            frmDataObj.find("input[name='rsn']").remove();
-
-            if (rsn != "") {
-                frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
-
-                //파라미터를 물고 가야함.
-                location.href = "./excel-ken-down?excelType=M&" + frmDataObj.serialize();
-
-            } else {
-                alert(msgCtrl.getMsg("fail.reason"));
-                return;
-            }
-
-        });
 
     }
     };

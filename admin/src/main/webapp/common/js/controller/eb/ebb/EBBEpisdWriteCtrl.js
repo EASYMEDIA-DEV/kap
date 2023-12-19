@@ -12,6 +12,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 	// form Object
 	var $formObj = jQuery("#frmData");
+	var $excelObj = ctrl.obj.parent().find(".excel-down");
+
+
 	//온라인강의 복사본 생성
 	var onlineHtml = $("#onlineList").find("tr.examTr").eq(0).clone(true);
 	var onlineFileHtml = $("#onlineList").find("tr.examTr").eq(1).clone(true);
@@ -444,6 +447,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// set model
 	ctrl.model = {
 		id : {
+
+			btnExcel : {
+				event : {
+					click : function() {
+						//사유입력 레이어팝업 활성화
+						$excelObj.find("#rsn").val('');
+						$excelObj.modal("show");
+					}
+				}
+			},
 			btn_end_edu : {
 				event : {
 					click : function() {
@@ -1143,6 +1156,25 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 },
 		immediately : function(event) {
 
+			$excelObj.find("button.down").on('click', function(){
+				var rsn = $excelObj.find("#rsn").val().trim();
+				var frmDataObj    = $formObj.closest("form");
+
+				frmDataObj.find("input[name='rsn']").remove();
+
+				if (rsn != "") {
+					frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+
+					//파라미터를 물고 가야함.
+					location.href = "./excel-down2?" + frmDataObj.serialize();
+
+				} else {
+					alert(msgCtrl.getMsg("fail.reason"));
+					return;
+				}
+
+			});
+
 			//교육 시작일 이전에 수정가능한 목록 제어
 			var updateEdDt = $("#edctnStrtDt").val();
 			if(updateEdDt != ""){
@@ -1622,7 +1654,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//오프라인평가 관련 데이터 세팅끝
 
 						//수료여부
-						debugger;
+						//debugger;
 						if(resultFlag){
 							//debugger;
 							cmmCtrl.jsonAjax(function(data){

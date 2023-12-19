@@ -3,7 +3,6 @@ package com.kap.mngwserc.controller.cb.cba;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
-import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
@@ -195,18 +194,9 @@ public class CBATechGuidanceController {
      * 컨설팅 사업 기술 지도 삭제
      */
     @PostMapping(value = "/delete")
-    @ResponseBody
-    public String deleteTechGuidance(@Valid @RequestBody CBATechGuidanceDTO cBATechGuidanceDTO, ModelMap modelMap) throws Exception {
+    public String deleteTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
         try {
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            cBATechGuidanceDTO.setRegId(cOUserDetailsDTO.getId());
-            cBATechGuidanceDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
-            cBATechGuidanceDTO.setRegName(cOUserDetailsDTO.getName());
-            cBATechGuidanceDTO.setRegDeptNm(cOUserDetailsDTO.getDeptNm());
-            cBATechGuidanceDTO.setModId(cOUserDetailsDTO.getId());
-            cBATechGuidanceDTO.setModIp(cOUserDetailsDTO.getLoginIp());
-
-            modelMap.addAttribute("respCnt", cBATechGuidanceService.deleteTechGuidance(cBATechGuidanceDTO));
+            modelMap.addAttribute("respCnt", cBATechGuidanceService.deleteTechGuidance(pCBATechGuidanceInsertDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());

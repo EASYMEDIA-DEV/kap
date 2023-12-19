@@ -35,9 +35,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     function callbackAjaxLogin(data) {
         if(data.data.passwordChk) {
             if($("#typeChk").val() == 'modify') {
-                location.replace('/my-page/member/modify-page');
+                location.replace('/my-page/member/intrduction/modify-page');
             } else if($("#typeChk").val() == 'wthdrw') {
-                location.replace('/my-page/wthdrw/wthdrw-page')
+                location.replace('/my-page/member/wthdrw/wthdrw-page')
             }
         } else {
             alert(msgCtrl.getMsg("fail.mp.mph.al_002"));
@@ -251,7 +251,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         if($("#bsnmNosOld").val()!= "") {
                             $("#partTypeChg").val("chg");
                             jQuery.ajax({
-                                url : "/my-page/member/"+$("#bsnmNosOld").val(),
+                                url : "/my-page/member/intrduction/"+$("#bsnmNosOld").val(),
                                 type : "get",
                                 data :
                                     {
@@ -304,6 +304,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                         }
                                         $(".lastBtnIndex"+sqList.length).append('<button class="btn-text-icon delete btnSqInfoMinus" type="button"><span>삭제</span></button>');
                                         $(".lastBtnIndex"+sqList.length).append('<button class="btn-solid small gray-bg btn-add-line btnSqInfoPlus" type="button"><span>SQ 정보 추가</span></button>');
+                                    } else {
+                                        $(".gubunOne").hide();
+                                        $(".gubunTwo").hide();
                                     }
                                 },
                                 error : function(xhr, ajaxSettings, thrownError)
@@ -326,7 +329,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                         //confirm-comp
                         jQuery.ajax({
-                            url : "/my-page/member/confirm-comp",
+                            url : "/my-page/member/intrduction/confirm-comp",
                             type : "post",
                             timeout: 30000,
                             data : {},
@@ -334,17 +337,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             async: false,
                             cache : false,
                             success : function(data, status, xhr){
-                                console.log(data);
-                                // if(data.data.chk) {
-                                //     $("#btnPartsChg").hide();
-                                //     alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
-                                // } else {
+                                if(data.data.chk) {
+                                    $("#btnPartsChg").hide();
+                                    alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
+                                } else {
                                     $("#partTypeChg").val("turnOver");
                                     $("#bsnmNo").prop('readonly', false);
                                     $("#bsnmNo").attr('disabled', false);
                                     $(".btnCmpnChk").show();
                                     openPopup('switchingMemberPopup',this);
-                                // }
+                                }
                             },
                             error : function(data, status, xhr){
                                 return false;
@@ -418,7 +420,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 async : {
                     use : true,
                     func : function(){
-                        cmmCtrl.frmAjax(callbackAjaxLogin, "/my-page/member/confirm-password", $formObj, "POST", "json", true);
+                        cmmCtrl.frmAjax(callbackAjaxLogin, "/my-page/member/intrduction/confirm-password", $formObj, "POST", "json", true);
                     }
                 }
             });
@@ -502,7 +504,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 //TODO 페이지 이동
                                 alert(msgCtrl.getMsg("success.upd2"));
                                 location.reload();
-                            }, "/my-page/member/update", $formObj6, "POST", "json",'',false);
+                            }, "/my-page/member/intrduction/update", $formObj6, "POST", "json",'',false);
                         }
                     }
                 }

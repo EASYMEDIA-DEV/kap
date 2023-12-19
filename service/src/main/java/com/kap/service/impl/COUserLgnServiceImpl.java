@@ -3,6 +3,7 @@ package com.kap.service.impl;
 import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COStringUtil;
+import com.kap.common.utility.COWebUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -223,6 +224,8 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 			//ID가 없다.
 			cOLoginDTO.setRespCd("9999");
     	}
+		//리턴값에 비밀번호가 노출된다.
+		cOLoginDTO.setPassword("");
     	return cOLoginDTO;
     }
 

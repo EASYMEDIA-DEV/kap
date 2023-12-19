@@ -1331,6 +1331,54 @@
 
 
     </div>
+
+
+
+
+
+
+    <!-- 사유 레이어 팝업(Modal) -->
+    <div class="modal fade excel-down" tabindex="-1" role="dialog" >
+        <div class="modal-dialog modal-lg modal-center" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >▣ 엑셀 다운로드
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </h5>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group ">
+                        <p><em class="ion-play mr-sm"></em>사유입력</p>
+                        <div class="col-sm-12">
+                            <textarea maxlength="30" class="col-sm-12 pv" style="resize: vertical;" rows="10" placeholder="사유를 입력하세요." id="rsn" title="사유" oninput="cmmCtrl.checkMaxlength(this);"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer row">
+                    <div class="text-center">
+                        <button type="button" class="btn btn-primary down mt">다운로드</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </div>
 
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/eba/EBACouseSrchLayer.jsp"></jsp:include><!--교육과정검색-->
@@ -1345,3 +1393,5 @@
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업-->
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBMemAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업 - 개인별 -->
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBChangeEpisdLayer.jsp"></jsp:include><!-- 차수변경 레이어팝업-->
+
+

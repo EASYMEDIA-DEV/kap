@@ -104,13 +104,13 @@
                 , CMPN_MST.MJR_PRDCT_3
             FROM
                 CP_CNSTG_APPCTN_MST CP_MST
-                JOIN CO_MEM_MST MEM_MST
-                    ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+            JOIN CO_MEM_MST MEM_MST
+            ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
                 LEFT JOIN CP_CMPN_MST CMPN_MST
-                     ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+                    ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
                 LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
-                     ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
-        ) MST
+                    ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+            ) MST
         <include refid="selectManageConsultListWhereSql" />
         ORDER BY
             REG_DTM DESC
@@ -154,8 +154,8 @@
             COUNT(*)
         FROM
             CP_CNSTG_APPCTN_MST CP_MST
-            JOIN CO_MEM_MST MEM_MST
-                ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+        JOIN CO_MEM_MST MEM_MST
+            ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
             LEFT JOIN CP_CMPN_MST CMPN_MST
                 ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
             LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
@@ -266,32 +266,32 @@
                     <when test="f == 8 ">
                         <!-- 최초등록자 -->
                         AND (
-                            INSTR(#{q}, MST.REG_ID) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT MEM_SEQ FROM CO_ADM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
-                            OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        INSTR(#{q}, MST.REG_ID) <![CDATA[>]]> 0
+                        OR EXISTS(SELECT MEM_SEQ FROM CO_ADM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </when>
                     <when test="f == 9 ">
                         <!-- 최종등록자 -->
                         AND (
-                            INSTR(#{q}, aa.MOD_ID) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        INSTR(#{q}, aa.MOD_ID) <![CDATA[>]]> 0
+                        OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </when>
                     <otherwise>
                         AND (
-                            EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND CMPN_NM LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND BSNM_NO LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND SLS_PMT LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND MPLE_CNT LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND (INSTR(#{q}, FIRST_RGNS_NM) <![CDATA[>]]> 0 or INSTR(#{q}, SCND_RGNS_NM) <![CDATA[>]]> 0 ))
-                            OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND CRTFN_CMPN_NM LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE MEM_SEQ = MST.CMSSR_SEQ AND NAME LIKE CONCAT('%', #{q}, '%'))
-                            OR INSTR(#{q}, MST.REG_ID) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT MEM_SEQ FROM CO_ADM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
-                            OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
-                            OR INSTR(#{q}, AA.MOD_ID) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND CMPN_NM LIKE CONCAT('%', #{q}, '%'))
+                        OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND BSNM_NO LIKE CONCAT('%', #{q}, '%'))
+                        OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND SLS_PMT LIKE CONCAT('%', #{q}, '%'))
+                        OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND MPLE_CNT LIKE CONCAT('%', #{q}, '%'))
+                        OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND (INSTR(#{q}, FIRST_RGNS_NM) <![CDATA[>]]> 0 or INSTR(#{q}, SCND_RGNS_NM) <![CDATA[>]]> 0 ))
+                        OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND CRTFN_CMPN_NM LIKE CONCAT('%', #{q}, '%'))
+                        OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE MEM_SEQ = MST.CMSSR_SEQ AND NAME LIKE CONCAT('%', #{q}, '%'))
+                        OR INSTR(#{q}, MST.REG_ID) <![CDATA[>]]> 0
+                        OR EXISTS(SELECT MEM_SEQ FROM CO_ADM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE ID = MST.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        OR INSTR(#{q}, AA.MOD_ID) <![CDATA[>]]> 0
+                        OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </otherwise>
                 </choose>
@@ -318,35 +318,35 @@
             , IFNULL(ROUND((SUM(RGLR_SCORE) / SUM(RGLR_CMPN_CNT)),1),0) RGLR_AVG_SCORE         <!-- 정규점수평균 -->
             , IFNULL(ROUND((SUM(SHRT_SCORE) / SUM(SHRT_CMPN_CNT)),1),0) SHRT_AVG_SCORE         <!-- 단기점수평균 -->
         FROM (
-               SELECT
-                    CP_MST.BSN_YEAR
-                    , CP_MST.APPCTN_BSNM_NO
-                    , (SELECT COUNT(TTL_SCORE) FROM CP_CNSTG_SRV_RSLT_DTL CCSR WHERE CP_MST.CNSTG_SEQ = CCSR.CNSTG_SEQ ) SRV_CMPLT_CMPN_CNT
-                    , (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD01' ) SHRT_CMPN_CNT
-                    , (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD02' ) RGLR_CMPN_CNT
-                    , (SELECT COUNT(CMSSR_SEQ) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ ) CMSSR_CNT
-                    , CPSR.TTL_SCORE
-                    , (SELECT TTL_SCORE FROM CP_CNSTG_SRV_RSLT_DTL WHERE CNSTG_SEQ = (SELECT CNSTG_SEQ FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD01' )) SHRT_SCORE
-                    , (SELECT TTL_SCORE FROM CP_CNSTG_SRV_RSLT_DTL WHERE CNSTG_SEQ = (SELECT CNSTG_SEQ FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD02' )) RGLR_SCORE
-                FROM
-                    CP_CNSTG_APPCTN_MST CP_MST
-                JOIN CO_MEM_MST MEM_MST
-                    ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+            SELECT
+                CP_MST.BSN_YEAR
+                , CP_MST.APPCTN_BSNM_NO
+                , (SELECT COUNT(TTL_SCORE) FROM CP_CNSTG_SRV_RSLT_DTL CCSR WHERE CP_MST.CNSTG_SEQ = CCSR.CNSTG_SEQ ) SRV_CMPLT_CMPN_CNT
+                , (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD01' ) SHRT_CMPN_CNT
+                , (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD02' ) RGLR_CMPN_CNT
+                , (SELECT COUNT(CMSSR_SEQ) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ ) CMSSR_CNT
+                , CPSR.TTL_SCORE
+                , (SELECT TTL_SCORE FROM CP_CNSTG_SRV_RSLT_DTL WHERE CNSTG_SEQ = (SELECT CNSTG_SEQ FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD01' )) SHRT_SCORE
+                , (SELECT TTL_SCORE FROM CP_CNSTG_SRV_RSLT_DTL WHERE CNSTG_SEQ = (SELECT CNSTG_SEQ FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD02' )) RGLR_SCORE
+            FROM
+                CP_CNSTG_APPCTN_MST CP_MST
+            JOIN CO_MEM_MST MEM_MST
+            ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
                 LEFT JOIN CP_CMPN_MST CMPN_MST
-                        ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+                    ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
                 LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
-                        ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+                    ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
                 LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
-                        ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
-                WHERE 1=1
+                    ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
+            WHERE 1=1
                 <if test="rtnBsnGubun != null and rtnBsnGubun != ''">
                     AND CP_MST.CNSTG_CD = '${rtnBsnGubun}'
                 </if>
-                    AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
-                    AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
-                    AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
-                    AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
-            ) MST
+                AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
+                AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
+                AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
+                AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
+        ) MST
         <if test="rtnBsnYear != null and rtnBsnYear != ''">
         WHERE
             BSN_YEAR = ${rtnBsnYear}
@@ -385,12 +385,12 @@
                 FROM
                     CP_CNSTG_APPCTN_MST CP_MST
                 JOIN CO_MEM_MST MEM_MST
-                    ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
-                LEFT JOIN CP_CMPN_MST CMPN_MST
+                ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+                    LEFT JOIN CP_CMPN_MST CMPN_MST
                         ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
-                LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
+                    LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
                         ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
-                LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
+                    LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
                         ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
                 WHERE 1=1
                 <if test="rtnBsnGubun != null and rtnBsnGubun != ''">
@@ -402,7 +402,7 @@
                     AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
                     AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
             ) MST
-            GROUP BY MST.BSN_YEAR
+        GROUP BY MST.BSN_YEAR
         ) AA
     </select>
 
@@ -415,42 +415,42 @@
     -->
     <select id="selectConsultSuveyRsltDtlExcel" parameterType="CBBConsultSuveyRsltListDTO" resultType="CBBConsultSuveyRsltListDTO">
         SELECT
-            CP_MST.BSN_YEAR             <!-- 사업연도 -->
-            , CMPN_MST.CMPN_NM          <!-- 부품사명 -->
-            , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM    <!-- 담당위원 -->
-            , CPSR.PTCPT_NAME           <!-- 참여자 -->
-            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM     <!-- 신청업종/분야 -->
-            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.GUIDE_TYPE_CD AND CD_ID = 'GUIDE_TYPE_CD') GUIDE_TYPE_NM        <!-- 지도구분 -->
-            , CASE IFNULL(CPSR.TTL_SCORE, 0) WHEN 0 THEN '미참여' ELSE '참여' END AS SRV_STTS                                     <!-- 설문참여상태 -->
-            , (SELECT CNSTG_KICKF_DT FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ AND CNSTG_PSCND_CD = 'CNSTG_PSCND03') LVLUP_DT      <!-- 렙업일 -->
-            , IFNULL(CPSR.TTL_SCORE, 0) TTL_SCORE                       <!-- 총점(100) -->
-            , IFNULL(CPSR.GUIDE_RSLT_SCORE, 0) GUIDE_RSLT_SCORE         <!-- 지도실적(50) -->
-            , IFNULL(CPSR.CMMNCTN_SCORE, 0) CMMNCTN_SCORE               <!-- 의사소동(5) -->
-            , IFNULL(CPSR.PLNNGABLT_SCORE, 0) PLNNGABLT_SCORE           <!-- 기획력(10) -->
-            , IFNULL(CPSR.EXCTVABLT_SCORE, 0) EXCTVABLT_SCORE           <!-- 실행력(15) -->
-            , IFNULL(CPSR.MND_SCORE, 0) MND_SCORE                       <!-- 마인드(5) -->
-            , IFNULL(CPSR.EXPRTS_SCORE, 0) EXPRTS_SCORE                 <!-- 전문지식(15) -->
+        CP_MST.BSN_YEAR             <!-- 사업연도 -->
+        , CMPN_MST.CMPN_NM          <!-- 부품사명 -->
+        , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM    <!-- 담당위원 -->
+        , CPSR.PTCPT_NAME           <!-- 참여자 -->
+        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM     <!-- 신청업종/분야 -->
+        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.GUIDE_TYPE_CD AND CD_ID = 'GUIDE_TYPE_CD') GUIDE_TYPE_NM        <!-- 지도구분 -->
+        , CASE IFNULL(CPSR.TTL_SCORE, 0) WHEN 0 THEN '미참여' ELSE '참여' END AS SRV_STTS                                     <!-- 설문참여상태 -->
+        , (SELECT CNSTG_KICKF_DT FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ AND CNSTG_PSCND_CD = 'CNSTG_PSCND03') LVLUP_DT      <!-- 렙업일 -->
+        , IFNULL(CPSR.TTL_SCORE, 0) TTL_SCORE                       <!-- 총점(100) -->
+        , IFNULL(CPSR.GUIDE_RSLT_SCORE, 0) GUIDE_RSLT_SCORE         <!-- 지도실적(50) -->
+        , IFNULL(CPSR.CMMNCTN_SCORE, 0) CMMNCTN_SCORE               <!-- 의사소동(5) -->
+        , IFNULL(CPSR.PLNNGABLT_SCORE, 0) PLNNGABLT_SCORE           <!-- 기획력(10) -->
+        , IFNULL(CPSR.EXCTVABLT_SCORE, 0) EXCTVABLT_SCORE           <!-- 실행력(15) -->
+        , IFNULL(CPSR.MND_SCORE, 0) MND_SCORE                       <!-- 마인드(5) -->
+        , IFNULL(CPSR.EXPRTS_SCORE, 0) EXPRTS_SCORE                 <!-- 전문지식(15) -->
         FROM
-            CP_CNSTG_APPCTN_MST CP_MST
-            JOIN CO_MEM_MST MEM_MST
-                ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
-            LEFT JOIN CP_CMPN_MST CMPN_MST
-                    ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
-            LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
-                    ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
-            LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
-                    ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
+        CP_CNSTG_APPCTN_MST CP_MST
+        JOIN CO_MEM_MST MEM_MST
+        ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+        LEFT JOIN CP_CMPN_MST CMPN_MST
+        ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+        LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
+        ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+        LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
+        ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
         where 1=1
         <if test="rtnBsnYear != null and rtnBsnYear != ''">
             AND BSN_YEAR = ${rtnBsnYear}
         </if>
-            AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
-            AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
-            AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
-            AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
+        AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
+        AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
+        AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
+        AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
         ORDER BY
-            CP_MST.REGDTM DESC
-         LIMIT #{firstIndex}, #{recordCountPerPage}
+        CP_MST.REGDTM DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
@@ -462,25 +462,25 @@
     -->
     <select id="getConsultSuveyRsltDtlCnt" parameterType="CBBConsultSuveyRsltListDTO" resultType="java.lang.Integer">
         SELECT
-            COUNT(*)
+        COUNT(*)
         FROM
-            CP_CNSTG_APPCTN_MST CP_MST
+        CP_CNSTG_APPCTN_MST CP_MST
         JOIN CO_MEM_MST MEM_MST
-            ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+        ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
         LEFT JOIN CP_CMPN_MST CMPN_MST
-                ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+        ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
         LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
-                ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+        ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
         LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
-                ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
+        ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
         where 1=1
         <if test="rtnBsnYear != null and rtnBsnYear != ''">
             AND BSN_YEAR = ${rtnBsnYear}
         </if>
-            AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
-            AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
-            AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
-            AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
+        AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
+        AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
+        AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
+        AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
     </select>
 
     <!--
@@ -511,23 +511,23 @@
     -->
     <insert id="insertCnstgDlvryInfo" parameterType="java.util.HashMap">
         INSERT /* CBBManageConsultMapper.insertCnstgDlvryInfo */ INTO CP_CNSTG_DLVRY_DTL(
-              CNSTG_SEQ
-            , CMPN_DLVRY_SEQ
-            , CMPN_NM
-            , RATE
-            , REG_ID
-            , REG_IP
-            , REG_DTM
+                                                                                          CNSTG_SEQ
+                                                                                        , CMPN_DLVRY_SEQ
+                                                                                        , CMPN_NM
+                                                                                        , RATE
+                                                                                        , REG_ID
+                                                                                        , REG_IP
+                                                                                        , REG_DTM
         )
         VALUES(
-              #{cnstgSeq}
+                  #{cnstgSeq}
               , #{cmpnDlvrySeq}
               , #{dlvryCmpnNm}
               , #{dlvryRate}
               , #{regId}
               , #{regIp}
               , now()
-          )
+              )
     </insert>
 
     <!--
@@ -659,22 +659,22 @@
         INSERT /* CBBManageConsultMapper.insertCnstgDpndnInfo */ INTO CP_CNSTG_DPNDN_DTL
         (
             CNSTG_SEQ
-            , DPNDN_SEQ
-            , CMPN_NM
-            , RATE
-            , REG_ID
-            , REG_IP
-            , REG_DTM
+        , DPNDN_SEQ
+        , CMPN_NM
+        , RATE
+        , REG_ID
+        , REG_IP
+        , REG_DTM
         )
         VALUES(
-            #{cnstgSeq}
-            , #{dpndnSeq}
-            , #{cmpnNm}
-            , #{dpndnRate}
-            , #{regId}
-            , #{regIp}
-            , now()
-          )
+                  #{cnstgSeq}
+              , #{dpndnSeq}
+              , #{cmpnNm}
+              , #{dpndnRate}
+              , #{regId}
+              , #{regIp}
+              , now()
+              )
     </insert>
 
     <!--
@@ -688,30 +688,30 @@
         INSERT /* CBBManageConsultMapper.insertCnstgPicInfo */ INTO CP_CNSTG_PIC_DTL
         (
             CNSTG_SEQ
-            , PIC_SEQ
-            , NAME
-            , EMAIL
-            , DEPT_NM
-            , PSTN_NM
-            , HP_NO
-            , CMPN_TEL_NO
-            , REG_ID
-            , REG_IP
-            , REG_DTM
+        , PIC_SEQ
+        , NAME
+        , EMAIL
+        , DEPT_NM
+        , PSTN_NM
+        , HP_NO
+        , CMPN_TEL_NO
+        , REG_ID
+        , REG_IP
+        , REG_DTM
         )
         VALUES(
-            #{cnstgSeq}
-            , #{picSeq}
-            , #{name}
-            , #{email}
-            , #{deptNm}
-            , #{pstnNm}
-            , #{hpNo}
-            , #{cmpnTelNo}
-            , #{regId}
-            , #{regIp}
-            , now()
-          )
+                  #{cnstgSeq}
+              , #{picSeq}
+              , #{name}
+              , #{email}
+              , #{deptNm}
+              , #{pstnNm}
+              , #{hpNo}
+              , #{cmpnTelNo}
+              , #{regId}
+              , #{regIp}
+              , now()
+              )
     </insert>
 
     <!--
@@ -763,72 +763,68 @@
     -->
     <insert id="insertManageConsultRsume" parameterType="CBBManageConsultUpdateDTO">
         INSERT /* CBBManageConsultMapper.insertManageConsultRsume */ INTO CP_CNSTG_RSUME_MST(
-              CNSTG_SEQ
-            , BFRE_JDGMT_RSLT_CD
-            , BFRE_JDGMT_RSLT_CNTN
-            , CNSTG_CMPLTN_SCHDL_DT
-            , RSUME_STTS_CD
-            , APPCTN_FLD_CD
-            , VST_DT
-            , VSTR_NM
-            , NTRVR_NM
-            , INIT_VST_RSLT_CD
-            , INIT_VST_OPNN_CNTN
-            , CMSSR_SEQ
-            , CNSTG_KICKF_DT
-            , CNSTG_PSCND_DT
-            , CNSTG_XTNSN_RSLT_CNT
-            , CNSTG_XTNSN_RSLT_MNTH
-            , GUIDE_TYPE_CD
-            , GUIDE_PSCND_CD
-            , GUIDE_PSCND_DT
-            , GUIDE_KICKF_DT
-            , CNSTG_TERM
-            , XTNSN_CNCL_RSN
-            , INIT_VST_FILE_SEQ
-            , KICKF_FILE_SEQ
-            , LVLUP_FILE_SEQ
-            , ETC_FILE_SEQ
-            , SRV_SEQ
-            , SRV_STRT_DTM
-            , SRV_END_DTM
-            , REG_ID
-            , REG_IP
-            , REG_DTM
+                                                                                              CNSTG_SEQ
+                                                                                            , BFRE_JDGMT_RSLT_CD
+                                                                                            , BFRE_JDGMT_RSLT_CNTN
+                                                                                            , CNSTG_CMPLTN_SCHDL_DT
+                                                                                            , VST_DT
+                                                                                            , VSTR_NM
+                                                                                            , NTRVR_NM
+                                                                                            , INIT_VST_RSLT_CD
+                                                                                            , INIT_VST_OPNN_CNTN
+                                                                                            , CMSSR_SEQ
+                                                                                            , CNSTG_KICKF_DT
+                                                                                            , CNSTG_PSCND_DT
+                                                                                            , CNSTG_XTNSN_RSLT_CNT
+                                                                                            , CNSTG_XTNSN_RSLT_MNTH
+                                                                                            , GUIDE_TYPE_CD
+                                                                                            , GUIDE_PSCND_CD
+                                                                                            , GUIDE_PSCND_DT
+                                                                                            , GUIDE_KICKF_DT
+                                                                                            , CNSTG_TERM
+                                                                                            , XTNSN_CNCL_RSN
+                                                                                            , INIT_VST_FILE_SEQ
+                                                                                            , KICKF_FILE_SEQ
+                                                                                            , LVLUP_FILE_SEQ
+                                                                                            , ETC_FILE_SEQ
+                                                                                            , SRV_SEQ
+                                                                                            , SRV_STRT_DTM
+                                                                                            , SRV_END_DTM
+                                                                                            , REG_ID
+                                                                                            , REG_IP
+                                                                                            , REG_DTM
         )
         VALUES(
-              #{detailsKey} ,
-              #{bfreJdgmtRsltCd},
-              #{bfreJdgmtRsltCntn},
-              #{cnstgCmpltnSchdlDt},
-              #{resumeSttsCd},
-              #{appctnFldCd},
-              #{vstDt},
-              #{vstrNm} ,
-              #{ntrvrNm} ,
-              #{initVstRsltCd} ,
-              #{initVstOpnnCntn} ,
-              #{cmssrSeq},
-              #{guideKickfDt},
-              #{cnstgPscndDt},
-              #{cnstgXtnsnRsltCnt},
-              #{cnstgXtnsnRsltMnth},
-              #{guideTypeCd} ,
-              #{guidePscndCd} ,
-              #{guidePscndDt} ,
-              #{guideKickfDt} ,
-              #{cnstgTerm} ,
-              #{xtnsnCnclRsn} ,
-              #{initVstFileSeq} ,
-              #{kickfFileSeq} ,
-              #{lvlupFileSeq} ,
-              #{etcFileSeq},
-              #{srvSeq},
-              #{srvStrtDtm},
-              #{srvEndDtm},
-              #{regId},
-              #{regIp},
-              now()
+                  #{detailsKey} ,
+                  #{bfreJdgmtRsltCd},
+                  #{bfreJdgmtRsltCntn},
+                  #{cnstgCmpltnSchdlDt},
+                  #{vstDt},
+                  #{vstrNm} ,
+                  #{ntrvrNm} ,
+                  #{initVstRsltCd} ,
+                  #{initVstOpnnCntn} ,
+                  #{cmssrSeq},
+                  #{guideKickfDt},
+                  #{cnstgPscndDt},
+                  #{cnstgXtnsnRsltCnt},
+                  #{cnstgXtnsnRsltMnth},
+                  #{guideTypeCd} ,
+                  #{guidePscndCd} ,
+                  #{guidePscndDt} ,
+                  #{guideKickfDt} ,
+                  #{cnstgTerm} ,
+                  #{xtnsnCnclRsn} ,
+                  #{initVstFileSeq} ,
+                  #{kickfFileSeq} ,
+                  #{lvlupFileSeq} ,
+                  #{etcFileSeq},
+                  #{srvSeq},
+                  #{srvStrtDtm},
+                  #{srvEndDtm},
+                  #{regId},
+                  #{regIp},
+                  now()
               )
     </insert>
 
@@ -954,67 +950,67 @@
     -->
     <insert id="insertManageConsult" parameterType="CBBManageConsultInsertDTO">
         INSERT /* CBBManageConsultMapper.insertManageConsult */ INTO CP_CNSTG_APPCTN_MST (
-               CNSTG_SEQ
-             , APPCTN_BSNM_NO
-             , APPCTN_MEM_SEQ
-             , CNSTG_CD
-             , RSUME_STTS_CD
-             , APPCTN_DT
-             , BSN_YEAR
-             , CMPN_SIZE_CD
-             , FRGN_DPNDN_RATE
-             , TTL_SLS_PMT
-             , DMSTC_SLS_PMT
-             , FRGN_SLS_PMT
-             , CAR_PART_SLS_PMT
-             , CAR_PART_XCLUD_SLS_PMT
-             , CMPN_ADDR_SAME_YN
-             , FCTRY_ZIPCODE
-             , FCTRY_BSC_ADDR
-             , FCTRY_DTL_ADDR
-             , FIRST_RGNS_CD
-             , SCND_RGNS_CD
-             , HMPGE_URL
-             , QLTY_PIC_CNT
-             , APPCTN_RSN_CD
-             , RQST_CNTN
-             , ITRDC_FILE_SEQ
-             , IMPVM_FILE_SEQ
-             , REG_ID
-             , REG_IP
-             , REG_DTM
-            )
+                                                                                           CNSTG_SEQ
+                                                                                         , APPCTN_BSNM_NO
+                                                                                         , APPCTN_MEM_SEQ
+                                                                                         , CNSTG_CD
+                                                                                         , RSUME_STTS_CD
+                                                                                         , APPCTN_DT
+                                                                                         , BSN_YEAR
+                                                                                         , CMPN_SIZE_CD
+                                                                                         , FRGN_DPNDN_RATE
+                                                                                         , TTL_SLS_PMT
+                                                                                         , DMSTC_SLS_PMT
+                                                                                         , FRGN_SLS_PMT
+                                                                                         , CAR_PART_SLS_PMT
+                                                                                         , CAR_PART_XCLUD_SLS_PMT
+                                                                                         , CMPN_ADDR_SAME_YN
+                                                                                         , FCTRY_ZIPCODE
+                                                                                         , FCTRY_BSC_ADDR
+                                                                                         , FCTRY_DTL_ADDR
+                                                                                         , FIRST_RGNS_CD
+                                                                                         , SCND_RGNS_CD
+                                                                                         , HMPGE_URL
+                                                                                         , QLTY_PIC_CNT
+                                                                                         , APPCTN_RSN_CD
+                                                                                         , RQST_CNTN
+                                                                                         , ITRDC_FILE_SEQ
+                                                                                         , IMPVM_FILE_SEQ
+                                                                                         , REG_ID
+                                                                                         , REG_IP
+                                                                                         , REG_DTM
+        )
         VALUES (
-            #{cnstgSeq}
-           , #{bsnmNo}
-           , #{memSeq}
-           , "CONSULT_GB02"
-           , #{resumeSttsCd}
-           , #{appctnDt}
-           , DATE_FORMAT(#{appctnDt}, '%Y')
-           , #{cpSize}
-           , #{frgnDpndnRate}
-           , #{ttlSlsPmt}
-           , #{dmstcSlsPmt}
-           , #{frgnSlsPmt}
-           , #{carPartSlsPmt}
-           , #{carPartXcludSlsPmt}
-           , #{cmpnAddrSameYn}
-           , #{fctryZipcode}
-           , #{fctryBscAddr}
-           , #{fctryDtlAddr}
-           , #{firstRgnsCd}
-           , #{scndRgnsCd}
-           , #{hmpgeUrl}
-           , #{qltyPicCnt}
-           , #{appctnRsnCd}
-           , #{rqstCntn}
-           , #{itrdcFileSeq}
-           , #{impvmFileSeq}
-           , #{regId}
-           , #{regIp}
-           , NOW()
-           )
+                   #{cnstgSeq}
+               , #{bsnmNo}
+               , #{memSeq}
+               , "CONSULT_GB02"
+               , #{resumeSttsCd}
+               , #{appctnDt}
+               , DATE_FORMAT(#{appctnDt}, '%Y')
+               , #{cpSize}
+               , #{frgnDpndnRate}
+               , #{ttlSlsPmt}
+               , #{dmstcSlsPmt}
+               , #{frgnSlsPmt}
+               , #{carPartSlsPmt}
+               , #{carPartXcludSlsPmt}
+               , #{cmpnAddrSameYn}
+               , #{fctryZipcode}
+               , #{fctryBscAddr}
+               , #{fctryDtlAddr}
+               , #{firstRgnsCd}
+               , #{scndRgnsCd}
+               , #{hmpgeUrl}
+               , #{qltyPicCnt}
+               , #{appctnRsnCd}
+               , #{rqstCntn}
+               , #{itrdcFileSeq}
+               , #{impvmFileSeq}
+               , #{regId}
+               , #{regIp}
+               , NOW()
+               )
     </insert>
 
     <!--
@@ -1074,7 +1070,7 @@
             (SELECT NAME CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-            (SELECT NAME CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
+                                        (SELECT NAME CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
@@ -1107,7 +1103,7 @@
             CP_CNSTG_APPCTN_TRNSF_DTL A
         WHERE
             CNSTG_SEQ = #{detailsKey}
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+            LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
@@ -1128,13 +1124,13 @@
           REG_DTM
         )
         VALUES(
-          #{trnsfSeq},
-          #{cnstgSeq},
-          #{bfreMemSeq},
-          #{aftrMemSeq},
-          #{regId},
-          #{regIp},
-          NOW()
+                  #{trnsfSeq},
+                  #{cnstgSeq},
+                  #{bfreMemSeq},
+                  #{aftrMemSeq},
+                  #{regId},
+                  #{regIp},
+                  NOW()
               )
     </insert>
 
@@ -1153,5 +1149,212 @@
         WHERE
             CNSTG_SEQ = #{detailsKey}
     </select>
+
+    <!--
+     쿼리명 : CBBManageConsultMapper.deleteManageConsult
+     설  명 : 컨설팅사업 경영컨설팅 신청마스터 테이블 삭제
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.12.14   이옥정       최초생성
+-->
+    <delete id="deleteManageConsult" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteManageConsult */
+        from
+        cp_cnstg_appctn_mst
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultRsumeMst
+         설  명 : 컨설팅사업 진행마스터 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultRsumeMst" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultRsumeMst */
+        from
+        cp_cnstg_rsume_mst
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultPicDtl
+         설  명 : 컨설팅사업 담당임원 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultPicDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultPicDtl */
+        from
+        cp_cnstg_pic_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultCbsnDtl
+         설  명 : 컨설팅사업 부품사 업종 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultCbsnDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultCbsnDtl */
+        from
+        cp_cnstg_cbsn_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultDlvryDtl
+         설  명 : 컨설팅사업 고객사비율 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultDlvryDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultDlvryDtl */
+        from
+        cp_cnstg_dlvry_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultDpndnDtl
+         설  명 : 컨설팅사업 완성차의존율 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultDpndnDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultDpndnDtl */
+        from
+        cp_cnstg_dpndn_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultAppctnTypeDtl
+         설  명 : 컨설팅사업 신청분야 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultAppctnTypeDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultAppctnTypeDtl */
+        from
+        cp_cnstg_appctn_type_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultSrvRsltDtl
+         설  명 : 컨설팅사업 만족도 결과 상세 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultSrvRsltDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultSrvRsltDtl */
+        from
+        cp_cnstg_srv_rslt_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteConsultAppctnTrnsfDtl
+         설  명 : 컨설팅사업 참여이관로그 테이블 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.15   이옥정       최초생성
+    -->
+    <delete id="deleteConsultAppctnTrnsfDtl" parameterType="CBBManageConsultSearchDTO">
+        delete /* CBBManageConsultMapper.deleteConsultAppctnTrnsfDtl */
+        from
+        cp_cnstg_appctn_trnsf_dtl
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    cnstg_seq in
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+            </choose>
+        </where>
+    </delete>
 
 </mapper>

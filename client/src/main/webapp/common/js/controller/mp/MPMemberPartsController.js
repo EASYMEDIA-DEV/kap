@@ -128,6 +128,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         } else if($(this).val() == 'COMPANY01002'){
                                 $(".gubunOne").hide();
                                 $(".gubunTwo").show();
+                        } else {
+                            $(".gubunOne").hide();
+                            $(".gubunTwo").hide();
                         }
                     }
                 }
@@ -296,7 +299,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     cmmCtrl.frmAjax(function(respObj) {
                                         alert(msgCtrl.getMsg("success.upd2"));
                                         // location.reload();
-                                    }, "/my-page/member/update-company", $formObj5, "POST", "json",'',false);
+                                    }, "/my-page/member/intrduction/update-company", $formObj5, "POST", "json",'',false);
                                 }
                             } else if($("#bsnmNosOld").val() != "" && $("#partTypeChg").val()=="turnOver"){
                                 //이직 시

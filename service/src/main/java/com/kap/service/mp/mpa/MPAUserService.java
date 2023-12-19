@@ -3,6 +3,7 @@ package com.kap.service.mp.mpa;
 import com.kap.core.dto.mp.mpa.*;
 import com.kap.core.dto.MPPwdInitDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.mp.mpi.MPIWthdrwDto;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -106,4 +107,11 @@ public interface MPAUserService {
     void updateUserCompanyChg(MPAUserDto mpaUserDto, MPEPartsCompanyDTO mpePartsCompanyDTO, MPJoinDto mpJoinDto) throws Exception;
 
     MPAPartDto selectConfirmComp(MPAUserDto mpaUserDto) throws Exception;
+
+    /**
+     * 사용자 탈퇴
+     * @param mpiWthdrwDto
+     * @throws Exception
+     */
+    void updateUserWthdrw(MPIWthdrwDto mpiWthdrwDto) throws Exception;
 }

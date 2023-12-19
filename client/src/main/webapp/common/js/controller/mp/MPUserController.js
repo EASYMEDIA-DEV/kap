@@ -86,9 +86,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             dupId : {
                 event : {
                     click : function() {
-
+                        const html = '<input type="hidden" value="" name="id" id="idSub" />';
+                        $formObj.append(html);
                         $(".for-status-chk-id").removeClass("satisfy");
                         if($("#id").val().trim().length > 0) {
+                            $("#idSub").val($("#id").val());
                             cmmCtrl.frmAjax(function(respObj) {
                                 if(respObj.dupChk == 'Y') {
                                     dupIdChk = true;

@@ -42,7 +42,7 @@
 					if('${rtnData.receivedatass.paramsTwo}' == "compChg") {
 						var formObj = opener.$("formUserSubmit").serialize();
 						jQuery.ajax({
-							url : "/my-page/member/update-company-chg",
+							url : "/my-page/member/intrduction/update-company-chg",
 							type : "post",
 							timeout: 30000,
 							data : {
