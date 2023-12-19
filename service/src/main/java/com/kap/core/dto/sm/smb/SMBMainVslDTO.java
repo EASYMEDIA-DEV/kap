@@ -66,6 +66,8 @@ public class SMBMainVslDTO extends BaseDTO {
     private Integer fileSeq;
     private Integer imgFileSeq;
     private Integer videoFileSeq;
+    // 파일 확장자
+    private String fileExtn;
     // 파일 순번
     private Integer mnVslfileSeq;
     // 링크 URL
@@ -76,12 +78,8 @@ public class SMBMainVslDTO extends BaseDTO {
     private String expsYn;
     // 정렬
     private String sortType;
-
-    // 이미지 파일 확장자
-    private String imageExtns;
-    // 영상 파일 확장자
-    private String videoExtns;
-
+    // 업데이트 유무
+    private String updateYn;
     // 조회
     private List<SMBMainVslDTO> list;
 
