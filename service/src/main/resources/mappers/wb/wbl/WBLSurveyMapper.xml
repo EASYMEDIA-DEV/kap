@@ -284,6 +284,11 @@
 			 , a.email
 			 , b.srv_seq
 			 , (select titl from sv_mst where srv_seq = b.srv_seq) as titl
+			<if test="crtfnNo != null and crtfnNo != ''.toString() ">
+			, (select rspn_mm from sv_mst where srv_seq = b.srv_seq) as rspn_mm
+			, (select count(srv_seq) from sv_qstn_dtl where srv_seq = b.srv_seq) as qstn_cnt
+			, (select cntn from sv_mst where srv_seq = b.srv_seq) as cntn
+		     </if>
 			 , a.srv_rspn_seq
 			 , a.crtfn_no
 			 , a.ptcpt_cd
@@ -297,7 +302,14 @@
 			 , a.mod_ip
 			 , a.mod_dtm
 		from cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
-		where a.cxstn_srv_seq = #{detailsKey}
+		<choose>
+			<when test="crtfnNo != null and crtfnNo != ''.toString() ">
+				where a.crtfn_no = #{detailsKey}
+			</when>
+			<otherwise>
+				where a.cxstn_srv_seq = #{detailsKey}
+			</otherwise>
+		</choose>
 	</select>
 
 	<!--

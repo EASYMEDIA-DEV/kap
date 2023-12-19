@@ -115,7 +115,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		}else{
 			episdText = Integer.toString(wBLSurveyMstInsertDTO.getEpisd());
 		}
-		crtfnNo = wBLSurveyMstInsertDTO.getYear()+episdText+wBLSurveyMstInsertDTO.getBsnmRegNo();
+		crtfnNo = wBLSurveyMstInsertDTO.getYear()+episdText+wBLSurveyMstInsertDTO.getBsnmRegNo().replaceAll("-","");
 
 		wBLSurveyMstInsertDTO.setCrtfnNo(crtfnNo);
 		wBLSurveyMstInsertDTO.setPtcptCd("E");

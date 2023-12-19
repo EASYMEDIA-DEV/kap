@@ -89,4 +89,7 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "엑셀사유", example = "")
     private String rsn;
 
+    @Schema(title = "인증번호", example = "")
+    private String crtfnNo;
+
 }

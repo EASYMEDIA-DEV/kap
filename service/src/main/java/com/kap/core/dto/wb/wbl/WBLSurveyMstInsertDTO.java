@@ -113,4 +113,13 @@ public class WBLSurveyMstInsertDTO extends BaseDTO {
     @Schema(title = "수정ID")
     private String modId;
 
+    @Schema(title = "응답시간", example = "")
+    private String rspnMm;
+
+    @Schema(title = "문항수", example = "숫자")
+    private Integer qstnCnt;
+
+    @Schema(title = "설문내용", example = "")
+    private String cntn;
+
 }
