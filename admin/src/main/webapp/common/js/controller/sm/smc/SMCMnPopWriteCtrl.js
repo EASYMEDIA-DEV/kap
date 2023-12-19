@@ -183,26 +183,113 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     func : function (){
                         var actionUrl = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update" );
                         var actionMsg = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
-                        if($formObj.find(".dropzone.dz-started").size() > 0)
-                        {
-                            cmmCtrl.fileFrmAjax(function(data){
-                                //콜백함수. 페이지 이동
-                                if(data.respCnt > 0){
-                                    alert(actionMsg);
-                                    location.replace("./list");
-                                }
-                            }, actionUrl, $formObj, "json");
+
+                        // controller에 json으로 넘길 form값
+                        var actForm = {};
+
+                        var fileSeq = $("#fileSeq").val();
+                        var detailsKey = $("#detailsKey").val();
+
+                        var expsStrtDtm = $("#expsStrtDtm").val();
+                        var ptupStrtHh = $("#ptupStrtHh").val();
+                        var ptupStrtMi = $("#ptupStrtMi").val();
+                        var expsEndDtm = $("#expsEndDtm").val();
+                        var ptupEndHh = $("#ptupEndHh").val();
+                        var ptupEndMi = $("#ptupEndMi").val();
+                        var odtmYn = $("#odtmYn").val();
+                        var tagCd = $("input[name='tagCd']:checked").val();
+                        var titl = $("#titl").val();
+                        var cntn = $("#cntn").val();
+                        var urlUrl = $("#urlUrl").val();
+                        var wnppYn = $("#wnppYn").val();
+                        var expsYn = $("#expsYn").val();
+
+                        actForm.fileSeq = fileSeq;
+                        actForm.detailsKey = detailsKey;
+                        actForm.expsStrtDtm = expsStrtDtm;
+                        actForm.ptupStrtHh = ptupStrtHh;
+                        actForm.ptupStrtMi = ptupStrtMi;
+                        actForm.expsEndDtm = expsEndDtm;
+                        actForm.ptupEndHh = ptupEndHh;
+                        actForm.ptupEndMi = ptupEndMi;
+                        actForm.odtmYn = odtmYn;
+                        actForm.tagCd = tagCd;
+                        actForm.titl = titl;
+                        actForm.cntn = cntn;
+                        actForm.urlUrl = urlUrl;
+                        actForm.wnppYn = wnppYn;
+                        actForm.expsYn = expsYn;
+
+                        var mdCd =  $("input[name='mdCd']").val();
+                        if (mdCd == 'pc') {
+                            //PC 파일 세팅
+                            var pcImageFileArray = new Array();
+                            if(!($(".pcImageFile").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
+                                $(".pcImageFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
+                                $(".pcImageFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
+                                $.each($(".pcImageFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
+                                    //alt값  data에 넣어주기.
+                                    data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+
+                                    for (let i in data) {
+                                        if (data.hasOwnProperty(i)) {
+                                            var temp = {};
+                                            temp.fileSeq = data.fileSeq;
+                                            temp.status = data.status;
+                                            temp.width = data.width;
+                                            temp.height = data.height;
+                                            temp.webPath = data.webPath;
+                                            temp.fieldNm = "fileSeq";
+                                            temp.orgnFileNm = data.orgnFileNm;
+                                            temp.fileDsc = data.fileDsc;
+                                            temp.fileOrd = data.fileOrd;
+
+                                            if(pcImageFileArray == "" || (pcImageFileArray[pcImageFileArray.length-1].fileOrd != temp.fileOrd)){
+                                                pcImageFileArray.push(temp);
+                                            }
+                                        }
+                                    }
+                                })
+                            }
+                            actForm.fileList = pcImageFileArray;
+                        } else {
+                            //모바일 파일 세팅
+                            var mblImageFileArray = new Array();
+                            if(!($(".mblImageFile").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
+                                $(".mblImageFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
+                                $(".mblImageFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
+                                $.each($(".mblImageFile").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
+                                    //alt값  data에 넣어주기.
+                                    data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+
+                                    for (let i in data) {
+                                        if (data.hasOwnProperty(i)) {
+                                            var temp = {};
+                                            temp.fileSeq = data.fileSeq;
+                                            temp.status = data.status;
+                                            temp.width = data.width;
+                                            temp.height = data.height;
+                                            temp.webPath = data.webPath;
+                                            temp.fieldNm = "fileSeq";
+                                            temp.orgnFileNm = data.orgnFileNm;
+                                            temp.fileDsc = data.fileDsc;
+                                            temp.fileOrd = data.fileOrd;
+
+                                            if(mblImageFileArray == "" || (mblImageFileArray[mblImageFileArray.length-1].fileOrd != temp.fileOrd)){
+                                                mblImageFileArray.push(temp);
+                                            }
+                                        }
+                                    }
+                                })
+                            }
+                            actForm.fileList = mblImageFileArray;
                         }
-                        else
-                        {
-                            cmmCtrl.frmAjax(function(data){
-                                if(data.respCnt > 0){
-                                    alert(actionMsg);
-                                    location.replace("./list");
-                                }
-                                actionUrl = "./list";
-                            }, actionUrl, $formObj, "post", "json")
-                        }
+                        console.log(actForm);
+
+                        cmmCtrl.jsonAjax(function(data){
+                            alert("저장되었습니다.");
+                            location.href = "./list";
+                        }, actionUrl, actForm, "text");
                     }
                 },
                 msg : {
