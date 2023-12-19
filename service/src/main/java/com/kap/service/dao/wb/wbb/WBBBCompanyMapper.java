@@ -90,6 +90,11 @@ public interface WBBBCompanyMapper {
     public int insertApplyDtl(WBBAApplyDtlDTO wbbaApplyDtlDTO) throws Exception;
 
     /**
+     * 상생신청 다음단계 생성
+     */
+    public int insertApplyStep(WBBAApplyDtlDTO wbbaApplyDtlDTO) throws Exception;
+
+    /**
      * 신청 파일 생성
      */
     public int insertFileInfo(WBBAApplyDtlDTO wbbaApplyDtlDTO) throws Exception;

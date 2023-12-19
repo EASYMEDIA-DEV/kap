@@ -110,22 +110,22 @@ public class WBHACompanyDTO extends BaseDTO {
     private String mjrPrdct3;
 
     @Schema(title = "품질5스타코드")
-    private String qlty5StarCd;
+    private String qlty5starCd;
 
     @Schema(title = "품질5스타년도")
-    private Integer qlty5StarYear;
+    private Integer qlty5starYear;
 
     @Schema(title = "납입5스타코드")
-    private String pay5StarCd;
+    private String pay5starCd;
 
     @Schema(title = "납입5스타년도")
-    private Integer pay5StarYear;
+    private Integer pay5starYear;
 
     @Schema(title = "기술5스타코드")
-    private String tchlg5StarCd;
+    private String tchlg5starCd;
 
     @Schema(title = "기술5스타년도")
-    private Integer tchlg5StarYear;
+    private Integer tchlg5starYear;
 
     @Schema(title = "sq정보")
     private List<WBHACompanyDTO> sqInfoList;

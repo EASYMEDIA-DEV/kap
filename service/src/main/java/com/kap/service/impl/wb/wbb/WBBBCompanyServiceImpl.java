@@ -243,12 +243,12 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                         wbbaCompanyDTO.setCrtfnCmpnNm(wbbaCompanyDTO.getSqInfoList().get(t).getCrtfnCmpnNm());
 
                         // 2차인 경우, 스타등급 빈 값 처리
-                        wbbaCompanyDTO.setTchlg5StarCd(null);
-                        wbbaCompanyDTO.setPay5StarCd(null);
-                        wbbaCompanyDTO.setQlty5StarCd(null);
-                        wbbaCompanyDTO.setTchlg5StarYear(null);
-                        wbbaCompanyDTO.setPay5StarYear(null);
-                        wbbaCompanyDTO.setQlty5StarYear(null);
+                        wbbaCompanyDTO.setTchlg5starCd(null);
+                        wbbaCompanyDTO.setPay5starCd(null);
+                        wbbaCompanyDTO.setQlty5starCd(null);
+                        wbbaCompanyDTO.setTchlg5starYear(null);
+                        wbbaCompanyDTO.setPay5starYear(null);
+                        wbbaCompanyDTO.setQlty5starYear(null);
 
                         if (!seq.isEmpty()) {
                             wbbaCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
@@ -368,7 +368,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                         wbbApplyDtlDTO.setRegId(modId);
                         wbbApplyDtlDTO.setRegIp(modIp);
 
-                        wbbbCompanyMapper.insertApplyDtl(wbbApplyDtlDTO);
+                        wbbbCompanyMapper.insertApplyStep(wbbApplyDtlDTO);
                     }
 
                 } else if ("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd()) || "PRO_TYPE04_1_5".equals(wbbaApplyMstDTO.getMngSttsCd())
@@ -433,12 +433,12 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                         wbbaCompanyDTO.setCrtfnCmpnNm(wbbaCompanyDTO.getSqInfoList().get(t).getCrtfnCmpnNm());
 
                         // 2차인 경우, 스타등급 빈 값 처리
-                        wbbaCompanyDTO.setTchlg5StarCd(null);
-                        wbbaCompanyDTO.setPay5StarCd(null);
-                        wbbaCompanyDTO.setQlty5StarCd(null);
-                        wbbaCompanyDTO.setTchlg5StarYear(null);
-                        wbbaCompanyDTO.setPay5StarYear(null);
-                        wbbaCompanyDTO.setQlty5StarYear(null);
+                        wbbaCompanyDTO.setTchlg5starCd(null);
+                        wbbaCompanyDTO.setPay5starCd(null);
+                        wbbaCompanyDTO.setQlty5starCd(null);
+                        wbbaCompanyDTO.setTchlg5starYear(null);
+                        wbbaCompanyDTO.setPay5starYear(null);
+                        wbbaCompanyDTO.setQlty5starYear(null);
 
                         if (!seq.isEmpty()) {
                             wbbaCompanyDTO.setCbsnSeq(Integer.valueOf(seq));

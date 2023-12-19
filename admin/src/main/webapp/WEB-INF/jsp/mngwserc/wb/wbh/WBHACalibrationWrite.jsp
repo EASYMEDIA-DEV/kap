@@ -18,6 +18,7 @@
             <input type="hidden" class="notRequired" name="appctnBsnmNo" value="${userInfo.bsnmNo}"/>
             <input type="hidden" class="notRequired" name="bsnCd" value="INQ07008"/>
 
+
             <h6 class="mt0"><strong>관리자 등록</strong></h6><hr>
 
             <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
@@ -251,7 +252,7 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                         <c:if test="${fn:contains(cdList, 'COMPANY030')}">
-                                            <option value="${cdList.cd}" <c:if test="${userInfo.qlty5StarCd eq cdList.cd}">selected</c:if>>
+                                            <option value="${cdList.cd}" <c:if test="${userInfo.qlty5starCd eq cdList.cd}">selected</c:if>>
                                                     ${cdList.cdNm}
                                             </option>
                                         </c:if>
@@ -260,7 +261,7 @@
                                 <select class="form-control input-sm notRequired" id="qlty5starYear" name="qlty5starYear" title="품질5스타연도">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                        <option value="${cdList.cd}" <c:if test="${userInfo.qlty5StarYear eq cdList.cd}">selected</c:if>>
+                                        <option value="${cdList.cd}" <c:if test="${userInfo.qlty5starYear eq cdList.cd}">selected</c:if>>
                                                 ${cdList.cdNm}
                                         </option>
                                     </c:forEach>
@@ -276,7 +277,7 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                         <c:if test="${fn:contains(cdList, 'COMPANY030')}">
-                                            <option value="${cdList.cd}" <c:if test="${userInfo.pay5StarCd eq cdList.cd}">selected</c:if>>
+                                            <option value="${cdList.cd}" <c:if test="${userInfo.pay5starCd eq cdList.cd}">selected</c:if>>
                                                     ${cdList.cdNm}
                                             </option>
                                         </c:if>
@@ -285,7 +286,7 @@
                                 <select class="form-control input-sm notRequired" id="pay5starYear" name="pay5starYear" title="납입5스타연도">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                        <option value="${cdList.cd}" <c:if test="${userInfo.pay5StarYear eq cdList.cd}">selected</c:if>>
+                                        <option value="${cdList.cd}" <c:if test="${userInfo.pay5starYear eq cdList.cd}">selected</c:if>>
                                                 ${cdList.cdNm}
                                         </option>
                                     </c:forEach>
@@ -301,7 +302,7 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                         <c:if test="${fn:contains(cdList, 'COMPANY030')}">
-                                            <option value="${cdList.cd}" <c:if test="${userInfo.tchlg5StarCd eq cdList.cd}">selected</c:if>>
+                                            <option value="${cdList.cd}" <c:if test="${userInfo.tchlg5starCd eq cdList.cd}">selected</c:if>>
                                                     ${cdList.cdNm}
                                             </option>
                                         </c:if>
@@ -310,7 +311,7 @@
                                 <select class="form-control input-sm notRequired" id="tchlg5starYear" name="tchlg5starYear" title="기술5스타연도">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                        <option value="${cdList.cd}" <c:if test="${userInfo.tchlg5StarYear eq cdList.cd}">selected</c:if>>
+                                        <option value="${cdList.cd}" <c:if test="${userInfo.tchlg5starYear eq cdList.cd}">selected</c:if>>
                                                 ${cdList.cdNm}
                                         </option>
                                     </c:forEach>

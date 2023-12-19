@@ -23,7 +23,6 @@
                 <td class="text-center">${list.email}</td>
                 <td class="text-center">${not empty list.mngSttsChngDtm ? list.mngSttsChngDtm : "-"}</td>
                 <td class="text-center">${not empty list.appctnSttsChngDtm ? list.appctnSttsChngDtm : "-"}</td>
-                <td class="text-center">${not empty list.regDtm ? list.regDtm : "-"}</td>
                 <td class="text-center">${not empty list.modDtm ? list.modName : "-"}(${not empty list.modDtm ? list.id : ""})</td>
                 <td class="text-center">${not empty list.modDtm ? list.modDtm : "-"}</td>
             </tr>
