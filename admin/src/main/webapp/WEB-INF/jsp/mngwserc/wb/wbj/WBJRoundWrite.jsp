@@ -89,52 +89,14 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset id="test">
-                <div class="form-group text-sm examListContainer">
-                    <c:choose>
-                        <c:when test="${ rtnInfo.episdSeq != null }">
-                            <c:forEach var="prizeList" items="${rtnInfo.prizeList}" varStatus="qstnStatus">
-                                <div class="col-sm-12 examList mt-sm pl0 pr0 examHtmlTemplage">
-                                    <label class="col-sm-1 control-label examQstnNm">포상종류/포상금 <span class="star"> *</span></label>
-                                    <input type="hidden" name="prizeSeq" title="너냐" value="${prizeList.prizeSeq}" />
-                                    <div class="col-sm-11 pl0 pr0 prizeText">
-                                        <div class="col-sm-12">
-                                            <div>
-                                                <label class="col-sm-1 control-label">훈격<span class="star"> *</span></label>
-                                                <div class="col-sm-2">
-                                                    <select class="form-control input-sm srvTypeCd mrtsCd" name="mrtsCd" title="훈격" >
-                                                        <option >훈격선택</option>
-                                                        <c:forEach var="cdList" items="${cdList.MNGCNSLT_DIS}" varStatus="status">
-                                                            <option value="${cdList.cd}" ${ kl:decode(prizeList.mrtsCd, cdList.cd, 'selected', '') }>${cdList.cdNm}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <label class="col-sm-1 control-label">포상부문<span class="star"> *</span></label>
-                                                <div class="col-sm-2">
-                                                    <select class="form-control input-sm srvTypeCd prizeCd" name="prizeCd" title="포상부문" >
-                                                        <option >포상부문 선택</option>
-                                                        <c:forEach var="cdList" items="${cdList.MNGCNSLT_REW}" varStatus="status">
-                                                            <option value="${cdList.cd}" ${ kl:decode(prizeList.prizeCd, cdList.cd, 'selected', '') }>${cdList.cdNm}</option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                                <label class="col-sm-1 control-label">포상금<span class="star"> *</span></label>
-                                                <div class="col-sm-2">
-                                                    <input type="text" name="prizePmt" title="포상금"  value="${prizeList.prizePmt}">만원
-                                                </div>
-                                                <div class="col-sm-2 pl0">
-                                                    <button type="button" class="btn btn-sm btn-inverse btnExamWrite">포상종류 추가</button>
-                                                    <button type="button" class="btn btn-sm btn-danger btnExamDelete">포상종류 삭제</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:forEach>
-                        </c:when>
-                        <c:otherwise>
-                            <div class="col-sm-12 examList mt-sm pl0 pr0 examHtmlTemplage">
-                                <label class="col-sm-1 control-label examQstnNm">포상종류/포상금 <span class="star"> *</span></label>
+            <fieldset>
+                <c:choose>
+                    <c:when test="${ rtnInfo.episdSeq != null }">
+                    <div class="form-group text-sm examListContainer">
+                        <c:forEach var="prizeList" items="${rtnInfo.prizeList}" varStatus="qstnStatus">
+                            <div class="col-sm-12 examList mt-sm pl0 pr0">
+                                <label class="col-sm-1 control-label examQstnNm"> ${qstnStatus.index > 0 ? '' : '포상종류/포상금 <span class="star"> *</span>'} </label>
+                                <input type="hidden" name="prizeSeq" title="포상순번" value="${prizeList.prizeSeq}" />
                                 <div class="col-sm-11 pl0 pr0 prizeText">
                                     <div class="col-sm-12">
                                         <div>
@@ -143,7 +105,7 @@
                                                 <select class="form-control input-sm srvTypeCd mrtsCd" name="mrtsCd" title="훈격" >
                                                     <option >훈격선택</option>
                                                     <c:forEach var="cdList" items="${cdList.MNGCNSLT_DIS}" varStatus="status">
-                                                        <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                                        <option value="${cdList.cd}" ${ kl:decode(prizeList.mrtsCd, cdList.cd, 'selected', '') }>${cdList.cdNm}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -152,13 +114,13 @@
                                                 <select class="form-control input-sm srvTypeCd prizeCd" name="prizeCd" title="포상부문" >
                                                     <option >포상부문 선택</option>
                                                     <c:forEach var="cdList" items="${cdList.MNGCNSLT_REW}" varStatus="status">
-                                                        <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                                        <option value="${cdList.cd}" ${ kl:decode(prizeList.prizeCd, cdList.cd, 'selected', '') }>${cdList.cdNm}</option>
                                                     </c:forEach>
                                                 </select>
                                             </div>
                                             <label class="col-sm-1 control-label">포상금<span class="star"> *</span></label>
                                             <div class="col-sm-2">
-                                                <input type="text" name="prizePmt" title="포상금" >만원
+                                                <input type="text" name="prizePmt" title="포상금"  value="${prizeList.prizePmt}">만원
                                             </div>
                                             <div class="col-sm-2 pl0">
                                                 <button type="button" class="btn btn-sm btn-inverse btnExamWrite">포상종류 추가</button>
@@ -168,9 +130,49 @@
                                     </div>
                                 </div>
                             </div>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
+                        </c:forEach>
+                    </div>
+                    </c:when>
+                    <c:otherwise>
+                    <div class="form-group text-sm examListContainer">
+                        <div class="col-sm-12 examList mt-sm pl0 pr0 examHtmlTemplage">
+                            <label class="col-sm-1 control-label examQstnNm">포상종류/포상금 <span class="star"> *</span></label>
+                            <div class="col-sm-11 pl0 pr0 prizeText">
+                                <div class="col-sm-12">
+                                    <div>
+                                        <label class="col-sm-1 control-label">훈격<span class="star"> *</span></label>
+                                        <div class="col-sm-2">
+                                            <select class="form-control input-sm srvTypeCd mrtsCd" name="mrtsCd" title="훈격" >
+                                                <option >훈격선택</option>
+                                                <c:forEach var="cdList" items="${cdList.MNGCNSLT_DIS}" varStatus="status">
+                                                    <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-1 control-label">포상부문<span class="star"> *</span></label>
+                                        <div class="col-sm-2">
+                                            <select class="form-control input-sm srvTypeCd prizeCd" name="prizeCd" title="포상부문" >
+                                                <option >포상부문 선택</option>
+                                                <c:forEach var="cdList" items="${cdList.MNGCNSLT_REW}" varStatus="status">
+                                                    <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <label class="col-sm-1 control-label">포상금<span class="star"> *</span></label>
+                                        <div class="col-sm-2">
+                                            <input type="text" name="prizePmt" title="포상금" >만원
+                                        </div>
+                                        <div class="col-sm-2 pl0">
+                                            <button type="button" class="btn btn-sm btn-inverse btnExamWrite">포상종류 추가</button>
+                                            <button type="button" class="btn btn-sm btn-danger btnExamDelete">포상종류 삭제</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </c:otherwise>
+                </c:choose>
             </fieldset>
 
             <fieldset>
