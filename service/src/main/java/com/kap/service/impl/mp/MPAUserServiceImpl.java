@@ -343,6 +343,11 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     }
 
+    @Override
+    public MPAUserDto selectUserDtlId(MPAUserDto mpaUserDto) throws Exception {
+        return mpaUserMapper.selectUserDtlId(mpaUserDto);
+    }
+
 
     @Override
     public void excelDownload(MPAUserDto mpaUserDto, HttpServletResponse response) throws Exception {

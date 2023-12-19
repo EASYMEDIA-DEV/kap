@@ -16,7 +16,6 @@
 
         <div class="divide-con-area">
             <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
-            </div>
 
             <div class="right-con-area">
                 <form name="formWthdrwSuccess" id="formWthdrwSuccess" method="post" action="/my-page/member/wthdrw/wthdrw-success">

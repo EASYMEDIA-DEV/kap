@@ -243,6 +243,7 @@ public class MPUserController {
             //수신자 정보 등록
             cOMailDTO.getReceiver().add(receiverDto);
             cOMessageService.sendMail(cOMailDTO, "UserJoinSuccess.html");
+
         }
         catch (Exception e)
         {
@@ -259,7 +260,8 @@ public class MPUserController {
     @RequestMapping("/join-success")
     public String getMemberJoinSuccess(MPAUserDto mpaUserDto , ModelMap modelMap) throws Exception
     {
-        modelMap.addAttribute("rtnData", mpaUserDto);
+        MPAUserDto mpaUserDto2 = mpaUserService.selectUserDtlId(mpaUserDto);
+        modelMap.addAttribute("rtnData", mpaUserDto2);
         return "/front/mp/MPUserJoinSuccess.front";
     }
 

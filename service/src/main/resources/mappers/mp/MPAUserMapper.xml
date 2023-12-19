@@ -402,6 +402,7 @@
              , mem.mod_dtm
              , mem.last_lgn_dtm
              , mem.mem_cd
+             , mem.wthdrw_yn
              , case when mem.cmssr_type_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd )
                     else '' end as cmssr_type_cd_nm
              , case when mem.cmssr_cbsn_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd )
@@ -1188,4 +1189,57 @@
               )
     </insert>
 
+
+
+    <!--
+      쿼리명 : MPAUserMapper.selectUserDtlId
+      설  명 : 일반 사용자 목록을 조회한다.
+        수정일      수정자       수정내용
+      ==========   ========   ==============
+      2023.11.09    양현우       최초생성
+  -->
+    <select id="selectUserDtlId" parameterType="MPAUserDto" resultType="MPAUserDto">
+        select mem.mem_seq /* MPAUserMapper.selectUserDtl */
+             , mem.id
+             , mem.name
+             , mem.hp_no
+             , mem.email
+             , mem.reg_dtm
+             , mem.mod_dtm
+             , mem.last_lgn_dtm
+             , mem.mem_cd
+             , mem.wthdrw_yn
+             , case when mem.cmssr_type_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd )
+                    else '' end as cmssr_type_cd_nm
+             , case when mem.cmssr_cbsn_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd )
+                    else '' end as cmssr_cbsn_cd_nm
+             ,  case when mem.cmssr_work_cd != ''  then  (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd )
+                     else '' end as cmssr_work_cd_nm
+             , cmpn_mst.cmpn_nm
+             , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
+             , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
+                    when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
+                    else null end as mod_name
+        from co_mem_mst mem
+                 inner join ( select mem_mod_seq
+                                   , mem_seq
+                                   , mod_cd
+                                   , reg_id
+                              from co_mem_mod_log
+                              where ( mem_mod_seq
+                                        , mem_seq)
+                                        in ( select max(mem_mod_seq)
+                                                  , mem_seq
+                                             from co_mem_mod_log
+                                             group by mem_seq )
+        ) mst
+                            on mem.mem_seq = mst.mem_seq
+                 left outer join co_mem_cmpn_rel cmpn_rel
+                                 on mem.mem_seq = cmpn_rel.mem_seq
+                                     and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                 left outer join cp_cmpn_mst cmpn_mst
+                                 ON mem.work_bsnm_no  = cmpn_mst.bsnm_no
+--                                  on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
+        where mem.id = #{id}
+    </select>
 </mapper>

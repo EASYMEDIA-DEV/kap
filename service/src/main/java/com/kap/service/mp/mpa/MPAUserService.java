@@ -114,4 +114,7 @@ public interface MPAUserService {
      * @throws Exception
      */
     void updateUserWthdrw(MPIWthdrwDto mpiWthdrwDto) throws Exception;
+
+
+    MPAUserDto selectUserDtlId(MPAUserDto mpaUserDto) throws Exception;
 }

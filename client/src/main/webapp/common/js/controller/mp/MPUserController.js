@@ -86,7 +86,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             dupId : {
                 event : {
                     click : function() {
-                        const html = '<input type="hidden" value="" name="id" id="idSub" />';
+                        const html = '<input type="hidden" value="" name="id" id="idSub" class="notRequired" title="아이디" />';
                         $formObj.append(html);
                         $(".for-status-chk-id").removeClass("satisfy");
                         if($("#id").val().trim().length > 0) {
@@ -385,13 +385,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                     func : function (){
                         cmmCtrl.frmAjax(function(respObj) {
-                            var today = new Date();
-                            var year = today.getFullYear();
-                            var month = ('0' + (today.getMonth() + 1)).slice(-2);
-                            var day = ('0' + today.getDate()).slice(-2);
-                            var hours = ('0' + today.getHours()).slice(-2);
-                            var minutes = ('0' + today.getMinutes()).slice(-2);
-                            $("#regDtm").val(year + "-" + month + "-" + day + " " + hours + ":" + minutes);
+                            $("#joinId").val($("#id").val());
                             document.getElementById("formSuccess").submit();
                         }, "/member/insert", $formObj, "POST", "json",'',false);
                     }
