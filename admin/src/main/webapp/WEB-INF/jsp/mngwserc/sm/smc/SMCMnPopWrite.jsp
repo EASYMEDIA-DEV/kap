@@ -16,7 +16,7 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.popupSeq}" />
             <!-- 첨부파일 순번 -->
-            <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDto.fileSeq}" />
+            <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnInfo.fileSeq}" />
             <fieldset>
                 <div class="form-group form-inline">
                     <label class="col-sm-1 control-label">게시기간<span class="star"> *</span></label>
@@ -127,12 +127,12 @@
                 </div>
             </fieldset>
             <c:choose>
-                <c:when test="${mdCd eq 'pc'}">
-                    <fieldset id="imgArea" <c:if test="${rtnDto.tagCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:block;"</c:if>>
+                <c:when test="${mdCd eq 'pc'}" >
+                    <fieldset id="imgArea" class="pcImageFile" <c:if test="${rtnDto.tagCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:block;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">PC 이미지<span class="star"> *</span></label>
                             <div class="col-sm-10 col-md-11">
-                                <spring:eval var="imgExtns" expression="@environment.getProperty('app.file.imgExtns')" />
+                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="5242880" />
                                 <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${imgExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지">
                                     <div class="dz-default dz-message">
@@ -140,7 +140,7 @@
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ 1920 X 1080 / 파일 확장자(${imgExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
+                                    ※ 1920 X 1080 / 파일 확장자(${fileExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
                                 </p>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
                     </fieldset>
                 </c:when>
                 <c:when test="${mdCd eq 'mbl' or mdCd eq null}">
-                    <fieldset id="imgArea" <c:if test="${rtnDto.tagCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:block;"</c:if>>
+                    <fieldset id="imgArea" class="mblImageFile" <c:if test="${rtnDto.tagCd eq 'html'}">style="display:none;"</c:if><c:if test="${rtnDto.tagCd eq 'img' or rtnDto.tagCd eq null}">style="display:block;"</c:if>>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">모바일 이미지<span class="star"> *</span></label>
                             <div class="col-sm-10 col-md-11">

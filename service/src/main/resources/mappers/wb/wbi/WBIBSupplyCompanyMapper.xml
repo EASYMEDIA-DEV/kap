@@ -42,7 +42,7 @@
                     ) D
                 ) F
         <include refid="selectListWhereSql" />
-        ORDER BY year DESC, episd DESC
+        ORDER BY year DESC, episd DESC, reg_dtm desc
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 

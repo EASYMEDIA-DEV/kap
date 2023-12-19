@@ -36,7 +36,7 @@ import java.util.ArrayList;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/my-page/member")
+@RequestMapping(value="/my-page/member/intrduction")
 public class MPHCertificationController {
 
     private final COUserLgnService coUserLgnService;
@@ -54,8 +54,8 @@ public class MPHCertificationController {
      * @throws Exception
      */
     @GetMapping("/certification")
-    public String getMemberJoinChk() throws Exception {
-
+    public String getMemberPasswordChk(ModelMap modelMap) throws Exception {
+        modelMap.addAttribute("data", "modify");
         return "/front/mp/mph/MPHCertification.front";
     }
 

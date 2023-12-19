@@ -379,4 +379,19 @@ public class COStringUtil {
         }
         return str1;
     }
+
+    /**
+     * URL 파싱(폴더단위 리턴)
+     */
+    public static String getUrlFolder(String str){
+        String rtn = "";
+        String[] arrFolder = str.split("/");
+        if(arrFolder.length > 1) {
+            for (int q = 1; q < (arrFolder.length - 1); q++) {
+                rtn = rtn + "/" + arrFolder[q];
+            }
+        }
+        rtn = rtn + "/";
+        return rtn;
+    }
 }

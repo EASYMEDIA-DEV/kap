@@ -83,6 +83,12 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpaUserDto.setMemSeq(memSeqIdgen.getNextIntegerId());
         mpaUserDto.setEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getPwd(), mpaUserDto.getId()));
         int i = mpdCmtMapper.insertCmt(mpaUserDto);
+        mpaUserDto.setTrmsAgmntYn("N");
+        mpaUserDto.setPsnifAgmntYn("N");
+        mpaUserDto.setPsnif3AgmntYn("N");
+        mpaUserDto.setFndnNtfyRcvYn("N");
+        mpaUserDto.setCi("");
+        mpaUserMapper.insertUserDtl(mpaUserDto);
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
         return i;
@@ -555,7 +561,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPDCmtServiceImpl");
         pCoSystemLogDTO.setFncNm("selectKenMonthList");
         pCoSystemLogDTO.setPrcsCd("DL");
-        pCoSystemLogDTO.setRsn(mpdKenDto.getRsn());
+        pCoSystemLogDTO.setRsn("월 근태 엑셀 다운로드");
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
@@ -892,7 +898,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPDCmtServiceImpl");
         pCoSystemLogDTO.setFncNm("selectKenList");
         pCoSystemLogDTO.setPrcsCd("DL");
-        pCoSystemLogDTO.setRsn(mpdKenDto.getRsn());
+        pCoSystemLogDTO.setRsn("일일 근태 엑셀 다운로드");
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);

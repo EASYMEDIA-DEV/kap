@@ -568,34 +568,40 @@
                             <hr>
                             <h6 class="mt0"><em class="ion-play mr-sm"></em>
                                 <c:choose>
-                                    <c:when test="${rtnInfo.appctnSttsCd ne 'PRO_TYPE05001_01_003'}">
+                                    <c:when test="${empty rtnAppctnRsume.applyList}">
                                         <c:choose>
-                                            <c:when test="${rtnInfo.appctnSttsCd eq 'PRO_TYPE05001_01_001'}">
-                                                전체 진행상태 : 1차 심사(접수완료)
+                                            <c:when test="${rtnInfo.appctnSttsCd ne 'PRO_TYPE05001_01_003'}">
+                                                <c:choose>
+                                                    <c:when test="${rtnInfo.appctnSttsCd eq 'PRO_TYPE05001_01_001'}">
+                                                        전체 진행상태 : 1차 심사(접수완료)
+                                                    </c:when>
+                                                    <c:when test="${rtnInfo.appctnSttsCd eq 'PRO_TYPE05001_01_002'}">
+                                                        전체 진행상태 : 1차 심사(탈락)
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        전체 진행상태 : 1차 심사(통과)
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:when>
-                                            <c:when test="${rtnInfo.appctnSttsCd eq 'PRO_TYPE05001_01_002'}">
-                                                전체 진행상태 : 1차 심사(탈락)
-                                            </c:when>
-                                            <c:otherwise>
-                                                전체 진행상태 : 1차 심사(통과)
-                                            </c:otherwise>
                                         </c:choose>
                                     </c:when>
                                     <c:otherwise>
-                                        <c:choose>
-                                            <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_001'}">
-                                                전체 진행상태 : 최종 심사(결과대기)
-                                            </c:when>
-                                            <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_002'}">
-                                                전체 진행상태 : 최종 심사(사용자취소)
-                                            </c:when>
-                                            <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_003'}">
-                                                전체 진행상태 : 최종 심사(탈락)
-                                            </c:when>
-                                            <c:otherwise>
-                                                전체 진행상태 : 최종 심사(수상)
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <c:forEach var="item" items="${rtnAppctnRsume.applyList}" varStatus="status">
+                                            <c:choose>
+                                                <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_001'}">
+                                                    전체 진행상태 : 최종 심사(결과대기)
+                                                </c:when>
+                                                <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_002'}">
+                                                    전체 진행상태 : 최종 심사(사용자취소)
+                                                </c:when>
+                                                <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_003'}">
+                                                    전체 진행상태 : 최종 심사(탈락)
+                                                </c:when>
+                                                <c:otherwise>
+                                                    전체 진행상태 : 최종 심사(수상)
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
                                     </c:otherwise>
                                 </c:choose>
                             </h6>
@@ -608,7 +614,7 @@
                                     1차 심사
                                 </a>
                             </div>
-                            <div id="addEx1" class="panel-collapse collapse" role="tabpanel">
+                            <div id="addEx1" class="panel-collapse collapse <c:if test="${empty rtnAppctnRsume.applyList}">in</c:if>" role="tabpanel">
                                 <div class="panel-body">
                                     <input type="hidden" class="notRequired" name="rsumeSeq" value="${rtnInfo.rsumeSeq}" />
                                     <input type="hidden" class="notRequired" name="rsumeOrd" value="${rtnInfo.rsumeOrd}" />
@@ -763,7 +769,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <c:forEach var="item" items="${rtnAppctnRsume.applyList}" varStatus="status">
-                                        <div id="addEx2" class="panel-collapse collapse" role="tabpanel">
+                                        <div id="addEx2" class="panel-collapse collapse in" role="tabpanel">
                                             <div class="panel-body">
                                                 <input type="hidden" class="notRequired" name="finalRsumeSeq" value="${item.rsumeSeq}" />
                                                 <input type="hidden" class="notRequired" name="rsumeOrd" value="2" />
@@ -807,7 +813,7 @@
                                                         <label class="col-sm-2 control-label">훈격</label>
                                                         <div class="col-sm-3 form-inline">
                                                             <select class="form-control input-sm mrtsCd notRequired" id="optMrtsCd" name="mrtsCd" title="훈격">
-                                                                <option value="" >선택</option>
+                                                                <option >선택</option>
                                                                 <c:forEach var="cdList" items="${rtnInfo.mrtsList}" varStatus="status">
                                                                     <option value="${cdList.mrtsCd}" <c:if test="${rtnInfo.mrtsCd eq cdList.mrtsCd}">selected</c:if>>${cdList.mrtsCdNm}</option>
                                                                 </c:forEach>

@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
-<div id="wrap" class="member member-main" data-controller="controller/co/COLgnCtrl"><!-- 로그인, 회원가입 페이지 member 클래스 추가 --><!-- 각 인트로 화면은 member-main 클래스 추가 -->
+<div id="wrap" class="member member-main" data-controller="controller/co/COLgnCtrl" data-rtn-url="${rtnUrl}" ><!-- 로그인, 회원가입 페이지 member 클래스 추가 --><!-- 각 인트로 화면은 member-main 클래스 추가 -->
     <!-- content 영역 start -->
     <div class="cont-wrap">
         <div class="inner">

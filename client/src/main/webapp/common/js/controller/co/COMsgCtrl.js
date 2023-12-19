@@ -9,6 +9,7 @@ var msgCtrl = (function(){
 			upd : "수정하시겠습니까?",
 			del : "삭제하시겠습니까?",
 			sve : "저장하시겠습니까?",
+			wthdrw : "탈퇴하시겠습니까?",
 			upd2 : "변경하시겠습니까?",
 			list : "목록으로 이동 시 입력한 값이 초기화 처리됩니다. \n이동하시겠습니까?",
 			pwdUpd : '비밀번호를 변경하시겠습니까?',
@@ -41,6 +42,9 @@ var msgCtrl = (function(){
 			mp : {
 				join : {
 				  emailAuth : '인증이 발송 되었습니다.',
+				},
+				wthdrw : {
+					al_001 : '회원탈퇴가 완료되었습니다.',
 				}
 			},
 			sqCertiApply : "자격증 신청이 완료되었습니다.",
@@ -118,6 +122,9 @@ var msgCtrl = (function(){
 				},
 				mph : {
 					al_002 : '비밀번호가 일치하지 않습니다.'
+				},
+				mpi : {
+					al_003 : '회원 탈퇴 기타 사유를 입력해주세요.'
 				}
 			}
 			,sqCertiFile : "신청자 증명사진을 등록해주세요."

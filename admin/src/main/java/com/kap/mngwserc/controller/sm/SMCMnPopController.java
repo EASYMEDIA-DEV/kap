@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -118,7 +115,7 @@ public class SMCMnPopController {
      * 팝업을 등록한다.
      */
     @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String insertMnPop(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
+    public String insertMnPop(@RequestBody SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
@@ -175,7 +172,7 @@ public class SMCMnPopController {
      *
      */
     @RequestMapping(value="/update")
-    public String updateMnPop(SMCMnPopDTO smcMnPopDTO, COAAdmDTO pCOAAdmDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
+    public String updateMnPop(@RequestBody SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {

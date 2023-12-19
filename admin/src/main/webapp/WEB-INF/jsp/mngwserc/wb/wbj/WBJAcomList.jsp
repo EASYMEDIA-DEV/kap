@@ -161,7 +161,7 @@
 					</h6>
 					<div class="pull-right">
 						<button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
-						<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete">선택삭제</button>
+						<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnChooseDelete">선택삭제</button>
 						<button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
 					</div>
 				</div>

@@ -128,6 +128,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         } else if($(this).val() == 'COMPANY01002'){
                                 $(".gubunOne").hide();
                                 $(".gubunTwo").show();
+                        } else {
+                            $(".gubunOne").hide();
+                            $(".gubunTwo").hide();
                         }
                     }
                 }
@@ -296,40 +299,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     cmmCtrl.frmAjax(function(respObj) {
                                         alert(msgCtrl.getMsg("success.upd2"));
                                         // location.reload();
-                                    }, "/my-page/member/update-company", $formObj5, "POST", "json",'',false);
+                                    }, "/my-page/member/intrduction/update-company", $formObj5, "POST", "json",'',false);
                                 }
                             } else if($("#bsnmNosOld").val() != "" && $("#partTypeChg").val()=="turnOver"){
                                 //이직 시
                                 $(".partDtl").show();
                                 if(confirm(msgCtrl.getMsg("confirm.sve"))) {
-                                    jQuery.ajax({
-                                        url : "/nice/my-idnttvrfct",
-                                        type : "post",
-                                        data :
-                                            {
-                                                "receivedata" : "no&"+$("#ci").val()+"&compChg" //팝업 후 이동할 페이지 파라미터 추가 ex /id-find-res&ex1&ex2 최대 5개
-                                            },
-                                        success : function(data)
-                                        {
-                                            const {form} = document;
-
-                                            const option = `status=no, menubar=no, toolbar=no, resizable=no, width=500, height=600`;
-                                            document.getElementById('enc_data').value = data.enc_data; // enc_data 값을 설정
-                                            document.getElementById('integrity_value').value = data.integrity_value; // integrity_value 값을 설정
-                                            document.getElementById('token_version_id').value = data.token_version_id; // integrity_value 값을 설정
-
-                                            window.open('', 'nicePopup', option);
-
-                                            form.target = 'nicePopup';
-                                            document.getElementById('form').submit();
-
-                                        },
-                                        error : function(xhr, ajaxSettings, thrownError)
-                                        {
-                                            cmmCtrl.errorAjax(xhr);
-                                            jQuery.jstree.rollback(data.rlbk);
-                                        }
-                                    });
+                                    cmmCtrl.niceCertification("no&"+$("#ci").val()+"&compChg");
                                   }
 
                             } else {
