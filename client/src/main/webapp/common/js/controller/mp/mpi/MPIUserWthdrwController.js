@@ -68,6 +68,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 var minutes = ('0' + today.getMinutes()).slice(-2);
                                 $("#regDtm").val(year + "-" + month + "-" + day + " " + hours + ":" + minutes);
                                 document.getElementById("formWthdrwSuccess").submit();
+                                if(respObj.respCnt > 0){
+
+                                }
                             }, "/my-page/member/wthdrw/update-wthdrw", $formObj, "POST", "json",'',false);
 
                         }
