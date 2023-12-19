@@ -54,8 +54,8 @@ public class MPHCertificationController {
      * @throws Exception
      */
     @GetMapping("/certification")
-    public String getMemberJoinChk() throws Exception {
-
+    public String getMemberPasswordChk(ModelMap modelMap) throws Exception {
+        modelMap.addAttribute("data", "modify");
         return "/front/mp/mph/MPHCertification.front";
     }
 

@@ -37,7 +37,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             if($("#typeChk").val() == 'modify') {
                 location.replace('/my-page/member/modify-page');
             } else if($("#typeChk").val() == 'wthdrw') {
-                location.replace('/my-page/wthdrw/wthdrw-page')
+                location.replace('/my-page/member/wthdrw/wthdrw-page')
             }
         } else {
             alert(msgCtrl.getMsg("fail.mp.mph.al_002"));

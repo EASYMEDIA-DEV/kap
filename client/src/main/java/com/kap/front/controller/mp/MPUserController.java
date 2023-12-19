@@ -144,7 +144,7 @@ public class MPUserController {
     }
 
     /**
-     * TODO EDM 수정 하기
+     *
      * 이메일 인증 번호 전송
      *
      * @param

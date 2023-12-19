@@ -1122,4 +1122,69 @@
 
     </where>
     </sql>
+
+
+    <!--
+쿼리명 : MPAUserMapper.updateUserWthdrw
+설  명 :  [일반 , 부품  ] 탈퇴 여부 Y
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.12.19    양현우       최초생성
+-->
+    <update id="updateUserWthdrw" parameterType="MPIWthdrwDto">
+        update co_mem_mst  /* MPAUserMapper.updateUserWthdrw */
+         set wthdrw_yn = 'N'
+           , mod_id =#{modId}
+           , mod_ip=#{modIp}
+           , mod_dtm =now()
+          where mem_seq=#{memSeq}
+    </update>
+
+    <!--
+쿼리명 : MPAUserMapper.updateUserCiDel
+설  명 :  [일반 , 부품  ] ci값 삭제
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.12.19    양현우       최초생성
+-->
+    <update id="updateUserCiDel" parameterType="MPIWthdrwDto">
+        update co_mem_dtl  /* MPAUserMapper.updateUserCiDel */
+         set ci = ''
+           , mod_id =#{modId}
+           , mod_ip =#{modIp}
+           , mod_dtm = now()
+          where mem_seq =#{memSeq}
+    </update>
+
+
+    <!--
+      쿼리명 : MPAUserMapper.insertUserWthdrw
+      설  명 :  [일반 , 부품] 사용자 삭제
+        수정일      수정자       수정내용
+      ==========   ========   ==============
+      2023.11.10    양현우       최초생성
+      -->
+    <insert id="insertUserWthdrw" parameterType="MPIWthdrwDto">
+        insert into co_mem_wthdrw_dtl /* MPAUserMapper.insertUserWthdrw */
+        (  mem_seq
+        , wthdrw_rsn_cd
+        , wthdrw_rsn_etc_nm
+        , reg_id
+        , reg_ip
+        , reg_dtm
+        , mod_id
+        , mod_ip
+        , mod_dtm )
+        values( #{memSeq}
+              , #{wthdrwRsnCd}
+              , #{wthdrwRsnEtcNm}
+              , #{regId}
+              , #{regIp}
+              , now()
+              , #{modId}
+              , #{modIp}
+              , now()
+              )
+    </insert>
+
 </mapper>

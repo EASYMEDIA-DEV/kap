@@ -5,6 +5,7 @@ import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.*;
 import com.kap.core.dto.mp.mpa.*;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.mp.mpi.MPIWthdrwDto;
 import com.kap.service.COFileService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
@@ -331,6 +332,15 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaPartDto.setChk(chk);
         mpaPartDto.setCount(totCnt);
         return mpaPartDto;
+    }
+
+    @Override
+    public void updateUserWthdrw(MPIWthdrwDto mpiWthdrwDto) throws Exception {
+            mpaUserMapper.updateUserWthdrw(mpiWthdrwDto);
+            mpaUserMapper.insertUserWthdrw(mpiWthdrwDto);
+            mpaUserMapper.updateUserCiDel(mpiWthdrwDto);
+
+
     }
 
 
