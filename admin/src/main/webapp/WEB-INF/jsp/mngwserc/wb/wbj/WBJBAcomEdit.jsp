@@ -614,7 +614,7 @@
                                     1차 심사
                                 </a>
                             </div>
-                            <div id="addEx1" class="panel-collapse collapse" role="tabpanel">
+                            <div id="addEx1" class="panel-collapse collapse <c:if test="${empty rtnAppctnRsume.applyList}">in</c:if>" role="tabpanel">
                                 <div class="panel-body">
                                     <input type="hidden" class="notRequired" name="rsumeSeq" value="${rtnInfo.rsumeSeq}" />
                                     <input type="hidden" class="notRequired" name="rsumeOrd" value="${rtnInfo.rsumeOrd}" />
@@ -769,7 +769,7 @@
                                 </c:when>
                                 <c:otherwise>
                                     <c:forEach var="item" items="${rtnAppctnRsume.applyList}" varStatus="status">
-                                        <div id="addEx2" class="panel-collapse collapse" role="tabpanel">
+                                        <div id="addEx2" class="panel-collapse collapse in" role="tabpanel">
                                             <div class="panel-body">
                                                 <input type="hidden" class="notRequired" name="finalRsumeSeq" value="${item.rsumeSeq}" />
                                                 <input type="hidden" class="notRequired" name="rsumeOrd" value="2" />
