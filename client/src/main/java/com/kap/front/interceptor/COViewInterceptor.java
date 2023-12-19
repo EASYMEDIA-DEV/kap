@@ -81,11 +81,9 @@ public class COViewInterceptor implements HandlerInterceptor{
             userUrl = COStringUtil.nullConvert(menuList.get(i).getUserUrl());
             if (userUrl != null && !"".equals(userUrl) )         //requestURI.indexOf(userUrl) > -1
             {
-                if(folderUrl.startsWith(userUrl)){
-                    if(userUrl.equals(menuList.get(i-1).getUserUrl())){
-                        pageMenuDto    = menuList.get(i);
-                        break;
-                    }
+                if(userUrl.startsWith(folderUrl)){
+                    pageMenuDto    = menuList.get(i);
+                    break;
                 }
             }
         }
