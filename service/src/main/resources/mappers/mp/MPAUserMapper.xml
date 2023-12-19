@@ -766,6 +766,7 @@
         set pwd = #{newEncPwd}
           , pwd_chng_dtm = now()
           , lgn_fail_cnt = 0
+          , chng_xtnsn_cnt = 0
           , mod_id = #{modId}
           , mod_ip = #{modIp}
           , mod_dtm = now()

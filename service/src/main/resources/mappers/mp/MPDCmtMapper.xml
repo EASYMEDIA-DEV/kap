@@ -41,6 +41,10 @@
         , mod_id  				-- 수정id
         , mod_ip  				-- 수정ip
         , mod_dtm	 				-- 수정일
+        , pwd_chn
+        , chng_xtnsn_cnt
+        , tmp_pwd_yn
+        , pwd_chng_dtm
         )
         values(
                 #{memSeq}
@@ -72,6 +76,9 @@
               , now()
               , #{regId}
               , #{regIp}
+              , now()
+              , '0'
+              , 'N'
               , now()
               )
     </insert>
