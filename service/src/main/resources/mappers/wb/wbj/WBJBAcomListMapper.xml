@@ -970,7 +970,7 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                            B.REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                B.REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR B.REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>
@@ -978,7 +978,7 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                            B.MOD_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                B.MOD_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR B.MOD_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>
