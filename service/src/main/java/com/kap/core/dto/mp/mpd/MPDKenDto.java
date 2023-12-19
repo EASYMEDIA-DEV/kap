@@ -88,6 +88,9 @@ public class MPDKenDto extends BaseDTO {
     @Schema(title="일일 / 월 근태 엑셀 타입" , example = "D")
     private String excelType;
 
+    @Schema(title="엑셀 여부" , example = "Y")
+    private String excelYn;
+
     @Schema(title="사유" , example = "D")
     private String rsn;
 

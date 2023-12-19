@@ -153,6 +153,7 @@ public class MPDCmtController {
     {
         try
         {
+            mpdKenDto.setExcelYn("Y");
             //엑셀 생성
             if(mpdKenDto.getExcelType().equals("D")) {
                 mpdCmtService.excelDownload(mpdCmtService.selectKenList(mpdKenDto), response);
@@ -340,6 +341,7 @@ public class MPDCmtController {
     @PostMapping(value = "/select-tab-four")
     public String selectEduListPageTabFourAjax(MPDKenDto mpdKenDto ,
                                                ModelMap modelMap ) throws Exception {
+        mpdKenDto.setExcelYn("N");
         modelMap.addAttribute("rtnData", mpdCmtService.selectKenList(mpdKenDto));
         // 로그인한 계정
         COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();
@@ -366,6 +368,7 @@ public class MPDCmtController {
     @PostMapping(value = "/ken-month")
     public String selectKenMonthAjax(MPDKenDto mpdKenDto ,
                                      ModelMap modelMap ) throws Exception {
+        mpdKenDto.setExcelYn("N");
         modelMap.addAttribute("rtnData", mpdCmtService.selectKenMonthList(mpdKenDto));
         // 로그인한 계정
         COUserDetailsDTO cOUserDetailsDTO  = COUserDetailsHelperService.getAuthenticatedUser();

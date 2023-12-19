@@ -24,7 +24,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     change : function() {
                         if($(this).val() == 'MEM_WTHDRW_005') {
-                               $("#wthdrwRsnEtcNm").attr('disabled',false);
+                            $("#wthdrwRsnEtcNm").attr('disabled',false);
                         } else {
                             $("#wthdrwRsnEtcNm").val("");
                             $("#wthdrwRsnEtcNm").attr('disabled',true);
@@ -60,17 +60,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         if (confirm(msgCtrl.getMsg("confirm.wthdrw"))) {
                             cmmCtrl.frmAjax(function(respObj) {
                                 alert(msgCtrl.getMsg("success.mp.wthdrw.al_001"));
-                                var today = new Date();
-                                var year = today.getFullYear();
-                                var month = ('0' + (today.getMonth() + 1)).slice(-2);
-                                var day = ('0' + today.getDate()).slice(-2);
-                                var hours = ('0' + today.getHours()).slice(-2);
-                                var minutes = ('0' + today.getMinutes()).slice(-2);
-                                $("#regDtm").val(year + "-" + month + "-" + day + " " + hours + ":" + minutes);
                                 document.getElementById("formWthdrwSuccess").submit();
-                                if(respObj.respCnt > 0){
-
-                                }
                             }, "/my-page/member/wthdrw/update-wthdrw", $formObj, "POST", "json",'',false);
 
                         }

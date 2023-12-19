@@ -140,7 +140,9 @@
             and dd = #{dd}
         </if>
             order by reg_dtm desc
+        <if test="excelYn != 'Y'.toString() ">
             limit   #{firstIndex}, #{recordCountPerPage}
+        </if>
 
     </select>
 
@@ -189,7 +191,9 @@
             and mnth=#{mnth}
              and m2.wthdrw_yn=#{wthdrwYn}
              GROUP BY m1.mem_seq
+        <if test="excelYn != 'Y'.toString() ">
         limit  #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
 

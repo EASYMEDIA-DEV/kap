@@ -62,7 +62,7 @@
 
 <div id="wrap" class="member"  data-controller="controller/mp/MPUserController"><!-- 로그인, 회원가입 페이지 member 클래스 추가 -->
   <form name="formSuccess" id="formSuccess" method="post" action="/member/join-success">
-      <input type="hidden" id="regDtm" name="regDtm"  />
+      <input type="hidden" id="joinId" name="id"  />
       <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
   </form>

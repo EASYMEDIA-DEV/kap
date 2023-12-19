@@ -102,4 +102,8 @@ public interface MPAUserMapper {
      * @param mpiWthdrwDto
      */
     void insertUserWthdrw(MPIWthdrwDto mpiWthdrwDto);
+
+
+    MPAUserDto selectUserDtlId(MPAUserDto mpaUserDto);
+
 }

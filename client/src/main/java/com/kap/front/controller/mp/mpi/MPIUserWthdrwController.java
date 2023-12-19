@@ -51,6 +51,8 @@ public class MPIUserWthdrwController {
     //이메일 발송
     private final COMessageService cOMessageService;
 
+    private final COLgnService coLgnService;
+
     @Value("${app.site.name}")
     private String siteName;
 
@@ -139,9 +141,17 @@ public class MPIUserWthdrwController {
     @RequestMapping("/wthdrw-success")
     public String getMemberWthdrwSuccess(MPAUserDto mpaUserDto , ModelMap modelMap , HttpSession sesssion) throws Exception
     {
-        sesssion.invalidate();
-        modelMap.addAttribute("rtnData", mpaUserDto);
-        return "/front/mp/mpi/MPIUserWthdrwSuccess.front";
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        mpaUserDto.setDetailsKey(String.valueOf(cOUserDetailsDTO.getSeq()));
+        MPAUserDto mpaUserDto1 = mpaUserService.selectUserDtl(mpaUserDto);
+        if(mpaUserDto1.getWthdrwYn().equals("Y")) {
+            return "redirect:/";
+        } else {
+            sesssion.invalidate();
+            modelMap.addAttribute("rtnData", mpaUserDto1);
+            return "/front/mp/mpi/MPIUserWthdrwSuccess.front";
+        }
+
     }
 
 }

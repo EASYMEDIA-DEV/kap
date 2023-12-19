@@ -17,7 +17,6 @@
 
         <div class="divide-con-area">
             <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
-            </div>
 
             <div class="right-con-area">
                 <div class="cont-sec-w">
@@ -30,7 +29,7 @@
                                     <div class="def-list-w">
                                         <div class="def-list">
                                             <p class="tit f-head">탈퇴일시</p>
-                                            <p class="txt f-sub-head">${rtnData.regDtm}</p>
+                                            <p class="txt f-sub-head">${rtnData.modDtm}</p>
                                         </div>
                                     </div>
                                     <div class="btn-wrap">
