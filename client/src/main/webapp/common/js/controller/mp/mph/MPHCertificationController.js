@@ -304,6 +304,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                         }
                                         $(".lastBtnIndex"+sqList.length).append('<button class="btn-text-icon delete btnSqInfoMinus" type="button"><span>삭제</span></button>');
                                         $(".lastBtnIndex"+sqList.length).append('<button class="btn-solid small gray-bg btn-add-line btnSqInfoPlus" type="button"><span>SQ 정보 추가</span></button>');
+                                    } else {
+                                        $(".gubunOne").hide();
+                                        $(".gubunTwo").hide();
                                     }
                                 },
                                 error : function(xhr, ajaxSettings, thrownError)

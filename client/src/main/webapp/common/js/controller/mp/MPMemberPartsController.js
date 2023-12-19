@@ -128,6 +128,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         } else if($(this).val() == 'COMPANY01002'){
                                 $(".gubunOne").hide();
                                 $(".gubunTwo").show();
+                        } else {
+                            $(".gubunOne").hide();
+                            $(".gubunTwo").hide();
                         }
                     }
                 }
