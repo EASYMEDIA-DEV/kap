@@ -79,45 +79,54 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             var mjrPrdct2 = detailList[0].mjrPrdct2
             var mjrPrdct3 = detailList[0].mjrPrdct3
 
-            var qlty5StarCd = detailList[0].qlty5StarCd
-            var qlty5StarYear = detailList[0].qlty5StarYear
-            var pay5StarYear = detailList[0].pay5StarYear
-            var pay5StarCd = detailList[0].pay5StarCd
-            var tchlg5StarCd = detailList[0].tchlg5StarCd
-            var tchlg5StarYear = detailList[0].tchlg5StarYear
+            if(ctgryCd == 'COMPANY01001'){
+                var qlty5StarCd = detailList[0].qlty5StarCd
+                var qlty5StarYear = detailList[0].qlty5StarYear
+                var pay5StarYear = detailList[0].pay5StarYear
+                var pay5StarCd = detailList[0].pay5StarCd
+                var tchlg5StarCd = detailList[0].tchlg5StarCd
+                var tchlg5StarYear = detailList[0].tchlg5StarYear
 
-            var crtfnCmpnNm1 = detailList[0].crtfnCmpnNm
-            var nm1 = detailList[0].nm
-            var cbsnSeq1 = detailList[0].cbsnSeq
-            var score1 = detailList[0].score
-            var year1 = detailList[0].year
+            }else{
 
-            var crtfnCmpnNm2 = detailList[1].crtfnCmpnNm
-            var nm2 = detailList[1].nm
-            var cbsnSeq2 = detailList[1].cbsnSeq
-            var score2 = detailList[1].score
-            var year2 = detailList[1].year
+                var crtfnCmpnNm1 = detailList[0].crtfnCmpnNm
+                var nm1 = detailList[0].nm
+                var cbsnSeq1 = detailList[0].cbsnSeq
+                var score1 = detailList[0].score
+                var year1 = detailList[0].year
 
-            var crtfnCmpnNm3 = detailList[2].crtfnCmpnNm
-            var nm3 = detailList[2].nm
-            var cbsnSeq3 = detailList[2].cbsnSeq
-            var score3 = detailList[2].score
-            var year3 = detailList[2].year
+                $('#nm').val(nm1);
+                $('#score').val(score1);
+                $('#crtfnCmpnNm').val(crtfnCmpnNm1);
+                $('#cbsnSeq').val(cbsnSeq1);
 
-            $('#nm').val(nm1);
-            $('#score').val(score1);
-            $('#crtfnCmpnNm').val(crtfnCmpnNm1);
-            $('#cbsnSeq').val(cbsnSeq1);
+                if(detailList.length >= 2){
 
-            $("#nm1").val(nm2);
-            $('#score1').val(score2);
-            $('#crtfnCmpnNm1').val(crtfnCmpnNm2);
-            $('#cbsnSeq1').val(cbsnSeq2);
+                    var crtfnCmpnNm2 = detailList[1].crtfnCmpnNm
+                    var nm2 = detailList[1].nm
+                    var cbsnSeq2 = detailList[1].cbsnSeq
+                    var score2 = detailList[1].score
+                    var year2 = detailList[1].year
 
-            $("#nm2").val(nm3);
-            $("#score2").val(score3);
-            $("#crtfnCmpnNm2").val(crtfnCmpnNm3);
-            $("#cbsnSeq2").val(cbsnSeq3);
+                    $("#nm1").val(nm2);
+                    $('#score1').val(score2);
+                    $('#crtfnCmpnNm1').val(crtfnCmpnNm2);
+                    $('#cbsnSeq1').val(cbsnSeq2);
+
+                    if(detailList.length == 3){
+                        var crtfnCmpnNm3 = detailList[2].crtfnCmpnNm
+                        var nm3 = detailList[2].nm
+                        var cbsnSeq3 = detailList[2].cbsnSeq
+                        var score3 = detailList[2].score
+                        var year3 = detailList[2].year
+
+                        $("#nm2").val(nm3);
+                        $("#score2").val(score3);
+                        $("#crtfnCmpnNm2").val(crtfnCmpnNm3);
+                        $("#cbsnSeq2").val(cbsnSeq3);
+                    }
+                }
+            }
 
             $("#ctgryCdSelect").val(ctgryCd).prop("selected", true);
             if (ctgryCd == "COMPANY01001") {
@@ -155,7 +164,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $('input[name=slsPmt]').val(cmpnSlsPmt);
             $('input[name=cmpnSlsYear]').val(cmpnSlsYear);
             $('input[name=mpleCnt]').val(cmpnMpleCnt);
-            $('input[name=cmpnTelNo]').val(cmpnTelNo);
+            console.log(cmpnTelNo);
+            var afCmpnTelNo = cmpnTelNo.replace('-', '');
+            console.log(afCmpnTelNo);
+            $('input[name=telNo]').val(afCmpnTelNo);
 
             $('input[name=cmpnNfrmlNm]').val(cmpnNfrmlNm);
             $('input[name=cmpnCd]').val(cmpnCd);
