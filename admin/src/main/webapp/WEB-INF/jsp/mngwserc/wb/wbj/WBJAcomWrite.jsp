@@ -139,6 +139,7 @@
                                     </c:if>
                                 </c:forEach>
                             </select>
+                            <input type="hidden" id="befeCtgryCd" class="notRequired" value="${rtnInfo.ctgryCd}"/>
                         </div>
                     </div>
 

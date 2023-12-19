@@ -155,6 +155,25 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 event : {
                     change : function() {
                         fieldShowFn($(this).val());
+
+                        var ctgryCd = $(this).val();
+
+                        if(ctgryCd == 'COMPANY01001'){
+                            $(".companyCate1").css("display", "block");
+                            $(".SQ").val("");
+                            $(".companyCate2").css("display", "none");
+                        }else if(ctgryCd == 'COMPANY01002'){
+                            $(".companyCate1").css("display", "none");
+                            $(".starType").val("");
+                            $(".companyCate2").css("display", "block");
+                        }else{
+                            alert("부품사 구분은 1차,2차만 등록가능합니다.");
+                            if($("#befeCtgryCd").val() == ""){
+                                $(this).val($("#befeCtgryCd").val());
+                            }else{
+                                $(this).val($("#befeCtgryCd").val()).trigger("change");
+                            }
+                        }
                     }
                 }
             },

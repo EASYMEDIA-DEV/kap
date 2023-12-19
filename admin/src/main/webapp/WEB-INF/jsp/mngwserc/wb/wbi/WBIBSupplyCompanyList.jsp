@@ -109,8 +109,6 @@
                         <th class="text-center">이메일</th>
                         <th class="text-center">관리자등록일</th>
                         <th class="text-center">사용자수정일</th>
-                        <th class="text-center">최초 등록자<br>(아이디)</th>
-                        <th class="text-center">최초 등록일시</th>
                         <th class="text-center">최종 수정자<br>(아이디)</th>
                         <th class="text-center">최종 수정일시</th>
                     </tr>

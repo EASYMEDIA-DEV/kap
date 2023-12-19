@@ -189,8 +189,6 @@
 								<th class="text-center">핸드폰번호</th>
 								<th class="text-center">1차결과</th>
 								<th class="text-center">최종결과</th>
-								<th class="text-center">최초 등록자(아이디)</th>
-								<th class="text-center">최초 등록일시</th>
 								<th class="text-center">최종 수정자(아이디)</th>
 								<th class="text-center">최종 수정일시</th>
 							</tr>
