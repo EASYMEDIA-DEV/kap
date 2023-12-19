@@ -385,16 +385,13 @@ public class COStringUtil {
      */
     public static String getUrlFolder(String str){
         String rtn = "";
-
         String[] arrFolder = str.split("/");
-        for (String val : arrFolder)
-        {
-            if (!"".equals(val) && val.indexOf(".do") == -1)
-            {
-                rtn = rtn  + "/" + val;
+        if(arrFolder.length > 1) {
+            for (int q = 1; q < (arrFolder.length - 1); q++) {
+                rtn = rtn + "/" + arrFolder[q];
             }
         }
-        rtn = rtn  + "/";
+        rtn = rtn + "/";
         return rtn;
     }
 }
