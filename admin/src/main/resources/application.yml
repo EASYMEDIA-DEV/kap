@@ -26,6 +26,17 @@ spring:
     resources:
       add-mappings: true
 
+
+api :
+  gpc:
+    end-point: https://127.0.0.1:9012
+    key: A5Z0A4B9B5T4
+    secret: bc125IJyf96M1LTCsEq6a8PntjFn8Dpc
+  kap:
+    end-point: https://127.0.0.1:9012
+    key: N5Z0A4B9A5T4
+    secret: hV127IJyf96M1LTAsEq6a8PntjFK9DpC
+
 ---
 #spring :
 #  mail:
@@ -103,3 +114,16 @@ nice :
   product-id : 2101764012
   url : https://svc.niceapi.co.kr:22001
   enc-product-id : 2101979031
+
+api:
+  gpc:
+    end-point: http://192.168.0.13
+    key: N5Z0A4B9B5T4
+    secret: hV127IJyf96M1LTCsEq6a8PntjFK9DpC
+  kap:
+    end-point: http://192.168.0.14
+    key: N5Z0A4B9A5T4
+    secret: hV127IJyf96M1LTAsEq6a8PntjFK9DpC
+
+
+

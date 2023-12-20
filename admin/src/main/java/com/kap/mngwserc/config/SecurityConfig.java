@@ -51,6 +51,7 @@ public class SecurityConfig  {
                         ,"/**/*list*"
                         ,"/**/*index*"
                         , "/**/*write*"
+                        , "/api/**"
                         ,"/mngwsercgateway/login"
                         , "/mngwserc/upload"
                         , "/mngwserc/dropzone/upload"
