@@ -1507,7 +1507,6 @@
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${not empty rtnDto}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
                             <button type="submit" class="btn btn-sm btn-success">수정</button>
                         </c:when>
                         <c:otherwise>
