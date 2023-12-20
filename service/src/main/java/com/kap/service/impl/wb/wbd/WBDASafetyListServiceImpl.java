@@ -85,20 +85,23 @@ public class WBDASafetyListServiceImpl implements WBDASafetyListService {
         String detailsKey = wBRoundMstDTO.getDetailsKey();
         int firstEpisdGiveSeqIdgen = 0;
 
-        wBDASafetyListMapper.deleteGiveList(wBRoundMstDTO);
+        if(wBRoundMstDTO.getGiveList().size() > 0){
+            wBDASafetyListMapper.deleteGiveList(wBRoundMstDTO);
 
-        for(int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++){
-            firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
+            for(int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++){
+                firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
 
-            WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getGiveList().get(i);
+                WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getGiveList().get(i);
 
-            wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
-            wBOrderMstDto.setDetailsKey(detailsKey);
+                wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
+                wBOrderMstDto.setDetailsKey(detailsKey);
 
-            wBDASafetyListMapper.updateGiveList(wBOrderMstDto);
+                wBDASafetyListMapper.updateGiveList(wBOrderMstDto);
+            }
+            respCnt = wBDASafetyListMapper.updateCarbon(wBRoundMstDTO);
+        }else{
+            respCnt = wBDASafetyListMapper.updateExpsYnCarbon(wBRoundMstDTO);
         }
-
-        respCnt = wBDASafetyListMapper.updateCarbon(wBRoundMstDTO);
 
         wBRoundMstDTO.setRespCnt(respCnt);
 

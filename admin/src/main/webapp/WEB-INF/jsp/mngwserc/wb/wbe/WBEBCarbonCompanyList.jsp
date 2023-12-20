@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/wb/wbd/WBDBSafetyListCtrl">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/wb/wbe/WBEBCarbonCompanyListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
         <form class="form-horizontal" name="frmSearch" method="post" action="">
             <!-- 현재 페이징 번호 -->

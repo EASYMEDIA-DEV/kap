@@ -23,6 +23,11 @@ public interface WBCASecurityListMapper {
     public int insertCarbon(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 
     /**
+     * 회차 중복 수정
+     */
+    public int updateExpsYnCarbon(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
      * 회차 수정
      */
     public int updateCarbon(WBRoundMstDTO wBRoundMstDTO) throws Exception;

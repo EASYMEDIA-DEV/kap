@@ -85,20 +85,23 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
         String detailsKey = wBRoundMstDTO.getDetailsKey();
         int firstEpisdGiveSeqIdgen = 0;
 
-        wBCASecurityListMapper.deleteGiveList(wBRoundMstDTO);
+        if(wBRoundMstDTO.getGiveList().size() > 0){
+            wBCASecurityListMapper.deleteGiveList(wBRoundMstDTO);
 
-        for(int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++){
-            firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
+            for(int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++){
+                firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
 
-            WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getGiveList().get(i);
+                WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getGiveList().get(i);
 
-            wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
-            wBOrderMstDto.setDetailsKey(detailsKey);
+                wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
+                wBOrderMstDto.setDetailsKey(detailsKey);
 
-            wBCASecurityListMapper.updateGiveList(wBOrderMstDto);
+                wBCASecurityListMapper.updateGiveList(wBOrderMstDto);
+            }
+            respCnt = wBCASecurityListMapper.updateCarbon(wBRoundMstDTO);
+        }else{
+            respCnt = wBCASecurityListMapper.updateExpsYnCarbon(wBRoundMstDTO);
         }
-
-        respCnt = wBCASecurityListMapper.updateCarbon(wBRoundMstDTO);
 
         wBRoundMstDTO.setRespCnt(respCnt);
 

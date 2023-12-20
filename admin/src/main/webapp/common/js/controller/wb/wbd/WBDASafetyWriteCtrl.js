@@ -221,38 +221,59 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
                         var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
+                        var expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
+                        var befeExpsYn = ctrl.obj.find("#befeExpsYn").val();
 
-                        var wbRoundMstDTO = {};
-                        wbRoundMstDTO.detailsKey = ctrl.obj.find("#detailsKey").val();
-                        wbRoundMstDTO.bsnCd = ctrl.obj.find("#bsnCd").val();
-                        wbRoundMstDTO.year = ctrl.obj.find("#year").val();
-                        wbRoundMstDTO.episd = ctrl.obj.find("#episd").val();
+                        cmmCtrl.frmAjax(function(respObj){
+                            if(respObj != undefined && respObj.respCnt > 0){
+                                if (expsYn == befeExpsYn) {
+                                    alert("신청정보가 존재하여 수정할 수 없습니다.");
+                                    return;
+                                }else{
+                                    var wbRoundMstDTO = {};
+                                    wbRoundMstDTO.detailsKey = ctrl.obj.find("#detailsKey").val();
+                                    wbRoundMstDTO.bsnCd = ctrl.obj.find("#bsnCd").val();
+                                    wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
+                                    wbRoundMstDTO.giveList = new Array();
 
-                        wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val();
-                        wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val();
+                                    cmmCtrl.jsonAjax(function(data){
+                                        alert(actionMsg);
+                                        location.href = "./list";
+                                    }, actionUrl, wbRoundMstDTO, "text")
+                                }
+                            }else{
+                                var wbRoundMstDTO = {};
+                                wbRoundMstDTO.detailsKey = ctrl.obj.find("#detailsKey").val();
+                                wbRoundMstDTO.bsnCd = ctrl.obj.find("#bsnCd").val();
+                                wbRoundMstDTO.year = ctrl.obj.find("#year").val();
+                                wbRoundMstDTO.episd = ctrl.obj.find("#episd").val();
 
-                        wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val();
-                        wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val();
+                                wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val();
+                                wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val();
 
-                        wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
+                                wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val();
+                                wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val();
 
-                        wbRoundMstDTO.giveList = new Array();
+                                wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
 
-                        $(".giveText").each(function(index, data){
-                            var wBOrderMstDto = {};
-                            wBOrderMstDto.strtDt = $("input[name=giveStrtDtList]").eq(index).val();
-                            wBOrderMstDto.endDt = $("input[name=giveEndDtList]").eq(index).val();
-                            wBOrderMstDto.giveOrd = $("input[name=giveOrd]").eq(index).val();
+                                wbRoundMstDTO.giveList = new Array();
 
-                            wbRoundMstDTO.giveList.push(wBOrderMstDto);
-                        })
+                                $(".giveText").each(function(index, data){
+                                    var wBOrderMstDto = {};
+                                    wBOrderMstDto.strtDt = $("input[name=giveStrtDtList]").eq(index).val();
+                                    wBOrderMstDto.endDt = $("input[name=giveEndDtList]").eq(index).val();
+                                    wBOrderMstDto.giveOrd = $("input[name=giveOrd]").eq(index).val();
+
+                                    wbRoundMstDTO.giveList.push(wBOrderMstDto);
+                                })
 
 
-                        cmmCtrl.jsonAjax(function(data){
-                            alert(actionMsg);
-                            location.href = "./list";
-                        }, actionUrl, wbRoundMstDTO, "text")
-
+                                cmmCtrl.jsonAjax(function(data){
+                                    alert(actionMsg);
+                                    location.href = "./list";
+                                }, actionUrl, wbRoundMstDTO, "text")
+                            }
+                        }, "./getAppctnCnt", $formObj, "POST", "json");
                     }
                 },
                 msg : {
