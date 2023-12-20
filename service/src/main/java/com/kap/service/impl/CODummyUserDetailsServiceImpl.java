@@ -1,5 +1,6 @@
 package com.kap.service.impl;
 
+import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COUserDetailsService;
 import org.springframework.web.context.request.RequestAttributes;
@@ -28,12 +29,12 @@ public class CODummyUserDetailsServiceImpl implements COUserDetailsService
 	{
 		COUserDetailsDTO cOLoginUserDTO = COUserDetailsDTO.builder().build();
 		cOLoginUserDTO.setSeq(1);
-		cOLoginUserDTO.setId("u5391392");
-		cOLoginUserDTO.setName("임서화");
+		cOLoginUserDTO.setId("hyumain1");
+		cOLoginUserDTO.setName("TBD");
 		cOLoginUserDTO.setAuthCd("99");
 		cOLoginUserDTO.setDeptNm("DEPT01");
 		cOLoginUserDTO.setDeptCd("DEV");
-		cOLoginUserDTO.setEmail("im_sh27@easymedia.net");
+		cOLoginUserDTO.setEmail("dev@easymedia.net");
 		cOLoginUserDTO.setLastLgnDtm("2023-11-16 00:00:00");
 		cOLoginUserDTO.setLoginIp("127.0.0.1");
 		cOLoginUserDTO.setConSessionId("11111");
