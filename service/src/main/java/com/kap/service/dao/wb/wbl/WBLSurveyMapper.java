@@ -1,7 +1,5 @@
 package com.kap.service.dao.wb.wbl;
 
-import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.wb.wbl.WBLEpisdMstDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
@@ -35,6 +33,8 @@ public interface WBLSurveyMapper {
      * 목록을 조회
      */
     public List<WBLSurveyMstSearchDTO> selectSurveyList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
+
+
     /**
      * 목록개수를 조회
      */
@@ -102,5 +102,22 @@ public interface WBLSurveyMapper {
      * 응답 초기화
      */
     public int updateSurveyRspn(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO);
+
+    /**
+     * 목록을 조회
+     */
+    public List<WBLSurveyMstSearchDTO> selectFrontSurveyList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
+
+    /**
+     * 설문 미참여
+     */
+    public int updateNoSurvey(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO);
+
+    /**
+     * 상생협력체감도 상세 조회
+     */
+    public WBLSurveyMstInsertDTO selectFrontSurveyDtl(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO);
+
+
 
 }
