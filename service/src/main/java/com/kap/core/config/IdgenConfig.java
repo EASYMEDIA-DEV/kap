@@ -293,6 +293,19 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** TREND 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl trendIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("TREND_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
     /** 이미지 업로드
      * @return
      */

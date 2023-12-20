@@ -352,6 +352,22 @@
         WHERE EPISD_SEQ = #{detailsKey}
     </update>
 
+    <!--
+		쿼리명 : WBDASafetyListMapper.updateExpsYnCarbon
+		설  명 : 중복 회차 수정
+		 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.12.20  김대성     최초 생성
+	-->
+    <update id="updateExpsYnCarbon" parameterType="wBRoundMstDTO">
+        UPDATE CX_EPISD_MST SET /* WBDASafetyListMapper.updateExpsYnCarbon  */
+                EXPS_YN = #{expsYn}
+                ,MOD_ID = #{modId}
+                ,MOD_IP = #{modIp}
+                ,MOD_DTM = NOW()
+        WHERE EPISD_SEQ = #{detailsKey}
+    </update>
+
 
     <!--
          쿼리명 : WBDASafetyListMapper.selectYearDtl
@@ -411,7 +427,7 @@
                     </foreach>
                 </when>
                 <otherwise>
-                    APPCTN_SEQ = #{detailsKey}
+                    EPISD_SEQ = #{detailsKey}
                 </otherwise>
             </choose>
         </where>

@@ -211,4 +211,9 @@ public interface COBUserMenuMapper {
 	 * 사용 url 수정
 	 */
 	public void updateMenuUseYn(COMenuDTO cOMenuDTO) throws Exception;
+	/**
+	 * 사용자 메뉴 목록을 가져온다.
+	 */
+	public List<COMenuDTO> getClientMenuList(COMenuDTO cOMenuDTO) throws Exception;
+
 }

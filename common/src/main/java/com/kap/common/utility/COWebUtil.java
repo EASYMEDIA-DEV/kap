@@ -1,5 +1,8 @@
 package com.kap.common.utility;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
 /**
@@ -153,5 +156,41 @@ public class COWebUtil {
 	public static String setFileHipen(String str)
 	{
 		return str.replaceAll("\\p{Space}", "-").replaceAll("\\*", "").replaceAll("%", "").replaceAll(";", "").replaceAll("\\+", "").replaceAll(",", "").replaceAll("\\*", "").replaceAll("|", "").replaceAll(";", "");
+	}
+
+	/**
+	 * 외부 I/F TOKEN 생성
+	 */
+
+	/**
+	 * header 정보 조회
+	 * @return 조회조건에 검색된 데이터
+	 */
+	public static String getIfToken(String apiKey, String secretKey, String timestamp) throws Exception
+	{
+		String signature = null;
+		try
+		{
+			String toBeHashed = apiKey + secretKey + timestamp;
+			MessageDigest md = MessageDigest.getInstance("SHA-512");
+			byte[] bytes = md.digest(toBeHashed.getBytes("UTF-8"));
+			StringBuilder sb = new StringBuilder();
+			for(int i=0; i< bytes.length ;i++)
+			{
+				sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+			}
+			signature = sb.toString();
+		}
+		catch (NoSuchAlgorithmException e)
+		{
+			//에러시 처리
+			throw e;
+		}
+		catch (UnsupportedEncodingException e)
+		{
+			//에러시 처리
+			throw e;
+		}
+		return signature;
 	}
 }

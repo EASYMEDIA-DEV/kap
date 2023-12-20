@@ -12,6 +12,8 @@ server:
     key-alias: bns-ssl
   tomcat:
     additional-tld-skip-patterns: "*.jar"
+    max-http-form-post-size: 104886080
+    max-swallow-size: 104886080
 ---
 spring.config.activate.on-profile: stg
 domain:

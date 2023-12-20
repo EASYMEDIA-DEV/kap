@@ -51,11 +51,11 @@
             <div class="clearfix">
                 <div class="pull-left">
                     <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
-                    <c:if test="${ not empty rtnDto }">
+                    <c:if test="${ rtnDto.prcsCd != '' and rtnDto.prcsCd != null }">
                         <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
                     </c:if>
                 </div>
-                <c:if test="${ rtnDto.prcsCd eq '30' }">
+                <c:if test="${ rtnDto.prcsCd eq '30' or rtnDto.prcsCd == '' or rtnDto.prcsCd == null }">
                     <div class="pull-right">
                         <button type="submit" class="btn btn-sm btn-success">저장</button>
                     </div>

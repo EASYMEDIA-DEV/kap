@@ -330,6 +330,11 @@
                     and ma.work_bsnm_no = #{workBsnmNo}
                 </if>
             </if>
+
+            <if test="srchDivide == 'Y'.toString() "> /* 회원검색시 1차 2차 필요 할때 */
+               and ma.ctgry_cd in ('COMPANY01001' , 'COMPANY01002')
+            </if>
+
             <if test="q != null and q != ''.toString() ">
                 <choose>
                     <when test="f == 1">

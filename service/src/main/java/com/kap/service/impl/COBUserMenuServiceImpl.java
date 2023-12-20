@@ -100,14 +100,15 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 		String userUrl = cOMenuDTO.getUserUrl();
 
 		if(userUrl != null && !userUrl.isEmpty()) {
-			int trgtLen = cOMenuDTO.getUserUrl().length() - 1;
+			/*int trgtLen = cOMenuDTO.getUserUrl().length() - 1;
 
 			if (userUrl.lastIndexOf("/") == trgtLen) {
 				userUrl = userUrl.substring(0, trgtLen);
-			}
+			}*/
 
 			if (menuType.equals("cms")) {
-				cOMenuDTO.setUserUrl(COStringUtil.nullConvert(userUrl + "/" + cOMenuDTO.getMenuSeq() + "/content"));
+//				cOMenuDTO.setUserUrl(COStringUtil.nullConvert(userUrl + "/" + cOMenuDTO.getMenuSeq() + "/content"));
+				cOMenuDTO.setUserUrl(COStringUtil.nullConvert(userUrl + "/content"));
 			} else {
 				cOMenuDTO.setUserUrl(COStringUtil.nullConvert(cOMenuDTO.getAdmUrl()).replace("/mngwserc", ""));
 			}
@@ -471,6 +472,13 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 		}
 
 		return tmpArray;
+	}
+
+	/**
+	 * 사용자 메뉴 목록을 가져온다.
+	 */
+	public List<COMenuDTO> getClientMenuList(COMenuDTO cOMenuDTO) throws Exception{
+		return cOBUserMenuMapper.getClientMenuList(cOMenuDTO);
 	}
 
 }

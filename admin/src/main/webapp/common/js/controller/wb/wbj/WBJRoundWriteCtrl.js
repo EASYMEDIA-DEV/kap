@@ -157,25 +157,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         var editorVal = jQuery(this).val().length;
 
-                        if (editorVal < 1)
-                        {
-                            editorChk = false;
-
-                            alert(msgCtrl.getMsg("fail.co.cog.cnts"));
-
-                            CKEDITOR.instances[jQuery(this).prop("id")].focus();
-
-                            // 에디터 최상단으로 스크롤 이동
-                            jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
-
-                            return false;
-                        }
                     });
-
-                    if (!editorChk)
-                    {
-                        isValid = false;
-                    }
 
                     return isValid;
                 },
@@ -213,18 +195,110 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                             wbRoundMstDTO.prizeList.push(wBOrderMstDto);
                         })
-                        var yearDtl = $("#yearDtl").val();
+                        var bfreYear = $("#bfreYear").val();
+                        var bfreExpsYn = $("#bfreExpsYn").val();
+                        var bfrePlaceSeq = $("#bfrePlaceSeq").val();
+                        var bfreAddNtfyCntn = $("#bfreAddNtfyCntn").val();
+                        var bfreBsnStrtDtm = $("#bfreBsnStrtDtm").val();
+                        var bfreBsnEndDtm = $("#bfreBsnEndDtm").val();
+                        var bfreAccsStrtDtm = $("#bfreAccsStrtDtm").val();
+                        var bfreAccsEndDtm = $("#bfreAccsEndDtm").val();
                         cmmCtrl.frmAjax(function(respObj) {
                             var episdCnt = respObj.optEpisdCnt[0];
-
                             if(actionUrl.indexOf('update') != -1 ){
-                                if(episdCnt >= 1 && yearDtl != wbRoundMstDTO.year){
+                                if(episdCnt >= 1 && bfreYear != wbRoundMstDTO.year){
                                     alert("이미 등록된 회차입니다.");
-                                }else{
-                                    cmmCtrl.jsonAjax(function(data){
-                                        alert(actionMsg);
-                                        location.href = "./list";
-                                    }, actionUrl, wbRoundMstDTO, "text")
+                                }else {
+                                    cmmCtrl.frmAjax(function(respObj) {
+                                        if(respObj.optEpisdCnt == '0')
+                                        {
+                                            cmmCtrl.jsonAjax(function (data) {
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }, actionUrl, wbRoundMstDTO, "text")
+                                        }
+                                        else if
+                                        (
+                                            bfreExpsYn != wbRoundMstDTO.expsYn && bfrePlaceSeq != wbRoundMstDTO.placeSeq && bfreAddNtfyCntn != wbRoundMstDTO.addNtfyCntn
+                                              && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm &&  bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
+                                              && bfreBsnStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBsnEndDtm == wbRoundMstDTO.accsEndDtm && bfreYear == wbRoundMstDTO.year
+                                        ){
+                                            cmmCtrl.jsonAjax(function (data) {
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }, actionUrl, wbRoundMstDTO, "text")
+                                        }
+                                        else if
+                                        (
+                                            bfreExpsYn == wbRoundMstDTO.expsYn && bfrePlaceSeq != wbRoundMstDTO.placeSeq && bfreAddNtfyCntn != wbRoundMstDTO.addNtfyCntn
+                                            && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm &&  bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
+                                            && bfreBsnStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBsnEndDtm == wbRoundMstDTO.accsEndDtm && bfreYear == wbRoundMstDTO.year
+                                        ) {
+                                            cmmCtrl.jsonAjax(function (data) {
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }, actionUrl, wbRoundMstDTO, "text")
+                                        }
+                                        else if
+                                        (
+                                            bfreExpsYn != wbRoundMstDTO.expsYn && bfrePlaceSeq == wbRoundMstDTO.placeSeq && bfreAddNtfyCntn != wbRoundMstDTO.addNtfyCntn
+                                            && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm &&  bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
+                                            && bfreBsnStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBsnEndDtm == wbRoundMstDTO.accsEndDtm && bfreYear == wbRoundMstDTO.year
+                                        ) {
+                                            cmmCtrl.jsonAjax(function (data) {
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }, actionUrl, wbRoundMstDTO, "text")
+                                        }
+                                        else if
+                                        (
+                                            bfreExpsYn != wbRoundMstDTO.expsYn && bfrePlaceSeq != wbRoundMstDTO.placeSeq && bfreAddNtfyCntn == wbRoundMstDTO.addNtfyCntn
+                                            && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm &&  bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
+                                            && bfreBsnStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBsnEndDtm == wbRoundMstDTO.accsEndDtm && bfreYear == wbRoundMstDTO.year
+                                        ) {
+                                            cmmCtrl.jsonAjax(function (data) {
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }, actionUrl, wbRoundMstDTO, "text")
+                                        }
+                                        else if
+                                        (
+                                            bfreExpsYn != wbRoundMstDTO.expsYn && bfrePlaceSeq == wbRoundMstDTO.placeSeq && bfreAddNtfyCntn == wbRoundMstDTO.addNtfyCntn
+                                            && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm &&  bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
+                                            && bfreBsnStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBsnEndDtm == wbRoundMstDTO.accsEndDtm && bfreYear == wbRoundMstDTO.year
+                                        ) {
+                                            cmmCtrl.jsonAjax(function (data) {
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }, actionUrl, wbRoundMstDTO, "text")
+                                        }
+                                        else if
+                                        (
+                                            bfreExpsYn == wbRoundMstDTO.expsYn && bfrePlaceSeq != wbRoundMstDTO.placeSeq && bfreAddNtfyCntn == wbRoundMstDTO.addNtfyCntn
+                                            && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm &&  bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
+                                            && bfreBsnStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBsnEndDtm == wbRoundMstDTO.accsEndDtm && bfreYear == wbRoundMstDTO.year
+                                        ) {
+                                            cmmCtrl.jsonAjax(function (data) {
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }, actionUrl, wbRoundMstDTO, "text")
+                                        }
+                                        else if
+                                        (
+                                            bfreExpsYn == wbRoundMstDTO.expsYn && bfrePlaceSeq == wbRoundMstDTO.placeSeq && bfreAddNtfyCntn != wbRoundMstDTO.addNtfyCntn
+                                            && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm &&  bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
+                                            && bfreBsnStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBsnEndDtm == wbRoundMstDTO.accsEndDtm && bfreYear == wbRoundMstDTO.year
+                                        ) {
+                                            cmmCtrl.jsonAjax(function (data) {
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }, actionUrl, wbRoundMstDTO, "text")
+                                        }
+                                        else
+                                        {
+                                            alert("신청정보가 존재하여 수정할 수 없습니다.");
+                                        }
+                                    }, "/mngwserc/wb/wbja/getRsumeCnt", $formObj, "post", "json")
                                 }
                             }else{
                                 if(episdCnt >= 1){

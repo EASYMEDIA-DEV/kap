@@ -85,20 +85,23 @@ public class WBEACarbonListServiceImpl implements WBEACarbonListService {
         String detailsKey = wBRoundMstDTO.getDetailsKey();
         int firstEpisdGiveSeqIdgen = 0;
 
-        wBEACarbonListMapper.deleteGiveList(wBRoundMstDTO);
+        if(wBRoundMstDTO.getGiveList().size() > 0){
+            wBEACarbonListMapper.deleteGiveList(wBRoundMstDTO);
 
-        for(int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++){
-            firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
+            for(int i = 0; i < wBRoundMstDTO.getGiveList().size(); i++){
+                firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
 
-            WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getGiveList().get(i);
+                WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getGiveList().get(i);
 
-            wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
-            wBOrderMstDto.setDetailsKey(detailsKey);
+                wBOrderMstDto.setGiveSeq(firstEpisdGiveSeqIdgen);
+                wBOrderMstDto.setDetailsKey(detailsKey);
 
-            wBEACarbonListMapper.updateGiveList(wBOrderMstDto);
+                wBEACarbonListMapper.updateGiveList(wBOrderMstDto);
+            }
+            respCnt = wBEACarbonListMapper.updateCarbon(wBRoundMstDTO);
+        }else{
+            respCnt = wBEACarbonListMapper.updateExpsYnCarbon(wBRoundMstDTO);
         }
-
-        respCnt = wBEACarbonListMapper.updateCarbon(wBRoundMstDTO);
 
         wBRoundMstDTO.setRespCnt(respCnt);
 

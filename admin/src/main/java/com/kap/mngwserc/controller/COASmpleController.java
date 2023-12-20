@@ -1,27 +1,29 @@
 package com.kap.mngwserc.controller;
 
+import com.kap.common.utility.RestTemplateUtil;
 import com.kap.core.annotation.MapData;
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COSmpleSrchDTO;
 import com.kap.core.dto.EmfMap;
 import com.kap.service.COAAdmService;
-import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mobile.device.Device;
 import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.List;
+import java.util.Map;
 
 /**
  * <pre> 
@@ -62,7 +64,6 @@ public class COASmpleController {
         cOAAdmService.selectAdmList(COAAdmDTO.builder().build());
         return "mngwserc/COAAdmList.admin";
     }
-
 
     /**
      * <pre>
