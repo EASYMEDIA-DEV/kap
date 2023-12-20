@@ -12,7 +12,7 @@
 <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 
 <div class="container-fluid">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/cb/cba/CBATechGuidanceWriteCtrl">
+    <div class="card-body" data-controller="controller/cb/cba/CBATechGuidanceWriteCtrl">
         <h6 class="mt0">신청부품사 등록</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />

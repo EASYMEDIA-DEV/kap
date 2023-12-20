@@ -65,7 +65,7 @@
 </head>
 <body>
 <div id="wrap" class="${ wrapClass }">
-	<header id="header" c>
+	<header id="header">
 		<!-- header - START -->
 		<h1><a class="logo" href="#"></a></h1>
 		<a href="javascript:" class="prev-btn icon-btn"></a>
