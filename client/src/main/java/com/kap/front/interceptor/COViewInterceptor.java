@@ -56,8 +56,10 @@ public class COViewInterceptor implements HandlerInterceptor{
         // 메뉴 목록
         List<COMenuDTO> menuList = null;
         int userMenuSeq = 612;
+
+
         //메뉴 목록을 조회한다.
-        if (RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION) != null)
+        /*if (RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION) != null)
         {
             menuList = (List<COMenuDTO>) RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION);
         }
@@ -68,7 +70,19 @@ public class COViewInterceptor implements HandlerInterceptor{
             cOMenuDTO.setIsMenu("Y");
             menuList = cOBUserMenuService.getMenuList(cOMenuDTO);
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
-        }
+        }*/
+
+        /*메뉴 구조 확립 되기전까진 호출할때마다 메뉴 생성하도록 변경... 이렇게 안하면 확인할때마다 세션 날려야됨*/
+        COMenuDTO cOMenuDTO = new COMenuDTO();
+        cOMenuDTO.setMenuSeq(userMenuSeq);
+        cOMenuDTO.setIsMenu("Y");
+        menuList = cOBUserMenuService.getMenuList(cOMenuDTO);
+        RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
+
+
+
+
+
         //menuLsit 계층으로 출력
         JSONArray gnbMenuList = cOBUserMenuService.getJsonData(menuList, 0, userMenuSeq);
         request.setAttribute("gnbMenuList", gnbMenuList);

@@ -71,7 +71,7 @@
 														<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
 															<ul class="three-pack">
 																<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
-																	<c:if test="${ menu2.attr.gnbYn eq 'Y'}">
+																	<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
 																		<li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
 																	</c:if>
 																</c:forEach>
