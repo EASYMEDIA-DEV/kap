@@ -76,4 +76,8 @@ public interface COBUserMenuService {
 	 */
 	public JSONArray getJsonData(List<COMenuDTO> jsonList, int startNum, int paramSeq) throws Exception;
 
+	/**
+	 * 사용자 메뉴 목록을 가져온다.
+	 */
+	public List<COMenuDTO> getClientMenuList(COMenuDTO cOMenuDTO) throws Exception;
 }

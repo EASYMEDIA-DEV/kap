@@ -110,7 +110,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
         int pageNo = -1, lftVal=0, rhtVal=0;
         String firstUrl = "", admUrl = "", pageTitle = "";
         //URL체크시 REST방식이라서 마지막 서브폴더는 잘라야 한다.
-
+        COMenuDTO pageMenuDto = null;
         for (int i = 0, size = menuList.size(); i < size; i++)
         {
             admUrl = "";
@@ -132,6 +132,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
             {
                 pageNo    = menuList.get(i).getMenuSeq();
                 pageTitle = menuList.get(i).getMenuNm();
+                pageMenuDto    = menuList.get(i);
                 break;
             }
         }
@@ -162,6 +163,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
 
         request.setAttribute("pageNo", pageNo);
         request.setAttribute("pageTitle", pageTitle);
+        request.setAttribute("pageMenuDto", pageMenuDto);
         // 페이지 인디케이트
         List<COMenuDTO> parntMenuList = new ArrayList<COMenuDTO>();
         List<COMenuDTO> lnbMenuList = new ArrayList<COMenuDTO>();

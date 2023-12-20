@@ -735,4 +735,36 @@
 		where
 			menu_seq = #{menuSeq}
 	</update>
+
+	<!--
+         쿼리명 : COBMenuMapper.getClientMenuList
+         설  명 : 사용자 메뉴 목록을 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2020.10.19   허진영       최초생성
+    -->
+	<select id="getClientMenuList" parameterType="COMenuDTO" resultType="COMenuDTO">
+		select /* COBMenuMapper.getClientMenuList */
+			   menu_seq
+			 , parnt_seq
+			 , pstn
+			 , lft_val
+			 , rht_val
+			 , dpth
+			 , menu_type
+			 , menu_nm
+			 , user_url
+			 , seo_kwrd
+			 , seo_cntn
+		     , gnb_yn
+			 , (select count(*) from co_menu_mst where parnt_seq = a.menu_seq) as childcnt
+		from
+			co_menu_mst a
+		where
+			a.use_yn = 'Y'
+		  and lft_val <![CDATA[>]]> (select lft_val from co_menu_mst where menu_seq = #{menuSeq})
+		  and rht_val <![CDATA[<]]> (select rht_val from co_menu_mst where menu_seq = #{menuSeq})
+		order by
+			lft_val
+	</select>
 </mapper>

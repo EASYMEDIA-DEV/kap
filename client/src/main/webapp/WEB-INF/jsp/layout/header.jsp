@@ -4,18 +4,34 @@
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>KAP</title>
+	<spring:eval var="siteName" expression="@environment.getProperty('app.site.name')" />
+	<c:set var="pageTitle" value="${siteName}"/>
+	<c:if test="${ not empty pageMenuDto }">
+		<c:set var="pageTitle" value="${pageMenuDto.menuNm} | ${siteName}"/>
+	</c:if>
+	<title>${ pageTitle }</title>
 	<link rel="shortcut icon" href="/common/images/favicon.ico" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-	<meta name="keywords" content="KAP"/>
-	<meta name="description" content="KAP"/>
+	<meta name="keywords" content="${ pageMenuDto.seoKwrd }"/>
+	<meta name="description" content="${ pageMenuDto.seoCntn }"/>
 	<meta name="X-CSRF-TOKEN" content="${_csrf.token}" />
-	<meta property="og:site_name" content="KAP" id="og-sitename-value"/>
+	<meta property="og:site_name" content="${siteName}" id="og-sitename-value"/>
 	<meta property="og:type" content="website" id="og-type-value"/>
-	<meta property="og:url" content="URL" id="og-url-value"/>
-	<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
-	<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
-	<meta property="og:image" content="img URL" id="og-image-value"/>
+	<c:set var="scheme" value="${pageContext.request.scheme}" scope="request"/>
+	<c:set var="serverName" value="${pageContext.request.serverName}" scope="request"/>
+	<c:set var="servletPath" value="${requestScope['javax.servlet.forward.servlet_path']}" scope="request"/>
+	<c:set var="requestUrlOrgn" value="${scheme}://${serverName}${serverPort}${servletPath}" scope="request" />
+	<c:set var="siteUrl">${requestUrlOrgn}<c:if test="${not empty strPam}">?${strPam}</c:if></c:set>
+	<meta property="og:url" content="${siteUrl}" id="og-url-value"/>
+	<meta property="og:title" content="${ pageTitle }" id="og-title-value"/>
+	<meta property="og:description" content="${ pageMenuDto.seoCntn }" id="og-description-value"/>
+	<c:set var="ogImage">
+		<c:choose>
+			<c:when test="${fn:contains(siteUrl,'/main')}">${scheme}://${serverName}${serverPort}/common/images/img-main-kv-01.jpg</c:when>
+			<c:otherwise>${scheme}://${serverName}${serverPort}/common/images/img-main-kv-03.jpg</c:otherwise>
+		</c:choose>
+	</c:set>
+	<meta property="og:image" content="${ogImage}" id="og-image-value"/>
 	<link rel="stylesheet" href="/common/css/swiper.css" />
 	<link rel="stylesheet" href="/common/css/fonts.css" />
 	<link rel="stylesheet" href="/common/css/common.css" />
