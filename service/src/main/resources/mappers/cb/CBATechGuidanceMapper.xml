@@ -388,75 +388,6 @@
     </update>
 
     <!--
-     쿼리명 : CBATechGuidanceMapper.updateTechMemberInfo
-     설  명 :  신청자 정보 업데이트
-      수정일     수정자       수정내용
-    ==========   ======    ==============
-    2023.11.20   임서화      최초 생성
-    -->
-    <update id="updateTechMemberInfo" parameterType="java.util.HashMap">
-        UPDATE /* CBATechGuidanceMapper.updateTechMemberInfo */ CO_MEM_MST
-        SET
-            DEPT_CD = #{deptCd}
-          , DEPT_DTL_NM = #{deptDtlNm}
-          , PSTN_CD = #{pstnCd}
-          , TEL_NO = #{memTelNo}
-          , MOD_ID = #{regId}
-          , MOD_IP = #{regIp}
-          , MOD_DTM = NOW()
-        WHERE 1=1
-          AND MEM_SEQ = #{memSeq}
-    </update>
-
-    <!--
-     쿼리명 : CBATechGuidanceMapper.updateTechCompanyInfo
-     설  명 :  신청 부품사 정보 업데이트
-      수정일     수정자       수정내용
-    ==========   ======    ==============
-    2023.11.20   임서화      최초 생성
-    -->
-    <update id="updateTechCompanyInfo" parameterType="java.util.HashMap">
-        UPDATE /* CBATechGuidanceMapper.updateTechCompanyInfo */ CP_CMPN_MST
-        SET
-            CTGRY_CD = #{ctgryCd}
-            , SIZE_CD = #{sizeCd}
-            , RPRSNT_NM = #{rprsntNm}
-            , STBSM_DT = #{stbsmDt}
-            , ZIPCODE = #{zipcode}
-            , BSC_ADDR = #{bscAddr}
-            , DTL_ADDR = #{dtlAddr}
-            , SLS_PMT = #{slsPmt}
-            , SLS_YEAR = #{slsYear}
-            , MPLE_CNT = #{mpleCnt}
-            , MJR_PRDCT_1 = #{mjrPrdct1}
-            , MJR_PRDCT_2 = #{mjrPrdct2}
-            , MJR_PRDCT_3 = #{mjrPrdct3}
-            <if test="ctgryCd == null and ctgryCd != ''.toString() ">
-                <choose>
-                    <when test="ctgryCd == 'COMPANY01001'">
-                        , QLTY_5_STAR_CD = #{qlty5StarCd}
-                        , QLTY_5_STAR_YEAR = #{qlty5StarYear}
-                        , PAY_5_STAR_CD = #{pay5StarCd}
-                        , PAY_5_STAR_YEAR = #{pay5StarYear}
-                        , TCHLG_5_STAR_CD = #{tchlg5StarCd}
-                        , TCHLG_5_STAR_YEAR = #{tchlg5StarYear}
-                    </when>
-                    <when test="ctgryCd == 'COMPANY01002'">
-                        , NM = #{nm}
-                        , SCORE = #{score}
-                        , YEAR = #{year}
-                        , CRTFN_CMPN_NM = #{crtfnCmpnNm}
-                    </when>
-                </choose>
-            </if>
-            , MOD_ID = #{regId}
-            , MOD_IP = #{regIp}
-            , MOD_DTM = NOW()
-        WHERE 1=1
-        AND BSNM_NO = #{bsnmNo}
-    </update>
-
-    <!--
      쿼리명 : CBATechGuidanceMapper.insertCnstgDlvryInfo
      설  명 :  고객사 비율 비율 등록
       수정일     수정자       수정내용
@@ -529,7 +460,7 @@
     <insert id="insertCnstgDpndnInfo" parameterType="java.util.HashMap">
         INSERT /* CBATechGuidanceMapper.insertCnstgDpndnInfo */ INTO CP_CNSTG_DPNDN_DTL
         (
-            CNSTG_SEQ
+        CNSTG_SEQ
         , DPNDN_SEQ
         , CMPN_NM
         , RATE
@@ -538,14 +469,14 @@
         , REG_DTM
         )
         VALUES(
-                  #{cnstgSeq}
-              , #{dpndnSeq}
-              , #{cmpnNm}
-              , #{dpndnRate}
-              , #{regId}
-              , #{regIp}
-              , now()
-              )
+          #{cnstgSeq}
+          , #{dpndnSeq}
+          , #{cmpnNm}
+          , #{dpndnRate}
+          , #{regId}
+          , #{regIp}
+          , now()
+        )
     </insert>
 
     <!--
@@ -558,19 +489,19 @@
     <insert id="insertCnstgAppctnType" parameterType="java.util.HashMap">
         INSERT /* CBATechGuidanceMapper.insertCnstgAppctnType */INTO CP_CNSTG_APPCTN_TYPE_DTL
         (
-            CNSTG_SEQ
+        CNSTG_SEQ
         , CD
         , REG_ID
         , REG_IP
         , REG_DTM
         )
         VALUES(
-                  #{cnstgSeq}
-              , #{appctnTypeCd}
-              , #{regId}
-              , #{regIp}
-              , now()
-              )
+          #{cnstgSeq}
+          , #{appctnTypeCd}
+          , #{regId}
+          , #{regIp}
+          , now()
+        )
     </insert>
 
     <!--
