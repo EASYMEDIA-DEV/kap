@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.sm.SMKTrendMapper">
+    <!--
+         쿼리명 : SMKTrendMapper.selectTrendList
+         설  명 : TREND 목록을 조회한다.
+       	  수정일	 수정자     수정내용
+        ==========   ======   =============
+        2023.12.20.14   구은희     최초생성
+    -->
+    <select id="selectTrendList" parameterType="SMKTrendDTO">
+        select /* SMKTrendMapper.selectTrendList */
+            trnd_seq
+            , type_cd
+            , (case when A.type_cd = 'TYPE01' then '교육사업'
+                    when A.type_cd = 'TYPE02' then '컨설팅사업'
+                    when A.type_cd = 'TYPE03' then '상생사업'
+               end)
+            AS type_cd_nm -- 카테고리명
+            , titl
+            , url_url
+            , exps_yn
+            , exps_ord
+            , thnl_file_seq
+            , reg_id
+            , (select name from co_adm_mst where id = A.reg_id) as reg_name
+            , reg_dtm
+            , mod_id
+            , (select name from co_adm_mst where id = A.mod_id) as mod_name
+            , mod_dtm
+        from sm_main_trend_mst A
+        <include refid="selectTrendListwhereSql" />
+        order by
+        exps_ord desc
+            limit #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : SMKTrendMapper.selectTrendDtl
+         설  명 : TREND 상세를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.20    구은희       최초생성
+    -->
+    <select id="selectTrendDtl" parameterType="SMKTrendDTO">
+        SELECT /* SMKTrendMapper.selectTrendDtl */
+            trnd_seq
+             , type_cd
+             , titl
+             , url_url
+             , exps_yn
+             , exps_ord
+             , thnl_file_seq
+             , reg_id
+             , (select name from co_adm_mst where id = A.reg_id) as reg_name
+             , reg_dtm
+             , mod_id
+             , (select name from co_adm_mst where id = A.mod_id) as mod_name
+             , mod_dtm
+        FROM
+            sm_main_trend_mst A
+        WHERE 1=1
+          AND trnd_seq = #{trndSeq}
+    </select>
+
+    <!--
+         쿼리명 : SMKTrendMapper.selectTrendNewRow
+         설  명 : TREND 정렬을 위한 row를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.20    구은희       최초생성
+    -->
+    <select id="selectTrendNewRow" parameterType="SMKTrendDTO">
+        SELECT /* SMKTrendMapper.selectTrendNewRow */
+            trnd_seq,
+            exps_ord
+        FROM
+            sm_main_trend_mst
+        WHERE
+            EXPS_ORD = (
+            SELECT
+            <if test='sortType == "UP"'>
+                MIN(EXPS_ORD)
+            </if>
+            <if test='sortType == "DOWN"'>
+                MAX(EXPS_ORD)
+            </if>
+               FROM sm_main_trend_mst
+                WHERE 1=1
+                <if test='sortType == "UP"'>
+                    AND EXPS_ORD <![CDATA[>]]> #{expsOrd}
+                </if>
+                <if test='sortType == "DOWN"'>
+                    AND EXPS_ORD <![CDATA[<]]> #{expsOrd}
+                </if>
+            )
+        LIMIT 1
+    </select>
+
+
+    <!--
+         쿼리명 : SMKTrendMapper.insertTrend
+         설  명 : TREND 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.20    구은희       최초생성
+    -->
+    <insert id="insertTrend" parameterType="SMKTrendDTO">
+        <selectKey keyProperty="expsOrd" resultType="java.lang.Integer" order="BEFORE">
+            SELECT IFNULL(MAX(EXPS_ORD), 0) + 1 FROM sm_main_trend_mst
+        </selectKey>
+        INSERT /* SMKTrendMapper.insertTrend */ INTO sm_main_trend_mst
+        (
+            trnd_seq
+            , type_cd
+            , titl
+            , url_url
+            , exps_yn
+            , exps_ord
+            , thnl_file_seq
+            , reg_id
+            , reg_ip
+            , reg_dtm
+        )
+        VALUES
+        (
+        #{trndSeq}
+        , #{typeCd}
+        , #{titl}
+        , #{urlUrl}
+        , #{expsYn}
+        , #{expsOrd}
+        , #{thnlFileSeq}
+        , #{regId}
+        , #{regIp}
+        , NOW()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : SMKTrendMapper.deleteTrend
+         설  명 : TREND 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.20    구은희       최초생성
+    -->
+    <delete id="deleteTrend" parameterType="SMKTrendDTO">
+        DELETE /* SMKTrendMapper.deleteTrend */
+        FROM
+        sm_main_trend_mst
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    trnd_seq IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    trnd_seq = #{trndSeq}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+         쿼리명 : SMKTrendMapper.updateTrend
+         설  명 : TREND 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.20    구은희       최초생성
+    -->
+    <update id="updateTrend" parameterType="SMKTrendDTO">
+        UPDATE /* SMKTrendMapper.updateTrend */ sm_main_trend_mst
+        SET
+        TITL = #{titl}
+        , TYPE_CD = #{typeCd}
+        , THNL_FILE_SEQ = #{thnlFileSeq}
+        , URL_URL = #{urlUrl}
+        , EXPS_YN = #{expsYn}
+        , EXPS_ORD = #{expsOrd}
+        , MOD_ID = #{modId}
+        , MOD_IP = #{modIp}
+        , MOD_DTM = NOW()
+          WHERE 1=1
+        AND TRND_SEQ = #{trndSeq}
+    </update>
+
+    <!--
+         쿼리명 : SMKTrendMapper.updateUseYn
+         설  명 : TREND 노출 여부를 수정한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.20    구은희       최초생성
+    -->
+    <update id="updateUseYn" parameterType="SMKTrendDTO">
+        UPDATE /* SMKTrendMapper.updateUseYn */ sm_main_trend_mst
+        SET
+        EXPS_YN = 'N'
+        , MOD_ID = #{modId}
+        , MOD_IP = #{modIp}
+        , MOD_DTM = NOW()
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    TRND_SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    TRND_SEQ = #{trndSeq}
+                </otherwise>
+            </choose>
+        </where>
+    </update>
+
+    <!--
+        쿼리명 : SMKTrendMapper.updateOrder
+        설  명 : TREND 정렬을 수정한다.
+         수정일      수정자       수정내용
+       ==========   ========   ==============
+       2023.12.20    구은희       최초생성
+   -->
+    <update id="updateOrder" parameterType="SMKTrendDTO">
+        UPDATE /* SMKTrendMapper.updateOrder */ sm_main_trend_mst
+        SET
+            EXPS_ORD = #{expsOrd}
+          , MOD_ID = #{modId}
+          , MOD_IP = #{modIp}
+          , MOD_DTM = NOW()
+        WHERE 1=1
+          AND TRND_SEQ = #{trndSeq}
+    </update>
+
+    <!--
+         쿼리명 : SMKTrendMapper.selectUseTrendCnt
+         설  명 : TREND 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.20    구은희       최초생성
+    -->
+    <select id="selectUseTrendCnt" parameterType="SMKTrendDTO" resultType="java.lang.Integer">
+        SELECT /* SMKTrendMapper.selectUseTrendCnt*/
+            COUNT(TRND_SEQ)
+        FROM
+            sm_main_trend_mst A
+            <include refid="selectTrendListwhereSql" />
+    </select>
+
+    <!--
+		쿼리명 : selectTrendListwhereSql
+		설  명 : TREND 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.12.20    구은희       최초생성
+    -->
+    <sql id="selectTrendListwhereSql">
+        <where>
+            <if test="srchDate != null and srchDate != ''.toString() ">
+                <choose>
+                    <when test="srchDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                            AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <when test="srchDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <otherwise>
+
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="expsYnList != null and expsYnList.size() > 0">
+                AND (
+                <foreach collection="expsYnList" item="expsYnList" index="index" open="" close="" separator=" or ">
+                    EXPS_YN = #{expsYnList}
+                </foreach>
+                )
+            </if>
+            <if test="typeCdList != null and typeCdList.size() > 0">
+                AND (
+                <foreach collection="typeCdList" item="typeCdList" index="index" open="" close="" separator=" or ">
+                    TYPE_CD = #{typeCdList}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 1">
+                        AND TITL LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        AND (
+                            INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <when test="f == 3">
+                        AND (
+                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </when>
+                    <otherwise>
+                        AND (
+                            INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                            INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                            INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
+                            EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+</mapper>

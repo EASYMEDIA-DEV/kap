@@ -62,8 +62,7 @@ public class SMCMnPopServiceImpl implements SMCMnPopService {
 
         smcMnPopDTO.setList( smcMnPopMapper.selectMnPopList(smcMnPopDTO) );
         smcMnPopDTO.setTotalCount( smcMnPopMapper.selectUseMnPopCnt(smcMnPopDTO) );
-        smcMnPopDTO.setList(smcMnPopMapper.selectMnPopList(smcMnPopDTO));
-        return smcMnPopDTO;
+         return smcMnPopDTO;
     }
 
     /**
