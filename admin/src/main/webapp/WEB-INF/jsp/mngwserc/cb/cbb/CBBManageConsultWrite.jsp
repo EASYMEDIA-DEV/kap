@@ -121,7 +121,7 @@
                     <div class="col-sm-4">
                         <select class="form-control input-sm ctgryCd" name="ctgryCd" id="ctgryCdSelect">
                             <c:forEach var="cpType" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                <c:if test="${fn:contains(cpType.cd,'COMPANY01') && fn:length(cpType.cd) eq 12}">
+                                <c:if test="${fn:contains(cpType.cd,'COMPANY01') && fn:length(cpType.cd) eq 12 && (cpType.cd ne 'COMPANY01003' && cpType.cd ne 'COMPANY01004')}">
                                     <option value="${cpType.cd}" <c:if test="${rtnDto.ctgryCd eq cpType.cd}">selected</c:if>>${cpType.cdNm}</option>
                                 </c:if>
                             </c:forEach>
@@ -143,8 +143,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">대표자명<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="hidden" class="notRequired" name="rprsntNm" id="rprsntNm" value="${rtnDto.rprsntNm}" title="대표자명"/>
-                        <p class="form-control-static" name="rprsntNm" id="rprsntNmTxt">${rtnDto.rprsntNm}</p>
+                        <input type="hidden" class="form-control input-sm" name="rprsntNm" id="rprsntNmTxt" value="${rtnDto.rprsntNm}" title="대표자명"/>
                     </div>
                     <label class="col-sm-1 control-label">설립일자<span class="star"> *</span></label>
                     <div class="input-group col-md-2" style="z-index:0;">
@@ -1590,7 +1589,6 @@
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${not empty rtnDto}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
                             <button type="submit" class="btn btn-sm btn-success">수정</button>
                         </c:when>
                         <c:otherwise>
