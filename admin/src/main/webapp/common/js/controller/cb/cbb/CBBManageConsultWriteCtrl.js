@@ -537,7 +537,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             btnPartUserModal: {
                 event: {
                     click: function () {
+                        $("#srchDivide").val("Y");
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
+
                             var cmpnMst = {};
                             cmpnMst.bsnmNo = data.bsnmNo.replaceAll("-", "");
                             cmmCtrl.jsonAjax(function (data) {
