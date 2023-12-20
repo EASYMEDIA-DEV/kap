@@ -66,11 +66,12 @@ public class COViewInterceptor implements HandlerInterceptor{
             COMenuDTO cOMenuDTO = new COMenuDTO();
             cOMenuDTO.setMenuSeq(userMenuSeq);
             cOMenuDTO.setIsMenu("Y");
-            menuList = cOBUserMenuService.getMenuList(cOMenuDTO);
+            menuList = cOBUserMenuService.getClientMenuList(cOMenuDTO);
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
         }
         //menuLsit 계층으로 출력
         JSONArray gnbMenuList = cOBUserMenuService.getJsonData(menuList, 0, userMenuSeq);
+        log.error("gnbMenuList : {}", gnbMenuList);
         request.setAttribute("gnbMenuList", gnbMenuList);
         COMenuDTO pageMenuDto = null;
         String requestURI = request.getRequestURI();
@@ -79,7 +80,7 @@ public class COViewInterceptor implements HandlerInterceptor{
         for (int i = 0, size = menuList.size(); i < size; i++)
         {
             userUrl = COStringUtil.nullConvert(menuList.get(i).getUserUrl());
-            if (userUrl != null && !"".equals(userUrl) )         //requestURI.indexOf(userUrl) > -1
+            if (userUrl != null && !"".equals(userUrl) && !"/".equals(folderUrl) )         //requestURI.indexOf(userUrl) > -1
             {
                 if(userUrl.startsWith(folderUrl)){
                     pageMenuDto    = menuList.get(i);

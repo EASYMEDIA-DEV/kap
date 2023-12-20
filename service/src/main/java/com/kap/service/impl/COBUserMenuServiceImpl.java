@@ -474,4 +474,11 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 		return tmpArray;
 	}
 
+	/**
+	 * 사용자 메뉴 목록을 가져온다.
+	 */
+	public List<COMenuDTO> getClientMenuList(COMenuDTO cOMenuDTO) throws Exception{
+		return cOBUserMenuMapper.getClientMenuList(cOMenuDTO);
+	}
+
 }
