@@ -240,7 +240,8 @@ define(["ezCtrl", "ezVald"], function (ezCtrl, ezVald) {
                                     jQuery("#userUrl").val(rtnData.userUrl.replace(replaceStr, ""));
                                     jQuery("#spanSuffix").text(replaceStr);*/
 
-                                    jQuery("#userUrl").val(userUrl.substring(0, userUrl.replace("/content", "").lastIndexOf("/")));
+                                    // jQuery("#userUrl").val(userUrl.substring(0, userUrl.replace("/content", "").lastIndexOf("/")));
+                                    jQuery("#userUrl").val(userUrl.substring(0, userUrl.replace("/content", "").length));
                                     jQuery("#spanSuffix").text("/content")
                                 }else {
                                     jQuery("#spanSuffix").text("");
