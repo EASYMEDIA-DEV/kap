@@ -13,6 +13,7 @@
 <c:set var="date" value="<%=new java.util.Date( )%>" />
 <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 
+
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/cb/cbb/CBBManageConsultWriteCtrl">
         <h6 class="mt0">신청부품사 등록</h6>
