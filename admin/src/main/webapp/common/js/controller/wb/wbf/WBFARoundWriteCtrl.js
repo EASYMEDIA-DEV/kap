@@ -13,6 +13,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // form Object
     var $formObj = jQuery("#frmData");
 
+    var bfreExpsYn;
+
     const structController = (function(){
         const options = {
             'business' : {
@@ -89,26 +91,29 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // set model
     ctrl.model = {
         id : {
-            /*btn_delete : {
+            btn_delete : {
                 event : {
                     click : function() {
-                        let delActCnt = $("input:checkbox[name='delValueList']:checked");
-                        if(delActCnt.length > 0){
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.del.target.board"));
-                                    $formObj.find("#btnSearch").click();
-                                }
-                                else{
-                                    alert(msgCtrl.getMsg("fail.act"));
-                                }
-                            }, "./delete", $formObj, "POST", "json");
-                        } else {
-                            alert(msgCtrl.getMsg("fail.del.target.board"));
-                        }
+                        cmmCtrl.frmAjax(function(respObj) {
+                            let nowEpsYn = $formObj.find('input[name=expsYn]:checked').val();
+
+                            if (respObj.respCnt > 0 && (bfreExpsYn == nowEpsYn)) {
+                                alert("신청정보가 존재하여 삭제할 수 없습니다.");
+                                return false;
+                            } else {
+                                cmmCtrl.frmAjax(function(respObj){
+                                    if(respObj != undefined && respObj.respCnt > 0){
+                                        alert(msgCtrl.getMsg("success.del.target.none"));
+                                        location.href = "./list";
+                                    } else {
+                                        alert(msgCtrl.getMsg("fail.act"));
+                                    }
+                                }, "./delete", $formObj, "POST", "json");
+                            }
+                        }, "./getRegisterChk", $formObj, "POST", "json");
                     }
                 }
-            },*/
+            },
         },
         classname : {
             insertLow : {
@@ -275,6 +280,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 });
             });
 
+            bfreExpsYn = $formObj.find('input[name=expsYn]:checked').val();
+
             jQuery(".CodeMirror").find("textarea").addClass("notRequired");
 
             /* File Dropzone Setting */
@@ -335,17 +342,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         wbRoundMstDTO.bsnCd = ctrl.obj.find("#bsnCd").val();
                         wbRoundMstDTO.year = ctrl.obj.find("#year").val();
                         wbRoundMstDTO.episd = ctrl.obj.find("#episd").val();
-
                         wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val();
                         wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val();
-
                         wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val();
                         wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val();
-
                         wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
 
                         wbRoundMstDTO.giveList = new Array();
-
                         $(".giveText").each(function(index, data){
                             var wBOrderMstDto = {};
                             wBOrderMstDto.strtDt = $("input[name=giveStrtDtList]").eq(index).val();
@@ -356,8 +359,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         });
 
                         wbRoundMstDTO.bsinList = [];
-
-                        $('.business-txt').each((idx, el)=>{
+                        $('.business-txt').each(function(idx, el) {
                             let point = $(el);
                             let WBRoundOptnMstDTO = {};
                             WBRoundOptnMstDTO.optnNm = point.val();
@@ -366,7 +368,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         });
 
                         wbRoundMstDTO.asigtList = [];
-                        $('.assignment-txt').each((idx, el)=>{
+                        $('.assignment-txt').each(function(idx, el) {
                             let point = $(el);
                             let WBRoundOptnMstDTO = {};
                             WBRoundOptnMstDTO.optnNm = point.val();
@@ -374,19 +376,56 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             wbRoundMstDTO.asigtList.push(WBRoundOptnMstDTO);
                         });
 
-                        cmmCtrl.jsonAjax(function(data){
-                            if(actionUrl == "./insert" && JSON.parse(data).respCnt == -1) {
-                                alert("이미 등록된 회차입니다.")
-                                return;
-                            } else if(actionUrl == "./update" && JSON.parse(data).respCnt == -1) {
-                                alert("신청정보가 존재하여 수정할 수 없습니다.")
-                                return;
-                            } else {
-                                alert(actionMsg);
-                                location.href = "./list";
-                            }
-                        }, actionUrl, wbRoundMstDTO, "text")
+                        if(actionUrl == "./insert") {
+                            cmmCtrl.frmAjax(function(respObj){
+                                if(respObj.respCnt > 0) {
+                                    alert("이미 등록된 회차입니다.");
+                                    return false;
+                                } else {
+                                    cmmCtrl.jsonAjax(function(respObj){
+                                        let response = JSON.parse(respObj);
+                                        if(response.respCnt > 0){
+                                            alert(actionMsg);
+                                            location.href = "./list";
+                                        } else {
+                                            alert(msgCtrl.getMsg("fail.act"));
+                                        }
+                                    }, actionUrl, wbRoundMstDTO, "text");
+                                }
+                            }, "./getRoundChk", $formObj, "POST", "json");
+                        } else if(actionUrl == "./update") {
+                            console.log($formObj.serializeArray());
+                            cmmCtrl.frmAjax(function(respObj) {
+                                let nowEpsYn = $formObj.find('input[name=expsYn]:checked').val();
 
+                                if (respObj.respCnt > 0 && (bfreExpsYn == nowEpsYn)) {
+                                    alert("신청정보가 존재하여 수정할 수 없습니다.");
+                                    return false;
+                                } else if (respObj.respCnt > 0 && (bfreExpsYn != nowEpsYn)) {
+                                    /*노출 여부 수정*/
+                                    cmmCtrl.jsonAjax(function(respObj){
+                                        let response = JSON.parse(respObj);
+                                        if(response.respCnt > 0){
+                                            alert(actionMsg);
+                                            location.href = "./list";
+                                        } else {
+                                            alert(msgCtrl.getMsg("fail.act"));
+                                        }
+                                    }, './updateExpsYn', wbRoundMstDTO, "text");
+                                }else {
+                                    /*전체 수정*/
+                                    cmmCtrl.jsonAjax(function(respObj){
+                                        let response = JSON.parse(respObj);
+                                        if(response.respCnt > 0){
+                                            alert(actionMsg);
+                                            location.href = "./list";
+                                        } else {
+                                            alert(msgCtrl.getMsg("fail.act"));
+                                        }
+                                    }, actionUrl, wbRoundMstDTO, "text");
+                                }
+                            }, "./getRegisterChk", $formObj, "POST", "json");
+                        }
                     }
                 },
                 msg : {

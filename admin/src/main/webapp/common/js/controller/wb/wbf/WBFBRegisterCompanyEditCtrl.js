@@ -28,6 +28,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     //modalForm
     var $modalFormObj = $modalObj.find("form").eq(0);
 
+    var ctgtyCdBfre = "";
+
     /* 팝업 옵션 */
     let optVal = {
         '1' : '아이디',
@@ -120,6 +122,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             }
         });
 
+        /* ctgry 이전 값 */
+        ctgtyCdBfre = rtnData['ctgryCd'];
         fieldShowFn(rtnData['ctgryCd']);
 
         /* SQ List */
@@ -238,11 +242,11 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         if(checkedVal === 'Y') {
             pmndvPmtViwe.css('display', 'block');
-            shadow.show($dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03001]`));
+            setDisable.show($dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03001]`));
         } else {
             pmndvPmtViwe.css('display', 'none');
-            shadow.hide($dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03001]`));
-            shadow.show($dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03002]`));
+            setDisable.hide($dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03001]`));
+            setDisable.show($dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03002]`));
         }
     }
 
@@ -271,7 +275,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     }
 
     /* 현재 단계가 아닐 경우 disable 처리 js */
-    let shadow = (function() {
+    let setDisable = (function() {
         let paint = function(panel) {
             $(panel).find('.panel-body')
                 .css('pointer-events', 'none')
@@ -323,90 +327,40 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     }
 
     /* 회차 검색 Ajax */
-    let getPageInfo = () => {
-        cmmCtrl.frmAjax(function(respObj) {
+    let initPageSet = () => {
 
-            let dataSpprt = respObj.rtnData.spprtDtlList;
-            let dataRsumeTask = respObj.rtnData.rsumeTaskDtlList;
+        setDisable.init();
 
-            /* 현재 진행 코드 Sett */
-            let nowSpprtCd = dataSpprt[(dataSpprt.length-1)]['giveType'];
-            $sendFormData.find('input[type=hidden][name=nowSpprtCd]').val(nowSpprtCd);
-            let nowRsumeTaskCd = dataRsumeTask[(dataRsumeTask.length-1)]['rsumeSttsCd']
-            $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val(nowRsumeTaskCd);
+        let nowSpprtCd = $sendFormData.find('input[type=hidden][name=nowSpprtCd]').val();
+        let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
 
-            shadow.init();
+        /*현재 진행상태 관리자상태 값 check*/
+        $dataSpprt.find(`.panel[data-sttsCd=${nowSpprtCd}]`).find('a[role="button"]').click();
+        $dataRsumeTask.find(`.panel[data-sttsCd=${nowRsumeTaskCd}]`).find('a[role="button"]').click();
+        /*현재 상태 panel show*/
+        setDisable.check($dataSpprt.find(`.panel[data-sttsCd=${nowSpprtCd}]`));
+        setDisable.check($dataRsumeTask.find(`.panel[data-sttsCd=${nowRsumeTaskCd}]`));
 
-            dataSpprt.forEach(function(el, idx) {
-                let panel = $dataSpprt.find(`.panel[data-sttsCd=${el['giveType']}]`);
-                setValue(panel, el);
-                /* 파일정보 */
-                let file = panel.find('.dropzone.attachFile');
-                if(file != undefined && file != null) {
-                    $(file).each(function(idx, ele) {
-                        let target = $(ele).find('input[type=hidden][data-hidden=fileInfo]');
-                        $(el).each(function(idx, elem) {
-                            if(elem[target.attr('data-name')] != undefined && elem[target.attr('data-name')] != null){
-                                target.val(elem[target.attr('data-name')]);
-                            }
-                        });
-                    });
-                }
-            });
-            /* 현재 진행상태 관리자상태 값 check */
-            shadow.check($dataSpprt.find(`.panel[data-sttsCd=${nowSpprtCd}]`));
-            /* 현재 상태 pabel show */
-            $dataSpprt.find(`.panel[data-sttsCd=${nowSpprtCd}]`).find('a[role="button"]').click();
-
-            dataRsumeTask.forEach(function(el, idx) {
-                let panel = $dataRsumeTask.find(`.panel[data-sttsCd=${el['rsumeSttsCd']}]`);
-                setValue(panel, el);
-
-                /* 파일정보 */
-                let file = panel.find('.dropzone.attachFile');
-                if(file != undefined && file != null) {
-                    $(file).each(function(idx, ele) {
-                        let target = $(ele).find('input[type=hidden][data-hidden=fileInfo]');
-                        $(el.appctnFileInfo).each(function(idx, elem) {
-                            if(elem['fileCd'] == target.attr('data-fileType')) {
-                                target.val(elem['fileSeq']);
-                            }
-                        });
-                    });
-                }
-            });
-
-            let lastRsumeTask = dataRsumeTask[dataRsumeTask.length-1];
-            let title = `${lastRsumeTask.rsumeSttsCdNm}(${lastRsumeTask.mngSttsCdNm})` || '';
-            $dataRsumeTask.find("#rsuemTitle").html(title);
-
-            /* 현재 진행상태 관리자상태 값 check */
-            shadow.check($dataRsumeTask.find(`.panel[data-sttsCd=${nowRsumeTaskCd}]`));
-            /* 현재 상태 panel show */
-            $dataRsumeTask.find(`.panel[data-sttsCd=${nowRsumeTaskCd}]`).find('a[role="button"]').click();
-
-            $formObj.find(".dropzone").each(function(){
-                var trgtObj = $(this);
-                cmmCtrl.setDropzone(trgtObj, {
-                    maxFileCnt  : trgtObj.data("maxFileCnt"),
-                    maxFileSize : trgtObj.data("maxFileSize"),
-                    fileExtn    : trgtObj.data("fileExtn"),
-                    fileFieldNm : trgtObj.data("fileFieldNm")
-                })
-            });
-
-            searchTrnsfList(1);
-
-            /* datetimepicker init */
-            let date = new Date();
-            let dateVal = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
-            $('input[class*=datetimepicker]').each(function(idx, el) {
-                if($(el).val() == '') {
-                    $(el).val(dateVal);
-                }
+        $formObj.find(".dropzone").each(function(){
+            var trgtObj = $(this);
+            cmmCtrl.setDropzone(trgtObj, {
+                maxFileCnt  : trgtObj.data("maxFileCnt"),
+                maxFileSize : trgtObj.data("maxFileSize"),
+                fileExtn    : trgtObj.data("fileExtn"),
+                fileFieldNm : trgtObj.data("fileFieldNm")
             })
+        });
 
-        }, "/mngwserc/wb/wbfb/getEditInfo", $formObj, "post", "json")
+        searchTrnsfList(1);
+
+        /* datetimepicker init */
+        let date = new Date();
+        let dateVal = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+        $('input[class*=datetimepicker]').each(function(idx, el) {
+            if($(el).val() == '') {
+                $(el).val(dateVal);
+            }
+        })
     }
 
 
@@ -456,6 +410,11 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             ctgryCd : {
                 event : {
                     change : function() {
+                        let selVal = $(this).val();
+                        if(selVal == 'COMPANY01003' || selVal == 'COMPANY01004') {
+                            alert('부품사 구분은 1차,2차만 등록가능합니다. ');
+                            $formObj.find('#ctgryCd').val(ctgtyCdBfre);
+                        }
                         fieldShowFn($(this).val());
                     }
                 }
@@ -654,13 +613,18 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         immediately : function() {
-
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
             cmmCtrl.setFormData($modalFormObj);
 
-            getPageInfo();
+            /* 페이지 기본 setting */
+            initPageSet();
+            /* 선급금 해당 여부 show/hide */
             pmndvPmtViewShowFn();
+
+            /* 구분 값 */
+            ctgtyCdBfre = $formObj.find('#ctgryCd').val();
+            /* 구분 값에 따른 show/hide */
             fieldShowFn($('#ctgryCd').val());
 
             $formObj.validation({
@@ -670,22 +634,23 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     let nowSpprtCd = $sendFormData.find('input[type=hidden][name=nowSpprtCd]').val();
                     let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
 
-                    if(nowSpprtCd != 'PRO_TYPE03003'
-                        && $dataSpprt.find('input[name=mngSttsCd]').val() != 'PRO_TYPE03003_02_006'){
-                        let dropzoneSpprt = $dataSpprt.find(`[data-sttsCd=${nowSpprtCd}]`).find(".dropzone");
+                    let dropzoneSpprt = $dataSpprt.find(`[data-sttsCd=${nowSpprtCd}]`).find(".dropzone");
+                    if(dropzoneSpprt.length > 0) {
                         dropzoneSpprt.each(function(idx, el) {
                             if($(el).find('.dz-preview').length < 1) {
                                 isValid = false;
                             }
-                        })
+                        });
                     }
 
                     let dropzoneTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`).find(".dropzone");
-                    dropzoneTask.each(function(idx, el) {
-                        if($(el).find('.dz-preview').length < 1) {
-                            isValid = false;
-                        }
-                    })
+                    if(dropzoneTask.length > 0) {
+                        dropzoneTask.each(function(idx, el) {
+                            if($(el).find('.dz-preview').length < 1) {
+                                isValid = false;
+                            }
+                        });
+                    }
 
                     if(!isValid) {
                         alert(msgCtrl.getMsg("fail.notFileRequired"));

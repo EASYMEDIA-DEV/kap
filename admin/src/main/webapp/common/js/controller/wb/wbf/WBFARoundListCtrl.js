@@ -58,19 +58,31 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
-            btnDelete : {
+            btn_delete : {
                 event : {
                     click : function() {
-                        cmmCtrl.frmAjax(function(respObj){
-                            if(respObj != undefined && respObj.respCnt < 0){
-                                alert(msgCtrl.getMsg("신청정보가 존재하여 삭제할 수 없습니다."));
-                            } else if(respObj != undefined && respObj.respCnt > 0){
-                                alert(msgCtrl.getMsg("success.del.target.board"));
-                                $formObj.find("#btnSearch").click();
-                            } else {
-                                alert(msgCtrl.getMsg("fail.act"));
-                            }
-                        }, "./delete", $formObj, "POST", "json");
+                        let delActCnt = $("input:checkbox[name='delValueList']:checked");
+                        if(delActCnt.length > 0){
+                            cmmCtrl.frmAjax(function(respObj){
+                                if(respObj != undefined && respObj.respCnt > 0){
+                                    alert("신청정보가 존재하여 수정할 수 없습니다.")
+                                    return false;
+                                } else {
+                                    cmmCtrl.frmAjax(function(respObj){
+                                        if(respObj != undefined && respObj.respCnt > 0){
+                                            alert(msgCtrl.getMsg("success.del.target.board"));
+                                            $formObj.find("#btnSearch").click();
+                                        } else {
+                                            alert(msgCtrl.getMsg("fail.act"));
+                                        }
+                                    }, "./delete", $formObj, "POST", "json");
+                                }
+                            }, "./getRegisterChk", $formObj, "POST", "json");
+
+                        } else {
+                            alert(msgCtrl.getMsg("fail.del.target.board"));
+                        }
+
                     }
                 }
             },

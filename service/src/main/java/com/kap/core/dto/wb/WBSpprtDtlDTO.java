@@ -109,9 +109,6 @@ public class WBSpprtDtlDTO extends BaseDTO {
     @Schema(title = "접수일자 날짜 포멧", example = "MM/dd")
     private String giveDtFmt;
 
-    /* 파일 저장시 사용 정보 */
-    List<WBRsumeFileDtlDTO> appctnFileInfo;
-
     /* List */
     List<WBSpprtDtlDTO> list;
 

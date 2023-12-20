@@ -16,8 +16,8 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
-            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07006" />
             <input type="hidden" class="notRequired" id="delValueList" name="delValueList" value="${rtnDto.episdSeq}" />
+            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07006" />
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -259,7 +259,20 @@
                 </c:choose>
             </fieldset>
 
+            <div class="clearfix " style="margin-bottom: 16px">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
+                    <c:if test="${ not empty rtnDto}">
+                        <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                    </c:if>
+                </div>
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-sm btn-success">저장</button>
+                </div>
+            </div>
+
             <c:if test="${not empty rtnDto.detailsKey}">
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                 <fieldset></fieldset>
                 <fieldset>
                     <div class="form-group text-sm">
@@ -308,28 +321,6 @@
                     </div>
                 </fieldset>
             </c:if>
-            <hr />
-
-
-
-
-
-            <div class="clearfix">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
-                </div>
-                <div class="pull-right">
-                    <c:choose>
-                        <c:when test="${ not empty rtnDto}">
-                            <button type="submit" class="btn btn-sm btn-success">저장</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button type="submit" class="btn btn-sm btn-success">저장</button>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
-
 
         </form>
     </div>

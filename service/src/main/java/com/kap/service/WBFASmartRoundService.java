@@ -51,7 +51,23 @@ public interface WBFASmartRoundService {
     public WBRoundMstDTO updateRound(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception;
 
     /**
+     * 회차 관리 노출 여부 수정
+     */
+    public int updateExpsYn(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception;
+
+    /**
      * 회차 관리 글 삭제
      */
     public int deleteRound(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 회차 관리 등록 - 등록된 회차 확인
+     */
+    public int getRoundChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+    * 회차 관리 수정 - 등록된 신청부품사
+    */
+    public int getRegisterChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
 }

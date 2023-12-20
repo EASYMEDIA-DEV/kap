@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -106,7 +107,6 @@ public class WBFASmartRoundController {
             // 코드 set
             cdDtlList.add("ROUND_CD");
             modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
-
             modelMap.addAttribute("rtnYear", wBFASmartRoundService.selectYearDtl(wBRoundMstSearchDTO));
 
             if(wBRoundMstSearchDTO.getDetailsKey() != null){
@@ -130,7 +130,7 @@ public class WBFASmartRoundController {
      */
     @PostMapping(value="/insert")
     @ResponseBody
-    public WBRoundMstDTO SmartRoundInsert(@Valid @RequestBody WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception
+    public WBRoundMstDTO smartRoundInsert(@Valid @RequestBody WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -156,13 +156,17 @@ public class WBFASmartRoundController {
      */
     @PostMapping(value="/update")
     @ResponseBody
-    public WBRoundMstDTO SmartRoundUpdate(@Valid @RequestBody WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception
+    public WBRoundMstDTO smartRoundUpdate(@Valid @RequestBody WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception
     {
         try
         {
             COUserDetailsDTO cOUserDetailsDTO= COUserDetailsHelperService.getAuthenticatedUser();
             wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
+
+            List<String> delValue = new ArrayList<>();
+            delValue.add(wBRoundMstDTO.getDetailsKey());
+            wBRoundMstDTO.setDelValueList(delValue);
 
             wBRoundMstDTO = wBFASmartRoundService.updateRound(wBRoundMstDTO, request);
         }
@@ -178,6 +182,28 @@ public class WBFASmartRoundController {
         return wBRoundMstDTO;
     }
 
+
+    /**
+     * 스마트공장구축 - 노출 여부 수정
+     */
+    @PostMapping(value="/updateExpsYn")
+    public String updateExpsYn(@Valid @RequestBody WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBFASmartRoundService.updateExpsYn(wBRoundMstDTO, request));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
     /**
      * 스마트공장구축 - 회차 삭제
      */
@@ -186,12 +212,55 @@ public class WBFASmartRoundController {
     {
         try
         {
-
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             modelMap.addAttribute("respCnt", wBFASmartRoundService.deleteRound(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 스마트공장구축 - 회차 수정 
+     * 등록 회차 확인
+     */
+    @PostMapping(value="/getRoundChk")
+    public String getRoundChk(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBFASmartRoundService.getRoundChk(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 스마트공장구축 - 회차 삭제 / 수정
+     * 등록된 부품사 확인
+     */
+    @PostMapping(value="/getRegisterChk")
+    public String getRegisterChk(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBFASmartRoundService.getRegisterChk(wBRoundMstDTO));
         }
         catch (Exception e)
         {
