@@ -127,7 +127,6 @@ var commonScript = (function(){
       }
       $(".accordion-st .acco-click-area").off().on("click", function(e){
         if($(e.target).parents(".form-checkbox").size() == 0){
-          //console.log("외부");
           $(this).parents(".list-item").siblings().removeClass("active").find(".acco-hide-area").stop(true, true).slideUp(300);
           if(!$(this).parents(".list-item").hasClass("active")){
             $(this).parents(".list-item").addClass("active").find(".acco-hide-area").stop(true, true).slideDown(300);
@@ -144,6 +143,7 @@ var commonScript = (function(){
       });
       $(".txt-tab-swiper.func-tab .txt-tab-btn").off().on("click", function(){
         $(this).addClass("active").siblings().removeClass("active");
+
         if($(this).parents(".pop-con-area").size() > 0) {
           $(this).parents(".pop-con-area").find(".con-area").scrollTop(0); // 탭 클릭시, 맨 상단 스크롤 이동
           $(this).parents(".pop-con-area").find(".tab-con").hide().eq($(this).index()).show();
@@ -151,7 +151,12 @@ var commonScript = (function(){
           $(this).parents(".tab-con-w").find(".tab-con").hide().eq($(this).index()).show();
           // 탭 클릭 시, 맨 처음 탭에 active 가도록 초기화
           if($(this).parents(".tab-con-w").find(".tab-con").eq($(this).index()).find(".txt-depth-tab-swiper").size() > 0 && !$(this).parents(".tab-con-w").find(".tab-con").eq($(this).index()).find(".txt-depth-tab-swiper .swiper-slide:first-child").hasClass("active")) {
-            $(this).parents(".tab-con-w").find(".tab-con").eq($(this).index()).find(".txt-depth-tab-swiper .swiper-slide:first-child").addClass("active").siblings().removeClass("active");;  
+            $(this).parents(".tab-con-w").find(".tab-con").eq($(this).index()).find(".txt-depth-tab-swiper .swiper-slide:first-child").addClass("active").siblings().removeClass("active");;
+
+            let depthTabSwiper = tabmenuSwipers[$(this).index()];
+            if (depthTabSwiper) {
+              depthTabSwiper.slideTo(0, 0);
+            }
           }
           
         }
@@ -289,7 +294,6 @@ var commonScript = (function(){
                   
                   if(!(yearValue === 'currentYear')) {
                     $(`.history-area .year-wrap .year-box .year-btn[data-year="${yearValue}"]`).removeClass("on");
-                    console.log("같다");
                   }
                 }
               }
@@ -379,13 +383,13 @@ var commonScript = (function(){
       const tooltipPosCalcu = function(tool) {
         $(tool).css("left", `50%`)
 
-        const cont = $(".cont-sec-w");
-        const contW = cont.outerWidth();
-        const toolW = tool.outerWidth();
-        const contL = cont.offset().left;
-        const toolL = tool.offset().left;
-        const contR = contL + contW;
-        const toolR = toolL + toolW;
+        let cont = $(".cont-sec-w");
+        let contW = cont.outerWidth();
+        let toolW = tool.outerWidth();
+        let contL = cont.offset().left;
+        let toolL = tool.offset().left;
+        let contR = contL + contW;
+        let toolR = toolL + toolW;
 
         if(contL > toolL) {
           $(tool).css("left", `calc(50% + ${contL - toolL}px)`)
@@ -396,10 +400,10 @@ var commonScript = (function(){
       const tooltipPosMobCalcu = function(tool) {
         $(tool).css("left", 0)
 
-        const cont = $(".cont-sec-w");
-        const contW = cont.outerWidth();
-        const contL = cont.offset().left;
-        const toolL = tool.offset().left;
+        let cont = $(".cont-sec-w");
+        let contW = cont.outerWidth();
+        let contL = cont.offset().left;
+        let toolL = tool.offset().left;
 
         $(tool).css({width: contW, left: `${contL - toolL}px`});
       }
@@ -412,10 +416,11 @@ var commonScript = (function(){
         
       }
 
+      let tool;
       $(".tooltip-wrap .tooltip-btn").off().on("click", function(){
         $(this).parents(".tooltip-wrap").addClass("open");
         $(this).parents(".tooltip-wrap").find(".tooltip-box").stop(true, true).fadeIn(200);
-        const tool = $($(this).parents(".tooltip-wrap").find(".tooltip-box"));
+        tool = $($(this).parents(".tooltip-wrap").find(".tooltip-box"));
         
         if (window.innerWidth >= 1024) {
           setTimeout(() => {
@@ -552,7 +557,6 @@ var commonScript = (function(){
       $("input[type='radio']").off().change(function(){
         if($(this).parents(".etc-option-w").size() > 0){
           if($(this).prop('checked') == true){
-            console.log("해당 클릭");
             $(this).parents(".etc-option-w").find("input[type='text']").removeAttr('disabled').focus();
           }
         }else{
@@ -935,7 +939,8 @@ var commonScript = (function(){
             gsap.to($(".lnb-area"), {
               scrollTrigger: {
                 trigger: $(".divide-con-area"),
-                start: "top 70%",
+                // start: "top 70%",
+                start: () => "top 85%",
                 endTrigger: $(".divide-con-area .right-con-area"),
                 end: () => "bottom-=100rem " + _lnbHeight,
                 onEnter: function(){
@@ -943,7 +948,7 @@ var commonScript = (function(){
                 },
                 invalidateOnRefresh: true,
                 scrub: true,
-                //markers:true,
+                // markers:true,
               },
             });
           },
@@ -974,7 +979,6 @@ var commonScript = (function(){
       // lnb 아코디언 클릭
       $(".lnb-area .btn-two-depth").on("click", function(){
         if(window.innerWidth > 1023){
-          console.log("here");
           if(!$(this).hasClass("single-menu")){
             if(!$(this).hasClass("active")){
               $(this).addClass("active");
@@ -1018,7 +1022,7 @@ var commonScript = (function(){
         if(_isScrollTop > _this_scroll) { // down
           if($(window).scrollTop() > 100 && !$("#header").hasClass("srch-open")){
             gsap.to(("#header"), 0.7, {top:"-100rem", ease: Power3.easeOut});
-            gsap.to((".anchor-btn-w"), 0.7, {top: 0, ease: Power3.easeOut});
+            $(".anchor-btn-w").size() && gsap.to((".anchor-btn-w"), 0.7, {top: 0, ease: Power3.easeOut});
             $(".quick-menu").addClass("scroll-down");
           }
 
@@ -1030,7 +1034,7 @@ var commonScript = (function(){
             $("#header").addClass("up-scroll");
             $("#header").removeClass("hide");
             gsap.to(("#header"), 1, {top: 0, ease: Power3.easeOut});
-            gsap.to((".anchor-btn-w"), 1, {top: $("header").height(), ease: Power3.easeOut});
+            $(".anchor-btn-w").size() && gsap.to((".anchor-btn-w"), 1, {top: $("header").height(), ease: Power3.easeOut});
           } else{
             if($("#wrap").hasClass("main")){
               $("#header").removeClass("up-scroll");
@@ -1247,7 +1251,9 @@ var commonScript = (function(){
       }
 
       // 라벨 형식 tab swiper
-      tabmenuSwiperCreate();
+      if($(".txt-depth-tab-swiper").size() > 0) {
+        tabmenuSwiperCreate();
+      }
       
       // [공통 - 교육/세미나] swiper
       trainingSwperInitFn();
@@ -1255,11 +1261,26 @@ var commonScript = (function(){
 
       // [교육사업 > 교육사업소개] swiper
       swiperInitFn();
+
+      // [퀵메뉴]
+      trendListSwiper = new Swiper(".trend-list-swiper.swiper-container", {
+        slidesPerView: 3,
+        loop: true,
+        spaceBetween: 40,
+        observer: true,
+        observeParents: true,
+        navigation: {
+          nextEl: ".trend-list-swiper .swiper-button-next",
+          prevEl: ".trend-list-swiper .swiper-button-prev",
+        },
+      });
     },
     resizeFn: function(){
       $(window).resize(function(){
         // 라벨 형식 tab swiper
-        tabmenuSwiperCreate();
+        if($(".txt-depth-tab-swiper").size() > 0) {
+          tabmenuSwiperCreate();
+        }
 
         // 퀵, top버튼 position 변경
         quickRePosition();
@@ -1323,25 +1344,43 @@ $(document).on("ready", function(){
 function scrollMotionTrigger(){
   if($(".scroll-motion").size() > 0){
     $(".scroll-motion:visible").each(function(q){
+      let currentEle = $(this);
       gsap.to($(this), {
+        onComplete: function () {
+          // [마이페이지 > 교육 사업 신청내역], progress
+          if($(currentEle).find(".progress-area").length > 0) {
+            let progressValue = $(currentEle).find(".progress-area").data("progress");
+            $(currentEle).find(".progress-area .progress .progress-bar").css("width", `${progressValue}%`);
+            progressCounterNum($(currentEle), progressValue);
+          }
+        },
         scrollTrigger: {
           trigger: $(this),
           start: () => "top 85%",
           end:"bottom top",
           toggleClass: {targets: $(".scroll-motion:visible").eq(q), className: "active"},
           once: true,
-          onEnter: () => {
-            // [마이페이지 > 교육 사업 신청내역], progress
-            if($(".progress").size() > 0) {
-              let progressValue = $(".progress .progress-bar").data("progress");
-              $(".scroll-motion.active .for-motion .progress-area .progress .progress-bar").css("width", progressValue);
-            }
-          },
-          //markers: true,
+          // markers: true,
         },
       });
     });
   }
+}
+
+function progressCounterNum(progressValue, numValue) {
+  $({countNum: 0}).animate(
+    {countNum: numValue}, {
+      deley: 800,
+      duration: 1000,
+      easing: "easeOutQuad",
+      step: function () {
+        $(progressValue).find(".progress-info .progress-num .num").text(Math.floor(this.countNum));
+      },
+      complete: function () {
+        $(preogressEle).find(".progress-info .progress-num .num").text(this.countNum);
+      }
+    }
+  );
 }
 
 function quickRePosition(){
@@ -1406,13 +1445,16 @@ function tabmenuSwiperCreate() {
           observer: true,
           observeParents: true,
         });
-
+        
         tabmenuSwipers[idx] = newSwiper;
+        newSwiper.slideTo($(item).find('.swiper-slide.active').index(), 0);
       }
     } else {
-      if (currentSwiper) {
-        currentSwiper.destroy();
-        tabmenuSwipers[idx] = undefined;
+      if(!(currentSwiper === undefined)) {
+        if (currentSwiper) {
+          currentSwiper.destroy();
+          tabmenuSwipers[idx] = undefined;
+        }
       }
     }
   });

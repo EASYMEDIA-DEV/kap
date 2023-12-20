@@ -1,6 +1,7 @@
 package com.kap.core.dto.sm.smb;
 
 import com.kap.core.dto.BaseDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -94,6 +95,9 @@ public class SMBMainVslDTO extends BaseDTO {
     private String dStrDt;
     // 게시 종료 날짜 (검색)
     private String dEndDt;
+
+    @Schema(title = "웹 파일 경로")
+    private String webPath;
 
 
 }
