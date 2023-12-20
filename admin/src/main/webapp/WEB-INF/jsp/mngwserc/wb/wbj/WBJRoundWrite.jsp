@@ -19,7 +19,14 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.episdSeq}" />
             <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07010" />
             <input type="hidden" class="notRequired" id="episd" name="episd" value="1" />
-            <input type="hidden" class="notRequired" id="yearDtl" name="yearDtl" value="${rtnInfo.year}" />
+            <input type="hidden" class="notRequired" id="bfreYear" value="${rtnInfo.year}" />
+            <input type="hidden" class="notRequired" id="bfrePlaceSeq" value="${rtnInfo.placeSeq}"/>
+            <input type="hidden" class="notRequired" id="bfreExpsYn" value="${rtnInfo.expsYn}"/>
+            <input type="hidden" class="notRequired" id="bfreAddNtfyCntn" value="${rtnDto.addNtfyCntn}"/>
+            <input type="hidden" class="notRequired" id="bfreBsnStrtDtm" value="${kl:convertDate(rtnInfo.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"/>
+            <input type="hidden" class="notRequired" id="bfreBsnEndDtm" value="${kl:convertDate(rtnInfo.bsnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"/>
+            <input type="hidden" class="notRequired" id="bfreAccsStrtDtm" value="${kl:convertDate(rtnInfo.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"/>
+            <input type="hidden" class="notRequired" id="bfreAccsEndDtm" value="${kl:convertDate(rtnInfo.accsEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"/>
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -96,7 +103,7 @@
                         <c:forEach var="prizeList" items="${rtnInfo.prizeList}" varStatus="qstnStatus">
                             <div class="col-sm-12 examList mt-sm pl0 pr0">
                                 <label class="col-sm-1 control-label examQstnNm"> ${qstnStatus.index > 0 ? '' : '포상종류/포상금 <span class="star"> *</span>'} </label>
-                                <input type="hidden" name="prizeSeq" title="포상순번" value="${prizeList.prizeSeq}" />
+                                <input type="hidden" class="notRequired" name="prizeSeq" title="포상순번" value="${prizeList.prizeSeq}" />
                                 <div class="col-sm-11 pl0 pr0 prizeText">
                                     <div class="col-sm-12">
                                         <div>

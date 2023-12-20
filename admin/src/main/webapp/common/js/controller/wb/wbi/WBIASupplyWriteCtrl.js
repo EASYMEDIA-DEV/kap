@@ -91,18 +91,30 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         wbRoundMstDTO.giveList = new Array();
 
-                        var yearDtl = $("#yearDtl").val();
+                        var bfreYear = $("#bfreYear").val();
+                        var bfreExpsYn = $("#bfreExpsYn").val();
+                        var bfreAccsStrtDtm = $("#bfreAccsStrtDtm").val();
+                        var bfreAccsEndDtm = $("#bfreAccsEndDtm").val();
+                        var bfreEpisd = $("#bfreEpisd").val();
                         cmmCtrl.frmAjax(function(respObj) {
                             var episdCnt = respObj.optEpisdCnt[0];
 
                             if(actionUrl.indexOf('update') != -1 ){
-                                if(episdCnt >= 1 && yearDtl != wbRoundMstDTO.year){
+                                if(episdCnt >= 1 && bfreYear != wbRoundMstDTO.year){
                                     alert("이미 등록된 회차입니다.");
                                 }else{
-                                    cmmCtrl.jsonAjax(function(data){
-                                        alert(actionMsg);
-                                        location.href = "./list";
-                                    }, actionUrl, wbRoundMstDTO, "text")
+                                    cmmCtrl.frmAjax(function(respObj) {
+                                        if(respObj.optEpisdCnt == '0' ||
+                                            (wbRoundMstDTO.expsYn != bfreExpsYn && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm && bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
+                                                && bfreYear == wbRoundMstDTO.year && bfreEpisd == wbRoundMstDTO.episd) ){
+                                            cmmCtrl.jsonAjax(function(data){
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }, actionUrl, wbRoundMstDTO, "text")
+                                        }else{
+                                            alert("신청정보가 존재하여 수정할 수 없습니다.");
+                                        }
+                                    }, "/mngwserc/wb/wbia/getRsumeCnt", $formObj, "post", "json")
                                 }
                             }else{
                                 if(episdCnt >= 1){

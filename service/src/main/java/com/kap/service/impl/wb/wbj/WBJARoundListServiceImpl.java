@@ -104,17 +104,20 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
         String detailsKey = wBRoundMstDTO.getDetailsKey();
         int firstEpisdGiveSeqIdgen = 0;
 
-        wBJARoundListMapper.deletePrizeList(wBRoundMstDTO);
+        List<String> episdCnt =  wBJARoundListMapper.episdCnt(wBRoundMstDTO);
+        if(episdCnt.contains("0")){
+            wBJARoundListMapper.deletePrizeList(wBRoundMstDTO);
 
-        for(int i = 0; i < wBRoundMstDTO.getPrizeList().size(); i++){
-            firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
+            for(int i = 0; i < wBRoundMstDTO.getPrizeList().size(); i++){
+                firstEpisdGiveSeqIdgen = cxEpisdGiveSeqIdgen.getNextIntegerId();
 
-            WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getPrizeList().get(i);
+                WBOrderMstDto wBOrderMstDto= wBRoundMstDTO.getPrizeList().get(i);
 
-            wBOrderMstDto.setPrizeSeq(firstEpisdGiveSeqIdgen);
-            wBOrderMstDto.setDetailsKey(detailsKey);
+                wBOrderMstDto.setPrizeSeq(firstEpisdGiveSeqIdgen);
+                wBOrderMstDto.setDetailsKey(detailsKey);
 
-            wBJARoundListMapper.updatePrizeList(wBOrderMstDto);
+                wBJARoundListMapper.updatePrizeList(wBOrderMstDto);
+            }
         }
 
         respCnt = wBJARoundListMapper.updateRound(wBRoundMstDTO);

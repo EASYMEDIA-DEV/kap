@@ -17,7 +17,11 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
             <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07009" />
-            <input type="hidden" class="notRequired" id="yearDtl" name="yearDtl" value="${rtnInfo.year}" />
+            <input type="hidden" class="notRequired" id="bfreYear" value="${rtnInfo.year}" />
+            <input type="hidden" class="notRequired" id="bfreEpisd" value="${rtnDto.episd}" />
+            <input type="hidden" class="notRequired" id="bfreAccsStrtDtm" value="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"/>
+            <input type="hidden" class="notRequired" id="bfreAccsEndDtm" value="${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"/>
+            <input type="hidden" class="notRequired" id="bfreExpsYn" value="${rtnDto.expsYn}"/>
 
             <fieldset>
                 <div class="form-group text-sm">
