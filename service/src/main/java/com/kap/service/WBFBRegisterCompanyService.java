@@ -67,7 +67,7 @@ public interface WBFBRegisterCompanyService {
     /**
      *  사업자등록번호 Check
      */
-    public WBFBRegisterSearchDTO getBsnmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception;
+    public WBFBRegisterSearchDTO getBsnmNoCheck(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
 
     /**
      *   신청 부품사 연관 RsumDtl 테이블 Get Detail

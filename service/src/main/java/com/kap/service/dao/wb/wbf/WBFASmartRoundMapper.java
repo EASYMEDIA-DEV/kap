@@ -58,11 +58,6 @@ public interface WBFASmartRoundMapper {
     public List<WBRoundOptnMstDTO> selectBusinessList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 
     /**
-     * 등록된 회차 확인
-     */
-    public int selectRoundCheck(WBRoundMstDTO wBRoundMstDTO) throws Exception;
-
-    /**
      * 회차 등록 insert
      */
     public int insertRound(WBRoundMstDTO wBRoundMstDTO) throws Exception;
@@ -78,19 +73,19 @@ public interface WBFASmartRoundMapper {
     public int insertBsnOptnList(WBRoundOptnMstDTO wBRoundOptnMstDTO) throws Exception;
 
     /**
-     * 회사 수정 전 확인
-     */
-    public int updateRoundChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
-
-    /**
      * 회사 수정
      */
     public int updateRound(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 
     /**
-     * 회사 수정
+     * 회차 지급 수정
      */
     public int updateGiveList(WBOrderMstDto wBOrderMstDto) throws Exception;
+
+    /**
+     * 노출여부 수정
+     */
+    public int updateExpsYn(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 
     /**
      * 회차 삭제
@@ -103,17 +98,22 @@ public interface WBFASmartRoundMapper {
     public int deleteGiveList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 
     /**
-     * 회차 별 사업유형 삭제
+     * 회차 별 사업유형 / 과제명 삭제
      */
-    public int deleteBsinList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
-
-    /**
-     *  회차 별 과제명 삭제
-     */
-    public int deleteAsigtList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+    public int deleteBsnOptnList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 
     /**
      * 회차 등록 페이지 Year 옵션
      * */
     public WBRoundMstDTO selectYearDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 회차 관리 수정 / 삭제 - 등록된 신청부품사 확인
+     */
+    public int getRegisterChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 등록된 회차 확인
+     */
+    public int getRoundChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 }

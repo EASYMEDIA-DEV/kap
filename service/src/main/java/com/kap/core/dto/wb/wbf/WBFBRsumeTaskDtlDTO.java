@@ -61,7 +61,7 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     @Schema(title = "출연회사코드", example = "")
     private String aprncCmpnCd;
     @Schema(title = "공급업체명", example = "")
-    private String offerCmpnCdNm;
+    private String offerCmpnNm;
     @Schema(title = "공급업체 사업자등록번호", example = "")
     private String offerBsnmNo;
     @Schema(title = "공급담당자명", example = "")

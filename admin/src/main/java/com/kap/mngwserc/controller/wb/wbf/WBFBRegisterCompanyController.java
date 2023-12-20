@@ -251,6 +251,7 @@ public class WBFBRegisterCompanyController {
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             modelMap.addAttribute("optYearList", wBFBRegisterCompanyService.getOptYearList(wBFBRegisterSearchDTO));
             modelMap.addAttribute("rtnBasicData", wBFBRegisterCompanyService.getRegisterDtl(wBFBRegisterSearchDTO));
+            modelMap.addAttribute("rtnRegisterData", wBFBRegisterCompanyService.getEditInfo(wBFBRegisterSearchDTO));
 
         }
         catch (Exception e)
@@ -286,41 +287,15 @@ public class WBFBRegisterCompanyController {
     }
 
     /**
-     * Edit 페이지 등록 정보 Get Ajax
-     *
-     * @param wBFBRegisterSearchDTO - appctnSeq == detailKey
-     */
-    @PostMapping(value = "/getEditInfo")
-    public String getEditPageInfoAjax(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
-    {
-        try {
-
-            wBFBRegisterSearchDTO.setBsnCd("INQ07006"); /* 스마트 공장 */
-            modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getEditInfo(wBFBRegisterSearchDTO));
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-        return "jsonView";
-    }
-
-    /**
-     * Edit 페이지 등록 정보 Get Ajax
-     *
-     * @param wBFBRegisterSearchDTO - appctnSeq == detailKey
+     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
      */
     @PostMapping(value = "/getBsnmNoCheck")
-    public String getBsnmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
+    public String getBsnmNoCheck(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap) throws Exception
     {
         try {
 
-            wBFBRegisterSearchDTO.setBsnCd("INQ07006"); /* 스마트 공장 */
-            modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getBsnmNoCheck(wBFBRegisterSearchDTO));
+            wBFBRegisterDTO.setBsnCd("INQ07006"); /* 스마트 공장 */
+            modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getBsnmNoCheck(wBFBRegisterDTO));
         }
         catch (Exception e)
         {

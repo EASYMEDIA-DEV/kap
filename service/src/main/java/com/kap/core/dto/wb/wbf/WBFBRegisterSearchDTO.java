@@ -134,13 +134,10 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     List<String> episdList;
 
     /* 상생신청지원금 상세 DTO */
-    List<WBSpprtDtlDTO> spprtDtlList;
+    List<WBSpprtDtlDTO> spprtDtl;
 
     /* 스마트 공장 상세 DTO */
-    WBFBRsumeTaskDtlDTO rsumeTaskDtl;
-
-    /* 스마트 공장 상세 DTO */
-    List<WBFBRsumeTaskDtlDTO> rsumeTaskDtlList;
+    List<WBFBRsumeTaskDtlDTO> rsumeTaskDtl;
 
     @Schema(title = "SQ 리스트 - 회사업종상세 테이블")
     private List<WBCompanyDetailMstDTO> searchSqInfoList;

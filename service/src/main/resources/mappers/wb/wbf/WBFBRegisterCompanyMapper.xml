@@ -174,13 +174,9 @@
             ,DATE_FORMAT(INFO.give_dt, '%m/%d') AS give_dt_fmt
         FROM(
             SELECT /*WBFBRegisterCompanyMapper.getSpprtDtlList*/
-                appctn_spprt_seq, appctn_seq, give_type, accs_dt
-                ,gvmnt_spprt_pmt
-                ,mjcmn_aprnc_pmt
-                ,ttl_pmt
-                ,bank_nm, acnt_no, dpsit_nm, appctn_stts_cd
-                ,appctn_stts_chng_dtm, give_dt,give_seq
-                ,mng_stts_cd, mng_stts_chng_dtm, spprt_appctn_file_seq, acnt_file_seq, bnkbk_file_seq, tchlg_lse_file_seq, lse_pay_file_seq
+                appctn_spprt_seq,appctn_seq,give_type,accs_dt,gvmnt_spprt_pmt,mjcmn_aprnc_pmt,cmssn_pmt,ttl_pmt,bank_nm,acnt_no
+                 ,dpsit_nm, appctn_stts_cd,appctn_stts_chng_dtm,give_dt,give_seq,mng_stts_cd,mng_stts_chng_dtm,spprt_appctn_file_seq,acnt_file_seq,bnkbk_file_seq
+                 ,tchlg_lse_file_seq, lse_pay_file_seq
             FROM cx_appctn_spprt_dtl
             WHERE appctn_seq = #{appctnSeq}
         ) INFO
@@ -705,7 +701,7 @@
         UPDATE cx_appctn_rsume_task_dtl /*WBFBRegisterCompanyMapper.updRsumeTaskDtl*/
         SET
             aprnc_cmpn_cd = #{aprncCmpnCd}
-            ,offer_cmpn_nm = #{offerCmpnCdNm}
+            ,offer_cmpn_nm = #{offerCmpnNm}
             ,offer_bsnm_no = #{offerBsnmNo}
             ,offer_pic_nm = #{offerPicNm}
             ,offer_pic_hp_no = #{offerPicHpNo}
@@ -941,28 +937,6 @@
     </delete>
 
     <!--
-         쿼리명 : WBFBRegisterCompanyMapper.delAppctnMdst
-         설  명 : 상생신청마스터 Delete
-         수정일     수정자     수정내용
-        ==========  ======  ==============
-        2023.11.16  김동현     최초 생성
-    -->
-    <select id="getExcelSpprtDtl" parameterType="WBFBRegisterDTO">
-
-    </select>
-
-    <!--
-         쿼리명 : WBFBRegisterCompanyMapper.delAppctnMdst
-         설  명 : 상생신청마스터 Delete
-         수정일     수정자     수정내용
-        ==========  ======  ==============
-        2023.11.16  김동현     최초 생성
-    -->
-    <select id="getExcelRsumeTaskDtl" parameterType="WBFBRegisterDTO">
-
-    </select>
-
-    <!--
          쿼리명 : WBFASmartRoundMapper.selectListwhereSql
          설  명 : 게시판 리스트 검색 옵션
          수정일     수정자     수정내용
@@ -1008,31 +982,31 @@
             <if test="q != null and q != ''.toString() ">
                 <choose>
                     <when test="f == 1">
-                        AND EXISTS INFO.cmpn_nm LIKE CONCAT('%', #{q}, '%')))
+                        AND INFO.cmpn_nm LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 2">
-                        AND EXISTS INFO.bsnm_no LIKE CONCAT('%', #{q}, '%')))
+                        AND INFO.bsnm_no LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 3">
-                        AND EXISTS INFO.name LIKE CONCAT('%', #{q}, '%')))
+                        AND INFO.name LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 4">
-                        AND EXISTS INFO.id LIKE CONCAT('%', #{q}, '%')))
+                        AND INFO.id LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 5">
-                        AND EXISTS INFO.hp_no LIKE CONCAT('%', #{q}, '%')))
+                        AND INFO.hp_no LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <otherwise>
                         AND (
-                            EXISTS INFO.cmpn_nm LIKE CONCAT('%', #{q}, '%')))
+                            INFO.cmpn_nm LIKE CONCAT('%', #{q}, '%')
                             OR
-                            EXISTS INFO.bsnm_no LIKE CONCAT('%', #{q}, '%')))
+                            INFO.bsnm_no LIKE CONCAT('%', #{q}, '%')
                             OR
-                            EXISTS INFO.name LIKE CONCAT('%', #{q}, '%')))
+                            INFO.name LIKE CONCAT('%', #{q}, '%')
                             OR
-                            EXISTS INFO.id LIKE CONCAT('%', #{q}, '%')))
+                            INFO.id LIKE CONCAT('%', #{q}, '%')
                             OR
-                            EXISTS INFO.hp_no LIKE CONCAT('%', #{q}, '%')))
+                            INFO.hp_no LIKE CONCAT('%', #{q}, '%')
                         )
                     </otherwise>
                 </choose>

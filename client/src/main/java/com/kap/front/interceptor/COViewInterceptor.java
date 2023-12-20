@@ -85,7 +85,6 @@ public class COViewInterceptor implements HandlerInterceptor{
 
         //menuLsit 계층으로 출력
         JSONArray gnbMenuList = cOBUserMenuService.getJsonData(menuList, 0, userMenuSeq);
-        log.error("gnbMenuList : {}", gnbMenuList);
         request.setAttribute("gnbMenuList", gnbMenuList);
         COMenuDTO pageMenuDto = null;
         String requestURI = request.getRequestURI();

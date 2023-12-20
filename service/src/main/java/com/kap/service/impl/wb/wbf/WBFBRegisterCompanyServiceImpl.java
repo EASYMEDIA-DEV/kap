@@ -271,7 +271,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
     public WBFBRegisterSearchDTO getEditInfo(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception {
 
         /* 선급금 관련 정보 - 지원금액상세 Table 조회 */
-        wBFBRegisterSearchDTO.setSpprtDtlList(wBFBRegisterCompanyMapper.getSpprtDtlList(wBFBRegisterSearchDTO));
+        wBFBRegisterSearchDTO.setSpprtDtl(wBFBRegisterCompanyMapper.getSpprtDtlList(wBFBRegisterSearchDTO));
 
         /* 부품사 관리 등록 정보 - 진행 상세 Table 조회 */
         List<WBFBRsumeTaskDtlDTO> rsumeTaskDtlList = wBFBRegisterCompanyMapper.getRsumeTaskDtlList(wBFBRegisterSearchDTO);
@@ -282,7 +282,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         rsumeTaskDtlList.set(0, rsumeTaskDTO);
 
         /* ReBuilding */
-        wBFBRegisterSearchDTO.setRsumeTaskDtlList(rsumeTaskDtlList);
+        wBFBRegisterSearchDTO.setRsumeTaskDtl(rsumeTaskDtlList);
 
         return wBFBRegisterSearchDTO;
     }
@@ -290,8 +290,8 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
     /**
      *  사업자등록번호 Check
      */
-    public WBFBRegisterSearchDTO getBsnmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception {
-        return wBFBRegisterCompanyMapper.getBsnmNoCheck(wBFBRegisterSearchDTO.getRsumeTaskDtl().getOfferBsnmNo());
+    public WBFBRegisterSearchDTO getBsnmNoCheck(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
+        return wBFBRegisterCompanyMapper.getBsnmNoCheck(wBFBRegisterDTO.getRsumeTaskDtl().getOfferBsnmNo());
     }
 
     /**
