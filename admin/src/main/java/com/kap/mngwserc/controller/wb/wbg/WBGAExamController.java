@@ -1,6 +1,7 @@
 package com.kap.mngwserc.controller.wb.wbg;
 
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbg.*;
 import com.kap.service.COCodeService;
 import com.kap.service.WBGAExamService;
@@ -271,4 +272,27 @@ public class WBGAExamController {
         }
         return "mngwserc/wb/wbb/WBBBCompanyTrnsfAjax";
     }
+
+    /**
+     * 신청 진행단계 확인
+     */
+    @PostMapping(value="/getRsumePbsnCnt")
+    public String getRsumePbsnCnt(WBGAExamSearchDTO wBGAExamSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBGAExamService.getRsumePbsnCnt(wBGAExamSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+
 }

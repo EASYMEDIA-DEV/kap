@@ -277,6 +277,27 @@ public class WBDBSafetyController {
         return "mngwserc/wb/wbd/WBDBSafetyTrnsfAjax";
     }
 
+    /**
+     * 신청 진행단계 확인
+     */
+    @PostMapping(value="/getRsumePbsnCnt")
+    public String getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBDBSafetyService.getRsumePbsnCnt(wBEBCarbonCompanySearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
 
     @GetMapping(value = "/excel-down")
     public void selectUserListExcel(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO ,HttpServletResponse response) throws Exception

@@ -2,6 +2,7 @@ package com.kap.service.dao.wb.wbg;
 
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbg.*;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -253,5 +254,10 @@ public interface WBGAExamMapper {
      * 참여이관로그 개수 조회
      */
     public int getTrnsfCount(WBBATransDTO wbbTransDTO) throws Exception;
+
+    /**
+     * 신청 진행단계 확인
+     */
+    public int getRsumePbsnCnt(WBGAExamSearchDTO wBGAExamSearchDTO) throws Exception;
 
 }
