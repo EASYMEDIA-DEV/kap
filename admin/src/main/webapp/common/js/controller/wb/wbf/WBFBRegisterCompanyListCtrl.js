@@ -47,11 +47,13 @@ define(["ezCtrl"], function(ezCtrl) {
                         if(delActCnt.length > 0){
                             if(confirm(msgCtrl.getMsg("confirm.del"))){
                                 cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
+                                    if(respObj.respCnt < 0){
+                                        alert("접수 이후의 신청 건은 삭제가 불가합니다.");
+                                        return;
+                                    } else if(respObj.respCnt > 0) {
                                         alert(msgCtrl.getMsg("success.del.target.board"));
                                         $formObj.find("#btnSearch").click();
-                                    }
-                                    else{
+                                    } else {
                                         alert(msgCtrl.getMsg("fail.act"));
                                     }
                                 }, "./delete", $formObj, "POST", "json");

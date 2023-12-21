@@ -202,15 +202,6 @@ public class WBFBRegisterCompanyController {
             wBFBRegisterDTO.setModIp( coaAdmDTO.getLoginIp() );
 
             wBFBRegisterDTO.setBsnCd("INQ07006"); /* 스마트 공장 */
-            /* 스마트 공장 구축 - 신청 코드 값*/
-            wBFBRegisterDTO.setRsumeSttsCd("PRO_TYPE02001");
-            /* 스마트 신청 신청자 최초 상태값 - 접수완료 */
-            wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02001_01_001");
-            /* 스마트 신청 관리자 최초 상태값 - 미확인 */
-            wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02001_02_001");
-            /* 신청진행상세 진행 정렬 초기 값 */
-            wBFBRegisterDTO.setRsumeOrd(1);
-
             modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.putRegisterCompany(wBFBRegisterDTO));
         }catch (Exception e)
         {
@@ -344,7 +335,7 @@ public class WBFBRegisterCompanyController {
      * 신청부품사 삭제
      */
     @PostMapping(value="/delete")
-    public String DeletedeleteRegisterCompany(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String deleteRegister(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -352,7 +343,29 @@ public class WBFBRegisterCompanyController {
             wBFBRegisterDTO.setModId(cOUserDetailsDTO.getId());
             wBFBRegisterDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
-            modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.deleteRegisterCompany(wBFBRegisterDTO));
+            modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.deleteRegister(wBFBRegisterDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 신청부품사 삭제 전 - 삭제 가능여부 확인
+     */
+    @PostMapping(value="/confDelete")
+    public String confDeleteRegister(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            wBFBRegisterDTO.setBsnCd("INQ07006");
+            modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.confDeleteRegister(wBFBRegisterDTO));
         }
         catch (Exception e)
         {

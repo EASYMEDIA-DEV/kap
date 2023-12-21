@@ -647,8 +647,9 @@
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">사용자 상태값</label>
+                                            <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="defaultSpprtDtl.appctnSttsCd" value="${apprtDtl[0].appctnSttsCd}">
                                                 <p class="form-control-static">${apprtDtl[0].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -862,8 +863,9 @@
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">사용자 상태값</label>
+                                            <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnSttsCd" value="${apprtDtl[1].appctnSttsCd}">
                                                 <p class="form-control-static">${apprtDtl[1].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -1029,6 +1031,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnSttsCd" value="${apprtDtl[2].appctnSttsCd}">
                                                 <p class="form-control-static">${apprtDtl[2].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -1195,6 +1198,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[0].appctnSttsCd}">
                                                 <p class="form-control-static">${rsumeTaskDtl[0].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -1424,6 +1428,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[1].appctnSttsCd}">
                                                 <p class="form-control-static" >${rsumeTaskDtl[1].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -1490,6 +1495,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[2].appctnSttsCd}">
                                                 <p class="form-control-static">${rsumeTaskDtl[2].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -1599,6 +1605,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[3].appctnSttsCd}">
                                                 <p class="form-control-static" >${rsumeTaskDtl[3].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -1700,6 +1707,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[4].appctnSttsCd}">
                                                 <p class="form-control-static">${rsumeTaskDtl[4].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -1838,6 +1846,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[5].appctnSttsCd}">
                                                 <p class="form-control-static">${rsumeTaskDtl[5].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -1925,6 +1934,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[6].appctnSttsCd}">
                                                 <p class="form-control-static" data-name="appctnSttsCdNm">${rsumeTaskDtl[6].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
@@ -2046,7 +2056,6 @@
             <input type="hidden" class="notRequired" name="nowRsumeTaskCd" value="${rsumeTaskDtl[rsumeLeng].rsumeSttsCd}" />
         </form>
 
-        <hr />
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/wb/WBFBPartUserModal.jsp" />
 
