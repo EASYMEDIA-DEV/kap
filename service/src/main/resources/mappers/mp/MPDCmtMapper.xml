@@ -28,6 +28,7 @@
         </if>
         , cmssr_photo_file_seq  	-- 파일순번
         , cmssr_mjr_carer_cntn  	-- 경력 내용
+        , cmssr_cnstg_fld_cntn
         , cmssr_mjr_carer_exps_yn -- 노출 여
         , ntfy_sms_rcv_yn  		-- sms 여부
         , ntfy_sms_rcv_chng_dtm
@@ -63,6 +64,7 @@
               , #{cmssrRsgntDt}
         </if>
               , #{cmssrPhotoFileSeq}
+              , #{cmssrCnstgFldCntn}
               , #{cmssrMjrCarerCntn}
               , #{cmssrMjrCarerExpsYn}
               , 'N'

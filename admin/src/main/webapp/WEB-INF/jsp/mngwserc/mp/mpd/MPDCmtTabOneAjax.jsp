@@ -168,6 +168,16 @@
     </div>
 </fieldset>
 
+<fieldset>
+    <div class="form-group text-sm">
+        <label class="col-sm-1 control-label">컨설팅분야</label>
+        <div class="col-sm-3">
+            <div class="input-group">
+                <textarea  type="text" id="cmssrCnstgFldCntn" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired">${rtnDtl.cmssrCnstgFldCntn}</textarea>               </div>
+        </div>
+    </div>
+</fieldset>
+
 <fieldset class="last-child">
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">주요경력 화면노출여부<span class="star"> *</span></label>
