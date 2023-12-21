@@ -52,6 +52,11 @@ public interface WBCBSecurityService {
     public WBEBCarbonCompanyTrnsfDTO getTrnsfList(WBEBCarbonCompanyTrnsfDTO wBEBCarbonCompanyTrnsfDTO) throws Exception;
 
     /**
+     * 신청 진행단계 확인
+     */
+    public int getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+
+    /**
      * 엑셀 다운로드
      */
     public void excelDownload(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, HttpServletResponse response) throws Exception;

@@ -66,19 +66,27 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         var delType = frmDataObj.data("delType");
                         if (delActCnt > 0)
                         {
-                            if(confirm('삭제하시겠습니까?'))
-                            {
-                                //삭제 전송
-                                cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
-                                        alert('게시물이 삭제되었습니다.');
-                                        $formObj.find("#btnSearch").click();
+                            //삭제 전송
+                            cmmCtrl.frmAjax(function(respObj){
+                                if(respObj != undefined && respObj.respCnt > 0){
+                                    alert("신청(1단계) 관리자 상태값 '미확인'일 경우에만 삭제 가능합니다.");
+                                }else{
+                                    if(confirm('삭제하시겠습니까?'))
+                                    {
+                                        //삭제 전송
+                                        cmmCtrl.frmAjax(function(respObj){
+                                            if(respObj != undefined && respObj.respCnt > 0){
+                                                alert('게시물이 삭제되었습니다.');
+                                                $formObj.find("#btnSearch").click();
+                                            }
+                                            else{
+                                                alert(msgCtrl.getMsg("fail.act"));
+                                            }
+                                        }, "./deleteList", frmDataObj, "POST", "json");
                                     }
-                                    else{
-                                        alert(msgCtrl.getMsg("fail.act"));
-                                    }
-                                }, "./deleteList", frmDataObj, "POST", "json");
-                            }
+                                }
+
+                            }, "./getRsumePbsnCnt", frmDataObj, "POST", "json");
                         }
                         else
                         {

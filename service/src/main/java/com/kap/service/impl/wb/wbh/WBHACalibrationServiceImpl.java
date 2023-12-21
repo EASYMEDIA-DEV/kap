@@ -6,6 +6,7 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.*;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -926,5 +927,17 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         wbbaTransDTO.setTotalCount(wbhaCalibrationMapper.getTrnsfCount(wbbaTransDTO));
 
         return wbbaTransDTO;
+    }
+
+    /**
+     * 신청 진행단계 확인
+     */
+    public int getRsumePbsnCnt(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wbhaCalibrationMapper.getRsumePbsnCnt(wbhaCalibrationSearchDTO);
+
+        return respCnt;
     }
 }
