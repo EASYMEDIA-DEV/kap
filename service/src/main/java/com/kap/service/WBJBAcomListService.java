@@ -79,4 +79,9 @@ public interface WBJBAcomListService {
      * 리스트 엑셀 다운로드
      */
     public void excelDownload(WBJAcomSearchDTO wBJAcomSearchDTO, HttpServletResponse response) throws Exception;
+
+    /**
+     * 관리자 미확인 갯수 조회
+     */
+    public int getCnt(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
 }

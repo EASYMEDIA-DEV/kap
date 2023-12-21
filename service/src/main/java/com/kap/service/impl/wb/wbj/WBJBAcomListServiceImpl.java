@@ -570,4 +570,13 @@ public class WBJBAcomListServiceImpl implements WBJBAcomListService {
         workbook.write(response.getOutputStream());
         workbook.close();
     }
+
+    public int getCnt(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception {
+        int rtnCnt = 0;
+
+        //마스터 삭제
+        rtnCnt = wBJBAcomListMapper.getCnt(wBJAcomSearchDTO);
+
+        return rtnCnt;
+    }
 }

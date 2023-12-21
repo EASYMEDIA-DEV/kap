@@ -79,16 +79,25 @@ define(["ezCtrl"], function(ezCtrl) {
                             {
                                 //삭제 전송
                                 cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
-                                        var msg = "삭제되었습니다.";
+                                    var respCnt = respObj.respCnt;
 
-                                        alert(msg);
-                                        $formObj.find("#btnSearch").click();
+                                    if(respCnt >= 1){
+                                        alert("신청(1단계) 관리자 상태값 '미확인'일 경우에만 삭제 가능합니다.");
+                                    }else{
+                                        //삭제 전송
+                                        cmmCtrl.frmAjax(function(respObj){
+                                            if(respObj != undefined && respObj.respCnt > 0){
+                                                var msg = "삭제되었습니다.";
+
+                                                alert(msg);
+                                                $formObj.find("#btnSearch").click();
+                                            }
+                                            else{
+                                                alert(msgCtrl.getMsg("fail.act"));
+                                            }
+                                        }, "./delete", frmDataObj, "POST", "json");
                                     }
-                                    else{
-                                        alert(msgCtrl.getMsg("fail.act"));
-                                    }
-                                }, "./delete", frmDataObj, "POST", "json");
+                                }, "./getCnt", frmDataObj, "POST", "json");
                             }
                         } else {
                             alert("삭제대상을 선택해주세요.");

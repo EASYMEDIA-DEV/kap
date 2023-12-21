@@ -527,4 +527,16 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         workbook.write(response.getOutputStream());
         workbook.close();
     }
+
+    /**
+     *  관리자 상태값 미확인 갯수 조회
+     */
+    public int getCnt(WBIBSupplySearchDTO wBIBSupplySearchDTO) throws Exception {
+        int rtnCnt = 0;
+
+        //마스터 삭제
+        rtnCnt = wBIBSupplyCompanyMapper.getCnt(wBIBSupplySearchDTO);
+
+        return rtnCnt;
+    }
 }
