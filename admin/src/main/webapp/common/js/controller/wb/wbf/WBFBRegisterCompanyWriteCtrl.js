@@ -21,8 +21,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     //modalForm
     var $modalFormObj = $modalObj.find("form").eq(0);
 
-    var ctgtyCdBfre = "";
-
     /* 팝업 옵션 */
     let optVal = {
         '1' : '아이디',
@@ -113,8 +111,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             }
         });
 
-        /* ctgry 이전 값 */
-        ctgtyCdBfre = rtnData['ctgryCd'];
         fieldShowFn(rtnData['ctgryCd']);
 
         /* SQ List */
@@ -214,11 +210,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             ctgryCd : {
                 event : {
                     change : function() {
-                        let selVal = $(this).val();
-                        if(selVal == 'COMPANY01003' || selVal == 'COMPANY01004') {
-                            alert('부품사 구분은 1차,2차만 등록가능합니다. ');
-                            $formObj.find('#ctgryCd').val(ctgtyCdBfre);
-                        }
                         fieldShowFn($(this).val());
                     }
                 }

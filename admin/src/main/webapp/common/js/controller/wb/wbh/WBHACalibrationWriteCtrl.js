@@ -26,8 +26,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     //장비 html
     var equipmentInitHtml = "";
 
-    var ctgryVal = $('#ctgryCd').val();
-
     // 목록 조회
     var search = function (page){
 
@@ -85,7 +83,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             }
         });
 
-        ctgryVal = $('#ctgryCd').val();
         fieldShowFn(rtnData['ctgryCd']);
 
         /* SQ List */
@@ -188,14 +185,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             ctgryCd : {
                 event : {
                     change : function() {
-                        var ctgryCd = $(this).val();
-
-                        if (ctgryCd == "COMPANY01001" || ctgryCd == "COMPANY01002") {
-                        } else {
-                            alert('부품사 구분은 1차,2차만 등록가능합니다.');
-                            $(this).val(ctgryVal);
-                        }
-
                         fieldShowFn($(this).val());
                     }
                 }
