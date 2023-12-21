@@ -152,9 +152,11 @@
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                         <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
-                                            <option value="${cdList.cd}" <c:if test="${userInfo.ctgryCd eq cdList.cd}">selected</c:if>>
-                                                    ${cdList.cdNm}
-                                            </option>
+                                            <c:if test="${cdList.cd eq 'COMPANY01001' or cdList.cd eq 'COMPANY01002'}" >
+                                                <option value="${cdList.cd}" <c:if test="${userInfo.ctgryCd eq cdList.cd}">selected</c:if>>
+                                                        ${cdList.cdNm}
+                                                </option>
+                                            </c:if>
                                         </c:if>
                                     </c:forEach>
                                 </select>
