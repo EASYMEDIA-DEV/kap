@@ -237,7 +237,7 @@ public class MPDCmtController {
             mpaUserDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
             mpaUserDto.setModId( cOUserDetailsDTO.getId() );
             mpaUserDto.setModIp( cOUserDetailsDTO.getLoginIp() );
-            modelMap.addAttribute("respCnt", mpdCmtService.deleteCmt(mpaUserDto));
+            modelMap.addAttribute("respCnt", mpdCmtService.updateCmt(mpaUserDto));
         }
         catch (Exception e)
         {

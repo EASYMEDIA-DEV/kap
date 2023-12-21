@@ -64,6 +64,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
 
     private final EgovIdGnrService memModSeqIdgen;
 
+    private final EgovIdGnrService coCmssrAtndcSeqIdgen;
 
     private final MPAUserMapper mpaUserMapper;
 
@@ -95,10 +96,10 @@ public class MPDCmtServiceImpl implements MPDCmtService {
     }
 
     @Override
-    public int deleteCmt(MPAUserDto mpaUserDto) throws Exception {
+    public int updateCmt(MPAUserDto mpaUserDto) throws Exception {
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
-        return  mpdCmtMapper.deleteCmt(mpaUserDto);
+        return  mpdCmtMapper.updateCmt(mpaUserDto);
     }
 
     @Override
@@ -163,7 +164,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
             }
             if(!StringUtils.isEmpty(mpdKenDtos.get(i).getMonthDays())) {
                 String[] split = mpdKenDtos.get(i).getMonthDays().split(", ");
-                String[] split2 = mpdKenDtos.get(i).getMonthTypes().split(", ");
+                String[] split2 = mpdKenDtos.get(i).getMonthTypesNm().split(", ");
                 int length = split.length;
                 for (int j = 0; j < dates.size(); j++) {
                     for( int k = 0 ; k < length ; k++) {
@@ -208,6 +209,30 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpdKenDto.setDays(weeks);
 
         return mpdKenDto;
+    }
+
+    @Override
+    public MPDKenDto selectKenMonthCnt(MPDKenDto mpdKenDto) throws Exception {
+        return mpdCmtMapper.selectKenMonthCnt(mpdKenDto);
+
+    }
+
+    @Override
+    public MPDKenDto selectKenCmpnList(MPDKenDto mpdKenDto) throws Exception {
+        List<MPDKenDto> mpdKenDtos = mpdCmtMapper.selectKenCmpnList(mpdKenDto);
+        mpdKenDto.setList( mpdKenDtos );
+        return mpdKenDto;
+    }
+
+    @Override
+    public void insertAtend(MPDKenDto mpdKenDto) throws Exception {
+        mpdKenDto.setAtndcSeq(coCmssrAtndcSeqIdgen.getNextIntegerId());
+        mpdCmtMapper.insertAtend(mpdKenDto);
+    }
+
+    @Override
+    public MPDKenDto selectKenCmpnDtl(MPDKenDto mpdKenDto) throws Exception {
+        return mpdCmtMapper.selectKenCmpnDtl(mpdKenDto);
     }
 
 
@@ -378,30 +403,31 @@ public class MPDCmtServiceImpl implements MPDCmtService {
                 if(!StringUtils.isEmpty(list.get(i).getMonthDays())) {
                     String[] split = list.get(i).getMonthDays().split(", ");
                     String[] split2 = list.get(i).getMonthTypes().split(", ");
+                    String[] split3 = list.get(i).getMonthTypesNm().split(", ");
                     int length = split.length;
                     for (int j = 0; j < dates.size(); j++) {
                         cell = row.createCell(j + 1);
                         cell.setCellStyle(style_body);
                         for (int k = 0; k < length; k++) {
                             if (dates.get(j).equals(split[k])) {
-                                cell.setCellValue(split2[k]);
+                                cell.setCellValue(split3[k]);
                                 switch (split2[k]){
-                                    case "a":
+                                    case "CMSSR_ATTEND_002": //출근
                                         atndnPeople++;
                                         break;
-                                    case "b":
+                                    case "CMSSR_ATTEND_005":  //연차
                                         annualPeople++;
                                         break;
-                                    case "c":
+                                    case "CMSSR_ATTEND_001":       //지도
                                         engPeople++;
                                         break;
-                                    case "d":
+                                    case "CMSSR_ATTEND_003":       //강의
                                         lecturePeople++;
                                         break;
-                                    case "e":
+                                    case "CMSSR_ATTEND_004":       //역량 개발
                                         cmptnDvlpmPeople++;
                                         break;
-                                    case "f":
+                                    case "CMSSR_ATTEND_007":   //기타
                                         etcPeople++;
                                         break;
                                     default:
@@ -449,13 +475,13 @@ public class MPDCmtServiceImpl implements MPDCmtService {
             kentae.add("역량개발");
             kentae.add("기타");
 
-            kentaeCd.add("a");
-            kentaeCd.add("b");
-            kentaeCd.add("c");
-            kentaeCd.add("d");
-            kentaeCd.add("e");
-            kentaeCd.add("f");
-            kentaeCd.add("g");
+            kentaeCd.add("CMSSR_ATTEND_002");
+            kentaeCd.add("CMSSR_ATTEND_006");
+            kentaeCd.add("CMSSR_ATTEND_005");
+            kentaeCd.add("CMSSR_ATTEND_001");
+            kentaeCd.add("CMSSR_ATTEND_003");
+            kentaeCd.add("CMSSR_ATTEND_004");
+            kentaeCd.add("CMSSR_ATTEND_007");
 
             //출근 , 재택 , 연차 , 지도 , 강의 ,역량개발 , 기타 그리기
             for (int i = 0; i < kentae.size(); i++) {
@@ -718,22 +744,22 @@ public class MPDCmtServiceImpl implements MPDCmtService {
             for (int i = 0; i < list.size(); i++) {
                 //TODO 코드 정의 후 밑 주석 해제 후 이 부분 삭제
                 switch (list.get(i).getAtndcCd()) {
-                    case "a":
+                    case "CMSSR_ATTEND_002": //출근
                         atndn++;
                         break;
-                    case "b":
+                    case "CMSSR_ATTEND_005":  //연차
                         annual++;
                         break;
-                    case "c":
+                    case "CMSSR_ATTEND_001":       //지도
                         eng++;
                         break;
-                    case "d":
+                    case "CMSSR_ATTEND_003":       //강의
                         lecture++;
                         break;
-                    case "e":
+                    case "CMSSR_ATTEND_004":       //역량 개발
                         cmptnDvlpm++;
                         break;
-                    case "f":
+                    case "CMSSR_ATTEND_007":   //기타
                         etc++;
                         break;
                     default:
@@ -741,29 +767,6 @@ public class MPDCmtServiceImpl implements MPDCmtService {
                         break;
                 }
 
-                //            switch(list.get(i).getAtndcCdNm()) {
-//                case "출근" :
-//                    atndn++;
-//                    break;
-//                case "연차" :
-//                    annual++;
-//                    break;
-//                case "지도" :
-//                    eng++;
-//                    break;
-//                case "강의" :
-//                    lecture++;
-//                    break;
-//                case "역량개발" :
-//                    cmptnDvlpm++;
-//                    break;
-//                case "기타" :
-//                    etc++;
-//                    break;
-//                default :
-//                    log.info("값이 없다.");
-//                    break;
-//            }
             }
 
 

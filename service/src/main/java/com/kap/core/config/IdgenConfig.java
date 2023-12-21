@@ -948,4 +948,17 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 출석 마스터
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl coCmssrAtndcSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("ATNDC_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }

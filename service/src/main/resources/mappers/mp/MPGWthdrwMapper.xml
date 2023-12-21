@@ -70,7 +70,7 @@
        -->
     <sql id="selectWthdrwListWhereSql">
         <where>
-                and ma.wthdrw_yn='Y'
+                and ma.wthdrw_yn='N'
             <if test="date == 1">
                 <if test="strtDt != null and strtDt != ''.toString() ">
                     and ma.wthdrw_reg_dtm <![CDATA[>=]]> str_to_date(#{strtDt}, '%Y-%m-%d')

@@ -4,6 +4,7 @@ import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * <pre>
@@ -26,17 +27,79 @@ import javax.servlet.http.HttpServletResponse;
 public interface MPDCmtService {
 
 
+     /**
+      * 위원등록
+      * @param mpaUserDto
+      * @return
+      * @throws Exception
+      */
      int insertCmt(MPAUserDto mpaUserDto) throws Exception;
 
-     int deleteCmt(MPAUserDto mpaUserDto) throws Exception;
+     /**
+      * 위원수정
+      * @param mpaUserDto
+      * @return
+      * @throws Exception
+      */
+     int updateCmt(MPAUserDto mpaUserDto) throws Exception;
 
+     /**
+      * 위원 리스트 조회
+      * @param mpdKenDto
+      * @return
+      * @throws Exception
+      */
      MPDKenDto selectKenList(MPDKenDto mpdKenDto) throws Exception;
 
+     /**
+      * 엑셀 다운
+      * @param mpdKenDto
+      * @param response
+      * @throws Exception
+      */
      void excelDownload(MPDKenDto mpdKenDto, HttpServletResponse response) throws Exception;
 
+     /**
+      * 근태 월 조회
+      * @param mpdKenDto
+      * @return
+      * @throws Exception
+      */
      MPDKenDto selectKenMonthList(MPDKenDto mpdKenDto) throws Exception;
 
+     /**
+      * 근태 월 테이블 조회
+      * @param mpdKenDto
+      * @return
+      * @throws Exception
+      */
      MPDKenDto selectKenMonthTableList(MPDKenDto mpdKenDto) throws Exception;
+
+     /**
+      * 월 근태 갯수 조회
+      * @param mpdKenDto
+      * @return
+      * @throws Exception
+      */
+     MPDKenDto selectKenMonthCnt(MPDKenDto mpdKenDto) throws Exception;
+
+     /**
+      * 위원 지도부품사 조회
+      * @param mpdKenDto
+      * @return
+      * @throws Exception
+      */
+     MPDKenDto selectKenCmpnList(MPDKenDto mpdKenDto) throws Exception;
+
+     /**
+      * 위원 근태 insert
+      */
+     void insertAtend(MPDKenDto mpdKenDto) throws Exception;
+
+     /**
+      * 위원 근태 조회
+      */
+     MPDKenDto selectKenCmpnDtl(MPDKenDto mpdKenDto) throws Exception;
 
 
 

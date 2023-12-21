@@ -85,29 +85,45 @@
 
 
     <!--
-     쿼리명 : MPDCmtMapper.deleteCmt
+     쿼리명 : MPDCmtMapper.updateCmt
      설  명 : 위원을 삭제한다.
       수정일     수정자       수정내용
     ==========   ======    ==============
     2023.11.21   양현우       최초생성
 -->
-    <delete id="deleteCmt" parameterType="MPAUserDto">
-        delete /* MPDCmtMapper.deleteCmt */
-        from co_mem_mst
-        <where>
-            <choose>
-                <when test="delValueList != null and delValueList.size() > 0">
-                    mem_seq in
-                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
-                        #{delValueList}
-                    </foreach>
-                </when>
-                <otherwise>
-                    adm_seq = #{detailsKey}
-                </otherwise>
-            </choose>
-        </where>
-    </delete>
+    <update id="updateCmt" parameterType="MPAUserDto">
+           update co_mem_mst
+            set wthdrw_yn = 'N'
+                <where>
+                    <choose>
+                        <when test="delValueList != null and delValueList.size() > 0">
+                            mem_seq in
+                            <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                                #{delValueList}
+                            </foreach>
+                        </when>
+                        <otherwise>
+                            adm_seq = #{detailsKey}
+                        </otherwise>
+                    </choose>
+                </where>
+
+<!--        delete /* MPDCmtMapper.updateCmt */-->
+<!--        from co_mem_mst-->
+<!--        <where>-->
+<!--            <choose>-->
+<!--                <when test="delValueList != null and delValueList.size() > 0">-->
+<!--                    mem_seq in-->
+<!--                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">-->
+<!--                        #{delValueList}-->
+<!--                    </foreach>-->
+<!--                </when>-->
+<!--                <otherwise>-->
+<!--                    adm_seq = #{detailsKey}-->
+<!--                </otherwise>-->
+<!--            </choose>-->
+<!--        </where>-->
+    </update>
 
     <!--
      쿼리명 : MPDCmtMapper.selectKenList
@@ -117,12 +133,12 @@
      2023.11.23    양현우       최초생성
  -->
     <select id="selectKenList" parameterType="MPDKenDto" resultType="MPDKenDto">
-        select (select cd_nm from co_code_mst where  cd=m1.atndc_cd ) -- 근태옵션
+        select (select cd_nm from co_code_mst where  cd=m1.atndc_cd ) as atndcCdNm -- 근태옵션
              , atndc_cd
-             , guide_part_cmpn_1 -- 지도부품사1
-             , rgns_1-- 소재지역1
-             , guide_part_cmpn_2-- 지도부품사2
-             , rgns_2-- 소재지역2
+             , guide_part_cmpn_1
+             , guide_part_cmpn_2
+             ,  rgns_1
+             ,  rgns_2
              , etc_bsntrp-- 기타출장
              , etc-- 기타
              , m1.reg_dtm-- 근태체크일시
@@ -183,7 +199,8 @@
              , m2.mem_seq
              , GROUP_CONCAT(atndc_dt order by atndc_dt asc SEPARATOR ', ' ) AS monthDays
              , GROUP_CONCAT(atndc_cd order by atndc_dt asc SEPARATOR ', ' ) AS monthTypes
-             , (select count(*) from co_cmssr_atndc_mst where mem_seq = m1.mem_seq and atndc_cd not in('a','b') and year=#{year}) as total -- TODO 코드 확정시 not in 수정
+        , GROUP_CONCAT((select cd_nm from co_code_mst where  cd=m1.atndc_cd ) order by atndc_dt asc SEPARATOR ', ' ) AS monthTypesNm
+             , (select count(*) from co_cmssr_atndc_mst where mem_seq = m1.mem_seq and atndc_cd not in('CMSSR_ ATTEND_002','CMSSR_ ATTEND_005') and year=#{year}) as total
          FROM co_cmssr_atndc_mst m1
          inner join co_mem_mst m2
           on m1.mem_seq = m2.mem_seq
@@ -216,5 +233,133 @@
               group by m1.mem_seq ) as a
     </select>
 
+
+    <!--
+쿼리명 : MPDCmtMapper.selectKenMonthCnt
+설  명 : 위원 근태 월 갯수을 조회한다.
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.23    양현우       최초생성
+-->
+    <select id="selectKenMonthCnt" parameterType="MPDKenDto" resultType="MPDKenDto">
+        select  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_001' and mem_seq=#{detailsKey}) as cnstg_cnt /* MPDCmtMapper.selectKenMonthCnt */
+             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_002' and mem_seq=#{detailsKey}) as atndn_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_003' and mem_seq=#{detailsKey}) as lecture_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_004' and mem_seq=#{detailsKey}) as cpcpty_dvlpm_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_005' and mem_seq=#{detailsKey}) as annual_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_006' and mem_seq=#{detailsKey}) as home_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_007' and mem_seq=#{detailsKey}) as etc_cnt
+        from co_cmssr_atndc_mst
+        where year=#{year}
+          and mnth =#{mnth}
+          and mem_seq=#{detailsKey}
+        group by mem_Seq
+    </select>
+
+    <!--
+쿼리명 : MPDCmtMapper.selectKenCmpnList
+설  명 : 지도부품사 조회
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.23    양현우       최초생성
+-->
+    <select id="selectKenCmpnList" parameterType="MPDKenDto" resultType="MPDKenDto">
+    select cmpn_mst.cmpn_nm /* MPDCmtMapper.selectKenCmpnList */
+         , appctn_mst.appctn_bsnm_no
+         ,  (select cd_nm from co_code_mst where  cd=appctn_mst.first_rgns_cd ) as first_rgns_cd_nm
+         , appctn_mst.first_rgns_cd
+         ,  (select cd_nm from co_code_mst where  cd=appctn_mst.scnd_rgns_cd ) as scnd_rgns_cd_nm
+         , appctn_mst.scnd_rgns_cd
+         , rsume_mst.cnstg_seq
+      from cp_cnstg_appctn_mst appctn_mst
+       inner join cp_cnstg_rsume_mst rsume_mst
+        on appctn_mst.cnstg_seq = rsume_mst.cnstg_seq
+       inner join cp_cmpn_mst cmpn_mst
+        on appctn_mst.appctn_bsnm_no =  cmpn_mst.bsnm_no
+         where init_vst_rslt_cd ='BF_JDGMT_RSLT01'
+          and rsume_mst.cmssr_seq =#{detailsKey}
+          and ( rsume_mst.guide_pscnd_cd  not in('GUIDE_PSCND04') or
+                rsume_mst.cnstg_pscnd_cd not in('CNSTG_PSCND03') )
+          order by appctn_mst.cnstg_seq
+    </select>
+
+
+    <!--
+쿼리명 : MPDCmtMapper.selectKenCmpnDtl
+설  명 : 출석 체크 상세
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.23    양현우       최초생성
+-->
+    <select id="selectKenCmpnDtl" parameterType="MPDKenDto" resultType="MPDKenDto">
+        select atndc_cd /* MPDCmtMapper.selectKenCmpnDtl */
+             , cnstg_seq_1
+             , guide_part_cmpn_1
+             , rgns_1
+             , cnstg_seq_2
+             , guide_part_cmpn_2
+             , rgns_2
+             , etc_bsntrp
+             , etc
+        from co_cmssr_atndc_mst ccam
+        where mem_seq=#{detailsKey}
+                  and year =#{year}
+          and mnth=#{mnth}
+          and dd=#{dd}
+    </select>
+
+    <!--
+       쿼리명 : MPDCmtMapper.insertAtend
+       설  명 : 위원 출석 체크
+         수정일      수정자       수정내용
+       ==========   ========   ==============
+       2023.11.10    양현우       최초생성
+       -->
+    <insert id="insertAtend" parameterType="MPDKenDto">
+        insert into co_cmssr_atndc_mst /* MPDCmtMapper.insertAtend */
+              ( atndc_seq
+               , mem_seq
+               , reg_id
+               , year
+               , mnth
+               , dd
+               , atndc_dt
+               , atndc_cd
+               , cnstg_seq_1
+               , guide_part_cmpn_1
+               , rgns_1
+               , cnstg_seq_2
+               , guide_part_cmpn_2
+               , rgns_2
+               , etc_bsntrp
+               , etc
+               , reg_ip
+               , reg_dtm
+               , mod_id
+               , mod_ip
+               , mod_dtm
+       ) values( #{atndcSeq}
+               , #{detailsKey}
+               , #{regId}
+               , #{year}
+               , #{mnth}
+               , #{dd}
+               , #{atndcDt}
+               , #{atndcCd}
+               , #{cnstgSeq1}
+               , #{guidePartCmpn1}
+               , #{rgns1}
+               , #{cnstgSeq2}
+               , #{guidePartCmpn2}
+               , #{rgns2}
+               , #{etcBsntrp}
+               , #{etc}
+               , #{regIp}
+               , now()
+               , #{modId}
+               , #{modIp}
+               , now()
+                )
+    </insert>
 
 </mapper>
