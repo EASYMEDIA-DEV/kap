@@ -243,10 +243,10 @@
         ==========  ======  ==============
         2023.11.30  오병호     최초 생성
     -->
-    <update id="delAppctnFileDtl" parameterType="wBJAcomDTO">
+    <delete id="delAppctnFileDtl" parameterType="wBJAcomDTO">
         DELETE FROM CX_APPCTN_FILE_DTL
         WHERE APPCTN_SEQ = #{appctnSeq}
-    </update>
+    </delete>
 
     <!--
          쿼리명 : WBJAcomMapper.putAppctnRsumeDtl

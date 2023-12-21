@@ -517,6 +517,7 @@
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">신청서</label>
+                                            <input type="hidden" class="notRequired" name="fileCd" value="ATTACH_FILE_TYPE01" title="첨부파일유형"/>
                                             <div class="col-sm-10 col-md-11">
                                                 <input type="hidden" class="notRequired" name="fileSeq" value="${rtnInfo.appctnSeq}">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
