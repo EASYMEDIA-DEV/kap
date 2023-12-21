@@ -642,6 +642,7 @@
             </foreach>
         </where>
         AND MNG_STTS_CD != 'PRO_TYPE06001_02_001'
+        AND APPCTN_STTS_CD != 'PRO_TYPE06001_01_001'
     </select>
 </mapper>
 
