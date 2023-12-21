@@ -199,7 +199,6 @@
                                 <th class="text-center">강사</th>
                                 <th class="text-center">강사 소속</th>
                                 <th class="text-center">모집방식</th>
-                                <th class="text-center">선발여부</th>
                                 <th class="text-center">교육장소</th>
                             </tr>
                             </thead>

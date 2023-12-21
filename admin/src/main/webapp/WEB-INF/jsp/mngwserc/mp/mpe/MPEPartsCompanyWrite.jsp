@@ -224,7 +224,7 @@
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">SQ 정보</label>
                                 <div class="col-sm-5">
-                                    <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">${sqInfoList.sqInfoList}
+                                    <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
                                         <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>
                                         <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="${list.nm}" title="SQ 업종" placeholder="SQ 업종입력"/>
                                         <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="점수" placeholder="SQ 점수입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>

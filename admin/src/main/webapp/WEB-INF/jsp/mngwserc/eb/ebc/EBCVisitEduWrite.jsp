@@ -395,9 +395,9 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">신청주체<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">신청주제<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control" id="appctnThemeCntn" name="appctnThemeCntn" title="신청주체" rows="5">${rtnInfo.appctnThemeCntn}</textarea>
+                        <textarea class="form-control" id="appctnThemeCntn" name="appctnThemeCntn" title="신청주제" rows="5">${rtnInfo.appctnThemeCntn}</textarea>
                     </div>
                 </div>
             </fieldset>

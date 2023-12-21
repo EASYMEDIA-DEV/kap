@@ -16,14 +16,13 @@
                 <td class="text-center">${list.isttrName}</td>
                 <td class="text-center">${list.ffltnNm} <c:if test="${list.isttrOutCnt ne ''}">외 ${list.isttrOutCnt}명 </c:if></td>
                 <td class="text-center">${list.rcrmtMthdCdNm}</td>
-                <td class="text-center">선발여부값</td>
                 <td class="text-center">${list.placeNm}</td>
             </tr>
         </c:forEach>
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
-            <td colspan="12" class="text-center">
+            <td colspan="13" class="text-center">
                 검색결과가 없습니다.<br>
                 (등록된 데이터가 없습니다.)
             </td>

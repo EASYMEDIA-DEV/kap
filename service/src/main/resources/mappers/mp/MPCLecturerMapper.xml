@@ -241,6 +241,37 @@
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
+    <!--select A.episd_seq as san_ctn_seq  /*MPCLecturerMapper.selectWinBusinessList */
+        , A.year&#45;&#45; 사업년도
+        , A.episd&#45;&#45; 회차
+        , B.pic_cmssr_seq &#45;&#45; 위원 seq
+        , (select cd_nm from co_code_mst where  cd=D.optn_cd )  as type_cd_nm&#45;&#45; 사업구분
+        , D.optn_nm as bsnCdNm
+        , (select cd_nm from co_code_mst where  cd=E.rsume_stts_cd )  as status &#45;&#45; 진행상태
+        , C.cmpn_nm &#45;&#45; 부품사명
+        , C.bsnm_no &#45;&#45; 사업자등록번호
+        , (select cd_nm from co_code_mst where  cd=C.ctgry_cd ) as ctgry_cd_nm &#45;&#45; 구분
+        , (select cd_nm from co_code_mst where  cd=C.size_cd ) as cmpn_size_cd_nm &#45;&#45; 규모
+        , B.appctn_bsnm_no&#45;&#45; 사업자등록번호
+        , (select name from co_mem_mst where mem_seq=B.pic_cmssr_seq) as name &#45;&#45; 담당위원
+        , B.reg_dtm&#45;&#45; 신청일
+        , A.bsn_strt_dtm &#45;&#45; 사업시작일시
+        , A.bsn_end_dtm &#45;&#45; 사업종료일시
+    from cx_episd_mst A
+    inner join cx_appctn_mst B
+    on A.episd_seq = B.episd_seq
+    inner join cp_cmpn_mst C
+    on B.appctn_bsnm_no  = C.bsnm_no
+    inner join cx_episd_bsn_optn_dtl D
+    on A.episd_seq  = D.episd_seq
+    inner join cx_appctn_rsume_dtl E
+    on B.appctn_seq = E.appctn_seq
+    INNER JOIN cp_isttr_mst F
+    ON B.pic_cmssr_seq = F.isttr_seq
+    WHERE F.isttr_seq = '23'
+    order by A.episd_seq desc
+    limit 0, 10-->
+
     <!--
          쿼리명 : MPCLecturerMapper.selectWinBusinessCnt
          설  명 : 상생 사업 현황 개수를 조회한다.

@@ -12,7 +12,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // form Object
     var $formObj = ctrl.obj.find("frmData");
-     var getList = function(){
+    var getList = function(){
          var actForm = {};
          var psnifSeq = $("#psnIfSelectList").val();
          actForm.psnifSeq = psnifSeq;
