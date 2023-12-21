@@ -14,7 +14,7 @@
                 <td class="text-center">${ list.appctnFldNm}</td><!-- 신청분야/업종 -->
                 <td class="text-center">${ list.rgnsName}</td><!-- 신청 소재지 -->
                 <td class="text-center">${ list.cmssrNm}</td><!-- 담당위원 -->
-                <td class="text-center">${ list.regDtm}</td><!-- 신청일 -->
+                <td class="text-center">${ kl:convertDate(list.regDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</td><!-- 신청일 -->
             </tr>
         </c:forEach>
     </c:when>

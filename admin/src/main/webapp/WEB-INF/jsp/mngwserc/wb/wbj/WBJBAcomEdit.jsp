@@ -149,7 +149,7 @@
                                     <select class="form-control input-sm" id="ctgryCd" name="ctgryCd" title="구분">
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                            <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
+                                            <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01') and cdList.cd ne 'COMPANY01003' and cdList.cd ne 'COMPANY01004'}">
                                                 <option value="${cdList.cd}" <c:if test="${rtnInfo.ctgryCd eq cdList.cd}">selected</c:if>>
                                                         ${cdList.cdNm}
                                                 </option>
@@ -459,7 +459,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">부품사명 검색<span class="star"> *</span></label>
                         <div class="col-sm-2">
-                            <input type="hidden" title="부품사" id="bsnmNo" name="cmpnSeq" value="${rtnInfo.cmpnSeq}" />
+                            <input type="hidden" title="부품사" id="newBsnmNo" name="cmpnSeq" value="${rtnInfo.cmpnSeq}" />
                             <input type="text" class="form-control input-sm notRequired" id="bsnmNoNm" disabled value="${ rtnInfo.bsnmNoNm }" title="부품사명"/>
                         </div>
                         <span class="input-group-btn">

@@ -3,6 +3,7 @@ package com.kap.service.impl.wb.wbe;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbe.*;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -558,6 +559,18 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyTrnsfDTO.setTotalCount(wBEBCarbonCompanyMapper.getTrnsfListTotCnt(wBEBCarbonCompanyTrnsfDTO));
 
         return wBEBCarbonCompanyTrnsfDTO;
+    }
+
+    /**
+     * 신청 진행단계 확인
+     */
+    public int getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBEBCarbonCompanyMapper.getRsumePbsnCnt(wBEBCarbonCompanySearchDTO);
+
+        return respCnt;
     }
 
     /**

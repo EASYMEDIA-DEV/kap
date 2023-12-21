@@ -87,16 +87,25 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             {
                                 //삭제 전송
                                 cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
-                                        var msg = "삭제되었습니다.";
+                                    var respCnt = respObj.respCnt;
 
-                                        alert(msg);
-                                        $formObj.find("#btnSearch").click();
+                                    if(respCnt >= 1){
+                                        alert("접수 이후의 신청 건은 삭제가 불가합니다.");
+                                    }else{
+                                        //삭제 전송
+                                        cmmCtrl.frmAjax(function(respObj){
+                                            if(respObj != undefined && respObj.respCnt > 0){
+                                                var msg = "삭제되었습니다.";
+
+                                                alert(msg);
+                                                $formObj.find("#btnSearch").click();
+                                            }
+                                            else{
+                                                alert(msgCtrl.getMsg("fail.act"));
+                                            }
+                                        }, "./delete", frmDataObj, "POST", "json");
                                     }
-                                    else{
-                                        alert(msgCtrl.getMsg("fail.act"));
-                                    }
-                                }, "./delete", frmDataObj, "POST", "json");
+                                }, "./getCnt", frmDataObj, "POST", "json");
                             }
                         } else {
                             alert("삭제대상을 선택해주세요.");

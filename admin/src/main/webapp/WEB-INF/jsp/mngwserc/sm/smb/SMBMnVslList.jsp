@@ -83,7 +83,7 @@
                     </div>
                     <div class="pull-left ml-sm">
                         <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                        <button type="button" class="btn btn-default btn-sm" id="refresh">초기화</button>
+                        <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
                     </div>
                 </div>
             </fieldset>

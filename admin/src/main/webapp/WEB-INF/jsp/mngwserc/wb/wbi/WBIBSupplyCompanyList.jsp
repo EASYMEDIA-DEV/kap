@@ -81,41 +81,45 @@
                 </h6>
                 <div class="pull-right">
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
-                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteList">선택삭제</button>
-                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">관리자 등록</button>
                 </div>
             </div>
             <!--VUE 영역 시작 -->
             <div class="table-responsive col-sm-12 p0 m0" id="vueList">
                 <table class="table table-hover table-striped" >
                     <thead>
-                    <tr>
-                        <th class="text-center">
-                            <label class="checkbox-inline c-checkbox">
-                                <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
-                                <span class="ion-checkmark-round"></span>
-                            </label>
-                        </th>
-                        <th class="text-center">번호</th>
-                        <th class="text-center">사업연도</th>
-                        <th class="text-center">회차</th>
-                        <th class="text-center">관리자</br>상태값</th>
-                        <th class="text-center">부품사명</th>
-                        <th class="text-center">사업자등록번호</th>
-                        <th class="text-center">구분</th>
-                        <th class="text-center">규모</th>
-                        <th class="text-center">신청자</br>(아이디)</th>
-                        <th class="text-center">휴대폰번호</th>
-                        <th class="text-center">이메일</th>
-                        <th class="text-center">관리자등록일</th>
-                        <th class="text-center">사용자수정일</th>
-                        <th class="text-center">최종 수정자<br>(아이디)</th>
-                        <th class="text-center">최종 수정일시</th>
-                    </tr>
+                        <tr>
+                            <th class="text-center">
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
+                                    <span class="ion-checkmark-round"></span>
+                                </label>
+                            </th>
+                            <th class="text-center">번호</th>
+                            <th class="text-center">사업연도</th>
+                            <th class="text-center">회차</th>
+                            <th class="text-center">관리자</br>상태값</th>
+                            <th class="text-center">부품사명</th>
+                            <th class="text-center">사업자등록번호</th>
+                            <th class="text-center">구분</th>
+                            <th class="text-center">규모</th>
+                            <th class="text-center">신청자</br>(아이디)</th>
+                            <th class="text-center">휴대폰번호</th>
+                            <th class="text-center">이메일</th>
+                            <th class="text-center">관리자등록일</th>
+                            <th class="text-center">사용자수정일</th>
+                            <th class="text-center">최종 수정자<br>(아이디)</th>
+                            <th class="text-center">최종 수정일시</th>
+                        </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->
                     <tbody id="listContainer"/>
                 </table>
+                    <div class="pull-right mr-sm">
+                        <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
+                    </div>
+                    <div class="pull-left mr-sm">
+                        <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteList">선택삭제</button>
+                    </div>
                 <!-- 페이징 버튼 -->
                 <div id="pagingContainer"/>
             </div>

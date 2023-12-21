@@ -118,7 +118,7 @@
                             <th class="text-center">번호</th>
                             <th class="text-center">구분</th>
                             <th class="text-center">제목</th>
-                            <th class="text-center">조회수</th>
+<%--                            <th class="text-center">조회수</th>--%>
                             <th class="text-center">최초 등록자</th>
                             <th class="text-center">최초 등록일시</th>
                             <th class="text-center">최종 수정자</th>

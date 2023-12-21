@@ -198,4 +198,10 @@ public interface WBJBAcomListMapper {
      * 상생참여이관로그 등록
      */
     public int insertChangeLog(WBJBAcomChangeDTO wBJBAcomChangeDTO) throws Exception;
+
+    /**
+     * 관리자 미확인 갯수 조회
+     */
+    public int getCnt(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
+
 }

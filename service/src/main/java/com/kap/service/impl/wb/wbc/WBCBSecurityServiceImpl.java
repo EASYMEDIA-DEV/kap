@@ -561,6 +561,18 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
     }
 
     /**
+     * 신청 진행단계 확인
+     */
+    public int getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBCBSecurityMapper.getRsumePbsnCnt(wBEBCarbonCompanySearchDTO);
+
+        return respCnt;
+    }
+
+    /**
      * 엑셀 다운로드
      */
     @Override

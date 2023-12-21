@@ -17,18 +17,14 @@
                 <td class="text-center">${list.rsumeSttsNm}</td>
                 <td class="text-center">${list.mngSttsNm}</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}" data-appctn-seq="${list.appctnSeq}" data-bsnm-no="${list.bsnmNo}" data-mem-seq="${list.memSeq}" >${list.cmpnNm }</a></td>
-
                 <td class="text-center">${list.bsnmNo }</td>
                 <td class="text-center">${list.ctgryNm}</td>
                 <td class="text-center">${list.sizeNm}</td>
                 <td class="text-center">${kl:nameMasking(list.name)}<br>(${kl:idMasking(list.id)})</td>
                 <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
                 <td class="text-center">${kl:emailMasking(list.email)}</td>
-
                 <td class="text-center">${list.slsPmt}</td>
                 <td class="text-center">${list.picCmssrNm}</td>
-
-
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${list.tchlgOrdMax eq 1}">
@@ -41,13 +37,13 @@
                 </td>
                 <td class="text-center">${list.tchlgCntSum}</td>
 
-                <td class="text-center">${list.nvstmPmt}</td> 투자금액
-                <td class="text-center">${list.fndnSpprtPmt}</td> 재단 지원금
-                <td class="text-center">${list.realGiveDt}</td> 실 지급일
+                <td class="text-center">${list.nvstmPmt}</td>
+                <td class="text-center">${list.fndnSpprtPmt}</td>
+                <td class="text-center">${list.realGiveDt}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.regDtm}">
-                            ${ list.regDtm }
+                            ${ kl:convertDate(list.regDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                         </c:when>
                         <c:otherwise>
                             -
@@ -57,7 +53,7 @@
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.appctnSttsChngDtm}">
-                            ${ list.appctnSttsChngDtm }
+                            ${ kl:convertDate(list.appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                         </c:when>
                         <c:otherwise>
                             -
@@ -77,7 +73,7 @@
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modDtm}">
-                            ${list.modDtm }
+                            ${ kl:convertDate(list.modDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                         </c:when>
                         <c:otherwise>
                             -

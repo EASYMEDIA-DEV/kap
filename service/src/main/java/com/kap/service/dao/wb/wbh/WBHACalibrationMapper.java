@@ -2,6 +2,7 @@ package com.kap.service.dao.wb.wbh;
 
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.*;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbh.*;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -258,5 +259,10 @@ public interface WBHACalibrationMapper {
      * 참여이관로그 개수 조회
      */
     public int getTrnsfCount(WBBATransDTO wbbTransDTO) throws Exception;
+
+    /**
+     * 신청 진행단계 확인
+     */
+    public int getRsumePbsnCnt(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 
 }

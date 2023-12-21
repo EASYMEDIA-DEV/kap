@@ -92,4 +92,20 @@ public interface WBLSurveyService {
 	void excelDownload(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, HttpServletResponse response ) throws Exception;
 
 
+	/**
+	 *  목록을 조회한다.
+	 */
+	public WBLSurveyMstSearchDTO selectFrontSurveyList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
+
+	/**
+	 * 설문 미참여
+	 */
+	public int updateNoSurvey(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
+
+	/**
+	 *  상세
+	 */
+	public WBLSurveyMstInsertDTO selectFrontSurveyDtl(WBLSurveyMstSearchDTO wBLSurveyMstSearchDT) throws Exception;
+
+
 }

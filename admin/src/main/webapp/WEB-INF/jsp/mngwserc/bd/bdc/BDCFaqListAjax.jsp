@@ -12,7 +12,7 @@
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center">${ list.ctgryName }</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.faqSeq}">${list.titl}</a></td>
-                <td class="text-center">${ list.readCnt }</td>
+<%--                <td class="text-center">${ list.readCnt }</td>--%>
                 <td class="text-center">${ list.regName }(${ list.regId })</td>
                 <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                 <td class="text-center">${ empty list.modName ? '-' : list.modName += '(' += list.modId += ')' }</td>
@@ -23,7 +23,7 @@
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
-            <td colspan="10" class="text-center">
+            <td colspan="9" class="text-center">
                 검색결과가 없습니다.<br>
                 (등록된 데이터가 없습니다.)
             </td>

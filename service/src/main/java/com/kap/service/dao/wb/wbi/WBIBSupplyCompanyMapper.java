@@ -148,4 +148,8 @@ public interface WBIBSupplyCompanyMapper {
      */
     public int insertChangeLog(WBIBSupplyChangeDTO wBIBSupplyChangeDTO) throws Exception;
 
+    /**
+     *  관리자 미확인 갯수 조회
+     */
+    public int getCnt(WBIBSupplySearchDTO wBIBSupplySearchDTO);
 }
