@@ -31,38 +31,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 $(".pcVideo").css("display", "none");
                 $(".pcImage").css("display", "block");
                 $(this).prop("checked", "true")
-                if(uploadFileCnt > 0) {
-                    if($("#detailsKey").val == '') {
-                        removeFIle(uploadFileCnt)
-                    }
-                }
             }else{
                 $(".pcImage").css("display", "none");
                 $(".pcVideo").css("display", "block");
                 $(this).prop("checked", "true")
-                if(uploadFileCnt > 0) {
-                    if($("#detailsKey").val == '') {
-                        removeFIle(uploadFileCnt)
-                    }
-                }
             }
         }else if(mdCd == 'mobile'){
             if(tagCd == 'image'){
                 $(".mobileVideo").css("display", "none");
                 $(".mobileImg").css("display", "block");
-                if(uploadFileCnt > 0) {
-                    if($("#detailsKey").val == '') {
-                        removeFIle(uploadFileCnt)
-                    }
-                }
             }else{
                 $(".mobileImg").css("display", "none");
                 $(".mobileVideo").css("display", "block");
-                if(uploadFileCnt > 0) {
-                    if($("#detailsKey").val == '') {
-                        removeFIle(uploadFileCnt)
-                    }
-                }
             }
         }
 
@@ -88,8 +68,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             odtmYn : {
                 event : {
                     click : function() {
-                        var odtmYn = $("#odtmYn").is(":checked");
-                        if(odtmYn == false){
+                        var odtmYn = $("#odtmYn").val();
+                        if(odtmYn == 'Y'){
+                            $("#odtmYn").val('N');
                             $("input[name=expsStrtDtm]").attr("disabled", false);
                             $("input[name=expsEndDtm]").attr("disabled", false);
                             // $("input[name=expsStrtDtm]").attr("readonly", false);
@@ -97,9 +78,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $("input[name=expsStrtDtm]").removeClass("notRequired");
                             $("input[name=expsEndDtm]").removeClass("notRequired");
                             $("#odtmYn").addClass("notRequired");
-                        }else if(odtmYn == true){
-                            $("input[name=expsStrtDtm]").val('');
-                            $("input[name=expsEndDtm]").val('');
+                        }else if(odtmYn == 'N' || odtmYn == ''){
+                            $("#odtmYn").val('Y');
                             $("input[name=expsStrtDtm]").attr("disabled", true);
                             $("input[name=expsEndDtm]").attr("disabled", true);
                             // $("input[name=expsStrtDtm]").attr("readonly", true);
@@ -200,8 +180,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             mainVslObj['detailsKey'] = $("#detailsKey").val();
                             mainVslObj['imgFileSeq'] = $("#imgFileSeq").val();
                             mainVslObj['videoFileSeq'] = $("#videoFileSeq").val();
-                            var odtmYn = $("#odtmYn").is(":checked");
-                            if(odtmYn == false){
+                            var odtmYn = $("#odtmYn").val();
+                            if(odtmYn != 'Y'){
                                 mainVslObj['expsStrtDtm'] = $("#expsStrtDtm").val();
                                 mainVslObj['ptupStrtHh'] = $("#ptupStrtHh").val();
                                 mainVslObj['ptupStrtMi'] = $("#ptupStrtMi").val();
@@ -209,7 +189,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 mainVslObj['ptupEndHh'] = $("#ptupEndHh").val();
                                 mainVslObj['ptupEndMi'] = $("#ptupEndMi").val();
                             }
-                            mainVslObj['odtmYn'] = odtmYn == false ? 'N': 'Y';
+                            mainVslObj['odtmYn'] = $("#odtmYn").val();
                             mainVslObj['titl'] = $("#titl").val();
                             mainVslObj['mnCopy'] = $("#mnCopy").val();
                             mainVslObj['mnHexCd'] = $("#mnHexCd").val();

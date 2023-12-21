@@ -17,7 +17,7 @@ define(["ezCtrl"], function(ezCtrl) {
     //목록 조회
     var search = function(page){
         //data로 치환해주어야한다.
-        //cmmCtrl.setFormData($formObj);
+        cmmCtrl.setFormData($formObj);
 
         if(page != undefined){
             $formObj.find("#pageIndex").val(page);
