@@ -776,6 +776,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 								$("p.nm").text(data.nm);
 								$("p.stduyMthd").text(data.stduyMthd);
+								$("#stduyMthdCd").val(data.stduyMthdCd);
+
+
+
 								$("p.stduyDtm").text(data.stduyDtm);
 							}
 
@@ -1073,10 +1077,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var edctnSeq = $("#edctnSeq").val();
 						var episdYear = $("#episdYear").val();
 						var episdOrd = $("#episdOrd").val();
-
-						debugger;
-
-
 					}
 				}
 			},
@@ -1479,78 +1479,83 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var onlineIndex = 0;
 						var fileIndex = 1;
 
-						$("#onlineList > tr").each(function(){
+						//집체교육이면 안넣음
+						var stduyMthdCd = $("#stduyMthdCd").val();
+						if(stduyMthdCd != "STDUY_MTHD01"){
+							$("#onlineList > tr").each(function(){
 
-							var onlineNm = $(this).find("[name='onlineNm']").val();
+								var onlineNm = $(this).find("[name='onlineNm']").val();
 
-							if(!(onlineNm === undefined) && $(this).attr("class") != "examTr"){
-								var onlinePack = {};
-								var onlineUrl = $(this).find("[name='onlineUrl']").val();
-								var onlineTime = $(this).find("[name='onlineTime']").val();
+								if(!(onlineNm === undefined) && $(this).attr("class") != "examTr"){
+									var onlinePack = {};
+									var onlineUrl = $(this).find("[name='onlineUrl']").val();
+									var onlineTime = $(this).find("[name='onlineTime']").val();
 
 
-								onlinePack.thnlFileSeq = $(this).next().find("input:hidden.thnlFileForm").val();
+									onlinePack.thnlFileSeq = $(this).next().find("input:hidden.thnlFileForm").val();
 
-								onlinePack.edctnSeq = actForm.edctnSeq;
-								onlinePack.episdOrd = actForm.episdOrd;
-								onlinePack.episdYear = actForm.episdYear;
-								onlinePack.nm = onlineNm;
-								onlinePack.url = onlineUrl;
-								onlinePack.time = onlineTime;
+									onlinePack.edctnSeq = actForm.edctnSeq;
+									onlinePack.episdOrd = actForm.episdOrd;
+									onlinePack.episdYear = actForm.episdYear;
+									onlinePack.nm = onlineNm;
+									onlinePack.url = onlineUrl;
+									onlinePack.time = onlineTime;
 
-								if(onlineNm ===undefined || onlineNm =="" && resultFlag == true){
-									alert("강의명을 입력해 주세요");
-									resultFlag = false;
-								}
+									if(onlineNm ===undefined || onlineNm =="" && resultFlag == true){
+										alert("강의명을 입력해 주세요");
+										resultFlag = false;
+									}
 
-								if(onlineUrl ===undefined || onlineUrl =="" && resultFlag == true){
-									alert("유튜브 URL을 입력해 주세요");
-									resultFlag = false;
-								}
+									if(onlineUrl ===undefined || onlineUrl =="" && resultFlag == true){
+										alert("유튜브 URL을 입력해 주세요");
+										resultFlag = false;
+									}
 
-								if(onlineTime ===undefined || onlineTime =="" && resultFlag == true){
-									alert("강의 시간을  입력해 주세요");
-									resultFlag = false;
-								}
+									if(onlineTime ===undefined || onlineTime =="" && resultFlag == true){
+										alert("강의 시간을  입력해 주세요");
+										resultFlag = false;
+									}
 
-								var onlinefileArray = new Array();
-								if(!($("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0) === undefined) &&
-									$("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files != undefined &&
-									$("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files.length > 0){
+									var onlinefileArray = new Array();
+									if(!($("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0) === undefined) &&
+										$("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files != undefined &&
+										$("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files.length > 0){
 
-									$.each($("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files, function(idx, data){
+										$.each($("#onlineList").find(".dropzone.attachFile").eq(fileIndex).get(0).dropzone.files, function(idx, data){
 
-										//alt값  data에 넣어주기.
-										data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
+											//alt값  data에 넣어주기.
+											data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
 
-										for (let i in data) {
-											if (data.hasOwnProperty(i)) {
-												var temp = {};
-												temp.fileSeq = data.fileSeq;
-												temp.status = data.status;
-												temp.width = data.width;
-												temp.height = data.height;
-												temp.webPath = data.webPath;
-												temp.fieldNm = "lctrFileSeq";//data.fieldNm;
-												temp.orgnFileNm = data.orgnFileNm;
-												temp.fileDsc = data.fileDsc;
-												temp.fileOrd = data.fileOrd;
+											for (let i in data) {
+												if (data.hasOwnProperty(i)) {
+													var temp = {};
+													temp.fileSeq = data.fileSeq;
+													temp.status = data.status;
+													temp.width = data.width;
+													temp.height = data.height;
+													temp.webPath = data.webPath;
+													temp.fieldNm = "lctrFileSeq";//data.fieldNm;
+													temp.orgnFileNm = data.orgnFileNm;
+													temp.fileDsc = data.fileDsc;
+													temp.fileOrd = data.fileOrd;
 
-												if(onlinefileArray == "" || (onlinefileArray[onlinefileArray.length-1].fileOrd != temp.fileOrd)){
-													onlinefileArray.push(temp);
+													if(onlinefileArray == "" || (onlinefileArray[onlinefileArray.length-1].fileOrd != temp.fileOrd)){
+														onlinefileArray.push(temp);
+													}
+
 												}
-
 											}
-										}
-									})
+										})
+									}
+									fileIndex = fileIndex + 1;
+									onlinePack.fileList = onlinefileArray;
+									lctrList.push(onlinePack);
 								}
-								fileIndex = fileIndex + 1;
-								onlinePack.fileList = onlinefileArray;
-								lctrList.push(onlinePack);
-							}
 
-							onlineIndex = onlineIndex + 1;
-						});
+								onlineIndex = onlineIndex + 1;
+							});
+						}
+
 
 
 						actForm.lctrList = lctrList;
