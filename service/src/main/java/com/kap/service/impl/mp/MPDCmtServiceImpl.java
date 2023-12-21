@@ -866,7 +866,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
 
             }
 
-
+        if(list.size() >=2) {
             CellRangeAddress mergedRegion = new CellRangeAddress(2, list.size() + 1, 0, 0);
             sheet.addMergedRegion(mergedRegion);
 
@@ -874,6 +874,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
                 CellRangeAddress mergedRegion2 = new CellRangeAddress(2, list.size() + 1, i, i);
                 sheet.addMergedRegion(mergedRegion2);
             }
+        }
 
 
         }
