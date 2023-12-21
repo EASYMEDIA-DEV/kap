@@ -10,10 +10,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * <pre>
  * 메인 페이지
  * </pre>
- * @ClassName		: COnsultingController.java
+ * @ClassName		: CONsultingController.java
  * @Description		: 컨설팅 페이지
  * @see
  * @Modification Information
@@ -35,7 +35,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value="/consulting/{type:tech|Manage}")
-public class COnsultingController {
+public class CONsultingController {
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
     /** 서비스 **/
@@ -49,8 +49,6 @@ public class COnsultingController {
     //파일 업로드 사이즈
     @Value("${app.file.max-size}")
     private int atchUploadMaxSize;
-
-
 
     @GetMapping("/index")
     public String getConsultIndexPage(ModelMap modelMap, HttpServletRequest request) throws Exception {
@@ -68,6 +66,24 @@ public class COnsultingController {
 
         modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
 
-        return "front/consult/ConsultingIndex.front";
+        return "front/consult/CONsultingIndex.front";
     }
+
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping(value="consulting/{type:tech|Manage}")
+    public class CONsultingRestController {
+
+        private final MPAUserService mPAUserService;
+        
+        /**
+         * 멤버 키로 상세 정보 검색
+         */
+        @PostMapping(value = "/selectDtlInfo")
+        @ResponseBody
+        public MPAUserDto selectDtlInfo(@Valid @RequestBody MPAUserDto mpaUserDto) throws Exception {
+            return mPAUserService.selectUserDtlTab(mpaUserDto);
+        }
+    }
+
 }

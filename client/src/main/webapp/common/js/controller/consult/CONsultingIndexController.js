@@ -20,9 +20,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             open : {
                 event : {
                     click : function(){
-                       $(".memberDetailsPopup ").show();
+                       $(".cssMemberDetailsPopup ").show();
                        $("body").addClass("stop-scroll");
                        $(".dimd").css("z-index", `${ dimdIdxNum + $(".layer-popup:visible").length }`).stop(true, true).fadeIn(300);
+                       var memSeq = $(this).find(".memSeq").val();
+                       var cssInfo = {};
+                       cssInfo.detailsKey = memSeq;
+                        console.log(cssInfo)
+                        cmmCtrl.jsonAjax(function (data) {
+                            console.log(data)
+                        }, './selectDtlInfo', cssInfo, "text");
                     }
                 }
             }

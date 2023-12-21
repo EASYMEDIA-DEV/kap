@@ -2,7 +2,7 @@
 <!-- 레이어 팝업(Modal) -->
     <div id="mpdCmtSrchLayer">
         <!-- 위원 상세 팝업 -->
-        <div class="layer-popup memberDetailsPopup">
+        <div class="layer-popup cssMemberDetailsPopup">
             <div class="for-center">
                 <div class="pop-wrap">
                     <div class="pop-con-area">

@@ -297,6 +297,7 @@
                                             <img src="/common/images/@img-foundation-group-member.png" alt="">
                                         </div>
                                         <c:forEach var="csList" items="${rtnDto.list}" varStatus="status">
+                                            <input type="hidden" class="memSeq" value="${csList.memSeq}">
                                             <div class="txt-box">
                                                 <div class="names">
                                                     <p class="name f-title3">${csList.name}</p>
@@ -414,4 +415,4 @@
     </div>
 </div>
 <!-- content 영역 end -->
-<jsp:include page="/WEB-INF/jsp/front/consult/ConsultingLayer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jsp/front/consult/CONsultingLayer.jsp"></jsp:include>
