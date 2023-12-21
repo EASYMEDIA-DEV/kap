@@ -31,30 +31,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 $(".pcVideo").css("display", "none");
                 $(".pcImage").css("display", "block");
                 $(this).prop("checked", "true")
-                if(uploadFileCnt > 0) {
-                    removeFIle(uploadFileCnt)
-                }
             }else{
                 $(".pcImage").css("display", "none");
                 $(".pcVideo").css("display", "block");
                 $(this).prop("checked", "true")
-                if(uploadFileCnt > 0) {
-                    removeFIle(uploadFileCnt)
-                }
             }
         }else if(mdCd == 'mobile'){
             if(tagCd == 'image'){
                 $(".mobileVideo").css("display", "none");
                 $(".mobileImg").css("display", "block");
-                if(uploadFileCnt > 0) {
-                    removeFIle(uploadFileCnt)
-                }
             }else{
                 $(".mobileImg").css("display", "none");
                 $(".mobileVideo").css("display", "block");
-                if(uploadFileCnt > 0) {
-                    removeFIle(uploadFileCnt)
-                }
             }
         }
 
@@ -193,7 +181,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             mainVslObj['imgFileSeq'] = $("#imgFileSeq").val();
                             mainVslObj['videoFileSeq'] = $("#videoFileSeq").val();
                             var odtmYn = $("#odtmYn").val();
-                            if(odtmYn == 'N'){
+                            if(odtmYn != 'Y'){
                                 mainVslObj['expsStrtDtm'] = $("#expsStrtDtm").val();
                                 mainVslObj['ptupStrtHh'] = $("#ptupStrtHh").val();
                                 mainVslObj['ptupStrtMi'] = $("#ptupStrtMi").val();

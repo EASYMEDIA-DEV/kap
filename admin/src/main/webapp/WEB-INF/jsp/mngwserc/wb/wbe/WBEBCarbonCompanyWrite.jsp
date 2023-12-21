@@ -138,7 +138,10 @@
                             <select class="form-control input-sm" id="ctgryCd" name="ctgryCd">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${classTypeList.COMPANY_TYPE}" varStatus="status">
-                                    <c:if test="${fn:contains(cdList.cd, 'COMPANY01')}">
+                                    <c:if test="${fn:contains(cdList.cd, 'COMPANY01001')}">
+                                        <option value="${cdList.cd}" <c:if test="${rtnDto.episd eq cdList.cdNm}">selected</c:if> >${cdList.cdNm}</option>
+                                    </c:if>
+                                    <c:if test="${fn:contains(cdList.cd, 'COMPANY01002')}">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.episd eq cdList.cdNm}">selected</c:if> >${cdList.cdNm}</option>
                                     </c:if>
                                 </c:forEach>

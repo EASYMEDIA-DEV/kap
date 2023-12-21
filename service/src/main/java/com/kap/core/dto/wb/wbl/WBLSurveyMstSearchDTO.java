@@ -92,4 +92,12 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "인증번호", example = "")
     private String crtfnNo;
 
+    @Schema(title = "응답시간", example = "")
+    private String rspnMm;
+
+    @Schema(title = "문항수", example = "숫자")
+    private Integer qstnCnt;
+
+    @Schema(title = "설문내용", example = "")
+    private String cntn;
 }

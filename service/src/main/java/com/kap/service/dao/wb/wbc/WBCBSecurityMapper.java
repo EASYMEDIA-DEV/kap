@@ -205,4 +205,9 @@ public interface WBCBSecurityMapper {
      */
     public List getGiveOrdList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
 
+    /**
+     * 신청 진행단계 확인
+     */
+    public int getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+
 }

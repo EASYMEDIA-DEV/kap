@@ -75,5 +75,9 @@ public interface WBIBSupplyCompanyService {
      * 리스트 엑셀 다운로드
      */
     public void excelDownload(WBIBSupplySearchDTO wBIBSupplySearchDTO, HttpServletResponse response) throws Exception;
-    
+
+    /**
+     * 신창자를 삭제한다.
+     */
+    public int getCnt(WBIBSupplySearchDTO wBIBSupplySearchDTO) throws Exception;
 }

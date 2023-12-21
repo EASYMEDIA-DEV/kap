@@ -103,10 +103,6 @@
 							</jsp:include>
 						</select>
 					</div>
-					<div class="pull-right">
-						<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnChooseDelete">선택삭제</button>
-						<button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-					</div>
 				</div>
 
 				<!--VUE 영역 시작 -->
@@ -139,6 +135,12 @@
 						<!-- 리스트 목록 결과 -->
 						<tbody id="listContainer"/>
 					</table>
+						<div class="pull-right">
+							<button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
+						</div>
+						<div class="pull-left mr-sm">
+							<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnChooseDelete">선택삭제</button>
+						</div>
 					<!-- 페이징 버튼 -->
 					<div id="pagingContainer"/>
 				</div>

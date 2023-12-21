@@ -2,6 +2,7 @@ package com.kap.mngwserc.controller.wb.wbe;
 
 
 
+import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyTrnsfDTO;
@@ -275,6 +276,27 @@ public class WBEBCarbonCompanyController {
             throw new Exception(e.getMessage());
         }
         return "mngwserc/wb/wbe/WBEBCarbonCompanyTrnsfAjax";
+    }
+
+    /**
+     * 신청 진행단계 확인
+     */
+    @PostMapping(value="/getRsumePbsnCnt")
+    public String getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBEBCarbonCompanyService.getRsumePbsnCnt(wBEBCarbonCompanySearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
     }
 
 

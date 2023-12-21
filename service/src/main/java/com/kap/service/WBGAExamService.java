@@ -1,6 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbg.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -91,4 +92,9 @@ public interface WBGAExamService {
      * 참여 이관 로그를 가져온다.
      */
     public WBBATransDTO getTrnsfList(WBBATransDTO wbbTransDTO) throws Exception;
+
+    /**
+     * 신청 진행단계 확인
+     */
+    public int getRsumePbsnCnt(WBGAExamSearchDTO wBGAExamSearchDTO) throws Exception;
 }

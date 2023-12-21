@@ -35,6 +35,7 @@
 	<link rel="stylesheet" href="/common/css/swiper.css" />
 	<link rel="stylesheet" href="/common/css/fonts.css" />
 	<link rel="stylesheet" href="/common/css/common.css" />
+	<link rel="stylesheet" href="/common/css/main.css" />
 	<link rel="stylesheet" href="/common/css/style.css" />
 	<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="/common/js/gsap.min.js"></script>
@@ -55,6 +56,11 @@
 	<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js"></script>
 	<c:set var="servletPath" value="${requestScope['javax.servlet.forward.servlet_path']}" scope="request" />
 	<c:choose>
+		<c:when test="${ servletPath eq '/' }">
+			<script type="text/javascript" src="/common/js/hammer.min.js"></script>
+			<script type="text/javascript" src="/common/js/main.js"></script>
+			<c:set var="wrapClass" value="main" />
+		</c:when>
 		<c:when test="${ fn:startsWith(servletPath, '/my-page/') }">
 			<c:set var="wrapClass" value="mypage" />
 		</c:when>
@@ -67,7 +73,7 @@
 <div id="wrap" class="${ wrapClass }">
 	<header id="header">
 		<!-- header - START -->
-		<h1><a class="logo" href="#"></a></h1>
+		<h1><a class="logo" href="/"></a></h1>
 		<a href="javascript:" class="prev-btn icon-btn"></a>
 		<h2 class="nav-tit">${ not empty pageMenuDto ? pageMenuDto.menuNm : ''}</h2><!-- @ 해당 서브페이지의 이름 -->
 		<nav>

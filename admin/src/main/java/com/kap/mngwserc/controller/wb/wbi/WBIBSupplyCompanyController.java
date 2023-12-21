@@ -358,4 +358,27 @@ public class WBIBSupplyCompanyController {
             throw new Exception(e.getMessage());
         }
     }
+
+    /**
+     * 관리자 상태값 미확인 갯수 조회
+     */
+    @RequestMapping(value="/getCnt")
+    public String getCnt(WBIBSupplySearchDTO wBIBSupplySearchDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            int respCnt = wBIBSupplyCompanyService.getCnt(wBIBSupplySearchDTO);
+            modelMap.addAttribute("respCnt", respCnt);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
 }

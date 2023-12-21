@@ -700,4 +700,34 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
 
 	}
+
+
+
+	/**
+	 *  목록을 조회한다.
+	 */
+	public WBLSurveyMstSearchDTO selectFrontSurveyList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception {
+		wBLSurveyMstSearchDTO.setList( wBLSurveyMapper.selectFrontSurveyList(wBLSurveyMstSearchDTO) );
+		return wBLSurveyMstSearchDTO;
+	}
+
+	/**
+	 *  설문 미참여
+	 */
+	@Override
+	public int updateNoSurvey(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception {
+
+		int respCnt = 0;
+		respCnt = wBLSurveyMapper.updateNoSurvey( wBLSurveyMstSearchDTO );
+
+		return respCnt;
+	}
+
+	@Override
+	public WBLSurveyMstInsertDTO selectFrontSurveyDtl(WBLSurveyMstSearchDTO wBLSurveyMstSearchDT) throws Exception {
+		WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO = wBLSurveyMapper.selectFrontSurveyDtl(wBLSurveyMstSearchDT);
+
+		return wBLSurveyMstInsertDTO;
+	}
+
 }
