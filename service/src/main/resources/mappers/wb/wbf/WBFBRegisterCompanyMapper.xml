@@ -386,6 +386,9 @@
             appctn_spprt_seq,
             appctn_seq,
             give_type,
+            appctn_stts_cd,
+            mng_stts_cd,
+            mng_stts_chng_dtm,
             reg_id,
             reg_ip,
             reg_dtm
@@ -395,6 +398,9 @@
             #{appctnSpprtSeq},
             #{appctnSeq},
             #{giveType},
+            #{appctnSttsCd},
+            #{mngSttsCd},
+            now(),
             #{regId},
             #{regIp},
             now()
@@ -467,32 +473,6 @@
             #{regIp},
             now()
         )
-    </insert>
-
-    <!--
-         쿼리명 : WBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl
-         설  명 : 회차신청 스마트 상세 Insert
-         수정일     수정자     수정내용
-        ==========  ======  ==============
-        2023.11.16  김동현     최초 생성
-    -->
-    <insert id="putInitNextAppctnRsumeTask" parameterType="wBFBRegisterDTO"  >
-        INSERT /* WBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl */ INTO cx_appctn_rsume_task_dtl
-        (
-            rsume_seq,
-            rsume_ord,
-            reg_id,
-            reg_ip,
-            reg_dtm
-        )
-        VALUES
-            (
-                #{rsumeSeq},
-                #{rsumeOrd},
-                #{regId},
-                #{regIp},
-                now()
-            )
     </insert>
 
     <!--
@@ -921,20 +901,38 @@
     </delete>
 
     <!--
-         쿼리명 : WBFBRegisterCompanyMapper.delAppctnMdst
+         쿼리명 : WBFBRegisterCompanyMapper.delAppctnMst
          설  명 : 상생신청마스터 Delete
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.16  김동현     최초 생성
     -->
-    <delete id="delAppctnMdst" parameterType="WBFBRegisterDTO">
-        DELETE /*WBFBRegisterCompanyMapper.delAppctnMdst*/
+    <delete id="delAppctnMst" parameterType="WBFBRegisterDTO">
+        DELETE /*WBFBRegisterCompanyMapper.delAppctnMst*/
         FROM cx_appctn_mst
         WHERE appctn_seq IN
         <foreach collection="delValueList" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>
     </delete>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.confDeleteRegister
+         설  명 : 상생신청마스터 Delete
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="confDeleteRegister" parameterType="WBFBRegisterDTO">
+        SELECT COUNT(*)
+        FROM cx_appctn_rsume_dtl
+        WHERE rsume_stts_cd = 'PRO_TYPE02001'
+        AND (appctn_stts_cd != 'PRO_TYPE02001_01_001' OR mng_stts_cd != 'PRO_TYPE02001_02_001')
+        AND appctn_seq IN
+        <foreach collection="delValueList" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
     <!--
          쿼리명 : WBFASmartRoundMapper.selectListwhereSql

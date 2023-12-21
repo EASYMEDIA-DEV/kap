@@ -75,7 +75,7 @@
 
                         </div>
                         <div class="col-sm-4" style="margin-left: -15px">
-                            <input type="text" class="form-control " id="deptDtlNm" name="deptDtlNm" value="" title="부서 상세" maxlength="50"/>
+                            <input type="text" class="form-control notRequired" id="deptDtlNm" name="deptDtlNm" value="" title="부서 상세" maxlength="50"/>
                         </div>
                     </div>
 
