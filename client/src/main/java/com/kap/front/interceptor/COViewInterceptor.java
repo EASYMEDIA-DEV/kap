@@ -3,7 +3,6 @@ package com.kap.front.interceptor;
 import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COMenuDTO;
-import com.kap.service.COBMenuService;
 import com.kap.service.COBUserMenuService;
 import com.kap.service.COCodeService;
 import com.kap.service.COCommService;
@@ -56,8 +55,10 @@ public class COViewInterceptor implements HandlerInterceptor{
         // 메뉴 목록
         List<COMenuDTO> menuList = null;
         int userMenuSeq = 612;
+
+
         //메뉴 목록을 조회한다.
-        if (RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION) != null)
+        /*if (RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION) != null)
         {
             menuList = (List<COMenuDTO>) RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION);
         }
@@ -66,9 +67,21 @@ public class COViewInterceptor implements HandlerInterceptor{
             COMenuDTO cOMenuDTO = new COMenuDTO();
             cOMenuDTO.setMenuSeq(userMenuSeq);
             cOMenuDTO.setIsMenu("Y");
-            menuList = cOBUserMenuService.getMenuList(cOMenuDTO);
+            menuList = cOBUserMenuService.getClientMenuList(cOMenuDTO);
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
-        }
+        }*/
+
+        /*메뉴 구조 확립 되기전까진 호출할때마다 메뉴 생성하도록 변경... 이렇게 안하면 확인할때마다 세션 날려야됨*/
+        COMenuDTO cOMenuDTO = new COMenuDTO();
+        cOMenuDTO.setMenuSeq(userMenuSeq);
+        cOMenuDTO.setIsMenu("Y");
+        menuList = cOBUserMenuService.getMenuList(cOMenuDTO);
+        RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
+
+
+
+
+
         //menuLsit 계층으로 출력
         JSONArray gnbMenuList = cOBUserMenuService.getJsonData(menuList, 0, userMenuSeq);
         request.setAttribute("gnbMenuList", gnbMenuList);
@@ -79,13 +92,11 @@ public class COViewInterceptor implements HandlerInterceptor{
         for (int i = 0, size = menuList.size(); i < size; i++)
         {
             userUrl = COStringUtil.nullConvert(menuList.get(i).getUserUrl());
-            if (userUrl != null && !"".equals(userUrl) )         //requestURI.indexOf(userUrl) > -1
+            if (userUrl != null && !"".equals(userUrl) && !"/".equals(folderUrl) )         //requestURI.indexOf(userUrl) > -1
             {
-                if(folderUrl.startsWith(userUrl)){
-                    if(userUrl.equals(menuList.get(i-1).getUserUrl())){
-                        pageMenuDto    = menuList.get(i);
-                        break;
-                    }
+                if(userUrl.startsWith(folderUrl)){
+                    pageMenuDto    = menuList.get(i);
+                    break;
                 }
             }
         }
