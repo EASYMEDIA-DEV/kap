@@ -61,4 +61,21 @@ public class EXGExamEdctnPtcptMst {
     private Integer ptcptCnt;
     @Schema(title = "시험개요")
     private String smmryCntn;
+    @Schema(title = "응시자 ID")
+    private String id;
+    @Schema(title = "응시자 이름")
+    private String name;
+
+    @Schema(title = "자동화 여부")
+    private String cmptnAutoYn;
+    @Schema(title = "수료 출석 코드")
+    private String cmptnStndCd;
+    @Schema(title = "수료 출석 코드 명")
+    private Integer cmptnStndCdNm;
+    @Schema(title = "수료 평가 코드")
+    private String cmptnJdgmtCd;
+    @Schema(title = "수료 평가 코드 명")
+    private Integer cmptnJdgmtCdNm;
+    @Schema(title = "시험점수")
+    private Integer examScore;
 }

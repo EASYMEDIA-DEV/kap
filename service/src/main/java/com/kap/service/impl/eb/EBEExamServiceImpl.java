@@ -219,11 +219,54 @@ public class EBEExamServiceImpl implements EBEExamService {
     }
 
     /**
+     * 평가지 답변 상세
+     */
+    public EXGExamMstInsertDTO selectExamRspnDtl(EXGExamMstSearchDTO eXGExamMstSearchDTO) throws Exception
+    {
+        EXGExamMstInsertDTO eXGExamMstInsertDTO = eBEExamMapper.selectExamDtl(eXGExamMstSearchDTO);
+        List<EXGExamQstnDtlDTO> examQstnDtlList = eBEExamMapper.getExamQstnRspnDtlList(eXGExamMstSearchDTO);
+        List<EXGExamExmplDtlDTO> examExmplDtlList = eBEExamMapper.getExamExmplDtlList(eXGExamMstSearchDTO);
+        List<EXGExamExmplRspnDtlDTO> examExmplRspnDtlList = eBEExamMapper.getExamExmplUserRspnDtlList(eXGExamMstSearchDTO);
+        for(EXGExamQstnDtlDTO eXGExamQstnDtlDTO : examQstnDtlList){
+            eXGExamQstnDtlDTO.setExExamExmplDtlList( new ArrayList<EXGExamExmplDtlDTO>());
+            eXGExamQstnDtlDTO.setExExamExmplRspnDtlList( new ArrayList<EXGExamExmplRspnDtlDTO>());
+            for(EXGExamExmplDtlDTO eXGExamExmplDtlDTO : examExmplDtlList){
+                if(eXGExamQstnDtlDTO.getQstnSeq() == eXGExamExmplDtlDTO.getQstnSeq()){
+                    eXGExamQstnDtlDTO.getExExamExmplDtlList().add(eXGExamExmplDtlDTO);
+                }
+            }
+            for(EXGExamExmplRspnDtlDTO eXGExamExmplRspnDtlDTO : examExmplRspnDtlList){
+                if(eXGExamQstnDtlDTO.getQstnSeq() == eXGExamExmplRspnDtlDTO.getQstnSeq()){
+                    eXGExamQstnDtlDTO.getExExamExmplRspnDtlList().add(eXGExamExmplRspnDtlDTO);
+                }
+            }
+        }
+        eXGExamMstInsertDTO.setExExamQstnDtlList( examQstnDtlList );
+        //교육 시험 매핑 여부
+        int edctnEpisdCnt = eBEExamMapper.getExamEdctnEpisdCnt( eXGExamMstSearchDTO );
+        eXGExamMstInsertDTO.setPosbChg( edctnEpisdCnt > 0 ? false : true );
+        return eXGExamMstInsertDTO;
+    }
+
+    /**
      * 사용자 평가지
      */
     public EXGExamEdctnPtcptMst selectUserExamDtl(int ptcptSeq) throws Exception{
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         EXGExamMstSearchDTO eXGExamMstSearchDTO = EXGExamMstSearchDTO.builder().ptcptSeq(ptcptSeq).memSeq(cOUserDetailsDTO.getSeq()).build();
+        return eBEExamMapper.selectUserExamDtl(eXGExamMstSearchDTO);
+    }
+
+    /**
+     * 사용자 평가지
+     */
+    public EXGExamEdctnPtcptMst selectUserExamDtl(EXGExamMstSearchDTO eXGExamMstSearchDTO) throws Exception{
+        if(eXGExamMstSearchDTO.getPtcptSeq() == null){
+            new Exception("NOT PTCPT SEQ");
+        }
+        if(eXGExamMstSearchDTO.getMemSeq() == null){
+            new Exception("NOT MEM SEQ");
+        }
         return eBEExamMapper.selectUserExamDtl(eXGExamMstSearchDTO);
     }
 
@@ -241,6 +284,7 @@ public class EBEExamServiceImpl implements EBEExamService {
         List<EXGExamQstnDtlDTO> eXGExamExmplDtlDTOList = eBEExamMapper.getExamQstnCanswList(eXGExamMstSearchDTO);
         if(eXGExamEdctnPtcptRspnMst.getMtlccList() != null && eXGExamEdctnPtcptRspnMst.getMtlccList().size() > 0 && eXGExamExmplDtlDTOList != null && eXGExamExmplDtlDTOList.size() > 0)
         {
+            eXGExamEdctnPtcptRspnMst.setQstnList( new ArrayList<EXGExamQstnRspnDtlDTO>() );
             boolean isSuccess = false;
             for(EXGExamQstnDtlDTO eXGExamQstnDtlDTO : eXGExamExmplDtlDTOList)
             {
@@ -275,6 +319,14 @@ public class EBEExamServiceImpl implements EBEExamService {
                 if(isSuccess){
                     totScord += eXGExamQstnDtlDTO.getScord();
                 }
+                EXGExamQstnRspnDtlDTO eXGExamQstnRspnDtlDTO = new EXGExamQstnRspnDtlDTO();
+                eXGExamQstnRspnDtlDTO.setExamPtcptSeq( examPtcptSeq );
+                eXGExamQstnRspnDtlDTO.setPtcptSeq( eXGExamEdctnPtcptRspnMst.getPtcptSeq() );
+                eXGExamQstnRspnDtlDTO.setExamSeq( eXGExamEdctnPtcptRspnMst.getExamSeq() );
+                eXGExamQstnRspnDtlDTO.setQstnSeq( eXGExamQstnDtlDTO.getQstnSeq() );
+                eXGExamQstnRspnDtlDTO.setCanswYn( (isSuccess) ? "Y" : "N" );
+                eXGExamQstnRspnDtlDTO.setQstnScore( (isSuccess) ? eXGExamQstnDtlDTO.getScord() : 0 );
+                eXGExamEdctnPtcptRspnMst.getQstnList().add(eXGExamQstnRspnDtlDTO);
             }
         }
         //교육 참여 마스터 등록
@@ -285,14 +337,81 @@ public class EBEExamServiceImpl implements EBEExamService {
         eXGExamEdctnPtcptRspnMst.setExamPtcptSeq( examPtcptSeq );
         eXGExamEdctnPtcptRspnMst.setExamScore( totScord );
         actCnt = eBEExamMapper.insertExamPtcptMst(eXGExamEdctnPtcptRspnMst);
+
         if(eXGExamEdctnPtcptRspnMst.getSbjctList() != null && eXGExamEdctnPtcptRspnMst.getSbjctList().size() > 0){
+            for(EXGExamEdctnPtcptSbjctRspnMst eXGExamEdctnPtcptSbjctRspnMst : eXGExamEdctnPtcptRspnMst.getSbjctList())
+            {
+                EXGExamQstnRspnDtlDTO eXGExamQstnRspnDtlDTO = new EXGExamQstnRspnDtlDTO();
+                eXGExamQstnRspnDtlDTO.setExamPtcptSeq( examPtcptSeq );
+                eXGExamQstnRspnDtlDTO.setPtcptSeq( eXGExamEdctnPtcptRspnMst.getPtcptSeq() );
+                eXGExamQstnRspnDtlDTO.setExamSeq( eXGExamEdctnPtcptRspnMst.getExamSeq() );
+                eXGExamQstnRspnDtlDTO.setQstnSeq( eXGExamEdctnPtcptSbjctRspnMst.getQstnSeq() );
+                eXGExamQstnRspnDtlDTO.setCanswYn( "X" );
+                eXGExamQstnRspnDtlDTO.setQstnScore(  0 );
+                eXGExamEdctnPtcptRspnMst.getQstnList().add(eXGExamQstnRspnDtlDTO);
+            }
             eBEExamMapper.insertExamPtcptSbjctRspnDtl(eXGExamEdctnPtcptRspnMst);
         }
         if(eXGExamEdctnPtcptRspnMst.getMtlccList() != null && eXGExamEdctnPtcptRspnMst.getMtlccList().size() > 0){
             eBEExamMapper.insertExamPtcptMtlccRspnDtl(eXGExamEdctnPtcptRspnMst);
         }
+        if(eXGExamEdctnPtcptRspnMst.getQstnList() != null && eXGExamEdctnPtcptRspnMst.getQstnList().size() > 0){
+            eBEExamMapper.insertExamQstnRspnDtl(eXGExamEdctnPtcptRspnMst);
+        }
+        //수료 자동 처리
+        //교육 차수의 수료 자동화 여부가 Y이면 객관식 총합으로 비고 후 Y, 일시저장
+        //교육 차수의 수료 자동화 여부가 N이면 나두고.
         eBEExamMapper.updateEdctnPtcptScord(eXGExamEdctnPtcptRspnMst);
         return actCnt;
     }
 
+    /**
+     * 주관식 답변 수정
+     */
+    public int updateEdctnSbjctRspn(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst, EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst, HttpServletRequest request) throws Exception{
+        int actCnt = 0;
+        EXGExamMstSearchDTO eXGExamMstSearchDTO = new EXGExamMstSearchDTO();
+        eXGExamMstSearchDTO.setDetailsKey( String.valueOf(eXGExamEdctnPtcptRspnMst.getExamSeq()) );
+        int totalScord = 0;
+        if(eXGExamEdctnPtcptRspnMst.getSbjctList() != null && eXGExamEdctnPtcptRspnMst.getSbjctList().size() > 0){
+            for(EXGExamEdctnPtcptSbjctRspnMst eXGExamEdctnPtcptSbjctRspnMst : eXGExamEdctnPtcptRspnMst.getSbjctList())
+            {
+                log.error("eXGExamEdctnPtcptSbjctRspnMst : {}", eXGExamEdctnPtcptSbjctRspnMst);
+                EXGExamQstnRspnDtlDTO eXGExamQstnRspnDtlDTO = new EXGExamQstnRspnDtlDTO();
+                eXGExamQstnRspnDtlDTO.setExamPtcptSeq( eXGExamEdctnPtcptRspnMst.getExamPtcptSeq() );
+                eXGExamQstnRspnDtlDTO.setPtcptSeq( eXGExamEdctnPtcptRspnMst.getPtcptSeq() );
+                eXGExamQstnRspnDtlDTO.setExamSeq( eXGExamEdctnPtcptRspnMst.getExamSeq() );
+                eXGExamQstnRspnDtlDTO.setQstnSeq( eXGExamEdctnPtcptSbjctRspnMst.getQstnSeq() );
+                eXGExamQstnRspnDtlDTO.setCanswYn( eXGExamEdctnPtcptSbjctRspnMst.getCanswYn() );
+                //정답이면 점수 합산
+                if("Y".equals(eXGExamEdctnPtcptSbjctRspnMst.getCanswYn()))
+                {
+                    totalScord += eXGExamEdctnPtcptSbjctRspnMst.getScord();
+                    eXGExamQstnRspnDtlDTO.setQstnScore(  eXGExamEdctnPtcptSbjctRspnMst.getScord() );
+                }else{
+                    eXGExamQstnRspnDtlDTO.setQstnScore(  0 );
+                }
+                //질문 응답 수정
+                eBEExamMapper.updateExamPtcptQstnSbjctRspnDtl(eXGExamQstnRspnDtlDTO);
+                //주관식 응답 수정
+                eBEExamMapper.updateExamPtcptSbjctRspnDtl(eXGExamQstnRspnDtlDTO);
+            }
+        }
+        //저장된 점수 합산
+        totalScord += eXGExamEdctnPtcptMst.getExamScore();
+        //수료 자동화 여부
+        if("Y".equals(eXGExamEdctnPtcptMst.getCmptnAutoYn())){
+            //평가 점수 체크
+            if(totalScord >= eXGExamEdctnPtcptMst.getCmptnJdgmtCdNm()){
+                //수료 여부
+                eXGExamEdctnPtcptRspnMst.setCmptnYn( "Y" );
+            }else{
+                eXGExamEdctnPtcptRspnMst.setCmptnYn( "N" );
+            }
+            //출석체크
+        }
+        eXGExamEdctnPtcptRspnMst.setExamScore(totalScord);
+        eBEExamMapper.updateEdctnPtcptScord(eXGExamEdctnPtcptRspnMst);
+        return actCnt;
+    }
 }

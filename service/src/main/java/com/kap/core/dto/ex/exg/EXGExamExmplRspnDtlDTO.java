@@ -3,15 +3,13 @@ package com.kap.core.dto.ex.exg;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
-import java.util.List;
 
 /**
- *  교육 시험 마스터 DTO
+ *  교육 시험 질문 답변 상세 DTO
  * <pre>
  * << 개정이력(Modification Information) >>
  *
@@ -29,31 +27,22 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper=false)
-@Schema(title = "교육 시험 질문 상세")
-public class EXGExamQstnDtlDTO extends BaseDTO  {
+@Schema(title = "교육 시험 질문 답변 상세")
+public class EXGExamExmplRspnDtlDTO extends BaseDTO  {
     @Schema(title = "시험순번", example = "숫자")
     private Integer examSeq;
     @Schema(title = "질문순번", example = "숫자")
     private Integer qstnSeq;
-
-    @Schema(title = "설문유형코드", example = "EXG_A,EXG_B,EXG_C,EXG_D")
-    @NotNull
-    private String srvTypeCd;
-
-    @Schema(title = "설문유형코드명", example = "객관식(단일)")
-    private String SrvTypeCdNm;
-
-    @Schema(title = "질문명", example = "")
-    @NotNull
-    private String qstnNm;
-
-    @Schema(title = "질문순서", example = "0부터")
-    @NotNull
-    private Integer qstnOrd;
-
-    @Schema(title = "배점", example = "")
-    @NotNull
-    private Integer scord;
+    @Schema(title = "답변순번", example = "숫자")
+    private Integer examPtcptSeq;
+    @Schema(title = "참여순번", example = "숫자")
+    private Integer ptcptSeq;
+    @Schema(title = "보기순번", example = "숫자")
+    private Integer exmplSeq;
+    @Schema(title = "주관식 답변", example = "")
+    private String sbjctRply;
+    @Schema(title = "정답여부", example = "")
+    private String canswYn;
 
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
@@ -67,20 +56,4 @@ public class EXGExamQstnDtlDTO extends BaseDTO  {
     private String modDtm;
     @Schema(title = "수정ID")
     private String modId;
-
-    @Schema(title = "교육 시험 질문 보기 리스트")
-    private List<EXGExamExmplDtlDTO> exExamExmplDtlList;
-
-    @Schema(title = "교육 시험 질문 답변 리스트")
-    private List<EXGExamExmplRspnDtlDTO> exExamExmplRspnDtlList;
-
-    @Schema(title = "사용자 시험 질문 정답 보기(채점)", description = "group_concat(exmpl_seq SEPARATOR ',')")
-    @Hidden
-    private String exmplCansw;
-
-    @Schema(title = "사용자 시험 질문 정답 여부", description = "")
-    private String canswYn;
-    @Schema(title = "사용자 시험 질문 응답 점수", description = "")
-    private Integer qstnScore;
-
 }

@@ -160,7 +160,12 @@ public class EBEExamController {
         {
             try
             {
-                EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst = eBEExamService.selectUserExamDtl(eXGExamEdctnPtcptRspnMst.getPtcptSeq());
+                EXGExamMstSearchDTO eXGExamMstSearchDTO = new EXGExamMstSearchDTO();
+                eXGExamMstSearchDTO.setPtcptSeq( eXGExamEdctnPtcptRspnMst.getPtcptSeq() );
+                eXGExamMstSearchDTO.setMemSeq( eXGExamEdctnPtcptRspnMst.getMemSeq() );
+                EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst = eBEExamService.selectUserExamDtl(eXGExamMstSearchDTO);
+
+
                 //시험 조건
                 if(eXGExamEdctnPtcptMst == null){
                     throw new BusinessException(ErrorCode.CANNOT_READ);
@@ -186,6 +191,8 @@ public class EBEExamController {
             }
             return eXGExamEdctnPtcptRspnMst;
         }
+
+
 
     }
 }

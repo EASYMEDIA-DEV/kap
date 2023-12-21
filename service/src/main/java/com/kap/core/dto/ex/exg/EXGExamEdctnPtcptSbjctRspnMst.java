@@ -38,7 +38,9 @@ public class EXGExamEdctnPtcptSbjctRspnMst {
     @Schema(title = "질문순번")
     private Integer qstnSeq;
     @Schema(title = "주관식답변")
-    private Integer sbjctRply;
+    private String sbjctRply;
     @Schema(title = "정답여부")
     private String canswYn;
+    @Schema(title = "점수")
+    private Integer scord;
 }

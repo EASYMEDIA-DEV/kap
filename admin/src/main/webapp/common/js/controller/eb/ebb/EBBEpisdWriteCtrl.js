@@ -1150,8 +1150,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
-
-
+			//2023.12.21 참여자 목록 시험 응시 클릭
+			btnExamPtcptSeq :{
+				event : {
+					click : function() {
+						//레이어 팝업
+						cmmCtrl.paramAjax(function(data){
+							$(".exgExamUserDtlLayer").html(data);
+							$(".exgExamUserDtlLayer").show();
+							$(".exgExamUserDtlLayer").modal("show");
+						}, "./getExamUserDtl", { ptcptSeq : $(this).data("ptcptSeq"), memSeq : $(this).data("memSeq"), _csrf:$('meta[name=X-CSRF-TOKEN]').attr('content') }, "html");
+					}
+				}
+			},
 
 },
 		immediately : function(event) {

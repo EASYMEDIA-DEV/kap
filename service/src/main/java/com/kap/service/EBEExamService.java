@@ -50,9 +50,18 @@ public interface EBEExamService {
     public EXGExamMstInsertDTO selectExamDtl(EXGExamMstSearchDTO eXGExamMstSearchDTO) throws Exception;
 
     /**
+     * 평가지 답변 상세
+     */
+    public EXGExamMstInsertDTO selectExamRspnDtl(EXGExamMstSearchDTO eXGExamMstSearchDTO) throws Exception;
+
+    /**
      * 사용자 평가지
      */
     public EXGExamEdctnPtcptMst selectUserExamDtl(int ptcptSeq) throws Exception;
+    /**
+     * 사용자 평가지
+     */
+    public EXGExamEdctnPtcptMst selectUserExamDtl(EXGExamMstSearchDTO eXGExamMstSearchDTO) throws Exception;
 
     /**
      * 답변 등록
@@ -60,4 +69,8 @@ public interface EBEExamService {
     public int insertEdctnRspn(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst, HttpServletRequest request) throws Exception;
 
 
+    /**
+     * 주관식 답변 수정
+     */
+    public int updateEdctnSbjctRspn(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst, EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst, HttpServletRequest request) throws Exception;
 }
