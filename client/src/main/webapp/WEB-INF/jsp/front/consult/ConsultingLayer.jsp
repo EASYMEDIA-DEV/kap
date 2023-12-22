@@ -16,32 +16,29 @@
                                         <div class="article-list-w txt-list">
                                             <dl class="list-item">
                                                 <dt class="f-body1">전문위원</dt>
-                                                <dd class="f-body2">홍길동</dd>
+                                                <dd class="f-body2 name"></dd>
                                             </dl>
                                             <dl class="list-item">
                                                 <dt class="f-body1">이메일</dt>
-                                                <dd class="f-body2">abcabc@abc.com</dd>
+                                                <dd class="f-body2 email"></dd>
                                             </dl>
                                             <dl class="list-item">
                                                 <dt class="f-body1">업종/분야</dt>
                                                 <dd class="f-body2">
-                                                    <p class="box-label"><span>금속분야</span></p>
-                                                    <p class="box-label"><span>금속분야</span></p>
+                                                    <p class="box-label cmssrCbsnCd"><span></span></p>
                                                 </dd>
                                             </dl>
                                             <dl class="list-item">
                                                 <dt class="f-body1">경력</dt>
-                                                <dd class="f-body2">
-                                                    <p>자동차안전연구원 부원장</p>
-                                                    <p>연구개발실장</p>
-                                                    <p>결함조사실장</p>
+                                                <dd class="f-body2 cmssrMjrCarerCntn">
+                                                    <p></p>
                                                 </dd>
                                             </dl>
                                             <dl class="list-item">
                                                 <dt class="f-body1">컨설팅 분야</dt>
                                                 <dd class="f-body2">
-                                                    <p>자동차 및 자동차부품 Recall(제작결함) 대응</p>
-                                                    <p>자동차 관리법 업무 지원</p>
+                                                    <p></p>
+                                                    <p></p>
                                                 </dd>
                                             </dl>
                                         </div>
