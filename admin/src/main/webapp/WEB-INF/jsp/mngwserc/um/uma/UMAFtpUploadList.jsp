@@ -42,7 +42,7 @@
 				<hr class="mt0" />
 				<div class="clearfix">
 					<h6 class="pull-left mt0">
-						<em class="ion-play mr-sm"></em>${pageTitle} 이미지 목록
+						<em class="ion-play mr-sm"></em>${pageTitle} 목록
 					</h6>
 					<div class="pull-right ml-sm">
 						<select class="form-control input-sm listRowSizeContainer" >
@@ -52,7 +52,7 @@
 						</select>
 					</div>
 					<div class="pull-right">
-						<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete">선택삭제</button>
+						<button type="button" class="btn btn-danger btn-sm mb-sm" id="ftpBtnDelete">선택삭제</button>
 					</div>
 
 				</div>

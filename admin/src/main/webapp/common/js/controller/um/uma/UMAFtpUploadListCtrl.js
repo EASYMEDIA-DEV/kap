@@ -46,7 +46,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 }
             },
             //데이터 삭제
-            btnDelete : {
+            ftpBtnDelete : {
                 event : {
                     click : function() {
                         var frmDataObj    = $("#frmSearch")
@@ -66,7 +66,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                                 msg = msgCtrl.getMsg("success.del.target." + delType);
                                             }
                                             alert(msg);
-                                            $frmDataObj.find("#btnSearch").click();
+                                            location.reload(true);
                                         }
                                         else{
                                             alert(msgCtrl.getMsg("fail.act"));

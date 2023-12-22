@@ -617,13 +617,14 @@
 		     ,prcs_mst.cmptn_jdgmt_cd
 		     ,(select code_mst.cd_nm from co_code_mst code_mst where code_mst.cd = prcs_mst.cmptn_jdgmt_cd and code_mst.cd_id = 'CMPTN_JDGMT') cmptn_jdgmt_cd_nm
 		     , ptcpt_mst.exam_score
+		     , prcs_mst.stduy_mthd_cd
 		FROM ep_edctn_ptcpt_mst ptcpt_mst JOIN ed_edctn_episd_mst episd_mst
 											   ON episd_mst.edctn_seq = ptcpt_mst.edctn_seq AND episd_mst.episd_year = ptcpt_mst.episd_year AND episd_mst.episd_ord = ptcpt_mst.episd_ord
 										  JOIN ed_edctn_prcs_mst prcs_mst ON prcs_mst.edctn_seq = ptcpt_mst.edctn_seq
 										  JOIN co_mem_mst mem_mst on mem_mst.mem_seq = ptcpt_mst.mem_seq
 		WHERE ptcpt_mst.ptcpt_seq = #{ptcptSeq} AND ptcpt_mst.mem_seq = #{memSeq}
 		  <if test="siteGubun == 'front'.toString()">
-		  	and ptcpt_mst.stts_cd = 'R' AND prcs_mst.jdgmt_yn = 'Y' AND NOW() between episd_mst.exam_strt_dtm and episd_mst.exam_end_dtm
+		  	and ptcpt_mst.stts_cd = 'EDU_STTS_CD01' AND prcs_mst.jdgmt_yn = 'Y' AND NOW() between episd_mst.exam_strt_dtm and episd_mst.exam_end_dtm
 		  </if>
 	</select>
 
@@ -831,10 +832,70 @@
 		</if>
 		<if test="cmptnYn != null and cmptnYn == 'N'.toString()">
 			, cmptn_yn = #{cmptnYn}
+			, cmptn_dtm = null
 		</if>
 		where
 			ptcpt_seq = #{ptcptSeq}
 	</update>
+
+	<!--
+		쿼리명 : EXGExamMapper.getExamRspnSum
+		설  명 : 교육 참여 응답 점수
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getExamRspnSum" parameterType="EXGExamMstSearchDTO" resultType="java.lang.Integer">
+		select /* EXGExamMapper.getExamRspnSum */
+			sum(ifnull(a.qstn_score, 0))
+		from
+			ep_edctn_qstn_rspn_dtl a
+		where a.ptcpt_seq = #{ptcptSeq} and a.exam_seq = #{examSeq}
+	</select>
+
+	<!--
+		쿼리명 : EXGExamMapper.getEdctnAtndcSum
+		설  명 : 교육 참여 출석 전체, 출석 수 주말 제외
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getEdctnAtndcSum" parameterType="EXGExamEdctnPtcptMst" resultType="java.util.HashMap">
+		select /* EXGExamMapper.getEdctnAtndcSum */
+		    count(1) totEdctn
+		     , sum(
+					case
+							when nullif(atndc_dtm, '') is not null
+						then 1
+						else 0
+					end
+				) strtEdctn
+		from
+			ep_edctn_atndc_dtl
+		where ptcpt_seq = #{ptcptSeq} and dayofweek(edctn_dt) != 1 and dayofweek(edctn_dt) != 7
+	</select>
+
+	<!--
+		쿼리명 : EXGExamMapper.getEdctnLtcrSum
+		설  명 : 교육 참여 온라인 강의 전체, 수강 수
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<select id="getEdctnLtcrSum" parameterType="EXGExamEdctnPtcptMst" resultType="java.util.HashMap">
+		select /* EXGExamMapper.getEdctnLtcrSum */
+			   count(1) totLctr
+			 , sum(
+				case
+					when nullif(ptctp_lctr_dtl.ptcpt_seq, '') is not null
+						then 1
+					else 0
+					end
+			   ) cntLctr
+		from ed_edctn_lctr_dtl lctr_dtl
+				 left join ep_edctn_lctr_dtl ptctp_lctr_dtl on ptctp_lctr_dtl.lctr_seq = lctr_dtl.lctr_seq AND ptctp_lctr_dtl.ptcpt_seq = #{ptcptSeq}
+		where lctr_dtl.edctn_seq = #{edctnSeq}
+	</select>
 
 </mapper>
 

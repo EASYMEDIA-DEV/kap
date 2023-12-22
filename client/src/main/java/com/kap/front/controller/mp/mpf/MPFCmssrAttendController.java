@@ -1,25 +1,23 @@
 package com.kap.front.controller.mp.mpf;
 
 import com.kap.core.dto.*;
-import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
-import com.kap.core.dto.mp.mpi.MPIWthdrwDto;
+import com.kap.core.dto.mp.mpf.MPFFileDto;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
-import com.kap.service.mp.mpa.MPAUserService;
 import com.kap.service.mp.mpd.MPDCmtService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -53,6 +51,11 @@ public class MPFCmssrAttendController {
 
 
 
+    //파일 업로드 유틸
+    private final COFileUtil cOFileUtil;
+    //파일 업로드 확장자
+    @Value("${app.file.fileExtns}")
+    private String imgUploadFileExtns;
     /**
      * 근태 페이지
      * @return
@@ -150,6 +153,81 @@ public class MPFCmssrAttendController {
         return "jsonView";
     }
 
+    /** 파일 찾기 시 파일 업로드
+     *
+     *
+     */
+    @RequestMapping(value="/insert-fileUpload")
+    public String testFileUpload(final MultipartHttpServletRequest multiRequest,COFileDTO coFileDTO ,ModelMap modelMap) throws Exception
+    {
+        List<COFileDTO> result = null;
 
+        Map<String, MultipartFile> files = multiRequest.getFileMap();
+        int atchFileCnt = 0;
+        if (!files.isEmpty())
+        {
+            result = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 10485760);
+            if (result.size() > 0)
+            {
+                if(!imgUploadFileExtns.contains(result.get(0).getFileExtn())) {
+                    JSONObject errObj = new JSONObject();
+                    errObj.put("message", "파일 업로드에 실패하였습니다. \n관리자에게 문의해주세요.");
+                    modelMap.addAttribute("error", errObj);
+                }
+
+                if(coFileDTO!=null) {
+                    result.get(0).setFileSeq(coFileDTO.getFileSeq());
+                    result.get(0).setFileOrd(coFileDTO.getFileOrd());
+                }
+
+                result.get(0).setStatus("success");
+            }
+        }
+        modelMap.addAttribute("fileName", result);
+
+        return "jsonView";
+    }
+
+    /**
+     * 파일 조회
+     *
+     */
+    @RequestMapping(value="/select-file")
+    public String selectImage(MPFFileDto mpfFileDto , ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnKick" ,mpdCmtService.selectKenCmpnKickImage(mpfFileDto));
+            modelMap.addAttribute("rtnLvl" ,mpdCmtService.selectKenCmpnLvlImage(mpfFileDto));
+
+        }
+        catch (Exception e)
+        {
+            if (log.isErrorEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * 파일 수정
+     * @param mpfFileDto
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value="/update-consult")
+    public String updateCnstg(MPFFileDto mpfFileDto ) throws Exception
+    {
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+        mpfFileDto.setModId(cOUserDetailsDTO.getId());
+        mpfFileDto.setModIp(cOUserDetailsDTO.getLoginIp());
+        mpdCmtService.updateCnstgRsumeMst(mpfFileDto);
+        return "jsonView";
+    }
 
 }

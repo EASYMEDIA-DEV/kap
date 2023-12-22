@@ -45,6 +45,20 @@
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>
+                            <c:if test= "${cdList.cd eq 'COMPANY01003'}">
+
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                </label>
+                            </c:if>
+                            <c:if test= "${cdList.cd eq 'COMPANY01004'}">
+
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                </label>
+                            </c:if>
                         </c:forEach>
                     </div>
                 </div>

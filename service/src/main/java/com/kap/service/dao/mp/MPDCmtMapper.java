@@ -2,6 +2,7 @@ package com.kap.service.dao.mp;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
+import com.kap.core.dto.mp.mpf.MPFFileDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -48,6 +49,11 @@ public interface MPDCmtMapper {
     MPDKenDto selectKenCmpnDtl(MPDKenDto mpdKenDto);
 
     void insertAtend(MPDKenDto mpdKenDto);
+
+    MPFFileDto selectKenCmpnKickImage(MPFFileDto mpfFileDto);
+    MPFFileDto selectKenCmpnLvlImage(MPFFileDto mpfFileDto);
+
+    void updateCnstgRsumeMst(MPFFileDto mpfFileDto);
 
 
 }

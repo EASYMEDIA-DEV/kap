@@ -2,6 +2,7 @@ package com.kap.service.mp.mpd;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
+import com.kap.core.dto.mp.mpf.MPFFileDto;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -101,6 +102,13 @@ public interface MPDCmtService {
       */
      MPDKenDto selectKenCmpnDtl(MPDKenDto mpdKenDto) throws Exception;
 
+
+     MPFFileDto selectKenCmpnKickImage(MPFFileDto mpfFileDto) throws Exception;
+
+     MPFFileDto selectKenCmpnLvlImage(MPFFileDto mpfFileDto) throws Exception;
+
+
+     void updateCnstgRsumeMst(MPFFileDto mpfFileDto) throws Exception;
 
 
 

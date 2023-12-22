@@ -437,7 +437,7 @@ public class EBBEpisdController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/ex/exg/EXGExamUserDtlLayer";
+        return "mngwserc/ex/exg/EXGExamUserDtl";
     }
 
     /**

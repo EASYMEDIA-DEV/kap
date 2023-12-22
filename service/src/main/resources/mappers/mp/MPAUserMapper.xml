@@ -47,6 +47,7 @@
         , pstn_cd
         , reg_id
         , cmssr_mjr_carer_cntn
+        , birth
         FROM ( SELECT MEM.MEM_SEQ
         , MEM.ID
         , MEM.NAME

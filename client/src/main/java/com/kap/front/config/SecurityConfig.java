@@ -61,6 +61,8 @@ public class SecurityConfig {
                         ,"/nice/**"
                         ,"/my-page/member/intrduction/update-company-chg"
                         ,"/my-page/member/intrduction/confirm-comp"
+                        ,"/my-page/member/attend/insert-fileUpload"
+                        , "/file/view"
                         , "/**/*write*")
                 .and()
                 .exceptionHandling()

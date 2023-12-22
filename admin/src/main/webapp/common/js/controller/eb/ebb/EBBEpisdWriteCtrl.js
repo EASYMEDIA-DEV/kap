@@ -1156,9 +1156,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					click : function() {
 						//레이어 팝업
 						cmmCtrl.paramAjax(function(data){
-							$(".exgExamUserDtlLayer").html(data);
-							$(".exgExamUserDtlLayer").show();
-							$(".exgExamUserDtlLayer").modal("show");
+							$("#exgExamUserDtlLayerContainer").html(data);
+							$("#exgExamUserDtlLayer").one('show.bs.modal', function() {
+							}).one('hidden.bs.modal', function() {
+							}).one('choice', function(data, param) {
+								search(1)
+							}).modal("show");
+
 						}, "./getExamUserDtl", { ptcptSeq : $(this).data("ptcptSeq"), memSeq : $(this).data("memSeq"), _csrf:$('meta[name=X-CSRF-TOKEN]').attr('content') }, "html");
 					}
 				}

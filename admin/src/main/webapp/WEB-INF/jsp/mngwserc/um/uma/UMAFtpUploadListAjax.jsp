@@ -6,15 +6,15 @@
             <tr data-total-count="${rtnData.totalCount}">
                 <td>
                     <label class="checkbox-inline c-checkbox">
-                        <input type="checkbox" value="${list.seq}" name="delValueList" class="checkboxSingle notRequired" />
+                        <input type="checkbox" value="${list.pubcSeq}" name="delValueList" class="checkboxSingle notRequired" />
                         <span class="ion-checkmark-round"></span>
                     </label>
                 </td>
-                <td>${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
+                <td>${ rtnData.totalCount - status.index}</td>
                 <td>${list.orgnFileNm}</td>
-                <td>https://127.0.0.1:9012/${list.phyPath}</td>
-                <td>${ list.regName }</td>
-                <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
+                <td>http://mng.kap.easymedia.kr${list.webPath}</td>
+                <td>${ list.regName}(${list.regId})</td>
+                <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '') }</td>
             </tr>
         </c:forEach>
 

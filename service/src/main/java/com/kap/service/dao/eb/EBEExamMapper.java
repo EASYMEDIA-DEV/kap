@@ -4,6 +4,7 @@ import com.kap.core.dto.COEgovSeqDTO;
 import com.kap.core.dto.ex.exg.*;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -149,5 +150,18 @@ public interface EBEExamMapper {
      */
     public int updateEdctnPtcptScord(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
 
+    /**
+     * 교육 참여 응답 점수
+     */
+    public int getExamRspnSum(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
 
+    /**
+     * 교육 참여 출석 전체, 출석 수 주말 제외
+     */
+    public HashMap getEdctnAtndcSum(EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst);
+
+    /**
+     * 교육 참여 온라인 강의 전체, 수강 수
+     */
+    public HashMap getEdctnLtcrSum(EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst);
 }

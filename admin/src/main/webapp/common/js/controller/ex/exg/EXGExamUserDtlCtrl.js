@@ -68,7 +68,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             }
                         })
                         cmmCtrl.jsonAjax(function(data){
-                            $(".exgExamUserDtlLayer").modal("hide");
+                            ctrl.obj.trigger("choice", null);
+                            $("#exgExamUserDtlLayer").modal("hide");
                         }, actionUrl, rspnObj, "json")
                     }
                 },
