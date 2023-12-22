@@ -961,4 +961,30 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 비회원 교육 과정 마스터
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl nmbEdctnPrcsSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("NMB_EDCTN_PRCS_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 비회원 교육 참여 마스터
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl nmbEdctnPtcptSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("NMB_EDCTN_PTCPT_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }
