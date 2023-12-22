@@ -364,4 +364,62 @@
                 )
     </insert>
 
+
+    <!--
+쿼리명 : MPDCmtMapper.selectKenCmpnKickImage
+설  명 : 킥오프 이미지
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.23    양현우       최초생성
+-->
+    <select id="selectKenCmpnKickImage" parameterType="MPFFileDto" resultType="MPFFileDto">
+        select dtl.file_seq  /* MPDCmtMapper.selectKenCmpnKickImage */
+             , dtl.file_ord
+             , dtl.orgn_file_nm
+        from cp_cnstg_rsume_mst mst
+         left outer join co_file_dtl dtl
+          on mst.kickf_file_seq  = dtl.file_seq
+           where dtl.use_yn='Y'
+            and cnstg_seq  =#{cnstgSeq}
+    </select>
+
+    <!--
+쿼리명 : MPDCmtMapper.selectKenCmpnLvlImage
+설  명 : 렙업 이미지
+수정일      수정자       수정내용
+==========   ========   ==============
+2023.11.23    양현우       최초생성
+-->
+    <select id="selectKenCmpnLvlImage" parameterType="MPFFileDto" resultType="MPFFileDto">
+        select dtl.file_seq    /* MPDCmtMapper.selectKenCmpnLvlImage */
+             , dtl.file_ord
+             , dtl.orgn_file_nm
+        from cp_cnstg_rsume_mst mst
+         left outer join co_file_dtl dtl
+          on mst.lvlup_file_seq  = dtl.file_seq
+           where dtl.use_yn='Y'
+            and cnstg_seq  =#{cnstgSeq}
+    </select>
+
+    <!--
+     쿼리명 : MPDCmtMapper.updateCnstgRsumeMst
+     설  명 : 컨설팅 이미지 수정
+      수정일     수정자       수정내용
+    ==========   ======    ==============
+    2023.12.22   양현우       최초생성
+-->
+    <update id="updateCnstgRsumeMst" parameterType="MPFFileDto">
+    update cp_cnstg_rsume_mst
+       set  mod_id =#{modId}
+        <if test="kickfFileSeq != ''.toString() and  kickfFileSeq != null">
+         , kickf_file_seq = #{kickfFileSeq}
+        </if>
+        <if test="lvlupFileSeq != ''.toString() and lvlupFileSeq != null">
+         , lvlup_file_seq =#{lvlupFileSeq}
+        </if>
+         , mod_ip =#{modIp}
+         , mod_dtm = now()
+        where cnstg_seq=#{cnstgSeq}
+    </update>
+
 </mapper>

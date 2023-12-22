@@ -7,6 +7,7 @@ import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpd.MPDKenDto;
+import com.kap.core.dto.mp.mpf.MPFFileDto;
 import com.kap.service.*;
 import com.kap.service.dao.mp.MPAUserMapper;
 import com.kap.service.dao.mp.MPDCmtMapper;
@@ -233,6 +234,26 @@ public class MPDCmtServiceImpl implements MPDCmtService {
     @Override
     public MPDKenDto selectKenCmpnDtl(MPDKenDto mpdKenDto) throws Exception {
         return mpdCmtMapper.selectKenCmpnDtl(mpdKenDto);
+    }
+
+    @Override
+    public MPFFileDto selectKenCmpnKickImage(MPFFileDto mpfFileDto) throws Exception {
+        return mpdCmtMapper.selectKenCmpnKickImage(mpfFileDto);
+    }
+
+    @Override
+    public MPFFileDto selectKenCmpnLvlImage(MPFFileDto mpfFileDto) throws Exception {
+        return mpdCmtMapper.selectKenCmpnLvlImage(mpfFileDto);
+    }
+
+    @Override
+    public void updateCnstgRsumeMst(MPFFileDto mpfFileDto) throws Exception {
+        HashMap<String, Integer> kickFile = cOFileService.setFileInfo(mpfFileDto.getKickFile());
+        HashMap<String, Integer> lvlFile = cOFileService.setFileInfo(mpfFileDto.getLvlFile());
+        mpfFileDto.setKickfFileSeq(kickFile.get(null));
+        mpfFileDto.setLvlupFileSeq(lvlFile.get(null));
+
+        mpdCmtMapper.updateCnstgRsumeMst(mpfFileDto);
     }
 
 

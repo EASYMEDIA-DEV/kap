@@ -2,6 +2,17 @@
 
 
 <div id="wrap" class="mypage" data-controller="controller/mp/mpf/MPFCmssrAttendController"><!-- 마이페이지 mypage 클래스 추가 -->
+    <form name="formUploadSubmit" id="formUploadSubmit">
+        <input type="hidden" name="fileKickSeq" id="fileKickSeq" class="notRequired"/>
+        <input type="hidden" name="fileKickOrd" id="fileKickOrd" class="notRequired"/>
+        <input type="hidden" name="fileLvlSeq" id="fileLvlSeq" class="notRequired"/>
+        <input type="hidden" name="fileLvlOrd" id="fileLvlOrd" class="notRequired"/>
+        <input type="hidden" name="cnstgSeq" id="cnstgSeq" class="notRequired"/>
+        <input type="hidden" name="fileSeq" id="fileSeq" class="notRequired"/>
+        <input type="hidden" name="fileOrd" id="fileOrd" class="notRequired"/>
+        <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+    </form>
     <!-- content 영역 start -->
     <div class="cont-wrap">
         <form name="formAttendSubmit" id="formAttendSubmit"  >
@@ -29,7 +40,7 @@
                                     <p class="f-title1 gray-txt"><span class="key-txt">${loginMap.name}</span> 위원님 <span class="key-txt"> ${now_dt.date[0]}년  ${now_dt.date[1]}월  ${now_dt.date[2]}일</span> <br>어디로 출근하시나요?</p>
                                 </div>
                                 <div class="btn-wrap">
-                                    <a class="btn-text-icon black-arrow" href="javascript:"><span>자료 업로드</span></a>
+                                    <a class="btn-text-icon black-arrow" id="fileUpload" href="javascript:"><span>자료 업로드</span></a>
                                 </div>
                             </div>
 
@@ -126,7 +137,7 @@
                                                                             <select id="guidePartCmpn2" title="지도부품사 선택" name="guidePartCmpn2" class="notRequired" title="지도부품사2" ${rtnDataCmpn.atndcCd == null ? '' : 'disabled'}>
                                                                                 <option value="" selected="">선택</option>
                                                                                 <c:forEach var="list" items="${cmpnData.list}" varStatus="status">
-                                                                                    <option <c:if test="${rtnDataCmpn.cnstgSeq2 eq list.cnstgSeq}">selected</c:if> value="${list.firstRgnsCdNm}/${list.firstRgnsCd} ${list.scndRgnsCdNm}/${list.scndRgnsCd}/${list.cnstgSeq}/${list.cmpnNm}">${list.cmpnNm}</option>
+                                                                                    <option <c:if test="${rtnDataCmpn.cnstgSeq2 eq list.cnstgSeq}">selected</c:if> value="${list.cmpnNm}/${list.firstRgnsCdNm} ${list.scndRgnsCdNm}/${list.cnstgSeq}">${list.cmpnNm}</option>
                                                                                 </c:forEach>
                                                                             </select>
                                                                         </div>
@@ -205,5 +216,7 @@
             </div>
         </div>
         </form>
+        <jsp:include page="/WEB-INF/jsp/front/mp/mpf/MPFFileUploadSrchLayer.jsp"  />
+
     </div>
 </div>
