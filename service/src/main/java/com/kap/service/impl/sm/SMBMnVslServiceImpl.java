@@ -111,6 +111,8 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         // 2023-06-05 메인 비주얼 배너 업로드 개수 5개 제한 복원
         if (mainCnt < 5) {
             pSMBMainVslDTO.setVslSeq(mainVslIdgen.getNextIntegerId());
+            pSMBMainVslDTO.setMnHexCd(pSMBMainVslDTO.getMnHexCd().replace(" ", ""));
+            pSMBMainVslDTO.setSubHexCd(pSMBMainVslDTO.getSubHexCd().replace(" ", ""));
             pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.insertMnVsl(pSMBMainVslDTO));
         } else {
             pSMBMainVslDTO.setRespCnt(-1);
@@ -138,8 +140,10 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
             // 등록하는 글의 노출 여부가 Y일 때, 개수 체크
             pSMBMainVslDTO.setUpdateYn("Y");
             int mainCnt = sMBMnVslMapper.selectMnVslCnt(pSMBMainVslDTO);
-            // 2023-06-05 메인 비주얼 배너 업로드 개수 5개 제한 복원
+            // 메인 비주얼 배너 업로드 개수 5개 제한
             if (mainCnt < 5) {
+                pSMBMainVslDTO.setMnHexCd(pSMBMainVslDTO.getMnHexCd().replace(" ", ""));
+                pSMBMainVslDTO.setSubHexCd(pSMBMainVslDTO.getSubHexCd().replace(" ", ""));
                 pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.updateMnVsl(pSMBMainVslDTO));
             } else {
                 pSMBMainVslDTO.setRespCnt(-1);

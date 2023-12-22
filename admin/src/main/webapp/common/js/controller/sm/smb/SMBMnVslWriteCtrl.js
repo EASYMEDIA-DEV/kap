@@ -90,6 +90,30 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }
                     }
                 }
+            },
+            mnHexCd : {
+                event : {
+                    change : function(){
+                        var regex = /^[ㄱ-ㅎ|가-힣|\s|]+$/;
+                        var mnHexCd = $("#mnHexCd").val();
+                        $("#mnHexCd").val(mnHexCd.replace(" ",""));
+                        if(regex.test(mnHexCd)){
+                            $("#mnHexCd").val('');
+                        }
+                    }
+                }
+            },
+            subHexCd: {
+                event : {
+                    change : function(){
+                        var regex = /^[ㄱ-ㅎ|가-힣|\s|]+$/;
+                        var subHexCd = $("#subHexCd").val();
+                        $("#subHexCd").val(subHexCd.replace(" ",""));
+                        if(regex.test(subHexCd)){
+                            $("#subHexCd").val('');
+                        }
+                    }
+                }
             }
         },
         classname : {
