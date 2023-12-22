@@ -254,12 +254,12 @@ public class CBATechGuidanceController {
     @GetMapping(value = "/excel-down")
     public void selectManageConsultListExcel(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, HttpServletResponse response) throws Exception
     {
-       /* try
-        {*/
+        try
+        {
             cBATechGuidanceInsertDTO.setExcelYn("Y");
             //엑셀 생성
             cBATechGuidanceService.excelDownload(cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceInsertDTO), response);
-        /*}
+        }
         catch (Exception e)
         {
             if (log.isDebugEnabled())
@@ -267,7 +267,7 @@ public class CBATechGuidanceController {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
     }
 
     @RestController
