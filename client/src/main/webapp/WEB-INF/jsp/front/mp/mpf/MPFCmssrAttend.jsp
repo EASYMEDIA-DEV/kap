@@ -3,7 +3,7 @@
 
 <div id="wrap" class="mypage" data-controller="controller/mp/mpf/MPFCmssrAttendController"><!-- 마이페이지 mypage 클래스 추가 -->
     <form name="formUploadSubmit" id="formUploadSubmit">
-        <input type="hidden" name="fileKickSeq" id="fileKickSeq" class="notRequired"/>
+        <input type="hidden" name="fileKickSeq" id="fileKickSeq" class="notRequired" />
         <input type="hidden" name="fileKickOrd" id="fileKickOrd" class="notRequired"/>
         <input type="hidden" name="fileLvlSeq" id="fileLvlSeq" class="notRequired"/>
         <input type="hidden" name="fileLvlOrd" id="fileLvlOrd" class="notRequired"/>
@@ -15,6 +15,8 @@
     </form>
     <!-- content 영역 start -->
     <div class="cont-wrap">
+        <jsp:include page="/WEB-INF/jsp/front/mp/mpf/MPFFileUploadSrchLayer.jsp"  />
+        
         <form name="formAttendSubmit" id="formAttendSubmit"  >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <!--
@@ -106,7 +108,7 @@
                                                                 <div class="data-line">
                                                                     <div class="form-group">
                                                                         <div class="form-select">
-                                                                            <select id="guidePartCmpn1" title="지도부품사 선택" name="guidePartCmpn1" title="지도부품사1" class="notRequired" ${rtnDataCmpn.atndcCd == null ? '' : 'disabled'}>
+                                                                            <select id="guidePartCmpn1" name="guidePartCmpn1" title="지도부품사1" class="notRequired" ${rtnDataCmpn.atndcCd == null ? '' : 'disabled'}>
                                                                                 <option value="" selected="">선택</option>
                                                                                 <c:forEach var="list" items="${cmpnData.list}" varStatus="status">
                                                                                     <option <c:if test="${rtnDataCmpn.cnstgSeq1 eq list.cnstgSeq}">selected</c:if>  value="${list.cmpnNm}/${list.firstRgnsCdNm} ${list.scndRgnsCdNm}/${list.cnstgSeq}">${list.cmpnNm}</option>
@@ -134,7 +136,7 @@
                                                                 <div class="data-line">
                                                                     <div class="form-group">
                                                                         <div class="form-select">
-                                                                            <select id="guidePartCmpn2" title="지도부품사 선택" name="guidePartCmpn2" class="notRequired" title="지도부품사2" ${rtnDataCmpn.atndcCd == null ? '' : 'disabled'}>
+                                                                            <select id="guidePartCmpn2" title="지도부품사 선택" name="guidePartCmpn2" class="notRequired" ${rtnDataCmpn.atndcCd == null ? '' : 'disabled'}>
                                                                                 <option value="" selected="">선택</option>
                                                                                 <c:forEach var="list" items="${cmpnData.list}" varStatus="status">
                                                                                     <option <c:if test="${rtnDataCmpn.cnstgSeq2 eq list.cnstgSeq}">selected</c:if> value="${list.cmpnNm}/${list.firstRgnsCdNm} ${list.scndRgnsCdNm}/${list.cnstgSeq}">${list.cmpnNm}</option>
@@ -216,7 +218,6 @@
             </div>
         </div>
         </form>
-        <jsp:include page="/WEB-INF/jsp/front/mp/mpf/MPFFileUploadSrchLayer.jsp"  />
 
     </div>
 </div>
