@@ -127,43 +127,43 @@
                                         </tr>
                                         <tr>
                                             <th>부품사명</th>
-                                            <td>에이테크</td>
+                                            <td id="cmpnNm"></td>
                                         </tr>
                                         <tr>
                                             <th>대표자명</th>
-                                            <td>홍상직</td>
+                                            <td id="rprsntNm"></td>
                                         </tr>
                                         <tr>
                                             <th>구분</th>
-                                            <td>1차</td>
+                                            <td id="sizeCd"></td>
                                         </tr>
                                         <tr>
                                             <th>규모</th>
-                                            <td>중소기업</td>
+                                            <td id="sizeNm"></td>
                                         </tr>
                                         <tr>
                                             <th>설립일자</th>
-                                            <td>2002-07-15</td>
+                                            <td id="stbsmDt"></td>
                                         </tr>
                                         <tr>
                                             <th>회사 전화번호</th>
-                                            <td>031-1234-5678</td>
+                                            <td id="telNo"></td>
                                         </tr>
                                         <tr>
                                             <th>본사주소</th>
-                                            <td>(04365) 서울 용산구 원효로 74 현대자동차원효로 사옥 5층</td>
+                                            <td id="dtlAddr"></td>
                                         </tr>
                                         <tr>
                                             <th>매출액</th>
-                                            <td>100억 원(2022년)</td>
+                                            <td id="slsPmt"></td>
                                         </tr>
                                         <tr>
                                             <th>직원수</th>
-                                            <td>50명</td>
+                                            <td id="mpleCnt"></td>
                                         </tr>
                                         <tr>
                                             <th>주생산품</th>
-                                            <td>① 알루미늄 실린더 ② 섀시</td>
+                                            <td id="mjrPrdct">① 알루미늄 실린더 ② 섀시</td>
                                         </tr>
                                         <tr>
                                             <th>품질5스타</th>
@@ -179,7 +179,7 @@
                                         </tr>
                                         <tr>
                                             <th>SQ정보</th>
-                                            <td>
+                                            <td id="sqInfo">
                                                 <p>1. SQ1 / 2000 / 2018 년 / 와이즈랩</p>
                                                 <p>2. SQ3 / 2000 / 2018 년 / 와이즈랩</p>
                                                 <p>3. SQ2 / 2000 / 2018 년 / 와이즈랩</p>
