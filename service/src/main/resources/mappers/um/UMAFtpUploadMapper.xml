@@ -38,7 +38,7 @@
         SELECT /* UMAFtpUploadMapper.getFtpUploadListTotCnt */
             count(*)
         FROM
-            um_upload_mst
+            SM_FILE_PUBC_MST
     </select>
 
     <insert id="insertUploadFile" parameterType="UMAFtpUploadDTO">
