@@ -243,7 +243,7 @@
                                         <p class="txt f-head">상주기술지도 신청은 온라인으로만 접수받으며, 절차에 따라 항목을 입력하시면 신청이 완료됩니다. <br>이후 담당자가 연락하여, 초도 방문 후 상주기술지도 부품사를 선정하게 됩니다.</p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg" href="javascript:"><span>신청하기</span></a>
+                                        <a class="btn-solid small white-bg techApplication" data-authCd="${loginMap.authCd}" <c:if test="${empty loginMap}">href="/login"</c:if>><span>신청하기</span></a>
                                     </div>
                                 </div>
 
@@ -291,12 +291,12 @@
                         </div>
                         <div class="sec-con-area popUp">
                             <div class="list-sec">
-                                <div class="article-list-w txt-card-list"><!--  txt-card-list: 텍스트 카드일 경우 + bg가 있을 경우 -->
-                                    <a class="list-item open" title="팝업 열기">
-                                        <div class="bg">
-                                            <img src="/common/images/@img-foundation-group-member.png" alt="">
-                                        </div>
-                                        <c:forEach var="csList" items="${rtnDto.list}" varStatus="status">
+                                <div class="article-list-w txt-card-list" id="infoCard"><!--  txt-card-list: 텍스트 카드일 경우 + bg가 있을 경우 -->
+                                    <c:forEach var="csList" items="${rtnDto.list}" varStatus="status">
+                                        <a class="list-item open" title="팝업 열기">
+                                            <div class="bg">
+                                                <img src="/common/images/@img-foundation-group-member.png" alt="">
+                                            </div>
                                             <input type="hidden" class="memSeq" value="${csList.memSeq}">
                                             <div class="txt-box">
                                                 <div class="names">
@@ -304,17 +304,17 @@
                                                     <p class="position f-sub-head">전문위원</p>
                                                 </div>
                                                 <div class="labels">
-                                                    <p class="box-label"><span>${csList.cmssrCbsnCdNm}</span></p>
+                                                    <p class="box-label cmssrCbsnCdNm"><span>${csList.cmssrCbsnCdNm}</span></p>
                                                 </div>
                                                 <div class="btn-wrap">
                                                     <div class="btn-text-icon black-circle"><span>더 알아보기</span></div>
                                                 </div>
                                             </div>
-                                        </c:forEach>
-                                    </a>
+                                        </a>
+                                    </c:forEach>
                                 </div>
-                                <div class="btn-wrap align-center">
-                                    <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
+                                <div class="btn-wrap align-center moreBtn">
+                                    <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count cntText"></span></a>
                                 </div>
                             </div>
                         </div>
@@ -327,82 +327,26 @@
             <div class="accepting-fixed-area">
                 <div class="for-position">
                     <button class="open-click-area" type="button">
-                        <p class="tit">2023 1차 사업재편지원 사업 <span class="status">접수중</span></p>
+                        <p class="tit">2023  상주기술지도 <span class="status">접수중</span></p>
                         <div class="btn-text-icon plus"><span>더보기</span></div>
                     </button>
 
                     <div class="hide-area">
                         <div class="inner-con">
                             <div class="tit-area">
-                                <p class="f-title1">2023 1차 사업재편지원 사업  (상시접수중)</p>
+                                <p class="f-title1">2023 상주기술지도 접수중 (상시접수중)</p>
                             </div>
-                            <div class="con-area">
-                                <div class="scroll-area">
-                                    <div class="info-line-list-w">
-                                        <div class="list">
-                                            <p class="tit">접수일자</p>
-                                            <p class="txt">2023.02.01 10:00 ~ 2023.02.01 17:00</p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">교육일자</p>
-                                            <p class="txt">2023.02.01 10:00 - 2023.02.01 17:00</p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">강사</p>
-                                            <p class="txt">
-                                                <!-- <span class="img"><img src="/common/images/img-instructor-profile-01.jpg" alt=""></span> -->
-                                                <span>홍길동</span>
-                                            </p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">정원</p>
-                                            <p class="txt">30명</p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">교육장소</p>
-                                            <p class="txt">경주GPC
-                                            </p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">학습방식</p>
-                                            <p class="txt">집체교육</p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">학습방식</p>
-                                            <p class="txt">집체교육</p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">학습방식</p>
-                                            <p class="txt">집체교육</p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">학습방식</p>
-                                            <p class="txt">집체교육</p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">학습방식</p>
-                                            <p class="txt">집체교육</p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">학습방식</p>
-                                            <p class="txt">집체교육</p>
-                                        </div>
-                                        <div class="list">
-                                            <p class="tit">학습방식</p>
-                                            <p class="txt">집체교육</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- <div class="con-area">
+                              <div class="scroll-area">
+                              </div>
+                            </div> -->
 
                             <div class="btn-wrap">
                                 <div class="btn-set">
-                                    <a class="btn-solid small gray-bg has-icon tel" href="javascript:" title="회차 담당자 문의하기"><span>회차 담당자 문의</span></a>
-                                    <a class="btn-solid small gray-bg has-icon lecture" href="javascript:" title="온라인 강의목차 보기"><span>온라인 강의목차</span></a>
                                     <a class="btn-solid small gray-bg has-icon download" href="javascript:" download title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>
                                 </div>
                                 <div class="btn-set">
-                                    <a class="btn-solid small black-bg"><span>신청하기</span></a>
+                                    <a class="btn-solid small black-bg" href="javascript:"><span>신청하기</span></a>
                                 </div>
                             </div>
 
