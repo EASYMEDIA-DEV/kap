@@ -31,7 +31,7 @@ public interface MPDCmtMapper {
 
     int insertCmt(MPAUserDto mpaUserDto);
 
-    int deleteCmt(MPAUserDto mpaUserDto);
+    int updateCmt(MPAUserDto mpaUserDto);
 
     List<MPDKenDto> selectKenList(MPDKenDto mpdKenDto);
 
@@ -40,5 +40,14 @@ public interface MPDCmtMapper {
     List<MPDKenDto> selectKenMonthList(MPDKenDto mpdKenDto);
 
     int selectKenMonthListCnt(MPDKenDto mpdKenDto);
+
+    MPDKenDto selectKenMonthCnt(MPDKenDto mpdKenDto);
+
+    List<MPDKenDto> selectKenCmpnList(MPDKenDto mpdKenDto);
+
+    MPDKenDto selectKenCmpnDtl(MPDKenDto mpdKenDto);
+
+    void insertAtend(MPDKenDto mpdKenDto);
+
 
 }

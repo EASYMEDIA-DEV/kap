@@ -201,6 +201,9 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title="경력내용" , example = "경력내용")
     private String cmssrMjrCarerCntn;
 
+    @Schema(title="컨설팅내용" , example = "컨설팅내용")
+    private String cmssrCnstgFldCntn;
+
     @Schema(title="경력 노출여부" , example = "Y")
     private String cmssrMjrCarerExpsYn;
 

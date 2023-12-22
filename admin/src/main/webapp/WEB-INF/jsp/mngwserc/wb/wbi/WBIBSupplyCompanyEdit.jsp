@@ -148,7 +148,7 @@
                                     <select class="form-control input-sm" id="ctgryCd" name="ctgryCd" title="구분">
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                            <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
+                                            <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01') and cdList.cd ne 'COMPANY01003' and cdList.cd ne 'COMPANY01004'}">
                                                 <option value="${cdList.cd}" <c:if test="${rtnInfo.ctgryCd eq cdList.cd}">selected</c:if>>
                                                         ${cdList.cdNm}
                                                 </option>
@@ -517,6 +517,7 @@
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">신청서</label>
+                                            <input type="hidden" class="notRequired" name="fileCd" value="ATTACH_FILE_TYPE01" title="첨부파일유형"/>
                                             <div class="col-sm-10 col-md-11">
                                                 <input type="hidden" class="notRequired" name="fileSeq" value="${rtnInfo.appctnSeq}">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />

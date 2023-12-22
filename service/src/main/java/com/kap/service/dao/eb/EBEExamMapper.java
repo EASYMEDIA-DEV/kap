@@ -87,9 +87,19 @@ public interface EBEExamMapper {
     public List<EXGExamQstnDtlDTO> getExamQstnDtlList(EXGExamMstSearchDTO eXGExamMstSearchDTO);
 
     /**
+     * 교육 시험 질문 조회
+     */
+    public List<EXGExamQstnDtlDTO> getExamQstnRspnDtlList(EXGExamMstSearchDTO eXGExamMstSearchDTO);
+
+    /**
      * 교육 시험 질문 보기 조회
      */
     public List<EXGExamExmplDtlDTO> getExamExmplDtlList(EXGExamMstSearchDTO eXGExamMstSearchDTO);
+
+    /**
+     * 교육 시험 질문 답변 조회
+     */
+    public List<EXGExamExmplRspnDtlDTO> getExamExmplUserRspnDtlList(EXGExamMstSearchDTO eXGExamMstSearchDTO);
 
     /**
      * 교육에 매핑된 평가지는 사용여부만 수정
@@ -115,9 +125,21 @@ public interface EBEExamMapper {
      */
     public int insertExamPtcptMst(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
     /**
+     * 교육 시험 문제 답변 상세
+     */
+    public int insertExamQstnRspnDtl(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
+    /**
      * 교육 시험 주관식 등록
      */
     public int insertExamPtcptSbjctRspnDtl(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
+    /**
+     * 교육 시험 주관식 질문 정답 수정
+     */
+    public int updateExamPtcptQstnSbjctRspnDtl(EXGExamQstnRspnDtlDTO eXGExamQstnRspnDtlDTO);
+    /**
+     * 교육 시험 주관식 정답 수정
+     */
+    public int updateExamPtcptSbjctRspnDtl(EXGExamQstnRspnDtlDTO eXGExamQstnRspnDtlDTO);
     /**
      * 교육 시험 객관식 등록
      */

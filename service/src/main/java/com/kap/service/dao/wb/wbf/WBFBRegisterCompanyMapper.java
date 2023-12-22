@@ -100,11 +100,6 @@ public interface WBFBRegisterCompanyMapper {
     public int putAppctnRsumeTaskDtl(WBFBRegisterDTO wBFBRegisterDTO);
 
     /**
-     *  스마트 상세 - 다음 단계 초기값 세팅
-     */
-    public int putInitNextAppctnRsumeTask(WBFBRegisterDTO wBFBRegisterDTO);
-
-    /**
      *  Write Page
      *  회사 마스터 Update
      */
@@ -252,6 +247,11 @@ public interface WBFBRegisterCompanyMapper {
      * Delete 순서 6
      *  상생신청마스터 Delete
      */
-    public int delAppctnMdst(WBFBRegisterDTO wBFBRegisterDTO);
+    public int delAppctnMst(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     *  신청 부품사 삭제전 - 사용자 / 관리자 상태 확인
+     */
+    public int confDeleteRegister(WBFBRegisterDTO wBFBRegisterDTO);
 
 }

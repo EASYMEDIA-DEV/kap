@@ -6,6 +6,7 @@ import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomDTO;
 
 import java.util.List;
 
@@ -70,6 +71,12 @@ public interface WBIBSupplyCompanyMapper {
      *  신청부품사 등록 - 신청 파일 상세
      */
     public int putAppctnFileDtl(WBIBSupplyDTO wBIBSupplyDTO);
+
+    /**
+     *  Write Page
+     *  신청부품사 등록 - 신청 파일 업데이트
+     */
+    public int delAppctnFileDtl(WBIBSupplyDTO wBIBSupplyDTO);
 
     /**
      *  Write Page
@@ -148,4 +155,8 @@ public interface WBIBSupplyCompanyMapper {
      */
     public int insertChangeLog(WBIBSupplyChangeDTO wBIBSupplyChangeDTO) throws Exception;
 
+    /**
+     *  관리자 미확인 갯수 조회
+     */
+    public int getCnt(WBIBSupplySearchDTO wBIBSupplySearchDTO);
 }

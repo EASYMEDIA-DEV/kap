@@ -40,6 +40,9 @@ public class EXGExamQstnDtlDTO extends BaseDTO  {
     @NotNull
     private String srvTypeCd;
 
+    @Schema(title = "설문유형코드명", example = "객관식(단일)")
+    private String SrvTypeCdNm;
+
     @Schema(title = "질문명", example = "")
     @NotNull
     private String qstnNm;
@@ -68,7 +71,16 @@ public class EXGExamQstnDtlDTO extends BaseDTO  {
     @Schema(title = "교육 시험 질문 보기 리스트")
     private List<EXGExamExmplDtlDTO> exExamExmplDtlList;
 
+    @Schema(title = "교육 시험 질문 답변 리스트")
+    private List<EXGExamExmplRspnDtlDTO> exExamExmplRspnDtlList;
+
     @Schema(title = "사용자 시험 질문 정답 보기(채점)", description = "group_concat(exmpl_seq SEPARATOR ',')")
     @Hidden
     private String exmplCansw;
+
+    @Schema(title = "사용자 시험 질문 정답 여부", description = "")
+    private String canswYn;
+    @Schema(title = "사용자 시험 질문 응답 점수", description = "")
+    private Integer qstnScore;
+
 }

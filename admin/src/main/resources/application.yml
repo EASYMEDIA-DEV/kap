@@ -70,13 +70,39 @@ app:
     name: KAP
   file:
     #파일 업로드 물리 경로
-    upload-path: D:/project/kap_git/upload
+    upload-path: D:/IdeaProjects/worksapace/kap_upload
     #파일 업로드 가능 확장자
     fileExtns: jpg,jpeg,gif,png,bmp,mp4,webm,wmv,avi,mkv,pdf,ppt,pptx,xls,xlsx,doc,docx,dox,hwp,txt,zip
     imageExtns: jpg,jpeg,png
     videoExtns: mp4,webm,wmv,avi,mkv
     #파일 업로드 크기
     max-size: 41943040
+    #썸네일 사이즈 관련
+    #메인 비주얼 PC
+    mainVslPcSize : 1920 x 1080
+    #메인 비주얼 Mbl
+    mainVslMblSize : 390 x 675
+    #상생사업 영역
+    cxstnSize : 700 x 675
+    #Trend 레이어 영역
+    #교육사업
+    trendEduSize : 337 x 210
+    #컨설팅사업
+    trendCnstgSize : 337 x 480
+    #상생사업
+    trendCxstnSize : 480 x 480
+    #메인 팝업 PC
+    mainPopPcSize : 440 x 460
+    #메인 팝업 Mbl
+    mainPopMblSize : 350 x 365
+    #교육과정 썸네일
+    eduThumSize : 337 x 210
+    #위원관리 사진 사이즈
+    cmssrImgSize : 337 x 386
+    #재단소식 및 뉴스레터 Pc
+    bdThumPcSize : 337 x 210
+    #재단소식 및 뉴스레터 Mbl
+    bdThumMblSize : 170 x 106
 
 
 log4jdbc:
@@ -106,7 +132,7 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%10t] %-60(%logger{39}.%M\\(%L\\)) : %m%n%wEx"
 app:
-  is-login: false
+  is-login: true
 
 nice :
   client-id : 1d9b7bb5-b3da-4b64-a852-003b3b5615f6

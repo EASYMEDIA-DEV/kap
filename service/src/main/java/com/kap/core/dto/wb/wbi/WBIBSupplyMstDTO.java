@@ -116,4 +116,5 @@ public class WBIBSupplyMstDTO extends BaseDTO {
     @Schema(title = "이후회원아이디")
     private String aftrMemId;
 
+    List<WBIBSupplyMstDTO> list;
 }

@@ -145,6 +145,36 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         /* 회사 마스터 Update */
         respCnt *= wBIBSupplyCompanyMapper.updCmpnCbsnMst(wBIBSupplyDTO);
 
+        /* 구분에 따른 분기 */
+        if(wBIBSupplyDTO.getCtgryCd().equals("COMPANY01002")) {
+            wBIBSupplyDTO.setQlty5StarCd("");
+            wBIBSupplyDTO.setQlty5StarYear("");
+            wBIBSupplyDTO.setPay5StarCd("");
+            wBIBSupplyDTO.setPay5StarYear("");
+            wBIBSupplyDTO.setTchlg5StarCd("");
+            wBIBSupplyDTO.setTchlg5StarYear("");
+        } else {
+            /* 회사 상세 Update or Insert */
+            List<WBIBSupplyDTO> sqInfoList = wBIBSupplyDTO.getSqInfoList();
+            if(sqInfoList != null) {
+                for(WBIBSupplyDTO WBIBSupplyDTO : sqInfoList) {
+                    WBIBSupplyDTO.setBsnmNo(wBIBSupplyDTO.getBsnmNo());
+                    if(!Objects.nonNull(wBIBSupplyDTO.getCbsnSeq())){
+                        /* cbsnSeq is null */
+                        wBIBSupplyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
+                        wBIBSupplyDTO.setRegId(wBIBSupplyDTO.getRegId());
+                        wBIBSupplyDTO.setRegIp(wBIBSupplyDTO.getRegIp());
+                        respCnt *= wBIBSupplyCompanyMapper.insCmpnCbsnDtl(wBIBSupplyDTO);
+                    } else {
+                        /* cbsnSeq is not null */
+                        wBIBSupplyDTO.setModIp(wBIBSupplyDTO.getRegIp());
+                        wBIBSupplyDTO.setModId(wBIBSupplyDTO.getRegId());
+                        respCnt *= wBIBSupplyCompanyMapper.updCmpnCbsnDtl(wBIBSupplyDTO);
+                    }
+                }
+            }
+        }
+
         /* 상생신청 마스터 */
         wBIBSupplyDTO.setAppctnSeq(cxAppctnMstSeqIdgen.getNextIntegerId()); /* 신청순번 */
         respCnt *= wBIBSupplyCompanyMapper.putAppctnMst(wBIBSupplyDTO);
@@ -157,50 +187,6 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBIBSupplyDTO.getFileList());
         wBIBSupplyDTO.setFileSeq(fileSeqMap.get("appctnSeq")); /* 파일 시퀀스 */
         respCnt *= wBIBSupplyCompanyMapper.putAppctnFileDtl(wBIBSupplyDTO);
-
-        // 부품사 정보수정 Start
-        String seq = "";
-        String nm = "";
-        String score = "";
-        String year = "";
-        String crtfnCmnNm = "";
-
-        /* 회사 상세 Update or Insert */
-        if("COMPANY01002".equals(wBIBSupplyDTO.getCtgryCd())){
-            for(int i = 0; i < wBIBSupplyDTO.getSqInfoList().size(); i++) {
-                seq = String.valueOf(wBIBSupplyDTO.getSqInfoList().get(i).getCbsnSeq());
-                nm = wBIBSupplyDTO.getSqInfoList().get(i).getNm();
-                year = String.valueOf(wBIBSupplyDTO.getSqInfoList().get(i).getYear());
-                score = String.valueOf(wBIBSupplyDTO.getSqInfoList().get(i).getScore());
-                crtfnCmnNm = wBIBSupplyDTO.getSqInfoList().get(i).getCrtfnCmpnNm();
-
-                if(year.equals("")|| year.isEmpty()) {
-                    wBIBSupplyDTO.setYear(null);
-                } else {
-                    wBIBSupplyDTO.setYear(Integer.valueOf(year));
-                }
-
-                if(score.equals("")|| score.isEmpty()) {
-                    wBIBSupplyDTO.setScore(null);
-                } else {
-                    wBIBSupplyDTO.setScore(Integer.valueOf(score));
-                }
-                wBIBSupplyDTO.setNm(nm);
-                wBIBSupplyDTO.setCrtfnCmpnNm(crtfnCmnNm);
-
-                if (!seq.isEmpty() && !"null".equals(seq)) {
-                    wBIBSupplyDTO.setCbsnSeq(Integer.valueOf(seq));
-                    wBIBSupplyDTO.setModIp(wBIBSupplyDTO.getRegIp());
-                    wBIBSupplyDTO.setModId(wBIBSupplyDTO.getRegId());
-                    respCnt *= wBIBSupplyCompanyMapper.updCmpnCbsnDtl(wBIBSupplyDTO);
-                } else {
-                    wBIBSupplyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
-                    wBIBSupplyDTO.setRegId(wBIBSupplyDTO.getRegId());
-                    wBIBSupplyDTO.setRegIp(wBIBSupplyDTO.getRegIp());
-                    respCnt *= wBIBSupplyCompanyMapper.insCmpnCbsnDtl(wBIBSupplyDTO);
-                }
-            }
-        }
 
         return respCnt;
     }
@@ -248,46 +234,32 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         /* 회사 마스터 Update */
         respCnt *= wBIBSupplyCompanyMapper.updCmpnCbsnMst(wBIBSupplyDTO);
 
-        // 부품사 정보수정 Start
-        String seq = "";
-        String nm = "";
-        String score = "";
-        String year = "";
-        String crtfnCmnNm = "";
-
-        /* 회사 상세 Update or Insert */
-        if("COMPANY01002".equals(wBIBSupplyDTO.getCtgryCd())){
-            for(int i = 0; i < wBIBSupplyDTO.getSqInfoList().size(); i++) {
-                seq = String.valueOf(wBIBSupplyDTO.getSqInfoList().get(i).getCbsnSeq());
-                nm = wBIBSupplyDTO.getSqInfoList().get(i).getNm();
-                year = String.valueOf(wBIBSupplyDTO.getSqInfoList().get(i).getYear());
-                score = String.valueOf(wBIBSupplyDTO.getSqInfoList().get(i).getScore());
-                crtfnCmnNm = wBIBSupplyDTO.getSqInfoList().get(i).getCrtfnCmpnNm();
-
-                if(year.equals("")|| year.isEmpty()) {
-                    wBIBSupplyDTO.setYear(null);
-                } else {
-                    wBIBSupplyDTO.setYear(Integer.valueOf(year));
-                }
-
-                if(score.equals("")|| score.isEmpty()) {
-                    wBIBSupplyDTO.setScore(null);
-                } else {
-                    wBIBSupplyDTO.setScore(Integer.valueOf(score));
-                }
-                wBIBSupplyDTO.setNm(nm);
-                wBIBSupplyDTO.setCrtfnCmpnNm(crtfnCmnNm);
-
-                if (!seq.isEmpty()) {
-                    wBIBSupplyDTO.setCbsnSeq(Integer.valueOf(seq));
-                    wBIBSupplyDTO.setModIp(wBIBSupplyDTO.getModIp());
-                    wBIBSupplyDTO.setModId(wBIBSupplyDTO.getModId());
-                    respCnt *= wBIBSupplyCompanyMapper.updCmpnCbsnDtl(wBIBSupplyDTO);
-                } else {
-                    wBIBSupplyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
-                    wBIBSupplyDTO.setRegId(wBIBSupplyDTO.getRegId());
-                    wBIBSupplyDTO.setRegIp(wBIBSupplyDTO.getRegIp());
-                    respCnt *= wBIBSupplyCompanyMapper.insCmpnCbsnDtl(wBIBSupplyDTO);
+        /* 구분에 따른 분기 */
+        if(wBIBSupplyDTO.getCtgryCd().equals("COMPANY01002")) {
+            wBIBSupplyDTO.setQlty5StarCd("");
+            wBIBSupplyDTO.setQlty5StarYear("");
+            wBIBSupplyDTO.setPay5StarCd("");
+            wBIBSupplyDTO.setPay5StarYear("");
+            wBIBSupplyDTO.setTchlg5StarCd("");
+            wBIBSupplyDTO.setTchlg5StarYear("");
+        } else {
+            /* 회사 상세 Update or Insert */
+            List<WBIBSupplyDTO> sqInfoList = wBIBSupplyDTO.getSqInfoList();
+            if(sqInfoList != null) {
+                for(WBIBSupplyDTO WBIBSupplyDTO : sqInfoList) {
+                    WBIBSupplyDTO.setBsnmNo(wBIBSupplyDTO.getBsnmNo());
+                    if(!Objects.nonNull(wBIBSupplyDTO.getCbsnSeq())){
+                        /* cbsnSeq is null */
+                        wBIBSupplyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
+                        wBIBSupplyDTO.setRegId(wBIBSupplyDTO.getRegId());
+                        wBIBSupplyDTO.setRegIp(wBIBSupplyDTO.getRegIp());
+                        respCnt *= wBIBSupplyCompanyMapper.insCmpnCbsnDtl(wBIBSupplyDTO);
+                    } else {
+                        /* cbsnSeq is not null */
+                        wBIBSupplyDTO.setModIp(wBIBSupplyDTO.getRegIp());
+                        wBIBSupplyDTO.setModId(wBIBSupplyDTO.getRegId());
+                        respCnt *= wBIBSupplyCompanyMapper.updCmpnCbsnDtl(wBIBSupplyDTO);
+                    }
                 }
             }
         }
@@ -306,6 +278,13 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
             //상생참여이관로그 생성
             respCnt *= wBIBSupplyCompanyMapper.insertChangeLog(wBIBSupplyChangeDTO);
         }
+
+        /* 상생신청파일 삭제 */
+        respCnt *= wBIBSupplyCompanyMapper.delAppctnFileDtl(wBIBSupplyDTO);
+        /* 상생신청파일 상세 */
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBIBSupplyDTO.getFileList());
+        wBIBSupplyDTO.setFileSeq(fileSeqMap.get("fileSeq")); /* 파일 시퀀스 */
+        respCnt *= wBIBSupplyCompanyMapper.putAppctnFileDtl(wBIBSupplyDTO);
 
         wBIBSupplyDTO.setDetailsKey(detailsKey); /* 신청순번 */
         /* 상생 관리자 메모 */
@@ -526,5 +505,17 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         // Excel File Output
         workbook.write(response.getOutputStream());
         workbook.close();
+    }
+
+    /**
+     *  관리자 상태값 미확인 갯수 조회
+     */
+    public int getCnt(WBIBSupplySearchDTO wBIBSupplySearchDTO) throws Exception {
+        int rtnCnt = 0;
+
+        //마스터 삭제
+        rtnCnt = wBIBSupplyCompanyMapper.getCnt(wBIBSupplySearchDTO);
+
+        return rtnCnt;
     }
 }

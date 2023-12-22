@@ -1,15 +1,20 @@
 package com.kap.mngwserc.controller.eb;
 
+import com.easymedia.error.ErrorCode;
+import com.easymedia.error.exception.BusinessException;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
+import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptMst;
+import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptRspnMst;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.EBBEpisdService;
+import com.kap.service.EBEExamService;
 import com.kap.service.SVASurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -59,6 +64,9 @@ public class EBBEpisdController {
     public final COCodeService cOCodeService;
 
     private final SVASurveyService sVSurveyService;
+
+    /** 평가 서비스 **/
+    private final EBEExamService eBEExamService;
 
     /**
      *  교육회차관리 목록으로 이동한다.
@@ -405,6 +413,34 @@ public class EBBEpisdController {
     }
 
     /**
+     * 교육참여자 시험 평가 상세
+     */
+    @PostMapping(value = "/getExamUserDtl")
+    public String getExamUserDtl(@RequestParam(required = true) int ptcptSeq, @RequestParam(required = true) int memSeq, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            //시험 항목 조회
+            EXGExamMstSearchDTO eXGExamMstSearchDTO = EXGExamMstSearchDTO.builder()
+                                                      .ptcptSeq(ptcptSeq)
+                                                      .memSeq(memSeq).build();
+            EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst = eBEExamService.selectUserExamDtl(eXGExamMstSearchDTO);
+            eXGExamMstSearchDTO.setDetailsKey( String.valueOf(eXGExamEdctnPtcptMst.getExamSeq()) );
+            modelMap.addAttribute("rtnData", eXGExamEdctnPtcptMst);
+            modelMap.addAttribute("rtnExamData", eBEExamService.selectExamRspnDtl(eXGExamMstSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/ex/exg/EXGExamUserDtlLayer";
+    }
+
+    /**
      * 교육참여자 출석부 목록을 호출한다.
      */
     @GetMapping(value = "/episdAtndcList")
@@ -563,6 +599,38 @@ public class EBBEpisdController {
                 throw new Exception(e.getMessage());
             }
             return eBBEpisdDTO;
+        }
+
+        @Operation(summary = "교육 답변 주관식 수정", tags = "평가지", description = "교육 답변 등록")
+        @PostMapping(value="/sbjct-update")
+        public EXGExamEdctnPtcptRspnMst updateExamSbjctReply(@RequestBody @Valid  EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst, HttpServletRequest request) throws Exception
+        {
+            try
+            {
+                EXGExamMstSearchDTO eXGExamMstSearchDTO = EXGExamMstSearchDTO.builder()
+                        .ptcptSeq(eXGExamEdctnPtcptRspnMst.getPtcptSeq())
+                        .memSeq(eXGExamEdctnPtcptRspnMst.getMemSeq()).build();
+                EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst = eBEExamService.selectUserExamDtl(eXGExamMstSearchDTO);
+                //시험 조건
+                if(eXGExamEdctnPtcptMst == null){
+                    throw new BusinessException(ErrorCode.CANNOT_READ);
+                }
+                //시험 매핑
+                if(eXGExamEdctnPtcptMst.getExamSeq() == null){
+                    throw new BusinessException(ErrorCode.CANNOT_READ);
+                }
+                //채점
+                eXGExamEdctnPtcptRspnMst.setRespCnt( eBEExamService.updateEdctnSbjctRspn(eXGExamEdctnPtcptRspnMst, eXGExamEdctnPtcptMst, request) );
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new BusinessException(ErrorCode.INTERNAL_SERVER_ERROR);
+            }
+            return eXGExamEdctnPtcptRspnMst;
         }
 
         @Operation(summary = "교육차수 차수변경", tags = "교육차수 신청자 등록", description = "")

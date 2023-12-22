@@ -99,6 +99,9 @@
 						<c:when test="${param.srchType eq 'cnstg' or param.srchType eq 'edctn'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-30'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
+						<c:when test="${param.srchType eq 'defaultBoard'}">
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+						</c:when>
 						<c:otherwise>
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:otherwise>
@@ -109,7 +112,14 @@
 					</button>
 					</span>
 					<span class="input-group-addon bg-white b0">~</span>
-					<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+					<c:choose>
+						<c:when test="${param.srchType eq 'defaultBoard'}">
+							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+						</c:when>
+						<c:otherwise>
+							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+						</c:otherwise>
+					</c:choose>
 					<span class="input-group-btn" style="z-index:0;">
 						<button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
 							<em class="ion-calendar"></em>

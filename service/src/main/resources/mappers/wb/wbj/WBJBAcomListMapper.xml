@@ -243,10 +243,10 @@
         ==========  ======  ==============
         2023.11.30  오병호     최초 생성
     -->
-    <update id="delAppctnFileDtl" parameterType="wBJAcomDTO">
+    <delete id="delAppctnFileDtl" parameterType="wBJAcomDTO">
         DELETE FROM CX_APPCTN_FILE_DTL
         WHERE APPCTN_SEQ = #{appctnSeq}
-    </update>
+    </delete>
 
     <!--
          쿼리명 : WBJAcomMapper.putAppctnRsumeDtl
@@ -1055,6 +1055,27 @@
             </if>
         </where>
     </sql>
+
+    <!--
+     쿼리명 : WBJBAcomListMapper.getCnt
+     설  명 : 관리자 상태값 미확인 갯수 조회
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.12.04  오병호     최초 생성
+    -->
+    <select id="getCnt" parameterType="wBJAcomSearchDTO">
+        SELECT
+        COUNT(*)
+        FROM CX_APPCTN_RSUME_DTL
+        <where>
+            APPCTN_SEQ IN
+            <foreach collection="delValueList" item="item" index="index" separator=", " open="(" close=")">
+                #{item}
+            </foreach>
+        </where>
+        AND MNG_STTS_CD != 'PRO_TYPE05001_02_001'
+        AND APPCTN_STTS_CD != 'PRO_TYPE05001_01_001'
+    </select>
 </mapper>
 
 

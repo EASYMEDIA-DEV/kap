@@ -137,17 +137,17 @@ public class WBIBSupplyDTO extends BaseDTO {
     @Schema(title = "품질5스타코드")
     private String qlty5StarCd;
     @Schema(title = "품질5스타년도")
-    private Integer qlty5StarYear;
+    private String qlty5StarYear;
 
     @Schema(title = "납입5스타코드")
     private String pay5StarCd;
     @Schema(title = "납입5스타년도")
-    private Integer pay5StarYear;
+    private String pay5StarYear;
 
     @Schema(title = "기술5스타코드")
     private String tchlg5StarCd;
     @Schema(title = "기술5스타년도")
-    private Integer tchlg5StarYear;
+    private String tchlg5StarYear;
 
     /* Detail */
     @Schema(title = "담당위원코드", example = "")
@@ -176,4 +176,6 @@ public class WBIBSupplyDTO extends BaseDTO {
 
     @Schema(title = "인증주관사명")
     private String crtfnCmpnNm;
+
+    List<WBIBSupplyDTO> list;
 }

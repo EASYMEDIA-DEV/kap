@@ -77,7 +77,12 @@ public interface WBFBRegisterCompanyService {
     /**
      *  신청 부품사 삭제
      */
-    public int deleteRegisterCompany(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+    public int deleteRegister(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+
+    /**
+     *  신청 부품사 삭제전 - 사용자 / 관리자 상태 확인
+     */
+    public int confDeleteRegister(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
 
     /**
      *  엑셀 Download

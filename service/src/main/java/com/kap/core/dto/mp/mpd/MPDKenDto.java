@@ -35,6 +35,8 @@ public class MPDKenDto extends BaseDTO {
     @Schema(title = "출석순번", example = "1")
     private int atndcSeq;
 
+    @Schema(title = "출석일", example = "2023-01-01")
+    private String atndcDt;
 
     @Schema(title = "근태옵션명", example = "지도")
     private String atndcCdNm;
@@ -42,10 +44,35 @@ public class MPDKenDto extends BaseDTO {
     @Schema(title = "근태옵션", example = "CODE")
     private String atndcCd;
 
+    @Schema(title = "회사명", example = "CODE")
+    private String cmpnNm;
 
     @Schema(title = "지도부품사1", example = "부품사1")
     private String guidePartCmpn1;
 
+    @Schema(title = "회사사업자번호", example = "1234")
+    private String appctnBsnmNo;
+
+    @Schema(title = "소재지1", example = "1234")
+    private String firstRgnsCd;
+
+    @Schema(title = "소재지1명", example = "1234")
+    private String firstRgnsCdNm;
+
+    @Schema(title = "소재지2", example = "1234")
+    private String scndRgnsCd;
+
+    @Schema(title = "소재지2명", example = "1234")
+    private String scndRgnsCdNm;
+
+    @Schema(title = "컨설팅순번", example = "1234")
+    private String cnstgSeq;
+
+    @Schema(title = "컨설팅순번1", example = "1234")
+    private String cnstgSeq1;
+
+    @Schema(title = "컨설팅순번2", example = "1234")
+    private String cnstgSeq2;
 
     @Schema(title = "소재지역1", example = "경북")
     private String rgns1;
@@ -106,16 +133,39 @@ public class MPDKenDto extends BaseDTO {
     @Schema(title="월" , example = "2020-11-11,2020-11-11")
     private String monthDays;
 
-    @Schema(title="근태타입" , example = "지도,지도")
+    @Schema(title="근태타입" , example = "cmssr")
     private String monthTypes;
+
+    @Schema(title="근태타입이름" , example = "지도,지도")
+    private String monthTypesNm;
 
 
     private List<String> kenDays;
 
 
-
     @Schema(title = "근태 목록", example = "DTO의 리스트")
     private List<MPDKenDto> list;
+
+    @Schema(title="컨설팅 갯수" , example = "0")
+    private Integer cnstgCnt;
+
+    @Schema(title="출근 갯수" , example = "0")
+    private int atndnCnt;
+
+    @Schema(title="강의 갯수" , example = "0")
+    private int lectureCnt;
+
+    @Schema(title="역량 개발 갯수" , example = "0")
+    private int cpcptyDvlpmCnt;
+
+    @Schema(title="연차 갯수" , example = "0")
+    private int annualCnt;
+
+    @Schema(title="재택 갯수" , example = "0")
+    private int homeCnt;
+
+    @Schema(title="기타갯수" , example = "0")
+    private int etcCnt;
 
 
 

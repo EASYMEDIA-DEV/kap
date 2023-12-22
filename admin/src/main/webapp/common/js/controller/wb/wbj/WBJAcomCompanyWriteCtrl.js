@@ -160,13 +160,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             $(".companyCate1").css("display", "none");
                             $(".starType").val("");
                             $(".companyCate2").css("display", "block");
-                        }else{
-                            alert("부품사 구분은 1차,2차만 등록가능합니다.");
-                            if($("#befeCtgryCd").val() == ""){
-                                $(this).val($("#befeCtgryCd").val());
-                            }else{
-                                $(this).val($("#befeCtgryCd").val()).trigger("change");
-                            }
                         }
                     }
                 }
@@ -256,7 +249,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 event : {
                     click : function() {
                         cmmCtrl.getPartsCompanyLayerPop(function(data){
-                            $("#bsnmNo").val(data.seq);
+                            $("#newBsnmNo").val(data.seq);
                             $("#bsnmNoNm").val(data.titl);
                             $("#ctgryNm").val(data.ctgryNm);
                         });

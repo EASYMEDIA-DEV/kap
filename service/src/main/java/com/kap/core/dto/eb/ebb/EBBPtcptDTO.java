@@ -97,6 +97,10 @@ public class EBBPtcptDTO extends BaseDTO {
     @Schema(title = "시험점수", example = "")
     private Integer examScore;
 
+    //2023.12.21 평가 응시 순번 추가
+    @Schema(title = "평가응시순번", example = "")
+    private Integer examPtcptSeq;
+
     @Schema(title = "수료여부", example = "Y/N")
     private String cmptnYn;
 

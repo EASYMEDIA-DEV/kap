@@ -28,7 +28,7 @@
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.regDtm}">
-                            ${ list.regDtm }
+                            ${ kl:convertDate( list.regDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                         </c:when>
                         <c:otherwise>
                             -
@@ -38,7 +38,7 @@
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.appctnSttsChngDtm}">
-                            ${ list.appctnSttsChngDtm }
+                            ${ kl:convertDate( list.appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                         </c:when>
                         <c:otherwise>
                             -
@@ -58,7 +58,7 @@
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modDtm}">
-                            ${list.modDtm }
+                            ${ kl:convertDate( list.modDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                         </c:when>
                         <c:otherwise>
                             -

@@ -185,6 +185,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnPartUserModal : {
                 event : {
                     click: function () {
+                        $modalObj.find("input[name=memCd]").val('CP');
                         search(1);
                         $modalObj.modal("show");
                     }

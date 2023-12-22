@@ -36,7 +36,14 @@
             </button>--%>
           </c:if>
           <c:if test="${ptcptList.otsdExamPtcptYn ne 'Y'}">
-            ${ptcptList.examScore}
+            <c:choose>
+                <c:when test="${ not empty ptcptList.examPtcptSeq }">
+                    <a href="javascript:" class="btnExamPtcptSeq" data-exam-ptcpt-seq="${ptcptList.examPtcptSeq}" data-ptcpt-seq="${ptcptList.ptcptSeq}" data-mem-seq="${ptcptList.memSeq}">${kl:nvl(ptcptList.examScore, '0')}</a>
+                </c:when>
+                <c:otherwise>
+                  -
+                </c:otherwise>
+            </c:choose>
           </c:if>
         </td>
         <td class="text-center form-inline">
