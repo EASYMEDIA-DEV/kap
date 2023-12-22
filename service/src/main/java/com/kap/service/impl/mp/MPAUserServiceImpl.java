@@ -10,13 +10,12 @@ import com.kap.service.COFileService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPEPartsCompanyService;
-import com.kap.service.dao.cm.CommonMapper;
 import com.kap.service.dao.mp.MPAUserMapper;
-import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
@@ -63,7 +62,6 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     private final MPEPartsCompanyService mpePartsCompanyService;
 
-    private final CommonMapper commonMapper;
 
     private final COFileService cOFileService;
 
@@ -72,10 +70,6 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     private final EgovIdGnrService memSeqIdgen;
 
-    /* SQ정보 테이블 시퀀스 */
-    private final EgovIdGnrService mpePartsCompanySqInfoDtlIdgen;
-
-    private final MPEPartsCompanyMapper mpePartsCompanyMapper;
 
     /**
      * 일반 사용자 조회
@@ -673,9 +667,16 @@ public class MPAUserServiceImpl implements MPAUserService {
             cell.setCellStyle(style_body);
 
             //성별
-            //TODO 양현우 성별 코드
             cell = row.createCell(3);
-            cell.setCellValue(list.get(i).getGndr());
+            String gndrNm = "-";
+            if(!StringUtils.isEmpty(list.get(i).getGndr())) {
+                if (list.get(i).getGndr().equals("1")) {
+                    gndrNm = "남";
+                } else {
+                    gndrNm = "여";
+                }
+            }
+            cell.setCellValue(gndrNm);
             cell.setCellStyle(style_body);
 
             //생년월일
@@ -711,7 +712,6 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //이메일 여부
             cell = row.createCell(10);
-            System.out.println(list.get(i).getNtfyEmailRcvYn());
             cell.setCellValue(list.get(i).getNtfyEmailRcvYn().toString().equals("Y") ? "O" : "X");
             cell.setCellStyle(style_body);
 
