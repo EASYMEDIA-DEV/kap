@@ -78,4 +78,6 @@ public class EXGExamEdctnPtcptMst {
     private Integer cmptnJdgmtCdNm;
     @Schema(title = "시험점수")
     private Integer examScore;
+    @Schema(title = "학습 방식 코드")
+    private String stduyMthdCd;
 }
