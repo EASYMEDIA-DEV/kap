@@ -23,19 +23,23 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 		$("#stduyMthdCd").attr("disabled", true);
 		$("#stduyTimeCd").attr("disabled", true);
 		$("#stduyDdCd").attr("disabled", true);
+		var edctnSeq = $("#edctnSeq").val();
+
+		if(!(edctnSeq === undefined || edctnSeq == "" )){
+			cmmCtrl.listFrmAjax(function(respObj) {
+				$formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+				//CALLBACK 처리
+				ctrl.obj.find("#listContainer").html(respObj);
+				//전체 갯수
+				var totCnt = $(respObj).eq(0).data("totalCount");
+				//총 건수
+				ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+				//페이징 처리
+				cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
+			}, "/mngwserc/eb/ebb/select", $formObj, "POST", "html");
+		}
 
 
-		cmmCtrl.listFrmAjax(function(respObj) {
-			$formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
-			//CALLBACK 처리
-			ctrl.obj.find("#listContainer").html(respObj);
-			//전체 갯수
-			var totCnt = $(respObj).eq(0).data("totalCount");
-			//총 건수
-			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
-			//페이징 처리
-			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-		}, "/mngwserc/eb/ebb/select", $formObj, "POST", "html");
 
 		$("#stduyMthdCd").attr("disabled", false);
 		$("#stduyTimeCd").attr("disabled", false);

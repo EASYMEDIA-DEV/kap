@@ -9,6 +9,7 @@ import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.service.*;
 import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.eb.EBBEpisdMapper;
+import com.kap.service.dao.eb.EBBFrontEpisdMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -56,6 +57,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	//DAO
 	private final EBBEpisdMapper eBBEpisdMapper;
 
+	private final EBBFrontEpisdMapper eBBFrontEpisdMapper;
+
 
 	//교육장 서비스
 	private final EBFEduRoomService eBFEduRoomService;
@@ -95,6 +98,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		COPaginationUtil page = new COPaginationUtil();
 
+		if(eBBEpisdDTO.getSiteGubun().equals("front")){
+			eBBEpisdDTO.setPageRowSize(9);
+			eBBEpisdDTO.setListRowSize(9);
+		}
+
 		page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
 		page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
 
@@ -103,9 +111,13 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
 		eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
 
-		eBBEpisdDTO.setList( eBBEpisdMapper.selectEpisdList(eBBEpisdDTO) );
-		eBBEpisdDTO.setTotalCount( eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO) );
-
+		if(eBBEpisdDTO.getSiteGubun().equals("front")){
+			eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectFrontCouseList(eBBEpisdDTO) );
+			eBBEpisdDTO.setTotalCount( eBBFrontEpisdMapper.selectFrontCouseListCnt(eBBEpisdDTO) );
+		}else{
+			eBBEpisdDTO.setList( eBBEpisdMapper.selectEpisdList(eBBEpisdDTO) );
+			eBBEpisdDTO.setTotalCount( eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO) );
+		}
 
 
 		return eBBEpisdDTO;
@@ -136,9 +148,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		return excelListDto;
 	}
-
-
-
 
 	/**
 	 * 교육차수 상세를 조회한다.
@@ -801,16 +810,16 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		cell = row.createCell(20);
 		cell.setCellValue("교육실적");
 		cell.setCellStyle(style_header);
-		cell = row.createCell(57);
+		cell = row.createCell(58);
 		cell.setCellValue("예산/지출");
 		cell.setCellStyle(style_header);
 
 		// 셀 병합
 		CellRangeAddress row1cols0 = new CellRangeAddress(0, 0, 0, 19);//기본정보 병합 0~19
-		CellRangeAddress row1cols20 = new CellRangeAddress(0, 0, 20, 56);//교육실적 병합 병합 20~56
-		CellRangeAddress row1cols57 = new CellRangeAddress(0, 0, 57, 80);//예산/지출 병합 57~80
-		sheet.addMergedRegion(row1cols0); sheet.addMergedRegion(row1cols20); sheet.addMergedRegion(row1cols57);
-		cellList.add(row1cols0); cellList.add(row1cols20); cellList.add(row1cols57);
+		CellRangeAddress row1cols20 = new CellRangeAddress(0, 0, 20, 57);//교육실적 병합 병합 20~56
+		CellRangeAddress row1cols58 = new CellRangeAddress(0, 0, 58, 81);//예산/지출 병합 57~80
+		sheet.addMergedRegion(row1cols0); sheet.addMergedRegion(row1cols20); sheet.addMergedRegion(row1cols58);
+		cellList.add(row1cols0); cellList.add(row1cols20); cellList.add(row1cols58);
 
 
 
@@ -849,14 +858,14 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		//2층 교육실적2 시작
 		cell = row.createCell(37); cell.setCellValue("직급별 수료인원(명)"); cell.setCellStyle(style_header);//직급별 수료인원(명) 37~42
-		cell = row.createCell(43); cell.setCellValue("출석/평가"); cell.setCellStyle(style_header);//출석/평가 43~44
-		cell = row.createCell(45); cell.setCellValue("만족도"); cell.setCellStyle(style_header);//만족도 45~50
-		cell = row.createCell(51); cell.setCellValue("교육 시간"); cell.setCellStyle(style_header);//교육 시간 51~56
+		cell = row.createCell(44); cell.setCellValue("출석/평가"); cell.setCellStyle(style_header);//출석/평가 43~44
+		cell = row.createCell(46); cell.setCellValue("만족도"); cell.setCellStyle(style_header);//만족도 45~50
+		cell = row.createCell(52); cell.setCellValue("교육 시간"); cell.setCellStyle(style_header);//교육 시간 51~56
 		//2층 교육실적2 끝
 
 		//2층 예산지출 시작
-		cell = row.createCell(57); cell.setCellValue("예산"); cell.setCellStyle(style_header);//예산 57~68
-		cell = row.createCell(69); cell.setCellValue("지출"); cell.setCellStyle(style_header);//지출 69~80
+		cell = row.createCell(58); cell.setCellValue("예산"); cell.setCellStyle(style_header);//예산 57~68
+		cell = row.createCell(70); cell.setCellValue("지출"); cell.setCellStyle(style_header);//지출 69~80
 
 		//2층 예산지출 끝
 
@@ -897,25 +906,25 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		//2층 교육실적1 끝
 
 		//2층 교육실적2 시작
-		CellRangeAddress row2cols37 = new CellRangeAddress(1, 1, 37, 42);//직급별 수료인원(명)
-		CellRangeAddress row2cols43 = new CellRangeAddress(1, 1, 43, 44);//출석/평가
-		CellRangeAddress row2cols45 = new CellRangeAddress(1, 1, 45, 50);//만족도
-		CellRangeAddress row2cols51 = new CellRangeAddress(1, 1, 51, 56);//교육 시간
-		sheet.addMergedRegion(row2cols37); sheet.addMergedRegion(row2cols43); sheet.addMergedRegion(row2cols45); sheet.addMergedRegion(row2cols51);
+		CellRangeAddress row2cols37 = new CellRangeAddress(1, 1, 37, 43);//직급별 수료인원(명)
+		CellRangeAddress row2cols44 = new CellRangeAddress(1, 1, 44, 45);//출석/평가
+		CellRangeAddress row2cols46 = new CellRangeAddress(1, 1, 46, 51);//만족도
+		CellRangeAddress row2cols52 = new CellRangeAddress(1, 1, 52, 57);//교육 시간
+		sheet.addMergedRegion(row2cols37); sheet.addMergedRegion(row2cols44); sheet.addMergedRegion(row2cols46); sheet.addMergedRegion(row2cols52);
 		//2층 교육실적2 끝
 
 		//2층 예산지출 시작
-		CellRangeAddress row2cols57 = new CellRangeAddress(1, 1, 57, 68);//예산
-		CellRangeAddress row2cols69 = new CellRangeAddress(1, 1, 69, 80);//지출
-		sheet.addMergedRegion(row2cols57); sheet.addMergedRegion(row2cols69);
+		CellRangeAddress row2cols58 = new CellRangeAddress(1, 1, 58, 69);//예산
+		CellRangeAddress row2cols70 = new CellRangeAddress(1, 1, 70, 81);//지출
+		sheet.addMergedRegion(row2cols58); sheet.addMergedRegion(row2cols70);
 		//2층 예산지출 끝
 
 		cellList.add(row2cols0); cellList.add(row2cols1); cellList.add(row2cols2); cellList.add(row2cols3); cellList.add(row2cols4); cellList.add(row2cols5);
 		cellList.add(row2cols6); cellList.add(row2cols7); cellList.add(row2cols8); cellList.add(row2cols9); cellList.add(row2cols11); cellList.add(row2cols12);
 		cellList.add(row2cols14); cellList.add(row2cols15); cellList.add(row2cols16); cellList.add(row2cols17); cellList.add(row2cols18); cellList.add(row2cols19);
 
-		cellList.add(row2cols20); cellList.add(row2cols24); cellList.add(row2cols28); cellList.add(row2cols37); cellList.add(row2cols43); cellList.add(row2cols45);
-		cellList.add(row2cols51); cellList.add(row2cols57); cellList.add(row2cols69);
+		cellList.add(row2cols20); cellList.add(row2cols24); cellList.add(row2cols28); cellList.add(row2cols37); cellList.add(row2cols44); cellList.add(row2cols46);
+		cellList.add(row2cols52); cellList.add(row2cols58); cellList.add(row2cols70);
 
 
 		//헤더 3층
@@ -947,46 +956,46 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		cell = row.createCell(40); cell.setCellValue("부과장/차장(명)"); cell.setCellStyle(style_header);//부과장/차장(명) 40
 		cell = row.createCell(41); cell.setCellValue("사원/대리(명)"); cell.setCellStyle(style_header);//사원/대리(명) 41
 		cell = row.createCell(42); cell.setCellValue("조장/반장(명)"); cell.setCellStyle(style_header);//조장/반장(명) 42
-		cell = row.createCell(43); cell.setCellValue("출석률(%)"); cell.setCellStyle(style_header);//출석률(%) 43
-		cell = row.createCell(44); cell.setCellValue("평가점수(점)"); cell.setCellStyle(style_header);//평가점수(점) 44
-		cell = row.createCell(45); cell.setCellValue("종합 평균 "); cell.setCellStyle(style_header);//종합 평균 45
-		cell = row.createCell(46); cell.setCellValue("전체(공통)"); cell.setCellStyle(style_header);//전체(공통) 46
-		cell = row.createCell(47); cell.setCellValue("교육환경"); cell.setCellStyle(style_header);//교육환경 47
-		cell = row.createCell(48); cell.setCellValue("교육지원"); cell.setCellStyle(style_header);//교육지원 48
-		cell = row.createCell(49); cell.setCellValue("교육내용"); cell.setCellStyle(style_header);//교육내용 49
-		cell = row.createCell(50); cell.setCellValue("강사"); cell.setCellStyle(style_header);//강사 50
-		cell = row.createCell(51); cell.setCellValue("강사1(시간)"); cell.setCellStyle(style_header);//강사1(시간) 51
-		cell = row.createCell(52); cell.setCellValue("강사2(시간)"); cell.setCellStyle(style_header);//강사2(시간) 52
-		cell = row.createCell(53); cell.setCellValue("강사3(시간)"); cell.setCellStyle(style_header);//강사3(시간) 53
-		cell = row.createCell(54); cell.setCellValue("강사4(시간)"); cell.setCellStyle(style_header);//강사4(시간) 54
-		cell = row.createCell(55); cell.setCellValue("강사5(시간)"); cell.setCellStyle(style_header);//강사5(시간) 55
-		cell = row.createCell(56); cell.setCellValue("강사6(시간)"); cell.setCellStyle(style_header);//강사6(시간) 56
+		cell = row.createCell(43); cell.setCellValue("기타(명)"); cell.setCellStyle(style_header);//기타(명) 42
+		cell = row.createCell(44); cell.setCellValue("출석률(%)"); cell.setCellStyle(style_header);//출석률(%) 43
+		cell = row.createCell(45); cell.setCellValue("평가점수(점)"); cell.setCellStyle(style_header);//평가점수(점) 44
+		cell = row.createCell(46); cell.setCellValue("종합 평균 "); cell.setCellStyle(style_header);//종합 평균 45
+		cell = row.createCell(47); cell.setCellValue("전체(공통)"); cell.setCellStyle(style_header);//전체(공통) 46
+		cell = row.createCell(48); cell.setCellValue("교육환경"); cell.setCellStyle(style_header);//교육환경 47
+		cell = row.createCell(49); cell.setCellValue("교육지원"); cell.setCellStyle(style_header);//교육지원 48
+		cell = row.createCell(50); cell.setCellValue("교육내용"); cell.setCellStyle(style_header);//교육내용 49
+		cell = row.createCell(51); cell.setCellValue("강사"); cell.setCellStyle(style_header);//강사 50
+		cell = row.createCell(52); cell.setCellValue("강사1(시간)"); cell.setCellStyle(style_header);//강사1(시간) 51
+		cell = row.createCell(53); cell.setCellValue("강사2(시간)"); cell.setCellStyle(style_header);//강사2(시간) 52
+		cell = row.createCell(54); cell.setCellValue("강사3(시간)"); cell.setCellStyle(style_header);//강사3(시간) 53
+		cell = row.createCell(55); cell.setCellValue("강사4(시간)"); cell.setCellStyle(style_header);//강사4(시간) 54
+		cell = row.createCell(56); cell.setCellValue("강사5(시간)"); cell.setCellStyle(style_header);//강사5(시간) 55
+		cell = row.createCell(57); cell.setCellValue("강사6(시간)"); cell.setCellStyle(style_header);//강사6(시간) 56
 
-		cell = row.createCell(57); cell.setCellValue("예산 총계(원)"); cell.setCellStyle(style_header);//예산 총계(원)
-		cell = row.createCell(58); cell.setCellValue("부담금/대관비(원)"); cell.setCellStyle(style_header);//부담금/대관비(원)
-		cell = row.createCell(59); cell.setCellValue("강사비(원)"); cell.setCellStyle(style_header);//강사비(원)
-		cell = row.createCell(60); cell.setCellValue("교재비(원)"); cell.setCellStyle(style_header);//교재비(원)
-		cell = row.createCell(61); cell.setCellValue("식대(원)"); cell.setCellStyle(style_header);//식대(원)
-		cell = row.createCell(62); cell.setCellValue("다과비(원)"); cell.setCellStyle(style_header);//다과비(원)
-		cell = row.createCell(63); cell.setCellValue("소모품비(원)"); cell.setCellStyle(style_header);//소모품비(원)
-		cell = row.createCell(64); cell.setCellValue("발송비(원)"); cell.setCellStyle(style_header);//발송비(원)
-		cell = row.createCell(65); cell.setCellValue("재료비(원)"); cell.setCellStyle(style_header);//재료비(원)
-		cell = row.createCell(66); cell.setCellValue("집행비(원)"); cell.setCellStyle(style_header);//집행비(원)
-		cell = row.createCell(67); cell.setCellValue("기타(원)"); cell.setCellStyle(style_header);//기타(원)
-		cell = row.createCell(68); cell.setCellValue("비고"); cell.setCellStyle(style_header);//비고
-		cell = row.createCell(69); cell.setCellValue("지출 총계(원)"); cell.setCellStyle(style_header);//지출 총계(원)
-		cell = row.createCell(70); cell.setCellValue("부담금/대관비(원)"); cell.setCellStyle(style_header);//부담금/대관비(원)
-		cell = row.createCell(71); cell.setCellValue("강사비(원)"); cell.setCellStyle(style_header);//강사비(원)
-		cell = row.createCell(72); cell.setCellValue("교재비(원)"); cell.setCellStyle(style_header);//교재비(원)
-		cell = row.createCell(73); cell.setCellValue("식대(원)"); cell.setCellStyle(style_header);//식대(원)
-		cell = row.createCell(74); cell.setCellValue("다과비(원)"); cell.setCellStyle(style_header);//다과비(원)
-		cell = row.createCell(75); cell.setCellValue("소모품비(원)"); cell.setCellStyle(style_header);//소모품비(원)
-		cell = row.createCell(76); cell.setCellValue("발송비(원)"); cell.setCellStyle(style_header);//발송비(원)
-		cell = row.createCell(77); cell.setCellValue("재료비(원)"); cell.setCellStyle(style_header);//재료비(원)
-		cell = row.createCell(78); cell.setCellValue("집행비(원)"); cell.setCellStyle(style_header);//집행비(원)
-		cell = row.createCell(79); cell.setCellValue("기타(원)"); cell.setCellStyle(style_header);//기타(원)
-		cell = row.createCell(80); cell.setCellValue("비고"); cell.setCellStyle(style_header);//비고
-
+		cell = row.createCell(58); cell.setCellValue("예산 총계(원)"); cell.setCellStyle(style_header);//예산 총계(원)
+		cell = row.createCell(59); cell.setCellValue("부담금/대관비(원)"); cell.setCellStyle(style_header);//부담금/대관비(원)
+		cell = row.createCell(60); cell.setCellValue("강사비(원)"); cell.setCellStyle(style_header);//강사비(원)
+		cell = row.createCell(61); cell.setCellValue("교재비(원)"); cell.setCellStyle(style_header);//교재비(원)
+		cell = row.createCell(62); cell.setCellValue("식대(원)"); cell.setCellStyle(style_header);//식대(원)
+		cell = row.createCell(63); cell.setCellValue("다과비(원)"); cell.setCellStyle(style_header);//다과비(원)
+		cell = row.createCell(64); cell.setCellValue("소모품비(원)"); cell.setCellStyle(style_header);//소모품비(원)
+		cell = row.createCell(65); cell.setCellValue("발송비(원)"); cell.setCellStyle(style_header);//발송비(원)
+		cell = row.createCell(66); cell.setCellValue("재료비(원)"); cell.setCellStyle(style_header);//재료비(원)
+		cell = row.createCell(67); cell.setCellValue("집행비(원)"); cell.setCellStyle(style_header);//집행비(원)
+		cell = row.createCell(68); cell.setCellValue("기타(원)"); cell.setCellStyle(style_header);//기타(원)
+		cell = row.createCell(69); cell.setCellValue("비고"); cell.setCellStyle(style_header);//비고
+		cell = row.createCell(70); cell.setCellValue("지출 총계(원)"); cell.setCellStyle(style_header);//지출 총계(원)
+		cell = row.createCell(71); cell.setCellValue("부담금/대관비(원)"); cell.setCellStyle(style_header);//부담금/대관비(원)
+		cell = row.createCell(72); cell.setCellValue("강사비(원)"); cell.setCellStyle(style_header);//강사비(원)
+		cell = row.createCell(73); cell.setCellValue("교재비(원)"); cell.setCellStyle(style_header);//교재비(원)
+		cell = row.createCell(74); cell.setCellValue("식대(원)"); cell.setCellStyle(style_header);//식대(원)
+		cell = row.createCell(75); cell.setCellValue("다과비(원)"); cell.setCellStyle(style_header);//다과비(원)
+		cell = row.createCell(76); cell.setCellValue("소모품비(원)"); cell.setCellStyle(style_header);//소모품비(원)
+		cell = row.createCell(77); cell.setCellValue("발송비(원)"); cell.setCellStyle(style_header);//발송비(원)
+		cell = row.createCell(78); cell.setCellValue("재료비(원)"); cell.setCellStyle(style_header);//재료비(원)
+		cell = row.createCell(79); cell.setCellValue("집행비(원)"); cell.setCellStyle(style_header);//집행비(원)
+		cell = row.createCell(80); cell.setCellValue("기타(원)"); cell.setCellStyle(style_header);//기타(원)
+		cell = row.createCell(81); cell.setCellValue("비고"); cell.setCellStyle(style_header);//비고
 
 		// 병합된 영역의 각 셀에 스타일을 적용
 		for(CellRangeAddress call : cellList){
@@ -998,7 +1007,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				}
 			}
 		}
-
 
 		// Body
 		List<EBBEpisdExcelDTO> list = eBBEpisdExcelDTO.getList();
@@ -1057,47 +1065,47 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			cell = row.createCell(40); cell.setCellValue(dto.getA4()); cell.setCellStyle(style_body);//과장/차장(명)
 			cell = row.createCell(41); cell.setCellValue(dto.getA5()); cell.setCellStyle(style_body);//사원/대리(명)
 			cell = row.createCell(42); cell.setCellValue(dto.getA6()); cell.setCellStyle(style_body);//조장/반장(명) 42
-			/*cell = row.createCell(43); cell.setCellValue("@15"+dto.getA7()); cell.setCellStyle(style_body);//직급별 인원 - 기타*/
-			cell = row.createCell(43); cell.setCellValue(dto.getA11()); cell.setCellStyle(style_body);//출석률(%) 43
-			cell = row.createCell(44); cell.setCellValue(dto.getAvgScore()); cell.setCellStyle(style_body);//평가점수(점)
-			cell = row.createCell(45); cell.setCellValue(dto.getA12()); cell.setCellStyle(style_body);//종합 평균 ######
-			cell = row.createCell(46); cell.setCellValue(dto.getA13()); cell.setCellStyle(style_body);//전체(공통) ######
-			cell = row.createCell(47); cell.setCellValue(dto.getA14()); cell.setCellStyle(style_body);//교육환경 ######
-			cell = row.createCell(48); cell.setCellValue(dto.getA15()); cell.setCellStyle(style_body);//교육지원 ######
-			cell = row.createCell(49); cell.setCellValue(dto.getA16()); cell.setCellStyle(style_body);//교육내용 ######
-			cell = row.createCell(50); cell.setCellValue(dto.getA17()); cell.setCellStyle(style_body);//강사 ######
-			cell = row.createCell(51); cell.setCellValue(dto.getPmtC1()); cell.setCellStyle(style_body);//강사1(시간)
-			cell = row.createCell(52); cell.setCellValue(dto.getPmtC2()); cell.setCellStyle(style_body);//강사2(시간)
-			cell = row.createCell(53); cell.setCellValue(dto.getPmtC3()); cell.setCellStyle(style_body);//강사3(시간)
-			cell = row.createCell(54); cell.setCellValue(dto.getPmtC4()); cell.setCellStyle(style_body);//강사4(시간)
-			cell = row.createCell(55); cell.setCellValue(dto.getPmtC5()); cell.setCellStyle(style_body);//강사5(시간)
-			cell = row.createCell(56); cell.setCellValue(dto.getPmtC6()); cell.setCellStyle(style_body);//강사6(시간) 56
+			cell = row.createCell(43); cell.setCellValue(dto.getA7()); cell.setCellStyle(style_body);//직급별 인원 - 기타 43
+			cell = row.createCell(44); cell.setCellValue(dto.getA11()); cell.setCellStyle(style_body);//출석률(%) 43
+			cell = row.createCell(45); cell.setCellValue(dto.getAvgScore()); cell.setCellStyle(style_body);//평가점수(점)
+			cell = row.createCell(46); cell.setCellValue(dto.getA12()); cell.setCellStyle(style_body);//종합 평균 ######
+			cell = row.createCell(47); cell.setCellValue(dto.getA13()); cell.setCellStyle(style_body);//전체(공통) ######
+			cell = row.createCell(48); cell.setCellValue(dto.getA14()); cell.setCellStyle(style_body);//교육환경 ######
+			cell = row.createCell(49); cell.setCellValue(dto.getA15()); cell.setCellStyle(style_body);//교육지원 ######
+			cell = row.createCell(50); cell.setCellValue(dto.getA16()); cell.setCellStyle(style_body);//교육내용 ######
+			cell = row.createCell(51); cell.setCellValue(dto.getA17()); cell.setCellStyle(style_body);//강사 ######
+			cell = row.createCell(52); cell.setCellValue(dto.getPmtC1()); cell.setCellStyle(style_body);//강사1(시간)
+			cell = row.createCell(53); cell.setCellValue(dto.getPmtC2()); cell.setCellStyle(style_body);//강사2(시간)
+			cell = row.createCell(54); cell.setCellValue(dto.getPmtC3()); cell.setCellStyle(style_body);//강사3(시간)
+			cell = row.createCell(55); cell.setCellValue(dto.getPmtC4()); cell.setCellStyle(style_body);//강사4(시간)
+			cell = row.createCell(56); cell.setCellValue(dto.getPmtC5()); cell.setCellStyle(style_body);//강사5(시간)
+			cell = row.createCell(57); cell.setCellValue(dto.getPmtC6()); cell.setCellStyle(style_body);//강사6(시간) 56
 
-			cell = row.createCell(57); cell.setCellValue(dto.getPmtA0()); cell.setCellStyle(style_body);//예산 총계(원)
-			cell = row.createCell(58); cell.setCellValue(dto.getPmtA1()); cell.setCellStyle(style_body);//부담금/대관비(원)
-			cell = row.createCell(59); cell.setCellValue(dto.getPmtA2()); cell.setCellStyle(style_body);//강사비(원)
-			cell = row.createCell(60); cell.setCellValue(dto.getPmtA3()); cell.setCellStyle(style_body);//교재비(원)
-			cell = row.createCell(61); cell.setCellValue(dto.getPmtA4()); cell.setCellStyle(style_body);//식대(원)
-			cell = row.createCell(62); cell.setCellValue(dto.getPmtA5()); cell.setCellStyle(style_body);//다과비(원)
-			cell = row.createCell(63); cell.setCellValue(dto.getPmtA6()); cell.setCellStyle(style_body);//소모품비(원)
-			cell = row.createCell(64); cell.setCellValue(dto.getPmtA7()); cell.setCellStyle(style_body);//발송비(원)
-			cell = row.createCell(65); cell.setCellValue(dto.getPmtA8()); cell.setCellStyle(style_body);//재료비(원)
-			cell = row.createCell(66); cell.setCellValue(dto.getPmtA9()); cell.setCellStyle(style_body);//집행비(원)
-			cell = row.createCell(67); cell.setCellValue(dto.getPmtA10()); cell.setCellStyle(style_body);//기타(원)
-			cell = row.createCell(68); cell.setCellValue(dto.getPmtA11()); cell.setCellStyle(style_body);//비고(원)
+			cell = row.createCell(58); cell.setCellValue(dto.getPmtA0()); cell.setCellStyle(style_body);//예산 총계(원)
+			cell = row.createCell(59); cell.setCellValue(dto.getPmtA1()); cell.setCellStyle(style_body);//부담금/대관비(원)
+			cell = row.createCell(60); cell.setCellValue(dto.getPmtA2()); cell.setCellStyle(style_body);//강사비(원)
+			cell = row.createCell(61); cell.setCellValue(dto.getPmtA3()); cell.setCellStyle(style_body);//교재비(원)
+			cell = row.createCell(62); cell.setCellValue(dto.getPmtA4()); cell.setCellStyle(style_body);//식대(원)
+			cell = row.createCell(63); cell.setCellValue(dto.getPmtA5()); cell.setCellStyle(style_body);//다과비(원)
+			cell = row.createCell(64); cell.setCellValue(dto.getPmtA6()); cell.setCellStyle(style_body);//소모품비(원)
+			cell = row.createCell(65); cell.setCellValue(dto.getPmtA7()); cell.setCellStyle(style_body);//발송비(원)
+			cell = row.createCell(66); cell.setCellValue(dto.getPmtA8()); cell.setCellStyle(style_body);//재료비(원)
+			cell = row.createCell(67); cell.setCellValue(dto.getPmtA9()); cell.setCellStyle(style_body);//집행비(원)
+			cell = row.createCell(68); cell.setCellValue(dto.getPmtA10()); cell.setCellStyle(style_body);//기타(원)
+			cell = row.createCell(69); cell.setCellValue(dto.getPmtA11()); cell.setCellStyle(style_body);//비고(원)
 
-			cell = row.createCell(69); cell.setCellValue(dto.getPmtB0()); cell.setCellStyle(style_body);//지출총계(원)
-			cell = row.createCell(70); cell.setCellValue(dto.getPmtB1()); cell.setCellStyle(style_body);//부담금/대관비(원)
-			cell = row.createCell(71); cell.setCellValue(dto.getPmtB2()); cell.setCellStyle(style_body);//강사비(원)
-			cell = row.createCell(72); cell.setCellValue(dto.getPmtB3()); cell.setCellStyle(style_body);//교재비(원)
-			cell = row.createCell(73); cell.setCellValue(dto.getPmtB4()); cell.setCellStyle(style_body);//식대(원)
-			cell = row.createCell(74); cell.setCellValue(dto.getPmtB5()); cell.setCellStyle(style_body);//다과비(원)
-			cell = row.createCell(75); cell.setCellValue(dto.getPmtB6()); cell.setCellStyle(style_body);//소모품비(원)
-			cell = row.createCell(76); cell.setCellValue(dto.getPmtB7()); cell.setCellStyle(style_body);//발송비(원)
-			cell = row.createCell(77); cell.setCellValue(dto.getPmtB8()); cell.setCellStyle(style_body);//재료비(원)
-			cell = row.createCell(78); cell.setCellValue(dto.getPmtB9()); cell.setCellStyle(style_body);//집행비(원)
-			cell = row.createCell(79); cell.setCellValue(dto.getPmtB10()); cell.setCellStyle(style_body);//기타(원)
-			cell = row.createCell(80); cell.setCellValue(dto.getPmtB11()); cell.setCellStyle(style_body);//비고
+			cell = row.createCell(70); cell.setCellValue(dto.getPmtB0()); cell.setCellStyle(style_body);//지출총계(원)
+			cell = row.createCell(71); cell.setCellValue(dto.getPmtB1()); cell.setCellStyle(style_body);//부담금/대관비(원)
+			cell = row.createCell(72); cell.setCellValue(dto.getPmtB2()); cell.setCellStyle(style_body);//강사비(원)
+			cell = row.createCell(73); cell.setCellValue(dto.getPmtB3()); cell.setCellStyle(style_body);//교재비(원)
+			cell = row.createCell(74); cell.setCellValue(dto.getPmtB4()); cell.setCellStyle(style_body);//식대(원)
+			cell = row.createCell(75); cell.setCellValue(dto.getPmtB5()); cell.setCellStyle(style_body);//다과비(원)
+			cell = row.createCell(76); cell.setCellValue(dto.getPmtB6()); cell.setCellStyle(style_body);//소모품비(원)
+			cell = row.createCell(77); cell.setCellValue(dto.getPmtB7()); cell.setCellStyle(style_body);//발송비(원)
+			cell = row.createCell(78); cell.setCellValue(dto.getPmtB8()); cell.setCellStyle(style_body);//재료비(원)
+			cell = row.createCell(79); cell.setCellValue(dto.getPmtB9()); cell.setCellStyle(style_body);//집행비(원)
+			cell = row.createCell(80); cell.setCellValue(dto.getPmtB10()); cell.setCellStyle(style_body);//기타(원)
+			cell = row.createCell(81); cell.setCellValue(dto.getPmtB11()); cell.setCellStyle(style_body);//비고
 
 
 
@@ -1113,7 +1121,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			}
 
 			//셀 너비 자동맞춤 시작
-			for(int j=0; j<=80;j++){
+			for(int j=0; j<=81;j++){
 				if(j == 10) continue;//병합된 셀이므로 패스
 				sheet.autoSizeColumn(j);
 
@@ -1121,7 +1129,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				if(j == 9){
 					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+1200 );
 				//교육장소, 협력기관, 예산비고, 지출비고
-				}else if(j == 11 || j == 12 || j == 68 || j == 80){
+				}else if(j == 11 || j == 12 || j == 69 || j == 81){
 					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+2500 );
 				//그외 일반적인 셀들
 				}else{
@@ -1211,8 +1219,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		cell = row.createCell(11); cell.setCellValue("교육신청일"); cell.setCellStyle(style_header);
 		cell = row.createCell(12); cell.setCellValue("교육상태"); cell.setCellStyle(style_header);
 		cell = row.createCell(13); cell.setCellValue("출석"); cell.setCellStyle(style_header);
-		cell = row.createCell(14); cell.setCellValue("평가"); cell.setCellStyle(style_header);
-		cell = row.createCell(15); cell.setCellValue("수료"); cell.setCellStyle(style_header);
+		cell = row.createCell(14); cell.setCellValue("수강"); cell.setCellStyle(style_header);
+		cell = row.createCell(15); cell.setCellValue("평가"); cell.setCellStyle(style_header);
+		cell = row.createCell(16); cell.setCellValue("수료"); cell.setCellStyle(style_header);
 
 
 		// Body
@@ -1246,14 +1255,15 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			cell = row.createCell(11); cell.setCellValue(eduDtm); cell.setCellStyle(style_body);//교육신청일
 			cell = row.createCell(12); cell.setCellValue(dto.getEduStat()); cell.setCellStyle(style_body);//교육상태
 			cell = row.createCell(13); cell.setCellValue(dto.getEduAtndc()+"%"); cell.setCellStyle(style_body);//출석
+			cell = row.createCell(14); cell.setCellValue(""); cell.setCellStyle(style_body);//수강
 			String examScore = (dto.getExamScore() == null || dto.getExamScore().equals("")) ? "0" : String.valueOf(dto.getExamScore());
-			cell = row.createCell(14); cell.setCellValue(examScore+"점"); cell.setCellStyle(style_body);//평가
+			cell = row.createCell(15); cell.setCellValue(examScore+"점"); cell.setCellStyle(style_body);//평가
 
 			String cmptnYn = (dto.getCmptnYn().equals("Y")) ?"수료" : "미수료";
-			cell = row.createCell(15); cell.setCellValue(cmptnYn); cell.setCellStyle(style_body);//수료
+			cell = row.createCell(16); cell.setCellValue(cmptnYn); cell.setCellStyle(style_body);//수료
 
 			//셀 너비 자동맞춤 시작
-			for(int j=0; j<=15;j++){
+			for(int j=0; j<=16;j++){
 				sheet.autoSizeColumn(j);
 				if(j == 3){
 					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+2024 );

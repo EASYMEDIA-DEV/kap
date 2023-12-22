@@ -1450,6 +1450,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
 						actForm.cmptnAutoYn = $("input[name='cmptnAutoYn']:checked").val();//수료자동여부
 						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
+						actForm.edctnCmpltnYn = $("input[name='edctnCmpltnYn']:checked").val();//교육완료여부
 
 
 						//교육 안내문 세팅

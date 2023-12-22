@@ -1,23 +1,19 @@
 package com.kap.front.controller.eb;
 
-import com.easymedia.error.ErrorCode;
-import com.easymedia.error.exception.BusinessException;
-import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptMst;
-import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptRspnMst;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.service.COCodeService;
-import com.kap.service.EBEExamService;
-import io.swagger.v3.oas.annotations.Operation;
+import com.kap.service.EBBEpisdService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import java.util.List;
 
 /**
  * <pre>
@@ -45,20 +41,22 @@ import javax.validation.Valid;
 public class EBACouseController {
 
     /** 서비스 **/
-    private final EBEExamService eBEExamService;
+    private final EBBEpisdService eBBEpisdService;
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
+
     /**
      * 교육과정 신청 목록
      */
     @GetMapping(value="/apply/list")
-    public String getEducationApplyList(ModelMap modelMap) throws Exception
+    public String getEducationApplyList(ModelMap modelMap, EBBEpisdDTO eBBEpisdDTO) throws Exception
     {
         String vwUrl = "front/eb/eba/EBACouseList.front";
         try
         {
-            System.out.println("@@@@@ 온닷!!! 교육과정 신청 목록");
-            modelMap.addAttribute("rtnData", "");
+            EBBEpisdDTO rtnList  = eBBEpisdService.selectEpisdList(eBBEpisdDTO);
+
+            modelMap.addAttribute("rtnData", rtnList);
         }
         catch (Exception e)
         {
@@ -72,9 +70,34 @@ public class EBACouseController {
     }
 
     /**
+     * 교육과정 목록을 조회한다.
+     */
+    @RequestMapping(value = "/apply/select")
+    public String getEpisdPageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
+            modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/eb/eba/EBACouseListAjax";
+    }
+
+
+
+    /**
      * 교육과정 신청 상세
      */
-    @GetMapping(value="/apply/detail")
+    @PostMapping(value="/apply/detail")
     public String getEducationApplyDtl(ModelMap modelMap) throws Exception
     {
         String vwUrl = "front/eb/eba/EBACouseDtl.front";

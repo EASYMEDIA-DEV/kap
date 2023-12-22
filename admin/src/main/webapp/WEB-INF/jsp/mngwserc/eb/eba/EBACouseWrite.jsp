@@ -17,7 +17,7 @@
 
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">과정분류${rtnDto.prntCd}<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">과정분류<span class="star"> *</span></label>
                     <div class="col-sm-11" style="margin-left: -15px">
                         <div class="col-sm-1">
                             <select class="form-control input-sm wd-sm classType" name="cd" id="cd" title="과정분류-대분류">
@@ -155,9 +155,9 @@
 
                 <label class="col-sm-1 control-label">수료 기준<span class="star"> *</span></label>
                 <div class="col-sm-11" style="margin-left: -80px;">
-                        <label class="col-sm-1 control-label">출석</label>
+                        <label class="col-sm-1 control-label">출석/수강</label>
                         <div class="col-sm-1">
-                            <select class="form-control input-sm wd-sm" name="cmptnStndCd" id="cmptnStndCd" title="출석">
+                            <select class="form-control input-sm wd-sm" name="cmptnStndCd" id="cmptnStndCd" title="출석/수강">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${studyCdList.CMPTN_STND}" varStatus="status">
                                     <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnStndCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -401,7 +401,7 @@
             </c:if>
 
             <!--VUE 영역 시작 -->
-            <div class="table-responsive col-sm-12 p0 m0" id="vueList">
+            <div class="table-responsive col-sm-12 p0 m0" id="vueList" <c:if test="${empty rtnDto}">style="display:none;"</c:if>  >
                 <table class="table table-hover table-striped" >
                     <thead>
                     <tr>

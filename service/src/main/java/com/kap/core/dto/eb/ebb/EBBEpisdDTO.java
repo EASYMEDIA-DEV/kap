@@ -272,6 +272,20 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "만족도결과 순번", example = "번호")
     private Integer rsltSeq;
 
+
+    @Schema(title = "교육완료여부", example = "Y/N")
+    @Builder.Default
+    private String edctnCmpltnYn = "";
+
+    @Schema(title = "검색 정렬조건", example = "숫자")
+    @Builder.Default
+    private Integer srchOrder = 1;
+
+
+    @Schema(title = "파일경로", example = "텍스트")
+    private String webPath;
+
+
     //오프라인여부
 
     //로그인세션ID

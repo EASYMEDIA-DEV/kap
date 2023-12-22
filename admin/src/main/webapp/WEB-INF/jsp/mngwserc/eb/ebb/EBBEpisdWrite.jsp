@@ -737,6 +737,36 @@
                         </div>
                     </fieldset>
 
+                    <fieldset class="last-child">
+                        <div class="form-group text-sm">
+
+                            <label class="col-sm-1 control-label">교육완료여부<span class="star"> *</span></label>
+                            <div class="col-sm-11">
+                                <div class="row">
+                                    <c:set var="edctnCmpltnYn" value="${kl:nvl(rtnDto.edctnCmpltnYn, 'N')}" />
+                                    <label class="radio-inline c-radio">
+                                        <input type="radio" name="edctnCmpltnYn" value="Y" title="교육완료여부" <c:if test="${edctnCmpltnYn eq 'Y'}">checked</c:if> />
+                                        <span class="ion-record"></span> 완료
+                                    </label>
+                                    <label class="radio-inline c-radio">
+                                        <input type="radio" name="edctnCmpltnYn" value="N" title="교육완료여부" <c:if test="${edctnCmpltnYn eq 'N'}">checked</c:if> />
+                                        <span class="ion-record"></span> 미완료
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <p class="text-bold mt">
+                                        ※ GPC 교육의 경우 교육완료 처리 시 해당 차수정보와 참석자 정보, 설문 응답결과에 대해 GPC와의 I/F가 진행됩니다.
+                                    </p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </fieldset>
+
+
+
+
                 </div>
 
                 <!-- 참여자 목록-->
