@@ -58,27 +58,55 @@ public class MPUserController {
     //코드 서비스
     private final COCodeService cOCodeService;
 
+    /**
+     * 회원가입 체크 페이지
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/join")
     public String getMemberJoinChk() throws Exception {
 
         return "/front/mp/MPUserJoinChk.front";
+
     }
 
+    /**
+     * 회원가입 페이지
+     * @param modelMap
+     * @param type
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/verification/{type}")
     public String getPwdFind(ModelMap modelMap, @PathVariable String type) throws Exception {
         modelMap.addAttribute("rtnData", type);
+
         return "/front/mp/MPUserVerification.front";
+
     }
 
+    /**
+     * 회원가입 동의 페이지
+     * @param modelMap
+     * @param coIdFindDto
+     * @return
+     * @throws Exception
+     */
     @RequestMapping( "/agreement")
     public String getAgreement(ModelMap modelMap, COIdFindDto coIdFindDto) throws Exception {
         modelMap.addAttribute("data", cOUserLgnService.getIdFind(coIdFindDto));
         modelMap.addAttribute("verificationData", coIdFindDto);
 
         return "/front/mp/MPUserAgreement.front";
+
     }
 
-
+    /**
+     * 회원가입 페이지
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/mp-user-join")
     public String getMemberJoin(ModelMap modelMap) throws Exception {
         ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -86,13 +114,17 @@ public class MPUserController {
         cdDtlList.add("MEM_CD");
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-
         return "/front/mp/MPUserJoin.front";
+
     }
 
 
     /**
      * id 중복 체크
+     * @param mpaUserDto
+     * @param modelMap
+     * @return
+     * @throws Exception
      */
     @PostMapping(value = "/dup-id")
     public String selectDupId(MPAUserDto mpaUserDto,
@@ -114,11 +146,16 @@ public class MPUserController {
         }
 
         return "jsonView";
+
     }
 
 
     /**
      * 이메일 중복 체크
+     * @param mpaUserDto
+     * @param modelMap
+     * @return
+     * @throws Exception
      */
     @PostMapping(value = "/dup-email")
     public String selectDupEmail(MPAUserDto mpaUserDto,
@@ -141,12 +178,11 @@ public class MPUserController {
         }
 
         return "jsonView";
+
     }
 
     /**
-     *
      * 이메일 인증 번호 전송
-     *
      * @param
      * @return
      * @throws Exception
@@ -191,17 +227,21 @@ public class MPUserController {
             }
             throw new Exception(e.getMessage());
         }
-        return randomNumber.toString();
-    }
 
+        return randomNumber.toString();
+
+    }
 
     /**
      * 회원 등록
+     * @param mpJoinDto
+     * @param req
+     * @return
+     * @throws Exception
      */
     @PostMapping(value="/insert")
     public String insertCmt(MPJoinDto mpJoinDto ,
-                            HttpServletRequest req ,
-                            ModelMap modelMap) throws Exception
+                            HttpServletRequest req) throws Exception
     {
         try
         {
@@ -219,7 +259,6 @@ public class MPUserController {
             mpePartsCompanyDTO.setModIp(clientIp);
             mpaUserService.insertUser(mpaUserDto , mpePartsCompanyDTO , mpJoinDto);
 
-
             //이메일 발송
             COMailDTO cOMailDTO = new COMailDTO();
             cOMailDTO.setSubject("["+siteName+"] 회원 가입 완료 안내");
@@ -230,7 +269,6 @@ public class MPUserController {
             receiverDto.setEmail(mpaUserDto.getEmail());
             //이름
             receiverDto.setName("");
-            //치환문자1
 
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date now = new Date();
@@ -255,32 +293,54 @@ public class MPUserController {
         }
 
         return "jsonView";
+
     }
 
-    @RequestMapping("/join-success")
+    /**
+     * 가입 성공 페이지
+     * @param mpaUserDto
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/join-success" , method = RequestMethod.POST)
     public String getMemberJoinSuccess(MPAUserDto mpaUserDto , ModelMap modelMap) throws Exception
     {
         MPAUserDto mpaUserDto2 = mpaUserService.selectUserDtlId(mpaUserDto);
         modelMap.addAttribute("rtnData", mpaUserDto2);
+
         return "/front/mp/MPUserJoinSuccess.front";
+
     }
 
+    /**
+     * 부품사 가입 페이지
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/mp-member-parts-join")
     public String getMemberPartsJoin(ModelMap modelMap) throws Exception
     {
-
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("COMPANY_TYPE");
         cdDtlList.add("CO_YEAR_CD");
 
-
         modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
 
         return "/front/mp/MPMemberPartsJoin.front";
+
     }
 
+    /**
+     * 부품사 조회
+     * @param modelMap
+     * @param bsnmNo
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/bsnm-select/{bsnmNo}")
     public String getCmpnSelect(ModelMap modelMap, @PathVariable String bsnmNo) throws Exception {
 
@@ -289,6 +349,7 @@ public class MPUserController {
         modelMap.addAttribute("rtnData", mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO));
 
         return "jsonView";
+
     }
 
     private static String getClientIp(HttpServletRequest req) {
@@ -319,5 +380,7 @@ public class MPUserController {
         }
 
         return ip;
+
     }
+
 }

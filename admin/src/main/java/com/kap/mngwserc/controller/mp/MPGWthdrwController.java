@@ -40,30 +40,38 @@ public class MPGWthdrwController {
 
     private final MPGWthdrwService mpgWthdrwService;
 
-
+    /**
+     * 탈퇴 회원 리스트 조회
+     * @param mpgWthdrwDto
+     * @param modelMap
+     * @return
+     * @throws Exception
+     */
     @GetMapping(value = "/list")
     public String getUserListPage(MPGWthdrwDto mpgWthdrwDto ,
                                   ModelMap modelMap ) throws Exception {
-
-        // 로그인한 계정
-        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        mpgWthdrwDto.setLgnSsnId(cOUserDetailsDTO.getId());
-
         modelMap.addAttribute("rtnData", mpgWthdrwService.selectWthdrwList(mpgWthdrwDto));
+
         return "mngwserc/mp/mpg/MPGWthdrwList.admin";
     }
 
     /**
-     * 일반회원관리 목록으로 이동한다.
+     * 탈퇴 회원 조회
      */
     @PostMapping(value = "/select")
     public String selectWthdrwListPageAjax(MPGWthdrwDto mpgWthdrwDto ,
                                          ModelMap modelMap ) throws Exception {
         modelMap.addAttribute("rtnData", mpgWthdrwService.selectWthdrwList(mpgWthdrwDto));
-        // 로그인한 계정
+
         return "mngwserc/mp/mpg/MPGWthdrwListAjax";
     }
 
+    /**
+     * 엑셀 다운
+     * @param mpgWthdrwDto
+     * @param response
+     * @throws Exception
+     */
     @GetMapping(value = "/excel-down")
     public void selectUserListExcel(MPGWthdrwDto mpgWthdrwDto ,
                                     HttpServletResponse response) throws Exception

@@ -63,17 +63,14 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     private final MPEPartsCompanyService mpePartsCompanyService;
 
-
     private final COFileService cOFileService;
-
 
     private final EgovIdGnrService memModSeqIdgen;
 
     private final EgovIdGnrService memSeqIdgen;
 
-
     /**
-     * 일반 사용자 조회
+     * 사용자 조회
      * @param mpaUserDto
      * @return
      * @throws Exception
@@ -92,9 +89,10 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaUserDto.setRecordCountPerPage( page.getRecordCountPerPage() );
         mpaUserDto.setTotalCount( mpaUserMapper.selectUserListCnt(mpaUserDto ));
         List<MPAUserDto> mpaUserDtos = mpaUserMapper.selectUserList(mpaUserDto);
-
         mpaUserDto.setList( mpaUserDtos );
+
         return mpaUserDto;
+
     }
 
     /**
@@ -137,8 +135,16 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     /**
      * 회원 수정
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
      */
     public int updateUserDtl(MPAUserDto mpaUserDto) throws Exception {
+
+        if (mpaUserDto.getChngFndn().equals("Y")) {
+            mpaUserMapper.updateUserDtlModS(mpaUserDto);
+        }
+
         if(mpaUserDto.getFileList() != null && !mpaUserDto.getFileList().isEmpty()) {
             HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(mpaUserDto.getFileList());
             mpaUserDto.setCmssrPhotoFileSeq(fileSeqMap.get("fileSeq"));
@@ -146,12 +152,14 @@ public class MPAUserServiceImpl implements MPAUserService {
 
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
+
         return mpaUserMapper.updateUserDtl(mpaUserDto);
+
     }
 
 
     /**
-     * 일반 사용자 조회
+     * 미래차공모전 리스트 조회
      * @param mpaAttctnDto
      * @return
      * @throws Exception
@@ -170,11 +178,18 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaAttctnDto.setRecordCountPerPage( page.getRecordCountPerPage() );
         mpaAttctnDto.setTotalCount( mpaUserMapper.selectAttcntListCnt(mpaAttctnDto));
         List<MPAAttctnDto> mpaAttctnDtos = mpaUserMapper.selectAttcntList(mpaAttctnDto);
-
         mpaAttctnDto.setList( mpaAttctnDtos );
+
         return mpaAttctnDto;
+
     }
 
+    /**
+     * 문의 리스트 조회
+     * @param mpaInqrDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPAInqrDto selectInqrList(MPAInqrDto mpaInqrDto) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
@@ -188,9 +203,10 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaInqrDto.setRecordCountPerPage( page.getRecordCountPerPage() );
         mpaInqrDto.setTotalCount( mpaUserMapper.selectInqrListCnt(mpaInqrDto));
         List<MPAInqrDto> mpaInprDtos = mpaUserMapper.selectInqrList(mpaInqrDto);
-
         mpaInqrDto.setList( mpaInprDtos );
+
         return mpaInqrDto;
+
     }
 
     /**
@@ -208,7 +224,6 @@ public class MPAUserServiceImpl implements MPAUserService {
         // & < > : ; ? ' " 공백은 치환 -> !
         password = password.replaceAll("[\\s&<>:;?']", "!");
 
-
         MPPwdInitDto mpPwdInitDtos = mpaUserMapper.selectMemDtl(mpPwdInitDto);
         mpPwdInitDto.setPwd(password);
         mpPwdInitDto.setEmail(mpPwdInitDtos.getEmail());
@@ -219,9 +234,8 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpPwdInitDto.setModIp( cOUserDetailsDTO.getLoginIp() );
         mpPwdInitDto.setNewEncPwd(COSeedCipherUtil.encryptPassword(password, mpPwdInitDto.getId()));
 
-
-
         return mpaUserMapper.updatePwdInit(mpPwdInitDto);
+
     }
 
     /**
@@ -233,6 +247,11 @@ public class MPAUserServiceImpl implements MPAUserService {
         return mpaUserMapper.selectCiCnt(mpaUserDto);
     }
 
+    /**
+     * 부품사 갯수 조회
+     * @param mpePartsCompanyDTO
+     * @return
+     */
     public int selectcmpnMst(MPEPartsCompanyDTO mpePartsCompanyDTO) {
         return mpaUserMapper.selectcmpnMst(mpePartsCompanyDTO);
     }
@@ -263,9 +282,15 @@ public class MPAUserServiceImpl implements MPAUserService {
             mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
             mpaUserMapper.insertUserDtlHistory(mpaUserDto);
         }
-
     }
 
+    /**
+     * [사용자] 정보 수정
+     * @param mpaUserDto
+     * @param mpePartsCompanyDTO
+     * @param mpJoinDto
+     * @throws Exception
+     */
     @Override
     public void updateUser(MPAUserDto mpaUserDto, MPEPartsCompanyDTO mpePartsCompanyDTO, MPJoinDto mpJoinDto) throws Exception {
         int dupCmpnCnt = selectcmpnMst(mpePartsCompanyDTO);
@@ -274,7 +299,6 @@ public class MPAUserServiceImpl implements MPAUserService {
             mpaUserDto.setEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getPwd(), mpaUserDto.getId()));
             pwdChg ="Y";
         }
-
 
         mpaUserDto.setChngPwd(pwdChg);
         mpaUserMapper.updateUserDtlMod(mpaUserDto);
@@ -286,7 +310,6 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
 
-
         if(mpaUserDto.getMemCd().equals("CP")) {
             if(mpJoinDto.getPartTypeChg().equals("new")) {
                 mpaUserMapper.insertUserCmpnRel(mpaUserDto);
@@ -295,23 +318,36 @@ public class MPAUserServiceImpl implements MPAUserService {
                 mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
             }
         }
-
-
     }
 
 
+    /**
+     * 사용자 부품사 수정
+     * @param mpaUserDto
+     * @param mpePartsCompanyDTO
+     * @param mpJoinDto
+     * @throws Exception
+     */
     @Override
     public void updateUserCompanyChg(MPAUserDto mpaUserDto, MPEPartsCompanyDTO mpePartsCompanyDTO, MPJoinDto mpJoinDto) throws Exception {
         int dupCmpnCnt = selectcmpnMst(mpePartsCompanyDTO);
         mpaUserMapper.updateUserDtlModBsnm(mpaUserDto);
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
-            mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+        mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+
         if (mpJoinDto.getBsnmChk().equals("false") && dupCmpnCnt == 0) {
             mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
         }
+
     }
 
+    /**
+     * 부품사 수정시 사업 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPAPartDto selectConfirmComp(MPAUserDto mpaUserDto) throws Exception {
         MPAPartDto mpaPartDto = new MPAPartDto();
@@ -329,21 +365,35 @@ public class MPAUserServiceImpl implements MPAUserService {
         return mpaPartDto;
     }
 
+    /**
+     * 사용자 탈퇴
+     * @param mpiWthdrwDto
+     * @throws Exception
+     */
     @Override
     public void updateUserWthdrw(MPIWthdrwDto mpiWthdrwDto) throws Exception {
             mpaUserMapper.updateUserWthdrw(mpiWthdrwDto);
             mpaUserMapper.insertUserWthdrw(mpiWthdrwDto);
             mpaUserMapper.updateUserCiDel(mpiWthdrwDto);
-
-
     }
 
+    /**
+     * 사용자 id조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPAUserDto selectUserDtlId(MPAUserDto mpaUserDto) throws Exception {
         return mpaUserMapper.selectUserDtlId(mpaUserDto);
     }
 
-
+    /**
+     * 엑셀 다운
+     * @param mpaUserDto
+     * @param response
+     * @throws Exception
+     */
     @Override
     public void excelDownload(MPAUserDto mpaUserDto, HttpServletResponse response) throws Exception {
         if (mpaUserDto.getMemCd().equals("CO")) {   //일반
@@ -353,9 +403,14 @@ public class MPAUserServiceImpl implements MPAUserService {
         } else if(mpaUserDto.getMemCd().equals("CS")) { //위원
             excelCs(mpaUserDto, response);
         }
-
     }
 
+    /**
+     * 위원 엑셀
+     * @param mpaUserDto
+     * @param response
+     * @throws IOException
+     */
     private void excelCs(MPAUserDto mpaUserDto, HttpServletResponse response) throws IOException {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
@@ -535,7 +590,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         //다운로드 사유 입력
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
-        pCoSystemLogDTO.setTrgtMenuNm("회원/부품사 관리 > 일반회원관리");
+        pCoSystemLogDTO.setTrgtMenuNm("회원/부품사 관리 > 위원관리");
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPAUserServiceImpl");
         pCoSystemLogDTO.setFncNm("selectUserList");
         pCoSystemLogDTO.setPrcsCd("DL");
@@ -546,6 +601,12 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     }
 
+    /**
+     * 일반 엑셀
+     * @param mpaUserDto
+     * @param response
+     * @throws Exception
+     */
     private void excelCo(MPAUserDto mpaUserDto ,HttpServletResponse response) throws Exception {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFCellStyle style_header = workbook.createCellStyle();
@@ -756,6 +817,12 @@ public class MPAUserServiceImpl implements MPAUserService {
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
     }
 
+    /**
+     * 부품사 엑셀
+     * @param mpaUserDto
+     * @param response
+     * @throws Exception
+     */
     private void excelCp(MPAUserDto mpaUserDto, HttpServletResponse response) throws Exception {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFCellStyle style_header = workbook.createCellStyle();
@@ -1038,4 +1105,3 @@ public class MPAUserServiceImpl implements MPAUserService {
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
     }
 }
-

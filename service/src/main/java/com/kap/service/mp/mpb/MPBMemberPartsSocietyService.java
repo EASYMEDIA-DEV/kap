@@ -35,13 +35,18 @@ public interface MPBMemberPartsSocietyService {
 
     /**
      * 컨설팅 리스트 조회
+     * @param mpbBusDto
+     * @return
+     * @throws Exception
      */
     MPBBusDto selectBusList(MPBBusDto mpbBusDto) throws Exception;
 
     /**
      * 상생 리스트 조회
+     * @param mpbSanDto
+     * @return
+     * @throws Exception
      */
     MPBSanDto selectSanList(MPBSanDto mpbSanDto) throws Exception;
-
 
 }

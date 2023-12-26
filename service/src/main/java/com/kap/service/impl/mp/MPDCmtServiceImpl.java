@@ -2,7 +2,6 @@ package com.kap.service.impl.mp;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -74,6 +73,12 @@ public class MPDCmtServiceImpl implements MPDCmtService {
     private final COSystemLogService cOSystemLogService;
 
 
+    /**
+     * 위원등록
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public int insertCmt(MPAUserDto mpaUserDto) throws Exception {
 
@@ -84,7 +89,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpaUserDto.setMemCd("CS");
         mpaUserDto.setMemSeq(memSeqIdgen.getNextIntegerId());
         mpaUserDto.setEncPwd(COSeedCipherUtil.encryptPassword(mpaUserDto.getPwd(), mpaUserDto.getId()));
-        int i = mpdCmtMapper.insertCmt(mpaUserDto);
+        int cnt = mpdCmtMapper.insertCmt(mpaUserDto);
         mpaUserDto.setTrmsAgmntYn("N");
         mpaUserDto.setPsnifAgmntYn("N");
         mpaUserDto.setPsnif3AgmntYn("N");
@@ -93,16 +98,32 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpaUserMapper.insertUserDtl(mpaUserDto);
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
-        return i;
+
+        return cnt;
+
     }
 
+    /**
+     * 위원 수정
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public int updateCmt(MPAUserDto mpaUserDto) throws Exception {
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
+
         return  mpdCmtMapper.updateCmt(mpaUserDto);
+
     }
 
+    /**
+     * 근태 조회
+     * @param mpdKenDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPDKenDto selectKenList(MPDKenDto mpdKenDto) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
@@ -116,6 +137,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpdKenDto.setRecordCountPerPage( page.getRecordCountPerPage() );
         mpdKenDto.setYear(mpdKenDto.getMonthpicker().split("-")[0]);
         mpdKenDto.setMnth(mpdKenDto.getMonthpicker().split("-")[1]);
+
         if(mpdKenDto.getMonthpicker().split("-").length ==3) {
             mpdKenDto.setDd(mpdKenDto.getMonthpicker().split("-")[2]);
         }
@@ -124,9 +146,17 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         List<MPDKenDto> mpdKenDtos = mpdCmtMapper.selectKenList(mpdKenDto);
 
         mpdKenDto.setList( mpdKenDtos );
+
         return mpdKenDto;
+
     }
 
+    /**
+     * 근태 월 리스트 조회
+     * @param mpdKenDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPDKenDto selectKenMonthList(MPDKenDto mpdKenDto) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
@@ -179,13 +209,22 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         }
 
         mpdKenDto.setList( mpdKenDtos );
+
         return mpdKenDto;
+
     }
 
+    /**
+     * 근태 월 테이블 조회
+     * @param mpdKenDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPDKenDto selectKenMonthTableList(MPDKenDto mpdKenDto) throws Exception {
         int year = Integer.parseInt(mpdKenDto.getMonthpicker().split("-")[0]);
         int month = Integer.parseInt(mpdKenDto.getMonthpicker().split("-")[1]);
+
         mpdKenDto.setYear(String.valueOf(year));
         mpdKenDto.setMnth(String.valueOf(month));
 
@@ -194,6 +233,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         List<String> dates = new ArrayList<String>();
         List<String> weeks = new ArrayList<String>();
+
         for(int day = 1 ; day <= lastDayOfMonth ; day++) {
             LocalDate date = yearMonth.atDay(day);
             String formattedDate = date.format(formatter);
@@ -210,42 +250,85 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpdKenDto.setDays(weeks);
 
         return mpdKenDto;
+
     }
 
+    /**
+     * 근태 월 갯수 조회
+     * @param mpdKenDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPDKenDto selectKenMonthCnt(MPDKenDto mpdKenDto) throws Exception {
         return mpdCmtMapper.selectKenMonthCnt(mpdKenDto);
 
     }
 
+    /**
+     * 근태 부품사 조회
+     * @param mpdKenDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPDKenDto selectKenCmpnList(MPDKenDto mpdKenDto) throws Exception {
         List<MPDKenDto> mpdKenDtos = mpdCmtMapper.selectKenCmpnList(mpdKenDto);
         mpdKenDto.setList( mpdKenDtos );
+
         return mpdKenDto;
+
     }
 
+    /**
+     * 근태 저장
+     * @param mpdKenDto
+     * @throws Exception
+     */
     @Override
     public void insertAtend(MPDKenDto mpdKenDto) throws Exception {
         mpdKenDto.setAtndcSeq(coCmssrAtndcSeqIdgen.getNextIntegerId());
         mpdCmtMapper.insertAtend(mpdKenDto);
     }
 
+    /**
+     * 근태 부품사 상세 조회
+     * @param mpdKenDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPDKenDto selectKenCmpnDtl(MPDKenDto mpdKenDto) throws Exception {
         return mpdCmtMapper.selectKenCmpnDtl(mpdKenDto);
     }
 
+    /**
+     * 킥오프 이미지 조회
+     * @param mpfFileDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPFFileDto selectKenCmpnKickImage(MPFFileDto mpfFileDto) throws Exception {
         return mpdCmtMapper.selectKenCmpnKickImage(mpfFileDto);
     }
 
+    /**
+     * 렙업 이미지 조회
+     * @param mpfFileDto
+     * @return
+     * @throws Exception
+     */
     @Override
     public MPFFileDto selectKenCmpnLvlImage(MPFFileDto mpfFileDto) throws Exception {
         return mpdCmtMapper.selectKenCmpnLvlImage(mpfFileDto);
     }
 
+    /**
+     * 근태 이미지 수정
+     * @param mpfFileDto
+     * @throws Exception
+     */
     @Override
     public void updateCnstgRsumeMst(MPFFileDto mpfFileDto) throws Exception {
         HashMap<String, Integer> kickFile = cOFileService.setFileInfo(mpfFileDto.getKickFile());
@@ -256,7 +339,12 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         mpdCmtMapper.updateCnstgRsumeMst(mpfFileDto);
     }
 
-
+    /**
+     * 엑셀 다운
+     * @param mpdKenDto
+     * @param response
+     * @throws Exception
+     */
     @Override
     public void excelDownload(MPDKenDto mpdKenDto, HttpServletResponse response) throws Exception {
         if(mpdKenDto.getExcelType().equals("D")) { //일별 엑셀
@@ -268,6 +356,12 @@ public class MPDCmtServiceImpl implements MPDCmtService {
 
     }
 
+    /**
+     * 월별 엑셀
+     * @param mpdKenDto
+     * @param response
+     * @throws Exception
+     */
     private void excelMonty(MPDKenDto mpdKenDto, HttpServletResponse response) throws Exception {
         int year = Integer.parseInt(mpdKenDto.getMonthpicker().split("-")[0]);
         int month = Integer.parseInt(mpdKenDto.getMonthpicker().split("-")[1]);
@@ -487,7 +581,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
             List<String> kentae = new ArrayList<String>();
             List<String> kentaeCd = new ArrayList<String>();
 
-            //TODO 양현우 코드 수정 하기
+
             kentae.add("출근");
             kentae.add("재택");
             kentae.add("연차");
@@ -615,10 +709,21 @@ public class MPDCmtServiceImpl implements MPDCmtService {
 
     }
 
+    /**
+     * 엑셀 하이픈
+     * @param str
+     * @return
+     */
     private String excelHypen(String str) {
         return StringUtils.isEmpty(str) ? "-" : str;
     }
 
+    /**
+     * 일별 엑셀
+     * @param mpdKenDto
+     * @param response
+     * @throws IOException
+     */
     private void excelDay(MPDKenDto mpdKenDto, HttpServletResponse response) throws IOException {
 
         int atndn = 0; //출근
@@ -743,7 +848,6 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         for (int i = 0; i <= 17; i++) {
             cell = row.createCell(i);
             cell.setCellStyle(style_header);
-//            StringUtils.
             if (i != 13 && i != 14 && i != 15 && i != 16) {
                 sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i)); //열시작, 열종료, 행시작, 행종료 (자바배열과 같이 0부터 시작)
             } else if(i == 13){
@@ -763,7 +867,6 @@ public class MPDCmtServiceImpl implements MPDCmtService {
 
         if(list.size() >= 1) {
             for (int i = 0; i < list.size(); i++) {
-                //TODO 코드 정의 후 밑 주석 해제 후 이 부분 삭제
                 switch (list.get(i).getAtndcCd()) {
                     case "CMSSR_ATTEND_002": //출근
                         atndn++;
@@ -896,10 +999,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
                 sheet.addMergedRegion(mergedRegion2);
             }
         }
-
-
-        }
-
+    }
         // 열 너비 설정
        /* for(int i =0; i < 8; i++){
             sheet.autoSizeColumn(i);

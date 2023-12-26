@@ -49,13 +49,12 @@ public class MPFCmssrAttendController {
 
     private final MPDCmtService mpdCmtService;
 
-
-
     //파일 업로드 유틸
     private final COFileUtil cOFileUtil;
     //파일 업로드 확장자
     @Value("${app.file.fileExtns}")
     private String imgUploadFileExtns;
+
     /**
      * 근태 페이지
      * @return
@@ -96,12 +95,14 @@ public class MPFCmssrAttendController {
         modelMap.addAttribute("cmpnData", mpdCmtService.selectKenCmpnList(mpdKenDto));
 
         return "/front/mp/mpf/MPFCmssrAttend.front";
-    }
 
+    }
 
     /**
      * 근태  입력
-     *
+     * @param mpdKenDto
+     * @return
+     * @throws Exception
      */
     @RequestMapping(value="/insert-attend")
     public String insertAtendc(MPDKenDto mpdKenDto) throws Exception
@@ -151,11 +152,16 @@ public class MPFCmssrAttendController {
         }
 
         return "jsonView";
+
     }
 
-    /** 파일 찾기 시 파일 업로드
-     *
-     *
+    /**
+     * 파일 찾기 시 파일 업로드
+     * @param multiRequest
+     * @param coFileDTO
+     * @param modelMap
+     * @return
+     * @throws Exception
      */
     @RequestMapping(value="/insert-fileUpload")
     public String testFileUpload(final MultipartHttpServletRequest multiRequest,COFileDTO coFileDTO ,ModelMap modelMap) throws Exception
@@ -186,11 +192,15 @@ public class MPFCmssrAttendController {
         modelMap.addAttribute("fileName", result);
 
         return "jsonView";
+
     }
 
     /**
      * 파일 조회
-     *
+     * @param mpfFileDto
+     * @param modelMap
+     * @return
+     * @throws Exception
      */
     @RequestMapping(value="/select-file")
     public String selectImage(MPFFileDto mpfFileDto , ModelMap modelMap) throws Exception
@@ -211,6 +221,7 @@ public class MPFCmssrAttendController {
         }
 
         return "jsonView";
+
     }
 
     /**
@@ -227,7 +238,9 @@ public class MPFCmssrAttendController {
         mpfFileDto.setModId(cOUserDetailsDTO.getId());
         mpfFileDto.setModIp(cOUserDetailsDTO.getLoginIp());
         mpdCmtService.updateCnstgRsumeMst(mpfFileDto);
+
         return "jsonView";
+
     }
 
 }

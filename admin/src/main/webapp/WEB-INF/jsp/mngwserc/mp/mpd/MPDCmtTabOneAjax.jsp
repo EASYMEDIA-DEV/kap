@@ -6,6 +6,8 @@
     <input type="hidden" id="id" name="id" value=${rtnDtl.id} />
     <input type="hidden" id="cmssrCbsnCdSe" name="cmssrCbsnCdSe" value=${rtnDtl.cmssrCbsnCd} />
     <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDtl.cmssrPhotoFileSeq}" />
+    <input type="hidden" id="memCd" name="memCd" value="${rtnDtl.memCd}" class="notRequired"/>
+
 </form>
 <fieldset>
     <div class="form-group text-sm">
