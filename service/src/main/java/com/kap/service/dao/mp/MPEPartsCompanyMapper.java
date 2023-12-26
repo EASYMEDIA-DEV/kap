@@ -1,6 +1,9 @@
 package com.kap.service.dao.mp;
 
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -98,13 +101,34 @@ public interface MPEPartsCompanyMapper {
     public int deletePartsComSQInfo(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
     /**
-     * 교육사업 연도별 개수 목록을 조회
+     * 교육사업 연도별 통계 목록을 조회
      */
     public List<MPEPartsCompanyDTO> selectEduStatisticsCntList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
     /**
+     * 컨설팅 목록을 조회
+     */
+    public List<CBATechGuidanceInsertDTO> selectConsultingList(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅 목록 개수 조회
+     */
+    public int selectConsultingListCnt(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 자금지원 목록을 조회
+     */
+    public List<WBGAExamSearchDTO> selectFundingList(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+    /**
+     * 자금지원 목록 개수 조회
+     */
+    public int selectFundingCnt(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+
+    /**
      * 자동차부품산업대상 목록을 조회
      */
-    public List<MPEPartsCompanyDTO> selectCarTargetList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+    public List<WBJAcomSearchDTO> selectCarTargetList(WBJAcomSearchDTO wbjAcomSearchDTO) throws Exception;
 
 }

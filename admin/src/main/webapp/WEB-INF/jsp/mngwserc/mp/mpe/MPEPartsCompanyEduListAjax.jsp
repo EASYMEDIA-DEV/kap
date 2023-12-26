@@ -1,43 +1,46 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<c:choose>
-    <c:when test="${ not empty eduList}">
-        <tr>
-            <th scope="row">품질아카데미</th>
-            <c:forEach  var="list" items="${eduList.list}" varStatus="status">
-                <td class="text-center">${list.edu1}</td>
-            </c:forEach>
-        </tr>
-        <tr>
-            <th scope="row">제조/경영혁신</th>
-            <c:forEach  var="list" items="${eduList.list}" varStatus="status">
-                <td class="text-center">${list.edu2}</td>
-            </c:forEach>
-        </tr>
-        <tr>
-            <th scope="row">세미나</th>
-            <c:forEach  var="list" items="${eduList.list}" varStatus="status">
-                <td class="text-center">${list.edu3}</td>
-            </c:forEach>
-        </tr>
-        <tr>
-            <th scope="row">방문교육</th>
-            <c:forEach  var="list" items="${eduList.list}" varStatus="status">
-                <td class="text-center">${list.edu4}</td>
-            </c:forEach>
-        </tr>
-        <tr>
-            <th scope="row">소계</th>
-            <c:forEach  var="list" items="${eduList.list}" varStatus="status">
-                <td class="text-center">${list.sumedu}</td>
-            </c:forEach>
-        </tr>
-    </c:when>
-    <c:otherwise>
-        <tr data-total-count="0">
-            <td colspan="6" class="text-center">
-                검색결과가 없습니다.<br>
-                (등록된 데이터가 없습니다.)
-            </td>
-        </tr>
-    </c:otherwise>
-</c:choose>
+<tr>
+    <th scope="row">${eduList1.cdNm}</th>
+    <td class="text-center">${eduList1.year2023 + eduList1.year2022 + eduList1.year2021 + eduList1.year2020 + eduList1.yearElse}</td>
+    <td class="text-center">${eduList1.year2023}</td>
+    <td class="text-center">${eduList1.year2022}</td>
+    <td class="text-center">${eduList1.year2021}</td>
+    <td class="text-center">${eduList1.year2020}</td>
+    <td class="text-center">${eduList1.yearElse}</td>
+</tr>
+<tr>
+    <th scope="row">${eduList2.cdNm}</th>
+    <td class="text-center">${eduList2.year2023 + eduList2.year2022 + eduList2.year2021 + eduList2.year2020 + eduList2.yearElse}</td>
+    <td class="text-center">${eduList2.year2023}</td>
+    <td class="text-center">${eduList2.year2022}</td>
+    <td class="text-center">${eduList2.year2021}</td>
+    <td class="text-center">${eduList2.year2020}</td>
+    <td class="text-center">${eduList2.yearElse}</td>
+</tr>
+<tr>
+    <th scope="row">${eduList3.cdNm}</th>
+    <td class="text-center">${eduList3.year2023 + eduList3.year2022 + eduList3.year2021 + eduList3.year2020 + eduList3.yearElse}</td>
+    <td class="text-center">${eduList3.year2023}</td>
+    <td class="text-center">${eduList3.year2022}</td>
+    <td class="text-center">${eduList3.year2021}</td>
+    <td class="text-center">${eduList3.year2020}</td>
+    <td class="text-center">${eduList3.yearElse}</td>
+</tr>
+<tr>
+    <th scope="row">${eduList4.cdNm}</th>
+    <td class="text-center">${eduList4.year2023 + eduList4.year2022 + eduList4.year2021 + eduList4.year2020 + eduList4.yearElse}</td>
+    <td class="text-center">${eduList4.year2023}</td>
+    <td class="text-center">${eduList4.year2022}</td>
+    <td class="text-center">${eduList4.year2021}</td>
+    <td class="text-center">${eduList4.year2020}</td>
+    <td class="text-center">${eduList4.yearElse}</td>
+</tr>
+<tr>
+    <th scope="row">소계</th>
+    <td class="text-center" id="cumulativeCnt"></td>
+    <td class="text-center">${eduList1.year2023 + eduList2.year2023 + eduList3.year2023 + eduList4.year2023}</td>
+    <td class="text-center">${eduList1.year2022 + eduList2.year2022 + eduList3.year2022 + eduList4.year2022}</td>
+    <td class="text-center">${eduList1.year2021 + eduList2.year2021 + eduList3.year2021 + eduList4.year2021}</td>
+    <td class="text-center">${eduList1.year2020 + eduList2.year2020 + eduList3.year2020 + eduList4.year2020}</td>
+    <td class="text-center">${eduList1.yearElse + eduList2.yearElse + eduList3.yearElse + eduList4.yearElse}</td>
+</tr>

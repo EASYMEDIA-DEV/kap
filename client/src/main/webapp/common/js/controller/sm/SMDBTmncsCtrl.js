@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // set controller name
     var exports = {
-        controller : "controller/sm/SMDBTmncsController"
+        controller : "controller/sm/SMDBTmncsCtrl"
     };
 
     // get controller object

@@ -3,7 +3,10 @@ package com.kap.service.impl.mp;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPEPartsCompanyService;
@@ -292,17 +295,17 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
     /**
      * 자동차부품산업대상 목록을 조회한다.
      */
-    public MPEPartsCompanyDTO selectCarTargetList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+    public WBJAcomSearchDTO selectCarTargetList(WBJAcomSearchDTO wbjAcomSearchDTO) throws Exception {
 
         COPaginationUtil page = new COPaginationUtil();
-        page.setCurrentPageNo(mpePartsCompanyDTO.getPageIndex());
-        page.setRecordCountPerPage(mpePartsCompanyDTO.getListRowSize());
-        page.setPageSize(mpePartsCompanyDTO.getPageRowSize());
-        mpePartsCompanyDTO.setFirstIndex(page.getFirstRecordIndex());
-        mpePartsCompanyDTO.setRecordCountPerPage(page.getRecordCountPerPage());
-        mpePartsCompanyDTO.setList(mpePartsCompanyMapper.selectCarTargetList(mpePartsCompanyDTO));
+        page.setCurrentPageNo(wbjAcomSearchDTO.getPageIndex());
+        page.setRecordCountPerPage(wbjAcomSearchDTO.getListRowSize());
+        page.setPageSize(wbjAcomSearchDTO.getPageRowSize());
+        wbjAcomSearchDTO.setFirstIndex(page.getFirstRecordIndex());
+        wbjAcomSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        wbjAcomSearchDTO.setList(mpePartsCompanyMapper.selectCarTargetList(wbjAcomSearchDTO));
 
-        return mpePartsCompanyDTO;
+        return wbjAcomSearchDTO;
     }
 
     /**
@@ -676,5 +679,47 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+    }
+
+    /**
+     * 컬설팅 목록을 조회한다.
+     */
+    public CBATechGuidanceInsertDTO selectConsultingList(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(cbaTechGuidanceInsertDTO.getPageIndex());
+        page.setRecordCountPerPage(cbaTechGuidanceInsertDTO.getListRowSize());
+
+        page.setPageSize(cbaTechGuidanceInsertDTO.getPageRowSize());
+
+        cbaTechGuidanceInsertDTO.setFirstIndex(page.getFirstRecordIndex());
+        cbaTechGuidanceInsertDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        cbaTechGuidanceInsertDTO.setList(mpePartsCompanyMapper.selectConsultingList(cbaTechGuidanceInsertDTO));
+        cbaTechGuidanceInsertDTO.setTotalCount(mpePartsCompanyMapper.selectConsultingListCnt(cbaTechGuidanceInsertDTO));
+
+        return cbaTechGuidanceInsertDTO;
+    }
+
+    /**
+     * 자금지원 목록을 조회한다.
+     */
+    public WBGAExamSearchDTO selectFundingList(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(wbgaExamSearchDTO.getPageIndex());
+        page.setRecordCountPerPage(wbgaExamSearchDTO.getListRowSize());
+
+        page.setPageSize(wbgaExamSearchDTO.getPageRowSize());
+
+        wbgaExamSearchDTO.setFirstIndex(page.getFirstRecordIndex());
+        wbgaExamSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        wbgaExamSearchDTO.setList(mpePartsCompanyMapper.selectFundingList(wbgaExamSearchDTO));
+        wbgaExamSearchDTO.setTotalCount(mpePartsCompanyMapper.selectFundingCnt(wbgaExamSearchDTO));
+
+        return wbgaExamSearchDTO;
     }
 }

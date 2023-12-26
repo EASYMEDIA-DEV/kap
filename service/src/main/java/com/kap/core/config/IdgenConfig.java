@@ -752,7 +752,18 @@ public class IdgenConfig {
                 .build();
     }
 
-
+    /** 방문교육 신청 순번
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl edctnVstMstSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EDC_VST_SEQ")
+                .setCipers(13)
+                .build();
+    }
 
     /** 방문교육 관리 결과상세 순번
      * @return

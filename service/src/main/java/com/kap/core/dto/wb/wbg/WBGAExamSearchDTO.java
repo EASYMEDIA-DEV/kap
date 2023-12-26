@@ -22,6 +22,8 @@ public class WBGAExamSearchDTO extends BaseDTO {
 
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
+    @Schema(title = "사업코드명", example = "")
+    private String bsnNm;
     @Schema(title = "옵션 구분 코드", example = "")
     private String optnCd;
     @Schema(title = "회차순번", example = "")

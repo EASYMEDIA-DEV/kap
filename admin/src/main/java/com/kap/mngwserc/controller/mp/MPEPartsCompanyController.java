@@ -2,12 +2,12 @@ package com.kap.mngwserc.controller.mp;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.service.COCodeService;
-import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.EBBEpisdService;
-import com.kap.service.MPEPartsCompanyService;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
+import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <pre>
@@ -53,6 +54,9 @@ public class MPEPartsCompanyController {
 
     /** 교육회차관리 서비스 **/
     public final EBBEpisdService eBBEpisdService;
+
+    /* 상생사업 관리 서비스 */
+    public final WBGAExamService wBGAExamService;
 
     /**
      * 부품사 목록 페이지로 이동한다.
@@ -186,29 +190,55 @@ public class MPEPartsCompanyController {
     }
 
     /**
-     *  부품사 실적정보 조회
-     */
-    @PostMapping(value = "/select-tab-two")
-    public String selectPartsPerformanceTabTwoAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
-        modelMap.addAttribute("rtnData", mpePartsCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
-        return "mngwserc/mp/mpe/MPEPartsCompanyTabTwoAjax";
-    }
-
-    /**
      *  부품사 실적정보 조회 - 교육참여 연도별 개수 조회
      */
     @PostMapping(value = "/selectEduStatisticsCntList")
     public String selectEduStatisticsCntListAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
-        modelMap.addAttribute("eduList", mpePartsCompanyService.selectEduStatisticsCntList(mpePartsCompanyDTO));
+
+        List<MPEPartsCompanyDTO> totalEduList = mpePartsCompanyService.selectEduStatisticsCntList(mpePartsCompanyDTO).getList();
+        modelMap.addAttribute("eduList1", totalEduList.get(0));
+        modelMap.addAttribute("eduList2", totalEduList.get(1));
+        modelMap.addAttribute("eduList3", totalEduList.get(2));
+        modelMap.addAttribute("eduList4", totalEduList.get(3));
+
         return "mngwserc/mp/mpe/MPEPartsCompanyEduListAjax";
+    }
+
+    /**
+     *  부품사 실적정보 조회 - 기술지도 목록 조회
+     */
+    @PostMapping(value = "/selectTechGuidanceList")
+    public String selectTechGuidanceListAjax(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
+        cbaTechGuidanceInsertDTO.setCnstgCd("CONSULT_GB01");
+        modelMap.addAttribute("techGuidanceList", mpePartsCompanyService.selectConsultingList(cbaTechGuidanceInsertDTO));
+        return "mngwserc/mp/mpe/MPEPartsCompanyTechGuidanceListAjax";
+    }
+
+    /**
+     *  부품사 실적정보 조회 - 경영컨설팅 목록 조회
+     */
+    @PostMapping(value = "/selectManageConsultList")
+    public String selectManageConsultListAjax(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
+        cbaTechGuidanceInsertDTO.setCnstgCd("CONSULT_GB02");
+        modelMap.addAttribute("manageConsultList", mpePartsCompanyService.selectConsultingList(cbaTechGuidanceInsertDTO));
+        return "mngwserc/mp/mpe/MPEPartsCompanyManageConsultListAjax";
+    }
+
+    /**
+     *  부품사 실적정보 조회 - 자금지원 목록 조회(시험계측장비, 검교정, 공급망안정화)
+     */
+    @PostMapping(value = "/selectFundingList")
+    public String selectFundingListAjax(WBGAExamSearchDTO wbgaExamSearchDTO, ModelMap modelMap) throws Exception {
+        modelMap.addAttribute("fundingList", mpePartsCompanyService.selectFundingList(wbgaExamSearchDTO));
+        return "mngwserc/mp/mpe/MPEPartsCompanyFundingListAjax";
     }
 
     /**
      *  부품사 실적정보 조회 - 자동자부품산업대상 목록 조회
      */
     @PostMapping(value = "/selectCarTargetList")
-    public String selectCarTargetListAjax(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception {
-        modelMap.addAttribute("carTargetList", mpePartsCompanyService.selectCarTargetList(mpePartsCompanyDTO));
+    public String selectCarTargetListAjax(WBJAcomSearchDTO wbjAcomSearchDTO, ModelMap modelMap) throws Exception {
+        modelMap.addAttribute("carTargetList", mpePartsCompanyService.selectCarTargetList(wbjAcomSearchDTO));
         return "mngwserc/mp/mpe/MPEPartsCompanyCarTargetListAjax";
     }
 

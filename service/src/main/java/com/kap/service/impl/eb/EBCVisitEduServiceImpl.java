@@ -67,6 +67,9 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
     // 회원관리 서비스
     private final MPAUserService mpaUserService;
 
+    /* 방문교육 신청 시퀀스 */
+    private final EgovIdGnrService edctnVstMstSeqIdgen;
+
     /* 방문교육 결과 상세 시퀀스 */
     private final EgovIdGnrService edctnVstRsltSeqIdgen;
 
@@ -695,5 +698,22 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         ebcVisitEduExcelDTO.setList(ebcVisitEduMapper.selectIsttrExcelList(ebcVisitEduExcelDTO));
 
         return ebcVisitEduExcelDTO;
+    }
+
+    /**
+     * 방문교육 신청정보를 등록
+     */
+    public int applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
+        ebcVisitEduDTO.setVstSeq(edctnVstMstSeqIdgen.getNextIntegerId());
+        //신청분야 상세 insert
+        ebcVisitEduMapper.insertAppctnType(ebcVisitEduDTO);
+        return ebcVisitEduMapper.applyVisitEduInfo(ebcVisitEduDTO);
+    }
+
+    /**
+     * 방문교육 신청일시 값 조회
+     */
+    public EBCVisitEduDTO selectVisitEduApplyRegDtm(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
+        return ebcVisitEduMapper.selectVisitEduApplyRegDtm(ebcVisitEduDTO);
     }
 }

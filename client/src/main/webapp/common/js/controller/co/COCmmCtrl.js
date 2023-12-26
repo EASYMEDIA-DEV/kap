@@ -934,6 +934,8 @@ var cmmCtrl = (function(){
 				// 우편번호와 주소 정보를 해당 필드에 넣는다.
 				$("#"+zipcode).val(data.zonecode);
 				$("#"+bscAddr).val(addr);
+				// 방문교육시 교육장소 받아오기
+				$("#edctnPlaceAddr").val(data.sido + " " + data.sigungu);
 				// 커서를 상세주소 필드로 이동한다.
 				$("#"+dtlAddr).focus();
 

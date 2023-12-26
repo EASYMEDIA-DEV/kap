@@ -673,7 +673,7 @@
                             <div class="row">
                                 <label class="col-sm-1 control-label">참석률(%)</label>
                                 <div class="col-sm-10 form-inline">
-                                    <input type="text" class="form-control input-sm" id="ptcptRate" name="ptcptRate" value="${rtnInfo.ptcptRate}" title="참석률(%)" maxlength="50" />
+                                    <input type="text" class="form-control input-sm" id="ptcptRate" name="ptcptRate" value="${not empty rtnInfo.ptcptRate ? rtnInfo.ptcptRate * 100 : rtnInfo.ptcptRate}" title="참석률(%)" maxlength="50" />
                                 </div>
                             </div>
                         </fieldset>
