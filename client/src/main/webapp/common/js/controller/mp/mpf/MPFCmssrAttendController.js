@@ -85,6 +85,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             form.append( "files", e.target.files[0] );
                             form.append( "fileSeq",  $("#fileKickSeq").val() );
                             form.append( "fileOrd", $("#fileKickOrd").val() );
+                            form.append( "__csrf", $("#csrfKeyAttend").val() );
                             jQuery.ajax({
                                 url : "./insert-fileUpload"
                                 , type : "POST"
@@ -125,6 +126,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             form.append( "files", e.target.files[0] );
                             form.append( "fileSeq",  $("#fileLvlSeq").val() );
                             form.append( "fileOrd", $("#fileLvlOrd").val() );
+                            form.append( "__csrf", $("#csrfKeyAttend").val() );
                             jQuery.ajax({
                                 url : "./insert-fileUpload"
                                 , type : "POST"

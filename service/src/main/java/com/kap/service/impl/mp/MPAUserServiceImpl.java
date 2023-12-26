@@ -69,7 +69,6 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     private final EgovIdGnrService memSeqIdgen;
 
-
     /**
      * 사용자 조회
      * @param mpaUserDto
@@ -93,6 +92,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaUserDto.setList( mpaUserDtos );
 
         return mpaUserDto;
+
     }
 
     /**
@@ -135,6 +135,9 @@ public class MPAUserServiceImpl implements MPAUserService {
 
     /**
      * 회원 수정
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
      */
     public int updateUserDtl(MPAUserDto mpaUserDto) throws Exception {
 
@@ -151,6 +154,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
 
         return mpaUserMapper.updateUserDtl(mpaUserDto);
+
     }
 
 
@@ -177,6 +181,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaAttctnDto.setList( mpaAttctnDtos );
 
         return mpaAttctnDto;
+
     }
 
     /**
@@ -201,6 +206,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaInqrDto.setList( mpaInprDtos );
 
         return mpaInqrDto;
+
     }
 
     /**
@@ -229,6 +235,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpPwdInitDto.setNewEncPwd(COSeedCipherUtil.encryptPassword(password, mpPwdInitDto.getId()));
 
         return mpaUserMapper.updatePwdInit(mpPwdInitDto);
+
     }
 
     /**
@@ -328,9 +335,11 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
         mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+
         if (mpJoinDto.getBsnmChk().equals("false") && dupCmpnCnt == 0) {
             mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
         }
+
     }
 
     /**

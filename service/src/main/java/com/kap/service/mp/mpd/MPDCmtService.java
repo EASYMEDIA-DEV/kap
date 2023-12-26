@@ -5,7 +5,6 @@ import com.kap.core.dto.mp.mpd.MPDKenDto;
 import com.kap.core.dto.mp.mpf.MPFFileDto;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * <pre>
@@ -93,11 +92,16 @@ public interface MPDCmtService {
 
      /**
       * 위원 근태 insert
+      * @param mpdKenDto
+      * @throws Exception
       */
      void insertAtend(MPDKenDto mpdKenDto) throws Exception;
 
      /**
       * 위원 근태 조회
+      * @param mpdKenDto
+      * @return
+      * @throws Exception
       */
      MPDKenDto selectKenCmpnDtl(MPDKenDto mpdKenDto) throws Exception;
 
@@ -123,8 +127,5 @@ public interface MPDCmtService {
       * @throws Exception
       */
      void updateCnstgRsumeMst(MPFFileDto mpfFileDto) throws Exception;
-
-
-
 
 }

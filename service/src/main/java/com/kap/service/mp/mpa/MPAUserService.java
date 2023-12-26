@@ -45,6 +45,9 @@ public interface MPAUserService {
 
     /**
      * 일반 사용자 상세 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
      */
     MPAUserDto selectUserDtl(MPAUserDto mpaUserDto) throws Exception;
 
@@ -82,11 +85,17 @@ public interface MPAUserService {
 
     /**
      * 미래차공모전 리스트 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
      */
     MPAAttctnDto selectAttcntList(MPAAttctnDto mpaUserDto) throws Exception;
 
     /**
      * 문의 리스트 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
      */
     MPAInqrDto selectInqrList(MPAInqrDto mpaUserDto) throws Exception;
 

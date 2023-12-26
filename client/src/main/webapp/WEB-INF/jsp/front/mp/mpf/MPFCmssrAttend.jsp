@@ -18,7 +18,7 @@
         <jsp:include page="/WEB-INF/jsp/front/mp/mpf/MPFFileUploadSrchLayer.jsp"  />
         
         <form name="formAttendSubmit" id="formAttendSubmit"  >
-            <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="hidden" class="notRequired" id="csrfKeyAttend" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <!--
           신청 페이지: apply-page 클래스 추가
           그 외 페이지: basic-page 클래스 추가

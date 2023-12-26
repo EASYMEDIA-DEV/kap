@@ -43,7 +43,6 @@ public class MPHCertificationController {
 
     private final MPAUserService mpaUserService;
 
-    //코드 서비스
     private final COCodeService cOCodeService;
 
     private final MPEPartsCompanyService mpePartsCompanyService;
@@ -56,7 +55,9 @@ public class MPHCertificationController {
     @GetMapping("/certification")
     public String getMemberPasswordChk(ModelMap modelMap) throws Exception {
         modelMap.addAttribute("data", "modify");
+
         return "/front/mp/mph/MPHCertification.front";
+
     }
 
     /**
@@ -90,11 +91,17 @@ public class MPHCertificationController {
             mpaUserDtos.setEmailAddr(split[1]);
             modelMap.addAttribute("rtnDtl", mpaUserDtos);
         }
+
         return "/front/mp/mph/MPHUserModify.front";
+
     }
 
     /**
      * 비밀번호 체크
+     * @param cOLoginDTO
+     * @param modelMap
+     * @return
+     * @throws Exception
      */
     @PostMapping(value = "/confirm-password")
     public String selectDupEmail(COLoginDTO cOLoginDTO,
@@ -111,12 +118,16 @@ public class MPHCertificationController {
         }
 
         return "jsonView";
+
     }
-
-
 
     /**
      * 회원 수정
+     * @param mpJoinDto
+     * @param req
+     * @param modelMap
+     * @return
+     * @throws Exception
      */
     @PostMapping(value="/update")
     public String insertCmt(MPJoinDto mpJoinDto ,
@@ -189,12 +200,15 @@ public class MPHCertificationController {
         }
 
         return "jsonView";
-    }
 
+    }
 
     /**
      * 부품사를 수정한다.
-     *
+     * @param mpJoinDto
+     * @param modelMap
+     * @return
+     * @throws Exception
      */
     @RequestMapping(value="/update-company")
     public String updatePartsCompany(MPJoinDto mpJoinDto ,ModelMap modelMap) throws Exception
@@ -215,11 +229,15 @@ public class MPHCertificationController {
         }
 
         return "jsonView";
+
     }
 
     /**
-     * 부품사를 이직한다..
-     *
+     * 부품사를 이직한다.
+     * @param mpJoinDto
+     * @param modelMap
+     * @return
+     * @throws Exception
      */
     @RequestMapping(value="/update-company-chg")
     public String updateUserCompanyChg(MPJoinDto mpJoinDto ,ModelMap modelMap) throws Exception
@@ -255,10 +273,16 @@ public class MPHCertificationController {
         }
 
         return "jsonView";
+
     }
 
     /**
      * 부품사 상세 조회
+     * @param bsnmNo
+     * @param modelMap
+     * @param request
+     * @return
+     * @throws Exception
      */
     @GetMapping(value="/{bsnmNo}")
     public String getPartsCompanyWritePage(@PathVariable String bsnmNo, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -285,10 +309,14 @@ public class MPHCertificationController {
         }
 
         return "jsonView";
+
     }
 
     /**
      * 이직 가능 여부 확인
+     * @param modelMap
+     * @return
+     * @throws Exception
      */
     @PostMapping(value = "/confirm-comp")
     public String selectConfirmComp(ModelMap modelMap) throws Exception {
@@ -305,6 +333,7 @@ public class MPHCertificationController {
         }
 
         return "jsonView";
+
     }
 
 }
