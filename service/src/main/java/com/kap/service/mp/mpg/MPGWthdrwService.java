@@ -23,8 +23,12 @@ import javax.servlet.http.HttpServletResponse;
         */
 public interface MPGWthdrwService {
 
+    /**
+     * 탈퇴 회원 리스트 조회
+     * @param mpgWthdrwDto
+     * @return
+     */
     MPGWthdrwDto selectWthdrwList(MPGWthdrwDto mpgWthdrwDto);
-
 
     /**
      * 엑셀 생성
