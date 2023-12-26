@@ -132,7 +132,7 @@ logging:
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%10t] %-60(%logger{39}.%M\\(%L\\)) : %m%n%wEx"
 app:
-  is-login: true
+  is-login: false
 
 nice :
   client-id : 1d9b7bb5-b3da-4b64-a852-003b3b5615f6
