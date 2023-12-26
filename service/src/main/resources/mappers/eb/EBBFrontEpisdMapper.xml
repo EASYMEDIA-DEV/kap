@@ -10,76 +10,93 @@
     -->
 	<select id="selectFrontCouseList" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
 		SELECT /*EBBEpisdMapper.selectFrontCouseList*/
-			edctn_seq
-			, episd_seq
+			a. edctn_seq
 			, episd_year
 			, episd_ord
-			, DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
-			, (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
-			, nm
-			, ctgry_cd_nm
+			, episd_seq
+			, (select parnt_seq from co_code_mst WHERE cd = a.ctgry_cd) as parnt_seq
+			, (SELECT cd_nm FROM co_code_mst WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
+				(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
+				AND dpth = 2) prnt_cd_nm
+			, a.ctgry_cd
+			, (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
+			, a.nm
+			, (select cd_nm from co_code_mst where cd=a.stduy_mthd_cd) as stduy_mthd_cd_nm
+			, (select cd_nm from co_code_mst where cd=a.stduy_dd_cd) as stduy_dd_cd_nm
+			, (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as stduy_time_cd_nm
 			, accs_strt_dtm
 			, accs_end_dtm
-			, stduy_mthd_cd_nm
-			, case
-				when NOW()  <![CDATA[<]]> accs_strt_dtm then '접수대기'
-				when NOW()  <![CDATA[>]]>  accs_strt_dtm AND NOW()  <![CDATA[<]]>   accs_end_dtm then '접수중'
-				when NOW()  <![CDATA[>]]>  accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt  <![CDATA[>=]]>  fxnum_cnt) then '접수마감'
-			END  AS accs_status_nm
-			, case
-				when NOW()  <![CDATA[<]]>  accs_strt_dtm then '2'
-				when NOW()  <![CDATA[>]]>  accs_strt_dtm AND NOW()  <![CDATA[<]]>   accs_end_dtm then '1'
-				when NOW()  <![CDATA[>]]>  accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt  <![CDATA[>=]]>  fxnum_cnt) then '3'
-			END  AS accs_status_order
+			, DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
 			, edctn_strt_dtm
 			, edctn_end_dtm
-			, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
-					case when NOW()  <![CDATA[<]]>  edctn_strt_dtm then '교육대기'
-							when NOW()  <![CDATA[>]]>  edctn_strt_dtm AND NOW()  <![CDATA[<]]>  edctn_end_dtm then '교육중'
-							when NOW()  <![CDATA[>]]>  edctn_end_dtm then '교육마감'
-					END
-					when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
-			END  AS edctn_status_nm
-			, stduy_dd_cd_nm
-			, stduy_time_cd_nm
-			, rcrmt_mthd_cd_nm
+			, accs_status_nm
+			, accs_status_order
 			, fxnum_cnt
 			, fxnum_impsb_yn
+			, rcrmt_mthd_cd
+			, rcrmt_mthd_cd_nm
+		    , place_seq
+			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS web_path
 			, place_nm
-			, (SELECT web_path FROM co_file_dtl WHERE file_seq = AA.thnl_file_seq AND file_ord = 0) as web_path
-		FROM (
-			SELECT
-			b.edctn_seq
-			, a.episd_seq
-			, a.episd_year
-			, a.episd_ord
-			, (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
-			, b.ctgry_cd
-			, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
-			, b.nm
-			, b.stduy_mthd_cd
-			, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
-			, (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) as stduy_dd_cd_nm
-			, (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm
-			, a.accs_strt_dtm
-			, a.accs_end_dtm
-			, a.edctn_strt_dtm
-			, a.edctn_end_dtm
-			, a.edctn_stts_cd
-			, a.fxnum_cnt
-			, a.fxnum_impsb_yn
-			, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
-			, (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
-			, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
-			, b.thnl_file_seq
-			, a.reg_dtm
-		FROM ed_edctn_episd_mst a
-		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
-		) AA
+		FROM ed_edctn_prcs_mst a
+		LEFT JOIN (
+						SELECT
+
+						bbb.*
+						, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = bbb.place_seq) as place_nm
+
+						FROM (SELECT
+									edctn_seq
+									, episd_year
+									, episd_ord
+									, episd_seq
+									, accs_strt_dtm
+									, accs_end_dtm
+									, edctn_strt_dtm
+									, edctn_end_dtm
+									, fxnum_cnt
+									, fxnum_impsb_yn
+									, case
+										when NOW()   <![CDATA[<]]>  accs_strt_dtm then '접수대기'
+										when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()   <![CDATA[<]]>    accs_end_dtm then '접수중'
+										when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '접수마감'
+									END  AS accs_status_nm
+									, case
+										when NOW()   <![CDATA[<]]>   accs_strt_dtm then '2'
+										when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()  <![CDATA[<]]>    accs_end_dtm then '1'
+										when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '3'
+									END  AS accs_status_order
+									, place_seq
+						           , rcrmt_mthd_cd
+						           , rcrmt_mthd_cd_nm
+									, @rownum:=@rownum+1
+									FROM (select
+												b.edctn_seq
+												, b.episd_year
+												, b.episd_ord
+												, b.episd_seq
+												, b.accs_strt_dtm
+												, b.accs_end_dtm
+												, b.edctn_strt_dtm
+												, b.edctn_end_dtm
+												, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = b.edctn_seq AND episd_year = b.episd_year AND episd_ord = b.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
+												, b.fxnum_cnt
+												, b.fxnum_impsb_yn
+												, place_seq
+												, b.rcrmt_mthd_cd
+												, (select cd_nm from co_code_mst where cd=b.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
+											from ed_edctn_episd_mst b
+									) bb, (SELECT @rownum:=0) TMP
+
+						ORDER BY accs_status_order asc, accs_strt_dtm ASC) bbb
+						GROUP BY edctn_seq
+
+		) bb ON a.edctn_seq = bb.edctn_seq
 
 		<include refid="selectFrontEpisdListwhereSql" />
 
 		<if test="siteGubun == 'front'.toString() ">
+
 			<choose>
 				<when test="srchOrder == 1">
 					<!-- 신청 마감순-->
@@ -117,38 +134,62 @@
 	<select id="selectFrontCouseListCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
 
 		SELECT /*EBBEpisdMapper.selectFrontCouseListCnt*/
-			count(*) as cnt
-		FROM (
+			count(*)
+		FROM ed_edctn_prcs_mst a
+		LEFT JOIN (
 			SELECT
+
+				bbb.*
+
+				FROM (SELECT
+				edctn_seq
+				, episd_year
+				, episd_ord
+				, episd_seq
+				, accs_strt_dtm
+				, accs_end_dtm
+				, edctn_strt_dtm
+				, edctn_end_dtm
+				, fxnum_cnt
+				, fxnum_impsb_yn
+				, case
+				when NOW()   <![CDATA[<]]>  accs_strt_dtm then '접수대기'
+				when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()   <![CDATA[<]]>    accs_end_dtm then '접수중'
+				when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '접수마감'
+				END  AS accs_status_nm
+				, case
+				when NOW()   <![CDATA[<]]>   accs_strt_dtm then '2'
+				when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()  <![CDATA[<]]>    accs_end_dtm then '1'
+				when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '3'
+				END  AS accs_status_order
+				, place_seq
+				, place_nm
+				, web_path
+				, @rownum:=@rownum+1
+				FROM (select
 				b.edctn_seq
-				, a.episd_seq
-				, a.episd_year
-				, a.episd_ord
-				, (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
-				, b.ctgry_cd
-				, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
-				, b.nm
-				, b.stduy_mthd_cd
-				, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
-				, (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) as stduy_dd_cd_nm
-				, (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm
-				, a.accs_strt_dtm
-				, a.accs_end_dtm
-				, a.edctn_strt_dtm
-				, a.edctn_end_dtm
-				, a.edctn_stts_cd
-				, a.fxnum_cnt
-				, a.fxnum_impsb_yn
-				, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
-				, a.rcrmt_mthd_cd
-				, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
-				, a.reg_dtm
-			FROM ed_edctn_episd_mst a
-			LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
-		) AA
+				, b.episd_year
+				, b.episd_ord
+				, b.episd_seq
+				, b.accs_strt_dtm
+				, b.accs_end_dtm
+				, b.edctn_strt_dtm
+				, b.edctn_end_dtm
+				, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = b.edctn_seq AND episd_year = b.episd_year AND episd_ord = b.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
+				, b.fxnum_cnt
+				, b.fxnum_impsb_yn
+				, place_seq
+				, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = b.place_seq) as place_nm
+				, (SELECT web_path FROM co_file_dtl WHERE file_seq = 1 AND file_ord = 0) AS web_path
+			from ed_edctn_episd_mst b
+			) bb, (SELECT @rownum:=0) TMP
+
+			ORDER BY accs_status_order asc, accs_strt_dtm ASC) bbb
+			GROUP BY edctn_seq
+		) bb ON a.edctn_seq = bb.edctn_seq
+
 
 		<include refid="selectFrontEpisdListwhereSql" />
-
 	</select>
 
 	<!--
@@ -162,6 +203,42 @@
 		<where>
 
 			AND NOW()  <![CDATA[<]]>  edctn_strt_dtm
+
+			<!--과정분류 검색 중분류까지 있을경우-->
+			<if test="ctgryCd != null and ctgryCd !='' ">
+				AND a.ctgry_cd = #{ctgryCd}
+			</if>
+
+			<!--과정분류 검색 - 대분류만 선택 했을경우-->
+			<if test="prntCd !=null and prntCd !='' and (ctgryCd == null or ctgryCd =='') ">
+				AND LEFT(a.ctgry_cd, 7) like concat('%', #{prntCd}, '%')
+			</if>
+
+
+			<!-- 학습방식 -->
+			<if test="stduyMthdCdList != null and stduyMthdCdList.size() > 0">
+				and (
+				<foreach collection="stduyMthdCdList" item="stduyMthdCdList" index="index" open="" close="" separator=" or ">
+					stduy_mthd_cd = #{stduyMthdCdList}
+				</foreach>
+				)
+			</if>
+			<!-- 접수상태 -->
+			<if test="accsStatusOrderList != null and accsStatusOrderList.size() > 0">
+				and (
+				<foreach collection="accsStatusOrderList" item="accsStatusOrderList" index="index" open="" close="" separator=" or ">
+					accs_status_order = #{accsStatusOrderList}
+				</foreach>
+				)
+
+			</if>
+			<!-- 키워드 -->
+			<if test="q != null and q !='' ">
+				and (nm like concat('%', #{q}, '%')) or (place_nm like concat('%', #{q}, '%'))
+			</if>
+
+
+			<!-- 기간검색 -->
 
 		</where>
 	</sql>

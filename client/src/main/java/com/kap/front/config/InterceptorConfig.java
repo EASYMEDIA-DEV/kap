@@ -27,6 +27,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/my-page/**/*.*")
                 .order(1);
 
+        //교육신청 로그인체크
+        registry.addInterceptor(cOAuthenticInterceptor()).addPathPatterns("/education/apply/detail/**")
+                .order(1);
+
         //web, mbl jsp(header, footer)
         registry.addInterceptor(cOViewInterceptor()).addPathPatterns("/**").order(2)
                 .excludePathPatterns("/**/*.*")

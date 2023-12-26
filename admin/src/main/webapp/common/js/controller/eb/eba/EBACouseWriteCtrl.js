@@ -50,7 +50,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	//과정분류 조회
 	var selectCtgryCdList = function(arg){
 
-		if(arg === undefined){
+		if($(arg).val() == "" || $(arg).val() === undefined){
 			arg = $("#ctgryCd").data("ctgrycd");
 		}
 
@@ -59,6 +59,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 		cmmCtrl.jsonAjax(function(data){
 			callbackAjaxCtgryCdList(data);
+
+			//데이터가 없으면 2뎁스 사용 불가처리 함
+			if(arg == "" || arg === undefined){
+				$("#ctgryCd").attr("readonly", true).attr("disabled", true);
+			}else{
+				$("#ctgryCd").attr("readonly", false).attr("disabled", false);
+			}
+
 		}, './classTypeList', cdMst, "text");
 	}
 
