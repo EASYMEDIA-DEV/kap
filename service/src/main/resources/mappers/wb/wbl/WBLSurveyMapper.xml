@@ -607,4 +607,23 @@
 		from cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
 		where a.cxstn_srv_seq = #{detailsKey}
 	</select>
+
+
+	<!--
+	쿼리명 : WBLSurveyMapper.updateSurvey
+	설  명 : 설문 참여처리
+	  수정일      수정자       수정내용
+	==========   ========   ==============
+	2023.12.26    박준희       최초생성
+	-->
+	<update id="updateSurvey" parameterType="WBLSurveyMstInsertDTO">
+		update /* WBLSurveyMapper.updateSurvey */ cx_appctn_rsume_srv_mst
+		set
+			srv_rspn_seq = #{srvRspnSeq}
+		  ,	ptcpt_cd = #{ptcptCd}
+		  , cmpltn_yn = #{cmpltnYn}
+		  , ptcpt_cmpltn_dtm = now()
+		where
+			cxstn_srv_seq = #{cxstnSrvSeq}
+	</update>
 </mapper>

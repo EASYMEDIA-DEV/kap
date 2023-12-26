@@ -118,6 +118,9 @@ public interface WBLSurveyMapper {
      */
     public WBLSurveyMstInsertDTO selectFrontSurveyDtl(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO);
 
-
+    /**
+     * 설문 참여
+     */
+    public int updateSurvey(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO);
 
 }

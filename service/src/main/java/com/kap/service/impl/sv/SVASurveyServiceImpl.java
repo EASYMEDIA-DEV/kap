@@ -3,10 +3,7 @@ package com.kap.service.impl.sv;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.sv.sva.SVASurveyExmplDtlDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
-import com.kap.core.dto.sv.sva.SVASurveyQstnDtlDTO;
+import com.kap.core.dto.sv.sva.*;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SVASurveyService;
 import com.kap.service.dao.sv.SVASurveyMapper;
@@ -55,7 +52,18 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 	/* 설문관리보기 시퀀스 */
 	private final EgovIdGnrService svQstnExmplDtlIdgen;
 
-    /**
+
+	/* 설문응답 시퀀스 */
+	private final EgovIdGnrService svRspnSeqIdgen;
+
+	/* 설문객관식응답 시퀀스 */
+	private final EgovIdGnrService svMtlccRspnSeqIdgen;
+
+	/* 설문주관식응답 시퀀스 */
+	private final EgovIdGnrService svSbjctRspnSeqIdgen;
+
+
+	/**
      * 공통코드를 조회한다.
      */
     public HashMap<String, List<COCodeDTO>> getSurveyTypeList() throws Exception
@@ -334,4 +342,82 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 		return sVASurveyMstInsertDTO;
 	}
 
+
+	@Override
+	public int insertSurveyRspnList(SVASurveyRspnMstInsertDTO sVASurveyRspnMstDTO, HttpServletRequest request) throws Exception {
+
+		int respCnt = 0;
+
+		String regId = "";
+		String regIp = CONetworkUtil.getMyIPaddress(request);
+
+		if (COUserDetailsHelperService.getAuthenticatedUser() != null){
+			regId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+		}else{
+			regId = sVASurveyRspnMstDTO.getRegId();
+		}
+
+		int surveyRspnMstIdgen = 0;
+
+		sVASurveyRspnMstDTO.setRegIp(regIp);
+		sVASurveyRspnMstDTO.setRegId(regId);
+		sVASurveyRspnMstDTO.setModIp(regIp);
+		sVASurveyRspnMstDTO.setModId(regId);
+
+		//등록
+		surveyRspnMstIdgen = svRspnSeqIdgen.getNextIntegerId();
+		sVASurveyRspnMstDTO.setSrvRspnSeq(surveyRspnMstIdgen);
+
+		sVASurveyMapper.insertSurveyRspnMst( sVASurveyRspnMstDTO );
+
+		respCnt = surveyRspnMstIdgen;
+
+		if(sVASurveyRspnMstDTO.getSvSurveyQstnRspnDtlList() != null && sVASurveyRspnMstDTO.getSvSurveyQstnRspnDtlList().size() > 0){
+
+			for(int i = 0 ; i < sVASurveyRspnMstDTO.getSvSurveyQstnRspnDtlList().size() ; i++) {
+
+				SVASurveyQstnRspnDtlDTO sVASurveyQstnRspnDtlDTO = sVASurveyRspnMstDTO.getSvSurveyQstnRspnDtlList().get(i);
+
+				int qstnSeq = sVASurveyQstnRspnDtlDTO.getQstnSeq();
+
+				if(sVASurveyQstnRspnDtlDTO.getSvSurveyExmplRspnDtlList() != null && sVASurveyQstnRspnDtlDTO.getSvSurveyExmplRspnDtlList().size() > 0){
+
+					for(int k = 0 ; k < sVASurveyQstnRspnDtlDTO.getSvSurveyExmplRspnDtlList().size() ; k++) {
+
+						SVASurveyExmplRspnDtlDTO sVASurveyExmplRspnDtlDTO = sVASurveyQstnRspnDtlDTO.getSvSurveyExmplRspnDtlList().get(k);
+
+						if (sVASurveyQstnRspnDtlDTO.getSrvTypeCd().equals("QST03")||sVASurveyQstnRspnDtlDTO.getSrvTypeCd().equals("QST04")){
+							int surveySbjctRspnIdgen = svSbjctRspnSeqIdgen.getNextIntegerId();
+
+							sVASurveyExmplRspnDtlDTO.setSbjctRspnSeq(surveySbjctRspnIdgen);
+							sVASurveyExmplRspnDtlDTO.setSrvRspnSeq(surveyRspnMstIdgen);
+							sVASurveyExmplRspnDtlDTO.setQstnSeq(qstnSeq);
+							sVASurveyExmplRspnDtlDTO.setRegIp(regIp);
+							sVASurveyExmplRspnDtlDTO.setRegId(regId);
+							sVASurveyMapper.insertSurveyRspnSbjctDtl( sVASurveyExmplRspnDtlDTO );
+
+						}else{
+							int surveyMtlccRspnIdgen = svMtlccRspnSeqIdgen.getNextIntegerId();
+
+							sVASurveyExmplRspnDtlDTO.setMtlccRspnSeq(surveyMtlccRspnIdgen);
+							sVASurveyExmplRspnDtlDTO.setSrvRspnSeq(surveyRspnMstIdgen);
+							sVASurveyExmplRspnDtlDTO.setRegIp(regIp);
+							sVASurveyExmplRspnDtlDTO.setRegId(regId);
+							sVASurveyMapper.insertSurveyRspnMtlccDtl( sVASurveyExmplRspnDtlDTO );
+
+						}
+					}
+				}
+			}
+		}
+		return respCnt;
+	}
+
+	@Override
+	public int selectSurveyScore(SVASurveyRspnScoreDTO sVASurveyRspnScoreDTO) throws Exception {
+		int respCnt = 0;
+		respCnt = sVASurveyMapper.selectSurveyScore( sVASurveyRspnScoreDTO );
+
+		return respCnt;
+	}
 }

@@ -100,4 +100,5 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
 
     @Schema(title = "설문내용", example = "")
     private String cntn;
+
 }

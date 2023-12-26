@@ -2,10 +2,7 @@ package com.kap.service.dao.sv;
 
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyExmplDtlDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
-import com.kap.core.dto.sv.sva.SVASurveyQstnDtlDTO;
+import com.kap.core.dto.sv.sva.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -147,5 +144,25 @@ public interface SVASurveyMapper {
      * 설문 마스터 조회 (컨설팅)
      */
     public SVASurveyMstInsertDTO selectSurveyConDtl(SVASurveyMstSearchDTO sVASurveyDTO);
+
+    /**
+     * 설문 응답 마스터 등록
+     */
+    public int insertSurveyRspnMst(SVASurveyRspnMstInsertDTO sVASurveyRspnMstDTO);
+
+    /**
+     * 설문 응답 등록 객관식
+     */
+    public int insertSurveyRspnMtlccDtl(SVASurveyExmplRspnDtlDTO sVASurveyExmplRspnDtlDTO);
+
+    /**
+     * 설문 응답 등록 주관식
+     */
+    public int insertSurveyRspnSbjctDtl(SVASurveyExmplRspnDtlDTO sVASurveyExmplRspnDtlDTO);
+
+    /**
+     * 설문 점수 계산
+     */
+    public int selectSurveyScore(SVASurveyRspnScoreDTO sVASurveyRspnScoreDTO);
 
 }

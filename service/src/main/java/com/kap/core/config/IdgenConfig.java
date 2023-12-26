@@ -987,4 +987,43 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 설문응답 마스터
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl svRspnSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SV_RSPN_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 설문응답 상세(객관식)
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl svMtlccRspnSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SV_MTLCC_RSPN_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
+    /** 설문응답 상세(주관식)
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl svSbjctRspnSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("SV_SBJCT_RSPN_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }
