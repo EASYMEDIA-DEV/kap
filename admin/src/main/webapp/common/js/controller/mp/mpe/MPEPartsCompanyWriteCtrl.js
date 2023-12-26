@@ -17,42 +17,30 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var tabTwo = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
-            ctrl.obj.find("#techListContainer").html(respObj);
-            //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            //총 건수
-            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "techListContainer", "pagingContainer");
-        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
-
-        cmmCtrl.listFrmAjax(function(respObj) {
-            //CALLBACK 처리
             ctrl.obj.find("#eduStatisticsListContainer").html(respObj);
         }, "/mngwserc/mp/mpe/selectEduStatisticsCntList", $formObj, "POST", "html",'',false);
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
-            ctrl.obj.find("#consultListContainer").html(respObj);
+            ctrl.obj.find("#techGuidanceListContainer").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
             //총 건수
-            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
+            ctrl.obj.find("#techGuidanceListContainerTotCnt").text(totCnt);
             //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "consultListContainer", "pagingContainer");
-        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
+            cmmCtrl.listPaging(totCnt, $formObj, "techGuidanceListContainer", "pagingContainer");
+        }, "/mngwserc/mp/mpe/selectManageConsultList", $formObj, "POST", "html",'',false);
 
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#manageConsultContainer").html(respObj);
+        }, "/mngwserc/mp/mpe/selectManageConsultList", $formObj, "POST", "html",'',false);
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
             ctrl.obj.find("#fundingListContainer").html(respObj);
-            //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            //총 건수
-            ctrl.obj.find("#eduListContainerTotCnt").text(totCnt);
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "fundingListContainer", "pagingContainer");
-        }, "/mngwserc/mp/mpe/select-tab-two", $formObj, "POST", "html",'',false);
+        }, "/mngwserc/mp/mpe/selectFundingList", $formObj, "POST", "html",'',false);
+
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
@@ -198,6 +186,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
                 }
             });
+
+            var edu1 = $("#eduStatisticsListContainer tr:eq(0) td:eq(0)").text();
+            var edu2 = $("#eduStatisticsListContainer tr:eq(1) td:eq(0)").text();
+            var edu3 = $("#eduStatisticsListContainer tr:eq(2) td:eq(0)").text();
+            var edu4 = $("#eduStatisticsListContainer tr:eq(3) td:eq(0)").text();
+
+            $("#cumulativeCnt").text(parseInt(edu1) + parseInt(edu2) + parseInt(edu3) + parseInt(edu4));
 
             // 유효성 검사
             $formObj.validation({

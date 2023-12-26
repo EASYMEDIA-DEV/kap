@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,23 +62,64 @@ public class EBCVisitEduController {
     /**
      * 방문교육 신청 1단계(기본정보) 페이지로 이동한다.
      */
+    @RequestMapping(value="/index")
+    public String getVisitEduIndexPage(MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "/front/eb/ebc/EBCVisitEduMain.front";
+        MPAUserDto applicantDto = null;
+        try
+        {
+            if(COUserDetailsHelperService.getAuthenticatedUser() != null) {
+                mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+                applicantDto = mpaUserService.selectUserDtl(mpaUserDto);
+                modelMap.addAttribute("loginYn", "Y");
+
+            } else {
+                modelMap.addAttribute("loginYn", "N");
+            }
+            modelMap.addAttribute("rtnInfo", applicantDto);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return vwUrl;
+    }
+
+    /**
+     * 방문교육 신청 1단계(기본정보) 페이지로 이동한다.
+     */
     @RequestMapping(value="/apply/one-step")
     public String getVisitEduApplyOneStepPage(MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
+        String vwUrl = "/front/eb/ebc/EBCVisitEduApplyOneStep.front";
+
         try
         {
-            mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+            if(COUserDetailsHelperService.getAuthenticatedUser() != null) {
 
-            mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
-            MPAUserDto applicantDto = mpaUserService.selectUserDtl(mpaUserDto);
-            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+                mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+                MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
 
+                if(applicantDto.getMemCd().equals("CP")) {
+                    mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                    MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
-            if (originList.getList().size() != 0) {
-                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+                    if (originList.getList().size() != 0) {
+                        modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+                    }
+                    modelMap.addAttribute("applicantInfo", applicantDto);
+                    modelMap.addAttribute("sqInfoList", originList);
+                } else {
+                    vwUrl = "redirect:../index";
+                }
+            } else {
+                vwUrl = "redirect:../index";
             }
-            modelMap.addAttribute("applicantInfo", applicantDto);
-            modelMap.addAttribute("sqInfoList", originList);
         }
         catch (Exception e)
         {
@@ -88,28 +130,55 @@ public class EBCVisitEduController {
             throw new Exception(e.getMessage());
         }
 
-        return "/front/eb/ebc/EBCVisitEduApplyOneStep.front";
+        return vwUrl;
     }
 
     /**
      * 방문교육 신청 2단계(신청내용입력) 페이지로 이동한다.
      */
     @RequestMapping(value="/apply/two-step")
-    public String getVisitEduApplyTwoStepPage(ModelMap modelMap) throws Exception
+    public String getVisitEduApplyTwoStepPage(EBCVisitEduDTO ebcVisitEduDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap) throws Exception
     {
+        String vwUrl = "/front/eb/ebc/EBCVisitEduApplyTwoStep.front";
+
         try
         {
-            // 공통코드 배열 셋팅
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            // 코드 set
-            cdDtlList.add("COMPANY_TYPE");
-            cdDtlList.add("CO_YEAR_CD");
-            cdDtlList.add("MEM_CD");
-            cdDtlList.add("ADDR_CD");
-            cdDtlList.add("EBC_VISIT_CD");
-            cdDtlList.add("SYSTEM_HOUR");
 
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            if(COUserDetailsHelperService.getAuthenticatedUser() != null) {
+
+                mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+                MPAUserDto applicantDto = mpaUserService.selectUserDtl(mpaUserDto);
+
+                if(applicantDto.getMemCd().equals("CP")) {
+                    mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                    MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+                    // 공통코드 배열 셋팅
+                    ArrayList<String> cdDtlList = new ArrayList<String>();
+                    // 코드 set
+                    cdDtlList.add("COMPANY_TYPE");
+                    cdDtlList.add("CO_YEAR_CD");
+                    cdDtlList.add("MEM_CD");
+                    cdDtlList.add("ADDR_CD");
+                    cdDtlList.add("EBC_VISIT_CD");
+                    cdDtlList.add("SYSTEM_HOUR");
+
+                    modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+                    if (originList.getList().size() != 0) {
+                        ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+                        ebcVisitEduDTO.setAppctnBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                        ebcVisitEduDTO.setZipcode(originList.getList().get(0).getZipcode());
+                        ebcVisitEduDTO.setBscAddr(originList.getList().get(0).getBscAddr());
+                        ebcVisitEduDTO.setDtlAddr(originList.getList().get(0).getDtlAddr());
+                    }
+                    modelMap.addAttribute("rtnInfo", ebcVisitEduDTO);
+                } else {
+                    vwUrl = "redirect:../index";
+                }
+            } else {
+                vwUrl = "redirect:../index";
+            }
         }
         catch (Exception e)
         {
@@ -119,13 +188,92 @@ public class EBCVisitEduController {
             }
             throw new Exception(e.getMessage());
         }
-        return "front/eb/ebc/EBCVisitEduApplyTwoStep.front";
+        return vwUrl;
+    }
+
+    /**
+     * 방문교육 정보를 수정한다.
+     *
+     */
+    @PostMapping(value="/apply/insert")
+    public String applyVisitEduInfo(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try{
+            ebcVisitEduDTO.setEdctnSttsCd("EBC_VISIT_CD02001"); // 교육상태 코드를 '신청'으로 지정
+            ebcVisitEduDTO.setRegId(COUserDetailsHelperService.getAuthenticatedUser().getId());
+            ebcVisitEduDTO.setRegIp(COUserDetailsHelperService.getAuthenticatedUser().getLoginIp());
+
+            int respCnt = ebcVisitEduService.applyVisitEduInfo(ebcVisitEduDTO);
+            modelMap.addAttribute("respCnt", respCnt);
+
+            // 방문신청여부 세션값에 저장
+            HttpSession session = request.getSession();
+            session.setAttribute("applyCompleteYn", "Y");
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 방문교육 신청 완료 페이지로 이동한다.
+     */
+    @RequestMapping(value="/apply/complete")
+    public String getVisitEduApplyCompletePage(EBCVisitEduDTO ebcVisitEduDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "/front/eb/ebc/EBCVisitEduApplyComplete.front";
+
+        try
+        {
+            if(COUserDetailsHelperService.getAuthenticatedUser() != null) {
+
+                mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+                MPAUserDto applicantDto = mpaUserService.selectUserDtl(mpaUserDto);
+
+                if(applicantDto.getMemCd().equals("CP")) {
+
+                    // 방문신청여부 세션값 가져오기
+                    HttpSession session = request.getSession();
+                    String applyCompleteYn = (String) session.getAttribute("applyCompleteYn");
+
+                    if(applyCompleteYn == null || !applyCompleteYn.equals("Y")) {
+                        vwUrl = "redirect:../index";
+                    } else {
+                        ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+                        modelMap.addAttribute("rtnData", ebcVisitEduService.selectVisitEduApplyRegDtm(ebcVisitEduDTO));
+                    }
+                } else {
+                    vwUrl = "redirect:../index";
+                }
+            } else {
+                vwUrl = "redirect:../index";
+            }
+
+            // 방문신청여부 세션값 삭제
+            HttpSession session = request.getSession();
+            session.removeAttribute("applyCompleteYn");
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return vwUrl;
     }
 
     /**
      * 신청분야별 체크박스값 호출
      */
-    @PostMapping(value = "/changeAppctnFldCd")
+    @PostMapping(value = "/apply/two-step/changeAppctnFldCd")
     public String changeAppctnFldCd(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         List<COCodeDTO> detailList = null;
         try
@@ -138,10 +286,6 @@ public class EBCVisitEduController {
             detailList = cOCodeService.getCdIdList(cOCodeDTO);
             modelMap.addAttribute("cdDtlList", detailList);
             modelMap.addAttribute("cdName", cOCodeDTO.getCd());
-
-            //신청분야상세코드 목록
-            modelMap.addAttribute("appctnTypeList", ebcVisitEduService.selectAppctnTypeList(ebcVisitEduDTO));
-
         }
         catch (Exception e)
         {

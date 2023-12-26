@@ -1,6 +1,9 @@
 package com.kap.service;
 
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -85,9 +88,20 @@ public interface MPEPartsCompanyService {
     public MPEPartsCompanyDTO selectEduStatisticsCntList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
     /**
+     * 컨설팅 목록을 조회
+     */
+    public CBATechGuidanceInsertDTO selectConsultingList(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 자금지원 목록을 조회
+     */
+    public WBGAExamSearchDTO selectFundingList(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+
+    /**
      * 자동차부품산업대상 목록을 조회
      */
-    public MPEPartsCompanyDTO selectCarTargetList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+    public WBJAcomSearchDTO selectCarTargetList(WBJAcomSearchDTO wbjAcomSearchDTO) throws Exception;
 
     /**
      * 엑셀 생성

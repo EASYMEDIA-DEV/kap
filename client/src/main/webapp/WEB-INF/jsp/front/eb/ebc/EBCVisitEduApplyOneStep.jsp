@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" data-controller="controller/eb/EBCVisitEduController">
+<div id="wrap" data-controller="controller/eb/EBCVisitEduCtrl">
     <div class="cont-wrap">
         <!--
           신청 페이지: apply-page 클래스 추가
@@ -207,15 +207,15 @@
                                                 <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01001'}">
                                                     <tr>
                                                         <th>품질5스타</th>
-                                                        <td>${rtnInfo.qlty5StarCd} / ${rtnInfo.qlty5StarYear}년</td>
+                                                        <td>${rtnInfo.qlty5StarCdNm} / ${rtnInfo.qlty5StarYear}년</td>
                                                     </tr>
                                                     <tr>
                                                         <th>납입5스타</th>
-                                                        <td>${rtnInfo.pay5StarCd} / ${rtnInfo.pay5StarYear}년</td>
+                                                        <td>${rtnInfo.pay5StarCdNm} / ${rtnInfo.pay5StarYear}년</td>
                                                     </tr>
                                                     <tr>
                                                         <th>기술5스타</th>
-                                                        <td>${rtnInfo.tchlg5StarCd} / ${rtnInfo.tchlg5StarYear}년</td>
+                                                        <td>${rtnInfo.tchlg5StarCdNm} / ${rtnInfo.tchlg5StarYear}년</td>
                                                     </tr>
                                                 </c:when>
                                             </c:choose>

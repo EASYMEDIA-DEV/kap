@@ -1,6 +1,15 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" data-controller="controller/eb/EBCVisitEduController">
+<div id="wrap" data-controller="controller/eb/EBCVisitEduCtrl">
     <form class="form-horizontal" id="frmData" name="frmData" method="post" >
+        <!-- CSRF KEY -->
+        <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${rtnInfo.memSeq}" />
+        <input type="hidden" class="notRequired" id="appctnBsnmNo" name="appctnBsnmNo" value="${rtnInfo.appctnBsnmNo}" />
+        <input type="hidden" class="notRequired" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" />
+        <input type="hidden" class="notRequired" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" />
+        <input type="hidden" class="notRequired" id="dtlAddr" name="dtlAddr" value="${rtnInfo.dtlAddr}" />
+        <input type="hidden" class="notRequired" id="edctnPlaceAddr" name="edctnPlaceAddr" value="${rtnInfo.edctnPlaceAddr}" />
+
         <div class="cont-wrap">
             <!--
               신청 페이지: apply-page 클래스 추가
@@ -74,7 +83,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-textarea">
-                                                                <textarea name="" id="appctnRsn" name="appctnRsn" placeholder="신청사유 입력"></textarea>
+                                                                <textarea id="appctnRsn" name="appctnRsn" placeholder="신청사유 입력"></textarea>
                                                                 <div class="check-byte">
                                                                     <p class="txt" id="appctnRsnTextCnt"><span class="current-byte">0</span>자</p>
                                                                     <p class="txt"><span class="max-byte">500</span>자</p>
@@ -108,7 +117,17 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="checkBoxArea"></div>
+                                                        <div class="inner-line" id="techBox" style="display: none;">
+                                                            <div class="agree-box">
+                                                                <div class="gray-bg-sec narrow-pad">
+                                                                    <p class="f-body2">
+                                                                        (공통)
+                                                                        <br/>업종 기초기술, 품질관리, 공정관리 개선, 레이아웃 개선, 설비관리 개선, 생산기술 개선, 3정 5행, 작업조건 관리, 개선 사례, (IT/전산) 전산화 현황 진단, 스마트공장 구축 지원사례
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="inner-line checkBoxArea"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -166,8 +185,8 @@
                                                     <div class="data-line">
                                                         <div class="middle-line">
                                                             <div class="form-checkbox">
-                                                                <input type="checkbox" id="sameAsHQChk" name="">
-                                                                <label for="sameAsHQChk">본사와 동일</label>
+                                                                <input type="checkbox" id="samePlaceBtn" name="">
+                                                                <label for="samePlaceBtn">본사와 동일</label>
                                                             </div>
                                                         </div>
                                                         <div class="middle-line">
@@ -310,7 +329,7 @@
                                 <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
                             </div>
                             <div class="btn-set">
-                                <a class="btn-solid small black-bg" href="javascript:"><span>신청하기</span></a>
+                                <a class="btn-solid small black-bg" href="javascript:" id="applyCompleteBtn"><span>신청하기</span></a>
                             </div>
                         </div>
                     </div>

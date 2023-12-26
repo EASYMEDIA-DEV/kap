@@ -456,6 +456,75 @@
 	</delete>
 
 	<!--
+		 쿼리명 : EBCVisitEduMapper.applyVisitEduInfo
+		 설  명 : [사용자] 방문교육 신청정보를 등록한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2023.12.26   구은희       최초생성
+    -->
+	<insert id="applyVisitEduInfo" parameterType="EBCVisitEduDTO">
+		insert into /*EBCVisitEduMapper.applyVisitEduInfo*/ ev_edctn_vst_mst (
+		   vst_seq
+		 , mem_seq
+		 , appctn_bsnm_no
+		 , appctn_rsn
+		 , appctn_fld_cd
+		 , appctn_theme_cntn
+		 , hope_dt
+		 , place_zipcode
+		 , place_bsc_addr
+		 , place_dtl_addr
+		 , edctn_place
+		 , ptcpt_trgt_cntn
+		 , ptcpt_cnt
+		 , ptcpt_hh
+		 , itrdc_file_seq
+		 , edctn_stts_cd
+		 , reg_id
+		 , reg_ip
+		 , reg_dtm
+		) VALUES
+			(
+			 #{vstSeq}
+			, #{memSeq}
+			, #{appctnBsnmNo}
+			, #{appctnRsn}
+			, #{appctnFldCd}
+			, #{appctnThemeCntn}
+			, #{hopeDt}
+			, #{placeZipcode}
+			, #{placeBscAddr}
+			, #{placeDtlAddr}
+			, #{edctnPlaceAddr}
+			, #{ptcptTrgtCntn}
+			, #{ptcptCnt}
+			, #{ptcptHh}
+			, #{itrdcFileSeq}
+			, #{edctnSttsCd}
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+	</insert>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.selectVisitEduApplyRegDtm
+         설  명 : [사용자] 방문교육 신청일시 값을 가져온다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.05   구은희       최초생성
+    -->
+	<select id="selectVisitEduApplyRegDtm" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduDTO">
+		select /*EBCVisitEduMapper.selectVisitEduApplyRegDtm*/
+			reg_dtm
+		from ev_edctn_vst_mst
+		where 1=1
+		  and mem_seq = #{memSeq}
+		order by reg_dtm desc
+		limit 1
+	</select>
+
+	<!--
          쿼리명 : EBCVisitEduMapper.updateEdctnVst
          설  명 : 방문교육 신청내용을 수정한다.
           수정일     수정자       수정내용

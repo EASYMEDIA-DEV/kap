@@ -312,6 +312,16 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     $formObj.find("input[name=placeZipcode]").val(originPartsZipCode);
                     $formObj.find("input[name=placeBscAddr]").val(originPartsBscAddr);
                     $formObj.find("input[name=placeDtlAddr]").val(originPartsDtlAddr);
+
+                    var samePlaceAddrArr = jQuery("input[name=placeBscAddr]").val().split(' ');
+                    var edctnPlaceAddr;
+                    if(samePlaceAddrArr[1] != undefined){
+                        edctnPlaceAddr =  samePlaceAddrArr[0] + ' ' + samePlaceAddrArr[1];
+                    } else {
+                        edctnPlaceAddr = samePlaceAddrArr[0];
+                    }
+
+                    $formObj.find("input[name=edctnPlaceAddr]").val(edctnPlaceAddr);
                 }
             });
 
@@ -565,7 +575,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         actForm.edctnEndDtm = edctnEndDtm;//교육종료일시
                         actForm.edctnPlace = edctnPlace;
                         actForm.cmptnCnt = cmptnCnt;
-                        actForm.ptcptRate = ptcptRate;
+                        actForm.ptcptRate = ptcptRate / 100;
                         actForm.lctrFileSeq = lctrFileSeq;
                         actForm.etcMatlsFileSeq = etcMatlsFileSeq;
 

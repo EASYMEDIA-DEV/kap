@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" data-controller="controller/sm/SMDAPsnIfController">
+<div id="wrap" data-controller="controller/sm/SMDAPsnIfCtrl">
     <form class="form-horizontal" id="frmData" name="frmData" method="post" >
          <input type="hidden" class="notRequired" id="psnifSeq" name="psnifSeq" value="" />
     </form>

@@ -92,6 +92,8 @@ public class WBJAcomSearchDTO extends BaseDTO {
     private String hpNo;
     @Schema(title = "이메일", example = "")
     private String email;
+    @Schema(title = "직급명", example = "")
+    private String pstnNm;
     @Schema(title = "진행상태 코드", example = "")
     private String rsumeSttsCd;
     @Schema(title = "진행상태 명", example = "")
@@ -112,6 +114,9 @@ public class WBJAcomSearchDTO extends BaseDTO {
     private String mrtsCdNm;
     @Schema(title = "포상코드", example = "")
     private String mrtsCd;
+    @Schema(title = "포상금액", example = "숫자")
+    private int prizePmt;
+
 
     @Schema(title = "담당위원코드", example = "")
     private String picCmssrSeq;

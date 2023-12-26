@@ -199,20 +199,26 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     private String winnerPstnNm;
 
     //교육사업 통계
-    @Schema(title = "품질아카데미 개수", example = "")
-    private String edu1;
+    @Schema(title = "교육사업명", example = "")
+    private String cdNm;
 
-    @Schema(title = "제조/경영혁신 개수", example = "")
-    private String edu2;
+    @Schema(title = "2024년도", example = "")
+    private Integer year2024;
 
-    @Schema(title = "세미나 개수", example = "")
-    private String edu3;
+    @Schema(title = "2023년도", example = "")
+    private Integer year2023;
 
-    @Schema(title = "방문교육 개수", example = "")
-    private String edu4;
+    @Schema(title = "2022년도", example = "")
+    private Integer year2022;
 
-    @Schema(title = "교육별 소계", example = "")
-    private String sumedu;
+    @Schema(title = "2021년도", example = "")
+    private Integer year2021;
+
+    @Schema(title = "2020년도", example = "")
+    private Integer year2020;
+
+    @Schema(title = "2019년도 이전 ", example = "")
+    private Integer yearElse;
 
     // 검색조건
     // 검색 등록/수정 기간 시작일

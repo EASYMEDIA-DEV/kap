@@ -3,12 +3,6 @@
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
-                <td class="text-center">
-                    <label class="checkbox-inline c-checkbox">
-                        <input type="checkbox" value="${list.vstSeq}" name="delValueList" class="checkboxSingle notRequired" data-auth-cd="${list.vstSeq}"/>
-                        <span class="ion-checkmark-round"></span>
-                    </label>
-                </td>
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
                 <td class="text-center">${list.edctnSttsName}</td>
                 <td class="text-center">
@@ -22,8 +16,8 @@
                 <td class="text-center">${kl:convertDate(list.visitRegDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}</td>
                 <td class="text-center">${list.appctnFldName}</td>
                 <td class="text-center">${kl:convertDate(list.hopeDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</td>
-                <td class="text-center">${list.ptcptCnt}</td>
                 <td class="text-center">${list.edctnPlaceAddr}</td>
+                <td class="text-center">${list.ptcptCnt}</td>
                 <td class="text-center">${list.ptcptHhNum}</td>
                 <td class="text-center">${list.name}<br>(${kl:idMasking(list.id)})</td>
                 <td class="text-center">${list.hpNo}</td>
@@ -81,7 +75,7 @@
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
-            <td colspan="24" class="text-center">
+            <td colspan="23" class="text-center">
                 검색결과가 없습니다.<br>
                 (등록된 데이터가 없습니다.)
             </td>

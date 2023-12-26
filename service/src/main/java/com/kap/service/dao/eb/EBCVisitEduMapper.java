@@ -122,6 +122,14 @@ public interface EBCVisitEduMapper {
 	 */
 	public List<EBCVisitEduExcelDTO> selectIsttrExcelList(EBCVisitEduExcelDTO ebcVisitEduExcelDTO) throws Exception;
 
+	/**
+	 * 방문교육 신청정보 등록
+	 */
+	public int applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
+	/**
+	 * 방문교육 신청일시 값 조회
+	 */
+	public EBCVisitEduDTO selectVisitEduApplyRegDtm(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
 }

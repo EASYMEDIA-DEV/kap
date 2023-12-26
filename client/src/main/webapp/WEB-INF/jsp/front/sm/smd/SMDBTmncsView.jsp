@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" data-controller="controller/sm/SMDBTmncsController">
+<div id="wrap" data-controller="controller/sm/SMDBTmncsCtrl">
     <div class="cont-wrap">
         <div class="inner">
             <div class="sub-top-vis-area">

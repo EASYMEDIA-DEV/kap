@@ -360,7 +360,7 @@
                             </colgroup>
                             <tbody>
                             <tr>
-                                <th class="bg-gray-lighter">교육/세미나</th>
+                                <th class="bg-gray-lighter">교육사업</th>
                                 <th class="bg-gray-lighter">컨설팅사업</th>
                                 <th class="bg-gray-lighter">상생사업</th>
                             </tr>
@@ -410,13 +410,13 @@
                                 <th class="text-center">지도기간</th>
                                 <th class="text-center">초도방문자료</th>
                                 <th class="text-center">킥오프자료</th>
-                                <th class="text-center">랩업자</th>
+                                <th class="text-center">랩업자료</th>
                                 <th class="text-center">회사소개자료</th>
                                 <th class="text-center">공정개선율</th>
                             </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->
-                            <tbody id="techListContainer"/>
+                            <tbody id="techGuidanceListContainer"/>
                         </table>
                     </div>
                     <div class="clearfix">
@@ -434,18 +434,21 @@
                                 <th class="text-center">지도기간</th>
                                 <th class="text-center">초도방문자료</th>
                                 <th class="text-center">킥오프자료</th>
-                                <th class="text-center">랩업자</th>
+                                <th class="text-center">랩업자료</th>
                                 <th class="text-center">회사소개자료</th>
                                 <th class="text-center">공정개선율</th>
                             </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->
-                            <tbody id="consultListContainer"/>
+                            <tbody id="manageConsultContainer"/>
                         </table>
                     </div>
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
                             자금지원
+                        </h6>
+                        <h6 class="pull-right mt0">
+                            단위: 원
                         </h6>
                     </div>
                     <div class="table-responsive">
