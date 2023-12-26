@@ -3,6 +3,9 @@
 <form class="form-horizontal" id="frmData" name="frmData" method="post" >
     <input type="hidden" id="oldEmail" name="oldEmail" value=${rtnDtl.email} />
     <input type="hidden" id="id" name="id" value=${rtnDtl.id} />
+    <input type="hidden" id="fndnNtfyRcvYn" name="fndnNtfyRcvYn" value=${rtnDtl.fndnNtfyRcvYn} />
+    <input type="hidden" id="oldEmailRcv" name="oldEmailRcv"  value="${rtnDtl.ntfyEmailRcvYn}"  class="notRequired"/>
+    <input type="hidden" id="oldSmsRcv" name="oldSmsRcv" value="${rtnDtl.ntfySmsRcvYn}" class="notRequired"/>
 </form>
         <fieldset>
             <div class="form-group text-sm">
@@ -77,6 +80,7 @@
                         <input type="radio" name="ntfySmsRcvYn" value="N" title="수신"  ${rtnDtl.ntfySmsRcvYn.toString() == 'N' ? 'checked' : ''}  />
                         <span class="ion-record"></span> 수신 안함
                     </label>
+                    ${ kl:convertDate(rtnDtl.ntfySmsRcvChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} 변경
                 </div>
                 <label class="col-sm-1 control-label">이메일 수신여부<span class="star"> *</span></label>
                 <div class="col-sm-5">
@@ -89,6 +93,7 @@
                         <input type="radio" name="ntfyEmailRcvYn" value="N" title="수신" ${rtnDtl.ntfyEmailRcvYn.toString() == 'N' ? 'checked' : ''} />
                         <span class="ion-record"></span> 수신 안함
                     </label>
+                    ${ kl:convertDate(rtnDtl.ntfyEmailRcvChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} 변경
                 </div>
             </div>
         </fieldset>

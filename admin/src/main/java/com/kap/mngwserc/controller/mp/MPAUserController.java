@@ -49,13 +49,6 @@ public class MPAUserController {
 
     @Value("${app.site.name}")
     private String siteName;
-    //사이트 웹 소스 URL
-    @Value("${app.user-domain}")
-    private String httpFrontUrl;
-    //사이트 관리자 URL
-    @Value("${app.admin-domain}")
-    private String httpAdmtUrl;
-
     //이메일 발송
     private final COMessageService cOMessageService;
 
@@ -70,9 +63,7 @@ public class MPAUserController {
         mpaUserDto.setMemCd("CO");
         mpaUserDto.setExcelYn("N");
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
-        // 로그인한 계정
-        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
+
         return "mngwserc/mp/mpa/MPAUserList.admin";
     }
 
@@ -85,9 +76,7 @@ public class MPAUserController {
         mpaUserDto.setMemCd("CO");
         mpaUserDto.setExcelYn("N");
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
-        // 로그인한 계정
-        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
+
         return "mngwserc/mp/mpa/MPAUserListAjax";
     }
 
@@ -99,9 +88,7 @@ public class MPAUserController {
                                                ModelMap modelMap ) throws Exception {
 
         modelMap.addAttribute("rtnData", mpaUserService.selectAttcntList(mpaAttctnDto));
-        // 로그인한 계정
-        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        mpaAttctnDto.setLgnSsnId(cOUserDetailsDTO.getId());
+
         return "mngwserc/mp/mpa/MPAUserTabTwoAjax";
     }
 
@@ -113,9 +100,8 @@ public class MPAUserController {
                                                  ModelMap modelMap ) throws Exception {
 
         modelMap.addAttribute("rtnData", mpaUserService.selectInqrList(mpaInqrDto));
-        // 로그인한 계정
-        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        mpaInqrDto.setLgnSsnId(cOUserDetailsDTO.getId());
+
+
         return "mngwserc/mp/mpa/MPAUserTabThreeAjax";
     }
 
@@ -130,9 +116,6 @@ public class MPAUserController {
         {
             mpaUserDto.setMemCd("CO");
 
-            // 로그인한 계정
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
             modelMap.addAttribute("rtnData", mpaUserDto);
 
 
@@ -161,10 +144,6 @@ public class MPAUserController {
     {
         try
         {
-            // 로그인한 계정
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
-
             String chk;
             if(mpaUserService.selectDupEmail(mpaUserDto) >=1) {
                 chk = "N";
@@ -191,15 +170,10 @@ public class MPAUserController {
      */
     @PostMapping(value="/dup-id")
     public String selectDupId(MPAUserDto mpaUserDto ,
-                                 ModelMap modelMap ) throws Exception
+                              ModelMap modelMap ) throws Exception
     {
         try
         {
-
-            // 로그인한 계정
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
-
             String chk;
             if(mpaUserService.selectDupId(mpaUserDto) >=1) {
                 chk = "N";
@@ -227,14 +201,10 @@ public class MPAUserController {
      */
     @PostMapping(value="/select-tab-one")
     public String getUserDtlAjax(MPAUserDto mpaUserDto ,
-                             ModelMap modelMap ) throws Exception
+                                 ModelMap modelMap ) throws Exception
     {
         try
         {
-            // 로그인한 계정
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
-
             if(!"".equals(mpaUserDto.getDetailsKey())){
                 modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
 
@@ -267,8 +237,45 @@ public class MPAUserController {
             mpaUserDto.setRegId( cOUserDetailsDTO.getId() );
             mpaUserDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
             mpaUserDto.setModId( cOUserDetailsDTO.getId() );
+            mpaUserDto.setMemSeq(Integer.valueOf(mpaUserDto.getDetailsKey()));
             mpaUserDto.setTableNm(tableNm);
+
+            String emailYn = "N";
+            String fndnNtfyRcvYn = mpaUserDto.getFndnNtfyRcvYn();
+            String fndnChk = "N";
+            String smsYn = "N";
+
+            if(fndnNtfyRcvYn.equals("Y")) {
+                if(mpaUserDto.getNtfyEmailRcvYn().equals('N') && mpaUserDto.getNtfySmsRcvYn().equals('N')) {
+                    fndnChk = "Y";
+                    mpaUserDto.setFndnNtfyRcvYn("N");
+                }
+            }
+
+            if(fndnNtfyRcvYn.equals("N")) {
+                if(mpaUserDto.getNtfyEmailRcvYn().equals('Y') || mpaUserDto.getNtfySmsRcvYn().equals('Y')) {
+                    fndnChk = "Y";
+                    mpaUserDto.setFndnNtfyRcvYn("Y");
+                }
+            }
+
+            mpaUserDto.setChngFndn(fndnChk);
+
+            if(!mpaUserDto.getOldEmailRcv().equals(String.valueOf(mpaUserDto.getNtfyEmailRcvYn()))) {
+                emailYn = "Y";
+            }
+
+            mpaUserDto.setChngEmail(emailYn);
+
+
+            if(!mpaUserDto.getOldSmsRcv().equals(String.valueOf(mpaUserDto.getNtfySmsRcvYn()))) {
+                smsYn = "Y";
+            }
+
+            mpaUserDto.setChngSms(smsYn);
+
             modelMap.addAttribute("respCnt", mpaUserService.updateUserDtl(mpaUserDto));
+
         }
         catch (Exception e)
         {
@@ -313,16 +320,12 @@ public class MPAUserController {
     @PostMapping(value="/pwd-init")
     public String updatePwdInit(@RequestParam("id") String id) throws Exception
     {
-
         MPPwdInitDto mpPwdInitDto = new MPPwdInitDto();
         int actCnt = 0;
         try
         {
-
             mpPwdInitDto.setId(id);
             actCnt = mpaUserService.updatePwdInit(mpPwdInitDto);
-
-
 
             if (actCnt > 0)
             {
