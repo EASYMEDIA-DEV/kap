@@ -6,7 +6,9 @@
     <input type="hidden" id="fndnNtfyRcvYn" name="fndnNtfyRcvYn" value=${rtnDtl.fndnNtfyRcvYn} />
     <input type="hidden" id="oldEmailRcv" name="oldEmailRcv"  value="${rtnDtl.ntfyEmailRcvYn}"  class="notRequired"/>
     <input type="hidden" id="oldSmsRcv" name="oldSmsRcv" value="${rtnDtl.ntfySmsRcvYn}" class="notRequired"/>
+    <input type="hidden" id="oldWorkBsnmNo" name="oldWorkBsnmNo" value="${rtnDtl.workBsnmNo}" class="notRequired"/>
 
+    <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 </form>
 <form name="form" id="form"  action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
     <input type="hidden" id="m" name="m" value="service" class="notRequired" />
@@ -41,7 +43,7 @@
 
         <label class="col-sm-3 control-label">구분<span class="star"> *</span></label>
         <div class="col-sm-5">
-            <p class="col-sm-11 form-control-static">${rtnDtl.ctgryCdNm}</p>
+            <p class="col-sm-11 form-control-static" id="ctgryCdNm">${rtnDtl.ctgryCdNm}</p>
         </div>
     </div>
 </fieldset>

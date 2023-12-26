@@ -5,6 +5,8 @@ import com.kap.core.dto.*;
 import com.kap.core.dto.mp.mpa.MPAAttctnDto;
 import com.kap.core.dto.mp.mpa.MPAInqrDto;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpa.MPJoinDto;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.COMessageService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.mp.mpa.MPAUserService;
@@ -274,6 +276,20 @@ public class MPAUserController {
                 }
 
                 mpaUserDto.setChngSms(smsYn);
+
+                if(mpaUserDto.getMemCd().equals("CP")) {
+                    if(!mpaUserDto.getOldWorkBsnmNo().equals(mpaUserDto.getWorkBsnmNo())) {
+                        MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+                        MPJoinDto mpJoinDto = new MPJoinDto();
+                        mpJoinDto.setBsnmChk("true");
+                        mpePartsCompanyDTO.setBsnmNo(mpaUserDto.getWorkBsnmNo());
+                        mpePartsCompanyDTO.setRegId(cOUserDetailsDTO.getId());
+                        mpePartsCompanyDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+                        mpePartsCompanyDTO.setModId(cOUserDetailsDTO.getId());
+                        mpePartsCompanyDTO.setModIp(cOUserDetailsDTO.getLoginIp());
+                        mpaUserService.updateUserCompanyChg(mpaUserDto , mpePartsCompanyDTO , mpJoinDto);
+                    }
+                }
             }
 
             mpaUserDto.setChngFndn(fndnChk);

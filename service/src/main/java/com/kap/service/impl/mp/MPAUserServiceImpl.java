@@ -327,7 +327,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpaUserMapper.updateUserDtlModBsnm(mpaUserDto);
         mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
         mpaUserMapper.insertUserDtlHistory(mpaUserDto);
-            mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+        mpaUserMapper.insertUserCmpnRel(mpaUserDto);
         if (mpJoinDto.getBsnmChk().equals("false") && dupCmpnCnt == 0) {
             mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
         }
