@@ -29,7 +29,7 @@
                         </div>
 
                         <div class="col-sm-1">
-                            <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="권한" data-ctgrycd="${rtnDto.ctgryCd}">
+                            <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="과정분류-중분류" data-ctgrycd="${rtnDto.ctgryCd}" readonly="true" disabled>
                                 <option value="">선택</option>
                             </select>
                         </div>

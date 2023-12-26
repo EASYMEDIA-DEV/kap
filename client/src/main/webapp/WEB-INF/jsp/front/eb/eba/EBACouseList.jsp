@@ -88,19 +88,16 @@
                                                             <div class="data-line">
                                                                 <div class="form-group">
                                                                     <div class="form-select">
-                                                                        <select id="" title="과정 1차 분류">
-                                                                            <option value="" selected="">전체</option>
-                                                                            <option value="">option1</option>
-                                                                            <option value="">option2</option>
-                                                                            <option value="">option3</option>
+                                                                        <select name="prntCd" id="prntCd" title="과정 1차 분류" class="classType">
+                                                                            <option value="" selected>전체</option>
+                                                                            <c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
+                                                                                <option value="${cdList.cd}" <c:if test="${rtnDto.prntCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                                            </c:forEach>
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-select">
-                                                                        <select id="" title="과정 2차 분류" disabled=""><!-- 1차 분류 선택 시 disabled 해제 -->
-                                                                            <option value="" selected="">전체</option>
-                                                                            <option value="">option1</option>
-                                                                            <option value="">option2</option>
-                                                                            <option value="">option3</option>
+                                                                        <select name="ctgryCd" id="ctgryCd" title="과정 2차 분류" disabled=""><!-- 1차 분류 선택 시 disabled 해제 -->
+                                                                            <option value="" selected>전체</option>
                                                                         </select>
                                                                     </div>
                                                                 </div>
@@ -116,22 +113,19 @@
                                                         <div class="data-line-w">
                                                             <div class="data-line">
                                                                 <div class="opt-group total-check-w">
+
                                                                     <div class="form-checkbox total-check">
-                                                                        <input type="checkbox" id="studyingWayChk1" name="studyingWayChk" checked>
-                                                                        <label for="studyingWayChk1">전체</label>
+                                                                        <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd" name="stduyMthdCd">
+                                                                        <label for="stduyMthdCd">전체</label>
                                                                     </div>
-                                                                    <div class="form-checkbox">
-                                                                        <input type="checkbox" id="studyingWayChk2" name="studyingWayChk" checked>
-                                                                        <label for="studyingWayChk2">집체교육</label>
-                                                                    </div>
-                                                                    <div class="form-checkbox">
-                                                                        <input type="checkbox" id="studyingWayChk3" name="studyingWayChk" checked>
-                                                                        <label for="studyingWayChk3">온라인교육</label>
-                                                                    </div>
-                                                                    <div class="form-checkbox">
-                                                                        <input type="checkbox" id="studyingWayChk4" name="studyingWayChk" checked>
-                                                                        <label for="studyingWayChk4">집체교육+온라인</label>
-                                                                    </div>
+
+                                                                    <c:forEach var="cdList" items="${classTypeList.STDUY_MTHD}" varStatus="status">
+                                                                        <div class="form-checkbox">
+                                                                            <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd${status.index}" name="stduyMthdCd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.stduyMthdCd, cdList.cd)}">checked</c:if>>
+                                                                            <label for="stduyMthdCd${status.index}">${cdList.cdNm}</label>
+                                                                        </div>
+                                                                    </c:forEach>
+
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -146,20 +140,20 @@
                                                             <div class="data-line">
                                                                 <div class="opt-group total-check-w">
                                                                     <div class="form-checkbox total-check">
-                                                                        <input type="checkbox" id="acceptStateChk1" name="acceptStateChk" checked>
-                                                                        <label for="acceptStateChk1">전체</label>
+                                                                        <input type="checkbox" id="accsStatusOrder1" data-name="accsStatusOrderList" name="accsStatusOrder" value="" >
+                                                                        <label for="accsStatusOrder1">전체</label>
                                                                     </div>
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" id="acceptStateChk2" name="acceptStateChk" checked>
-                                                                        <label for="acceptStateChk2">접수대기</label>
+                                                                        <input type="checkbox" id="accsStatusOrder2" data-name="accsStatusOrderList"  name="accsStatusOrder" value="2" >
+                                                                        <label for="accsStatusOrder2">접수대기</label>
                                                                     </div>
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" id="acceptStateChk3" name="acceptStateChk" checked>
-                                                                        <label for="acceptStateChk3">접수중</label>
+                                                                        <input type="checkbox" id="accsStatusOrder3" data-name="accsStatusOrderList"  name="accsStatusOrder" value="1" >
+                                                                        <label for="accsStatusOrder3">접수중</label>
                                                                     </div>
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" id="acceptStateChk4" name="acceptStateChk" checked>
-                                                                        <label for="acceptStateChk4">마감</label>
+                                                                        <input type="checkbox" id="accsStatusOrder4" data-name="accsStatusOrderList"  name="accsStatusOrder" value="3" >
+                                                                        <label for="accsStatusOrder4">마감</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -174,7 +168,7 @@
                                                         <div class="data-line-w">
                                                             <div class="data-line">
                                                                 <div class="form-input srch-input w-longer">
-                                                                    <input type="text" placeholder="과정명 또는 교육장소 입력">
+                                                                    <input type="text" name="q" id="q" placeholder="과정명 또는 교육장소 입력">
                                                                     <div class="input-btn-wrap">
                                                                         <button class="delete-btn" title="지우기" type="button"></button>
                                                                         <button class="srch-btn" title="검색"></button>
@@ -194,12 +188,12 @@
                                                                 <div class="middle-line">
                                                                     <div class="opt-group">
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="searchPeriodRadio1" name="searchPeriodRadio" checked>
-                                                                            <label for="searchPeriodRadio1">교육기간</label>
+                                                                            <input type="radio" id="srchDateType1" name="srchDateType" value="1" checked>
+                                                                            <label for="srchDateType1">교육기간</label>
                                                                         </div>
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="searchPeriodRadio2" name="searchPeriodRadio">
-                                                                            <label for="searchPeriodRadio2">접수기간</label>
+                                                                            <input type="radio" id="srchDateType2" name="srchDateType" value="2">
+                                                                            <label for="srchDateType2">접수기간</label>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -207,10 +201,10 @@
                                                                     <!-- 2023-12-07 수정 -->
                                                                     <div class="form-group form-calendar">
                                                                         <div class="form-input">
-                                                                            <input type="text" placeholder="2023.01.01">
+                                                                            <input type="text" name="strtDt" id="strtDt" placeholder="2023.01.01">
                                                                         </div>
                                                                         <div class="form-input calendar">
-                                                                            <input type="text" placeholder="2023.01.01">
+                                                                            <input type="text" name="endDt" id="endDt" placeholder="2023.01.01">
                                                                         </div>
                                                                     </div>
                                                                     <!-- // 2023-12-07 수정 -->
@@ -226,8 +220,8 @@
                                                 <button class="btn-solid small gray-bg btn-role-close" type="button"><span>닫기</span><!--ㅠ-->
                                                 </button></div>
                                             <div class="btn-set">
-                                                <button class="btn-solid small gray-bg"><span>필터 초기화</span></button>
-                                                <button class="btn-solid small black-bg"><span>적용</span></button>
+                                                <button class="btn-solid small gray-bg" id="btnRefresh" type="button"><span>필터 초기화</span></button>
+                                                <button class="btn-solid small black-bg" id="btnSearch" type="button"><span>적용</span></button>
                                             </div>
                                         </div>
                                     </div>
@@ -235,21 +229,15 @@
                             </div>
 
 
-                            <div class="board-list">
-                                <div class="training-swiper-area">
-                                    <div class="swiper-container training-swiper">
+                            <div class="board-list" id="listContainer">
 
 
-                                        <div class="swiper-wrapper marquee_wrapper1" id="listContainer">
-
-                                            //여기다 반복
-
-                                        </div>
-
-
-
+                                <div class="no-data-area has-border view02"><!-- has-border: 테두리 있을 경우 -->
+                                    <div class="txt-box">
+                                        <p class="txt f-body1">등록된 회차가 없습니다.</p>
                                     </div>
                                 </div>
+
                             </div>
 
                             <div class="btn-wrap add-load align-center">

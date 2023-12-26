@@ -12,6 +12,11 @@ server:
     key-alias: bns-ssl
   tomcat:
     additional-tld-skip-patterns: "*.jar"
+  servlet:
+    session:
+      timeout: 120m
+      cookie:
+        name: KAP_LOCAL_USERS_JSESSIONID
 ---
 spring.config.activate.on-profile: stg
 domain:
