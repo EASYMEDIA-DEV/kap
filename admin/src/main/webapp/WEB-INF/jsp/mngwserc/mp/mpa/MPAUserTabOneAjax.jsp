@@ -6,6 +6,7 @@
     <input type="hidden" id="fndnNtfyRcvYn" name="fndnNtfyRcvYn" value=${rtnDtl.fndnNtfyRcvYn} />
     <input type="hidden" id="oldEmailRcv" name="oldEmailRcv"  value="${rtnDtl.ntfyEmailRcvYn}"  class="notRequired"/>
     <input type="hidden" id="oldSmsRcv" name="oldSmsRcv" value="${rtnDtl.ntfySmsRcvYn}" class="notRequired"/>
+    <input type="hidden" id="memCd" name="memCd" value="${rtnDtl.memCd}" class="notRequired"/>
 </form>
         <fieldset>
             <div class="form-group text-sm">

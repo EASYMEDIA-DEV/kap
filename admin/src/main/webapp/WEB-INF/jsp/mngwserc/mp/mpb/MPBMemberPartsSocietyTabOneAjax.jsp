@@ -2,12 +2,17 @@
 <form class="form-horizontal" id="frmData" name="frmData" method="post" >
     <input type="hidden" id="oldEmail" name="oldEmail" value=${rtnDtl.email} />
     <input type="hidden" id="id" name="id" value=${rtnDtl.id} />
+    <input type="hidden" id="memCd" name="memCd" value="${rtnDtl.memCd}" class="notRequired"/>
+    <input type="hidden" id="fndnNtfyRcvYn" name="fndnNtfyRcvYn" value=${rtnDtl.fndnNtfyRcvYn} />
+    <input type="hidden" id="oldEmailRcv" name="oldEmailRcv"  value="${rtnDtl.ntfyEmailRcvYn}"  class="notRequired"/>
+    <input type="hidden" id="oldSmsRcv" name="oldSmsRcv" value="${rtnDtl.ntfySmsRcvYn}" class="notRequired"/>
+
 </form>
 <form name="form" id="form"  action="https://nice.checkplus.co.kr/CheckPlusSafeModel/service.cb">
-    <input type="hidden" id="m" name="m" value="service" />
-    <input type="hidden" id="token_version_id" name="token_version_id" value="" />
-    <input type="hidden" id="enc_data" name="enc_data" />
-    <input type="hidden" id="integrity_value" name="integrity_value" />
+    <input type="hidden" id="m" name="m" value="service" class="notRequired" />
+    <input type="hidden" id="token_version_id" name="token_version_id" value="" class="notRequired"/>
+    <input type="hidden" id="enc_data" name="enc_data" class="notRequired" />
+    <input type="hidden" id="integrity_value" name="integrity_value" class="notRequired" />
 </form>
 
 <fieldset>
@@ -143,6 +148,8 @@
                 <input type="radio" name="ntfySmsRcvYn" value="N" title="수신"  ${rtnDtl.ntfySmsRcvYn.toString() == 'N' ? 'checked' : ''}  />
                 <span class="ion-record"></span> 수신 안함
             </label>
+            ${ kl:convertDate(rtnDtl.ntfySmsRcvChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} 변경
+
         </div>
         <label class="col-sm-1 control-label">이메일 수신여부<span class="star"> *</span></label>
         <div class="col-sm-5">
@@ -155,6 +162,8 @@
                 <input type="radio" name="ntfyEmailRcvYn" value="N" title="수신" ${rtnDtl.ntfyEmailRcvYn.toString() == 'N' ? 'checked' : ''} />
                 <span class="ion-record"></span> 수신 안함
             </label>
+            ${ kl:convertDate(rtnDtl.ntfyEmailRcvChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} 변경
+
         </div>
     </div>
 </fieldset>

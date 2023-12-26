@@ -462,6 +462,7 @@
              , mem.cmssr_rsgnt_dt
              , mem.cmssr_photo_file_seq
              , mem.cmssr_mjr_carer_cntn
+             , mem.cmssr_cnstg_fld_cntn
              , mem.cmssr_mjr_carer_exps_yn
              , mem.work_bsnm_no
              , cmpn_mst.cmpn_nm
@@ -578,6 +579,7 @@
              , cmssr_type_cd =#{cmssrTypeCd}
              , cmssr_cbsn_cd =#{cmssrCbsnCd}
              , cmssr_work_cd =#{cmssrWorkCd}
+             , cmssr_cnstg_fld_cntn =#{cmssrCnstgFldCntn}
         <if test="birth != null and birth != ''.toString() ">
              , birth =#{birth}
         </if>
@@ -1224,5 +1226,5 @@
           ON mem.work_bsnm_no  = cmpn_mst.bsnm_no
             where mem.id = #{id}
     </select>
-    
+
 </mapper>

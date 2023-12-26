@@ -245,34 +245,38 @@ public class MPAUserController {
             String fndnChk = "N";
             String smsYn = "N";
 
-            if(fndnNtfyRcvYn.equals("Y")) {
-                if(mpaUserDto.getNtfyEmailRcvYn().equals('N') && mpaUserDto.getNtfySmsRcvYn().equals('N')) {
-                    fndnChk = "Y";
-                    mpaUserDto.setFndnNtfyRcvYn("N");
+            if(!mpaUserDto.getMemCd().equals("CS")) {
+                if (fndnNtfyRcvYn.equals("Y")) {
+                    if (mpaUserDto.getNtfyEmailRcvYn().equals('N') && mpaUserDto.getNtfySmsRcvYn().equals('N')) {
+                        fndnChk = "Y";
+                        mpaUserDto.setFndnNtfyRcvYn("N");
+                    }
                 }
-            }
 
-            if(fndnNtfyRcvYn.equals("N")) {
-                if(mpaUserDto.getNtfyEmailRcvYn().equals('Y') || mpaUserDto.getNtfySmsRcvYn().equals('Y')) {
-                    fndnChk = "Y";
-                    mpaUserDto.setFndnNtfyRcvYn("Y");
+                if (fndnNtfyRcvYn.equals("N")) {
+                    if (mpaUserDto.getNtfyEmailRcvYn().equals('Y') || mpaUserDto.getNtfySmsRcvYn().equals('Y')) {
+                        fndnChk = "Y";
+                        mpaUserDto.setFndnNtfyRcvYn("Y");
+                    }
                 }
+
+
+
+                if (!mpaUserDto.getOldEmailRcv().equals(String.valueOf(mpaUserDto.getNtfyEmailRcvYn()))) {
+                    emailYn = "Y";
+                }
+
+                mpaUserDto.setChngEmail(emailYn);
+
+
+                if (!mpaUserDto.getOldSmsRcv().equals(String.valueOf(mpaUserDto.getNtfySmsRcvYn()))) {
+                    smsYn = "Y";
+                }
+
+                mpaUserDto.setChngSms(smsYn);
             }
 
             mpaUserDto.setChngFndn(fndnChk);
-
-            if(!mpaUserDto.getOldEmailRcv().equals(String.valueOf(mpaUserDto.getNtfyEmailRcvYn()))) {
-                emailYn = "Y";
-            }
-
-            mpaUserDto.setChngEmail(emailYn);
-
-
-            if(!mpaUserDto.getOldSmsRcv().equals(String.valueOf(mpaUserDto.getNtfySmsRcvYn()))) {
-                smsYn = "Y";
-            }
-
-            mpaUserDto.setChngSms(smsYn);
 
             modelMap.addAttribute("respCnt", mpaUserService.updateUserDtl(mpaUserDto));
 

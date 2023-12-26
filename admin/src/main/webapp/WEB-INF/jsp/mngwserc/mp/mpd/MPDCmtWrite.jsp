@@ -14,7 +14,7 @@
             <!-- 페이징 버튼 사이즈 -->
             <input type="hidden" id="pageRowSize" name="pageRowSize" class="notRequired" value="${ rtnData.pageRowSize }" />
             <input type="hidden" id="listRowSize" name="listRowSize" class="notRequired" value="${ rtnData.listRowSize }" />
-
+            <input type="hidden" id="memCd" name="memCd" value="${rtnDtl.memCd}" class="notRequired"/>
             <div class="tab-content">
                 <fieldset>
                     <div class="form-group text-sm">
@@ -192,6 +192,16 @@
                         <div class="col-sm-3">
                             <div class="input-group">
                                 <textarea  type="text" id="cmssrMjrCarerCntn" title="주요경력" name="cmssrMjrCarerCntn"></textarea>               </div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">컨설팅분야</label>
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <textarea  type="text" id="cmssrCnstgFldCntn" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired"></textarea>               </div>
                         </div>
                     </div>
                 </fieldset>

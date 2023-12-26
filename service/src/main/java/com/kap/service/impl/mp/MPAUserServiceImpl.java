@@ -138,7 +138,7 @@ public class MPAUserServiceImpl implements MPAUserService {
      */
     public int updateUserDtl(MPAUserDto mpaUserDto) throws Exception {
 
-        if(mpaUserDto.getChngFndn().equals("Y")){
+        if (mpaUserDto.getChngFndn().equals("Y")) {
             mpaUserMapper.updateUserDtlModS(mpaUserDto);
         }
 
@@ -581,7 +581,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         //다운로드 사유 입력
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
-        pCoSystemLogDTO.setTrgtMenuNm("회원/부품사 관리 > 일반회원관리");
+        pCoSystemLogDTO.setTrgtMenuNm("회원/부품사 관리 > 위원관리");
         pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.mp.MPAUserServiceImpl");
         pCoSystemLogDTO.setFncNm("selectUserList");
         pCoSystemLogDTO.setPrcsCd("DL");
