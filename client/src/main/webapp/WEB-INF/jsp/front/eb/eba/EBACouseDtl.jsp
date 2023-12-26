@@ -24,19 +24,7 @@
     <div class="divide-con-area">
         <!--LNB 시작-->
         <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
-        <%--<div class="lnb-area">
-            <div class="for-motion">
-                <div class="lnb-list">
-                    <a class="btn-two-depth single-menu active" href="javascript:"><span>교육사업 소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                </div>
-                <div class="lnb-list">
-                    <a class="btn-two-depth single-menu" href="javascript:"><span>교육신청</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                </div>
-                <div class="lnb-list">
-                    <a class="btn-two-depth single-menu" href="javascript:"><span>방문교육</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                </div>
-            </div>
-        </div>--%>
+
         <!--LNB 종료-->
         <div class="right-con-area">
             <div class="cont-sec-w">
@@ -50,21 +38,21 @@
                                 <div class="txt-area">
                                     <div class="top-line">
                                         <div class="sort-label-area">
-                                            <p class="label"><span>품질아카데미</span></p>
-                                            <p class="label"><span>품질학교</span></p>
+                                            <p class="label"><span>${rtnData.prntCdNm}</span></p>
+                                            <p class="label"><span>${rtnData.ctgryCdNm}</span></p>
                                         </div>
-                                        <p class="training-name f-title1">꼭 알아야 할 품질 기초</p>
-                                        <p class="training-explain-txt">품질 전문가로서의 첫 시작을 위한 교육!</p>
+                                        <p class="training-name f-title1">${rtnData.nm}</p>
+                                        <p class="training-explain-txt">${rtnData.smmryNm}</p>
                                     </div>
                                     <div class="class-property-w">
                                         <div class="property-list offline"><!-- offline: 집체교육 -->
                                             <p class="txt">
-                                                <span>집체교육</span>
+                                                <span>${rtnData.stduyMthdCdNm}</span>
                                             </p>
                                         </div>
                                         <div class="property-list time"><!-- time: 학습시간 -->
                                             <p class="txt">
-                                                <span>2일(14시간)</span>
+                                                <span>${rtnData.stduyDdCdNm}일(${rtnData.stduyTimeCdNm}시간)</span>
                                             </p>
                                         </div>
                                     </div>
@@ -267,12 +255,13 @@
                         </div>
                         <div class="sec-con-area">
                             <div class="txt-sec">
-                                <div class="paragraph">
+                                ${rtnData.itrdcCntn}
+                                <%--<div class="paragraph">
                                     <p class="f-sub-head">품질 전문가로서의 첫 시작을 위한 교육!</p>
                                 </div>
                                 <div class="paragraph">
                                     <p class="f-sub-head">품질의 기본 개념부터 올바른 품질 문제 파악 및 실용적인 QC 7도구 활용 방법까지, 품질 세계에 입문한 부품사 직원들이 품질을 제대로 이해하고 업무에 바로 활용할 수 있도록 최고 품질 전문가의 실전 강의를 제공합니다.</p>
-                                </div>
+                                </div>--%>
                             </div>
                         </div>
                     </div>
@@ -284,7 +273,8 @@
                         </div>
                         <div class="sec-con-area">
                             <div class="txt-sec">
-                                <div class="ul-txt-w highlight">
+                                ${rtnData.stduyTrgtCntn}
+                                <%--<div class="ul-txt-w highlight">
                                     <div class="ul-txt-list">
                                         <p class="ul-txt has-dot">(K) 품질이 중요한 이유에 대해 설명할 수 있다.</p>
                                         <p class="ul-txt has-dot">(K) 완성차 구매/품질 정책을 조직 시스템 및 업무에 반영한다.</p>
@@ -292,7 +282,7 @@
                                         <p class="ul-txt has-dot">(S) 현장에서 품질 문제 해결을 위해 QC-7 Tool를 용도에 맞게 활용할 수 있다.</p>
                                         <p class="ul-txt has-dot">(S) 현장에서 품질 개선을 위한 기법을 적용할 수 있다.</p>
                                     </div>
-                                </div>
+                                </div>--%>
                             </div>
                         </div>
                     </div>
@@ -305,7 +295,7 @@
                         <div class="sec-con-area">
                             <div class="table-sec">
                                 <div class="table-box need-scroll">
-                                    <table class="basic-table">
+                                    <%--<table class="basic-table">
                                         <caption>신청자 기본 정보</caption>
                                         <colgroup>
                                             <col style="width: 273rem;">
@@ -333,7 +323,64 @@
                                             <td>경력 3년 이상 필수</td>
                                         </tr>
                                         </tbody>
-                                    </table>
+                                    </table>--%>
+
+                                        <table class="basic-table">
+                                            <caption>신청자 기본 정보</caption>
+                                            <colgroup>
+                                                <col style="width: 273rem;">
+                                                <col style="width: 820rem;">
+                                            </colgroup>
+                                            <tbody>
+
+                                                <c:forEach var="list" items="${edTarget}">
+                                                    <c:set var="tempNm" value="" />
+                                                    <tr>
+                                                    <c:forEach var="targetList" items="${list.edList}">
+                                                        <c:choose>
+                                                            <c:when test="${targetList.dpth eq '2'}">
+                                                                <th>${targetList.cdNm}</th>
+
+                                                                <c:if test="${targetList.cdNm ne '기타' && targetList.cd ne 'ED_TARGET05001'}">
+                                                                    <c:forEach var="rtnTrgtDataList" items="${rtnTrgtData}">
+                                                                        <c:if test="${rtnTrgtDataList.targetCd eq targetList.cd}">
+                                                                            <c:set var="tempNm" value="${rtnTrgtDataList.targetCdNm}" />
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </c:if>
+
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <td>
+                                                                    ${tempNm}
+                                                                    <%--<c:if test="${targetList.cdNm ne '기타' && targetList.cd ne 'ED_TARGET05001'}">
+                                                                        <c:forEach var="rtnTrgtDataList" items="${rtnTrgtData}">
+                                                                            <c:if test="${rtnTrgtDataList.targetCd eq targetList.cd}">
+                                                                                ${rtnTrgtDataList.targetCdNm}
+                                                                            </c:if>
+                                                                        </c:forEach>
+                                                                    </c:if>--%>
+                                                                </td>
+                                                                <c:if test="${targetList.cdNm eq '기타' && targetList.cd eq 'ED_TARGET05001'}">
+                                                                    <td>
+                                                                        <c:if test="${empty rtnTrgtData[rtnTrgtData.size()-1].etcNm}">
+                                                                            없음
+                                                                        </c:if>
+                                                                        <c:if test="${not empty rtnTrgtData[rtnTrgtData.size()-1].etcNm}">
+                                                                            ${rtnTrgtData[rtnTrgtData.size()-1].etcNm}
+                                                                        </c:if>
+                                                                    </td>
+                                                                </c:if>
+
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+
+
                                 </div>
                             </div>
                         </div>
@@ -356,19 +403,19 @@
                                         <tbody>
                                         <tr>
                                             <th>학습방식</th>
-                                            <td>집체교육</td>
+                                            <td>${rtnData.stduyMthdCdNm}</td>
                                         </tr>
                                         <tr>
                                             <th>수료기준</th>
-                                            <td>출석 80% 이상, 평가 90점 이상</td>
+                                            <td>출석 ${rtnData.cmptnStndCdNm}% 이상, 평가 ${rtnData.cmptnJdgmtCdNm}점 이상</td>
                                         </tr>
                                         <tr>
                                             <th>학습시간</th>
-                                            <td>2일 / 14시간</td>
+                                            <td>${rtnData.stduyDdCdNm}일 / ${rtnData.stduyTimeCdNm}시간</td>
                                         </tr>
                                         <tr>
                                             <th>학습 준비물</th>
-                                            <td>노트북</td>
+                                            <td>${rtnData.stduySuplsNm}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -384,7 +431,9 @@
                         </div>
                         <div class="sec-con-area">
                             <div class="curriculum-div">
-                                <div class="day-list">
+                                ${rtnData.pcStduyCntn}
+                                ${rtnData.mblStduyCntn}
+                                <%--<div class="day-list">
                                     <div class="tit-area">
                                         <p class="tit f-title2">1일차</p>
                                     </div>
@@ -438,7 +487,7 @@
                                             <p class="method">강의 / 토론</p>
                                         </div>
                                     </div>
-                                </div>
+                                </div>--%>
                             </div>
                         </div>
                     </div>
@@ -974,7 +1023,7 @@
 
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap align-center for-motion">
-                    <a class="btn-solid small black-bg" href="javascript:"><span>목록</span></a>
+                    <a class="btn-solid small black-bg" href="/education/apply/list"><span>목록</span></a>
                 </div>
             </div>
 

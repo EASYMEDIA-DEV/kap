@@ -1,6 +1,7 @@
 package com.kap.front.controller.eb;
 
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.EmfMap;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.service.COCodeService;
@@ -128,7 +129,7 @@ public class EBACouseController {
             System.out.println("@@@@@ 온닷!!! 교육과정 신청 상세");
 
             HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
-
+            System.out.println("@@@ rtnMap = " + rtnMap);
             EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
             List<EBACouseDTO> rtnTrgtData = (List<EBACouseDTO>) rtnMap.get("rtnTrgtData");
 
@@ -177,10 +178,12 @@ public class EBACouseController {
                 rtnDto.setPrntCd(prntCd);
             }
 
+            System.out.println("@@@@rtnDto = " + rtnDto);
 
             modelMap.addAttribute("rtnData", rtnDto);
             modelMap.addAttribute("rtnTrgtData", rtnTrgtData);
             modelMap.addAttribute("relList", relList);
+            modelMap.addAttribute("edTarget", setEdTargetList("ED_TARGET"));
         }
         catch (Exception e)
         {
@@ -191,6 +194,57 @@ public class EBACouseController {
             throw new Exception(e.getMessage());
         }
         return vwUrl;
+    }
+
+    /*
+    학습대상 공통코드 분류
+     */
+    private List<EmfMap> setEdTargetList(String arg){
+
+        List<EmfMap> targetList = new ArrayList<>();
+
+        try{
+
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            //과정분류 공통코드 세팅
+            // 코드 set
+            cdDtlList.add(arg);
+
+            HashMap<String, List<COCodeDTO>> temp =  cOCodeService.getCmmCodeBindAll(cdDtlList);
+
+            List<COCodeDTO> tempList = temp.get(arg);
+
+            for(COCodeDTO a : tempList){
+
+                if(a.getDpth() == 2){
+                    EmfMap targetMap = new EmfMap();
+
+                    List<EmfMap> dpth3List = new ArrayList<>();
+                    for(COCodeDTO b : tempList){
+                        if(b.getCd().contains(a.getCd())){
+                            EmfMap map = new EmfMap();
+
+                            map.put("cd", b.getCd());
+                            map.put("cdNm", b.getCdNm());
+                            map.put("dpth", b.getDpth());
+                            dpth3List.add(map);
+                            targetMap.put("edList", dpth3List);
+                        }
+                    }
+                    targetList.add(targetMap);
+                }
+
+
+            }
+
+
+        }catch (Exception e){
+
+        }
+
+
+        return targetList;
+
     }
 
     @RestController

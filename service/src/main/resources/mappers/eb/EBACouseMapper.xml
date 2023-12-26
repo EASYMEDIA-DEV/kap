@@ -175,10 +175,10 @@
 					  	(SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
 					  	AND dpth =  2 AND dpth <![CDATA[>]]> 1) prnt_cd
 
-				  , (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
+				  , (SELECT cd_nm FROM co_code_mst
 					 WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = a.ctgry_cd) AND rht_val <![CDATA[>=]]>
 																											  (SELECT rht_val FROM co_code_mst WHERE cd = a.ctgry_cd)
-					   AND dpth <![CDATA[<]]> 4 AND dpth <![CDATA[>]]> 1) prnt_cd_nm
+					   AND dpth = 2) prnt_cd_nm
 
 				  , stduy_mthd_cd
 				  , (select cd_nm from co_code_mst where cd=a.stduy_mthd_cd) as stduy_mthd_cd_nm
@@ -187,7 +187,9 @@
 				  , stduy_time_cd
 				  , (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as stduy_time_cd_nm
 			      , cmptn_stnd_cd
+				  , (select cd_nm from co_code_mst where cd=a.cmptn_stnd_cd) as cmptn_stnd_cd_nm
 				  , cmptn_jdgmt_cd
+				  , (select cd_nm from co_code_mst where cd=a.cmptn_jdgmt_cd) as cmptn_jdgmt_cd_nm
 				  , jdgmt_yn
 				  , stduy_supls_nm
 				  , pc_stduy_cntn
@@ -217,8 +219,9 @@
 		select
 		    edctn_seq
 			, cd as target_cd
+			, (select cd_nm from co_code_mst where cd=a.cd) as target_cd_nm
 			, etc_nm
-		from ed_edctn_trgt_dtl
+		from ed_edctn_trgt_dtl a
 		where
 			edctn_seq = #{detailsKey}
 	</select>

@@ -90,7 +90,13 @@
                                         <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <div class="btn-solid small black-bg episdDtl" data-episdSeq="${list.episdSeq}"><span>더 알아보기</span></div>
+                                        <c:if test="${list.accsStatusOrder eq 3}">
+                                            <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                        </c:if>
+                                        <c:if test="${list.accsStatusOrder ne 3}">
+                                            <div class="btn-solid small black-bg episdDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                        </c:if>
+
                                     </div>
                                 </div>
                             </div>

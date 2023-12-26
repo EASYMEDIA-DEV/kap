@@ -194,10 +194,8 @@ define(["ezCtrl"], function(ezCtrl) {
 			episdDtl : {
 				event : {
 					click : function(e){
-						var episdSeq = $(e.target).closest("div").data("episdseq");
-						$("#episdSeq").val(episdSeq);
-						$formObj.attr("action", "/education/apply/detail");
-						$formObj.submit();
+						var edctnseq = $(e.target).closest("div").data("edctnseq");
+						location.href="/education/apply/detail?detailsKey="+edctnseq;
 					}
 				}
 			},

@@ -76,6 +76,9 @@ public class EBACouseDTO extends BaseDTO {
     @Schema(title = "학습대상 코드", example = "텍스트")
     private String targetCd;
 
+    @Schema(title = "학습대상 코드명", example = "텍스트")
+    private String targetCdNm;
+
     //학습대상 코드 - 기타
     @Schema(title = "학습대상 코드 - 기타", example = "텍스트")
     private String etcNm;
@@ -92,9 +95,15 @@ public class EBACouseDTO extends BaseDTO {
     @Schema(title = "수료기준코드", example = "텍스트")
     private String cmptnStndCd;
 
+    @Schema(title = "수료기준코드명", example = "텍스트")
+    private String cmptnStndCdNm;
+
     //수료평가코드
     @Schema(title = "수료평가코드", example = "텍스트")
     private String cmptnJdgmtCd;
+
+    @Schema(title = "수료평가코드명", example = "텍스트")
+    private String cmptnJdgmtCdNm;
 
     //평가여부
     @Schema(title = "평가여부(화면에서는 평가없음)", example = "Y = 평가 함 / N = 평가 안함(체크박스 체크)")
