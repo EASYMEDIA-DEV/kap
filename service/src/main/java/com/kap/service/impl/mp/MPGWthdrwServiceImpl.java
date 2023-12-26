@@ -10,6 +10,7 @@ import com.kap.service.dao.mp.MPGWthdrwMapper;
 import com.kap.service.mp.mpg.MPGWthdrwService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -156,7 +157,8 @@ public class MPGWthdrwServiceImpl  implements MPGWthdrwService {
 
             //탈퇴 사유
             cell = row.createCell(3);
-            cell.setCellValue(list.get(i).getWthdrwRsnNm()+" "+list.get(i).getWthdrwRsnEtcNm());
+
+            cell.setCellValue(list.get(i).getWthdrwRsnNm() + " " + (StringUtils.isEmpty(list.get(i).getWthdrwRsnEtcNm()) ? "" : list.get(i).getWthdrwRsnEtcNm()));
             cell.setCellStyle(style_body);
 
 
