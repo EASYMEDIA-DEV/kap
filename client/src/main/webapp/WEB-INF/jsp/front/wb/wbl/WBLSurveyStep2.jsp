@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- content 영역 start -->
-<div class="cont-wrap">
+<div class="cont-wrap" data-controller="controller/wb/wbl/WBLSurveyStep2Ctrl">
     <div class="inner">
         <div class="sub-top-vis-area">
             <div class="page-tit-area t-align-center">
@@ -16,7 +16,7 @@
                     <p class="subject-tit f-title3">상생협력 체감도 조사</p>
                     <div class="sort-label-area">
                         <p class="label"><span>대상업체 ${rtnData.partCmpnNm1}</span></p>
-                        <p class="label"><span>수행 동일전공</span></p>
+                        <p class="label"><span>수행 ${rtnData.partCmpnNm2}</span></p>
                     </div>
                 </div>
                 <div class="right">
@@ -26,6 +26,10 @@
                     </div>
                 </div>
             </div>
+            <form class="form-horizontal" id="frmData" name="frmData" method="post" >
+                <input type="hidden" name="srvSeq" value="${rtnData.srvSeq}">
+                <input type="hidden" name="rfncCd" value="WIN">
+
             <div class="survey-form">
                 <div class="cont-sec-w">
 
@@ -45,10 +49,21 @@
                                 <div class="sec-con-area">
                                     <div class="survey-list-w">
                         </c:if>
+                                    <div class="survey-list surveyList ${qstnList.cd}" data-survey-type="${qstnList.cd}">
+                                        <input type="hidden" name="dpth" value="${qstnList.dpth}">
+                                        <input type="hidden" name="qstnSeq" value="${qstnList.qstnSeq}">
+                                        <input type="hidden" name="srvTypeCd" value="${qstnList.srvTypeCd}">
+                                        <c:choose>
+                                            <c:when test="${qstnList.ncsYn eq 'Y' && qstnList.dpth eq '1'}">
+                                                <c:set var="notRequired" value="" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="notRequired" value="notRequired" />
+                                            </c:otherwise>
+                                        </c:choose>
 
-                                    <div class="survey-list">
                                         <div class="question-tit">
-                                            <p class="number">Q1</p>
+                                            <p class="number ${qstnList.cd}questionTxt">Q1</p>
                                             <p class="tit f-sub-head">${qstnList.qstnNm}</p>
                                         </div>
                                         <div class="survey-con">
@@ -56,8 +71,8 @@
                                                 <c:when test="${qstnList.srvTypeCd eq 'QST01'}">    <!--객관식단일-->
                                                     <div class="opt-group verticality"><!-- verticality : 아래로 떨어지는 -->
                                                         <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
-                                                            <div class="form-radio">
-                                                                <input type="radio" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnOrd}">
+                                                            <div class="form-radio exmplList">
+                                                                <input type="radio" class="${notRequired} answer" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="${qstnList.qstnNm}">
                                                                 <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplNm}</label>
                                                             </div>
                                                         </c:forEach>
@@ -66,21 +81,21 @@
                                                 <c:when test="${qstnList.srvTypeCd eq 'QST02'}">    <!--객관식복수-->
                                                     <div class="opt-group verticality"><!-- verticality : 아래로 떨어지는 -->
                                                         <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
-                                                            <div class="form-checkbox">
-                                                                <input type="checkbox" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnOrd}">
+                                                            <div class="form-checkbox exmplList">
+                                                                <input type="checkbox" class="${notRequired} answer" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="${qstnList.qstnNm}">
                                                                 <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplNm}</label>
                                                             </div>
                                                         </c:forEach>
                                                     </div>
                                                 </c:when>
                                                 <c:when test="${qstnList.srvTypeCd eq 'QST03'}">    <!--주관식단답-->
-                                                    <div class="form-input w-full">
-                                                        <input type="text" placeholder="답변을 작성해주세요." name="answer${qstnList.qstnOrd}">
+                                                    <div class="form-input w-full exmplList">
+                                                        <input type="text" placeholder="답변을 작성해주세요." class="${notRequired} answer" name="answer${qstnList.qstnSeq}" title="${qstnList.qstnNm}">
                                                     </div>
                                                 </c:when>
                                                 <c:when test="${qstnList.srvTypeCd eq 'QST04'}">    <!--주관식서술-->
-                                                    <div class="form-textarea">
-                                                        <textarea name="answer${qstnList.qstnOrd}" id="" cols="" rows="" placeholder="답변을 작성해주세요."></textarea>
+                                                    <div class="form-textarea exmplList">
+                                                        <textarea name="answer${qstnList.qstnSeq}" class="${notRequired} answer" id="" cols="" rows="" placeholder="답변을 작성해주세요." title="${qstnList.qstnNm}"></textarea>
                                                         <div class="check-byte">
                                                             <p class="txt"><span class="current-byte">0</span>자</p>
                                                             <p class="txt"><span class="max-byte">2,000</span>자</p>
@@ -91,8 +106,8 @@
                                                     <div class="criterion-form">
                                                         <div class="criterion-list-w">
                                                             <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
-                                                                <div class="form-radio">
-                                                                    <input type="radio" id="criterionOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="criterionOption01">
+                                                                <div class="form-radio exmplList">
+                                                                    <input type="radio" id="criterionOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" class="${notRequired} answer" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="${qstnList.qstnNm}">
                                                                     <label for="criterionOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplOrd}</label>
                                                                 </div>
                                                                 <c:if test="${exmplStatus.first}">
@@ -112,7 +127,6 @@
                                             </c:choose>
                                         </div>
                                     </div>
-
                      <c:set var="cd" value="${ qstnList.cd}" />
                     </c:forEach>
                                 </div>
@@ -121,6 +135,7 @@
                     </div>
                 </div>
             </div>
+        </form>
 
 
             <div class="page-bot-btn-sec">
@@ -129,7 +144,7 @@
                         <a class="btn-solid small gray-bg" href="javascript:"><span>목록</span></a>
                     </div>
                     <div class="btn-set">
-                        <a class="btn-solid small black-bg" href="javascript:"><span>제출하기</span></a>
+                        <a class="btn-solid small black-bg" href="javascript:" id="btnSubmit"><span>제출하기</span></a>
                     </div>
                 </div>
             </div>

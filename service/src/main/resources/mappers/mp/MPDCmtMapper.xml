@@ -3,15 +3,15 @@
 <mapper namespace="com.kap.service.dao.mp.MPDCmtMapper">
 
     <!--
-        쿼리명 : MPDCmtMapper.insertUserDtlHistory
-        설  명 : 사용자 수정  이력
-          수정일      수정자       수정내용
-        ==========   ========   ==============
-        2023.11.10    양현우       최초생성
-        -->
+            쿼리명 : MPDCmtMapper.insertUserDtlHistory
+            설  명 : 사용자 수정  이력
+              수정일      수정자       수정내용
+            ==========   ========   ==============
+            2023.11.10    양현우       최초생성
+    -->
     <insert id="insertCmt" parameterType="MPAUserDto">
         insert into co_mem_mst
-        (   mem_seq 				-- 회원순번
+        ( mem_seq 				-- 회원순번
         , mem_cd  				-- 회원코드
         , id   					-- id
         , name  					-- 이름
@@ -47,8 +47,7 @@
         , tmp_pwd_yn
         , pwd_chng_dtm
         )
-        values(
-                #{memSeq}
+        values( #{memSeq}
               , #{memCd}
               , #{id}
               , #{name}
@@ -85,14 +84,13 @@
               )
     </insert>
 
-
     <!--
-     쿼리명 : MPDCmtMapper.updateCmt
-     설  명 : 위원을 삭제한다.
-      수정일     수정자       수정내용
-    ==========   ======    ==============
-    2023.11.21   양현우       최초생성
--->
+         쿼리명 : MPDCmtMapper.updateCmt
+         설  명 : 위원을 삭제한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.21   양현우       최초생성
+    -->
     <update id="updateCmt" parameterType="MPAUserDto">
            update co_mem_mst
             set wthdrw_yn = 'N'
@@ -109,31 +107,15 @@
                         </otherwise>
                     </choose>
                 </where>
-
-<!--        delete /* MPDCmtMapper.updateCmt */-->
-<!--        from co_mem_mst-->
-<!--        <where>-->
-<!--            <choose>-->
-<!--                <when test="delValueList != null and delValueList.size() > 0">-->
-<!--                    mem_seq in-->
-<!--                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">-->
-<!--                        #{delValueList}-->
-<!--                    </foreach>-->
-<!--                </when>-->
-<!--                <otherwise>-->
-<!--                    adm_seq = #{detailsKey}-->
-<!--                </otherwise>-->
-<!--            </choose>-->
-<!--        </where>-->
     </update>
 
     <!--
-     쿼리명 : MPDCmtMapper.selectKenList
-     설  명 : 근태 목록을 조회한다.
-       수정일      수정자       수정내용
-     ==========   ========   ==============
-     2023.11.23    양현우       최초생성
- -->
+         쿼리명 : MPDCmtMapper.selectKenList
+         설  명 : 근태 목록을 조회한다.
+           수정일      수정자       수정내용
+         ==========   ========   ==============
+         2023.11.23    양현우       최초생성
+     -->
     <select id="selectKenList" parameterType="MPDKenDto" resultType="MPDKenDto">
         select (select cd_nm from co_code_mst where  cd=m1.atndc_cd ) as atndcCdNm -- 근태옵션
              , atndc_cd
@@ -164,14 +146,13 @@
 
     </select>
 
-
     <!--
-쿼리명 : MPDCmtMapper.selectKenListCnt
-설  명 : 근태 갯수을 조회한다.
-  수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.23    양현우       최초생성
--->
+        쿼리명 : MPDCmtMapper.selectKenListCnt
+        설  명 : 근태 갯수을 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.23    양현우       최초생성
+    -->
     <select id="selectKenListCnt" parameterType="MPDKenDto" resultType="java.lang.Integer">
     select count(*)
         from co_cmssr_atndc_mst m1
@@ -190,12 +171,12 @@
 
 
     <!--
- 쿼리명 : MPDCmtMapper.selectKenMonthList
- 설  명 : 근태 월 목록을 조회한다.
-   수정일      수정자       수정내용
- ==========   ========   ==============
- 2023.11.23    양현우       최초생성
--->
+         쿼리명 : MPDCmtMapper.selectKenMonthList
+         설  명 : 근태 월 목록을 조회한다.
+           수정일      수정자       수정내용
+         ==========   ========   ==============
+         2023.11.23    양현우       최초생성
+    -->
     <select id="selectKenMonthList" parameterType="MPDKenDto" resultType="MPDKenDto">
         SELECT m2.name
              , m2.mem_seq
@@ -217,32 +198,31 @@
 
 
     <!--
-쿼리명 : MPDCmtMapper.selectKenMonthListCnt
-설  명 : 근태 월 갯수을 조회한다.
-  수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.23    양현우       최초생성
--->
+        쿼리명 : MPDCmtMapper.selectKenMonthListCnt
+        설  명 : 근태 월 갯수을 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.23    양현우       최초생성
+    -->
     <select id="selectKenMonthListCnt" parameterType="MPDKenDto" resultType="java.lang.Integer">
-        select count(*) from(
-        SELECT count(*)
-         FROM co_cmssr_atndc_mst m1
-          inner join co_mem_mst m2
-           on m1.mem_seq = m2.mem_seq
-            where  year=#{year}
-             and mnth=#{mnth}
-              and m2.wthdrw_yn=#{wthdrwYn}
-              group by m1.mem_seq ) as a
+        select count(*)
+         from ( SELECT count(*)
+                  FROM co_cmssr_atndc_mst m1
+                   inner join co_mem_mst m2
+                    on m1.mem_seq = m2.mem_seq
+                     where year=#{year}
+                      and mnth=#{mnth}
+                      and m2.wthdrw_yn=#{wthdrwYn}
+                       group by m1.mem_seq ) as a
     </select>
 
-
     <!--
-쿼리명 : MPDCmtMapper.selectKenMonthCnt
-설  명 : 위원 근태 월 갯수을 조회한다.
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.23    양현우       최초생성
--->
+        쿼리명 : MPDCmtMapper.selectKenMonthCnt
+        설  명 : 위원 근태 월 갯수을 조회한다.
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.23    양현우       최초생성
+    -->
     <select id="selectKenMonthCnt" parameterType="MPDKenDto" resultType="MPDKenDto">
         select  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_001' and mem_seq=#{detailsKey}) as cnstg_cnt /* MPDCmtMapper.selectKenMonthCnt */
              ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_002' and mem_seq=#{detailsKey}) as atndn_cnt
@@ -252,19 +232,19 @@
              ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_006' and mem_seq=#{detailsKey}) as home_cnt
              ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_007' and mem_seq=#{detailsKey}) as etc_cnt
         from co_cmssr_atndc_mst
-        where year=#{year}
+         where year=#{year}
           and mnth =#{mnth}
           and mem_seq=#{detailsKey}
         group by mem_Seq
     </select>
 
     <!--
-쿼리명 : MPDCmtMapper.selectKenCmpnList
-설  명 : 지도부품사 조회
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.23    양현우       최초생성
--->
+        쿼리명 : MPDCmtMapper.selectKenCmpnList
+        설  명 : 지도부품사 조회
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.23    양현우       최초생성
+    -->
     <select id="selectKenCmpnList" parameterType="MPDKenDto" resultType="MPDKenDto">
     select cmpn_mst.cmpn_nm /* MPDCmtMapper.selectKenCmpnList */
          , appctn_mst.appctn_bsnm_no
@@ -285,14 +265,13 @@
           order by appctn_mst.cnstg_seq
     </select>
 
-
     <!--
-쿼리명 : MPDCmtMapper.selectKenCmpnDtl
-설  명 : 출석 체크 상세
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.23    양현우       최초생성
--->
+        쿼리명 : MPDCmtMapper.selectKenCmpnDtl
+        설  명 : 출석 체크 상세
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.23    양현우       최초생성
+    -->
     <select id="selectKenCmpnDtl" parameterType="MPDKenDto" resultType="MPDKenDto">
         select atndc_cd /* MPDCmtMapper.selectKenCmpnDtl */
              , cnstg_seq_1
@@ -304,18 +283,18 @@
              , etc_bsntrp
              , etc
         from co_cmssr_atndc_mst ccam
-        where mem_seq=#{detailsKey}
-                  and year =#{year}
+         where mem_seq=#{detailsKey}
+          and year =#{year}
           and mnth=#{mnth}
           and dd=#{dd}
     </select>
 
     <!--
-       쿼리명 : MPDCmtMapper.insertAtend
-       설  명 : 위원 출석 체크
-         수정일      수정자       수정내용
-       ==========   ========   ==============
-       2023.11.10    양현우       최초생성
+           쿼리명 : MPDCmtMapper.insertAtend
+           설  명 : 위원 출석 체크
+             수정일      수정자       수정내용
+           ==========   ========   ==============
+           2023.11.10    양현우       최초생성
        -->
     <insert id="insertAtend" parameterType="MPDKenDto">
         insert into co_cmssr_atndc_mst /* MPDCmtMapper.insertAtend */
@@ -364,14 +343,13 @@
                 )
     </insert>
 
-
     <!--
-쿼리명 : MPDCmtMapper.selectKenCmpnKickImage
-설  명 : 킥오프 이미지
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.23    양현우       최초생성
--->
+        쿼리명 : MPDCmtMapper.selectKenCmpnKickImage
+        설  명 : 킥오프 이미지
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.23    양현우       최초생성
+    -->
     <select id="selectKenCmpnKickImage" parameterType="MPFFileDto" resultType="MPFFileDto">
         select dtl.file_seq  /* MPDCmtMapper.selectKenCmpnKickImage */
              , dtl.file_ord
@@ -384,12 +362,12 @@
     </select>
 
     <!--
-쿼리명 : MPDCmtMapper.selectKenCmpnLvlImage
-설  명 : 렙업 이미지
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.23    양현우       최초생성
--->
+        쿼리명 : MPDCmtMapper.selectKenCmpnLvlImage
+        설  명 : 렙업 이미지
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.23    양현우       최초생성
+    -->
     <select id="selectKenCmpnLvlImage" parameterType="MPFFileDto" resultType="MPFFileDto">
         select dtl.file_seq    /* MPDCmtMapper.selectKenCmpnLvlImage */
              , dtl.file_ord
@@ -402,12 +380,12 @@
     </select>
 
     <!--
-     쿼리명 : MPDCmtMapper.updateCnstgRsumeMst
-     설  명 : 컨설팅 이미지 수정
-      수정일     수정자       수정내용
-    ==========   ======    ==============
-    2023.12.22   양현우       최초생성
--->
+         쿼리명 : MPDCmtMapper.updateCnstgRsumeMst
+         설  명 : 컨설팅 이미지 수정
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.22   양현우       최초생성
+    -->
     <update id="updateCnstgRsumeMst" parameterType="MPFFileDto">
     update cp_cnstg_rsume_mst
        set  mod_id =#{modId}

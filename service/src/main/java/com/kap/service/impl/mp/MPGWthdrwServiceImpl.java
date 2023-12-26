@@ -10,6 +10,7 @@ import com.kap.service.dao.mp.MPGWthdrwMapper;
 import com.kap.service.mp.mpg.MPGWthdrwService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -49,6 +50,11 @@ public class MPGWthdrwServiceImpl  implements MPGWthdrwService {
 
     private final COSystemLogService cOSystemLogService;
 
+    /**
+     * 탈퇴 회원 리스트 조회
+     * @param mpgWthdrwDto
+     * @return
+     */
     @Override
     public MPGWthdrwDto selectWthdrwList(MPGWthdrwDto mpgWthdrwDto) {
         COPaginationUtil page = new COPaginationUtil();
@@ -67,6 +73,12 @@ public class MPGWthdrwServiceImpl  implements MPGWthdrwService {
         return mpgWthdrwDto;
     }
 
+    /**
+     * 엑셀 다운
+     * @param mpgWthdrwDto
+     * @param response
+     * @throws Exception
+     */
     @Override
     public void excelDownload(MPGWthdrwDto mpgWthdrwDto, HttpServletResponse response) throws Exception {
         XSSFWorkbook workbook = new XSSFWorkbook();
@@ -145,7 +157,8 @@ public class MPGWthdrwServiceImpl  implements MPGWthdrwService {
 
             //탈퇴 사유
             cell = row.createCell(3);
-            cell.setCellValue(list.get(i).getWthdrwRsnNm());
+
+            cell.setCellValue(list.get(i).getWthdrwRsnNm() + " " + (StringUtils.isEmpty(list.get(i).getWthdrwRsnEtcNm()) ? "" : list.get(i).getWthdrwRsnEtcNm()));
             cell.setCellStyle(style_body);
 
 

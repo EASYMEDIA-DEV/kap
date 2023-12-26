@@ -41,7 +41,7 @@
     <input type="hidden" class="sqInfoList2" name="sqInfoList2" class="notRequired" />
     <input type="hidden" class="sqInfoList3" name="sqInfoList3" class="notRequired" />
     <input type="hidden" class="bsnmChk" name="bsnmChk" class="notRequired" />
-<div id="wrap" class="member"  data-controller="controller/mp/MPMemberPartsController"><!-- 로그인, 회원가입 페이지 member 클래스 추가 -->
+    <div id="wrap" class="member"  data-controller="controller/mp/MPMemberPartsController"><!-- 로그인, 회원가입 페이지 member 클래스 추가 -->
     <!-- content 영역 start -->
     <div class="cont-wrap">
         <div class="inner">

@@ -11,12 +11,11 @@ var exports = {
     var ctrl = new ezCtrl.controller(exports.controller);
     var width = 500; //팝업의 너비
     var height = 600; //팝업의 높이
+
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
     var $excelObj = ctrl.obj.parent().find(".excel-down");
-    var $excelObj2 = ctrl.obj.parent().find(".container-fluid");
     var workChk = true;
-
     var dupEmailChk = true;
 
     //사용자 상세 조회
@@ -24,7 +23,6 @@ var exports = {
         cmmCtrl.frmAjax(function(respObj) {
             ctrl.obj.find("#tab1").html(respObj);
         }, "/mngwserc/mp/mpb/select-tab-one", $formObj, "POST", "html",'',false);
-
     }
 
     /**
@@ -44,7 +42,7 @@ var exports = {
     }
 
     /**
-     * 컨설티 사업 조회
+     * 컨설팅 사업 조회
      */
     var tabThree = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
@@ -151,6 +149,9 @@ var exports = {
     // set model
     ctrl.model = {
         id : {
+            /**
+             * 검색 버튼 클릭
+             */
             btnSearch : {
                 event : {
                 click : function() {
@@ -160,14 +161,22 @@ var exports = {
                 }
             }
         },
+            /**
+             * 사업자등록번호 input 입력 시
+             */
             workBsnmNo : {
                 event : {
                     input : function (event) {
                         let bsnmNo = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
                         event.target.value = bsnmNo;
+                        workChk = false;
                     },
                 }
             },
+
+            /**
+             * 사업자등록번호 인증 버튼
+             */
             btnBsnmNo : {
                 event : {
                     click : function () {
@@ -176,49 +185,79 @@ var exports = {
                             alert(msgCtrl.getMsg("fail.mp.mpa.al_016"));
                             return ;
                         } else {
+
+                            var ajaxData = {
+                            }
+                            jQuery("#frmData").serializeArray().forEach(function (field) {
+                                if (field.name == '_csrf') {
+                                    ajaxData[field.name] = field.value;
+                                }
+
+                                if (field.name == 'detailsKey') {
+                                    ajaxData[field.name] = field.value;
+                                }
+                            });
+
                             jQuery.ajax({
-                                url : "/mngwserc/nice/comp-chk",
+                                url : "./confirm-comp",
                                 type : "post",
-                                data :
-                                    {
-                                        "compNum" : $("#workBsnmNo").val()
-                                    },
-                                success : function(data)
-                                {
-                                    if(data.rsp_cd=='P000') {
-                                        if(data.result_cd == '01') {
-                                            if(data.comp_status == '1') {
-                                                $("#ctgry_cd").val(data.comp_name);
-                                                workChk = true;
-                                            } else {
-                                                alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
-                                                $("#ctgry_cd").val("");
-                                                $("#workBsnmNo").val("");
-                                                workChk = false;
-                                            }
-                                        } else {
-                                            alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
-                                            $("#ctgry_cd").val("");
-                                            $("#workBsnmNo").val("");
-                                            workChk = false;
-                                        }
-                                    } else {
-                                        alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
-                                        $("#ctgry_cd").val("");
-                                        $("#workBsnmNo").val("");
+                                timeout: 30000,
+                                data : ajaxData,
+                                dataType : "json",
+                                async: false,
+                                cache : false,
+                                success : function(data, status, xhr){
+                                    if(data.data.chk) {
+                                        alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
+                                        return false;
                                         workChk = false;
+                                    } else {
+                                        var ajaxData = {
+                                            bsnmNo:  $("#workBsnmNo").val()
+                                        }
+
+                                        jQuery("#frmData").serializeArray().forEach(function (field) {
+                                            if (field.name == '_csrf') {
+                                                ajaxData[field.name] = field.value;
+                                            }
+                                        });
+                                        $.ajax({
+                                            type: "post",
+                                            url: './checkBsnmNo',
+                                            dataType: "json",
+                                            data:ajaxData,
+                                            success: function (r) {
+                                                if (r.respCnt) {
+                                                    $("#ctgry_cd").val(r.cmpnNm);
+                                                    $("#ctgryCdNm").text(r.ctgryCdNm);
+                                                    workChk = true;
+                                                } else {
+                                                    alert(msgCtrl.getMsg("fail.mp.mpb.al_012"));
+                                                    $("#ctgry_cd").val("");
+                                                    $("#ctgryCdNm").text("");
+                                                    workChk = false;
+                                                }
+                                            },
+                                            error: function (xhr, ajaxSettings, thrownError) {
+                                                alert("인증에 실패했습니다.");
+                                            }
+                                        });
                                     }
                                 },
-                                error : function(xhr, ajaxSettings, thrownError)
-                                {
-                                    cmmCtrl.errorAjax(xhr);
-                                    jQuery.jstree.rollback(data.rlbk);
+                                error : function(data, status, xhr){
+                                    return false;
+                                },
+                                complete : function(){
                                 }
                             });
                         }
                     }
                 }
             },
+
+            /**
+             * 직급 변경 이벤트
+             */
             pstnCd : {
                 event : {
                     change : function() {
@@ -231,7 +270,11 @@ var exports = {
                     }
                 }
             },
-        telNo : {
+
+            /**
+             * 일반 전화번호 input 이벤트
+             */
+            telNo : {
                 event : {
                     input : function (event) {
                         let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
@@ -263,6 +306,10 @@ var exports = {
                     }
                 }
         },
+
+        /**
+         * 주소 이벤트
+         */
         searchPostCode : {
             event : {
                 click : function() {
@@ -271,6 +318,10 @@ var exports = {
                 }
             }
         },
+
+        /**
+         * 비밀번호 초기화 이벤트
+         */
         btnPwdInit : {
                 event : {
                     click : function() {
@@ -284,28 +335,35 @@ var exports = {
                     }
                 }
             },
-            email : {
-                event : {
-                    input : function() {
-                        dupEmailChk = false;
-                    }
+        /**
+         * 이메일 input 이벤트
+         */
+        email : {
+            event : {
+                input : function() {
+                    dupEmailChk = false;
                 }
-            },
-            dupEmail : {
-                event : {
-                    click : function() {
-                        cmmCtrl.frmAjax(function(respObj) {
-                                if(respObj.dupChk == 'Y') {
-                                    dupEmailChk = true;
-                                    alert(msgCtrl.getMsg("fail.mp.mpa.al_008"));
-                                } else {
-                                    dupEmailChk = false;
-                                    alert(msgCtrl.getMsg("fail.mp.mpa.al_007"));
-                                }
-                        }, "/mngwserc/mp/mpa/dup-email", $formObj, "POST", "json",'',false);
-                    }
+            }
+        },
+
+        /**
+         * 이메일 중복 버튼 이벤트
+         */
+        dupEmail : {
+            event : {
+                click : function() {
+                    cmmCtrl.frmAjax(function(respObj) {
+                            if(respObj.dupChk == 'Y') {
+                                dupEmailChk = true;
+                                alert(msgCtrl.getMsg("fail.mp.mpa.al_008"));
+                            } else {
+                                dupEmailChk = false;
+                                alert(msgCtrl.getMsg("fail.mp.mpa.al_007"));
+                            }
+                    }, "/mngwserc/mp/mpa/dup-email", $formObj, "POST", "json",'',false);
                 }
-            },
+            }
+        },
 
         //엑셀다운로드
         btnExcelDown : {
@@ -319,6 +377,9 @@ var exports = {
         }
     },
     classname : {
+        /**
+         * 탭 클릭
+         */
         tabClick : {
             event : {
                 click : function (e){
@@ -355,7 +416,6 @@ var exports = {
         }
     },
     //페이징 목록 갯수
-
     listRowSizeContainer : {
         event : {
             change : function(){
@@ -390,7 +450,7 @@ var exports = {
 
                 }
                 if(!workChk) {
-                    alert(msgCtrl.getMsg("fail.mp.mpa.al_012"));
+                    alert(msgCtrl.getMsg("fail.mp.mpb.al_013"));
                     return false;
                 }
                 return true;
@@ -411,7 +471,6 @@ var exports = {
                 }
             }
         });
-
     }
     };
 

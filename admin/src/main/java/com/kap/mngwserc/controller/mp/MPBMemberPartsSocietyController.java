@@ -6,8 +6,10 @@ import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.MPBSanDto;
 import com.kap.core.dto.mp.mpa.MPAInqrDto;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.MPEPartsCompanyService;
 import com.kap.service.mp.mpa.MPAUserService;
 import com.kap.service.mp.mpb.MPBMemberPartsSocietyService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +19,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
@@ -51,6 +55,9 @@ public class MPBMemberPartsSocietyController {
     private final MPBMemberPartsSocietyService mpbMemberPartsSocietyService;
 
     private final COCodeService cOCodeService;
+
+    private final MPEPartsCompanyService mpePartsCompanyService;
+
     /**
      * 부품사회원 목록으로 이동한다.
      */
@@ -63,13 +70,9 @@ public class MPBMemberPartsSocietyController {
         cdDtlList.add("COMPANY_TYPE");
         modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
-        // 로그인한 계정
-        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
+
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyList.admin";
     }
-
-
 
     /**
      * 부품사회원 목록으로 이동한다.
@@ -79,13 +82,39 @@ public class MPBMemberPartsSocietyController {
                                          ModelMap modelMap ) throws Exception {
         mpaUserDto.setMemCd("CP");
         modelMap.addAttribute("rtnData", mpaUserService.selectUserList(mpaUserDto));
-        // 로그인한 계정
-        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        mpaUserDto.setLgnSsnId(cOUserDetailsDTO.getId());
+
         return "mngwserc/mp/mpb/MPBMemberPartsSocietyListAjax";
     }
 
-
+    /**
+     * 부품사 사업자등록번호 등록여부를 확인한다.
+     */
+    @RequestMapping(value = "/checkBsnmNo", method= RequestMethod.POST)
+    public String checkBsnmNo(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            int respCnt = 0;
+            MPEPartsCompanyDTO rtnData = mpePartsCompanyService.checkBsnmNo(mpePartsCompanyDTO);
+            if (rtnData != null) {
+                respCnt = 1;
+                modelMap.addAttribute("rtnData", rtnData);
+                modelMap.addAttribute("cmpnNm", rtnData.getCmpnNm());
+                modelMap.addAttribute("rprsntNm", rtnData.getRprsntNm());
+                modelMap.addAttribute("ctgryCdNm", rtnData.getCtgryNm());
+            }
+            modelMap.addAttribute("respCnt", respCnt);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
 
     /**
      * 관리자 상세 페이지
@@ -94,7 +123,6 @@ public class MPBMemberPartsSocietyController {
     public String getAdmWritePage(MPAUserDto mpaUserDto ,
                                   ModelMap modelMap ) throws Exception
     {
-
         try
         {
             mpaUserDto.setMemCd("CP");
@@ -231,5 +259,23 @@ public class MPBMemberPartsSocietyController {
             }
             throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     * 이직 가능 여부 확인
+     */
+    @PostMapping(value = "/confirm-comp")
+    public String selectConfirmComp(ModelMap modelMap , MPAUserDto mpaUserDto) throws Exception {
+        try {
+            mpaUserDto.setMemSeq(Integer.valueOf(mpaUserDto.getDetailsKey()));
+            modelMap.addAttribute("data", mpaUserService.selectConfirmComp(mpaUserDto));
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
     }
 }

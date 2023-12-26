@@ -3,12 +3,12 @@
 <mapper namespace="com.kap.service.dao.mp.MPBMemberPartsSocietyMapper">
 
     <!--
-쿼리명 : MPBMemberPartsSocietyMapper.selectEduList
-설  명 : 부품 사회원 교육 사업 리스트 조회
-  수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.13    양현우       최초생성
--->
+        쿼리명 : MPBMemberPartsSocietyMapper.selectEduList
+        설  명 : 부품 사회원 교육 사업 리스트 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.13    양현우       최초생성
+    -->
     <select id="selectEduList" parameterType="MPBEduDto" resultType="MPBEduDto">
         select parnt_seq
              , prnt_cd_nm /*MPBMemberPartsSocietyMapper.selectEduList*/
@@ -204,16 +204,16 @@
     </select>
 
     <!--
-쿼리명 : MPBMemberPartsSocietyMapper.selectEduListCnt
-설  명 : 부품 사회원 교육 사업 리스트 갯수 조회
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.13    양현우       최초생성
--->
+        쿼리명 : MPBMemberPartsSocietyMapper.selectEduListCnt
+        설  명 : 부품 사회원 교육 사업 리스트 갯수 조회
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.13    양현우       최초생성
+    -->
     <select id="selectEduListCnt" parameterType="MPBEduDto" resultType="java.lang.Integer">
        select count(*) /*MPBMemberPartsSocietyMapper.selectEduList*/
        from ( select parnt_seq
-                   , prnt_cd_nm
+                  , prnt_cd_nm
                   , ctgry_cd
                   , ctgry_cd_nm
                   , nm
@@ -268,17 +268,15 @@
                          , episd_ord
                          , accs_strt_dtm
                          , accs_end_dtm
-                         , case
-                               when NOW() <![CDATA[<]]> accs_strt_dtm then '접수대기'
-                               when NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm then '접수중'
-                               when NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND 30 <![CDATA[>=]]> fxnum_cnt) then '마감'
+                         , case when NOW() <![CDATA[<]]> accs_strt_dtm then '접수대기'
+                                when NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm then '접수중'
+                                when NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND 30 <![CDATA[>=]]> fxnum_cnt) then '마감'
                                     END  AS accs_status_nm
                          , edctn_strt_dtm
                          , edctn_end_dtm
-                         , case
-                               when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-                               when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
-                               when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
+                         , case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+                                when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+                                when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
                                     END  AS edctn_status_nm
                          , (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
                          , (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
@@ -397,12 +395,12 @@
     </select>
 
     <!--
-쿼리명 : MPBMemberPartsSocietyMapper.selectBusList
-설  명 : [부품,위원] 컨설팅 사업 리스트  조회
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.20    양현우       최초생성
--->
+        쿼리명 : MPBMemberPartsSocietyMapper.selectBusList
+        설  명 : [부품,위원] 컨설팅 사업 리스트  조회
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    양현우       최초생성
+    -->
     <select id="selectBusList" parameterType="MPBBusDto" resultType="MPBBusDto">
         select m1.cnstg_seq  -- 순번  /*MPBMemberPartsSocietyMapper.selectBusList*/
               ,m1.bsn_year -- 사업년도
@@ -452,37 +450,37 @@
     </select>
 
     <!--
-쿼리명 : MPBMemberPartsSocietyMapper.selectBusListCnt
-설  명 : 부품 사회원 컨설팅 사업 리스트  갯수 조회
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.20    양현우       최초생성
--->
+        쿼리명 : MPBMemberPartsSocietyMapper.selectBusListCnt
+        설  명 : 부품 사회원 컨설팅 사업 리스트  갯수 조회
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    양현우       최초생성
+    -->
     <select id="selectBusListCnt" parameterType="MPBBusDto" resultType="java.lang.Integer">
         select count(*)   /*MPBMemberPartsSocietyMapper.selectBusListCnt */
         from cp_cnstg_appctn_mst m1
-                 inner join cp_cmpn_mst m2
-                            on m1.appctn_bsnm_no = m2.bsnm_no
-                 left outer join cp_cnstg_rsume_mst m3
-                                 on m1.cnstg_seq = m3.cnstg_seq
-                 left outer join co_mem_mst m4
-                                 on m3.cmssr_seq = m4.mem_seq
-            where 1 = 1
-            <if test="chkPS == 'P'.toString() ">
-                and appctn_mem_seq=#{detailsKey}
-            </if>
-            <if test="chkPS == 'S'.toString() ">
-                and m3.cmssr_seq=#{detailsKey}
-            </if>
+         inner join cp_cmpn_mst m2
+          on m1.appctn_bsnm_no = m2.bsnm_no
+         left outer join cp_cnstg_rsume_mst m3
+          on m1.cnstg_seq = m3.cnstg_seq
+         left outer join co_mem_mst m4
+          on m3.cmssr_seq = m4.mem_seq
+          where 1 = 1
+         <if test="chkPS == 'P'.toString() ">
+          and appctn_mem_seq=#{detailsKey}
+         </if>
+         <if test="chkPS == 'S'.toString() ">
+          and m3.cmssr_seq=#{detailsKey}
+         </if>
     </select>
 
     <!--
-쿼리명 : MPBMemberPartsSocietyMapper.selectSanList
-설  명 : [부품 사회원,위원] 상생 사업 리스트  조회
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.20    양현우       최초생성
--->
+        쿼리명 : MPBMemberPartsSocietyMapper.selectSanList
+        설  명 : [부품 사회원,위원] 상생 사업 리스트  조회
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    양현우       최초생성
+    -->
     <select id="selectSanList" parameterType="MPBSanDto" resultType="MPBSanDto">
         select m1.episd_seq as san_ctn_seq  /*MPBMemberPartsSocietyMapper.selectSanList */
              , m1.year-- 사업년도
@@ -517,12 +515,12 @@
     </select>
 
     <!--
-쿼리명 : MPBMemberPartsSocietyMapper.selectSanListCnt
-설  명 : 부품 사회원 상생 사업 리스트  조회
-수정일      수정자       수정내용
-==========   ========   ==============
-2023.11.20    양현우       최초생성
--->
+        쿼리명 : MPBMemberPartsSocietyMapper.selectSanListCnt
+        설  명 : 부품 사회원 상생 사업 리스트  조회
+        수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    양현우       최초생성
+    -->
     <select id="selectSanListCnt" parameterType="MPBBusDto" resultType="java.lang.Integer">
         select count(*) /*MPBMemberPartsSocietyMapper.selectSanListCnt */
         from cx_episd_mst m1

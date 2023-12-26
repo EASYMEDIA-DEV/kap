@@ -154,12 +154,15 @@
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.09   구은희       최초생성
+        2023.12.26   양현우       구분 추가
     -->
     <select id="checkBsnmNo" parameterType="MPEPartsCompanyDTO">
         SELECT /* MPEPartsCompanyMapper.checkBsnmNo */
             BSNM_NO
              , CMPN_NM
              , RPRSNT_NM
+             , CTGRY_CD
+             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = CTGRY_CD) AS CTGRY_NM
         FROM CP_CMPN_MST
         WHERE BSNM_NO = #{bsnmNo}
     </select>

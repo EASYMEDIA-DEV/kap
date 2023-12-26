@@ -16,6 +16,7 @@
              , id
              , wthdrw_rsn_nm
              , wthdrw_yn
+             , wthdrw_rsn_etc_nm
         from( select  m2.reg_dtm as wthdrw_reg_dtm-- 탈퇴일
                      , m1.mem_cd -- 회원 분류
                      , case when m1.mem_cd ='CO' then '일반'
@@ -24,11 +25,11 @@
                             else '' end as mem_cd_nm -- 회원 분류_nm
                      , m1.id -- 아이디
                      , m1.wthdrw_yn
-                     , case when  m2.wthdrw_rsn_cd = 'e' then m2.wthdrw_rsn_etc_nm
-                            else m2.wthdrw_rsn_cd end as wthdrw_rsn_nm -- TODO 양현우 else (select cd_nm from co_code_mst where  cd m2.wthdrw_rsn_cd  )
+                     , (select cd_nm from co_code_mst where  cd = m2.wthdrw_rsn_cd  ) as wthdrw_rsn_nm
+                     , m2.wthdrw_rsn_etc_nm
                 from co_mem_mst m1
                          inner join co_mem_wthdrw_dtl m2
-                                    on m1.mem_seq =m2.mem_seq ) as ma
+                                    on m1.mem_seq = m2.mem_seq ) as ma
                         <include refid="selectWthdrwListWhereSql" />
                          order by ma.wthdrw_reg_dtm desc
                             LIMIT   #{firstIndex}, #{recordCountPerPage}
@@ -52,8 +53,8 @@
         else '' end as mem_cd_nm -- 회원 분류_nm
         , m1.id -- 아이디
         , m1.wthdrw_yn
-        , case when  m2.wthdrw_rsn_cd = 'e' then m2.wthdrw_rsn_etc_nm
-        else m2.wthdrw_rsn_cd end as wthdrw_rsn_nm -- TODO 양현우 else (select cd_nm from co_code_mst where  cd m2.wthdrw_rsn_cd  )
+        , (select cd_nm from co_code_mst where  cd = m2.wthdrw_rsn_cd  ) as wthdrw_rsn_nm
+        , m2.wthdrw_rsn_etc_nm
         from co_mem_mst m1
         inner join co_mem_wthdrw_dtl m2
         on m1.mem_seq =m2.mem_seq ) as ma
@@ -92,7 +93,8 @@
                         and ma.id like concat('%', #{q}, '%')
                     </when>
                     <when test="f == 2">
-                        and ma.wthdrw_rsn_nm like concat('%', #{q}, '%')
+                        and ( ma.wthdrw_rsn_nm like concat('%', #{q}, '%') or
+                              ma.wthdrw_rsn_etc_nm like  concat('%', #{q}, '%') )
                     </when>
                     <otherwise>
                         and
@@ -100,12 +102,13 @@
                         ma.id like concat('%', #{q}, '%')
                         or
                         ma.wthdrw_rsn_nm like concat('%', #{q}, '%')
+                        or
+                        ma.wthdrw_rsn_etc_nm like  concat('%', #{q}, '%')
                         )
                     </otherwise>
                 </choose>
             </if>
         </where>
     </sql>
-
 
 </mapper>

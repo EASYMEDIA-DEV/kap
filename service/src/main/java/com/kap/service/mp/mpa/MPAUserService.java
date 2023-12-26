@@ -45,9 +45,18 @@ public interface MPAUserService {
 
     /**
      * 일반 사용자 상세 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
      */
     MPAUserDto selectUserDtl(MPAUserDto mpaUserDto) throws Exception;
 
+    /**
+     * 사용자 상세 탭 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
     MPAUserDto selectUserDtlTab(MPAUserDto mpaUserDto) throws Exception;
 
     /**
@@ -66,17 +75,27 @@ public interface MPAUserService {
      */
     int selectDupId(MPAUserDto mpaUserDto) throws Exception;
 
-
-
+    /**
+     * 사용자 정보 upd
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
     int updateUserDtl(MPAUserDto mpaUserDto) throws Exception;
 
     /**
      * 미래차공모전 리스트 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
      */
     MPAAttctnDto selectAttcntList(MPAAttctnDto mpaUserDto) throws Exception;
 
     /**
      * 문의 리스트 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
      */
     MPAInqrDto selectInqrList(MPAInqrDto mpaUserDto) throws Exception;
 
@@ -95,7 +114,6 @@ public interface MPAUserService {
      */
     void insertUser(MPAUserDto mpaUserDto , MPEPartsCompanyDTO mpePartsCompanyDTO , MPJoinDto mpJoinDto) throws Exception;
 
-
     /**
      * 사용자 , 부품사 수정
      * @param mpaUserDto
@@ -103,9 +121,21 @@ public interface MPAUserService {
      */
     void updateUser(MPAUserDto mpaUserDto , MPEPartsCompanyDTO mpePartsCompanyDTO , MPJoinDto mpJoinDto) throws Exception;
 
-
+    /**
+     * 사용자 부품사 수정
+     * @param mpaUserDto
+     * @param mpePartsCompanyDTO
+     * @param mpJoinDto
+     * @throws Exception
+     */
     void updateUserCompanyChg(MPAUserDto mpaUserDto, MPEPartsCompanyDTO mpePartsCompanyDTO, MPJoinDto mpJoinDto) throws Exception;
 
+    /**
+     * 부품사 개수 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
     MPAPartDto selectConfirmComp(MPAUserDto mpaUserDto) throws Exception;
 
     /**
@@ -115,6 +145,11 @@ public interface MPAUserService {
      */
     void updateUserWthdrw(MPIWthdrwDto mpiWthdrwDto) throws Exception;
 
-
+    /**
+     * 사용자 조회
+     * @param mpaUserDto
+     * @return
+     * @throws Exception
+     */
     MPAUserDto selectUserDtlId(MPAUserDto mpaUserDto) throws Exception;
 }

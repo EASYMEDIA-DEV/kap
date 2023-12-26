@@ -326,13 +326,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnPartsChg : {
                 event : {
                     click : function() {
+                        var ajaxData = {
+                        }
+                        jQuery("#formPasswordConfirm").serializeArray().forEach(function (field) {
+                            if (field.name == '_csrf') {
+                                ajaxData[field.name] = field.value;
+                            }
 
+                        });
                         //confirm-comp
                         jQuery.ajax({
                             url : "/my-page/member/intrduction/confirm-comp",
                             type : "post",
                             timeout: 30000,
-                            data : {},
+                            data : ajaxData,
                             dataType : "json",
                             async: false,
                             cache : false,

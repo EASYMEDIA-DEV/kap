@@ -730,4 +730,16 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		return wBLSurveyMstInsertDTO;
 	}
 
+	/**
+	 *  설문 참여
+	 */
+	@Override
+	public int updateSurvey(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO) throws Exception {
+
+		int respCnt = 0;
+		respCnt = wBLSurveyMapper.updateSurvey( wBLSurveyMstInsertDTO );
+
+		return respCnt;
+	}
+
 }

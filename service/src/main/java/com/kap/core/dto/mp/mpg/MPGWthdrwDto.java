@@ -44,10 +44,13 @@ public class MPGWthdrwDto extends BaseDTO {
     private String id;
 
     @Schema(title = "탈퇴사유", example = "탈퇴")
-    private String wthdrwRsnNm;             //엑셀
+    private String wthdrwRsnNm;
+
+    @Schema(title = "탈퇴사유기타", example = "탈퇴")
+    private String wthdrwRsnEtcNm;
 
     @Schema(title = "탈퇴일", example = "2023-10-11")
-    private String wthdrwRegDtm;             //엑셀
+    private String wthdrwRegDtm;
 
     private String lgnSsnId;
 

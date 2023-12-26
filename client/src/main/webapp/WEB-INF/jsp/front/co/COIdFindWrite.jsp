@@ -34,8 +34,9 @@
 
                 <div class="tab-con-area">
                     <form id="frmIdFind" name="frmIdFind" method="post" action="./id-find-res">
+                        <div class="tab-con">
+                            <input type="hidden" class="notRequired" id="csrfKey2" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-                    <div class="tab-con">
                         <input type='hidden' value='1' name='types' readonly>
                         <input type="hidden" name="birthdate" value="" id="birthdate-id" class="notRequired" />
                         <div class="data-enter-form">
@@ -109,7 +110,9 @@
 
                     <div class="tab-con">
                         <form id="frmIdFind-email" name="frmIdFind-email" method="post" action="./id-find-res">
-                        <div class="data-enter-form">
+                            <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+                            <div class="data-enter-form">
                             <input type="hidden" name="birthdate" value="" id="birthdate-email" class="notRequired"/>
                             <input type="hidden" name="birthdate" value="" id="email" class="notRequired"/>
                             <div class="row">
@@ -181,8 +184,8 @@
                                 <button class="btn-solid small black-bg" type="submit"><span>아이디 찾기</span></button>
                             </div>
                         </div>
+                        </form>
                     </div>
-                    </form>
                     <div class="tab-con">
                         <div class="gray-bg-sec middle-pad dark-gray-bg t-align-center t-align-center">
                             <div class="phone-certi">

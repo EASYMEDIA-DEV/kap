@@ -5,7 +5,6 @@ import com.kap.core.dto.mp.mpd.MPDKenDto;
 import com.kap.core.dto.mp.mpf.MPFFileDto;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * <pre>
@@ -26,7 +25,6 @@ import java.util.List;
  * </pre>
  */
 public interface MPDCmtService {
-
 
      /**
       * 위원등록
@@ -94,23 +92,40 @@ public interface MPDCmtService {
 
      /**
       * 위원 근태 insert
+      * @param mpdKenDto
+      * @throws Exception
       */
      void insertAtend(MPDKenDto mpdKenDto) throws Exception;
 
      /**
       * 위원 근태 조회
+      * @param mpdKenDto
+      * @return
+      * @throws Exception
       */
      MPDKenDto selectKenCmpnDtl(MPDKenDto mpdKenDto) throws Exception;
 
-
+     /**
+      * 킥오프 이미지 조회
+      * @param mpfFileDto
+      * @return
+      * @throws Exception
+      */
      MPFFileDto selectKenCmpnKickImage(MPFFileDto mpfFileDto) throws Exception;
 
+     /**
+      * 렙업 이미지 조회
+      * @param mpfFileDto
+      * @return
+      * @throws Exception
+      */
      MPFFileDto selectKenCmpnLvlImage(MPFFileDto mpfFileDto) throws Exception;
 
-
+     /**
+      * 파일 수정
+      * @param mpfFileDto
+      * @throws Exception
+      */
      void updateCnstgRsumeMst(MPFFileDto mpfFileDto) throws Exception;
-
-
-
 
 }

@@ -2,6 +2,8 @@ package com.kap.front.controller.wb.wbl;
 
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
+import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
 import com.kap.service.SVASurveyService;
@@ -227,6 +229,73 @@ public class WBLSurveyController{
         }
 
         return vwUrl;
+    }
+
+    /**
+     * 설문step2
+     */
+    @GetMapping(value="/step3")
+    public String getSurveyStep3(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "front/wb/wbl/WBLSurveyStep3.front";
+        try
+        {
+            if (RequestContextHolder.getRequestAttributes().getAttribute("crtfnNo", RequestAttributes.SCOPE_SESSION) == null
+                    && RequestContextHolder.getRequestAttributes().getAttribute("cxstnSrvSeq", RequestAttributes.SCOPE_SESSION) == null){
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return vwUrl;
+    }
+
+    @Operation(summary = "응답 등록", tags = "", description = "응답 마스터, 응답 상세")
+    @PostMapping(value="/insert")
+    public String insertSurveyList(@Valid @RequestBody SVASurveyRspnMstInsertDTO sVASurveyRspnMstDTO, HttpServletRequest request , ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            int respCnt = sVSurveyService.insertSurveyRspnList(sVASurveyRspnMstDTO, request);
+
+            if (respCnt > 0){
+                WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO = new WBLSurveyMstInsertDTO();
+                int cxstnSrvSeq = (int) RequestContextHolder.getRequestAttributes().getAttribute("cxstnSrvSeq", RequestAttributes.SCOPE_SESSION);
+
+                wBLSurveyMstInsertDTO.setCxstnSrvSeq(cxstnSrvSeq);
+                wBLSurveyMstInsertDTO.setSrvRspnSeq(respCnt);
+                wBLSurveyMstInsertDTO.setPtcptCd("Y");
+                wBLSurveyMstInsertDTO.setCmpltnYn("Y");
+                wLSurveyService.updateSurvey(wBLSurveyMstInsertDTO);
+
+                SVASurveyRspnScoreDTO sVASurveyRspnScoreDTO = new SVASurveyRspnScoreDTO();
+                sVASurveyRspnScoreDTO.setSrvType("WIN");
+                sVASurveyRspnScoreDTO.setTargetSeq(cxstnSrvSeq);
+                sVSurveyService.selectSurveyScore(sVASurveyRspnScoreDTO);
+
+            }
+
+            modelMap.addAttribute("respCnt", respCnt);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
     }
 
 }

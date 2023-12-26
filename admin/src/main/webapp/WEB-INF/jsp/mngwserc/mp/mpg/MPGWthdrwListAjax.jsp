@@ -9,13 +9,11 @@
             <span class="ion-checkmark-round"></span>
           </label>
         </td>
-
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td class="text-center">${list.memCdNm}</td>
         <td class="text-center">${kl:idMasking(list.id)}</td>
-        <td class="text-center">${list.wthdrwRsnNm}</td>
+        <td class="text-center">${list.wthdrwRsnNm} ${list.wthdrwRsnNm != '기타' ? '' : '('+=list.wthdrwRsnEtcNm+=')'}</td>
         <td class="text-center">${ kl:convertDate(list.wthdrwRegDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
-
       </tr>
     </c:forEach>
   </c:when>

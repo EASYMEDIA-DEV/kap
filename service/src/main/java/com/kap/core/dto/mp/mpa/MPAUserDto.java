@@ -294,6 +294,9 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title="이전이메일여부")
     private String oldEmailRcv;
 
+    @Schema(title="이전이메일여부")
+    private String oldWorkBsnmNo;
+
 
     @Schema(title="이전sms여부")
     private String oldSmsRcv;

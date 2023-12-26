@@ -74,6 +74,7 @@
 								"mpePartsCompanyDTO.sqInfoList1" :opener.$(".sqInfoList1").val() ,
 								"mpePartsCompanyDTO.sqInfoList2" :opener.$(".sqInfoList2").val() ,
 								"mpePartsCompanyDTO.sqInfoList3" :opener.$(".sqInfoList3").val() ,
+								"_csrf": opener.$("#csrfKey").val()
 							},
 							dataType : "json",
 							async: false,

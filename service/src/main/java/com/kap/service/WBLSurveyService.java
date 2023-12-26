@@ -107,5 +107,9 @@ public interface WBLSurveyService {
 	 */
 	public WBLSurveyMstInsertDTO selectFrontSurveyDtl(WBLSurveyMstSearchDTO wBLSurveyMstSearchDT) throws Exception;
 
+	/**
+	 * 설문 참여
+	 */
+	public int updateSurvey(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO) throws Exception;
 
 }

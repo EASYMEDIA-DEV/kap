@@ -819,4 +819,104 @@
 	</select>
 
 
+	<!--
+         쿼리명 : SVASurveyMapper.insertSurveyRspnMst
+         설  명 : 설문 응답 마스터 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.26    박준희       최초생성
+    -->
+	<insert id="insertSurveyRspnMst" parameterType="SVASurveyRspnMstInsertDTO">
+		insert /* SVASurveyMapper.insertSurveyRspnMst */ into sv_rspn_mst
+		(
+		srv_rspn_seq
+		, srv_seq
+		, mem_Seq
+		, rfnc_cd
+		, rfnc_seq
+		, name
+		, email
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		)
+		values
+			(
+			#{srvRspnSeq}
+			, #{srvSeq}
+			, #{memSeq}
+			, #{rfncCd}
+			, #{rfncSeq}
+			, #{name}
+			, #{email}
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+	</insert>
+
+	<!--
+         쿼리명 : SVASurveyMapper.insertSurveyRspnMtlccDtl
+         설  명 : 설문 응답  등록 객관식
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.26    박준희       최초생성
+    -->
+	<insert id="insertSurveyRspnMtlccDtl" parameterType="SVASurveyExmplRspnDtlDTO">
+		insert /* SVASurveyMapper.insertSurveyRspnMst */ into sv_mtlcc_rspn_dtl
+		(
+		 mtlcc_rspn_seq
+		, exmpl_seq
+		, srv_rspn_seq
+		, isttr_seq
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		)
+		values
+			(
+			 #{mtlccRspnSeq}
+			, #{exmplSeq}
+			, #{srvRspnSeq}
+			, #{isttrSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+	</insert>
+
+	<!--
+         쿼리명 : SVASurveyMapper.insertSurveyRspnSbjctDtl
+         설  명 : 설문 응답  등록 주관식
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.26    박준희       최초생성
+    -->
+	<insert id="insertSurveyRspnSbjctDtl" parameterType="SVASurveyExmplRspnDtlDTO">
+		insert /* SVASurveyMapper.insertSurveyRspnSbjctDtl */ into sv_sbjct_rspn_dtl
+		(
+		 sbjct_rspn_seq
+		, srv_rspn_seq
+		, qstn_seq
+		, sbjct_rply
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		)
+		values
+			(
+			 #{sbjctRspnSeq}
+			, #{srvRspnSeq}
+			, #{qstnSeq}
+			, #{sbjctRply}
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+	</insert>
+
+	<select id="selectSurveyScore" statementType="CALLABLE" parameterType="SVASurveyRspnScoreDTO">
+		{call sp_survey_score(#{srvType} , #{targetSeq})}
+	</select>
+
 </mapper>

@@ -42,16 +42,11 @@ import java.util.Date;
 @RequestMapping(value="/my-page/member/wthdrw")
 public class MPIUserWthdrwController {
 
-
     private final MPAUserService mpaUserService;
 
-    //코드 서비스
     private final COCodeService cOCodeService;
 
-    //이메일 발송
     private final COMessageService cOMessageService;
-
-    private final COLgnService coLgnService;
 
     @Value("${app.site.name}")
     private String siteName;
@@ -64,12 +59,14 @@ public class MPIUserWthdrwController {
     @GetMapping("/certification")
     public String getMemberPasswordChk(ModelMap modelMap) throws Exception {
         modelMap.addAttribute("data", "wthdrw");
+
         return "/front/mp/mph/MPHCertification.front";
+
     }
 
     /**
      * 정보 수정 페이지
-     *
+     * @param modelMap
      * @return
      * @throws Exception
      */
@@ -77,21 +74,24 @@ public class MPIUserWthdrwController {
     public String getMemberWthdrw(ModelMap modelMap) throws Exception {
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
-//        // 코드 set
+        // 코드 set
         cdDtlList.add("MEM_WTHDRW");
 
         modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
 
         return "/front/mp/mpi/MPIUserWthdrw.front";
+
     }
 
 
     /**
      * 탈퇴 후 이메일 전송 세션 끊기
-     *
+     * @param mpiWthdrwDto
+     * @return
+     * @throws Exception
      */
     @RequestMapping(value="/update-wthdrw")
-    public String updatePartsCompany(MPIWthdrwDto mpiWthdrwDto , ModelMap modelMap , HttpSession sesssion) throws Exception
+    public String updatePartsCompany(MPIWthdrwDto mpiWthdrwDto) throws Exception
     {
         try
         {
@@ -137,7 +137,14 @@ public class MPIUserWthdrwController {
         return "jsonView";
     }
 
-
+    /**
+     * 회원가입 탈퇴 완료 페이지
+     * @param mpaUserDto
+     * @param modelMap
+     * @param sesssion
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/wthdrw-success")
     public String getMemberWthdrwSuccess(MPAUserDto mpaUserDto , ModelMap modelMap , HttpSession sesssion) throws Exception
     {
@@ -149,9 +156,10 @@ public class MPIUserWthdrwController {
         } else {
             sesssion.invalidate();
             modelMap.addAttribute("rtnData", mpaUserDto1);
-            return "/front/mp/mpi/MPIUserWthdrwSuccess.front";
-        }
 
+            return "/front/mp/mpi/MPIUserWthdrwSuccess.front";
+
+        }
     }
 
 }

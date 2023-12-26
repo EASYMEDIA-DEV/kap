@@ -3,6 +3,8 @@ package com.kap.service;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
+import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -74,5 +76,17 @@ public interface SVASurveyService {
 	 * 응답 상세(컨설팅)
 	 */
 	public SVASurveyMstInsertDTO selectSurveyTypeConDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
+
+
+	/**
+	 * 응답 등록
+	 */
+	public int insertSurveyRspnList(SVASurveyRspnMstInsertDTO sVASurveyRspnMstDTO, HttpServletRequest request) throws Exception;
+
+
+	/**
+	 * 설문 응답 점수 계산
+	 */
+	public int selectSurveyScore(SVASurveyRspnScoreDTO sVASurveyRspnScoreDTO) throws Exception;
 
 }
