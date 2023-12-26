@@ -26,7 +26,7 @@
 
         <label class="col-sm-1 control-label">부품사명</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control input-sm" id="ctgry_cd" title="부품사명" name="ctgry_cd" readonly  value="${rtnDtl.cmpnNm}"/>
+            <input type="text" class="form-control input-sm notRequired" id="ctgry_cd" title="부품사명" name="ctgry_cd" readonly  value="${rtnDtl.cmpnNm}" />
         </div>
     </div>
 </fieldset>
@@ -61,7 +61,7 @@
                     </c:if>
                 </c:forEach>
             </select>
-                <input type="text" class="form-control input-sm" id="deptDtlNm" title="부서상세" name="deptDtlNm"  value="${rtnDtl.deptDtlNm}" style="width:150px;"/>
+                <input type="text" class="form-control input-sm notRequired" id="deptDtlNm" title="부서상세" name="deptDtlNm"  value="${rtnDtl.deptDtlNm}" style="width:150px;"/>
             </div>
         </div>
 
