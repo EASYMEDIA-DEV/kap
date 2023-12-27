@@ -272,9 +272,9 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String appctnFldCd;
 
     @Schema(title = "진행상태코드")
-    private String resumeSttsCd;
+    private String rsumeSttsCd;
     @Schema(title = "진행상태 텍스트")
-    private String resumeSttsNm;
+    private String rsumeSttsNm;
 
     // 이관 이력 리스트
     List<CBBManageConsultInsertDTO> trsfGuidanceList;

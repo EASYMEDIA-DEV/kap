@@ -84,8 +84,8 @@ public class CBBManageConsultController {
      */
     @GetMapping(value = "/write")
     public String getManageConsultWritePage(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, ModelMap modelMap) throws Exception {
-        /*try
-        {*/
+        try
+        {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
@@ -123,12 +123,12 @@ public class CBBManageConsultController {
             }
 
         }
-        /*} catch (Exception e) {
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
 
         return "mngwserc/cb/cbb/CBBManageConsultWrite.admin";
@@ -281,11 +281,11 @@ public class CBBManageConsultController {
     @GetMapping(value = "/trsfList")
     public String getTrsfListPageAjax(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, CBBManageConsultSearchDTO cBBManageConsultSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-       /* try
-        {*/
+        try
+        {
             modelMap.addAttribute("rtnData", cBBManageConsultService.selectTrsfGuidanceList(cBBManageConsultInsertDTO, cBBManageConsultSearchDTO));
             modelMap.addAttribute("CBATechGuidanceInsertDTO", cBBManageConsultInsertDTO);
-       /* }
+        }
         catch (Exception e)
         {
             if (log.isDebugEnabled())
@@ -293,7 +293,7 @@ public class CBBManageConsultController {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
         return "mngwserc/cb/cbb/CBBManageConsultsTrsfListAjax";
     }
 

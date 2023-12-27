@@ -57,6 +57,8 @@ define(["ezCtrl"], function(ezCtrl) {
                         var frmDataObj    = $(this).closest("form");
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
                         var delType = frmDataObj.data("delType");
+                        var cond = frmDataObj.data("cond");
+                        console.log(delActCnt);
                         if (delActCnt > 0)
                         {
                             // 계정은 최고 관리자 및 본인 계정은 삭제 불가

@@ -14,7 +14,7 @@
             , CNSTG_CD                  /* 컨설팅코드 */
             , BSN_YEAR					/* 사엽연도 */
             , RSUME_STTS_CD			    /* 진행상태코드 */
-            , RESUME_STTS_NM			/* 진행상태코드명 */
+            , RSUME_STTS_NM			/* 진행상태코드명 */
             , CMPN_NM					/* 부품사명 */
             , CTGRY_CD					/* 부품사구분코드 */
             , CTGRY_NM					/* 부품사구분코드명 */
@@ -92,7 +92,7 @@
                 , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.LVLUP_FILE_SEQ AND USE_YN = 'Y') LVLUP_FILE_ORD
                 , CP_MST.APPCTN_DT
                 , CP_MST.RSUME_STTS_CD
-                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGCNSLT_STATUS') RESUME_STTS_NM
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM
                 , CP_MST.REG_ID
                 , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = CP_MST.APPCTN_MEM_SEQ) REG_NAME
                 , CP_MST.REG_DTM
@@ -230,8 +230,8 @@
                 AND APPCTN_FLD_CD = #{appctnFidCd}
             </if>
             <!-- 진행상태 -->
-            <if test="resumeSttsCd != null and resumeSttsCd != ''">
-                AND RSUME_STTS_CD = #{resumeSttsCd}
+            <if test="rsumeSttsCd != null and rsumeSttsCd != ''">
+                AND RSUME_STTS_CD = #{rsumeSttsCd}
             </if>
             <if test="q != null and q != ''.toString() ">
                 <choose>
@@ -511,23 +511,23 @@
     -->
     <insert id="insertCnstgDlvryInfo" parameterType="java.util.HashMap">
         INSERT /* CBBManageConsultMapper.insertCnstgDlvryInfo */ INTO CP_CNSTG_DLVRY_DTL(
-                                                                                          CNSTG_SEQ
-                                                                                        , CMPN_DLVRY_SEQ
-                                                                                        , CMPN_NM
-                                                                                        , RATE
-                                                                                        , REG_ID
-                                                                                        , REG_IP
-                                                                                        , REG_DTM
+          CNSTG_SEQ
+        , CMPN_DLVRY_SEQ
+        , CMPN_NM
+        , RATE
+        , REG_ID
+        , REG_IP
+        , REG_DTM
         )
         VALUES(
-                  #{cnstgSeq}
-              , #{cmpnDlvrySeq}
-              , #{dlvryCmpnNm}
-              , #{dlvryRate}
-              , #{regId}
-              , #{regIp}
-              , now()
-              )
+          #{cnstgSeq}
+          , #{cmpnDlvrySeq}
+          , #{dlvryCmpnNm}
+          , #{dlvryRate}
+          , #{regId}
+          , #{regIp}
+          , now()
+          )
     </insert>
 
     <!--
@@ -658,7 +658,7 @@
     <insert id="insertCnstgDpndnInfo" parameterType="java.util.HashMap">
         INSERT /* CBBManageConsultMapper.insertCnstgDpndnInfo */ INTO CP_CNSTG_DPNDN_DTL
         (
-            CNSTG_SEQ
+        CNSTG_SEQ
         , DPNDN_SEQ
         , CMPN_NM
         , RATE
@@ -667,14 +667,14 @@
         , REG_DTM
         )
         VALUES(
-                  #{cnstgSeq}
-              , #{dpndnSeq}
-              , #{cmpnNm}
-              , #{dpndnRate}
-              , #{regId}
-              , #{regIp}
-              , now()
-              )
+        #{cnstgSeq}
+        , #{dpndnSeq}
+        , #{cmpnNm}
+        , #{dpndnRate}
+        , #{regId}
+        , #{regIp}
+        , now()
+        )
     </insert>
 
     <!--
@@ -687,7 +687,7 @@
     <insert id="insertCnstgPicInfo" parameterType="java.util.HashMap">
         INSERT /* CBBManageConsultMapper.insertCnstgPicInfo */ INTO CP_CNSTG_PIC_DTL
         (
-            CNSTG_SEQ
+        CNSTG_SEQ
         , PIC_SEQ
         , NAME
         , EMAIL
@@ -700,18 +700,18 @@
         , REG_DTM
         )
         VALUES(
-                  #{cnstgSeq}
-              , #{picSeq}
-              , #{name}
-              , #{email}
-              , #{deptNm}
-              , #{pstnNm}
-              , #{hpNo}
-              , #{cmpnTelNo}
-              , #{regId}
-              , #{regIp}
-              , now()
-              )
+        #{cnstgSeq}
+        , #{picSeq}
+        , #{name}
+        , #{email}
+        , #{deptNm}
+        , #{pstnNm}
+        , #{hpNo}
+        , #{cmpnTelNo}
+        , #{regId}
+        , #{regIp}
+        , now()
+          )
     </insert>
 
     <!--
@@ -725,7 +725,7 @@
         UPDATE CP_CNSTG_APPCTN_MST  /*CBBManageConsultMapper.updateManageConsult*/
         SET
             APPCTN_MEM_SEQ = #{memSeq},
-            RSUME_STTS_CD = #{resumeSttsCd},
+            RSUME_STTS_CD = #{rsumeSttsCd},
             APPCTN_DT = #{appctnDt},
             APPCTN_FLD_CD = #{appctnFldCd},
             CMPN_SIZE_CD = #{cpSize},
@@ -763,68 +763,68 @@
     -->
     <insert id="insertManageConsultRsume" parameterType="CBBManageConsultUpdateDTO">
         INSERT /* CBBManageConsultMapper.insertManageConsultRsume */ INTO CP_CNSTG_RSUME_MST(
-                                                                                              CNSTG_SEQ
-                                                                                            , BFRE_JDGMT_RSLT_CD
-                                                                                            , BFRE_JDGMT_RSLT_CNTN
-                                                                                            , CNSTG_CMPLTN_SCHDL_DT
-                                                                                            , VST_DT
-                                                                                            , VSTR_NM
-                                                                                            , NTRVR_NM
-                                                                                            , INIT_VST_RSLT_CD
-                                                                                            , INIT_VST_OPNN_CNTN
-                                                                                            , CMSSR_SEQ
-                                                                                            , CNSTG_KICKF_DT
-                                                                                            , CNSTG_PSCND_DT
-                                                                                            , CNSTG_XTNSN_RSLT_CNT
-                                                                                            , CNSTG_XTNSN_RSLT_MNTH
-                                                                                            , GUIDE_TYPE_CD
-                                                                                            , GUIDE_PSCND_CD
-                                                                                            , GUIDE_PSCND_DT
-                                                                                            , GUIDE_KICKF_DT
-                                                                                            , CNSTG_TERM
-                                                                                            , XTNSN_CNCL_RSN
-                                                                                            , INIT_VST_FILE_SEQ
-                                                                                            , KICKF_FILE_SEQ
-                                                                                            , LVLUP_FILE_SEQ
-                                                                                            , ETC_FILE_SEQ
-                                                                                            , SRV_SEQ
-                                                                                            , SRV_STRT_DTM
-                                                                                            , SRV_END_DTM
-                                                                                            , REG_ID
-                                                                                            , REG_IP
-                                                                                            , REG_DTM
+            CNSTG_SEQ
+            , BFRE_JDGMT_RSLT_CD
+            , BFRE_JDGMT_RSLT_CNTN
+            , CNSTG_CMPLTN_SCHDL_DT
+            , VST_DT
+            , VSTR_NM
+            , NTRVR_NM
+            , INIT_VST_RSLT_CD
+            , INIT_VST_OPNN_CNTN
+            , CMSSR_SEQ
+            , CNSTG_KICKF_DT
+            , CNSTG_PSCND_DT
+            , CNSTG_XTNSN_RSLT_CNT
+            , CNSTG_XTNSN_RSLT_MNTH
+            , GUIDE_TYPE_CD
+            , GUIDE_PSCND_CD
+            , GUIDE_PSCND_DT
+            , GUIDE_KICKF_DT
+            , CNSTG_TERM
+            , XTNSN_CNCL_RSN
+            , INIT_VST_FILE_SEQ
+            , KICKF_FILE_SEQ
+            , LVLUP_FILE_SEQ
+            , ETC_FILE_SEQ
+            , SRV_SEQ
+            , SRV_STRT_DTM
+            , SRV_END_DTM
+            , REG_ID
+            , REG_IP
+            , REG_DTM
         )
         VALUES(
-                  #{detailsKey} ,
-                  #{bfreJdgmtRsltCd},
-                  #{bfreJdgmtRsltCntn},
-                  #{cnstgCmpltnSchdlDt},
-                  #{vstDt},
-                  #{vstrNm} ,
-                  #{ntrvrNm} ,
-                  #{initVstRsltCd} ,
-                  #{initVstOpnnCntn} ,
-                  #{cmssrSeq},
-                  #{guideKickfDt},
-                  #{cnstgPscndDt},
-                  #{cnstgXtnsnRsltCnt},
-                  #{cnstgXtnsnRsltMnth},
-                  #{guideTypeCd} ,
-                  #{guidePscndCd} ,
-                  #{guidePscndDt} ,
-                  #{guideKickfDt} ,
-                  #{cnstgTerm} ,
-                  #{xtnsnCnclRsn} ,
-                  #{initVstFileSeq} ,
-                  #{kickfFileSeq} ,
-                  #{lvlupFileSeq} ,
-                  #{etcFileSeq},
-                  #{srvSeq},
-                  #{srvStrtDtm},
-                  #{srvEndDtm},
-                  #{regId},
-                  #{regIp},
-                  now()
+            #{detailsKey} ,
+            #{bfreJdgmtRsltCd},
+            #{bfreJdgmtRsltCntn},
+            #{cnstgCmpltnSchdlDt},
+            #{vstDt},
+            #{vstrNm} ,
+            #{ntrvrNm} ,
+            #{initVstRsltCd} ,
+            #{initVstOpnnCntn} ,
+            #{cmssrSeq},
+            #{guideKickfDt},
+            #{cnstgPscndDt},
+            #{cnstgXtnsnRsltCnt},
+            #{cnstgXtnsnRsltMnth},
+            #{guideTypeCd} ,
+            #{guidePscndCd} ,
+            #{guidePscndDt} ,
+            #{guideKickfDt} ,
+            #{cnstgTerm} ,
+            #{xtnsnCnclRsn} ,
+            #{initVstFileSeq} ,
+            #{kickfFileSeq} ,
+            #{lvlupFileSeq} ,
+            #{etcFileSeq},
+            #{srvSeq},
+            #{srvStrtDtm},
+            #{srvEndDtm},
+            #{regId},
+            #{regIp},
+            now()
               )
     </insert>
 
@@ -950,66 +950,66 @@
     -->
     <insert id="insertManageConsult" parameterType="CBBManageConsultInsertDTO">
         INSERT /* CBBManageConsultMapper.insertManageConsult */ INTO CP_CNSTG_APPCTN_MST (
-                                                                                           CNSTG_SEQ
-                                                                                         , APPCTN_BSNM_NO
-                                                                                         , APPCTN_MEM_SEQ
-                                                                                         , CNSTG_CD
-                                                                                         , RSUME_STTS_CD
-                                                                                         , APPCTN_DT
-                                                                                         , BSN_YEAR
-                                                                                         , CMPN_SIZE_CD
-                                                                                         , FRGN_DPNDN_RATE
-                                                                                         , TTL_SLS_PMT
-                                                                                         , DMSTC_SLS_PMT
-                                                                                         , FRGN_SLS_PMT
-                                                                                         , CAR_PART_SLS_PMT
-                                                                                         , CAR_PART_XCLUD_SLS_PMT
-                                                                                         , CMPN_ADDR_SAME_YN
-                                                                                         , FCTRY_ZIPCODE
-                                                                                         , FCTRY_BSC_ADDR
-                                                                                         , FCTRY_DTL_ADDR
-                                                                                         , FIRST_RGNS_CD
-                                                                                         , SCND_RGNS_CD
-                                                                                         , HMPGE_URL
-                                                                                         , QLTY_PIC_CNT
-                                                                                         , APPCTN_RSN_CD
-                                                                                         , RQST_CNTN
-                                                                                         , ITRDC_FILE_SEQ
-                                                                                         , IMPVM_FILE_SEQ
-                                                                                         , REG_ID
-                                                                                         , REG_IP
-                                                                                         , REG_DTM
+            CNSTG_SEQ
+            , APPCTN_BSNM_NO
+            , APPCTN_MEM_SEQ
+            , CNSTG_CD
+            , RSUME_STTS_CD
+            , APPCTN_DT
+            , BSN_YEAR
+            , CMPN_SIZE_CD
+            , FRGN_DPNDN_RATE
+            , TTL_SLS_PMT
+            , DMSTC_SLS_PMT
+            , FRGN_SLS_PMT
+            , CAR_PART_SLS_PMT
+            , CAR_PART_XCLUD_SLS_PMT
+            , CMPN_ADDR_SAME_YN
+            , FCTRY_ZIPCODE
+            , FCTRY_BSC_ADDR
+            , FCTRY_DTL_ADDR
+            , FIRST_RGNS_CD
+            , SCND_RGNS_CD
+            , HMPGE_URL
+            , QLTY_PIC_CNT
+            , APPCTN_RSN_CD
+            , RQST_CNTN
+            , ITRDC_FILE_SEQ
+            , IMPVM_FILE_SEQ
+            , REG_ID
+            , REG_IP
+            , REG_DTM
         )
         VALUES (
-                   #{cnstgSeq}
-               , #{bsnmNo}
-               , #{memSeq}
-               , "CONSULT_GB02"
-               , #{resumeSttsCd}
-               , #{appctnDt}
-               , DATE_FORMAT(#{appctnDt}, '%Y')
-               , #{cpSize}
-               , #{frgnDpndnRate}
-               , #{ttlSlsPmt}
-               , #{dmstcSlsPmt}
-               , #{frgnSlsPmt}
-               , #{carPartSlsPmt}
-               , #{carPartXcludSlsPmt}
-               , #{cmpnAddrSameYn}
-               , #{fctryZipcode}
-               , #{fctryBscAddr}
-               , #{fctryDtlAddr}
-               , #{firstRgnsCd}
-               , #{scndRgnsCd}
-               , #{hmpgeUrl}
-               , #{qltyPicCnt}
-               , #{appctnRsnCd}
-               , #{rqstCntn}
-               , #{itrdcFileSeq}
-               , #{impvmFileSeq}
-               , #{regId}
-               , #{regIp}
-               , NOW()
+            #{cnstgSeq}
+            , #{bsnmNo}
+            , #{memSeq}
+            , "CONSULT_GB02"
+            , "MNGTECH_STATUS_01"
+            , #{appctnDt}
+            , DATE_FORMAT(#{appctnDt}, '%Y')
+            , #{cpSize}
+            , #{frgnDpndnRate}
+            , #{ttlSlsPmt}
+            , #{dmstcSlsPmt}
+            , #{frgnSlsPmt}
+            , #{carPartSlsPmt}
+            , #{carPartXcludSlsPmt}
+            , #{cmpnAddrSameYn}
+            , #{fctryZipcode}
+            , #{fctryBscAddr}
+            , #{fctryDtlAddr}
+            , #{firstRgnsCd}
+            , #{scndRgnsCd}
+            , #{hmpgeUrl}
+            , #{qltyPicCnt}
+            , #{appctnRsnCd}
+            , #{rqstCntn}
+            , #{itrdcFileSeq}
+            , #{impvmFileSeq}
+            , #{regId}
+            , #{regIp}
+            , NOW()
                )
     </insert>
 

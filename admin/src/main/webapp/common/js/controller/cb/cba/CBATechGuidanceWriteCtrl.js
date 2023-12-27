@@ -54,44 +54,44 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
         if(bfGbDt == 0 || bfGbDt < 0){
             if(guidePscndCd){
-                $(".resumeSttsNm").text("지도중");
-                $(".resumeSttsCd").val("MNGTECH_STATUS_09");
+                $(".rsumeSttsNm").text("지도중");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_09");
                 if(guidePscndCd == 'GUIDE_PSCND01'){
-                    $(".resumeSttsNm").text("지도연기");
-                    $(".resumeSttsCd").val("MNGTECH_STATUS_10");
+                    $(".rsumeSttsNm").text("지도연기");
+                    $(".rsumeSttsCd").val("MNGTECH_STATUS_10");
                 }else if(guidePscndCd == 'GUIDE_PSCND02'){
-                    $(".resumeSttsNm").text("재단취소");
-                    $(".resumeSttsCd").val("MNGTECH_STATUS_11");
+                    $(".rsumeSttsNm").text("재단취소");
+                    $(".rsumeSttsCd").val("MNGTECH_STATUS_11");
                 }else if(guidePscndCd == 'GUIDE_PSCND03'){
-                    $(".resumeSttsNm").text("부품사취소");
-                    $(".resumeSttsCd").val("MNGTECH_STATUS_12");
+                    $(".rsumeSttsNm").text("부품사취소");
+                    $(".rsumeSttsCd").val("MNGTECH_STATUS_12");
                 }else if(guidePscndCd == 'GUIDE_PSCND04'){
-                    $(".resumeSttsNm").text("지도 완료");
-                    $(".resumeSttsCd").val("MNGTECH_STATUS_13");
+                    $(".rsumeSttsNm").text("지도 완료");
+                    $(".rsumeSttsCd").val("MNGTECH_STATUS_13");
                 }
             }else{
-                $(".resumeSttsNm").text("지도착수");
-                $(".resumeSttsCd").val("MNGTECH_STATUS_08");
+                $(".rsumeSttsNm").text("지도착수");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_08");
             }
         }else{
             if (bfJdgmtRslt == 'BF_JDGMT_RSLT05' || initVstRsltCd == 'BF_JDGMT_RSLT05') {
-                $(".resumeSttsNm").text("사용자취소");
-                $(".resumeSttsCd").val("MNGTECH_STATUS_02");
+                $(".rsumeSttsNm").text("사용자취소");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_02");
             }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT01') {
-                $(".resumeSttsNm").text("사전심사선정");
-                $(".resumeSttsCd").val("MNGTECH_STATUS_03");
+                $(".rsumeSttsNm").text("사전심사선정");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_03");
             }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT02') {
-                $(".resumeSttsNm").text("사전심사탈락");
-                $(".resumeSttsCd").val("MNGTECH_STATUS_04");
+                $(".rsumeSttsNm").text("사전심사탈락");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_04");
             }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT03' || initVstRsltCd == 'BF_JDGMT_RSLT03') {
-                $(".resumeSttsNm").text("지원단이관");
-                $(".resumeSttsCd").val("MNGTECH_STATUS_05");
+                $(".rsumeSttsNm").text("지원단이관");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
             }else if(initVstRsltCd == 'BF_JDGMT_RSLT01'){
-                $(".resumeSttsNm").text("지도승인");
-                $(".resumeSttsCd").val("MNGTECH_STATUS_06");
+                $(".rsumeSttsNm").text("지도승인");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_06");
             }else if(initVstRsltCd == 'BF_JDGMT_RSLT02'){
-                $(".resumeSttsNm").text("지도불가");
-                $(".resumeSttsCd").val("MNGTECH_STATUS_07");
+                $(".rsumeSttsNm").text("지도불가");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_07");
             }
         }
     }
@@ -507,6 +507,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             btnPartUserModal: {
                 event: {
                     click: function () {
+                        $("#srchDivide").val("Y");
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             var cmpnMst = {};
                             cmpnMst.bsnmNo = data.bsnmNo.replaceAll("-", "");
