@@ -85,6 +85,35 @@ define(["ezCtrl"], function(ezCtrl) {
                 }
 
             },
+            //데이터 삭제
+            btnDel : {
+                event : {
+                    click: function () {
+                        var frmDataObj = $(this).closest("form");
+                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
+                        var delType = frmDataObj.data("delType");
+                        if (delActCnt > 0) {
+                            if(confirm(msgCtrl.getMsg("confirm.del")))
+                            {
+                                //삭제 전송
+                                cmmCtrl.frmAjax(function(respObj){
+                                    if(respObj != undefined && respObj.respCnt > 0){
+                                        var msg = msgCtrl.getMsg("success.del.target.none");
+                                        if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
+                                            msg = msgCtrl.getMsg("success.del.target." + delType);
+                                        }
+                                        alert(msg);
+                                        $formObj.find("#btnSearch").click();
+                                    }
+                                    else{
+                                        alert("매칭된 게시물은 삭제 할 수 없습니다.");
+                                    }
+                                }, "./delete", frmDataObj, "POST", "json");
+                            }
+                        }
+                    }
+                }
+            },
         },
         classname : {
             // 페이징 처리
