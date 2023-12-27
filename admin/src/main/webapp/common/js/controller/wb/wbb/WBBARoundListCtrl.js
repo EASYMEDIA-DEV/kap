@@ -66,7 +66,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         //페이징 이동
                         if( $(this).attr("value") != "null" ){
-                            search($formObj.find("input[name=pageIndex]").val($(this).attr("value")));
+                            $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
+                            search($(this).attr("value"));
                         }
                     }
                 }

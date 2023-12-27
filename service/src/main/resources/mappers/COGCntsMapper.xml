@@ -253,6 +253,32 @@
 		SELECT IFNULL(MAX(VER)+1,1) VER FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
 	</select>
 
+	<!--
+		 쿼리명 : COGCntsMapper.getCmsDtl
+		 설  명 : CMS 배포 목록을 조회
+			 수정일	 수정자     수정내용
+		==========   ======   =============
+		2023.12.20   김태훈     최초생성
+	-->
+	<select id="getCmsDtl" parameterType="COGCntsDTO" resultType="COGCntsDTO">
+		select /* COGCntsMapper.getCmsDtl */
+			menu_seq
+			 , SEQ
+			 , VER
+			 , CNTS
+			 , JS_CNTS
+			 , PRCS_CD
+			 , REG_ID
+			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+			 , REG_DTM
+			 , MOD_ID
+			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+			 , MOD_DTM
+		from
+			CO_CNTS_MST A
+		where
+			MENU_SEQ = #{menuSeq} AND PRCS_CD = 10
+	</select>
 </mapper>
 
 

@@ -767,4 +767,59 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         workbook.write(response.getOutputStream());
         workbook.close();
     }
+
+    /**
+     * 부품사 신청자를 등록한다.
+     */
+    @Transactional
+    public int insertApply(WBBAApplyMstDTO wbbaApplyMstDTO, HttpServletRequest request) throws Exception {
+
+        int rtnCnt = 0;
+
+        try {
+            int appctnSeq = cxAppctnMstSeqIdgen.getNextIntegerId();
+            //마스터 생성
+            String regId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+            String regIp = CONetworkUtil.getMyIPaddress(request);
+
+            wbbaApplyMstDTO.setAppctnSeq(appctnSeq);
+            //wbbaApplyMstDTO.setAppctnBsnmNo(wbbaCompanyDTO.getBsnmNo());
+            wbbaApplyMstDTO.setRegId(regId);
+            wbbaApplyMstDTO.setRegIp(regIp);
+
+            rtnCnt = wbbbCompanyMapper.insertApply(wbbaApplyMstDTO);
+
+            if (rtnCnt > 0) {
+                //상생신청진행 상세 생성
+                WBBAApplyDtlDTO wbbApplyDtlDTO = new WBBAApplyDtlDTO();
+                wbbApplyDtlDTO.setRsumeSeq(cxAppctnRsumeDtlSeqIdgen.getNextIntegerId());
+                wbbApplyDtlDTO.setAppctnSeq(wbbaApplyMstDTO.getAppctnSeq());
+                wbbApplyDtlDTO.setRsumeOrd(1);
+                wbbApplyDtlDTO.setRsumeSttsCd("신청");
+                wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_2");
+                wbbApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2");
+                wbbApplyDtlDTO.setRegId(regId);
+                wbbApplyDtlDTO.setRegIp(regIp);
+                wbbbCompanyMapper.insertApplyDtl(wbbApplyDtlDTO);
+
+                //신청파일 넣기
+                for (int i = 0; i < wbbaApplyMstDTO.getFileList().size() ; i++) {
+
+                    List<COFileDTO> fileList = new ArrayList();
+                    fileList.add(wbbaApplyMstDTO.getFileList().get(i));
+
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                    wbbApplyDtlDTO.setSbmsnSeq(fileApplyIdgen.getNextIntegerId());
+                    wbbApplyDtlDTO.setOptnSeq(Integer.valueOf(wbbaApplyMstDTO.getOptnSeq().get(i)));
+                    wbbApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+
+                    wbbbCompanyMapper.insertFileInfo(wbbApplyDtlDTO);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rtnCnt;
+    }
 }

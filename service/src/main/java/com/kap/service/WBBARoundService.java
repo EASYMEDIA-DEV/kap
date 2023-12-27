@@ -55,4 +55,14 @@ public interface WBBARoundService {
      * 회차 삭제
      */
     public int deleteRound(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 최신 회차 목록을 조회한다.
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 최신 회차 목록을 조회한다.
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }

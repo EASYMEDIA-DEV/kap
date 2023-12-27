@@ -5,10 +5,13 @@ import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.wb.wba.WBAManageInsertDTO;
+import com.kap.core.dto.wb.wba.WBAManageSearchDTO;
 import com.kap.service.COGCntsService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.dao.COGCntsMapper;
+import com.kap.service.dao.wb.wba.WBAManagementMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -40,6 +43,7 @@ public class COGCntsServiceImpl implements COGCntsService {
 
 	//DAO
 	private final COGCntsMapper cOGCntsMapper;
+	private final WBAManagementMapper wbaManagementMapper;
 
 	/** Sequence **/
 	/* 관리자 시퀀스 */
@@ -174,4 +178,17 @@ public class COGCntsServiceImpl implements COGCntsService {
 		}
 	}
 
+	/**
+	 * 컨텐츠 배포 내용조회
+	 */
+	public COGCntsDTO getCmsDtl(COGCntsDTO pCOGCntsDTO, String bsnCd) throws Exception
+	{
+		WBAManageSearchDTO wbaManageSearchDTO = new WBAManageSearchDTO();
+
+		wbaManageSearchDTO.setDetailsKey(bsnCd);
+		WBAManageInsertDTO wbaManageInsertDTO = wbaManagementMapper.selectManagementMst(wbaManageSearchDTO);
+		pCOGCntsDTO.setMenuSeq(wbaManageInsertDTO.getUserMenuSeq());
+
+		return cOGCntsMapper.getCmsDtl(pCOGCntsDTO);
+	}
 }

@@ -179,7 +179,9 @@
              , A.CMPN_NM
              , A.RPRSNT_NM
              , A.CTGRY_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_NM
              , A.SIZE_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_NM
              , A.STBSM_DT
              , A.TEL_NO AS COMP_TEL
              , A.ZIPCODE
@@ -192,10 +194,13 @@
              , A.MJR_PRDCT_2
              , A.MJR_PRDCT_3
              , A.QLTY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.QLTY_5_STAR_CD) AS QLTY_5_STAR_NM
              , A.QLTY_5_STAR_YEAR
              , A.PAY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.PAY_5_STAR_CD) AS PAY_5_STAR_NM
              , A.PAY_5_STAR_YEAR
              , A.TCHLG_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_NM
              , A.TCHLG_5_STAR_YEAR
              , (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) ID
              , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) NAME

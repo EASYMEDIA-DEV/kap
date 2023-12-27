@@ -90,4 +90,10 @@ public interface WBBBCompanyService {
      * 참여 이관 로그를 가져온다.
      */
     public void excelDownload(WBBACompanySearchDTO wbbCompanySearchDTO, HttpServletResponse response) throws Exception;
+
+    /**
+     * 신청자를 등록한다.
+     * @return
+     */
+    public int insertApply(WBBAApplyMstDTO wbbApplyMstDTO, HttpServletRequest request) throws Exception;
 }
