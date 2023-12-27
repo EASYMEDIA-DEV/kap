@@ -231,9 +231,9 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     @Schema(title = "FAX번호")
     private String faxNo;
     @Schema(title = "진행상태코드")
-    private String resumeSttsCd;
+    private String rsumeSttsCd;
     @Schema(title = "진행상태 텍스트")
-    private String resumeSttsNm;
+    private String rsumeSttsNm;
     @Schema(title = "대표자승인여부")
     private String rprsntApprvYn;
     @Schema(title = "신청사유코드")

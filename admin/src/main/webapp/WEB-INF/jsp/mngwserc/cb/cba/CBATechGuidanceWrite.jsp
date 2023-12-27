@@ -94,7 +94,7 @@
                         </div>
                         <label class="col-sm-1 control-label">전화번호</label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control input-sm notRequired"  name="telNo" value="${rtnDto.telNo}" title="전화번호"/>
+                            <input type="text" class="form-control input-sm notRequired"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호"/>
                         </div>
                     </div>
                 </fieldset>
@@ -156,7 +156,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="cmpnTelNo" value="${rtnDto.cmpnTelNo}" title="전화번호"/>
+                        <input type="text" class="form-control input-sm" name="cmpnTelNo"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${rtnDto.cmpnTelNo}" title="전화번호"/>
                     </div>
                     <label class="col-sm-1 control-label">사업자등록번호<span class="star">*</span></label>
                     <div class="col-sm-4">
@@ -723,8 +723,8 @@
                 <!-- 진행 정보 -->
                 <div id="episdList" class="tab-pane fade in active">
                     <fieldset>
-                        <input type="hidden" name="resumeSttsCd" class="resumeSttsCd" value="MNGTECH_STATUS_01">
-                        <h6 class="mt0"><em class="ion-play mr-sm"></em> 진행상태 : <label class="resumeSttsNm" style="color: red;">신청</label></h6>
+                        <input type="hidden" name="rsumeSttsCd" class="rsumeSttsCd" value="MNGTECH_STATUS_01">
+                        <h6 class="mt0"><em class="ion-play mr-sm"></em> 진행상태 : <label class="rsumeSttsNm" style="color: red;">신청</label></h6>
                     </fieldset>
                     <c:choose>
                         <c:when test="${empty rtnDto.rsumeList}">

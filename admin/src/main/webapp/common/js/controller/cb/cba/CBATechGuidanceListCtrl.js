@@ -92,6 +92,8 @@ define(["ezCtrl"], function(ezCtrl) {
                                 }else{
                                     if(confirm(msgCtrl.getMsg("confirm.del")))
                                     {
+
+
                                         //삭제 전송
                                         cmmCtrl.frmAjax(function(respObj){
                                             if(respObj != undefined && respObj.respCnt > 0){

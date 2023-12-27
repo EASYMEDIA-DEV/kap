@@ -14,7 +14,7 @@
             , CNSTG_CD                  /* 컨설팅코드 */
             , BSN_YEAR					/* 사엽연도 */
             , RSUME_STTS_CD			    /* 진행상태코드 */
-            , RESUME_STTS_NM			/* 진행상태코드명 */
+            , RSUME_STTS_NM			/* 진행상태코드명 */
             , CMPN_NM					/* 부품사명 */
             , CTGRY_CD					/* 부품사구분코드 */
             , CTGRY_NM					/* 부품사구분코드명 */
@@ -59,7 +59,7 @@
                 , CP_MST.CNSTG_CD
                 , CP_MST.BSN_YEAR
                 , CP_MST.RSUME_STTS_CD
-                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGTECH_STATUS') RESUME_STTS_NM
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
                 , CMPN_MST.CMPN_NM
                 , CMPN_MST.CTGRY_CD
                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.CTGRY_CD AND CD_ID = 'COMPANY_TYPE') CTGRY_NM
@@ -270,7 +270,7 @@
            #{cnstgSeq}
            , #{bsnmNo}
            , #{memSeq}
-           , #{resumeSttsCd}
+           , "MNGTECH_STATUS_01"
            , "CONSULT_GB01"
            , #{appctnDt}
            , DATE_FORMAT(#{appctnDt}, '%Y')
@@ -305,7 +305,7 @@
         UPDATE CP_CNSTG_APPCTN_MST  /*CBATechGuidanceMapper.updateTechGuidance*/
         SET
             APPCTN_MEM_SEQ = #{memSeq},
-            RSUME_STTS_CD = #{resumeSttsCd},
+            RSUME_STTS_CD = #{rsumeSttsCd},
             APPCTN_DT = #{appctnDt},
             CMPN_SIZE_CD = #{sizeCd},
             CMPN_ADDR_SAME_YN = #{cmpnAddrSameYn},
@@ -917,8 +917,8 @@
                 AND CBSN_NM = #{cbsnNm}
             </if>
             <!-- 진행상태 -->
-            <if test="resumeSttsCd != null and resumeSttsCd != ''">
-                AND RSUME_STTS_CD = #{resumeSttsCd}
+            <if test="rsumeSttsCd != null and rsumeSttsCd != ''">
+                AND RSUME_STTS_CD = #{rsumeSttsCd}
             </if>
 
             <if test="q != null and q != ''.toString() ">
