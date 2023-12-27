@@ -1,9 +1,12 @@
 package com.kap.service.impl.wb.wbb;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBBARoundService;
 import com.kap.service.dao.wb.wbb.WBBARoundMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,7 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <pre>
@@ -56,8 +60,10 @@ public class WBBARoundServiceImpl implements WBBARoundService {
 
         page.setPageSize(wBRoundMstSearchDTO.getPageRowSize());
 
-        wBRoundMstSearchDTO.setFirstIndex(page.getFirstRecordIndex());
-        wBRoundMstSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        if ("admin".equals(wBRoundMstSearchDTO.getSiteGubun())) {
+            wBRoundMstSearchDTO.setFirstIndex(page.getFirstRecordIndex());
+            wBRoundMstSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
 
         wBRoundMstSearchDTO.setList(wBBARoundMapper.selectRoundList(wBRoundMstSearchDTO));
         wBRoundMstSearchDTO.setTotalCount(wBBARoundMapper.getRoundListTotCnt(wBRoundMstSearchDTO));
@@ -129,5 +135,60 @@ public class WBBARoundServiceImpl implements WBBARoundService {
         wBRoundMstDTO.setRespCnt(respCnt);
 
         return respCnt;
+    }
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        wBRoundMstSearchDTO = wBBARoundMapper.getRoundDtl(wBRoundMstSearchDTO);
+
+        wBRoundMstSearchDTO.setStageOrd(1);
+
+        if (wBRoundMstSearchDTO != null) {
+            //공통사업의 경우 신청단계의 옵션정보를 가져온다. 그외 사업의 경우 양식관리 파일정보를 가져와야함.
+            List<WBAManagementOptnDTO> optionList = wBBARoundMapper.selectOPtnList(wBRoundMstSearchDTO);
+            wBRoundMstSearchDTO.setOptnList(optionList);
+        }
+
+        return wBRoundMstSearchDTO;
+    }
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        int rtnCode = 0;
+
+        COUserDetailsDTO cOUserDetailsDTO = null;
+
+        if (!COUserDetailsHelperService.isAuthenticated())
+        {
+            //비로그인 코드 100
+            rtnCode = 999;
+        }
+        else
+        {
+            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+            if (!"CP".equals(cOUserDetailsDTO.getAuthCd())) {
+                rtnCode = 100;
+            } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
+                wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                int cnt = wBBARoundMapper.getApplyCount(wBRoundMstSearchDTO);
+
+                if (cnt > 0) {
+                    //신청여부 존재 코드 300
+                    rtnCode = 300;
+                }
+
+                //신청가능 코드 200
+                rtnCode = 200;
+            }
+        }
+
+        return rtnCode;
     }
 }

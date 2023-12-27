@@ -3,6 +3,7 @@ package com.kap.core.dto.wb;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -41,6 +42,9 @@ public class WBRoundMstSearchDTO extends BaseDTO {
     @Schema(title = "회차", example = "숫자")
     private Integer episd;
 
+    @Schema(title = "멤버순번", example = "")
+    private Integer memSeq;
+
     @Schema(title = "접수시작일시", example = "yyyy-MM-dd hh:mm:ss")
     private String accsStrtDtm;
     @Schema(title = "접수종료일시", example = "yyyy-MM-dd hh:mm:ss")
@@ -57,7 +61,11 @@ public class WBRoundMstSearchDTO extends BaseDTO {
     @Schema(title = "노출 여부")
     private String expsYn;
 
+    @Schema(title = "노출순서")
+    private Integer ordFlag;
 
+    @Schema(title = "옵션순번")
+    private Integer stageOrd;
 
     @Schema(title = "검색조건", example = "yyyy-MM-dd hh:mm:ss")
     private String carbonDate;
@@ -69,5 +77,8 @@ public class WBRoundMstSearchDTO extends BaseDTO {
 
     @Schema(title = "조회 리스트")
     private List<WBRoundMstSearchDTO> list;
+
+    @Schema(title = "옵션파일 리스트")
+    private List<WBAManagementOptnDTO> optnList;
 
 }

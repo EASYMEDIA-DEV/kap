@@ -88,6 +88,15 @@ public class WBRoundMstDTO extends BaseDTO {
     @Schema(title = "유형 옵션 구분")
     private String optnCd;
 
+    @Schema(title = "사용자 진행상태")
+    private String acctStatus;
+
+    @Schema(title = "디데이")
+    private String dday;
+    
+    @Schema(title = "노출순서")
+    private Integer dateOrd;
+    
     @Schema(title = "사업유형 리스트")
     private List<WBRoundOptnMstDTO> bsinList;
 

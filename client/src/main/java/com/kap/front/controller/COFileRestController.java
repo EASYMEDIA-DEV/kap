@@ -9,6 +9,7 @@ import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -147,5 +148,59 @@ public class COFileRestController {
             throw new Exception(e.getMessage());
         }
         return rtnList;
+    }
+
+    @GetMapping("/file/download")
+    public void fileDownload(COFileDTO coFileDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        COFileDTO fileDTO = cOFileService.getFileInf(coFileDTO);
+
+        String phyPath = fileDTO.getPhyPath();
+        String realFileNm = fileDTO.getOrgnFileNm();
+        String saveFileNm = fileDTO.getSaveFileNm();
+
+        if (fileDTO == null || "".equals(phyPath) || "".equals(saveFileNm)) {
+            throw new FileNotFoundException("파일이 없습니다.");
+        }
+        File uFile = new File(phyPath);
+
+        long fSize = uFile.length();
+
+        if (fSize > 0) {
+            String userAgent = COWebUtil.removeCRLF(request.getHeader("User-Agent"));
+
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition", COBrowserUtil.getDisposition(realFileNm, userAgent, "UTF-8"));
+            response.setContentLengthLong(fSize);
+
+            BufferedInputStream in = null;
+            BufferedOutputStream out = null;
+
+            try {
+                in = new BufferedInputStream(new FileInputStream(uFile));
+                out = new BufferedOutputStream(response.getOutputStream());
+
+                FileCopyUtils.copy(in, out);
+
+                out.flush();
+            }
+            catch (IOException ex) {
+                // 다음 Exception 무시 처리
+                // Connection reset by peer: socket write error
+                // EgovBasiclog.ignore("IO Exception", ex);
+                if (ex == null) {
+                    log.error("IO Exception");
+                } else {
+                    log.error("IO Exception", ex);
+                }
+
+            }
+            finally {
+                in.close();
+                out.close();
+                // ResourceCloseHelper.close(in, out);
+            }
+        } else {
+            throw new FileNotFoundException("파일이 없습니다.");
+        }
     }
 }

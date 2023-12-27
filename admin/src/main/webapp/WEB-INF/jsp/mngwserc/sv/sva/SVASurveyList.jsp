@@ -94,7 +94,7 @@
                     </select>
                 </div>
                 <div class="pull-right mr-sm">
-                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete">선택삭제</button>
+                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDel">선택삭제</button>
                     <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>
             </div>

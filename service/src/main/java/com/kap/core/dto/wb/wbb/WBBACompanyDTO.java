@@ -72,8 +72,14 @@ public class WBBACompanyDTO extends BaseDTO {
     @Schema(title = "카테고리 코드")
     private String ctgryCd;
 
+    @Schema(title = "카테고리 코드명")
+    private String ctgryNm;
+
     @Schema(title = "규모 코드")
     private String sizeCd;
+
+    @Schema(title = "규모 코드명")
+    private String sizeNm;
 
     @Schema(title = "설립일자")
     private String stbsmDt;
@@ -111,17 +117,26 @@ public class WBBACompanyDTO extends BaseDTO {
     @Schema(title = "품질5스타코드")
     private String qlty5starCd;
 
+    @Schema(title = "품질5스타값")
+    private String qlty5starNm;
+
     @Schema(title = "품질5스타년도")
     private Integer qlty5starYear;
 
     @Schema(title = "납입5스타코드")
     private String pay5starCd;
 
+    @Schema(title = "납입5스타값")
+    private String pay5starNm;
+
     @Schema(title = "납입5스타년도")
     private Integer pay5starYear;
 
     @Schema(title = "기술5스타코드")
     private String tchlg5starCd;
+
+    @Schema(title = "기술5스타값")
+    private String tchlg5starNm;
 
     @Schema(title = "기술5스타년도")
     private Integer tchlg5starYear;

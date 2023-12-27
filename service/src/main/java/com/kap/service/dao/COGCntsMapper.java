@@ -73,4 +73,10 @@ public interface COGCntsMapper {
 	 */
 	public int selectNewVer(COGCntsDTO pCOGCntsDTO) throws Exception;
 
+	/**
+	 * 컨텐츠 배포 내용조회
+	 */
+	public COGCntsDTO getCmsDtl(COGCntsDTO pCOGCntsDTO) throws Exception;
+
+
 }
