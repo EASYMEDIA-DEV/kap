@@ -60,7 +60,7 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "업종코드", example = "코드")
     private String cbsnCd;
 
-    @Schema(title = "업종코드", example = "코드명")
+    @Schema(title = "업종코드명", example = "코드명")
     private String cbsnCdNm;
 
 
@@ -212,6 +212,10 @@ public class EBBEpisdDTO extends BaseDTO {
 
     @Schema(title = "강사명", example = "이름")
     private String isttrName;
+
+    @Schema(title = "회차 내 모든 강사명", example = "이름")
+    private String isttrGroupName;
+
 
     @Schema(title = "회차정렬", example = "텍스트")
     private String ffltnNm;

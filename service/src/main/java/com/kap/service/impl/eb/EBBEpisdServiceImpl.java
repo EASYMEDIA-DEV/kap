@@ -124,6 +124,34 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	}
 
 	/**
+	 *  교육과정에 속한 차수목록을 호출한다.
+	 */
+	public EBBEpisdDTO selectCouseChildEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+
+		COPaginationUtil page = new COPaginationUtil();
+
+		if(eBBEpisdDTO.getSiteGubun().equals("front")){
+			eBBEpisdDTO.setPageRowSize(9);
+			eBBEpisdDTO.setListRowSize(9);
+		}
+
+		page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
+		page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
+
+		page.setPageSize(eBBEpisdDTO.getPageRowSize());
+
+		eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
+		eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+		eBBEpisdDTO.setList( eBBEpisdMapper.selectEpisdList(eBBEpisdDTO) );
+		eBBEpisdDTO.setTotalCount( eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO) );
+
+
+		return eBBEpisdDTO;
+	}
+
+	/**
 	 *  교육차수 목록을 조회한다.(엑셀용)
 	 */
 	public EBBEpisdExcelDTO selectEpisdExcelList(EBBEpisdDTO eBBEpisdDTO) throws Exception

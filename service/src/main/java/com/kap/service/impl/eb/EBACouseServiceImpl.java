@@ -1,11 +1,17 @@
 package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.*;
+import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
-import com.kap.service.*;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.service.COCodeService;
+import com.kap.service.COFileService;
+import com.kap.service.COSeqGnrService;
+import com.kap.service.EBACouseService;
 import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.eb.EBACouseMapper;
+import com.kap.service.dao.eb.EBBEpisdMapper;
+import com.kap.service.dao.eb.EBBFrontEpisdMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -42,6 +48,10 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 	//DAO
 	private final EBACouseMapper eBACouseMapper;
+
+	private final EBBEpisdMapper eBBEpisdMapper;
+
+	private final EBBFrontEpisdMapper eBBFrontEpisdMapper;
 
 	private final COSeqGnrService cOSeqGnrService;
 
@@ -93,7 +103,13 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 		map.put("rtnData", ebaDto);
 
-		map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
+		//학습대상목록을 호출한다. 관리자는 모든 공통코드가 출력되야하고, 사용자는 선택한것만 나와야해서 출력해오는 데이터가 상이함
+		if(eBACouseDTO.getSiteGubun().equals("admin")){
+			map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
+		}else{
+			map.put("rtnTrgtData", eBBFrontEpisdMapper.selectCouseTrgtList(eBACouseDTO));
+		}
+
 
 
 

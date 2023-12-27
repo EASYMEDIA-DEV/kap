@@ -1,5 +1,6 @@
 package com.kap.service.dao.eb;
 
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -35,5 +36,11 @@ public interface EBBFrontEpisdMapper {
 	 * 교육신청 목록(사용자) 목록 갯수 조회
 	 */
 	public int selectFrontCouseListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+	/**
+	 * 교육과정 대상 목록
+	 */
+	public List<EBACouseDTO> selectCouseTrgtList(EBACouseDTO eBACouseDTO) throws Exception;
 
 }

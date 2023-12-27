@@ -35,6 +35,11 @@ public interface EBBEpisdService {
 	public EBBEpisdDTO selectEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육과정에 속한 차수목록을 호출한다.
+	 */
+	public EBBEpisdDTO selectCouseChildEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
 	 * 교육차수 목록을 조회한다.(엑셀용)
 	 */
 	public EBBEpisdExcelDTO selectEpisdExcelList(EBBEpisdDTO eBBEpisdDTO) throws Exception;

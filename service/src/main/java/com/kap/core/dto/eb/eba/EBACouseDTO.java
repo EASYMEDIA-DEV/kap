@@ -73,6 +73,14 @@ public class EBACouseDTO extends BaseDTO {
     private String stduyTrgtCntn;
 
     //학습대상 코드
+    @Schema(title = "학습대상 부모코드", example = "텍스트")
+    private String prntTargetCd;
+
+    //학습대상 코드
+    @Schema(title = "학습대상 부모코드명", example = "텍스트")
+    private String prntTargetCdNm;
+
+    //학습대상 코드
     @Schema(title = "학습대상 코드", example = "텍스트")
     private String targetCd;
 
@@ -165,14 +173,12 @@ public class EBACouseDTO extends BaseDTO {
     @Schema(title = "연계교육명", example = "텍스트")
     private String cnnctNm;
 
-
-
+    @Schema(title = "파일경로", example = "텍스트")
+    private String webPath;
 
 
     //로그인세션ID
     private String lgnSsnId;
-
-
 
     //사용여부
     private List<EBACouseDTO> list;

@@ -54,6 +54,7 @@ public class COFileRestController {
 
     @GetMapping("/file/view")
     public void cvplFileDownload(COFileDTO coFileDTO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        System.out.println("@@@ coFileDTO = " + coFileDTO);
         if (COUserDetailsHelperService.isAuthenticated()) {
             COFileDTO fileDTO = cOFileService.getFileInf(coFileDTO);
 

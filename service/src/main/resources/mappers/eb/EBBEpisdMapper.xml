@@ -19,6 +19,7 @@
 				, ctgry_cd
 				, ctgry_cd_nm
 		     	, cbsn_cd
+				, (select cd_nm from co_code_mst WHERE cd = aa.cbsn_cd) as cbsn_cd_nm
 				, nm
 				, stduy_mthd_cd
 				, stduy_mthd_cd_nm
@@ -51,6 +52,7 @@
 						when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 				END  AS edctn_status_nm
 				, (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
+				, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst WHERE isttr_seq in (SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq = aa.edctn_seq AND episd_ord = aa.episd_ord AND episd_year = aa.episd_year )) AS isttr_group_name
 				, (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
 				, case when isttr_cnt <![CDATA[<=]]>1 then ''
 					when isttr_cnt <![CDATA[>]]>  1 then isttr_cnt-1
@@ -63,6 +65,7 @@
 				, pic_nm
 				, pic_email
 				, pic_tel_no
+		     	, edctn_ntctn_file_seq
 				, place_seq
 		     	, place_nm
 		     	, bdget_expns_yn
@@ -110,6 +113,7 @@
 				, a.pic_nm
 				, a.pic_email
 				, a.pic_tel_no
+			   	, a.edctn_ntctn_file_seq
 				, a.place_seq
 				, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
 			   	, a.bdget_expns_yn
