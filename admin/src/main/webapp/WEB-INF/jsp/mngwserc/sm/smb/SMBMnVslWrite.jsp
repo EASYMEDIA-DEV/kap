@@ -92,7 +92,7 @@
                         &nbsp;분&nbsp;
                         <div class="form-group" style="padding-bottom:7px">
                             <label class="checkbox-inline c-checkbox">
-                                <input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="${rtnDto.odtmYn}" title="상시여부" <c:if test="${rtnDto.odtmYn eq 'Y'}">checked</c:if> />
+                                <input type="checkbox" class="notRequired" id="odtmYn" name="odtmYn" value="${not empty rtnDto.odtmYn ? rtnDto.odtmYn : 'N'}" title="상시여부" <c:if test="${rtnDto.odtmYn eq 'Y'}">checked</c:if> />
                                 <span class="ion-checkmark-round"></span> 상시
                             </label>
                         </div>

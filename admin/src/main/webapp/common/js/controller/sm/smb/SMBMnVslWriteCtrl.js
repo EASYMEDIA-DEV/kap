@@ -196,196 +196,32 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
                         var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
-                        var tagCd = $("input[name='tagCd']:checked").val();
-                        var mdCd = $("#mdCd").val();
-                        var mainVslObj = {}
-                            mainVslObj['_csrf'] = $("#csrfKey").val();
-                            mainVslObj['mdCd'] = mdCd;
-                            mainVslObj['detailsKey'] = $("#detailsKey").val();
-                            mainVslObj['imgFileSeq'] = $("#imgFileSeq").val();
-                            mainVslObj['videoFileSeq'] = $("#videoFileSeq").val();
-                            var odtmYn = $("#odtmYn").val();
-                            if(odtmYn != 'Y'){
-                                mainVslObj['expsStrtDtm'] = $("#expsStrtDtm").val();
-                                mainVslObj['ptupStrtHh'] = $("#ptupStrtHh").val();
-                                mainVslObj['ptupStrtMi'] = $("#ptupStrtMi").val();
-                                mainVslObj['expsEndDtm'] = $("#expsEndDtm").val();
-                                mainVslObj['ptupEndHh'] = $("#ptupEndHh").val();
-                                mainVslObj['ptupEndMi'] = $("#ptupEndMi").val();
-                            }
-                            mainVslObj['odtmYn'] = $("#odtmYn").val();
-                            mainVslObj['titl'] = $("#titl").val();
-                            mainVslObj['mnCopy'] = $("#mnCopy").val();
-                            mainVslObj['mnHexCd'] = $("#mnHexCd").val();
-                            mainVslObj['subCopy'] = $("#subCopy").val();
-                            mainVslObj['subHexCd'] = $("#subHexCd").val();
-                            mainVslObj['tagCd'] = tagCd;
-                            mainVslObj['urlUrl'] =  $("#urlUrl").val();
-                            mainVslObj['wnppYn'] = $("input[name='wnppYn']:checked").val();
-                            mainVslObj['expsYn'] = $("input[name='expsYn']:checked").val();
-
-                        if(mdCd == 'pc'){
-                            if(tagCd == 'image'){
-                                // pc 이미지
-                                var fileArray = new Array();
-                                if(!($(".pcImage").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
-                                    $(".pcImage").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
-                                    $(".pcImage").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
-                                    $.each($(".pcImage").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
-                                        //alt값  data에 넣어주기.
-                                        data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
-
-                                        for (let i in data) {
-                                            if (data.hasOwnProperty(i)) {
-                                                var temp = {};
-                                                temp.fileSeq = data.fileSeq;
-                                                temp.status = data.status;
-                                                temp.width = data.width;
-                                                temp.height = data.height;
-                                                temp.webPath = data.webPath;
-                                                temp.fieldNm = data.fieldNm;
-                                                temp.orgnFileNm = data.orgnFileNm;
-                                                temp.fileDsc = data.fileDsc;
-                                                temp.fileOrd = data.fileOrd;
-
-                                                if(fileArray == "" || (fileArray[fileArray.length-1].fileOrd != temp.fileOrd)){
-                                                    fileArray.push(temp);
-                                                }
-
-                                            }
-                                        }
-
-                                    })
-                                }
-                                mainVslObj.fileList = fileArray;
-                            }else if(tagCd == 'video'){
-                                //pc 동영상
-                                var fileArray = new Array();
-                                if(!($(".pcVideo").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
-                                    $(".pcVideo").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
-                                    $(".pcVideo").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
-                                    $.each($(".pcVideo").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
-                                        //alt값  data에 넣어주기.
-                                        data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
-
-                                        for (let i in data) {
-                                            if (data.hasOwnProperty(i)) {
-                                                var temp = {};
-                                                temp.fileSeq = data.fileSeq;
-                                                temp.status = data.status;
-                                                temp.width = data.width;
-                                                temp.height = data.height;
-                                                temp.webPath = data.webPath;
-                                                temp.fieldNm = data.fieldNm;
-                                                temp.orgnFileNm = data.orgnFileNm;
-                                                temp.fileDsc = data.fileDsc;
-                                                temp.fileOrd = data.fileOrd;
-
-                                                if(fileArray == "" || (fileArray[fileArray.length-1].fileOrd != temp.fileOrd)){
-                                                    fileArray.push(temp);
-                                                }
-
-                                            }
-                                        }
-
-                                    })
-                                }
-                                mainVslObj.fileList = fileArray;
-                            }
-                        }else if(mdCd == 'mobile'){
-                            if(tagCd == 'image'){
-                                // 모바일 이미지
-                                var fileArray = new Array();
-                                if(!($(".mobileImg").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
-                                    $(".mobileImg").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
-                                    $(".mobileImg").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
-                                    $.each($(".mobileImg").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
-                                        //alt값  data에 넣어주기.
-                                        data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
-
-                                        for (let i in data) {
-                                            if (data.hasOwnProperty(i)) {
-                                                var temp = {};
-                                                temp.fileSeq = data.fileSeq;
-                                                temp.status = data.status;
-                                                temp.width = data.width;
-                                                temp.height = data.height;
-                                                temp.webPath = data.webPath;
-                                                temp.fieldNm = data.fieldNm;
-                                                temp.orgnFileNm = data.orgnFileNm;
-                                                temp.fileDsc = data.fileDsc;
-                                                temp.fileOrd = data.fileOrd;
-
-                                                if(fileArray == "" || (fileArray[fileArray.length-1].fileOrd != temp.fileOrd)){
-                                                    fileArray.push(temp);
-                                                }
-
-                                            }
-                                        }
-
-                                    })
-                                }
-                                mainVslObj.fileList = fileArray;
-                            }else if(tagCd == 'video'){
-                                // 모바일 동영상
-                                var fileArray = new Array();
-                                if(!($(".mobileVideo").find(".dropzone.attachFile").eq(0).get(0) === undefined) &&
-                                    $(".mobileVideo").find(".dropzone.attachFile").eq(0).get(0).dropzone.files != undefined &&
-                                    $(".mobileVideo").find(".dropzone.attachFile").eq(0).get(0).dropzone.files.length > 0) {
-                                    $.each($(".mobileVideo").find(".dropzone.attachFile").eq(0).get(0).dropzone.files, function (idx, data) {
-                                        //alt값  data에 넣어주기.
-                                        data.fileDsc = $(data._removeLink).closest(".dz-preview").find("input[name=fileAlt]").val();
-
-                                        for (let i in data) {
-                                            if (data.hasOwnProperty(i)) {
-                                                var temp = {};
-                                                temp.fileSeq = data.fileSeq;
-                                                temp.status = data.status;
-                                                temp.width = data.width;
-                                                temp.height = data.height;
-                                                temp.webPath = data.webPath;
-                                                temp.fieldNm = data.fieldNm;
-                                                temp.orgnFileNm = data.orgnFileNm;
-                                                temp.fileDsc = data.fileDsc;
-                                                temp.fileOrd = data.fileOrd;
-
-                                                if(fileArray == "" || (fileArray[fileArray.length-1].fileOrd != temp.fileOrd)){
-                                                    fileArray.push(temp);
-                                                }
-
-                                            }
-                                        }
-
-                                    })
-                                }
-                                mainVslObj.fileList = fileArray;
-                            }
-                        }
                         if($formObj.find(".dropzone").size() > 0)
                         {
-                            cmmCtrl.jsonAjax(function(data){
-                                var rtn = JSON.parse(data);
+                            console.log($formObj);
+                            cmmCtrl.fileFrmAjax(function(data){
                                 //콜백함수. 페이지 이동
-                                if(rtn.respCnt > 0){
+                                if(data.respCnt > 0){
                                     alert(actionMsg);
                                     location.replace("./list");
-                                }else if(rtn.respCnt == '-1'){
-                                    alert(rtn.respMsg);
+                                }else if(data.respCnt == '-1'){
+                                    alert(data.SMBMainVslDTO.respMsg);
+                                    location.reload();
                                 }
-                            }, actionUrl, mainVslObj, "text");
+                            }, actionUrl, $formObj, "json");
                         }
                         else
                         {
-                            cmmCtrl.jsonAjax(function(data){
-                                var rtn = JSON.parse(data);
-                                if(rtn.respCnt > 0){
+                            cmmCtrl.frmAjax(function(data){
+                                if(data.respCnt > 0){
                                     alert(actionMsg);
                                     location.replace("./list");
-                                }else if(rtn.respCnt == '-1'){
-                                    alert(rtn.respMsg);
+                                }else if(data.respCnt == '-1'){
+                                    alert(data.respMsg);
+                                    location.reload();
                                 }
                                 actionUrl = "./list";
-                            }, actionUrl, mainVslObj, "text")
+                            }, actionUrl, $formObj, "post", "json")
                         }
                     }
                 }

@@ -14,7 +14,7 @@
                 <td>${list.orgnFileNm}</td>
                 <td>http://mng.kap.easymedia.kr${list.webPath}</td>
                 <td>${ list.regName}(${list.regId})</td>
-                <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '') }</td>
+                <td>${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
             </tr>
         </c:forEach>
 
