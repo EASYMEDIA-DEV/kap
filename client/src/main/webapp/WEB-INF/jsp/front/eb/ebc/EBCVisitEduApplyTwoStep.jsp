@@ -309,7 +309,7 @@
                                                                 <p class="empty-txt">선택된 파일 없음</p>
                                                             </div>
                                                             <div class="file-btn-area">
-                                                                <input type="file" id="searchFile">
+                                                                <input type="file" id="searchFile" name="atchFile" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip" class="fileInput notRequired"/>
                                                                 <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                             </div>
                                                         </div>

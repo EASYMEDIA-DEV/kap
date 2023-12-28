@@ -115,7 +115,7 @@
                                         </table>
                                     </div>
                                     <div class="btn-wrap align-right">
-                                        <a class="btn-text-icon black-circle" href="javascript:"><span>신청자 기본정보 수정</span></a>
+                                        <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification"><span>신청자 기본정보 수정</span></a>
                                     </div>
                                 </div>
                             </div>

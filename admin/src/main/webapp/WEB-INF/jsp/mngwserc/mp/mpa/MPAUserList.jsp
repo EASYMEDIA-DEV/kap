@@ -35,7 +35,7 @@
                                     <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
                                     <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>휴대폰번호</option>
                                     <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>이메일</option>
-                                    <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종수정자</option>
+                                    <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종 수정자</option>
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">

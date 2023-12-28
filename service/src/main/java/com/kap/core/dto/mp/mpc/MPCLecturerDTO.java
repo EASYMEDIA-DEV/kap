@@ -104,8 +104,8 @@ public class MPCLecturerDTO extends BaseDTO {
     @Schema(title = "사업자번호", example = "")
     private String sbrdnBsnmNo;
 
-    @Schema(title = "사업신청일", example = "yyyy-MM-dd hh:mm:ss")
-    private String bsnRegDtm;
+    @Schema(title = "사업자번호", example = "")
+    private String bsnmNo;
 
     @Schema(title = "부품사명", example = "")
     private String cmpnNm;
