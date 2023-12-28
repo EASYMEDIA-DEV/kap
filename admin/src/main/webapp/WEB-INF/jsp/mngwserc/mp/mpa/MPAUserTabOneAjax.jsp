@@ -22,7 +22,7 @@
         </fieldset>
         <fieldset>
             <div class="form-group text-sm">
-                <label class="col-sm-1 control-label">비밀번호<span class="star"> *</span></label>
+                <label class="col-sm-1 control-label">비밀번호</label>
                <button type="button" class="btn btn-secondary"  id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button>
             </div>
         </fieldset>

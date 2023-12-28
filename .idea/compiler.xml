@@ -11,7 +11,7 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/jakarta.persistence/jakarta.persistence-api/2.2.3/8f6ea5daedc614f07a3654a455660145286f024e/jakarta.persistence-api-2.2.3.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/jakarta.annotation/jakarta.annotation-api/1.3.5/59eb84ee0d616332ff44aba065f3888cf002cd2d/jakarta.annotation-api-1.3.5.jar" />
         </processorPath>
-        <module name="com.kap.kap.client.main" />
+        <module name="kap.client.main" />
         <module name="kap.admin.main" />
       </profile>
       <profile name="Gradle Imported" enabled="true">
@@ -20,9 +20,9 @@
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.18.28/a2ff5da8bcd8b1b26f36b806ced63213362c6dcc/lombok-1.18.28.jar" />
           <entry name="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-configuration-processor/2.7.15/1208a78ea8722a4af167f658ffd22bf29358da40/spring-boot-configuration-processor-2.7.15.jar" />
         </processorPath>
-        <module name="com.kap.kap.service.main" />
+        <module name="kap.service.main" />
         <module name="kap.common.main" />
-        <module name="com.kap.kap.error.main" />
+        <module name="kap.error.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8" />
