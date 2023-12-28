@@ -198,7 +198,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         if($formObj.find(".dropzone").size() > 0)
                         {
-                            console.log($formObj);
                             cmmCtrl.fileFrmAjax(function(data){
                                 //콜백함수. 페이지 이동
                                 if(data.respCnt > 0){
@@ -206,22 +205,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                     location.replace("./list");
                                 }else if(data.respCnt == '-1'){
                                     alert(data.SMBMainVslDTO.respMsg);
-                                    location.reload();
                                 }
                             }, actionUrl, $formObj, "json");
-                        }
-                        else
-                        {
-                            cmmCtrl.frmAjax(function(data){
-                                if(data.respCnt > 0){
-                                    alert(actionMsg);
-                                    location.replace("./list");
-                                }else if(data.respCnt == '-1'){
-                                    alert(data.respMsg);
-                                    location.reload();
-                                }
-                                actionUrl = "./list";
-                            }, actionUrl, $formObj, "post", "json")
                         }
                     }
                 }
