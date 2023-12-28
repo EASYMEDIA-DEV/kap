@@ -6,16 +6,8 @@
 <c:choose>
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
+
             <tr data-total-count="${rtnData.totalCount}">
-                <%--<td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center">${ list.year }</td>
-                <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.episdSeq}">${list.episd}</a></td>
-                <td class="text-center">${ kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
-                <td class="text-center">${ kl:convertDate(list.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
-                <td class="text-center">${ list.dateState}</td>
-                <td class="text-center">${ list.regName}</td>
-                <td class="text-center">${ list.regDtm}</td>
-                <td class="text-center">--%>
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
                         <input type="checkbox" value="${list.episdSeq}" name="delValueList" class="checkboxSingle notRequired" />
@@ -27,12 +19,12 @@
                 <td class="text-center">${ kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
                 <td class="text-center">${ kl:convertDate(list.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
                 <td class="text-center">${list.dateState}</td>
-                <td class="text-center">-</td>
-                <td class="text-center">-</td>
-                    <td class="text-center">${ list.prizePmt}</td>
-                    <td class="text-center">${ list.placeNm}</td>
+                <td class="text-center deleteCheck" data-value="${list.regCli}">${ kl:decode(list.regCli, 0,"-", list.regCli) }</td>
+                <td class="text-center">${ kl:decode(list.winCli, 0,"-", list.winCli) }</td>
+                <td class="text-center">${ list.prizePmt}</td>
+                <td class="text-center">${ list.placeNm}</td>
                 <td class="text-center">${ list.regName}</td>
-                <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
+                <%--<td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modDtm}">
@@ -42,7 +34,7 @@
                             -
                         </c:otherwise>
                     </c:choose>
-                </td>
+                </td>--%>
                 <td class="text-center">${ kl:decode(list.modDtm, "", "-", kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '')) }</td>
                 <td class="text-center">${ list.expsYn eq 'Y' ? '노출' : '미노출' }</td>
             </tr>
