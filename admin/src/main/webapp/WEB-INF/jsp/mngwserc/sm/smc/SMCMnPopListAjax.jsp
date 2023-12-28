@@ -17,7 +17,7 @@
                     </a>
                 </td>
                 <%-- <td class="text-center" data-strt-dtm="${list.expsStrtDtm}">${ empty list.expsStrtDtm ? '-' : kl:convertDate(list.expsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>--%>
-                <td class="text-center" >${ list.odtmYn == 'Y' ? "상시" : kl:convertDate(list.expsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '-') +=  '</br> ~ </br>' +=  kl:convertDate(list.expsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } </td>
+                <td class="text-center" >${ list.odtmYn == 'Y' ? "상시" : kl:convertDate(list.expsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '-') +=  ' ~ ' +=  kl:convertDate(list.expsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } </td>
                 <td class="text-center">${list.regName}(${list.regId})</td>
                 <td class="text-center">${list.regDtm}</td>
                 <td class="text-center">

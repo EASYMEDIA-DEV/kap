@@ -60,7 +60,7 @@ public class EBCVisitEduController {
 
 
     /**
-     * 방문교육 신청 1단계(기본정보) 페이지로 이동한다.
+     * 방문교육 신청 페이지로 이동한다.
      */
     @RequestMapping(value="/index")
     public String getVisitEduIndexPage(MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
