@@ -5,13 +5,13 @@
       <tr data-total-count="${rtnData.totalCount}">
         <td class="text-center">
           <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" value="${list.cnstgSeq}" name="delValueList" class="checkboxSingle notRequired" data-edctn_seq="${list.cnstgSeq}"/>
+            <input type="checkbox" value="${list.cnstgSeq}" name="delValueList" class="checkboxSingle notRequired" data-edctn_seq="${list.cnstgSeq}"  data-rsumeCd="${list.rsumeSttsCd}"/>
             <span class="ion-checkmark-round"></span>
           </label>
         </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>    <%--번호--%>
         <td class="text-center">${ list.bsnYear }</td>                                              <%--사업연도--%>
-        <td class="text-center">${ list.resumeSttsNm }</td>                                         <%--진행상태--%>
+        <td class="text-center">${ list.rsumeSttsNm }</td>                                         <%--진행상태--%>
         <td class="text-center"><a href="javascript:" class="listView" data-details-key="${list.cnstgSeq}">${ list.cmpnNm }</a></td>                                               <%--부품사명--%>
         <td class="text-center">${ list.appctnBsnmNo }</td>                                         <%--사업자등록번호--%>
         <td class="text-center">${ list.ctgryNm }</td>                                              <%--구분--%>

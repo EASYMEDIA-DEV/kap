@@ -38,7 +38,7 @@ public class CBATechGuidanceSearchDTO extends BaseDTO {
     @Schema(title = "지도분야")
     private String appctnFidCd;
     @Schema(title = "진행상태")
-    private String resumeSttsCd;
+    private String rsumeSttsCd;
     @Schema(title = "리스트")
     private List<CBATechGuidanceInsertDTO> list;
 

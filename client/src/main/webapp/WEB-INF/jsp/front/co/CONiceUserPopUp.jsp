@@ -25,8 +25,6 @@
 		<input type="hidden" id="param5" name="param5"  value="${rtnData.receivedatass.paramsFive}"/>
 		<script type="text/javascript">
 			if('${rtnData.resultcode}' == "0000") {
-				console.log(document.getElementById("param1").value );
-				console.log(document.getElementById("ci").value );
 				if(document.getElementById("param1").value != document.getElementById("ci").value) {
 					alert("본인인증에 실패하였습니다.");
 

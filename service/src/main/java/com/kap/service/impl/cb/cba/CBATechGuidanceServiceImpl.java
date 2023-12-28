@@ -232,6 +232,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             mPAUserDto.setPstnCd(pCBATechGuidanceInsertDTO.getPstnCd());
             mPAUserDto.setTelNo(pCBATechGuidanceInsertDTO.getTelNo());
             mPAUserDto.setHpNo(pCBATechGuidanceInsertDTO.getHpNo());
+            mPAUserDto.setChngFndn("N");
             mpaUserService.updateUserDtl(mPAUserDto);
         }
     }
@@ -632,7 +633,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
             //진행상태
             cell = row.createCell(2);
-            cell.setCellValue(excelList.get(i).getResumeSttsNm());
+            cell.setCellValue(excelList.get(i).getRsumeSttsNm());
             cell.setCellStyle(style_body);
 
             //부품사명

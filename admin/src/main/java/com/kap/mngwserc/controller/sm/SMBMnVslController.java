@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 /**
  * <pre>
@@ -154,56 +153,43 @@ public class SMBMnVslController {
         return mav;
     }
 
-
-    @RestController
-    @RequiredArgsConstructor
-    @RequestMapping(value="/mngwserc/sm/smb/{mdCd:pc|mobile}")
-    public class SMBMnVslRestController {
-
-        private final SMBMnVslService sMBMnVslService;
-
-        /**
-         * 메인 비주얼 등록
-         */
-        @PostMapping(value = "/insert")
-        @ResponseBody
-        public SMBMainVslDTO insertMnVsl(@RequestBody SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
-            /*  try {*/
-            System.err.println("sMBMainVslDTO:::"+sMBMainVslDTO);
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            sMBMainVslDTO.setMdCd(mdCd);
-            sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
-            sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
-            modelMap.addAttribute("respCnt", sMBMnVslService.insertMnVsl(sMBMainVslDTO));
-       /* } catch (Exception e) {
+    /**
+     * 메인 비주얼 등록
+     */
+    @PostMapping(value = "/insert")
+    public String insertMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
+      try {
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        sMBMainVslDTO.setMdCd(mdCd);
+        sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
+        sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+        modelMap.addAttribute("respCnt", sMBMnVslService.insertMnVsl(sMBMainVslDTO));
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
-
-            return sMBMainVslDTO;
         }
-        @PostMapping(value = "/update")
-        @ResponseBody
-        public SMBMainVslDTO updateMnVsl(@Valid @RequestBody SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
-            try {
-                COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-                sMBMainVslDTO.setMdCd(mdCd);
-                sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
-                sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
-                modelMap.addAttribute("respCnt", sMBMnVslService.updateMnVsl(sMBMainVslDTO));
-            } catch (Exception e) {
-                if (log.isErrorEnabled()) {
-                    log.debug(e.getMessage());
-                }
-                throw new Exception(e.getMessage());
-            }
-
-            return sMBMainVslDTO;
-        }
+        return "jsonView";
     }
 
+    @PostMapping(value = "/update")
+    public String updateMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
+        try {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            sMBMainVslDTO.setMdCd(mdCd);
+            sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
+            sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
+            modelMap.addAttribute("respCnt", sMBMnVslService.updateMnVsl(sMBMainVslDTO));
+        } catch (Exception e) {
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
 }

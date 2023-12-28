@@ -32,7 +32,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// 로그인 콜백
 	var callbackAjaxLogin = function(data){
 		var code = data.respCd;
-		// code ="1410";
 		if(code == "0000") {
 			//returnUrl 조회
 			if($.trim(ctrl.obj.data("rtnUrl")) != ""){
@@ -75,7 +74,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				alert(msgCtrl.getMsg("fail.co.login.password.changeCycle"));
 				location.replace("/change-password");
 			}
-			
+
 		}
 
 		else if (code == "9999")
@@ -190,6 +189,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				event : {
 					click : function (){
 						cmmCtrl.niceCertification( "/id-find-res");
+					}
+				}
+			},
+			myInfoUpd : {
+				event : {
+					click : function() {
+						// TODO 양현우 12/28 위원 ci값 비교?
+						if($("#authCd").val() == 'CS') {
+							cmmCtrl.niceCertification( "/my-page/member/intrduction/modify-page");
+						} else {
+							cmmCtrl.niceCertification( "/my-page/member/intrduction/modify-page&ciChk&"+$("#ci").val());
+						}
 					}
 				}
 			},

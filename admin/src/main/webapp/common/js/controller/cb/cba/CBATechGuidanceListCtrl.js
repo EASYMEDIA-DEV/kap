@@ -75,56 +75,6 @@ define(["ezCtrl"], function(ezCtrl) {
                         search(1);
                     }
                 }
-            },
-            //데이터 삭제
-            btnDeleteExam : {
-                event : {
-                    click : function() {
-                        var frmDataObj    = $(this).closest("form");
-                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-                        var delType = frmDataObj.data("delType");
-                        if (delActCnt > 0)
-                        {
-                            //삭제 전송
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    alert(msgCtrl.getMsg("fail.ex.deleteCheck"));
-                                }else{
-                                    if(confirm(msgCtrl.getMsg("confirm.del")))
-                                    {
-                                        //삭제 전송
-                                        cmmCtrl.frmAjax(function(respObj){
-                                            if(respObj != undefined && respObj.respCnt > 0){
-                                                var msg = msgCtrl.getMsg("success.del.target.none");
-                                                if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
-                                                    msg = msgCtrl.getMsg("success.del.target." + delType);
-                                                }
-                                                alert(msg);
-                                                $formObj.find("#btnSearch").click();
-                                            }
-                                            else{
-                                                alert(msgCtrl.getMsg("fail.act"));
-                                            }
-                                        }, "./delete", frmDataObj, "POST", "json");
-                                    }
-                                }
-                            }, "./getExamEdctnEpisdCnt", frmDataObj, "POST", "json");
-                        }
-                        else
-                        {
-                            if(typeof delType!= "undefined")
-                            {
-                                alert(msgCtrl.getMsg("fail.del.target." + frmDataObj.data("delType")));
-                            }
-                            else
-                            {
-                                alert(msgCtrl.getMsg("fail.targetBoard"));
-                            }
-
-                            return;
-                        }
-                    }
-                }
             },//데이터 삭제
             btnDeleteConsult : {
                 event : {
@@ -132,25 +82,36 @@ define(["ezCtrl"], function(ezCtrl) {
                         var frmDataObj    = $(this).closest("form");
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
                         var delType = frmDataObj.data("delType");
+
                         if (delActCnt > 0)
                         {
                             // 계정은 최고 관리자 및 본인 계정은 삭제 불가
                             if(confirm(msgCtrl.getMsg("confirm.del")))
                             {
-                                //삭제 전송
-                                cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
-                                        var msg = msgCtrl.getMsg("success.del.target.none");
-                                        if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
-                                            msg = msgCtrl.getMsg("success.del.target." + delType);
+                                $('input:checkbox[name=delValueList]').each(function (index) {
+                                    if($(this).is(":checked")==true){
+                                        var rsumeCd = $(this).data("rsumecd");
+                                        if(rsumeCd == "MNGTECH_STATUS_01") {
+                                            //삭제 전송
+                                            cmmCtrl.frmAjax(function(respObj){
+                                                if(respObj != undefined && respObj.respCnt > 0){
+                                                    var msg = msgCtrl.getMsg("success.del.target.none");
+                                                    if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
+                                                        msg = msgCtrl.getMsg("success.del.target." + delType);
+                                                    }
+                                                    alert(msg);
+                                                    $formObj.find("#btnSearch").click();
+                                                }
+                                                else{
+                                                    alert(msgCtrl.getMsg("fail.act"));
+                                                }
+                                            }, "./delete", frmDataObj, "POST", "json");
+                                        }else{
+                                            alert("접수 이후의 신청 건은 삭제가 불가합니다");
+                                            return false;
                                         }
-                                        alert(msg);
-                                        $formObj.find("#btnSearch").click();
                                     }
-                                    else{
-                                        alert(msgCtrl.getMsg("fail.act"));
-                                    }
-                                }, "./delete", frmDataObj, "POST", "json");
+                                })
                             }
                         }
                         else

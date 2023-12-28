@@ -111,8 +111,6 @@ public class EBBEpisdController {
         {
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
-
-
         }
         catch (Exception e)
         {
@@ -182,15 +180,12 @@ public class EBBEpisdController {
     @GetMapping(value = "/excel-down3")
     public void getEpisdPtcptAtndcExcel(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response) throws Exception
     {
-        /*try
-        {*/
+        try
+        {
             eBBEpisdDTO.setExcelYn("Y");
             // 목록 조회
             //목록 상단 th에 뿌려줄 날짜 리스트를 구한다.
             EBBPtcptDTO eBBPtcptDTO = eBBEpisdService.setAtndcList(eBBEpisdDTO);
-
-            System.out.println("@@@ getEdctnStrtDtm = " + eBBEpisdDTO.getEdctnStrtDtm());
-            System.out.println("@@@ getEdctnEndDtm = " + eBBEpisdDTO.getEdctnEndDtm());
 
                 String getEdctnStrtDtm= eBBEpisdDTO.getEdctnStrtDtm();
                 String getEdctnEndDtm= eBBEpisdDTO.getEdctnEndDtm();
@@ -221,7 +216,7 @@ public class EBBEpisdController {
 
             //엑셀 생성
             eBBEpisdService.excelDownload3(tableAtndcList, eBBPtcptDTO, response);
-        /*}
+        }
         catch (Exception e)
         {
             if (log.isDebugEnabled())
@@ -229,7 +224,7 @@ public class EBBEpisdController {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
     }
 
 

@@ -97,27 +97,34 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
      * 메인 비주얼 등록
      */
     public int insertMnVsl(SMBMainVslDTO pSMBMainVslDTO) throws Exception {
-        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
-        String tagCd = pSMBMainVslDTO.getTagCd();
-
-        if (tagCd.equals("image")) {
-            pSMBMainVslDTO.setFileSeq(fileSeqMap.get("imgFileSeq"));
-        } else {
-            pSMBMainVslDTO.setFileSeq(fileSeqMap.get("videoFileSeq"));
-        }
 
         int mainCnt = sMBMnVslMapper.selectMnVslCnt(pSMBMainVslDTO);
 
-        // 2023-06-05 메인 비주얼 배너 업로드 개수 5개 제한 복원
-        if (mainCnt < 5) {
+        // 등록 시점에 노출이 5개면 제한
+        // 메인 비주얼 배너 업로드 갯수 5개 제한
+        // 노출여부가 N이면 갯수 체크 안함
+        boolean temp = (pSMBMainVslDTO.getExpsYn().equals("N") || mainCnt < 5) ? true : false;
+
+        if(temp){
             pSMBMainVslDTO.setVslSeq(mainVslIdgen.getNextIntegerId());
             pSMBMainVslDTO.setMnHexCd(pSMBMainVslDTO.getMnHexCd().replace(" ", ""));
             pSMBMainVslDTO.setSubHexCd(pSMBMainVslDTO.getSubHexCd().replace(" ", ""));
+
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pSMBMainVslDTO.getFileList());
+            String tagCd = pSMBMainVslDTO.getTagCd();
+
+            if (tagCd.equals("image")) {
+                pSMBMainVslDTO.setFileSeq(fileSeqMap.get("imgFileSeq"));
+            } else {
+                pSMBMainVslDTO.setFileSeq(fileSeqMap.get("videoFileSeq"));
+            }
+
             pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.insertMnVsl(pSMBMainVslDTO));
-        } else {
+        }else{
             pSMBMainVslDTO.setRespCnt(-1);
             pSMBMainVslDTO.setRespMsg("메인에 노출할 게시물은 최대 5개까지입니다.");
         }
+
         return pSMBMainVslDTO.getRespCnt();
     }
 
@@ -139,6 +146,8 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         if(expsYn.equals("Y")){
             // 등록하는 글의 노출 여부가 Y일 때, 개수 체크
             pSMBMainVslDTO.setUpdateYn("Y");
+            pSMBMainVslDTO.setDStrDt(pSMBMainVslDTO.getExpsStrtDtm());
+            pSMBMainVslDTO.setDEndDt(pSMBMainVslDTO.getExpsEndDtm());
             int mainCnt = sMBMnVslMapper.selectMnVslCnt(pSMBMainVslDTO);
             // 메인 비주얼 배너 업로드 개수 5개 제한
             if (mainCnt < 5) {
@@ -153,10 +162,6 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
             // 노출여부가 N이면 개수 체크 x
             pSMBMainVslDTO.setRespCnt(sMBMnVslMapper.updateMnVsl(pSMBMainVslDTO));
         }
-
-
-
-
         return pSMBMainVslDTO.getRespCnt();
     }
 

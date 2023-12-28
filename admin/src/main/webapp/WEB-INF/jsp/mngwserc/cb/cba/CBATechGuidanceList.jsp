@@ -59,10 +59,10 @@
                     <label class="col-sm-1 control-label">진행상태</label>
                     <div class="col-sm-5">
                         <div class="col-sm-3 pr0">
-                            <select class="form-control input-sm" name="resumeSttsCd">
+                            <select class="form-control input-sm" name="rsumeSttsCd">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${cdDtlList.MNGTECH_STATUS}" varStatus="status">
-                                    <option value="${cdList.cd}" <c:if test="${rtnData.resumeSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.rsumeSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                 </c:forEach>
                             </select>
                         </div>

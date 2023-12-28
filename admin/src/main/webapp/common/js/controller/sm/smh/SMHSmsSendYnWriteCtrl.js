@@ -23,9 +23,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var smsSendYn = frmDataObj.find("input[name='smsSendYn']:checked").val();
                         var confirmMsg = "";
                         if (smsSendYn === "Y") {
-                            confirmMsg = "‘ON’로 설정 시 모든 SMS는 발송이 중지됩니다. 설정하시겠습니까?";
+                            confirmMsg = "‘ON’로 설정 시 모든 SMS는 발송이 시작됩니다.\n설정하시겠습니까?";
                         } else {
-                            confirmMsg = "‘OFF’로 설정 시 모든 SMS는 발송이 중지됩니다. 설정하시겠습니까?";
+                            confirmMsg = "‘OFF’로 설정 시 모든 SMS는 발송이 중지됩니다.\n설정하시겠습니까?";
                         }
 
                         if(confirm(confirmMsg))
@@ -38,8 +38,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 else{
                                     alert(msgCtrl.getMsg("fail.act"));
                                 }
-                                location.replace("./write");
                             }, "./update", frmDataObj, "POST", "json");
+                        } else {
+
                         }
                     }
                 }

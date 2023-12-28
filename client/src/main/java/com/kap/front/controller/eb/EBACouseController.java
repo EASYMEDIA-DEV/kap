@@ -1,6 +1,7 @@
 package com.kap.front.controller.eb;
 
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.EmfMap;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.service.COCodeService;
@@ -95,7 +96,7 @@ public class EBACouseController {
      * 교육과정 목록을 조회한다.
      */
     @RequestMapping(value = "/apply/select")
-    public String getEpisdPageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getCousePageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -114,6 +115,32 @@ public class EBACouseController {
         return "front/eb/eba/EBACouseListAjax";
     }
 
+    /**
+     * 교육회차관리 목록을 조회한다.
+     */
+    @RequestMapping(value = "/apply/episdSelect")
+    public String getEpisdPageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+
+            System.out.println("@@@@@온다");
+
+
+            modelMap.addAttribute("rtnData", eBBEpisdService.selectCouseChildEpisdList(eBBEpisdDTO));
+            modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/eb/eba/EBACouseChildEpisdListAjax";
+    }
+
 
 
     /**
@@ -125,12 +152,11 @@ public class EBACouseController {
         String vwUrl = "front/eb/eba/EBACouseDtl.front";
         try
         {
-            System.out.println("@@@@@ 온닷!!! 교육과정 신청 상세");
-
             HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
 
             EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
-            List<EBACouseDTO> rtnTrgtData = (List<EBACouseDTO>) rtnMap.get("rtnTrgtData");
+            List<EBACouseDTO> rtnEpisdList = (List<EBACouseDTO>) rtnMap.get("rtnEpisdList");//과저엥 소속된 차수 목록
+            List<EBACouseDTO> rtnTrgtData = (List<EBACouseDTO>) rtnMap.get("rtnTrgtData");//학습대상 목록
 
             //교육과정연계 상세 조회
             List<EBACouseDTO> relList = eBACouseService.selectEdctnRelList(rtnDto);
@@ -177,10 +203,11 @@ public class EBACouseController {
                 rtnDto.setPrntCd(prntCd);
             }
 
+            modelMap.addAttribute("rtnData", rtnDto);//과정 기본정보
+            modelMap.addAttribute("rtnEpisdList", rtnEpisdList);//과정에 소속된 차수목록
+            modelMap.addAttribute("rtnTrgtData", rtnTrgtData);//학습 대상 목록
+            modelMap.addAttribute("relList", relList);//과정 연계 목록
 
-            modelMap.addAttribute("rtnData", rtnDto);
-            modelMap.addAttribute("rtnTrgtData", rtnTrgtData);
-            modelMap.addAttribute("relList", relList);
         }
         catch (Exception e)
         {
@@ -191,6 +218,57 @@ public class EBACouseController {
             throw new Exception(e.getMessage());
         }
         return vwUrl;
+    }
+
+    /*
+    학습대상 공통코드 분류
+     */
+    private List<EmfMap> setEdTargetList(String arg){
+
+        List<EmfMap> targetList = new ArrayList<>();
+
+        try{
+
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            //과정분류 공통코드 세팅
+            // 코드 set
+            cdDtlList.add(arg);
+
+            HashMap<String, List<COCodeDTO>> temp =  cOCodeService.getCmmCodeBindAll(cdDtlList);
+
+            List<COCodeDTO> tempList = temp.get(arg);
+
+            for(COCodeDTO a : tempList){
+
+                if(a.getDpth() == 2){
+                    EmfMap targetMap = new EmfMap();
+
+                    List<EmfMap> dpth3List = new ArrayList<>();
+                    for(COCodeDTO b : tempList){
+                        if(b.getCd().contains(a.getCd())){
+                            EmfMap map = new EmfMap();
+
+                            map.put("cd", b.getCd());
+                            map.put("cdNm", b.getCdNm());
+                            map.put("dpth", b.getDpth());
+                            dpth3List.add(map);
+                            targetMap.put("edList", dpth3List);
+                        }
+                    }
+                    targetList.add(targetMap);
+                }
+
+
+            }
+
+
+        }catch (Exception e){
+
+        }
+
+
+        return targetList;
+
     }
 
     @RestController

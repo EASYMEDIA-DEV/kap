@@ -73,8 +73,19 @@ public class EBACouseDTO extends BaseDTO {
     private String stduyTrgtCntn;
 
     //학습대상 코드
+    @Schema(title = "학습대상 부모코드", example = "텍스트")
+    private String prntTargetCd;
+
+    //학습대상 코드
+    @Schema(title = "학습대상 부모코드명", example = "텍스트")
+    private String prntTargetCdNm;
+
+    //학습대상 코드
     @Schema(title = "학습대상 코드", example = "텍스트")
     private String targetCd;
+
+    @Schema(title = "학습대상 코드명", example = "텍스트")
+    private String targetCdNm;
 
     //학습대상 코드 - 기타
     @Schema(title = "학습대상 코드 - 기타", example = "텍스트")
@@ -92,9 +103,15 @@ public class EBACouseDTO extends BaseDTO {
     @Schema(title = "수료기준코드", example = "텍스트")
     private String cmptnStndCd;
 
+    @Schema(title = "수료기준코드명", example = "텍스트")
+    private String cmptnStndCdNm;
+
     //수료평가코드
     @Schema(title = "수료평가코드", example = "텍스트")
     private String cmptnJdgmtCd;
+
+    @Schema(title = "수료평가코드명", example = "텍스트")
+    private String cmptnJdgmtCdNm;
 
     //평가여부
     @Schema(title = "평가여부(화면에서는 평가없음)", example = "Y = 평가 함 / N = 평가 안함(체크박스 체크)")
@@ -156,14 +173,12 @@ public class EBACouseDTO extends BaseDTO {
     @Schema(title = "연계교육명", example = "텍스트")
     private String cnnctNm;
 
-
-
+    @Schema(title = "파일경로", example = "텍스트")
+    private String webPath;
 
 
     //로그인세션ID
     private String lgnSsnId;
-
-
 
     //사용여부
     private List<EBACouseDTO> list;

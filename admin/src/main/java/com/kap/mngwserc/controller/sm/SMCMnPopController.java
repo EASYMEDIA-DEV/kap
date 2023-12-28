@@ -115,7 +115,7 @@ public class SMCMnPopController {
      * 팝업을 등록한다.
      */
     @RequestMapping(value="/insert", method= RequestMethod.POST)
-    public String insertMnPop(@RequestBody SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
+    public String insertMnPop(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
@@ -172,11 +172,10 @@ public class SMCMnPopController {
      *
      */
     @RequestMapping(value="/update")
-    public String updateMnPop(@RequestBody SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
+    public String updateMnPop(SMCMnPopDTO smcMnPopDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception
     {
         try
         {
-
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             smcMnPopDTO.setModId(cOUserDetailsDTO.getId());
             smcMnPopDTO.setModIp(cOUserDetailsDTO.getLoginIp());

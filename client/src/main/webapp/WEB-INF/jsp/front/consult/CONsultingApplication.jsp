@@ -135,7 +135,7 @@
                                         </tr>
                                         <tr>
                                             <th>구분</th>
-                                            <td id="sizeCd"></td>
+                                            <td id="ctgryNm"></td>
                                         </tr>
                                         <tr>
                                             <th>규모</th>
@@ -163,26 +163,23 @@
                                         </tr>
                                         <tr>
                                             <th>주생산품</th>
-                                            <td id="mjrPrdct">① 알루미늄 실린더 ② 섀시</td>
+                                            <td id="mjrPrdct"></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="fiveStar" style="display: none">
                                             <th>품질5스타</th>
-                                            <td>★★★★★ / 2022년</td>
+                                            <td id="qlty5Star"></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="fiveStar" style="display: none">
                                             <th>납입5스타</th>
-                                            <td>★★★ / 2018년</td>
+                                            <td id="pay5Star"></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="fiveStar" style="display: none">
                                             <th>기술5스타</th>
-                                            <td>-</td>
+                                            <td id="techlg5Star"></td>
                                         </tr>
-                                        <tr>
+                                        <tr class="sqInfo" style="display: none">
                                             <th>SQ정보</th>
                                             <td id="sqInfo">
-                                                <p>1. SQ1 / 2000 / 2018 년 / 와이즈랩</p>
-                                                <p>2. SQ3 / 2000 / 2018 년 / 와이즈랩</p>
-                                                <p>3. SQ2 / 2000 / 2018 년 / 와이즈랩</p>
                                             </td>
                                         </tr>
                                         </tbody>

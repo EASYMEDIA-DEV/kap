@@ -197,11 +197,18 @@ define(["ezCtrl"], function(ezCtrl) {
             }
         },
         immediately : function() {
+
+            var odtmYn = $('#odtmYn').is(":checked");
+            if (odtmYn) {
+                $(".datetimepicker_strtDt, .datetimepicker_endDt").addClass("notRequired").prop("disabled", true);
+                $(".input-group").find("input").prop("disabled", true).val("");
+                $(".input-group").siblings("select").prop("disabled", true).find("option:eq(0)").prop("selected", true);
+            }
+
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
-
             search($formObj.find("input[name=pageIndex]").val());
-
+            debugger;
         }
     };
 

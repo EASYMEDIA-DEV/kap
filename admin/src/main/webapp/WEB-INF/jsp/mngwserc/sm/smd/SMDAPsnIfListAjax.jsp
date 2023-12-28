@@ -15,10 +15,38 @@
                             ${list.titl}
                     </a>
                 </td>
-                <td class="text-center">${list.regName}(${list.regId})</td>
-                <td class="text-center">${list.regDtm}</td>
-                <td class="text-center">${list.modName}(${list.modId})</td>
-                <td class="text-center">${list.modDtm}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.regName }">
+                            ${ list.regName }(${ list.regId })
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.regDtm }">
+                            ${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.modName }">
+                            ${ list.modName }(${ list.modId })
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.modDtm }">
+                            ${ kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
                 <td class="text-center">${ kl:decode(list.expsYn, 'Y', '노출', '미노출') }</td>
             </tr>
         </c:forEach>

@@ -210,54 +210,54 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         var initVstOpnnCntn = $("#initVstOpnnCntn").val();
 
         if(bfGbDt == 0 || bfGbDt < 0) {
-            $(".resumeSttsNm").text("지도중");
-            $(".resumeSttsCd").val("MNGCNSLT_STATUS09");
+            $(".rsumeSttsNm").text("지도중");
+            $(".rsumeSttsCd").val("MNGCNSLT_STATUS09");
 
             if (guidePscndCd == 'GUIDE_PSCND01') {
-                $(".resumeSttsNm").text("지도연기");
-                $(".resumeSttsCd").val("MNGTECH_STATUS10");
+                $(".rsumeSttsNm").text("지도연기");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS10");
             } else if (guidePscndCd == 'CNSTG_PSCND01') {
-                $(".resumeSttsNm").text("재단취소");
-                $(".resumeSttsCd").val("MNGTECH_STATUS11");
+                $(".rsumeSttsNm").text("재단취소");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS11");
             } else if (guidePscndCd == 'CNSTG_PSCND02') {
-                $(".resumeSttsNm").text("부품사취소");
-                $(".resumeSttsCd").val("MNGTECH_STATUS12");
+                $(".rsumeSttsNm").text("부품사취소");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS12");
             } else if (guidePscndCd == 'CNSTG_PSCND03') {
-                $(".resumeSttsNm").text("지도 완료");
-                $(".resumeSttsCd").val("MNGTECH_STATUS13");
+                $(".rsumeSttsNm").text("지도 완료");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS13");
             }
         }
         else{
             if(initVstRsltCd == ''){
                 if (bfJdgmtRslt == 'BF_JDGMT_RSLT05') {
-                    $(".resumeSttsNm").text("사용자취소");
-                    $(".resumeSttsCd").val("MNGCNSLT_STATUS02");
+                    $(".rsumeSttsNm").text("사용자취소");
+                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS02");
                 }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT01') {
-                    $(".resumeSttsNm").text("사전심사선정");
-                    $(".resumeSttsCd").val("MNGCNSLT_STATUS03");
+                    $(".rsumeSttsNm").text("사전심사선정");
+                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS03");
                 }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT02') {
-                    $(".resumeSttsNm").text("사전심사탈락");
-                    $(".resumeSttsCd").val("MNGCNSLT_STATUS04");
+                    $(".rsumeSttsNm").text("사전심사탈락");
+                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS04");
                 }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT04') {
-                    $(".resumeSttsNm").text("봉사단이관");
-                    $(".resumeSttsCd").val("MNGCNSLT_STATUS05");
+                    $(".rsumeSttsNm").text("봉사단이관");
+                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS05");
                 }
             }else{
                 if(initVstRsltCd == 'BF_JDGMT_RSLT01'){
-                    $(".resumeSttsNm").text("지도승인");
-                    $(".resumeSttsCd").val("MNGCNSLT_STATUS07");
+                    $(".rsumeSttsNm").text("지도승인");
+                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS07");
                 }else if(initVstRsltCd == 'BF_JDGMT_RSLT02'){
-                    $(".resumeSttsNm").text("지도불가");
-                    $(".resumeSttsCd").val("MNGCNSLT_STATUS08");
+                    $(".rsumeSttsNm").text("지도불가");
+                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS08");
                 }else if((vstDtFormat == 0 || vstDtFormat < 0) && initVstOpnnCntn == ''){
-                    $(".resumeSttsNm").text("초도방문");
-                    $(".resumeSttsCd").val("MNGCNSLT_STATUS06");
+                    $(".rsumeSttsNm").text("초도방문");
+                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS06");
                 }else if(initVstRsltCd == 'BF_JDGMT_RSLT04'){
-                    $(".resumeSttsNm").text("봉사단이관");
-                    $(".resumeSttsCd").val("MNGCNSLT_STATUS05");
+                    $(".rsumeSttsNm").text("봉사단이관");
+                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS05");
                 }else if(initVstRsltCd == 'BF_JDGMT_RSLT05'){
-                    $(".resumeSttsNm").text("사용자취소");
-                    $(".resumeSttsCd").val("MNGCNSLT_STATUS02");
+                    $(".rsumeSttsNm").text("사용자취소");
+                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS02");
                 }
             }
         }
@@ -539,7 +539,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     click: function () {
                         $("#srchDivide").val("Y");
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
-
                             var cmpnMst = {};
                             cmpnMst.bsnmNo = data.bsnmNo.replaceAll("-", "");
                             cmmCtrl.jsonAjax(function (data) {

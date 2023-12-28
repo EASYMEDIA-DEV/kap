@@ -255,6 +255,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             mPAUserDto.setPstnCd(pCBBManageConsultInsertDTO.getPstnCd());
             mPAUserDto.setTelNo(pCBBManageConsultInsertDTO.getTelNo());
             mPAUserDto.setHpNo(pCBBManageConsultInsertDTO.getHpNo());
+            mPAUserDto.setChngFndn("N");
             mpaUserService.updateUserDtl(mPAUserDto);
         }
     }
@@ -639,7 +640,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
             //진행상태
             cell = row.createCell(2);
-            cell.setCellValue(list.get(i).getResumeSttsNm());
+            cell.setCellValue(list.get(i).getRsumeSttsNm());
             cell.setCellStyle(style_body);
 
             //부품사명
