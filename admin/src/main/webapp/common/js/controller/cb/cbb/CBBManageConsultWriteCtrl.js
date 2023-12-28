@@ -166,7 +166,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $('input[name=mpleCnt]').val(cmpnMpleCnt);
             console.log(cmpnTelNo);
             var afCmpnTelNo = cmpnTelNo.replace('-', '');
-            console.log(afCmpnTelNo);
             $('input[name=telNo]').val(afCmpnTelNo);
 
             $('input[name=cmpnNfrmlNm]').val(cmpnNfrmlNm);

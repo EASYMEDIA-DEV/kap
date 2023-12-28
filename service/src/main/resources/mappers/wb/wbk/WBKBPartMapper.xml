@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.wb.wbk.WBKBPartMapper">
+    <!--
+         쿼리명 : WBPartCompanyMapper.selPartCompanyUserList
+         설  명 : 부품사 회원 List 정보
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selPartCompanyUserList" parameterType="WBPartCompanyDTO" resultType="WBPartCompanyDTO">
+        select mem_seq
+             , id
+             , name
+             , hp_no
+             , email
+             , reg_dtm
+             , mod_dtm
+             , mem_cd
+             , work_bsnm_no
+             , mod_name
+             , cmpn_nm
+             , size_cd_nm
+             , ctgry_cd_nm
+             , gndr
+             , tel_no
+             , zipcode
+             , bsc_addr
+             , dtl_addr
+             , ntfy_sms_rcv_yn
+             , ntfy_email_rcv_yn
+           from ( select mem.mem_seq
+                       , mem.id
+                       , mem.name
+                       , mem.hp_no
+                       , mem.email
+                       , mem.reg_dtm
+                       , mem.mod_dtm
+                       , mem.gndr
+                       , mem.mem_cd
+                       , mem.work_bsnm_no
+                       , mem.ntfy_sms_rcv_yn
+                       , mem.ntfy_email_rcv_yn
+                       , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
+                              when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
+                                else null end as mod_name
+                      , cmpn_mst.cmpn_nm
+                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd ) as size_cd_nm
+                      , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
+                      , cmpn_mst.ctgry_cd
+                      , mem.tel_no
+                      , mem.zipcode
+                      , mem.bsc_addr
+                      , mem.dtl_addr
+                     from co_mem_mst mem
+                      inner join ( select mem_mod_seq
+                                        , mem_seq
+                                        , mod_cd
+                                        , reg_id
+                                      from co_mem_mod_log
+                                        where ( mem_mod_seq
+                                              , mem_seq)
+                                         in ( select max(mem_mod_seq)
+                                                   , mem_seq
+                                                 from co_mem_mod_log
+                                                   group by mem_seq ) ) mst
+                       on mem.mem_seq = mst.mem_seq
+                        left outer join co_mem_cmpn_rel cmpn_rel
+                          on mem.mem_seq = cmpn_rel.mem_seq
+                           and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                        left outer join cp_cmpn_mst cmpn_mst
+                          on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no
+               ) as ma
+            <include refid="selectUserListWhereSql" />
+            order by ma.reg_dtm desc
+            <if test="excelYn != 'Y'.toString() ">
+                limit   #{firstIndex}, #{recordCountPerPage}
+            </if>
+    </select>
+
+    <!--
+         쿼리명 : WBPartCompanyMapper.selPartCompanyUserListCnt
+         설  명 : 부품사 회원 List Count
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selPartCompanyUserListCnt" parameterType="WBPartCompanyDTO" resultType="java.lang.Integer" >
+        select count(*)
+          from (select mem.mem_seq
+                     , mem.id
+                     , mem.name
+                     , mem.hp_no
+                     , mem.email
+                     , mem.reg_dtm
+                     , mem.mod_dtm
+                     , mem.mem_cd
+                     , mem.work_bsnm_no
+                     , mem.gndr
+                     , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
+                            when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
+                             else null end as mod_name
+                     , cmpn_mst.cmpn_nm
+                     , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd ) as size_cd_nm
+                     , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
+                     , cmpn_mst.ctgry_cd
+                    from co_mem_mst mem
+                     inner join ( select mem_mod_seq
+                                       , mem_seq
+                                       , mod_cd
+                                       , reg_id
+                                     from co_mem_mod_log
+                                       where ( mem_mod_seq
+                                             , mem_seq)
+                                        in ( select max(mem_mod_seq)
+                                                  , mem_seq
+                                                from co_mem_mod_log
+                                                 group by mem_seq ) ) mst
+                      on mem.mem_seq = mst.mem_seq
+                       left outer join co_mem_cmpn_rel cmpn_rel
+                        on mem.mem_seq = cmpn_rel.mem_seq
+                         and mem.work_bsnm_no = cmpn_rel.bsnm_no
+                        left outer join cp_cmpn_mst cmpn_mst
+                          on cmpn_mst.bsnm_no  = cmpn_rel.bsnm_no ) as ma
+                        <include refid="selectUserListWhereSql" />
+    </select>
+
+    <!--
+         쿼리명 : WBPartCompanyMapper.selPartCompanyUserListCnt
+         설  명 : 부품사 회원 정보
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selPartUserDetail" parameterType="WBPartCompanyDTO" resultType="WBPartCompanyDTO">
+
+        SELECT mem_seq, id, name, gndr , birth, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, hp_no, tel_no, work_bsnm_no
+        FROM co_mem_mst
+        WHERE id = #{selPartUser} AND mem_cd = #{memCd}
+    </select>
+
+    <!--
+         쿼리명 : WBPartCompanyMapper.selPartCompanyUserListCnt
+         설  명 : 부품사 회원 회사 SQ 정보
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <select id="selPartUserCompDetail" parameterType="WBPartCompanyDTO" resultType="WBCompanyDetailMstDTO">
+        SELECT cbsn_seq, nm, score, year, crtfn_cmpn_nm
+        FROM cp_cmpn_cbsn_dtl
+        WHERE bsnm_no = #{workBsnmNo}
+        ORDER BY cbsn_seq;
+    </select>
+
+    <!-- 사용자 공통 검색 조건 -->
+    <sql id="selectUserListWhereSql">
+        <where>
+            and ma.mem_cd = #{memCd}
+            <if test="date == 1">
+                <if test="strtDt != null and strtDt != ''.toString() ">
+                    and ma.reg_dtm <![CDATA[>=]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                </if>
+                <if test="endDt != null and endDt != ''.toString() ">
+                    and ma.reg_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                </if>
+            </if>
+            <if test="date == 2">
+                <if test="strtDt != null and strtDt != ''.toString() ">
+                    and ma.mod_dtm <![CDATA[>=]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+                </if>
+                <if test="endDt != null and endDt != ''.toString() ">
+                    and ma.mod_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                </if>
+            </if>
+            <if test="ctgryCdList != null and ctgryCdList.size() > 0">
+                and (
+                <foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="" close="" separator=" or ">
+                    ma.ctgry_cd = #{ctgryCdList}
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        and ma.id like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        and ma.name like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 3">
+                        and ma.hp_no like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 4">
+                        and ma.email like concat('%', #{q}, '%')
+                    </when>
+                    <when test="f == 5">
+                        and (ma.mod_name like concat('%', #{q}, '%') )
+                    </when>
+                    <when test="f == 6">
+                        and (ma.cmpn_nm like concat('%', #{q}, '%') )
+                    </when>
+                    <when test="f == 7">
+                        and (ma.work_bsnm_no like concat('%', #{q}, '%') )
+                    </when>
+                    <otherwise>
+                        and
+                        (
+                        ma.id like concat('%', #{q}, '%')
+                        or
+                        ma.name like concat('%', #{q}, '%')
+                        or
+                        ma.hp_no like concat('%', #{q}, '%')
+                        or
+                        ma.email like concat('%', #{q}, '%')
+                        or
+                        ma.mod_name like concat('%', #{q}, '%')
+                        or
+                        ma.cmpn_nm like concat('%', #{q}, '%')
+                        or
+                        ma.work_bsnm_no like concat('%', #{q}, '%')
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+</mapper>
+
+
+
