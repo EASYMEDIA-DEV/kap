@@ -32,7 +32,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// 로그인 콜백
 	var callbackAjaxLogin = function(data){
 		var code = data.respCd;
-		code ="1410";
 		if(code == "0000") {
 			//returnUrl 조회
 			if($.trim(ctrl.obj.data("rtnUrl")) != ""){
