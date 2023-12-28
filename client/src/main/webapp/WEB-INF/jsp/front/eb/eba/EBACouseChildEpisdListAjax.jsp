@@ -57,7 +57,8 @@
                     </div>
                     <div class="cont-area">
                         <div class="btn-wrap">
-                            <button class="btn-text-icon black-arrow" onclick="if(this.checked){this.checked=false; openPopup('eduPersonInfoPopup', this)}"><span>회차 담당자 문의</span></button>
+                            <button class="btn-text-icon black-arrow popupPrevSet" type="button" data-picNm="${list.picNm}" data-picEmail="${list.picEmail}" data-picTelNo="${list.picTelNo}"><span>회차 담당자 문의</span></button>
+
                             <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD01'}">
                                 <button class="btn-text-icon black-arrow" type="button"><span>온라인 강의목차</span></button>
                             </c:if>
@@ -83,7 +84,7 @@
                             </div>
                             <div class="info-list">
                                 <p class="tit f-caption2">교육장소</p>
-                                <p class="txt f-body1"><a href="javascript:" title="교육장 안내 팝업 열기">${list.placeNm}</a></p>
+                                <p class="txt f-body1"><a href="javascript:" class="mapBtn" data-bscAddr="${list.bscAddr}" data-dtlAddr="${list.dtlAddr}" title="교육장 안내 팝업 열기">${list.placeNm}</a></p>
                             </div>
                             <div class="info-list">
                                 <p class="tit f-caption2">접수기간</p>

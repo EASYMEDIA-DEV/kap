@@ -9,7 +9,6 @@
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="hidden" id="episdSeq" name="episdSeq" value="" />
 
-
         <div class="cont-wrap">
             <!--
               신청 페이지: apply-page 클래스 추가
@@ -204,258 +203,110 @@
                                 <div class="sec-con-area">
                                     <div class="training-swiper-area swiper-role">
                                         <div class="inner-title">
-                                            <p class="f-title2">선수과정(2)</p>
+                                            <p class="f-title2">선수과정(${relList1.totalCount})</p>
                                         </div>
+
+
                                         <div class="swiper-container training-swiper">
                                             <div class="swiper-wrapper marquee_wrapper1">
-                                                <a class="swiper-slide marquee_item1 accepting" href="javascript:">
-                                                    <!--
-                                                      접수중: accepting
-                                                      접수대기: waiting
-                                                      접수마감: end
-                                                    -->
-                                                    <div class="img-area">
-                                                        <img src="/common/images/img-main-training-offline-01.jpg" alt="">
-                                                    </div>
-                                                    <div class="txt-area">
-                                                        <div class="sort-label-area">
-                                                            <p class="label"><span>품질아카데미</span></p>
-                                                            <p class="label"><span>품질학교</span></p>
+
+                                                <c:forEach var="list" items="${relList1.list}" varStatus="status">
+                                                    <a class="swiper-slide marquee_item1 waiting" href="javascript:">
+                                                        <!--
+                                                          접수중: accepting
+                                                          접수대기: waiting
+                                                          접수마감: end
+                                                        -->
+                                                        <div class="img-area">
+                                                            <img src="${list.webPath}" alt="">
                                                         </div>
-                                                        <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                        <div class="date-info-w">
-                                                            <div class="list">
-                                                                <p class="txt">교육기간</p>
-                                                                <p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
+                                                        <div class="txt-area">
+                                                            <div class="top-label-area">
+                                                                <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
                                                             </div>
-                                                            <div class="list">
-                                                                <p class="txt">집체교육</p>
-                                                                <p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="status-info-w">
-                                                            <p class="box-label bigger"><span>1줄말줄임테스트1줄말줄임테스트1줄말줄임테스트1줄말줄임테스트1줄말줄임테스트1줄말줄임테스트1줄말줄임테스트</span></p>
-                                                            <p class="box-label bigger accepting"><span>접수중</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- hover 시 노출되는 영역 -->
-                                                    <div class="hover-area">
-                                                        <div class="for-position">
+
                                                             <div class="sort-label-area">
-                                                                <p class="label"><span>품질아카데미</span></p>
-                                                                <p class="label"><span>품질학교</span></p>
+                                                                <p class="label"><span>${list.prntCdNm}</span></p>
+                                                                <p class="label"><span>${list.ctgryCdNm}</span></p>
                                                             </div>
-                                                            <p class="training-name">22222꼭 알아야 할 품질 기초</p>
+                                                            <p class="training-name">${list.nm}</p>
                                                             <div class="date-info-w">
                                                                 <div class="list">
-                                                                    <div class="tit">접수기간</div>
-                                                                    <div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
+                                                                    <p class="txt">교육기간</p>
+                                                                    <p class="date">
+                                                                            ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                        ~
+                                                                            ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                        (${list.stduyDdCdNm}일간)
+                                                                    </p>
                                                                 </div>
                                                                 <div class="list">
-                                                                    <div class="tit">교육기간</div>
-                                                                    <div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
-                                                                </div>
-                                                                <div class="list ">
-                                                                    <div class="tit">집체교육</div>
-                                                                    <div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
+                                                                    <p class="txt">${list.stduyMthdCdNm}</p>
+                                                                    <p class="date"><span class="item">${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)</span>
+                                                                        <span class="item">
+                                                                            <c:if test="${list.fxnumImpsbYn eq 'Y'}">
+                                                                                정원${list.fxnumCnt}명(${list.rcrmtMthdCdNm})
+                                                                            </c:if>
+                                                                            <c:if test="${list.fxnumImpsbYn eq 'N'}">
+                                                                                정원제한 없음
+                                                                            </c:if>
+                                                                        </span>
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                             <div class="status-info-w">
-                                                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                                <p class="box-label bigger"><span>접수중</span></p>
-                                                            </div>
-                                                            <div class="btn-wrap">
-                                                                <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
+                                                                <p class="box-label bigger"><span>${list.placeNm}</span></p>
+                                                                <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </a>
-                                                <a class="swiper-slide marquee_item1 waiting" href="javascript:">
-                                                    <!--
-                                                      접수중: accepting
-                                                      접수대기: waiting
-                                                      접수마감: end
-                                                    -->
-                                                    <div class="img-area">
-                                                        <img src="/common/images/img-main-training-offline-01.jpg" alt="">
-                                                    </div>
-                                                    <div class="txt-area">
-                                                        <div class="sort-label-area">
-                                                            <p class="label"><span>품질아카데미</span></p>
-                                                            <p class="label"><span>품질학교</span></p>
-                                                        </div>
-                                                        <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                        <div class="date-info-w">
-                                                            <div class="list">
-                                                                <p class="txt">교육기간</p>
-                                                                <p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
-                                                            </div>
-                                                            <div class="list">
-                                                                <p class="txt">집체교육</p>
-                                                                <p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="status-info-w">
-                                                            <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                            <p class="box-label bigger waiting"><span>접수대기</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- hover 시 노출되는 영역 -->
-                                                    <div class="hover-area">
-                                                        <div class="for-position">
-                                                            <div class="sort-label-area">
-                                                                <p class="label"><span>품질아카데미</span></p>
-                                                                <p class="label"><span>품질학교</span></p>
-                                                            </div>
-                                                            <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                            <div class="date-info-w">
-                                                                <div class="list">
-                                                                    <div class="tit">접수기간</div>
-                                                                    <div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
+                                                        <!-- hover 시 노출되는 영역 -->
+                                                        <div class="hover-area">
+                                                            <div class="for-position">
+                                                                <div class="sort-label-area">
+                                                                    <p class="label"><span>${list.prntCdNm}</span></p>
+                                                                    <p class="label"><span>${list.ctgryCdNm}</span></p>
                                                                 </div>
-                                                                <div class="list">
-                                                                    <div class="tit">교육기간</div>
-                                                                    <div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
+                                                                <p class="training-name">${list.nm}</p>
+                                                                <div class="date-info-w">
+                                                                    <div class="list">
+                                                                        <div class="tit">접수기간</div>
+                                                                        <div class="txt">
+                                                                                ${ empty list.accsStrtDtm ? '-' : kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                            ~
+                                                                                ${ empty list.accsEndDtm ? '-' : kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="list">
+                                                                        <div class="tit">교육기간</div>
+                                                                        <div class="txt">
+                                                                                ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                            ~
+                                                                                ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                            (${list.stduyDdCdNm}일간)
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="list ">
+                                                                        <div class="tit">${list.stduyMthdCdNm}</div>
+                                                                        <div class="txt status-txt">${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)</div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="list ">
-                                                                    <div class="tit">집체교육</div>
-                                                                    <div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
+                                                                <div class="status-info-w">
+                                                                    <p class="box-label bigger"><span>${list.placeNm}</span></p>
+                                                                    <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                                                </div>
+                                                                <div class="btn-wrap">
+                                                                    <c:if test="${list.accsStatusOrder eq 3}">
+                                                                        <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                                                    </c:if>
+                                                                    <c:if test="${list.accsStatusOrder ne 3}">
+                                                                        <div class="btn-solid small black-bg episdDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                                                    </c:if>
+
                                                                 </div>
                                                             </div>
-                                                            <div class="status-info-w">
-                                                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                                <p class="box-label bigger"><span>접수대기</span></p>
-                                                            </div>
-                                                            <div class="btn-wrap">
-                                                                <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
-                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </a>
-                                                <a class="swiper-slide marquee_item1 waiting" href="javascript:">
-                                                    <!--
-                                                      접수중: accepting
-                                                      접수대기: waiting
-                                                      접수마감: end
-                                                    -->
-                                                    <div class="img-area">
-                                                        <!-- <img src="/common/images/img-main-training-offline-01.jpg" alt=""> -->
-                                                    </div>
-                                                    <div class="txt-area">
-                                                        <div class="sort-label-area">
-                                                            <p class="label"><span>품질아카데미</span></p>
-                                                            <p class="label"><span>품질학교</span></p>
-                                                        </div>
-                                                        <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                        <div class="date-info-w">
-                                                            <div class="list">
-                                                                <p class="txt">교육기간</p>
-                                                                <p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
-                                                            </div>
-                                                            <div class="list">
-                                                                <p class="txt">집체교육</p>
-                                                                <p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="status-info-w">
-                                                            <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                            <p class="box-label bigger end"><span>접수마감</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- hover 시 노출되는 영역 -->
-                                                    <div class="hover-area">
-                                                        <div class="for-position">
-                                                            <div class="sort-label-area">
-                                                                <p class="label"><span>품질아카데미</span></p>
-                                                                <p class="label"><span>품질학교</span></p>
-                                                            </div>
-                                                            <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                            <div class="date-info-w">
-                                                                <div class="list">
-                                                                    <div class="tit">접수기간</div>
-                                                                    <div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
-                                                                </div>
-                                                                <div class="list">
-                                                                    <div class="tit">교육기간</div>
-                                                                    <div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
-                                                                </div>
-                                                                <div class="list ">
-                                                                    <div class="tit">집체교육</div>
-                                                                    <div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="status-info-w">
-                                                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                                <p class="box-label bigger"><span>접수마감</span></p>
-                                                            </div>
-                                                            <div class="btn-wrap">
-                                                                <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a class="swiper-slide marquee_item1 end" href="javascript:">
-                                                    <!--
-                                                      접수중: accepting
-                                                      접수대기: waiting
-                                                      접수마감: end
-                                                    -->
-                                                    <div class="img-area">
-                                                        <img src="/common/images/img-main-training-offline-01.jpg" alt="">
-                                                    </div>
-                                                    <div class="txt-area">
-                                                        <div class="sort-label-area">
-                                                            <p class="label"><span>품질아카데미</span></p>
-                                                            <p class="label"><span>품질학교</span></p>
-                                                        </div>
-                                                        <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                        <div class="date-info-w">
-                                                            <div class="list">
-                                                                <p class="txt">교육기간</p>
-                                                                <p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
-                                                            </div>
-                                                            <div class="list">
-                                                                <p class="txt">집체교육</p>
-                                                                <p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="status-info-w">
-                                                            <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                            <p class="box-label bigger end"><span>접수마감</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- hover 시 노출되는 영역 -->
-                                                    <div class="hover-area">
-                                                        <div class="for-position">
-                                                            <div class="sort-label-area">
-                                                                <p class="label"><span>품질아카데미</span></p>
-                                                                <p class="label"><span>품질학교</span></p>
-                                                            </div>
-                                                            <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                            <div class="date-info-w">
-                                                                <div class="list">
-                                                                    <div class="tit">접수기간</div>
-                                                                    <div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
-                                                                </div>
-                                                                <div class="list">
-                                                                    <div class="tit">교육기간</div>
-                                                                    <div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
-                                                                </div>
-                                                                <div class="list ">
-                                                                    <div class="tit">집체교육</div>
-                                                                    <div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="status-info-w">
-                                                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                                <p class="box-label bigger"><span>접수마감</span></p>
-                                                            </div>
-                                                            <div class="btn-wrap">
-                                                                <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
+                                                    </a>
+                                                </c:forEach>
                                             </div>
                                         </div>
                                         <div class="swiper-button-next circle-arr btn_next"></div>
@@ -463,258 +314,111 @@
                                     </div>
                                     <div class="training-swiper-area swiper-role">
                                         <div class="inner-title">
-                                            <p class="f-title2">후속과정(4)</p>
+                                            <p class="f-title2">후속과정(${relList2.totalCount})</p>
                                         </div>
                                         <div class="swiper-container training-swiper">
                                             <div class="swiper-wrapper marquee_wrapper1">
-                                                <a class="swiper-slide marquee_item1 accepting" href="javascript:">
-                                                    <!--
-                                                      접수중: accepting
-                                                      접수대기: waiting
-                                                      접수마감: end
-                                                    -->
-                                                    <div class="img-area">
-                                                        <!-- <img src="/common/images/img-main-training-offline-01.jpg" alt=""> -->
-                                                    </div>
-                                                    <div class="txt-area">
-                                                        <div class="sort-label-area">
-                                                            <p class="label"><span>품질아카데미</span></p>
-                                                            <p class="label"><span>품질학교</span></p>
+
+                                                <c:forEach var="list" items="${relList2.list}" varStatus="status">
+                                                    <a class="swiper-slide marquee_item1 waiting" href="javascript:">
+                                                        <!--
+                                                          접수중: accepting
+                                                          접수대기: waiting
+                                                          접수마감: end
+                                                        -->
+                                                        <div class="img-area">
+                                                            <img src="${list.webPath}" alt="">
                                                         </div>
-                                                        <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                        <div class="date-info-w">
-                                                            <div class="list">
-                                                                <p class="txt">교육기간</p>
-                                                                <p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
+                                                        <div class="txt-area">
+                                                            <div class="top-label-area">
+                                                                <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
                                                             </div>
-                                                            <div class="list">
-                                                                <p class="txt">집체교육</p>
-                                                                <p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="status-info-w">
-                                                            <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                            <p class="box-label bigger accepting"><span>접수중</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- hover 시 노출되는 영역 -->
-                                                    <div class="hover-area">
-                                                        <div class="for-position">
+
                                                             <div class="sort-label-area">
-                                                                <p class="label"><span>품질아카데미</span></p>
-                                                                <p class="label"><span>품질학교</span></p>
+                                                                <p class="label"><span>${list.prntCdNm}</span></p>
+                                                                <p class="label"><span>${list.ctgryCdNm}</span></p>
                                                             </div>
-                                                            <p class="training-name">22222꼭 알아야 할 품질 기초</p>
+                                                            <p class="training-name">${list.nm}</p>
                                                             <div class="date-info-w">
                                                                 <div class="list">
-                                                                    <div class="tit">접수기간</div>
-                                                                    <div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
+                                                                    <p class="txt">교육기간</p>
+                                                                    <p class="date">
+                                                                            ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                        ~
+                                                                            ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                        (${list.stduyDdCdNm}일간)
+                                                                    </p>
                                                                 </div>
                                                                 <div class="list">
-                                                                    <div class="tit">교육기간</div>
-                                                                    <div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
-                                                                </div>
-                                                                <div class="list ">
-                                                                    <div class="tit">집체교육</div>
-                                                                    <div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
+                                                                    <p class="txt">${list.stduyMthdCdNm}</p>
+                                                                    <p class="date"><span class="item">${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)</span>
+                                                                        <span class="item">
+                                                                            <c:if test="${list.fxnumImpsbYn eq 'Y'}">
+                                                                                정원${list.fxnumCnt}명(${list.rcrmtMthdCdNm})
+                                                                            </c:if>
+                                                                            <c:if test="${list.fxnumImpsbYn eq 'N'}">
+                                                                                정원제한 없음
+                                                                            </c:if>
+                                                                        </span>
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                             <div class="status-info-w">
-                                                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                                <p class="box-label bigger"><span>접수중</span></p>
-                                                            </div>
-                                                            <div class="btn-wrap">
-                                                                <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
+                                                                <p class="box-label bigger"><span>${list.placeNm}</span></p>
+                                                                <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </a>
-                                                <a class="swiper-slide marquee_item1 waiting" href="javascript:">
-                                                    <!--
-                                                      접수중: accepting
-                                                      접수대기: waiting
-                                                      접수마감: end
-                                                    -->
-                                                    <div class="img-area">
-                                                        <!-- <img src="/common/images/img-main-training-offline-01.jpg" alt=""> -->
-                                                    </div>
-                                                    <div class="txt-area">
-                                                        <div class="sort-label-area">
-                                                            <p class="label"><span>품질아카데미</span></p>
-                                                            <p class="label"><span>품질학교</span></p>
-                                                        </div>
-                                                        <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                        <div class="date-info-w">
-                                                            <div class="list">
-                                                                <p class="txt">교육기간</p>
-                                                                <p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
-                                                            </div>
-                                                            <div class="list">
-                                                                <p class="txt">글로벌상생교육센터(GPC)(경주)</p>
-                                                                <p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="status-info-w">
-                                                            <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                            <p class="box-label bigger waiting"><span>접수대기</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- hover 시 노출되는 영역 -->
-                                                    <div class="hover-area">
-                                                        <div class="for-position">
-                                                            <div class="sort-label-area">
-                                                                <p class="label"><span>품질아카데미</span></p>
-                                                                <p class="label"><span>품질학교</span></p>
-                                                            </div>
-                                                            <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                            <div class="date-info-w">
-                                                                <div class="list">
-                                                                    <div class="tit">접수기간</div>
-                                                                    <div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
+                                                        <!-- hover 시 노출되는 영역 -->
+                                                        <div class="hover-area">
+                                                            <div class="for-position">
+                                                                <div class="sort-label-area">
+                                                                    <p class="label"><span>${list.prntCdNm}</span></p>
+                                                                    <p class="label"><span>${list.ctgryCdNm}</span></p>
                                                                 </div>
-                                                                <div class="list">
-                                                                    <div class="tit">교육기간</div>
-                                                                    <div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
+                                                                <p class="training-name">${list.nm}</p>
+                                                                <div class="date-info-w">
+                                                                    <div class="list">
+                                                                        <div class="tit">접수기간</div>
+                                                                        <div class="txt">
+                                                                                ${ empty list.accsStrtDtm ? '-' : kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                            ~
+                                                                                ${ empty list.accsEndDtm ? '-' : kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="list">
+                                                                        <div class="tit">교육기간</div>
+                                                                        <div class="txt">
+                                                                                ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                            ~
+                                                                                ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                                            (${list.stduyDdCdNm}일간)
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="list ">
+                                                                        <div class="tit">${list.stduyMthdCdNm}</div>
+                                                                        <div class="txt status-txt">${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)</div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="list ">
-                                                                    <div class="tit">집체교육</div>
-                                                                    <div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
+                                                                <div class="status-info-w">
+                                                                    <p class="box-label bigger"><span>${list.placeNm}</span></p>
+                                                                    <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                                                </div>
+                                                                <div class="btn-wrap">
+                                                                    <c:if test="${list.accsStatusOrder eq 3}">
+                                                                        <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                                                    </c:if>
+                                                                    <c:if test="${list.accsStatusOrder ne 3}">
+                                                                        <div class="btn-solid small black-bg episdDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                                                    </c:if>
+
                                                                 </div>
                                                             </div>
-                                                            <div class="status-info-w">
-                                                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                                <p class="box-label bigger"><span>접수대기</span></p>
-                                                            </div>
-                                                            <div class="btn-wrap">
-                                                                <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
-                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </a>
-                                                <a class="swiper-slide marquee_item1 waiting" href="javascript:">
-                                                    <!--
-                                                      접수중: accepting
-                                                      접수대기: waiting
-                                                      접수마감: end
-                                                    -->
-                                                    <div class="img-area">
-                                                        <!-- <img src="/common/images/img-main-training-offline-01.jpg" alt=""> -->
-                                                    </div>
-                                                    <div class="txt-area">
-                                                        <div class="sort-label-area">
-                                                            <p class="label"><span>품질아카데미</span></p>
-                                                            <p class="label"><span>품질학교</span></p>
-                                                        </div>
-                                                        <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                        <div class="date-info-w">
-                                                            <div class="list">
-                                                                <p class="txt">교육기간</p>
-                                                                <p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
-                                                            </div>
-                                                            <div class="list">
-                                                                <p class="txt">글로벌상생교육센터(GPC)(경주)</p>
-                                                                <p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="status-info-w">
-                                                            <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                            <p class="box-label bigger end"><span>접수마감</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- hover 시 노출되는 영역 -->
-                                                    <div class="hover-area">
-                                                        <div class="for-position">
-                                                            <div class="sort-label-area">
-                                                                <p class="label"><span>품질아카데미</span></p>
-                                                                <p class="label"><span>품질학교</span></p>
-                                                            </div>
-                                                            <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                            <div class="date-info-w">
-                                                                <div class="list">
-                                                                    <div class="tit">접수기간</div>
-                                                                    <div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
-                                                                </div>
-                                                                <div class="list">
-                                                                    <div class="tit">교육기간</div>
-                                                                    <div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
-                                                                </div>
-                                                                <div class="list ">
-                                                                    <div class="tit">집체교육</div>
-                                                                    <div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="status-info-w">
-                                                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                                <p class="box-label bigger"><span>접수마감</span></p>
-                                                            </div>
-                                                            <div class="btn-wrap">
-                                                                <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <a class="swiper-slide marquee_item1 end" href="javascript:">
-                                                    <!--
-                                                      접수중: accepting
-                                                      접수대기: waiting
-                                                      접수마감: end
-                                                    -->
-                                                    <div class="img-area">
-                                                        <img src="/common/images/img-main-training-offline-01.jpg" alt="">
-                                                    </div>
-                                                    <div class="txt-area">
-                                                        <div class="sort-label-area">
-                                                            <p class="label"><span>품질아카데미</span></p>
-                                                            <p class="label"><span>품질학교</span></p>
-                                                        </div>
-                                                        <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                        <div class="date-info-w">
-                                                            <div class="list">
-                                                                <p class="txt">교육기간</p>
-                                                                <p class="date">2023.09.18 10:00 ~ 2023.09.19 11:00 (n일간)</p>
-                                                            </div>
-                                                            <div class="list">
-                                                                <p class="txt">글로벌상생교육센터(GPC)(경주)</p>
-                                                                <p class="date"><span class="item">2일(14시간)</span><span class="item">정원30명(모집 후 선발)</span></p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="status-info-w">
-                                                            <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                            <p class="box-label bigger end"><span>접수마감</span></p>
-                                                        </div>
-                                                    </div>
-                                                    <!-- hover 시 노출되는 영역 -->
-                                                    <div class="hover-area">
-                                                        <div class="for-position">
-                                                            <div class="sort-label-area">
-                                                                <p class="label"><span>품질아카데미</span></p>
-                                                                <p class="label"><span>품질학교</span></p>
-                                                            </div>
-                                                            <p class="training-name">22222꼭 알아야 할 품질 기초</p>
-                                                            <div class="date-info-w">
-                                                                <div class="list">
-                                                                    <div class="tit">접수기간</div>
-                                                                    <div class="txt">2023.08.01 13:00 ~ 2023.08.31 14:00</div>
-                                                                </div>
-                                                                <div class="list">
-                                                                    <div class="tit">교육기간</div>
-                                                                    <div class="txt">2023.09.18 10:00 ~ 2023.09.19 11:00 (3일간)</div>
-                                                                </div>
-                                                                <div class="list ">
-                                                                    <div class="tit">집체교육</div>
-                                                                    <div class="txt status-txt">2일(14시간) / 정원30명(모집 후 선발)</div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="status-info-w">
-                                                                <p class="box-label bigger"><span>글로벌상생교육센터(GPC)(경주)</span></p>
-                                                                <p class="box-label bigger"><span>접수마감</span></p>
-                                                            </div>
-                                                            <div class="btn-wrap">
-                                                                <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
+                                                    </a>
+                                                </c:forEach>
+
+
+
                                             </div>
                                         </div>
                                         <div class="swiper-button-next circle-arr btn_next"></div>
@@ -842,8 +546,12 @@
 
 
     </form>
+
+    <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAPicLayer.jsp"></jsp:include>
+    <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduRoomLayer.jsp"></jsp:include>
+
 </div>
 
 
 
-<jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAPicLayer.jsp"></jsp:include>
+

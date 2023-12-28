@@ -50,6 +50,10 @@
 	<c:set var="curtDt"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
 	<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="yyyyMMddHHmmss" /></c:set>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script type="text/javascript" src="/common/js/kakao.js"></script>
+	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f90d438f5adb45f1893d7ca237eaac27&libraries=services,clusterer,drawing"></script>
+	<script type="text/javascript" src="/common/js/kakaomap.js"></script>
+
 	<!--함수 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js"></script>
 	<!--메시지 공통-->

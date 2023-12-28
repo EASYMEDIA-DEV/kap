@@ -113,6 +113,19 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "교육장소명", example = "")
     private String placeNm;
 
+    @Schema(title = "교육장소 - 기본주소", example = "")
+    private String bscAddr;
+
+    @Schema(title = "교육장소 - 상세주소", example = "")
+    private String dtlAddr;
+
+    @Schema(title = "교육장소 - 우편번호", example = "")
+    private String zipcode;
+
+    @Schema(title = "교육장소 - 대표전화번호", example = "")
+    private String rprsntTelNo;
+
+
     @Schema(title = "설문순번", example = "숫자")
     private Integer srvSeq;
 
@@ -291,6 +304,9 @@ public class EBBEpisdDTO extends BaseDTO {
 
     @Schema(title = "접수출력순서", example = "숫자")
     private Integer accsStatusOrder;
+
+    @Schema(title = "과정연계순서", example = "텍스트")
+    private String cnnctCd;
 
 
     //오프라인여부

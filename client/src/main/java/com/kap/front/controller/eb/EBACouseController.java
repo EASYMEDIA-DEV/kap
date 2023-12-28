@@ -98,6 +98,8 @@ public class EBACouseController {
     @RequestMapping(value = "/apply/select")
     public String getCousePageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
+
+        String rtnView = "front/eb/eba/EBACouseListAjax";
         try
         {
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
@@ -111,8 +113,12 @@ public class EBACouseController {
             }
             throw new Exception(e.getMessage());
         }
+        System.out.println("@@@ == " + eBBEpisdDTO.getCnnctCd() );
+        if(eBBEpisdDTO.getCnnctCd() != null){
+            rtnView = "front/eb/eba/EBACouseRelListAjax";
+        }
 
-        return "front/eb/eba/EBACouseListAjax";
+        return rtnView;
     }
 
     /**
@@ -207,6 +213,9 @@ public class EBACouseController {
             modelMap.addAttribute("rtnEpisdList", rtnEpisdList);//과정에 소속된 차수목록
             modelMap.addAttribute("rtnTrgtData", rtnTrgtData);//학습 대상 목록
             modelMap.addAttribute("relList", relList);//과정 연계 목록
+
+            modelMap.addAttribute("relList1", rtnMap.get("relList1"));//과정 연계 목록 - 선수목록
+            modelMap.addAttribute("relList2", rtnMap.get("relList2"));//과정 연계 목록 - 후속목록
 
         }
         catch (Exception e)

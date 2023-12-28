@@ -4,10 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.service.COCodeService;
-import com.kap.service.COFileService;
-import com.kap.service.COSeqGnrService;
-import com.kap.service.EBACouseService;
+import com.kap.service.*;
 import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.eb.EBACouseMapper;
 import com.kap.service.dao.eb.EBBEpisdMapper;
@@ -62,6 +59,8 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 	public final COCodeService cOCodeService;
 
+	public final EBBEpisdService eBBEpisdService;
+
 	//파일 업로드 위치
 	@Value("${app.file.upload-path}")
 	private String fileUploadPath;
@@ -108,12 +107,38 @@ public class EBACouseServiceImpl implements EBACouseService {
 			map.put("rtnTrgtData", eBACouseMapper.selectCouseTrgtList(eBACouseDTO));
 		}else{
 			map.put("rtnTrgtData", eBBFrontEpisdMapper.selectCouseTrgtList(eBACouseDTO));
+
+			EBBEpisdDTO eBBEpisdDTO1 = new EBBEpisdDTO();
+			//교육과정에 연계된 목록을 호출한다.
+			eBBEpisdDTO1.setEdctnSeq(ebaDto.getEdctnSeq());
+			eBBEpisdDTO1.setCnnctCd("EDCTN_REL01");
+
+			EBBEpisdDTO eBBEpisdDTO2 = new EBBEpisdDTO();
+			//교육과정에 연계된 목록을 호출한다.
+			eBBEpisdDTO2.setEdctnSeq(ebaDto.getEdctnSeq());
+			eBBEpisdDTO2.setCnnctCd("EDCTN_REL02");
+
+			map.put("relList1", relList(eBBEpisdDTO1));
+			map.put("relList2", relList(eBBEpisdDTO2));
 		}
 
-
-
-
 		return map;
+	}
+
+	private EBBEpisdDTO relList(EBBEpisdDTO eBBEpisdDTO) throws Exception {
+
+		COPaginationUtil page = new COPaginationUtil();
+
+		page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
+		page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
+		page.setPageSize(eBBEpisdDTO.getPageRowSize());
+		eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
+		eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+		eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectFrontCouseList(eBBEpisdDTO) );
+		eBBEpisdDTO.setTotalCount( eBBFrontEpisdMapper.selectFrontCouseListCnt(eBBEpisdDTO) );
+
+		return eBBEpisdDTO;
 	}
 
 	/**

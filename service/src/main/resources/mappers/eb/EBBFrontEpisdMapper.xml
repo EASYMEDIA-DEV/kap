@@ -204,6 +204,12 @@
 
 			AND NOW()  <![CDATA[<]]>  edctn_strt_dtm
 
+			AND episd_year IS NOT NULL
+
+			<if test="cnnctCd != null and cnnctCd != '' ">
+				AND a.edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd = #{cnnctCd})
+			</if>
+
 			<!--과정분류 검색 중분류까지 있을경우-->
 			<if test="ctgryCd != null and ctgryCd !='' ">
 				AND a.ctgry_cd = #{ctgryCd}

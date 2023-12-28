@@ -42,14 +42,14 @@
 				when NOW()  <![CDATA[>]]>  accs_strt_dtm AND NOW()  <![CDATA[<]]>   accs_end_dtm then '1'
 				when NOW()  <![CDATA[>]]>  accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt  <![CDATA[>=]]>  fxnum_cnt) then '3'
 				END  AS accs_status_order
-		, edctn_strt_dtm
-				, edctn_end_dtm
-				, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
-						case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-								when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
-								when NOW() <![CDATA[>]]> edctn_end_dtm then '교육완료'
-						end
-						when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+				, edctn_strt_dtm
+						, edctn_end_dtm
+						, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+								case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+										when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+										when NOW() <![CDATA[>]]> edctn_end_dtm then '교육완료'
+								end
+								when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 				END  AS edctn_status_nm
 				, (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
 				, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst WHERE isttr_seq in (SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq = aa.edctn_seq AND episd_ord = aa.episd_ord AND episd_year = aa.episd_year )) AS isttr_group_name
@@ -67,7 +67,11 @@
 				, pic_tel_no
 		     	, edctn_ntctn_file_seq
 				, place_seq
-		     	, place_nm
+				, place_nm
+				, bsc_addr
+				, dtl_addr
+				, zipcode
+				, rprsnt_tel_no
 		     	, bdget_expns_yn
 		     	, case bdget_expns_yn
 		     	    when 'Y' then '마감'
@@ -115,7 +119,16 @@
 				, a.pic_tel_no
 			   	, a.edctn_ntctn_file_seq
 				, a.place_seq
-				, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
+				/*, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
+				, (SELECT bsc_addr FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as bsc_addr
+				, (SELECT dtl_addr FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as dtl_addr
+				, (SELECT dtl_addr FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as zipcode
+				, (SELECT dtl_addr FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as rprsnt_tel_no*/
+				, c.nm as place_nm
+			    , c.bsc_addr
+			    , c.dtl_addr
+			    , c.zipcode
+			    , c.rprsnt_tel_no
 			   	, a.bdget_expns_yn
 				, a.reg_id
 				, (select name from co_adm_mst where id = a.reg_id) as reg_name
@@ -127,6 +140,7 @@
 				, a.edctn_cmpltn_yn
 				FROM ed_edctn_episd_mst a
 				LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+				LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
 			<include refid="selectLecturerEpisdListSql" />
 		) AA
 
