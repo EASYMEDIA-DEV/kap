@@ -177,7 +177,8 @@
                             <th class="text-center">구분</th>
                             <th class="text-center">규모</th>
                             <th class="text-center">담당위원</th>
-<%--                            <th class="text-center">신청일</th>--%>
+                            <th class="text-center">신청일</th>
+                            <th class="text-center">사업기간</th>
                         </tr>
                         </thead>
                         <!-- 리스트 목록 결과 -->
