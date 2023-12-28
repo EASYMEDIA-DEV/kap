@@ -6,6 +6,20 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ *
+ *
+ * <pre>
+ * << 개정이력(Modification Information) >>
+ *
+ *   수정일              수정자           수정내용
+ *  -----------  --------  ---------------------------
+ *   2011.10.10             최초 생성
+ *   2023.12.28  양현우     id 마스킹 (3자리 이후 마스킹)
+
+ * </pre>
+ */
+
 public class MaskingUtil {
 
     // ID 마스킹(앞4자리 이후 마스킹)
@@ -13,7 +27,7 @@ public class MaskingUtil {
         if (StringUtils.isBlank(memberId)) {
             return null;
         }
-        return memberId.replaceAll("(?<=.{4}).", "*");
+        return memberId.replaceAll("(?<=.{3}).", "*");
     }
 
     // 이름 가운데 글자 마스킹
