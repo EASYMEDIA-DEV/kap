@@ -58,26 +58,33 @@ define(["ezCtrl"], function(ezCtrl) {
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
                         var delType = frmDataObj.data("delType");
                         var cond = frmDataObj.data("cond");
-                        console.log(delActCnt);
-                        if (delActCnt > 0)
-                        {
+                        if (delActCnt > 0) {
                             // 계정은 최고 관리자 및 본인 계정은 삭제 불가
-                            if(confirm(msgCtrl.getMsg("confirm.del")))
-                            {
-                                //삭제 전송
-                                cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
-                                        var msg = msgCtrl.getMsg("success.del.target.none");
-                                        if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
-                                            msg = msgCtrl.getMsg("success.del.target." + delType);
+                            if (confirm(msgCtrl.getMsg("confirm.del"))) {
+
+                                $('input:checkbox[name=delValueList]').each(function (index) {
+                                    if ($(this).is(":checked") == true) {
+                                        var rsumeCd = $(this).data("rsumecd");
+                                        if (rsumeCd == "MNGCNSLT_STATUS01") {
+                                            //삭제 전송
+                                            cmmCtrl.frmAjax(function (respObj) {
+                                                if (respObj != undefined && respObj.respCnt > 0) {
+                                                    var msg = msgCtrl.getMsg("success.del.target.none");
+                                                    if (typeof delType != "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined") {
+                                                        msg = msgCtrl.getMsg("success.del.target." + delType);
+                                                    }
+                                                    alert(msg);
+                                                    $formObj.find("#btnSearch").click();
+                                                } else {
+                                                    alert(msgCtrl.getMsg("fail.act"));
+                                                }
+                                            }, "./delete", frmDataObj, "POST", "json");
+                                        }else{
+                                            alert("접수 이후의 신청 건은 삭제가 불가합니다");
+                                            return false;
                                         }
-                                        alert(msg);
-                                        $formObj.find("#btnSearch").click();
                                     }
-                                    else{
-                                        alert(msgCtrl.getMsg("fail.act"));
-                                    }
-                                }, "./delete", frmDataObj, "POST", "json");
+                                })
                             }
                         }
                         else

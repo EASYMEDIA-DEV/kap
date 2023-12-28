@@ -24,7 +24,7 @@
             <p class="col-sm-11 form-control-static">${rtnDtl.name}</p>
         </div>
 
-        <label class="col-sm-1 control-label">부품사명</label>
+        <label class="col-sm-1 control-label">부품사명<span class="star"> *</span></label>
         <div class="col-sm-5">
             <input type="text" class="form-control input-sm notRequired" id="ctgry_cd" title="부품사명" name="ctgry_cd" readonly  value="${rtnDtl.cmpnNm}" />
         </div>
@@ -92,7 +92,7 @@
 </fieldset>
 <fieldset>
     <div class="form-group text-sm">
-        <label class="col-sm-1 control-label">비밀번호<span class="star"> *</span></label>
+        <label class="col-sm-1 control-label">비밀번호</label>
         <button type="button" class="btn btn-secondary"  id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button>
     </div>
 </fieldset>
@@ -180,9 +180,9 @@
             </colgroup>
             <tbody>
             <tr>
-                <th scope="row" class="bg-gray-lighter">최종 수정자 <span style="color: red">*</span></th>
+                <th scope="row" class="bg-gray-lighter">최종 수정자</th>
                 <td>${rtnDtl.modName}</td>
-                <th scope="row" class="bg-gray-lighter">최종 수정일시 <span style="color: red">*</span></th>
+                <th scope="row" class="bg-gray-lighter">최종 수정일시</th>
                 <td>${ kl:convertDate(rtnDtl.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
             </tr>
             </tbody>

@@ -522,6 +522,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
                     int length = split.length;
                     for (int j = 0; j < dates.size(); j++) {
                         cell = row.createCell(j + 1);
+                        cell.setCellValue("-");
                         cell.setCellStyle(style_body);
                         for (int k = 0; k < length; k++) {
                             if (dates.get(j).equals(split[k])) {

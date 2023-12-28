@@ -51,7 +51,7 @@
                         <select class="form-control input-sm" id="deptCd" name="deptCd" title="부서" >
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                                <c:if test="${fn:contains(cdList, 'MEM_CD02')}">
+                                <c:if test="${fn:contains(cdList, 'MEM_CD02') and cdList.cd ne 'MEM_CD02'}">
                                     <option value="${cdList.cd}" <c:if test="${rtnInfo.deptCd eq cdList.cd}">selected</c:if>>
                                             ${cdList.cdNm}
                                     </option>
@@ -68,7 +68,7 @@
                         <select class="form-control input-sm notRequired" id="pstnCdSelect" name="pstnCd" title="직급" >
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                                <c:if test="${fn:contains(cdList, 'MEM_CD01') and cdList.cd ne 'COMPANY01'}">
+                                <c:if test="${fn:contains(cdList, 'MEM_CD01') and cdList.cd ne 'MEM_CD01'}">
                                     <option value="${cdList.cd}" <c:if test="${rtnInfo.pstnCd eq cdList.cd}">selected</c:if>>
                                             ${cdList.cdNm}
                                     </option>

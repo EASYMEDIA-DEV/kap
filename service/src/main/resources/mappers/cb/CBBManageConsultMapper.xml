@@ -956,6 +956,7 @@
             , CNSTG_CD
             , RSUME_STTS_CD
             , APPCTN_DT
+            , APPCTN_FLD_CD
             , BSN_YEAR
             , CMPN_SIZE_CD
             , FRGN_DPNDN_RATE
@@ -985,8 +986,9 @@
             , #{bsnmNo}
             , #{memSeq}
             , "CONSULT_GB02"
-            , "MNGTECH_STATUS_01"
+            , "MNGCNSLT_STATUS01"
             , #{appctnDt}
+            , #{appctnFldCd}
             , DATE_FORMAT(#{appctnDt}, '%Y')
             , #{cpSize}
             , #{frgnDpndnRate}

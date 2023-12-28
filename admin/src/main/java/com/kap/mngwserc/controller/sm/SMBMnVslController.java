@@ -82,19 +82,19 @@ public class SMBMnVslController {
      */
     @GetMapping(value = "/write")
     public String getMnVslWritePage(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
-        /*try {*/
+        try {
             sMBMainVslDTO.setMdCd(mdCd);
             modelMap.addAttribute("mdCd", sMBMainVslDTO.getMdCd());
 
             if (!"".equals(sMBMainVslDTO.getDetailsKey()) && sMBMainVslDTO.getDetailsKey() != null) {
                 modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslDtl(sMBMainVslDTO));
             }
-       /* } catch (Exception e) {
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
         return "mngwserc/sm/smb/SMBMnVslWrite.admin";
     }
@@ -158,22 +158,22 @@ public class SMBMnVslController {
      */
     @PostMapping(value = "/insert")
     public String insertMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
-        /*  try {*/
-        System.err.println("sMBMainVslDTO:::"+sMBMainVslDTO);
+      try {
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         sMBMainVslDTO.setMdCd(mdCd);
         sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
         sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         modelMap.addAttribute("respCnt", sMBMnVslService.insertMnVsl(sMBMainVslDTO));
-       /* } catch (Exception e) {
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
         return "jsonView";
     }
+
     @PostMapping(value = "/update")
     public String updateMnVsl(SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
         try {
@@ -193,53 +193,3 @@ public class SMBMnVslController {
         return "jsonView";
     }
 }
-    /*@RestController
-    @RequiredArgsConstructor
-    @RequestMapping(value="/mngwserc/sm/smb/{mdCd:pc|mobile}")
-    public class SMBMnVslRestController {
-
-        private final SMBMnVslService sMBMnVslService;
-
-        *//**
-         * 메인 비주얼 등록
-         *//*
-        @PostMapping(value = "/insert")
-        @ResponseBody
-        public SMBMainVslDTO insertMnVsl(@RequestBody SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
-            *//*  try {*//*
-            System.err.println("sMBMainVslDTO:::"+sMBMainVslDTO);
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            sMBMainVslDTO.setMdCd(mdCd);
-            sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
-            sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
-            modelMap.addAttribute("respCnt", sMBMnVslService.insertMnVsl(sMBMainVslDTO));
-       *//* } catch (Exception e) {
-            if (log.isErrorEnabled()) {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }*//*
-
-            return sMBMainVslDTO;
-        }
-        @PostMapping(value = "/update")
-        @ResponseBody
-        public SMBMainVslDTO updateMnVsl(@Valid @RequestBody SMBMainVslDTO sMBMainVslDTO, ModelMap modelMap, @PathVariable("mdCd") String mdCd) throws Exception {
-            try {
-                COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-                sMBMainVslDTO.setMdCd(mdCd);
-                sMBMainVslDTO.setRegId(cOUserDetailsDTO.getId());
-                sMBMainVslDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
-
-                modelMap.addAttribute("respCnt", sMBMnVslService.updateMnVsl(sMBMainVslDTO));
-            } catch (Exception e) {
-                if (log.isErrorEnabled()) {
-                    log.debug(e.getMessage());
-                }
-                throw new Exception(e.getMessage());
-            }
-
-            return sMBMainVslDTO;
-        }
-    }*/
-

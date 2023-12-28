@@ -494,6 +494,8 @@
              , m2.appctn_bsnm_no-- 사업자등록번호
              , (select name from co_mem_mst where mem_seq=m2.pic_cmssr_seq) as name -- 담당위원
              , m2.reg_dtm-- 신청일
+             , m1.bsn_strt_dtm
+             , m1.bsn_end_dtm
          from cx_episd_mst m1
           inner join cx_appctn_mst m2
            on m1.episd_seq = m2.episd_seq

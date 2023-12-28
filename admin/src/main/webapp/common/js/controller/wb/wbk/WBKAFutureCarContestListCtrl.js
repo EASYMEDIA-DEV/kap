@@ -74,13 +74,33 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btn_delete : {
                 event : {
                     click : function() {
-                        //상세보기
-                        var detailsKey = $("input[name='delValueList']:checked").map(function(){
-                                            return $(this).val();
-                                        }).get();
-                        $formObj.find("input[name=detailsKey]").val(detailsKey);
-                        if (confirm(msgCtrl.getMsg("confirm.del"))) {
-                            cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+
+                        var checkedValues = [];
+
+                        //참여자 체크
+                        $('.checkboxSingle:checked').each(function () {
+                            var dataValue = $(this).closest('td').siblings(".deleteCheck").data('value');
+                            checkedValues.push(dataValue);
+                        });
+                        
+                        // 삭제 키
+                        var detailsKey = $("input[name='delValueList']:checked").map(function () {
+                            return $(this).val();
+                        }).get();
+                        
+                        // 참여자 0이상 체크
+                        var hasRegCli = $.grep(checkedValues, function (num) {
+                            return num > 0;
+                        }).length > 0;
+
+                        //참여자 존재 시 미 삭제
+                        if (!hasRegCli) {
+                            $formObj.find("input[name=detailsKey]").val(detailsKey);
+                            if (confirm(msgCtrl.getMsg("confirm.del"))) {
+                                cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+                            }
+                        }else {
+                            alert("신청정보가 존재하여 삭제할 수 없습니다.")
                         }
                     }
                 }

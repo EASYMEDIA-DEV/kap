@@ -1,0 +1,940 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.wb.wbk.WBKBRegisterMapper">
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.getRegisterList
+         설  명 : List Data Select
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <select id="getRegisterList" parameterType="wBKBRegisterSearchDTO" resultType="wBKBRegisterSearchDTO">
+        SELECT /*WBKBRegisterMapper.getRegisterList*/
+            DISTINCT
+            YEAR(A.year) as year, A.episd,
+            B.appctn_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm , B.mod_id,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = d.theme_cd) as theme_cd_nm,
+            C.rsume_seq,
+            C.rsume_ord,
+            C.appctn_stts_cd,
+            C.mng_stts_cd,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = D.ptcpt_type) as ptcpt_type_nm,
+            D.wdcrm_cd,
+            B.mod_id,
+            B.mod_dtm
+        FROM
+            (
+            SELECT * FROM cx_episd_mst
+            WHERE bsn_cd = 'INQ07011'
+            ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+            INNER JOIN(
+                SELECT
+                    appctn_seq,
+                    rsume_ord,
+                    rsume_seq,
+                    appctn_stts_cd,
+                    mng_stts_cd
+                FROM cx_appctn_rsume_dtl AS crd
+                WHERE (appctn_seq, rsume_ord) IN (
+                    SELECT appctn_seq, MAX(rsume_ord) AS max_rsume_ord
+                    FROM cx_appctn_rsume_dtl
+                    GROUP BY appctn_seq
+                )
+            )C on C.appctn_seq = B.appctn_seq
+            INNER JOIN cx_appctn_rsume_prize_car_dtl D on D.rsume_seq = C.rsume_seq
+        <include refid="selectListwhereSql" />
+        ORDER BY YEAR DESC, APPCTN_SEQ DESC
+        <if test="excelYn == null">
+        LIMIT #{firstIndex}, #{recordCountPerPage};
+        </if>
+    </select>
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.selectFutureCarRegDtl
+         설  명 : DTL
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <select id="selectFutureCarRegDtl" parameterType="wBKBRegisterSearchDTO" resultType="WBKBRegisterDTO">
+        SELECT  /*WBKBRegisterMapper.selectFutureCarRegDtl*/
+            YEAR(A.year) as year, A.episd,
+            E.name,
+            (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = B.MEM_SEQ) as id,
+            E.email,
+            E.hp_no,
+            E.tel_no,
+            E.gndr,
+            E.birth,
+            B.appctn_seq, B.reg_id, B.reg_dtm , B.mod_id, B.mod_dtm,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = D.theme_cd) as theme_cd_nm,
+            C.rsume_ord, -- 서류 단계
+            -- C.rsume_stts_cd, -- 서류 상
+            C.appctn_stts_cd, -- 신청자 신청 상태값
+            C.appctn_stts_chng_dtm, -- 신청자 신청 수정일
+            C.mng_stts_cd, -- 관리자 확인 상태값
+            C.mng_stts_chng_dtm, -- 관리자 확인 수정일
+            D.rsume_seq,
+            (SELECT
+                GROUP_CONCAT(TMMBR_SEQ) AS COMBINED_TMMBR_SEQ
+            FROM
+                CX_APPCTN_RSUME_PRIZE_CAR_TMMBR_DTL
+            WHERE
+                RSUME_SEQ = D.RSUME_SEQ) AS tmmbrSeqList,
+            D.name AS rdName,
+            D.hp_no AS rdHpNo,
+            D.email AS rdEmail,
+            D.schl_nm AS rdSchlNm,
+            D.grd AS rdGrd,
+            D.grd_cd AS rdGrdCd,
+            D.theme_cd,
+            D.dtl_cntn,
+            D.wdcrm_cd,
+            D.ptcpt_type,
+            D.hghst_winer_yn,
+            F.file_seq,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = D.ptcpt_type) as ptcpt_type_nm
+        FROM
+            (
+            SELECT * FROM cx_episd_mst
+            WHERE bsn_cd = 'INQ07011'
+            ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+            INNER JOIN cx_appctn_rsume_dtl C on C.appctn_seq = B.appctn_seq
+            INNER JOIN cx_appctn_rsume_prize_car_dtl D on D.rsume_seq = C.rsume_seq
+            INNER JOIN co_mem_mst E on E.mem_seq = B.mem_seq
+            LEFT JOIN cx_appctn_file_dtl F on F.appctn_seq = B.appctn_seq
+        WHERE B.APPCTN_SEQ = #{detailsKey} AND C.RSUME_ORD = 1 ;
+    </select>
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.selectFutureCarPartDtl
+         설  명 : DTL
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+
+    <select id="selectFutureCarPartDtl" parameterType="wBKBRegisterDTO" resultType="WBKBRegPartDTO">
+        select *    /*WBKBRegisterMapper.selectFutureCarPartDtl*/
+        from cx_appctn_rsume_prize_car_tmmbr_dtl
+        where rsume_seq=#{rsumeSeq};
+    </select>
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.selectFutureCarRsumeDtl
+         설  명 : DTL
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+
+    <select id="selectFutureCarRsumeDtl" parameterType="wBKBRegisterDTO" resultType="WBKBRsumeDTO">
+        SELECT   /*WBKBRegisterMapper.selectFutureCarRsumeDtl*/
+               RSUME_ORD , APPCTN_SEQ , APPCTN_STTS_CD , APPCTN_STTS_CHNG_DTM , MNG_STTS_CD , MNG_STTS_CHNG_DTM
+        FROM cx_appctn_rsume_dtl
+        WHERE RSUME_SEQ = #{rsumeSeq};
+    </select>
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.selectFutureCarFileDtl
+         설  명 : DTL
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+
+    <select id="selectFutureCarFileDtl" parameterType="wBKBRegisterDTO" resultType="WBKBFileDtlDTO">
+        SELECT /*WBKBRegisterMapper.selectFutureCarFileDtl*/
+            RSUME_SEQ , RSUME_ORD , FILE_CD , FILE_SEQ , REG_ID , REG_IP , REG_DTM
+        FROM cx_appctn_rsume_file_dtl
+        WHERE RSUME_SEQ = #{rsumeSeq}
+        ORDER BY RSUME_ORD ASC;
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getRegisterCompanyCount
+         설  명 : List Data Count
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+        count(*)
+        FROM
+        (
+        SELECT * FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
+        ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+        INNER JOIN cx_appctn_rsume_dtl C on C.appctn_seq = B.appctn_seq
+        INNER JOIN cx_appctn_rsume_prize_car_dtl D on D.rsume_seq = C.rsume_seq
+    -->
+
+    <select id="getRegisterCompanyCount" parameterType="wBKBRegisterSearchDTO" resultType="java.lang.Integer">
+
+        SELECT  /*WBKBRegisterMapper.getRegisterCompanyCount*/
+            count(*)
+        FROM
+        (
+            SELECT * FROM cx_episd_mst
+            WHERE bsn_cd = 'INQ07011'
+        ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+        INNER JOIN(
+            SELECT
+                appctn_seq,
+                rsume_ord,
+                rsume_seq,
+                appctn_stts_cd,
+                mng_stts_cd
+            FROM cx_appctn_rsume_dtl AS crd
+            WHERE (appctn_seq, rsume_ord) IN (
+                SELECT appctn_seq, MAX(rsume_ord) AS max_rsume_ord
+                FROM cx_appctn_rsume_dtl
+                GROUP BY appctn_seq
+            )
+        )C on C.appctn_seq = B.appctn_seq
+        INNER JOIN cx_appctn_rsume_prize_car_dtl D on D.rsume_seq = C.rsume_seq
+        <include refid="selectListwhereSql" />
+
+    </select>
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getRegisterCompanySubList
+         설  명 : List Data Select Sub - 상생 진행 상세
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <select id="getRegisterCompanySubList" parameterType="wBKBRegisterSearchDTO" resultType="wBKBRegisterSearchDTO">
+        select /*WBKBRegisterMapper.getRegisterCompanySubList*/
+               name,
+             hp_no,
+             email
+        from cx_appctn_rsume_prize_car_dtl
+        where rsume_seq = #{rsumeSeq}
+
+    </select>
+
+    <!--
+       쿼리명 : WBFBRegisterCompanyMapper.getRegisterFirstResultList
+       설  명 : 1차 심사 결과 조회 - 공모전 신청팀 1차 결과 리스트
+       수정일     수정자     수정내용
+      ==========  ======  ==============
+      2023.11.16  민윤기     최초 생성
+  -->
+    <select id="getRegisterFirstResultList" parameterType="wBKBRegisterSearchDTO" resultType="wBKBRegisterSearchDTO">
+        SELECT /*WBKBREGISTERMAPPER.getRegisterFirstResultList*/
+            appctn_stts_cd AS fResultCd,
+               (select cd_nm from co_code_mst
+                where cd = a.appctn_stts_cd) AS fResultNm
+        FROM CX_APPCTN_RSUME_DTL a
+        WHERE APPCTN_SEQ = #{appctnSeq}
+        AND RSUME_ORD = 2;
+    </select>
+
+    <!--
+       쿼리명 : WBFBRegisterCompanyMapper.getRegisterFinalResultList
+       설  명 : 최종 심사 결과 조회 - 공모전 신청팀 1차 결과 리스트
+       수정일     수정자     수정내용
+      ==========  ======  ==============
+      2023.11.16  민윤기     최초 생성
+  -->
+    <select id="getRegisterFinalResultList" parameterType="wBKBRegisterSearchDTO" resultType="wBKBRegisterSearchDTO">
+        SELECT /*WBKBREGISTERMAPPER.getRegisterFinalResultList*/
+            mng_stts_cd AS lResultCd
+        FROM CX_APPCTN_RSUME_DTL a
+        WHERE APPCTN_SEQ = #{appctnSeq}
+        AND RSUME_ORD = 3;
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getRegisterCompanyDetailSubList
+         설  명 : List Data Select Sub - 상생 진행 상세
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <select id="getRegisterCompanyDetailSubList" parameterType="WBFBRegisterSearchDTO">
+        SELECT /*WBKBRegisterMapper.getRegisterCompanyDetailSubList*/
+            A.rsume_stts_cd, (SELECT cd_nm FROM co_code_mst WHERE cd = A.rsume_stts_cd) as rsume_stts_nm,
+            A.appctn_stts_chng_dtm, A.mng_stts_chng_dtm, A.mod_id, A.mod_dtm
+        FROM (SELECT * FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{appctnSeq}) A
+        LEFT JOIN cx_appctn_rsume_task_dtl B
+        ON A.rsume_seq = B.rsume_seq AND A.rsume_ord = B.rsume_ord
+        ORDER BY A.rsume_ord DESC LIMIT 1;
+    </select>
+
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getOptYearList
+         설  명 : 연도 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <select id="getOptYearList" parameterType="wBKBRegisterSearchDTO">
+        SELECT  /*WBKBRegisterMapper.getOptYearList*/
+            DISTINCT YEAR(year)
+        FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
+        ORDER BY year ASC
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getOptEpisdList
+         설  명 : 연도 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <select id="getOptEpisdList" parameterType="wBKBRegisterSearchDTO">
+        SELECT  /*WBKBRegisterMapper.getOptEpisdList*/
+            DISTINCT episd
+        FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
+        AND year = #{year}
+        ORDER BY episd_seq DESC
+    </select>
+
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.getEpisdSeq
+         설  명 : 연도 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <select id="getEpisdSeq" parameterType="wBKBRegisterSearchDTO">
+        SELECT  /*WBKBRegisterMapper.getEpisdSeq*/
+               episd_seq
+        FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
+        AND year = #{year}
+        AND episd = #{episd}
+    </select>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.putAppctnMst
+         설  명 : 회차신청 마스터 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <insert id="putAppctnMst" parameterType="wBKBRegisterDTO" >
+        INSERT /*WBKBRegisterMapper.putAppctnMst*/
+        INTO cx_appctn_mst
+        (
+            appctn_seq,
+            episd_seq,
+            mem_seq,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+        (
+            #{appctnSeq},
+            #{episdSeq},
+            #{memSeq},
+            #{regId},
+            #{regIp},
+            now()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.updAppctnMst
+         설  명 : 회차신청 마스터 update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+
+    <update id="updAppctnMst" parameterType="wBKBRegisterDTO">
+        UPDATE /*WBKBRegisterMapper.updAppctnMst*/
+            cx_appctn_mst
+        SET
+            episd_seq = #{episdSeq},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE appctn_seq = #{detailsKey}
+    </update>
+
+    <!-- cx_appctn_file_dtl
+    #{appctnSeq},
+                #{fileCd},
+                #{fileSeq},
+                #{regId},
+                #{regIp},
+                now()
+         쿼리명 : WBFBRegisterCompanyMapper.selectFutureCarRegDtl
+         설  명 : 회차신청 마스터 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <insert id="putAppctnFileDtl" parameterType="wBKBRegisterDTO" >
+        INSERT /*WBKBRegisterMapper.selectFutureCarRegDtl*/ INTO cx_appctn_rsume_file_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            file_cd,
+            file_seq,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+            (
+                #{rsumeSeq},
+                #{rsumeOrd},
+                #{fileCd},
+                #{fileSeq},
+                #{regId},
+                #{regIp},
+                now()
+            )
+    </insert>
+
+    <!--
+   쿼리명 : WBKBRegisterMapper.putAppctnMst
+   설  명 : 서류 심사 파일 삭제
+   수정일     수정자     수정내용
+  ==========  ======  ==============
+  2023.11.16  민윤기     최초 생성
+-->
+    <delete id="delFile" parameterType="wBKBRegisterDTO">
+
+        DELETE /* WBKBRegisterMapper.delFile */
+        FROM
+            cx_appctn_file_dtl
+        WHERE APPCTN_SEQ = #{detailsKey};
+
+    </delete>
+
+    <!--
+ 쿼리명 : WBKBRegisterMapper.putAppctnMst
+ 설  명 : 1차,최종 심사 파일 삭제
+ 수정일     수정자     수정내용
+==========  ======  ==============
+2023.11.16  민윤기     최초 생성
+-->
+    <delete id="delDtlFile" parameterType="wBKBRsumeDTO">
+
+        DELETE /* WBKBRegisterMapper.delDtlFile */
+        FROM
+            cx_appctn_rsume_file_dtl
+        WHERE RSUME_SEQ = #{rsumeSeq} AND RSUME_ORD = #{rsumeOrd} AND FILE_CD = #{fileCd}
+
+    </delete>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.putDtlFileDtl
+         설  명 : 1차,최종 심사 파일 등록
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <insert id="putDtlFileDtl" parameterType="wBKBRsumeDTO" >
+        INSERT /*WBKBRegisterMapper.putDtlFileDtl*/
+        INTO cx_appctn_rsume_file_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            file_cd,
+            file_seq,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+            (
+                #{rsumeSeq},
+                #{rsumeOrd},
+                #{fileCd},
+                #{fileSeq},
+                #{regId},
+                #{regIp},
+                now()
+            )
+    </insert>
+
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.putAppctnRsumeDtl
+         설  명 : 회차신청 상세 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <insert id="putAppctnRsumeDtl" parameterType="wBKBRegisterDTO" >
+        INSERT /*WBKBRegisterMapper.putAppctnRsumeDtl*/ INTO cx_appctn_rsume_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            appctn_seq,
+            rsume_stts_cd,
+            appctn_stts_cd,
+            appctn_stts_chng_dtm,
+            mng_stts_cd,
+            mng_stts_chng_dtm,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+        (
+            #{rsumeSeq},
+            #{rsumeOrd},
+            #{appctnSeq},
+            #{rsumeSttsCd},
+            #{appctnSttsCd},
+            now(),
+            #{mngSttsCd},
+            now(),
+            #{regId},
+            #{regIp},
+            now()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.putAppctnRsumeTaskDtl
+         설  명 : 회차신청 스마트 상세 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <insert id="putAppctnRsumeTaskDtl" parameterType="wBKBRegisterDTO"  >
+        INSERT /*WBKBRegisterMapper.putAppctnRsumeTaskDtl*/
+        INTO cx_appctn_rsume_prize_car_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            name,
+            hp_no,
+            email,
+            schl_nm,
+            grd,
+            grd_cd,
+            theme_cd,
+            dtl_cntn,
+            wdcrm_cd,
+            hghst_winer_yn,
+            ptcpt_type,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+        (
+            #{rsumeSeq},
+            1,
+            #{rdName},
+            #{rdHpNo},
+            #{rdEmail},
+            #{rdSchlNm},
+            #{rdGrd},
+            #{rdGrdCd},
+            #{themeCd},
+            #{dtlCntn},
+            #{wdcrmCd},
+            #{hghstWinerYn},
+            #{ptcptType},
+            #{regId},
+            #{regIp},
+            now()
+        )
+    </insert>
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.updAppctnRsumeTaskDtl
+         설  명 : 신청 상세 update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+
+    <update id="updAppctnRsumeTaskDtl" parameterType="wBKBRegisterDTO">
+        UPDATE /*WBKBRegisterMapper.updAppctnRsumeTaskDtl*/
+            cx_appctn_rsume_prize_car_dtl
+        SET
+            NAME = #{rdName},
+            HP_NO = #{rdHpNo},
+            EMAIL = #{rdEmail},
+            SCHL_NM = #{rdSchlNm},
+            GRD = #{rdGrd},
+            GRD_CD = #{rdGrdCd},
+            THEME_CD = #{themeCd},
+            DTL_CNTN = #{dtlCntn},
+            WDCRM_CD = #{wdcrmCd},
+            PTCPT_TYPE = #{ptcptType},
+            HGHST_WINER_YN = #{hghstWinerYn},
+            MOD_ID = #{modId},
+            MOD_IP = #{modIp},
+            MOD_DTM = now()
+        WHERE RSUME_SEQ = #{rsumeSeq}
+    </update>
+
+    <!--
+     쿼리명 : WBKBRegisterMapper.updRsumeStep
+     설  명 : 신청 진행 상태 update
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  민윤기     최초 생성
+-->
+
+    <update id="updRsumeStep" parameterType="wBKBRegisterDTO">
+        UPDATE /*WBKBRegisterMapper.updRsumeStep*/
+            cx_appctn_rsume_dtl
+        SET
+            APPCTN_STTS_CD= #{appctnSttsCd},
+            appctn_stts_chng_dtm = now(),
+            mng_stts_cd= #{mngSttsCd},
+            mng_stts_chng_dtm= now(),
+            REG_ID= #{modId},
+            REG_IP= #{modIp},
+            REG_DTM= now()
+        WHERE RSUME_SEQ = #{rsumeSeq} AND RSUME_ORD = #{rsumeOrd}
+    </update>
+
+
+    <!--
+       쿼리명 : WBKBRegisterMapper.delRsumeNestStep
+       설  명 : 신청 진행 상태 삭제
+       수정일     수정자     수정내용
+      ==========  ======  ==============
+      2023.11.16  민윤기     최초 생성
+  -->
+    <delete id="delRsumeNestStep" parameterType="wBKBRegisterDTO">
+        DELETE /*WBKBRegisterMapper.delRsumeNestStep*/
+        FROM
+            cx_appctn_rsume_dtl
+        WHERE RSUME_SEQ = #{rsumeSeq} AND RSUME_ORD = #{rsumeOrd} + 1
+    </delete>
+
+
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.insertRsumeStep
+         설  명 : 신청 진행 상태 Insert
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <insert id="insertRsumeStep" parameterType="wBKBRsumeDTO"  >
+        INSERT /*WBKBRegisterMapper.insertRsumeStep*/
+        INTO cx_appctn_rsume_dtl
+        (
+            RSUME_SEQ,
+            RSUME_ORD,
+            APPCTN_SEQ,
+            APPCTN_STTS_CD,
+            appctn_stts_chng_dtm,
+            mng_stts_chng_dtm,
+            REG_ID,
+            REG_IP,
+            REG_DTM
+        )
+        VALUES
+            (
+                #{rsumeSeq},
+                #{rsumeOrd} + 1,
+                #{appctnSeq},
+                #{appctnSttsCd},
+                now(),
+                now(),
+                #{regId},
+                #{regIp},
+                now()
+            )
+    </insert>
+
+    <!--
+      쿼리명 : WBFBRegisterCompanyMapper.putPartDtl
+      설  명 : 회차신청 팀원 상세 Insert
+      수정일     수정자     수정내용
+     ==========  ======  ==============
+     2023.11.16  민윤기     최초 생성
+ -->
+    <insert id="putPartDtl" parameterType="wBKBRegPartDTO"  >
+        INSERT /*WBKBRegisterMapper.putPartDtl*/
+        INTO cx_appctn_rsume_prize_car_tmmbr_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            tmmbr_seq,
+            name,
+            hp_no,
+            email,
+            schl_nm,
+            grd,
+            grd_cd,
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+            (
+                #{rsumeSeq},
+                1,
+                #{tmmbrSeq},
+                #{name},
+                #{hpNo},
+                #{email},
+                #{schlNm},
+                #{grd},
+                #{grdCd},
+                #{regId},
+                #{regIp},
+                now()
+            )
+    </insert>
+
+    <!--
+       쿼리명 : WBKBRegisterMapper.delPartDtl
+       설  명 : 회차신청 팀원 update
+       수정일     수정자     수정내용
+      ==========  ======  ==============
+      2023.11.16  민윤기     최초 생성
+  -->
+    <delete id="delPartDtl" parameterType="wBKBRegisterDTO">
+        delete /*WBKBRegisterMapper.delPartDtl*/
+        from
+        cx_appctn_rsume_prize_car_tmmbr_dtl
+        Where rsume_seq = #{rsumeSeq}
+    </delete>
+    <update id="updPartDtl" parameterType="wBKBRegPartDTO">
+        UPDATE /*WBKBRegisterMapper.updPartDtl*/
+            cx_appctn_rsume_prize_car_tmmbr_dtl
+        SET
+
+            NAME = #{name},
+            HP_NO = #{hpNo},
+            EMAIL = #{email},
+            SCHL_NM = #{schlNm},
+            GRD = #{grd},
+            GRD_CD = #{grdCd},
+            MOD_ID = #{modId},
+            MOD_IP = #{modIp},
+            MOD_DTM = now()
+        WHERE tmmbr_seq = #{tmmbrSeq}
+    </update>
+
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.updCoMemMst
+         설  명 : 회원 마스터 Update
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <update id="updCoMemMst" parameterType="wBKBRegisterDTO">
+        UPDATE /*WBKBRegisterMapper.updCoMemMst*/
+            co_mem_mst
+        SET
+            tel_no = #{telNo},
+            mod_id = #{modId},
+            mod_ip = #{modIp},
+            mod_dtm = now()
+        WHERE id = #{name}
+    </update>
+
+
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.selectListwhereSql
+         설  명 : 게시판 리스트 검색 옵션
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  민윤기     최초 생성
+    -->
+    <sql id="selectListwhereSql">
+        <where>
+
+            <if test="carbonDate != null and carbonDate != ''.toString() ">
+                <choose>
+                    <when test="carbonDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                            B.REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            B.REG_DTM >= STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND B.REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE( #{endDt} , '%Y-%m-%d'), INTERVAL 1 DAY)
+                            )
+                        </if>
+                    </when>
+                    <when test="carbonDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                            B.REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            B.REG_DTM >= STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND B.REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE( #{endDt} , '%Y-%m-%d'), INTERVAL 1 DAY)
+                            )
+                        </if>
+                    </when>
+                    <when test="carbonDate == 3">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND
+                            (
+                            B.MOD_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            OR
+                            B.MOD_DTM >= STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND B.REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE( #{endDt} , '%Y-%m-%d'), INTERVAL 1 DAY)
+                            }
+                        </if>
+                    </when>
+                </choose>
+            </if>
+            <if test="year != null and year != ''.toString()">
+                AND (
+
+                    A.year = #{year}
+
+                )
+            </if>
+            <if test="ptcptTypeList != null and ptcptTypeList.size() > 0">
+                AND (
+                <foreach collection="ptcptTypeList" item="ptcptTypeList" index="index" open="" close="" separator=" or ">
+                    D.ptcpt_type = #{ptcptTypeList}
+                </foreach>
+                )
+            </if>
+            <if test="themeCdList != null and themeCdList.size() > 0">
+                AND (
+                <foreach collection="themeCdList" item="themeCdList" index="index" open="" close="" separator=" or ">
+                    D.theme_cd = #{themeCdList}
+                </foreach>
+                )
+            </if>
+            <if test="wdcrmCdList != null and wdcrmCdList.size() > 0">
+                AND (
+                <foreach collection="wdcrmCdList" item="wdcrmCdList" index="index" open="" close="" separator=" or ">
+                    D.wdcrm_cd = #{wdcrmCdList}
+                </foreach>
+                )
+            </if>
+            <if test="fResultCdList != null and fResultCdList.size() > 0">
+                AND (
+                <foreach collection="fResultCdList" item="fResultCdList" index="index" open="" close="" separator=" or ">
+                    C.appctn_stts_cd = #{fResultCdList}
+                    AND C.RSUME_ORD = 2
+                    <if test="fResultCdList == 'WBKB_REG_FRT002' ">
+                        OR C.RSUME_ORD = 3
+                    </if>
+                </foreach>
+                )
+            </if>
+            <if test="lResultCdList != null and lResultCdList.size() > 0">
+                AND (
+                <foreach collection="lResultCdList" item="lResultCdList" index="index" open="" close="" separator=" or ">
+                    C.mng_stts_cd = #{lResultCdList}
+                    AND C.RSUME_ORD = 3
+                </foreach>
+                )
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                <choose>
+                    <when test="f == 1">
+                        AND EXISTS (SELECT NAME FROM CX_APPCTN_RSUME_PRIZE_CAR_DTL WHERE RSUME_SEQ = D.RSUME_SEQ AND (NAME LIKE CONCAT('%', #{q}, '%') OR NAME LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 2">
+                        AND EXISTS (SELECT REG_ID FROM CX_APPCTN_MST WHERE APPCTN_SEQ = B.APPCTN_SEQ AND (REG_ID LIKE CONCAT('%', #{q}, '%') OR REG_ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <when test="f == 3">
+                        AND EXISTS (SELECT MOD_ID FROM CX_APPCTN_MST WHERE APPCTN_SEQ = B.APPCTN_SEQ AND (MOD_ID LIKE CONCAT('%', #{q}, '%') OR MOD_ID LIKE CONCAT('%', #{q}, '%')))
+                    </when>
+                    <otherwise>
+                        AND (
+                        EXISTS (SELECT NAME FROM CX_APPCTN_RSUME_PRIZE_CAR_DTL WHERE RSUME_SEQ = D.RSUME_SEQ AND (NAME LIKE CONCAT('%', #{q}, '%') OR NAME LIKE CONCAT('%', #{q}, '%')))
+                        OR
+                        EXISTS (SELECT MOD_ID FROM CX_APPCTN_MST WHERE APPCTN_SEQ = B.APPCTN_SEQ AND (MOD_ID LIKE CONCAT('%', #{q}, '%') OR MOD_ID LIKE CONCAT('%', #{q}, '%')))
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
+
+
+    <!--
+       쿼리명 : WBKBRegisterMapper.checkAppctnRsumeSeq
+       설  명 : 등록 삭제 가능 확인
+       수정일     수정자     수정내용
+      ==========  ======  ==============
+      2023.11.16  민윤기     최초 생성
+      -->
+    <select id="checkAppctnRsumeSeq" parameterType="wBKBRegisterDTO">
+        SELECT /* WBKBRegisterMapper.checkAppctnRsumeSeq */
+            DISTINCT(RSUME_SEQ)
+        FROM CX_APPCTN_RSUME_DTL
+        WHERE APPCTN_SEQ = #{detailsKey};
+    </select>
+        <!--
+        쿼리명 : WBKBRegisterMapper.checkAppctnRsumeDtl
+        설  명 : 등록 삭제 가능 확인
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.16  민윤기     최초 생성
+       -->
+    <select id="checkAppctnRsumeDtl" parameterType="wBKBRegisterDTO">
+        SELECT /* WBKBRegisterMapper.checkAppctnRsumeDtl */
+               COUNT(*)
+        FROM CX_APPCTN_RSUME_DTL
+        WHERE  RSUME_ORD = 1
+        AND (MNG_STTS_CD IS NULL OR MNG_STTS_CD = '')
+        AND APPCTN_SEQ IN
+        <foreach item="appctnSeq" collection="appctnSeqs" open="(" separator="," close=")">
+            #{appctnSeq}
+        </foreach>;
+    </select>
+    <!--
+     쿼리명 : WBKBRegisterMapper.putAppctnMst
+     설  명 : 등록 삭제
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.16  민윤기     최초 생성
+    -->
+    <delete id="deleteCarRegAppctnMst" parameterType="wBKBRegisterDTO">
+
+        DELETE /* WBKBRegisterMapper.deleteCarRegAppctnMst */
+        FROM
+            cx_appctn_mst
+        WHERE APPCTN_SEQ = #{detailsKey};
+
+    </delete>
+    <delete id="deleteCarRegAppctnRsumeDtl" parameterType="wBKBRegisterDTO">
+
+        DELETE /* WBKBRegisterMapper.deleteCarRegAppctnRsumeDtl */
+        FROM
+            cx_appctn_rsume_dtl
+        WHERE APPCTN_SEQ = #{detailsKey};
+
+    </delete>
+    <delete id="deleteCarRegAppctnFileDtl" parameterType="wBKBRegisterDTO">
+
+        DELETE /* WBKBRegisterMapper.deleteCarRegAppctnFileDtl */
+        FROM
+            cx_appctn_file_dtl
+        WHERE APPCTN_SEQ = #{detailsKey};
+
+    </delete>
+    <delete id="deleteCarRegAppctnDtl" parameterType="wBKBRegisterDTO">
+
+        DELETE /* WBKBRegisterMapper.deleteCarRegAppctnDtl */
+        FROM
+            cx_appctn_rsume_prize_car_dtl
+        WHERE RSUME_SEQ = #{rsumeSeq};
+
+    </delete>
+    <delete id="deleteCarRegAppctnTmmbrDtl" parameterType="wBKBRegisterDTO">
+
+        DELETE /* WBKBRegisterMapper.deleteCarRegAppctnTmmbrDtl */
+        FROM
+            cx_appctn_rsume_prize_car_tmmbr_dtl
+        WHERE RSUME_SEQ = #{rsumeSeq};
+
+    </delete>
+
+</mapper>
+
+
+

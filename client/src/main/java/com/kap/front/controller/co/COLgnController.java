@@ -5,6 +5,7 @@ import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.*;
+import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -44,6 +45,8 @@ public class COLgnController {
     private final COUserLgnService cOUserLgnService;
 	//이메일 발송
 	private final COMessageService cOMessageService;
+
+	private final MPAUserService mpaUserService;
 
 
 	@Value("${app.site.name}")
@@ -266,6 +269,9 @@ public class COLgnController {
 			else
 			{
 				COUserDetailsDTO rtnCOAAdmDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
+				MPAUserDto mpaUserDto = new MPAUserDto();
+				mpaUserDto.setDetailsKey(String.valueOf(rtnCOAAdmDTO.getSeq()));
+				modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
 				modelMap.addAttribute("tmpLgnVO", rtnCOAAdmDTO);
 			}
 		}

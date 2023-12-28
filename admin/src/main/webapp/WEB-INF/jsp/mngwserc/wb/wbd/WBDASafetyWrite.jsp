@@ -122,7 +122,7 @@
                             <span class="ion-record"></span> 미노출
                         </label>
                     </div>
-                    <input type="hidden" id="befeExpsYn" value="${rtnDto.expsYn}"/>
+                    <input type="hidden" class="notRequired" id="befeExpsYn" value="${rtnDto.expsYn}"/>
                 </div>
             </fieldset>
             <fieldset id="rowInsert">

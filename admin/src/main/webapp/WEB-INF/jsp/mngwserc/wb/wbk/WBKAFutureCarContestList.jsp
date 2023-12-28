@@ -113,8 +113,8 @@
                         <th class="text-center">총 상금(인원)</th>
                         <th class="text-center">장소</th>
                         <th class="text-center">최초 등록자</th>
-                        <th class="text-center">최초 등록일시</th>
-                        <th class="text-center">최종 수정자</th>
+                        <%--<th class="text-center">최초 등록일시</th>
+                        <th class="text-center">최종 수정자</th>--%>
                         <th class="text-center">최종 수정일시</th>
                         <th class="text-center">노출여부</th>
                     </tr>

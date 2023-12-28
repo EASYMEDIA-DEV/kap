@@ -21,13 +21,29 @@
 	</form>
 	<script type="text/javascript">
 			if('${rtnData.resultcode}' == "0000") {
-				alert("본인인증에 성공하였습니다.");
+				if(document.getElementById("param1").value == "ciChk") {
+					if(document.getElementById("param2").value != document.getElementById("ci").value) {
+						alert("본인인증에 실패하였습니다.");
+					} else {
+						alert("본인인증에 성공하였습니다.");
 
-				window.opener.name = "nicePop";
-				document.form.target = "nicePop";
-				document.form.action = "${rtnData.receivedatass.redirectUrl}";
-				document.form.submit();
+						window.opener.name = "nicePop";
+						document.form.target = "nicePop";
+						document.form.action = "${rtnData.receivedatass.redirectUrl}";
+						document.form.submit();
+					}
 
+
+				}else {
+
+					alert("본인인증에 성공하였습니다.");
+
+					window.opener.name = "nicePop";
+					document.form.target = "nicePop";
+					document.form.action = "${rtnData.receivedatass.redirectUrl}";
+					document.form.submit();
+
+				}
 				window.close();
 
 			} else {

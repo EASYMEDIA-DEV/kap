@@ -156,15 +156,20 @@ var exports = {
             dupEmail : {
                 event : {
                     click : function() {
-                        cmmCtrl.frmAjax(function(respObj) {
-                                if(respObj.dupChk == 'Y') {
-                                    dupEmailChk = true;
-                                    alert(msgCtrl.getMsg("fail.mp.mpa.al_008"));
-                                } else {
-                                    dupEmailChk = false;
-                                    alert(msgCtrl.getMsg("fail.mp.mpa.al_007"));
-                                }
-                        }, "/mngwserc/mp/mpa/dup-email", $formObj, "POST", "json",'',false);
+                       if (!$("input[name='email']").val() == "") {
+                           cmmCtrl.frmAjax(function(respObj) {
+                               if(respObj.dupChk == 'Y') {
+                                   dupEmailChk = true;
+                                   alert(msgCtrl.getMsg("fail.mp.mpa.al_008"));
+                               } else {
+                                   dupEmailChk = false;
+                                   alert(msgCtrl.getMsg("fail.mp.mpa.al_007"));
+                               }
+                           }, "/mngwserc/mp/mpa/dup-email", $formObj, "POST", "json",'',false);
+                       } else {
+                           alert(msgCtrl.getMsg("fail.mp.mpa.al_006"));
+                           return false;
+                       }
                     }
                 }
             },
@@ -261,6 +266,7 @@ var exports = {
                         if(data.respCnt >=1) {
                             alert(msgCtrl.getMsg("fail.mp.mpa.al_004"));
                         }
+                        location.href = './list';
                     }, actionUrl, $formObj, "post", "json")
                 },
                 error: function(e){

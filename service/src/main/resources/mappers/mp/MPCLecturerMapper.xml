@@ -199,45 +199,40 @@
     -->
     <select id="selectWinBusinessList" parameterType="MPCLecturerDTO">
         SELECT /*MPCLecturerMapper.selectWinBusinessList*/
-            A.episd_seq
-             , A.year -- 사업연도
+            B.APPCTN_SEQ
+             , A.YEAR -- 사업연도
+             , C.rsume_stts_cd -- 진행상태코드
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = C.rsume_stts_cd) as rsume_stts_nm -- 진행상태명
+             , A.bsn_strt_dtm -- 사업시작일시
+             , A.bsn_end_dtm -- 사업종료일시
              , A.episd -- 회차
              , A.bsn_cd -- 사업코드
              , (SELECT cd_nm FROM co_code_mst WHERE cd = A.bsn_cd) as bsn_nm -- 사업코드명
-             , A.bsn_strt_dtm -- 사업시작일시
-             , A.bsn_end_dtm -- 사업종료일시
-             , B.sbrdn_bsnm_no -- 사업신청 시 사업자번호
-             , B.reg_dtm AS bsn_reg_dtm -- 신청일
-             , B.pic_cmssr_seq
-             , C.cmpn_nm -- 부품사명
-             , C.ctgry_cd -- 부품사 구분
-             , (select cd_nm from co_code_mst where cd_id = 'company_type' and cd = C.ctgry_cd) as ctgry_nm
-             , c.size_cd -- 부품사 규모
-             , (select cd_nm from co_code_mst where cd_id = 'company_type' and cd = C.size_cd) as size_nm
-             , C.bsnm_no -- 부품사 사업자등록번호
-             , D.rsume_stts_cd -- 진행상태코드
-             , (SELECT cd_nm FROM co_code_mst WHERE cd = D.rsume_stts_cd) as rsume_stts_nm -- 진행상태명
-             , F.optn_cd
-             , F.optn_nm
-             , (select cd_nm from co_code_mst where cd = F.optn_cd)  as type_cd_nm-- 사업구분명
-        FROM
-            (
-                SELECT * FROM cx_episd_mst
-                WHERE bsn_cd IN ('INQ07003', 'INQ07004', 'INQ07005', 'INQ07006')
-                -- 강사 및 위탁위원관리에서는 보안솔루션구축, 안전설비구축, 탄소배출저감, 스마트공장구축만 노출
-            ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+             , (select cd_nm from co_code_mst where cd = G.optn_cd)  as type_cd_nm-- 사업구분명
+             , F.CMPN_NM -- 부품사명
+             , F.BSNM_NO -- 사업자등록번호
+             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.CTGRY_CD ) AS CTGRY_NM -- 구분명
+             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.SIZE_CD) AS SIZE_NM -- 규모명
+             , B.REG_DTM -- 신청일
 
-                INNER JOIN cp_cmpn_mst C ON B.appctn_bsnm_no = C.bsnm_no
-                INNER JOIN
-            (
-                SELECT appctn_seq, rsume_stts_cd
-                FROM cx_appctn_rsume_dtl
-            ) D
-            ON B.appctn_seq = D.appctn_seq
-                LEFT JOIN cx_episd_bsn_optn_dtl F ON A.episd_seq  = F.episd_seq
-                INNER JOIN cp_isttr_mst E ON B.pic_cmssr_seq = E.isttr_seq
+        FROM CX_EPISD_MST A
+                 JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+                 JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+                 JOIN CO_MEM_MST D ON B.MEM_SEQ = D.MEM_SEQ
+                 JOIN CP_CMPN_MST F ON  D.WORK_BSNM_NO = F.BSNM_NO
+                 LEFT JOIN CX_APPCTN_RSUME_TCHLG_DTL V ON C.RSUME_SEQ = V.RSUME_SEQ
+                 LEFT JOIN cx_episd_bsn_optn_dtl G ON A.episd_seq  = G.episd_seq
+                 INNER JOIN (
+            SELECT C.APPCTN_SEQ, MAX(C.RSUME_ORD) AS RSUME_ORD
+            FROM CX_EPISD_MST A
+                     JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+                     JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+                     INNER JOIN cp_isttr_mst E ON B.pic_cmssr_seq = E.isttr_seq
             WHERE E.isttr_seq = #{isttrSeq}
-        ORDER BY year DESC, episd DESC
+            GROUP BY APPCTN_SEQ
+        ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
+        WHERE A.bsn_cd IN ('INQ07003', 'INQ07004', 'INQ07005', 'INQ07006')
+        ORDER BY A.YEAR DESC, B.APPCTN_SEQ DESC
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 

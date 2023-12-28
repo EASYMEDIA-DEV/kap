@@ -304,35 +304,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             // 유효성 검사
             $formObj.validation({
                 after : function() {
-                    var isValid = true, editorChk = true;
+                    var isValid = true;
 
-                    $formObj.find(".ckeditorRequired").each(function() {
-                        jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-                        jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
-                        jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
-                        jQuery(this).val(jQuery(this).val().split("\'").join("~!singlecomma!~"));
-                        jQuery(this).val(jQuery(this).val().split("\"").join("~!doublecomma!~"));
-
-                        var editorVal = jQuery(this).val().length;
-
-                        if (editorVal < 1)
-                        {
-                            editorChk = false;
-
-                            alert(msgCtrl.getMsg("fail.co.cog.cnts"));
-
-                            CKEDITOR.instances[jQuery(this).prop("id")].focus();
-
-                            // 에디터 최상단으로 스크롤 이동
-                            jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
-
-                            return false;
-                        }
-                    });
-
-                    if (!editorChk)
-                    {
-                        isValid = false;
+                    if($(".dropzone .dz-preview").length < 1) {
+                        alert(msgCtrl.getMsg("fail.notFileRequired"));
+                        isValid = !isValid;
                     }
 
                     return isValid;
