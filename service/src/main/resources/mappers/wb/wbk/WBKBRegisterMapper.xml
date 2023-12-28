@@ -14,9 +14,9 @@
             DISTINCT
             YEAR(A.year) as year, A.episd,
             B.appctn_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm , B.mod_id,
-            (SELECT cd_nm FROM co_code_mst WHERE cd = D.theme_cd) as theme_cd_nm,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = d.theme_cd) as theme_cd_nm,
             C.rsume_seq,
-            C.max_rsume_ord as rsume_ord,
+            C.rsume_ord,
             C.appctn_stts_cd,
             C.mng_stts_cd,
             (SELECT cd_nm FROM co_code_mst WHERE cd = D.ptcpt_type) as ptcpt_type_nm,
@@ -29,14 +29,18 @@
             WHERE bsn_cd = 'INQ07011'
             ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
             INNER JOIN(
-                    SELECT
+                SELECT
                     appctn_seq,
-                    MAX(rsume_ord) AS max_rsume_ord,
+                    rsume_ord,
                     rsume_seq,
-                    appctn_stts_cd ,
+                    appctn_stts_cd,
                     mng_stts_cd
+                FROM cx_appctn_rsume_dtl AS crd
+                WHERE (appctn_seq, rsume_ord) IN (
+                    SELECT appctn_seq, MAX(rsume_ord) AS max_rsume_ord
                     FROM cx_appctn_rsume_dtl
                     GROUP BY appctn_seq
+                )
             )C on C.appctn_seq = B.appctn_seq
             INNER JOIN cx_appctn_rsume_prize_car_dtl D on D.rsume_seq = C.rsume_seq
         <include refid="selectListwhereSql" />
@@ -175,13 +179,17 @@
         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
         INNER JOIN(
             SELECT
-            appctn_seq,
-            MAX(rsume_ord) AS max_rsume_ord,
-            rsume_seq,
-            appctn_stts_cd ,
-            mng_stts_cd
-            FROM cx_appctn_rsume_dtl
-            GROUP BY appctn_seq
+                appctn_seq,
+                rsume_ord,
+                rsume_seq,
+                appctn_stts_cd,
+                mng_stts_cd
+            FROM cx_appctn_rsume_dtl AS crd
+            WHERE (appctn_seq, rsume_ord) IN (
+                SELECT appctn_seq, MAX(rsume_ord) AS max_rsume_ord
+                FROM cx_appctn_rsume_dtl
+                GROUP BY appctn_seq
+            )
         )C on C.appctn_seq = B.appctn_seq
         INNER JOIN cx_appctn_rsume_prize_car_dtl D on D.rsume_seq = C.rsume_seq
         <include refid="selectListwhereSql" />
@@ -799,8 +807,8 @@
             </if>
             <if test="wdcrmCdList != null and wdcrmCdList.size() > 0">
                 AND (
-                <foreach collection="fResultCdList" item="fResultCdList" index="index" open="" close="" separator=" or ">
-                    C.appctn_stts_cd = #{fResultCdList}
+                <foreach collection="wdcrmCdList" item="wdcrmCdList" index="index" open="" close="" separator=" or ">
+                    D.wdcrm_cd = #{wdcrmCdList}
                 </foreach>
                 )
             </if>
@@ -808,6 +816,10 @@
                 AND (
                 <foreach collection="fResultCdList" item="fResultCdList" index="index" open="" close="" separator=" or ">
                     C.appctn_stts_cd = #{fResultCdList}
+                    AND C.RSUME_ORD = 2
+                    <if test="fResultCdList == 'WBKB_REG_FRT002' ">
+                        OR C.RSUME_ORD = 3
+                    </if>
                 </foreach>
                 )
             </if>
@@ -815,13 +827,14 @@
                 AND (
                 <foreach collection="lResultCdList" item="lResultCdList" index="index" open="" close="" separator=" or ">
                     C.mng_stts_cd = #{lResultCdList}
+                    AND C.RSUME_ORD = 3
                 </foreach>
                 )
             </if>
             <if test="q != null and q != ''.toString() ">
                 <choose>
                     <when test="f == 1">
-                        AND EXISTS (SELECT NAME FROM CX_APPCTN_RSUME_PRIZE_CAR_TMMBR_DTL WHERE RSUME_SEQ = D.RSUME_SEQ AND (NAME LIKE CONCAT('%', #{q}, '%') OR NAME LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS (SELECT NAME FROM CX_APPCTN_RSUME_PRIZE_CAR_DTL WHERE RSUME_SEQ = D.RSUME_SEQ AND (NAME LIKE CONCAT('%', #{q}, '%') OR NAME LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 2">
                         AND EXISTS (SELECT REG_ID FROM CX_APPCTN_MST WHERE APPCTN_SEQ = B.APPCTN_SEQ AND (REG_ID LIKE CONCAT('%', #{q}, '%') OR REG_ID LIKE CONCAT('%', #{q}, '%')))
@@ -831,9 +844,7 @@
                     </when>
                     <otherwise>
                         AND (
-                        EXISTS (SELECT NAME FROM CX_APPCTN_RSUME_PRIZE_CAR_TMMBR_DTL WHERE RSUME_SEQ = D.RSUME_SEQ AND (NAME LIKE CONCAT('%', #{q}, '%') OR NAME LIKE CONCAT('%', #{q}, '%')))
-                        OR
-                        EXISTS (SELECT REG_ID FROM CX_APPCTN_MST WHERE APPCTN_SEQ = B.APPCTN_SEQ AND (REG_ID LIKE CONCAT('%', #{q}, '%') OR REG_ID LIKE CONCAT('%', #{q}, '%')))
+                        EXISTS (SELECT NAME FROM CX_APPCTN_RSUME_PRIZE_CAR_DTL WHERE RSUME_SEQ = D.RSUME_SEQ AND (NAME LIKE CONCAT('%', #{q}, '%') OR NAME LIKE CONCAT('%', #{q}, '%')))
                         OR
                         EXISTS (SELECT MOD_ID FROM CX_APPCTN_MST WHERE APPCTN_SEQ = B.APPCTN_SEQ AND (MOD_ID LIKE CONCAT('%', #{q}, '%') OR MOD_ID LIKE CONCAT('%', #{q}, '%')))
                         )
