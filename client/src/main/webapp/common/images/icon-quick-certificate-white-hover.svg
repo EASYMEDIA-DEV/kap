@@ -1,11 +1,5 @@
-<svg width="32" height="36" viewBox="0 0 32 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Group 201">
-<g id="Group 196">
-<g id="Group 195">
-<path id="Rectangle 256" d="M8.00195 12V29.8C8.00195 29.9105 8.0915 30 8.20195 30H23.802C23.9124 30 24.002 29.9105 24.002 29.8V12" stroke="#F5F6F7" stroke-width="1.5"/>
-<path id="Vector 131" d="M12.6675 20.9608L14.8986 23.1919C14.9767 23.27 15.1034 23.27 15.1815 23.1919L19.3341 19.0392" stroke="#F5F6F7" stroke-width="1.5"/>
-<path id="Rectangle 257" d="M5.33472 10L26.668 10" stroke="#F5F6F7" stroke-width="1.5"/>
-</g>
-</g>
-</g>
+<svg width="33" height="32" viewBox="0 0 33 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8.50195 8V25.8C8.50195 25.9105 8.5915 26 8.70195 26H24.302C24.4124 26 24.502 25.9105 24.502 25.8V8" stroke="#F5F6F7" stroke-width="1.5"/>
+<path d="M13.1675 16.9609L15.3986 19.192C15.4767 19.2701 15.6034 19.2701 15.6815 19.192L19.8341 15.0393" stroke="#F5F6F7" stroke-width="1.5"/>
+<path d="M5.83472 6L27.168 6" stroke="#F5F6F7" stroke-width="1.5"/>
 </svg>

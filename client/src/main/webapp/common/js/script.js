@@ -195,10 +195,15 @@ var commonScript = (function(){
         if(window.innerWidth > 1023){
           if(!$(".filter-popup").hasClass("opened")){
             $(this).attr("title", "필터 닫기");
-            $(".filter-popup").addClass("opened").stop(true, true).slideDown(300);
+            $(".filter-popup").addClass("opened").stop(true, true).slideDown(300, function(){
+              ScrollTrigger.refresh();
+            });
+            
           }else{
             $(this).attr("title", "필터 열기");
-            $(".filter-popup").removeClass("opened").stop(true, true).slideUp(300);
+            $(".filter-popup").removeClass("opened").stop(true, true).slideUp(300, function(){
+              ScrollTrigger.refresh();
+            });
           }          
         }else{
           $(this).attr("title", "필터 닫기");
@@ -1051,7 +1056,9 @@ var commonScript = (function(){
         }
 
         // 페이지 스크롤 길이
-        $(".scroll-gauge .bar").width((_isScrollTop / (($("#wrap").height() - window.innerHeight)) * 100) + "%");
+        setTimeout(function(){
+          $(".scroll-gauge .bar").width((_isScrollTop / (($("#wrap").height() - window.innerHeight)) * 100) + "%");
+        }, 40)
 
         // 퀵, top버튼 position 변경
         quickRePosition();
@@ -1214,8 +1221,11 @@ var commonScript = (function(){
           }
         }
 
-        if($(this).parents(".layer-popup").hasClass("allTrainingSchedulePopup")){
+        if($(this).parents(".layer-popup").hasClass("full-popup")){
           $(this).parents(".layer-popup").removeClass("open");
+        }
+        if($(this).parents(".layer-popup").hasClass("trendPopup")){
+          $(this).parents(".layer-popup").find(".swiper-slide").removeClass("mv");
         }
 
         if($(this).parents(".layer-popup").hasClass("estiCertiPop")){
@@ -1254,6 +1264,10 @@ var commonScript = (function(){
       if($(".txt-depth-tab-swiper").size() > 0) {
         tabmenuSwiperCreate();
       }
+
+      if($(".trend-swiper-area").size() > 0){
+        trendSwiperCreate();
+      }
       
       // [공통 - 교육/세미나] swiper
       trainingSwperInitFn();
@@ -1261,25 +1275,16 @@ var commonScript = (function(){
 
       // [교육사업 > 교육사업소개] swiper
       swiperInitFn();
-
-      // [퀵메뉴]
-      trendListSwiper = new Swiper(".trend-list-swiper.swiper-container", {
-        slidesPerView: 3,
-        loop: true,
-        spaceBetween: 40,
-        observer: true,
-        observeParents: true,
-        navigation: {
-          nextEl: ".trend-list-swiper .swiper-button-next",
-          prevEl: ".trend-list-swiper .swiper-button-prev",
-        },
-      });
     },
     resizeFn: function(){
       $(window).resize(function(){
         // 라벨 형식 tab swiper
         if($(".txt-depth-tab-swiper").size() > 0) {
           tabmenuSwiperCreate();
+        }
+
+        if($(".trend-swiper-area").size() > 0){
+          trendSwiperCreate();
         }
 
         // 퀵, top버튼 position 변경
@@ -1433,6 +1438,7 @@ function acceptingRePosition(){
   }
 }
 
+// 탭메뉴
 let tabmenuSwipers = [];
 function tabmenuSwiperCreate() {
   $(".txt-depth-tab-swiper").each(function (idx, item) {
@@ -1460,9 +1466,82 @@ function tabmenuSwiperCreate() {
   });
 }
 
+// [퀵메뉴 > TREND]
+let trendSwiper = undefined;
+function trendSwiperCreate() {
+  if (window.innerWidth >= 1024 && !trendSwiper) {
+    trendSwiper = new Swiper('.trend-swiper', {
+      observer: true,
+      observeParents: true,
+      slidesPerView: 'auto',
+      navigation: {
+        nextEl: ".trend-swiper-area .swiper-button-next",
+        prevEl: ".trend-swiper-area .swiper-button-prev",
+      },
+      speed : 800,
+      on: {
+        slideChange: function () {
+          $(".swiper-slide-next").next().next().addClass("mv");
+          if (this.realIndex > this.previousIndex && $(".swiper-slide-next").next().next().next() && !($(".swiper-slide-next").next().next().next().data('motion'))) {
+            gsap.from($(".swiper-slide-next").next().next().next(), .6, {xPercent: 100, ease: 'cubic-bezier(0.215, 0.610, 0.355, 1.000)'})
+            $(".swiper-slide-next").next().next().next().data("motion", true);
+          }
+        }
+      }
+    });
+  } else if (window.innerWidth < 1024 && trendSwiper) {
+    trendSwiper.destroy();
+    trendSwiper = undefined;
+  }
+}
+
+function trendMobMotion() {
+  if($(".trend-swiper").size() > 0){
+    ScrollTrigger.matchMedia({
+      "(max-width: 1023px)": function() {
+        $(".trend-swiper .swiper-slide").removeClass("mv");
+        $(".trend-swiper .swiper-slide").each(function(q){
+          ScrollTrigger.create({
+            trigger: $(this),
+            start: "top 70%",
+            end:"bottom top",
+            scroller: ".trendPopup .con-area",
+            markers: true,
+            onEnter: () => {
+              if(!$(this).hasClass("mv")) {
+                $(this).addClass("mv");
+              }
+            }
+          });
+        });
+      }
+    });
+  }
+}
+
+function trendPcMotion() {
+  const trendSlides = $(".trend-swiper .swiper-slide:lt(4)");
+  // let trendSlideChkNum = 0;
+  gsap.fromTo(trendSlides, {x: "100vw"}, {
+    x: 0,
+    duration: .8,
+    delay: 0.8,
+    ease: 'cubic-bezier(0.215, 0.610, 0.355, 1.000)',
+    stagger: {
+      amount: .8,
+      onComplete: function () {
+        // if(trendSlideChkNum < 3) {
+        // }
+        $(this.targets()).addClass("mv")
+        // trendSlideChkNum++;
+      },
+    },
+  })
+}
+
 let popIdxNum = 200;
 let dimdIdxNum = 200 - 2;
-function openPopup(popName, comebackEl) {
+function openPopup(popName, comebackEl, reloadChk) {
   comeBackElement = comebackEl;
   var designatedPopup = $("."+popName) || $("#"+popName);
   
@@ -1477,6 +1556,7 @@ function openPopup(popName, comebackEl) {
   if($(".accepting-fixed-area").hasClass("opened")) {
     $(".accepting-fixed-area").css("z-index", dimdIdxNum);
   }
+  
 
   // 모달 오픈 사용자 이벤트 발생
   var event = $.Event("onModalOpen");
@@ -1487,21 +1567,33 @@ function openPopup(popName, comebackEl) {
       if(window.innerWidth > 1023){
         designatedPopup.stop(true, true).fadeIn(300, function(){
           designatedPopup.addClass("completed");
+          if($(designatedPopup).hasClass("trendPopup")) {
+            trendPcMotion()
+            trendSwiper.slideTo(0);
+            trendMobMotion();
+          }
+          // fadein 완료 후 reloadChk 값이 Y 이면 data값 변경 후 트리커 클릭 처리
+          if(reloadChk == "Y"){
+            $(comebackEl.target).data("mapchk", "Y").trigger("click");
+          }
         })
       }else{
         $(designatedPopup).css("display","block");
+        $(designatedPopup).hasClass("trendPopup") && $(".trendPopup .con-area").scrollTop(0);
         setTimeout(() => {
           gsap.to($(designatedPopup).find(".pop-con-area"), 0.6, {top: 0, ease: Power3, onComplete: function(){
             designatedPopup.addClass("completed");
           }});
+          $(designatedPopup).hasClass("trendPopup") && trendMobMotion();
         }, 10);
       }
 
-      if(popName == "allTrainingSchedulePopup"){
+      if($(designatedPopup).hasClass("full-popup")){ // full-popup 팝업만 2분할 모션
         designatedPopup.stop(true, true).show(0, function(){
-          $(".allTrainingSchedulePopup").addClass("open");
+          $(designatedPopup).addClass("open");
         })
       }
+
       
       $(".dimd").css("z-index", `${ dimdIdxNum + $(".layer-popup:visible").length }`).stop(true, true).fadeIn(300);
       designatedPopup.attr("tabindex", 0).focus();
@@ -1580,6 +1672,8 @@ function trainingSwperInitFn(){
   //   }
   // }
 }
+
+
 
 // 전체 교육 일정 레이어 팝업 관련 함수
 function schedulePopupFn(){
