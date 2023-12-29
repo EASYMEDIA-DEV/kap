@@ -50,7 +50,7 @@
                                     </div>
                                 </div>
                                 <div class="status-info-w">
-                                    <p class="box-label bigger"><span>${list.placeNm}</span></p>
+                                    <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>${list.placeNm}</span></p></c:if>
                                     <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
                                 </div>
                             </div>
@@ -86,7 +86,8 @@
                                         </div>
                                     </div>
                                     <div class="status-info-w">
-                                        <p class="box-label bigger"><span>${list.placeNm}</span></p>
+
+                                        <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>${list.placeNm}</span></p></c:if>
                                         <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
                                     </div>
                                     <div class="btn-wrap">

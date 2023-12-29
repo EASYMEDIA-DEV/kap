@@ -146,8 +146,37 @@
 
 		<include refid="selectEpisdListwhereSql" />
 
-		order by
-		reg_dtm desc
+		<if test="siteGubun == 'front'.toString() ">
+
+			<choose>
+				<when test="srchOrder == 1">
+					<!-- 신청 마감순-->
+					ORDER BY accs_status_order ASC, accs_order_day asc
+				</when>
+				<when test="srchOrder == 2">
+					<!-- 교육일자순 -->
+					ORDER BY edctn_strt_dtm asc
+				</when>
+				<when test="srchOrder == 3">
+					<!--학습시간 짧은순-->
+					ORDER BY stduy_dd_cd_nm asc
+				</when>
+				<when test="srchOrder == 4">
+					<!--학습시간 긴순-->
+					ORDER BY stduy_dd_cd_nm desc
+				</when>
+				<otherwise>
+					<!-- 신청 마감순-->
+					ORDER BY accs_status_order ASC, accs_order_day asc
+				</otherwise>
+			</choose>
+		</if>
+
+		<if test="siteGubun == 'admin'.toString() ">
+			order by reg_dtm desc
+		</if>
+
+
 
 		<if test="excelYn != 'Y'.toString() ">
 			limit #{firstIndex}, #{recordCountPerPage}
@@ -430,12 +459,35 @@
 			, url
 			, time
 			, thnl_file_seq
+			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS web_path
 			, reg_id
 			, reg_ip
 			, reg_dtm
 			, mod_id
 			, mod_ip
 			, mod_dtm
+		from ed_edctn_lctr_dtl a where 1=1
+		and edctn_seq = #{edctnSeq}
+		and episd_ord = #{episdOrd}
+		and episd_year = #{episdYear}
+
+		order by lctr_seq asc
+
+		<if test="siteGubun == 'front'.toString() ">
+			limit #{firstIndex}, #{recordCountPerPage}
+		</if>
+	</select>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectLctrDtlList
+      설  명 : 교육강의상세목록 갯수 호출
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.02   김학규       최초생성
+ 	-->
+	<select id="selectLctrDtlListCnt" parameterType="EBBLctrDTO" resultType="java.lang.Integer">
+		select /* EBBEpisdMapper.selectLctrDtlListCnt */
+			count(*)
 		from ed_edctn_lctr_dtl where 1=1
 		and edctn_seq = #{edctnSeq}
 		and episd_ord = #{episdOrd}

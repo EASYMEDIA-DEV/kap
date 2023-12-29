@@ -241,7 +241,7 @@
                             </div>
 
                             <div class="btn-wrap add-load align-center">
-                                <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(9/40)</span></a>
+                                <a class="btn-solid small black-line pageSet" href="javascript:"><span>더보기</span><span class="item-count">(9/40)</span></a>
                             </div>
                         </div>
                     </div>

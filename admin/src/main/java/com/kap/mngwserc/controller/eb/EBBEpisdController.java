@@ -383,8 +383,6 @@ public class EBBEpisdController {
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
     }
 
-
-
     /**
      * 교육참여자 목록을 호출한다.
      */

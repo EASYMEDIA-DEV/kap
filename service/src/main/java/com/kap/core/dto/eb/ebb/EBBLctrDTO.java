@@ -60,4 +60,9 @@ public class EBBLctrDTO extends BaseDTO {
     @Schema(title = "썸네일파일 순번", example = "텍스트")
     private Integer thnlFileSeq;
 
+    @Schema(title = "썸네일파일 경로", example = "텍스트")
+    private String webPath;
+
+    private List<EBBLctrDTO> list;
+
 }

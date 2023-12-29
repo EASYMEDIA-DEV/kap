@@ -4,6 +4,7 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.EmfMap;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBLctrDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.EBACouseService;
 import com.kap.service.EBBEpisdService;
@@ -113,7 +114,7 @@ public class EBACouseController {
             }
             throw new Exception(e.getMessage());
         }
-        System.out.println("@@@ == " + eBBEpisdDTO.getCnnctCd() );
+
         if(eBBEpisdDTO.getCnnctCd() != null){
             rtnView = "front/eb/eba/EBACouseRelListAjax";
         }
@@ -129,10 +130,6 @@ public class EBACouseController {
     {
         try
         {
-
-            System.out.println("@@@@@온다");
-
-
             modelMap.addAttribute("rtnData", eBBEpisdService.selectCouseChildEpisdList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
         }
@@ -146,8 +143,6 @@ public class EBACouseController {
         }
         return "front/eb/eba/EBACouseChildEpisdListAjax";
     }
-
-
 
     /**
      * 교육과정 신청 상세
@@ -227,6 +222,27 @@ public class EBACouseController {
             throw new Exception(e.getMessage());
         }
         return vwUrl;
+    }
+
+    /**
+     * 교육참여자 목록을 호출한다.
+     */
+    @RequestMapping(value = "/apply/episdLctrDtlList")
+    public String getLcptListPageAjax(EBBLctrDTO eBBLctrDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/eb/eba/EBAEduLctrListAjax";
     }
 
     /*

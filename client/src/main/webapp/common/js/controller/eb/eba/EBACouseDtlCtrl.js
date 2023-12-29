@@ -13,6 +13,8 @@ define(["ezCtrl"], function(ezCtrl) {
 	// form Object
 	var $formObj = ctrl.obj.find("form").eq(0);
 
+	var $lctrFormObj = ctrl.obj.find("form").eq(1);
+
 	var mapContainer = document.getElementById('eduRoom'), // 지도를 표시할 div
 		mapOption = {
 			center: new daum.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
@@ -21,7 +23,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	// 지도를 생성합니다
 	var map = new daum.maps.Map(mapContainer, mapOption);
-
 
 	// 목록 조회
 	var search = function (page){
@@ -40,11 +41,21 @@ define(["ezCtrl"], function(ezCtrl) {
 			var totCnt = $("#totalCount").val();
 			//총 건수
 
-			if(totCnt <= 9 ){
+			if(totCnt <= 10 ){
 				$(".btn-wrap.add-load.align-center").remove();
 			}else{
+
 				var tempPage = (page === undefined || page == "") ? 1 : page;
-				$(".btn-wrap.add-load.align-center").find(".item-count").text("("+(tempPage*9)+"/"+totCnt+")");
+
+				var rtnPage = 0;
+
+				if((tempPage * 10)>totCnt){
+					rtnPage = totCnt
+				}else{
+					rtnPage = (tempPage * 10);
+				}
+
+				$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
 			}
 
 			$(".article-total-count.f-body2").find("span").text(totCnt);
@@ -56,6 +67,49 @@ define(["ezCtrl"], function(ezCtrl) {
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
 		}, "/education/apply/episdSelect", $formObj, "GET", "html");
+
+	}
+
+	var lctrSearch = function (page){
+		//data로 치환해주어야한다.
+
+		if(page != undefined){
+			$lctrFormObj.find("#pageIndex").val(page);
+		}
+
+		cmmCtrl.listFrmAjax(function(respObj) {
+
+			//CALLBACK 처리
+			ctrl.obj.find("#listLctrContainer").html(respObj);
+
+			//전체 갯수
+			var totCnt = ctrl.obj.find("#listLctrContainer").find("#totalCount").val();
+			//총 건수
+			console.log(totCnt);
+			if(totCnt <= 10 ){
+				ctrl.obj.find(".onlineEduContPopup").find(".btn-wrap.align-center").remove();
+			}else{
+				var tempPage = (page === undefined || page == "") ? 1 : page;
+				var tempPage = (page === undefined || page == "") ? 1 : page;
+
+				var rtnPage = 0;
+
+				if((tempPage * 10)>totCnt){
+					rtnPage = totCnt
+				}else{
+					rtnPage = (tempPage * 10);
+				}
+
+				ctrl.obj.find(".onlineEduContPopup").find(".btn-wrap.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
+
+			}
+
+			$(".item-count").text();
+
+			ctrl.obj.find("#listLctrContainerTotCnt").text(totCnt);
+			//페이징 처리
+			cmmCtrl.listPaging(totCnt, $lctrFormObj, "listLctrContainer", "pagingContainer");
+		}, "/education/apply/episdLctrDtlList", $lctrFormObj, "GET", "html");
 
 	}
 
@@ -80,10 +134,21 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click : function() {
 						//페이징 이동
-						if( $(this).attr("value") != "null" ){
-							$formObj.find("input[name=pageIndex]").val($(this).attr("value"));
-							search();
-						}
+
+						var pageIndex = $formObj.find("input[name=pageIndex]").val();
+						search(++pageIndex);
+					}
+				}
+			},
+			//온라인강의 페이징 처리
+			lctrPageSet : {
+				event : {
+					click : function() {
+						//페이징 이동
+
+
+						var pageIndex = $lctrFormObj.find("input[name=pageIndex]").val();
+						lctrSearch(++pageIndex);
 					}
 				}
 			},
@@ -99,7 +164,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			},
 
 			//회차 담당자문의 팝업
-			popupPrevSet : {
+			popupPicPrevSet : {
 				event : {
 					click : function(e) {
 
@@ -111,7 +176,27 @@ define(["ezCtrl"], function(ezCtrl) {
 						$(".eduPersonInfoPopup").find("table.basic-table").find("tr").eq(1).find("td").text(picEmail);
 						$(".eduPersonInfoPopup").find("table.basic-table").find("tr").eq(2).find("td").text(picTelNo);
 
-						javascript:openPopup('eduPersonInfoPopup', e);
+						openPopup('eduPersonInfoPopup', e);
+
+					}
+				}
+			},
+
+			//회차별 온라인강의 목록 팝업
+			popupLctrPrevSet : {
+				event : {
+					click : function(e) {
+
+						var episdYear = $(e.target).parent().data("episdyear");
+						var episdOrd = $(e.target).parent().data("episdord");
+
+						$("#lctrEpisdYear").val(episdYear);
+						$("#lctrEpisdOrd").val(episdOrd);
+
+						//listLcptContainer
+						lctrSearch(1);
+
+						openPopup('onlineEduContPopup', e);
 
 					}
 				}
@@ -121,59 +206,64 @@ define(["ezCtrl"], function(ezCtrl) {
 			mapBtn : {
 				event: {
 					click: function (e) {
+						if(jQuery(e.target).data("mapchk") == "N") {
+							openPopup('educCenterInfoPopup', e, "Y");
+						}
 
-						openPopup('educCenterInfoPopup', e);
+						if(jQuery(e.target).data("mapchk") == "Y") {
 
+							//교육장명
+							//대표 전화번호
+							var bscAddr = $(e.target).data("bscaddr");//기본주소
+							var dtlAddr = $(e.target).data("dtladdr");//상세주소
 
-						//교육장명
-						//대표 전화번호
-						var bscAddr = $(e.target).data("bscaddr");//기본주소
-						var dtlAddr = $(e.target).data("dtladdr");//상세주소
-
-						//주소세팅 시작
-						//var addrNm = $(this).prev().attr("addrNm");
-						var addr = bscAddr +" "+dtlAddr; //$(this).prev().attr("addr");
-
-
-						// 주소-좌표 변환 객체를 생성합니다
-						var geocoder = new daum.maps.services.Geocoder();
+							//주소세팅 시작
+							//var addrNm = $(this).prev().attr("addrNm");
+							var addr = bscAddr + " " + dtlAddr; //$(this).prev().attr("addr");
 
 
-						// 주소로 좌표를 검색합니다
-						geocoder.addressSearch(addr, function (result, status) {
+							// 주소-좌표 변환 객체를 생성합니다
+							var geocoder = new daum.maps.services.Geocoder();
 
-							// 정상적으로 검색이 완료됐으면
-							if (status === daum.maps.services.Status.OK) {
-								console.log(result[0].y);
-								console.log(result[0].x);
-								//debugger
-								var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+							// 주소로 좌표를 검색합니다
+							geocoder.addressSearch(addr, function (result, status) {
 
-								// 결과값으로 받은 위치를 마커로 표시합니다
-								var marker = new daum.maps.Marker({
-									map: map,
-									position: coords
-								});
-
-								// 인포윈도우로 장소에 대한 설명을 표시합니다
-								/*var infowindow = new daum.maps.InfoWindow({
-									content: '<div style="width:150px;text-align:center;padding:6px 0;">' + dtlAddr + '</div>'
-								});
-								infowindow.open(map, marker);*/
-
-								// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-								map.setCenter(coords);
+								// 정상적으로 검색이 완료됐으면
+								if (status === daum.maps.services.Status.OK) {
+									console.log(result[0].y);
+									console.log(result[0].x);
 
 
+									var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
-							}
-						});
-						//주소세팅 종료
-						//map.relayout();
+									// 결과값으로 받은 위치를 마커로 표시합니다
+									var marker = new kakao.maps.Marker({
+										map: map,
+										position: coords
+									});
+
+									// 인포윈도우로 장소에 대한 설명을 표시합니다
+									/*var infowindow = new daum.maps.InfoWindow({
+										content: '<div style="width:150px;text-align:center;padding:6px 0;">' + dtlAddr + '</div>'
+									});
+									infowindow.open(map, marker);*/
+
+									// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+									map.setCenter(coords);
+
+
+								}
+							});
+							//주소세팅 종료
+							map.relayout();
+							jQuery(e.target).data("mapchk", "N")
+						}
 
 					}
 				}
 			}
+
+
 
 
 
@@ -185,6 +275,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			search();
 
 			$(document).on('DOMNodeInserted','.educCenterInfoPopup', function() {
+				console.log(1);
 				map.relayout();
 			});
 		}

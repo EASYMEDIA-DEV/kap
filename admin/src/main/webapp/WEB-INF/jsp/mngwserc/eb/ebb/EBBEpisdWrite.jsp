@@ -397,7 +397,7 @@
                         <input type="hidden" class="notRequired" id="edctnNtctnFileSeq" name="edctnNtctnFileSeq" value="${rtnDto.edctnNtctnFileSeq}" />
                     </fieldset>
 
-                    <fieldset>
+                    <fieldset class="eduRoom">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">교육장소<span class="star text-danger"> *</span></label>
                             <div class="col-sm-11">

@@ -315,6 +315,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				$(this).addClass("notRequired");
 			}
 		});
+	}else if("STDUY_MTHD02" == stduyMthdCd){
+
+			console.log("온라인임");
+
+			$(".eduRoom").css("display", "none");
+
+
 	}else{
 		$(".onlineSet").css("display", "");
 
@@ -1405,7 +1412,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							}
 						}
 
-						if($("#placeSeq").val() == ""){
+						var stduyMthdCd = $("#stduyMthdCd").val();
+
+						if(stduyMthdCd != "STDUY_MTHD02" && $("#placeSeq").val() == ""){
 							alert("교육장소를 선택해주세요");
 							return false;
 						}

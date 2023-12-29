@@ -96,25 +96,33 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	public EBBEpisdDTO selectEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
 
-		COPaginationUtil page = new COPaginationUtil();
+
 
 		if(eBBEpisdDTO.getSiteGubun().equals("front")){
-			eBBEpisdDTO.setPageRowSize(9);
-			eBBEpisdDTO.setListRowSize(9);
-		}
 
-		page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
-		page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
-
-		page.setPageSize(eBBEpisdDTO.getPageRowSize());
-
-		eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
-		eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
-
-		if(eBBEpisdDTO.getSiteGubun().equals("front")){
-			eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectFrontCouseList(eBBEpisdDTO) );
 			eBBEpisdDTO.setTotalCount( eBBFrontEpisdMapper.selectFrontCouseListCnt(eBBEpisdDTO) );
+			eBBEpisdDTO.setPageRowSize(9);
+			int recordCountPerPage = (eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize();
+
+			eBBEpisdDTO.setFirstIndex(0);
+			eBBEpisdDTO.setRecordCountPerPage( recordCountPerPage );
+
+			eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectFrontCouseList(eBBEpisdDTO) );
+
 		}else{
+
+			COPaginationUtil page = new COPaginationUtil();
+
+
+			page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
+			page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
+
+			page.setPageSize(eBBEpisdDTO.getPageRowSize());
+
+			eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
+			eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+
 			eBBEpisdDTO.setList( eBBEpisdMapper.selectEpisdList(eBBEpisdDTO) );
 			eBBEpisdDTO.setTotalCount( eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO) );
 		}
@@ -129,24 +137,16 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	public EBBEpisdDTO selectCouseChildEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
 
-		COPaginationUtil page = new COPaginationUtil();
 
-		if(eBBEpisdDTO.getSiteGubun().equals("front")){
-			eBBEpisdDTO.setPageRowSize(9);
-			eBBEpisdDTO.setListRowSize(9);
-		}
 
-		page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
-		page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
-
-		page.setPageSize(eBBEpisdDTO.getPageRowSize());
-
-		eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
-		eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
-
-		eBBEpisdDTO.setList( eBBEpisdMapper.selectEpisdList(eBBEpisdDTO) );
 		eBBEpisdDTO.setTotalCount( eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO) );
 
+		int recordCountPerPage = (eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize();
+
+		eBBEpisdDTO.setFirstIndex(0);
+		eBBEpisdDTO.setRecordCountPerPage(recordCountPerPage);
+
+		eBBEpisdDTO.setList( eBBEpisdMapper.selectEpisdList(eBBEpisdDTO) );
 
 		return eBBEpisdDTO;
 	}
@@ -231,6 +231,27 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 
 		return map;
+	}
+
+	/**
+	 * 온라인 교육강의 상세 호출
+	 */
+	public EBBLctrDTO selectLctrDtlList(EBBLctrDTO eBBLctrDTO) throws Exception {
+
+		COPaginationUtil page = new COPaginationUtil();
+
+
+		eBBLctrDTO.setTotalCount( eBBEpisdMapper.selectLctrDtlListCnt(eBBLctrDTO) );
+
+		int recordCountPerPage = (eBBLctrDTO.getPageIndex() * eBBLctrDTO.getPageRowSize() >= eBBLctrDTO.getTotalCount()) ? eBBLctrDTO.getTotalCount() : eBBLctrDTO.getPageIndex() * eBBLctrDTO.getPageRowSize();
+
+		eBBLctrDTO.setFirstIndex(0);
+		eBBLctrDTO.setRecordCountPerPage(recordCountPerPage);
+
+		eBBLctrDTO.setList( eBBEpisdMapper.selectLctrDtlList(eBBLctrDTO) );
+
+
+		return eBBLctrDTO;
 	}
 
 	/**
