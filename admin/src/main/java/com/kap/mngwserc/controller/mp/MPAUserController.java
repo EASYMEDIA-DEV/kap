@@ -346,7 +346,6 @@ public class MPAUserController {
         {
             mpPwdInitDto.setId(id);
             actCnt = mpaUserService.updatePwdInit(mpPwdInitDto);
-
             if (actCnt > 0)
             {
                 //이메일 발송
@@ -359,20 +358,11 @@ public class MPAUserController {
                 //이메일
                 receiverDto.setEmail(mpPwdInitDto.getEmail());
                 //이름
-                receiverDto.setName("");
+                receiverDto.setName(mpPwdInitDto.getName());
                 //치환문자1
-                receiverDto.setNote1(mpPwdInitDto.getPwd());
-                //치환문자2
-                receiverDto.setNote2(field2);
-                //치환문자3
-                receiverDto.setNote3(field2);
-                if(mpPwdInitDto.getMemCd().equals("CO")) {
-                    receiverDto.setNote3("일반 사용자");
-                } else if(mpPwdInitDto.getMemCd().equals("CP")) {
-                    receiverDto.setNote3("부품 사회원");
-                } else if(mpPwdInitDto.getMemCd().equals("CS")) {
-                    receiverDto.setNote3("위원");
-                }
+                receiverDto.setNote1(mpPwdInitDto.getName());
+                receiverDto.setNote2(mpPwdInitDto.getPwd());
+
                 //수신자 정보 등록
                 cOMailDTO.getReceiver().add(receiverDto);
                 cOMessageService.sendMail(cOMailDTO, "UserPwdInit.html");

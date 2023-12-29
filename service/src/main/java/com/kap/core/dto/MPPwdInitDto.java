@@ -19,6 +19,8 @@ public class MPPwdInitDto extends BaseDTO {
 
     private String newEncPwd;
 
+    private String name;
+
 
 
 

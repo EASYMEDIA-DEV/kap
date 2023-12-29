@@ -748,6 +748,7 @@
         SELECT  /* MPAUserMapper.selectMemDtl */
             email
           , mem_cd
+          , name
         from co_mem_mst
         where id =#{id}
     </select>

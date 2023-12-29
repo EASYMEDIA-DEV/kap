@@ -228,6 +228,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         mpPwdInitDto.setPwd(password);
         mpPwdInitDto.setEmail(mpPwdInitDtos.getEmail());
         mpPwdInitDto.setMemCd(mpPwdInitDtos.getMemCd());
+        mpPwdInitDto.setName(mpPwdInitDtos.getName());
         mpPwdInitDto.setRegId( cOUserDetailsDTO.getId() );
         mpPwdInitDto.setRegIp( cOUserDetailsDTO.getLoginIp() );
         mpPwdInitDto.setModId( cOUserDetailsDTO.getId() );
