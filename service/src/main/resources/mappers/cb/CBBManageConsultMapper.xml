@@ -356,7 +356,7 @@
                     </when>
                     <when test="f == 5 ">
                         <!-- 신청소재지 -->
-                        AND EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ and (INSTR(#{q}, FIRST_RGNS_NM) <![CDATA[>]]> 0 OR INSTR(#{q}, SCND_RGNS_NM) <![CDATA[>]]> 0 ))
+                        AND EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ and ( FIRST_RGNS_NM LIKE CONCAT('%', #{q}, '%') OR SCND_RGNS_NM LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 6 ">
                         <!-- SQ인증주관사 -->
@@ -387,7 +387,7 @@
                         OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND BSNM_NO LIKE CONCAT('%', #{q}, '%'))
                         OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND SLS_PMT LIKE CONCAT('%', #{q}, '%'))
                         OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND MPLE_CNT LIKE CONCAT('%', #{q}, '%'))
-                        OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND (INSTR(#{q}, FIRST_RGNS_NM) <![CDATA[>]]> 0 or INSTR(#{q}, SCND_RGNS_NM) <![CDATA[>]]> 0 ))
+                        OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ and ( FIRST_RGNS_NM LIKE CONCAT('%', #{q}, '%') OR SCND_RGNS_NM LIKE CONCAT('%', #{q}, '%')))
                         OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND CRTFN_CMPN_NM LIKE CONCAT('%', #{q}, '%'))
                         OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE MEM_SEQ = MST.CMSSR_SEQ AND NAME LIKE CONCAT('%', #{q}, '%'))
                         OR INSTR(#{q}, MST.REG_ID) <![CDATA[>]]> 0
