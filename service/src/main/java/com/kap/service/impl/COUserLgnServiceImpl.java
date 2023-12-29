@@ -71,7 +71,6 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 		ThreadContext.put("trgtMenuNm", "로그인");
 
 		MPAUserDto rtnCOUserDto = cOUserLgnMapper.getLoginInfo(cOLoginDTO);
-
 		if (rtnCOUserDto != null)
     	{
     		// 차단여부 확인
@@ -122,7 +121,10 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 					else if(dateResult < 0) {
 
 						//오픈일 이후 첫 로그인 정보 업데이트
-						cOLoginDTO.setRespCd("1310");
+						//위원이 아닐경우만 정보 업데이트
+						if(!rtnCOUserDto.getMemCd().equals("CS")){
+							cOLoginDTO.setRespCd("1310");
+						}
 					}
 					else
 					{

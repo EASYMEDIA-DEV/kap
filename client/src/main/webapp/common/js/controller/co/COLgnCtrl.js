@@ -195,12 +195,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			myInfoUpd : {
 				event : {
 					click : function() {
-						// TODO 양현우 12/28 위원 ci값 비교?
-						if($("#authCd").val() == 'CS') {
-							cmmCtrl.niceCertification( "/my-page/member/intrduction/modify-page");
-						} else {
 							cmmCtrl.niceCertification( "/my-page/member/intrduction/modify-page&ciChk&"+$("#ci").val());
-						}
 					}
 				}
 			},
