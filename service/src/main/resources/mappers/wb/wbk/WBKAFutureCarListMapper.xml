@@ -145,6 +145,17 @@
              ,EXPS_YN
              ,REG_ID
              ,REG_IP
+             ,(SELECT
+					COUNT(*)
+				FROM
+					(
+					SELECT *
+					FROM cx_episd_mst
+					WHERE bsn_cd = 'INQ07011'
+					)B
+					INNER JOIN cx_appctn_mst C on C.episd_seq = b.episd_seq
+					WHERE C.episd_seq = a.episd_seq
+				) AS REG_CLI
              , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
              ,REG_DTM
              ,MOD_ID

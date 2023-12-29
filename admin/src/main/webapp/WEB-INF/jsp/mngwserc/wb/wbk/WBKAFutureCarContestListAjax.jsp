@@ -23,8 +23,6 @@
                 <td class="text-center">${ kl:decode(list.winCli, 0,"-", list.winCli) }</td>
                 <td class="text-center">${ list.prizePmt}</td>
                 <td class="text-center">${ list.placeNm}</td>
-                <td class="text-center">${ list.regName}</td>
-                <%--<td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modDtm}">
@@ -34,8 +32,8 @@
                             -
                         </c:otherwise>
                     </c:choose>
-                </td>--%>
-                <td class="text-center">${ kl:decode(list.modDtm, "", "-", kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '')) }</td>
+                </td>
+                <td class="text-center">${ kl:decode(list.modDtm, "", "-", list.modDtm) }</td>
                 <td class="text-center">${ list.expsYn eq 'Y' ? '노출' : '미노출' }</td>
             </tr>
         </c:forEach>

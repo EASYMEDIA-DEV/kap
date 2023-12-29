@@ -1,0 +1,55 @@
+@charset "UTF-8";
+
+* {margin: 0; padding: 0; -webkit-box-sizing: border-box; box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact; word-break: keep-all; word-wrap: break-word; overflow-wrap: break-word; -webkit-overflow-scrolling: touch;}
+
+/* --------------------------------------------- Common style 공통 스타일 - START --------------------------------------------- */
+#wrap {overflow:hidden; position: relative; width:100%;}
+.only-pc {display: block !important;}
+.only-tabl {display: block;}
+.only-mobile {display: none;}
+@media all and (max-width: 1023px) {
+  .inner {width: calc(100% - 40px);}
+  .only-pc {display: none !important;}
+  .only-tabl {display: block;}
+  .only-tabl + .only-mobile {display: none;}
+  .only-mobile {display: block;}
+}
+
+@media all and (max-width: 599px) {
+  .only-tabl {display: none;}
+  .only-tabl + .only-mobile {display: block;}
+}
+/* --------------------------------------------- Common style 공통 스타일 - END --------------------------------------------- */
+
+
+/* --------------------------------------------- ETC - START --------------------------------------------- */
+.etc-wrap {position: relative; width: 100%; height: 100vh; overflow: hidden; background: url() no-repeat center center / cover;}
+.etc-wrap.err {background-image: url("/common/images/visual-error-page.jpg");}
+.etc-wrap.site {background-image: url("/common/images/visual-siteinspection-page.jpg");}
+.etc-wrap.infoup {background-image: url("/common/images/visual-login-page-infoupdate.jpg");}
+.etc-wrap .scroll-area {position: relative; overflow-y: auto; height: 100%;}
+.etc-wrap .etc-inner {position: relative; top: 30%; left: calc(100% - 667px); width: 507px; padding-bottom: 100px;}
+.etc-wrap .tit {margin-bottom: 40px; font-size: 72px; font-weight: bold; line-height: 1;}
+.etc-wrap .info {margin-bottom: 20px; font-size: 18px; font-weight: bold;}
+.etc-wrap .txt {font-size: 16px;}
+.etc-wrap .txt ~ .txt {margin-top: 12px;}
+.etc-wrap dl {display: flex; margin-top: 80px;}
+.etc-wrap dl dt {flex-shrink: 0; margin-right: 12px;}
+.etc-wrap .btn-wrap {margin-top: 40px;}
+.etc-wrap.infoup .tit, .etc-wrap.infoup .txt {color: #F5F6F7;}
+
+@media all and (max-width: 1280px) {
+  .etc-wrap .etc-inner {left: calc(100% - 867px); width: 707px;}
+}
+@media all and (max-width: 1023px) {
+  .etc-wrap.err {background-image: url("/common/images/visual-error-page-mobile.jpg"); background-position: center center;}
+  .etc-wrap.site {background-image: url("/common/images/visual-siteinspection-page-mobile.jpg"); background-position: center top;}
+  .etc-wrap.infoup {background-image: url("/common/images//visual-login-page-infoupdate-mobile.jpg"); background-position: center bottom;}
+  .etc-wrap .etc-inner {/*top: 252px*/ left: unset; width: 100%; padding: 0 20px 100px;}
+  .etc-wrap .tit {margin-bottom: 32px;}
+  .etc-wrap .info {margin-bottom: 12px;}
+  .etc-wrap dl {display: block; margin-top: 48px;}
+  .etc-wrap dl dt {width: 49px; margin-bottom: 8px;}
+  .etc-wrap .btn-wrap {margin-top: 24px;}
+}
+/* --------------------------------------------- ETC - END --------------------------------------------- */
