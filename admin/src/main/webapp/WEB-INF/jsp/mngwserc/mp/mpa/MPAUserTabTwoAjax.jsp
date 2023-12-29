@@ -6,14 +6,14 @@
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center">${ list.year}</td>
-                <td class="text-center">${ list.name}</td>
-                <td class="text-center">${ list.ptcptTypeNm}</td>
+                <td class="text-center">${ kl:emptyHypen(list.name)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.ptcptTypeNm)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.themeCdNm)}</td>
-                <td class="text-center">${ list.wdcrmCdNm}</td>
+                <td class="text-center">${ kl:emptyHypen(list.wdcrmCdNm)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.seoryuCdNm)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.firstCdNm)}</td>
-                <td class="text-center">${ list.endCd}</td>
-                <td class="text-center">${ list.regDtm}</td>
+                <td class="text-center">${ kl:emptyHypen(list.endCd)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.regDtm)}</td>
             </tr>
         </c:forEach>
     </c:when>

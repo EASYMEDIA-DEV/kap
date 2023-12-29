@@ -21,10 +21,10 @@
               ${kl:idMasking(list.id)}
           </a>
         </td>
-        <td class="text-center">${kl:nameMasking(list.name)}</td>
-        <td class="text-center">${ list.cmssrTypeCdNm}</td>
-        <td class="text-center">${ list.cmssrCbsnCdNm}</td>
-        <td class="text-center">${ list.cmssrWorkCdNm}</td>
+        <td class="text-center">${ kl:nameMasking(list.name)}</td>
+        <td class="text-center">${ kl:emptyHypen(list.cmssrTypeCdNm)}</td>
+        <td class="text-center">${ kl:emptyHypen(list.cmssrCbsnCdNm)}</td>
+        <td class="text-center">${ kl:emptyHypen(list.cmssrWorkCdNm)}</td>
         <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
         <td class="text-center">${kl:emailMasking(list.email)}</td>
         <td class="text-center">${list.cmtModName}(${list.regId})</td>
