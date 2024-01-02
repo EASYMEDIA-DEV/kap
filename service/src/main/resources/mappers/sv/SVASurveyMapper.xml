@@ -916,7 +916,7 @@
 	</insert>
 
 	<select id="selectSurveyScore" statementType="CALLABLE" parameterType="SVASurveyRspnScoreDTO">
-		{call sp_survey_score(#{srvType} , #{targetSeq})}
-	</select>
+		{call sp_survey_score(#{srvType} , #{targetSeq}, '' , '' , '' , '' , '')}
+		</select>
 
 </mapper>
