@@ -58,7 +58,13 @@ public class SMCMnPopServiceImpl implements SMCMnPopService {
         page.setPageSize(smcMnPopDTO.getPageRowSize());
 
         smcMnPopDTO.setFirstIndex( page.getFirstRecordIndex() );
-        smcMnPopDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+        if(smcMnPopDTO.getSiteGubun().equals("front")) {
+            smcMnPopDTO.setRecordCountPerPage(6);
+        }else{
+            smcMnPopDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+        }
+
 
         smcMnPopDTO.setList( smcMnPopMapper.selectMnPopList(smcMnPopDTO) );
         smcMnPopDTO.setTotalCount( smcMnPopMapper.selectUseMnPopCnt(smcMnPopDTO) );

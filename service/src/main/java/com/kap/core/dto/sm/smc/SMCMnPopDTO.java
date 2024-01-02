@@ -135,4 +135,9 @@ public class SMCMnPopDTO extends BaseDTO {
     @Schema(title = "노출 정렬 타입", example = "UP, DOWN")
     private String sortType;
 
+    @Schema(title = "파일 경로")
+    private String webPath;
+    @Schema(title = "파일설명")
+    private String fileDsc;
+
 }

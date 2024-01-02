@@ -1226,6 +1226,8 @@ var commonScript = (function(){
         }
         if($(this).parents(".layer-popup").hasClass("trendPopup")){
           $(this).parents(".layer-popup").find(".swiper-slide").removeClass("mv");
+          $(this).parents(".layer-popup").find(".swiper-slide .for-motion").removeClass("init");
+          _isTrendChk = false;
         }
 
         if($(this).parents(".layer-popup").hasClass("estiCertiPop")){
@@ -1468,8 +1470,14 @@ function tabmenuSwiperCreate() {
 
 // [퀵메뉴 > TREND]
 let trendSwiper = undefined;
+let _isTrendChk = false;
+
 function trendSwiperCreate() {
   if (window.innerWidth >= 1024 && !trendSwiper) {
+    if(_isTrendChk) {
+      $(".trend-swiper .swiper-slide").addClass("mv");
+      $(".trend-swiper .swiper-slide .for-motion").addClass("init");
+    }
     trendSwiper = new Swiper('.trend-swiper', {
       observer: true,
       observeParents: true,
@@ -1479,17 +1487,9 @@ function trendSwiperCreate() {
         prevEl: ".trend-swiper-area .swiper-button-prev",
       },
       speed : 800,
-      on: {
-        slideChange: function () {
-          $(".swiper-slide-next").next().next().addClass("mv");
-          if (this.realIndex > this.previousIndex && $(".swiper-slide-next").next().next().next() && !($(".swiper-slide-next").next().next().next().data('motion'))) {
-            gsap.from($(".swiper-slide-next").next().next().next(), .6, {xPercent: 100, ease: 'cubic-bezier(0.215, 0.610, 0.355, 1.000)'})
-            $(".swiper-slide-next").next().next().next().data("motion", true);
-          }
-        }
-      }
     });
   } else if (window.innerWidth < 1024 && trendSwiper) {
+    _isTrendChk = true;
     trendSwiper.destroy();
     trendSwiper = undefined;
   }
@@ -1506,7 +1506,7 @@ function trendMobMotion() {
             start: "top 70%",
             end:"bottom top",
             scroller: ".trendPopup .con-area",
-            markers: true,
+            // markers: true,
             onEnter: () => {
               if(!$(this).hasClass("mv")) {
                 $(this).addClass("mv");
@@ -1520,8 +1520,7 @@ function trendMobMotion() {
 }
 
 function trendPcMotion() {
-  const trendSlides = $(".trend-swiper .swiper-slide:lt(4)");
-  // let trendSlideChkNum = 0;
+  const trendSlides = $(".trend-swiper .swiper-slide");
   gsap.fromTo(trendSlides, {x: "100vw"}, {
     x: 0,
     duration: .8,
@@ -1530,10 +1529,7 @@ function trendPcMotion() {
     stagger: {
       amount: .8,
       onComplete: function () {
-        // if(trendSlideChkNum < 3) {
-        // }
         $(this.targets()).addClass("mv")
-        // trendSlideChkNum++;
       },
     },
   })
@@ -1579,7 +1575,10 @@ function openPopup(popName, comebackEl, reloadChk) {
         })
       }else{
         $(designatedPopup).css("display","block");
-        $(designatedPopup).hasClass("trendPopup") && $(".trendPopup .con-area").scrollTop(0);
+        if($(designatedPopup).hasClass("trendPopup")) {
+          $(".trendPopup .con-area").scrollTop(0);
+          _isTrendChk = true;
+        }
         setTimeout(() => {
           gsap.to($(designatedPopup).find(".pop-con-area"), 0.6, {top: 0, ease: Power3, onComplete: function(){
             designatedPopup.addClass("completed");

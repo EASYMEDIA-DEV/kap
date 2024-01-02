@@ -26,12 +26,19 @@
         , URL_URL
         , WNPP_YN
         , EXPS_YN
+        <if test='siteGubun == "front"'>
+            , (SELECT web_path FROM CO_FILE_DTL  WHERE FILE_SEQ = A.FILE_SEQ ORDER BY FILE_ORD DESC LIMIT 1) WEB_PATH
+            , (SELECT FILE_EXTN FROM CO_FILE_DTL  WHERE FILE_SEQ = A.FILE_SEQ ORDER BY FILE_ORD DESC LIMIT 1) FILE_EXTN
+            , (SELECT file_dsc FROM CO_FILE_DTL  WHERE FILE_SEQ = A.FILE_SEQ ORDER BY FILE_ORD DESC LIMIT 1) FILE_DSC
+        </if>
+        <if test='siteGubun != "front"'>
         , REG_ID
         , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
         , REG_DTM
         , MOD_ID
         , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
         , MOD_DTM
+        </if>
         FROM SM_MAIN_POPUP_MST A
         <include refid="selectPopListwhereSql" />
         ORDER BY
@@ -306,6 +313,12 @@
     -->
     <sql id="selectPopListwhereSql">
         <where>
+            <if test='siteGubun == "front"'>
+                AND exps_yn = 'Y'
+                AND ( IFNULL(odtm_yn, 'N') = 'Y'
+                OR (exps_strt_dtm <![CDATA[ <= ]]> SYSDATE() AND exps_end_dtm <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)
+                ))
+            </if>
             <if test="mdCd != null and mdCd != ''.toString() ">
                 AND MD_CD = #{mdCd}
             </if>

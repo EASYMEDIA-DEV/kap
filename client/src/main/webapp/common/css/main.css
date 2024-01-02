@@ -109,6 +109,7 @@
   .main .quick-menu.scroll-down .btn-w .quick-btn.edu-schedule {background-image: url("/common/images/icon-quick-edu-schedule-default-mobile.svg");}
   .main .quick-menu.scroll-down .btn-w .quick-btn.certificate {background-image: url("/common/images/icon-quick-certificate-default-mobile.svg");}
   .main .quick-menu.scroll-down .btn-w .quick-btn.faq {background-image: url("/common/images/icon-quick-faq-default-mobile.svg");}
+  .main .quick-menu.scroll-down .btn-w .quick-btn.trend {border: none;}
   .main .quick-menu.scroll-down .btn-w .quick-btn.edu-schedule:hover {background-image: url("/common/images/icon-quick-edu-schedule-default-mobile.svg");}
   .main .quick-menu.scroll-down .btn-w .quick-btn.certificate:hover {background-image: url("/common/images/icon-quick-certificate-default-mobile.svg");}
   .main .quick-menu.scroll-down .btn-w .quick-btn.faq:hover {background-image: url("/common/images/icon-quick-faq-default-mobile.svg");}
