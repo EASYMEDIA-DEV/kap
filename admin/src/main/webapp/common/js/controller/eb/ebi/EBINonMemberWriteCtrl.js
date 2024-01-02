@@ -568,9 +568,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//신청자등록 시작
 						var seqObj = {};
 						seqObj.edctnSeq = $("#edctnSeq").val();
-						// seqObj.episdYear = $("#episdYear").val();
-						// seqObj.episdOrd = $("#episdOrd").val();
-						// seqObj.episdSeq = $("#episdSeq").val();
 
 
 						//정원수 체크
@@ -726,8 +723,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								$("tr.setPlace").css("display", "");
 
 							}
-
-
 						});
 					}
 				}
@@ -741,15 +736,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							if(data.choiceCnt > 1){
 								alert(msgCtrl.getMsg("fail.eb.ebf.notSrchPlaceCom1"));
 							}else{
-
 								var placeSeq = data.seq;
 								var titl= data.titl;//교육장명
 
 								$("#cprtnInsttSeq").val(placeSeq);
 								$("#cprtnInsttNm").val(titl);
 							}
-
-
 						});
 					}
 				}
@@ -763,7 +755,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							if(data.choiceCnt > 1){
 								alert(msgCtrl.getMsg("fail.eb.ebf.notSrchPlaceCom1"));
 							}else{
-
 								var titl= data.titl;//교육장명
 								var seq = data.seq;
 								$("#expnsCprtnInsttNm").val(titl);
@@ -849,15 +840,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 										}else{
 											$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
 										}
-
 									}
-
 								}
-
 								$(".notIsttr").css("display", "none");
 								$(".setIsttr").css("display", "none");
 							}
-
 							isttrTable();
 						});
 					}
@@ -910,36 +897,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				selectCtgryCdList();
 			}
 
-			//교육 시작일 이전에 수정가능한 목록 제어
-			/*var updateEdDt = $("#edctnStrtDt").val();
-			if(updateEdDt != ""){
-				var eduDate = new Date(updateEdDt);//교육 시작일
-				var nowDate = new Date();//현재날짜
-				if(nowDate>=eduDate){
-
-					$(".eduIsttrSearch").attr("disabled", true);//강사 추가버튼 사용 불가
-					$(".btnOneTrRemove").attr("disabled", true);//강사 삭제버튼 사용불가
-					// $(".eduSrvSearch").attr("disabled", true);//만족도조사 추가버튼 사용불가
-					// $(".srvReset").attr("disabled", true);//설문 초기화버튼 사용불가
-					// $(".eduExamSearch").attr("disabled", true);//평가버튼 사용 불가
-					// $(".otsdExamPtcptYn ").attr("disabled", true);//오프라인평가버튼 사용불가
-
-					//설문, 시험 달력 사용불가
-					$("#srvStrtDtm, #srvEndDtm, #srvEndDtm, #examEndDtm").attr("disabled", true);
-
-					$(".jdgmtYn").find("input").each(function(e){
-						$(this).click(function(e){
-							console.log('1');
-							e.stopImmediatePropagation();
-						});
-
-					});
-
-				}
-			}*/
-
-
-
 			//교육 참여자목록 조회
 			if($("#detailsKey").val() != ""){
 				search();
@@ -948,11 +905,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//질문 번호 셋팅,점수 셋팅
 			questionSet();
 
-
 			//폼 데이터 처리
 			filedSet();
-
-
 
 			//예산지출내역 폼 조립
 			bdgetSet();
@@ -970,7 +924,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$("#expnsPmt").blur(function(){
 				expnsPmt();
 			});
-
 
 
 			/* Editor Setting */
@@ -1045,9 +998,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//유효성체크 플래그
 						var resultFlag = true;
 
-						//회차정보 마지막 중복체크 진행
-						// $("#episdOrd").trigger("change");
-
 						var actForm = {};
 
 						var ctgryCd = $("#ctgryCd").val();
@@ -1080,9 +1030,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							if($(this).val() != undefined && $(this).val() != ""){
 								var tempForm = {};
 								tempForm.edctnSeq = $("#edctnSeq").val();
-								// tempForm.episdYear = $("#episdYear").val();
 								tempForm.isttrSeq = $(this).val();
-								// tempForm.episdOrd = $("#episdOrd").val();
 								isttrSeqList.push(tempForm);
 							}
 						});
@@ -1178,17 +1126,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actForm.pcStduyCntn = $("#pcStduyCntn").val();//pc학습내용
 						actForm.mblStduyCntn = $("#mblStduyCntn").val();//모바일학습내용
-
-
-						// actForm.srvSeq = $("#srvSeq").val();//설문순번
-						// actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
-						// actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
-
-						//시험안하면 날짜 안넣어줌 에러남
-						// if($("#examStrtDtm").attr("class").indexOf("notRequired") < 0){
-						// 	actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
-						// 	actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
-						// }
 						
 
 
@@ -1196,9 +1133,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.edctnNtctnFileSeq = $("#edctnNtctnFileSeq").val();
 						actForm.thnlFileSeq = $("#thnlFileSeq").val();
 
-						// actForm.examSeq = $("#examSeq").val();//시험순번
-						// actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
-						// actForm.cmptnAutoYn = $("input[name='cmptnAutoYn']:checked").val();//수료자동여부
 						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
 
 
@@ -1277,8 +1211,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							var temp = {};
 
 							temp.edctnSeq =  actForm.edctnSeq;
-							// temp.episdOrd = actForm.episdOrd;
-							// temp.episdYear = actForm.episdYear;
 
 							temp.cd = $(this).attr("name");
 
@@ -1295,8 +1227,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$("div.bdgetForm4").find("input").each(function(){
 							var temp = {};
 							temp.edctnSeq =  actForm.edctnSeq;
-							// temp.episdOrd = actForm.episdOrd;
-							// temp.episdYear = actForm.episdYear;
 
 							temp.cd = $(this).attr("name");
 

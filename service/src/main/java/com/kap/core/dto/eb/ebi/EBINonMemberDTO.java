@@ -120,9 +120,6 @@ public class EBINonMemberDTO extends BaseDTO {
     @Schema(title = "카테고리 부모코드번호", example = "숫자")
     private String parntSeq;
 
-    /*@Schema(title = "평가여부", example = "Y/N")
-    private String jdgmtYn;*/
-
 
 
     @Schema(title = "카테고리 부모 코드 ", example = "")
@@ -142,12 +139,6 @@ public class EBINonMemberDTO extends BaseDTO {
 
     @Schema(title = "교육과정 요약", example = "텍스트")
     private String smmryNm;
-
-    /*@Schema(title = "학습방식 코드", example = "")
-    private String stduyMthdCd;
-
-    @Schema(title = "학습방식 코드 명", example = "")
-    private String stduyMthdCdNm;*/
 
     @Schema(title = "학습일 코드", example = "")
     private String stduyDdCd;
@@ -188,18 +179,9 @@ public class EBINonMemberDTO extends BaseDTO {
     @Schema(title = "신청자수", example = "숫자")
     private String accsCnt;
 
-    /*@Schema(title = "모집방법코드명", example = "숫자")
-    private String rcrmtMthdCdNm;*/
-
     @Schema(title = "복사여부", example = "Y/N")
     @Builder.Default
     private String copyYn = "N";
-
-    /*@Schema(title = "회차번호 공통코드", example = "숫자")
-    private String roundCd;*/
-
-    /*@Schema(title = "회차번호 강의순번", example = "숫자")
-    private Integer lctrSeq;*/
 
     @Schema(title = "협업기관명 코드", example = "숫자")
     private Integer cprtnInsttSeq;

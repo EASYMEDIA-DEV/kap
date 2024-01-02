@@ -49,9 +49,6 @@
             <input type="hidden" class="notRequired" id="prntCd" name="prntCd" value="${rtnDto.prntCd}" />
             <input type="hidden" class="notRequired" id="copyYn" name="copyYn" value="${rtnDto.copyYn}" />
 
-            <!-- 첨부파일 순번 -->
-<%--            <input type="hidden" class="notRequired" id="edctnNtctnFileSeq" name="edctnNtctnFileSeq" value="${rtnDto.edctnNtctnFileSeq}" />--%>
-
             <ul class="nav nav-tabs" id="myTabs">
                 <li class="active tabClick"><a data-toggle="tab" href="#edctnList">교육정보</a></li>
                 <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>> <a data-toggle="tab" href="#accsList">신청자정보</a></li>

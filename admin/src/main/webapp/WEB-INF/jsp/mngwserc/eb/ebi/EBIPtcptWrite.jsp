@@ -10,10 +10,6 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="edctnSeq" name="edctnSeq" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="ptcptSeq" name="ptcptSeq" value="${rtnDto.ptcptSeq}" />
-<%--            <input type="hidden" class="notRequired" id="episdOrd" name="episdOrd" value="${rtnDto.episdOrd}" />--%>
-<%--            <input type="hidden" class="notRequired" id="episdYear" name="episdYear" value="${rtnDto.episdYear}" />--%>
-<%--            <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnDto.episdSeq}" />--%>
-<%--            <input type="hidden" class="notRequired" id="stduyMthdCd" name="stduyMthdCd" value="${ rtnDto.stduyMthdCd}" />--%>
 
 
             <!-- 과정정보 -->
@@ -223,6 +219,4 @@
         </form>
     </div>
 </div>
-
-<%--<jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include><!--교육장검색-->--%>
 

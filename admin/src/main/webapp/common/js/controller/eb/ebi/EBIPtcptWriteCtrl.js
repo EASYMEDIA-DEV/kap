@@ -25,23 +25,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					}
 				}
 			},
-			/*pstnCd : {
-				event : {
-					change : function() {
-						var pstnCd = document.getElementById('pstnCd');
-						var selectPstn = pstnCd.options[pstnCd.selectedIndex].value;
-
-						$("#pstnNm").val("");
-
-						if(selectPstn == "MEM_CD01007") {
-							$("#pstnNmChk").css('display', 'block');
-						}
-						else {
-							$("#pstnNmChk").css('display', 'none');
-						}
-					}
-				}
-			},*/
 			hpNo : {
 				event : {
 					input : function (event) {

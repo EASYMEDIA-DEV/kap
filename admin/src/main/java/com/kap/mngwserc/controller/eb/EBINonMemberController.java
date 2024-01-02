@@ -116,7 +116,6 @@ public class EBINonMemberController {
     {
         try
         {
-//            System.out.println("@@@@ 여기 아닌가?");
             pEBINonMemberDTO.setExcelYn("Y");
 
             // 목록 조회

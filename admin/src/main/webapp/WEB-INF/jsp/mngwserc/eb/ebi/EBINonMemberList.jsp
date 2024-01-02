@@ -18,8 +18,6 @@
 
 				<!-- 상세로 이동시 시퀀스 -->
 				<input type="hidden" id="detailsKey" name="detailsKey" value="" />
-<%--				<input type="hidden" id="episdOrd" name="episdOrd" value="" />--%>
-<%--				<input type="hidden" id="episdYear" name="episdYear" value="" />--%>
 
 				<!--기간 검색 시작-->
 				<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">

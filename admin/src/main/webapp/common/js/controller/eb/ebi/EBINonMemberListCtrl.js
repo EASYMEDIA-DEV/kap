@@ -104,7 +104,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	var callbackAjaxCdList  = function (cdList){
 
-		console.log(cdList);
+		// console.log(cdList);
 
 		var detailList = cdList.detailList;
 
@@ -212,7 +212,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 
 						$(".classType input:checked").each(function(){
-							console.log($(this).val());
+							// console.log($(this).val());
 
 							var checkVal = $(this).val();
 
@@ -221,7 +221,7 @@ define(["ezCtrl"], function(ezCtrl) {
 							$("."+checkVal).css("display","block");
 
 							$("."+checkVal).find("input:checkbox").attr("disabled", false);
-							console.log(cdnm);
+							// console.log(cdnm);
 							$("."+checkVal).find("input:checkbox").find("span").append(cdnm+"23434");
 
 
@@ -256,11 +256,7 @@ define(["ezCtrl"], function(ezCtrl) {
 					click : function() {
 						//상세보기
 						var detailsKey = $(this).data("detailsKey");
-						// var episdYear = $(this).data("episdYear");
-						// var episdOrd = $(this).data("episdOrd");
 						$formObj.find("input[name=detailsKey]").val(detailsKey);
-						// $formObj.find("input[name=episdYear]").val(episdYear);
-						// $formObj.find("input[name=episdOrd]").val(episdOrd);
 
 
 						location.href = "./write?" + $formObj.serialize();
