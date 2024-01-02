@@ -1359,6 +1359,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.episdYear =$("#episdYear").val();//연도
 						actForm.episdOrd =$("#episdOrd").val();//회차정렬
 
+						actForm.episdSeq =$("#episdSeq").val();//회차순번
+
 						actForm.orgEpisdYear =$("#orgEpisdYear").val();//연도(수정시 where절에 사용되는 pk값)
 						actForm.orgEpisdOrd =$("#orgEpisdOrd").val();//회차정렬(수정시 where절에 사용되는 pk값)
 
@@ -1371,6 +1373,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								tempForm.episdYear = $("#episdYear").val();
 								tempForm.isttrSeq = $(this).val();
 								tempForm.episdOrd = $("#episdOrd").val();
+								tempForm.episdSeq = $("#episdSeq").val();
 								isttrSeqList.push(tempForm);
 							}
 

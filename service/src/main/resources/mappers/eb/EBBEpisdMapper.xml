@@ -946,6 +946,7 @@
 			, episd_ord
 			, isttr_seq
 			, episd_year
+			, episd_seq
 			, reg_id
 			, reg_ip
 			, reg_dtm
@@ -959,6 +960,7 @@
 			, #{isttrSeqList.episdOrd}
 			, #{isttrSeqList.isttrSeq}
 			, #{isttrSeqList.episdYear}
+			, #{episdSeq}
 			, #{regId}
 			, #{regIp}
 			, now()

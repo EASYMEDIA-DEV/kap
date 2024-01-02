@@ -44,6 +44,9 @@ public class EBBisttrDTO extends BaseDTO {
     @NotNull
     private Integer episdYear;
 
+    @Schema(title = "회차순번", example = "숫자")
+    private Integer episdSeq;
+
     @Schema(title = "강사순번", example = "숫자")
     @NotNull
     private Integer isttrSeq;
