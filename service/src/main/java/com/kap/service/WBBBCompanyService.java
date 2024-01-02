@@ -4,6 +4,7 @@ import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -95,5 +96,16 @@ public interface WBBBCompanyService {
      * 신청자를 등록한다.
      * @return
      */
-    public int insertApply(WBBAApplyMstDTO wbbApplyMstDTO, HttpServletRequest request) throws Exception;
+    public int insertApply(WBBAApplyMstDTO wbbApplyMstDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
+     * 단계 파일여부를 조회한다.
+     * @return
+     */
+    public String getFileYn(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
+
+    /**
+     *   신청자 정보 조회
+     */
+    public WBBACompanySearchDTO getApplyDtl(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
 }

@@ -178,4 +178,14 @@ public interface WBBBCompanyMapper {
      * 상생참여자 이관정보 삭제
      */
     public int deleteTrans(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
+
+    /**
+     * 단계 파일여부를 조회한다.
+     */
+    public String getFileYn(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
+
+    /**
+     * 신청자 정보조회
+     */
+    public WBBACompanySearchDTO getApplyDtl(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
 }

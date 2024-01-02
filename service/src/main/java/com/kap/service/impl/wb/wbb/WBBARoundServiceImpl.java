@@ -144,9 +144,8 @@ public class WBBARoundServiceImpl implements WBBARoundService {
 
         wBRoundMstSearchDTO = wBBARoundMapper.getRoundDtl(wBRoundMstSearchDTO);
 
-        wBRoundMstSearchDTO.setStageOrd(1);
-
         if (wBRoundMstSearchDTO != null) {
+            wBRoundMstSearchDTO.setStageOrd(1);
             //공통사업의 경우 신청단계의 옵션정보를 가져온다. 그외 사업의 경우 양식관리 파일정보를 가져와야함.
             List<WBAManagementOptnDTO> optionList = wBBARoundMapper.selectOPtnList(wBRoundMstSearchDTO);
             wBRoundMstSearchDTO.setOptnList(optionList);
@@ -166,7 +165,7 @@ public class WBBARoundServiceImpl implements WBBARoundService {
 
         if (!COUserDetailsHelperService.isAuthenticated())
         {
-            //비로그인 코드 100
+            //비로그인 코드 999
             rtnCode = 999;
         }
         else
@@ -174,7 +173,13 @@ public class WBBARoundServiceImpl implements WBBARoundService {
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
             if (!"CP".equals(cOUserDetailsDTO.getAuthCd())) {
-                rtnCode = 100;
+                if ("CS".equals(cOUserDetailsDTO.getAuthCd())) {
+                    //위원인 경우 150
+                    rtnCode = 150;
+                } else {
+                    //부품사회원이 아닌경우 100
+                    rtnCode = 100;
+                }
             } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
                 wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
                 int cnt = wBBARoundMapper.getApplyCount(wBRoundMstSearchDTO);
@@ -182,10 +187,11 @@ public class WBBARoundServiceImpl implements WBBARoundService {
                 if (cnt > 0) {
                     //신청여부 존재 코드 300
                     rtnCode = 300;
+                } else {
+                    //신청가능 코드 200
+                    rtnCode = 200;
                 }
 
-                //신청가능 코드 200
-                rtnCode = 200;
             }
         }
 

@@ -2,6 +2,7 @@
 <div class="cont-wrap" data-controller="controller/wb/wbb/WBBManagementCtrl">
   <form id="frmData" name="frmData" enctype="multipart/form-data">
   <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  <input type="hidden" class="notRequired" name="episdSeq" value="${rtnData.episdSeq}" />
   <div class="sub-top-vis-area apply-page consult-biz">
     <div class="page-tit-area">
       <p class="page-tit f-xlarge-title"><span class="for-move">사업신청</span></p>
@@ -59,24 +60,7 @@
                         </div>
                       </div>
 
-
-                      <div class="data-line">
-                        <p class="data-title f-body1">사업신청서</p>
-                        <div class="form-group">
-                          <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                            <p class="empty-txt">선택된 파일 없음</p>
-                          </div>
-                          <div class="file-btn-area">
-                            <input type="file" id="searchFile" name="atchFile" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip" class="fileInput notRequired"/>
-                            <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
-                          </div>
-                          <div class="btn-wrap btn-down-wrap">
-                            <a class="btn-text-icon download gray" href="javascript:" download=""><span>양식 다운로드</span></a>
-                          </div>
-                        </div>
-                      </div>
-
-                      <%--<c:forEach var="item" items="${rtnData.optnList}" varStatus="status">
+                      <c:forEach var="item" items="${rtnData.optnList}" varStatus="status">
                         <div class="data-line">
                           <p class="data-title f-body1">${item.optnNm}</p>
                           <div class="form-group">
@@ -84,7 +68,8 @@
                               <p class="empty-txt">선택된 파일 없음</p>
                             </div>
                             <div class="file-btn-area">
-                              <input type="file" class="searchFile" id="searchFile${status.index}" name="atchFile" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip" class="fileInput notRequired"/>
+                              <input type="file" class="searchFile" id="searchFile${status.index}" name="atchFile${status.index}" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip" class="fileInput notRequired"/>
+                              <input type="hidden" name="optnSeq" value="${item.optnSeq}"/>
                               <label class="btn-solid gray-bg" for="searchFile${status.index}">파일 찾기</label>
                             </div>
                             <div class="btn-wrap btn-down-wrap">
@@ -92,7 +77,7 @@
                             </div>
                           </div>
                         </div>
-                      </c:forEach>--%>
+                      </c:forEach>
 
                     </div>
                   </div>
@@ -149,4 +134,8 @@
   </div>
   </form>
 </div>
+
+<form id="test" name="test" enctype="multipart/form-data">
+
+</form>
 <!-- content 영역 end -->

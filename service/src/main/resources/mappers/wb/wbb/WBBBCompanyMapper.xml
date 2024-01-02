@@ -757,6 +757,53 @@
     </delete>
 
     <!--
+         쿼리명 : WBBBCompanyMapper.getFileYn
+         설  명 : 파일여부 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="getFileYn" parameterType="wbbaCompanySearchDTO" resultType="java.lang.String">
+        SELECT /* WBBBCompanyMapper.getFileYn */
+            FILE_YN
+        FROM CX_STAGE_DTL
+        WHERE BSN_CD = #{bsnCd} AND STAGE_ORD = 1
+    </select>
+
+    <!--
+         쿼리명 : WBBBCompanyMapper.getApplyUserCnt
+         설  명 : 부품사관리 마스터 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="getApplyUserCnt" parameterType="wbbaApplyMstDTO" resultType="java.lang.Integer">
+        SELECT /* WBBBCompanyMapper.getApplyUserCnt */
+            COUNT(*)
+        FROM CX_APPCTN_MST A
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
+    </select>
+
+    <!--
+         쿼리명 : WBBBCompanyMapper.getApplyDtl
+         설  명 : 신청자 정보조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="getApplyDtl" parameterType="WBBACompanySearchDTO" resultType="WBBACompanySearchDTO">
+        SELECT /* WBBBCompanyMapper.getApplyDtl */
+               APPCTN_SEQ,
+               EPISD_SEQ,
+               MEM_SEQ,
+               APPCTN_BSNM_NO,
+               REG_DTM,
+               (SELECT cd_nm FROM co_code_mst WHERE cd = #{bsnCd}) AS BSN_NM
+        FROM CX_APPCTN_MST A
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
+    </select>
+
+    <!--
 		쿼리명 : selectCompanyListwhereSql
 		설  명 : 게시판 관리 where Sql
 	      수정일      수정자       수정내용
