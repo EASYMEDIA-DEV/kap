@@ -177,7 +177,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 event : {
                     change : function() {
                         cmmCtrl.setFormData($modalFormObj);
-                        selOptnList();
                     },
                 }
             },

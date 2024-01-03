@@ -118,6 +118,8 @@ public class WBBACompanySearchDTO extends BaseDTO {
     @Schema(title = "검색 리스트", example = "")
     List<WBBACompanySearchDTO> list;
 
+    @Schema(title = "삭제가능여부", example = "")
+    private String deleteYn;
 
     /* 검색 관련 코드 */
     @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")

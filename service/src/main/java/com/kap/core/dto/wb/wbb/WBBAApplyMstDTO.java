@@ -29,7 +29,7 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "상생사업 신청 마스터")
-public class WBBAApplyMstDTO extends BaseDTO {
+public class  WBBAApplyMstDTO extends BaseDTO {
 
     @Schema(title = "신청순번")
     private Integer appctnSeq;
