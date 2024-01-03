@@ -404,6 +404,9 @@
 .main-popup .pop-wrap .swiper-slide {width: 440rem; height: 100%; overflow: hidden;}
 .main-popup .pop-wrap .swiper-slide .click-area {display:block;}
 .main-popup .pop-wrap .swiper-slide .click-area img {width: 100%;}
+.main-popup .pop-wrap .swiper-slide .click-area .pop-txt-con {padding: 30rem; max-height: 460rem; overflow-y: auto; font-size: 16rem; line-height: 160%; letter-spacing: -0.32rem;}
+.main-popup .pop-wrap .swiper-slide .click-area .pop-txt-con img {margin: 20rem 0;}
+.main-popup .pop-wrap .swiper-slide .click-area .pop-txt-con img:first-child {margin-top: 0;}
 .main-popup .pop-wrap .swiper-slide-invisible-blank {width:0;}
 
 .main-popup .pop-wrap .bot-info-area {position: static; display: flex; justify-content: space-between; padding: 12rem 20rem;}
@@ -427,5 +430,11 @@
   .main-popup .pop-wrap .bot-info-area .slide-control-area .move-control,
   .main-popup .pop-wrap .bot-info-area .slide-control-area .timer-gauge {display: none;}
   .main-popup .pop-wrap .bot-info-area .slide-control-area .swiper-pagination {display: none;}
+  .main-popup .pop-wrap .swiper-slide .click-area .pop-txt-con {padding: 20rem; max-height: 100%; font-size: 13rem; line-height: 165%; letter-spacing: -0.26rem;}
+  .main-popup .pop-wrap .swiper-slide .click-area .pop-txt-con img {margin: 16rem 0;}
   .main-popup.has-controller .pop-wrap .bot-info-area .slide-control-area .swiper-pagination {display: block;}
+}
+
+@media all and (max-width: 599px) {
+  .main-popup .pop-wrap .swiper-slide .click-area .pop-txt-con {max-height: 360rem;}
 }

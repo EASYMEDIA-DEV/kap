@@ -43,4 +43,9 @@ public interface EBBFrontEpisdMapper {
 	 */
 	public List<EBACouseDTO> selectCouseTrgtList(EBACouseDTO eBACouseDTO) throws Exception;
 
+	/**
+	 * 교육차수 목록을 조회한다. (사용자 전체교육일정 레이어)
+	 */
+	public List<EBBEpisdDTO> selectEpisdLayerList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
 }

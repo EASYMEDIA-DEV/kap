@@ -12,6 +12,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	// form Object
 	var $formObj = ctrl.obj.find("form").eq(0);
+	var $formLayerObj = ctrl.obj.find("form").eq(1);
 
 
 	// 목록 조회
@@ -59,6 +60,151 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	}
 
+	var searchLayer = function (arg){
+
+		var searchForm = {};
+
+		searchForm.ctgryCd = arg;
+		cmmCtrl.jsonAjax(function(data){
+			var rtn = JSON.parse(data);
+			//정원여유
+
+			$(".edctnList").empty();
+			var listSize = rtn.list.length;
+
+			if(listSize > 0){
+				$.each(rtn.list, function(e){
+
+					var $this = this;
+
+					var addClass =  (e==0)? "swiper-slide txt-tab-btn active edctnSearch" : "swiper-slide txt-tab-btn edctnSearch";
+
+					var temp = "<a class='"+addClass+"' href='javascript:' data-edctnseq="+$this.edctnSeq+"><p class='txt'><span class='menu-name'>"+$this.nm+"</span></p></a>";
+
+					$(".edctnList").append(temp);
+
+				});
+
+				$(".edu-info-div").css("display", "");
+
+				$(".listNotEmpty").css("display", "");
+				$(".listEmpty").css("display", "none");
+				$(".total-edu-area").removeClass("no-data");
+			}else{
+				$(".edu-info-div").css("display", "none");
+
+				$(".listNotEmpty").css("display", "none");
+				$(".listEmpty").css("display", "");
+				$(".total-edu-area").addClass("no-data");
+			}
+
+
+
+		}, "/education/apply/selectEduList", searchForm, "text");
+
+		$(".txt-depth-tab-swiper .txt-tab-btn").off().on("click", function(){
+			$(this).addClass("active").siblings().removeClass("active");
+		});
+
+		$(".edctnList").find("a:first").trigger("click");
+
+	}
+
+	var searchEpisdLayer = function (edctnSeq){
+
+		var searchForm = {};
+
+		var now = new Date();	// 현재 날짜 및 시간
+		var year = now.getFullYear();	// 연도
+
+		searchForm.detailsKey = edctnSeq;
+		searchForm.episdYear = year;
+
+		cmmCtrl.jsonAjax(function(data){
+
+			var rtn = JSON.parse(data);
+
+			var rtnDto = rtn.rtnDto;
+			var rtnEpisdList = rtn.rtnEpisdList;
+
+			$(".edctnNmLayer").find("span").text(rtnDto.nm);//제목변경 nm
+			$(".stduyMthdLayer").text(rtnDto.stduyMthdCdNm);//교육타입 변경 stduyMthdCdNm
+			$(".stduyDdLayer").text(rtnDto.stduyDdCdNm+"일("+rtnDto.stduyTimeCdNm+"시간)");//교육일자, 시간 변경
+
+			var listSize = rtnEpisdList.length;
+
+			if(listSize>0){
+				$(".edu-info-div").css("display", "");
+				$(".edu-plan-area").find(".listNotEmpty").find(".round-list").empty();
+				$(".edu-plan-area").find(".listNotEmpty").find(".period-bar-list").empty();
+
+				$(".listNotEmpty").css("display", "");
+				$(".listEmpty").css("display", "none");
+				$(".total-edu-area").removeClass("no-data");
+
+
+				$.each(rtnEpisdList, function(){
+
+					var copyEpisdSample = $(".copyEpisdSample").find(".round-div").clone(true);
+					var copyEpisdSample2 = $(".copyEpisdSample2").find(".period-bar-div").clone(true);
+
+					var $this = this;
+
+					var episdOrd = $this.episdOrd;
+
+					var accsStrtDt = $this.accsStrtDt;
+					var accsEndDt = $this.accsEndDt;
+					var edctnStrtDt = $this.edctnStrtDt;
+					var edctnEndDt = $this.edctnEndDt;
+
+					var accsStrtYear = $this.accsStrtYear;
+					var accsEndYear = $this.accsEndYear;
+					var edctnStrtYear = $this.edctnStrtYear;
+					var edctnEndYear = $this.edctnEndYear;
+
+					var episdYear = $this.episdYear;
+
+
+
+
+
+					copyEpisdSample.find(".episdOrd").text(episdOrd+"회차");
+					copyEpisdSample.find(".episdAccsDt").text(accsStrtDt + " ~ " + accsEndDt);
+					if(episdYear != accsStrtYear && episdYear != accsEndYear){
+						copyEpisdSample.find(".episdAccsDt").closest("div").addClass("no-this-year");
+					}
+
+					copyEpisdSample.find(".episdEduDt").text(edctnStrtDt + " ~ " + edctnEndDt);
+					if(episdYear != edctnStrtYear && episdYear != edctnEndYear){
+						copyEpisdSample.find(".episdEduDt").closest("div").addClass("no-this-year");
+					}
+
+					$(".eduYear").text(episdYear+"년");
+					$(".edu-plan-area").find(".listNotEmpty").find(".round-list").append(copyEpisdSample);
+
+					$(".edu-plan-area").find(".listNotEmpty").find(".period-bar-list").append(copyEpisdSample2);
+
+				});
+
+				//과정에 대한 차수 반복
+				$(".edu-plan-area").find(".round-list").find(".copyEpisdSample").css("display","");
+
+				schedulePopupFn();
+
+			}else{
+				$(".edu-info-div").css("display", "none");
+				$(".listNotEmpty").css("display", "none");
+				$(".listEmpty").css("display", "");
+				$(".total-edu-area").addClass("no-data");
+
+
+
+			}
+
+		}, "/education/apply/detailLayer", searchForm, "text");
+	}
+
+
 	//과정분류 조회
 	var selectCtgryCdList = function(arg){
 
@@ -103,6 +249,95 @@ define(["ezCtrl"], function(ezCtrl) {
 		var ctgrycd = $("#ctgryCd").data("ctgrycd");
 
 		$("#ctgryCd").val(ctgrycd).prop("selected", true);//조회된 과정분류값 자동선택
+	}
+
+	var selectCtgryCdListLayer = function(arg){
+
+		var cdMst= {};
+		cdMst.cd = arg;
+
+		cmmCtrl.jsonAjax(function(data){
+			callbackAjaxCtgryCdListLayer(data);
+
+			//데이터가 없으면 2뎁스 사용 불가처리 함
+			if(arg == "" || arg === undefined){
+				$formLayerObj.find("#ctgryCd").attr("readonly", true).attr("disabled", true);
+			}else{
+				$formLayerObj.find("#ctgryCd").attr("readonly", false).attr("disabled", false);
+			}
+
+		}, '/education/classTypeList', cdMst, "text");
+	}
+
+	//과정분류 2뎁스 세팅
+	var callbackAjaxCtgryCdListLayer = function(data){
+
+		var detailList = JSON.parse(data);
+
+		$formLayerObj.find("#ctgryCd").empty();
+
+		var temp ="";
+
+		var detailLength = detailList.length;
+
+		if(detailLength > 0){
+
+
+			for(var i =0; i < detailList.length; i++){
+
+				var cd = detailList[i].cd;
+				var cdNm = detailList[i].cdNm;
+
+
+				var addClass =  (i==0)? "swiper-slide active txt-tab-btn searchLayer" : "swiper-slide txt-tab-btn searchLayer";
+				temp = temp+"<a class='"+addClass+"' data-ctgrycd="+cd+" href='javascript:'><p class='txt'><span class='menu-name'>"+cdNm+"</span></p></a>";
+
+			}
+			$formLayerObj.find("#ctgryCd").append(temp);
+
+			$formLayerObj.find("#ctgryCd").find("a:first").trigger("click");
+
+			txtTabSwiperCreate();
+
+			$(".txt-major-tab-swiper .txt-tab-btn").off().on("click", function(){
+				$(this).addClass("active").siblings().removeClass("active");
+			});
+			$(".txt-tab-swiper.func-tab .txt-tab-btn").off().on("click", function(){
+				$(this).addClass("active").siblings().removeClass("active");
+
+				if($(this).parents(".pop-con-area").size() > 0) {
+					$(this).parents(".pop-con-area").find(".con-area").scrollTop(0); // 탭 클릭시, 맨 상단 스크롤 이동
+					$(this).parents(".pop-con-area").find(".tab-con").hide().eq($(this).index()).show();
+				} else {
+					$(this).parents(".tab-con-w").find(".tab-con").hide().eq($(this).index()).show();
+					// 탭 클릭 시, 맨 처음 탭에 active 가도록 초기화
+					if($(this).parents(".tab-con-w").find(".tab-con").eq($(this).index()).find(".txt-depth-tab-swiper").size() > 0 && !$(this).parents(".tab-con-w").find(".tab-con").eq($(this).index()).find(".txt-depth-tab-swiper .swiper-slide:first-child").hasClass("active")) {
+						$(this).parents(".tab-con-w").find(".tab-con").eq($(this).index()).find(".txt-depth-tab-swiper .swiper-slide:first-child").addClass("active").siblings().removeClass("active");;
+
+						let depthTabSwiper = tabmenuSwipers[$(this).index()];
+						if (depthTabSwiper) {
+							depthTabSwiper.slideTo(0, 0);
+						}
+					}
+
+				}
+			});
+
+
+			$(".edu-info-div").css("display", "");
+			$(".listNotEmpty").css("display", "");
+			$(".listEmpty").css("display", "none");
+			$(".total-edu-area").removeClass("no-data");
+		}else{
+			$(".edu-info-div").css("display", "none");
+
+			$(".listNotEmpty").css("display", "none");
+			$(".listEmpty").css("display", "");
+			$(".total-edu-area").addClass("no-data");
+		}
+		//데이터 있음
+
+		//데이터 없음
 	}
 
 
@@ -176,6 +411,35 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
+			classTypeLayer : {
+				event : {
+					click : function() {
+						selectCtgryCdListLayer($(this).data("prntcd"));
+					}
+				}
+			},
+			edctnSearch : {
+				event : {
+					click : function(e) {
+						//전체 팝업일정에서 과정명 클릭할때 실행
+						var edctnSeq= $(e.target).closest("a").data("edctnseq");
+						searchEpisdLayer(edctnSeq);
+
+					}
+				}
+			},
+
+
+			ctgryCdLayer : {
+				event : {
+					click : function(e) {
+
+						var ctgryCd = $(e.target).closest("a").data("ctgrycd");
+						searchLayer(ctgryCd);
+					}
+				}
+			},
+
 
 			//페이징 처리
 			pageSet : {
@@ -209,12 +473,25 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
+			//회차 담당자문의 팝업
+			eduTotCal : {
+				event : {
+					click : function(e) {
+
+						openPopup('allTrainingSchedulePopup', e);
+
+					}
+				}
+			},
+
 		},
 		immediately : function() {
 			//리스트 조회
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);
 			search();
+
+			$(".classTypeLayer:first").trigger("click");
 		}
 	};
 	

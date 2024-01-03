@@ -40,6 +40,9 @@ public interface EBBEpisdService {
 	 */
 	public EBBEpisdDTO selectCouseChildEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+
+
+
 	/**
 	 * 교육차수 목록을 조회한다.(엑셀용)
 	 */

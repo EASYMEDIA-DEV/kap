@@ -66,20 +66,36 @@ public class EBBEpisdDTO extends BaseDTO {
 
     @Schema(title = "접수시작일시", example = "yyyy-mm-dd HH:mm:ss")
     private String accsStrtDtm;
+    @Schema(title = "접수시작일", example = "mm.dd")
+    private String accsStrtDt;
+    @Schema(title = "접수시작년도", example = "yyyy")
+    private String accsStrtYear;
+
     @Schema(title = "접수시작시간", example = "HH:mm")
     private String accsStrtHour;
 
     @Schema(title = "접수종료일시", example = "yyyy-mm-dd HH:mm:ss")
     private String accsEndDtm;
+    @Schema(title = "접수종료일", example = "mm.dd")
+    private String accsEndDt;
+    @Schema(title = "접수종료년도", example = "yyyy")
+    private String accsEndYear;
     @Schema(title = "접수종료시간", example = "HH:mm")
     private String accsEndHour;
 
-
     @Schema(title = "교육시작일시", example = "yyyy-mm-dd HH:mm:ss")
     private String edctnStrtDtm;
+    @Schema(title = "교육시작일", example = "mm.dd")
+    private String edctnStrtDt;
+    @Schema(title = "교육시작년도", example = "year")
+    private String edctnStrtYear;
 
     @Schema(title = "교육종료일시", example = "yyyy-mm-dd HH:mm:ss")
     private String edctnEndDtm;
+    @Schema(title = "교육종료일", example = "mm.dd")
+    private String edctnEndDt;
+    @Schema(title = "교육종료년도", example = "year")
+    private String edctnEndYear;
 
     @Schema(title = "정원수", example = "숫자")
     private Integer fxnumCnt;

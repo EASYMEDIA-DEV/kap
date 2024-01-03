@@ -37,6 +37,12 @@ public class EBACouseDTO extends BaseDTO {
     @NotNull
     private Integer edctnSeq;
 
+    //교육순번
+    @Schema(title = "교육년도", example = "YYYY")
+    @NotNull
+    private Integer episdYear;
+
+
     //카테고리코드 소분류
     @Schema(title = "카테고리코드 소분류", example = "")
     private String ctgryCd;

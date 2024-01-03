@@ -44,6 +44,25 @@ public class EBBSrvRstDTO extends BaseDTO {
     @NotNull
     private Integer episdYear;
 
+    @Schema(title = "종합평균", example = "숫자")
+    private Float vrllAvrg;
+
+    @Schema(title = "전체공통점수", example = "숫자")
+    private Float ttlCoScore;
+
+    @Schema(title = "교육환경점수", example = "숫자")
+    private Float edctnEnvrnmtScore;
+
+    @Schema(title = "교육지원점수", example = "숫자")
+    private Float edctnSpprtScore;
+
+    @Schema(title = "교육내용점수", example = "숫자")
+    private Float edctnCntnScore;
+
+    @Schema(title = "강사점수", example = "숫자")
+    private Float isttrScore;
+
+
     @Schema(title = "부서별 인원 - 품질", example = "숫자")
     private Integer t1;
 

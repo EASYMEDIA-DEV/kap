@@ -154,8 +154,16 @@ public class EBACouseServiceImpl implements EBACouseService {
 		return ebaList;
 	}
 
+	/**
+	 *  교육차수 목록을 조회한다. (사용자 전체교육일정 레이어)
+	 */
+	public EBBEpisdDTO selectEpisdLayerList(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
 
+		eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectEpisdLayerList(eBBEpisdDTO) );
 
+		return eBBEpisdDTO;
+	}
 
 	/**
 	 * 교육과정을 등록한다.

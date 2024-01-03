@@ -172,6 +172,8 @@ var mainScript = (function(){
         });
 
         mainPopSwiper = new Swiper(".main-popup .swiper-container", {
+          observer: true,
+          observeParents: true,
           slidesPerView: 1,
           loop : true,
           navigation: {
@@ -184,6 +186,9 @@ var mainScript = (function(){
           },
           touchReleaseOnEdges: true,
           on:{
+            slideChangeTransitionStart:function(){
+              $(".slide-control-area .move-control .btn-pause").removeClass("stopped");
+            },
             slideChangeTransitionEnd:function(){
               if(window.innerWidth > 1023){
                 popupTimerMotion.restart();
@@ -371,6 +376,8 @@ function mainPopupIndicatorChk(){
 
       if(mainPopSwiper == undefined){
         mainPopSwiper = new Swiper(".main-popup .swiper-container", {
+          observer: true,
+          observeParents: true,
           slidesPerView: 1,
           loop : true,
           navigation: {

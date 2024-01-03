@@ -137,8 +137,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	public EBBEpisdDTO selectCouseChildEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
 
-
-
 		eBBEpisdDTO.setTotalCount( eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO) );
 
 		int recordCountPerPage = (eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize();
@@ -218,6 +216,10 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		}
 
 
+
+		EBBSrvRstDTO srvScoreDtl = eBBEpisdMapper.selectEpisdSrvScoreDtl(ebbDto);
+
+
 		//만족도결과 호출
 		EBBSrvRstDTO srvRstDtl = eBBEpisdMapper.selectEpisdSrvRstDtl(ebbDto);
 
@@ -226,6 +228,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		map.put("lctrDtoList", lctrDtoList);//온라인강의 목록
 		map.put("isttrList", isttrList);//강사 목록
 		map.put("bdgetList", bdgetList);//예산지출내역 목록
+
+		map.put("srvScoreDtl", srvScoreDtl);//만족도결과 점수
 		map.put("srvRstDtl", srvRstDtl);//설문 상세
 
 

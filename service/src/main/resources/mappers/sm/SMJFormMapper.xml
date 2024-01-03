@@ -26,6 +26,7 @@
              , CAR_PART_APPCTN_FILE_SEQ
              , FTRE_CAR_APPCTN_FILE_SEQ
              , TTL_EDCTN_FILE_SEQ
+             , (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.TTL_EDCTN_FILE_SEQ) AS FILE_ORD
              , REG_ID
              , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
              , REG_DTM

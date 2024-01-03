@@ -101,23 +101,23 @@
 			<choose>
 				<when test="srchOrder == 1">
 					<!-- 신청 마감순-->
-					ORDER BY accs_status_order ASC, accs_order_day asc
+					ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc
 				</when>
 				<when test="srchOrder == 2">
 					<!-- 교육일자순 -->
-					ORDER BY edctn_strt_dtm asc
+					ORDER BY accs_status_order is null asc, edctn_strt_dtm asc
 				</when>
 				<when test="srchOrder == 3">
 					<!--학습시간 짧은순-->
-					ORDER BY stduy_dd_cd_nm asc
+					ORDER BY accs_status_order is null asc, stduy_dd_cd_nm asc
 				</when>
 				<when test="srchOrder == 4">
 					<!--학습시간 긴순-->
-					ORDER BY stduy_dd_cd_nm desc
+					ORDER BY accs_status_order is null asc, stduy_dd_cd_nm desc
 				</when>
 				<otherwise>
 					<!-- 신청 마감순-->
-					ORDER BY accs_status_order ASC, accs_order_day asc
+					ORDER BY accs_status_order is null asc, accs_status_order ASC, accs_order_day asc
 				</otherwise>
 			</choose>
 		</if>
@@ -203,7 +203,8 @@
 	<sql id="selectFrontEpisdListwhereSql">
 		<where>
 
-			AND NOW()  <![CDATA[<]]>  edctn_strt_dtm
+			/*AND NOW()  <![CDATA[<]]>  edctn_strt_dtm*/
+			((NOW()  <![CDATA[<]]>  edctn_strt_dtm) OR (edctn_strt_dtm IS NULL))
 
 			/*AND episd_year IS NOT NULL*/
 
@@ -278,6 +279,164 @@
 		WHERE 1=1
 		  AND A.CD_ID = 'ED_TARGET'
 		  AND A.DPTH = 2
+
+	</select>
+
+	<!--
+		쿼리명 : EBBFrontEpisdMapper.selectEpisdLayerList
+		설  명 : 교육차수 목록을 조회한다. (사용자 전체교육일정 레이어)
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.15    김학규       최초생성
+    -->
+	<select id="selectEpisdLayerList" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
+		SELECT /*EBBEFrontpisdMapper.selectEpisdLayerList*/
+		edctn_seq
+		, episd_seq
+		, episd_year
+		, episd_ord
+		, parnt_seq
+		, (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
+		, ctgry_cd
+		, ctgry_cd_nm
+		, cbsn_cd
+		, (select cd_nm from co_code_mst WHERE cd = aa.cbsn_cd) as cbsn_cd_nm
+		, nm
+		, stduy_mthd_cd
+		, stduy_mthd_cd_nm
+		, stduy_dd_cd
+		, stduy_dd_cd_nm
+		, stduy_time_cd
+		, stduy_time_cd_nm
+		, episd_year
+		, episd_ord
+		, DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
+		, accs_strt_dtm
+		, accs_end_dtm
+
+
+		, DATE_FORMAT(accs_strt_dtm,'%Y') AS accs_strt_year
+		, DATE_FORMAT(accs_end_dtm,'%Y') AS accs_end_year
+		, DATE_FORMAT(edctn_strt_dtm,'%Y') AS edctn_strt_year
+		, DATE_FORMAT(edctn_end_dtm,'%Y') AS edctn_end_year
+
+		, DATE_FORMAT(accs_strt_dtm,'%m.%d') AS accs_strt_dt
+		, DATE_FORMAT(accs_end_dtm,'%m.%d') AS accs_end_dt
+		, DATE_FORMAT(edctn_strt_dtm,'%m.%d') AS edctn_strt_dt
+		, DATE_FORMAT(edctn_end_dtm,'%m.%d') AS edctn_end_dt
+		, case
+		when NOW() <![CDATA[<]]> accs_strt_dtm then '접수대기'
+		when NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm then '접수중'
+		when NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt <![CDATA[>=]]> fxnum_cnt) then '마감'
+		END  AS accs_status_nm
+		, case
+		when NOW()  <![CDATA[<]]>  accs_strt_dtm then '2'
+		when NOW()  <![CDATA[>]]>  accs_strt_dtm AND NOW()  <![CDATA[<]]>   accs_end_dtm then '1'
+		when NOW()  <![CDATA[>]]>  accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt  <![CDATA[>=]]>  fxnum_cnt) then '3'
+		END  AS accs_status_order
+		, edctn_strt_dtm
+		, edctn_end_dtm
+		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+		case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+		when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+		when NOW() <![CDATA[>]]> edctn_end_dtm then '교육완료'
+		end
+		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+		END  AS edctn_status_nm
+		, (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
+		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst WHERE isttr_seq in (SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq = aa.edctn_seq AND episd_ord = aa.episd_ord AND episd_year = aa.episd_year )) AS isttr_group_name
+		, (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
+		, case when isttr_cnt <![CDATA[<=]]>1 then ''
+		when isttr_cnt <![CDATA[>]]>  1 then isttr_cnt-1
+		END isttr_out_cnt
+		, fxnum_cnt
+		, fxnum_impsb_yn
+		, accs_cnt
+		, rcrmt_mthd_cd
+		, rcrmt_mthd_cd_nm
+		, pic_nm
+		, pic_email
+		, pic_tel_no
+		, edctn_ntctn_file_seq
+		, place_seq
+		, place_nm
+		, bsc_addr
+		, dtl_addr
+		, zipcode
+		, rprsnt_tel_no
+		, bdget_expns_yn
+		, case bdget_expns_yn
+		when 'Y' then '마감'
+		when 'N' then '미마감'
+		when 'C' then '교육취소'
+		end bdget_expns_nm
+		, reg_id
+		, reg_name
+		, reg_dtm
+		, mod_id
+		, mod_name
+		, mod_dtm
+		, exps_yn
+		, edctn_cmpltn_yn
+		FROM (SELECT
+		b.edctn_seq
+		, a.episd_seq
+		, b.ctgry_cd
+		, a.cbsn_cd
+		, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
+		, (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
+		, b.nm
+		, b.stduy_mthd_cd
+		, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
+		, b.stduy_dd_cd
+		, (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) as stduy_dd_cd_nm
+		, b.stduy_time_cd
+		, (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm
+		, a.episd_year
+		, a.episd_ord
+		, a.accs_strt_dtm
+		, a.accs_end_dtm
+		, a.edctn_strt_dtm
+		, a.edctn_end_dtm
+		, a.edctn_stts_cd
+		, (SELECT min(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS min_isttr_seq
+		, (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
+		, a.fxnum_cnt
+		, a.fxnum_impsb_yn
+		, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
+		, a.rcrmt_mthd_cd
+		, (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
+		, a.pic_nm
+		, a.pic_email
+		, a.pic_tel_no
+		, a.edctn_ntctn_file_seq
+		, a.place_seq
+		, c.nm as place_nm
+		, c.bsc_addr
+		, c.dtl_addr
+		, c.zipcode
+		, c.rprsnt_tel_no
+		, a.bdget_expns_yn
+		, a.reg_id
+		, (select name from co_adm_mst where id = a.reg_id) as reg_name
+		, a.reg_dtm
+		, a.mod_id
+		, (select name from co_adm_mst where id = a.reg_id) as mod_name
+		, a.mod_dtm
+		, a.exps_yn
+		, a.edctn_cmpltn_yn
+		FROM ed_edctn_episd_mst a
+		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
+
+		) AA
+
+		where 1=1
+		and edctn_seq = #{edctnSeq}
+		and episd_year = #{episdYear}
+
+		order by episd_ord asc;
+
 
 	</select>
 

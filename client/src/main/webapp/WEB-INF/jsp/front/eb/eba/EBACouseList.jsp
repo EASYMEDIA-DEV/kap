@@ -45,7 +45,7 @@
                                 <div class="btn-set">
                                 </div>
                                 <div class="btn-set">
-                                    <button class="btn-solid small gray-bg"><span>전체교육일정</span></button>
+                                    <button class="btn-solid small gray-bg eduTotCal" type="button"><span>전체교육일정</span></button>
                                 </div>
                             </div>
 
@@ -251,6 +251,9 @@
     </div>
 
     </form>
+
+
+    <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduTotCalLayer.jsp"></jsp:include><!--전체 교육일정-->
 
 </div>
 

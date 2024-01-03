@@ -1255,11 +1255,7 @@ var commonScript = (function(){
 
       // 텍스트 형식 tab swiper
       if($(".txt-tab-swiper").size() > 0){
-        const divideSwiper = new Swiper(".txt-tab-swiper .swiper-container", {
-          slidesPerView: "auto",
-          observer: true,
-          observeParents: true,
-        });
+        txtTabSwiperCreate();
       }
 
       // 라벨 형식 tab swiper
@@ -1521,15 +1517,18 @@ function trendMobMotion() {
 
 function trendPcMotion() {
   const trendSlides = $(".trend-swiper .swiper-slide");
+  console.log(trendSlides);
+  let motionSetTime;
+
   gsap.fromTo(trendSlides, {x: "100vw"}, {
     x: 0,
-    duration: .8,
+    duration: 1.6,
     delay: 0.8,
-    ease: 'cubic-bezier(0.215, 0.610, 0.355, 1.000)',
+    ease: "power4.out",
     stagger: {
-      amount: .8,
-      onComplete: function () {
-        $(this.targets()).addClass("mv")
+      amount: 2,
+      onStart: function () {
+        $(this.targets()).addClass("mv");
       },
     },
   })
@@ -1672,6 +1671,15 @@ function trainingSwperInitFn(){
   // }
 }
 
+// 전체 교육 일정 팝업 내 스와이퍼 함수 재호출
+function txtTabSwiperCreate(){
+  const divideSwiper = new Swiper(".txt-tab-swiper .swiper-container", {
+    slidesPerView: "auto",
+    observer: true,
+    observeParents: true,
+  });
+}
+
 
 
 // 전체 교육 일정 레이어 팝업 관련 함수
@@ -1681,16 +1689,25 @@ function schedulePopupFn(){
     var monthOuterWidth = Math.round($(".total-edu-area .edu-plan-area .month-wrap .month").outerWidth(true))
   
     $(".total-edu-area .edu-plan-area .round-period .period").each(function(q){
-      $(".period-bar").eq(q).find("span").text($(this).text())
-  
-      var startPeriod = $(this).text().split("~")[0]
-      var endPeriod = $(this).text().split("~")[1]
-      var startMonth = parseInt(startPeriod.split(".")[0]) // 시작 달
-      var startDate = parseInt(startPeriod.split(".")[1]) // 시작 날짜
-      var endMonth = parseInt(endPeriod.split(".")[0]) // 종료 달
-      var endDate = parseInt(endPeriod.split(".")[1]) // 종료 날짜
-  
-      $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":((endMonth - startMonth) * monthOuterWidth) + ((endDate - startDate) * (monthOuterWidth / 31))})
+      if(!$(this).closest(".round-period").hasClass("no-this-year")){
+        $(".period-bar").eq(q).find("span").text($(this).text())
+
+        var startPeriod = $(this).text().split("~")[0]
+        var endPeriod = $(this).text().split("~")[1]
+        var startMonth = parseInt(startPeriod.split(".")[0]) // 시작 달
+        var startDate = parseInt(startPeriod.split(".")[1]) // 시작 날짜
+        var endMonth = parseInt(endPeriod.split(".")[0]) // 종료 달
+        var endDate = parseInt(endPeriod.split(".")[1]) // 종료 날짜
+    
+        if(endMonth < startMonth){
+          $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":"100%"})
+        }else{
+          $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":((endMonth - startMonth) * monthOuterWidth) + ((endDate - startDate) * (monthOuterWidth / 31))})
+        }
+        
+      }else{
+        $(".period-bar").eq(q).css("width", "0")
+      }
     });
 
     if(window.innerWidth > 1023){

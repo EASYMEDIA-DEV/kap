@@ -5,9 +5,11 @@ import com.kap.core.dto.EmfMap;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBLctrDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.EBACouseService;
 import com.kap.service.EBBEpisdService;
+import com.kap.service.SMJFormService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +51,11 @@ public class EBACouseController {
     private final EBACouseService eBACouseService;
 
     private final EBBEpisdService eBBEpisdService;
+
+    private final SMJFormService sMJFormService;
+
+
+
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
 
@@ -62,6 +69,9 @@ public class EBACouseController {
         try
         {
             EBBEpisdDTO rtnList  = eBBEpisdService.selectEpisdList(eBBEpisdDTO);
+            SMJFormDTO smjFormDTO = new SMJFormDTO();
+            smjFormDTO.setTypeCd("BUSINESS03");
+            SMJFormDTO rtnFormDto = sMJFormService.selectFormDtl(smjFormDTO);
 
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -81,6 +91,8 @@ public class EBACouseController {
             modelMap.addAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));
 
             modelMap.addAttribute("rtnData", rtnList);
+            modelMap.addAttribute("rtnFormDto", rtnFormDto);
+
         }
         catch (Exception e)
         {
@@ -321,6 +333,62 @@ public class EBACouseController {
                 throw new Exception(e.getMessage());
             }
             return detailList;
+        }
+
+        /**
+         * 교육과정 목록을 조회한다.(전체 레이어팝업)
+         */
+        @PostMapping(value = "/apply/selectEduList")
+        public EBBEpisdDTO getCouseListLayerAjax(@RequestBody EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+        {
+
+            EBBEpisdDTO rtnMap = new EBBEpisdDTO();
+            try
+            {
+                rtnMap = eBBEpisdService.selectEpisdList(eBBEpisdDTO);
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return rtnMap;
+        }
+
+        /**
+         * 교육과정 신청 상세
+         */
+        @PostMapping(value="/apply/detailLayer")
+        public HashMap<String, Object> getEducationApplyDtl(@RequestBody EBACouseDTO eBACouseDTO, ModelMap modelMap) throws Exception {
+            HashMap<String, Object> resultMap;
+
+
+            try {
+
+                resultMap = new HashMap<>();
+
+                HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
+
+                EBACouseDTO rtnDto = (EBACouseDTO) rtnMap.get("rtnData");
+                EBBEpisdDTO ebbEpisdDTO = new EBBEpisdDTO();
+                ebbEpisdDTO.setEdctnSeq(rtnDto.getEdctnSeq());
+                ebbEpisdDTO.setEpisdYear(eBACouseDTO.getEpisdYear());
+
+                EBBEpisdDTO rtnEpisd = eBACouseService.selectEpisdLayerList(ebbEpisdDTO);//과정에 소속된 차수 목록
+
+                resultMap.put("rtnDto", rtnDto);
+                resultMap.put("rtnEpisdList", rtnEpisd.getList());
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return resultMap;
         }
 
     }

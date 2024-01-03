@@ -1179,8 +1179,31 @@
 		  and episd_ord = #{episdOrd}
 	</select>
 
-
-
+	<!--
+	  쿼리명 : EBBEpisdMapper.selectEpisdSrvScoreDtl
+	  설  명 : 교육차수관리 - 만족도 결과 평균 점수 호출
+	   수정일     수정자       수정내용
+	 ==========   ======    ==============
+	 2023.11.28   김학규       최초생성
+	 -->
+	<select id="selectEpisdSrvScoreDtl" parameterType="EBBEpisdDTO" resultType="EBBSrvRstDTO">
+		SELECT
+			rslt_seq
+			 , edctn_seq
+			 , episd_year
+			 , episd_ord
+			 , episd_seq
+			 , vrll_avrg
+			 , ttl_co_score
+			 , edctn_envrnmt_score
+			 , edctn_spprt_score
+			 , edctn_cntn_score
+			 , isttr_score
+			 , ttl_ptcpt_cnt
+		FROM ed_edctn_srv_rslt_dtl
+		WHERE 1=1
+		  AND episd_seq = #{episdSeq}
+	</select>
 
 	<!--
       쿼리명 : EBBEpisdMapper.selectEpisdSrvRstDtl
@@ -1743,12 +1766,12 @@
 		, SUM(CNT07) AS A7 /* 직급별 인원 - 기타 */
 		, A11 /*출석률*/
 		, AVG_score /*평가점수(점)*/
-		, '' AS A_12 /* 종합 평균 */
-		, '' AS A_13 /* 전체(공통) */
-		, '' AS A_14 /* 교육환경 */
-		, '' AS A_15 /* 교육지원 */
-		, '' AS A_16 /* 교육내용 */
-		, '' AS A_17 /* 강사 */
+		, ifnull(A_12, 0.0) AS A_12/* 종합 평균 */
+		, ifnull(A_13, 0.0) AS A_13/* 전체(공통) */
+		, ifnull(A_14, 0.0) AS A_14/* 교육환경 */
+		, ifnull(A_15, 0.0) AS A_15/* 교육지원 */
+		, ifnull(A_16, 0.0) AS A_16/* 교육내용 */
+		, ifnull(A_17, 0.0) AS A_17 /* 강사 */
 		, pmt_c1 /* 강사시간1 */
 		, pmt_c2 /* 강사시간2 */
 		, pmt_c3 /* 강사시간3 */
@@ -1840,12 +1863,12 @@
 
 		, ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 0) AS A11/*출석률*/
 		, ROUND(avg(exam_score), 2) AS AVG_score /*평가 점수*/
-		, '' AS A_12 /* 종합 평균 */
-		, '' AS A_13 /* 전체(공통) */
-		, '' AS A_14 /* 교육환경 */
-		, '' AS A_15 /* 교육지원 */
-		, '' AS A_16 /* 교육내용 */
-		, '' AS A_17 /* 강사 */
+		, vrll_avrg AS A_12 /* 종합 평균 */
+		, ttl_co_score AS A_13 /* 전체(공통) */
+		, edctn_envrnmt_score AS A_14 /* 교육환경 */
+		, edctn_spprt_score AS A_15 /* 교육지원 */
+		, edctn_cntn_score AS A_16 /* 교육내용 */
+		, isttr_score AS A_17 /* 강사 */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03001' THEN pmt ELSE NULL END) AS pmt_c1/* 강사시간1 */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03002' THEN pmt ELSE NULL END) AS pmt_c2/* 강사시간2 */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03003' THEN pmt ELSE NULL END) AS pmt_c3/* 강사시간3 */
@@ -1933,6 +1956,22 @@
 				inner JOIN ed_edctn_episd_mst episdmst ON episdmst.episd_seq = ptcpt.episd_seq
 			GROUP BY episd_seq, ctgry_cd
 		) j ON j.episd_seq = a.episd_seq
+		LEFT JOIN(
+			SELECT
+				rslt_seq
+				, edctn_seq
+				, episd_year
+				, episd_ord
+				, episd_seq
+				, vrll_avrg
+				, ttl_co_score
+				, edctn_envrnmt_score
+				, edctn_spprt_score
+				, edctn_cntn_score
+				, isttr_score
+				, ttl_ptcpt_cnt
+			FROM ed_edctn_srv_rslt_dtl
+		) k ON k.episd_seq = a.episd_seq
 
 		GROUP BY a.EPISD_ORD
 		) AA
@@ -2003,12 +2042,12 @@
 
 		, ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 2) AS A11/*출석률*/
 		, ROUND(avg(exam_score), 2) AS AVG_score /*평가 점수*/
-		, '' AS A_12 /* 종합 평균 */
-		, '' AS A_13 /* 전체(공통) */
-		, '' AS A_14 /* 교육환경 */
-		, '' AS A_15 /* 교육지원 */
-		, '' AS A_16 /* 교육내용 */
-		, '' AS A_17 /* 강사 */
+		, vrll_avrg AS A_12 /* 종합 평균 */
+		, ttl_co_score AS A_13 /* 전체(공통) */
+		, edctn_envrnmt_score AS A_14 /* 교육환경 */
+		, edctn_spprt_score AS A_15 /* 교육지원 */
+		, edctn_cntn_score AS A_16 /* 교육내용 */
+		, isttr_score AS A_17 /* 강사 */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03001' THEN pmt ELSE NULL END) AS pmt_c1/* 강사시간1 */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03002' THEN pmt ELSE NULL END) AS pmt_c2/* 강사시간2 */
 		, MAX(CASE bd_cd WHEN 'ED_BDGET_CD03003' THEN pmt ELSE NULL END) AS pmt_c3/* 강사시간3 */
@@ -2087,7 +2126,7 @@
 		GROUP BY isttr_tb.episd_seq) g ON g.edctn_seq = a.edctn_seq AND g.episd_year = a.episd_year AND g.episd_ord = a.episd_ord
 		LEFT JOIN (SELECT ptcpt_seq, ptcpt_bsnm_no, edctn_seq, episd_year, episd_ord, stts_cd from ep_edctn_ptcpt_mst WHERE stts_cd = 'EDU_STTS_CD01' GROUP BY ptcpt_seq) h ON h.edctn_seq = a.edctn_seq AND h.episd_year = a.episd_year AND h.episd_ord = a.episd_ord
 		LEFT JOIN (SELECT ptcpt_seq AS at_ptcpt_seq, edctn_dt, atndc_dtm FROM ep_edctn_atndc_dtl) i ON i.at_ptcpt_seq = h.ptcpt_seq
-		LEFT JOIN(
+		LEFT JOIN (
 		SELECT
 		ctgry_cd
 		, COUNT(ctgry_cd) AS ct_cnt
@@ -2097,6 +2136,22 @@
 		inner JOIN ed_edctn_episd_mst episdmst ON episdmst.episd_seq = ptcpt.episd_seq
 		GROUP BY episd_seq, ctgry_cd
 		) j ON j.episd_seq = a.episd_seq
+		LEFT JOIN (
+			SELECT
+				rslt_seq
+				, edctn_seq
+				, episd_year
+				, episd_ord
+				, episd_seq
+				, vrll_avrg
+				, ttl_co_score
+				, edctn_envrnmt_score
+				, edctn_spprt_score
+				, edctn_cntn_score
+				, isttr_score
+				, ttl_ptcpt_cnt
+			FROM ed_edctn_srv_rslt_dtl
+		) k ON k.episd_seq = a.episd_seq
 
 		GROUP BY a.EPISD_ORD
 		) AA

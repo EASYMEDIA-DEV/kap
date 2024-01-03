@@ -262,6 +262,8 @@ public class EBBEpisdController {
         List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
         List<EBBBdgetDTO> bdgetList = (List<EBBBdgetDTO>) rtnMap.get("bdgetList");//예산/지출관리 목록
 
+
+        EBBSrvRstDTO srvScoreDtl = (EBBSrvRstDTO)rtnMap.get("srvScoreDtl");//만족도 결과 점수
         EBBSrvRstDTO srvRstDtl = (EBBSrvRstDTO)rtnMap.get("srvRstDtl");//만족도 결과 부서, 직급별 인원 통계
 
         List<EBBPtcptDTO> ptcptList = (List<EBBPtcptDTO>) rtnMap.get("ptcptList");//교육참여자 목록
@@ -296,7 +298,9 @@ public class EBBEpisdController {
         modelMap.addAttribute("lctrDtoList", lctrDtoList);//온라인강의
         modelMap.addAttribute("isttrList", isttrList);//강사정보
         modelMap.addAttribute("bdgetList", bdgetList);//예산지출목록
+        modelMap.addAttribute("srvScoreDtl", srvScoreDtl);//만족도 결과 점수
         modelMap.addAttribute("srvRstDtl", srvRstDtl);//만족도 결과 부서, 직급별 인원 통계
+
         modelMap.addAttribute("ptcptList", ptcptList);//교육 참여자 목록
 
 

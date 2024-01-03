@@ -197,6 +197,11 @@ public interface EBBEpisdMapper {
 	public List<EBBBdgetDTO> selectBdgetDtlList(EBBBdgetDTO eBBBdgetDTO) throws Exception;
 
 	/**
+	 * 교육차수관리 - 만족도 결과 평균 점수 호출
+	 */
+	public EBBSrvRstDTO selectEpisdSrvScoreDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
 	 * 교육차수 - 만족도 조사결과 통계
 	 */
 	public EBBSrvRstDTO selectEpisdSrvRstDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;

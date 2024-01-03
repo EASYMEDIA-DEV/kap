@@ -1027,13 +1027,12 @@
                                         <th>강사평가</th>
                                     </tr>
                                     <tr>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-                                        <td class="text-center">5.0</td>
-
+                                        <td class="text-center">${srvScoreDtl.vrllAvrg}</td>
+                                        <td class="text-center">${srvScoreDtl.ttlCoScore}</td>
+                                        <td class="text-center">${srvScoreDtl.edctnEnvrnmtScore}</td>
+                                        <td class="text-center">${srvScoreDtl.edctnSpprtScore}</td>
+                                        <td class="text-center">${srvScoreDtl.edctnCntnScore}</td>
+                                        <td class="text-center">${srvScoreDtl.isttrScore}</td>
                                     </tr>
                                     </tbody>
                                 </table>

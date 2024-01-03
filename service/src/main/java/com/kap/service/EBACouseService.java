@@ -1,6 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.eb.eba.EBACouseDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,6 +41,10 @@ public interface EBACouseService {
 	 */
 	public List<EBACouseDTO> selectEdctnRelList(EBACouseDTO eBACouseDTO) throws Exception;
 
+	/**
+	 * 교육차수 목록을 조회한다. (사용자 전체교육일정 레이어)
+	 */
+	public EBBEpisdDTO selectEpisdLayerList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
 	 * 교육과정을 등록한다.

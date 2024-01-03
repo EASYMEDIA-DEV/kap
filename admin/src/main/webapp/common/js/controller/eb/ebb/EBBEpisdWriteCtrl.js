@@ -318,8 +318,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	}else if("STDUY_MTHD02" == stduyMthdCd){
 
 			console.log("온라인임");
-
+			$(".onlineSet").css("display", "");
 			$(".eduRoom").css("display", "none");
+			$(".onlineSet").find("input:text").each(function(){
+				if($(this).closest("tr").attr("class") !="examTr"){
+					$(this).removeClass("notRequired");
+				}
+
+			});
+			$(".onlineSet").find("div.dropzone").each(function(){
+				if($(this).closest("tr").attr("class") !="examTr"){
+					$(this).removeClass("notRequired");
+				}
+			});
 
 
 	}else{

@@ -76,6 +76,9 @@ public class SMJFormDTO extends BaseDTO {
     @Schema(title = "전체교육일정 파일 순번", example = "숫자")
     private Integer ttlEdctnFileSeq;
 
+    @Schema(title = "파일순번", example = "숫자")
+    private Integer fileOrd;
+
     @Schema(title = "등록ID", example = "")
     private String regId;
 
