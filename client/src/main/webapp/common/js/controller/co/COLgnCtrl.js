@@ -437,7 +437,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								alert(msgCtrl.getMsg("fail.co.login.notIdExist"));
 								return ;
 							} else {
-								cmmCtrl.niceCertification('/pwd-find-setting&' + data.data.id );
+								cmmCtrl.niceCertification('/pwd-find-setting&ciChk&' + data.data.ci +"&"+data.data.id );
 							}
 
 						}, "/pwd-find", $formObj6, "POST", "json");
