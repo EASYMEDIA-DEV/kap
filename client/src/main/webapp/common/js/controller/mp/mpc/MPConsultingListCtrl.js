@@ -24,8 +24,8 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click : function(){
                         var conSeq = $(this).data("seq");
-                        alert($(".conSeq+statusType").text());
-                        location.href="./detail?detailsKey="+conSeq;
+                        var statusType = $("."+conSeq+"statusType").text();
+                        location.href="./detail?detailsKey="+conSeq+"?statusType="+statusType;
                     }
                 }
             }
