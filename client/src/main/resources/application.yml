@@ -26,6 +26,10 @@ spring:
     resources:
       add-mappings: true
 
+nice :
+  return-url-adm : http://mng.kap.easymedia.kr
+  return-url-user : http://kap.easymedia.kr
+
 #강제 로그인 여부
 app:
   is-login: false

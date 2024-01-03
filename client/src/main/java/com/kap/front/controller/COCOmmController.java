@@ -75,7 +75,7 @@ public class COCOmmController {
         /** 코드 서비스 **/
         private final COCodeService cOCodeService;
 
-        @Value("${app.user-domain}")
+        @Value("${nice.return-url-user}")
         private String url;
 
         @Operation(summary = "신청자, 부품사 정보 조회", tags = "회원", description = "신청자, 부품사 정보 조회")

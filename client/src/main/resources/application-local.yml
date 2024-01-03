@@ -7,7 +7,8 @@ nice :
   product-id : 2101764012
   url : https://svc.niceapi.co.kr:22001
   enc-product-id : 2101979031
-
+  return-url-adm : https://127.0.0.1:9012
+  return-url-user : https://127.0.0.1:9014
 #강제 로그인 여부
 app:
   file:
@@ -21,3 +22,4 @@ app:
     max-size: 41943040
     #템플릿 경로
     template-file-path: D:\EGOVFRAME\project\2023\kap\admin\src\main\webapp\WEB-INF\template\
+#    template-file-path: D:\kap-git\client\src\main\webapp\WEB-INF\jsp\template\

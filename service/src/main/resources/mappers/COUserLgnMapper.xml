@@ -153,6 +153,7 @@
       수정일     수정자       수정내용
     ==========   ======    ==============
     2023.12.06   양현우       최초생성
+    2024.01.04   양현우       위원 사용자 빼고 조회
 -->
 	<select id="getIdFind" parameterType="COIdFindDto" resultType="MPAUserDto">
 		select /* COUserLgnMapper.idFind */
@@ -160,6 +161,7 @@
 		  , a.id
 		  , a.email
 		  , a.name
+		  , b.ci
 		from
 			co_mem_mst a
 		 inner join co_mem_dtl b
@@ -184,6 +186,7 @@
 			and b.ci = #{ci}
 		</if>
 		  and wthdrw_yn = 'Y'
+		  and a.mem_cd not in ('CS')
 	</select>
 
 	<!--
