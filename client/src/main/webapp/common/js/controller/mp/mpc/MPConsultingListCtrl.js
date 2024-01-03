@@ -9,12 +9,6 @@ define(["ezCtrl"], function(ezCtrl) {
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
-    /*var memberSearch = function(){*/
-    /*var memberInfo = {};
-        cmmCtrl.jsonAjax(function(data){
-        }, actionUrl,memberInfo, "json")
-    }*/
-
     // set model
     ctrl.model = {
         id : {
@@ -24,8 +18,16 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click : function(){
                         var conSeq = $(this).data("seq");
-                        var statusType = $("."+conSeq+"statusType").text();
-                        location.href="./detail?detailsKey="+conSeq+"?statusType="+statusType;
+                        location.href="./detail?detailsKey="+conSeq;
+                    }
+                }
+            },
+            survey : {
+                event : {
+                    click : function(){
+                        var conSeq = $(this).data("seq");
+                        var bsnYear = $(".bsnYear").val();
+                        location.href="./surveyIndex?detailsKey="+conSeq;
                     }
                 }
             }

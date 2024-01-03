@@ -53,7 +53,7 @@ public class MPConsultingController {
      *  목록
      */
     @GetMapping(value="/list")
-    public String getCOnsultingList(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getConsultingList(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
@@ -73,13 +73,13 @@ public class MPConsultingController {
      *  컨설팅 신청 상세 조회
      */
     @GetMapping(value="/detail")
-    public String getCOnsultingDtl(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getConsultingDtl(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         /*try
         {*/
-            System.err.println("dto:::::"+cBATechGuidanceInsertDTO);
+            String appctnTypeCd = cBATechGuidanceInsertDTO.getAppctnTypeCd();
             modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
-           /* COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            /* COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
             modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
             modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());*/
@@ -89,6 +89,28 @@ public class MPConsultingController {
             throw new Exception(e.getMessage());
         }*/
         return "front/mp/mpc/MPConsultingDtl.front";
+    }
+
+    /**
+     *  컨설팅 신청 상세 조회
+     */
+    @GetMapping(value="/surveyIndex")
+    public String getConsultingSurveyIndex(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        /*try
+        {*/
+            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
+            System.err.println("bsnYear::::"+cBATechGuidanceInsertDTO);
+           /* COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
+            modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
+            modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());*/
+        /*}
+        catch (Exception e)
+        {
+            throw new Exception(e.getMessage());
+        }*/
+        return "front/mp/mpc/MPConsultingSurveyIndex.front";
     }
 
     @RestController
