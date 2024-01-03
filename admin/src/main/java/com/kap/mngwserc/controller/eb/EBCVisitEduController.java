@@ -159,6 +159,27 @@ public class EBCVisitEduController {
     }
 
     /**
+     * 방문교육 신청 이관 이력을 조회한다.
+     */
+    @GetMapping(value = "/trsfList")
+    public String getTrsfListPageAjax(EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", ebcVisitEduService.selectTrsfVisitEduList(ebcVisitEduDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "mngwserc/eb/ebc/EBCVisitEduTrsfListAjax";
+    }
+
+    /**
      * 부품사 추가정보의 신청부품업종을 조회한다.
      */
     @GetMapping(value = "/codeSelect")

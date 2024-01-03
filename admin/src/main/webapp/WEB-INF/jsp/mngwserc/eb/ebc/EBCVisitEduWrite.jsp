@@ -17,6 +17,7 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.vstSeq}" />
             <input type="hidden" class="notRequired" id="vstSeq" name="vstSeq" value="${rtnInfo.vstSeq}" />
             <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${rtnInfo.memSeq}" />
+            <input type="hidden" class="notRequired" id="bfreMemSeq" name="bfreMemSeq" value="${rtnInfo.memSeq}" />
             <input type="hidden" class="notRequired" id="vstRsltSeq" name="vstRsltSeq" value="${rtnInfo.vstRsltSeq}" />
             <input type="hidden" class="notRequired" id="itrdcFileSeq" name="itrdcFileSeq" value="${rtnInfo.itrdcFileSeq}" />
             <input type="hidden" class="notRequired" id="lctrFileSeq" name="lctrFileSeq" value="${rtnInfo.lctrFileSeq}" />
@@ -364,6 +365,42 @@
                 </div>
             </fieldset>
             <br><br>
+            <fieldset class="trsfField">
+                <div class="clearfix">
+                    <h6 class="pull-left mt0">
+                        <em class="ion-play mr-sm"></em>신청자 변경 이력
+                        <input type="hidden" id="trsfListContainerTotCnt" value="0">
+                    </h6>
+                    <!-- 현재 페이징 번호 -->
+                    <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnInfo.pageIndex }" />
+                    <!-- 페이징 버튼 사이즈 -->
+                    <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnInfo.pageRowSize }" />
+                    <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnInfo.listRowSize }" />
+
+                    <div class="pull-right ml-sm" data-html2canvas-ignore="true">
+                        <select class="form-control input-sm listRowSizeContainer" >
+                            <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                                <jsp:param name="listRowSize" value="${ rtnInfo.listRowSize }" />
+                            </jsp:include>
+                        </select>
+                    </div>
+                    <div class="table-responsive col-sm-12 p0 m0" id="vueList">
+                        <table class="table table-hover table-striped" >
+                            <thead>
+                            <tr>
+                                <th class="text-center">이전 신청자</th>
+                                <th class="text-center">변경 신청자</th>
+                                <th class="text-center">변경일 / 변경자</th>
+                            </tr>
+                            </thead>
+                            <!-- 리스트 목록 결과 -->
+                            <tbody id="trsfListContainer"/>
+
+                        </table>
+                        <!-- 페이징 버튼 -->
+                        <div id="trsfPagingContainer"/>
+                    </div>
+            </fieldset>
             <fieldset>
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>신청내용</h6>
             </fieldset>
@@ -665,6 +702,7 @@
                             <div class="row">
                                 <label class="col-sm-1 control-label">수료인원(명)</label>
                                 <div class="col-sm-10 form-inline">
+                                    <fmt:formatNumber var="formatPtcptRate" value="${rtnInfo.ptcptRate * 100}" pattern="##0" />
                                     <input type="text" class="form-control input-sm " id="cmptnCnt" name="cmptnCnt" value="${rtnInfo.cmptnCnt}" title="수료인원" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                 </div>
                             </div>
@@ -673,7 +711,7 @@
                             <div class="row">
                                 <label class="col-sm-1 control-label">참석률(%)</label>
                                 <div class="col-sm-10 form-inline">
-                                    <input type="text" class="form-control input-sm" id="ptcptRate" name="ptcptRate" value="${not empty rtnInfo.ptcptRate ? rtnInfo.ptcptRate * 100 : rtnInfo.ptcptRate}" title="참석률(%)" maxlength="50" />
+                                    <input type="text" class="form-control input-sm" id="ptcptRate" name="ptcptRate" value="${not empty rtnInfo.ptcptRate ? formatPtcptRate : formatPtcptRate}" title="참석률(%)" maxlength="50" />
                                 </div>
                             </div>
                         </fieldset>

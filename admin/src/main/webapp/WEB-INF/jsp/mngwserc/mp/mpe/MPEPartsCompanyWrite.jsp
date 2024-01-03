@@ -23,7 +23,7 @@
             <div class="tab-content">
                 <div id="dtl" class="tab-pane fade in active">
                     <div id="tab1">
-                        <div class="text-left mb-xl"><h5>부품사 관리 등록</h5></div>
+                        <div class="text-left mb-xl"><h5>부품사 관리 상세/수정</h5></div>
                         <fieldset>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
@@ -321,7 +321,7 @@
                         </div>
                         <hr />
                         <c:if test="${ not empty rtnInfo }">
-                            <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                            <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                             <div class="table-responsive">
                                 <table class="table text-sm">
                                     <tbody>

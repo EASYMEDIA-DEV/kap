@@ -1,4 +1,4 @@
-define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
+define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
 
     "use strict";
 
@@ -14,6 +14,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     var $formObj = ctrl.obj.find("frmData");
     var width = 500; //팝업의 너비
     var height = 600; //팝업의 높이
+
     var textCntCheck = function (id) {
         var content = $(this).val();
         if(content.length == 0 || content == '') {
@@ -234,14 +235,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         }
 
                         cmmCtrl.jsonAjax(function(data){
-                            var info = {};
-                            if (data.respCnt > 0) {
-                                info.applyCompleteYn = "Y";
-                            } else {
-                                info.applyCompleteYn = "N";
-                            }
                             location.href = "./complete";
                         }, "./insert", actForm, "text");
+                    }
+                }
+            },
+            //파일 삭제
+            delFile : {
+                event : {
+                    click: function () {
+                        $(".delFile").remove();
+                        $("#emptyFile").show();
+                        $("#showFile").hide();
+                        $("#fileNm").text("");
+                        $("#file").removeClass("attached");
                     }
                 }
             }
@@ -272,6 +279,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 }
 
                 $("input[name=edctnPlaceAddr]").val(edctnPlaceAddr);
+            });
+
+            //파일 설정
+            $("input[type=file]").fileUpload({
+                loading:true,
+                sync:true
+            },function(data){
+                alert('test')
+                //해당 input file 객체에 data(tempFileData) 응답 값이 저장
+                if(data != undefined && data.length > 0){
+                    ctrl.obj.find(".file-list-area .empty-txt").text(data[0].orgnFileNm);
+                }
             });
 
             // 유효성 검사

@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/mngwserc/sm/smc/{mdCd:pc|mbl}")
+@RequestMapping(value="/mngwserc/sm/smc/{mdCd:pc|mobile}")
 public class SMCMnPopController {
 
     /** 서비스 **/

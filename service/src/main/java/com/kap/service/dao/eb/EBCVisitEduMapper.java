@@ -38,6 +38,16 @@ public interface EBCVisitEduMapper {
 	public int selectVisitEduCnt(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
 	/**
+	 * 방문교육 신청 이관이력 목록을 조회한다.
+	 */
+	public List<EBCVisitEduDTO> selectTrsfVisitEduList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+	/**
+	 * 방문교육 신청 이관이력 목록 개수를 조회
+	 */
+	public int selectTrsfVisitEduListCnt(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+	/**
 	 * 방문교육 상세를 조회
 	 */
 	public EBCVisitEduDTO selectVisitEduDtl(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
@@ -46,11 +56,6 @@ public interface EBCVisitEduMapper {
 	 * 방문교육 신청분야 상세코드 목록을 조회한다.
 	 */
 	public List<EBCVisitEduDTO> selectAppctnTypeList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
-
-	/**
-	 * 방문교육 신청자 정보 수정
-	 */
-	public int updateMemPartsSociety(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
 	/**
 	 * 방문교육 강사를 조회
@@ -86,6 +91,27 @@ public interface EBCVisitEduMapper {
 	 * 방문교육 결과상세 수정
 	 */
 	public int updateEdctnVstRslt(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+	/**
+	 * 방문교육 결과상세 회원순번 수정
+	 */
+	public int updateEdctnVstOptnMemSeq(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+	/**
+	 * 방문교육 신청분야 회원순번 수정
+	 */
+	public int updateAppctnTypeMemSeq(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+	/**
+	 * 방문교육 강사 회원순번 수정
+	 */
+	public int updateIsttrMemSeq(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
+	/**
+	 * 방문교육 신청 이관이력 등록
+	 */
+	public int insertEdctnTrnsfInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
 
 	/**
 	 * 방문교육 신청분야 상세 등록

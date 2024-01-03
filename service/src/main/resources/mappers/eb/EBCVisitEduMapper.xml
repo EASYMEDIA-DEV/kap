@@ -21,9 +21,10 @@
 			 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.ptcpt_hh) AS ptcpt_hh_num
 			 , A.edctn_place AS edctn_place_addr -- 교육장소 hidden값
 	 		 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.edctn_stts_cd) AS edctn_stts_name -- 교육상태명
-			 , A.reg_dtm AS visit_reg_dtm -- 방문교육신청일시
-			 , A.mod_id AS visit_mod_id -- 최종수정자
-			 , A.mod_dtm  AS visit_mod_dtm-- 최종수정일시
+			 , A.reg_dtm -- 방문교육신청일시
+			 , A.mod_id -- 최종수정자
+			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS mod_name
+			 , A.mod_dtm -- 최종수정일시
 			 , B.name-- 신청자이름
 			 , B.id -- 신청자 아이디
 			 , B.hp_no -- 신청자 핸드폰번호
@@ -378,8 +379,8 @@
 		) VALUES
 		<foreach collection="isttrSeqList" item="isttrSeqList" index="index" separator=" , " open="" close=";">
 			(
-			#{isttrSeqList.vstSeq}
-			, #{isttrSeqList.memSeq}
+			#{vstSeq}
+			, #{memSeq}
 			, #{vstRsltSeq}
 			, #{isttrSeqList.isttrSeq}
 			, #{regId}
@@ -534,8 +535,10 @@
 	<update id="updateEdctnVst" parameterType="EBCVisitEduDTO">
 		update /* EBCVisitEduMapper.updateEdctnVst */ ev_edctn_vst_mst
 		set
-			mem_seq = #{memSeq}
-		  , appctn_fld_cd = #{appctnFldCd}
+			appctn_fld_cd = #{appctnFldCd}
+		<if test="aftrMemSeq != null and aftrMemSeq != ''.toString()">
+			, mem_seq = #{aftrMemSeq}
+		</if>
 		  , appctn_theme_cntn = #{appctnThemeCntn}
 		  , appctn_rsn = #{appctnRsn}
 		  , hope_dt = #{hopeDt}
@@ -613,8 +616,10 @@
 	<update id="updateEdctnVstRslt" parameterType="EBCVisitEduDTO">
 		update /* EBCVisitEduMapper.updateEdctnVstRslt */ ev_edctn_vst_rslt_dtl
 		set
-			mem_seq = #{memSeq}
-		  , cnfrmd_theme = #{cnfrmdTheme}
+		  cnfrmd_theme = #{cnfrmdTheme}
+		<if test="aftrMemSeq != null and aftrMemSeq != ''.toString()">
+			, mem_seq = #{aftrMemSeq}
+		</if>
 		  , edctn_year = #{edctnYear}
 		  , edctn_strt_dtm = #{edctnStrtDtm}
 		  , edctn_end_dtm = #{edctnEndDtm}
@@ -660,6 +665,51 @@
 		  and vst_seq = #{vstSeq}
 		  and vst_rslt_seq = #{vstRsltSeq}
 		  and mem_seq = #{memSeq}
+	</select>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.selectTrsfVisitEduList
+         설  명 : 방문교육 신청 이관이력 리스트를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.02   구은희       최초생성
+    -->
+	<select id="selectTrsfVisitEduList" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduDTO">
+		select /*EBCVisitEduMapper.selectTrsfVisitEduList*/
+			trnsf_seq
+			 , vst_seq
+			 , mem_seq
+			 , bfre_mem_seq
+			 , aftr_mem_seq
+			 , (select name from co_mem_mst where mem_seq = A.bfre_mem_seq) as before_name
+			 , (select id from co_mem_mst where mem_seq = A.bfre_mem_seq) as before_id
+			 , (select name from co_mem_mst where mem_seq = A.aftr_mem_seq) as after_name
+			 , (select id from co_mem_mst where mem_seq = A.aftr_mem_seq) as after_id
+			 , reg_id
+			 , (select name from co_adm_mst where id = A.mod_id) as reg_name
+			 , reg_ip
+			 , reg_dtm
+			 , mod_id
+			 , (select name from co_adm_mst where id = A.mod_id) as mod_name
+			 , mod_ip
+			 , mod_dtm
+		from ev_edctn_trnsf_dtl A
+		where vst_seq = #{vstSeq}
+		limit #{firstIndex}, #{recordCountPerPage}
+	</select>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.selectTrsfVisitEduListCnt
+         설  명 : 방문교육 신청 이관이력 리스트 개수를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.02   구은희       최초생성
+    -->
+	<select id="selectTrsfVisitEduListCnt" parameterType="EBCVisitEduDTO" resultType="java.lang.Integer">
+		select /*EBCVisitEduMapper.selectTrsfVisitEduListCnt*/
+			count(*)
+		from ev_edctn_trnsf_dtl
+		where vst_seq = #{vstSeq}
 	</select>
 
 	<!--
@@ -717,6 +767,89 @@
 		  and mem_seq = #{memSeq}
 		  and vst_rslt_seq = #{vstRsltSeq}
 	</delete>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.updateAppctnTypeMemSeq
+         설  명 : 방문교육 신청분야 값 회원순번을 수정한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2024.01.02   구은희       최초생성
+    -->
+	<update id="updateAppctnTypeMemSeq" parameterType="EBCVisitEduDTO">
+		UPDATE /*EBCVisitEduMapper.updateAppctnTypeMemSeq*/ ev_edctn_appctn_type_dtl
+		SET mem_seq = #{aftrMemSeq}
+		WHERE 1=1
+		  AND mem_seq = #{memSeq}
+		  AND vst_seq = #{vstSeq}
+	</update>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.updateIsttrMemSeq
+         설  명 : 방문교육 강사 회원순번을 수정한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2024.01.02   구은희       최초생성
+    -->
+	<update id="updateIsttrMemSeq" parameterType="EBCVisitEduDTO">
+		UPDATE /*EBCVisitEduMapper.updateIsttrMemSeq*/ ev_edctn_isttr_rel
+		SET mem_seq = #{aftrMemSeq}
+		WHERE 1=1
+		  AND mem_seq = #{memSeq}
+		  AND vst_seq = #{vstSeq}
+		  AND vst_rslt_seq = #{vstRsltSeq}
+	</update>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.updateEdctnVstOptnMemSeq
+         설  명 : 방문교육 결과상세 회원순번을 수정한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2024.01.02   구은희       최초생성
+    -->
+	<update id="updateEdctnVstOptnMemSeq" parameterType="EBCVisitEduDTO">
+		UPDATE /*EBCVisitEduMapper.updateEdctnVstOptnMemSeq*/ ev_edctn_vst_optn_dtl
+		SET mem_seq = #{aftrMemSeq}
+		WHERE 1=1
+		  AND mem_seq = #{memSeq}
+		  AND vst_seq = #{vstSeq}
+		  AND vst_rslt_seq = #{vstRsltSeq}
+	</update>
+
+	<!--
+         쿼리명 : EBCVisitEduMapper.insertEdctnTrnsfInfo
+         설  명 : 방문교육 신청 이관이력 등록 상세를 등록한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.02   구은희       최초생성
+    -->
+	<insert id="insertEdctnTrnsfInfo" parameterType="EBCVisitEduDTO">
+		insert into /*EBCVisitEduMapper.insertEdctnTrnsfInfo*/ ev_edctn_trnsf_dtl
+		(
+			trnsf_seq
+			, vst_seq
+			, mem_seq
+			, bfre_mem_seq
+			, aftr_mem_seq
+			, reg_id
+			, reg_ip
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		) values (
+			#{trnsfSeq}
+			 , #{vstSeq}
+			 , #{memSeq}
+			 , #{bfreMemSeq}
+			 , #{aftrMemSeq}
+			 , #{regId}
+			 , #{regIp}
+			 , now()
+			 , #{modId}
+			 , #{modIp}
+			 , now()
+		)
+	</insert>
 
 	<!--
          쿼리명 : EBCVisitEduMapper.selectExcelList
@@ -833,12 +966,10 @@
 					 , B.hp_no -- 신청자 핸드폰번호
 					 , B.email -- 신청자이메일
 					 , D.edctn_year -- 교육년도
-					 -- 교육일??
 					 , D.edctn_strt_dtm -- 교육시작일시
 					 , D.edctn_end_dtm -- 교육종료일시
 					 , A.place_bsc_addr -- 방문교육 기본주소
 					 , A.place_dtl_addr -- 방문교육 상세주소
-					 -- 정원??
 					 , (case when D.rslt_end_yn = 'Y' then '마감'
 							 when D.rslt_end_yn = 'N' then '미마감'
 							 when D.rslt_end_yn = 'C' then '교육취소'
