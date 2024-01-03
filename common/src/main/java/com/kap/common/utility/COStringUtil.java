@@ -2,6 +2,7 @@ package com.kap.common.utility;
 
 import com.nhncorp.lucy.security.xss.XssPreventer;
 import com.nhncorp.lucy.security.xss.XssSaxFilter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -364,7 +365,7 @@ public class COStringUtil {
      */
     public static String bsnmNoConvert(String str1)
     {
-        if(str1.isEmpty()) {
+        if(StringUtils.isEmpty(str1)) {
             return "-";
         }
         String prefix = str1.substring(0,3);
@@ -374,7 +375,7 @@ public class COStringUtil {
     }
 
     public static String emptyHypen(String str1) {
-        if(str1.isEmpty()){
+        if(StringUtils.isEmpty(str1)){
             return "-";
         }
         return str1;
