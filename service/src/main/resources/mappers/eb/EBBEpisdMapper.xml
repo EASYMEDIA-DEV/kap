@@ -433,12 +433,12 @@
 			, episd_ord
 			, isttr_seq
 			FROM ed_edctn_isttr_rel
-			) C
+			) d
 			ON 1 = 1
-			AND A.edctn_seq = C.edctn_seq
-			AND A.episd_year = C.episd_year
-			AND A.episd_ord = C.episd_ord
-			AND C.isttr_seq = #{isttrSeq}
+			AND a.edctn_seq = d.edctn_seq
+			AND a.episd_year = d.episd_year
+			AND a.episd_ord = d.episd_ord
+			AND d.isttr_seq = #{isttrSeq}
 		</if>
 	</sql>
 

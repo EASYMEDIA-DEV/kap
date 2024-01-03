@@ -21,8 +21,16 @@
         </div>
         <div class="img-area">
             <div class="img">
-                <img class="only-pc" src="/common/images/img-sub-top-visual-san-com-future.jpg" alt="">
-                <img class="only-mobile" src="/common/images/img-sub-top-visual-san-com-future-mobile.jpg" alt="">
+                <c:choose>
+                    <c:when test="${rtnData.bsnCd eq 'futureTech'}">
+                        <img class="only-pc" src="/common/images/img-sub-top-visual-san-com-future.jpg" alt="">
+                        <img class="only-mobile" src="/common/images/img-sub-top-visual-san-com-future-mobile.jpg" alt="">
+                    </c:when>
+                    <c:otherwise>
+                        <img class="only-pc" src="/common/images/img-sub-top-visual-san-com-business.jpg" alt="">
+                        <img class="only-mobile" src="/common/images/img-sub-top-visual-san-com-business-mobile.jpg" alt="">
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>

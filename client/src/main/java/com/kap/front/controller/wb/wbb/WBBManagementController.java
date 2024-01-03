@@ -30,7 +30,7 @@ import java.util.List;
  * 공통사업 Controller
  * </pre>
  *
- * @author 박준희
+ * @author 김태훈
  * @version 1.0
  * @ClassName : WBBManagementController.java
  * @Description : 공통사업 Controller
@@ -66,7 +66,7 @@ public class WBBManagementController {
             wBRoundMstSearchDTO.setExpsYn("Y");
             wBRoundMstSearchDTO.setFirstIndex(0);
             wBRoundMstSearchDTO.setRecordCountPerPage(3);
-            modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, wBRoundMstSearchDTO.getBsnCd()));
+            modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, wBRoundMstSearchDTO.getBsnCd(), "Y"));
             modelMap.addAttribute("rtnData", wbbaRoundService.selectRoundList(wBRoundMstSearchDTO));
             //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wbbaRoundService.getRoundDtl(wBRoundMstSearchDTO));

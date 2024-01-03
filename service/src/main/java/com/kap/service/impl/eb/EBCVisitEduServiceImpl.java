@@ -10,7 +10,6 @@ import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.*;
 import com.kap.service.dao.eb.EBCVisitEduMapper;
 import com.kap.service.dao.mp.MPEPartsCompanyMapper;
-import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -64,9 +63,6 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
     // 부품사관리 서비스
     public final MPEPartsCompanyService mpePartsCompanyService;
 
-    // 회원관리 서비스
-    private final MPAUserService mpaUserService;
-
     /* 방문교육 신청 시퀀스 */
     private final EgovIdGnrService edctnVstMstSeqIdgen;
 
@@ -75,6 +71,9 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
     /* 방문교육 결과옵션 상세 시퀀스 */
     private final EgovIdGnrService edctnVstOptnSeqIdgen;
+
+    /* 방문교육 신청 이관이력 시퀀스 */
+    private final EgovIdGnrService edctnVstTrnsfSeqIdgen;
 
     //로그인 상태값 시스템 등록
     private final COSystemLogService cOSystemLogService;
@@ -103,7 +102,28 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
     }
 
     /**
-     * 방문교육 목록을 조회한다.
+     * 방문교육 신청 이관이력을 조회한다.
+     */
+    public EBCVisitEduDTO selectTrsfVisitEduList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(ebcVisitEduDTO.getPageIndex());
+        page.setRecordCountPerPage(ebcVisitEduDTO.getListRowSize());
+
+        page.setPageSize(ebcVisitEduDTO.getPageRowSize());
+
+        ebcVisitEduDTO.setFirstIndex(page.getFirstRecordIndex());
+        ebcVisitEduDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        ebcVisitEduDTO.setTotalCount(ebcVisitEduMapper.selectTrsfVisitEduListCnt(ebcVisitEduDTO));
+        ebcVisitEduDTO.setList(ebcVisitEduMapper.selectTrsfVisitEduList(ebcVisitEduDTO));
+
+        return ebcVisitEduDTO;
+    }
+
+    /**
+     * 방문교육 신청분야 목록을 조회한다.
      */
     public List<EBCVisitEduDTO> selectAppctnTypeList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
         return ebcVisitEduMapper.selectAppctnTypeList(ebcVisitEduDTO);
@@ -139,6 +159,26 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
      */
     public int updateVisitEdu(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
 
+        // 신청자 이관 여부
+        String trnsfYn = "N";
+
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        ebcVisitEduDTO.setRegId( cOUserDetailsDTO.getId() );
+        ebcVisitEduDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+        ebcVisitEduDTO.setModId( cOUserDetailsDTO.getId() );
+        ebcVisitEduDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+        if(!ebcVisitEduDTO.getMemSeq().equals(ebcVisitEduDTO.getBfreMemSeq())) {
+            ebcVisitEduDTO.setAftrMemSeq(ebcVisitEduDTO.getMemSeq());
+            ebcVisitEduDTO.setMemSeq(ebcVisitEduDTO.getBfreMemSeq());
+
+            trnsfYn = "Y";
+
+            // 이관이력 등록
+            ebcVisitEduDTO.setTrnsfSeq(edctnVstTrnsfSeqIdgen.getNextIntegerId());
+            ebcVisitEduMapper.insertEdctnTrnsfInfo(ebcVisitEduDTO);
+        }
+
         HashMap<String, Integer> itrdcFileSeqMap = cOFileService.setFileInfo(ebcVisitEduDTO.getItrdcFileList());
         HashMap<String, Integer> lctrFileMap = cOFileService.setFileInfo(ebcVisitEduDTO.getLctrFileList());
         HashMap<String, Integer> etcMatlsFileMap = cOFileService.setFileInfo(ebcVisitEduDTO.getEtcMatlsFileList());
@@ -148,12 +188,6 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
         int respCnt = 0;
         List<EBCVisitEduDTO> resultOpList = ebcVisitEduDTO.getResultOpList();
-
-        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        ebcVisitEduDTO.setRegId( cOUserDetailsDTO.getId() );
-        ebcVisitEduDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
-        ebcVisitEduDTO.setModId( cOUserDetailsDTO.getId() );
-        ebcVisitEduDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
         // 방문교육 결과정보 insert, 시퀀스 생성
         if(ebcVisitEduDTO.getVstRsltSeq() == null) {
@@ -166,7 +200,6 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
         //부품사 정보 수정
         MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
-
         mpePartsCompanyDTO.setBsnmNo(ebcVisitEduDTO.getAppctnBsnmNo());
         mpePartsCompanyDTO.setCtgryCd(ebcVisitEduDTO.getCtgryCd());
         mpePartsCompanyDTO.setSizeCd(ebcVisitEduDTO.getSizeCd());
@@ -201,21 +234,23 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
         mpePartsCompanyService.updatePartsCompany(mpePartsCompanyDTO);
 
-        //강사 수정
+        //강사 삭제
         ebcVisitEduMapper.deleteIsttrRel(ebcVisitEduDTO);
-        ebcVisitEduMapper.insertIsttrRel(ebcVisitEduDTO);
+        //신청분야 상세 삭제
+        ebcVisitEduMapper.deleteAppctnType(ebcVisitEduDTO);
+        //교육실적 삭제
+        ebcVisitEduMapper.deleteResultOp(ebcVisitEduDTO);
 
         //신청내용 수정
         ebcVisitEduMapper.updateEdctnVst(ebcVisitEduDTO);
         ebcVisitEduMapper.updateEdctnVstRslt(ebcVisitEduDTO);
 
-        //신청분야 상세 수정
-        ebcVisitEduMapper.deleteAppctnType(ebcVisitEduDTO);
+        if(trnsfYn.equals("Y")) {
+            ebcVisitEduDTO.setMemSeq(ebcVisitEduDTO.getAftrMemSeq());
+        }
+
+        ebcVisitEduMapper.insertIsttrRel(ebcVisitEduDTO);
         ebcVisitEduMapper.insertAppctnType(ebcVisitEduDTO);
-
-        //교육실적 수정
-        ebcVisitEduMapper.deleteResultOp(ebcVisitEduDTO);
-
         for (EBCVisitEduDTO dto : resultOpList) {
 
             ebcVisitEduDTO.setRsltOptnSeq(edctnVstOptnSeqIdgen.getNextIntegerId());
@@ -232,6 +267,7 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
             ebcVisitEduMapper.insertResultOp(ebcVisitEduDTO);
         }
+
         return respCnt;
     }
 

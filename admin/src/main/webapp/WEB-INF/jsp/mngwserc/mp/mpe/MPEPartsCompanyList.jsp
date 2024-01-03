@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/mp/mpe/MPEPartsCompanyListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
-        <form class="form-horizontal" id="frmSearch" name="frmSearch" method="post" action="" data-del-type="account">
+        <form class="form-horizontal" id="frmSearch" name="frmSearch" method="post" action="" data-del-type="board">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
             <!-- 페이징 버튼 사이즈 -->
@@ -19,7 +19,7 @@
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
-                <jsp:param name="srchOption" value="등록일,수정기간" />
+                <jsp:param name="srchOption" value="등록일,수정일" />
             </jsp:include>
             <!--기간 검색 종료-->
 
@@ -71,10 +71,9 @@
                                     <option value="">전체</option>
                                     <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>대표자명</option>
                                     <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>부품사명</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>지역</option>
                                     <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>부품사코드</option>
                                     <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>사업자등록번호</option>
-                                    <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>전화번호</option>
+                                    <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>회사 전화번호</option>
                                     <option value="7" <c:if test="${rtnData.f eq '7'}">selected</c:if>>최초 등록자</option>
                                     <option value="8" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최종 수정자</option>
                                 </select>

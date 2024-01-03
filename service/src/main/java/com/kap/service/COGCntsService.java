@@ -65,5 +65,5 @@ public interface COGCntsService {
 	/**
 	 * 컨텐츠 상세조회
 	 */
-	public COGCntsDTO getCmsDtl(COGCntsDTO pCOGCntsDTO,String bsnCd) throws Exception;
+	public COGCntsDTO getCmsDtl(COGCntsDTO pCOGCntsDTO,String value, String type) throws Exception;
 }

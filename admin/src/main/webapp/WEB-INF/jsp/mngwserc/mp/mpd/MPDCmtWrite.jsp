@@ -1,6 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<c:set var="date" value="<%=new java.util.Date( )%>" />
+<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/mp/mpd/MPDCmtWriteCtrl">
@@ -21,7 +22,7 @@
                         <label class="col-sm-1 control-label">아이디<span class="star"> *</span></label>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm " id="id" title="아이디" name="id"  />
+                                <input type="text" class="form-control input-sm " id="id" title="아이디" name="id" placeholder="아이디 입력" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');"/>
                                 <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupId">중복확인</button></span>
                             </div>
                         </div>
@@ -32,7 +33,7 @@
                         <label class="col-sm-1 control-label">비밀번호<span class="star"> *</span></label>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input type="password" class="form-control input-sm " id="pwd" title="비밀번호" name="pwd"  />
+                                <input type="password" class="form-control input-sm " id="pwd" title="비밀번호" name="pwd"  maxlength="16" placeholder="비밀번호 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
                                 ※ 8~16자 이내 영문+숫자+특수문자 조합으로 입력해주세요.
                             </div>
                         </div>
@@ -43,7 +44,7 @@
                         <label class="col-sm-1 control-label">비밀번호 확인<span class="star"> *</span></label>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input type="password" class="form-control input-sm " id="pwdCon" title="비밀번호" name="pwdCon"  />
+                                <input type="password" class="form-control input-sm " id="pwdCon" title="비밀번호" name="pwdCon" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
                             </div>
                         </div>
                     </div>
@@ -53,7 +54,7 @@
                         <label class="col-sm-1 control-label">이름<span class="star"> *</span></label>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm " id="name" title="이름" name="name"  />
+                                <input type="text" class="form-control input-sm " id="name" title="이름" name="name" placeholder="이름 입력" oninput="this.value=this.value.replace(/[^\wㄱ-힣]/g,'');"/>
                             </div>
                         </div>
                     </div>
@@ -95,7 +96,7 @@
                         <label class="col-sm-1 control-label">생년월일<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="input-group" style="z-index:0;width: 220px;">
-                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="birth" value="" title="생일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();" />
+                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="birth" title="생일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();" value="${kl:convertDate(kl:addDay(today, '0'), 'yyyyMMdd', 'yyyy-MM-dd', '')}"/>
                                 <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse input-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
@@ -126,7 +127,7 @@
                         <label class="col-sm-1 control-label">입사일<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="input-group" style="z-index:0;width: 220px;">
-                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="cmssrMplmnDt" value="" title="입사일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();" />
+                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="cmssrMplmnDt" value="${kl:convertDate(kl:addDay(today, '0'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="입사일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();" />
                                 <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse input-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
@@ -154,14 +155,14 @@
                     <div class="col-sm-5">
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm "id="hpNo" title="휴대폰번호" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  />
+                                <input type="text" class="form-control input-sm "id="hpNo" title="휴대폰번호" placeholder="휴대폰번호 입력" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  />
                             </div>
                         </div>
                     </div>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="input-group" style="z-index:0;width: 220px;">
-                            <input type="text" class="form-control input-sm " id="email" title="이메일" name="email"  maxlength="50"/>
+                            <input type="text" class="form-control input-sm " id="email" title="이메일" name="email" placeholder="이메일 입력" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')"/>
                             <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupEmail">중복확인</button></span>
                         </div>
                     </div>
@@ -191,7 +192,7 @@
                         <label class="col-sm-1 control-label">주요경력<span class="star"> *</span></label>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <textarea  type="text" id="cmssrMjrCarerCntn" title="주요경력" name="cmssrMjrCarerCntn"></textarea>               </div>
+                                <textarea  type="text" id="cmssrMjrCarerCntn" title="주요경력" name="cmssrMjrCarerCntn" placeholder="주요경력 입력"></textarea>               </div>
                         </div>
                     </div>
                 </fieldset>
@@ -201,13 +202,13 @@
                         <label class="col-sm-1 control-label">컨설팅분야</label>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <textarea  type="text" id="cmssrCnstgFldCntn" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired"></textarea>               </div>
+                                <textarea  type="text" id="cmssrCnstgFldCntn" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired" placeholder="컨설팅분야 입력"></textarea>               </div>
                         </div>
                     </div>
                 </fieldset>
                 <fieldset class="last-child">
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">주요경력 화면노출여부<span class="star"> *</span></label>
+                        <label class="col-sm-1 control-label">주요경력/컨설팅분야 화면노출여부<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <label class="radio-inline c-radio">
                                 <input type="radio" name="cmssrMjrCarerExpsYn" value="Y" checked  />

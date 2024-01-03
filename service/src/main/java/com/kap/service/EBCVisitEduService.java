@@ -28,18 +28,22 @@ import java.util.List;
 public interface EBCVisitEduService {
 
     /**
-     * 목록을 조회한다.
+     * 방문교육 신청 목록을 조회한다.
      */
     public EBCVisitEduDTO selectVisitEduList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
+    /**
+     * 방문교육 신청 이관이력 목록을 조회한다.
+     */
+    public EBCVisitEduDTO selectTrsfVisitEduList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
     /**
-     * 방문교육 상세 조회
+     * 방문교육 신청 상세 조회
      */
     public EBCVisitEduDTO selectVisitEduDtl(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
     /**
-     * 목록을 조회
+     * 방문교육 신청분야 목록을 조회
      */
     public List<EBCVisitEduDTO> selectAppctnTypeList(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 

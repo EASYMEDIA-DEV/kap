@@ -37,21 +37,26 @@ define(["ezCtrl"], function(ezCtrl) {
                     click: function () {
                         var frmDataObj    = $(this).closest("form");
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-                        if(confirm("삭제 처리하겠습니끼?"))
-                        {
-                            //삭제 전송
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    var msg = "삭제되었습니다.";
+                        if (delActCnt > 0) {
+                            if(confirm("삭제 처리하겠습니끼?"))
+                            {
+                                //삭제 전송
+                                cmmCtrl.frmAjax(function(respObj){
+                                    if(respObj != undefined && respObj.respCnt > 0){
+                                        var msg = "삭제되었습니다.";
 
-                                    alert(msg);
-                                    $formObj.find("#btnSearch").click();
-                                }
-                                else{
-                                    alert(msgCtrl.getMsg("fail.act"));
-                                }
-                            }, "./delete", frmDataObj, "POST", "json");
+                                        alert(msg);
+                                        $formObj.find("#btnSearch").click();
+                                    }
+                                    else{
+                                        alert(msgCtrl.getMsg("fail.act"));
+                                    }
+                                }, "./delete", frmDataObj, "POST", "json");
+                            }
+                        } else {
+                            alert(msgCtrl.getMsg("fail.del.target." + frmDataObj.data("delType")));
                         }
+
 
                     }
                 }

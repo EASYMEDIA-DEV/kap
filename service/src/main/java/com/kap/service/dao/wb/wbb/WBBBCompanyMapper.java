@@ -135,6 +135,11 @@ public interface WBBBCompanyMapper {
     public int updatePartsComSQInfo(WBBACompanyDTO wbbCompanyDTO) throws Exception;
 
     /**
+     * 부품사 SQ 정보를 삭제
+     */
+    public int deletePartsComSQInfo(WBBACompanyDTO wbbCompanyDTO) throws Exception;
+
+    /**
      * 상생사업 단계 조회
      */
     public List<WBBAApplyDtlDTO> selectStepDtlList(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;

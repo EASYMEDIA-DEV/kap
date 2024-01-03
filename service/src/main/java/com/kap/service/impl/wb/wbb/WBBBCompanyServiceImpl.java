@@ -277,19 +277,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     }
                 } else if (wbbaCompanyDTO.getCtgryCd().equals("COMPANY01001")) {
                     // 1차인 경우, SQ정보 빈 값 처리
-                    for(int t=0; t<wbbaCompanyDTO.getSqInfoList().size();t++) {
-                        seq = String.valueOf(wbbaCompanyDTO.getSqInfoList().get(t).getCbsnSeq());
-
-                        if (!seq.isEmpty()) {
-                            wbbaCompanyDTO.setYear(null);
-                            wbbaCompanyDTO.setScore(null);
-                            wbbaCompanyDTO.setNm(null);
-                            wbbaCompanyDTO.setCrtfnCmpnNm(null);
-                            wbbaCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
-                            wbbbCompanyMapper.updatePartsComSQInfo(wbbaCompanyDTO);
-                        }
-
-                    }
+                    wbbbCompanyMapper.deletePartsComSQInfo(wbbaCompanyDTO);
                 }
 
                 wbbbCompanyMapper.updatePartsCompany(wbbaCompanyDTO);
@@ -467,19 +455,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     }
                 } else if (wbbaCompanyDTO.getCtgryCd().equals("COMPANY01001")) {
                     // 1차인 경우, SQ정보 빈 값 처리
-                    for(int t=0; t<wbbaCompanyDTO.getSqInfoList().size();t++) {
-                        seq = String.valueOf(wbbaCompanyDTO.getSqInfoList().get(t).getCbsnSeq());
-
-                        if (!seq.isEmpty()) {
-                            wbbaCompanyDTO.setYear(null);
-                            wbbaCompanyDTO.setScore(null);
-                            wbbaCompanyDTO.setNm(null);
-                            wbbaCompanyDTO.setCrtfnCmpnNm(null);
-                            wbbaCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
-                            wbbbCompanyMapper.updatePartsComSQInfo(wbbaCompanyDTO);
-                        }
-
-                    }
+                    wbbbCompanyMapper.deletePartsComSQInfo(wbbaCompanyDTO);
                 }
 
                 wbbbCompanyMapper.updatePartsCompany(wbbaCompanyDTO);

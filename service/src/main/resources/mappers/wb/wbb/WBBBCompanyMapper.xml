@@ -11,10 +11,12 @@
     -->
     <select id="getRegisterCompanyList" parameterType="wbbaCompanySearchDTO" resultType="wbbaCompanySearchDTO">
         SELECT /*WBBBCompanyMapper.getRegisterCompanyList*/ *
+            , IF(RSUMEORD = 1 AND APPCTN_STTS_CD = '접수완료' AND mng_stts_cd = '미확인', 'Y', 'N') DELETE_YN
             FROM ( SELECT
                           TMP.* ,
                            ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_cd,
                            ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd,
+                           ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_cd,
                            ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_chng_dtm,
                            ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_chng_dtm
                             FROM (
@@ -448,6 +450,19 @@
         WHERE 1=1
           AND MEM_SEQ = #{memSeq}
     </update>
+
+    <!--
+        쿼리명 : WBBBCompanyMapper.deletePartsComSQInfo
+        설  명 : 부품사의 SQ 정보를 수정한다.
+         수정일     수정자       수정내용
+       ==========   ======    ==============
+       2023.12.11   김태훈       최초생성
+   -->
+    <delete id="deletePartsComSQInfo" parameterType="wbbaCompanyDTO">
+        DELETE /* WBBBCompanyMapper.deletePartsComSQInfo */
+        FROM CP_CMPN_CBSN_DTL
+        WHERE BSNM_NO = #{bsnmNo}
+    </delete>
 
     <!--
          쿼리명 : WBBBCompanyMapper.updatePartsCompany

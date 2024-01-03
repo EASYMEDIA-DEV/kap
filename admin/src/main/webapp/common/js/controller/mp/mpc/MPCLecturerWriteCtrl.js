@@ -104,12 +104,16 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
             tabClick : {
                 event : {
                     click : function (e){
-                        console.log(e.target.getAttribute('href').substr(1));
-                        if(e.target.getAttribute('href').substr(1)!='dtl') {
+                        var target = e.target.getAttribute('href').substr(1);
+                        if(target == 'edu') {
                             $(".dtl-tab").hide();
+                            $(".excel-area").show();
+                        } else if (target == 'dtl') {
+                            $(".dtl-tab").show();
                             $(".excel-area").hide();
                         } else {
-                            $(".dtl-tab").show();
+                            $(".dtl-tab").hide();
+                            $(".excel-area").hide();
                         }
                     }
                 }
@@ -141,6 +145,7 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
             //리스트 조회
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
+            $(".excel-area").hide();
             tabTwo();
             tabThree();
 

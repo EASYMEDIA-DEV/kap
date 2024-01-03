@@ -3,7 +3,7 @@
 <mapper namespace="com.kap.service.dao.mp.MPDCmtMapper">
 
     <!--
-            쿼리명 : MPDCmtMapper.insertUserDtlHistory
+            쿼리명 : MPDCmtMapper.insertCmt
             설  명 : 사용자 수정  이력
               수정일      수정자       수정내용
             ==========   ========   ==============
@@ -42,7 +42,6 @@
         , mod_id  				-- 수정id
         , mod_ip  				-- 수정ip
         , mod_dtm	 				-- 수정일
-        , pwd_chn
         , chng_xtnsn_cnt
         , tmp_pwd_yn
         , pwd_chng_dtm

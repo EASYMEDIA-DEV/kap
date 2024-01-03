@@ -582,7 +582,7 @@ public class MPAUserServiceImpl implements MPAUserService {
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_일반회원관리_", "UTF-8") + timeStamp +".xlsx");
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_위원관리_", "UTF-8") + timeStamp +".xlsx");
 
         // Excel File Output
         workbook.write(response.getOutputStream());
