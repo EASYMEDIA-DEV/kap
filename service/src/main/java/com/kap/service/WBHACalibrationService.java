@@ -99,8 +99,4 @@ public interface WBHACalibrationService {
      */
     public int getRsumePbsnCnt(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 
-    /**
-     * 최신 회차 목록을 조회한다.
-     */
-    public WBHACalibrationSearchDTO getRoundDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 }
