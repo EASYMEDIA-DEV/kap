@@ -303,7 +303,7 @@
                             <input type="text" class="form-control input-sm notRequired"  name="score" id="score" value="${sqInfoList[1]}"/>
                         </div>
                         <div class="col-sm-2">
-                            <select class="form-control input-sm" name="year" id="yearSelect">
+                            <select class="form-control input-sm notRequired" name="year" id="yearSelect">
                                 <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                     <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
                                         <option value="${yearList.cd}"<c:if test="${sqInfoList[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm} </option>
@@ -329,7 +329,7 @@
                                         <input type="text" class="form-control input-sm notRequired"  name="score" id="score${i}" value="${sqInfoList1[1]}"/>
                                     </div>
                                     <div class="col-sm-2">
-                                        <select class="form-control input-sm" name="year" id="yearSelect${i}">
+                                        <select class="form-control input-sm notRequired" name="year" id="yearSelect${i}">
                                             <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                                 <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
                                                     <option value="${yearList.cd}" <c:if test="${sqInfoList1[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm} </option>
@@ -353,7 +353,7 @@
                                         <input type="text" class="form-control input-sm notRequired"  name="score" id="score${i}" value="${sqInfoList2[1]}"/>
                                     </div>
                                     <div class="col-sm-2">
-                                        <select class="form-control input-sm" name="year" id="yearSelect${i}">
+                                        <select class="form-control input-sm notRequired" name="year" id="yearSelect${i}">
                                             <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                                 <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
                                                     <option value="${yearList.cd}" <c:if test="${sqInfoList2[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm} </option>
@@ -524,9 +524,9 @@
                     <div class="col-sm-4">
                         <input type="text" class="form-control input-sm" name="qltyPicCnt" value="${rtnDto.qltyPicCnt}" title="품질담당인원"/>
                     </div>
-                    <label class="col-sm-1 control-label">FAX<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">FAX</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="faxNo" value="${rtnDto.faxNo}" title="FAX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                        <input type="text" class="form-control input-sm notRequired" name="faxNo" value="${rtnDto.faxNo}" title="FAX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                     </div>
                 </div>
             </fieldset>
@@ -662,7 +662,7 @@
                     <c:forEach var="appctnCdList" items="${cdDtlList.TEC_GUIDE_APPCTN}" varStatus="status">
                         <c:if test="${appctnCdList.cd ne 'TEC_GUIDE_APPCTN00'}">
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" name="appctnTypeCd" value="${appctnCdList.cd}" title="신청사항" <%--<c:if test="${eq appctnCdList.cd}">checked</c:if>--%>/>
+                            <input type="checkbox" name="appctnTypeCd" value="${appctnCdList.cd}" title="신청사항"/>
                             <span class="ion-checkmark-round"></span>${appctnCdList.cdNm}
                         </label>
                         </c:if>

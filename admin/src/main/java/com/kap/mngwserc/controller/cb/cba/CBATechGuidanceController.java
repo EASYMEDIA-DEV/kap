@@ -12,7 +12,6 @@ import com.kap.service.CBATechGuidanceService;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SVASurveyService;
-import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -155,18 +154,18 @@ public class CBATechGuidanceController {
      */
     @RequestMapping(value = "/insert", method= RequestMethod.POST)
     public String insertTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
-       /* try {*/
+        try {
             COUserDetailsDTO cOUserDetailsDTO =COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBATechGuidanceInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             modelMap.addAttribute("respCnt", cBATechGuidanceService.insertTechGuidance(cBATechGuidanceInsertDTO));
-        /*} catch (Exception e) {
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
         return "jsonView";
     }
@@ -276,7 +275,6 @@ public class CBATechGuidanceController {
     public class CBATechGuiadnceRestController {
 
         private final CBATechGuidanceService cBATechGuidanceService;
-        private final MPAUserService mPAUserService;
         private final COCodeService cOCodeService;
 
         /**

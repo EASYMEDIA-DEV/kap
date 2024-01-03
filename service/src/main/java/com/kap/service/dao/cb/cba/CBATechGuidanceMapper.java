@@ -223,4 +223,10 @@ public interface CBATechGuidanceMapper {
      */
     public int deleteConsultAppctnTrnsfDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
+    /**
+     * 컨설팅 기술 지도 목록 조회
+     */
+    public List<CBATechGuidanceInsertDTO> selectMemSeqAppctnMst(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+
 }

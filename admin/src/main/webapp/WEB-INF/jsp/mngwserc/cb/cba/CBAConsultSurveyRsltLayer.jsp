@@ -65,20 +65,15 @@
                   <tr>
                     <th class="text-center">번호</th>
                     <th class="text-center">사업연도</th>
-                    <th class="text-center">부품사명</th>
+                    <th class="text-center">대상부품사</th>
+                    <th class="text-center">설문완료<br/>부품사</th>
+                    <th class="text-center">정규부품사</th>
+                    <th class="text-center">단기부품사</th>
                     <th class="text-center">담당위원</th>
-                    <th class="text-center">참여자</th>
-                    <th class="text-center">신청업종/분야</th>
-                    <th class="text-center">지도구분</th>
-                    <th class="text-center">상태</th>
-                    <th class="text-center">랩업일</th>
-                    <th class="text-center">총점(100)</th>
-                    <th class="text-center">지도실적(50)</th>
-                    <th class="text-center">지도실적(5)</th>
-                    <th class="text-center">기획력(10)</th>
-                    <th class="text-center">실행력(15)</th>
-                    <th class="text-center">마인드(5)</th>
-                    <th class="text-center">전문지식(15)</th>
+                    <th class="text-center">종합점수평균</th>
+                    <th class="text-center">정규점수평균</th>
+                    <th class="text-center">단기점수평균</th>
+                    <th class="text-center">엑셀다운로드</th>
                   </tr>
                   </thead>
                   <!-- 리스트 목록 결과 -->

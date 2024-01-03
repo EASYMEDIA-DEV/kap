@@ -522,7 +522,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 event: {
                     click: function () {
                         var cbsnVal = $("input[name=cbsnCd]:checked").val();
-                        console.log(cbsnVal);
                         if (cbsnVal == "TEC_GUIDE_INDUS01") { // 기타일 때 input 활성화
                             $("input[name=etcNm]").removeClass("notRequired");
                             $("input[name=etcNm]").attr("disabled", false);

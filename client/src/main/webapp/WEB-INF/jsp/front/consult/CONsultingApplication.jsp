@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
-<div class="cont-wrap" data-controller="controller/consult/CONsultingApplicationController">
+<div class="cont-wrap" data-controller="controller/consult/CONsultingApplicationCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
@@ -195,8 +195,8 @@
             </div>
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap for-motion">
-                    <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
-                    <a class="btn-solid small black-bg" href="javascript:"><span>다음</span></a>
+                    <a class="btn-solid small gray-bg" href="./index"><span>취소</span></a>
+                    <a class="btn-solid small black-bg consInfoAppl"><span>다음</span></a>
                 </div>
             </div>
         </div>

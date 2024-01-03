@@ -7,9 +7,8 @@ nice :
   product-id : 2101764012
   url : https://svc.niceapi.co.kr:22001
   enc-product-id : 2101979031
-
-#사용자 도메인1
-user-domain: http://juser.easymedia.co.kr:8518
+  return-url-adm : https://127.0.0.1:9012
+  return-url-user : https://127.0.0.1:9014
 
 #강제 로그인 여부
 app:

@@ -51,6 +51,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String bfName;
     @Schema(title = "이관 전 신청자 아이디")
     private String bfId;
+    @Schema(title = "탈락 이유")
+    private String rsltCntn;
 
     @Schema(title = "신청자 이메일")
     private String email;
@@ -91,6 +93,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String cbsnCd;
     @Schema(title = "컨설팅 코드")
     private String cnstgCd;
+    @Schema(title = "컨설팅 구분")
+    private String cnstgNm;
     @Schema(title = "기타명")
     private String etcNm;
     @Schema(title = "구분")
@@ -154,6 +158,7 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private List<CBATechGuidanceInsertDTO> list;
     @Schema(title = "킥오프일")
     private String guideKickfDt;
+
     // SQ 리스트
     private List<String> sqInfoList;
     // SQ 리스트1
@@ -240,6 +245,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String appctnRsnCd;
     @Schema(title = "신청분야코드")
     private String appctnTypeCd;
+    @Schema(title = "신청분야코드")
+    private String appctnTypeNm;
     @Schema(title = "요청내용, 신청사항")
     private String rqstCntn;
     @Schema(title = "관리자 메모")
