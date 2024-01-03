@@ -8,7 +8,7 @@
 <div class="container-fluid ">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/mp/mpd/MPDCmtListCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
-        <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="account">
+        <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="board">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
             <input type="hidden" id="popData" name="popData"  />
@@ -150,16 +150,18 @@
                 <div id="pagingContainer"/>
             </div>
             <!--리스트 종료 -->
-        </form>
+
     </div>
     <div class="clearfix">
         <div class="pull-left">
-            <button type="button" class="btn btn-sm btn-default" id="btnDelete" >삭제</button>
+            <button type="button" class="btn btn-sm btn-default" id="btnDelete" >선택삭제</button>
         </div>
+        </form>
         <div style="float:right">
-            <button type="submit" class="btn btn-sm btn-success dtl-tab" id="btnWrite" >등록</button>
+            <button type="button" class="btn btn-sm btn-success dtl-tab" id="btnWrite" >등록</button>
         </div>
     </div>
+
 </div>
 
 <div class="modal fade excel-down" tabindex="-1" role="dialog" >

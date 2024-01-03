@@ -130,7 +130,7 @@ public class MPHCertificationController {
      * @throws Exception
      */
     @PostMapping(value="/update")
-    public String insertCmt(MPJoinDto mpJoinDto ,
+    public String updateUser(MPJoinDto mpJoinDto ,
                             HttpServletRequest req ,
                             ModelMap modelMap) throws Exception
     {

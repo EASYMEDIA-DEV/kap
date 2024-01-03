@@ -58,12 +58,13 @@ var exports = {
                 click : function() {
                     if($("#email").val().trim().length > 0) {
                         cmmCtrl.frmAjax(function(respObj) {
+                            console.log(respObj.dupChk);
                             if(respObj.dupChk == 'Y') {
                                 dupEmailChk = true;
-                                alert(msgCtrl.getMsg("fail.mp.mpd.al_027"));
+                                alert(msgCtrl.getMsg("fail.mp.mpa.al_008"));
                             } else {
                                 dupEmailChk = false;
-                                alert(msgCtrl.getMsg("fail.mp.mpa.al_026"));
+                                alert(msgCtrl.getMsg("fail.mp.mpa.al_007"));
                             }
                         }, "/mngwserc/mp/mpa/dup-email", $formObj, "POST", "json",'',false);
 
@@ -187,7 +188,7 @@ var exports = {
             cmmCtrl.setDropzone(trgtObj, {
                 maxFileCnt  : trgtObj.data("maxFileCnt"),
                 maxFileSize : trgtObj.data("maxFileSize"),
-                fileExtn    : trgtObj.data("imageExtns"),
+                fileExtn    : trgtObj.data("fileExtn"),
                 fileFieldNm : trgtObj.data("fileFieldNm")
             })
         });
@@ -201,29 +202,35 @@ var exports = {
                 if(!dupIdChk) {
                     alert(msgCtrl.getMsg("fail.mp.mpd.al_013"));
                     chk = false;
+                    return chk;
                 }
                 if(!dupEmailChk) {
                     alert(msgCtrl.getMsg("fail.mp.mpd.al_030"));
                     chk = false;
+                    return chk;
                 }
                 if($("#pwd").val() != $("#pwdCon").val()) {
                     alert(msgCtrl.getMsg("fail.mp.mpd.al_028"));
                     chk = false;
+                    return chk;
 
                 }
                 if(!regex.test($("#pwd").val())) {
                     alert(msgCtrl.getMsg("fail.mp.mpd.al_028"));
                     chk = false;
+                    return chk;
                 }
                 if($("#cmssrTypeCd").val()!= 'MEM_CD03004') {
                     if($("#cmssrCbsnCd").val() =='' || $("#cmssrCbsnCd").val() ==undefined) {
                         alert(msgCtrl.getMsg("fail.mp.mpd.al_029"));
                         chk = false;
+                        return chk;
                     }
                 }
                 if($("#hpNo").val().length !=13) {
                     alert(msgCtrl.getMsg("fail.mp.mpd.al_033"));
                     chk = false;
+                    return chk;
                 }
 
                 $(".dropzone").not(".notRequired").each(function(i){
@@ -231,6 +238,7 @@ var exports = {
                     {
                         alert(msgCtrl.getMsg("fail.mp.mpd.al_014"));
                         chk = false;
+                        return chk;
                     } else {
                     }
                 });
