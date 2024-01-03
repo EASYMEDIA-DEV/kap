@@ -1,5 +1,6 @@
 package com.kap.service;
 
+import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbh.*;
@@ -97,4 +98,9 @@ public interface WBHACalibrationService {
      * 신청 진행단계 확인
      */
     public int getRsumePbsnCnt(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 최신 회차 목록을 조회한다.
+     */
+    public WBHACalibrationSearchDTO getRoundDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 }
