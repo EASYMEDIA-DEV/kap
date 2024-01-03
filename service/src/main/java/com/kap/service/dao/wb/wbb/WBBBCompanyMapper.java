@@ -135,6 +135,11 @@ public interface WBBBCompanyMapper {
     public int updatePartsComSQInfo(WBBACompanyDTO wbbCompanyDTO) throws Exception;
 
     /**
+     * 부품사 SQ 정보를 삭제
+     */
+    public int deletePartsComSQInfo(WBBACompanyDTO wbbCompanyDTO) throws Exception;
+
+    /**
      * 상생사업 단계 조회
      */
     public List<WBBAApplyDtlDTO> selectStepDtlList(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
@@ -178,4 +183,14 @@ public interface WBBBCompanyMapper {
      * 상생참여자 이관정보 삭제
      */
     public int deleteTrans(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
+
+    /**
+     * 단계 파일여부를 조회한다.
+     */
+    public String getFileYn(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
+
+    /**
+     * 신청자 정보조회
+     */
+    public WBBACompanySearchDTO getApplyDtl(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
 }

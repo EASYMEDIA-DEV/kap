@@ -57,20 +57,32 @@ define(["ezCtrl"], function(ezCtrl) {
 
                         if (delActCnt > 0)
                         {
-                            if(confirm("삭제 처리하겠습니끼?"))
-                            {
-                                //삭제 전송
-                                cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
-                                        var msg = "삭제되었습니다.";
+                            var delAct = frmDataObj.find("input:checkbox[name='delValueList']:checked");
+                            var deleteFlag = true;
+                            delAct.each(function(data,i) {
+                                if ($(this).data("deleteYn") == "N") {
+                                    deleteFlag = false;
+                                    alert('접수 이후의 신청 건은 삭제가 불가합니다.');
+                                    return false;
+                                }
+                            });
 
-                                        alert(msg);
-                                        $formObj.find("#btnSearch").click();
-                                    }
-                                    else{
-                                        alert(msgCtrl.getMsg("fail.act"));
-                                    }
-                                }, "./delete", frmDataObj, "POST", "json");
+                            if (deleteFlag) {
+                                if(confirm("삭제 처리하겠습니끼?"))
+                                {
+                                    //삭제 전송
+                                    cmmCtrl.frmAjax(function(respObj){
+                                        if(respObj != undefined && respObj.respCnt > 0){
+                                            var msg = "삭제되었습니다.";
+
+                                            alert(msg);
+                                            $formObj.find("#btnSearch").click();
+                                        }
+                                        else{
+                                            alert(msgCtrl.getMsg("fail.act"));
+                                        }
+                                    }, "./delete", frmDataObj, "POST", "json");
+                                }
                             }
                         } else {
                             alert("삭제대상을 선택해주세요.");

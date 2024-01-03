@@ -600,6 +600,55 @@ var cmmCtrl = (function(){
 		}
 	}
 
+	/* Ajax File Data */
+	var fn_ajax_file = function(callbackAjax, url, formObj, dataType, loading, sync)
+	{
+		if (typeof dataType == "undefined") {
+			dataType = "json";
+		}
+
+		if (typeof sync == "undefined") {
+			sync = true;
+		}
+
+		if (formObj.data("submitFlag") != "Y")
+		{
+			jQuery.ajax({
+				url : url,
+				type : "post",
+				timeout: 30000,
+				data : new FormData(formObj[0]),
+				dataType : dataType,
+				async: sync,
+				cache : false,
+				contentType: false,
+				processData: false,
+				beforeSend : function() {
+					formObj.data("submitFlag", "Y");
+					if (loading) {
+						$(".dimd").stop().fadeIn(100);
+					}
+				},
+				success : function(data, status, xhr) {
+					formObj.data("submitFlag", "N");
+
+					if (callbackAjax) {
+						callbackAjax(data);
+					}
+				},
+				error : function(data, status, xhr) {
+					formObj.data("submitFlag", "N");
+
+					fn_ajax_error(data, status, xhr);
+				},
+				complete : function() {
+					if (loading) {
+						$(".dimd").stop().fadeOut(100);
+					}
+				}
+			});
+		}
+	};
 	//FORM태그의 파일 객체 초기화
 	var fn_input_file_init = function(fileObj){
 		var agent = navigator.userAgent.toLowerCase();
@@ -995,6 +1044,7 @@ var cmmCtrl = (function(){
 		setPeriod: fn_set_period,
 		initCode : fn_init_code,
 		fileFrmAjax: fn_ajax_file_data,
+		fileFrm: fn_ajax_file,
 		inputFileInit: fn_input_file_init,
 		setPopup : fn_set_popup,
 		checkMaxlength : fn_check_maxlength,

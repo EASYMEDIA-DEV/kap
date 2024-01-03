@@ -103,6 +103,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         immediately : function() {
 
             examInitHtml = ctrl.obj.find(".examHtmlTemplage").html();
+            console.log(examInitHtml)
             ctrl.obj.find(".examHtmlTemplage").remove();
             if($.trim($("input[name=detailsKey]").val()) == "" || $(".examList").size()==0 ){
                 var writeHtml = ctrl.obj.append(examInitHtml);
@@ -135,8 +136,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             });
 
             $("#btn_delete").click(function () {
-                if (confirm(msgCtrl.getMsg("confirm.del"))) {
-                    cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+
+                var hasRegCli = $("#btn_delete").val();
+                if(hasRegCli > 0){
+                    alert("신청정보가 존재하여 삭제할 수 없습니다.");
+                }else{
+                    if (confirm(msgCtrl.getMsg("confirm.del"))) {
+                        cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+                    }
                 }
 
             });

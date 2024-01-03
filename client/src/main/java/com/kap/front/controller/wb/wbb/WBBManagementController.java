@@ -1,5 +1,6 @@
 package com.kap.front.controller.wb.wbb;
 
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
@@ -21,13 +22,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * <pre>
  * 공통사업 Controller
  * </pre>
  *
- * @author 박준희
+ * @author 김태훈
  * @version 1.0
  * @ClassName : WBBManagementController.java
  * @Description : 공통사업 Controller
@@ -63,7 +66,7 @@ public class WBBManagementController {
             wBRoundMstSearchDTO.setExpsYn("Y");
             wBRoundMstSearchDTO.setFirstIndex(0);
             wBRoundMstSearchDTO.setRecordCountPerPage(3);
-            modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, wBRoundMstSearchDTO.getBsnCd()));
+            modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, wBRoundMstSearchDTO.getBsnCd(), "Y"));
             modelMap.addAttribute("rtnData", wbbaRoundService.selectRoundList(wBRoundMstSearchDTO));
             //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wbbaRoundService.getRoundDtl(wBRoundMstSearchDTO));
@@ -114,16 +117,17 @@ public class WBBManagementController {
      * 사업신청 기본정보
      */
     @RequestMapping(value = "/step1")
-    public String getStep1Page(WBBACompanySearchDTO wbbCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+    public String getStep1Page(WBBACompanySearchDTO wbbaCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbb/WBBManagementStep1.front";
         try {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            wbbaCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("episd", wbbCompanySearchDTO.getEpisdSeq());
+            modelMap.addAttribute("episdSeq", wbbaCompanySearchDTO.getEpisdSeq());
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyUserDtl(wbbCompanySearchDTO));
+            modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyUserDtl(wbbaCompanySearchDTO));
+            modelMap.addAttribute("fileYn", wbbbCompanyService.getFileYn(wbbaCompanySearchDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -156,10 +160,33 @@ public class WBBManagementController {
     /**
      * 사업신청 신청
      */
-    @RequestMapping(value = "/insert")
-    public String insert(WBBAApplyMstDTO wbbApplyMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+    @PostMapping(value = "/insert")
+    public String insert(WBBAApplyMstDTO wbbApplyMstDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         try {
-           modelMap.addAttribute("actCnt", wbbbCompanyService.insertApply(wbbApplyMstDTO,request));
+
+            modelMap.addAttribute("actCnt", wbbbCompanyService.insertApply(wbbApplyMstDTO,multiRequest,request));
+        } catch (Exception e) {
+           if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    /**
+     * 사업신청 완료
+     */
+    @RequestMapping(value = "/complete")
+    public String complete(WBBACompanySearchDTO wbbaCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+        String vwUrl = "front/wb/wbb/WBBManagementComplete.front";
+        try {
+            COUserDetailsDTO cOUserDetailsDTO = null;
+            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+            modelMap.addAttribute("rtnData", wbbbCompanyService.getApplyDtl(wbbaCompanySearchDTO));
+            modelMap.addAttribute("fileYn", wbbbCompanyService.getFileYn(wbbaCompanySearchDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -167,6 +194,6 @@ public class WBBManagementController {
             throw new Exception(e.getMessage());
         }
 
-        return "jsonView";
+        return vwUrl;
     }
 }

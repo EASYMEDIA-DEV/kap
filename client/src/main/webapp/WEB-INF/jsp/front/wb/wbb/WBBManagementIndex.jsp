@@ -21,8 +21,16 @@
         </div>
         <div class="img-area">
             <div class="img">
-                <img class="only-pc" src="/common/images/img-sub-top-visual-san-com-future.jpg" alt="">
-                <img class="only-mobile" src="/common/images/img-sub-top-visual-san-com-future-mobile.jpg" alt="">
+                <c:choose>
+                    <c:when test="${rtnData.bsnCd eq 'futureTech'}">
+                        <img class="only-pc" src="/common/images/img-sub-top-visual-san-com-future.jpg" alt="">
+                        <img class="only-mobile" src="/common/images/img-sub-top-visual-san-com-future-mobile.jpg" alt="">
+                    </c:when>
+                    <c:otherwise>
+                        <img class="only-pc" src="/common/images/img-sub-top-visual-san-com-business.jpg" alt="">
+                        <img class="only-mobile" src="/common/images/img-sub-top-visual-san-com-business-mobile.jpg" alt="">
+                    </c:otherwise>
+                </c:choose>
             </div>
         </div>
     </div>
@@ -50,7 +58,7 @@
                                             <c:choose>
                                                 <c:when test="${item.dateOrd eq 1}">
                                                     <c:set var="classTag" value="accepting"/>
-                                                    <c:set var="applyButton" value="<a class='btn-solid small black-bg apply' href='javascript:' data-episd='${item.episd}'><span>신청하기</span></a>"/>
+                                                    <c:set var="applyButton" value="<a class='btn-solid small black-bg apply' href='javascript:' data-episd='${item.episdSeq}'><span>신청하기</span></a>"/>
                                                 </c:when>
                                                 <c:when test="${item.dateOrd eq 2}">
                                                     <c:set var="classTag" value="waiting"/>
@@ -181,7 +189,7 @@
                                         </div>
                                     </c:if>
                                     <div class="btn-set">
-                                        <a class="btn-solid small black-bg apply" href="javascript:" data-episd='${rtnRoundDtl.episd}'><span>신청하기</span></a>
+                                        <a class="btn-solid small black-bg apply" href="javascript:" data-episd='${rtnRoundDtl.episdSeq}'><span>신청하기</span></a>
                                     </div>
                                 </div>
                                 <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
@@ -189,13 +197,14 @@
                         </div>
                     </div>
                 </div>
-                <c:if test="${not empty rtnRoundDtl.optnList}">
-                    <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
-                        <input type="hidden" class="optnFile" value="${item.fileSeq}">
-                    </c:forEach>
-                </c:if>
-            </div>
-    </c:if>
+            </c:if>
+
+            <c:if test="${not empty rtnRoundDtl.optnList}">
+                <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
+                    <input type="hidden" class="optnFile" value="${item.fileSeq}">
+                </c:forEach>
+             </c:if>
+        </div>
     </div>
 </div>
 <!-- content 영역 end -->

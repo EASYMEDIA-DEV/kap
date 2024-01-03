@@ -3,6 +3,7 @@ package com.kap.service;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdExcelDTO;
+import com.kap.core.dto.eb.ebb.EBBLctrDTO;
 import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 
 import javax.servlet.http.HttpServletResponse;
@@ -63,6 +64,12 @@ public interface EBBEpisdService {
 	 * 교육차수 상세를 조회한다.
 	 */
 	public HashMap<String, Object> selectEpisdDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수에 등록된 온라인강의 목록 호출
+	 */
+	public EBBLctrDTO selectLctrDtlList(EBBLctrDTO eBBLctrDTO) throws Exception;
+
 
 	/**
 	 * 교육 참여자 목록을 호출한다.

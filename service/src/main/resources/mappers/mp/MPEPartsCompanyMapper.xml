@@ -122,9 +122,14 @@
              , A.TCHLG_5_STAR_YEAR
              , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_CD_NM
              , A.ADM_MEMO
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
              , A.REG_ID
              , A.REG_IP
              , A.REG_DTM
+             , A.MOD_ID
+             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+             , A.MOD_IP
+             , A.MOD_DTM
              , B.cbsn_seq
              , B.nm
              , B.score

@@ -15,6 +15,29 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
+
+    var search = function (page){
+        //data로 치환해주어야한다.
+        cmmCtrl.setFormData($formObj);
+
+        if(page != undefined){
+            $formObj.find("#pageIndex").val(page);
+        }
+
+        cmmCtrl.listFrmAjax(function(respObj) {
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+            //CALLBACK 처리
+            ctrl.obj.find("#trsfListContainer").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#trsfListContainerTotCnt").val(totCnt);
+            $(".trsfField").validation({});
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
+        }, "/mngwserc/eb/ebc/trsfList", $formObj, "GET", "html");
+    }
+
     var callbackAjaxDelete = function(data){
 
         if (parseInt(data.respCnt, 10) > 0)
@@ -35,20 +58,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         var totCnt = $("#isttrContainer").find("tr").size();
         var startCount = 2;
 
-
         $("#isttrContainer").find("tr").each(function(idx, data){
             if(idx>1){
                 $(this).find("td").eq(0).text(totCnt-idx);
             }
         });
 
-        //삭제했는데 하나도없으면 목록 없다는걸로 돌림
+        //삭제했는데 하나도 없으면 목록 없다는 걸로 돌림
         if($("#isttrContainer").find("tr").size() == 2){
             //돌림
             $("#isttrContainer").find(".notIsttr").css("display", "");
             $("#isttrContainer").find(".notIsttr").find("td").css("display", "");
         }
-
     }
 
     //소재지역 분류 조회
@@ -274,10 +295,34 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         isttrTable();
                     }
                 }
+            },
+            //페이징 처리
+            pageSet : {
+                event : {
+                    click : function() {
+                        //페이징 이동
+                        if( $(this).attr("value") != "null" ){
+                            $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
+                            search();
+                        }
+                    }
+                }
+            },
+            //페이징 목록 갯수
+
+            listRowSizeContainer : {
+                event : {
+                    change : function(){
+                        //리스트 갯수 변경
+                        $formObj.find("input[name=listRowSize]").val($(this).val());
+                        search(1);
+                    }
+                }
             }
         },
         immediately : function(){
             changeAppctnFldCd();
+            search();
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //부품사 우편번호와 동일하면 본사와 동일 체크 박스 checked
             var originPartsZipCode = $formObj.find("input[name=zipcode]").val();
@@ -377,10 +422,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         var vstSeq = $("#vstSeq").val();
                         var memSeq = $("#memSeq").val();
+                        var bfreMemSeq = $("#bfreMemSeq").val();
                         var vstRsltSeq = $("#vstRsltSeq").val();
 
                         actForm.vstSeq = vstSeq;
                         actForm.memSeq = memSeq;
+                        actForm.bfreMemSeq = bfreMemSeq;
                         actForm.vstRsltSeq = vstRsltSeq;
 
                         //신청자 정보

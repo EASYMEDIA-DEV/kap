@@ -102,9 +102,6 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
 
-    @Schema(title = "방문교육신청일시", example = "yyyy-MM-dd hh:mm:ss")
-    private String visitRegDtm;
-
     @Schema(title = "등록일시", example = "yyyy-MM-dd hh:mm:ss")
     private String regDtm;
 
@@ -330,6 +327,28 @@ public class EBCVisitEduDTO extends BaseDTO {
 
     @Schema(title = "조회 리스트", example = "")
     private List<EBCVisitEduDTO> list;
+
+    // 방문교육 신청 이관로그
+    @Schema(title = "양도순번", example = "숫자")
+    private Integer trnsfSeq;
+
+    @Schema(title = "이관전회원순번", example = "숫자")
+    private Integer bfreMemSeq;
+
+    @Schema(title = "이관후회원순번", example = "숫자")
+    private Integer aftrMemSeq;
+
+    @Schema(title = "이관전회원아이디", example = "")
+    private String beforeId;
+
+    @Schema(title = "이관전회원명", example = "")
+    private String beforeName;
+
+    @Schema(title = "이관후회원아이디", example = "")
+    private String afterId;
+
+    @Schema(title = "이관후회원명", example = "")
+    private String afterName;
 
     // 검색조건
     @Schema(title = "검색 등록/수정 기간 시작일자", example = "yyyy-MM-dd")

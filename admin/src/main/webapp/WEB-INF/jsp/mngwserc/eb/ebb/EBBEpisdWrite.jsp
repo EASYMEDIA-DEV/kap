@@ -397,7 +397,7 @@
                         <input type="hidden" class="notRequired" id="edctnNtctnFileSeq" name="edctnNtctnFileSeq" value="${rtnDto.edctnNtctnFileSeq}" />
                     </fieldset>
 
-                    <fieldset>
+                    <fieldset class="eduRoom">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">교육장소<span class="star text-danger"> *</span></label>
                             <div class="col-sm-11">
@@ -1027,12 +1027,12 @@
                                         <th>강사평가</th>
                                     </tr>
                                     <tr>
-                                        <td class="text-center" id="totalScore">5.0</td>
-                                        <td class="text-center" id="EDU01Score">5.0</td>
-                                        <td class="text-center" id="EDU02Score">5.0</td>
-                                        <td class="text-center" id="EDU03Score">5.0</td>
-                                        <td class="text-center" id="EDU04Score">5.0</td>
-                                        <td class="text-center" id="EDU05Score">5.0</td>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
+                                        <td class="text-center">5.0</td>
 
                                     </tr>
                                     </tbody>

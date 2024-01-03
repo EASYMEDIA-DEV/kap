@@ -208,7 +208,6 @@ define(["ezCtrl"], function(ezCtrl) {
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
             search($formObj.find("input[name=pageIndex]").val());
-            debugger;
         }
     };
 

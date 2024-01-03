@@ -102,8 +102,8 @@
                                             <div>
                                                 <label class="col-sm-1 control-label">시상<span class="star"> *</span></label>
                                                 <div class="col-sm-2">
-                                                    <select class="form-control input-sm srvTypeCd wdcrmCd" name="wdcrmCd">
-                                                        <option >시상선택</option>
+                                                    <select class="form-control input-sm srvTypeCd wdcrmCd" name="wdcrmCd" title="시상종류">
+                                                        <option value="" >시상선택</option>
                                                         <c:forEach var="cdDtlList" items="${cdDtlList.WBK_AWD}" varStatus="status">
                                                             <option value="${cdDtlList.cd}" ${ kl:decode(prizeList.wdcrmCd, cdDtlList.cd, 'selected', '') }>${cdDtlList.cdNm}</option>
                                                         </c:forEach>
@@ -112,7 +112,7 @@
                                                 <label class="col-sm-1 control-label">참여구분<span class="star"> *</span></label>
                                                 <div class="col-sm-2">
                                                     <select class="form-control input-sm srvTypeCd ptcptType" name="ptcptType">
-                                                        <option >참여부문 선택</option>
+                                                        <option value="">참여부문 선택</option>
                                                         <c:forEach var="cdDtlList" items="${cdDtlList.WBK_PTN}" varStatus="status">
                                                             <option value="${cdDtlList.cd}" ${ kl:decode(prizeList.ptcptType, cdDtlList.cd, 'selected', '') }>${cdDtlList.cdNm}</option>
                                                         </c:forEach>
@@ -120,7 +120,7 @@
                                                 </div>
                                                 <label class="col-sm-1 control-label">시상금<span class="star"> *</span></label>
                                                 <div class="col-sm-2">
-                                                    <input type="text" name="prizePmt" value="${prizeList.prizePmt}">만원
+                                                    <input type="text" name="prizePmt" value="${prizeList.prizePmt}" title="상금액수를">만원
                                                 </div>
                                                 <div class="col-sm-2 pl0">
                                                     <button type="button" class="btn btn-sm btn-inverse btnExamWrite">시상종류 추가</button>
@@ -142,7 +142,7 @@
                                         <div>
                                             <label class="col-sm-1 control-label">시상<span class="star"> *</span></label>
                                             <div class="col-sm-2">
-                                                <select class="form-control input-sm srvTypeCd wdcrmCd" name="wdcrmCd">
+                                                <select class="form-control input-sm srvTypeCd wdcrmCd" name="wdcrmCd" title="시상종류">
                                                     <option >시상선택</option>
                                                     <c:forEach var="cdDtlList" items="${cdDtlList.WBK_AWD}" varStatus="status">
                                                         <option value="${cdDtlList.cd}">${cdDtlList.cdNm}</option>
@@ -160,7 +160,7 @@
                                             </div>
                                             <label class="col-sm-1 control-label">시상금<span class="star"> *</span></label>
                                             <div class="col-sm-2">
-                                                <input type="text" name="prizePmt">만원
+                                                <input type="text" name="prizePmt" title ="상금액수">만원
                                             </div>
                                             <div class="col-sm-2 pl0">
                                                 <button type="button" class="btn btn-sm btn-inverse btnExamWrite">시상종류 추가</button>
@@ -175,12 +175,13 @@
                 </div>
             </fieldset>
             <fieldset>
-                <div class="form-group text-sm">
+                <div class="form-group text-sm" data-controller = "controller/wb/wbk/WBKPlaceMakeCtrl">
                     <label class="col-sm-1 control-label">장소<span class="star"> *</span></label>
-                    <input type="hidden" name="placeSeq" id="placeSeq" value="${rtnInfo.placeSeq}"/>
-                    <button type="button" class="btn btn-inverse btn-sm mb-sm" onclick="cmmCtrl.getEduRoomLayerPop(function(data){
+                    <input type="hidden" name="placeSeq" id="placeSeq" value="${rtnInfo.placeSeq}" title="교육장"/>
+                    <%--<button type="button" class="btn btn-inverse btn-sm mb-sm " onclick="cmmCtrl.getEduRoomLayerPop(function(data){
                       console.log(data);
-                     })">장소 검색</button>
+                     })">장소 검색</button>--%>
+                    <button type="button" class="btn btn-inverse btn-sm mb-sm" id="room" >장소 검색</button>
                 </div>
                 <table class="table table-hover table-striped">
                     <thead>
@@ -257,7 +258,7 @@
             <%--노출여부 e--%>
 
             <c:if test="${not empty rtnDto.detailsKey}">
-                <fieldset>
+               <%-- <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">최초 등록자</label>
                         <div class="col-sm-4">
@@ -269,7 +270,7 @@
                             <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</p>
                         </div>
                     </div>
-                </fieldset>
+                </fieldset>--%>
                 <c:set var="modFlag" value="${not empty rtnDto.modDtm && (rtnDto.regDtm ne rtnDto.modDtm)}" />
                 <fieldset class="last-child">
                     <div class="form-group text-sm">
@@ -311,7 +312,7 @@
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnInfo}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete" value="${rtnDto.regCli}">삭제</button>
                             <button type="submit" class="btn btn-sm btn-success">수정</button>
                         </c:when>
                         <c:otherwise>

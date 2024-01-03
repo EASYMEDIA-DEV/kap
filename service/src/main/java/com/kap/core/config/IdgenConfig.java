@@ -791,6 +791,19 @@ public class IdgenConfig {
                 .build();
     }
 
+    /** 방문교육 이관이력 순번
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl edctnVstTrnsfSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("EDC_TRANSF_SEQ")
+                .setCipers(13)
+                .build();
+    }
+
     /** 컨설팅 기술 지도 관리 (컨설팅관리)
      * @return
      */

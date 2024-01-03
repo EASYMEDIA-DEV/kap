@@ -315,6 +315,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				$(this).addClass("notRequired");
 			}
 		});
+	}else if("STDUY_MTHD02" == stduyMthdCd){
+
+			console.log("온라인임");
+
+			$(".eduRoom").css("display", "none");
+
+
 	}else{
 		$(".onlineSet").css("display", "");
 
@@ -373,74 +380,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			});
 		});
-
-		var EDU01Score =0;
-		var EDU02Score =0;
-		var EDU03Score =0;
-		var EDU04Score =0;
-		var EDU05Score =0;
-		var totalScore = 0;
-		var EDU01Cnt =0;
-		var EDU02Cnt =0;
-		var EDU03Cnt =0;
-		var EDU04Cnt =0;
-		var EDU05Cnt =0;
-		var totalCnt = 0;
-
-		$("input[name=qstnCd]").each(function(index){
-
-			if ($(this).val()=="EDU01"){
-				EDU01Score = EDU01Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
-				EDU01Cnt = EDU01Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
-			}else if ($(this).val()=="EDU02"){
-				EDU02Score = EDU02Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
-				EDU02Cnt = EDU02Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
-			}else if ($(this).val()=="EDU03"){
-				EDU03Score = EDU03Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
-				EDU03Cnt = EDU03Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
-			}else if ($(this).val()=="EDU04"){
-				EDU04Score = EDU04Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
-				EDU04Cnt = EDU04Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
-			}else if ($(this).val()=="EDU05"){
-				EDU05Score = EDU05Score + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
-				EDU05Cnt = EDU05Cnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
-			}
-
-			totalScore = totalScore + ($("input[name=qstnCdScore]:eq("+index+")").val()*$("input[name=qstnCdCount]:eq("+index+")").val());
-			totalCnt = totalCnt + parseInt($("input[name=qstnCdCount]:eq("+index+")").val());
-
-		})
-
-		if (EDU01Cnt == 0) {
-			$("#EDU01Score").text(0);
-		}else{
-			$("#EDU01Score").text((EDU01Score/EDU01Cnt).toFixed(1));
-		}
-		if (EDU02Cnt == 0) {
-			$("#EDU02Score").text(0);
-		}else{
-			$("#EDU02Score").text((EDU02Score/EDU02Cnt).toFixed(1));
-		}
-		if (EDU03Cnt == 0) {
-			$("#EDU03Score").text(0);
-		}else{
-			$("#EDU03Score").text((EDU03Score/EDU03Cnt).toFixed(1));
-		}
-		if (EDU04Cnt == 0) {
-			$("#EDU04Score").text(0);
-		}else{
-			$("#EDU04Score").text((EDU04Score/EDU04Cnt).toFixed(1));
-		}
-		if (EDU05Cnt == 0) {
-			$("#EDU05Score").text(0);
-		}else{
-			$("#EDU05Score").text((EDU05Score/EDU05Cnt).toFixed(1));
-		}
-		if (totalCnt == 0) {
-			$("#totalScore").text(0);
-		}else{
-			$("#totalScore").text((totalScore/totalCnt).toFixed(1));
-		}
 
 	}
 
@@ -1352,6 +1291,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.episdYear =$("#episdYear").val();//연도
 						actForm.episdOrd =$("#episdOrd").val();//회차정렬
 
+						actForm.episdSeq =$("#episdSeq").val();//회차순번
+
 						actForm.orgEpisdYear =$("#orgEpisdYear").val();//연도(수정시 where절에 사용되는 pk값)
 						actForm.orgEpisdOrd =$("#orgEpisdOrd").val();//회차정렬(수정시 where절에 사용되는 pk값)
 
@@ -1364,6 +1305,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								tempForm.episdYear = $("#episdYear").val();
 								tempForm.isttrSeq = $(this).val();
 								tempForm.episdOrd = $("#episdOrd").val();
+								tempForm.episdSeq = $("#episdSeq").val();
 								isttrSeqList.push(tempForm);
 							}
 
@@ -1405,7 +1347,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							}
 						}
 
-						if($("#placeSeq").val() == ""){
+						var stduyMthdCd = $("#stduyMthdCd").val();
+
+						if(stduyMthdCd != "STDUY_MTHD02" && $("#placeSeq").val() == ""){
 							alert("교육장소를 선택해주세요");
 							return false;
 						}

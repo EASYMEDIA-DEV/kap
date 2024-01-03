@@ -13,7 +13,7 @@
                 <td class="text-center">${kl:bsnmNoConvert(list.appctnBsnmNo)}</td>
                 <td class="text-center">${list.ctgryName}</td>
                 <td class="text-center">${list.sizeName}</td>
-                <td class="text-center">${kl:convertDate(list.visitRegDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}</td>
+                <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}</td>
                 <td class="text-center">${list.appctnFldName}</td>
                 <td class="text-center">${kl:convertDate(list.hopeDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</td>
                 <td class="text-center">${list.edctnPlaceAddr}</td>

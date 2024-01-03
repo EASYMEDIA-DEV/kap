@@ -58,10 +58,10 @@
 				<div class="menu-area">
 					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
 					<div class="btn-w">
-						<a class="quick-btn edu-schedule" href="javascript:"><span class="txt">교육일정</span></a>
+						<a class="quick-btn trend" href="javascript:"><span class="txt">TREND</span></a>
+						<a class="quick-btn edu-schedule" href="javascript:" ><span class="txt">교육일정</span></a>
 						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
 						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
-						<a class="quick-btn qna" href="javascript:"><span class="txt">1:1 문의</span></a>
 						<a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
 					</div>
 				</div>

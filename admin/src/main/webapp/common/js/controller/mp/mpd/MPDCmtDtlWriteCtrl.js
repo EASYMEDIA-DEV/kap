@@ -347,7 +347,7 @@ var exports = {
             cmmCtrl.setDropzone(trgtObj, {
                 maxFileCnt  : trgtObj.data("maxFileCnt"),
                 maxFileSize : trgtObj.data("maxFileSize"),
-                fileExtn    : trgtObj.data("imageExtns"),
+                fileExtn    : trgtObj.data("fileExtn"),
                 fileFieldNm : trgtObj.data("fileFieldNm")
             })
         });
@@ -362,19 +362,27 @@ var exports = {
                     if(!dupEmailChk) {
                         alert(msgCtrl.getMsg("fail.mp.mpd.al_030"));
                         chk = false;
+                        return chk;
                     }
                 }
                 if($("#cmssrTypeCd").val()!= 'MEM_CD03004') {
                     if($("#cmssrCbsnCd").val() =='' || $("#cmssrCbsnCd").val() ==undefined) {
                         alert(msgCtrl.getMsg("fail.mp.mpd.al_029"));
                         chk = false;
+                        return chk;
                     }
+                }
+                if($("#hpNo").val().length !=13) {
+                    alert(msgCtrl.getMsg("fail.mp.mpd.al_033"));
+                    chk = false;
+                    return chk;
                 }
                 $(".dropzone").not(".notRequired").each(function(i){
                     if ($(this).children(".dz-preview").length == 0)
                     {
                         alert(msgCtrl.getMsg("fail.mp.mpd.al_014"));
                         chk = false;
+                        return chk;
                     } else {
                     }
                 });
@@ -389,7 +397,7 @@ var exports = {
                         //콜백함수. 페이지 이동
                         if(data.respCnt > 0){
                             alert(msgCtrl.getMsg("fail.mp.mpd.al_004"));
-                            // location.replace("./list");
+                            location.replace("./list");
                         }
                     }, actionUrl, $formObj, "json");
 

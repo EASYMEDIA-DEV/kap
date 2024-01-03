@@ -18,10 +18,9 @@
 								<c:forEach var="menu2" items="${menu.children}" varStatus="status2">
 									<div class="lnb-list">
 										<c:if test="${ menu2.attr.gnbYn eq 'Y'}">
-
 											<c:set var="childrenGnbYn" value="N"/>
 											<c:forEach var="childrenChkList" items="${menu2.children}">
-												<c:if test="${childrenChkList.gnbYn eq 'Y' && childrenGnbYn ne 'Y'}">
+												<c:if test="${childrenChkList.attr.gnbYn eq 'Y' && childrenGnbYn ne 'Y'}">
 													<c:set var="childrenGnbYn" value="Y"/>
 												</c:if>
 											</c:forEach>

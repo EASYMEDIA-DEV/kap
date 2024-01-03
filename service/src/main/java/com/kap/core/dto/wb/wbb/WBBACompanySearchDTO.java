@@ -21,6 +21,8 @@ import java.util.List;
 public class WBBACompanySearchDTO extends BaseDTO {
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
+    @Schema(title = "사업코드명", example = "")
+    private String bsnNm;
     @Schema(title = "옵션 구분 코드", example = "")
     private String optnCd;
     @Schema(title = "회차순번", example = "")
@@ -116,6 +118,8 @@ public class WBBACompanySearchDTO extends BaseDTO {
     @Schema(title = "검색 리스트", example = "")
     List<WBBACompanySearchDTO> list;
 
+    @Schema(title = "삭제가능여부", example = "")
+    private String deleteYn;
 
     /* 검색 관련 코드 */
     @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")

@@ -26,7 +26,7 @@
         <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
         <td class="text-center">${kl:emailMasking(list.email)}</td>
         <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
-        <td class="text-center">${list.modName}</td>
+        <td class="text-center">${kl:emptyHypen(list.modName)}(${list.modId})</td>
         <td class="text-center">${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
         <input type="hidden" class="telNo" value="${list.telNo}"/>
         <input type="hidden" class="pstnCd" value="${list.pstnCd}"/>

@@ -226,6 +226,8 @@ public class WBHACalibrationSearchDTO extends BaseDTO {
     @Schema(title = "실 지급일", example = "yyyy-MM-dd hh:mm:ss")
     private String realGiveDt;
 
+    @Schema(title = "노출 여부")
+    private String expsYn;
 
     @Schema(title = "검색 리스트", example = "")
     List<WBHACalibrationSearchDTO> list;

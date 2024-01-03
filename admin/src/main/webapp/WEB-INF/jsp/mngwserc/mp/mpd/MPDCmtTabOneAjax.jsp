@@ -20,7 +20,7 @@
 
 <fieldset>
     <div class="form-group text-sm">
-        <label class="col-sm-1 control-label">비밀번호<span class="star"> *</span></label>
+        <label class="col-sm-1 control-label">비밀번호</label>
         <button type="button" class="btn btn-secondary"  id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button>
     </div>
 </fieldset>
@@ -128,14 +128,14 @@
     <div class="col-sm-5">
         <div class="col-sm-3">
             <div class="input-group">
-                <input type="text" class="form-control input-sm "id="hpNo"  value="${rtnDtl.hpNo}" title="휴대폰번호" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  />
+                <input type="text" class="form-control input-sm "id="hpNo"  value="${rtnDtl.hpNo}" title="휴대폰번호" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  placeholder="휴대폰번호 입력"/>
             </div>
         </div>
     </div>
     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
     <div class="col-sm-5">
         <div class="input-group" style="z-index:0;width: 220px;">
-            <input type="text" class="form-control input-sm " id="email" title="이메일" name="email" value="${rtnDtl.email}" maxlength="50"/>
+            <input type="text" class="form-control input-sm " id="email" title="이메일" name="email" value="${rtnDtl.email}" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')" placeholder="이메일 입력"/>
             <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupEmail">중복확인</button></span>
         </div>
     </div>
@@ -165,7 +165,7 @@
         <label class="col-sm-1 control-label">주요경력<span class="star"> *</span></label>
         <div class="col-sm-3">
             <div class="input-group">
-                <textarea  type="text" id="cmssrMjrCarerCntn" title="주요경력" name="cmssrMjrCarerCntn">${rtnDtl.cmssrMjrCarerCntn}</textarea>               </div>
+                <textarea  type="text" id="cmssrMjrCarerCntn" placeholder="주요경력 입력" title="주요경력" name="cmssrMjrCarerCntn">${rtnDtl.cmssrMjrCarerCntn}</textarea>               </div>
         </div>
     </div>
 </fieldset>
@@ -175,14 +175,14 @@
         <label class="col-sm-1 control-label">컨설팅분야</label>
         <div class="col-sm-3">
             <div class="input-group">
-                <textarea  type="text" id="cmssrCnstgFldCntn" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired">${rtnDtl.cmssrCnstgFldCntn}</textarea>               </div>
+                <textarea  type="text" id="cmssrCnstgFldCntn" placeholder="컨설팅분야 입력" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired">${rtnDtl.cmssrCnstgFldCntn}</textarea>               </div>
         </div>
     </div>
 </fieldset>
 
 <fieldset class="last-child">
     <div class="form-group text-sm">
-        <label class="col-sm-1 control-label">주요경력 화면노출여부<span class="star"> *</span></label>
+        <label class="col-sm-1 control-label">주요경력/컨설팅분야 화면노출여부<span class="star"> *</span></label>
         <div class="col-sm-5">
             <label class="radio-inline c-radio">
                 <input type="radio" name="cmssrMjrCarerExpsYn" value="Y" ${rtnDtl.cmssrMjrCarerExpsYn.toString() == 'Y' ? 'checked' : ''}  />

@@ -5,7 +5,7 @@
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
                 <td class="text-center">${list.email}</td>
-                <td class="text-center">${list.regDtm}</td>
+                <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
             </tr>
         </c:forEach>
     </c:when>

@@ -2,9 +2,7 @@ package com.kap.mngwserc.controller.eb;
 
 import com.easymedia.error.ErrorCode;
 import com.easymedia.error.exception.BusinessException;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptMst;
@@ -26,11 +24,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -383,8 +379,6 @@ public class EBBEpisdController {
         return "mngwserc/eb/ebb/EBBEpisdWrite.admin";
     }
 
-
-
     /**
      * 교육참여자 목록을 호출한다.
      */
@@ -563,8 +557,8 @@ public class EBBEpisdController {
         {
             try{
 
-                System.out.println("@@@온닷!!!");
                 eBBEpisdService.insertEpisd(eBBEpisdDTO);
+
             }
             catch (Exception e)
             {

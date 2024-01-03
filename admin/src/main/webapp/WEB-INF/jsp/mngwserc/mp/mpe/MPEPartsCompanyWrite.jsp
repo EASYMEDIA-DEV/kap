@@ -1,5 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<c:set var="date" value="<%=new java.util.Date( )%>" />
+<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <c:set var="sqInfoListCnt" value="${ fn:length(sqInfoList.list)}" />
@@ -21,12 +23,12 @@
             <div class="tab-content">
                 <div id="dtl" class="tab-pane fade in active">
                     <div id="tab1">
-                        <div class="text-left mb-xl"><h5>부품사 관리 등록</h5></div>
+                        <div class="text-left mb-xl"><h5>부품사 관리 상세/수정</h5></div>
                         <fieldset>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" id="bsnmNo" name="bsnmNo" value="${rtnInfo.bsnmNo}" title="사업자번호" placeholder="사업자등록번호 입력" <c:if test="${not empty rtnInfo.bsnmNo or not empty rtnInfo }">readonly</c:if> style="width: 220px;"/>
+                                    <input type="text" class="form-control input-sm" id="bsnmNo" name="bsnmNo" value="${rtnInfo.bsnmNo}" title="사업자번호등록번호" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g, '')" placeholder="사업자등록번호 입력" <c:if test="${not empty rtnInfo.bsnmNo or not empty rtnInfo }">readonly</c:if> style="width: 220px;"/>
                                     <button type="button" class="btn btn-sm" id="btnBsnmNo">인증</button> <span>※ 사업자등록번호 인증 시 부품사/대표자명이 자동으로 입력됩니다.</span>
                                 </div>
                             </div>
@@ -43,12 +45,12 @@
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">대표자명<span class="star text-danger"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="rprsntNm" name="rprsntNm" value="${rtnInfo.rprsntNm}" title="대표자명" style="width: 200px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="rprsntNm" name="rprsntNm" value="${rtnInfo.rprsntNm}" title="대표자명" style="width: 200px;" placeholder="대표자명 입력" oninput="this.value=this.value.replace(/[^a-zA-Zㄱ-힣]/g, '')"/>
                                 </div>
 
                                 <label class="col-sm-1 control-label">부품사코드</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="cmpnCd" name="cmpnCd" value="${rtnInfo.cmpnCd}" title="부품사코드" maxlength="50" placeholder="부품사코드 입력" style="width: 220px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="cmpnCd" name="cmpnCd" value="${rtnInfo.cmpnCd}" title="부품사코드" maxlength="50" placeholder="부품사코드 입력" style="width: 220px;"  oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -92,7 +94,13 @@
                                 <label class="col-sm-1 control-label">설립일자<span class="star"> *</span></label>
                                 <div class="col-sm-5">
                                     <div class="input-group" style="z-index:0;width: 220px;">
-                                        <input type="text" class="form-control input-sm datetimepicker_strtDt" id="stbsmDt" name="stbsmDt" value="${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" readonly="readonly" title="설립일자" />
+<%--                                        <input type="text" class="form-control input-sm datetimepicker_strtDt" id="stbsmDt" name="stbsmDt" value="${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" readonly="readonly" title="설립일자" />--%>
+                                        <input type="text" class="form-control input-sm datetimepicker_strtDt"
+                                               id="stbsmDt"
+                                               name="stbsmDt"
+                                               <c:if test="${not empty rtnInfo.stbsmDt}"> value="${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"  </c:if>
+                                               <c:if test="${empty rtnInfo.stbsmDt}">value="${kl:convertDate(kl:addDay(today, '0'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" </c:if>
+                                               readonly="readonly" title="설립일자" />
                                         <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse input-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
@@ -106,12 +114,12 @@
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" style="width: 130px;"/>
+                                    <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" style="width: 130px;" title="우편번호"/>
                                     <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색"><br>
                                     <br>
-                                    <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" style="width: 400px;"/><br>
+                                    <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" style="width: 400px;" title="기본주소"/><br>
                                     <br>
-                                    <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnInfo.dtlAddr}" title="우편번호" placeholder="상세주소 입력" maxlength="50" style="width: 400px;"/>
+                                    <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnInfo.dtlAddr}" title="상세주소" placeholder="상세주소 입력" maxlength="50" style="width: 400px;"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -119,7 +127,7 @@
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">매출액</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${rtnInfo.slsPmt}" title="매출액" placeholder="매출액 입력" style="width: 220px;"/> 억 원
+                                    <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${rtnInfo.slsPmt}" title="매출액" placeholder="매출액 입력" style="width: 220px;" oninput="this.value=this.value.replace(/[^0-9]/g, '')"/> 억 원
                                     <select class="form-control input-sm notRequired" id="slsYear" name="slsYear" title="선택" style="width: 100px;">
                                         <option value="">연도 선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
@@ -131,7 +139,7 @@
                                 </div>
                                 <label class="col-sm-1 control-label">직원수</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="mpleCnt" name="mpleCnt" value="${rtnInfo.mpleCnt}" title="직원수" maxlength="50" placeholder="직원수 입력" style="width: 220px;"/> 명
+                                    <input type="text" class="form-control input-sm notRequired" id="mpleCnt" name="mpleCnt" value="${rtnInfo.mpleCnt}" title="직원수" maxlength="50" placeholder="직원수 입력" style="width: 220px;" oninput="this.value=this.value.replace(/[^0-9]/g, '')"/> 명
                                 </div>
                             </div>
                         </fieldset>
@@ -313,7 +321,7 @@
                         </div>
                         <hr />
                         <c:if test="${ not empty rtnInfo }">
-                            <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                            <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                             <div class="table-responsive">
                                 <table class="table text-sm">
                                     <tbody>

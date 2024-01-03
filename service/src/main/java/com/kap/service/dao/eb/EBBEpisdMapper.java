@@ -94,9 +94,14 @@ public interface EBBEpisdMapper {
 	public int insertIsttrRel(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
-	 * 교육차수 - 교육강의 상세를 등록한다.
+	 * 교육차수 - 온라인강의 목록을 호출한다.
 	 */
 	public List<EBBLctrDTO> selectLctrDtlList(EBBLctrDTO eBBLctrDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 온라인강의 목록 갯수 조회
+	 */
+	public int selectLctrDtlListCnt(EBBLctrDTO eBBLctrDTO) throws Exception;
 
 	/**
 	 * 교육차수 - 교육강의 상세를 등록한다.

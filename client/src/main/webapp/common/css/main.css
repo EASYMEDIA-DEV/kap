@@ -74,25 +74,23 @@
 
 /* main 퀵메뉴(검은색 bg) */
 .main .quick-menu {margin-right: -100rem;}
-.main .quick-menu .btn-w {background-color: rgba(0, 0, 0, 0.50); border: 1px solid rgba(0, 1, 2, 0.50); border-color: rgba(0, 1, 2, 0.50); transition: background-color .5s ease, border-color .5s ease, bottom .5s ease, top .5s ease;}
+.main .quick-menu .btn-w {background-color: rgba(0, 0, 0, 0.50); border: 1px solid transparent; transition: background-color .5s ease, border-color .5s ease, bottom .5s ease, top .5s ease;}
 .main .quick-menu .btn-w .quick-btn .txt {color: #F5F6F7;}
 .main .quick-menu .btn-w .quick-btn.edu-schedule {background-image: url("/common/images/icon-quick-edu-schedule-white.svg");}
 .main .quick-menu .btn-w .quick-btn.certificate {background-image: url("/common/images/icon-quick-certificate-white.svg");}
 .main .quick-menu .btn-w .quick-btn.faq {background-image: url("/common/images/icon-quick-faq-white.svg");}
-.main .quick-menu .btn-w .quick-btn.qna {background-image: url("/common/images/icon-quick-qna-white.svg");}
+.main .quick-menu .btn-w .quick-btn.trend {border-bottom: 1px solid transparent; transition: border .5s ease;}
 .main .quick-menu .btn-w .quick-btn.edu-schedule:hover {background-image: url("/common/images/icon-quick-edu-schedule-white-hover.svg");}
 .main .quick-menu .btn-w .quick-btn.certificate:hover {background-image: url("/common/images/icon-quick-certificate-white-hover.svg");}
 .main .quick-menu .btn-w .quick-btn.faq:hover {background-image: url("/common/images/icon-quick-faq-white-hover.svg");}
-.main .quick-menu .btn-w .quick-btn.qna:hover {background-image: url("/common/images/icon-quick-qna-white-hover.svg");}
-.main .quick-menu.scroll-down .btn-w {background-color: rgba(255,255,255, 1); border-color: #ECEEEF;}
+.main .quick-menu.scroll-down .btn-w {background-color: #fff; border-color: #ECEEEF;}
+.main .quick-menu.scroll-down .btn-w .quick-btn.trend {border-color: #ECEEEF;}
 .main .quick-menu.scroll-down .btn-w .quick-btn.edu-schedule {background-image: url("/common/images/icon-quick-edu-schedule-default.svg");}
 .main .quick-menu.scroll-down .btn-w .quick-btn.certificate {background-image: url("/common/images/icon-quick-certificate-default.svg");}
 .main .quick-menu.scroll-down .btn-w .quick-btn.faq {background-image: url("/common/images/icon-quick-faq-default.svg");}
-.main .quick-menu.scroll-down .btn-w .quick-btn.qna {background-image: url("/common/images/icon-quick-qna-default.svg");}
 .main .quick-menu.scroll-down .btn-w .quick-btn.edu-schedule:hover {background-image: url("/common/images/icon-quick-edu-schedule-hover.svg");}
 .main .quick-menu.scroll-down .btn-w .quick-btn.certificate:hover {background-image: url("/common/images/icon-quick-certificate-hover.svg");}
 .main .quick-menu.scroll-down .btn-w .quick-btn.faq:hover {background-image: url("/common/images/icon-quick-faq-hover.svg");}
-.main .quick-menu.scroll-down .btn-w .quick-btn.qna:hover {background-image: url("/common/images/icon-quick-qna-hover.svg");}
 .main .quick-menu.scroll-down .btn-w .quick-btn .txt {color: #06161E;}
 
 @media all and (max-width: 1023px) {
@@ -100,11 +98,9 @@
   .main .quick-menu .btn-w .quick-btn.edu-schedule {background-image: url("/common/images/icon-quick-edu-schedule-default-mobile.svg");}
   .main .quick-menu .btn-w .quick-btn.certificate {background-image: url("/common/images/icon-quick-certificate-default-mobile.svg");}
   .main .quick-menu .btn-w .quick-btn.faq {background-image: url("/common/images/icon-quick-faq-default-mobile.svg");}
-  .main .quick-menu .btn-w .quick-btn.qna {background-image: url("/common/images/icon-quick-qna-default-mobile.svg");}
   .main .quick-menu .btn-w .quick-btn.edu-schedule:hover {background-image: url("/common/images/icon-quick-edu-schedule-default-mobile.svg");}
   .main .quick-menu .btn-w .quick-btn.certificate:hover {background-image: url("/common/images/icon-quick-certificate-default-mobile.svg");}
   .main .quick-menu .btn-w .quick-btn.faq:hover {background-image: url("/common/images/icon-quick-faq-default-mobile.svg");}
-  .main .quick-menu .btn-w .quick-btn.qna:hover {background-image: url("/common/images/icon-quick-qna-default-mobile.svg");}
   .main .quick-menu .btn-w .quick-btn .txt {color: #06161E;}
 
 
@@ -113,11 +109,10 @@
   .main .quick-menu.scroll-down .btn-w .quick-btn.edu-schedule {background-image: url("/common/images/icon-quick-edu-schedule-default-mobile.svg");}
   .main .quick-menu.scroll-down .btn-w .quick-btn.certificate {background-image: url("/common/images/icon-quick-certificate-default-mobile.svg");}
   .main .quick-menu.scroll-down .btn-w .quick-btn.faq {background-image: url("/common/images/icon-quick-faq-default-mobile.svg");}
-  .main .quick-menu.scroll-down .btn-w .quick-btn.qna {background-image: url("/common/images/icon-quick-qna-default-mobile.svg");}
+  .main .quick-menu.scroll-down .btn-w .quick-btn.trend {border: none;}
   .main .quick-menu.scroll-down .btn-w .quick-btn.edu-schedule:hover {background-image: url("/common/images/icon-quick-edu-schedule-default-mobile.svg");}
   .main .quick-menu.scroll-down .btn-w .quick-btn.certificate:hover {background-image: url("/common/images/icon-quick-certificate-default-mobile.svg");}
   .main .quick-menu.scroll-down .btn-w .quick-btn.faq:hover {background-image: url("/common/images/icon-quick-faq-default-mobile.svg");}
-  .main .quick-menu.scroll-down .btn-w .quick-btn.qna:hover {background-image: url("/common/images/icon-quick-qna-default-mobile.svg");}
 
 }
 
@@ -184,7 +179,7 @@
 
 
 @media all and (max-width: 1023px) {
-  .main-kv-sec .roll-swiper-area .list .txt-wrap {width: calc(100% - 80rem);}
+  .main-kv-sec .roll-swiper-area .list .txt-wrap {padding-right: 0; width: calc(100% - 80rem);}
   .main-kv-sec .roll-swiper-area .list .txt-wrap .tit {font-size: 32rem; line-height: 150%;}
   .main-kv-sec .roll-swiper-area .list .txt-wrap .tit br {display: none;}
   .main-kv-sec .roll-swiper-area .list .txt-wrap .txt {margin-top: 4rem; font-size: 15rem; line-height: 170%; letter-spacing: -0.3rem;}
@@ -199,7 +194,7 @@
 }
 
 @media all and (max-width: 599px) {
-  .main-kv-sec .roll-swiper-area .list .txt-wrap {padding-right: 0; width: calc(100% - 40rem);}
+  .main-kv-sec .roll-swiper-area .list .txt-wrap {width: calc(100% - 40rem);}
 }
 
 

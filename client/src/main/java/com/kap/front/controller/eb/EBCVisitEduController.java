@@ -4,6 +4,7 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBCVisitEduService;
@@ -11,6 +12,7 @@ import com.kap.service.MPEPartsCompanyService;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -58,6 +60,12 @@ public class EBCVisitEduController {
     /** 부품사 회원정보 서비스 **/
     private final MPAUserService mpaUserService;
 
+    //파일 업로드 유틸
+    private final COFileUtil cOFileUtil;
+
+    //파일 업로드 확장자
+    @Value("${app.file.fileExtns}")
+    private String imgUploadFileExtns;
 
     /**
      * 방문교육 신청 페이지로 이동한다.
@@ -100,23 +108,18 @@ public class EBCVisitEduController {
 
         try
         {
-            if(COUserDetailsHelperService.getAuthenticatedUser() != null) {
+            mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+            MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
 
-                mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
-                MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
+            if(applicantDto.getMemCd().equals("CP")) {
+                mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
-                if(applicantDto.getMemCd().equals("CP")) {
-                    mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
-                    MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
-
-                    if (originList.getList().size() != 0) {
-                        modelMap.addAttribute("rtnInfo", originList.getList().get(0));
-                    }
-                    modelMap.addAttribute("applicantInfo", applicantDto);
-                    modelMap.addAttribute("sqInfoList", originList);
-                } else {
-                    vwUrl = "redirect:../index";
+                if (originList.getList().size() != 0) {
+                    modelMap.addAttribute("rtnInfo", originList.getList().get(0));
                 }
+                modelMap.addAttribute("applicantInfo", applicantDto);
+                modelMap.addAttribute("sqInfoList", originList);
             } else {
                 vwUrl = "redirect:../index";
             }
@@ -144,38 +147,33 @@ public class EBCVisitEduController {
         try
         {
 
-            if(COUserDetailsHelperService.getAuthenticatedUser() != null) {
+            mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+            MPAUserDto applicantDto = mpaUserService.selectUserDtl(mpaUserDto);
 
-                mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
-                MPAUserDto applicantDto = mpaUserService.selectUserDtl(mpaUserDto);
+            if(applicantDto.getMemCd().equals("CP")) {
+                mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
-                if(applicantDto.getMemCd().equals("CP")) {
-                    mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
-                    MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                // 코드 set
+                cdDtlList.add("COMPANY_TYPE");
+                cdDtlList.add("CO_YEAR_CD");
+                cdDtlList.add("MEM_CD");
+                cdDtlList.add("ADDR_CD");
+                cdDtlList.add("EBC_VISIT_CD");
+                cdDtlList.add("SYSTEM_HOUR");
 
-                    // 공통코드 배열 셋팅
-                    ArrayList<String> cdDtlList = new ArrayList<String>();
-                    // 코드 set
-                    cdDtlList.add("COMPANY_TYPE");
-                    cdDtlList.add("CO_YEAR_CD");
-                    cdDtlList.add("MEM_CD");
-                    cdDtlList.add("ADDR_CD");
-                    cdDtlList.add("EBC_VISIT_CD");
-                    cdDtlList.add("SYSTEM_HOUR");
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-                    modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-
-                    if (originList.getList().size() != 0) {
-                        ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
-                        ebcVisitEduDTO.setAppctnBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
-                        ebcVisitEduDTO.setZipcode(originList.getList().get(0).getZipcode());
-                        ebcVisitEduDTO.setBscAddr(originList.getList().get(0).getBscAddr());
-                        ebcVisitEduDTO.setDtlAddr(originList.getList().get(0).getDtlAddr());
-                    }
-                    modelMap.addAttribute("rtnInfo", ebcVisitEduDTO);
-                } else {
-                    vwUrl = "redirect:../index";
+                if (originList.getList().size() != 0) {
+                    ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+                    ebcVisitEduDTO.setAppctnBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                    ebcVisitEduDTO.setZipcode(originList.getList().get(0).getZipcode());
+                    ebcVisitEduDTO.setBscAddr(originList.getList().get(0).getBscAddr());
+                    ebcVisitEduDTO.setDtlAddr(originList.getList().get(0).getDtlAddr());
                 }
+                modelMap.addAttribute("rtnInfo", ebcVisitEduDTO);
             } else {
                 vwUrl = "redirect:../index";
             }
@@ -231,25 +229,20 @@ public class EBCVisitEduController {
 
         try
         {
-            if(COUserDetailsHelperService.getAuthenticatedUser() != null) {
+            mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+            MPAUserDto applicantDto = mpaUserService.selectUserDtl(mpaUserDto);
 
-                mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
-                MPAUserDto applicantDto = mpaUserService.selectUserDtl(mpaUserDto);
+            if(applicantDto.getMemCd().equals("CP")) {
 
-                if(applicantDto.getMemCd().equals("CP")) {
+                // 방문신청여부 세션값 가져오기
+                HttpSession session = request.getSession();
+                String applyCompleteYn = (String) session.getAttribute("applyCompleteYn");
 
-                    // 방문신청여부 세션값 가져오기
-                    HttpSession session = request.getSession();
-                    String applyCompleteYn = (String) session.getAttribute("applyCompleteYn");
-
-                    if(applyCompleteYn == null || !applyCompleteYn.equals("Y")) {
-                        vwUrl = "redirect:../index";
-                    } else {
-                        ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
-                        modelMap.addAttribute("rtnData", ebcVisitEduService.selectVisitEduApplyRegDtm(ebcVisitEduDTO));
-                    }
-                } else {
+                if(applyCompleteYn == null || !applyCompleteYn.equals("Y")) {
                     vwUrl = "redirect:../index";
+                } else {
+                    ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+                    modelMap.addAttribute("rtnData", ebcVisitEduService.selectVisitEduApplyRegDtm(ebcVisitEduDTO));
                 }
             } else {
                 vwUrl = "redirect:../index";

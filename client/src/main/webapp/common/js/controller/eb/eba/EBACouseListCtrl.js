@@ -35,7 +35,16 @@ define(["ezCtrl"], function(ezCtrl) {
 				$(".btn-wrap.add-load.align-center").remove();
 			}else{
 				var tempPage = (page === undefined || page == "") ? 1 : page;
-				$(".btn-wrap.add-load.align-center").find(".item-count").text("("+(tempPage*9)+"/"+totCnt+")");
+
+				var rtnPage = 0;
+
+				if((tempPage * 9)>totCnt){
+					rtnPage = totCnt
+				}else{
+					rtnPage = (tempPage * 9);
+				}
+
+				$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
 			}
 
 			$(".article-total-count.f-body2").find("span").text(totCnt);
@@ -173,10 +182,10 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click : function() {
 						//페이징 이동
-						if( $(this).attr("value") != "null" ){
-							$formObj.find("input[name=pageIndex]").val($(this).attr("value"));
-							search();
-						}
+
+						var pageIndex = $formObj.find("input[name=pageIndex]").val();
+						search(++pageIndex);
+
 					}
 				}
 			},

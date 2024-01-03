@@ -181,13 +181,18 @@ public class COGCntsServiceImpl implements COGCntsService {
 	/**
 	 * 컨텐츠 배포 내용조회
 	 */
-	public COGCntsDTO getCmsDtl(COGCntsDTO pCOGCntsDTO, String bsnCd) throws Exception
+	public COGCntsDTO getCmsDtl(COGCntsDTO pCOGCntsDTO, String value, String type) throws Exception
 	{
-		WBAManageSearchDTO wbaManageSearchDTO = new WBAManageSearchDTO();
 
-		wbaManageSearchDTO.setDetailsKey(bsnCd);
-		WBAManageInsertDTO wbaManageInsertDTO = wbaManagementMapper.selectManagementMst(wbaManageSearchDTO);
-		pCOGCntsDTO.setMenuSeq(wbaManageInsertDTO.getUserMenuSeq());
+		if ("Y".equals(type)) {
+			WBAManageSearchDTO wbaManageSearchDTO = new WBAManageSearchDTO();
+
+			wbaManageSearchDTO.setDetailsKey(value);
+			WBAManageInsertDTO wbaManageInsertDTO = wbaManagementMapper.selectManagementMst(wbaManageSearchDTO);
+			pCOGCntsDTO.setMenuSeq(wbaManageInsertDTO.getUserMenuSeq());
+		} else {
+			pCOGCntsDTO.setMenuSeq(Integer.valueOf(value));
+		}
 
 		return cOGCntsMapper.getCmsDtl(pCOGCntsDTO);
 	}

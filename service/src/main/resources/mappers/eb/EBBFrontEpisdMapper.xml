@@ -21,6 +21,7 @@
 			, a.ctgry_cd
 			, (select cd_nm from co_code_mst WHERE cd = a.ctgry_cd) as ctgry_cd_nm
 			, a.nm
+		    , stduy_mthd_cd
 			, (select cd_nm from co_code_mst where cd=a.stduy_mthd_cd) as stduy_mthd_cd_nm
 			, (select cd_nm from co_code_mst where cd=a.stduy_dd_cd) as stduy_dd_cd_nm
 			, (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as stduy_time_cd_nm
@@ -204,7 +205,7 @@
 
 			AND NOW()  <![CDATA[<]]>  edctn_strt_dtm
 
-			AND episd_year IS NOT NULL
+			/*AND episd_year IS NOT NULL*/
 
 			<if test="cnnctCd != null and cnnctCd != '' ">
 				AND a.edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd = #{cnnctCd})

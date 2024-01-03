@@ -60,6 +60,7 @@
                     <li class="active tabClick"><a data-toggle="tab" href="#dtl">강사 상세정보</a></li>
                     <li class="tabClick"><a data-toggle="tab" href="#edu">교육 사업 현황</a></li>
                     <li class="tabClick"><a data-toggle="tab" href="#win">상생 사업 현황</a></li>
+                    <span class="dtl-tab" style="margin-left:55%"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
                     <div class="pull-right excel-area">
                         <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
                     </div>
@@ -134,7 +135,7 @@
                             </div>
                         </div>
                         <c:if test="${ not empty rtnInfo }">
-                            <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                            <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                             <div class="table-responsive ">
                                 <table class="table text-sm">
                                     <tbody>

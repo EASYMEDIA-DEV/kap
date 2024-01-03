@@ -240,7 +240,7 @@ public class MPUserController {
      * @throws Exception
      */
     @PostMapping(value="/insert")
-    public String insertCmt(MPJoinDto mpJoinDto ,
+    public String insertUser(MPJoinDto mpJoinDto ,
                             HttpServletRequest req) throws Exception
     {
         try
