@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 // set controller name
     var exports = {
-        controller : "controller/consult/CONsultingApplicationController"
+        controller : "controller/consult/CONsultingApplicationCtrl"
     };
 
     // get controller object
@@ -15,7 +15,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         info.bsnmNo = data;
         cmmCtrl.jsonAjax(function (data) {
             var coInfo = JSON.parse(data)
-            console.log(coInfo);
             $("#cmpnNm").text(coInfo.list[0].cmpnNm);
             $("#rprsntNm").text(coInfo.list[0].rprsntNm);
             $("#ctgryNm").text(coInfo.list[0].ctgryNm);
@@ -63,6 +62,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             $("#slsPmt").text(coInfo.list[0].slsPmt+"억 원"+" ("+coInfo.list[0].slsYear+"년)");
             $("#mpleCnt").text(coInfo.list[0].mpleCnt+"명");
             $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1);
+
             if(coInfo.list[0].mjrPrdct2){
                 $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1+" ② "+coInfo.list[0].mjrPrdct2);
                 if(coInfo.list[0].mjrPrdct3){
@@ -78,6 +78,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         },
         classname : {
+            consInfoAppl : {
+                event : {
+                    click : function(){
+                        location.href= "./consInfoAppl?bsnmNo="+$("#bsnmNo").val();
+                    }
+                }
+            }
         },
         immediately : function() {
             bsnmNoSearch($("#bsnmNo").val())

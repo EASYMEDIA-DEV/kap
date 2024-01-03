@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
-<div class="cont-wrap" data-controller="controller/consult/CONsultingIndexController">
+<div class="cont-wrap" data-controller="controller/consult/CONsultingIndexCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
@@ -12,7 +12,7 @@
     -->
     <div class="sub-top-vis-area basic-page">
         <div class="page-tit-area">
-            <p class="page-tit f-xlarge-title"><span class="for-move">기술지도</span></p>
+            <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
         </div>
         <div class="img-area">
             <div class="img">

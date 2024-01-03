@@ -1,9 +1,11 @@
 package com.kap.front.controller.consult;
 
+import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.CBATechGuidanceService;
 import com.kap.service.CBBManageConsultService;
+import com.kap.service.COCodeService;
 import com.kap.service.MPEPartsCompanyService;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +37,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/consulting/{type:tech|Manage}")
+@RequestMapping(value="/consulting/{type:tech|manage}")
 public class CONsultingController {
 
     /** 코드 서비스 **/
@@ -44,6 +46,7 @@ public class CONsultingController {
     private final CBATechGuidanceService cBATechGuidanceService;
     private final CBBManageConsultService cBBManageConsultService;
     private final MPAUserService mPAUserService;
+    private final COCodeService cOCodeService;
 
     // 파일 확장자
     @Value("${app.file.imageExtns}")
@@ -76,6 +79,27 @@ public class CONsultingController {
         return "front/consult/CONsultingApplication.front";
     }
 
+    @GetMapping("/consInfoAppl")
+    public String getConsultInfoApplicationPage(ModelMap modelMap, HttpServletRequest request) throws Exception {
+        try {
+
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            cdDtlList.add("ADDR_CD"); // 소재지 코드
+            cdDtlList.add("APPCTN_RSN_CD"); // 신청사유 코드
+            cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
+            cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+        }catch(Exception e){
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/consult/CONsultingApplWrite.front";
+    }
+
     @RestController
     @RequiredArgsConstructor
     @RequestMapping(value="consulting/{type:tech|Manage}")
@@ -83,6 +107,7 @@ public class CONsultingController {
 
         private final MPAUserService mPAUserService;
         private final MPEPartsCompanyService mPEPartsCompanyService;
+        private final COCodeService cOCodeService;
 
         /**
          * 멤버 키로 상세 정보 검색
@@ -101,6 +126,33 @@ public class CONsultingController {
         @ResponseBody
         public MPEPartsCompanyDTO checkPartsCompany(@Valid @RequestBody MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
             return mPEPartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+        }
+
+        /**
+         * 사업자 번호로 회사 정보 찾기
+         */
+        @PostMapping(value = "/bsnmNoSearch")
+        @ResponseBody
+        public MPEPartsCompanyDTO bsnmNoSearch(@Valid @RequestBody MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+            return mPEPartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+        }
+
+        /**
+         *  지역 정보로 서브 지역 정보 찾기
+         */
+        @PostMapping(value = "/subAddrSelect")
+        @ResponseBody
+        public List<COCodeDTO> selectSubAddr(@RequestBody COCodeDTO cOCodeDTO) throws Exception {
+            List<COCodeDTO> detailList = null;
+            try {
+                detailList = cOCodeService.getCdIdList(cOCodeDTO);
+            } catch (Exception e) {
+                if (log.isErrorEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return detailList;
         }
     }
 }
