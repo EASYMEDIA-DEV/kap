@@ -43,10 +43,10 @@
 
 
 
-            <input type="hidden" class="notRequired" id="edctnSeq" name="edctnSeq" value="${rtnDto.edctnSeq}" />
+            <input type="hidden" class="" id="edctnSeq" name="edctnSeq" value="${rtnDto.edctnSeq}" title="과정"/>
             <input type="hidden" class="notRequired" id="orgEpisdYear" name="orgEpisdYear" value="${rtnDto.episdYear}" />
             <input type="hidden" class="notRequired" id="orgEpisdOrd" name="orgEpisdOrd" value="${rtnDto.episdOrd}" />
-            <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnDto.episdSeq}" />
+            <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnDto.episdSeq}"/>
             <input type="hidden" class="notRequired" id="ctgryCd" name="ctgryCd" value="${rtnDto.ctgryCd}" />
 
             <input type="hidden" class="notRequired" id="prntCd" name="prntCd" value="${rtnDto.prntCd}" />
@@ -135,7 +135,16 @@
             <div class="tab-content">
 
                 <!-- 회차정보 -->
-                <div id="episdList" class="tab-pane fade in active" style="flex-wrap:wrap;">
+
+                <div id="prevEpisd" <c:if test="${ actionType eq 'update'}">style="display:none;"</c:if> >
+                    <table class="table table-hover table-striped">
+                        <tr>
+                            <td colspan="12"  rowspan="4" class="text-center">과정 선택후 등록 가능합니다.</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div id="episdList" class="tab-pane fade in active" style="flex-wrap:wrap;<c:if test="${actionType ne 'update'}">display:none;</c:if> ">
                     <fieldset>
                         <div class="form-group text-sm">
                             <div class="col-sm-12">
@@ -162,9 +171,9 @@
                                 </select>
                             </div>
 
-                            <label class="col-sm-1 control-label">업종<span class="star text-danger"> *</span></label>
+                            <label class="col-sm-1 control-label">업종</label>
                             <div class="col-sm-2">
-                                <select class="form-control input-sm wd-sm" name="cbsnCd" id="cbsnCd" title="업종">
+                                <select class="form-control input-sm wd-sm notRequired" name="cbsnCd" id="cbsnCd" title="업종">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${episdCdList.CBSN_CD}" varStatus="status">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.cbsnCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -177,7 +186,7 @@
 
                     <fieldset>
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">접수기간</label>
+                            <label class="col-sm-1 control-label">접수기간<span class="star text-danger"> *</span></label>
                             <div class="col-sm-10">
                                 <div class="form-inline">
                                     <div class="input-group form-date-group mr-sm">
@@ -213,7 +222,7 @@
                     </fieldset>
                     <fieldset>
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">교육기간</label>
+                            <label class="col-sm-1 control-label">교육기간<span class="star text-danger"> *</span></label>
                             <div class="col-sm-10">
                                 <div class="form-inline">
                                     <div class="input-group form-date-group mr-sm">
@@ -363,7 +372,7 @@
                                     <!-- 리스트 목록 결과 -->
                                     <tbody>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm" id="picNm" name="picNm" value="${rtnDto.picNm}" title="담당자명" maxlength="50" placeholder="담당자명"/>
+                                        <input type="text" class="form-control input-sm koreanChk" id="picNm" name="picNm" value="${rtnDto.picNm}" title="담당자명" maxlength="50" placeholder="담당자명"/>
                                     </td>
                                     <td class="text-center">
                                         <input type="text" class="form-control input-sm emailChk" id="picEmail" name="picEmail" value="${rtnDto.picEmail}" title="담당자이메일" maxlength="50" placeholder="담당자이메일"/>
@@ -492,6 +501,7 @@
                                     <tr class="examTr" style="display: none;">
                                         <td class="text-center" colspan="4">
                                             <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                            <spring:eval var="eduThumSize" expression="@environment.getProperty('app.file.eduThumSize')" />
                                             <spring:eval var="atchUploadMaxSize" expression="5242880" />
                                             <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
                                                 <div class="dz-default dz-message">
@@ -499,7 +509,8 @@
                                                 </div>
                                             </div>
                                             <p class="text-bold mt">
-                                                ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                <%--※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)--%>
+                                                    ※ ${eduThumSize} / 파일 확장자(jpg,jpeg,png) / 최대 용량(5MB) / 최대 개수 (1개)
                                             </p>
                                         </td>
                                     </tr>
@@ -527,6 +538,7 @@
                                                 <tr>
                                                     <td class="text-center" colspan="4">
                                                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                                        <spring:eval var="eduThumSize" expression="@environment.getProperty('app.file.eduThumSize')" />
                                                         <spring:eval var="atchUploadMaxSize" expression="5242880" />
                                                         <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq${lctrDtoList.thnlFileSeq}" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
                                                             <div class="dz-default dz-message">
@@ -534,7 +546,7 @@
                                                             </div>
                                                         </div>
                                                         <p class="text-bold mt">
-                                                            ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                            ※ ${eduThumSize} / 파일 확장자(jpg,jpeg,png) / 최대 용량(5MB) / 최대 개수 (1개)
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -563,6 +575,7 @@
                                             <tr>
                                                 <td class="text-center" colspan="4">
                                                     <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                                    <spring:eval var="eduThumSize" expression="@environment.getProperty('app.file.eduThumSize')" />
                                                     <spring:eval var="atchUploadMaxSize" expression="5242880" />
                                                     <div class="dropzone attachFile notRequired" data-file-field-nm="lctrFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
                                                         <div class="dz-default dz-message">
@@ -570,7 +583,7 @@
                                                         </div>
                                                     </div>
                                                     <p class="text-bold mt">
-                                                        ※ 파일확장자 jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                        ※ ${eduThumSize} / 파일 확장자(jpg,jpeg,png) / 최대 용량(5MB) / 최대 개수 (1개)
                                                     </p>
                                                 </td>
                                             </tr>
@@ -737,32 +750,36 @@
                         </div>
                     </fieldset>
 
-                    <fieldset class="last-child">
-                        <div class="form-group text-sm">
 
-                            <label class="col-sm-1 control-label">교육완료여부<span class="star"> *</span></label>
-                            <div class="col-sm-11">
-                                <div class="row">
-                                    <c:set var="edctnCmpltnYn" value="${kl:nvl(rtnDto.edctnCmpltnYn, 'N')}" />
-                                    <label class="radio-inline c-radio">
-                                        <input type="radio" name="edctnCmpltnYn" value="Y" title="교육완료여부" <c:if test="${edctnCmpltnYn eq 'Y'}">checked</c:if> />
-                                        <span class="ion-record"></span> 완료
-                                    </label>
-                                    <label class="radio-inline c-radio">
-                                        <input type="radio" name="edctnCmpltnYn" value="N" title="교육완료여부" <c:if test="${edctnCmpltnYn eq 'N'}">checked</c:if> />
-                                        <span class="ion-record"></span> 미완료
-                                    </label>
+                    <c:if test="${actionType eq 'update'}">
+                        <fieldset class="last-child">
+                            <div class="form-group text-sm">
+
+                                <label class="col-sm-1 control-label">교육완료여부<span class="star"> *</span></label>
+                                <div class="col-sm-11">
+                                    <div class="row">
+                                        <c:set var="edctnCmpltnYn" value="${kl:nvl(rtnDto.edctnCmpltnYn, 'N')}" />
+                                        <label class="radio-inline c-radio">
+                                            <input type="radio" name="edctnCmpltnYn" value="Y" title="교육완료여부" <c:if test="${edctnCmpltnYn eq 'Y'}">checked</c:if> />
+                                            <span class="ion-record"></span> 완료
+                                        </label>
+                                        <label class="radio-inline c-radio">
+                                            <input type="radio" name="edctnCmpltnYn" value="N" title="교육완료여부" <c:if test="${edctnCmpltnYn eq 'N'}">checked</c:if> />
+                                            <span class="ion-record"></span> 미완료
+                                        </label>
+                                    </div>
+                                    <div class="row">
+                                        <p class="text-bold mt">
+                                            ※ GPC 교육의 경우 교육완료 처리 시 해당 차수정보와 참석자 정보, 설문 응답결과에 대해 GPC와의 I/F가 진행됩니다.
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="row">
-                                    <p class="text-bold mt">
-                                        ※ GPC 교육의 경우 교육완료 처리 시 해당 차수정보와 참석자 정보, 설문 응답결과에 대해 GPC와의 I/F가 진행됩니다.
-                                    </p>
-                                </div>
+
+
                             </div>
+                        </fieldset>
+                    </c:if>
 
-
-                        </div>
-                    </fieldset>
 
 
 

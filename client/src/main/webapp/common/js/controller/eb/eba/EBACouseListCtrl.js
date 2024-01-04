@@ -127,6 +127,8 @@ define(["ezCtrl"], function(ezCtrl) {
 			var rtnDto = rtn.rtnDto;
 			var rtnEpisdList = rtn.rtnEpisdList;
 
+
+			$(".edctnNmLayer").attr("href", "/education/apply/detail?detailsKey="+rtnDto.edctnSeq);
 			$(".edctnNmLayer").find("span").text(rtnDto.nm);//제목변경 nm
 			$(".stduyMthdLayer").text(rtnDto.stduyMthdCdNm);//교육타입 변경 stduyMthdCdNm
 			$(".stduyDdLayer").text(rtnDto.stduyDdCdNm+"일("+rtnDto.stduyTimeCdNm+"시간)");//교육일자, 시간 변경

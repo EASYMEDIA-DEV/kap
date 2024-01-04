@@ -194,7 +194,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		//인풋 뭉치들 삽입
 		copyTitle.css("display", "");
-		console.log(idx);
+
 		var classNm = "bdgetForm"+(idx+1);
 		var totalForm = "<div class="+classNm+" style='width:100%;order:"+(idx+1)+" '>"+copyTitle.html()+lastForm+"</div>";
 		$("#bdget").append(totalForm);
@@ -317,11 +317,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		});
 	}else if("STDUY_MTHD02" == stduyMthdCd){
 
-			console.log("온라인임");
 			$(".onlineSet").css("display", "");
 			$(".eduRoom").css("display", "none");
 			$(".onlineSet").find("input:text").each(function(){
-				if($(this).closest("tr").attr("class") !="examTr"){
+
+				if($(this).closest("tr").attr("class") !="examTr" && $(this).attr("name") != 'onlineTime'){
 					$(this).removeClass("notRequired");
 				}
 
@@ -337,13 +337,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		$(".onlineSet").css("display", "");
 
 		$(".onlineSet").find("input:text").each(function(){
-			if($(this).closest("tr").attr("class") !="examTr"){
+			if($(this).closest("tr").attr("class") !="examTr" && $(this).attr("name") != 'onlineTime'){
 				$(this).removeClass("notRequired");
 			}
 
 		});
 		$(".onlineSet").find("div.dropzone").each(function(){
-			if($(this).closest("tr").attr("class") !="examTr"){
+			if($(this).closest("tr").attr("class") !="examTr" && $(this).attr("name") != 'onlineTime'){
 				$(this).removeClass("notRequired");
 			}
 		});
@@ -554,12 +554,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						seqObj['episdYear'] = episdYear;
 						seqObj['episdOrd'] = episdOrd;
 
-						console.log(seqObj);
-
 						cmmCtrl.jsonAjax(function(data){
 							if(data !=""){
 								var rtn = JSON.parse(data);
-								console.log(rtn);
+
 								if(rtn.edctnSeq>0){
 									alert("이미 등록된 회차입니다.");
 
@@ -734,6 +732,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							}
 
 							filedSet(data);
+
+							$("#episdList").css("display", "");
+							$("#prevEpisd").css("display", "none");
 
 
 						});
@@ -977,6 +978,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						onlineHtml.css("display", "none").addClass("examTr").addClass("notRequired");
 						onlineFileHtml.css("display", "none").addClass("examTr").addClass("notRequired");
 
+						//onlineHtml.find("input[name='onlineTime']").addClass("notRequired");
+
 						var trgtObj = $("#onlineList").find(".dropzone:last");
 						cmmCtrl.setDropzone(trgtObj, {
 							maxFileCnt  : trgtObj.data("maxFileCnt"),
@@ -1121,6 +1124,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 },
 		immediately : function(event) {
 
+			if($("#edctnSeq").val() == ""){
+				$("#episdList").css("display", "none");
+				$("#prevEpisd").css("display", "");
+			}else{
+				$("#episdList").css("display", "");
+				$("#prevEpisd").css("display", "none");
+			}
+
+
+
+
+
 			$excelObj.find("button.down").on('click', function(){
 				var rsn = $excelObj.find("#rsn").val().trim();
 				var frmDataObj    = $formObj.closest("form");
@@ -1159,7 +1174,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					$(".jdgmtYn").find("input").each(function(e){
 						$(this).click(function(e){
-							console.log('1');
+
 							e.stopImmediatePropagation();
 						});
 
@@ -1276,6 +1291,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//회차정보 마지막 중복체크 진행
 						$("#episdOrd").trigger("change");
 
+						if($("#edctnSeq").val() == ""){
+							alert("과정을 먼저 선택해주세요");
+							return  false;
+						}
+
 						var actForm = {};
 
 						var accsStrtDt = $("#accsStrtDt").val();
@@ -1297,7 +1317,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":59:59";
 
 						actForm.edctnSeq = $("#edctnSeq").val();//교육순번
-						actForm.cbsnCd = $("#cbsnCd").val();//업종코드
+
+						if($("#cbsnCd").val() !=""){
+							actForm.cbsnCd = $("#cbsnCd").val()//업종코드
+						}
 
 						actForm.episdYear =$("#episdYear").val();//연도
 						actForm.episdOrd =$("#episdOrd").val();//회차정렬
@@ -1362,6 +1385,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						if(stduyMthdCd != "STDUY_MTHD02" && $("#placeSeq").val() == ""){
 							alert("교육장소를 선택해주세요");
+							return false;
+						}
+
+						if($("#srvSeq").val() == ""){
+							alert("만족도조사를 선택해주세요");
 							return false;
 						}
 
@@ -1470,7 +1498,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 									onlinePack.episdYear = actForm.episdYear;
 									onlinePack.nm = onlineNm;
 									onlinePack.url = onlineUrl;
-									onlinePack.time = onlineTime;
+
 
 									if(onlineNm ===undefined || onlineNm =="" && resultFlag == true){
 										alert("강의명을 입력해 주세요");
@@ -1483,8 +1511,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 									}
 
 									if(onlineTime ===undefined || onlineTime =="" && resultFlag == true){
-										alert("강의 시간을  입력해 주세요");
-										resultFlag = false;
+										//alert("강의 시간을  입력해 주세요");
+										//resultFlag = false;
+										onlinePack.time = null;
+									}else{
+										onlinePack.time = onlineTime;
 									}
 
 									var onlinefileArray = new Array();
@@ -1630,13 +1661,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//오프라인평가 관련 데이터 세팅끝
 
 						//수료여부
-						//debugger;
+						debugger;
 						if(resultFlag){
 							//debugger;
-							cmmCtrl.jsonAjax(function(data){
+							/*cmmCtrl.jsonAjax(function(data){
 								alert("저장되었습니다.");
 								location.href = "./list";
-							}, actionUrl, actForm, "text");
+							}, actionUrl, actForm, "text");*/
 						}
 
 

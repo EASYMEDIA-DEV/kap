@@ -66,6 +66,7 @@
 				, pic_email
 				, pic_tel_no
 		     	, edctn_ntctn_file_seq
+				, (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = aa.edctn_ntctn_file_seq) AS file_ord
 				, place_seq
 				, place_nm
 				, bsc_addr

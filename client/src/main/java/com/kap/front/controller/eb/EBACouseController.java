@@ -13,6 +13,8 @@ import com.kap.service.SMJFormService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -160,7 +162,7 @@ public class EBACouseController {
      * 교육과정 신청 상세
      */
     @GetMapping(value="/apply/detail")
-    public String getEducationApplyDtl(EBACouseDTO eBACouseDTO, ModelMap modelMap) throws Exception
+    public String getEducationApplyDtl(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         String vwUrl = "front/eb/eba/EBACouseDtl.front";
         try
@@ -216,6 +218,16 @@ public class EBACouseController {
                 rtnDto.setPrntCd(prntCd);
             }
 
+            Device device = DeviceUtils.getCurrentDevice(request);
+
+            // Device (web, mobile) 구분
+            String deviceType = "web";
+
+            if (device != null && (device.isMobile() || device.isTablet()))
+            {
+                deviceType = "mbl";
+            }
+
             modelMap.addAttribute("rtnData", rtnDto);//과정 기본정보
             modelMap.addAttribute("rtnEpisdList", rtnEpisdList);//과정에 소속된 차수목록
             modelMap.addAttribute("rtnTrgtData", rtnTrgtData);//학습 대상 목록
@@ -223,6 +235,7 @@ public class EBACouseController {
 
             modelMap.addAttribute("relList1", rtnMap.get("relList1"));//과정 연계 목록 - 선수목록
             modelMap.addAttribute("relList2", rtnMap.get("relList2"));//과정 연계 목록 - 후속목록
+            modelMap.addAttribute("deviceType", deviceType);//디바이스 체크
 
         }
         catch (Exception e)

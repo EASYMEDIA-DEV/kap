@@ -64,6 +64,35 @@ define(["ezCtrl"], function(ezCtrl) {
 			$(".item-count").text();
 
 			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+
+			//플로팅 배너 처리
+			if(!($("#floatingEpisdSeq").val() === undefined)){
+				$(".accepting-fixed-area").css("display", "");
+				$(".edctnNm").data("episdseq", $("#floatingEpisdSeq").val());
+
+
+				$(".floatingEpisdOrd").html($("#floatingEpisdOrd").val()+"회차 <span className='status'>접수중</span>");
+
+				$(".floatingAccsStrtDtm").text($("#floatingAccsStrtDtm").val());
+				$(".floatingEdctnStrtDtm").text($("#floatingEdctnStrtDtm").val());
+				$(".floatingIsttrGroupName").text($("#floatingIsttrGroupName").val());
+				$(".floatingFxnumImpsb").text($("#floatingFxnumImpsb").val()+$("#floatingRcrmtMthdCdNm").val());
+				$(".floatingPlaceNm").text($("#floatingPlaceNm").val());
+				$(".floatingStduyMthdCdNm").text($("#floatingStduyMthdCdNm").val());
+				$(".floatingStduyDdCdNm").text($("#floatingStduyDdCdNm").val());
+
+				//학습방식 집체교육이면 온라인교육목차 숨김
+				if($("#floatingStduyMthdCd").val() == "STDUY_MTHD01"){
+					$(".lecture.floatingPop").hide();
+				}
+				//안내문 없으면 안내문 숨김
+
+				if($("#floatingedctnNtctnFileSeq").val() == ""){
+					$(".download.floatingPop").hide();
+				}
+			}
+
+
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
 		}, "/education/apply/episdSelect", $formObj, "GET", "html");
@@ -168,9 +197,9 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click : function(e) {
 
-						var picNm = $(e.target).parent().data("picnm");
-						var picEmail = $(e.target).parent().data("picemail");
-						var picTelNo = $(e.target).parent().data("pictelno");
+						var picNm = ($(e.target).parent().data("picnm") === undefined) ? $(e.target).data("picnm") : $(e.target).parent().data("picnm");
+						var picEmail = ($(e.target).parent().data("picemail") === undefined) ? $(e.target).data("picemail") : $(e.target).parent().data("picemail");
+						var picTelNo = ($(e.target).parent().data("pictelno") === undefined) ? $(e.target).data("pictelno") : $(e.target).parent().data("pictelno");
 
 						$(".eduPersonInfoPopup").find("table.basic-table").find("tr").eq(0).find("td").text(picNm);
 						$(".eduPersonInfoPopup").find("table.basic-table").find("tr").eq(1).find("td").text(picEmail);
@@ -187,8 +216,9 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click : function(e) {
 
-						var episdYear = $(e.target).parent().data("episdyear");
-						var episdOrd = $(e.target).parent().data("episdord");
+
+						var episdYear = ($(e.target).parent().data("episdyear") === undefined) ? $(e.target).data("episdyear") : $(e.target).parent().data("episdyear");
+						var episdOrd = ($(e.target).parent().data("episdord") === undefined) ? $(e.target).data("episdord") : $(e.target).parent().data("episdord");
 
 						$("#lctrEpisdYear").val(episdYear);
 						$("#lctrEpisdOrd").val(episdOrd);
@@ -201,6 +231,38 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
+
+			floatingPop : {
+				event : {
+					click : function(e) {
+						//플로팅 배너 하단에 있는 버튼은 버튼 자체로는 기능이 없고 클릭시 실제 본문에 있는 버튼의 이벤트를 발생 시키는 구조로 되어있음
+
+						var popType = $(e.target).parent().data("poptype");
+						/*
+						popType = 1 회차 담당자 문의
+						popType = 2 온라인 강의 목차
+						popType = 3 안내문 다운로드
+						* */
+
+						var episdSeq = $(e.target).closest("div.inner-con").find("div:first").find("p.edctnNm").data("episdseq");
+
+						$(".sec-con-area").find(".list-item").each(function(){
+
+							var thisSeq = $(this).data("episdseq");
+							if(thisSeq == episdSeq){
+								if(popType == 1){$(this).find(".popupPicPrevSet").trigger("click");}
+								if(popType == 2){$(this).find(".popupLctrPrevSet").trigger("click");}
+								if(popType == 3){
+									location.href=$(this).find(".btn-text-icon.download").attr("href");
+								}
+							}
+						})
+
+					}
+				}
+			},
+
+
 
 			//교육장 안내 팝업
 			mapBtn : {

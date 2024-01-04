@@ -56,7 +56,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 		var cdMst= {};
 		cdMst.cd = $(arg).val();
-
+		console.log(cdMst.cd);
 		cmmCtrl.jsonAjax(function(data){
 			callbackAjaxCtgryCdList(data);
 
@@ -74,7 +74,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 	var callbackAjaxCtgryCdList = function(data){
 
 		var detailList = JSON.parse(data);
-		var selectHtml = "<option value=''>전체</option>";
+		var selectHtml = "<option value=''>선택</option>";
 
 		for(var i =0; i < detailList.length; i++){
 
@@ -88,18 +88,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 		$("#ctgryCd").append(selectHtml);
 
-		var ctgrycd = $("#ctgryCd").data("ctgrycd");
+		let ctgrycd = $("#ctgryCd").data("ctgrycd");
 
-		$("#ctgryCd").val(ctgrycd).prop("selected", true);//조회된 과정분류값 자동선택
+
+		if($('#ctgryCd option[value="'+ctgrycd+'"]').length > 0){
+			$("#ctgryCd").val(ctgrycd).prop("selected", true);//조회된 과정분류값 자동선택
+		}else{
+			$("#ctgryCd").val("").prop("selected", true);//조회된 과정분류값 자동선택
+
+		}
+
+
 	}
 
 	var setSelectBox = function(arg){
 
 		if($("input[name='jdgmtYn']").is(":checked")){
-			$("#cmptnJdgmt option:eq(0)").prop("selected", true);
-			$("#cmptnJdgmt").addClass("notRequired");
+			$("#cmptnJdgmtCd option:eq(0)").prop("selected", true);
+			$("#cmptnJdgmtCd").addClass("notRequired");
+			$("#cmptnJdgmtCd").attr("disabled", true);
 		}else{
-			$("#cmptnJdgmt").removeClass("notRequired");
+			$("#cmptnJdgmtCd").removeClass("notRequired");
+			$("#cmptnJdgmtCd").attr("disabled", false);
 		}
 
 	}
@@ -230,6 +240,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			//cmmCtrl.setFormData($formObj);
 			search();
 
+			$(".jdgmtYn").trigger("change");//평가 관련 셀렉트박스 세팅
 
 			$(".classType").trigger("change");
 
@@ -243,6 +254,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					readOnly : _readOnly
 				});
 			});
+
+			//pcStduyCntn
 
 			jQuery(".CodeMirror").find("textarea").addClass("notRequired");
 
@@ -262,6 +275,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					var isValid = true, editorChk = true;
 
 					$formObj.find(".ckeditorRequired").each(function() {
+
 						jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
 						jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
 						jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
@@ -297,6 +311,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					func : function (){
 						var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
+
+						var targetchkLength= $("input[name='targetCd']:checked").length;
+
+						if(targetchkLength == 0){
+							alert("학습 대상을 선택해주세요");
+							return false;
+						}
+
+
+
+
 						if($formObj.find(".dropzone").size() > 0)
 						{
 							cmmCtrl.fileFrmAjax(function(data){

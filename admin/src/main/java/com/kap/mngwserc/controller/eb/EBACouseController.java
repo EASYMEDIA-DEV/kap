@@ -172,6 +172,7 @@ public class EBACouseController {
         modelMap.addAttribute("rtnData", rtnDto);
         modelMap.addAttribute("rtnTrgtData", rtnTrgtData);
         modelMap.addAttribute("relList", relList);
+        modelMap.addAttribute("copyYn", eBACouseDTO.getCopyYn());
 
 
         //학습대상 공통코드 호출

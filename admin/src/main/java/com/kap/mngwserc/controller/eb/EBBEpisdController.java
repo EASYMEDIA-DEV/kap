@@ -274,6 +274,11 @@ public class EBBEpisdController {
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
+        cdDtlList.add("CLASS_TYPE");
+        cdDtlList.add("STDUY_MTHD"); //학습방식
+        cdDtlList.add("STDUY_DD");//학습시간 - 학습일
+        cdDtlList.add("STDUY_TIME");//학습시간 - 학습시간
+
         cdDtlList.add("ROUND_CD");//회차정보 공통코드
         cdDtlList.add("CO_YEAR_CD");//연도 공통코드
 
@@ -287,6 +292,18 @@ public class EBBEpisdController {
         COCodeDTO cOCodeDTO = new COCodeDTO();
         cOCodeDTO.setCd("ROUND_CD");
         modelMap.addAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
+
+        modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
+
+        cOCodeDTO.setCd("CLASS01");
+        modelMap.addAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
+
+        cOCodeDTO.setCd("CLASS02");
+        modelMap.addAttribute("cdList2", cOCodeService.getCdIdList(cOCodeDTO));
+
+        cOCodeDTO.setCd("CLASS03");
+        modelMap.addAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));
+
 
         cOCodeDTO.setCd("ED_BDGET_CD01");//예산지출 코드 - 예산
         modelMap.addAttribute("ED_BDGET_CD01", cOCodeService.getCdIdList(cOCodeDTO));

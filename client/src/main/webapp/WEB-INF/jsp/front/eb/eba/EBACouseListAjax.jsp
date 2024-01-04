@@ -16,10 +16,12 @@
                                 <img src="${list.webPath}" alt="">
                             </div>
                             <div class="txt-area">
-                                <div class="top-label-area">
-                                    <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
-                                </div>
-
+                                <!--비회원 구분자를 사용하여 영역 표시-->
+                                <c:if test="${1 ne 1}">
+                                    <div class="top-label-area">
+                                        <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
+                                    </div>
+                                </c:if>
                                 <div class="sort-label-area">
                                     <p class="label"><span>${list.prntCdNm}</span></p>
                                     <p class="label"><span>${list.ctgryCdNm}</span></p>
@@ -29,9 +31,16 @@
                                     <div class="list">
                                         <p class="txt">교육기간</p>
                                         <p class="date">
-                                                ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
-                                            ~
-                                                ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                            <c:choose>
+                                                <c:when test="${empty list.edctnStrtDtm}">
+                                                    -
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                    ~
+                                                    ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                </c:otherwise>
+                                            </c:choose>
                                             (${list.stduyDdCdNm}일간)
                                         </p>
                                     </div>
@@ -50,8 +59,18 @@
                                     </div>
                                 </div>
                                 <div class="status-info-w">
-                                    <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>${list.placeNm}</span></p></c:if>
-                                    <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                    <c:choose>
+                                        <c:when test="${empty list.edctnStrtDtm}">
+                                            <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>-</span></p></c:if>
+                                            <c:if test="${list.stduyMthdCd eq 'STDUY_MTHD02'}"><p class="box-label bigger"><span>온라인</span></p></c:if>
+                                            <p class="box-label bigger waiting"><span>-</span></p>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>${list.placeNm}</span></p></c:if>
+                                            <c:if test="${list.stduyMthdCd eq 'STDUY_MTHD02'}"><p class="box-label bigger"><span>온라인</span></p></c:if>
+                                            <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                             <!-- hover 시 노출되는 영역 -->
@@ -66,17 +85,31 @@
                                         <div class="list">
                                             <div class="tit">접수기간</div>
                                             <div class="txt">
-                                                    ${ empty list.accsStrtDtm ? '-' : kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
-                                                ~
-                                                    ${ empty list.accsEndDtm ? '-' : kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                <c:choose>
+                                                    <c:when test="${empty list.edctnStrtDtm}">
+                                                        -
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${ empty list.accsStrtDtm ? '-' : kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                        ~
+                                                        ${ empty list.accsEndDtm ? '-' : kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                         <div class="list">
                                             <div class="tit">교육기간</div>
                                             <div class="txt">
-                                                    ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
-                                                ~
-                                                    ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                <c:choose>
+                                                    <c:when test="${empty list.edctnStrtDtm}">
+                                                        -
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                        ~
+                                                        ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
+                                                    </c:otherwise>
+                                                </c:choose>
                                                 (${list.stduyDdCdNm}일간)
                                             </div>
                                         </div>
@@ -86,9 +119,18 @@
                                         </div>
                                     </div>
                                     <div class="status-info-w">
-
-                                        <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>${list.placeNm}</span></p></c:if>
-                                        <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                        <c:choose>
+                                            <c:when test="${empty list.edctnStrtDtm}">
+                                                <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>-</span></p></c:if>
+                                                <c:if test="${list.stduyMthdCd eq 'STDUY_MTHD02'}"><p class="box-label bigger"><span>온라인</span></p></c:if>
+                                                <p class="box-label bigger waiting"><span>-</span></p>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>${list.placeNm}</span></p></c:if>
+                                                <c:if test="${list.stduyMthdCd eq 'STDUY_MTHD02'}"><p class="box-label bigger"><span>온라인</span></p></c:if>
+                                                <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                     <div class="btn-wrap">
                                         <c:if test="${list.accsStatusOrder eq 3}">

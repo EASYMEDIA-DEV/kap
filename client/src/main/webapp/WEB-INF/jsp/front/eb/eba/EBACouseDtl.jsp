@@ -12,7 +12,7 @@
         <input type="hidden" id="episdYear" name="episdYear" value="" />
         <input type="hidden" id="episdOrd" name="episdOrd" value="" />
         <input type="hidden" id="edctnSeq" name="edctnSeq" value="${rtnData.edctnSeq}" />
-
+        <% pageContext.setAttribute("newLine", "\n"); %>
         <div class="cont-wrap">
             <!--
               신청 페이지: apply-page 클래스 추가
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="sec-con-area">
                                     <div class="txt-sec">
-                                        ${rtnData.itrdcCntn}
+                                        ${fn:replace(rtnData.itrdcCntn, newLine, '<br>')}
                                     </div>
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="sec-con-area">
                                     <div class="txt-sec">
-                                        ${rtnData.stduyTrgtCntn}
+                                        ${fn:replace(rtnData.stduyTrgtCntn, newLine, '<br>')}
                                     </div>
                                 </div>
                             </div>
@@ -191,10 +191,18 @@
                                 </div>
                                 <div class="sec-con-area">
                                     <div class="curriculum-div">
+                                        <c:choose>
+                                            <c:when test="${deviceType eq 'web'}">
+                                                ${rtnData.pcStduyCntn}
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${rtnData.mblStduyCntn}
+                                            </c:otherwise>
+                                        </c:choose>
                                         <!-- PC 모바일 구분해야됨-->
-                                        ${rtnData.pcStduyCntn}
 
-                                        ${rtnData.mblStduyCntn}
+
+
                                     </div>
                                 </div>
                             </div>
@@ -461,72 +469,53 @@
                     </div>
 
                     <!-- 접수중 하단 플로팅 영역 -->
-                    <div class="accepting-fixed-area">
+                    <div class="accepting-fixed-area" style="display:none;">
                         <div class="for-position">
                             <button class="open-click-area" type="button">
-                                <p class="tit">8회차 <span class="status">접수중</span></p>
+                                <p class="tit floatingEpisdOrd"><span class="status">접수중</span></p>
                                 <div class="btn-text-icon plus"><span>더보기</span></div>
                             </button>
 
                             <div class="hide-area">
                                 <div class="inner-con">
                                     <div class="tit-area">
-                                        <p class="f-title1">2023 1차 사업재편지원 사업  (상시접수중)</p>
+                                        <p class="f-title1 edctnNm">${rtnData.nm}</p>
                                     </div>
                                     <div class="con-area">
                                         <div class="scroll-area">
                                             <div class="info-line-list-w">
                                                 <div class="list">
                                                     <p class="tit">접수일자</p>
-                                                    <p class="txt">2023.02.01 10:00 ~ 2023.02.01 17:00</p>
+                                                    <p class="txt floatingAccsStrtDtm">2023.02.01 10:00 ~ 2023.02.01 17:00</p>
                                                 </div>
                                                 <div class="list">
                                                     <p class="tit">교육일자</p>
-                                                    <p class="txt">2023.02.01 10:00 - 2023.02.01 17:00</p>
+                                                    <p class="txt floatingEdctnStrtDtm">2023.02.01 10:00 - 2023.02.01 17:00</p>
                                                 </div>
                                                 <div class="list">
                                                     <p class="tit">강사</p>
-                                                    <p class="txt">
-                                                        <!-- <span class="img"><img src="/common/images/img-instructor-profile-01.jpg" alt=""></span> -->
+                                                    <p class="txt floatingIsttrGroupName">
                                                         <span>홍길동</span>
                                                     </p>
                                                 </div>
                                                 <div class="list">
                                                     <p class="tit">정원</p>
-                                                    <p class="txt">30명</p>
+                                                    <p class="txt floatingFxnumImpsb">30명</p>
                                                 </div>
                                                 <div class="list">
                                                     <p class="tit">교육장소</p>
-                                                    <p class="txt">경주GPC
+                                                    <p class="txt floatingPlaceNm">경주GPC
                                                     </p>
                                                 </div>
                                                 <div class="list">
                                                     <p class="tit">학습방식</p>
-                                                    <p class="txt">집체교육</p>
+                                                    <p class="txt floatingStduyMthdCdNm">집체교육
+                                                    </p>
                                                 </div>
                                                 <div class="list">
-                                                    <p class="tit">학습방식</p>
-                                                    <p class="txt">집체교육</p>
-                                                </div>
-                                                <div class="list">
-                                                    <p class="tit">학습방식</p>
-                                                    <p class="txt">집체교육</p>
-                                                </div>
-                                                <div class="list">
-                                                    <p class="tit">학습방식</p>
-                                                    <p class="txt">집체교육</p>
-                                                </div>
-                                                <div class="list">
-                                                    <p class="tit">학습방식</p>
-                                                    <p class="txt">집체교육</p>
-                                                </div>
-                                                <div class="list">
-                                                    <p class="tit">학습방식</p>
-                                                    <p class="txt">집체교육</p>
-                                                </div>
-                                                <div class="list">
-                                                    <p class="tit">학습방식</p>
-                                                    <p class="txt">집체교육</p>
+                                                    <p class="tit">학습시간</p>
+                                                    <p class="txt floatingStduyDdCdNm">2일/14시간
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -534,9 +523,9 @@
 
                                     <div class="btn-wrap">
                                         <div class="btn-set">
-                                            <a class="btn-solid small gray-bg has-icon tel" href="javascript:" title="회차 담당자 문의하기"><span>회차 담당자 문의</span></a>
-                                            <a class="btn-solid small gray-bg has-icon lecture" href="javascript:" title="온라인 강의목차 보기"><span>온라인 강의목차</span></a>
-                                            <a class="btn-solid small gray-bg has-icon download" href="javascript:" download title="안내문 다운로드"><span>안내문 다운로드</span></a>
+                                            <a class="btn-solid small gray-bg has-icon tel floatingPop" data-popType="1" href="javascript:" title="회차 담당자 문의하기"><span>회차 담당자 문의</span></a>
+                                            <a class="btn-solid small gray-bg has-icon lecture floatingPop"data-popType="2" href="javascript:" title="온라인 강의목차 보기"><span>온라인 강의목차</span></a>
+                                            <a class="btn-solid small gray-bg has-icon download floatingPop" data-popType="3" href="javascript:" title="안내문 다운로드"><span>안내문 다운로드</span></a>
                                         </div>
                                         <div class="btn-set">
                                             <a class="btn-solid small black-bg" href="javascript:"><span>신청하기</span></a>

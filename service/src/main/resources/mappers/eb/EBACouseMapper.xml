@@ -202,6 +202,8 @@
 				  , (select name from co_adm_mst where id = a.reg_id) as reg_name
 				  , reg_dtm
 				  , mod_id
+				  , (select name from co_adm_mst where id = a.mod_id) as mod_name
+				  , mod_dtm
 				  , exps_yn
 			 from
 				 ed_edctn_prcs_mst a
@@ -295,7 +297,14 @@
 		, #{stduyTrgtCntn}
 		, #{stduyMthdCd}
 		, #{cmptnStndCd}
-		, #{cmptnJdgmtCd}
+
+		<if test='jdgmtYn =="Y" '>
+			, #{cmptnJdgmtCd}
+		</if>
+		<if test='jdgmtYn =="N" '>
+			, null
+		</if>
+
 		, #{jdgmtYn}
 		, #{stduyDdCd}
 		, #{stduyTimeCd}
@@ -331,7 +340,15 @@
 			, stduy_trgt_cntn = #{stduyTrgtCntn}
 			, stduy_mthd_cd = #{stduyMthdCd}
 			, cmptn_stnd_cd = #{cmptnStndCd}
-			, cmptn_Jdgmt_Cd = #{cmptnJdgmtCd}
+
+
+			<if test='jdgmtYn =="Y" '>
+				, cmptn_Jdgmt_Cd = #{cmptnJdgmtCd}
+			</if>
+			<if test='jdgmtYn =="N" '>
+				, cmptn_Jdgmt_Cd = null
+			</if>
+
 			, jdgmt_yn = #{jdgmtYn}
 			, stduy_dd_cd = #{stduyDdCd}
 			, stduy_time_cd = #{stduyTimeCd}

@@ -147,7 +147,14 @@ define(["ezCtrl"], function(ezCtrl) {
 					click : function() {
 						//선택삭제 진행
 
+						if($("#vueList").find("input:checkbox[name='delValueList']:checked").length == 0){
+							alert("삭제할 게시물을 선택해주세요.");
+							return false;
+						}
+
 						var actionForm = {};
+
+
 
 						var seqList = new Array();
 						$("#vueList").find("input:checkbox[name='delValueList']:checked").each(function(){

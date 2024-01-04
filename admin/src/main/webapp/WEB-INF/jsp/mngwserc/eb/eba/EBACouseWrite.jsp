@@ -101,7 +101,18 @@
                                 <c:forEach var="targetList" items="${list.edList}">
                                     <c:choose>
                                         <c:when test="${targetList.dpth eq '2'}">
-                                            <label class="col-sm-1 control-label">${targetList.cdNm}<span class="star"> *</span></label>
+                                            <c:set var="etcYn" value="Y"/>
+                                            <c:if test="${targetList.cdNm ne '기타' && targetList.cd ne 'ED_TARGET05001'}">
+                                                <c:set var="etcYn" value="N"/>
+                                            </c:if>
+                                            <c:if test="${targetList.cdNm eq '기타' && targetList.cd eq 'ED_TARGET05001'}">
+                                                <c:set var="etcYn" value="Y"/>
+                                            </c:if>
+                                            <label class="col-sm-1 control-label" <c:if test="${etcYn eq 'Y'}">style="margin-left: -10px;"</c:if>>${targetList.cdNm}
+                                                <c:if test="${etcYn eq 'N'}">
+                                                <span class="star"> *</span>
+                                                </c:if>
+                                            </label>
                                         </c:when>
                                         <c:otherwise>
                                             <c:if test="${targetList.cdNm ne '기타' && targetList.cd ne 'ED_TARGET05001'}">
@@ -160,7 +171,7 @@
                             <select class="form-control input-sm wd-sm" name="cmptnStndCd" id="cmptnStndCd" title="출석/수강">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${studyCdList.CMPTN_STND}" varStatus="status">
-                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnStndCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnStndCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}%</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -171,7 +182,7 @@
                             <select class="form-control input-sm wd-sm" name="cmptnJdgmtCd" id="cmptnJdgmtCd" title="평가">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${studyCdList.CMPTN_JDGMT}" varStatus="status">
-                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnJdgmtCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnJdgmtCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}점</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -195,7 +206,7 @@
                         <select class="form-control input-sm wd-sm" name="stduyDdCd" id="stduyDdCd" title="학습일">
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${studyCdList.STDUY_DD}" varStatus="status">
-                                <option value="${cdList.cd}" <c:if test="${rtnDto.stduyDdCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                <option value="${cdList.cd}" <c:if test="${rtnDto.stduyDdCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}일</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -205,7 +216,7 @@
                         <select class="form-control input-sm wd-sm" name="stduyTimeCd" id="stduyTimeCd" title="학습시간">
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${studyCdList.STDUY_TIME}" varStatus="status">
-                                <option value="${cdList.cd}" <c:if test="${rtnDto.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}일</option>
+                                <option value="${cdList.cd}" <c:if test="${rtnDto.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}시간</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -303,7 +314,7 @@
 
                             </span>
                             <input type="hidden" class="notRequired cloneHidden" name="" id="" value="">
-                            <button type="button" class="btn btn-sm btn-danger btnDeleteOptn"><em class="ion-android-remove"></em></button>
+                            <button type="button" class="btn btn-sm btn-danger btnDeleteOptn" onclick='$(this).closest(".row").remove();'><em class="ion-android-remove"></em></button>
                             </div>
                         </div>
 
@@ -318,14 +329,16 @@
                     <label class="col-sm-1 control-label">썸네일 이미지</label>
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                        <spring:eval var="eduThumSize" expression="@environment.getProperty('app.file.eduThumSize')" />
                         <spring:eval var="atchUploadMaxSize" expression="5242880" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="thnlFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="썸네일이미지">
+
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="thnlFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
                         </div>
                         <p class="text-bold mt">
-                            ※ jpg, jpeg, png 파일만 등록 가능합니다. (<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
+                            ※ ${eduThumSize} / 파일 확장자(jpg,jpeg,png) / 최대 용량(5MB) / 최대 개수 (1개)
                         </p>
                     </div>
                 </div>
@@ -364,7 +377,7 @@
                     </c:choose>
                 </div>
             </div>
-            <c:if test="${ not empty rtnDto }">
+            <c:if test="${ not empty rtnDto && copyYn eq 'N' }">
                 <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
                 <div class="table-responsive ">
                     <table class="table text-sm">
@@ -401,59 +414,58 @@
             </c:if>
 
             <!--VUE 영역 시작 -->
-            <div class="table-responsive col-sm-12 p0 m0" id="vueList" <c:if test="${empty rtnDto}">style="display:none;"</c:if>  >
-                <table class="table table-hover table-striped" >
-                    <thead>
-                    <tr>
-                        <th class="text-center" rowspan="2">
-                            <label class="checkbox-inline c-checkbox">
-                                <input type="checkbox" class="checkboxAll notRequired" name="totCheck" title="전체선택" />
-                                <span class="ion-checkmark-round"></span>
-                            </label>
-                        </th>
-                        <th class="text-center" rowspan="2">번호</th>
-                        <th class="text-center" rowspan="2">과정분류</th>
-                        <th class="text-center" rowspan="2">과정명</th>
-                        <th class="text-center" rowspan="2">학습방식</th>
-                        <th class="text-center" rowspan="2">학습시간</th>
+            <c:if test="${ not empty rtnDto && copyYn eq 'N' }">
+                <h6 class="mt"><em class="ion-play mr-sm"></em>회차정보</h6>
+                <div class="table-responsive col-sm-12 p0 m0" id="vueList" <c:if test="${empty rtnDto}">style="display:none;"</c:if>  >
+                    <table class="table table-hover table-striped" >
+                        <thead>
+                        <tr>
+                            <th class="text-center" rowspan="2"></th>
+                            <th class="text-center" rowspan="2">번호</th>
+                            <th class="text-center" rowspan="2">과정분류</th>
+                            <th class="text-center" rowspan="2">과정명</th>
+                            <th class="text-center" rowspan="2">학습방식</th>
+                            <th class="text-center" rowspan="2">학습시간</th>
 
-                        <th class="text-center" rowspan="2">년도</th>
-                        <th class="text-center" rowspan="2">회차</th>
-                        <th class="text-center" rowspan="2">접수기간</th>
-                        <th class="text-center" rowspan="2">접수상태</th>
-                        <th class="text-center" rowspan="2">교육기간</th>
-                        <th class="text-center" rowspan="2">실적마감여부</th>
-                        <th class="text-center" rowspan="2">교육상태</th>
-                        <th class="text-center" colspan="2">강사</th>
+                            <th class="text-center" rowspan="2">년도</th>
+                            <th class="text-center" rowspan="2">회차</th>
+                            <th class="text-center" rowspan="2">접수기간</th>
+                            <th class="text-center" rowspan="2">접수상태</th>
+                            <th class="text-center" rowspan="2">교육기간</th>
+                            <th class="text-center" rowspan="2">실적마감여부</th>
+                            <th class="text-center" rowspan="2">교육상태</th>
+                            <th class="text-center" colspan="2">강사</th>
 
-                        <th class="text-center" rowspan="2">정원</th>
-                        <th class="text-center" rowspan="2">신청자</th>
-                        <th class="text-center" rowspan="2">모집 방식</th>
-                        <th class="text-center" colspan="3">문의담당자</th>
-                        <th class="text-center" rowspan="2">교육장소</th>
+                            <th class="text-center" rowspan="2">정원</th>
+                            <th class="text-center" rowspan="2">신청자</th>
+                            <th class="text-center" rowspan="2">모집 방식</th>
+                            <th class="text-center" colspan="3">문의담당자</th>
+                            <th class="text-center" rowspan="2">교육장소</th>
 
 
-                        <th class="text-center" rowspan="2">최초 등록자</th>
-                        <th class="text-center" rowspan="2">최초 등록일시</th>
-                        <th class="text-center" rowspan="2">최종 수정자</th>
-                        <th class="text-center" rowspan="2">최종 수정일시</th>
-                        <th class="text-center" rowspan="2">노출여부</th>
-                    </tr>
-                    <tr>
-                        <th class="text-center">이름</th>
-                        <th class="text-center">소속</th>
+                            <th class="text-center" rowspan="2">최초 등록자</th>
+                            <th class="text-center" rowspan="2">최초 등록일시</th>
+                            <th class="text-center" rowspan="2">최종 수정자</th>
+                            <th class="text-center" rowspan="2">최종 수정일시</th>
+                            <th class="text-center" rowspan="2">노출여부</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">이름</th>
+                            <th class="text-center">소속</th>
 
-                        <th class="text-center">이름</th>
-                        <th class="text-center">이메일</th>
-                        <th class="text-center">전화번호</th>
-                    </tr>
-                    </thead>
-                    <!-- 리스트 목록 결과 -->
-                    <tbody id="listContainer"/>
-                </table>
-                <!-- 페이징 버튼 -->
-                <div id="pagingContainer"/>
-            </div>
+                            <th class="text-center">이름</th>
+                            <th class="text-center">이메일</th>
+                            <th class="text-center">전화번호</th>
+                        </tr>
+                        </thead>
+                        <!-- 리스트 목록 결과 -->
+                        <tbody id="listContainer"/>
+                    </table>
+                    <!-- 페이징 버튼 -->
+                    <div id="pagingContainer"/>
+                </div>
+            </c:if>
+
             <!--리스트 종료 -->
         </form>
     </div>

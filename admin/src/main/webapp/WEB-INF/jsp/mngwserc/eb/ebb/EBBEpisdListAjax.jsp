@@ -42,7 +42,7 @@
         <td class="text-center">${list.picTelNo}</td><!--담당자 전화번호-->
         <td class="text-center">${list.placeNm}</td><!--교육장소-->
         <td class="text-center">${list.regName}(${list.regId})</td><!--최초 등록자-->
-        <td class="text-center">${list.regDtm}</td><!--최초등록일시-->
+        <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최초등록일시-->
         <td class="text-center">${list.modName}(${list.modId})</td><!--최종수정자-->
         <td class="text-center">${ empty list.modDtm ? '-' : kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최종 수정일시-->
         <td class="text-center">${ kl:decode(list.expsYn, 'Y', '활성', '비활성') }</td><!--노출여부-->
@@ -51,7 +51,7 @@
   </c:when>
   <c:otherwise>
     <tr data-total-count="0">
-      <td colspan="25" class="text-center">
+      <td colspan="26" class="text-center">
         검색결과가 없습니다.<br>
         (등록된 데이터가 없습니다.)
       </td>

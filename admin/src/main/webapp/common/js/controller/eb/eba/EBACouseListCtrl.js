@@ -128,7 +128,7 @@ define(["ezCtrl"], function(ezCtrl) {
 						}
 						//복사
 						$("#copyYn").val("Y");
-						valList.closest("tr").find("td:eq(2) > a").trigger("click")
+						valList.closest("tr").find("td:eq(3) > a").trigger("click")
 					}
 				}
 			},
@@ -139,6 +139,13 @@ define(["ezCtrl"], function(ezCtrl) {
 						var $this = this;
 
 						var delList = new Array();
+
+
+						if($("#listContainer").find("input:checkbox[name='delValueList']:checked").length == 0){
+							alert("삭제할 게시물을 선택해주세요.");
+							return false;
+						}
+
 						$("#listContainer").find("input:checkbox[name='delValueList']:checked").each(function(){
 							delList.push($(this).val());
 						})

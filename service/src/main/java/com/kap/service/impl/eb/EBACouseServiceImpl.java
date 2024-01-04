@@ -1,6 +1,7 @@
 package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
@@ -183,6 +184,11 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 		eBACouseDTO.setEdctnSeq(firstEdctnMstIdgen);
 
+		String cnts = eBACouseDTO.getPcStduyCntn();
+		eBACouseDTO.setPcStduyCntn(COWebUtil.clearXSSMinimum(cnts));
+
+		String cnts2 = eBACouseDTO.getMblStduyCntn();
+		eBACouseDTO.setMblStduyCntn(COWebUtil.clearXSSMinimum(cnts2));
 
 		//교육과정 등록
 		respCnt = eBACouseMapper.insertCouse(eBACouseDTO);
@@ -239,6 +245,12 @@ public class EBACouseServiceImpl implements EBACouseService {
 		HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBACouseDTO.getFileList());
 
 		eBACouseDTO.setThnlFileSeq(fileSeqMap.get("thnlFileSeq"));
+
+		String cnts = eBACouseDTO.getPcStduyCntn();
+		eBACouseDTO.setPcStduyCntn(COWebUtil.clearXSSMinimum(cnts));
+
+		String cnts2 = eBACouseDTO.getMblStduyCntn();
+		eBACouseDTO.setMblStduyCntn(COWebUtil.clearXSSMinimum(cnts2));
 
 		respCnt = eBACouseMapper.updateCouse(eBACouseDTO);
 
