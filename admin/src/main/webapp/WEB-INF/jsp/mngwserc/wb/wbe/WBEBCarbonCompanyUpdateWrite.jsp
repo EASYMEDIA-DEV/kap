@@ -21,7 +21,7 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/wb/wbe/WBEBCarbonCompanyUpdateWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>관리자 등록</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>신청부품사 상세/수정</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
 
             <!-- 현재 페이징 번호 -->

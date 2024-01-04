@@ -219,10 +219,14 @@ public class WBEBCarbonCompanyController {
      */
     @RequestMapping(value = "/getEpisdSelect")
     @ResponseBody
-    public WBEBCarbonCompanySearchDTO getEpisdSelect( WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public WBEBCarbonCompanySearchDTO getEpisdSelect(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
+            if(wBEBCarbonCompanySearchDTO.getYearSearch() != null && !wBEBCarbonCompanySearchDTO.getYearSearch().equals(""))
+            {
+                wBEBCarbonCompanySearchDTO.setYear(Integer.parseInt(wBEBCarbonCompanySearchDTO.getYearSearch()));
+            }
             wBEBCarbonCompanySearchDTO = wBEBCarbonCompanyService.getYearSelect(wBEBCarbonCompanySearchDTO);
         }
         catch (Exception e)

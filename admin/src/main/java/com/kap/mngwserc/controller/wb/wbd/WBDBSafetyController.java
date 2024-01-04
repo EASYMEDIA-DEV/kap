@@ -218,10 +218,14 @@ public class WBDBSafetyController {
      */
     @RequestMapping(value = "/getEpisdSelect")
     @ResponseBody
-    public WBDBSafetySearchDTO getEpisdSelect( WBDBSafetySearchDTO wBDBSafetySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public WBDBSafetySearchDTO getEpisdSelect(WBDBSafetySearchDTO wBDBSafetySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
+            if(wBDBSafetySearchDTO.getYearSearch() != null && !wBDBSafetySearchDTO.getYearSearch().equals(""))
+            {
+                wBDBSafetySearchDTO.setYear(Integer.parseInt(wBDBSafetySearchDTO.getYearSearch()));
+            }
             wBDBSafetySearchDTO = wBDBSafetyService.getYearSelect(wBDBSafetySearchDTO);
         }
         catch (Exception e)

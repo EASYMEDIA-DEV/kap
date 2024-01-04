@@ -222,6 +222,10 @@ public class WBCBSecurityController {
     {
         try
         {
+            if(wBCBSecuritySearchDTO.getYearSearch() != null && !wBCBSecuritySearchDTO.getYearSearch().equals(""))
+            {
+                wBCBSecuritySearchDTO.setYear(Integer.parseInt(wBCBSecuritySearchDTO.getYearSearch()));
+            }
             wBCBSecuritySearchDTO = wBCBSecurityService.getYearSelect(wBCBSecuritySearchDTO);
         }
         catch (Exception e)

@@ -106,6 +106,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            episdYear : {
+                event : {
+                    change : function() {
+                        cmmCtrl.frmAjax(function(data) {
+
+                            var html = "<option value=\"\">회차 전체</option>";
+                            for(var i = 0; i< data.episdList.length; i++){
+                                html += '<option value=\"'+data.episdList[i]+'\">'+data.episdList[i]+'</option>';
+                            }
+                            $("#episd").html(html);
+
+                        }, "./getEpisdSelect", $formObj, "post", "json")
+                    }
+                }
+            }
         },
         classname : {
             //페이징 처리
