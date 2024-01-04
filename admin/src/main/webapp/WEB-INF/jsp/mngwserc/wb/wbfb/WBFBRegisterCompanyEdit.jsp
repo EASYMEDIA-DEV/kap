@@ -244,7 +244,7 @@
                                 <input type="button" class="btn btn-sm btn-primary" id="searchPostCode" value="우편번호 검색"><br>
                                 <br>
                                 <div style="display: flex; gap: 10px;">
-                                    <input type="text" class="form-control input-sm" id="zipCode" name="zipCode" value="${registerDtl.zipCode}" readonly placeholder="우편번호" style="width: 95px;" title="주소">
+                                    <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${registerDtl.zipcode}" readonly placeholder="우편번호" style="width: 95px;" title="주소">
                                     <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${registerDtl.bscAddr}" readonly placeholder="기본주소" style="width: 295px;" title="주소">
                                 </div>
                                 <br>
@@ -371,18 +371,18 @@
                             <div class="col-sm-10">
                                 <c:forEach var="i" begin="1" end="3" varStatus="status">
                                     <div class="col-sm-12 sqInfoArea" id="sqInfoArea${status.index-1}">
-                                        <input type="hidden" class="notRequired" id="cbsnSeq" name="sqInfoList[${status.index-1}].cbsnSeq" value="${rtnBasicData.searchSqInfoList[status.index-1].cbsnSeq}" />
-                                        <input type="text" class="form-control input-sm notRequired" id="nm" name="sqInfoList[${status.index-1}].nm" value="${rtnBasicData.searchSqInfoList[status.index-1].nm}" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
-                                        <input type="text" class="form-control input-sm notRequired" id="score" name="sqInfoList[${status.index-1}].score" value="${rtnBasicData.searchSqInfoList[status.index-1].score}" title="점수" placeholder="SQ 점수입력" maxlength="50"/>
+                                        <input type="hidden" class="notRequired" id="cbsnSeq" name="sqInfoList[${status.index-1}].cbsnSeq" value="${rtnBasicData.sqInfoList[status.index-1].cbsnSeq}" />
+                                        <input type="text" class="form-control input-sm notRequired" id="nm" name="sqInfoList[${status.index-1}].nm" value="${rtnBasicData.sqInfoList[status.index-1].nm}" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="score" name="sqInfoList[${status.index-1}].score" value="${rtnBasicData.sqInfoList[status.index-1].score}" title="점수" placeholder="SQ 점수입력" maxlength="50"/>
                                         <select class="form-control input-sm notRequired" id="year" name="sqInfoList[${status.index-1}].year" title="평가년도" style="width:auto;">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                                <option value="${cdList.cd}" <c:if test="${rtnBasicData.searchSqInfoList[status.index-1].year eq cdList.cd}">selected</c:if> >
+                                                <option value="${cdList.cd}" <c:if test="${rtnBasicData.sqInfoList[status.index-1].year eq cdList.cd}">selected</c:if> >
                                                         ${cdList.cdNm}
                                                 </option>
                                             </c:forEach>
                                         </select>
-                                        <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm" name="sqInfoList[${status.index-1}].crtfnCmpnNm" value="${rtnBasicData.searchSqInfoList[status.index-1].crtfnCmpnNm}" title="인증주관사명" placeholder="SQ 인증주관사 입력" maxlength="50"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm" name="sqInfoList[${status.index-1}].crtfnCmpnNm" value="${rtnBasicData.sqInfoList[status.index-1].crtfnCmpnNm}" title="인증주관사명" placeholder="SQ 인증주관사 입력" maxlength="50"/>
                                     </div>
                                 </c:forEach>
                             </div>

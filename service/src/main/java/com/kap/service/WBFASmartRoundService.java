@@ -28,7 +28,7 @@ public interface WBFASmartRoundService {
     /**
      * 회차 List 조회한다.
      */
-    public WBRoundMstSearchDTO selApplyCompanyList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+    public WBRoundMstSearchDTO selRoundList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
     /**
      * 회차 글 상세 조회한다.
@@ -69,5 +69,17 @@ public interface WBFASmartRoundService {
     * 회차 관리 수정 - 등록된 신청부품사
     */
     public int getRegisterChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 사용자
+     * 최근 회차 등록 조회
+     */
+    public WBRoundMstSearchDTO getRecentRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 사용자
+     * 최신 회차 목록을 조회한다.
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
 }

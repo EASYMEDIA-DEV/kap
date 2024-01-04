@@ -1,10 +1,12 @@
 package com.kap.service.impl.wb.wbf;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.WBRoundOptnMstDTO;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBFASmartRoundService;
 import com.kap.service.dao.wb.wbf.WBFASmartRoundMapper;
 import lombok.RequiredArgsConstructor;
@@ -14,9 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * <pre>
@@ -56,7 +55,7 @@ public class WBFASmartRoundServiceImpl implements WBFASmartRoundService {
     /**
      *   신청부품사 목록 List Get
      */
-    public WBRoundMstSearchDTO selApplyCompanyList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+    public WBRoundMstSearchDTO selRoundList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
         wBRoundMstSearchDTO.setBsnCd("INQ07006");
 
         COPaginationUtil page = new COPaginationUtil();
@@ -254,4 +253,58 @@ public class WBFASmartRoundServiceImpl implements WBFASmartRoundService {
 
         return respCnt;
     }
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRecentRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        wBRoundMstSearchDTO = wBFASmartRoundMapper.getRecentRoundDtl(wBRoundMstSearchDTO);
+
+        return wBRoundMstSearchDTO;
+    }
+
+    /**
+     * 신청 여부 조회
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        int rtnCode = 0;
+
+        COUserDetailsDTO cOUserDetailsDTO = null;
+
+        if (!COUserDetailsHelperService.isAuthenticated())
+        {
+            //비로그인 코드 100
+            rtnCode = 999;
+        }
+        else
+        {
+            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+            if (!"CP".equals(cOUserDetailsDTO.getAuthCd())) {
+                if ("CS".equals(cOUserDetailsDTO.getAuthCd())) {
+                    //위원인 경우 150
+                    rtnCode = 150;
+                } else {
+                    //부품사회원이 아닌경우 100
+                    rtnCode = 100;
+                }
+            } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
+                wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                int cnt = wBFASmartRoundMapper.getApplyCount(wBRoundMstSearchDTO);
+
+                if (cnt > 0) {
+                    //신청여부 존재 코드 300
+                    rtnCode = 300;
+                } else {
+                    //신청가능 코드 200
+                    rtnCode = 200;
+                }
+            }
+        }
+
+        return rtnCode;
+    }
+
 }

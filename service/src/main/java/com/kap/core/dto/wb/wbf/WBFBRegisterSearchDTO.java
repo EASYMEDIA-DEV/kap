@@ -32,6 +32,8 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     @Schema(title = "이관번호", example = "")
     private String trnsfSeq;
     @Schema(title = "이전회원순번", example = "")
+    private String memSeq;
+    @Schema(title = "이전회원순번", example = "")
     private String bfreMemSeq;
     @Schema(title = "이전회원순번", example = "")
     private String bfreMemNm;
@@ -140,7 +142,7 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     List<WBFBRsumeTaskDtlDTO> rsumeTaskDtl;
 
     @Schema(title = "SQ 리스트 - 회사업종상세 테이블")
-    private List<WBCompanyDetailMstDTO> searchSqInfoList;
+    private List<WBCompanyDetailMstDTO> sqInfoList;
 
     @Schema(title = "지급차수 List")
     private List<WBOrderMstDto> orderList;
