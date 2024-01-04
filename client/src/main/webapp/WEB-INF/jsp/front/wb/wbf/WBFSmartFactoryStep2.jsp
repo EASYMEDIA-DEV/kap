@@ -398,7 +398,7 @@
                 <div class="page-bot-btn-sec scroll-motion">
                     <div class="btn-wrap for-motion">
                         <div class="btn-set">
-                            <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                            <a class="btn-solid small gray-bg btnCancle" href="javascript:"><span>취소</span></a>
                         </div>
                         <div class="btn-set">
                             <a class="btn-solid small black-bg insert" href="javascript:"><span>다음</span></a>
