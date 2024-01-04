@@ -15,12 +15,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
         $(".surveyList").each(function () {
+            var $surveyObj = $(this);
             var surveyTypeData = $(this).data('survey-type');
             var cnt = 1;
             var subCnt = 1;
             $("." + surveyTypeData).each(function (index) {                         // 질문, 하위질문 번호를 구분하고 순서를 셋팅
                 if ($(this).find('input[name=dpth]').val() == '2') {
-                    $("." + surveyTypeData + "questionTxt:eq(" + index + ")").text("└Q" + eval(cnt - 1) + "-" + subCnt);
+                    $("." + surveyTypeData + "questionTxt:eq(" + index + ")").text("Q" + eval(cnt - 1) + "-" + subCnt);
+                    $(this).addClass(eval(cnt - 1) + "-" + subCnt);
                     subCnt = subCnt + 1;
                 } else {
                     $("." + surveyTypeData + "questionTxt:eq(" + index + ")").text("Q" + cnt);
@@ -44,6 +46,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             },
         },
         classname : {
+            answer : {
+                event : {
+                    click : function() {
+                        var surveyList = $(this).closest('.survey-list');
+                        var nextNo = $(this).data("next-no");
+
+                        if (nextNo != ''){
+                            surveyList.find(".survey-list-inner:not(:eq(0)) input:radio").prop('checked',false).hide();
+
+                            surveyList.find('.survey-list-inner:not(:eq(0))').hide();
+                            var nextNoSplit = nextNo.split(',');
+                            $(nextNoSplit).each(function(i){
+                                surveyList.find('.'+nextNoSplit[i]).show();
+                            });
+                        }
+                    }
+                }
+            },
         },
         immediately : function(){
 
