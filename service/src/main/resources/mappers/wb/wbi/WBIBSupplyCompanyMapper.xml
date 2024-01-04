@@ -656,6 +656,190 @@
         DELETE FROM CX_APPCTN_FILE_DTL
         WHERE APPCTN_SEQ = #{appctnSeq}
     </delete>
+
+    <!--
+     쿼리명 : WBIBSupplyCompanyMapper.insertApply
+     설  명 : 상생 신청 마스터 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.24  오병호     최초 생성
+    -->
+    <insert id="insertApply" parameterType="wBIBSupplyDTO">
+        INSERT /* WBIBSupplyCompanyMapper.insertApply */ INTO CX_APPCTN_MST
+        (
+            APPCTN_SEQ
+        , EPISD_SEQ
+        , MEM_SEQ
+        , APPCTN_BSNM_NO
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
+        )
+            VALUE
+            (
+            #{appctnSeq}
+            ,#{episdSeq}
+            ,#{memSeq}
+            ,#{appctnBsnmNo}
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+            )
+    </insert>
+
+    <!--
+     쿼리명 : WBIBSupplyCompanyMapper.insertApplyDtl
+     설  명 : 상생 신청 상세 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.24  오병호     최초 생성
+    -->
+    <insert id="insertApplyDtl" parameterType="wBIBSupplyDTO">
+        INSERT /* WBIBSupplyCompanyMapper.insertApplyDtl */ INTO CX_APPCTN_RSUME_DTL
+        (
+            RSUME_SEQ
+        , RSUME_ORD
+        , APPCTN_SEQ
+        , RSUME_STTS_CD
+        , APPCTN_STTS_CD
+        , APPCTN_STTS_CHNG_DTM
+        , MNG_STTS_CD
+        , MNG_STTS_CHNG_DTM
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        )
+            VALUE
+            (
+            #{rsumeSeq}
+            , 1
+            ,#{appctnSeq}
+            ,#{rsumeSttsCd}
+            ,#{appctnSttsCd}
+            ,NOW()
+            ,#{mngSttsCd}
+            ,NOW()
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+            )
+    </insert>
+
+    <!--
+        쿼리명 : WBIBSupplyCompanyMapper.selectRecent
+        설  명 : 최신 게시글 조회
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.12.01  오병호     최초 생성
+   -->
+    <select id="selectRecent" parameterType="wBRoundMstSearchDTO" resultType="wBIBSupplyDTO">
+            SELECT /* WBIBSupplyCompanyMapper.selectRecent*/
+                 RSUME_SEQ
+                , APPCTN_SEQ
+                , RSUME_STTS_CD
+                , REG_DTM
+            FROM CX_APPCTN_RSUME_DTL
+            WHERE RSUME_STTS_CD = 'PRO_TYPE06001'
+            ORDER BY REG_DTM DESC
+            LIMIT 1
+    </select>
+
+
+    <!--
+         쿼리명 : WBIBSupplyCompanyMapper.selectPartsCompanyList
+         설  명 : 부품사 목록을 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09  오병호       최초생성
+    -->
+    <select id="selectPartsCompanyList" parameterType="MPEPartsCompanyDTO" resultType="MPEPartsCompanyDTO">
+        SELECT /* WBIBSupplyCompanyMapper.selectPartsCompanyList */
+        BSNM_NO
+        , RPRSNT_NM
+        , CMPN_NM
+        , CMPN_CD
+        , CTGRY_CD
+        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.CTGRY_CD) AS CTGRY_NM
+        , SIZE_CD
+        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.SIZE_CD) AS SIZE_NM
+        , BSNM_NO
+        , BSC_ADDR
+        , DTL_ADDR
+        , SLS_PMT
+        , MPLE_CNT
+        , TEL_NO
+        , STBSM_DT
+        , ZIPCODE
+        , TEL_NO
+        , MJR_PRDCT_1
+        , MJR_PRDCT_2
+        , MJR_PRDCT_3
+        , QLTY_5_STAR_CD
+        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.QLTY_5_STAR_CD) AS QLTY_5_STAR_CD_NM
+        , QLTY_5_STAR_YEAR
+        , PAY_5_STAR_CD
+        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.PAY_5_STAR_CD) AS PAY_5_STAR_CD_NM
+        , PAY_5_STAR_YEAR
+        , TCHLG_5_STAR_CD
+        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_CD_NM
+        , TCHLG_5_STAR_YEAR
+        , REG_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+        , REG_IP
+        , REG_DTM
+        , MOD_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+        , MOD_IP
+        , MOD_DTM
+        FROM CP_CMPN_MST A
+        <include refid="selectPartsComListwhereSql" />
+        ORDER BY
+        REG_DTM DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : WBIBSupplyCompanyMapper.selectPartsCompanyCnt
+         설  명 : 부품사 개수를 조회한다.
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.12.01  오병호     최초 생성
+    -->
+    <select id="selectPartsCompanyCnt" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
+        SELECT /* WBIBSupplyCompanyMapper.selectPartsCompanyCnt*/
+        COUNT(BSNM_NO)
+        FROM
+        CP_CMPN_MST A
+        <include refid="selectPartsComListwhereSql" />
+    </select>
+
+    <!--
+		쿼리명 : selectPartsComListwhereSql
+		설  명 : 부품사 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.09    오병호       최초생성
+    -->
+    <sql id="selectPartsComListwhereSql">
+        <where>
+            <if test="q != null and q != ''">
+                <choose>
+                    <when test="f == 1">
+                        AND CMPN_NM LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <when test="f == 2">
+                        AND BSNM_NO LIKE CONCAT('%', #{q}, '%')
+                    </when>
+                    <otherwise>
+                        AND (
+                        INSTR(#{q}, CMPN_NM) <![CDATA[>]]> 0 OR
+                        INSTR(#{q}, BSNM_NO) <![CDATA[>]]> 0 OR
+                        )
+                    </otherwise>
+                </choose>
+            </if>
+        </where>
+    </sql>
 </mapper>
 
 

@@ -1,6 +1,7 @@
 package com.kap.service.impl.wb.wbj;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
@@ -12,6 +13,7 @@ import com.kap.service.COFileService;
 import com.kap.service.WBEACarbonListService;
 import com.kap.service.WBJARoundListService;
 import com.kap.service.dao.COFileMapper;
+import com.kap.service.dao.COGCntsMapper;
 import com.kap.service.dao.wb.wbe.WBEACarbonListMapper;
 import com.kap.service.dao.wb.wbj.WBJARoundListMapper;
 import lombok.RequiredArgsConstructor;
@@ -31,11 +33,7 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
 
     //Mapper
     private final WBJARoundListMapper wBJARoundListMapper;
-
-    //파일 서비스
-    private final COFileService cOFileService;
-    // DAO
-    private final COFileMapper cOFileMapper;
+    private final COGCntsMapper cOGCntsMapper;
 
     /* 회차관리 마스터 시퀀스 */
     private final EgovIdGnrService cxEpisdSeqIdgen;
@@ -188,4 +186,22 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
         return wBJARoundListMapper.episdCnt(wBRoundMstDTO);
     }
 
+    /**
+     * 해당 년도 회차 조회
+     */
+    public WBRoundMstDTO selectEpisdDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        return wBJARoundListMapper.selectEpisdDtl(wBRoundMstSearchDTO);
+    }
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        //공통사업의 경우 신청단계의 옵션정보를 가져온다. 그외 사업의 경우 양식관리 파일정보를 가져와야함.
+        wBRoundMstSearchDTO.setOptnList(wBJARoundListMapper.selectOPtnList(wBRoundMstSearchDTO));
+
+        return wBRoundMstSearchDTO;
+    }
 }

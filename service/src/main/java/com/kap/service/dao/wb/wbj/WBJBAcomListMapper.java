@@ -204,4 +204,19 @@ public interface WBJBAcomListMapper {
      */
     public int getCnt(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
 
+    /**
+     *  Write Page
+     *  회차 값에 따른 포상 검색
+     */
+    public List<String> getPrizeList(WBJAcomSearchDTO wBJAcomSearchDTO);
+
+    /**
+     * 상생신청 마스터 생성
+     */
+    public int insertApply(WBJAcomDTO wBJAcomDTO) throws Exception;
+
+    /**
+     * 회차 상세 조회
+     */
+    public WBJAcomDTO selectRecent(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
 }

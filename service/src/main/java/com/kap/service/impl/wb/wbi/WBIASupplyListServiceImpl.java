@@ -1,11 +1,16 @@
 package com.kap.service.impl.wb.wbi;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wba.WBAManageInsertDTO;
+import com.kap.core.dto.wb.wba.WBAManageSearchDTO;
+import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import com.kap.service.WBIASupplyListService;
+import com.kap.service.dao.COGCntsMapper;
 import com.kap.service.dao.wb.wbi.WBIASupplyListMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +28,7 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
 
     //Mapper
     private final WBIASupplyListMapper wBIASupplyListMapper;
+    private final COGCntsMapper cOGCntsMapper;
 
     /* 회차관리 마스터 시퀀스 */
     private final EgovIdGnrService cxEpisdSeqIdgen;
@@ -36,8 +42,10 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
         page.setRecordCountPerPage(wBRoundMstSearchDTO.getListRowSize());
         page.setPageSize(wBRoundMstSearchDTO.getPageRowSize());
 
-        wBRoundMstSearchDTO.setFirstIndex(page.getFirstRecordIndex());
-        wBRoundMstSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        if ("admin".equals(wBRoundMstSearchDTO.getSiteGubun())) {
+            wBRoundMstSearchDTO.setFirstIndex(page.getFirstRecordIndex());
+            wBRoundMstSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
         wBRoundMstSearchDTO.setList(wBIASupplyListMapper.selectSupplyList(wBRoundMstSearchDTO));
         wBRoundMstSearchDTO.setTotalCount(wBIASupplyListMapper.getSupplyListTotCnt(wBRoundMstSearchDTO));
 
@@ -140,5 +148,21 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
 
         return wBIASupplyListMapper.episdCnt(wBRoundMstDTO);
     }
-    
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        wBRoundMstSearchDTO = wBIASupplyListMapper.getRoundDtl(wBRoundMstSearchDTO);
+
+        wBRoundMstSearchDTO.setStageOrd(1);
+
+        if (wBRoundMstSearchDTO != null) {
+            //공통사업의 경우 신청단계의 옵션정보를 가져온다. 그외 사업의 경우 양식관리 파일정보를 가져와야함.
+            wBRoundMstSearchDTO.setOptnList(wBIASupplyListMapper.selectOPtnList(wBRoundMstSearchDTO));
+        }
+
+        return wBRoundMstSearchDTO;
+    }
 }

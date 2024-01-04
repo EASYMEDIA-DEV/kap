@@ -3,9 +3,13 @@ package com.kap.service.impl.wb.wbi;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import com.kap.core.dto.wb.WBPartCompanyDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -517,5 +521,72 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         rtnCnt = wBIBSupplyCompanyMapper.getCnt(wBIBSupplySearchDTO);
 
         return rtnCnt;
+    }
+
+    /**
+     * 부품사 신청자를 등록한다.
+     */
+    @Transactional
+    public int insertApply(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request) throws Exception {
+
+        int rtnCnt = 0;
+
+        try {
+            int appctnSeq = cxAppctnMstSeqIdgen.getNextIntegerId();
+            //마스터 생성
+            String regId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+            String regIp = CONetworkUtil.getMyIPaddress(request);
+
+            wBIBSupplyDTO.setAppctnSeq(appctnSeq);
+            wBIBSupplyDTO.setRegId(regId);
+            wBIBSupplyDTO.setRegIp(regIp);
+
+            rtnCnt = wBIBSupplyCompanyMapper.insertApply(wBIBSupplyDTO);
+
+            if (rtnCnt > 0) {
+                //상생신청진행 상세 생성
+                wBIBSupplyDTO.setRsumeSeq(cxAppctnRsumeDtlSeqIdgen.getNextIntegerId());
+                wBIBSupplyDTO.setAppctnSeq(appctnSeq); /* 신청순번 */
+                wBIBSupplyDTO.setRegId(regId);
+                wBIBSupplyDTO.setRegIp(regIp);
+
+                wBIBSupplyCompanyMapper.insertApplyDtl(wBIBSupplyDTO);
+
+                //신청파일 넣기
+                /* 상생신청파일 상세 */
+                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBIBSupplyDTO.getFileList());
+                wBIBSupplyDTO.setFileSeq(fileSeqMap.get("atchFile")); /* 파일 시퀀스 */
+                rtnCnt *= wBIBSupplyCompanyMapper.putAppctnFileDtl(wBIBSupplyDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rtnCnt;
+    }
+
+    /**
+     * 회차 상세 조회
+     */
+    public WBIBSupplyDTO selectRecent(WBIBSupplySearchDTO wBIBSupplySearchDTO) throws Exception {
+
+        WBIBSupplyDTO wBIBSupplyDTO = wBIBSupplyCompanyMapper.selectRecent(wBIBSupplySearchDTO);
+
+        return wBIBSupplyDTO;
+    }
+
+    /**
+     * 부품사 목록을 조회한다.
+     */
+    public MPEPartsCompanyDTO selectPartsCompanyList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+        page.setCurrentPageNo(mpePartsCompanyDTO.getPageIndex());
+        page.setRecordCountPerPage(mpePartsCompanyDTO.getListRowSize());
+        page.setPageSize(mpePartsCompanyDTO.getPageRowSize());
+
+        mpePartsCompanyDTO.setList(wBIBSupplyCompanyMapper.selectPartsCompanyList(mpePartsCompanyDTO));
+        mpePartsCompanyDTO.setTotalCount(wBIBSupplyCompanyMapper.selectPartsCompanyCnt(mpePartsCompanyDTO));
+
+        return mpePartsCompanyDTO;
     }
 }

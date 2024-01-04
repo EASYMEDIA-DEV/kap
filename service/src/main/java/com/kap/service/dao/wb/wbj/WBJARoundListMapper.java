@@ -4,6 +4,7 @@ import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 
 import java.util.List;
@@ -80,4 +81,14 @@ public interface WBJARoundListMapper {
      *
      */
     public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO);
+
+    /**
+     * 연도 상세 조회
+     */
+    public WBRoundMstDTO selectEpisdDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 회차 옵션파일 조회
+     */
+    public List<WBAManagementOptnDTO> selectOPtnList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }
