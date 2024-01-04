@@ -1,6 +1,9 @@
 package com.kap.service.dao.wb.wbe;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
+import com.kap.core.dto.wb.wbc.WBCBCompanyDtlDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbe.*;
 
 import java.util.List;
@@ -209,5 +212,15 @@ public interface WBEBCarbonCompanyMapper {
      * 신청 진행단계 확인
      */
     public int getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+
+    /**
+     * 부품사 정보를 조회한다.
+     */
+    public WBEBCompanyDTO getCompanyInfo(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+
+    /**
+     * 부품사 SQ 정보를 조회한다.
+     */
+    public List<WBEBCompanyDtlDTO> selectSqList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
 
 }

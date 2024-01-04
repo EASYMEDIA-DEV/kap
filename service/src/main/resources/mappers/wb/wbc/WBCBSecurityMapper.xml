@@ -9,7 +9,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectCarbonCompanyList" parameterType="wBEBCarbonCompanySearchDTO" resultType="wBEBCarbonCompanySearchDTO">
+    <select id="selectCarbonCompanyList" parameterType="wBCBSecuritySearchDTO" resultType="wBCBSecuritySearchDTO">
         SELECT /* WBCBSecurityMapper.selectCarbonCompanyList */
         B.APPCTN_SEQ
         ,YEAR(A.YEAR) AS YEAR
@@ -66,7 +66,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="getCarbonCompanyListTotCnt" parameterType="wBEBCarbonCompanySearchDTO" resultType="java.lang.Integer">
+    <select id="getCarbonCompanyListTotCnt" parameterType="wBCBSecuritySearchDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.getCarbonCompanyListTotCnt */ COUNT(*)
         FROM (
         SELECT
@@ -170,7 +170,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectYearDtl" parameterType="wBEBCarbonCompanySearchDTO" resultType="java.lang.String">
+    <select id="selectYearDtl" parameterType="wBCBSecuritySearchDTO" resultType="java.lang.String">
         SELECT /* WBCBSecurityMapper.selectYearDtl */
             DISTINCT(YEAR(YEAR)) AS YEAR
         FROM CX_EPISD_MST
@@ -185,7 +185,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="getYearSelect" parameterType="wBEBCarbonCompanySearchDTO" resultType="java.lang.Integer">
+    <select id="getYearSelect" parameterType="wBCBSecuritySearchDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.getYearSelect */
             DISTINCT(EPISD) AS EPISD
         FROM CX_EPISD_MST
@@ -201,7 +201,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectEpisdSeq" parameterType="wBEBCarbonCompanyMstInsertDTO" resultType="java.lang.Integer">
+    <select id="selectEpisdSeq" parameterType="wBCBSecurityMstInsertDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.selectEpisdSeq */
                EPISD_SEQ
         FROM CX_EPISD_MST
@@ -218,7 +218,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <insert id="insertAppctnMst" parameterType="wBEBCarbonCompanyMstInsertDTO">
+    <insert id="insertAppctnMst" parameterType="wBCBSecurityMstInsertDTO">
         INSERT INTO /* WBCBSecurityMapper.insertAppctnMst */ CX_APPCTN_MST
         (
             APPCTN_SEQ
@@ -252,7 +252,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <insert id="insertAppctnDtl" parameterType="wBEBCarbonCompanyDtlDTO">
+    <insert id="insertAppctnDtl" parameterType="wBCBSecurityDtlDTO">
         INSERT INTO /* WBCBSecurityMapper.insertAppctnDtl */ CX_APPCTN_RSUME_DTL
         (
             RSUME_SEQ
@@ -288,7 +288,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <insert id="insertAppctnPbsnDtl" parameterType="wBEBCarbonCompanyPbsnDtlDTO">
+    <insert id="insertAppctnPbsnDtl" parameterType="wBCBSecurityPbsnDtlDTO">
         INSERT INTO /* WBCBSecurityMapper.insertAppctnPbsnDtl */ CX_APPCTN_RSUME_PBSN_DTL
         (
             RSUME_SEQ
@@ -342,7 +342,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <update id="updateAppctnCompany" parameterType="wBEBCompanyDTO">
+    <update id="updateAppctnCompany" parameterType="wBCBCompanyDTO">
         UPDATE CP_CMPN_MST /* WBCBSecurityMapper.updateAppctnCompany */
         SET
           CTGRY_CD = #{ctgryCd}
@@ -378,7 +378,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectCarbonCompanyDtl" parameterType="wBEBCarbonCompanySearchDTO" resultType="wBEBCarbonCompanyMstInsertDTO">
+    <select id="selectCarbonCompanyDtl" parameterType="wBCBSecuritySearchDTO" resultType="wBCBSecurityMstInsertDTO">
         SELECT /* WBCBSecurityMapper.selectCarbonCompanyDtl */
             A.APPCTN_SEQ
              ,A.EPISD_SEQ
@@ -406,7 +406,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectCarbonCompanyMember" parameterType="wBEBCarbonCompanySearchDTO" resultType="mPAUserDto">
+    <select id="selectCarbonCompanyMember" parameterType="wBCBSecuritySearchDTO" resultType="mPAUserDto">
         SELECT /* WBCBSecurityMapper.selectCarbonCompanyMember */
             A.MEM_SEQ
              ,A.ID
@@ -431,7 +431,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectCarbonCompany" parameterType="wBEBCarbonCompanySearchDTO" resultType="wBEBCompanyDTO">
+    <select id="selectCarbonCompany" parameterType="wBCBSecuritySearchDTO" resultType="wBCBCompanyDTO">
         SELECT /* WBCBSecurityMapper.selectCarbonCompany */
             CMPN_NM
              ,CTGRY_CD
@@ -466,7 +466,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectCarbonCompanySQ" parameterType="wBEBCarbonCompanySearchDTO" resultType="wBEBCompanyDtlDTO">
+    <select id="selectCarbonCompanySQ" parameterType="wBCBSecuritySearchDTO" resultType="wBCBCompanyDtlDTO">
         SELECT
             BSNM_NO
              ,CBSN_SEQ
@@ -486,7 +486,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectCarbonCompanyDtlDetail" parameterType="wBEBCarbonCompanySearchDTO" resultType="WBEBCarbonCompanyDtlDTO">
+    <select id="selectCarbonCompanyDtlDetail" parameterType="wBCBSecuritySearchDTO" resultType="wBCBSecurityDtlDTO">
         SELECT /* WBCBSecurityMapper.selectCarbonCompanyDtlDetail */
             RSUME_SEQ
              ,RSUME_ORD
@@ -513,7 +513,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectCarbonCompanyPbsn" parameterType="wBEBCarbonCompanySearchDTO" resultType="WBEBCarbonCompanyPbsnDtlDTO">
+    <select id="selectCarbonCompanyPbsn" parameterType="wBCBSecuritySearchDTO" resultType="wBCBSecurityPbsnDtlDTO">
         SELECT /* WBCBSecurityMapper.selectCarbonCompanyPbsn */
             A.RSUME_SEQ
              ,A.RSUME_ORD
@@ -548,14 +548,14 @@
     </select>
 
     <!--
-       쿼리명 : WBEACarbonListMapper.deleteCarbonCompanySQ
+       쿼리명 : WBCBSecurityMapper.deleteCarbonCompanySQ
        설  명 : 부품사 SQ 정보 삭제
         수정일	 수정자     수정내용
        ==========   ======   =============
        2023.11.08  김대성     최초 생성
    -->
-    <delete id="deleteCarbonCompanySQ" parameterType="wBEBCompanyDTO">
-        DELETE /* WBEACarbonListMapper.deleteCarbonCompanySQ */
+    <delete id="deleteCarbonCompanySQ" parameterType="wBCBCompanyDTO">
+        DELETE /* WBCBSecurityMapper.deleteCarbonCompanySQ */
         FROM CP_CMPN_CBSN_DTL
         WHERE BSNM_NO = #{bsnmNo}
     </delete>
@@ -568,7 +568,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <insert id="insertCarbonCompanySQ" parameterType="wBEBCompanyDtlDTO">
+    <insert id="insertCarbonCompanySQ" parameterType="wBCBCompanyDtlDTO">
         INSERT INTO /* WBCBSecurityMapper.insertCarbonCompanySQ */ CP_CMPN_CBSN_DTL
         (
             BSNM_NO
@@ -602,7 +602,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <update id="updateAppctnMst" parameterType="wBEBCarbonCompanyMstInsertDTO">
+    <update id="updateAppctnMst" parameterType="wBCBSecurityMstInsertDTO">
         UPDATE /* WBCBSecurityMapper.updateAppctnMst */ CX_APPCTN_MST
         SET
             EPISD_SEQ =  #{episdSeq}
@@ -625,7 +625,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <update id="updateAppctnDtl" parameterType="wBEBCarbonCompanyDtlDTO">
+    <update id="updateAppctnDtl" parameterType="wBCBSecurityDtlDTO">
         UPDATE /* WBCBSecurityMapper.updateAppctnDtl */ CX_APPCTN_RSUME_DTL
         SET
             MNG_STTS_CD = #{mngSttsCd}
@@ -649,7 +649,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <update id="updateAppctnPbsnDtl" parameterType="wBEBCarbonCompanyPbsnDtlDTO">
+    <update id="updateAppctnPbsnDtl" parameterType="wBCBSecurityPbsnDtlDTO">
         UPDATE /* WBCBSecurityMapper.updateAppctnPbsnDtl */ CX_APPCTN_RSUME_PBSN_DTL
         SET
           PBSN_ZIPCODE = #{pbsnZipcode}
@@ -686,7 +686,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectAppctnSpprt" parameterType="wBEBCarbonCompanySearchDTO" resultType="wBEBCarbonCompanySpprtDTO">
+    <select id="selectAppctnSpprt" parameterType="wBCBSecuritySearchDTO" resultType="wBCBSecuritySpprtDTO">
         SELECT /* WBCBSecurityMapper.selectAppctnSpprt */
             APPCTN_SPPRT_SEQ
              ,APPCTN_SEQ
@@ -725,7 +725,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <insert id="insertAppctnSpprt" parameterType="wBEBCarbonCompanySpprtDTO">
+    <insert id="insertAppctnSpprt" parameterType="wBCBSecuritySpprtDTO">
         INSERT INTO CX_APPCTN_SPPRT_DTL
         (
             APPCTN_SPPRT_SEQ
@@ -753,7 +753,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <update id="updateAppctnSpprt" parameterType="wBEBCarbonCompanySpprtDTO">
+    <update id="updateAppctnSpprt" parameterType="wBCBSecuritySpprtDTO">
         UPDATE CX_APPCTN_SPPRT_DTL SET /* WBCBSecurityMapper.updateAppctnSpprt */
               ACCS_DT = #{accsDt}
              ,GVMNT_SPPRT_PMT = #{gvmntSpprtPmt}
@@ -789,7 +789,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectRsumeSeq" parameterType="wBEBCarbonCompanySearchDTO" resultType="java.lang.Integer">
+    <select id="selectRsumeSeq" parameterType="wBCBSecuritySearchDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.selectRsumeSeq */ RSUME_SEQ
         FROM CX_APPCTN_RSUME_DTL
         <where>
@@ -808,14 +808,14 @@
     </select>
 
     <!--
-       쿼리명 : WBEACarbonListMapper.carbonCompanyDeleteTrnsf
+       쿼리명 : WBCBSecurityMapper.carbonCompanyDeleteTrnsf
        설  명 : 참여이관 로그 리스트 삭제
         수정일	 수정자     수정내용
        ==========   ======   =============
        2023.11.08  김대성     최초 생성
    -->
-    <delete id="carbonCompanyDeleteTrnsf" parameterType="wBEBCarbonCompanySearchDTO">
-        DELETE /* WBEACarbonListMapper.carbonCompanyDeleteTrnsf */
+    <delete id="carbonCompanyDeleteTrnsf" parameterType="wBCBSecuritySearchDTO">
+        DELETE /* WBCBSecurityMapper.carbonCompanyDeleteTrnsf */
         FROM CX_APPCTN_TRNSF_DTL
         <where>
             <choose>
@@ -833,14 +833,14 @@
     </delete>
 
     <!--
-       쿼리명 : WBEACarbonListMapper.carbonCompanyDeleteSpprt
+       쿼리명 : WBCBSecurityMapper.carbonCompanyDeleteSpprt
        설  명 : 리스트 삭제
         수정일	 수정자     수정내용
        ==========   ======   =============
        2023.11.08  김대성     최초 생성
    -->
-    <delete id="carbonCompanyDeleteSpprt" parameterType="wBEBCarbonCompanySearchDTO">
-        DELETE /* WBEACarbonListMapper.carbonCompanyDeleteSpprt */
+    <delete id="carbonCompanyDeleteSpprt" parameterType="wBCBSecuritySearchDTO">
+        DELETE /* WBCBSecurityMapper.carbonCompanyDeleteSpprt */
         FROM CX_APPCTN_SPPRT_DTL
         <where>
             <choose>
@@ -858,14 +858,14 @@
     </delete>
 
     <!--
-       쿼리명 : WBEACarbonListMapper.carbonCompanyDeleteFileDtl
+       쿼리명 : WBCBSecurityMapper.carbonCompanyDeleteFileDtl
        설  명 : 상생신청파일 리스트 삭제
         수정일	 수정자     수정내용
        ==========   ======   =============
        2023.11.08  김대성     최초 생성
    -->
-    <delete id="carbonCompanyDeleteFileDtl" parameterType="wBEBCarbonCompanySearchDTO">
-        DELETE /* WBEACarbonListMapper.carbonCompanyDeleteFileDtl */
+    <delete id="carbonCompanyDeleteFileDtl" parameterType="wBCBSecuritySearchDTO">
+        DELETE /* WBCBSecurityMapper.carbonCompanyDeleteFileDtl */
         FROM CX_APPCTN_FILE_DTL
         <where>
             <choose>
@@ -883,14 +883,14 @@
     </delete>
 
     <!--
-       쿼리명 : WBEACarbonListMapper.carbonCompanyDeletePbsn
+       쿼리명 : WBCBSecurityMapper.carbonCompanyDeletePbsn
        설  명 : 상생신청 진행 상세 리스트 삭제
         수정일	 수정자     수정내용
        ==========   ======   =============
        2023.11.08  김대성     최초 생성
    -->
-    <delete id="carbonCompanyDeletePbsn" parameterType="wBEBCarbonCompanySearchDTO">
-        DELETE /* WBEACarbonListMapper.carbonCompanyDeletePbsn */
+    <delete id="carbonCompanyDeletePbsn" parameterType="wBCBSecuritySearchDTO">
+        DELETE /* WBCBSecurityMapper.carbonCompanyDeletePbsn */
         FROM CX_APPCTN_RSUME_PBSN_DTL
         <where>
             <choose>
@@ -908,14 +908,14 @@
     </delete>
 
     <!--
-       쿼리명 : WBEACarbonListMapper.carbonCompanyDeleteRsumeFile
+       쿼리명 : WBCBSecurityMapper.carbonCompanyDeleteRsumeFile
        설  명 : 상생신청 진행 파일 리스트 삭제
         수정일	 수정자     수정내용
        ==========   ======   =============
        2023.11.08  김대성     최초 생성
    -->
-    <delete id="carbonCompanyDeleteRsumeFile" parameterType="wBEBCarbonCompanySearchDTO">
-        DELETE /* WBEACarbonListMapper.carbonCompanyDeleteRsumeFile */
+    <delete id="carbonCompanyDeleteRsumeFile" parameterType="wBCBSecuritySearchDTO">
+        DELETE /* WBCBSecurityMapper.carbonCompanyDeleteRsumeFile */
         FROM CX_APPCTN_RSUME_FILE_DTL
         <where>
             <choose>
@@ -933,14 +933,14 @@
     </delete>
 
     <!--
-       쿼리명 : WBEACarbonListMapper.carbonCompanyDeleteRsume
+       쿼리명 : WBCBSecurityMapper.carbonCompanyDeleteRsume
        설  명 : 상생신청 진행 리스트 삭제
         수정일	 수정자     수정내용
        ==========   ======   =============
        2023.11.08  김대성     최초 생성
    -->
-    <delete id="carbonCompanyDeleteRsume" parameterType="wBEBCarbonCompanySearchDTO">
-        DELETE /* WBEACarbonListMapper.carbonCompanyDeleteRsume */
+    <delete id="carbonCompanyDeleteRsume" parameterType="wBCBSecuritySearchDTO">
+        DELETE /* WBCBSecurityMapper.carbonCompanyDeleteRsume */
         FROM CX_APPCTN_RSUME_DTL
         <where>
             <choose>
@@ -958,14 +958,14 @@
     </delete>
 
     <!--
-       쿼리명 : WBEACarbonListMapper.carbonDeleteList
+       쿼리명 : WBCBSecurityMapper.carbonDeleteList
        설  명 : 신청 마스터 리스트 삭제
         수정일	 수정자     수정내용
        ==========   ======   =============
        2023.11.08  김대성     최초 생성
    -->
-    <delete id="carbonCompanyDeleteMst" parameterType="wBEBCarbonCompanySearchDTO">
-        DELETE /* WBEACarbonListMapper.carbonCompanyDeleteMst */
+    <delete id="carbonCompanyDeleteMst" parameterType="wBCBSecuritySearchDTO">
+        DELETE /* WBCBSecurityMapper.carbonCompanyDeleteMst */
         FROM CX_APPCTN_MST
         <where>
             <choose>
@@ -989,7 +989,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="getTrnsfList" parameterType="wBEBCarbonCompanyTrnsfDTO" resultType="wBEBCarbonCompanyTrnsfDTO">
+    <select id="getTrnsfList" parameterType="wBCBSecurityTrnsfDTO" resultType="wBCBSecurityTrnsfDTO">
         SELECT /* WBCBSecurityMapper.getTrnsfList */
             TRNSF_SEQ
              ,APPCTN_SEQ
@@ -1014,7 +1014,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="getTrnsfListTotCnt" parameterType="wBEBCarbonCompanyTrnsfDTO" resultType="java.lang.Integer">
+    <select id="getTrnsfListTotCnt" parameterType="wBCBSecurityTrnsfDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.getTrnsfListTotCnt */
                COUNT(*)
         FROM CX_APPCTN_TRNSF_DTL
@@ -1028,7 +1028,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <insert id="insertAppctnFileDtl" parameterType="wBEBCarbonCompanyFileDtlDTO">
+    <insert id="insertAppctnFileDtl" parameterType="wBCBSecurityFileDtlDTO">
         INSERT INTO /* WBCBSecurityMapper.insertAppctnFileDtl */ CX_APPCTN_RSUME_FILE_DTL
         (
 			RSUME_SEQ
@@ -1064,7 +1064,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectFileDtl" parameterType="wBEBCarbonCompanySearchDTO" resultType="wBEBCarbonCompanyFileDtlDTO">
+    <select id="selectFileDtl" parameterType="wBCBSecuritySearchDTO" resultType="wBCBSecurityFileDtlDTO">
         SELECT /* WBCBSecurityMapper.selectFileDtl */
             A.RSUME_SEQ
              ,A.RSUME_ORD
@@ -1082,7 +1082,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectExcelPbsn" parameterType="wBEBCarbonCompanySearchDTO" resultType="WBEBCarbonCompanyPbsnDtlDTO">
+    <select id="selectExcelPbsn" parameterType="wBCBSecuritySearchDTO" resultType="wBCBSecurityPbsnDtlDTO">
         SELECT /* WBCBSecurityMapper.selectCarbonCompanyPbsn */
             A.RSUME_SEQ
              ,A.RSUME_ORD
@@ -1123,7 +1123,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="getGiveOrdList" parameterType="wBEBCarbonCompanyMstInsertDTO" resultType="java.lang.Integer">
+    <select id="getGiveOrdList" parameterType="wBCBSecurityMstInsertDTO" resultType="java.lang.Integer">
         SELECT /* getGiveOrdList */ GIVE_ORD
         FROM CX_APPCTN_MST A
                  JOIN CX_EPISD_GIVE_DTL B ON A.EPISD_SEQ = B.EPISD_SEQ
@@ -1138,7 +1138,7 @@
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
     -->
-    <insert id="insertAppctnTrnsf" parameterType="wBEBCarbonCompanyMstInsertDTO">
+    <insert id="insertAppctnTrnsf" parameterType="wBCBSecurityMstInsertDTO">
         INSERT INTO CX_APPCTN_TRNSF_DTL
         (
             TRNSF_SEQ
@@ -1168,7 +1168,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="getRsumePbsnCnt" parameterType="wBEBCarbonCompanySearchDTO" resultType="java.lang.Integer">
+    <select id="getRsumePbsnCnt" parameterType="wBCBSecuritySearchDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.getRsumePbsnCnt */
         COUNT(*)
         FROM CX_EPISD_MST A
@@ -1193,6 +1193,75 @@
                 </foreach>
             </when>
         </choose>
+    </select>
+
+
+
+    <!--
+         쿼리명 : WBCBSecurityMapper.getCompanyInfo
+         설  명 : 부품사관리 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김대성     최초 생성
+    -->
+    <select id="getCompanyInfo" parameterType="wBCBSecuritySearchDTO" resultType="wBCBCompanyDTO">
+        SELECT /* WBCBSecurityMapper.getCompanyInfo */
+            A.BSNM_NO
+             , A.CMPN_NM
+             , A.RPRSNT_NM
+             , A.CTGRY_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_NM
+             , A.SIZE_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_NM
+             , A.STBSM_DT
+             , A.TEL_NO AS COMP_TEL
+             , A.ZIPCODE
+             , A.BSC_ADDR
+             , A.DTL_ADDR
+             , A.SLS_PMT
+             , A.SLS_YEAR
+             , A.MPLE_CNT
+             , A.MJR_PRDCT_1
+             , A.MJR_PRDCT_2
+             , A.MJR_PRDCT_3
+             , A.QLTY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.QLTY_5_STAR_CD) AS QLTY_5_STAR_NM
+             , A.QLTY_5_STAR_YEAR
+             , A.PAY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.PAY_5_STAR_CD) AS PAY_5_STAR_NM
+             , A.PAY_5_STAR_YEAR
+             , A.TCHLG_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_NM
+             , A.TCHLG_5_STAR_YEAR
+             , (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) ID
+             , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) NAME
+             , (SELECT EMAIL FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) EMAIL
+             , (SELECT DEPT_CD FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) DEPT_CD
+             , (SELECT DEPT_DTL_NM FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) DEPT_DTL_NM
+             , (SELECT PSTN_CD FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) PSTN_CD
+             , (SELECT PSTN_NM FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) PSTN_NM
+             , (SELECT HP_NO FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) HP_NO
+             , (SELECT TEL_NO FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) TEL_NO
+        FROM CP_CMPN_MST A
+        WHERE A.BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : WBCBSecurityMapper.getUserInfo
+         설  명 : 부품사관리 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김대성     최초 생성
+    -->
+    <select id="selectSqList" parameterType="wBCBSecuritySearchDTO" resultType="wBCBCompanyDtlDTO">
+        SELECT /* WBCBSecurityMapper.selectSqList */
+            CBSN_SEQ
+             , NM
+             , SCORE
+             , YEAR
+             , CRTFN_CMPN_NM
+        FROM CP_CMPN_CBSN_DTL
+        WHERE BSNM_NO = #{bsnmNo}
     </select>
 
 </mapper>

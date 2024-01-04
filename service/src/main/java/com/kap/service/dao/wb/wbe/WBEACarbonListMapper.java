@@ -1,5 +1,6 @@
 package com.kap.service.dao.wb.wbe;
 
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
@@ -81,5 +82,20 @@ public interface WBEACarbonListMapper {
      * 회차 중복 체크
      */
     public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 회차 신청여부 조회
+     */
+    public int getApplyCount(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 회차 옵션파일 조회
+     */
+    public List<SMJFormDTO> selectOPtnList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
 }

@@ -1,9 +1,10 @@
 package com.kap.service;
 
 
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyTrnsfDTO;
+import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityTrnsfDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,51 +15,62 @@ public interface WBCBSecurityService {
     /**
      * 신청 목록을 조회한다.
      */
-    public WBEBCarbonCompanySearchDTO selectCarbonCompanyList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public WBCBSecuritySearchDTO selectCarbonCompanyList(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
 
     /**
      * 연도 상세 조회한다.
      */
-    public List<String> selectYearDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<String> selectYearDtl(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
 
     /**
      * 신청 상세 조회한다.
      */
-    public WBEBCarbonCompanyMstInsertDTO selectCarbonCompanyDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public WBCBSecurityMstInsertDTO selectCarbonCompanyDtl(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
 
     /**
      * 신청 등록
      */
-    public int carbonCompanyInsert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request) throws Exception;
+    public int carbonCompanyInsert(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, HttpServletRequest request) throws Exception;
 
     /**
      * 신청 수정
      */
-    public int carbonCompanyUpdate(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request) throws Exception;
+    public int carbonCompanyUpdate(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, HttpServletRequest request) throws Exception;
     
     /**
      * 연도 상세 조회한다.
      */
-    public WBEBCarbonCompanySearchDTO getYearSelect(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public WBCBSecuritySearchDTO getYearSelect(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
 
     /**
      * 신청 리스트 삭제
      */
-    public int carbonCompanyDeleteList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public int carbonCompanyDeleteList(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
 
     /**
      * 이관 로그 조회
      */
-    public WBEBCarbonCompanyTrnsfDTO getTrnsfList(WBEBCarbonCompanyTrnsfDTO wBEBCarbonCompanyTrnsfDTO) throws Exception;
+    public WBCBSecurityTrnsfDTO getTrnsfList(WBCBSecurityTrnsfDTO wBCBSecurityTrnsfDTO) throws Exception;
 
     /**
      * 신청 진행단계 확인
      */
-    public int getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public int getRsumePbsnCnt(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
 
     /**
      * 엑셀 다운로드
      */
-    public void excelDownload(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, HttpServletResponse response) throws Exception;
+    public void excelDownload(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, HttpServletResponse response) throws Exception;
+
+    /**
+     * 회원 부품사정보 상세 조회한다.
+     * @return
+     */
+    public WBCBCompanyDTO selectCompanyUserDtl(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
+
+    /**
+     * 사용자 신청 등록
+     */
+    public int carbonUserInsert(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, HttpServletRequest request) throws Exception;
 
 }

@@ -2,9 +2,9 @@ package com.kap.mngwserc.controller.wb.wbc;
 
 
 
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyTrnsfDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityTrnsfDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.WBCBSecurityService;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +21,10 @@ import java.util.ArrayList;
 
 /**
  * <pre>
- * 보안환경구축 회차관리를 위한 Controller
+ * 보안환경구축 신청관리를 위한 Controller
  * </pre>
  *
- * @ClassName		: WBEBCarbonCompanyController.java
+ * @ClassName		: WBCBSecurityController.java
  * @Description		: 보안환경구축 신청관리를 위한 Controller
  * @author 김대성
  * @since 2023.11.08
@@ -51,7 +51,7 @@ public class WBCBSecurityController {
      *  보안환경구축 신청 목록으로 이동한다.
      */
     @GetMapping(value="/list")
-    public String getCarbonList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getCarbonList(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -63,8 +63,8 @@ public class WBCBSecurityController {
         cdDtlList.add("ROUND_CD");
         modelMap.addAttribute("classCityTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 
-        modelMap.addAttribute("rtnYear", wBCBSecurityService.selectYearDtl(wBEBCarbonCompanySearchDTO));
-        modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyList(wBEBCarbonCompanySearchDTO));
+        modelMap.addAttribute("rtnYear", wBCBSecurityService.selectYearDtl(wBCBSecuritySearchDTO));
+        modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyList(wBCBSecuritySearchDTO));
 
 
         return "mngwserc/wb/wbc/WBCBSecurityList.admin";
@@ -74,11 +74,11 @@ public class WBCBSecurityController {
      * 보안환경구축 신청 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
-    public String getCarbonListPageAjax(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap) throws Exception
+    public String getCarbonListPageAjax(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap) throws Exception
     {
         try
         {
-            modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyList(wBEBCarbonCompanySearchDTO));
+            modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyList(wBCBSecuritySearchDTO));
         }
         catch (Exception e)
         {
@@ -95,7 +95,7 @@ public class WBCBSecurityController {
      * 보안환경구축 회차 등록 페이지
      */
     @RequestMapping(value = "/write")
-    public String getCarbonWritePage(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap) throws Exception
+    public String getCarbonWritePage(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap) throws Exception
     {
         try
         {
@@ -112,7 +112,7 @@ public class WBCBSecurityController {
             cdDtlList.add("ROUND_CD");
             modelMap.addAttribute("classCityTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 
-            modelMap.addAttribute("rtnYear", wBCBSecurityService.selectYearDtl(wBEBCarbonCompanySearchDTO));
+            modelMap.addAttribute("rtnYear", wBCBSecurityService.selectYearDtl(wBCBSecuritySearchDTO));
 
         }
         catch (Exception e)
@@ -130,11 +130,11 @@ public class WBCBSecurityController {
      * 보안환경구축 신청 등록
      */
     @PostMapping(value="/insert")
-    public String carbonCompanyInsert(@Valid @RequestBody WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    public String carbonCompanyInsert(@Valid @RequestBody WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
     {
         try
         {
-            modelMap.addAttribute("respCnt", wBCBSecurityService.carbonCompanyInsert(wBEBCarbonCompanyMstInsertDTO, request));
+            modelMap.addAttribute("respCnt", wBCBSecurityService.carbonCompanyInsert(wBCBSecurityMstInsertDTO, request));
         }
         catch (Exception e)
         {
@@ -151,7 +151,7 @@ public class WBCBSecurityController {
      * 보안환경구축 신청 수정 페이지
      */
     @RequestMapping(value = "/writeUpdate")
-    public String getCarbonUpdateWritePage(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap) throws Exception
+    public String getCarbonUpdateWritePage(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap) throws Exception
     {
         try
         {
@@ -172,11 +172,11 @@ public class WBCBSecurityController {
             cdDtlList.add("PRO_TYPE");
             modelMap.addAttribute("proTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "5"));
 
-            /*modelMap.addAttribute("rtnYear", wBCBSecurityService.selectYearDtl(wBEBCarbonCompanySearchDTO));*/
+            /*modelMap.addAttribute("rtnYear", wBCBSecurityService.selectYearDtl(wBCBSecuritySearchDTO));*/
 
-            modelMap.addAttribute("rtnEpisd", wBCBSecurityService.selectYearDtl(wBEBCarbonCompanySearchDTO));
+            modelMap.addAttribute("rtnEpisd", wBCBSecurityService.selectYearDtl(wBCBSecuritySearchDTO));
 
-            modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO));
+            modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
 
         }
         catch (Exception e)
@@ -194,11 +194,11 @@ public class WBCBSecurityController {
      * 보안환경구축 신청 수정
      */
     @PostMapping(value="/update")
-    public String carbonCompanyUpdate(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    public String carbonCompanyUpdate(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
     {
         try
         {
-            modelMap.addAttribute("respCnt", wBCBSecurityService.carbonCompanyUpdate(wBEBCarbonCompanyMstInsertDTO, request));
+            modelMap.addAttribute("respCnt", wBCBSecurityService.carbonCompanyUpdate(wBCBSecurityMstInsertDTO, request));
         }
         catch (Exception e)
         {
@@ -218,11 +218,11 @@ public class WBCBSecurityController {
      */
     @RequestMapping(value = "/getEpisdSelect")
     @ResponseBody
-    public WBEBCarbonCompanySearchDTO getEpisdSelect( WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public WBCBSecuritySearchDTO getEpisdSelect( WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            wBEBCarbonCompanySearchDTO = wBCBSecurityService.getYearSelect(wBEBCarbonCompanySearchDTO);
+            wBCBSecuritySearchDTO = wBCBSecurityService.getYearSelect(wBCBSecuritySearchDTO);
         }
         catch (Exception e)
         {
@@ -232,18 +232,18 @@ public class WBCBSecurityController {
             }
             throw new Exception(e.getMessage());
         }
-        return wBEBCarbonCompanySearchDTO;
+        return wBCBSecuritySearchDTO;
     }
 
     /**
      * 회차 리스트 삭제
      */
     @PostMapping(value="/deleteList")
-    public String carbonCompanyDeleteList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String carbonCompanyDeleteList(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            modelMap.addAttribute("respCnt", wBCBSecurityService.carbonCompanyDeleteList(wBEBCarbonCompanySearchDTO));
+            modelMap.addAttribute("respCnt", wBCBSecurityService.carbonCompanyDeleteList(wBCBSecuritySearchDTO));
         }
         catch (Exception e)
         {
@@ -260,11 +260,11 @@ public class WBCBSecurityController {
      * 참여 이관 로그를 가져온다.
      */
     @PostMapping(value="/log-list.ajax")
-    public String getTrnsfList(WBEBCarbonCompanyTrnsfDTO wBEBCarbonCompanyTrnsfDTO, ModelMap modelMap) throws Exception
+    public String getTrnsfList(WBCBSecurityTrnsfDTO wBCBSecurityTrnsfDTO, ModelMap modelMap) throws Exception
     {
         try
         {
-            modelMap.addAttribute("rtnData", wBCBSecurityService.getTrnsfList(wBEBCarbonCompanyTrnsfDTO));
+            modelMap.addAttribute("rtnData", wBCBSecurityService.getTrnsfList(wBCBSecurityTrnsfDTO));
         }
         catch (Exception e)
         {
@@ -281,11 +281,11 @@ public class WBCBSecurityController {
      * 신청 진행단계 확인
      */
     @PostMapping(value="/getRsumePbsnCnt")
-    public String getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getRsumePbsnCnt(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
-            modelMap.addAttribute("respCnt", wBCBSecurityService.getRsumePbsnCnt(wBEBCarbonCompanySearchDTO));
+            modelMap.addAttribute("respCnt", wBCBSecurityService.getRsumePbsnCnt(wBCBSecuritySearchDTO));
         }
         catch (Exception e)
         {
@@ -300,12 +300,12 @@ public class WBCBSecurityController {
 
 
     @GetMapping(value = "/excel-down")
-    public void selectUserListExcel(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO ,HttpServletResponse response) throws Exception
+    public void selectUserListExcel(WBCBSecuritySearchDTO wBCBSecuritySearchDTO , HttpServletResponse response) throws Exception
     {
         try
         {
             //엑셀 생성
-            wBCBSecurityService.excelDownload(wBCBSecurityService.selectCarbonCompanyList(wBEBCarbonCompanySearchDTO), response);
+            wBCBSecurityService.excelDownload(wBCBSecurityService.selectCarbonCompanyList(wBCBSecuritySearchDTO), response);
         }
         catch (Exception e)
         {

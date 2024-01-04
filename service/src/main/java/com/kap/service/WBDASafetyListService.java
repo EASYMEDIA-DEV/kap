@@ -52,4 +52,14 @@ public interface WBDASafetyListService {
      * 회차 중복 체크
      */
     public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 최신 회차 목록을 조회한다.
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }

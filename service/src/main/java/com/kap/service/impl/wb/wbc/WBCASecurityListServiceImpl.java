@@ -1,10 +1,16 @@
 package com.kap.service.impl.wb.wbc;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COGCntsDTO;
+import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBCASecurityListService;
+import com.kap.service.dao.COGCntsMapper;
 import com.kap.service.dao.wb.wbc.WBCASecurityListMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +18,7 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -21,6 +28,7 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
 
     //Mapper
     private final WBCASecurityListMapper wBCASecurityListMapper;
+    private final COGCntsMapper cOGCntsMapper;
 
     /* 회차관리 마스터 시퀀스 */
     private final EgovIdGnrService cxEpisdSeqIdgen;
@@ -37,8 +45,10 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
         page.setRecordCountPerPage(wBRoundMstSearchDTO.getListRowSize());
         page.setPageSize(wBRoundMstSearchDTO.getPageRowSize());
 
-        wBRoundMstSearchDTO.setFirstIndex(page.getFirstRecordIndex());
-        wBRoundMstSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        if ("admin".equals(wBRoundMstSearchDTO.getSiteGubun())) {
+            wBRoundMstSearchDTO.setFirstIndex(page.getFirstRecordIndex());
+            wBRoundMstSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
         wBRoundMstSearchDTO.setList(wBCASecurityListMapper.selectCarbonList(wBRoundMstSearchDTO));
         wBRoundMstSearchDTO.setTotalCount(wBCASecurityListMapper.getCarbonListTotCnt(wBRoundMstSearchDTO));
 
@@ -177,6 +187,55 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
         int respCnt = wBCASecurityListMapper.episdChk(wBRoundMstDTO);
         return respCnt;
     }
-    
-    
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+        wBRoundMstSearchDTO = wBCASecurityListMapper.getRoundDtl(wBRoundMstSearchDTO);
+
+        if (wBRoundMstSearchDTO != null) {
+            List<SMJFormDTO> smjList = wBCASecurityListMapper.selectOPtnList(wBRoundMstSearchDTO);
+            wBRoundMstSearchDTO.setSmjList(smjList);
+        }
+
+        return wBRoundMstSearchDTO;
+    }
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        int rtnCode = 0;
+
+        COUserDetailsDTO cOUserDetailsDTO = null;
+
+        if (!COUserDetailsHelperService.isAuthenticated())
+        {
+            //비로그인 코드 100
+            rtnCode = 999;
+        }
+        else
+        {
+            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+            if (!"CP".equals(cOUserDetailsDTO.getAuthCd())) {
+                rtnCode = 100;
+            } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
+                wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                int cnt = wBCASecurityListMapper.getApplyCount(wBRoundMstSearchDTO);
+
+                if (cnt > 0) {
+                    //신청여부 존재 코드 300
+                    rtnCode = 300;
+                }else{
+                    //신청가능 코드 200
+                    rtnCode = 200;
+                }
+            }
+        }
+
+        return rtnCode;
+    }
 }

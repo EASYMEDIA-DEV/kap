@@ -3,6 +3,7 @@ package com.kap.core.dto.wb;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -81,4 +82,6 @@ public class WBRoundMstSearchDTO extends BaseDTO {
     @Schema(title = "옵션파일 리스트")
     private List<WBAManagementOptnDTO> optnList;
 
+    @Schema(title = "양식 관리 파일 리스트")
+    private List<SMJFormDTO> smjList;
 }

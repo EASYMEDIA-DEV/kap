@@ -3,7 +3,8 @@ package com.kap.service.impl.wb.wbd;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
-import com.kap.core.dto.wb.wbe.*;
+import com.kap.core.dto.wb.wbc.*;
+import com.kap.core.dto.wb.wbd.*;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBDBSafetyService;
@@ -55,195 +56,195 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
     /**
      * 신청 목록
      */
-    public WBEBCarbonCompanySearchDTO selectCarbonCompanyList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
+    public WBDBSafetySearchDTO selectCarbonCompanyList(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
 
-        page.setCurrentPageNo(wBEBCarbonCompanySearchDTO.getPageIndex());
-        page.setRecordCountPerPage(wBEBCarbonCompanySearchDTO.getListRowSize());
+        page.setCurrentPageNo(wBDBSafetySearchDTO.getPageIndex());
+        page.setRecordCountPerPage(wBDBSafetySearchDTO.getListRowSize());
 
-        page.setPageSize(wBEBCarbonCompanySearchDTO.getPageRowSize());
+        page.setPageSize(wBDBSafetySearchDTO.getPageRowSize());
 
-        wBEBCarbonCompanySearchDTO.setFirstIndex(page.getFirstRecordIndex());
-        wBEBCarbonCompanySearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        wBDBSafetySearchDTO.setFirstIndex(page.getFirstRecordIndex());
+        wBDBSafetySearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
 
-        wBEBCarbonCompanySearchDTO.setList(wBDBSafetyMapper.selectCarbonCompanyList(wBEBCarbonCompanySearchDTO));
-        wBEBCarbonCompanySearchDTO.setTotalCount(wBDBSafetyMapper.getCarbonCompanyListTotCnt(wBEBCarbonCompanySearchDTO));
+        wBDBSafetySearchDTO.setList(wBDBSafetyMapper.selectCarbonCompanyList(wBDBSafetySearchDTO));
+        wBDBSafetySearchDTO.setTotalCount(wBDBSafetyMapper.getCarbonCompanyListTotCnt(wBDBSafetySearchDTO));
 
-        return wBEBCarbonCompanySearchDTO;
+        return wBDBSafetySearchDTO;
     }
 
     /**
      * 연도 상세 조회
      */
-    public List<String> selectYearDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
-        return wBDBSafetyMapper.selectYearDtl(wBEBCarbonCompanySearchDTO);
+    public List<String> selectYearDtl(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception {
+        return wBDBSafetyMapper.selectYearDtl(wBDBSafetySearchDTO);
     }
 
     /**
      * 회차 리스트 조회
      */
-    public WBEBCarbonCompanySearchDTO getYearSelect(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
-        wBEBCarbonCompanySearchDTO.setEpisdList(wBDBSafetyMapper.getYearSelect(wBEBCarbonCompanySearchDTO));
+    public WBDBSafetySearchDTO getYearSelect(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception {
+        wBDBSafetySearchDTO.setEpisdList(wBDBSafetyMapper.getYearSelect(wBDBSafetySearchDTO));
 
-        return wBEBCarbonCompanySearchDTO;
+        return wBDBSafetySearchDTO;
     }
 
     /**
      * 신청 상세 조회
      */
-    public WBEBCarbonCompanyMstInsertDTO selectCarbonCompanyDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
+    public WBDBSafetyMstInsertDTO selectCarbonCompanyDtl(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception {
 
         //MST
-        WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
+        WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBDBSafetySearchDTO);
 
         //DTL
-        wBEBCarbonCompanyMstInsertDTO.setRsumeDtlList(wBDBSafetyMapper.selectCarbonCompanyDtlDetail(wBEBCarbonCompanySearchDTO));
+        wBDBSafetyMstInsertDTO.setRsumeDtlList(wBDBSafetyMapper.selectCarbonCompanyDtlDetail(wBDBSafetySearchDTO));
 
-        wBEBCarbonCompanySearchDTO.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getMemSeq());
-        wBEBCarbonCompanySearchDTO.setBsnmNo(wBEBCarbonCompanyMstInsertDTO.getAppctnBsnmNo());
+        wBDBSafetySearchDTO.setMemSeq(wBDBSafetyMstInsertDTO.getMemSeq());
+        wBDBSafetySearchDTO.setBsnmNo(wBDBSafetyMstInsertDTO.getAppctnBsnmNo());
 
         //MEM
-        wBEBCarbonCompanyMstInsertDTO.setMemList(wBDBSafetyMapper.selectCarbonCompanyMember(wBEBCarbonCompanySearchDTO));
+        wBDBSafetyMstInsertDTO.setMemList(wBDBSafetyMapper.selectCarbonCompanyMember(wBDBSafetySearchDTO));
 
         //CMSSR
-        if(wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq() != null){
-            wBEBCarbonCompanySearchDTO.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq());
-            wBEBCarbonCompanyMstInsertDTO.getMemList().add(wBDBSafetyMapper.selectCarbonCompanyMember(wBEBCarbonCompanySearchDTO).get(0));
+        if(wBDBSafetyMstInsertDTO.getPicCmssrSeq() != null){
+            wBDBSafetySearchDTO.setMemSeq(wBDBSafetyMstInsertDTO.getPicCmssrSeq());
+            wBDBSafetyMstInsertDTO.getMemList().add(wBDBSafetyMapper.selectCarbonCompanyMember(wBDBSafetySearchDTO).get(0));
         }
 
         //COMPANY
-        WBEBCompanyDTO wBEBCompanyList = wBDBSafetyMapper.selectCarbonCompany(wBEBCarbonCompanySearchDTO);
+        WBDBCompanyDTO wBEBCompanyList = wBDBSafetyMapper.selectCarbonCompany(wBDBSafetySearchDTO);
         wBEBCompanyList.setDtlList(new ArrayList<>());
 
         //SQ
-        List<WBEBCompanyDtlDTO> wBEBCompanyDtlList = wBDBSafetyMapper.selectCarbonCompanySQ(wBEBCarbonCompanySearchDTO);
+        List<WBDBCompanyDtlDTO> wBEBCompanyDtlList = wBDBSafetyMapper.selectCarbonCompanySQ(wBDBSafetySearchDTO);
 
         //RSUME_PBSN_DTL
-        wBEBCarbonCompanyMstInsertDTO.setPbsnDtlList(wBDBSafetyMapper.selectCarbonCompanyPbsn(wBEBCarbonCompanySearchDTO));
-        for(WBEBCompanyDtlDTO wBEBCompanyDtlDTO : wBEBCompanyDtlList){
-            wBEBCompanyList.getDtlList().add(wBEBCompanyDtlDTO);
+        wBDBSafetyMstInsertDTO.setPbsnDtlList(wBDBSafetyMapper.selectCarbonCompanyPbsn(wBDBSafetySearchDTO));
+        for(WBDBCompanyDtlDTO wBDBCompanyDtlDTO : wBEBCompanyDtlList){
+            wBEBCompanyList.getDtlList().add(wBDBCompanyDtlDTO);
         }
-        wBEBCarbonCompanyMstInsertDTO.setCompanyDtl(wBEBCompanyList);
+        wBDBSafetyMstInsertDTO.setCompanyDtl(wBEBCompanyList);
 
         //지원금액 조회
-        List<WBEBCarbonCompanySpprtDTO> wBEBCarbonCompanySpprtDTO = wBDBSafetyMapper.selectAppctnSpprt(wBEBCarbonCompanySearchDTO);
+        List<WBDBSafetySpprtDTO> wBDBSafetySpprtDTO = wBDBSafetyMapper.selectAppctnSpprt(wBDBSafetySearchDTO);
 
-        wBEBCarbonCompanyMstInsertDTO.setSpprtList(wBEBCarbonCompanySpprtDTO);
+        wBDBSafetyMstInsertDTO.setSpprtList(wBDBSafetySpprtDTO);
 
         //file
-        wBEBCarbonCompanyMstInsertDTO.setFileDtlList(wBDBSafetyMapper.selectFileDtl(wBEBCarbonCompanySearchDTO));
+        wBDBSafetyMstInsertDTO.setFileDtlList(wBDBSafetyMapper.selectFileDtl(wBDBSafetySearchDTO));
 
         //지급 차수 조회
-        wBEBCarbonCompanyMstInsertDTO.setGiveOrdList(wBDBSafetyMapper.getGiveOrdList(wBEBCarbonCompanySearchDTO));
+        wBDBSafetyMstInsertDTO.setGiveOrdList(wBDBSafetyMapper.getGiveOrdList(wBDBSafetySearchDTO));
 
-        return wBEBCarbonCompanyMstInsertDTO;
+        return wBDBSafetyMstInsertDTO;
     }
 
 
     /**
      * 신청 등록
      */
-    public int carbonCompanyInsert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request) throws Exception {
+    public int carbonCompanyInsert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, HttpServletRequest request) throws Exception {
 
         int respCnt = 0;
 
-        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
+        wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
 
         COUserDetailsDTO coaAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        wBEBCarbonCompanyMstInsertDTO.setRegId(coaAdmDTO.getId());
-        wBEBCarbonCompanyMstInsertDTO.setRegIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyMstInsertDTO.setRegId(coaAdmDTO.getId());
+        wBDBSafetyMstInsertDTO.setRegIp(coaAdmDTO.getLoginIp());
 
         int firstAppctnMstSeqIdgen = cxAppctnMstSeqIdgen.getNextIntegerId();
-        wBEBCarbonCompanyMstInsertDTO.setAppctnSeq(firstAppctnMstSeqIdgen);
+        wBDBSafetyMstInsertDTO.setAppctnSeq(firstAppctnMstSeqIdgen);
 
         //신청 MST
-        respCnt = wBDBSafetyMapper.insertAppctnMst(wBEBCarbonCompanyMstInsertDTO);
+        respCnt = wBDBSafetyMapper.insertAppctnMst(wBDBSafetyMstInsertDTO);
 
         //신청 DTL
-        WBEBCarbonCompanyDtlDTO wBEBCarbonCompanyDtlDTO = new WBEBCarbonCompanyDtlDTO();
+        WBDBSafetyDtlDTO wBDBSafetyDtlDTO = new WBDBSafetyDtlDTO();
 
         int firstAppctnRsumeDtlSeqIdgen = 0;
 
-        wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
-        wBEBCarbonCompanyDtlDTO.setRsumeSttsCd("PRO_TYPE01001");
-        wBEBCarbonCompanyDtlDTO.setAppctnSttsCd("PRO_TYPE01001_01_001");
-        wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01001_02_001");
-        wBEBCarbonCompanyDtlDTO.setRegId(coaAdmDTO.getId());
-        wBEBCarbonCompanyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+        wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01001");
+        wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01001_01_001");
+        wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01001_02_001");
+        wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+        wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
         firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-        wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-        wBEBCarbonCompanyDtlDTO.setRsumeOrd(1);
-        wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+        wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+        wBDBSafetyDtlDTO.setRsumeOrd(1);
+        wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
 
-        WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO= wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList().get(0);
-        wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-        wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(1);
-        wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-        wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-        wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+        WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO= wBDBSafetyMstInsertDTO.getPbsnDtlList().get(0);
+        wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+        wBDBSafetyPbsnDtlDTO.setRsumeOrd(1);
+        wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+        wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
 
         //상생 신청 파일 상세
-        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBEBCarbonCompanyMstInsertDTO.getOptnFileList());
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getOptnFileList());
 
-        WBEBCarbonCompanyFileDtlDTO wBEBCarbonCompanyFileDtlDTO = new WBEBCarbonCompanyFileDtlDTO();
-        wBEBCarbonCompanyFileDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-        wBEBCarbonCompanyFileDtlDTO.setRsumeOrd(1);
-        wBEBCarbonCompanyFileDtlDTO.setFileCd("ATTACH_FILE_TYPE01");
-        wBEBCarbonCompanyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
-        wBEBCarbonCompanyFileDtlDTO.setRegId(coaAdmDTO.getId());
-        wBEBCarbonCompanyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+        WBDBSafetyFileDtlDTO wBDBSafetyFileDtlDTO = new WBDBSafetyFileDtlDTO();
+        wBDBSafetyFileDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+        wBDBSafetyFileDtlDTO.setRsumeOrd(1);
+        wBDBSafetyFileDtlDTO.setFileCd("ATTACH_FILE_TYPE01");
+        wBDBSafetyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+        wBDBSafetyFileDtlDTO.setRegId(coaAdmDTO.getId());
+        wBDBSafetyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-        wBDBSafetyMapper.insertAppctnFileDtl(wBEBCarbonCompanyFileDtlDTO);
+        wBDBSafetyMapper.insertAppctnFileDtl(wBDBSafetyFileDtlDTO);
 
         //회원
-        MPAUserDto mPAUserDto= wBEBCarbonCompanyMstInsertDTO.getMemList().get(0);
+        MPAUserDto mPAUserDto= wBDBSafetyMstInsertDTO.getMemList().get(0);
         mPAUserDto.setModId(coaAdmDTO.getId());
         mPAUserDto.setModIp(coaAdmDTO.getLoginIp());
         wBDBSafetyMapper.updateAppctnMember(mPAUserDto);
 
         //부품사
-        WBEBCompanyDTO wBEBCompanyDTO= wBEBCarbonCompanyMstInsertDTO.getCompanyDtl();
-        wBEBCompanyDTO.setModId(coaAdmDTO.getId());
-        wBEBCompanyDTO.setModIp(coaAdmDTO.getLoginIp());
-        wBDBSafetyMapper.updateAppctnCompany(wBEBCompanyDTO);
+        WBDBCompanyDTO wBDBCompanyDTO= wBDBSafetyMstInsertDTO.getCompanyDtl();
+        wBDBCompanyDTO.setModId(coaAdmDTO.getId());
+        wBDBCompanyDTO.setModIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyMapper.updateAppctnCompany(wBDBCompanyDTO);
 
         //부품사 SQ
 
-        if(wBEBCompanyDTO.getCtgryCd().equals("COMPANY01002")){
-            wBDBSafetyMapper.deleteCarbonCompanySQ(wBEBCompanyDTO);
-            for(int i=0; i < wBEBCompanyDTO.getDtlList().size(); i++){
-                WBEBCompanyDtlDTO wBEBCompanyDtlDTO = wBEBCompanyDTO.getDtlList().get(i);
+        if(wBDBCompanyDTO.getCtgryCd().equals("COMPANY01002")){
+            wBDBSafetyMapper.deleteCarbonCompanySQ(wBDBCompanyDTO);
+            for(int i=0; i < wBDBCompanyDTO.getDtlList().size(); i++){
+                WBDBCompanyDtlDTO wBDBCompanyDtlDTO = wBDBCompanyDTO.getDtlList().get(i);
 
                 int firstMpePartsCompanyDtlSeqIdgen = mpePartsCompanyDtlIdgen.getNextIntegerId();
 
-                wBEBCompanyDtlDTO.setCbsnSeq(firstMpePartsCompanyDtlSeqIdgen);
+                wBDBCompanyDtlDTO.setCbsnSeq(firstMpePartsCompanyDtlSeqIdgen);
 
-                wBDBSafetyMapper.insertCarbonCompanySQ(wBEBCompanyDtlDTO);
+                wBDBSafetyMapper.insertCarbonCompanySQ(wBDBCompanyDtlDTO);
             }
         }
 
         //지원금
         for(int i=0; i < 2; i++){
-            WBEBCarbonCompanySpprtDTO wBEBCarbonCompanySpprtDTO = new WBEBCarbonCompanySpprtDTO();
+            WBDBSafetySpprtDTO wBDBSafetySpprtDTO = new WBDBSafetySpprtDTO();
             int firstMpePartsCompanyDtlSeqIdgen = cxAppctnSpprtDtlIdgen.getNextIntegerId();
-            wBEBCarbonCompanySpprtDTO.setAppctnSpprtSeq(firstMpePartsCompanyDtlSeqIdgen);
-            wBEBCarbonCompanySpprtDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
+            wBDBSafetySpprtDTO.setAppctnSpprtSeq(firstMpePartsCompanyDtlSeqIdgen);
+            wBDBSafetySpprtDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
 
             if(i==0){
-                wBEBCarbonCompanySpprtDTO.setGiveType("PRO_TYPE03001");
-                wBEBCarbonCompanySpprtDTO.setAppctnSttsCd("PRO_TYPE03001_01_001");
+                wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03001");
+                wBDBSafetySpprtDTO.setAppctnSttsCd("PRO_TYPE03001_01_001");
             }else{
-                wBEBCarbonCompanySpprtDTO.setGiveType("PRO_TYPE03003");
-                wBEBCarbonCompanySpprtDTO.setAppctnSttsCd("PRO_TYPE03002_01_001");
+                wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03003");
+                wBDBSafetySpprtDTO.setAppctnSttsCd("PRO_TYPE03002_01_001");
             }
 
-            wBEBCarbonCompanySpprtDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanySpprtDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBDBSafetyMapper.insertAppctnSpprt(wBEBCarbonCompanySpprtDTO);
+            wBDBSafetySpprtDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetySpprtDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyMapper.insertAppctnSpprt(wBDBSafetySpprtDTO);
         }
 
-        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
+        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
     }
@@ -251,147 +252,147 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
     /**
      * 신청 수정
      */
-    public int carbonCompanyUpdate(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request) throws Exception {
+    public int carbonCompanyUpdate(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, HttpServletRequest request) throws Exception {
 
         int respCnt = 0;
 
-        int maxRsumeOrd = wBEBCarbonCompanyMstInsertDTO.getMaxRsumeOrd();
+        int maxRsumeOrd = wBDBSafetyMstInsertDTO.getMaxRsumeOrd();
         int rsumeOrd = maxRsumeOrd - 1;
 
         COUserDetailsDTO coaAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
-        wBEBCarbonCompanyMstInsertDTO.setModId(coaAdmDTO.getId());
-        wBEBCarbonCompanyMstInsertDTO.setModIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyMstInsertDTO.setModId(coaAdmDTO.getId());
+        wBDBSafetyMstInsertDTO.setModIp(coaAdmDTO.getLoginIp());
 
         //참여 이관 추가
-        WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
-        wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
-        WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
+        WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+        wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
+        WBDBSafetyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBDBSafetySearchDTO);
 
-        if(wBEBTrnsfDTO.getMemSeq() != wBEBCarbonCompanyMstInsertDTO.getMemSeq())
+        if(wBEBTrnsfDTO.getMemSeq() != wBDBSafetyMstInsertDTO.getMemSeq())
         {
             int firstAppctnTrnsfDtlSeqIdgen = cxAppctnTrnsfDtlIdgen.getNextIntegerId();
-            WBEBCarbonCompanyTrnsfDTO wBEBCarbonCompanyTrnsfDTO = new WBEBCarbonCompanyTrnsfDTO();
-            wBEBCarbonCompanyTrnsfDTO.setTrnsfSeq(firstAppctnTrnsfDtlSeqIdgen);
-            wBEBCarbonCompanyTrnsfDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
-            wBEBCarbonCompanyTrnsfDTO.setBfreMemSeq(wBEBTrnsfDTO.getMemSeq());
-            wBEBCarbonCompanyTrnsfDTO.setAftrMemSeq(wBEBCarbonCompanyMstInsertDTO.getMemSeq());
-            wBEBCarbonCompanyTrnsfDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyTrnsfDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBDBSafetyMapper.insertAppctnTrnsf(wBEBCarbonCompanyTrnsfDTO);
+            WBDBSafetyTrnsfDTO wBDBSafetyTrnsfDTO = new WBDBSafetyTrnsfDTO();
+            wBDBSafetyTrnsfDTO.setTrnsfSeq(firstAppctnTrnsfDtlSeqIdgen);
+            wBDBSafetyTrnsfDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+            wBDBSafetyTrnsfDTO.setBfreMemSeq(wBEBTrnsfDTO.getMemSeq());
+            wBDBSafetyTrnsfDTO.setAftrMemSeq(wBDBSafetyMstInsertDTO.getMemSeq());
+            wBDBSafetyTrnsfDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyTrnsfDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyMapper.insertAppctnTrnsf(wBDBSafetyTrnsfDTO);
         }
 
         //신청 MST ○
-        respCnt = wBDBSafetyMapper.updateAppctnMst(wBEBCarbonCompanyMstInsertDTO);
+        respCnt = wBDBSafetyMapper.updateAppctnMst(wBDBSafetyMstInsertDTO);
 
         //신청 DTL ○
-        WBEBCarbonCompanyDtlDTO wBEBCarbonCompanyDtlDTO = wBEBCarbonCompanyMstInsertDTO.getRsumeDtlList().get(rsumeOrd);
+        WBDBSafetyDtlDTO wBDBSafetyDtlDTO = wBDBSafetyMstInsertDTO.getRsumeDtlList().get(rsumeOrd);
 
-        wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
-        wBEBCarbonCompanyDtlDTO.setRsumeSeq(wBEBCarbonCompanyMstInsertDTO.getRsumeSeq());
-        wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd);
-        wBEBCarbonCompanyDtlDTO.setModId(coaAdmDTO.getId());
-        wBEBCarbonCompanyDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+        wBDBSafetyDtlDTO.setRsumeSeq(wBDBSafetyMstInsertDTO.getRsumeSeq());
+        wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd);
+        wBDBSafetyDtlDTO.setModId(coaAdmDTO.getId());
+        wBDBSafetyDtlDTO.setModIp(coaAdmDTO.getLoginIp());
 
-        wBDBSafetyMapper.updateAppctnDtl(wBEBCarbonCompanyDtlDTO);
+        wBDBSafetyMapper.updateAppctnDtl(wBDBSafetyDtlDTO);
 
         //Pbsn ○
-        WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO = wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList().get(rsumeOrd);
-        if(wBEBCarbonCompanyPbsnDtlDTO.getBsnPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getBsnPmt().equals("")){
-            wBEBCarbonCompanyPbsnDtlDTO.setBsnPmt(null);
+        WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO = wBDBSafetyMstInsertDTO.getPbsnDtlList().get(rsumeOrd);
+        if(wBDBSafetyPbsnDtlDTO.getBsnPmt() == null || wBDBSafetyPbsnDtlDTO.getBsnPmt().equals("")){
+            wBDBSafetyPbsnDtlDTO.setBsnPmt(null);
         }
-        if(wBEBCarbonCompanyPbsnDtlDTO.getBsnPlanDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getBsnPlanDt().equals("")){
-            wBEBCarbonCompanyPbsnDtlDTO.setBsnPlanDt(null);
+        if(wBDBSafetyPbsnDtlDTO.getBsnPlanDt() == null || wBDBSafetyPbsnDtlDTO.getBsnPlanDt().equals("")){
+            wBDBSafetyPbsnDtlDTO.setBsnPlanDt(null);
         }
-        if(wBEBCarbonCompanyPbsnDtlDTO.getSpprtPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getSpprtPmt().equals("")){
-            wBEBCarbonCompanyPbsnDtlDTO.setSpprtPmt(null);
+        if(wBDBSafetyPbsnDtlDTO.getSpprtPmt() == null || wBDBSafetyPbsnDtlDTO.getSpprtPmt().equals("")){
+            wBDBSafetyPbsnDtlDTO.setSpprtPmt(null);
         }
-        if(wBEBCarbonCompanyPbsnDtlDTO.getPhswPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getPhswPmt().equals("")){
-            wBEBCarbonCompanyPbsnDtlDTO.setPhswPmt(null);
+        if(wBDBSafetyPbsnDtlDTO.getPhswPmt() == null || wBDBSafetyPbsnDtlDTO.getPhswPmt().equals("")){
+            wBDBSafetyPbsnDtlDTO.setPhswPmt(null);
         }
-        if(wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt().equals("")){
-            wBEBCarbonCompanyPbsnDtlDTO.setTtlPmt(null);
+        if(wBDBSafetyPbsnDtlDTO.getTtlPmt() == null || wBDBSafetyPbsnDtlDTO.getTtlPmt().equals("")){
+            wBDBSafetyPbsnDtlDTO.setTtlPmt(null);
         }
 
-        wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(wBEBCarbonCompanyMstInsertDTO.getRsumeSeq());
-        wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
-        wBEBCarbonCompanyPbsnDtlDTO.setModId(coaAdmDTO.getId());
-        wBEBCarbonCompanyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
-        wBDBSafetyMapper.updateAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+        wBDBSafetyPbsnDtlDTO.setRsumeSeq(wBDBSafetyMstInsertDTO.getRsumeSeq());
+        wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
+        wBDBSafetyPbsnDtlDTO.setModId(coaAdmDTO.getId());
+        wBDBSafetyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyMapper.updateAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
 
         //상생 신청 파일 상세
-        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBEBCarbonCompanyMstInsertDTO.getFileList());
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getFileList());
 
-        WBEBCarbonCompanyFileDtlDTO wBEBCarbonCompanyFileDtlDTO = wBEBCarbonCompanyMstInsertDTO.getFileDtlList().get(rsumeOrd);
-        wBEBCarbonCompanyFileDtlDTO.setRsumeSeq(wBEBCarbonCompanyMstInsertDTO.getRsumeSeq());
-        wBEBCarbonCompanyFileDtlDTO.setRsumeOrd(maxRsumeOrd);
-        wBEBCarbonCompanyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"+rsumeOrd));
-        wBEBCarbonCompanyFileDtlDTO.setRegId(coaAdmDTO.getId());
-        wBEBCarbonCompanyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-        wBDBSafetyMapper.insertAppctnFileDtl(wBEBCarbonCompanyFileDtlDTO);
+        WBDBSafetyFileDtlDTO wBDBSafetyFileDtlDTO = wBDBSafetyMstInsertDTO.getFileDtlList().get(rsumeOrd);
+        wBDBSafetyFileDtlDTO.setRsumeSeq(wBDBSafetyMstInsertDTO.getRsumeSeq());
+        wBDBSafetyFileDtlDTO.setRsumeOrd(maxRsumeOrd);
+        wBDBSafetyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"+rsumeOrd));
+        wBDBSafetyFileDtlDTO.setRegId(coaAdmDTO.getId());
+        wBDBSafetyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyMapper.insertAppctnFileDtl(wBDBSafetyFileDtlDTO);
 
         //회원○
-        MPAUserDto mPAUserDto= wBEBCarbonCompanyMstInsertDTO.getMemList().get(0);
-        mPAUserDto.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getMemSeq());
+        MPAUserDto mPAUserDto= wBDBSafetyMstInsertDTO.getMemList().get(0);
+        mPAUserDto.setMemSeq(wBDBSafetyMstInsertDTO.getMemSeq());
         mPAUserDto.setModId(coaAdmDTO.getId());
         mPAUserDto.setModIp(coaAdmDTO.getLoginIp());
         wBDBSafetyMapper.updateAppctnMember(mPAUserDto);
 
         //부품사○
-        WBEBCompanyDTO wBEBCompanyDTO= wBEBCarbonCompanyMstInsertDTO.getCompanyDtl();
-        wBEBCompanyDTO.setModId(coaAdmDTO.getId());
-        wBEBCompanyDTO.setModIp(coaAdmDTO.getLoginIp());
-        wBDBSafetyMapper.updateAppctnCompany(wBEBCompanyDTO);
+        WBDBCompanyDTO wBDBCompanyDTO= wBDBSafetyMstInsertDTO.getCompanyDtl();
+        wBDBCompanyDTO.setModId(coaAdmDTO.getId());
+        wBDBCompanyDTO.setModIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyMapper.updateAppctnCompany(wBDBCompanyDTO);
 
         //부품사 SQ○
-        if(wBEBCompanyDTO.getCtgryCd().equals("COMPANY01002")){
-            wBDBSafetyMapper.deleteCarbonCompanySQ(wBEBCompanyDTO);
-            for(int i=0; i < wBEBCompanyDTO.getDtlList().size(); i++){
-                WBEBCompanyDtlDTO wBEBCompanyDtlDTO = wBEBCompanyDTO.getDtlList().get(i);
+        if(wBDBCompanyDTO.getCtgryCd().equals("COMPANY01002")){
+            wBDBSafetyMapper.deleteCarbonCompanySQ(wBDBCompanyDTO);
+            for(int i=0; i < wBDBCompanyDTO.getDtlList().size(); i++){
+                WBDBCompanyDtlDTO wBDBCompanyDtlDTO = wBDBCompanyDTO.getDtlList().get(i);
 
-                if(wBEBCompanyDtlDTO.getYear() == null || wBEBCompanyDtlDTO.getYear().equals("")){
-                    wBEBCompanyDtlDTO.setYear(null);
+                if(wBDBCompanyDtlDTO.getYear() == null || wBDBCompanyDtlDTO.getYear().equals("")){
+                    wBDBCompanyDtlDTO.setYear(null);
                 }
 
-                if(wBEBCompanyDtlDTO.getScore() == null || wBEBCompanyDtlDTO.getScore().equals("")){
-                    wBEBCompanyDtlDTO.setScore(null);
+                if(wBDBCompanyDtlDTO.getScore() == null || wBDBCompanyDtlDTO.getScore().equals("")){
+                    wBDBCompanyDtlDTO.setScore(null);
                 }
 
                 int firstMpePartsCompanyDtlSeqIdgen = mpePartsCompanyDtlIdgen.getNextIntegerId();
-                wBEBCompanyDtlDTO.setBsnmNo(wBEBCompanyDTO.getBsnmNo());
-                wBEBCompanyDtlDTO.setCbsnSeq(firstMpePartsCompanyDtlSeqIdgen);
-                wBDBSafetyMapper.insertCarbonCompanySQ(wBEBCompanyDtlDTO);
+                wBDBCompanyDtlDTO.setBsnmNo(wBDBCompanyDTO.getBsnmNo());
+                wBDBCompanyDtlDTO.setCbsnSeq(firstMpePartsCompanyDtlSeqIdgen);
+                wBDBSafetyMapper.insertCarbonCompanySQ(wBDBCompanyDtlDTO);
             }
         }
 
 
         //지급금 관련
-        for(int i=0; i < wBEBCarbonCompanyMstInsertDTO.getSpprtList().size(); i++){
+        for(int i=0; i < wBDBSafetyMstInsertDTO.getSpprtList().size(); i++){
             //상생 신청 파일 상세
-            WBEBCarbonCompanySpprtDTO wBEBCarbonCompanySpprtDTO = wBEBCarbonCompanyMstInsertDTO.getSpprtList().get(i);
-            wBEBCarbonCompanySpprtDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
+            WBDBSafetySpprtDTO wBDBSafetySpprtDTO = wBDBSafetyMstInsertDTO.getSpprtList().get(i);
+            wBDBSafetySpprtDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
             if(i == 0){
                 //지원금신청서
-                wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("spprtAppctnFileSeq"));
+                wBDBSafetySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("spprtAppctnFileSeq"));
                 //협약서
-                wBEBCarbonCompanySpprtDTO.setAgrmtFileSeq(fileSeqMap.get("agrmtFileSeq"));
+                wBDBSafetySpprtDTO.setAgrmtFileSeq(fileSeqMap.get("agrmtFileSeq"));
                 //보증보험증
-                wBEBCarbonCompanySpprtDTO.setGrnteInsrncFileSeq(fileSeqMap.get("grnteInsrncFileSeq"));
+                wBDBSafetySpprtDTO.setGrnteInsrncFileSeq(fileSeqMap.get("grnteInsrncFileSeq"));
             }else{
                 //지원금신청서
-                wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("spprtAppctnFileSeq1"));
+                wBDBSafetySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("spprtAppctnFileSeq1"));
                 //거래명세서
-                wBEBCarbonCompanySpprtDTO.setBlingFileSeq(fileSeqMap.get("blingFileSeq"));
+                wBDBSafetySpprtDTO.setBlingFileSeq(fileSeqMap.get("blingFileSeq"));
                 //매출전표
-                wBEBCarbonCompanySpprtDTO.setSlsFileSeq(fileSeqMap.get("slsFileSeq"));
+                wBDBSafetySpprtDTO.setSlsFileSeq(fileSeqMap.get("slsFileSeq"));
                 //검수확인서
-                wBEBCarbonCompanySpprtDTO.setInsptChkFileSeq(fileSeqMap.get("insptChkFileSeq"));
+                wBDBSafetySpprtDTO.setInsptChkFileSeq(fileSeqMap.get("insptChkFileSeq"));
             }
 
-            wBEBCarbonCompanySpprtDTO.setModId(coaAdmDTO.getId());
-            wBEBCarbonCompanySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
+            wBDBSafetySpprtDTO.setModId(coaAdmDTO.getId());
+            wBDBSafetySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            if(wBEBCarbonCompanySpprtDTO.getAccsDt() != "" ){
-                wBDBSafetyMapper.updateAppctnSpprt(wBEBCarbonCompanySpprtDTO);
+            if(wBDBSafetySpprtDTO.getAccsDt() != "" ){
+                wBDBSafetyMapper.updateAppctnSpprt(wBDBSafetySpprtDTO);
             }
         }
 
@@ -400,116 +401,116 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         int firstAppctnRsumeDtlSeqIdgen = 0;
 
         //신청 적합
-        if(maxRsumeOrd == 1 && "PRO_TYPE01001_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
+        if(maxRsumeOrd == 1 && "PRO_TYPE01001_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
             firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
-            wBEBCarbonCompanyDtlDTO.setRsumeSttsCd("PRO_TYPE01002");
-            wBEBCarbonCompanyDtlDTO.setAppctnSttsCd("PRO_TYPE01002_01_001");
-            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01002_02_001");
-            wBEBCarbonCompanyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01002");
+            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01002_01_001");
+            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01002_02_001");
+            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
 
-            wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
         }
         //사업계획 적합
-        else if(maxRsumeOrd == 2 && "PRO_TYPE01002_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
+        else if(maxRsumeOrd == 2 && "PRO_TYPE01002_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
             firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
-            wBEBCarbonCompanyDtlDTO.setRsumeSttsCd("PRO_TYPE01003");
-            wBEBCarbonCompanyDtlDTO.setAppctnSttsCd("PRO_TYPE01003_01_001");
-            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01003_02_001");
-            wBEBCarbonCompanyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01003");
+            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01003_01_001");
+            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01003_02_001");
+            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
 
-            wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
         }
         //최초점검 적합
-        else if(maxRsumeOrd == 3 && "PRO_TYPE01003_02_003".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
+        else if(maxRsumeOrd == 3 && "PRO_TYPE01003_02_003".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
             firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
-            wBEBCarbonCompanyDtlDTO.setRsumeSttsCd("PRO_TYPE01004");
-            wBEBCarbonCompanyDtlDTO.setAppctnSttsCd("PRO_TYPE01004_01_001");
-            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01004_02_001");
-            wBEBCarbonCompanyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01004");
+            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01004_01_001");
+            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01004_02_001");
+            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
 
-            wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
         }
         //완료 보고 적합
-        else if(maxRsumeOrd == 4 && "PRO_TYPE01004_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
+        else if(maxRsumeOrd == 4 && "PRO_TYPE01004_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
             firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
-            wBEBCarbonCompanyDtlDTO.setRsumeSttsCd("PRO_TYPE01005");
-            wBEBCarbonCompanyDtlDTO.setAppctnSttsCd("PRO_TYPE01005_01_001");
-            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01005_02_001");
-            wBEBCarbonCompanyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01005");
+            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01005_01_001");
+            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01005_02_001");
+            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
 
-            wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
         }
         //최종점검 적합
-        else if(maxRsumeOrd == 5 && "PRO_TYPE01005_02_003".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
+        else if(maxRsumeOrd == 5 && "PRO_TYPE01005_02_003".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
             firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
-            wBEBCarbonCompanyDtlDTO.setRsumeSttsCd("PRO_TYPE01006");
-            wBEBCarbonCompanyDtlDTO.setAppctnSttsCd("PRO_TYPE01006_01_001");
-            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01006_02_001");
-            wBEBCarbonCompanyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01006");
+            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01006_01_001");
+            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01006_02_001");
+            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-            wBEBCarbonCompanyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
+            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
 
-            wBEBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBEBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBEBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
+            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
         }
 
 
-        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
+        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
 
         return respCnt;
@@ -518,23 +519,23 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
     /**
      * 신청 리스트 삭제
      */
-    public int carbonCompanyDeleteList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
+    public int carbonCompanyDeleteList(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception {
 
 
-        List<String> appctnSeqList = wBEBCarbonCompanySearchDTO.getDelValueList();
+        List<String> appctnSeqList = wBDBSafetySearchDTO.getDelValueList();
 
-        wBDBSafetyMapper.carbonCompanyDeleteTrnsf(wBEBCarbonCompanySearchDTO);
-        wBDBSafetyMapper.carbonCompanyDeleteSpprt(wBEBCarbonCompanySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeleteTrnsf(wBDBSafetySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeleteSpprt(wBDBSafetySearchDTO);
 
-        wBEBCarbonCompanySearchDTO.setDelValueList(wBDBSafetyMapper.selectRsumeSeq(wBEBCarbonCompanySearchDTO));
+        wBDBSafetySearchDTO.setDelValueList(wBDBSafetyMapper.selectRsumeSeq(wBDBSafetySearchDTO));
 
-        wBDBSafetyMapper.carbonCompanyDeletePbsn(wBEBCarbonCompanySearchDTO);
-        wBDBSafetyMapper.carbonCompanyDeleteRsumeFile(wBEBCarbonCompanySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeletePbsn(wBDBSafetySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeleteRsumeFile(wBDBSafetySearchDTO);
 
-        wBEBCarbonCompanySearchDTO.setDelValueList(appctnSeqList);
+        wBDBSafetySearchDTO.setDelValueList(appctnSeqList);
 
-        wBDBSafetyMapper.carbonCompanyDeleteRsume(wBEBCarbonCompanySearchDTO);
-        int respCnt = wBDBSafetyMapper.carbonCompanyDeleteMst(wBEBCarbonCompanySearchDTO);
+        wBDBSafetyMapper.carbonCompanyDeleteRsume(wBDBSafetySearchDTO);
+        int respCnt = wBDBSafetyMapper.carbonCompanyDeleteMst(wBDBSafetySearchDTO);
 
         return respCnt;
 
@@ -543,31 +544,31 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
     /**
      * 이관 로그 조회
      */
-    public WBEBCarbonCompanyTrnsfDTO getTrnsfList(WBEBCarbonCompanyTrnsfDTO wBEBCarbonCompanyTrnsfDTO) throws Exception {
+    public WBDBSafetyTrnsfDTO getTrnsfList(WBDBSafetyTrnsfDTO wBDBSafetyTrnsfDTO) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
 
-        page.setCurrentPageNo(wBEBCarbonCompanyTrnsfDTO.getPageIndex());
-        page.setRecordCountPerPage(wBEBCarbonCompanyTrnsfDTO.getListRowSize());
+        page.setCurrentPageNo(wBDBSafetyTrnsfDTO.getPageIndex());
+        page.setRecordCountPerPage(wBDBSafetyTrnsfDTO.getListRowSize());
 
-        page.setPageSize(wBEBCarbonCompanyTrnsfDTO.getPageRowSize());
+        page.setPageSize(wBDBSafetyTrnsfDTO.getPageRowSize());
 
-        wBEBCarbonCompanyTrnsfDTO.setFirstIndex(page.getFirstRecordIndex());
-        wBEBCarbonCompanyTrnsfDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        wBDBSafetyTrnsfDTO.setFirstIndex(page.getFirstRecordIndex());
+        wBDBSafetyTrnsfDTO.setRecordCountPerPage(page.getRecordCountPerPage());
 
-        wBEBCarbonCompanyTrnsfDTO.setList(wBDBSafetyMapper.getTrnsfList(wBEBCarbonCompanyTrnsfDTO));
-        wBEBCarbonCompanyTrnsfDTO.setTotalCount(wBDBSafetyMapper.getTrnsfListTotCnt(wBEBCarbonCompanyTrnsfDTO));
+        wBDBSafetyTrnsfDTO.setList(wBDBSafetyMapper.getTrnsfList(wBDBSafetyTrnsfDTO));
+        wBDBSafetyTrnsfDTO.setTotalCount(wBDBSafetyMapper.getTrnsfListTotCnt(wBDBSafetyTrnsfDTO));
 
-        return wBEBCarbonCompanyTrnsfDTO;
+        return wBDBSafetyTrnsfDTO;
     }
 
     /**
      * 신청 진행단계 확인
      */
-    public int getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
+    public int getRsumePbsnCnt(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception {
 
         int respCnt = 0;
 
-        respCnt = wBDBSafetyMapper.getRsumePbsnCnt(wBEBCarbonCompanySearchDTO);
+        respCnt = wBDBSafetyMapper.getRsumePbsnCnt(wBDBSafetySearchDTO);
 
         return respCnt;
     }
@@ -576,7 +577,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
      * 엑셀 다운로드
      */
     @Override
-    public void excelDownload(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, HttpServletResponse response) throws Exception {
+    public void excelDownload(WBDBSafetySearchDTO wBDBSafetySearchDTO, HttpServletResponse response) throws Exception {
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFCellStyle style_header = workbook.createCellStyle();
         XSSFCellStyle style_body = workbook.createCellStyle();
@@ -723,22 +724,22 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         cell.setCellStyle(style_header);
 
         // Body
-        List<WBEBCarbonCompanySearchDTO> list = wBEBCarbonCompanySearchDTO.getList();
+        List<WBDBSafetySearchDTO> list = wBDBSafetySearchDTO.getList();
 
-        List<WBEBCarbonCompanyPbsnDtlDTO> pbsnList = null;
+        List<WBDBSafetyPbsnDtlDTO> pbsnList = null;
 
         int maxOrd = 0;
         int length = 0;
 
         for (int i=0; i<list.size(); i++) {
             row = sheet.createRow(rowNum++);
-            pbsnList = wBDBSafetyMapper.selectExcelPbsn(wBEBCarbonCompanySearchDTO.getList().get(i));
+            pbsnList = wBDBSafetyMapper.selectExcelPbsn(wBDBSafetySearchDTO.getList().get(i));
             length = pbsnList.size();
             maxOrd = pbsnList.get(length-1).getMaxRsumeOrd();
 
             //번호
             cell = row.createCell(0);
-            cell.setCellValue(wBEBCarbonCompanySearchDTO.getTotalCount() - i);
+            cell.setCellValue(wBDBSafetySearchDTO.getTotalCount() - i);
             cell.setCellStyle(style_body);
 
             //사업연도
@@ -913,5 +914,105 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         // Excel File Output
         workbook.write(response.getOutputStream());
         workbook.close();
+    }
+
+
+    /**
+     * 부품사 회원 정보를 조회한다.
+     * @return
+     */
+    public WBDBCompanyDTO selectCompanyUserDtl(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception {
+
+        WBDBCompanyDTO wBDBCompanyDTO = new WBDBCompanyDTO();
+
+        wBDBCompanyDTO = wBDBSafetyMapper.getCompanyInfo(wBDBSafetySearchDTO);
+        List<WBDBCompanyDtlDTO> sqList = wBDBSafetyMapper.selectSqList(wBDBSafetySearchDTO);
+        wBDBCompanyDTO.setDtlList(sqList);
+        wBDBCompanyDTO.setMemSeq(wBDBSafetySearchDTO.getMemSeq());
+        wBDBCompanyDTO.setEpisdSeq(wBDBSafetySearchDTO.getEpisdSeq());
+
+        return wBDBCompanyDTO;
+    }
+
+
+    /**
+     * 사용자 신청 등록
+     */
+    public int carbonUserInsert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, HttpServletRequest request) throws Exception {
+
+        int respCnt = 0;
+
+        COUserDetailsDTO cOUserDetailsDTO = null;
+        cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+        wBDBSafetyMstInsertDTO.setRegId(cOUserDetailsDTO.getId());
+        wBDBSafetyMstInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+
+        int firstAppctnMstSeqIdgen = cxAppctnMstSeqIdgen.getNextIntegerId();
+        wBDBSafetyMstInsertDTO.setAppctnSeq(firstAppctnMstSeqIdgen);
+
+        //신청 MST
+        respCnt = wBDBSafetyMapper.insertAppctnMst(wBDBSafetyMstInsertDTO);
+
+        //신청 DTL
+        WBDBSafetyDtlDTO wBDBSafetyDtlDTO = new WBDBSafetyDtlDTO();
+
+        int firstAppctnRsumeDtlSeqIdgen = 0;
+
+        wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+        wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01001");
+        wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01001_01_001");
+        wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01001_02_001");
+        wBDBSafetyDtlDTO.setRegId(cOUserDetailsDTO.getId());
+        wBDBSafetyDtlDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+
+        firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
+        wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+        wBDBSafetyDtlDTO.setRsumeOrd(1);
+        wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
+
+        WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO= wBDBSafetyMstInsertDTO.getPbsnDtlList().get(0);
+        wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+        wBDBSafetyPbsnDtlDTO.setRsumeOrd(1);
+        wBDBSafetyPbsnDtlDTO.setRegId(cOUserDetailsDTO.getId());
+        wBDBSafetyPbsnDtlDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+        wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+
+        //상생 신청 파일 상세
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getFileList());
+
+        WBDBSafetyFileDtlDTO wBDBSafetyFileDtlDTO = new WBDBSafetyFileDtlDTO();
+        wBDBSafetyFileDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+        wBDBSafetyFileDtlDTO.setRsumeOrd(1);
+        wBDBSafetyFileDtlDTO.setFileSeq(fileSeqMap.get("atchFile"));
+        wBDBSafetyFileDtlDTO.setFileCd("ATTACH_FILE_TYPE01");
+        wBDBSafetyFileDtlDTO.setRegId(cOUserDetailsDTO.getId());
+        wBDBSafetyFileDtlDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+
+        wBDBSafetyMapper.insertAppctnFileDtl(wBDBSafetyFileDtlDTO);
+
+        //지원금
+        for(int i=0; i < 2; i++){
+            WBDBSafetySpprtDTO wBDBSafetySpprtDTO = new WBDBSafetySpprtDTO();
+            int firstMpePartsCompanyDtlSeqIdgen = cxAppctnSpprtDtlIdgen.getNextIntegerId();
+            wBDBSafetySpprtDTO.setAppctnSpprtSeq(firstMpePartsCompanyDtlSeqIdgen);
+            wBDBSafetySpprtDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+
+            if(i==0){
+                wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03001");
+                wBDBSafetySpprtDTO.setAppctnSttsCd("PRO_TYPE03001_01_001");
+            }else{
+                wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03003");
+                wBDBSafetySpprtDTO.setAppctnSttsCd("PRO_TYPE03002_01_001");
+            }
+
+            wBDBSafetySpprtDTO.setRegId(cOUserDetailsDTO.getId());
+            wBDBSafetySpprtDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+            wBDBSafetyMapper.insertAppctnSpprt(wBDBSafetySpprtDTO);
+        }
+
+        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
     }
 }

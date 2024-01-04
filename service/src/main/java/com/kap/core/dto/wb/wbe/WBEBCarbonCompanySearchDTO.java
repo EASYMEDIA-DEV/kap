@@ -37,6 +37,9 @@ public class WBEBCarbonCompanySearchDTO extends BaseDTO {
     @Schema(title = "회차", example = "숫자")
     private Integer episd;
 
+    @Schema(title = "회차 순번", example = "숫자")
+    private Integer episdSeq;
+
     private String dateState;
 
     @Schema(title = "진행순번", example = "숫자")
