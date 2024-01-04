@@ -61,8 +61,14 @@ public class SMJFormDTO extends BaseDTO {
     @Schema(title = "시험계측장비 신청서 파일 순번", example = "숫자")
     private Integer examMsremntFileSeq;
 
+    @Schema(title = "시험계측장비 신청서 파일 순번", example = "숫자")
+    private Integer examMsremntFileOrd;
+
     @Schema(title = "검교정 신청서 파일 순번", example = "숫자")
     private Integer clbtnFileSeq;
+
+    @Schema(title = "시험계측장비 신청서 파일 순번", example = "숫자")
+    private Integer clbtnFileOrd;
 
     @Schema(title = "공급망안정화기금 신청서 파일 순번", example = "숫자")
     private Integer splychnStblztnFileSeq;

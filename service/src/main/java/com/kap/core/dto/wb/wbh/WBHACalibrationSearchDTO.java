@@ -103,142 +103,107 @@ public class WBHACalibrationSearchDTO extends BaseDTO {
     private String modId;
     @Schema(title = "수정일시", example = "yyyy-MM-dd")
     private String modDtm;
-
     @Schema(title = "담당위원코드", example = "")
     private String picCmssrSeq;
     @Schema(title = "담당위원이름", example = "")
     private String picName;
-
     @Schema(title = "공급업체명", example = "")
     private String offerCmpnCdNm;
     @Schema(title = "공급업체 사업자등록번호", example = "")
     private String offerBsnmNo;
-
-
     @Schema(title = "진행정렬", example = "숫자")
     private Integer rsumeOrd;
-
-
-
     @Schema(title = "등록일", example = "yyyy-MM-dd hh:mm:ss")
     private String regDtm;
-
     @Schema(title = "신정 진행 상태", example = "")
     private String rsumeSttsNm;
-
     @Schema(title = "사용자 진행 상태 명", example = "")
     private String appctnSttsNm;
-
     @Schema(title = "관리자 진행 상태 명", example = "")
     private String mngSttsNm;
-
-
     @Schema(title = "구분", example = "")
     private String ctgryNm;
-
     @Schema(title = "규모", example = "")
     private String sizeNm;
-
-
     @Schema(title = "종된 사업자 등록 번호", example = "")
     private String sbrdnBsnmNo;
-
-
-
     @Schema(title = "최초점검일", example = "")
     private String firstChkDt;
-
     @Schema(title = "최종점검일", example = "")
     private String lastChkDt;
-
-
-
-
     @Schema(title = "지원금액", example = "")
     private String spprtPmt;
-
     @Schema(title = "신청사업비", example = "")
     private String bsnPmt;
-
     @Schema(title = "자부담금액", example = "")
     private String phswPmt;
-
     @Schema(title = "총금액", example = "")
     private String ttlPmt;
-
     @Schema(title = "계좌번호", example = "")
     private String acntNo;
-
     @Schema(title = "은행명", example = "")
     private String bankNm;
-
     @Schema(title = "예금명", example = "")
     private String dpsitNm;
-
     @Schema(title = "지급일자", example = "yyyy-MM-dd hh:mm:ss")
     private String giveDt;
-
     @Schema(title = "관리자 메모", example = "")
     private String admMemo;
-
-
     @Schema(title = "담당 위원 명", example = "")
     private String picCmssrNm;
-
     @Schema(title = "사업시작일시", example = "yyyy-MM-dd hh:mm:ss")
     private String bsnStrtDtm;
     @Schema(title = "사업종료일시", example = "yyyy-MM-dd hh:mm:ss")
     private String bsnEndDtm;
-
     @Schema(title = "회차", example = "숫자")
     private Integer episdSelect;
-
     @Schema(title = "회차 리스트")
     private List episdList;
-
     @Schema(title = "사업 연도 검색 조건", example = "")
     private String yearSearch;
     @Schema(title = "사업 회차 검색 조건", example = "")
     private String episdSearch;
-
     @Schema(title = "진행상태 코드 리스트")
     private List carbonCdList;
     @Schema(title = "노출여부 리스트")
     private List expsYnList;
-
-
     @Schema(title = "등록자 아이디", example = "")
     private String regNm;
     @Schema(title = "수정자 아이디", example = "")
     private String modNm;
-
     @Schema(title = "장비 명", example = "")
     private String tchlgNm;
     @Schema(title = "장비 수량", example = "")
     private int tchlgCntSum;
     @Schema(title = "장비 리스트 수", example = "")
     private int tchlgOrdMax;
-
     @Schema(title = "투자금액", example = "")
     private String nvstmPmt;
     @Schema(title = "재단 지원금", example = "")
     private String fndnSpprtPmt;
     @Schema(title = "실 지급일", example = "yyyy-MM-dd hh:mm:ss")
     private String realGiveDt;
-
     @Schema(title = "노출 여부")
     private String expsYn;
-
+    @Schema(title = "파일순번")
+    private Integer fileSeq;
+    @Schema(title = "파일순번")
+    private Integer fileOrd;
     @Schema(title = "검색 리스트", example = "")
     List<WBHACalibrationSearchDTO> list;
-
-
+    @Schema(title = "사용자 진행상태")
+    private String acctStatus;
+    @Schema(title = "디데이")
+    private String dday;
+    @Schema(title = "노출순서")
+    private Integer dateOrd;
+    @Schema(title = "지원대상금액", example = "")
+    private Integer stndSlsPmt;
     /* 검색 관련 코드 */
     @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")
     private String carbonDate;
-
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
-
-
+    @Schema(title = "구분 코드 리스트")
+    private List<WBHAValidDtlDTO> validDtlDTOList;
 }

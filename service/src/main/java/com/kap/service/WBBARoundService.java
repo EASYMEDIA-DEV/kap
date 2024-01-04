@@ -62,7 +62,7 @@ public interface WBBARoundService {
     public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
     /**
-     * 최신 회차 목록을 조회한다.
+     * 신청가능여부 코드를 조회한다.
      */
     public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }
