@@ -4,7 +4,9 @@ import com.kap.core.dto.wb.WBAppctnTrnsfDtlDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -83,6 +85,21 @@ public interface WBFBRegisterCompanyService {
      *  신청 부품사 삭제전 - 사용자 / 관리자 상태 확인
      */
     public int confDeleteRegister(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+
+    /**
+     *  신청 부품사 등록 - 사용자
+     */
+    public int insertApply(WBFBRegisterDTO wBFBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
+     *  부품사 회원 정보 조회 - 사용자
+     */
+    public WBFBRegisterSearchDTO getCompanyUserDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception;
+
+    /**
+     *  신청 정보 조회 - 사용자
+     */
+    public WBFBRegisterSearchDTO getApplyDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception;
 
     /**
      *  엑셀 Download

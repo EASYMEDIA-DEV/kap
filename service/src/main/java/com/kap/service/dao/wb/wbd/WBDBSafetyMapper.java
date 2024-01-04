@@ -1,7 +1,10 @@
 package com.kap.service.dao.wb.wbd;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
-import com.kap.core.dto.wb.wbe.*;
+import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
+import com.kap.core.dto.wb.wbc.WBCBCompanyDtlDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
+import com.kap.core.dto.wb.wbd.*;
 
 import java.util.List;
 
@@ -9,42 +12,42 @@ public interface WBDBSafetyMapper {
     /**
      * 신청 조회
      */
-    public List<WBEBCarbonCompanySearchDTO> selectCarbonCompanyList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public List<WBDBSafetySearchDTO> selectCarbonCompanyList(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      * 신청 전체 갯수
      */
-    public int getCarbonCompanyListTotCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public int getCarbonCompanyListTotCnt(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      * 연도 상세 조회
      */
-    public List<String> selectYearDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<String> selectYearDtl(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 연도 상세 조회
      */
-    public List<WBEBCarbonCompanySearchDTO> getYearSelect(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<WBDBSafetySearchDTO> getYearSelect(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 신청 상세 조회
      */
-    public WBEBCarbonCompanyMstInsertDTO selectCarbonCompanyDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public WBDBSafetyMstInsertDTO selectCarbonCompanyDtl(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 회차 시퀀스 조회
      */
-    public int selectEpisdSeq(WBEBCarbonCompanyMstInsertDTO EBCarbonCompanyMstInsertDTO) throws Exception;
+    public int selectEpisdSeq(WBDBSafetyMstInsertDTO EBCarbonCompanyMstInsertDTO) throws Exception;
 
     /**
      * 신청 마스터 등록
      */
-    public int insertAppctnMst(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO);
+    public int insertAppctnMst(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO);
 
     /**
      * 신청 상세 등록
      */
-    public int insertAppctnDtl(WBEBCarbonCompanyDtlDTO wBEBCarbonCompanyDtlDTO);
+    public int insertAppctnDtl(WBDBSafetyDtlDTO wBDBSafetyDtlDTO);
 
     /**
      * 신청자 정보 수정
@@ -54,160 +57,169 @@ public interface WBDBSafetyMapper {
     /**
      * 부품사 정보 수정
      */
-    public int updateAppctnCompany(WBEBCompanyDTO wBEBCompanyDTO);
+    public int updateAppctnCompany(WBDBCompanyDTO wBDBCompanyDTO);
 
     /**
      * 신청 마스터 수정
      */
-    public int updateAppctnMst(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO);
+    public int updateAppctnMst(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO);
 
     /**
      * 신청 상세 수정
      */
-    public int updateAppctnDtl(WBEBCarbonCompanyDtlDTO wBEBCarbonCompanyDtlDTO);
+    public int updateAppctnDtl(WBDBSafetyDtlDTO wBDBSafetyDtlDTO);
 
     /**
      * 신청환경 상세 수정
      */
-    public int updateAppctnPbsnDtl(WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO);
+    public int updateAppctnPbsnDtl(WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO);
 
 
     /**
      * 신청환경 상세 등록
      */
-    public int insertAppctnPbsnDtl(WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO);
+    public int insertAppctnPbsnDtl(WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO);
 
 
     /**
      * 신청자 조회
      */
-    public List<MPAUserDto> selectCarbonCompanyMember(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<MPAUserDto> selectCarbonCompanyMember(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 신청 부품사 조회
      */
-    public WBEBCompanyDTO selectCarbonCompany(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public WBDBCompanyDTO selectCarbonCompany(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 신청 부품사 SQ 조회
      */
-    public List<WBEBCompanyDtlDTO> selectCarbonCompanySQ(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<WBDBCompanyDtlDTO> selectCarbonCompanySQ(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 신청정보 조회
      */
-    public List<WBEBCarbonCompanyDtlDTO> selectCarbonCompanyDtlDetail(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<WBDBSafetyDtlDTO> selectCarbonCompanyDtlDetail(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 신청진행 상세
      */
-    public List<WBEBCarbonCompanyPbsnDtlDTO> selectCarbonCompanyPbsn(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<WBDBSafetyPbsnDtlDTO> selectCarbonCompanyPbsn(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
 
     /**
      * 부품사 SQ 정보 삭제
      */
-    public int deleteCarbonCompanySQ(WBEBCompanyDTO wBEBCompanyDTO);
+    public int deleteCarbonCompanySQ(WBDBCompanyDTO wBDBCompanyDTO);
 
     /**
      * 부품사 SQ 정보 입력
      */
-    public int insertCarbonCompanySQ(WBEBCompanyDtlDTO wBEBCompanyDtlDTO);
+    public int insertCarbonCompanySQ(WBDBCompanyDtlDTO wBDBCompanyDtlDTO);
 
     /**
      * 지원금액 상세 조회
      */
-    public List<WBEBCarbonCompanySpprtDTO> selectAppctnSpprt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<WBDBSafetySpprtDTO> selectAppctnSpprt(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 지원금액 상세 입력
      */
-    public int insertAppctnSpprt(WBEBCarbonCompanySpprtDTO wBEBCarbonCompanySpprtDTO);
+    public int insertAppctnSpprt(WBDBSafetySpprtDTO wBDBSafetySpprtDTO);
 
     /**
      * 지원금액 상세 수정
      */
-    public int updateAppctnSpprt(WBEBCarbonCompanySpprtDTO wBEBCarbonCompanySpprtDTO);
+    public int updateAppctnSpprt(WBDBSafetySpprtDTO wBDBSafetySpprtDTO);
 
 
     /**
      * 참여이관 로그 리스트 삭제
      */
-    public int carbonCompanyDeleteTrnsf(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public int carbonCompanyDeleteTrnsf(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      * 참여이관 로그 추가
      */
-    public int insertAppctnTrnsf(WBEBCarbonCompanyTrnsfDTO wBEBCarbonCompanyTrnsfDTO);
+    public int insertAppctnTrnsf(WBDBSafetyTrnsfDTO wBDBSafetyTrnsfDTO);
 
     /**
      * 상생신청지원금 리스트 삭제
      */
-    public int carbonCompanyDeleteSpprt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public int carbonCompanyDeleteSpprt(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      * 상생신청파일 리스트 삭제
      */
-    public int carbonCompanyDeleteFileDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public int carbonCompanyDeleteFileDtl(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      * 상생신청 진행 상세 리스트 삭제
      */
-    public int carbonCompanyDeletePbsn(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public int carbonCompanyDeletePbsn(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      *상생신청 진행 파일 리스트 삭제
      */
-    public int carbonCompanyDeleteRsumeFile(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public int carbonCompanyDeleteRsumeFile(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      * 상생신청 진행 리스트 삭제
      */
-    public int carbonCompanyDeleteRsume(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public int carbonCompanyDeleteRsume(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      * 신청 마스터 리스트 삭제
      */
-    public int carbonCompanyDeleteMst(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public int carbonCompanyDeleteMst(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      * 진행순번 조회
      */
-    public List<String> selectRsumeSeq(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<String> selectRsumeSeq(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 참여 이관 로그 조회
      */
-    public List<WBEBCarbonCompanyTrnsfDTO> getTrnsfList(WBEBCarbonCompanyTrnsfDTO wBEBCarbonCompanyTrnsfDTO);
+    public List<WBDBSafetyTrnsfDTO> getTrnsfList(WBDBSafetyTrnsfDTO wBDBSafetyTrnsfDTO);
 
     /**
      * 참여 이관 로그 갯수
      */
-    public int getTrnsfListTotCnt(WBEBCarbonCompanyTrnsfDTO wBEBCarbonCompanyTrnsfDTO);
+    public int getTrnsfListTotCnt(WBDBSafetyTrnsfDTO wBDBSafetyTrnsfDTO);
 
     /**
      * 신청 파일 등록
      */
-    public int insertAppctnFileDtl(WBEBCarbonCompanyFileDtlDTO wBEBCarbonCompanyFileDtlDTO);
+    public int insertAppctnFileDtl(WBDBSafetyFileDtlDTO wBDBSafetyFileDtlDTO);
 
     /**
      * 신청 파일 조회
      */
-    public List<WBEBCarbonCompanyFileDtlDTO> selectFileDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+    public List<WBDBSafetyFileDtlDTO> selectFileDtl(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 
     /**
      * 엑셀 진행 상세
      */
-    public List<WBEBCarbonCompanyPbsnDtlDTO> selectExcelPbsn(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List<WBDBSafetyPbsnDtlDTO> selectExcelPbsn(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 지급차수 조회
      */
-    public List getGiveOrdList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public List getGiveOrdList(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
     /**
      * 신청 진행단계 확인
      */
-    public int getRsumePbsnCnt(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+    public int getRsumePbsnCnt(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 
+    /**
+     * 부품사 정보를 조회한다.
+     */
+    public WBDBCompanyDTO getCompanyInfo(WBDBSafetySearchDTO wBDBSafetySearchDTO);
+
+    /**
+     * 부품사 SQ 정보를 조회한다.
+     */
+    public List<WBDBCompanyDtlDTO> selectSqList(WBDBSafetySearchDTO wBDBSafetySearchDTO);
 }

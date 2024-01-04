@@ -18,7 +18,14 @@
             <input type="hidden" class="notRequired" name="appctnBsnmNo" value="${userInfo.bsnmNo}"/>
             <input type="hidden" class="notRequired" name="bsnCd" value="INQ07007"/>
 
-            <h6 class="mt0"><strong>관리자 등록</strong></h6><hr>
+            <h6 class="mt0"><strong>
+                <c:if test="${not empty rtnData.appctnSeq }">
+                    신청부품사 상세/수정
+                </c:if>
+                <c:if test="${empty rtnData.appctnSeq }">
+                    관리자 등록
+                </c:if>
+            </strong></h6><hr>
             <div id="appctnPdfArea1">
             <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
 

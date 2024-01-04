@@ -197,7 +197,7 @@ public class WBIBSupplyCompanyController {
             wBIBSupplyDTO.setModId( coaAdmDTO.getId() );
             wBIBSupplyDTO.setModIp( coaAdmDTO.getLoginIp() );
 
-            wBIBSupplyDTO.setBsnCd("INQ07009"); /* 스마트 공장 */
+            wBIBSupplyDTO.setBsnCd("INQ07009"); /* 공급망 */
 
             COCodeDTO cOCodeDTO = new COCodeDTO();
             /* 스마트 공장 구축 - 신청 코드 값*/

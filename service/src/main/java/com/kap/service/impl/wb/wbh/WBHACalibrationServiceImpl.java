@@ -4,13 +4,17 @@ import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import com.kap.core.dto.wb.wbb.*;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbh.*;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBHACalibrationService;
+import com.kap.service.dao.sm.SMJFormMapper;
 import com.kap.service.dao.wb.wbh.WBHACalibrationMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +25,15 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * <pre>
@@ -57,6 +60,10 @@ import java.util.List;
 public class WBHACalibrationServiceImpl implements WBHACalibrationService {
     //Mapper
     private final WBHACalibrationMapper wbhaCalibrationMapper;
+    private final SMJFormMapper smjFormMapper;
+
+    //파일 업로드 유틸
+    private final COFileUtil cOFileUtil;
     private final COFileService cOFileService;
 
     /* 회차관리 마스터 시퀀스 */
@@ -939,5 +946,267 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         respCnt = wbhaCalibrationMapper.getRsumePbsnCnt(wbhaCalibrationSearchDTO);
 
         return respCnt;
+    }
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBHACalibrationSearchDTO getRoundDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception {
+
+        //양식가져오기
+        SMJFormDTO smjFormDTO = new SMJFormDTO();
+        smjFormDTO.setTypeCd("BUSINESS02");
+        smjFormDTO = smjFormMapper.selectFormDtl(smjFormDTO);
+
+        wbhaCalibrationSearchDTO.setFileSeq(smjFormDTO.getClbtnFileSeq());
+        wbhaCalibrationSearchDTO.setFileOrd(smjFormDTO.getClbtnFileOrd());
+
+        //신청가능 매출액가져오기
+        WBHAValidDTO wbhaValidDTO = new WBHAValidDTO();
+        wbhaValidDTO = wbhaCalibrationMapper.selectExamValid(wbhaCalibrationSearchDTO);
+        wbhaCalibrationSearchDTO.setStndSlsPmt(wbhaValidDTO.getStndSlsPmt());
+
+        return wbhaCalibrationSearchDTO;
+    }
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public int getApplyChecked(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception {
+
+        int rtnCode = 0;
+
+        COUserDetailsDTO cOUserDetailsDTO = null;
+
+        if (!COUserDetailsHelperService.isAuthenticated())
+        {
+            //비로그인 코드 999
+            rtnCode = 999;
+        }
+        else
+        {
+            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+            if (!"CP".equals(cOUserDetailsDTO.getAuthCd())) {
+                if ("CS".equals(cOUserDetailsDTO.getAuthCd())) {
+                    //위원인 경우 150
+                    rtnCode = 150;
+                } else {
+                    //부품사회원이 아닌경우 100
+                    rtnCode = 100;
+                }
+            } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
+
+                WBHACompanyDTO wbhaCompanyDTO = new WBHACompanyDTO();
+                wbhaCalibrationSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wbhaCompanyDTO = wbhaCalibrationMapper.getCompanyInfo(wbhaCalibrationSearchDTO);
+
+                if ("COMPANY01001".equals(wbhaCompanyDTO.getCtgryCd()) || "COMPANY01002".equals(wbhaCompanyDTO.getCtgryCd())) {
+                    wbhaCalibrationSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    //신청시간 년도 구하기
+                    Calendar cal = Calendar.getInstance();
+
+                    wbhaCalibrationSearchDTO.setYear(String.valueOf(cal.get(Calendar.YEAR)));
+
+                    int cnt = wbhaCalibrationMapper.getApplyCount(wbhaCalibrationSearchDTO);
+
+                    if (cnt > 0) {
+                        //신청여부 존재 코드 300
+                        rtnCode = 300;
+                    } else {
+                        //참여조건만족 여부 체크
+                        //1. 매출액 비교
+                        WBHAValidDTO wbhaValidDTO = new WBHAValidDTO();
+                        wbhaValidDTO = wbhaCalibrationMapper.selectExamValid(wbhaCalibrationSearchDTO);
+
+                        cal.add(Calendar.YEAR, -1);
+                        int yyyy = cal.get(Calendar.YEAR);
+
+                        if ((yyyy != wbhaCompanyDTO.getSlsYear()) || (wbhaCompanyDTO.getSlsPmt() > wbhaValidDTO.getStndSlsPmt())) {
+                            //현재 신청년도와 부품사정보에 기입 된 매출년도의 값이 같지 않을떄 및 매출액 금액이 맞지 않는 경우
+                            rtnCode = 400;
+                        } else {
+                            //컨설팅지도 및 기술지도 체크
+                            List<WBHAValidDtlDTO> list = wbhaCalibrationMapper.selectExamValidDtlList(wbhaCalibrationSearchDTO);
+                            wbhaCalibrationSearchDTO.setValidDtlDTOList(list);
+
+                            int rtnCnt = wbhaCalibrationMapper.getApplyCompanyCnt(wbhaCalibrationSearchDTO);
+
+                            if (rtnCnt > 0) {
+                                //컨설팅 내역없음 코드 450
+                                rtnCode = 200;
+                            } else {
+                                //신청가능 코드 200
+                                rtnCode = 450;
+                            }
+                        }
+                    }
+                }
+            } else {
+                //부품사가 1차 2차가 아닐떄,
+                rtnCode = 190;
+            }
+        }
+
+        return rtnCode;
+    }
+
+    /**
+     * 부품사 신청자를 등록한다.
+     */
+    @Transactional
+    public int insertApply(WBHAApplyMstDTO wbhaApplyMstDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+
+        int rtnCnt = 0;
+            try {
+
+                COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+                //기존 신청자인지 확인,,,
+
+                WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
+                wbhaCalibrationSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                //신청시간 년도 구하기
+                Calendar cal = Calendar.getInstance();
+                wbhaCalibrationSearchDTO.setYear(String.valueOf(cal.get(Calendar.YEAR)));
+
+                rtnCnt = wbhaCalibrationMapper.getApplyCount(wbhaCalibrationSearchDTO);
+
+                if (rtnCnt > 0) {
+                    //기존 신청이력 존재
+                    rtnCnt = 999;
+                } else {
+                    //신청 프로세스 시작
+                    String regId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+                    String regIp = CONetworkUtil.getMyIPaddress(request);
+
+                    wbhaApplyMstDTO.setBsnCd("INQ07008");
+                    wbhaApplyMstDTO.setYear(wbhaCalibrationSearchDTO.getYear());
+                    WBRoundMstSearchDTO round = wbhaCalibrationMapper.getExisdDtl(wbhaApplyMstDTO);
+
+                    if (round == null) {
+                        //해당년도 회차 미 존재시 신규회차 생성
+                        int exipsdSeq = cxEpisdSeqIdgen.getNextIntegerId();
+
+                        WBRoundMstSearchDTO roundDtl = new WBRoundMstSearchDTO();
+
+                        roundDtl.setEpisdSeq(exipsdSeq);
+                        roundDtl.setBsnCd(wbhaApplyMstDTO.getBsnCd());
+                        roundDtl.setYear(Integer.valueOf(wbhaApplyMstDTO.getYear()));
+                        roundDtl.setEpisd(1); //회차는 1회차 고정
+                        roundDtl.setAccsStrtDtm(wbhaApplyMstDTO.getYear()+"-01-01 00:00:00");
+                        roundDtl.setAccsEndDtm(wbhaApplyMstDTO.getYear()+"-12-31 23:59:59");
+                        roundDtl.setBsnStrtDtm(wbhaApplyMstDTO.getYear()+"-01-01 00:00:00");
+                        roundDtl.setBsnEndDtm(wbhaApplyMstDTO.getYear()+"-12-31 23:59:59");
+                        roundDtl.setExpsYn("Y");
+                        roundDtl.setRegId(regId);
+                        roundDtl.setRegIp(regIp);
+
+                        wbhaCalibrationMapper.insetRound(roundDtl);
+
+                        wbhaApplyMstDTO.setEpisdSeq(exipsdSeq);
+                    } else {
+                        wbhaApplyMstDTO.setEpisdSeq(round.getEpisdSeq());
+                    }
+
+                    int appctnSeq = cxAppctnMstSeqIdgen.getNextIntegerId();
+                    //마스터 생성
+                    wbhaApplyMstDTO.setAppctnSeq(appctnSeq);
+                    wbhaApplyMstDTO.setAppctnBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                    wbhaApplyMstDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    wbhaApplyMstDTO.setRegId(regId);
+                    wbhaApplyMstDTO.setRegIp(regIp);
+
+                    rtnCnt = wbhaCalibrationMapper.insertApply(wbhaApplyMstDTO);
+
+                    if (rtnCnt > 0) {
+                        //상생신청진행 상세 생성
+                        WBHAApplyDtlDTO wbhaApplyDtlDTO = new WBHAApplyDtlDTO();
+                        wbhaApplyDtlDTO.setRsumeSeq(cxAppctnRsumeDtlSeqIdgen.getNextIntegerId());
+                        wbhaApplyDtlDTO.setAppctnSeq(wbhaApplyMstDTO.getAppctnSeq());
+                        wbhaApplyDtlDTO.setRsumeOrd(1);
+                        wbhaApplyDtlDTO.setRsumeSttsCd("PRO_TYPE07001");
+                        wbhaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_01_001");
+                        wbhaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_02_001");
+                        wbhaApplyDtlDTO.setRegId(regId);
+                        wbhaApplyDtlDTO.setRegIp(regIp);
+
+                        wbhaCalibrationMapper.insertApplyDtl(wbhaApplyDtlDTO);
+
+
+                        //신청대상장비 생성
+                        for (int j = 0; j < wbhaApplyMstDTO.getEuipmentList().size(); j++) {
+                            WBHAEuipmentDTO wbhaEuipmentDTO = new WBHAEuipmentDTO();
+                            int tchlgSeq = cxAppctnTchlgSeqIdgen.getNextIntegerId();
+                            wbhaEuipmentDTO.setAppctnSeq(appctnSeq);
+                            wbhaEuipmentDTO.setTchlgSeq(tchlgSeq);
+                            wbhaEuipmentDTO.setTchlgOrd(j + 1);
+                            wbhaEuipmentDTO.setTchlgNm(wbhaApplyMstDTO.getEuipmentList().get(j).getTchlgNm());
+                            wbhaEuipmentDTO.setTchlgCnt(wbhaApplyMstDTO.getEuipmentList().get(j).getTchlgCnt());
+                            wbhaEuipmentDTO.setRegId(regId);
+                            wbhaEuipmentDTO.setRegIp(regIp);
+
+                            wbhaCalibrationMapper.insertEuipment(wbhaEuipmentDTO);
+                        }
+
+                        //신청파일 넣기
+                        List<COFileDTO> rtnList = null;
+                        Map<String, MultipartFile> files = multiRequest.getFileMap();
+                        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+                        MultipartFile file;
+                        int atchFileCnt = 0;
+
+                        while (itr.hasNext()) {
+                            Map.Entry<String, MultipartFile> entry = itr.next();
+                            file = entry.getValue();
+
+                            if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                                atchFileCnt++;
+                            }
+                        }
+
+                        if (!files.isEmpty()) {
+                            rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                            for (int i = 0; i < rtnList.size() ; i++) {
+
+                                List<COFileDTO> fileList = new ArrayList();
+                                rtnList.get(i).setStatus("success");
+                                rtnList.get(i).setFieldNm("fileSeq");
+                                fileList.add(rtnList.get(i));
+
+                                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                                wbhaApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                                wbhaApplyDtlDTO.setFileCd(wbhaApplyMstDTO.getFileCdList().get(i));
+
+                                wbhaCalibrationMapper.insertFileInfo(wbhaApplyDtlDTO);
+                            }
+                        }
+                    }
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rtnCnt;
+    }
+
+    /**
+     * 부품사 신청자를 조회한다.
+     */
+    public WBHACalibrationSearchDTO getApplyDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception {
+
+        WBHAApplyMstDTO wbhaApplyMstDTO = new WBHAApplyMstDTO();
+        Calendar cal = Calendar.getInstance();
+        wbhaApplyMstDTO.setYear(String.valueOf(cal.get(Calendar.YEAR)));
+        wbhaApplyMstDTO.setBsnCd("INQ07008");
+        WBRoundMstSearchDTO round = wbhaCalibrationMapper.getExisdDtl(wbhaApplyMstDTO);
+
+        wbhaCalibrationSearchDTO.setEpisdSeq(round.getEpisdSeq());
+
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        wbhaCalibrationSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+        wbhaCalibrationSearchDTO = wbhaCalibrationMapper.getApplyDtl(wbhaCalibrationSearchDTO);
+
+        return wbhaCalibrationSearchDTO;
     }
 }

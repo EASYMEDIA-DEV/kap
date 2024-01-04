@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/wb/wbc/WBCBSecurityListCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>신청부품사 검색</h6>
         <form class="form-horizontal" name="frmSearch" method="post" action="">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
@@ -22,17 +22,14 @@
                     <label class="col-sm-1 control-label">사업회차</label>
                     <div class="col-sm-11">
                         <div class="form-group mr-sm">
-                            <select class="form-control input-sm" data-name="f" name="yearSearch">
+                            <select class="form-control input-sm" data-name="f" id="episdYear" name="yearSearch">
                                 <option value="">연도 전체</option>
                                 <c:forEach var="rtnYear" items="${rtnYear}" varStatus="status">
                                     <option value="${rtnYear}" <c:if test="${rtnData.year eq rtnYear }">selected</c:if>>${rtnYear}</option>
                                 </c:forEach>
                             </select>
-                            <select class="form-control input-sm" data-name="g" name="episdSearch">
+                            <select class="form-control input-sm" data-name="g" id="episd" name="episdSearch">
                                 <option value="">회차 전체</option>
-                                <c:forEach var="cdList" items="${classCityTypeList.ROUND_CD}" varStatus="status">
-                                    <option value="${cdList.cdNm}" <c:if test="${rtnData.episd eq cdList.cdNm}">selected</c:if> >${cdList.cdNm}</option>
-                                </c:forEach>
                             </select>
                         </div>
                     </div>
@@ -78,7 +75,7 @@
             <hr class="mt0" />
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>${pageTitle} 목록(총 <span id="listContainerTotCnt">0</span>건)
+                    <em class="ion-play mr-sm"></em>신청부품사 목록(총 <span id="listContainerTotCnt">0</span>건)
                 </h6>
                 <div class="pull-right">
                     <select class="form-control input-sm listRowSizeContainer" >

@@ -4,6 +4,7 @@ import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.WBRoundOptnMstDTO;
+import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 
 import java.util.List;
 
@@ -116,4 +117,19 @@ public interface WBFASmartRoundMapper {
      * 등록된 회차 확인
      */
     public int getRoundChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /** 사용자
+     * 최신 회차 조회
+     */
+    public WBRoundMstSearchDTO getRecentRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /** 사용자
+     * 회차 옵션파일 조회
+     */
+    public List<WBAManagementOptnDTO> selectOPtnList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+    
+    /** 사용자
+     * 회차 신청여부 조회
+     */
+    public int getApplyCount(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }

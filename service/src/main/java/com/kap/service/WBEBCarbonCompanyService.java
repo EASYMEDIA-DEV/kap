@@ -4,6 +4,7 @@ package com.kap.service;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyTrnsfDTO;
+import com.kap.core.dto.wb.wbe.WBEBCompanyDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,5 +61,16 @@ public interface WBEBCarbonCompanyService {
      * 엑셀 다운로드
      */
     public void excelDownload(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, HttpServletResponse response) throws Exception;
+
+    /**
+     * 회원 부품사정보 상세 조회한다.
+     * @return
+     */
+    public WBEBCompanyDTO selectCompanyUserDtl(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
+
+    /**
+     * 사용자 신청 등록
+     */
+    public int carbonUserInsert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request) throws Exception;
 
 }

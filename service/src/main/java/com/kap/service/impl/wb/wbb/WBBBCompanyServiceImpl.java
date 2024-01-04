@@ -854,7 +854,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
     }
 
     /**
-     * 부품사 신청자를 등록한다.
+     * 부품사 신청자를 조회한다.
      */
     public WBBACompanySearchDTO getApplyDtl(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception {
 

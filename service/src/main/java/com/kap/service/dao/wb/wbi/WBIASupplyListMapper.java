@@ -3,6 +3,7 @@ package com.kap.service.dao.wb.wbi;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 
 import java.util.List;
 
@@ -58,4 +59,15 @@ public interface WBIASupplyListMapper {
      *
      */
     public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO);
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 회차 옵션파일 조회
+     */
+    public List<WBAManagementOptnDTO> selectOPtnList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
 }

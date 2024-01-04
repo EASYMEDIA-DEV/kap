@@ -44,7 +44,8 @@ public class WBIBSupplyDTO extends BaseDTO {
     private String rsumeSttsCd;
     @Schema(title = "관리자메모", example = "")
     private String admMemo;
-
+    @Schema(title = "신청사업자번호")
+    private String appctnBsnmNo;
     @Schema(title = "상생상세 진행순번", example = "숫자")
     private Integer rsumeSeq;
     @Schema(title = "상생상세 진행정렬", example = "숫자")

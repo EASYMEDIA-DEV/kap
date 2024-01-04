@@ -1,6 +1,7 @@
 package com.kap.service;
 
 
+import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 
@@ -55,4 +56,9 @@ public interface WBIASupplyListService {
      *
      */
     public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 최신 회차 목록을 조회한다.
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }

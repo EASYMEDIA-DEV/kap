@@ -197,7 +197,6 @@
         FROM CX_APPCTN_VALID_MST A
                  JOIN CX_APPCTN_VALID_OPTN_DTL B ON A.VALID_SEQ = B.VALID_SEQ
         WHERE BSN_CD = 'INQ07008'
-
     </select>
 
     <!--
@@ -628,7 +627,9 @@
              , A.CMPN_NM
              , A.RPRSNT_NM
              , A.CTGRY_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_NM
              , A.SIZE_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_NM
              , A.STBSM_DT
              , A.TEL_NO AS COMP_TEL
              , A.ZIPCODE
@@ -828,9 +829,13 @@
             , APPCTN_SEQ
             , RSUME_STTS_CD
             , APPCTN_STTS_CD
-            , APPCTN_STTS_CHNG_DTM
+            <if test='siteGubun != "admin"'>
+                , APPCTN_STTS_CHNG_DTM
+            </if>
             , MNG_STTS_CD
-            , MNG_STTS_CHNG_DTM
+            <if test='siteGubun != "front"'>
+                , MNG_STTS_CHNG_DTM
+            </if>
             , REG_ID
             , REG_IP
             , REG_DTM
@@ -842,9 +847,13 @@
             ,#{appctnSeq}
             ,#{rsumeSttsCd}
             ,#{appctnSttsCd}
-            ,NOW()
+            <if test='siteGubun != "admin"'>
+                ,NOW()
+            </if>
             ,#{mngSttsCd}
-            ,NOW()
+            <if test='siteGubun != "front"'>
+                ,NOW()
+            </if>
             ,#{regId}
             ,#{regIp}
             ,NOW()
@@ -859,7 +868,7 @@
     2023.11.24  김태훈     최초 생성
     -->
     <insert id="insertApplyStep" parameterType="wbhaApplyDtlDTO">
-        INSERT /* WBHACalibrationMapper.insertApplyDtl */ INTO CX_APPCTN_RSUME_DTL
+        INSERT /* WBHACalibrationMapper.insertApplyStep */ INTO CX_APPCTN_RSUME_DTL
         (
             RSUME_SEQ
         , RSUME_ORD
@@ -1114,8 +1123,13 @@
         UPDATE /* WBHACalibrationMapper.updateApplyStatus */ CX_APPCTN_RSUME_DTL
         SET
             APPCTN_STTS_CD = #{appctnSttsCd},
+            <if test='siteGubun != "admin"'>
+                APPCTN_STTS_CHNG_DTM= NOW(),
+            </if>
             MNG_STTS_CD = #{mngSttsCd},
-            MNG_STTS_CHNG_DTM = NOW(),
+            <if test='siteGubun != "front"'>
+                MNG_STTS_CHNG_DTM = NOW(),
+            </if>
             RTRN_RSN_CNTN = #{rtrnRsnCntn},
             MOD_ID = #{modId},
             MOD_IP = #{modIp},
@@ -1284,6 +1298,91 @@
                 </foreach>
             </when>
         </choose>
+    </select>
+
+    <!--
+         쿼리명 : WBHACalibrationMapper.getRoundDtl
+         설  명 : 최신 회차 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="getRoundDtl" parameterType="wBHACalibrationSearchDTO" resultType="wBHACalibrationSearchDTO">
+        SELECT /* WBHACalibrationMapper.getRoundDtl */ *
+        FROM (
+                 SELECT
+                     EPISD_SEQ
+                      ,BSN_CD
+                      ,YEAR
+                      ,EPISD
+                      ,ACCS_STRT_DTM
+                      ,ACCS_END_DTM
+                      ,BSN_STRT_DTM
+                      ,BSN_END_DTM
+                      ,EXPS_YN
+                      , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
+                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+                     ELSE 3
+                     END AS DATE_ORD
+                 FROM CX_EPISD_MST A
+                 WHERE       BSN_CD = 'INQ07008' AND EXPS_YN = 'Y'
+             ) A
+        WHERE DATE_ORD = 1
+        ORDER BY ACCS_STRT_DTM, BSN_STRT_DTM ASC
+            LIMIT 1
+    </select>
+
+    <!--
+        쿼리명 : WBHACalibrationMapper.getApplyCount
+        설  명 : 회차사업 참여 카운트
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.24  김태훈     최초 생성
+   -->
+    <select id="getApplyCount" parameterType="wBHACalibrationSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBHACalibrationMapper.getApplyCount */ COUNT(*)
+        FROM (SELECT EPISD_SEQ
+              FROM cx_episd_mst
+              WHERE BSN_CD = 'INQ07008' AND YEAR = #{year}) cem
+        JOIN cx_appctn_mst cam ON cem.EPISD_SEQ = cam.episd_seq AND cam.mem_seq = #{memSeq}
+    </select>
+
+    <!--
+         쿼리명 : WBHACalibrationMapper.getApplyDtl
+         설  명 : 신청자 정보조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="getApplyDtl" parameterType="wBHACalibrationSearchDTO" resultType="wBHACalibrationSearchDTO">
+        SELECT /* WBHACalibrationMapper.getApplyDtl */
+            APPCTN_SEQ,
+            EPISD_SEQ,
+            MEM_SEQ,
+            APPCTN_BSNM_NO,
+            REG_DTM
+        FROM CX_APPCTN_MST A
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
+    </select>
+
+    <!--
+        쿼리명 : WBHACalibrationMapper.getApplyCompanyCnt
+        설  명 : 해당년도 컨설팅 참여 카운트
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.24  김태훈     최초 생성
+   -->
+    <select id="getApplyCompanyCnt" parameterType="wBHACalibrationSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBHACalibrationMapper.getApplyCompanyCnt */ COUNT(*)
+        FROM cp_cnstg_appctn_mst
+        WHERE appctn_bsnm_no = #{bsnmNo} AND BSN_YEAR = #{year}
+        <if test="validDtlDTOList != null and validDtlDTOList.size() > 0">
+            AND APPCTN_FLD_CD IN
+            <foreach collection="validDtlDTOList" item="validDtlDTO" index="index" open="(" close=")" separator=",">
+                #{validDtlDTO.optnCd}
+            </foreach>
+        </if>
+        AND RSUME_STTS_CD IN ('MNGCNSLT_STATUS09', 'MNGCNSLT_STATUS12');
     </select>
 </mapper>
 

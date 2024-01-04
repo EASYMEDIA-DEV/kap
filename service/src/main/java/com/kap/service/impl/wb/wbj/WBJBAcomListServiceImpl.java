@@ -552,4 +552,68 @@ public class WBJBAcomListServiceImpl implements WBJBAcomListService {
 
         return rtnCnt;
     }
+
+    /**
+     *  회차 값에 따른 포상 검색
+     */
+    public List<String> getPrizeList(WBJAcomSearchDTO wBJAcomSearchDTO)  throws Exception
+    {
+        return wBJBAcomListMapper.getPrizeList(wBJAcomSearchDTO);
+    }
+
+    /**
+     *  Write Page
+     *  신청부품사 등록
+     */
+    @Transactional
+    public int insertApply(WBJAcomDTO wBJAcomDTO, HttpServletRequest request) throws Exception
+    {
+        int rtnCnt = 0;
+        try{
+            int appctnSeq = cxAppctnMstSeqIdgen.getNextIntegerId();
+            //마스터 생성
+            String regId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+            String regIp = CONetworkUtil.getMyIPaddress(request);
+
+            wBJAcomDTO.setAppctnSeq(appctnSeq);
+            wBJAcomDTO.setRegId(regId);
+            wBJAcomDTO.setRegIp(regIp);
+
+            rtnCnt = wBJBAcomListMapper.insertApply(wBJAcomDTO);
+
+            if (rtnCnt > 0) {
+                //상생신청진행 상세 생성
+                wBJAcomDTO.setRsumeSeq(cxAppctnRsumeDtlSeqIdgen.getNextIntegerId());
+                wBJAcomDTO.setAppctnSeq(appctnSeq); /* 신청순번 */
+                wBJAcomDTO.setRsumeOrd(0); /* 신청순번 */
+                wBJAcomDTO.setRegId(regId);
+                wBJAcomDTO.setRegIp(regIp);
+
+                wBJBAcomListMapper.putAppctnRsumeDtl(wBJAcomDTO);
+
+                //신청파일 넣기
+                /* 상생신청파일 상세 */
+                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBJAcomDTO.getFileList());
+                wBJAcomDTO.setFileSeq(fileSeqMap.get("appctnFileSeq")); /* 파일 시퀀스 */
+                rtnCnt *= wBJBAcomListMapper.putAppctnFileDtl(wBJAcomDTO);
+
+                /* 상생신청 자동차부품산업 상세 */
+                rtnCnt *= wBJBAcomListMapper.putAppctnRsumePizePartDtl(wBJAcomDTO);
+            }
+
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rtnCnt;
+    }
+
+    /**
+     * 회차 상세 조회
+     */
+    public WBJAcomDTO selectRecent(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception {
+
+        WBJAcomDTO wBJAcomDTO = wBJBAcomListMapper.selectRecent(wBJAcomSearchDTO);
+
+        return wBJAcomDTO;
+    }
 }

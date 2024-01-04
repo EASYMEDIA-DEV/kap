@@ -254,4 +254,19 @@ public interface WBFBRegisterCompanyMapper {
      */
     public int confDeleteRegister(WBFBRegisterDTO wBFBRegisterDTO);
 
+    /**
+     *  신청 부품사 삭제전 - 사용자 / 관리자 상태 확인
+     */
+    public WBFBRegisterDTO getCompanyInfo(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
+     *  종된사업장번호 등록 확인
+     */
+    public int getSbrdmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
+     *  사용자 - 신청 정보 조회
+     */
+    public WBFBRegisterSearchDTO getApplyDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
 }

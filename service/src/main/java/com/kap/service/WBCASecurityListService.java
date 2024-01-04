@@ -1,6 +1,7 @@
 package com.kap.service;
 
 
+import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 
@@ -52,4 +53,14 @@ public interface WBCASecurityListService {
      * 회차 중복 체크
      */
     public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 최신 회차 목록을 조회한다.
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }

@@ -46,11 +46,20 @@ public class WBEBCompanyDTO extends BaseDTO {
     @Schema(title = "구분", example = "")
     private String ctgryCd;
 
+    @Schema(title = "구분 명", example = "")
+    private String ctgryNm;
+
     @Schema(title = "규모", example = "")
     private String sizeCd;
 
+    @Schema(title = "규모 명", example = "")
+    private String sizeNm;
+
     @Schema(title = "설립일자", example = "yyyy-MM-dd hh:mm:ss")
     private String stbsmDt;
+
+    @Schema(title = "전화번호")
+    private String compTel;
 
     @Schema(title = "전화번호", example = "")
     private String telNo;
@@ -66,6 +75,9 @@ public class WBEBCompanyDTO extends BaseDTO {
     private String slsYear;
     @Schema(title = "직원수", example = "")
     private int mpleCnt;
+
+    @Schema(title = "회원 순번", example = "")
+    private Integer memSeq;
 
     @Schema(title = "주요상품1", example = "")
     private String mjrPrdct1;
@@ -88,6 +100,9 @@ public class WBEBCompanyDTO extends BaseDTO {
     private String tchlg5starCd;
     @Schema(title = "기술5스타년도", example = "")
     private Integer tchlg5starYear;
+
+    @Schema(title = "회차 순번", example = "")
+    private Integer episdSeq;
 
 
     @Schema(title = "신청부품사 업종 리스트", example = "")

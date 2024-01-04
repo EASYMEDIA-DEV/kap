@@ -1,9 +1,12 @@
 package com.kap.service;
 
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
+import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbh.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -99,4 +102,24 @@ public interface WBHACalibrationService {
      */
     public int getRsumePbsnCnt(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 
+    /**
+     * 최신 회차 목록을 조회한다.
+     */
+    public WBHACalibrationSearchDTO getRoundDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 신청가능여부 코드를 조회한다.
+     */
+    public int getApplyChecked(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 신청자를 등록한다.
+     * @return
+     */
+    public int insertApply(WBHAApplyMstDTO wbhaApplyMstDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
+     *   신청자 정보 조회
+     */
+    public WBHACalibrationSearchDTO getApplyDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 }

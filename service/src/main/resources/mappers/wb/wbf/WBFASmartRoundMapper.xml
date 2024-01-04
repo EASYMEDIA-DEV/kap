@@ -34,6 +34,15 @@
         WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
         ELSE 'STATE05'
         END AS DATE_STATE_CD
+        ,CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수대기'
+        WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+        ELSE '마감'
+        END AS ACCT_STATUS
+        , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
+        WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+        ELSE 3
+        END AS DATE_ORD
+        , DATEDIFF(ACCS_END_DTM,NOW()) AS D_DAY
         ,EXPS_YN
         ,REG_ID
         , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
@@ -48,6 +57,61 @@
         ORDER BY A.REG_DTM DESC
     </select>
 
+    <!--
+         쿼리명 : WBFASmartRoundMapper.getRecentRoundDtl
+         설  명 : 최신 회차 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김동현     최초 생성
+    -->
+    <select id="getRecentRoundDtl" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstSearchDTO">
+        SELECT /* WBFASmartRoundMapper.getRecentRoundDtl */ *
+        FROM (
+                 SELECT
+                     EPISD_SEQ
+                      ,BSN_CD
+                      ,YEAR
+                      ,EPISD
+                      ,ACCS_STRT_DTM
+                      ,ACCS_END_DTM
+                      ,BSN_STRT_DTM
+                      ,BSN_END_DTM
+                      ,EXPS_YN
+                      , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
+                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+                     ELSE 3
+                     END AS DATE_ORD
+                 FROM CX_EPISD_MST A
+                 WHERE BSN_CD = #{bsnCd} AND EXPS_YN = 'Y'
+             ) A
+        WHERE DATE_ORD = 1
+        ORDER BY ACCS_STRT_DTM, BSN_STRT_DTM ASC
+        LIMIT 1
+    </select>
+
+    <!--
+        쿼리명 : WBFASmartRoundMapper.selectOPtnList
+        설  명 : 최신 회차 신청 양식 파일
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.24  김동현     최초 생성
+   -->
+    <select id="selectOPtnList" parameterType="wBRoundMstSearchDTO" resultType="WBAManagementOptnDTO">
+        SELECT /* WBFASmartRoundMapper.selectOPtnList */ *
+        FROM (
+                 SELECT
+                     OPTN_SEQ
+                      , A.STAGE_SEQ
+                      , OPTN_NM
+                      , OPTN_ORD
+                      , FILE_SEQ
+                      , STAGE_ORD
+                 FROM CX_OPTN_DTL A
+                          JOIN CX_STAGE_DTL B ON A.STAGE_SEQ = B.STAGE_SEQ AND B.BSN_CD = #{bsnCd} AND B. FILE_YN = 'Y'
+                 ORDER BY OPTN_ORD ASC
+             ) TMP
+        WHERE TMP.STAGE_ORD = #{stageOrd}
+    </select>
     <!--
          쿼리명 : WBFASmartRoundMapper.selectSmartRoundListTotCnt
          설  명 : 게시판 리스트 Count
@@ -332,6 +396,19 @@
         FROM CX_EPISD_MST
         WHERE bsn_cd = #{bsnCd}
         AND year = #{year} AND episd = #{episd}
+    </select>
+
+    <!--
+        쿼리명 : WBFASmartRoundMapper.getApplyCount
+        설  명 : 회차 참여 여부
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.24  김동현     최초 생성
+   -->
+    <select id="getApplyCount" parameterType="wBRoundMstSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBFASmartRoundMapper.getApplyCount */ COUNT(*)
+        FROM CX_APPCTN_MST
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
     </select>
 
     <!--

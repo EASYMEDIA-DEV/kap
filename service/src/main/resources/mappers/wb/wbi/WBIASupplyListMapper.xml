@@ -27,6 +27,15 @@
             WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 'STATE02'
             ELSE 'STATE05'
             END AS DATE_STATE_CD
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수대기'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            ELSE '마감'
+            END AS ACCT_STATUS
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+            ELSE 3
+            END AS DATE_ORD
+            , DATEDIFF(ACCS_END_DTM,NOW()) AS D_DAY
             ,EXPS_YN
             ,REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
@@ -37,7 +46,14 @@
             FROM CX_EPISD_MST A
         ) A
         <include refid="selectSupplyListwhereSql" />
-        ORDER BY A.REG_DTM DESC
+        <choose>
+            <when test="ordFlag == 1">
+                ORDER BY A.DATE_ORD, ACCS_STRT_DTM ASC
+            </when>
+            <otherwise>
+                ORDER BY A.REG_DTM DESC
+            </otherwise>
+        </choose>
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
@@ -344,6 +360,57 @@
         </choose>
     </select>
 
+    <!--
+         쿼리명 : WBIASupplyListMapper.getRoundDtl
+         설  명 : 최신 회차 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.12.24  오병호     최초 생성
+    -->
+    <select id="getRoundDtl" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstSearchDTO">
+        SELECT /* WBIASupplyListMapper.getRoundDtl */ *
+        FROM (
+                 SELECT
+                     EPISD_SEQ
+                      ,BSN_CD
+                      ,YEAR
+                      ,EPISD
+                      ,ACCS_STRT_DTM
+                      ,ACCS_END_DTM
+                      ,BSN_STRT_DTM
+                      ,BSN_END_DTM
+                      ,EXPS_YN
+                      , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
+                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+                     ELSE 3
+                     END AS DATE_ORD
+                 FROM CX_EPISD_MST A
+                 WHERE BSN_CD = 'INQ07009' AND EXPS_YN = 'Y'
+             ) A
+        WHERE DATE_ORD = 1
+        ORDER BY ACCS_STRT_DTM, BSN_STRT_DTM ASC
+            LIMIT 1
+    </select>
+
+    <!--
+        쿼리명 : WBIASupplyListMapper.selectOPtnList
+        설  명 : 최신 회차 상세 조회
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.24  오병호     최초 생성
+   -->
+    <select id="selectOPtnList" parameterType="wBRoundMstSearchDTO" resultType="WBAManagementOptnDTO">
+        select 	/* WBIASupplyListMapper.selectOPtnList */
+            a.file_seq as file_seq
+             , b.file_ord as optn_ord
+        from 	co_file_mst a
+                    inner
+                        join 	co_file_dtl b
+                                on 		a.file_seq = b.file_seq
+        where 	a.file_seq = 3986
+          and 	a.use_yn = 'Y'
+          and 	b.use_yn = 'Y'
+    </select>
 </mapper>
 
 

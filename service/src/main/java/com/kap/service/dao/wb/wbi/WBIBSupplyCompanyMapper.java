@@ -1,6 +1,9 @@
 package com.kap.service.dao.wb.wbi;
 
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.wb.*;
+import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
@@ -159,4 +162,29 @@ public interface WBIBSupplyCompanyMapper {
      *  관리자 미확인 갯수 조회
      */
     public int getCnt(WBIBSupplySearchDTO wBIBSupplySearchDTO);
+
+    /**
+     * 상생신청 마스터 생성
+     */
+    public int insertApply(WBIBSupplyDTO wBIBSupplyDTO) throws Exception;
+
+    /**
+     * 상생신청 상세 생성
+     */
+    public int insertApplyDtl(WBIBSupplyDTO wBIBSupplyDTO) throws Exception;
+
+    /**
+     * 회차 상세 조회
+     */
+    public WBIBSupplyDTO selectRecent(WBIBSupplySearchDTO wBIBSupplySearchDTO) throws Exception;
+
+    /**
+     * 회차 조회
+     */
+    public List<MPEPartsCompanyDTO> selectPartsCompanyList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 회차 전체 갯수
+     */
+    public int selectPartsCompanyCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 }

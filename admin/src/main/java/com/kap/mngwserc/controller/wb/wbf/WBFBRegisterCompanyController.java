@@ -356,28 +356,6 @@ public class WBFBRegisterCompanyController {
         return "jsonView";
     }
 
-    /**
-     * 신청부품사 삭제 전 - 삭제 가능여부 확인
-     */
-    @PostMapping(value="/confDelete")
-    public String confDeleteRegister(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
-    {
-        try
-        {
-            wBFBRegisterDTO.setBsnCd("INQ07006");
-            modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.confDeleteRegister(wBFBRegisterDTO));
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-        return "jsonView";
-    }
-
     @GetMapping(value = "/excel-down")
     public void getListExcel(WBFBRegisterSearchDTO wBFBRegisterSearchDTO , HttpServletResponse response) throws Exception
     {

@@ -133,7 +133,7 @@ public class WBFBRegisterDTO extends BaseDTO {
     @Schema(title = "규모", example = "")
     private String sizeCdNm; /* 코드 값 nm */
     @Schema(title = "우편변호", example = "")
-    private String zipCode;
+    private String zipcode;
     @Schema(title = "우편변호", example = "")
     private String bscAddr;
     @Schema(title = "우편변호", example = "")
@@ -152,14 +152,20 @@ public class WBFBRegisterDTO extends BaseDTO {
     private String mjrPrdct3;
     @Schema(title = "품질5스타코드", example = "")
     private String qlty5starCd;
+    @Schema(title = "품질5스타코드", example = "")
+    private String qlty5starCdNm;
     @Schema(title = "품질5스타년도", example = "")
     private String qlty5starYear;
     @Schema(title = "납입5스타코드", example = "")
     private String pay5starCd;
+    @Schema(title = "납입5스타코드", example = "")
+    private String pay5starCdNm;
     @Schema(title = "납입5스타년도", example = "")
     private String pay5starYear;
     @Schema(title = "기술5스타코드", example = "")
     private String tchlg5starCd;
+    @Schema(title = "기술5스타코드", example = "")
+    private String tchlg5starCdNm;
     @Schema(title = "기술5스타년도", example = "")
     private String tchlg5starYear;
     @Schema(title = "선급금액여부", example = "")

@@ -265,4 +265,24 @@ public interface WBHACalibrationMapper {
      */
     public int getRsumePbsnCnt(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBHACalibrationSearchDTO getRoundDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 회차 신청여부 조회
+     */
+    public int getApplyCount(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 신청여부 조회
+     */
+    public int getApplyCompanyCnt(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 신청자 정보조회
+     */
+    public WBHACalibrationSearchDTO getApplyDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
 }

@@ -25,7 +25,7 @@
         , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = G.APPCTN_STTS_CD) as MNG_STTS_CD_nm
         , (SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ) AS CMPN_SEQ_NM
-        , C.BSNM_NO
+        , F.CMPN_SEQ AS BSNM_NO
         , F.NAME
         , F.HP_NO
         FROM
@@ -1075,6 +1075,71 @@
         </where>
         AND MNG_STTS_CD != 'PRO_TYPE05001_02_001'
         AND APPCTN_STTS_CD != 'PRO_TYPE05001_01_001'
+    </select>
+
+    <!--
+         쿼리명 : WBJBAcomMapper.getPrizeList
+         설  명 : 포상 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <select id="getPrizeList" parameterType="WBJAcomSearchDTO" resultType="WBJAcomSearchDTO">
+        SELECT
+                (SELECT cd_nm FROM co_code_mst WHERE cd = A.PRIZE_CD) as PRIZE_CD_NM,
+                (SELECT cd_nm FROM co_code_mst WHERE cd = A.MRTS_CD) as MRTS_CD_NM,
+                A.EPISD_SEQ,
+                A.PRIZE_CD,
+                A.MRTS_CD,
+                A.PRIZE_PMT
+        FROM CX_EPISD_PRIZE_DTL A
+        WHERE EPISD_SEQ = ${episdSeq}
+        ORDER BY A.PRIZE_SEQ DESC
+    </select>
+
+    <!--
+     쿼리명 : WBJBAcomMapper.insertApply
+     설  명 : 상생 신청 마스터 생성
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.24  오병호     최초 생성
+    -->
+    <insert id="insertApply" parameterType="wBJAcomDTO">
+        INSERT /* WBJBAcomMapper.insertApply */ INTO CX_APPCTN_MST
+        (
+            APPCTN_SEQ
+        , EPISD_SEQ
+        , MEM_SEQ
+        , APPCTN_BSNM_NO
+        , REG_ID
+        , REG_IP
+        , REG_DTM
+        )
+            VALUE
+            (
+            #{appctnSeq}
+            ,#{episdSeq}
+            ,#{memSeq}
+            ,#{bsnmNo}
+            ,#{regId}
+            ,#{regIp}
+            ,NOW()
+            )
+    </insert>
+
+    <!--
+        쿼리명 : WBJBAcomMapper.selectRecent
+        설  명 : 최신 게시글 조회
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.12.01  오병호     최초 생성
+   -->
+    <select id="selectRecent" parameterType="wBJAcomSearchDTO" resultType="wBJAcomDTO">
+        SELECT /* WBJBAcomMapper.selectRecent*/
+            *
+        FROM CX_APPCTN_RSUME_PRIZE_PART_DTL
+        ORDER BY REG_DTM DESC
+        LIMIT 1
     </select>
 </mapper>
 

@@ -7,8 +7,8 @@ nice :
   product-id : 2101764012
   url : https://svc.niceapi.co.kr:22001
   enc-product-id : 2101979031
-  return-url-adm : https://127.0.0.1:9012
-  return-url-user : https://127.0.0.1:9014
+  return-url-adm : http://mng.kap.easymedia.kr
+  return-url-user : http://kap.easymedia.kr
 
 #강제 로그인 여부
 app:

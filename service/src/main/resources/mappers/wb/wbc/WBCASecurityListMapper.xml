@@ -33,6 +33,15 @@
             WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
             ELSE 'STATE05'
             END AS DATE_STATE_CD
+            , CASE WHEN NOW() <![CDATA[< ]]>  ACCS_STRT_DTM THEN 2
+            WHEN NOW()   <![CDATA[ >= ]]>  ACCS_STRT_DTM AND NOW()   <![CDATA[ <= ]]>  ACCS_END_DTM THEN 1
+            ELSE 3
+            END AS DATE_ORD
+            , CASE WHEN NOW() <![CDATA[< ]]> ACCS_STRT_DTM THEN '접수대기'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            ELSE '마감'
+            END AS ACCT_STATUS
+            ,DATEDIFF(ACCS_END_DTM,NOW()) AS D_DAY
             ,EXPS_YN
             ,REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
@@ -476,6 +485,65 @@
         </if>
     </select>
 
+    <!--
+         쿼리명 : WBCASecurityListMapper.getRoundDtl
+         설  명 : 최신 회차 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김대성     최초 생성
+    -->
+    <select id="getRoundDtl" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstSearchDTO">
+        SELECT /* WBCASecurityListMapper.getRoundDtl */ *
+        FROM (
+                 SELECT
+                     EPISD_SEQ
+                      ,BSN_CD
+                      ,YEAR
+                      ,EPISD
+                      ,ACCS_STRT_DTM
+                      ,ACCS_END_DTM
+                      ,BSN_STRT_DTM
+                      ,BSN_END_DTM
+                      ,EXPS_YN
+                      , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
+                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+                     ELSE 3
+                     END AS DATE_ORD
+                 FROM CX_EPISD_MST A
+                 WHERE BSN_CD = #{bsnCd} AND EXPS_YN = 'Y'
+             ) A
+        WHERE DATE_ORD = 1
+        ORDER BY ACCS_STRT_DTM, BSN_STRT_DTM ASC
+            LIMIT 1
+    </select>
+
+    <!--
+        쿼리명 : WBCASecurityListMapper.getApplyCount
+        설  명 : 회차사업 참여 카운트
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.24  김대성     최초 생성
+   -->
+    <select id="getApplyCount" parameterType="wBRoundMstSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBCASecurityListMapper.getApplyCount */ COUNT(*)
+        FROM CX_APPCTN_MST
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
+    </select>
+
+    <!--
+        쿼리명 : WBCASecurityListMapper.selectOPtnList
+        설  명 : 양식 파일 순번 조회
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.24  김대성     최초 생성
+   -->
+    <select id="selectOPtnList" parameterType="wBRoundMstSearchDTO" resultType="SMJFormDTO">
+        SELECT /* WBCASecurityListMapper.selectOPtnList */
+              SCRTY_ENVRNMT_FILE_SEQ
+             , (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.SCRTY_ENVRNMT_FILE_SEQ) AS FILE_ORD
+        FROM SM_STY_MST A
+        WHERE TYPE_CD = 'BUSINESS02'
+    </select>
 
 </mapper>
 

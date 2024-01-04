@@ -1195,6 +1195,73 @@
         </choose>
     </select>
 
+    <!--
+         쿼리명 : WBEBCarbonCompanyMapper.getCompanyInfo
+         설  명 : 부품사관리 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김대성     최초 생성
+    -->
+    <select id="getCompanyInfo" parameterType="wBEBCarbonCompanySearchDTO" resultType="wBEBCompanyDTO">
+        SELECT /* WBEBCarbonCompanyMapper.getCompanyInfo */
+            A.BSNM_NO
+             , A.CMPN_NM
+             , A.RPRSNT_NM
+             , A.CTGRY_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_NM
+             , A.SIZE_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_NM
+             , A.STBSM_DT
+             , A.TEL_NO AS COMP_TEL
+             , A.ZIPCODE
+             , A.BSC_ADDR
+             , A.DTL_ADDR
+             , A.SLS_PMT
+             , A.SLS_YEAR
+             , A.MPLE_CNT
+             , A.MJR_PRDCT_1
+             , A.MJR_PRDCT_2
+             , A.MJR_PRDCT_3
+             , A.QLTY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.QLTY_5_STAR_CD) AS QLTY_5_STAR_NM
+             , A.QLTY_5_STAR_YEAR
+             , A.PAY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.PAY_5_STAR_CD) AS PAY_5_STAR_NM
+             , A.PAY_5_STAR_YEAR
+             , A.TCHLG_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_NM
+             , A.TCHLG_5_STAR_YEAR
+             , (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) ID
+             , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) NAME
+             , (SELECT EMAIL FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) EMAIL
+             , (SELECT DEPT_CD FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) DEPT_CD
+             , (SELECT DEPT_DTL_NM FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) DEPT_DTL_NM
+             , (SELECT PSTN_CD FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) PSTN_CD
+             , (SELECT PSTN_NM FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) PSTN_NM
+             , (SELECT HP_NO FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) HP_NO
+             , (SELECT TEL_NO FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) TEL_NO
+        FROM CP_CMPN_MST A
+        WHERE A.BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : WBEBCarbonCompanyMapper.getUserInfo
+         설  명 : 부품사관리 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김대성     최초 생성
+    -->
+    <select id="selectSqList" parameterType="wBEBCarbonCompanySearchDTO" resultType="wBEBCompanyDtlDTO">
+        SELECT /* WBEBCarbonCompanyMapper.selectSqList */
+            CBSN_SEQ
+             , NM
+             , SCORE
+             , YEAR
+             , CRTFN_CMPN_NM
+        FROM CP_CMPN_CBSN_DTL
+        WHERE BSNM_NO = #{bsnmNo}
+    </select>
+
 </mapper>
 
 

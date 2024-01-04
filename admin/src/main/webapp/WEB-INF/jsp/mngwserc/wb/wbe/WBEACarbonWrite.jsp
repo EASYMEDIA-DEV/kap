@@ -12,7 +12,14 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/wb/wbe/WBEACarbonWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>
+            <c:if test="${not empty rtnDto.episdSeq }">
+                ${pageTitle} 상세/수정
+            </c:if>
+            <c:if test="${empty rtnDto.episdSeq }">
+                ${pageTitle} 등록
+            </c:if>
+        </h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />

@@ -1,7 +1,10 @@
 package com.kap.service;
 
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.wb.WBPartCompanyDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -80,4 +83,20 @@ public interface WBIBSupplyCompanyService {
      * 신창자를 삭제한다.
      */
     public int getCnt(WBIBSupplySearchDTO wBIBSupplySearchDTO) throws Exception;
+
+    /**
+     * 신청자를 등록한다.
+     * @return
+     */
+    public int insertApply(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * 최신 게시물 조회
+     */
+    public WBIBSupplyDTO selectRecent(WBIBSupplySearchDTO wBIBSupplySearchDTO) throws Exception;
+
+    /**
+     * 상세 조회한다.
+     */
+    public MPEPartsCompanyDTO selectPartsCompanyList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 }

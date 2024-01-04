@@ -97,7 +97,7 @@ public class WBBManagementController {
     }
 
     /**
-     * 회차정보를 가져온다.
+     * 신청가능 여부 코드를가져온다.
      */
     @RequestMapping(value = "/applyChecked")
     public String applyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap) throws Exception {
@@ -139,7 +139,7 @@ public class WBBManagementController {
     }
 
     /**
-     * 사업신청 기본정보
+     * 사업신청 정보입력
      */
     @RequestMapping(value = "/step2")
     public String getStep2Page(WBRoundMstSearchDTO wbRoundMstSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {

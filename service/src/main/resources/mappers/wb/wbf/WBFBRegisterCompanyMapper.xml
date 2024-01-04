@@ -113,6 +113,55 @@
     </select>
 
     <!--
+         쿼리명 : WBBBCompanyMapper.getCompanyInfo
+         설  명 : 부품사 정보 get
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김동현     최초 생성
+    -->
+    <select id="getCompanyInfo" parameterType="WBFBRegisterSearchDTO" resultType="WBFBRegisterDTO">
+        SELECT /* WBBBCompanyMapper.getCompanyInfo */
+            A.BSNM_NO
+             , A.CMPN_NM
+             , A.RPRSNT_NM
+             , A.CTGRY_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_CD_NM
+             , A.SIZE_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_CD_NM
+             , A.STBSM_DT
+             , A.TEL_NO AS COMP_TEL
+             , A.ZIPCODE
+             , A.BSC_ADDR
+             , A.DTL_ADDR
+             , A.SLS_PMT
+             , A.SLS_YEAR
+             , A.MPLE_CNT
+             , A.MJR_PRDCT_1
+             , A.MJR_PRDCT_2
+             , A.MJR_PRDCT_3
+             , A.QLTY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.QLTY_5_STAR_CD) AS QLTY_5_STAR_CD_NM
+             , A.QLTY_5_STAR_YEAR
+             , A.PAY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.PAY_5_STAR_CD) AS PAY_5_STAR_CD_NM
+             , A.PAY_5_STAR_YEAR
+             , A.TCHLG_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_CD_NM
+             , A.TCHLG_5_STAR_YEAR
+             , (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) ID
+             , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) NAME
+             , (SELECT EMAIL FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) EMAIL
+             , (SELECT DEPT_CD FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) DEPT_CD
+             , (SELECT DEPT_DTL_NM FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) DEPT_DTL_NM
+             , (SELECT PSTN_CD FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) PSTN_CD
+             , (SELECT PSTN_NM FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) PSTN_NM
+             , (SELECT HP_NO FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) HP_NO
+             , (SELECT TEL_NO FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) TEL_NO
+        FROM CP_CMPN_MST A
+        WHERE A.BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
          쿼리명 : WBFASmartRoundMapper.selectGiveList
          설  명 : 부품사 상세 옵션 지급차수 조회
          수정일     수정자     수정내용
@@ -489,7 +538,7 @@
             ,size_cd = #{sizeCd}
             ,stbsm_dt = #{stbsmDt}
             ,tel_no = #{compTel}
-            ,zipcode = #{zipCode}
+            ,zipcode = #{zipcode}
             ,bsc_addr = #{bscAddr}
             ,dtl_addr = #{dtlAddr}
             ,sls_pmt = #{slsPmt}
@@ -932,6 +981,37 @@
         <foreach collection="delValueList" item="item" index="index" open="(" separator="," close=")">
             #{item}
         </foreach>
+    </select>
+
+    <!--
+        쿼리명 : WBFBRegisterCompanyMapper.getSbrdmNoCheck
+        설  명 : 상생신청 종된사업장번호 확인
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.16  김동현     최초 생성
+   -->
+    <select id="getSbrdmNoCheck" parameterType="WBFBRegisterSearchDTO">
+        SELECT COUNT(*) /*WBFBRegisterCompanyMapper.getSbrdmNoCheck*/
+        FROM cx_appctn_mst
+        WHERE appctn_bsnm_no = #{bsnmNo} AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : WBBBCompanyMapper.getApplyDtl
+         설  명 : 상생 신청자 정보조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김동현     최초 생성
+    -->
+    <select id="getApplyDtl" parameterType="WBFBRegisterSearchDTO" resultType="WBFBRegisterSearchDTO">
+        SELECT /* WBFBRegisterCompanyMapper.getApplyDtl */
+            APPCTN_SEQ,
+            EPISD_SEQ,
+            MEM_SEQ,
+            APPCTN_BSNM_NO,
+            REG_DTM
+        FROM CX_APPCTN_MST A
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
     </select>
 
     <!--

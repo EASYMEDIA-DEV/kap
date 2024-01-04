@@ -84,4 +84,20 @@ public interface WBJBAcomListService {
      * 관리자 미확인 갯수 조회
      */
     public int getCnt(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
+
+    /**
+     * 회차 값에 따른
+     * 포상 값 가져오기
+     */
+    public List<String> getPrizeList(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
+
+    /**
+     * 신청 부품사 등록 Insert
+     */
+    public int insertApply(WBJAcomDTO wBJAcomDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * 상세 조회한다.
+     */
+    public WBJAcomDTO selectRecent(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
 }

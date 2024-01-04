@@ -1,6 +1,7 @@
 package com.kap.service;
 
 
+import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
@@ -52,4 +53,14 @@ public interface WBJARoundListService {
      * 
      */
     public List<String> episdCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 연도 상세 조회한다.
+     */
+    public WBRoundMstDTO selectEpisdDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 최신 회차 목록을 조회한다.
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }
