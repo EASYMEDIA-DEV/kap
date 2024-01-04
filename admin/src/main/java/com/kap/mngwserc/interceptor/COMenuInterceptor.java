@@ -80,6 +80,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
                 isMenuList = false;
             }
             cOUserDetailsDTO.setDriveMenuSeq( driveMenuSeq );
+            cOAAdmDTO.setDriveMenuSeq(driveMenuSeq);
         }
         else
         {
@@ -87,6 +88,7 @@ public class COMenuInterceptor implements HandlerInterceptor{
                 int driveMenuSeq = driveMenuList.get(0).getMenuSeq();
                 cOUserDetailsDTO.setDriveMenuSeq(driveMenuSeq);
                 RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", driveMenuSeq, RequestAttributes.SCOPE_SESSION);
+                cOAAdmDTO.setDriveMenuSeq(driveMenuSeq);
             }
         }
         //메뉴 목록을 조회한다.

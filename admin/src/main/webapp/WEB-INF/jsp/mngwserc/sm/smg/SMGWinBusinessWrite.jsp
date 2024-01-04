@@ -29,11 +29,11 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">첨부파일</label>
+                    <label class="col-sm-1 control-label">첨부파일<span class="star"> *</span></label>
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="52428800" data-max-file-cnt="1" data-title="이미지 첨부파일">
+                        <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${imageExtns}" data-max-file-size="52428800" data-max-file-cnt="1" data-title="이미지 첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>

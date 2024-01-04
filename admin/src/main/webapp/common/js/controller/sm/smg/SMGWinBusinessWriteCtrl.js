@@ -76,6 +76,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }
                     });
 
+                    if($(".dropzone .dz-preview").length < 1) {
+                        alert("이미지를 첨부해주세요");
+                        isValid = false;
+                    }
+
                     if (!editorChk)
                     {
                         isValid = false;

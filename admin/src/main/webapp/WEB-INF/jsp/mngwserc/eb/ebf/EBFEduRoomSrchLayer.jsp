@@ -29,7 +29,7 @@
                     <%--<div id="selectBoxArea"></div>--%>
                     <fieldset class="last-child">
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label ta_center">검색<br/>키워드</label>
+                            <label class="col-sm-1 control-label ta_center va-middle">검색 키워드</label>
                             <div class="col-sm-4">
                                 <div class="row">
                                     <div class="col-sm-3 pr0">
