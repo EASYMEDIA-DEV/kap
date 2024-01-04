@@ -160,40 +160,32 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
-                    <div class="col-sm-5" style="margin-left: -15px">
-                        <div class="row">
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm" data-name="deptCd" id="deptCd" name="deptCd" title="부서">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                                        <c:if test="${fn:contains(cdList.cd, 'MEM_CD02') and fn:length(cdList.cd) > 8}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnData.deptCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-5 pr0">
-                                <input type="text" class="form-control input-sm" value="${rtnDto.deptDtlNm}" id="deptDtlNm" name="deptDtlNm" title="부서 상세" maxlength="50" />
-                            </div>
-                        </div>
+                    <div class="col-sm-2" style="margin-left: -15px">
+                        <select class="form-control input-sm" data-name="deptCd" id="deptCd" name="deptCd" title="부서">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                <c:if test="${fn:contains(cdList.cd, 'MEM_CD02') and fn:length(cdList.cd) > 8}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.deptCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="col-sm-2" style="margin-left: -15px">
+                        <input type="text" class="form-control input-sm" value="${rtnDto.deptDtlNm}" id="deptDtlNm" name="deptDtlNm" title="부서 상세" maxlength="50" />
                     </div>
                     <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
-                    <div class="col-sm-5" style="margin-left: -15px">
-                        <div class="row">
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm" data-name="pstnCd" id="pstnCd" name="pstnCd" title="직급">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                                        <c:if test="${fn:contains(cdList.cd, 'MEM_CD01') and fn:length(cdList.cd) > 8}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnData.pstnCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-5 pr0" id="pstnNmChk">
-                                <input type="text" class="form-control input-sm" value="${rtnDto.pstnNm}" id="pstnNm" name="pstnNm" title="직급 상세" maxlength="50" />
-                            </div>
-                        </div>
+                    <div class="col-sm-2" style="margin-left: -15px">
+                        <select class="form-control input-sm" data-name="pstnCd" id="pstnCd" name="pstnCd" title="직급">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                <c:if test="${fn:contains(cdList.cd, 'MEM_CD01') and fn:length(cdList.cd) > 8}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.pstnCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="col-sm-2" id="pstnNmChk" style="display: none; margin-left: -15px;">
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.pstnNm}" id="pstnNm" name="pstnNm" title="직급 상세" maxlength="50" />
                     </div>
                 </div>
             </fieldset>

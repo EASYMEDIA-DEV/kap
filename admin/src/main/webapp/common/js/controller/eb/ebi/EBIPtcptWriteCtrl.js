@@ -43,6 +43,27 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				}
 			},
 
+			//직급 기타
+			pstnCd : {
+				event : {
+					change : function() {
+						var pstnCd = document.getElementById('pstnCd');
+						var selectPstn = pstnCd.options[pstnCd.selectedIndex].value;
+
+						$("#pstnNm").val("");
+
+						if(selectPstn == "MEM_CD01007") {
+							$("#pstnNmChk").css('display', 'block');
+							$("#pstnNm").removeClass("notRequired");
+						}
+						else {
+							$("#pstnNmChk").css('display', 'none');
+							$("#pstnNm").addClass("notRequired");
+						}
+					}
+				}
+			},
+
 			//사업자 등록 번호 입력
 			ptcptBsnmNo : {
 				event : {

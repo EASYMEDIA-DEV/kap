@@ -18,7 +18,7 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/ebi/EBINonMemberWriteCtrl" data-actionType="${actionType}">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} <c:choose><c:when test="${not empty rtnDto and rtnDto.copyYn eq'N'}">상세/수정</c:when><c:otherwise>등록</c:otherwise></c:choose></h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
@@ -526,18 +526,18 @@
                 <!-- 신청자 목록-->
                 <div id="accsList" class="tab-pane fade" style="flex-wrap:wrap;">
 
-                    <fieldset>
+                    <%--<fieldset>
                         <div class="form-group text-sm">
                             <div class="col-sm-11">
                                 <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 목록</h6>
                             </div>
                         </div>
-                    </fieldset>
+                    </fieldset>--%>
 
                     <fieldset class="ptcptField">
                         <div class="clearfix">
                             <h6 class="pull-left mt0">
-                                <em class="ion-play mr-sm"></em>교육 신청자 목록 (총 <span id="ptcptListContainerTotCnt">0</span> 건)
+                                <em class="ion-play mr-sm"></em>신청자 목록 (총 <span id="ptcptListContainerTotCnt">0</span> 건)
                             </h6>
                             <!-- 현재 페이징 번호 -->
                             <input type="hidden" id="pageIndex" name="pageIndex" class="notRequired" value="${ rtnData.pageIndex }" />
@@ -602,6 +602,11 @@
                 <div id="bdget" class="tab-pane fade" style="flex-wrap:wrap;">
                     <div class="bdgetForm0" style="width:100%;order:0">
                         <fieldset>
+                            <div class="form-group text-sm">
+                                <div class="col-sm-11">
+                                    <h6 class="mt0"><em class="ion-play mr-sm"></em>실적 마감 여부</h6>
+                                </div>
+                            </div>
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">마감여부<span class="star text-danger"> *</span></label>
                                 <div class="col-sm-11">

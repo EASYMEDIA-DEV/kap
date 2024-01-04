@@ -27,7 +27,7 @@
         <td class="text-center rprsntTelNo">${ list.rprsntTelNo }</td><!--대표번호-->
         <td class="text-center">${list.regName}(${ list.regId })</td><!--최초 등록자-->
         <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--최초등록일시-->
-        <td class="text-center">${empty list.modName ? '-' : list.modName}</td><!--최종수정자-->
+        <td class="text-center">${empty list.modName ? '-' : list.modName += '(' += list.modId += ')'}</td><!--최종수정자-->
         <td class="text-center">${empty list.modDtm ? '-' : kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--최종 수정일시-->
       </tr>
     </c:forEach>

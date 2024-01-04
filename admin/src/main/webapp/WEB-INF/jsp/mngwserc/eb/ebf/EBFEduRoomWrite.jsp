@@ -89,7 +89,7 @@
                             <c:if test="${ not empty rtnDto.modDtm }">
                             <tr>
                                 <th>최종 수정자</th>
-                                <td>${not empty rtnDto.modName ? rtnDto.modName : '-'}</td>
+                                <td>${not empty rtnDto.modName ? rtnDto.modName += '(' += rtnDto.modId += ')' : '-'}</td>
                                 <th>최종 수정일시</th>
                                 <td>${not empty rtnDto.modDtm ? kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') : '-'}</td>
                             </tr>
