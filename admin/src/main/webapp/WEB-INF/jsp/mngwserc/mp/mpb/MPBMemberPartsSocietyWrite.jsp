@@ -47,9 +47,9 @@
                     </tr>
                     <tr>
                         <th scope="row" class="bg-gray-lighter">가입일</th>
-                        <td> ${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
+                        <td> ${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                         <th scope="row" class="bg-gray-lighter">최종접속일</th>
-                        <td>${ kl:convertDate(rtnInfo.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
+                        <td>${ kl:convertDate(rtnInfo.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -269,5 +269,25 @@
                 </div>
             </div>
         </form>
+    </div>
+    <div class="dtl-tab">
+        <h5>수정이력</h5>
+        <table class="table">
+            <colgroup>
+                <col style="width:10%;">
+                <col style="width:40%;">
+                <col style="width:10%;">
+                <col style="width:40%;">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th scope="row" class="bg-gray-lighter">최종 수정자</th>
+                <td>${rtnInfo.modName}(${rtnInfo.modId})</td>
+                <th scope="row" class="bg-gray-lighter">최종 수정일시</th>
+                <td>${ kl:convertDate(rtnInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
+            </tr>
+            </tbody>
+        </table>
+
     </div>
 </div>

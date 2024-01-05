@@ -39,9 +39,6 @@
         , reg_id 					-- 등록id
         , reg_ip  				-- 등록ip
         , reg_dtm  				-- 등록일
-        , mod_id  				-- 수정id
-        , mod_ip  				-- 수정ip
-        , mod_dtm	 				-- 수정일
         , chng_xtnsn_cnt
         , tmp_pwd_yn
         , pwd_chng_dtm
@@ -62,8 +59,8 @@
               , #{cmssrRsgntDt}
         </if>
               , #{cmssrPhotoFileSeq}
-              , #{cmssrCnstgFldCntn}
               , #{cmssrMjrCarerCntn}
+              , #{cmssrCnstgFldCntn}
               , #{cmssrMjrCarerExpsYn}
               , 'N'
               , now()
@@ -71,9 +68,6 @@
               , now()
               , 'Y'
               , '0'
-              , #{regId}
-              , #{regIp}
-              , now()
               , #{regId}
               , #{regIp}
               , now()

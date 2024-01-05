@@ -4,12 +4,6 @@
   <c:when test="${ not empty rtnData.list}">
     <c:forEach var="list" items="${rtnData.list}" varStatus="status">
       <tr data-total-count="${rtnData.totalCount}">
-        <td class="text-center">
-          <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" value="${list.memSeq}" name="delValueList" class="checkboxSingle notRequired" data-auth-cd="${list.memSeq}"/>
-            <span class="ion-checkmark-round"></span>
-          </label>
-        </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
           <!-- 문법 -->
         <c:if test="${rtnData.srchLayer eq 'Y'}">

@@ -20,10 +20,10 @@
                 <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">아이디<span class="star"> *</span></label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm " id="id" title="아이디" name="id" placeholder="아이디 입력" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');"/>
-                                <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupId">중복확인</button></span>
+                                <input type="text" class="form-control input-sm " id="id" title="아이디" name="id" placeholder="아이디 입력" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');" />
+                                <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupId" style="margin-left:0.8rem;">중복확인</button></span>
                             </div>
                         </div>
                     </div>
@@ -31,18 +31,20 @@
                 <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">비밀번호<span class="star"> *</span></label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <div class="input-group">
-                                <input type="password" class="form-control input-sm " id="pwd" title="비밀번호" name="pwd"  maxlength="16" placeholder="비밀번호 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
-                                ※ 8~16자 이내 영문+숫자+특수문자 조합으로 입력해주세요.
+                                <input type="password" class="form-control input-sm " id="pwd" title="비밀번호 확인" name="pwd" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
                             </div>
+                            ※ 8~16자 이내 영문+숫자+특수문자 조합으로 입력해주세요.
                         </div>
                     </div>
+
                 </fieldset>
+
                 <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">비밀번호 확인<span class="star"> *</span></label>
-                        <div class="col-sm-3">
+                        <div class="col-sm-5">
                             <div class="input-group">
                                 <input type="password" class="form-control input-sm " id="pwdCon" title="비밀번호" name="pwdCon" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
                             </div>
@@ -83,7 +85,7 @@
                         <label class="cmssrCdDiv col-sm-1 control-label">업종/분야<span class="star"> *</span></label>
                         <div class="cmssrCdDiv col-sm-5">
                             <div class="input-group">
-                                <select class="form-control input-sm"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종분야" style="width:auto; display:inline-block;" >
+                                <select class="form-control input-sm notRequired"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종분야" style="width:auto; display:inline-block;" >
                                     <option value="">선택</option>
                                 </select>
                             </div>
@@ -96,7 +98,7 @@
                         <label class="col-sm-1 control-label">생년월일<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="input-group" style="z-index:0;width: 220px;">
-                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="birth" title="생일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();" value="${kl:convertDate(kl:addDay(today, '0'), 'yyyyMMdd', 'yyyy-MM-dd', '')}"/>
+                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="birth" title="생일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();"/>
                                 <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse input-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
@@ -127,7 +129,7 @@
                         <label class="col-sm-1 control-label">입사일<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="input-group" style="z-index:0;width: 220px;">
-                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="cmssrMplmnDt" value="${kl:convertDate(kl:addDay(today, '0'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="입사일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();" />
+                                <input type="text" class="form-control input-sm datetimepicker_strtDt" name="cmssrMplmnDt"  title="입사일" readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();" />
                                 <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse input-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
@@ -153,17 +155,15 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <div class="col-sm-3">
                             <div class="input-group">
                                 <input type="text" class="form-control input-sm "id="hpNo" title="휴대폰번호" placeholder="휴대폰번호 입력" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  />
                             </div>
-                        </div>
                     </div>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="input-group" style="z-index:0;width: 220px;">
                             <input type="text" class="form-control input-sm " id="email" title="이메일" name="email" placeholder="이메일 입력" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')"/>
-                            <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupEmail">중복확인</button></span>
+                            <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupEmail" style="margin-left:0.8rem;">중복확인</button></span>
                         </div>
                     </div>
                 </div>
@@ -181,7 +181,7 @@
                                 </div>
                             </div>
                             <p class="text-bold mt">
-                                ※ 1920 X 1080 / 파일 확장자(${imgType}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
+                                ※ 337 X 386 / 파일 확장자(${imgType}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
                             </p>
                         </div>
                     </div>

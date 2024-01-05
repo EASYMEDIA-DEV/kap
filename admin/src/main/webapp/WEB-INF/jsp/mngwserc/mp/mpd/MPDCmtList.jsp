@@ -82,8 +82,8 @@
                                     <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
                                     <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>휴대폰번호</option>
                                     <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>이메일</option>
-                                    <option value="8" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최초등록자</option>
-                                    <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종수정자</option>
+                                    <option value="8" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최초 등록자</option>
+                                    <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종 수정자</option>
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">
@@ -116,6 +116,9 @@
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="monthKen">월별 출근부</button>
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="dayKen">일일 근태현황</button>
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
+                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete" >선택삭제</button>
+                    <button type="button" class="btn btn-info btn-sm mb-sm dtl-tab" id="btnWrite" >등록</button>
+
                 </div>
             </div>
             <!--VUE 영역 시작 -->
@@ -153,13 +156,6 @@
 
     </div>
     <div class="clearfix">
-        <div class="pull-left">
-            <button type="button" class="btn btn-sm btn-default" id="btnDelete" >선택삭제</button>
-        </div>
-        </form>
-        <div style="float:right">
-            <button type="button" class="btn btn-sm btn-success dtl-tab" id="btnWrite" >등록</button>
-        </div>
     </div>
 
 </div>

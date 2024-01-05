@@ -42,7 +42,7 @@
                     </tr>
                     <tr>
                         <th scope="row" class="bg-gray-lighter">최초 등록일시</th>
-                        <td> ${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
+                        <td> ${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                         <th scope="row" class="bg-gray-lighter">재직여부</th>
                         <td>${rtnInfo.cmssrWorkCdNm}</td>
                     </tr>
@@ -79,7 +79,7 @@
                         <thead>
                         <tr>
                             <th class="text-center">번호</th>
-                            <th class="text-center">사업년도</th>
+                            <th class="text-center">사업연도</th>
                             <th class="text-center">사업구분</th>
                             <th class="text-center">진행상태</th>
                             <th class="text-center">부품사명</th>
@@ -116,8 +116,7 @@
                         <thead>
                         <tr>
                             <th class="text-center">번호</th>
-                            <th class="text-center">사업년도</th>
-                            <th class="text-center">사업구분</th>
+                            <th class="text-center">사업연도</th>
                             <th class="text-center">회차</th>
                             <th class="text-center">사업구분</th>
                             <th class="text-center">사업명</th>
@@ -186,4 +185,32 @@
             </div>
         </form>
     </div>
+
+    <div>
+        <h5>수정이력</h5>
+        <table class="table">
+            <colgroup>
+                <col style="width:10%;">
+                <col style="width:40%;">
+                <col style="width:10%;">
+                <col style="width:40%;">
+            </colgroup>
+            <tbody>
+            <tr>
+                <th scope="row" class="bg-gray-lighter">최초 등록자 </th>
+                <td>${rtnInfo.regName}(${rtnInfo.regId})</td>
+                <th scope="row" class="bg-gray-lighter">최초 등록일시</th>
+                <td>${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
+            </tr>
+            <tr>
+                <th scope="row" class="bg-gray-lighter">최종 수정자</th>
+                <td>${kl:emptyHypen(rtnInfo.modName)}(${kl:emptyHypen(rtnInfo.modId)})</td>
+                <th scope="row" class="bg-gray-lighter">최종 수정일시 </th>
+                <td>${ kl:emptyHypen(kl:convertDate(rtnInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-'))}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
 </div>
