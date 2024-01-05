@@ -30,7 +30,7 @@
                   <div class="col-sm-6">
                     <div class="col-sm-3 pr0">
                       <select class="form-control input-sm" name="rtnBsnYear">
-                        <option value="">선택</option>
+                        <option value="">전체</option>
                         <c:forEach begin="0" end="${start-2013}" var="result" step="1">
                            <option value="${start-result}" >${start-result}</option>
                         </c:forEach>

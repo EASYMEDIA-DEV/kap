@@ -37,6 +37,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
             $(".ptcptField").validation({});
 
+
+            var data = {};
+            data.detailsKey = $(".detailsKey").val();
+            data.detailsKey = $(".detailsKey").val();
+
+
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
 
