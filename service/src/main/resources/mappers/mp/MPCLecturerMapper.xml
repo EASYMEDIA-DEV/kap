@@ -94,7 +94,10 @@
         SELECT
             COUNT(ISTTR_SEQ)
         FROM CP_ISTTR_MST
-        WHERE ISTTR_SEQ NOT IN(#{isttrSeq})
+        WHERE 1=1
+        <if test="isttrSeq != null and isttrSeq != ''.toString()">
+            AND ISTTR_SEQ NOT IN(#{isttrSeq})
+        </if>
           AND EMAIL = #{email}
     </select>
 

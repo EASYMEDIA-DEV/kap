@@ -85,7 +85,7 @@
                         <th class="text-center">휴대폰번호</th>
                         <th class="text-center">이메일</th>
                         <th class="text-center">가입일</th>
-                        <th class="text-center">최종수정자</th>
+                        <th class="text-center">최종 수정자</th>
                         <th class="text-center">최종 수정일시</th>
                     </tr>
                     </thead>

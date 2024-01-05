@@ -256,6 +256,7 @@ var msgCtrl = (function(){
 				mpc : {
 					notSrchLecturer: "강사를 선택해주세요.",
 					notSrchLecturer1: "강사를 1개만 선택해주세요.",
+					al_004 : '저장되었습니다.'
 				},
 				mpd : {
 					al_001 : '시작일자가 종료일자보다 이후일 수 없습니다.',

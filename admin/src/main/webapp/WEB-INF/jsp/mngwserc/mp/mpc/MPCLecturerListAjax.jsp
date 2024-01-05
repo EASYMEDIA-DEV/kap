@@ -47,8 +47,15 @@
                 <td class="text-center">${list.email}</td>
                 <td class="text-center">${list.regName}</td>
                 <td class="text-center">${list.regDtm}</td>
-                <td class="text-center">${list.modName}</td>
-                <td class="text-center">${list.modDtm}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.modId }">
+                            ${list.modName}(${list.modId})
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">${kl:emptyHypen(kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-'))}</td>
             </tr>
         </c:forEach>
     </c:when>

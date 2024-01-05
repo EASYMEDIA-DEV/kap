@@ -20,8 +20,8 @@
                 <td class="text-center">${list.ptcptCnt}</td>
                 <td class="text-center">${list.ptcptHhNum}</td>
                 <td class="text-center">${list.name}<br>(${kl:idMasking(list.id)})</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.email}</td>
+                <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
+                <td class="text-center">${kl:emailMasking(list.email)}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${ not empty list.rsltEndYnNm }">

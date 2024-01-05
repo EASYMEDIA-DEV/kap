@@ -61,7 +61,7 @@
                         </select>
                     </div>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control input-sm" id="deptDtlNm" name="deptDtlNm" value="${rtnInfo.deptDtlNm}" title="부서상세명" />
+                        <input type="text" class="form-control input-sm" id="deptDtlNm" name="deptDtlNm" value="${rtnInfo.deptDtlNm}" title="부서상세명" maxlength="50"/>
                     </div>
 
                     <label class="col-sm-1 control-label">직급</label>
@@ -77,8 +77,8 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control input-sm notRequired" id="deptCdNm" name="deptCdNm" value="${rtnInfo.deptCdNm}" title="직급상세명"/>
+                    <div class="col-sm-2 pstnCdInput" <c:if test="${rtnInfo.pstnCd ne 'MEM_CD01007'}">style="display: none"</c:if>>
+                        <input type="text" class="form-control input-sm notRequired" id="deptCdNm" name="deptCdNm" value="${rtnInfo.deptCdNm}" title="직급상세명" maxlength="50"/>
                     </div>
                 </div>
             </fieldset>
@@ -88,9 +88,9 @@
                     <div class="col-sm-4">
                         <p class="form-control-static">${rtnInfo.hpNo}</p>
                     </div>
-                    <label class="col-sm-1 control-label">전화번호</label>
+                    <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" />
+                        <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" maxlength="50"/>
                     </div>
                 </div>
             </fieldset>
@@ -103,8 +103,8 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">부품사명<span class="star text-danger"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm notRequired" id="cmpnNm" name="cmpnNm" value="${rtnInfo.cmpnNm}" title="부품사명" style="width: 200px;"/>
                         <input type="hidden" id="appctnBsnmNo" name="appctnBsnmNo" value="${rtnInfo.appctnBsnmNo}"/>
+                        <p class="form-control-static" name="cmpnNm" id="cmpnNm">${rtnInfo.cmpnNm}</p>
                     </div>
                 </div>
             </fieldset>
@@ -174,11 +174,11 @@
                     <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                     <div class="col-sm-9">
                         <div style="display: flex; gap: 10px;">
-                            <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" style="width: 130px;"/>
+                            <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" maxlength="50" style="width: 130px;"/>
                             <input type="button" class="btn btn-sm btn-primary" id="searchPostCode" value="우편번호 검색"><br>
                         </div>
                         <br>
-                        <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" style="width: 400px;"/>
+                        <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" maxlength="50" style="width: 400px;"/>
                         <br>
                         <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnInfo.dtlAddr}" title="우편번호" placeholder="상세주소 입력" maxlength="50" style="width: 400px;"/>
                     </div>
@@ -188,7 +188,7 @@
                 <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">매출액(연도)</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${rtnInfo.slsPmt}" title="매출액" placeholder="매출액 입력" style="width: 220px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/> 억 원
+                        <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${rtnInfo.slsPmt}" title="매출액" placeholder="매출액 입력" maxlength="50" style="width: 220px;" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/> 억 원
                         <select class="form-control input-sm notRequired" id="slsYear" name="slsYear" title="선택" style="width: 100px;">
                             <option value="">연도 선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
@@ -295,8 +295,8 @@
                     <div class="col-sm-5 sqInfoList">
                         <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">${sqInfoList.sqInfoList}
                             <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>
-                            <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="${list.nm}" title="SQ 업종" placeholder="SQ 업종입력"/>
-                            <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="점수" placeholder="SQ 점수입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                            <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="${list.nm}" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
+                            <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="점수" placeholder="SQ 점수입력" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                             <select class="form-control input-sm notRequired" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도" style="width:auto;">
                                 <option value="">SQ 평가년도 선택</option>
                                 <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
@@ -408,7 +408,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청사유<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control" id="appctnRsn" name="appctnRsn" title="신청사유" rows="5">${rtnInfo.appctnRsn}</textarea>
+                        <textarea class="form-control" id="appctnRsn" name="appctnRsn" title="신청사유" rows="5" maxlength="500">${rtnInfo.appctnRsn}</textarea>
                     </div>
                 </div>
             </fieldset>
@@ -434,7 +434,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청주제<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control" id="appctnThemeCntn" name="appctnThemeCntn" title="신청주제" rows="5">${rtnInfo.appctnThemeCntn}</textarea>
+                        <textarea class="form-control" id="appctnThemeCntn" name="appctnThemeCntn" title="신청주제" rows="5" maxlength="500">${rtnInfo.appctnThemeCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
@@ -475,7 +475,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">참석대상<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control" id="ptcptTrgtCntn" name="ptcptTrgtCntn" title="참석대상" rows="5">${rtnInfo.ptcptTrgtCntn}</textarea>
+                        <textarea class="form-control" id="ptcptTrgtCntn" name="ptcptTrgtCntn" title="참석대상" rows="5" maxlength="500">${rtnInfo.ptcptTrgtCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
@@ -523,7 +523,7 @@
             </fieldset>
             <br><br>
             <fieldset>
-                <h6 class="mt0"><em class="ion-play mr-sm"></em>신청내용</h6>
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>교육실적</h6>
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
@@ -555,7 +555,6 @@
                                 <div class="col-sm-10 form-inline">
                                     <div class="input-group">
                                         <select class="form-control input-sm" id="edctnSttsCd" name="edctnSttsCd" title="교육상태" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
-                                            <option value="">선택</option>
                                             <c:forEach var="cdList" items="${cdDtlList.EBC_VISIT_CD}" varStatus="status">
                                                 <c:if test="${fn:contains(cdList, 'EBC_VISIT_CD02') and cdList.cd ne 'EBC_VISIT_CD02'}">
                                                     <option value="${cdList.cd}" <c:if test="${rtnInfo.edctnSttsCd eq cdList.cd}">selected</c:if>>
@@ -808,7 +807,7 @@
             </fieldset>
 
 
-            <label class="col-sm-1 control-label">교육시간<span class="star"> *</span></label>
+            <label class="col-sm-1 control-label">교육시간</label>
             <fieldset>
                 <div class="form-group text-sm">
                     <c:forEach var="cdList" items="${eduTimeCdList}" varStatus="status">
@@ -826,7 +825,7 @@
             </fieldset>
 
             <fieldset class="lctrFile">
-                <label class="col-sm-1 control-label">강의교안<span class="star"> *</span></label>
+                <label class="col-sm-1 control-label">강의교안</label>
                 <div class="col-sm-11">
                     <div class="form-group text-sm">
                         <div class="col-sm-10 col-md-11">
@@ -845,7 +844,7 @@
                 </div>
             </fieldset>
             <fieldset class="etcMatlsFile">
-                <label class="col-sm-1 control-label">기타자료<span class="star"> *</span></label>
+                <label class="col-sm-1 control-label">기타자료</label>
                 <div class="col-sm-11">
                     <div class="form-group text-sm">
                         <div class="col-sm-10 col-md-11">

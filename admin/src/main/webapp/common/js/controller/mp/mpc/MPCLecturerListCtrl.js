@@ -38,22 +38,23 @@ define(["ezCtrl"], function(ezCtrl) {
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
                         if(confirm("해당 게시물을 삭제하시겠습니까?"))
                         {
-                            //삭제 전송
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    var msg = "게시물이 삭제되었습니다.";
+                            if(delActCnt == 0) {
+                                alert("삭제할 게시물을 선택해주세요.");
+                                return false;
+                            } else {
+                                //삭제 전송
+                                cmmCtrl.frmAjax(function(respObj){
+                                    if(respObj != undefined && respObj.respCnt > 0){
+                                        var msg = "게시물이 삭제되었습니다.";
 
-                                    alert(msg);
-                                    $formObj.find("#btnSearch").click();
-                                }
-                                else{
-                                    alert(msgCtrl.getMsg("fail.act"));
-                                }
-                            }, "./delete", frmDataObj, "POST", "json");
+                                        alert(msg);
+                                        $formObj.find("#btnSearch").click();
+                                    }
+                                }, "./delete", frmDataObj, "POST", "json");
+                            }
                         } else {
                             return false;
                         }
-
                     }
                 }
             },

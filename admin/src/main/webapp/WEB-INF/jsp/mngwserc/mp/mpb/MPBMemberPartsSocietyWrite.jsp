@@ -60,6 +60,7 @@
                 <li class="tabClick"><a data-toggle="tab" href="#bus">컨설팅 사업 현황</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#san">상생 사업 현황</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#chat">1:1문의</a></li>
+                <span class="dtl-tab" style="margin-left:45%"><span style="color:red;">*</span>표시는 필수 기재 항목입니다.</span>
             </ul>
             <div class="tab-content">
                 <div id="dtl" class="tab-pane fade in active">

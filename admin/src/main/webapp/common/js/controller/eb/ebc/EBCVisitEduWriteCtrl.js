@@ -177,7 +177,22 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         $("#samePlaceBtn").prop("checked", false);
                     }
                 }
+            },
+            pstnCdSelect: {
+                event: {
+                    click: function () {
+                        var clickVal = $(this).val();
+                        if (clickVal == 'MEM_CD01007') {
+                            $(".pstnCdInput").show();
+                            $("input[name='deptCdNm']").removeClass("notRequired");
+                        } else {
+                            $(".pstnCdInput").hide();
+                            $("input[name='deptCdNm']").addClass("notRequired");
+                        }
+                    }
+                }
             }
+
         },
         classname : {
             //부품사 찾기
