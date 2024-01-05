@@ -204,6 +204,6 @@ public class WBHACalibrationSearchDTO extends BaseDTO {
     private String carbonDate;
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
-    @Schema(title = "구분 코드 리스트")
+    @Schema(title = "대상장비 리스트")
     private List<WBHAValidDtlDTO> validDtlDTOList;
 }

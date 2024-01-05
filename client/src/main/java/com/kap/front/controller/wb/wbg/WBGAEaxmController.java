@@ -1,16 +1,12 @@
-package com.kap.front.controller.wb.wbh;
+package com.kap.front.controller.wb.wbg;
 
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
+import com.kap.core.dto.wb.wbg.WBGAApplyMstDTO;
+import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
 import com.kap.core.dto.wb.wbh.WBHAApplyMstDTO;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
-import com.kap.service.COCodeService;
-import com.kap.service.COGCntsService;
-import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.WBHACalibrationService;
+import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,18 +20,18 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <pre>
- * 검교정 Controller
+ * 시험계측장비 Controller
  * </pre>
  *
- * @author 김태훈
+ * @author 김대성
  * @version 1.0
  * @ClassName : WBBManagementController.java
- * @Description : 검교정 Controller
+ * @Description : 시험계측장비 Controller
  * @Modification Information
  * <pre>
  * 		since			author				  description
  *    ==========    ==============    =============================
- *    2023.01.03		김태훈				   최초 생성
+ *    2023.01.03		김대성				   최초 생성
  * </pre>
  * @see
  * @since 2023.12.20
@@ -43,25 +39,25 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value = "/coexistence/calibration")
-public class WBHACalibrationController {
+@RequestMapping(value = "/coexistence/equipment")
+public class WBGAEaxmController {
 
     /**
      * 서비스
      **/
     public final COCodeService cOCodeService;
-    public final WBHACalibrationService wbhaCalibrationService;
+    public final WBGAExamService wbgaExamService;
     public final COGCntsService pCOGCntsService;
 
     /**
      * 메인
      */
     @GetMapping(value = "/content")
-    public String getCalibrationIndex(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, COGCntsDTO pCOGCntsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        String vwUrl = "front/wb/wbh/WBHACalibrationIndex.front";
+    public String getExamIndex(WBGAExamSearchDTO wbgaExamSearchDTO, COGCntsDTO pCOGCntsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+        String vwUrl = "front/wb/wbg/WBGAExamIndex.front";
         try {
-            modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, "722", "N"));
-            modelMap.addAttribute("rtnRoundDtl", wbhaCalibrationService.getRoundDtl(wbhaCalibrationSearchDTO));
+            modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, "721", "N"));
+            modelMap.addAttribute("rtnRoundDtl", wbgaExamService.getRoundDtl(wbgaExamSearchDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -76,9 +72,9 @@ public class WBHACalibrationController {
      * 신청가능 여부 코드를가져온다.
      */
     @RequestMapping(value = "/applyChecked")
-    public String applyChecked(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, ModelMap modelMap) throws Exception {
+    public String applyChecked(WBGAExamSearchDTO wbgaExamSearchDTO, ModelMap modelMap) throws Exception {
         try {
-            modelMap.addAttribute("resultCode", wbhaCalibrationService.getApplyChecked(wbhaCalibrationSearchDTO));
+            modelMap.addAttribute("resultCode", wbgaExamService.getApplyChecked(wbgaExamSearchDTO));
 
         } catch (Exception e) {
             /*if (log.isDebugEnabled()) {
@@ -94,15 +90,15 @@ public class WBHACalibrationController {
      * 사업신청 기본정보
      */
     @RequestMapping(value = "/step1")
-    public String getStep1Page(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        String vwUrl = "front/wb/wbh/WBHACalibrationStep1.front";
+    public String getStep1Page(WBGAExamSearchDTO wbgaExamSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+        String vwUrl = "front/wb/wbg/WBGAEaxmStep1.front";
         try {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbhaCalibrationSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            wbgaExamSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbhaCalibrationService.selectCompanyUserDtl(wbhaCalibrationSearchDTO));
+            modelMap.addAttribute("rtnData", wbgaExamService.selectCompanyUserDtl(wbgaExamSearchDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -117,10 +113,10 @@ public class WBHACalibrationController {
      * 사업신청 정보입력
      */
     @RequestMapping(value = "/step2")
-    public String getStep2Page(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        String vwUrl = "front/wb/wbh/WBHACalibrationStep2.front";
+    public String getStep2Page(WBGAExamSearchDTO wbgaExamSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+        String vwUrl = "front/wb/wbg/WBGAEaxmStep2.front";
         try {
-            modelMap.addAttribute("rtnData", wbhaCalibrationService.getRoundDtl(wbhaCalibrationSearchDTO));
+            modelMap.addAttribute("rtnData", wbgaExamService.getRoundDtl(wbgaExamSearchDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -135,9 +131,9 @@ public class WBHACalibrationController {
      * 사업신청 신청
      */
     @PostMapping(value = "/insert")
-    public String insert(WBHAApplyMstDTO wbhaApplyMstDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+    public String insert(WBGAApplyMstDTO wbgaApplyMstDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         try {
-            modelMap.addAttribute("actCnt", wbhaCalibrationService.insertApply(wbhaApplyMstDTO,multiRequest,request));
+            modelMap.addAttribute("actCnt", wbgaExamService.insertApply(wbgaApplyMstDTO,multiRequest,request));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -152,13 +148,13 @@ public class WBHACalibrationController {
      * 사업신청 완료
      */
     @RequestMapping(value = "/complete")
-    public String complete(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        String vwUrl = "front/wb/wbh/WBHACalibrationComplete.front";
+    public String complete(WBGAExamSearchDTO wbgaExamSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+        String vwUrl = "front/wb/wbg/WBGAExamComplete.front";
         try {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbhaCalibrationService.getApplyDtl(wbhaCalibrationSearchDTO));
+            modelMap.addAttribute("rtnData", wbgaExamService.getApplyDtl(wbgaExamSearchDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

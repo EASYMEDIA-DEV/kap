@@ -3,6 +3,9 @@ package com.kap.service;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbg.*;
+import com.kap.core.dto.wb.wbh.WBHAApplyMstDTO;
+import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -97,4 +100,25 @@ public interface WBGAExamService {
      * 신청 진행단계 확인
      */
     public int getRsumePbsnCnt(WBGAExamSearchDTO wBGAExamSearchDTO) throws Exception;
+
+    /**
+     * 최신 회차 목록을 조회한다.
+     */
+    public WBGAExamSearchDTO getRoundDtl(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+    /**
+     * 신청가능여부 코드를 조회한다.
+     */
+    public int getApplyChecked(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+    /**
+     * 신청자를 등록한다.
+     * @return
+     */
+    public int insertApply(WBGAApplyMstDTO wbgaApplyMstDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
+     *   신청자 정보 조회
+     */
+    public WBGAExamSearchDTO getApplyDtl(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
 }
