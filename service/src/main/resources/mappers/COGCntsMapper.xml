@@ -33,12 +33,14 @@
 			, CNTS
 			, JS_CNTS
 			, PRCS_CD
-			, REG_ID
-		    , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
 			, REG_DTM
+			, MOD_DTM
+		<if test="'Y'.toString() != userYn">
+			, REG_ID
+			, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
 			, MOD_ID
 			, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
-			, MOD_DTM
+		</if>
 		from
 			CO_CNTS_MST A
 		where
@@ -110,17 +112,19 @@
 	<select id="selectCntsDtl" parameterType="COGCntsDTO" resultType="COGCntsDTO">
 		SELECT /* COGCntsMapper.selectCntsDtl */
 			SEQ
-			 , MENU_SEQ
-		     , VER
-			 , CNTS
-			 , JS_CNTS
-			 , PRCS_CD
-			 , REG_ID
-			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
-			 , REG_DTM
-			 , MOD_ID
-			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
-			 , MOD_DTM
+			, MENU_SEQ
+		    , VER
+			, CNTS
+			, JS_CNTS
+			, PRCS_CD
+			, REG_DTM
+			, MOD_DTM
+		<if test="'Y'.toString() != userYn">
+			, REG_ID
+			, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+			, MOD_ID
+			, (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+		</if>
 		FROM
 			CO_CNTS_MST A
 		WHERE

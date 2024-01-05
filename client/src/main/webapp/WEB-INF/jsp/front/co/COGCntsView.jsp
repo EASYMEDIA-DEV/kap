@@ -2,7 +2,7 @@
 
 <div class="cont-wrap" data-controller="controller/co/COGCntsViewCtrl">
     <c:choose>
-        <c:when test="${ pageMenuDto.userUrl eq '/about/location/content' }">
+        <c:when test="${ pageMenuDto.userUrl eq '/foundation/intro/location/content' }">
             <div class="sub-top-vis-area map-page"><!-- map-page: 오시는 길 -->
                 <div class="page-tit-area">
                     <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
