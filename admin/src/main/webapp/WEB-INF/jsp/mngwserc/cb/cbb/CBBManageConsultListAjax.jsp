@@ -20,7 +20,7 @@
         <td class="text-center">${ list.mpleCnt }</td>                                              <%--직원수--%>
         <td class="text-center">${ list.appctnFldNm }</td>                                          <%--신청분야--%>
         <td class="text-center">${ list.firstRgnsNm } ${ list.scndRgnsNm }</td>                     <%--신청소재지--%>
-        <td class="text-center">${ list.crtfnCmpnNm }</td>                                          <%--SQ 인증 주관사--%>
+        <td class="text-center">${ empty list.crtfnCmpnNm ? '-' : list.crtfnCmpnNm}</td>            <%--SQ 인증 주관사--%>
         <td class="text-center">${ list.mnCmpnNm }</td>                                             <%--주고객사--%>
         <td class="text-center">${ empty list.vstDt ? '-' : list.vstDt }</td>                       <%--방문일--%>
         <td class="text-center">${ empty list.cmssrNm ? '-' : list.cmssrNm}</td>                    <%--담당위원--%>
@@ -32,7 +32,7 @@
               -
             </c:when>
             <c:otherwise>
-              <a href="/mngwserc/file/view?fileSeq=${list.kickfFileSeq}&fileOrd=${list.kickfFileOrd}">파일</a>
+              <a href="/mngwserc/file/view?fileSeq=${list.kickfFileSeq}&fileOrd=${list.kickfFileOrd}"><img src="/common/images/fileicon.png"></a>
             </c:otherwise>
           </c:choose>
         </td>
@@ -43,7 +43,7 @@
               -
             </c:when>
             <c:otherwise>
-              <a href="/mngwserc/file/view?fileSeq=${list.lvlupFileSeq}&fileOrd=${list.lvlupFileOrd}">파일</a>
+              <a href="/mngwserc/file/view?fileSeq=${list.lvlupFileSeq}&fileOrd=${list.lvlupFileOrd}"><img src="/common/images/fileicon.png"></a>
             </c:otherwise>
           </c:choose>
         </td>
