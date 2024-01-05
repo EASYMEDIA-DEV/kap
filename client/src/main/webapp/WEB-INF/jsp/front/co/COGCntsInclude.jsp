@@ -9,7 +9,7 @@
             </div>
         </div>
     </c:when>
-    <c:when test="${ pageMenuDto.userUrl eq '/about/greeting/content' }">
+    <c:when test="${ pageMenuDto.userUrl eq '/foundation/intro/greeting/content' }">
         <div class="img-area">
             <div class="img">
                 <img class="only-pc" src="/common/images/img-sub-top-visual-foundation-greeting.jpg" alt="">
@@ -17,7 +17,7 @@
             </div>
         </div>
     </c:when>
-    <c:when test="${ pageMenuDto.userUrl eq '/about/summary/content' }">
+    <c:when test="${ pageMenuDto.userUrl eq '/foundation/intro/summary/content' }">
         <div class="img-area">
             <div class="img">
                 <img class="only-pc" src="/common/images/img-sub-top-visual-foundation-outline.jpg" alt="">
@@ -25,7 +25,7 @@
             </div>
         </div>
     </c:when>
-    <c:when test="${ pageMenuDto.userUrl eq '/about/history/content' }">
+    <c:when test="${ pageMenuDto.userUrl eq '/foundation/intro/history/content' }">
         <div class="img-area">
             <div class="img">
                 <img class="only-pc" src="/common/images/img-sub-top-visual-foundation-history.jpg" alt="">
@@ -33,7 +33,7 @@
             </div>
         </div>
     </c:when>
-    <c:when test="${ pageMenuDto.userUrl eq '/about/ethic/content' }">
+    <c:when test="${ pageMenuDto.userUrl eq '/foundation/intro/ethic/content' }">
         <div class="img-area">
             <div class="img">
                 <img class="only-pc" src="/common/images/img-sub-top-visual-foundation-management.jpg" alt="">
@@ -41,7 +41,7 @@
             </div>
         </div>
     </c:when>
-    <c:when test="${ pageMenuDto.userUrl eq '/about/pr/content' }">
+    <c:when test="${ pageMenuDto.userUrl eq '/foundation/intro/pr/content' }">
         <div class="img-area">
             <div class="img">
                 <img class="only-pc" src="/common/images/img-sub-top-visual-foundation-promotion.jpg" alt="">
