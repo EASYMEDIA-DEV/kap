@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 사유 레이어 팝업(Modal) -->
-<div class="modal fade mpbMemberPartsSocietySrchLayer" tabindex="-1" role="dialog" data-controller="controller/mp/mpb/MPBMemberPartsSocietyListCtrl">
+<div class="modal fade mpbMemberPartsSocietySrchLayer" tabindex="-1" role="dialog"  data-controller="controller/mp/mpb/MPBMemberPartsSocietyListCtrl">
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1000px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -40,7 +40,14 @@
                                     <span class="ion-checkmark-round"></span> 전체
                                 </label>
                                 <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                    <c:if test="${fn:contains(cdList.cd,'COMPANY01') && fn:length(cdList.cd) eq 12}">
+                                    <c:if test= "${cdList.cd eq 'COMPANY01001'}">
+
+                                        <label class="checkbox-inline c-checkbox">
+                                            <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                        </label>
+                                    </c:if>
+                                    <c:if test= "${cdList.cd eq 'COMPANY01002'}">
                                         <label class="checkbox-inline c-checkbox">
                                             <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
                                             <span class="ion-checkmark-round"></span> ${cdList.cdNm}
@@ -84,7 +91,7 @@
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>${pageTitle} 부품사 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+                            <em class="ion-play mr-sm"></em>부품사회원 목록(총 <span id="listContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
