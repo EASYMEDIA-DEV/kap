@@ -15,7 +15,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control input-sm" id="bsnNm" name="bsnNm" value="${rtnDto.bsnNm}" title="제목" maxlength="20" placeholder="제목을 입력하세요." />
+                        <input type="text" class="form-control input-sm" id="bsnNm" name="bsnNm" value="${rtnDto.bsnNm}" title="제목" maxlength="20" placeholder="제목을 입력해주세요." />
                     </div>
                 </div>
             </fieldset>
@@ -23,7 +23,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="dsc" name="dsc" value="${rtnDto.dsc}" title="내용" maxlength="30" placeholder="내용을 입력하세요." />
+                        <input type="text" class="form-control input-sm" id="dsc" name="dsc" value="${rtnDto.dsc}" title="내용" maxlength="150" placeholder="내용을 입력해주세요." />
                     </div>
                 </div>
             </fieldset>
@@ -41,6 +41,14 @@
                         <p class="text-bold mt">
                             ※ ${imageExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${52428800 / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                         </p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">링크 URL<span class="star"> *</span></label>
+                    <div class="col-sm-11">
+                        <input type="text" class="form-control input-sm" id="urlUrl" name="urlUrl" value="${rtnDto.urlUrl}" title="링크 URL" maxlength="50" placeholder="URL을 입력해주세요." />
                     </div>
                 </div>
             </fieldset>
