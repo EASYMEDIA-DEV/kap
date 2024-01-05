@@ -4,7 +4,7 @@
 <form class="form-horizontal" id="frmData" name="frmData" method="post" >
     <input type="hidden" id="oldEmail" name="oldEmail" value=${rtnDtl.email} />
     <input type="hidden" id="id" name="id" value=${rtnDtl.id} />
-    <input type="hidden" id="cmssrCbsnCdSe" name="cmssrCbsnCdSe" value=${rtnDtl.cmssrCbsnCd} />
+    <input type="hidden" id="cmssrCbsnCdSe" class="notRequired" name="cmssrCbsnCdSe" value=${rtnDtl.cmssrCbsnCd} />
     <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${rtnDtl.cmssrPhotoFileSeq}" />
     <input type="hidden" id="memCd" name="memCd" value="${rtnDtl.memCd}" class="notRequired"/>
 
@@ -12,25 +12,21 @@
 <fieldset>
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">아이디<span class="star text-danger"> *</span></label>
-        <div class="col-sm-5">
-            <p class="col-sm-11 form-control-static">${rtnDtl.id}</p>
-        </div>
+            <p class="col-sm-5 form-control-static">${rtnDtl.id}</p>
     </div>
 </fieldset>
 
 <fieldset>
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">비밀번호</label>
-        <button type="button" class="btn btn-secondary"  id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button>
+        <span class="input-group-btn" ><button type="button" style="margin-left: 1rem" class="btn btn-default btn-sm" id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button></span>
     </div>
 </fieldset>
 
 <fieldset>
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">이름<span class="star text-danger"> *</span></label>
-        <div class="col-sm-5">
-            <p class="col-sm-11 form-control-static">${rtnDtl.name}</p>
-        </div>
+            <p class="col-sm-5 form-control-static">${rtnDtl.name}</p>
     </div>
 </fieldset>
 
@@ -57,7 +53,7 @@
         <label class="cmssrCdDiv col-sm-1 control-label">업종/분야<span class="star"> *</span></label>
         <div class="cmssrCdDiv col-sm-5">
             <div class="input-group">
-                <select class="form-control input-sm"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종분야" style="width:auto; display:inline-block;" >
+                <select class="form-control input-sm notRequired"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종분야" style="width:auto; display:inline-block;" >
                     <option value="">선택</option>
                 </select>
             </div>
@@ -126,17 +122,15 @@
 <div class="form-group text-sm">
     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
     <div class="col-sm-5">
-        <div class="col-sm-3">
             <div class="input-group">
                 <input type="text" class="form-control input-sm "id="hpNo"  value="${rtnDtl.hpNo}" title="휴대폰번호" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  placeholder="휴대폰번호 입력"/>
             </div>
-        </div>
     </div>
     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
     <div class="col-sm-5">
         <div class="input-group" style="z-index:0;width: 220px;">
             <input type="text" class="form-control input-sm " id="email" title="이메일" name="email" value="${rtnDtl.email}" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')" placeholder="이메일 입력"/>
-            <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupEmail">중복확인</button></span>
+            <span class="input-group-btn"><button type="button" style="margin-left: 1rem;" class="btn btn-default btn-sm" id="dupEmail">중복확인</button></span>
         </div>
     </div>
 </div>
@@ -154,7 +148,7 @@
                 </div>
             </div>
             <p class="text-bold mt">
-                ※ 1920 X 1080 / 파일 확장자(${imgType}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
+                ※ 337 X 386 / 파일 확장자(${imgType}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
             </p>
         </div>
     </div>
@@ -195,28 +189,3 @@
         </div>
     </div>
 </fieldset>
-
-    <h5>등록/수정이력</h5>
-        <table class="table">
-            <colgroup>
-                <col style="width:10%;">
-                <col style="width:40%;">
-                <col style="width:10%;">
-                <col style="width:40%;">
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">최초 등록자 </th>
-                <td>${rtnDtl.regName}(${rtnDtl.regId})</td>
-                <th scope="row" class="bg-gray-lighter">최초 등록일시</th>
-                <td>${ kl:convertDate(rtnDtl.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
-            </tr>
-            <tr>
-                <th scope="row" class="bg-gray-lighter">최종 수정자</th>
-                <td>${rtnDtl.modName}(${rtnDtl.modId})</td>
-                <th scope="row" class="bg-gray-lighter">최종 수정일시 </th>
-                <td>${ kl:convertDate(rtnDtl.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
-            </tr>
-            </tbody>
-        </table>
-

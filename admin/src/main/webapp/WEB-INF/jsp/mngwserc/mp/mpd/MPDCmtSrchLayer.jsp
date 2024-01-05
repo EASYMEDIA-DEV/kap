@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 레이어 팝업(Modal) -->
-<div class="modal fade mpdCmtSrchLayer" tabindex="-1" role="dialog" data-controller="controller/mp/mpd/MPDCmtListCtrl">
+<div class="modal fade mpdCmtSrchLayer" tabindex="-1" role="dialog" data-controller="controller/mp/mpd/MPDCmtListCtrl ">
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1000px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -20,11 +20,12 @@
                 <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <!-- 검색 여부 -->
                 <input type="hidden" name="srchLayer" value="Y" />
-                <input type="hidden" id="wthdrwYn" name="wthdrwYn" value="N" /> <%--위원 탈퇴 여부 기본 N--%>
+                <input type="hidden" id="wthdrwYn" name="wthdrwYn" value="Y" /> <%--위원 탈퇴 여부 기본 N--%>
+                <input type="hidden" name="srchDivide" id="cmtSrchDivide" />
                 <div class="modal-body">
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                        <jsp:param name="srchText" value="등록/수정기간" />
+                        <jsp:param name="srchText" value="기간검색" />
                         <jsp:param name="srchOption" value="등록일,수정일" />
                     </jsp:include>
                     <fieldset>
@@ -49,25 +50,25 @@
                         </div>
                     </fieldset>
 
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">재직여부</label>
-                            <div class="col-sm-5">
-                                <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxAll" />
-                                    <span class="ion-checkmark-round"></span> 전체
-                                </label>
-                                <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                                    <c:if test="${fn:contains(cdList, 'MEM_CD040')}">
-                                        <label class="checkbox-inline c-checkbox">
-                                            <input type="checkbox" class="checkboxSingle" data-name="cmssrWorkList" value="${cdList.cd}" />
-                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}
-                                        </label>
-                                    </c:if>
-                                </c:forEach>
-                            </div>
-                        </div>
-                    </fieldset>
+<%--                    <fieldset>--%>
+<%--                        <div class="form-group text-sm">--%>
+<%--                            <label class="col-sm-1 control-label">재직여부</label>--%>
+<%--                            <div class="col-sm-5">--%>
+<%--                                <label class="checkbox-inline c-checkbox">--%>
+<%--                                    <input type="checkbox" class="checkboxAll" />--%>
+<%--                                    <span class="ion-checkmark-round"></span> 전체--%>
+<%--                                </label>--%>
+<%--                                <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">--%>
+<%--                                    <c:if test="${fn:contains(cdList, 'MEM_CD040')}">--%>
+<%--                                        <label class="checkbox-inline c-checkbox">--%>
+<%--                                            <input type="checkbox" class="checkboxSingle" data-name="cmssrWorkList" value="${cdList.cd}" />--%>
+<%--                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}--%>
+<%--                                        </label>--%>
+<%--                                    </c:if>--%>
+<%--                                </c:forEach>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
+<%--                    </fieldset>--%>
                     <div id="selectBoxArea"></div>
                     <fieldset class="last-child">
                         <div class="form-group text-sm">
@@ -81,8 +82,8 @@
                                             <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
                                             <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>휴대폰번호</option>
                                             <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>이메일</option>
-                                            <option value="8" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최초등록자</option>
-                                            <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종수정자</option>
+                                            <option value="8" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최초 등록자</option>
+                                            <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종 수정자</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-9 pr0">
@@ -101,7 +102,7 @@
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>위원 목록 (총 <span id="partsComListContainerTotCnt">0</span> 건)
+                            <em class="ion-play mr-sm"></em>위원 목록 (총 <span id="listContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >

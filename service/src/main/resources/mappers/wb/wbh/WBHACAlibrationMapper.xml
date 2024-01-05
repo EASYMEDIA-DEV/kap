@@ -1289,7 +1289,7 @@
         WHERE BSN_CD = 'INQ07008'
         GROUP BY APPCTN_SEQ
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
-        WHERE (ORD.RSUME_ORD != 1 OR MNG_STTS_CD != 'PRO_TYPE01001_02_001')
+        WHERE (ORD.RSUME_ORD != 1 OR MNG_STTS_CD != 'PRO_TYPE07001_02_001')
         <choose>
             <when test="delValueList != null and delValueList.size() > 0">
                 AND B.APPCTN_SEQ IN
@@ -1373,16 +1373,36 @@
        2023.11.24  김태훈     최초 생성
    -->
     <select id="getApplyCompanyCnt" parameterType="wBHACalibrationSearchDTO" resultType="java.lang.Integer">
-        SELECT /* WBHACalibrationMapper.getApplyCompanyCnt */ COUNT(*)
-        FROM cp_cnstg_appctn_mst
-        WHERE appctn_bsnm_no = #{bsnmNo} AND BSN_YEAR = #{year}
-        <if test="validDtlDTOList != null and validDtlDTOList.size() > 0">
-            AND APPCTN_FLD_CD IN
-            <foreach collection="validDtlDTOList" item="validDtlDTO" index="index" open="(" close=")" separator=",">
-                #{validDtlDTO.optnCd}
-            </foreach>
-        </if>
-        AND RSUME_STTS_CD IN ('MNGCNSLT_STATUS09', 'MNGCNSLT_STATUS12');
+        SELECT /* WBHACalibrationMapper.getApplyCompanyCnt */ COUNT(APPCTN_FLD_CD)
+        FROM
+            ( SELECT
+                APPCTN_FLD_CD
+            FROM   CP_CNSTG_APPCTN_MST A, CP_CNSTG_RSUME_MST B
+            WHERE  A.cnstg_seq = B.cnstg_seq
+            AND  A.cnstg_cd = 'CONSULT_GB01'
+            AND  A.rsume_stts_cd IN ('MNGTECH_STATUS_08','MNGTECH_STATUS_09','MNGTECH_STATUS_13')
+            AND (YEAR(B.guide_bgn_dt) = Year(Now()) OR (Year(Now()) -1))
+            AND   B.guide_type_cd = 'GUIDE_TYPE_CD02'
+            AND A.appctn_bsnm_no = #{bsnmNo}
+            UNION ALL
+            SELECT
+                APPCTN_FLD_CD
+            FROM CP_CNSTG_APPCTN_MST A, CP_CNSTG_RSUME_MST B
+            WHERE A.cnstg_seq = b.cnstg_seq
+            AND ( A.cnstg_cd = 'CONSULT_GB02'
+                    AND A.rsume_stts_cd IN ('MNGCNSLT_STATUS09','MNGCNSLT_STATUS12')
+                    AND (YEAR(b.guide_kickf_dt) = Year(Now()) OR (Year(Now()) -1))
+                    AND  B.guide_type_cd = 'GUIDE_TYPE_CD02'
+                )
+            AND A.appctn_bsnm_no = #{bsnmNo} ) TMP
+            <where>
+                <if test="validDtlDTOList != null and validDtlDTOList.size() > 0">
+                    AND APPCTN_FLD_CD IN
+                    <foreach collection="validDtlDTOList" item="validDtlDTO" index="index" open="(" close=")" separator=",">
+                        #{validDtlDTO.optnCd}
+                    </foreach>
+                </if>
+            </where>
     </select>
 </mapper>
 

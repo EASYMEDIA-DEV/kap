@@ -3,6 +3,7 @@ package com.kap.core.dto.wb.wbg;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import com.kap.core.dto.wb.wbh.WBHAValidDtlDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -226,11 +227,20 @@ public class WBGAExamSearchDTO extends BaseDTO {
     private String fndnSpprtPmt;
     @Schema(title = "실 지급일", example = "yyyy-MM-dd hh:mm:ss")
     private String realGiveDt;
-
-
+    @Schema(title = "파일순번")
+    private Integer fileSeq;
+    @Schema(title = "파일순번")
+    private Integer fileOrd;
     @Schema(title = "검색 리스트", example = "")
     List<WBGAExamSearchDTO> list;
-
+    @Schema(title = "사용자 진행상태")
+    private String acctStatus;
+    @Schema(title = "디데이")
+    private String dday;
+    @Schema(title = "노출순서")
+    private Integer dateOrd;
+    @Schema(title = "지원대상금액", example = "")
+    private Integer stndSlsPmt;
 
     /* 검색 관련 코드 */
     @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")
@@ -238,6 +248,7 @@ public class WBGAExamSearchDTO extends BaseDTO {
 
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
-
+    @Schema(title = "대상장비 리스트")
+    private List<WBGAValidDtlDTO> validDtlDTOList;
 
 }

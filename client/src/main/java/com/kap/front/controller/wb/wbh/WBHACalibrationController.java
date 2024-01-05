@@ -60,10 +60,6 @@ public class WBHACalibrationController {
     public String getCalibrationIndex(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, COGCntsDTO pCOGCntsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbh/WBHACalibrationIndex.front";
         try {
-            wbhaCalibrationSearchDTO.setExpsYn("Y");
-            wbhaCalibrationSearchDTO.setFirstIndex(0);
-            wbhaCalibrationSearchDTO.setRecordCountPerPage(3);
-
             modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, "722", "N"));
             modelMap.addAttribute("rtnRoundDtl", wbhaCalibrationService.getRoundDtl(wbhaCalibrationSearchDTO));
         } catch (Exception e) {

@@ -315,7 +315,16 @@ public class WBJBAcomListServiceImpl implements WBJBAcomListService {
         respCnt *= wBJBAcomListMapper.putAppctnFileDtl(wBJAcomDTO);
 
         respCnt *= wBJBAcomListMapper.updAppctnMst(wBJAcomDTO);
-        respCnt *= wBJBAcomListMapper.updAppctnRsumePrizeDtl(wBJAcomDTO);
+
+        if ("PRO_TYPE05002_02_003".equals(wbjbAcomMstDTO.getFinalMngSttsCd())) {
+            wBJAcomDTO.setHghstWinerYn("Y"); // 최종 심사 신청자 상태값 결과대기 값 코드 넣기
+
+            respCnt *= wBJBAcomListMapper.updAppctnRsumePrizeDtl(wBJAcomDTO);
+        }else{
+            wBJAcomDTO.setHghstWinerYn(""); // 최종 심사 신청자 상태값 결과대기 값 코드 넣기
+
+            respCnt *= wBJBAcomListMapper.updAppctnRsumePrizeDtl(wBJAcomDTO);
+        }
 
         return respCnt;
     }
@@ -585,7 +594,7 @@ public class WBJBAcomListServiceImpl implements WBJBAcomListService {
                 //상생신청진행 상세 생성
                 wBJAcomDTO.setRsumeSeq(cxAppctnRsumeDtlSeqIdgen.getNextIntegerId());
                 wBJAcomDTO.setAppctnSeq(appctnSeq); /* 신청순번 */
-                wBJAcomDTO.setRsumeOrd(0); /* 신청순번 */
+                wBJAcomDTO.setRsumeOrd(1); /* 신청순번 */
                 wBJAcomDTO.setRegId(regId);
                 wBJAcomDTO.setRegIp(regIp);
 
@@ -613,6 +622,17 @@ public class WBJBAcomListServiceImpl implements WBJBAcomListService {
     public WBJAcomDTO selectRecent(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception {
 
         WBJAcomDTO wBJAcomDTO = wBJBAcomListMapper.selectRecent(wBJAcomSearchDTO);
+
+        return wBJAcomDTO;
+    }
+
+    /**
+     *  역대 수상자 리스트
+     */
+    public WBJAcomDTO selectWinerList(WBJAcomDTO wBJAcomDTO) throws Exception{
+        List<WBJAcomDTO> getWinnerLists = wBJBAcomListMapper.selectWinerList(wBJAcomDTO);
+
+        wBJAcomDTO.setList(getWinnerLists);
 
         return wBJAcomDTO;
     }

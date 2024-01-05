@@ -3,13 +3,6 @@
   <c:when test="${ not empty rtnData.list}">
     <c:forEach var="list" items="${rtnData.list}" varStatus="status">
       <tr data-total-count="${rtnData.totalCount}">
-        <td class="text-center">
-          <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" value="${list.id}" name="delValueList" class="checkboxSingle notRequired" data-auth-cd="${list.memSeq}"/>
-            <span class="ion-checkmark-round"></span>
-          </label>
-        </td>
-
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td class="text-center">
           <a href="javascript:" class="listView" data-details-key="${list.memSeq}">

@@ -17,7 +17,7 @@
         <!--기간 검색 시작-->
         <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
           <jsp:param name="srchText" value="기간검색" />
-          <jsp:param name="srchOption" value="신청일,방문일,킥오프일,렙업일,등록일,수정일" />
+          <jsp:param name="srchOption" value="신청일,방문일,킥오프일,랩업일,등록일,수정일" />
           <jsp:param name="srchType" value="cnstg" />
         </jsp:include>
         <fieldset>
@@ -41,7 +41,7 @@
         </fieldset>
         <fieldset>
         <div class="form-group text-sm">
-          <label class="col-sm-1 control-label">지도분야</label>
+          <label class="col-sm-1 control-label">신청분야</label>
           <div class="col-sm-5">
             <div class="col-sm-3 pr0">
               <select class="form-control input-sm" name="appctnFidCd">
@@ -149,8 +149,8 @@
             <th class="text-center">담당위원지도분야</th>
             <th class="text-center">킥오프일</th>
             <th class="text-center">킥오프자료</th>
-            <th class="text-center">렙업일</th>
-            <th class="text-center">렙업자료</th>
+            <th class="text-center">랩업일</th>
+            <th class="text-center">랩업자료</th>
             <th class="text-center">신청일</th>
             <th class="text-center">최초 등록자(아이디)</th>
             <th class="text-center">최초 등록일시</th>

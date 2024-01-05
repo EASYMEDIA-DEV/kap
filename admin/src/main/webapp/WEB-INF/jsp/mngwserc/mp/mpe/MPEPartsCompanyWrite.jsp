@@ -37,7 +37,7 @@
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">부품사명<span class="star text-danger"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="cmpnNm" name="cmpnNm" value="${rtnInfo.cmpnNm}" readonly title="부품사명" style="width: 200px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="cmpnNm" name="cmpnNm" value="${rtnInfo.cmpnNm}" readonly title="부품사명" maxlength="50" style="width: 200px;"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -45,7 +45,7 @@
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">대표자명<span class="star text-danger"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="rprsntNm" name="rprsntNm" value="${rtnInfo.rprsntNm}" title="대표자명" style="width: 200px;" placeholder="대표자명 입력" oninput="this.value=this.value.replace(/[^a-zA-Zㄱ-힣]/g, '')"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="rprsntNm" name="rprsntNm" value="${rtnInfo.rprsntNm}" title="대표자명" style="width: 200px;" placeholder="대표자명 입력" maxlength="50" oninput="this.value=this.value.replace(/[^a-zA-Zㄱ-힣]/g, '')"/>
                                 </div>
 
                                 <label class="col-sm-1 control-label">부품사코드</label>
@@ -114,10 +114,10 @@
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" style="width: 130px;" title="우편번호"/>
+                                    <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" style="width: 130px;" maxlength="50" title="우편번호"/>
                                     <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색"><br>
                                     <br>
-                                    <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" style="width: 400px;" title="기본주소"/><br>
+                                    <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" readonly placeholder="기본주소" style="width: 400px;" maxlength="50" title="기본주소"/><br>
                                     <br>
                                     <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnInfo.dtlAddr}" title="상세주소" placeholder="상세주소 입력" maxlength="50" style="width: 400px;"/>
                                 </div>
@@ -127,7 +127,7 @@
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">매출액</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${rtnInfo.slsPmt}" title="매출액" placeholder="매출액 입력" style="width: 220px;" oninput="this.value=this.value.replace(/[^0-9]/g, '')"/> 억 원
+                                    <input type="text" class="form-control input-sm notRequired" id="slsPmt" name="slsPmt" value="${rtnInfo.slsPmt}" title="매출액" placeholder="매출액 입력" maxlength="50" style="width: 220px;" oninput="this.value=this.value.replace(/[^0-9]/g, '')"/> 억 원
                                     <select class="form-control input-sm notRequired" id="slsYear" name="slsYear" title="선택" style="width: 100px;">
                                         <option value="">연도 선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
@@ -234,8 +234,8 @@
                                 <div class="col-sm-5">
                                     <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
                                         <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>
-                                        <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="${list.nm}" title="SQ 업종" placeholder="SQ 업종입력"/>
-                                        <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="점수" placeholder="SQ 점수입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="${list.nm}" title="SQ 업종" placeholder="SQ 업종입력" maxlength="50"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="점수" placeholder="SQ 점수입력" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                                         <select class="form-control input-sm notRequired" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도" style="width:auto;">
                                             <option value="">SQ 평가년도 선택</option>
                                             <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">

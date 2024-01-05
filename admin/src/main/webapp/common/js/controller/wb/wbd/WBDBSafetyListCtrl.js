@@ -69,7 +69,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             //삭제 전송
                             cmmCtrl.frmAjax(function(respObj){
                                 if(respObj != undefined && respObj.respCnt > 0){
-                                    alert("신청(1단계) 관리자 상태값 '미확인'일 경우에만 삭제 가능합니다.");
+                                    alert("접수 이후의 신청 건은 삭제가 불가합니다.");
                                 }else{
                                     if(confirm('삭제하시겠습니까?'))
                                     {

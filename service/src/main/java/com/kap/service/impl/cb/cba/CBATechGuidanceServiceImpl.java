@@ -4,7 +4,6 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
-import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -242,6 +241,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
      */
     void updateTechCompanyInfo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
 
+        System.err.println("pCBATechGuidanceInsertDTO:::"+pCBATechGuidanceInsertDTO);
+
         MPEPartsCompanyDTO mPEPartsCompanyDTO = new MPEPartsCompanyDTO();
         mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replace("-", ""));
         mPEPartsCompanyDTO = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
@@ -284,8 +285,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                 mpePartsCompanyDTO.setBsnmNo(mPEPartsCompanyDTO.getBsnmNo());
 
                 int cnt = cBATechGuidanceMapper.selectCmpnCbsnInfoCnt(Integer.valueOf(cbsnSeq[i]));
-
-                if(cnt > 1){
+                if(cnt >= 1){
                     mpePartsCompanyDTO.setModId(pCBATechGuidanceInsertDTO.getRegId());
                     mpePartsCompanyDTO.setModId(pCBATechGuidanceInsertDTO.getRegIp());
                     mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);

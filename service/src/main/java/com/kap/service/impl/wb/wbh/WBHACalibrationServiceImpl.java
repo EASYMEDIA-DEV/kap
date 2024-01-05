@@ -1063,7 +1063,6 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                 COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
                 //기존 신청자인지 확인,,,
-
                 WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
                 wbhaCalibrationSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
                 //신청시간 년도 구하기

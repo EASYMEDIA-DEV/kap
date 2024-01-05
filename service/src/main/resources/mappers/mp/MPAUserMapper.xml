@@ -60,8 +60,8 @@
                       , MEM.WORK_BSNM_NO
                       , MEM.NTFY_SMS_RCV_YN
                       , MEM.NTFY_EMAIL_RCV_YN
-                      , CASE WHEN MST.MOD_CD ='AD' THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MST.REG_ID)
-                             WHEN MST.MOD_CD = 'CO' THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MST.REG_ID)
+                      , CASE WHEN MST.MOD_CD ='AD' THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MEM.MOD_ID)
+                             WHEN MST.MOD_CD = 'CO' THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.MOD_ID)
                               ELSE NULL END AS MOD_NAME
                       , CMPN_MST.CMPN_NM
                       , CASE WHEN CMPN_MST.SIZE_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.SIZE_CD )
@@ -92,7 +92,7 @@
                       , MEM.CMSSR_RSGNT_DT
                       , MEM.WTHDRW_YN
                       , CMPN_MST.TEL_NO AS CMPN_TEL_NO
-                      , mst.reg_id as mod_id
+                      , mem.mod_id
                       , mem.dept_cd
                       , (select cd_nm from co_code_mst where  cd=mem.dept_cd ) as dept_cd_nm
                       , mem.dept_dtl_nm
@@ -320,8 +320,12 @@
                 </if>
             </if>
 
-            <if test="srchDivide == 'Y'.toString() "> /* 회원검색시 1차 2차 필요 할때 */
+            <if test="srchDivide == 'Y'.toString() and memCd == 'CP'.toString() "> /* 회원검색시 1차 2차 필요 할때 */
                and ma.ctgry_cd in ('COMPANY01001' , 'COMPANY01002')
+            </if>
+
+            <if test="srchDivide == 'Y'.toString() and memCd == 'CS'.toString()"> /* 회원검색시 1차 2차 필요 할때 */
+                and ma.cmssr_work_cd in ('MEM_CD04001')
             </if>
 
             <if test="q != null and q != ''.toString() ">
@@ -405,9 +409,14 @@
                      else '' end as cmssr_work_cd_nm
              , cmpn_mst.cmpn_nm
              , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
-             , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
-                    when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
+             , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mem.mod_id)
+                    when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mem.mod_id)
                     else null end as mod_name
+             , mem.mod_id
+             , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
+                    when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
+                    else null end as reg_name
+             , mem.reg_id as reg_id
         from co_mem_mst mem
                  inner join ( select mem_mod_seq
                                    , mem_seq
@@ -480,8 +489,8 @@
              , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
                     when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
                     else null end as reg_name
-             , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
-                    when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
+             , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mem.mod_id)
+                    when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mem.mod_id)
                     else null end as mod_name
              , mst.reg_id as mod_id
              , mem.reg_id as reg_id

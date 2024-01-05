@@ -100,4 +100,9 @@ public interface WBJBAcomListService {
      * 상세 조회한다.
      */
     public WBJAcomDTO selectRecent(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
+
+    /**
+     * 사업회차 연도 검색
+     */
+    public WBJAcomDTO selectWinerList(WBJAcomDTO wBJAcomDTO) throws Exception;
 }

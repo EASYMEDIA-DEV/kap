@@ -1,22 +1,26 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<%@taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core"%>
 <c:choose>
   <c:when test="${ not empty rtnData.list}">
     <c:forEach var="list" items="${rtnData.list}" varStatus="status">
       <tr data-total-count="${rtnData.totalCount}">
-        <td class="text-center">
-          <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" value="${list.memSeq}" name="delValueList" class="checkboxSingle notRequired" data-auth-cd="${list.memSeq}"/>
-            <span class="ion-checkmark-round"></span>
-          </label>
-        </td>
-
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-        <td class="text-center srchListView">
-          <a href="javascript:" class="listView" data-details-key="${list.memSeq}">
-              ${kl:idMasking(list.id)}
-          </a>
-        </td>
-        <td class="text-center">${kl:nameMasking(list.name)}</td>
+          <!-- 문법 -->
+        <c:if test="${rtnData.srchLayer eq 'Y'}">
+          <td class="text-center srchListView">
+              ${list.id}
+          </td>
+          <td class="text-center">${list.name}</td>
+        </c:if>
+        <c:if test="${rtnData.srchLayer ne 'Y'}">
+          <td class="text-center srchListView">
+            <a href="javascript:" class="listView" data-details-key="${list.memSeq}">
+                ${kl:idMasking(list.id)}
+            </a>
+          </td>
+          <td class="text-center">${kl:nameMasking(list.name)}</td>
+        </c:if>
+
         <td class="text-center">${list.cmpnNm}</td>
         <td class="text-center">${kl:bsnmNoConvert(list.workBsnmNo)}</td>
         <td class="text-center">${list.ctgryCdNm}</td>

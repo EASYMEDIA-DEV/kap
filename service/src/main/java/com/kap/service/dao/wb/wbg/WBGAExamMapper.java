@@ -4,6 +4,7 @@ import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbg.*;
+import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -259,5 +260,25 @@ public interface WBGAExamMapper {
      * 신청 진행단계 확인
      */
     public int getRsumePbsnCnt(WBGAExamSearchDTO wBGAExamSearchDTO) throws Exception;
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBGAExamSearchDTO getRoundDtl(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+    /**
+     * 회차 신청여부 조회
+     */
+    public int getApplyCount(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 신청여부 조회
+     */
+    public int getApplyCompanyCnt(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+    /**
+     * 신청자 정보조회
+     */
+    public WBGAExamSearchDTO getApplyDtl(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
 
 }

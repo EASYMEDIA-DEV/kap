@@ -226,19 +226,24 @@ var exports = {
             event : {
                 click : function() {
                     if($("#email").val().trim().length > 0) {
-                        cmmCtrl.frmAjax(function(respObj) {
-                            console.log(respObj.dupChk);
-                            if(respObj.dupChk == 'Y') {
-                                dupEmailChk = true;
-                                alert(msgCtrl.getMsg("fail.mp.mpd.al_027"));
-                            } else {
-                                dupEmailChk = false;
-                                alert(msgCtrl.getMsg("fail.mp.mpd.al_026"));
-                            }
-                        }, "/mngwserc/mp/mpa/dup-email", $formObj, "POST", "json",'',false);
+                        if(cmmCtrl.getEmailChk($("#email").val())) {
+                            cmmCtrl.frmAjax(function(respObj) {
+                                if(respObj.dupChk == 'Y') {
+                                    dupEmailChk = true;
+                                    alert(msgCtrl.getMsg("fail.mp.mpa.al_008"));
+                                } else {
+                                    dupEmailChk = false;
+                                    alert(msgCtrl.getMsg("fail.mp.mpa.al_007"));
+                                }
+                            }, "/mngwserc/mp/mpa/dup-email", $formObj, "POST", "json",'',false);
+                        } else {
+                            alert(msgCtrl.getMsg("fail.mp.mpa.al_017"));
+                            return false;
+                        }
 
                     } else {
                         alert(msgCtrl.getMsg("fail.mp.mpd.al_031"));
+                        return false;
                     }
               }
             }

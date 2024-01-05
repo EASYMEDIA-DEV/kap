@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- 사유 레이어 팝업(Modal) -->
-<div class="modal fade mpbMemberPartsSocietySrchLayer" tabindex="-1" role="dialog" data-controller="controller/mp/mpb/MPBMemberPartsSocietyListCtrl">
+<div class="modal fade mpbMemberPartsSocietySrchLayer" tabindex="-1" role="dialog"  data-controller="controller/mp/mpb/MPBMemberPartsSocietyListCtrl">
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1000px;">
         <div class="modal-content">
             <div class="modal-header">
@@ -26,7 +26,7 @@
                 <div class="modal-body">
                     <!--기간 검색 시작-->
                     <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                        <jsp:param name="srchText" value="등록/수정기간" />
+                        <jsp:param name="srchText" value="기간검색" />
                         <jsp:param name="periodType" value="notSelect" />
                         <jsp:param name="selPer" value="select" />
                     </jsp:include>
@@ -40,8 +40,27 @@
                                     <span class="ion-checkmark-round"></span> 전체
                                 </label>
                                 <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                    <c:if test="${fn:contains(cdList.cd,'COMPANY01') && fn:length(cdList.cd) eq 12}">
+                                    <c:if test= "${cdList.cd eq 'COMPANY01001'}">
+
                                         <label class="checkbox-inline c-checkbox">
+                                            <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                        </label>
+                                    </c:if>
+                                    <c:if test= "${cdList.cd eq 'COMPANY01002'}">
+                                        <label class="checkbox-inline c-checkbox">
+                                            <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                        </label>
+                                    </c:if>
+                                    <c:if test= "${cdList.cd eq 'COMPANY01003' }">
+                                        <label class="checkbox-inline c-checkbox srchGubun" >
+                                            <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                        </label>
+                                    </c:if>
+                                    <c:if test= "${cdList.cd eq 'COMPANY01004' }">
+                                        <label class="checkbox-inline c-checkbox srchGubun">
                                             <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
                                             <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                         </label>
@@ -65,7 +84,7 @@
                                             <option value="7" <c:if test="${rtnData.f eq '7'}">selected</c:if>>사업자등록번호</option>
                                             <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>휴대폰번호</option>
                                             <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>이메일</option>
-                                            <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종수정자</option>
+                                            <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종 수정자</option>
                                         </select>
                                     </div>
                                     <div class="col-sm-9 pr0">
@@ -84,7 +103,7 @@
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>${pageTitle} 부품사 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+                            <em class="ion-play mr-sm"></em>부품사회원 목록(총 <span id="listContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >

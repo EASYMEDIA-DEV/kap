@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1000px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >▣ 월 근태현황
+                <h5 class="modal-title" >▣ 월별 출근부
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -37,7 +37,7 @@
                             </select>
                         </div>
                             <div class="input-group">
-                                <input type="text" class="monthpicker monthInit"  name="monthpicker" />
+                                <input type="text" class="monthpicker monthInit"  name="monthpicker" style="margin-left:0.8rem" />
 <%--                                <input type="text" class="notRequired monthInit form-control input-sm datetimepicker_strtDt " name="monthpicker" value=""  readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();"/>--%>
 <%--                                <span class="input-group-btn" style="z-index:0;">--%>
 <%--                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">--%>
@@ -45,7 +45,7 @@
 <%--                                        </button>--%>
 <%--                                    </span>--%>
                                 <div class="pull-right">
-                                <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
+                                <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown" style="margin-left:0.8rem">엑셀다운로드</button>
                                 </div>
                             </div>
 

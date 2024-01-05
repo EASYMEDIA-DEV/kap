@@ -8,7 +8,6 @@ import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.eb.ebi.EBINonMemberDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.EBINonMemberService;
-import com.kap.service.SVASurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,8 +49,6 @@ public class EBINonMemberController {
     public final EBINonMemberService eBINonMemberService;
 
     public final COCodeService cOCodeService;
-
-    private final SVASurveyService sVSurveyService;
 
     /**
      *  비회원 교육 과정 관리 목록 페이지

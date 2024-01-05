@@ -1815,6 +1815,22 @@ var cmmCtrl = (function(){
 		});
 	}
 
+	var fn_email_validation_chk = function (email) {
+		let splitEmail = email.toString().split("@");
+		var atRegex = /[^@]+@[^@]+/; //@ 체크
+		var atDupRegex = /.*@.*@.*/; //@ 2개 이상 체크
+		var spaceRegex = /\s/; //공백 체크
+		let multiRegex = /[&=＇,+<>()]+|(\.{2,})/; //& = , ' + , 포함 경우
+		let lastRegex = /[0-9!@#$%^&*()_+{}\[\]:;<>,.?\\|`~-]+$/;
+		return atRegex.test(email) &&
+			      !atDupRegex.test(email) &&
+				  !spaceRegex.test(email) &&
+				  !multiRegex.test(email) &&
+			      !lastRegex.test(email) &&
+				   splitEmail[0].length < 64 &&
+			       splitEmail[1].length < 255
+	}
+
 
 	return {
 		nvl : fn_replace_null,
@@ -1873,6 +1889,9 @@ var cmmCtrl = (function(){
 		//컨설팅 만족도종합결과
 		getConsultSuveyRsltPop : fn_consult_suvey_rslt_layer_pop,
 		// pdf 다운로드 관련
-		getAppctnPdfDownload : fn_appctn_pdf_download
+		getAppctnPdfDownload : fn_appctn_pdf_download ,
+
+		// 이메일_체크
+		getEmailChk : fn_email_validation_chk
 	}
 }());

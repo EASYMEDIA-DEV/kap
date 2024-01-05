@@ -94,10 +94,10 @@
                 , CP_MST.RSUME_STTS_CD
                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM
                 , CP_MST.REG_ID
-                , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = CP_MST.APPCTN_MEM_SEQ) REG_NAME
+                , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
                 , CP_MST.REG_DTM
-                , CPR_MST.MOD_ID
-                , (SELECT NAME FROM CO_ADM_MST WHERE ID = CPR_MST.MOD_ID) MOD_NAME
+                , CP_MST.MOD_ID
+                , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
                 , CPR_MST.MOD_DTM
                 , CMPN_MST.MJR_PRDCT_1
                 , CMPN_MST.MJR_PRDCT_2
@@ -245,10 +245,10 @@
                     , CP_MST.RSUME_STTS_CD
                     , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM
                     , CP_MST.REG_ID
-                    , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = CP_MST.APPCTN_MEM_SEQ) REG_NAME
+                    , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
                     , CP_MST.REG_DTM
-                    , CPR_MST.MOD_ID
-                    , (SELECT NAME FROM CO_ADM_MST WHERE ID = CPR_MST.MOD_ID) MOD_NAME
+                    , CP_MST.MOD_ID
+                    , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
                     , CPR_MST.MOD_DTM
                     , CMPN_MST.MJR_PRDCT_1
                     , CMPN_MST.MJR_PRDCT_2
@@ -377,8 +377,8 @@
                     <when test="f == 9 ">
                         <!-- 최종등록자 -->
                         AND (
-                            INSTR(#{q}, aa.MOD_ID) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                            INSTR(#{q}, MST.MOD_ID) <![CDATA[>]]> 0
+                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = MST.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </when>
                     <otherwise>
@@ -715,6 +715,8 @@
              , GUIDE_PSCND_DT
              , GUIDE_BGN_DT
              , GUIDE_KICKF_DT
+             , CNSTG_PSCND_CD
+             , CNSTG_PSCND_DT
              , XTNSN_CNCL_RSN
              , CNSTG_CMPLTN_SCHDL_DT
              , CNSTG_XTNSN_RSLT_CNT
@@ -878,6 +880,7 @@
             , CMSSR_SEQ
             , CNSTG_KICKF_DT
             , CNSTG_PSCND_DT
+            , CNSTG_PSCND_CD
             , CNSTG_XTNSN_RSLT_CNT
             , CNSTG_XTNSN_RSLT_MNTH
             , GUIDE_TYPE_CD
@@ -910,6 +913,7 @@
             #{cmssrSeq},
             #{guideKickfDt},
             #{cnstgPscndDt},
+            #{cnstgPscndCd},
             #{cnstgXtnsnRsltCnt},
             #{cnstgXtnsnRsltMnth},
             #{guideTypeCd} ,
@@ -954,6 +958,8 @@
             CNSTG_XTNSN_RSLT_MNTH = #{cnstgXtnsnRsltMnth},
             GUIDE_TYPE_CD = #{guideTypeCd},
             GUIDE_PSCND_CD =  #{guidePscndCd},
+            CNSTG_PSCND_CD = #{cnstgPscndCd},
+            CNSTG_PSCND_DT = #{cnstgPscndDt},
             GUIDE_PSCND_DT =  #{guidePscndDt},
             GUIDE_BGN_DT =  #{guideBgnDt},
             GUIDE_KICKF_DT =  #{guideKickfDt},
@@ -1133,7 +1139,7 @@
             A.CNSTG_CD,
             A.RSUME_STTS_CD,
             A.APPCTN_DT,
-            A.CMPN_SIZE_CD AS CP_SIZE,
+            A.CMPN_SIZE_CD AS SIZE_CD,
             A.FRGN_DPNDN_RATE,
             A.TTL_SLS_PMT,
             A.DMSTC_SLS_PMT,
@@ -1172,10 +1178,10 @@
             A.ADM_MEMO,
             A.REG_DTM,
             A.REG_ID,
-            (SELECT NAME CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NAME,
+            (SELECT NAME CO_MEM_MST WHERE ID = A.REG_ID) AS REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-                                        (SELECT NAME CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
+            (SELECT NAME CO_MEM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
@@ -1203,7 +1209,7 @@
             AFTR_MEM_SEQ,
             REG_DTM,
             REG_ID,
-            (SELECT NAME FROM CO_ADM_MST WHERE ID=A.REG_ID) REG_NAME
+            (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) REG_NAME
         FROM
             CP_CNSTG_APPCTN_TRNSF_DTL A
         WHERE
@@ -1229,13 +1235,13 @@
           REG_DTM
         )
         VALUES(
-                  #{trnsfSeq},
-                  #{cnstgSeq},
-                  #{bfreMemSeq},
-                  #{aftrMemSeq},
-                  #{regId},
-                  #{regIp},
-                  NOW()
+          #{trnsfSeq},
+          #{cnstgSeq},
+          #{bfreMemSeq},
+          #{aftrMemSeq},
+          #{regId},
+          #{regIp},
+          NOW()
               )
     </insert>
 

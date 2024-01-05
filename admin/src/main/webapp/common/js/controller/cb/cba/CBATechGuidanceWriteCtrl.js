@@ -37,6 +37,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
             $(".ptcptField").validation({});
 
+
+            var data = {};
+            data.detailsKey = $(".detailsKey").val();
+            data.detailsKey = $(".detailsKey").val();
+
+
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
 
@@ -387,6 +393,205 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         changeStts();
                     }
                 }
+            },
+            submit : {
+                event : {
+                    click : function(){
+
+                        var deptCd = $(".deptCd").val();
+                        var pstnCd = $(".pstnCd").val();
+                        var ctgryCd = $(".ctgryCd").val();
+                        var mainAddr = $("#mainAddr").val();
+                        var cmpnTelNo = $("#cmpnTelNo").val();
+                        var hqZipcode = $("#hqZipcode").val();
+                        var sizeCdSelect = $("#sizeCdSelect").val();
+                        var rprsntNmTxt = $("#rprsntNmTxt").val();
+                        var qltyPicCnt = $(".qltyPicCnt").val();
+                        var zipcode = $("#zipcode").val();
+                        var subAddr  = $("#subAddr ").val();
+                        var rprsntApprvYn = $("input[name='rprsntApprvYn']:checked").val();
+                        var appctnRsnCd = $("input[name='appctnRsnCd']:checked").val();
+                        var cbsnCd = $("input[name='cbsnCd']:checked").val();
+                        var appctnTypeCd = $("input[name='appctnTypeCd']:checked").val();
+                        
+                        if(!deptCd){
+                            alert("부서를 선택해주세요.");
+                            $("#deptCd").focus();
+                            return false;
+                        }
+                        if(!pstnCd){
+                            alert("직급을 선택해주세요.");
+                            $("#pstnCdSelect").focus();
+                            return false;
+                        }
+                        if(!ctgryCd){
+                            alert("구분을 선택해주세요.");
+                            $("#ctgryCdSelect").focus();
+                            return false;
+                        }
+                        if(!cmpnTelNo){
+                            alert("전화번호를 입력해주세요.");
+                            $("#cmpnTelNo").focus();
+                            return false;
+                        }
+                        if(!hqZipcode){
+                            alert("주소를 입력해주세요.");
+                            $("#hqZipcode").focus();
+                            return false;
+                        }
+                        if(!sizeCdSelect){
+                            alert("규모를 선택해주세요.")
+                            $("#sizeCdSelect").focus();
+                            return false;
+                        }
+                        if(!rprsntNmTxt){
+                            alert("대표자명을 입력해주세요.")
+                            $("#rprsntNmTxt").focus();
+                            return false;
+                        }
+                        // 거래처별 매출
+                        var dlvrySize = $(".dlvryCmpnNm").length;
+                        for(var i =0; i<dlvrySize; i++){
+                            if(!$(".dlvryCmpnNm").eq(i).val()){
+                                alert("업체명을 입력해주세요.");
+                                $(".dlvryCmpnNm").eq(i).focus();
+                                return false;
+                            }
+                        }
+                        var dlvryRateSize = $(".dlvryRate").length;
+                        for(var i =0; i<dlvryRateSize; i++){
+                            if(!$(".dlvryRate").eq(i).val()){
+                                alert("매출비중을 입력해주세요.");
+                                $(".dlvryRate").eq(i).focus();
+                                return false;
+                            }
+                        }
+
+                        //완성차 의존율
+                        var dpndnSize = $(".dpndnCmpnNm").length;
+                        for(var i =0; i<dpndnSize; i++){
+                            if(!$(".dpndnCmpnNm").eq(i).val()){
+                                alert("업체명을 입력해주세요.");
+                                $(".dpndnCmpnNm").eq(i).focus();
+                                return false;
+                            }
+                        }
+                        var dlvryRateSize = $(".dpndnRate").length;
+                        for(var i =0; i<dlvryRateSize; i++){
+                            if(!$(".dlvryRate").eq(i).val()){
+                                alert("매출비중을 입력해주세요.");
+                                $(".dlvryRate").eq(i).focus();
+                                return false;
+                            }
+                        }
+                        if(!qltyPicCnt){
+                            alert("품질담당인원을 입력하세요.")
+                            $(".qltyPicCnt").focus();
+                            return false;
+                        }
+                        if(!zipcode){
+                            alert("주소를 입력하세요.")
+                            $("#zipcode").focus();
+                            return false;
+                        }
+                        if(mainAddr == '선택'){
+                            alert("소재 지역을 선택하세요.");
+                            $("#mainAddr").focus();
+                            return false;
+                        }
+                        if(!subAddr){
+                            alert("소재 지역을 선택하세요.");
+                            $("#subAddr").focus();
+                            return false;
+                        }
+                        if(!rprsntApprvYn){
+                            alert("대표자 승인여부를 선택하세요.");
+                            $("input[name='rprsntApprvYn']").focus();
+                            return false;
+                        }
+                        if(!appctnRsnCd){
+                            alert("신청사유를 선택하세요.");
+                            $("input[name='appctnRsnCd']").focus();
+                            return false;
+                        }
+                        if(!cbsnCd){
+                            alert("업종을 선택하세요.");
+                            $("input[name='cbsnCd']").focus();
+                            return false;
+                        }
+                        if(!appctnTypeCd){
+                            alert("신청사항을 선택하세요.");
+                            $("input[name='appctnTypeCd']").focus();
+                            return false;
+                        }
+                        var fileVal = $(".dropzone .dz-preview").length;
+                        if(fileVal <2){
+                            if($(".dropzone .dz-preview").eq(0).length == 0){
+                                alert("첨부파일을 등록해주세요.");
+                                return false;
+                            }else if($(".dropzone .dz-preview").eq(1).length == 0){
+                                alert("첨부파일을 등록해주세요.");
+                                return false;
+                            }
+                        }
+
+                        var actionUrl = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update");
+                        var actionMsg = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd"));
+                        var cmpnNm = $("#cmpnNmText").text();
+                        var bsnmNo = $("#bsnmNoText").text();
+                        var emailTxt = $("#emailTxt").text();
+                        var rprsntNmTxt = $("#rprsntNmTxt").text();
+                        var cbsnCd = $("input[name='cbsnCdRadio']:checked").val();
+
+                        var vstDt = $("input[name='vstDt']").val();
+                        if (!vstDt) {
+                            $("input[name='vstDt']").prop("disabled", true);
+                        }
+
+                        var guidePscndDt = $("input[name='guidePscndDt']").val();
+                        if (!guidePscndDt) {
+                            $("input[name='guidePscndDt']").prop("disabled", true);
+                        }
+
+                        var guideBgnDt = $("input[name='guideBgnDt']").val();
+                        if (!guideBgnDt) {
+                            $("input[name='guideBgnDt']").prop("disabled", true);
+                        }
+
+                        var guideKickfDt = $("input[name='guideKickfDt']").val();
+                        if (!guideKickfDt) {
+                            $("input[name='guideKickfDt']").prop("disabled", true);
+                        }
+
+                        var srvStrtDtm = $("input[name='srvStrtDtm']").val();
+                        if (!srvStrtDtm) {
+                            $("input[name='srvStrtDtm']").prop("disabled", true);
+                        }
+
+                        var srvEndDtm = $("input[name='srvEndDtm']").val();
+                        if (!srvEndDtm) {
+                            $("input[name='srvEndDtm']").prop("disabled", true);
+                        }
+
+                        $("#cmpnNm").val(cmpnNm);
+                        $("#bsnmNo").val(bsnmNo);
+                        $("#email").val(emailTxt);
+                        $("#rprsntNm").val(rprsntNmTxt);
+                        $("#cbsnCd").val(cbsnCd);
+
+
+                        if ($formObj.find(".dropzone").size() > 0) {
+                            cmmCtrl.fileFrmAjax(function (data) {
+                                //콜백함수. 페이지 이동
+                                if (data.respCnt > 0) {
+                                    alert(actionMsg);
+                                    location.replace("./list");
+                                }
+                            }, actionUrl, $formObj, "json");
+                        }
+
+                    }
+                }
             }
         },
         classname: {
@@ -508,6 +713,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 event: {
                     click: function () {
                         $("#srchDivide").val("Y");
+                        $(".srchGubun").remove();
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             var cmpnMst = {};
                             cmpnMst.bsnmNo = data.bsnmNo.replaceAll("-", "");
@@ -521,7 +727,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             btnCmtSearch: {
                 event: {
                     click: function () {
+                        $("#cmtSrchDivide").val("Y");
                         cmmCtrl.getCmtSrchPop(function (data) {
+
                             $("input[name=cmssrSeq]").val(data.seq);
                             $("input[name=cmssrName]").val(data.name);
                         });
@@ -626,6 +834,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         $(".guideTypeText").text(guideTypeText);
                         var cmssrName = $("input[name='cmssrName']").val();
                         $(".cmssrName").text(cmssrName);
+                    }
+                }
+            },
+            fltyImpvmRate : {
+                event : {
+                    change: function(){
+                        var bfreRate = $(".fltyImpvmBfreRate").val();
+                        var aftrRate = $(".fltyImpvmAftrRate").val();
+                        var rslt = (bfreRate - aftrRate)/bfreRate*100;
+
+                        $(".fltyImpvmRate").val(rslt.toFixed(1));
+
                     }
                 }
             }
@@ -738,22 +958,27 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         if (!vstDt) {
                             $("input[name='vstDt']").prop("disabled", true);
                         }
+
                         var guidePscndDt = $("input[name='guidePscndDt']").val();
                         if (!guidePscndDt) {
                             $("input[name='guidePscndDt']").prop("disabled", true);
                         }
+
                         var guideBgnDt = $("input[name='guideBgnDt']").val();
                         if (!guideBgnDt) {
                             $("input[name='guideBgnDt']").prop("disabled", true);
                         }
+
                         var guideKickfDt = $("input[name='guideKickfDt']").val();
                         if (!guideKickfDt) {
                             $("input[name='guideKickfDt']").prop("disabled", true);
                         }
+
                         var srvStrtDtm = $("input[name='srvStrtDtm']").val();
                         if (!srvStrtDtm) {
                             $("input[name='srvStrtDtm']").prop("disabled", true);
                         }
+
                         var srvEndDtm = $("input[name='srvEndDtm']").val();
                         if (!srvEndDtm) {
                             $("input[name='srvEndDtm']").prop("disabled", true);
@@ -774,14 +999,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                     location.replace("./list");
                                 }
                             }, actionUrl, $formObj, "json");
-                        } else {
-                            cmmCtrl.frmAjax(function (data) {
-                                if (data.respCnt > 0) {
-                                    alert(actionMsg);
-                                    location.replace("./list");
-                                }
-                                actionUrl = "./list";
-                            }, actionUrl, $formObj, "post", "json")
                         }
                     }
                 },
