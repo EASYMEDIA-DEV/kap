@@ -48,4 +48,7 @@ public class COGCntsDTO extends BaseDTO  {
 
     //드라이브 순번
     private int driveMenuSeq;
+
+    //사용자 페이지 여부
+    private String userYn;
 }

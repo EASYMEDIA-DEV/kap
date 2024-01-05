@@ -125,7 +125,14 @@
 			CO_CNTS_MST A
 		WHERE
 			MENU_SEQ = #{menuSeq}
-		AND	SEQ = #{detailsKey}
+		<choose>
+			<when test="'Y'.toString() == userYn">
+				AND PRCS_CD = 10
+			</when>
+			<otherwise>
+				AND	SEQ = #{detailsKey}
+			</otherwise>
+		</choose>
 	</select>
 
 	<!--
