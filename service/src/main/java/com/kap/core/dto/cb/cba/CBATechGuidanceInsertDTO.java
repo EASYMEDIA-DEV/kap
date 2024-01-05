@@ -269,7 +269,7 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     @Schema(title = "불량개선이후률")
     private Integer fltyImpvmAftrRate;
     @Schema(title = "불량개선율")
-    private Integer fltyImpvmRate;
+    private float fltyImpvmRate;
 
     // 만족도 설문
     @Schema(title = "설문순번")

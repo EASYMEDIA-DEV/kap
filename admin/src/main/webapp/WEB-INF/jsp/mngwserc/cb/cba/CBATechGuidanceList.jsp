@@ -17,7 +17,7 @@
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
-                <jsp:param name="srchOption" value="신청일,방문일,킥오프일,렙업일,등록일,수정일" />
+                <jsp:param name="srchOption" value="신청일,방문일,킥오프일,랩업일,등록일,수정일" />
                 <jsp:param name="srchType" value="cnstg" />
             </jsp:include>
             <fieldset>
@@ -44,10 +44,12 @@
                     <label class="col-sm-1 control-label">신청업종</label>
                     <div class="col-sm-5">
                         <div class="col-sm-3 pr0">
-                            <select class="form-control input-sm" name="appctnFidCd">
+                            <select class="form-control input-sm" name="cbsnCd">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
-                                    <option value="${cdList.cd}" <c:if test="${rtnData.appctnFidCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    <c:if test="${cdList.cd ne 'TEC_GUIDE_METAL' && cdList.cd ne 'TEC_GUIDE_NON'}">
+                                        <option value="${cdList.cd}" <c:if test="${rtnData.appctnFidCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </div>
@@ -80,12 +82,12 @@
                                     <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>부품사명</option>
                                     <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>사업자등록번호</option>
                                     <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>매출액</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '4'}">selected</c:if>>직원수</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '5'}">selected</c:if>>신청소재지</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '6'}">selected</c:if>>SQ인증주관사</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '7'}">selected</c:if>>담당위원</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최초등록자</option>
-                                    <option value="3" <c:if test="${rtnData.f eq '9'}">selected</c:if>>최종수정자</option>
+                                    <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>직원수</option>
+                                    <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>신청소재지</option>
+                                    <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>SQ인증주관사</option>
+                                    <option value="7" <c:if test="${rtnData.f eq '7'}">selected</c:if>>담당위원</option>
+                                    <option value="8" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최초등록자</option>
+                                    <option value="9" <c:if test="${rtnData.f eq '9'}">selected</c:if>>최종수정자</option>
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">
@@ -149,8 +151,8 @@
                         <th class="text-center">킥오프일</th>
                         <th class="text-center" style="display: none">지도착수일</th>
                         <th class="text-center">킥오프자료</th>
-                        <th class="text-center">렙업일</th>
-                        <th class="text-center">렙업자료</th>
+                        <th class="text-center">랩업일</th>
+                        <th class="text-center">랩업자료</th>
                         <th class="text-center">신청일</th>
                         <th class="text-center">최초 등록자(아이디)</th>
                         <th class="text-center">최초 등록일시</th>

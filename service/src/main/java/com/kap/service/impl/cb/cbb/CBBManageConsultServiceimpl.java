@@ -308,7 +308,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
                 int cnt = cBBManageConsultMapper.selectCmpnCbsnInfoCnt(Integer.valueOf(cbsnSeq[i]));
 
-                if(cnt > 1){
+                if(cnt >= 1){
                     mpePartsCompanyDTO.setModId(pCBBManageConsultInsertDTO.getRegId());
                     mpePartsCompanyDTO.setModId(pCBBManageConsultInsertDTO.getRegIp());
                     mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
