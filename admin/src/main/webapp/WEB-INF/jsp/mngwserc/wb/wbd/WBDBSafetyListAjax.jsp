@@ -14,10 +14,10 @@
                 </td>
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
                 <td class="text-center">${list.year }</td>
-                <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}">${list.episd}</a></td>
+                <td class="text-center">${list.episd}</td>
                 <td class="text-center">${list.rsumeSttsNm}</td>
                 <td class="text-center">${list.mngSttsNm}</td>
-                <td class="text-center">${list.cmpnNm }</td>
+                <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}">${list.cmpnNm }</a></td>
                 <td class="text-center">${list.bsnmNo }</td>
                 <td class="text-center">${list.sbrdnBsnmNo}</td>
                 <td class="text-center">${list.ctgryNm}</td>

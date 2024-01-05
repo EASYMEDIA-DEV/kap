@@ -260,8 +260,13 @@
             ,APPCTN_SEQ
             ,RSUME_STTS_CD
             ,APPCTN_STTS_CD
-            ,APPCTN_STTS_CHNG_DTM
+            <if test='siteGubun != "admin"'>
+                ,APPCTN_STTS_CHNG_DTM
+            </if>
             ,MNG_STTS_CD
+            <if test='siteGubun != "front"'>
+                ,MNG_STTS_CHNG_DTM
+            </if>
             ,REG_ID
             ,REG_IP
             ,REG_DTM
@@ -273,8 +278,13 @@
             ,#{appctnSeq}
             ,#{rsumeSttsCd}
             ,#{appctnSttsCd}
-            ,NOW()
+            <if test='siteGubun != "admin"'>
+                ,NOW()
+            </if>
             ,#{mngSttsCd}
+            <if test='siteGubun != "front"'>
+                ,NOW()
+            </if>
             ,#{regId}
             ,#{regIp}
             ,NOW()
