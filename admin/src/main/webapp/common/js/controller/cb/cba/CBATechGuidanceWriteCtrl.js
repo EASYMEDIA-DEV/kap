@@ -508,6 +508,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 event: {
                     click: function () {
                         $("#srchDivide").val("Y");
+                        $(".srchGubun").remove();
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             var cmpnMst = {};
                             cmpnMst.bsnmNo = data.bsnmNo.replaceAll("-", "");

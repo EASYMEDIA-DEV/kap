@@ -12,13 +12,13 @@
         </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
           <!-- 문법 -->
-        <c:if test="${rtnData.srchDivide eq 'Y'}">
+        <c:if test="${rtnData.srchLayer eq 'Y'}">
           <td class="text-center srchListView">
               ${list.id}
           </td>
           <td class="text-center">${list.name}</td>
         </c:if>
-        <c:if test="${rtnData.srchDivide ne 'Y'}">
+        <c:if test="${rtnData.srchLayer ne 'Y'}">
           <td class="text-center srchListView">
             <a href="javascript:" class="listView" data-details-key="${list.memSeq}">
                 ${kl:idMasking(list.id)}
