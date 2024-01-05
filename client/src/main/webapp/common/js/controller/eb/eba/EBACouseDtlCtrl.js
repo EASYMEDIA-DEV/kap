@@ -256,6 +256,7 @@ define(["ezCtrl"], function(ezCtrl) {
 									location.href=$(this).find(".btn-text-icon.download").attr("href");
 								}
 							}
+
 						})
 
 					}

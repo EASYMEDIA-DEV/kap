@@ -1,5 +1,8 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 			<footer>
+
+				<jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduTotCalLayer2.jsp"></jsp:include><!--전체 교육일정-->
+
 				<!-- footer - START -->
 				<div class="inner">
 					<figure class="footer-logo">
@@ -59,7 +62,7 @@
 					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
 					<div class="btn-w">
 						<a class="quick-btn trend" href="javascript:"><span class="txt">TREND</span></a>
-						<a class="quick-btn edu-schedule" href="javascript:" ><span class="txt">교육일정</span></a>
+						<a class="quick-btn edu-schedule" href="javascript:eduSchedule(this);" ><span class="txt">교육일정</span></a>
 						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
 						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
 						<a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
@@ -83,7 +86,12 @@
 				</div>
 			</div>
 		</div>
+
 		<!-- require -->
 		<script type="text/javascript" src="/common/js/lib/require.js" data-main="/common/js/site"></script>
+
+
+
+
 	</body>
 </html>

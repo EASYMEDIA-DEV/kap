@@ -435,7 +435,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			ctgryCdLayer : {
 				event : {
 					click : function(e) {
-
+						debugger
 						var ctgryCd = $(e.target).closest("a").data("ctgrycd");
 						searchLayer(ctgryCd);
 					}
@@ -480,7 +480,7 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click : function(e) {
 
-						openPopup('allTrainingSchedulePopup', e);
+						//openPopup('allTrainingSchedulePopup', e);
 
 					}
 				}

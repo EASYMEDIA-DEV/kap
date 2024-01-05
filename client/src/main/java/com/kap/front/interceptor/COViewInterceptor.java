@@ -2,10 +2,13 @@ package com.kap.front.interceptor;
 
 import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.COWebUtil;
+import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.service.COBUserMenuService;
 import com.kap.service.COCodeService;
 import com.kap.service.COCommService;
+import com.kap.service.SMJFormService;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,9 @@ public class COViewInterceptor implements HandlerInterceptor{
     /* 공통 서비스 */
     @Autowired
     private COCommService cOCommService;
+
+    @Autowired
+    private SMJFormService sMJFormService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -126,13 +132,37 @@ public class COViewInterceptor implements HandlerInterceptor{
         request.setAttribute("parntMenuList", parntMenuList);
 
 
-        // 추천 키워드
+        // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();
+        //과정분류 공통코드 세팅
+        cdDtlList.add("CLASS_TYPE");
+        cdDtlList.add("STDUY_MTHD"); //학습방식
+        request.setAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
+
+        SMJFormDTO smjFormDTO = new SMJFormDTO();
+        smjFormDTO.setTypeCd("BUSINESS03");
+        SMJFormDTO rtnFormDto = sMJFormService.selectFormDtl(smjFormDTO);
+
+        request.setAttribute("rtnFormDto", rtnFormDto);
+
         // 코드 set
         cdDtlList.add("FRONT_TOTAL_KEYWORD");
         request.setAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
         //공지사항
         request.setAttribute("headerNtfyList", cOCommService.getHeaderNtfyList());
+
+        //과정분류 - 소분류
+        COCodeDTO cOCodeDTO = new COCodeDTO();
+        cOCodeDTO.setCd("CLASS01");
+        request.setAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
+
+        cOCodeDTO.setCd("CLASS02");
+        request.setAttribute("cdList2", cOCodeService.getCdIdList(cOCodeDTO));
+
+        cOCodeDTO.setCd("CLASS03");
+        request.setAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));
+
+
         return true;
     }
 
