@@ -243,4 +243,7 @@ public class WBJAcomDTO extends BaseDTO {
     private String crtfnCmpnNm;
 
     List<WBJAcomDTO> list;
+
+    @Schema(title = "역대수상자여부")
+    private String hghstWinerYn;
 }

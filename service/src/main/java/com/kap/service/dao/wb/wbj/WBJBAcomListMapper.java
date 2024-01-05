@@ -219,4 +219,10 @@ public interface WBJBAcomListMapper {
      * 회차 상세 조회
      */
     public WBJAcomDTO selectRecent(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
+
+    /**
+     *  역대 수상자 리스트
+     */
+    public List<WBJAcomDTO> selectWinerList(WBJAcomDTO wBJAcomDTO);
+
 }
