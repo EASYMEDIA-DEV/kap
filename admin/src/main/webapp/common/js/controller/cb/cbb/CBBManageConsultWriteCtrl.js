@@ -549,7 +549,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             btnCmtSearch: {
                 event: {
                     click: function () {
+                        $("#cmtSrchDivide").val("Y");
                         cmmCtrl.getCmtSrchPop(function (data) {
+
                             $("input[name=cmssrSeq]").val(data.seq);
                             $("input[name=cmssrName]").val(data.name);
                         });

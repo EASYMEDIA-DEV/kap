@@ -320,8 +320,12 @@
                 </if>
             </if>
 
-            <if test="srchDivide == 'Y'.toString() "> /* 회원검색시 1차 2차 필요 할때 */
+            <if test="srchDivide == 'Y'.toString() and memCd == 'CP'.toString() "> /* 회원검색시 1차 2차 필요 할때 */
                and ma.ctgry_cd in ('COMPANY01001' , 'COMPANY01002')
+            </if>
+
+            <if test="srchDivide == 'Y'.toString() and memCd == 'CS'.toString()"> /* 회원검색시 1차 2차 필요 할때 */
+                and ma.cmssr_work_cd in ('MEM_CD04001')
             </if>
 
             <if test="q != null and q != ''.toString() ">

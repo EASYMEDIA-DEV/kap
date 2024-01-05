@@ -148,6 +148,46 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
+
+            //리스트 전체 체크박스 선택시
+            checkboxAll : {
+                event : {
+                    click : function() {
+                        //상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxSingle가 변경됨
+                        var trgtArr = $(this).closest("div").find(".checkboxSingle");
+                        if (trgtArr.length > 0)
+                        {
+                            var isChecked = false;
+                            if($(this).is(":checked"))
+                            {
+                                isChecked = true;
+                            }
+                            $.each(trgtArr, function(){
+                                $(this).prop("checked", isChecked);
+                            })
+                        }
+                    }
+                }
+            },
+            checkboxSingle : {
+                event : {
+                    click : function() {
+                        //상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxAll이 변경됨
+                        var trgtObj = $(this).closest("div");
+                        var allCbxCnt = trgtObj.find(".checkboxSingle").length;
+                        var selCbxCnt = trgtObj.find(".checkboxSingle:checked").length;
+                        if (allCbxCnt == selCbxCnt)
+                        {
+                            trgtObj.find(".checkboxAll").prop("checked", true);
+                        }
+                        else
+                        {
+                            trgtObj.find(".checkboxAll").prop("checked", false);
+                        }
+                    }
+                }
+            },
+
             classType : {
                 event : {
                     click : function() {

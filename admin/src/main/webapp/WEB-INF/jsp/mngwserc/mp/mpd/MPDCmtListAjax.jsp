@@ -1,7 +1,6 @@
 
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:choose>
-<%--  ${rtnData}--%>
 
   <c:when test="${ not empty rtnData.list}">
 
@@ -14,14 +13,25 @@
           </label>
 
         </td>
-
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-        <td class="text-center">
-          <a href="javascript:" class="listView" data-details-key="${list.memSeq}">
-              ${kl:idMasking(list.id)}
-          </a>
-        </td>
-        <td class="text-center">${ kl:nameMasking(list.name)}</td>
+
+
+        <!-- 문법 -->
+        <c:if test="${rtnData.srchLayer eq 'Y'}">
+          <td class="text-center">
+                ${list.id}
+          </td>
+          <td class="text-center">${list.name}</td>
+        </c:if>
+        <c:if test="${rtnData.srchLayer ne 'Y'}">
+          <td class="text-center">
+            <a href="javascript:" class="listView" data-details-key="${list.memSeq}">
+                ${kl:idMasking(list.id)}
+            </a>
+          </td>
+          <td class="text-center">${ kl:nameMasking(list.name)}</td>
+        </c:if>
+
         <td class="text-center">${ kl:emptyHypen(list.cmssrTypeCdNm)}</td>
         <td class="text-center">${ kl:emptyHypen(list.cmssrCbsnCdNm)}</td>
         <td class="text-center">${ kl:emptyHypen(list.cmssrWorkCdNm)}</td>
