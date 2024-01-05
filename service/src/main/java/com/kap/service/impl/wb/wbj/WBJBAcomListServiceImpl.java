@@ -585,7 +585,7 @@ public class WBJBAcomListServiceImpl implements WBJBAcomListService {
                 //상생신청진행 상세 생성
                 wBJAcomDTO.setRsumeSeq(cxAppctnRsumeDtlSeqIdgen.getNextIntegerId());
                 wBJAcomDTO.setAppctnSeq(appctnSeq); /* 신청순번 */
-                wBJAcomDTO.setRsumeOrd(0); /* 신청순번 */
+                wBJAcomDTO.setRsumeOrd(1); /* 신청순번 */
                 wBJAcomDTO.setRegId(regId);
                 wBJAcomDTO.setRegIp(regIp);
 
