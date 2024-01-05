@@ -103,4 +103,7 @@ public class CBBManageConsultUpdateDTO extends BaseDTO {
     private String rsumeSttsCd;
     @Schema(title = "진행상태 텍스트")
     private String rsumeSttsNm;
+
+    @Schema(title = "컨설팅 현황 코드")
+    private String cnstgPscndCd;
 }

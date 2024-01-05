@@ -16,7 +16,7 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/cb/cbb/CBBManageConsultWriteCtrl">
-        <h6 class="mt0">신청부품사 등록</h6>
+        <h6 class="mt0">신청부품사 <c:if test="${empty rtnDto}">등록</c:if><c:if test="${not empty rtnDto}">상세/수정</c:if></h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.cnstgSeq}" />
@@ -65,6 +65,7 @@
                     <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
                     <div class="col-sm-2">
                         <select class="form-control input-sm" name="deptCd">
+                            <option>선택</option>
                             <c:forEach var="memCd" items="${cdDtlList.MEM_CD}" varStatus="status">
                                 <c:if test="${fn:contains(memCd.cd,'CD02')  && memCd.cd ne 'MEM_CD02'}">
                                     <option value="${memCd.cd}"<c:if test="${rtnDto.deptCd eq memCd.cdNm}">selected</c:if>>${memCd.cdNm}</option>
@@ -78,6 +79,7 @@
                     <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                     <div class="col-sm-2">
                         <select class="form-control input-sm" id="pstnCdSelect" name="pstnCd" title="직급">
+                            <option>선택</option>
                             <c:forEach var="memCd" items="${cdDtlList.MEM_CD}" varStatus="status">
                                 <c:if test="${fn:contains(memCd.cd,'CD01') && memCd.cd ne 'MEM_CD01'}">
                                     <option value="${memCd.cd}" <c:if test="${rtnDto.pstnCd eq memCd.cd}">selected</c:if>>${memCd.cdNm}</option>
@@ -132,7 +134,7 @@
                         <select class="form-control input-sm notRequired" name="sizeCd" id="sizeCdSelect">
                             <c:forEach var="cpSize" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                                 <c:if test="${fn:contains(cpSize.cd,'COMPANY02') && cpSize.cd ne 'COMPANY02'}">
-                                    <option value="${cpSize.cd}">${cpSize.cdNm}</option>
+                                    <option value="${cpSize.cd}"<c:if test="${rtnDto.sizeCd eq cpSize.cd}">selected</c:if>>${cpSize.cdNm}</option>
                                 </c:if>
                             </c:forEach>
                         </select>
@@ -147,7 +149,7 @@
                     </div>
                     <label class="col-sm-1 control-label">설립일자<span class="star"> *</span></label>
                     <div class="input-group col-md-2" style="z-index:0;">
-                        <input type="text" class="form-control datetimepicker_strtDt"  name="stbsmDt" value="${kl:convertDate(rtnDto.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="설립일자" />
+                        <input type="text" class="form-control datetimepicker_strtDt"  name="stbsmDt" value="<c:if test="${not empty rtnDto.stbsmDt}">${kl:convertDate(rtnDto.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if>" title="설립일자" />
                         <span class="input-group-btn" style="z-index:0;">
                             <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                 <em class="ion-calendar"></em>
@@ -506,7 +508,7 @@
             <div class="form-group text-sm">
                 <label class="col-sm-1 control-label">신청일자<span class="star"> *</span></label>
                 <div class="input-group col-md-2" style="z-index:0;">
-                    <input type="text" class="form-control datetimepicker_strtDt"  name="appctnDt" value="${kl:convertDate(rtnDto.appctnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"title="신청일자" />
+                    <input type="text" class="form-control datetimepicker_strtDt"  name="appctnDt"  value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.appctnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if><c:if test="${empty rtnDto}">${today}</c:if>" title="신청일자" />
                     <span class="input-group-btn" style="z-index:0;">
                         <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                             <em class="ion-calendar"></em>
@@ -522,7 +524,7 @@
                     <c:forEach var="cpSize" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                         <c:if test="${fn:contains(cpSize.cd,'COMPANY02') && cpSize.cd ne 'COMPANY02' && cpSize.cd ne 'COMPANY02004'}">
                             <label class="radio-inline c-radio">
-                                <input type="radio" name="cpSize" value="${cpSize.cd}" title="부품사 규모" <c:if test="${cpSize.cd eq rtnDto.cpSize}">checked</c:if>/>
+                                <input type="radio" name="cpSize" value="${cpSize.cd}" title="부품사 규모" <c:if test="${cpSize.cd eq rtnDto.sizeCd}">checked</c:if>/>
                                 <span class="ion-record"></span> ${cpSize.cdNm}
                             </label>
                         </c:if>
@@ -831,7 +833,7 @@
                                     <label class="col-sm-1 control-label" style="z-index:0;">방문일</label>
                                     <div class="col-sm-4">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="vstDt" id="vstDt" value="${today}" title="방문일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="vstDt" id="vstDt" value="" title="방문일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -842,7 +844,7 @@
                                     <label class="col-sm-1 control-label">컨설팅 완료예정일</label>
                                     <div class="col-sm-4">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="cnstgCmpltnSchdlDt" id="cnstgCmpltnSchdlDt" value="${today}" title="컨설팅 완료예정일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="cnstgCmpltnSchdlDt" id="cnstgCmpltnSchdlDt" value="" title="컨설팅 완료예정일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -912,7 +914,7 @@
                                     <label class="col-sm-1 control-label">킥오프일</label>
                                     <div class="col-sm-4">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" value="${today}" name="guideKickfDt" value="" title="킥오프일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" value="" name="guideKickfDt" value="" title="킥오프일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -922,7 +924,7 @@
                                     </div>
                                     <label class="col-sm-1 control-label">컨설팅 현황</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control input-sm notRequired" name="guideTypeCd" id="guideTypeCd" >
+                                        <select class="form-control input-sm notRequired" name="cnstgPscndCd" id="cnstgPscndCd" >
                                             <option value="">선택</option>
                                             <c:forEach var="cnstgPscndCd" items="${cdDtlList.CNSTG_PSCND}" varStatus="status">
                                                 <option value="${cnstgPscndCd.cd}" >${cnstgPscndCd.cdNm}</option>
@@ -931,7 +933,7 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guidePscndDt" id="guidePscndDt" value="${today}"title="컨설팅현황일자" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value=""title="컨설팅현황일자" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1059,14 +1061,14 @@
                                                 <td class="text-center">
                                                     <div class="input-group form-date-group mr-sm">
                                                         <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq">
-                                                        <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="srvStrtDtm" id="srvStrtDtm" value="${today}" title="설문시작일시" readonly="readonly"/>
+                                                        <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="srvStrtDtm" id="srvStrtDtm" value="" title="설문시작일시" readonly="readonly"/>
                                                         <span class="input-group-btn" style="z-index:0;">
                                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                                 <em class="ion-calendar"></em>
                                                             </button>
                                                         </span>
                                                         <span class="input-group-addon bg-white b0">~</span>
-                                                        <input type="text" class="form-control input-sm datetimepicker_endDt notRequired" name="srvEndDtm" id="srvEndDtm" value="${today}" title="설문종료일시" readonly="readonly"/>
+                                                        <input type="text" class="form-control input-sm datetimepicker_endDt notRequired" name="srvEndDtm" id="srvEndDtm" value="" title="설문종료일시" readonly="readonly"/>
                                                         <span class="input-group-btn" style="z-index:0;">
                                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                                 <em class="ion-calendar"></em>
@@ -1215,16 +1217,16 @@
                                 </div>
                                 <label class="col-sm-1 control-label">컨설팅 현황</label>
                                 <div class="col-sm-2">
-                                    <select class="form-control input-sm notRequired" name="guidePscndCd" id="guidePscndCd" >
+                                    <select class="form-control input-sm notRequired" name="cnstgPscndCd" id="cnstgPscndCd" >
                                         <option value="">선택</option>
                                         <c:forEach var="cnstgPscndCd" items="${cdDtlList.CNSTG_PSCND}" varStatus="status">
-                                            <option value="${cnstgPscndCd.cd}" <c:if test="${rsumeList.guidePscndCd eq cnstgPscndCd.cd}">selected</c:if> >${cnstgPscndCd.cdNm}</option>
+                                            <option value="${cnstgPscndCd.cd}" <c:if test="${rsumeList.cnstgPscndCd eq cnstgPscndCd.cd}">selected</c:if> >${cnstgPscndCd.cdNm}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="input-group" style="z-index:0;width: 220px;">
-                                        <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guidePscndDt" id="guidePscndDt" value="${rsumeList.guidePscndDt}"title="컨설팅현황일자" />
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${rsumeList.cnstgPscndDt}"title="컨설팅현황일자" />
                                         <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1330,7 +1332,7 @@
                         </fieldset>
                         <fieldset>
                             <div class="form-group text-sm">
-                                <label class="col-sm-1 control-label">만족도조사<span class="star text-danger"> *</span></label>
+                                <label class="col-sm-1 control-label">만족도조사</label>
                                 <div class="col-sm-11">
                                     <button type="button" class="btn btn-inverse btn-sm srvSearch">
                                         설문 검색
@@ -1407,7 +1409,7 @@
                     </tr>
                     <tr>
                         <th scope="row" class="bg-gray-lighter">최종 수정자</th>
-                        <td>${rtnDto.modName}(${rtnDto.modId})</td>
+                        <td><c:if test="${not empty rtnDto.modName}">${rtnDto.modName}(${rtnDto.modId})</c:if><c:if test="${empty rtnDto.modName}">-</c:if></td>
                         <th scope="row" class="bg-gray-lighter">최종 수정일시 </th>
                         <td>${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
                     </tr>
@@ -1423,168 +1425,166 @@
                             </div>
                         </div>
                     </fieldset>
-                            <c:forEach var="rsumeList" items="${rtnDto.rsumeList}" varStatus="status">
-                                <c:if test="${not empty rsumeList}">
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-1 control-label">설문명<span class="star text-danger"> *</span></label>
-                                            <div class="col-sm-5">
-                                                <p class="form-control-static">
-                                                        ${rsumeList.srvNm}
-                                                </p>
-                                            </div>
-                                            <label class="col-sm-1 control-label">설문기간<span class="star text-danger"> *</span></label>
-                                            <div class="col-sm-5">
-                                                <p class="form-control-static">
-                                                        ${kl:convertDate(rsumeList.srvStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')} ~ ${kl:convertDate(rsumeList.srvEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')}
-                                                </p>
-                                            </div>
+                    <c:forEach var="rsumeList" items="${rtnDto.rsumeList}" varStatus="status">
+                        <c:if test="${not empty rsumeList}">
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">설문명<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">
+                                                ${rsumeList.srvNm}
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-1 control-label">설문기간<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">
+                                                ${kl:convertDate(rsumeList.srvStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')} ~ ${kl:convertDate(rsumeList.srvEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '.')}
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <c:forEach var="surveyInfoList" items="${surveyInfoList}" varStatus="status">
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">신청자<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">${rtnDto.name}
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-1 control-label">설문 참여자<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">
+                                            ${surveyInfoList.ptcptName}
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">참여자 연락처<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static">
+                                            ${surveyInfoList.ptcptTelno}
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-1 control-label">참여자 직급<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static pstnText">
+                                            ${surveyInfoList.ptcptPstn}
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">담당위원<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static cmssrName">
+                                        </p>
+                                    </div>
+                                    <label class="col-sm-1 control-label">신청 분야/업종<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static cbsnText">
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">지도구분<span class="star text-danger"> *</span></label>
+                                    <div class="col-sm-5">
+                                        <p class="form-control-static guideTypeText">
+                                        </p>
+                                    </div>
+                                </div>
+                            </fieldset>
+                                <fieldset>
+                                    <div class="form-group text-sm">
+                                        <div class="table-responsive ">
+                                            <table class="table text-sm">
+                                                <tbody>
+                                                    <tr>
+                                                        <th>종합 점수</th>
+                                                        <th>지도실적(50)</th>
+                                                        <th>의사소통 능력(5)</th>
+                                                        <th>기획력(10)</th>
+                                                        <th>실행력(15)</th>
+                                                        <th>마인드(5)</th>
+                                                        <th>전문지식(15)</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="text-center">${surveyInfoList.ttlScore}</td>
+                                                        <td class="text-center">${surveyInfoList.guideRsltScore}</td>
+                                                        <td class="text-center">${surveyInfoList.cmmnctnScore}</td>
+                                                        <td class="text-center">${surveyInfoList.plnngabltScore}</td>
+                                                        <td class="text-center">${surveyInfoList.exctvabltScore}</td>
+                                                        <td class="text-center">${surveyInfoList.mndScore}</td>
+                                                        <td class="text-center">${surveyInfoList.exprtsScore}</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-1 control-label">신청자<span class="star text-danger"> *</span></label>
-                                            <div class="col-sm-5">
-                                                <p class="form-control-static">${rtnDto.name}
-                                                </p>
-                                            </div>
-                                <c:forEach var="surveyInfoList" items="${surveyInfoList}" varStatus="status">
-                                            <label class="col-sm-1 control-label">설문 참여자<span class="star text-danger"> *</span></label>
-                                            <div class="col-sm-5">
-                                                <p class="form-control-static">
-                                                    ${surveyInfoList.ptcptName}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-1 control-label">참여자 연락처<span class="star text-danger"> *</span></label>
-                                            <div class="col-sm-5">
-                                                <p class="form-control-static">
-                                                    ${surveyInfoList.ptcptTelno}
-                                                </p>
-                                            </div>
-                                            <label class="col-sm-1 control-label">참여자 직급<span class="star text-danger"> *</span></label>
-                                            <div class="col-sm-5">
-                                                <p class="form-control-static pstnText">
-                                                    ${surveyInfoList.ptcptPstn}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-1 control-label">담당위원<span class="star text-danger"> *</span></label>
-                                            <div class="col-sm-5">
-                                                <p class="form-control-static cmssrName">
-                                                </p>
-                                            </div>
-                                            <label class="col-sm-1 control-label">신청 분야/업종<span class="star text-danger"> *</span></label>
-                                            <div class="col-sm-5">
-                                                <p class="form-control-static cbsnText">
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-1 control-label">지도구분<span class="star text-danger"> *</span></label>
-                                            <div class="col-sm-5">
-                                                <p class="form-control-static guideTypeText">
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                        <fieldset>
-                                            <div class="form-group text-sm">
-                                                <div class="table-responsive ">
-                                                    <table class="table text-sm">
-                                                        <tbody>
-                                                            <tr>
-                                                                <th>종합 점수</th>
-                                                                <th>지도실적(50)</th>
-                                                                <th>의사소통 능력(5)</th>
-                                                                <th>기획력(10)</th>
-                                                                <th>실행력(15)</th>
-                                                                <th>마인드(5)</th>
-                                                                <th>전문지식(15)</th>
-                                                            </tr>
-                                                            <tr>
-                                                                <td class="text-center">${surveyInfoList.ttlScore}</td>
-                                                                <td class="text-center">${surveyInfoList.guideRsltScore}</td>
-                                                                <td class="text-center">${surveyInfoList.cmmnctnScore}</td>
-                                                                <td class="text-center">${surveyInfoList.plnngabltScore}</td>
-                                                                <td class="text-center">${surveyInfoList.exctvabltScore}</td>
-                                                                <td class="text-center">${surveyInfoList.mndScore}</td>
-                                                                <td class="text-center">${surveyInfoList.exprtsScore}</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                    </c:forEach>
-                                </c:if>
+                                    </div>
+                                </fieldset>
                             </c:forEach>
-
-
-                            <c:if test="${rtnSurveyData != null}">
-                                <c:forEach var="qstnList" items="${rtnSurveyData.svSurveyQstnDtlList}" varStatus="qstnStatus">
-                                    <c:if test="${cd ne qstnList.cd}">
-                                        <h6 class="ml mb-xl ${fn:substring(qstnList.cd,0,3)}"><em class="ion-android-checkbox-blank mr-sm"></em>${qstnList.cdNm}</h6>
-                                    </c:if>
-                                    <c:if test="${qstnList.cd ne 'CON01' && qstnList.cd ne 'CON02'}">
-                                        <c:set var="rowspan" value="${qstnList.exmplCnt+3}" />
-                                        <fieldset style="<c:if test="${qstnList.ctgryCd eq null}">display:none;</c:if>" class="surveyList ${qstnList.cd}" data-survey-type="${qstnList.cd}" >
-                                            <input type="hidden" name="dpth" value="${qstnList.dpth}">
-                                            <div class="form-group text-sm">
-                                                <table class="table">
-                                                    <tr>
-                                                        <th rowspan="3" class="col-md-1 ${qstnList.cd}questionTxt">질문1</th>
-                                                        <th class="col-md-1">설문유형<span class="star"> *</span></th>
-                                                        <td class="form-inline col-md-8" >
-                                                                ${qstnList.srvTypeNm}
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>질문<span class="star"> *</span></th>
-                                                        <td>${qstnList.qstnNm}</td>
-                                                        <td></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>응답<span class="star"> *</span></th>
-                                                        <td>
-                                                            <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
-                                                                <c:choose>
-                                                                    <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
-                                                                        ${exmplList.winAnswerText}
-                                                                    </c:when>
-                                                                    <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
-                                                                        - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        - ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
-                                                                    </c:otherwise>
-                                                                </c:choose>
-                                                            </c:forEach>
-                                                        </td>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </fieldset>
-                                    </c:if>
-                                    <c:set var="cd" value="${ qstnList.cd}" />
-                                </c:forEach>
+                        </c:if>
+                    </c:forEach>
+                    <c:if test="${rtnSurveyData != null}">
+                        <c:forEach var="qstnList" items="${rtnSurveyData.svSurveyQstnDtlList}" varStatus="qstnStatus">
+                            <c:if test="${cd ne qstnList.cd}">
+                                <h6 class="ml mb-xl ${fn:substring(qstnList.cd,0,3)}"><em class="ion-android-checkbox-blank mr-sm"></em>${qstnList.cdNm}</h6>
                             </c:if>
-                        </div>
-                    </div>
-            </c:when>
+                            <c:if test="${qstnList.cd ne 'CON01' && qstnList.cd ne 'CON02'}">
+                                <c:set var="rowspan" value="${qstnList.exmplCnt+3}" />
+                                <fieldset style="<c:if test="${qstnList.ctgryCd eq null}">display:none;</c:if>" class="surveyList ${qstnList.cd}" data-survey-type="${qstnList.cd}" >
+                                    <input type="hidden" name="dpth" value="${qstnList.dpth}">
+                                    <div class="form-group text-sm">
+                                        <table class="table">
+                                            <tr>
+                                                <th rowspan="3" class="col-md-1 ${qstnList.cd}questionTxt">질문1</th>
+                                                <th class="col-md-1">설문유형<span class="star"> *</span></th>
+                                                <td class="form-inline col-md-8" >
+                                                        ${qstnList.srvTypeNm}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>질문<span class="star"> *</span></th>
+                                                <td>${qstnList.qstnNm}</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <th>응답<span class="star"> *</span></th>
+                                                <td>
+                                                    <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
+                                                        <c:choose>
+                                                            <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
+                                                                ${exmplList.winAnswerText}
+                                                            </c:when>
+                                                            <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
+                                                                - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                - ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </fieldset>
+                            </c:if>
+                            <c:set var="cd" value="${ qstnList.cd}" />
+                        </c:forEach>
+                    </c:if>
+                </div>
+            </div>
+        </c:when>
         </c:choose>
             <div class="clearfix">
                 <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
+                    <button type="button" class="btn btn-sm btn-default" id="btnList">목록</button>
                 </div>
                 <div class="pull-right">
                     <c:choose>

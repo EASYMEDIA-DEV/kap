@@ -25,6 +25,7 @@
             , SLS_PMT					/* 매출액(억원) */
             , MPLE_CNT					/* 부품사 직원수 */
             , CBSN_NM                   /* 신청 업종 */
+            , CBSN_CD                   /* 신청 업종 코드 */
             , FIRST_RGNS_CD			    /* 첫번째 지역 코드 */
             , FIRST_RGNS_NM			    /* 첫번째 지역 코드명 */
             , SCND_RGNS_CD				/* 두번째 지역 코드 */
@@ -71,6 +72,7 @@
                 , CMPN_MST.SLS_PMT
                 , CMPN_MST.MPLE_CNT
                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_NM
+                , (SELECT CD FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_CD
                 , CP_MST.FIRST_RGNS_CD
                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.FIRST_RGNS_CD AND CD_ID = 'ADDR_CD') FIRST_RGNS_NM
                 , CP_MST.SCND_RGNS_CD
@@ -95,10 +97,10 @@
                 , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.LVLUP_FILE_SEQ AND USE_YN = 'Y') LVLUP_FILE_ORD
                 , CP_MST.APPCTN_DT
                 , CP_MST.REG_ID
-                , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = CP_MST.APPCTN_MEM_SEQ) REG_NAME
+                , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
                 , CP_MST.REG_DTM
-                , CPR_MST.MOD_ID
-                , (SELECT NAME FROM CO_ADM_MST WHERE ID = CPR_MST.MOD_ID) MOD_NAME
+                , CP_MST.MOD_ID
+                , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
                 , CPR_MST.MOD_DTM
             FROM
                 CP_CNSTG_APPCTN_MST CP_MST
@@ -130,7 +132,7 @@
             CNSTG_SEQ					/* 컨설팅순번 */
              , CNSTG_CD                  /* 컨설팅코드 */
              , BSN_YEAR					/* 사엽연도 */
-             , RSUME_STTS_CD			    /* 진행상태코드 */
+             , RSUME_STTS_CD			/* 진행상태코드 */
              , RSUME_STTS_NM			/* 진행상태코드명 */
              , CMPN_NM					/* 부품사명 */
              , CTGRY_CD					/* 부품사구분코드 */
@@ -140,30 +142,31 @@
              , APPCTN_BSNM_NO			/* 신청당시 사업자번호 */
              , SLS_PMT					/* 매출액(억원) */
              , MPLE_CNT					/* 부품사 직원수 */
-             , CBSN_NM                   /* 신청 업종 */
-             , FIRST_RGNS_CD			    /* 첫번째 지역 코드 */
-             , FIRST_RGNS_NM			    /* 첫번째 지역 코드명 */
+             , CBSN_NM                  /* 신청 업종 */
+             , CBSN_CD                  /* 신청 업종 코드 */
+             , FIRST_RGNS_CD			/* 첫번째 지역 코드 */
+             , FIRST_RGNS_NM			/* 첫번째 지역 코드명 */
              , SCND_RGNS_CD				/* 두번째 지역 코드 */
              , SCND_RGNS_NM				/* 첫번째 지역 코드명 */
-             , CRTFN_CMPN_NM			    /* SQ 인증 주관사 */
+             , CRTFN_CMPN_NM			/* SQ 인증 주관사 */
              , MN_CMPN_NM				/* 주고객사 */
              , VST_DT					/* 방문일 */
-             , CMSSR_SEQ					/* 위원순번 */
+             , CMSSR_SEQ				/* 위원순번 */
              , CMSSR_NM					/* 위원이름 */
-             , VST_CNT                   /* 방문 횟수 */
-             , CMSSR_CBSN_CD			    /* 담당위원지도분야 코드 */
-             , CMSSR_CBSN_NM			    /* 담당위원지도분야 코드명 */
+             , VST_CNT                  /* 방문 횟수 */
+             , CMSSR_CBSN_CD			/* 담당위원지도분야 코드 */
+             , CMSSR_CBSN_NM			/* 담당위원지도분야 코드명 */
              , GUIDE_KICKF_DT			/* 킥오프시작일 */
              , KICKF_FILE_SEQ			/* 킥오프파일순번 */
-             , KICKF_FILE_ORD            /* 킥오프파일ORD */
+             , KICKF_FILE_ORD           /* 킥오프파일ORD */
              , CNSTG_PSCND_CD			/* 컨설팅현황코드 */
              , CNSTG_PSCND_NM			/* 컨설팅현황코드명 */
              , CNSTG_PSCND_DT			/* 컨설팅현황일자 */
-             , GUIDE_PSCND_DT            /* 렙업일 */
-             , GUIDE_BGN_DT              /* 지도착수일 */
+             , GUIDE_PSCND_DT           /* 렙업일 */
+             , GUIDE_BGN_DT             /* 지도착수일 */
              , LVLUP_FILE_SEQ			/* 렙업파일순번 */
              , LVLUP_FILE_ORD			/* 렙업파일ORD */
-             , APPCTN_DT					/* 신청일 */
+             , APPCTN_DT				/* 신청일 */
              , REG_ID					/* 등록자ID */
              , REG_NAME					/* 등록자이름 */
              , REG_DTM					/* 등록일 */
@@ -186,6 +189,7 @@
                  , CMPN_MST.SLS_PMT
                  , CMPN_MST.MPLE_CNT
                  , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_NM
+                 , (SELECT CD FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_CD
                  , CP_MST.FIRST_RGNS_CD
                  , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.FIRST_RGNS_CD AND CD_ID = 'ADDR_CD') FIRST_RGNS_NM
                  , CP_MST.SCND_RGNS_CD
@@ -210,10 +214,10 @@
            , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.LVLUP_FILE_SEQ AND USE_YN = 'Y') LVLUP_FILE_ORD
            , CP_MST.APPCTN_DT
            , CP_MST.REG_ID
-           , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = CP_MST.APPCTN_MEM_SEQ) REG_NAME
+            , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
            , CP_MST.REG_DTM
            , CPR_MST.MOD_ID
-           , (SELECT NAME FROM CO_ADM_MST WHERE ID = CPR_MST.MOD_ID) MOD_NAME
+           , (SELECT NAME FROM CO_MEM_MST WHERE ID = CPR_MST.MOD_ID) MOD_NAME
            , CPR_MST.MOD_DTM
             FROM
                 CP_CNSTG_APPCTN_MST CP_MST
@@ -243,8 +247,10 @@
             A.CNSTG_CD,
             (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) CNSTG_NM,
             A.RSUME_STTS_CD,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM,
             A.APPCTN_DT,
-            A.CMPN_SIZE_CD,
+            A.BSN_YEAR,
+            A.CMPN_SIZE_CD AS SIZE_CD,
             A.CMPN_ADDR_SAME_YN,
             A.FCTRY_ZIPCODE,
             A.FCTRY_BSC_ADDR,
@@ -269,6 +275,7 @@
             B.PSTN_CD,
             B.PSTN_NM,
             (SELECT CD FROM CP_CNSTG_CBSN_DTL where cnstg_seq = A.CNSTG_SEQ) CBSN_CD,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CBSN_CD) CBSN_NM,
             (SELECT ETC_NM FROM CP_CNSTG_CBSN_DTL where cnstg_seq = A.CNSTG_SEQ) ETC_NM,
             (SELECT FILE_SEQ FROM CO_FILE_MST WHERE FILE_SEQ = A.ITRDC_FILE_SEQ ) ITRDC_FILE_SEQ,
             (SELECT FILE_SEQ FROM CO_FILE_MST WHERE FILE_SEQ = A.IMPVM_FILE_SEQ ) IMPVM_FILE_SEQ,
@@ -277,10 +284,10 @@
             A.ADM_MEMO,
             A.REG_DTM,
             A.REG_ID,
-            (SELECT NAME CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NAME,
+            (SELECT NAME FROM CO_MEM_MST WHERE ID = A.REG_ID) REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-            (SELECT NAME CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
+            (SELECT NAME CO_MEM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
@@ -1011,8 +1018,8 @@
                 </foreach>
             </if>
             <!-- 신청업종 -->
-            <if test="cbsnNm != null and cbsnNm != ''">
-                AND CBSN_NM = #{cbsnNm}
+            <if test="cbsnCd != null and cbsnCd != ''">
+                AND CBSN_CD = #{cbsnCd}
             </if>
             <!-- 진행상태 -->
             <if test="rsumeSttsCd != null and rsumeSttsCd != ''">
@@ -1063,8 +1070,8 @@
                     <when test="f == 9 ">
                         <!-- 최종등록자 -->
                         AND (
-                            INSTR(#{q}, AA.MOD_ID) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                            INSTR(#{q}, MST.MOD_ID) <![CDATA[>]]> 0
+                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = MST.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                         )
                     </when>
                     <otherwise>
