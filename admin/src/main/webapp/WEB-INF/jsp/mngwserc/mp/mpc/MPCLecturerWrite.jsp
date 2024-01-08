@@ -94,7 +94,7 @@
                         <fieldset>
                             <label class="col-sm-1 control-label">회사 전화번호</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" placeholder="회사 전화번호 입력" maxlength="50" oninput="this.value=this.value.replace(/[^0-9]/g, '')" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" placeholder="회사 전화번호 입력" maxlength="13" oninput="this.value=this.value.replace(/[^0-9]/g, '')" style="width: 220px;"/>
                             </div>
                         </fieldset>
                         <fieldset>
@@ -117,56 +117,6 @@
                             </div>
                         </fieldset>
                         <hr />
-                        <div class="clearfix">
-                            <div class="pull-left">
-                                <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
-                            </div>
-                            <div class="pull-right">
-                                <c:choose>
-                                    <c:when test="${ not empty rtnInfo}">
-                                        <button type="submit" class="btn btn-sm btn-success" >저장</button>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <button type="submit" class="btn btn-sm btn-success">저장</button>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
-                        </div>
-                        <c:if test="${ not empty rtnInfo }">
-                            <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
-                            <div class="table-responsive ">
-                                <table class="table text-sm">
-                                    <tbody>
-                                    <tr>
-                                        <th>최초 등록자</th>
-                                        <td>${ rtnInfo.regName }(${ rtnInfo.regId })</td>
-                                        <th>최초 작성일</th>
-                                        <td>${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
-                                    </tr>
-                                    <tr>
-                                        <th>최종 수정자</th>
-                                        <td>
-                                            <c:choose>
-                                                <c:when test="${ not empty rtnInfo.modName }">
-                                                    ${ rtnInfo.modName }(${ rtnInfo.modId })
-                                                </c:when>
-                                                <c:otherwise>-</c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                        <th>최종 수정일</th>
-                                        <td>
-                                            <c:choose>
-                                                <c:when test="${ not empty rtnInfo.modDtm }">
-                                                    ${ kl:convertDate(rtnInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                                                </c:when>
-                                                <c:otherwise>-</c:otherwise>
-                                            </c:choose>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </c:if>
                     </div>
                 </div>
                 <div id="edu" class="tab-pane fade">
@@ -246,9 +196,63 @@
                     <!-- 페이징 버튼 -->
                     <div id="winBusinessPagingContainer"></div>
                 </div>
+                <div class="clearfix ">
+                    <div class="pull-left">
+                        <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
+                    </div>
+                    <div class="pull-right dtl-tab">
+                        <c:choose>
+                            <c:when test="${ not empty rtnInfo}">
+                                <button type="submit" class="btn btn-sm btn-success" >저장</button>
+                            </c:when>
+                            <c:otherwise>
+                                <button type="submit" class="btn btn-sm btn-success">저장</button>
+                            </c:otherwise>
+                        </c:choose>
+                    </div>
+                </div>
             </div>
         </form>
+
     </div>
+
+    <c:if test="${ not empty rtnInfo }">
+        <div class="dtl-tab">
+        <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
+        <div class="table-responsive ">
+            <table class="table text-sm">
+                <tbody>
+                <tr>
+                    <th>최초 등록자</th>
+                    <td>${ rtnInfo.regName }(${ rtnInfo.regId })</td>
+                    <th>최초 등록일시</th>
+                    <td>${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                </tr>
+                <tr>
+                    <th>최종 수정자</th>
+                    <td>
+                        <c:choose>
+                            <c:when test="${ not empty rtnInfo.modName }">
+                                ${ rtnInfo.modName }(${ rtnInfo.modId })
+                            </c:when>
+                            <c:otherwise>-</c:otherwise>
+                        </c:choose>
+                    </td>
+                    <th>최종 수정일시</th>
+                    <td>
+                        <c:choose>
+                            <c:when test="${ not empty rtnInfo.modDtm }">
+                                ${ kl:convertDate(rtnInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                            </c:when>
+                            <c:otherwise>-</c:otherwise>
+                        </c:choose>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </c:if>
 </div>
 
 <div class="modal fade excel-down" tabindex="-1" role="dialog" >
