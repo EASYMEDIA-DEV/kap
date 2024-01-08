@@ -89,7 +89,7 @@
                     <div class="col-sm-11">
 
                         <c:forEach var="list" items="${edTarget}">
-                            <div class="row" style="margin-bottom: 20px;">
+                            <div class="row edTargetRow" style="margin-bottom: 20px;">
                                 <c:forEach var="targetList" items="${list.edList}">
                                     <c:choose>
                                         <c:when test="${targetList.dpth eq '2'}">
@@ -100,7 +100,7 @@
                                             <c:if test="${targetList.cdNm eq '기타' && targetList.cd eq 'ED_TARGET05001'}">
                                                 <c:set var="etcYn" value="Y"/>
                                             </c:if>
-                                            <label class="col-sm-1 control-label" <c:if test="${etcYn eq 'Y'}">style="margin-left: -10px;"</c:if>>${targetList.cdNm}
+                                            <label class="col-sm-1 control-label" <c:if test="${etcYn eq 'Y'}">style="margin-left: -10px;"</c:if> data-cdnm="${targetList.cdNm}">${targetList.cdNm}
                                                 <c:if test="${etcYn eq 'N'}">
                                                 <span class="star"> *</span>
                                                 </c:if>
@@ -370,13 +370,13 @@
                 </div>
             </div>
             <c:if test="${ not empty rtnDto && copyYn eq 'N' }">
-                <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                 <div class="table-responsive ">
                     <table class="table text-sm">
                         <tbody>
                             <tr>
                                 <th>최초 작성자</th>
-                                <td>${ rtnDto.regName }</td>
+                                <td>${rtnDto.regName}(${rtnDto.regId})</td>
                                 <th>최초 작성일</th>
                                 <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                             </tr>

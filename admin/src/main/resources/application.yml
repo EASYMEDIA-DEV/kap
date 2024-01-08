@@ -73,6 +73,8 @@ app:
     upload-path: D:/IdeaProjects/worksapace/kap_upload
     #파일 업로드 가능 확장자
     fileExtns: jpg,jpeg,gif,png,bmp,mp4,webm,wmv,avi,mkv,pdf,ppt,pptx,xls,xlsx,doc,docx,dox,hwp,txt,zip
+    fileExtnsPdf: pdf, ppt, pptx, doc, docx, xls, xlsx
+
     imageExtns: jpg,jpeg,png
     videoExtns: mp4,webm,wmv,avi,mkv
     #파일 업로드 크기

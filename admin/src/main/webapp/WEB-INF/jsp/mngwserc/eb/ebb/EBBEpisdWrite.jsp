@@ -390,7 +390,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">교육안내문</label>
                             <div class="col-sm-10 col-md-11">
-                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtnsPdf')" />
                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                 <div class="dropzone attachFile notRequired" data-file-field-nm="edctnNtctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="썸네일이미지">
                                     <div class="dz-default dz-message">
@@ -398,7 +398,7 @@
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ 파일확장자 pdf, ppt, pptx, doc, docx, xls, xlsx 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                    ※ 파일확장자 ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                 </p>
                             </div>
                         </div>

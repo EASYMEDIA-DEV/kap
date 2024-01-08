@@ -191,46 +191,50 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			roomDto = eBFEduRoomService.selectEduRoomDtl(roomDto);
 		}
 
-		//차수관리 - 강사관계 호출
-		List<EBBisttrDTO> isttrList = eBBEpisdMapper.selectIsttrList(ebbDto);
+		if(eBBEpisdDTO.getSiteGubun().equals("admin")){
+			//차수관리 - 강사관계 호출
+			List<EBBisttrDTO> isttrList = eBBEpisdMapper.selectIsttrList(ebbDto);
 
-		//온라인 교육강의 상세 호출
-		List<EBBLctrDTO> lctrDtoList = new ArrayList();
-		EBBLctrDTO lctrDto = new EBBLctrDTO();
-		if(ebbDto !=null) {
-			lctrDto.setEdctnSeq(ebbDto.getEdctnSeq());
-			lctrDto.setEpisdOrd(ebbDto.getEpisdOrd());
-			lctrDto.setEpisdYear(ebbDto.getEpisdYear());
-			lctrDtoList = eBBEpisdMapper.selectLctrDtlList(lctrDto);
+			//온라인 교육강의 상세 호출
+			List<EBBLctrDTO> lctrDtoList = new ArrayList();
+			EBBLctrDTO lctrDto = new EBBLctrDTO();
+			if(ebbDto !=null) {
+				lctrDto.setEdctnSeq(ebbDto.getEdctnSeq());
+				lctrDto.setEpisdOrd(ebbDto.getEpisdOrd());
+				lctrDto.setEpisdYear(ebbDto.getEpisdYear());
+				lctrDtoList = eBBEpisdMapper.selectLctrDtlList(lctrDto);
+			}
+
+			//예산지출 상세 호출
+
+			List<EBBBdgetDTO> bdgetList = new ArrayList();
+			EBBBdgetDTO bdgetDto = new EBBBdgetDTO();
+			if(ebbDto !=null) {
+				bdgetDto.setEdctnSeq(ebbDto.getEdctnSeq());
+				bdgetDto.setEpisdOrd(ebbDto.getEpisdOrd());
+				bdgetDto.setEpisdYear(ebbDto.getEpisdYear());
+				bdgetList = eBBEpisdMapper.selectBdgetDtlList(bdgetDto);
+			}
+
+
+
+			EBBSrvRstDTO srvScoreDtl = eBBEpisdMapper.selectEpisdSrvScoreDtl(ebbDto);
+
+
+			//만족도결과 호출
+			EBBSrvRstDTO srvRstDtl = eBBEpisdMapper.selectEpisdSrvRstDtl(ebbDto);
+
+
+			map.put("roomDto", roomDto);//교육장정보
+			map.put("lctrDtoList", lctrDtoList);//온라인강의 목록
+			map.put("isttrList", isttrList);//강사 목록
+			map.put("bdgetList", bdgetList);//예산지출내역 목록
+
+			map.put("srvScoreDtl", srvScoreDtl);//만족도결과 점수
+			map.put("srvRstDtl", srvRstDtl);//설문 상세
 		}
-
-		//예산지출 상세 호출
-
-		List<EBBBdgetDTO> bdgetList = new ArrayList();
-		EBBBdgetDTO bdgetDto = new EBBBdgetDTO();
-		if(ebbDto !=null) {
-			bdgetDto.setEdctnSeq(ebbDto.getEdctnSeq());
-			bdgetDto.setEpisdOrd(ebbDto.getEpisdOrd());
-			bdgetDto.setEpisdYear(ebbDto.getEpisdYear());
-			bdgetList = eBBEpisdMapper.selectBdgetDtlList(bdgetDto);
-		}
-
-
-
-		EBBSrvRstDTO srvScoreDtl = eBBEpisdMapper.selectEpisdSrvScoreDtl(ebbDto);
-
-
-		//만족도결과 호출
-		EBBSrvRstDTO srvRstDtl = eBBEpisdMapper.selectEpisdSrvRstDtl(ebbDto);
-
 		map.put("rtnData", ebbDto);//교육차수 상세
-		map.put("roomDto", roomDto);//교육장정보
-		map.put("lctrDtoList", lctrDtoList);//온라인강의 목록
-		map.put("isttrList", isttrList);//강사 목록
-		map.put("bdgetList", bdgetList);//예산지출내역 목록
 
-		map.put("srvScoreDtl", srvScoreDtl);//만족도결과 점수
-		map.put("srvRstDtl", srvRstDtl);//설문 상세
 
 
 

@@ -30,6 +30,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
         //교육신청 로그인체크
         registry.addInterceptor(cOAuthenticInterceptor()).addPathPatterns("/education/apply/detail/**")
                 .order(1);
+        registry.addInterceptor(cOAuthenticInterceptor()).addPathPatterns("/education/apply/step1/**")
+                .order(1);
 
         //방문교육신청 로그인체크
         registry.addInterceptor(cOAuthenticInterceptor()).addPathPatterns("/education/visit/apply/**")

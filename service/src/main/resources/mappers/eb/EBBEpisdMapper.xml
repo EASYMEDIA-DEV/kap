@@ -541,6 +541,7 @@
 				   when NOW() <![CDATA[>]]> edctn_end_dtm then '교육완료'
 			END  AS edctn_status_nm
 			 , (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
+			 , (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst WHERE isttr_seq in (SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq = aa.edctn_seq AND episd_ord = aa.episd_ord AND episd_year = aa.episd_year )) AS isttr_group_name
 			 , (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
 			 , case when isttr_cnt <![CDATA[<=]]>1 then ''
 					when isttr_cnt <![CDATA[>]]>  1 then isttr_cnt-1

@@ -397,7 +397,7 @@
     <c:set var="month"><fmt:formatDate value="${today}" pattern="MM" /></c:set>
 
 
-    <div class="layer-popup full-popup allTrainingSchedulePopup open"><!-- full-popup: 화면 꽉 차는 팝업 -->
+    <div class="layer-popup full-popup allTrainingSchedulePopup"><!-- full-popup: 화면 꽉 차는 팝업 -->
         <div class="for-center">
             <div class="pop-wrap">
                 <div class="pop-con-area">

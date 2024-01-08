@@ -324,8 +324,22 @@ define(["ezCtrl"], function(ezCtrl) {
 
 					}
 				}
-			}
+			},
+			applyStep : {
+				event: {
+					click: function (e) {
 
+						var edpisdSeq = $(this).closest(".list-item").data("episdseq");
+
+						var edctnSeq = $("#edctnSeq").val();
+
+						var episdYear =$(this).closest(".list-item").data("episdyear");
+						var episdOrd = $(this).closest(".list-item").data("episdord");
+
+						location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+					}
+				}
+			}
 
 
 

@@ -6,7 +6,22 @@
             <div class="swiper-container training-swiper">
                 <div class="swiper-wrapper marquee_wrapper1" >
                     <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-                        <a class="swiper-slide marquee_item1 waiting" href="javascript:">
+
+                        <c:set var="accsStatusOrderClass" value=""/>
+
+                        <c:choose>
+                            <c:when test="${list.accsStatusOrder eq 1}">
+                                <c:set var="accsStatusOrderClass" value="accepting"/>
+                            </c:when>
+                            <c:when test="${list.accsStatusOrder eq 2}">
+                                <c:set var="accsStatusOrderClass" value="waiting"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="accsStatusOrderClass" value="end"/>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <a class="swiper-slide marquee_item1 ${accsStatusOrderClass}" href="javascript:">
                             <!--
                               접수중: accepting
                               접수대기: waiting
@@ -63,12 +78,12 @@
                                         <c:when test="${empty list.edctnStrtDtm}">
                                             <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>-</span></p></c:if>
                                             <c:if test="${list.stduyMthdCd eq 'STDUY_MTHD02'}"><p class="box-label bigger"><span>온라인</span></p></c:if>
-                                            <p class="box-label bigger waiting"><span>-</span></p>
+                                            <p class="box-label bigger ${accsStatusOrderClass}"><span>-</span></p>
                                         </c:when>
                                         <c:otherwise>
                                             <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>${list.placeNm}</span></p></c:if>
                                             <c:if test="${list.stduyMthdCd eq 'STDUY_MTHD02'}"><p class="box-label bigger"><span>온라인</span></p></c:if>
-                                            <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                            <p class="box-label bigger ${accsStatusOrderClass}"><span>${list.accsStatusNm}</span></p>
                                         </c:otherwise>
                                     </c:choose>
                                 </div>

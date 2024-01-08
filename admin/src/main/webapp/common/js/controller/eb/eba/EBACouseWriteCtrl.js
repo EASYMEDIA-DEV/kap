@@ -274,7 +274,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				after : function() {
 					var isValid = true, editorChk = true;
 
-					$formObj.find(".ckeditorRequired").each(function() {
+					$formObj.find(".ckeditorRequired").each(function(e) {
 
 						jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
 						jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
@@ -288,7 +288,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						{
 							editorChk = false;
 
-							alert(msgCtrl.getMsg("fail.co.cog.cnts"));
+							if($(this).attr("name") == "pcStduyCntn"){
+								alert("PC 학습내용을 입력해주세요.");
+								isValid = false;
+							}else{
+								alert("모바일 학습내용을 입력해주세요.");
+								isValid = false;
+							}
+
 
 							CKEDITOR.instances[jQuery(this).prop("id")].focus();
 
@@ -298,6 +305,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							return false;
 						}
 					});
+
+					var targetchkLength= $("input[name='targetCd']:checked").length;
+
+					$(".edTargetRow").each(function(){
+
+						var rowTargetLength= $(this).find("input[name='targetCd']:checked").length;
+
+						if(rowTargetLength == 0 && isValid){
+							var cdNm = $(this).find("label:first").data("cdnm");
+							if(cdNm !="기타"){
+								alert("학습 대상("+cdNm+")를 선택해주세요");
+								isValid = false;
+							}
+
+						}
+					});
+
+
+					if(targetchkLength == 0 && isValid){
+						alert("학습 대상을 선택해주세요");
+						return false;
+					}
 
 					if (!editorChk)
 					{
@@ -312,12 +341,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						var actionUrl = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? "./insert" : "./update" );
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
-						var targetchkLength= $("input[name='targetCd']:checked").length;
 
-						if(targetchkLength == 0){
-							alert("학습 대상을 선택해주세요");
-							return false;
-						}
 
 
 

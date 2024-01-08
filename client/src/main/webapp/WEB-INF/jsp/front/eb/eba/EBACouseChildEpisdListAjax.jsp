@@ -53,7 +53,7 @@
                     <c:set var="accsStatusOrderClass" value=""/>
                 </c:otherwise>
             </c:choose>
-            <div class="list-item available ${accsStatusOrderClass}" data-episdSeq="${list.episdSeq}"><!-- available: 신청 가능한 회차 --><!-- accepting: 접수중 -->
+            <div class="list-item available ${accsStatusOrderClass}" data-episdSeq="${list.episdSeq}" data-episdYear="${list.episdYear}" data-episdOrd="${list.episdOrd}"><!-- available: 신청 가능한 회차 --><!-- accepting: 접수중 -->
                 <c:if test="${accsStatusOrder < 3}"><!-- 접수대기와 접수중만 출력-->
                     <p class="available-label">
                         <span>신청 가능한 회차</span>
@@ -65,14 +65,17 @@
                             <div class="group">
                                 <p class="index-num f-title3">${list.episdOrd}회차</p>
                                 <div class="status-info-w">
-                                    <p class="box-label bigger"><span>${list.cbsnCdNm}</span></p>
+                                    <c:if test="${not empty episdDto.cbsnCdNm}">
+                                        <p class="box-label bigger"><span>${list.cbsnCdNm}</span></p>
+                                    </c:if>
+
                                     <c:set var="accsStatusOrderClass" value=""/>
 
                                     <c:choose>
                                         <c:when test="${list.accsStatusOrder eq 1}">
                                             <c:set var="accsStatusOrderClass" value="accepting"/>
                                         </c:when>
-                                        <c:when test="${list.accsStatusOrder eq 1}">
+                                        <c:when test="${list.accsStatusOrder eq 2}">
                                             <c:set var="accsStatusOrderClass" value="waiting"/>
                                         </c:when>
                                         <c:otherwise>
@@ -115,7 +118,8 @@
                                     <c:if test="${list.fxnumImpsbYn eq 'N'}">
                                         제한없음
                                     </c:if>
-                                    (${list.rcrmtMthdCdNm})</p>
+                                    (${list.rcrmtMthdCdNm})
+                                </p>
                             </div>
                             <div class="info-list">
                                 <p class="tit f-caption2">교육장소</p>
@@ -147,7 +151,7 @@
                                 </c:if>
                             </div>
                             <div class="btn-set">
-                                <a class="btn-solid small black-bg" href="javascript:"><span>신청하기</span></a>
+                                <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
                             </div>
                         </div>
                     </div>

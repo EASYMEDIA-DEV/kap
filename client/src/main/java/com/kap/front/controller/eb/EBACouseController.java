@@ -1,15 +1,18 @@
 package com.kap.front.controller.eb;
 
+import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.EmfMap;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBLctrDTO;
+import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
-import com.kap.service.COCodeService;
-import com.kap.service.EBACouseService;
-import com.kap.service.EBBEpisdService;
-import com.kap.service.SMJFormService;
+import com.kap.service.*;
+import com.kap.service.mp.mpa.MPAUserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +23,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,7 +60,10 @@ public class EBACouseController {
 
     private final SMJFormService sMJFormService;
 
+    public final MPEPartsCompanyService mpePartsCompanyService;
 
+    /** 부품사 회원정보 서비스 **/
+    private final MPAUserService mpaUserService;
 
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
@@ -170,7 +177,7 @@ public class EBACouseController {
             HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
 
             EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
-            List<EBACouseDTO> rtnEpisdList = (List<EBACouseDTO>) rtnMap.get("rtnEpisdList");//과저엥 소속된 차수 목록
+            List<EBACouseDTO> rtnEpisdList = (List<EBACouseDTO>) rtnMap.get("rtnEpisdList");//과정에 소속된 차수 목록
             List<EBACouseDTO> rtnTrgtData = (List<EBACouseDTO>) rtnMap.get("rtnTrgtData");//학습대상 목록
 
             //교육과정연계 상세 조회
@@ -321,6 +328,123 @@ public class EBACouseController {
 
     }
 
+    /**
+     * 교육과정 신청 상세
+     */
+    @GetMapping(value="/apply/step1")
+    public String getApplyStep(EBBEpisdDTO eBBEpisdDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "front/eb/eba/EBACouseStep1.front";
+
+        try{
+
+            EBACouseDTO eBACouseDTO = new EBACouseDTO();
+
+            eBACouseDTO.setDetailsKey(eBBEpisdDTO.getDetailsKey());
+            //선택한 과정정보 호출
+            HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
+
+            EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
+
+            COPaginationUtil page = new COPaginationUtil();
+
+            page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
+            page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
+
+            page.setPageSize(eBBEpisdDTO.getPageRowSize());
+
+            eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
+            eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+            HashMap<String, Object> episdDto = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+
+            //회원 기본정보 호출
+            mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+            MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
+
+            if(applicantDto.getMemCd().equals("CP")) {
+                mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+                if (originList.getList().size() != 0) {
+                    modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+                }
+                modelMap.addAttribute("applicantInfo", applicantDto);
+                modelMap.addAttribute("sqInfoList", originList);
+            }
+
+            //회원 부품사정보 호출
+
+            //
+            System.out.println("@@@ episdDto= " + episdDto);
+            modelMap.addAttribute("rtnData", rtnDto);
+
+            modelMap.addAttribute("episdDto", episdDto.get("rtnData"));
+
+
+        }catch (Exception e){
+
+        }
+
+
+        return vwUrl;
+    }
+
+    @Operation(summary = "교육차수 신청자 등록", tags = "교육차수 신청자 등록", description = "")
+    @PostMapping(value="/apply/setPtcptInfo")
+    public String setPtcptInfo(EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap) throws Exception
+    {
+
+        //교육차수 신청자를 등록한다. 등록할때 이미 회원이 있으면 취소
+        EBBPtcptDTO temoDto = new EBBPtcptDTO();
+        try {
+
+            temoDto = eBBEpisdService.setPtcptInfo(eBBPtcptDTO);
+
+            modelMap.addAttribute("rtnData", temoDto);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
+    }
+
+    @GetMapping(value="/apply/step2")
+    public String getApplyStep2(EBBEpisdDTO eBBEpisdDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "front/eb/eba/EBACouseStep2.front";
+
+
+        //신청전
+
+        //신청후
+
+
+
+
+
+
+        EBACouseDTO eBACouseDTO = new EBACouseDTO();
+
+        eBACouseDTO.setDetailsKey(eBBEpisdDTO.getDetailsKey());
+        //선택한 과정정보 호출
+        HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
+
+        EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
+
+        modelMap.addAttribute("rtnData", rtnDto);
+
+        return vwUrl;
+    }
+
     @RestController
     @RequiredArgsConstructor
     @RequestMapping(value="/education")
@@ -403,6 +527,32 @@ public class EBACouseController {
             }
             return resultMap;
         }
+
+        @Operation(summary = "교육차수 신청자 정원체크", tags = "교육차수 중복체크", description = "")
+        @PostMapping(value="/apply/fxnumChk")
+        public EBBEpisdDTO selectFxnumChk(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+
+            EBBEpisdDTO tempDto = new EBBEpisdDTO();
+
+            try {
+
+                tempDto = eBBEpisdService.selectFxnumChk(eBBEpisdDTO);
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return tempDto;
+        }
+
+
 
     }
 
