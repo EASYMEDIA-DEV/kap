@@ -69,35 +69,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         document.getElementById("appctnSttsCd").value = "PRO_TYPE06001_01_006";
     }
 
-    // 목록 조회
-    var search = function (page){
-
-        if(page !== undefined){
-            $modalFormObj.find("#pageIndex").val(page);
-        }
-        cmmCtrl.listFrmAjax(function(respObj) {
-            $modalFormObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
-            //CALLBACK 처리
-            ctrl.obj.find("#listContainer").html(respObj);
-            //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            //총 건수
-            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $modalFormObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/wb/wbjb/setModalData", $modalFormObj, "POST", "html");
-
-    }
-
-    var selPartUserData = function (){
-        cmmCtrl.frmAjax(function(respObj) {
-            $modalObj.modal("hide");
-            /* return data input */
-            setInputValue(respObj);
-        }, "/mngwserc/wb/wbjb/setModalDetail", $modalFormObj, "post", "json")
-
-    }
-
     /* 페이지 구성에 맞게 input value set (rtnData keys HTML id 값 동일 처리 필요) */
     var setInputValue = (respObj) => {
         let [rtnData, rtnDataCompList] = [respObj['rtnData'], respObj['rtnDataCompDetail'].list];
@@ -270,37 +241,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
-            // 회원검색 모달
-            btnPartUserModal : {
-                event : {
-                    click: function () {
-                        search(1);
-                        $modalObj.modal("show");
-                    }
-                }
-            },
-            btnSearch : {
-                event: {
-                    click: function () {
-                        //검색버튼 클릭시
-                        cmmCtrl.setFormData($modalFormObj);
-                        search(1);
-                    }
-                }
-            },
-            btnModalSelect : {
-                event: {
-                    click: function() {
-                        let trArea = $modalFormObj.find("#listContainer input[type=checkbox]:checked");
-                        if(trArea.length !== 0 || trArea != undefined){
-                            selPartUser = trArea.val();
-                            $modalFormObj.find("#selPartUser").val(selPartUser);
-                            selPartUserData();
-                        }
-
-                    }
-                }
-            },
             searchPostCode : {
                 event : {
                     click : function() {
@@ -310,6 +250,28 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         classname : {
+            // 회원검색 모달
+            btnPartUserModal: {
+                event: {
+                    click: function () {
+                        $("#srchDivide").val("Y");
+                        cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
+                            cmmCtrl.frmAjax(function (respObj) {
+                                $formObj.find('#memSeq').val(data.memSeq);
+                                if(respObj.rtnData == 0){
+                                    cmmCtrl.frmAjax(function(respObj) {
+                                        /* return data input */
+                                        setInputValue(respObj);
+                                    }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                                } else {
+                                    alert("이관 이력이 있는 회원은 선택이 불가합니다.");
+                                    return false;
+                                }
+                            }, "/mngwserc/wb/partUserChk", $formObj, "post", "json");
+                        });
+                    }
+                }
+            },
             appctnPdfDownload : {
                 event : {
                     click : function(){
@@ -388,6 +350,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
                         var beforeUser = $formObj.find("input[name='memSeq']").val();
                         var afterUser = $formDataObj.find("input[name='memSeq']").val();
+
                         if (beforeUser != afterUser) {
                             $formObj.find("input[name='memSeq']").val(beforeUser);
                             $formObj.find("input[name='bfreMemSeq']").val(afterUser);

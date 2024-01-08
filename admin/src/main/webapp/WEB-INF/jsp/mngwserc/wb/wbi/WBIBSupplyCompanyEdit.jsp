@@ -70,7 +70,7 @@
                                            title="신청자" maxlength="50" disabled/>
                                 </div>
                                 <div class="col-sm-1">
-                                    <button type="button" id="btnPartUserModal" class="btn btn-sm btn-info">회원검색
+                                    <button type="button" class="btn btn-sm btn-info btnPartUserModal">회원검색
                                     </button>
                                 </div>
                             </div>
@@ -639,7 +639,7 @@
 
 
         <%-- 부품사 회원 검색 모달 --%>
-        <jsp:include page="/WEB-INF/jsp/mngwserc/wb/WBFBPartUserModal.jsp"/>
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
 
     </div>
 </div>
