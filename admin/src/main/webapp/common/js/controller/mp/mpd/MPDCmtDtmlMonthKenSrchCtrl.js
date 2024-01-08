@@ -15,12 +15,9 @@ var exports = {
 
     function init() {
         var Month = new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)
-
         $(".monthInit").val(Month);
         tableList();
         tabFour();
-
-
     }
 
 
@@ -39,8 +36,6 @@ var exports = {
     }, "/mngwserc/mp/mpd/ken-month-table", $formObj, "POST", "json",'',false);
 
     }
-
-
 
 
     var tabFour = function() {
@@ -79,13 +74,13 @@ var exports = {
 
     },
     classname : {
-        monthInit : {
+        monthpicker : {
             event : {
                 change : function () {
                     tableList();
                     tabFour();
-                }
-            }
+                },
+            },
         },
         classType : {
             event : {
@@ -143,7 +138,6 @@ var exports = {
     },
     immediately : function() {
         init();
-
     }
     };
 

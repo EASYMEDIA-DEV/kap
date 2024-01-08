@@ -119,6 +119,24 @@ var exports = {
     }
 
     var tabFour = function(kenChk) {
+
+        var year = new Date().getFullYear().toString() ;
+        $(".mtz-monthpicker.mtz-monthpicker-year").val(year);
+
+        var input_month = ("0" + (new Date().getMonth() + 1));
+        var month = 0 ;
+        if(input_month < 10) {
+            month = input_month.substring(1,2);
+        } else {
+            month = input_month;
+        }
+        $('.ui-state-default.mtz-monthpicker.mtz-monthpicker-month.ui-state-active').attr('class','ui-state-default mtz-monthpicker mtz-monthpicker-month');
+        if(month <= 3) {
+            $("tbody.mtz-monthpicker").find('tr:first').find('td:eq('+(month-1)+')').addClass('ui-state-active');
+        } else {
+            $('.mtz-monthpicker').find('td:eq('+(month-1)+')').addClass('ui-state-active');
+        }
+
         //근태 사업
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);

@@ -6,7 +6,7 @@
     <jsp:param name="selPer" value="popup" />
 </jsp:include>
 <div class="container-fluid ">
-    <div class="card-body" data-controller="controller/co/COFormCtrl controller/mp/mpd/MPDCmtListCtrl">
+    <div class="card-body" data-controller="controller/co/COFormCtrl controller/mp/mpd/MPDCmtListCtrl ">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
         <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="board">
             <!-- 현재 페이징 번호 -->
@@ -20,6 +20,7 @@
             <input type="hidden" class="notRequired" id="lgnSsnId" value="${rtnData.lgnSsnId}">
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="${ rtnData.detailsKey }" />
+            <input type="hidden" id="monthpicker" name="monthpicker"  />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="등록/수정기간" />

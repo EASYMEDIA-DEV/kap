@@ -55,7 +55,8 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         $(".MPDCmtKenDaySrchLayer").one('show.bs.modal', function() {
                             $(".monthInit").val( new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)+"-"+("0" + (new Date().getDate())).slice(-2));
-
+                            $("#monthpicker").val(new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)+"-"+("0" + (new Date().getDate())).slice(-2));
+                            dayKenInit($("#monthpicker").val());
                         }).one('hidden.bs.modal', function() {
                             // Remove class for soft backdrop (if not will affect future modals)
                         }).one('choice', function(data, param) {
@@ -70,9 +71,31 @@ define(["ezCtrl"], function(ezCtrl) {
             monthKen : {
                 event : {
                     click : function() {
+
+                        var year = new Date().getFullYear().toString() ;
+                        $(".mtz-monthpicker.mtz-monthpicker-year").val(year);
+
+                        var input_month = ("0" + (new Date().getMonth() + 1));
+                        var month = 0 ;
+                        if(input_month < 10) {
+                            month = input_month.substring(1,2);
+                        } else {
+                            month = input_month;
+                        }
+                        $('.ui-state-default.mtz-monthpicker.mtz-monthpicker-month.ui-state-active').attr('class','ui-state-default mtz-monthpicker mtz-monthpicker-month');
+                        if(month <= 3) {
+                            $("tbody.mtz-monthpicker").find('tr:first').find('td:eq('+(month-1)+')').addClass('ui-state-active');
+                        } else {
+                            $('.mtz-monthpicker').find('td:eq('+(month-1)+')').addClass('ui-state-active');
+                        }
+
                         $(".MPDCmtKenMonthSrchLayer").one('show.bs.modal', function() {
                             var Month = new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)
-                            $(".monthInit").val(Month);
+                            $(".monthpicker").val(Month);
+                            $("#monthpicker").val(Month);
+                            tableList();
+                            tabFour();
+
                         }).one('hidden.bs.modal', function() {
                             // Remove class for soft backdrop (if not will affect future modals)
                         }).one('choice', function(data, param) {
@@ -284,6 +307,58 @@ define(["ezCtrl"], function(ezCtrl) {
             });
         }
     };
+
+    function tableList()  {
+        $("#tableOne").empty();
+        $("#tableTwo").empty();
+        $("#tableOne").append('<th class="text-center" rowspan="2">번호</th>');
+        $("#tableOne").append('<th class="text-center" rowspan="2">이름</th>');
+        cmmCtrl.frmAjax(function(respObj) {
+            let arrays = respObj.MPDKenDto.days;
+            arrays.forEach((element, index) => {
+                $("#tableOne").append('<th class="text-center">'+(index+1)+'</th>');
+                $("#tableTwo").append('<th class="text-center">'+element+'</th>');
+            });
+        }, "/mngwserc/mp/mpd/ken-month-table", $formObj, "POST", "json",'',false);
+
+    }
+
+
+    var tabFour = function() {
+        //근태 사업
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            ctrl.obj.find("#listContainerMonth").html(respObj);
+
+            // //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+
+            // //총 건수
+            ctrl.obj.find("#listContainerMonthTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainerMonth", "pagingContainerMonth");
+        }, "/mngwserc/mp/mpd/ken-month", $formObj, "POST", "html",'',false);
+
+    }
+
+    var dayKenInit = function(kenChk) {
+        //근태 사업
+        cmmCtrl.listFrmAjax(function(respObj) {
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
+            //CALLBACK 처리
+            ctrl.obj.find("#listContainerKen").html(respObj);
+            //전체 갯수
+            var totCnt = $(respObj).eq(0).data("totalCount");
+            //총 건수
+            ctrl.obj.find("#listContainerKenTotCnt").text(totCnt);
+            if(kenChk) {
+                $('.chkdd').remove();
+            }
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "listContainerKen", "pagingContainerKen");
+        }, "/mngwserc/mp/mpd/select-tab-four", $formObj, "POST", "html",'',false);
+
+    }
 
     // execute model
     ctrl.exec();

@@ -30,7 +30,7 @@
                     <hr class="mt0" />
 
                     <div class="clearfix">
-                        <h6 class="pull-left mt0">
+                        <h6 class="pull-left mt0" style="margin-right:1rem;">
                             <em class="ion-play mr-sm"></em> 근태 현황 (총 <span id="listContainerKenTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
@@ -41,14 +41,14 @@
                             </select>
                         </div>
                             <div class="input-group">
-                                <input type="text" class="notRequired monthInit form-control input-sm datetimepicker_strtDt " name="monthpicker" value=""  readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();"/>
-                                <span class="input-group-btn" style="z-index:0;">
+                                <input style="width:100px;" type="text"  class="notRequired monthInit form-control input-sm datetimepicker_strtDt " name="monthpicker" value=""  readonly onclick="cmmCtrl.initCalendar(this); $(this).focus();"/>
+                                <span  style="width:20%;" class="input-group-btn" style="z-index:0;">
                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                             <em class="ion-calendar"></em>
                                         </button>
                                     </span>
                                 <div class="pull-right">
-                                <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
+                                <button type="button" class="btn btn-inverse btn-sm " id="btnExcelDown">엑셀다운로드</button>
                                 </div>
                             </div>
 
