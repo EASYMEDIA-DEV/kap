@@ -74,7 +74,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
                         var year = new Date().getFullYear().toString() ;
                         $(".mtz-monthpicker.mtz-monthpicker-year").val(year);
-
                         var input_month = ("0" + (new Date().getMonth() + 1));
                         var month = 0 ;
                         if(input_month < 10) {
@@ -82,12 +81,16 @@ define(["ezCtrl"], function(ezCtrl) {
                         } else {
                             month = input_month;
                         }
+
+
                         $('.ui-state-default.mtz-monthpicker.mtz-monthpicker-month.ui-state-active').attr('class','ui-state-default mtz-monthpicker mtz-monthpicker-month');
+
                         if(month <= 3) {
                             $("tbody.mtz-monthpicker").find('tr:first').find('td:eq('+(month-1)+')').addClass('ui-state-active');
                         } else {
                             $('.mtz-monthpicker').find('td:eq('+(month-1)+')').addClass('ui-state-active');
                         }
+
 
                         $(".MPDCmtKenMonthSrchLayer").one('show.bs.modal', function() {
                             var Month = new Date().getFullYear()+"-" +  ("0" + (new Date().getMonth() + 1)).slice(-2)
@@ -105,6 +108,7 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
+
 
             //엑셀다운로드
             btnExcelDown : {
@@ -328,13 +332,13 @@ define(["ezCtrl"], function(ezCtrl) {
         //근태 사업
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
-            ctrl.obj.find("#listContainerMonth").html(respObj);
+            $("#listContainerMonth").html(respObj);
 
             // //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
 
             // //총 건수
-            ctrl.obj.find("#listContainerMonthTotCnt").text(totCnt);
+            $("#listContainerMonthTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainerMonth", "pagingContainerMonth");
         }, "/mngwserc/mp/mpd/ken-month", $formObj, "POST", "html",'',false);
@@ -346,11 +350,11 @@ define(["ezCtrl"], function(ezCtrl) {
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
-            ctrl.obj.find("#listContainerKen").html(respObj);
+           $("#listContainerKen").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
             //총 건수
-            ctrl.obj.find("#listContainerKenTotCnt").text(totCnt);
+            $("#listContainerKenTotCnt").text(totCnt);
             if(kenChk) {
                 $('.chkdd').remove();
             }
