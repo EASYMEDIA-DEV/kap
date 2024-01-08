@@ -481,6 +481,8 @@
              , cmpn_mst.dtl_addr as cmpn_dtl_addr
              , cmpn_mst.rprsnt_nm as rprsntNm
              , mem.dept_cd
+             , case when mem.dept_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.dept_cd )
+                    else '' end as dept_cd_nm
              , mem.dept_dtl_nm
              , mem.pstn_cd
              , mem.reg_dtm
