@@ -15,9 +15,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     //과정분류 조회
     var selectCtgryCdList = function(arg){
 
-        if(arg === undefined){
+        if($(arg).val() == "" || $(arg).val() === undefined){
             arg = $("#ctgryCd").data("ctgrycd");
         }
+
+        // if(arg === undefined){
+        //     arg = $("#ctgryCd").data("ctgrycd");
+        // }
 
         var cdMst= {};
         cdMst.cd = $(arg).val();
@@ -31,7 +35,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var callbackAjaxCtgryCdList = function(data){
 
         var detailList = JSON.parse(data);
-        var selectHtml = "<option value=''>전체</option>";
+        var selectHtml = "<option value=''>선택</option>";
 
         for(var i =0; i < detailList.length; i++){
 
@@ -47,7 +51,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
         var ctgrycd = $("#ctgryCd").data("ctgrycd");
 
-        $("#ctgryCd").val(ctgrycd).prop("selected", true);//조회된 과정분류값 자동선택
+        if($('#ctgryCd option[value="'+ctgrycd+'"]').length > 0){
+            $("#ctgryCd").val(ctgrycd).prop("selected", true);//조회된 과정분류값 자동선택
+        }else{
+            $("#ctgryCd").val("").prop("selected", true);//조회된 과정분류값 자동선택
+
+        }
+
     }
 
 

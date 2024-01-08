@@ -384,6 +384,8 @@
 			,reg_dtm
 			,mod_id
 			,mod_dtm
+		    ,( select name from co_adm_mst where id = a.reg_id) as reg_name
+		    ,( select name from co_adm_mst where id = a.mod_id) mod_name
 		from ex_exam_mst a
 		where exam_seq = #{detailsKey}
 	</select>
