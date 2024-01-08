@@ -157,19 +157,22 @@
 <fieldset>
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">주요경력<span class="star"> *</span></label>
-        <div class="col-sm-3">
+        <div class="col-sm-5">
             <div class="input-group">
-                <textarea  type="text" id="cmssrMjrCarerCntn" placeholder="주요경력 입력" title="주요경력" name="cmssrMjrCarerCntn">${rtnDtl.cmssrMjrCarerCntn}</textarea>               </div>
+                <textarea class="form-control input-sm" style="resize: none; border-radius:0.4rem;" rows="1" cols="20" type="text" id="cmssrMjrCarerCntn" title="주요경력" name="cmssrMjrCarerCntn" placeholder="주요경력 입력">${rtnDtl.cmssrMjrCarerCntn}</textarea>
+            </div>
         </div>
     </div>
+
 </fieldset>
+
 
 <fieldset>
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">컨설팅분야</label>
         <div class="col-sm-3">
             <div class="input-group">
-                <textarea  type="text" id="cmssrCnstgFldCntn" placeholder="컨설팅분야 입력" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired">${rtnDtl.cmssrCnstgFldCntn}</textarea>               </div>
+                <textarea  class="form-control input-sm" style="resize: none; border-radius:0.4rem ;" type="text" rows="1" cols="20" id="cmssrCnstgFldCntn" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired" placeholder="컨설팅분야 입력">${rtnDtl.cmssrCnstgFldCntn}</textarea>               </div>
         </div>
     </div>
 </fieldset>

@@ -191,7 +191,7 @@
         </form>
     </div>
 
-    <div>
+    <div class="dtl-tab">
         <h5>수정이력</h5>
         <table class="table">
             <colgroup>
