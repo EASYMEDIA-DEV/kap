@@ -246,20 +246,8 @@
                 </div>
             </fieldset>
             <c:if test="${not empty rtnDto.examSeq}">
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">최초 등록자</label>
-                        <div class="col-sm-4">
-                            <p class="form-control-static">${rtnDto.regName} (${rtnDto.regId})</p>
-                        </div>
-                        <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최초 등록일</label>
-                        <div class="col-sm-4">
-                            <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</p>
-                        </div>
-                    </div>
-                </fieldset>
                 <c:set var="modFlag" value="${not empty rtnDto.modDtm && (rtnDto.regDtm ne rtnDto.modDtm)}" />
-                <h5>수정이력</h5>
+                <h5>등록/수정이력</h5>
                 <table class="table">
                     <colgroup>
                         <col style="width:10%;">
@@ -272,7 +260,7 @@
                         <th scope="row" class="bg-gray-lighter">최초 등록자 </th>
                         <td>${rtnDto.regName} (${rtnDto.regId})</td>
                         <th scope="row" class="bg-gray-lighter">최초 등록일시</th>
-                        <td>${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</td>
+                        <td>${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</td>
                     </tr>
                     <tr>
                         <th scope="row" class="bg-gray-lighter">최종 수정자</th>
@@ -288,7 +276,7 @@
                         <th scope="row" class="bg-gray-lighter">최종 수정일시 </th>
                         <c:choose>
                             <c:when test="${modFlag}">
-                                <td>${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</td>
+                                <td>${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</td>
                             </c:when>
                             <c:otherwise>
                                 <td>-</td>
@@ -306,7 +294,7 @@
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnDto.examSeq}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete" style="${ kl:decode(rtnDto.posbChg, false, 'display:none;', '') }" >삭제</button>
                             <button type="submit" class="btn btn-sm btn-success">수정</button>
                         </c:when>
                         <c:otherwise>
