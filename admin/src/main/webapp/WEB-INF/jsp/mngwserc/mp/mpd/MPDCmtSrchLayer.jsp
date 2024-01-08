@@ -31,7 +31,7 @@
                     <fieldset>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">위원구분</label>
-                            <div class="col-sm-5">
+                            <div class="col-sm-7">
                                 <label class="checkbox-inline c-checkbox">
                                     <input type="checkbox" class="checkboxAll" />
                                     <span class="ion-checkmark-round"></span> 전체
@@ -49,30 +49,10 @@
                             </div>
                         </div>
                     </fieldset>
-
-<%--                    <fieldset>--%>
-<%--                        <div class="form-group text-sm">--%>
-<%--                            <label class="col-sm-1 control-label">재직여부</label>--%>
-<%--                            <div class="col-sm-5">--%>
-<%--                                <label class="checkbox-inline c-checkbox">--%>
-<%--                                    <input type="checkbox" class="checkboxAll" />--%>
-<%--                                    <span class="ion-checkmark-round"></span> 전체--%>
-<%--                                </label>--%>
-<%--                                <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">--%>
-<%--                                    <c:if test="${fn:contains(cdList, 'MEM_CD040')}">--%>
-<%--                                        <label class="checkbox-inline c-checkbox">--%>
-<%--                                            <input type="checkbox" class="checkboxSingle" data-name="cmssrWorkList" value="${cdList.cd}" />--%>
-<%--                                            <span class="ion-checkmark-round"></span> ${cdList.cdNm}--%>
-<%--                                        </label>--%>
-<%--                                    </c:if>--%>
-<%--                                </c:forEach>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </fieldset>--%>
                     <div id="selectBoxArea"></div>
                     <fieldset class="last-child">
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">검색키워드</label>
+                            <label class="col-sm-1 control-label" style="width : 10%">검색키워드</label>
                             <div class="col-sm-4">
                                 <div class="row">
                                     <div class="col-sm-3 pr0">
@@ -135,6 +115,8 @@
                                 <th class="text-center">이메일</th>
                                 <th class="text-center">최초 등록자</th>
                                 <th class="text-center">최초 등록일시</th>
+                                <th class="text-center">최종 수정자</th>
+                                <th class="text-center">최종 수정일시</th>
                             </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->
