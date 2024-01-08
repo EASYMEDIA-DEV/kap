@@ -43,15 +43,26 @@
             </fieldset>
 
 
-            <h6 class="mt0">신청자 정보</h6>
+            <br>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <div class="col-sm-5" style="margin-left: -15px">
+                        <h6 class="mt0">신청자 정보</h6>
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-5">
+                        <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                    </div>
+                </div>
+            </fieldset>
 
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청자(아이디)<span class="star"> *</span></label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <input type="hidden" id="memSeq" name="memSeq" value="" />
-                            <input type="text" class="form-control notRequired" id="mem" value="${rtnDto.nm}" title="신청자" disabled/>
+                            <input type="hidden" id="memSeq" class="notRequired" name="memSeq" value="" />
+                            <input type="text" class="form-control" id="mem" value="${rtnDto.nm}" title="신청자" disabled/>
                         </div>
                         <div class="col-sm-1">
                             <button type="button" id="btnPartUserModal" class="btn btn-sm btn-info">회원검색</button>
@@ -85,10 +96,10 @@
                         </div>
                     </div>
 
-                    <label class="col-sm-1 control-label">직급</label>
+                    <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <select class="form-control input-sm notRequired" id="pstnCd" name="pstnCd" title="직급">
+                            <select class="form-control input-sm" id="pstnCd" name="pstnCd" title="직급">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${classTypeList.MEM_CD}" varStatus="status">
                                     <c:if test="${fn:contains(cdList.cd, 'MEM_CD010')}">
@@ -118,8 +129,18 @@
                 </div>
             </fieldset>
 
-
-            <h6 class="mt0">부품사 정보</h6>
+            <br>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <div class="col-sm-5" style="margin-left: -15px">
+                        <h6 class="mt0">부품사 정보</h6>
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-5">
+                        <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                    </div>
+                </div>
+            </fieldset>
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -135,7 +156,7 @@
                     <label class="col-sm-1 control-label">구분<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
-                            <select class="form-control input-sm" id="ctgryCd" name="ctgryCd">
+                            <select class="form-control input-sm" id="ctgryCd" name="ctgryCd" title="구분">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${classTypeList.COMPANY_TYPE}" varStatus="status">
                                     <c:if test="${fn:contains(cdList.cd, 'COMPANY01001')}">
@@ -150,10 +171,10 @@
                         </div>
                     </div>
 
-                    <label class="col-sm-1 control-label">규모</label>
+                    <label class="col-sm-1 control-label">규모<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
-                            <select class="form-control input-sm notRequired" id="sizeCd" name="sizeCd">
+                            <select class="form-control input-sm" id="sizeCd" name="sizeCd" title="규모">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${classTypeList.COMPANY_TYPE}" varStatus="status">
                                     <c:if test="${fn:contains(cdList.cd, 'COMPANY020')}">
@@ -175,11 +196,11 @@
                         </div>
                     </div>
 
-                    <label class="col-sm-1 control-label">설립일자</label>
+                    <label class="col-sm-1 control-label">설립일자<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" id="stbsmDt" name="stbsmDt"
+                                <input type="text" class="form-control input-sm datetimepicker_strtDt" id="stbsmDt" name="stbsmDt"
                                        value=""
                                        title="설립일자" readonly onclick="cmmCtrl.initCalendar(this);"/>
                                 <span class="input-group-btn" style="z-index:0;">
@@ -340,7 +361,7 @@
                         </select>
                         <input type="text" id="crtfnCmpnNm0" class="form-control input-sm notRequired SQ" name="crtfnCmpnNm" value="" maxlength="50" placeholder="SQ인증주관사"/>
 
-                        <br>
+                        <br><br>
 
                         <input type="text" id="nm1" class="form-control input-sm notRequired SQ" name="nm" value="" maxlength="50" placeholder="SQ업종"/>
                         <input type="text" id="score1" class="form-control input-sm numberChk notRequired SQ" name="score" value="" maxlength="50" placeholder="SQ점수"/>
@@ -352,7 +373,7 @@
                         </select>
                         <input type="text" id="crtfnCmpnNm1" class="form-control input-sm notRequired SQ" name="crtfnCmpnNm" value="" maxlength="50" placeholder="SQ인증주관사"/>
 
-                        <br>
+                        <br><br>
 
                         <input type="text" id="nm2" class="form-control input-sm notRequired SQ" name="nm" value="" maxlength="50" placeholder="SQ업종"/>
                         <input type="text" id="score2" class="form-control input-sm numberChk notRequired SQ" name="score" value="" maxlength="50" placeholder="SQ점수"/>

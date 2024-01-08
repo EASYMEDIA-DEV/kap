@@ -28,7 +28,18 @@
                 </c:if>
             </strong></h6><hr>
             <div id="appctnPdfArea1">
-            <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
+                <br>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <div class="col-sm-5" style="margin-left: -15px">
+                            <h6 class="mt0">신청자 정보</h6>
+                        </div>
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-5">
+                            <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        </div>
+                    </div>
+                </fieldset>
 
             <div id="compnayDiv">
                 <fieldset>
@@ -79,10 +90,10 @@
                             </div>
                         </div>
 
-                        <label class="col-sm-1 control-label">직급</label>
+                        <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="col-sm-5" style="margin-left: -15px">
-                                <select class="form-control input-sm notRequired" id="pstnCd" name="pstnCd" title="직급">
+                                <select class="form-control input-sm" id="pstnCd" name="pstnCd" title="직급">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                         <c:if test="${fn:contains(cdList.cd, 'MEM_CD010')}">
@@ -114,7 +125,18 @@
                 </fieldset>
 
 
-                <h6 class="mt0"><em class="ion-play mr-sm"></em>부품사 정보</h6>
+                <br>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <div class="col-sm-5" style="margin-left: -15px">
+                            <h6 class="mt0">부품사 정보</h6>
+                        </div>
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-5">
+                            <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        </div>
+                    </div>
+                </fieldset>
 
                 <fieldset>
                     <div class="form-group text-sm">
