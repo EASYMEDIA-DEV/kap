@@ -18,25 +18,17 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">과정분류<span class="star"> *</span></label>
-                    <div class="col-sm-11" style="margin-left: -15px">
-                        <div class="col-sm-1">
+                    <div class="col-sm-6 form-inline">
                             <select class="form-control input-sm wd-sm classType" name="cd" id="cd" title="과정분류-대분류">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
                                     <option value="${cdList.cd}" <c:if test="${rtnDto.prntCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                 </c:forEach>
                             </select>
-                        </div>
-
-                        <div class="col-sm-1">
                             <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="과정분류-중분류" data-ctgrycd="${rtnDto.ctgryCd}" readonly="true" disabled>
                                 <option value="">선택</option>
                             </select>
-                        </div>
-
-
-                    </div>
-
+                </div>
                 </div>
             </fieldset>
             <fieldset>

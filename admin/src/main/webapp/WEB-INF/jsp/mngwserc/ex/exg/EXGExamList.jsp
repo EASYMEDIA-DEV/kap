@@ -15,7 +15,7 @@
 				<input type="hidden" id="detailsKey" name="detailsKey" value="" />
 				<!--기간 검색 시작-->
 				<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-					<jsp:param name="srchText" value="등록/수정기간" />
+					<jsp:param name="srchText" value="기간검색" />
 					<jsp:param name="srchOption" value="등록일,수정일" />
 				</jsp:include>
 				<fieldset>
@@ -48,8 +48,8 @@
 										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>제목</option>
 										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>과정명</option>
 										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>과정분류</option>
-										<option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>최초등록자</option>
-										<option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종수정자</option>
+										<option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>최초 등록자</option>
+										<option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종 수정자</option>
 
 									</select>
 								</div>

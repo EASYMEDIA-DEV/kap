@@ -16,20 +16,20 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">과정분류<span class="star"> *</span></label>
-                    <div class="col-sm-11" style="margin-left: -15px">
-                        <div class="col-sm-1">
+                        <div class="col-sm-6 form-inline">
                             <select class="form-control input-sm wd-sm classType" name="cd" id="cd" title="과정분류-대분류${rtnDto.prntCd}">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
                                     <option value="${cdList.cd}" <c:if test="${rtnDto.prntCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                 </c:forEach>
                             </select>
-                        </div>
-                        <div class="col-sm-1">
-                            <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="권한" data-ctgrycd="${rtnDto.ctgryCd}">
+                            <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="과정분류-중분류" data-ctgrycd="${rtnDto.ctgryCd}" >
                                 <option value="">선택</option>
                             </select>
-                        </div>
+<%--                            <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="권한" data-ctgrycd="${rtnDto.ctgryCd}">--%>
+<%--                                <option value="">선택</option>--%>
+<%--                            </select>--%>
+
                     </div>
                 </div>
             </fieldset>
@@ -246,8 +246,6 @@
                 </div>
             </fieldset>
             <c:if test="${not empty rtnDto.examSeq}">
-                <fieldset></fieldset>
-                <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">최초 등록자</label>
                         <div class="col-sm-4">
@@ -261,37 +259,44 @@
                     </div>
                 </fieldset>
                 <c:set var="modFlag" value="${not empty rtnDto.modDtm && (rtnDto.regDtm ne rtnDto.modDtm)}" />
-                <fieldset class="last-child">
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">최종 수정자</label>
-                        <div class="col-sm-4">
-                            <p class="form-control-static">
-                                <c:choose>
-                                    <c:when test="${modFlag}">
-                                        ${rtnDto.modName} (${rtnDto.modId})
-                                    </c:when>
-                                    <c:otherwise>
-                                        -
-                                    </c:otherwise>
-                                </c:choose>
-                            </p>
-                        </div>
-                        <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최종 수정일</label>
-                        <div class="col-sm-4">
-                            <p class="form-control-static">
-                                <c:choose>
-                                    <c:when test="${modFlag}">
-                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}
-                                    </c:when>
-                                    <c:otherwise>
-                                        -
-                                    </c:otherwise>
-                                </c:choose>
-                            </p>
-                        </div>
-                    </div>
-                </fieldset>
+                <h5>수정이력</h5>
+                <table class="table">
+                    <colgroup>
+                        <col style="width:10%;">
+                        <col style="width:40%;">
+                        <col style="width:10%;">
+                        <col style="width:40%;">
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row" class="bg-gray-lighter">최초 등록자 </th>
+                        <td>${rtnDto.regName} (${rtnDto.regId})</td>
+                        <th scope="row" class="bg-gray-lighter">최초 등록일시</th>
+                        <td>${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row" class="bg-gray-lighter">최종 수정자</th>
+                        <c:choose>
+                            <c:when test="${modFlag}">
+                                <td>${rtnDto.modName} (${rtnDto.modId})</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>-</td>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <th scope="row" class="bg-gray-lighter">최종 수정일시 </th>
+                        <c:choose>
+                            <c:when test="${modFlag}">
+                                <td>${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td>-</td>
+                            </c:otherwise>
+                        </c:choose>
+                    </tr>
+                    </tbody>
+                </table>
             </c:if>
             <hr />
             <div class="clearfix">
