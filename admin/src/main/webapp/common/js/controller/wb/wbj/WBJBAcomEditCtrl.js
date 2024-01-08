@@ -15,10 +15,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     let selPartUser; /* 선택 사용자 ID*/
 
     var $formObj = ctrl.obj.find("form").eq(0);
-    // form Object
-    var $modalObj = $(".part-modal");
-    //modalForm
-    var $modalFormObj = $modalObj.find("form").eq(0);
+
     var $formDataObj = ctrl.obj.find("#frm").eq(0);
     // 1차 심사사용자 신청 상태값
     var mngSttsCd = $("#mngSttsCd option:selected").val();
@@ -67,35 +64,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         fieldSQ.find("input,select").prop('disabled', true);
         fieldStart.hide();
         fieldStart.find("input,select").prop('disabled', true);
-    }
-
-    // 목록 조회
-    var search = function (page){
-
-        if(page !== undefined){
-            $modalFormObj.find("#pageIndex").val(page);
-        }
-        cmmCtrl.listFrmAjax(function(respObj) {
-            $modalFormObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
-            //CALLBACK 처리
-            ctrl.obj.find("#listContainer").html(respObj);
-            //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            //총 건수
-            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $modalFormObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/wb/wbjb/setModalData", $modalFormObj, "POST", "html");
-
-    }
-
-    var selPartUserData = function (){
-        cmmCtrl.frmAjax(function(respObj) {
-            $modalObj.modal("hide");
-            /* return data input */
-            setInputValue(respObj);
-        }, "/mngwserc/wb/wbjb/setModalDetail", $modalFormObj, "post", "json")
-
     }
 
     /* 페이지 구성에 맞게 input value set (rtnData keys HTML id 값 동일 처리 필요) */
@@ -239,7 +207,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             optYear : {
                 event : {
                     change : function() {
-                        cmmCtrl.setFormData($modalFormObj);
                         selEpisdList();
                     },
                 }
@@ -247,7 +214,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             /*optEpisd : {
                 event : {
                     change : function() {
-                        cmmCtrl.setFormData($modalFormObj);
                         selOptnList();
                     },
                 }
@@ -280,37 +246,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         }else{
                             document.getElementById("finalAppctnSttsCd").value = "PRO_TYPE05002_01_001";
                         }
-                    }
-                }
-            },
-            // 회원검색 모달
-            btnPartUserModal : {
-                event : {
-                    click: function () {
-                        search(1);
-                        $modalObj.modal("show");
-                    }
-                }
-            },
-            btnSearch : {
-                event: {
-                    click: function () {
-                        //검색버튼 클릭시
-                        cmmCtrl.setFormData($modalFormObj);
-                        search(1);
-                    }
-                }
-            },
-            btnModalSelect : {
-                event: {
-                    click: function() {
-                        let trArea = $modalFormObj.find("#listContainer input[type=checkbox]:checked");
-                        if(trArea.length !== 0 || trArea != undefined){
-                            selPartUser = trArea.val();
-                            $modalFormObj.find("#selPartUser").val(selPartUser);
-                            selPartUserData();
-                        }
-
                     }
                 }
             },
@@ -349,6 +284,21 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             }
         },
         classname : {
+            // 회원검색 모달
+            btnPartUserModal: {
+                event: {
+                    click: function () {
+                        $("#srchDivide").val("Y");
+                        cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                /* return data input */
+                                setInputValue(respObj);
+                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                        });
+                    }
+                }
+            },
             appctnPdfDownload : {
                 event : {
                     click : function(){
@@ -377,14 +327,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
-            checkboxSingle : {
-                event : {
-                  click : function() {
-                      $modalFormObj.find('tbody').find('input[type=checkbox]').prop('checked',false);
-                      $(this).prop('checked',true);
-                  }
-                },
-            },
             //페이징 처리
             pageSet : {
                 event : {
@@ -393,30 +335,12 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         if ($(this).closest('#changePaging').length > 0) {
                             $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
                             trnsfSearch($(this).attr("value"));
-                        } else {
-                            if( $(this).attr("value") !== "null" ){
-                                $modalFormObj.find("input[name=pageIndex]").val($(this).attr("value"));
-                                search();
-                            }
                         }
                     }
                 }
             },
-            //페이징 목록 갯수
-            listRowSizeContainer : {
-                event : {
-                    change : function(){
-                        //리스트 갯수 변경
-                        $modalFormObj.find("input[name=listRowSize]").val($(this).val());
-                        search(1);
-                    }
-                }
-            }
         },
         immediately : function() {
-            //리스트 조회
-            //폼 데이터 처리
-            cmmCtrl.setFormData($modalFormObj);
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
                 cmmCtrl.setDropzone(trgtObj, {
