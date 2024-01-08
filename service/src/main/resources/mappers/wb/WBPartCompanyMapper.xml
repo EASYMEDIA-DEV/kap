@@ -176,7 +176,7 @@
             cm.mjr_prdct_3
         FROM (SELECT mem_seq, id, name, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, hp_no, tel_no, work_bsnm_no
                 FROM co_mem_mst
-                WHERE mem_seq = #{selPartUser} AND mem_cd = #{memCd} ) as mm
+                WHERE mem_seq = #{memSeq}) as mm
         INNER JOIN cp_cmpn_mst cm ON mm.work_bsnm_no = cm.bsnm_no;
     </select>
 

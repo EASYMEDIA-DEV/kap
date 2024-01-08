@@ -99,7 +99,7 @@ public class WBPartCompanyDTO extends BaseDTO {
     //테이블 이름
     private String tableNm;
 
-    private int modSeq;
+    private Integer modSeq;
 
     @Schema(title = "직급코드")
     private String pstnCd;
@@ -150,12 +150,12 @@ public class WBPartCompanyDTO extends BaseDTO {
     private String bsnmNo;
 
     @Schema(title = "매출액 - 금액", example = "100")
-    private int slsPmt;
+    private Integer slsPmt;
     @Schema(title = "매출액 - 년도", example = "yyyy")
     private String slsYear;
 
     @Schema(title = "직원 수", example = "100")
-    private int mpleCnt;          // 직원 수
+    private Integer mpleCnt;          // 직원 수
 
     @Schema(title = "품질5스타코드", example = "")
     private String qlty5starCd;
