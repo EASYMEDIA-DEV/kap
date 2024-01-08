@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 // set controller name
     var exports = {
-        controller : "controller/consult/CONsultingApplicationCtrl"
+        controller : "controller/cb/cbb/CBBManageConsultApplicationCtrl"
     };
 
     // get controller object
@@ -75,7 +75,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
+            infoSameChk : {
+                event : {
+                    click : function(){
+                        document.getElementById("infoSameChk").checked;
 
+                    }
+                }
+            }
         },
         classname : {
             consInfoAppl : {

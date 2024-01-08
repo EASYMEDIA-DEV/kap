@@ -4,7 +4,7 @@
   String bsnmNo = request.getParameter("bsnmNo");
 %>
 <input type="hidden" class="bsnmNo" value="<%=bsnmNo%>">
-<div class="cont-wrap" data-controller="controller/consult/CONsultingApplWriteCtrl">
+<div class="cont-wrap" data-controller="controller/cb/cbb/CBBManageConsultWriteCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
@@ -47,10 +47,10 @@
         <div class="lnb-area">
             <div class="for-motion">
                 <div class="lnb-list">
-                    <a class="btn-two-depth single-menu active" href="javascript:"><span>기술지도</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                    <a class="btn-two-depth single-menu" href="javascript:"><span>기술지도</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
                 </div>
                 <div class="lnb-list">
-                    <a class="btn-two-depth single-menu" href="javascript:"><span>경영컨설팅</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                    <a class="btn-two-depth single-menu active" href="javascript:"><span>경영컨설팅</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
                 </div>
             </div>
         </div>
@@ -419,4 +419,3 @@
     </div>
 </div>
 <!-- content 영역 end -->
-<jsp:include page="/WEB-INF/jsp/front/consult/CONsultingLayer.jsp"></jsp:include>

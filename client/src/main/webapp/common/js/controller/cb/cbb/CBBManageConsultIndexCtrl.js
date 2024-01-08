@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 // set controller name
     var exports = {
-        controller : "controller/consult/CONsultingIndexCtrl"
+        controller : "controller/cb/cbb/CBBManageConsultIndexCtrl"
     };
 
     // get controller object
@@ -22,7 +22,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             open : {
                 event : {
                     click : function(){
-                       $(".cssMemberDetailsPopup ").show();
+                       $(".memberDetailsPopup ").show();
                        $("body").addClass("stop-scroll");
                        $(".dimd").css("z-index", `${ dimdIdxNum + $(".layer-popup:visible").length }`).stop(true, true).fadeIn(300);
                        var memSeq = $(this).find(".memSeq").val();
@@ -67,7 +67,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                        if(authCd == 'CS'){
                            alert("위원회원은 해당 서비스를 이용 할 수 없습니다.");
                        }else{
-                            location.href = '/consulting/tech/application';
+                            location.href = '/consulting/manage/application';
                        }
                     }
                 }

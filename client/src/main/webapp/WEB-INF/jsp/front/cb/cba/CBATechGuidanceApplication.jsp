@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
-<div class="cont-wrap" data-controller="controller/consult/CONsultingApplicationCtrl">
+<div class="cont-wrap" data-controller="controller/cb/cba/CBATechGuidanceApplicationCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
@@ -203,4 +203,3 @@
     </div>
 </div>
 <!-- content 영역 end -->
-<jsp:include page="/WEB-INF/jsp/front/consult/CONsultingLayer.jsp"></jsp:include>

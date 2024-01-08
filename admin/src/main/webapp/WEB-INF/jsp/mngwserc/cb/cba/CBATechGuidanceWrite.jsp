@@ -224,8 +224,8 @@
                             &nbsp;억원&nbsp;
                             <select class="form-control input-sm notRequired" id="slsYear" name="slsYear">
                                 <option value="">선택</option>
-                                <c:forEach var="cdList" items="${classCityTypeList.CO_YEAR_CD}" varStatus="status">
-                                    <option value="${cdList.cd}" <c:if test="${rtnDto.episd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.episd eq cdList.cd}">selected</c:if>>${fn:replace(cdList.cdNm, "년",'')}</option>
                                 </c:forEach>
                             </select>
                             &nbsp;년&nbsp;

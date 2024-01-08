@@ -1,4 +1,4 @@
-package com.kap.front.controller.consult;
+package com.kap.front.controller.cb;
 
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -24,7 +24,7 @@ import java.util.List;
  * <pre>
  * 메인 페이지
  * </pre>
- * @ClassName		: CONsultingController.java
+ * @ClassName		: CBATechGuidanceController.java
  * @Description		: 컨설팅 페이지
  * @see
  * @Modification Information
@@ -38,7 +38,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value="/consulting/{type:tech|manage}")
-public class CONsultingController {
+public class CBTechGuidanceController {
 
     /** 코드 서비스 **/
 
@@ -56,7 +56,14 @@ public class CONsultingController {
     private int atchUploadMaxSize;
 
     @GetMapping("/index")
-    public String getConsultIndexPage(ModelMap modelMap, HttpServletRequest request) throws Exception {
+    public String getConsultIndexPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
+
+        String url = "";
+        if(type.equals("tech")){
+            url = "front/cb/cba/CBATechGuidanceIndex.front";
+        }else{
+            url = "front/cb/cbb/CBBManageConsultIndex.front";
+        }
 
         MPAUserDto mpaUserDto = new MPAUserDto();
 
@@ -71,17 +78,32 @@ public class CONsultingController {
 
         modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
 
-        return "front/consult/CONsultingIndex.front";
+        return url;
     }
     @GetMapping("/application")
-    public String getConsultApplicationPage(ModelMap modelMap, HttpServletRequest request) throws Exception {
+    public String getConsultApplicationPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
 
-        return "front/consult/CONsultingApplication.front";
+        String url = "";
+        if(type.equals("tech")){
+            url = "front/cb/cba/CBATechGuidanceApplication.front";
+        }else{
+            url = "front/cb/cbb/CBBManageConsultApplication.front";
+        }
+
+        return url;
     }
 
     @GetMapping("/consInfoAppl")
-    public String getConsultInfoApplicationPage(ModelMap modelMap, HttpServletRequest request) throws Exception {
+    public String getConsultInfoApplicationPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
+        String url = "";
+
         try {
+
+            if(type.equals("tech")){
+                url = "front/cb/cba/CBATechGuidanceWrite.front";
+            }else{
+                url = "front/cb/cbb/CBBManageConsultWrite.front";
+            }
 
             ArrayList<String> cdDtlList = new ArrayList<String>();
             cdDtlList.add("ADDR_CD"); // 소재지 코드
@@ -97,13 +119,13 @@ public class CONsultingController {
             throw new Exception(e.getMessage());
         }
 
-        return "front/consult/CONsultingApplWrite.front";
+        return url;
     }
 
     @RestController
     @RequiredArgsConstructor
-    @RequestMapping(value="consulting/{type:tech|Manage}")
-    public class CONsultingRestController {
+    @RequestMapping(value="consulting/{type:tech|manage}")
+    public class CBATechGuidanceRestController {
 
         private final MPAUserService mPAUserService;
         private final MPEPartsCompanyService mPEPartsCompanyService;

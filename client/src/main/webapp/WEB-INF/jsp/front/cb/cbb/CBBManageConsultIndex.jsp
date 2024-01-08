@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
-<div class="cont-wrap" data-controller="controller/consult/CONsultingIndexCtrl">
+<div class="cont-wrap" data-controller="controller/cb/cbb/CBBManageConsultIndexCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
@@ -16,8 +16,8 @@
         </div>
         <div class="img-area">
             <div class="img">
-                <img class="only-pc" src="/common/images/img-sub-top-visual-notice.jpg" alt="">
-                <img class="only-mobile" src="/common/images/img-sub-top-visual-notice-mobile.jpg" alt="">
+                <img class="only-pc" src="/common/images/img-sub-top-visual-consulting-guide.jpg" alt="">
+                <img class="only-mobile" src="/common/images/img-sub-top-visual-consulting-guide-mobile.jpg" alt="">
             </div>
         </div>
     </div>
@@ -35,10 +35,7 @@
                         <div class="sec-con-area">
                             <div class="txt-sec">
                                 <div class="paragraph">
-                                    <p class="f-sub-head">재단은 부품사의 품질기술력 향상을 위해 기초기술이 취약한 중소 부품사들을 대상으로 금속 7개업종(Al주조, 단조, 용접, 열처리, 절삭가공, 도금, 프레스)과 비금속 5개업종(사출, 고무, 도장, 전기전자, IT System)의 전문기술 인력을 확보하여 부품사의 품질 ,기술, IT, 안전등 제조현장의 다양한 문제를 해결해주는 기술지도 사업을 2003년부터 운영해 오고 있습니다.</p>
-                                </div>
-                                <div class="paragraph">
-                                    <p class="f-sub-head">기술지도사업을 이끄는 기술봉사단은 분야별로 장기간의 실무 경험과 이론을 겸비한 전문가로 구성, 부품사 현장을 방문하여 무상으로 품질과 기술을 지도함으로써 실질적인 품질안정은 물론 기술력 향상, 안전한 제조현장 구축을 도모하고 있습니다.</p>
+                                    <p class="f-sub-head">재단은 2007년 자동차메이커의 연구개발 생산기술, 품질, 해외마케팅 등 다양한 분야의 임원 출신으로 구성된 협력 부품사 지원단을 발족, 회사 전반의 경영자문과 현장 맞춤형 컨설팅을 무상으로 제공하여 부품사의 관리시스템 체계화와 글로벌 경쟁력 향상을 적극 지원하고 있습니다.</p>
                                 </div>
                             </div>
                         </div>
@@ -52,11 +49,11 @@
                         <div class="sec-con-area">
                             <div class="txt-sec">
                                 <div class="paragraph">
-                                    <p class="f-sub-head">제조현장의 품질 및 기술 애로사항에 대한 업종별 기술인력(전문위원)의 현장 맞춤형 혁신활동 지원</p>
+                                    <p class="f-sub-head">자동차 메이커 및 유관기관 임원 출신으로 구성된 자문위원이 전문 경력과 노하우를 전수하기 위하여 부품사를 방문하여 경영전반에 걸쳐 맞춤형 컨설팅 무상으로 제공</p>
                                 </div>
                                 <div class="img-area">
                                     <p class="img">
-                                        <img src="/common/images/img-consulting-business-purpose.jpg" alt="">
+                                        <img src="/common/images/img-managementconsulting-business-purpose.jpg" alt="">
                                     </p>
                                 </div>
                             </div>
@@ -66,12 +63,39 @@
                 <div class="cont-sec scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
-                            <p class="f-title3">대상부품사</p>
+                            <p class="f-title3">컨설팅 개요</p>
                         </div>
                         <div class="sec-con-area">
-                            <div class="txt-sec">
-                                <div class="paragraph">
-                                    <p class="f-head">자동차 부품 1,2,3차 협력사</p>
+                            <div class="table-sec">
+                                <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                    <table class="basic-table">
+                                        <caption>신청자 기본 정보</caption>
+                                        <colgroup>
+                                            <col style="width: 273rem;">
+                                            <col style="width: 820rem;">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>지원대상</th>
+                                            <td>한국자동차부품사</td>
+                                        </tr>
+                                        <tr>
+                                            <th>활동기간</th>
+                                            <td>3~6개월 (필요 시 연장 가능)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>비용(무상)</th>
+                                            <td>
+                                                <p>국내 : 일체 무상지원 (교통비, 숙박비 등 재단 부담)</p>
+                                                <p>해외 : 항공료 및 현지 체제비용 업체부담</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>자문위원 인원</th>
+                                            <td>11명</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -80,52 +104,55 @@
                 <div class="cont-sec scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
-                            <p class="f-title3">지도분야</p>
+                            <p class="f-title3">컨설팅 분야</p>
                         </div>
                         <div class="sec-con-area">
-                            <div class="graphic-sec">
-                                <p class="sub-title">금속업종</p>
-                                <div class="category-list-w">
-                                    <div class="category-list">
-                                        <span>AL주조</span>
-                                    </div>
-                                    <div class="category-list">
-                                        <span>용접</span>
-                                    </div>
-                                    <div class="category-list">
-                                        <span>단조</span>
-                                    </div>
-                                    <div class="category-list">
-                                        <span>프레스</span>
-                                    </div>
-                                    <div class="category-list">
-                                        <span>열처리</span>
-                                    </div>
-                                    <div class="category-list">
-                                        <span>절삭가공</span>
-                                    </div>
-                                    <div class="category-list">
-                                        <span>도금</span>
+                            <div class="gray-bg-sec-w">
+                                <div class="gray-bg-sec">
+                                    <p class="f-title3">경영자문</p>
+                                    <div class="con-list-box-w">
+                                        <div class="con-list-box">
+                                            <p class="f-body1">종합 경영컨설팅</p>
+                                            <div class="ul-txt-w">
+                                                <div class="ul-txt-list">
+                                                    <p class="ul-txt">분야별 자문활동</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="con-list-box">
+                                            <p class="f-body1">자문업체 협력사 One-Point 자문</p>
+                                            <div class="ul-txt-w">
+                                                <div class="ul-txt-list">
+                                                    <p class="ul-txt">연구개발, 생산, 품질, 원가, 물류 등</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="graphic-sec">
-                                <p class="sub-title">비금속업종</p>
-                                <div class="category-list-w">
-                                    <div class="category-list">
-                                        <span>사출</span>
+                                <div class="gray-bg-sec">
+                                    <p class="f-title3">경영진단</p>
+                                    <div class="con-list-box-w">
+                                        <div class="con-list-box">
+                                            <p class="f-body1">회사 전반적인 부문 진단 희망 시</p>
+                                            <div class="ul-txt-w">
+                                                <div class="ul-txt-list">
+                                                    <p class="ul-txt">사업분야별 경영진단팀 구성<br/>1개월 진단</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="category-list">
-                                        <span>고무</span>
-                                    </div>
-                                    <div class="category-list">
-                                        <span>도장</span>
-                                    </div>
-                                    <div class="category-list">
-                                        <span>전기전자</span>
-                                    </div>
-                                    <div class="category-list">
-                                        <span>IT System</span>
+                                </div>
+                                <div class="gray-bg-sec">
+                                    <p class="f-title3">교육 세미나</p>
+                                    <div class="con-list-box-w">
+                                        <div class="con-list-box">
+                                            <p class="f-body1">맞춤형 교육·세미나</p>
+                                            <div class="ul-txt-w">
+                                                <div class="ul-txt-list">
+                                                    <p class="ul-txt">부품사 현지 방문<br/>(품질, 생산기술, 연구개발 등)</p>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -135,64 +162,57 @@
                 <div class="cont-sec scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
-                            <p class="f-title3">지도방법</p>
-                        </div>
-                        <div class="sec-con-area">
-                            <div class="txt-sec">
-                                <div class="paragraph">
-                                    <p class="f-head">6 ~ 9개월 지도업체 주 1회 방문 지도 ( 평균 24MD )</p>
-                                </div>
-                                <div class="ul-txt-w highlight">
-                                    <div class="ul-txt-list">
-                                        <p class="ul-txt has-dot">그룹지도 可 (완성차 및 1차사 요청), 융복합 지도 可 (타 업종, 경영컨설팅)</p>
-                                        <p class="ul-txt has-dot">IT System 분야 : 2 ~ 6개월 (월 1 ~ 2회 방문 / 평균 8 ~ 10MD)</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cont-sec scroll-motion">
-                    <div class="for-motion">
-                        <div class="sec-tit-area">
-                            <p class="f-title3">지도내용</p>
+                            <p class="f-title3">컨설팅 세부 내용</p>
                         </div>
                         <div class="sec-con-area">
                             <div class="gray-bg-sec">
                                 <div class="con-list-box-w">
                                     <div class="con-list-box">
-                                        <p class="sub-title">불량감소</p>
+                                        <p class="f-head">연구개발</p>
                                         <div class="ul-txt-w">
                                             <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">작업자 및 관리자 대상 의식교육 (품질, 기술, 원가, 안전 등) 실시</p>
-                                                <p class="ul-txt has-dot">공정불량 감소를 위한 상세 진단 및 지도</p>
+                                                <p class="ul-txt has-dot">미래차 사업 확대, 기술개발 로드맵 수립, 부품·신차개발 프로세스 정립, 연구소 운영</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="con-list-box">
-                                        <p class="sub-title">공정개선</p>
+                                        <p class="f-head">생산</p>
                                         <div class="ul-txt-w">
                                             <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">3정 5행 관련 개선안 도출 및 해당 업체와 합동 개선활동 추진</p>
-                                                <p class="ul-txt has-dot">현장 LAY-OUT 개선 및 물류 효율화 방안 제시</p>
-                                                <p class="ul-txt has-dot">품질문제, 불량률 축소를 위한 현장 개선활동 지도, SQ등급 향상 등</p>
+                                                <p class="ul-txt has-dot">공장운영, 생산(생산성 향상)설비 관리·개선, 공장라인 운영 적정성 관리, 부품 재고 관리</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="con-list-box">
-                                        <p class="sub-title">생산성 향상 &middot; 원가절감</p>
+                                        <p class="f-head">생산기술</p>
                                         <div class="ul-txt-w">
                                             <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">재료비 LOSS 감소, C/T 단축 방안 및 작업인원 축소 방안 제시 및 실행</p>
-                                                <p class="ul-txt has-dot">5스타 레벨업, SQ 레벨업을 위한 품질시스템 지도</p>
+                                                <p class="ul-txt has-dot">공정자동화, 6M 표준화, 수익성 개선, 공장 레이아웃·불량분석·설비 개선</p>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="con-list-box">
-                                        <p class="sub-title">전산시스템 및 스마트공장 구축 지원</p>
+                                        <p class="f-head">품질</p>
                                         <div class="ul-txt-w">
                                             <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">부문별 전산화, 현장 자동화, 단계별 스마트공장 설계·구축·운영 컨설팅</p>
+                                                <p class="ul-txt has-dot">품질경영시스템구축, 품질 불량 개선, 품질5스타 및 SQ 평가·인증</p>
+                                                <p class="ul-txt has-dot">자동차부품 Recall(제작 결함) 대응</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="con-list-box">
+                                        <p class="f-head">원가(재경)</p>
+                                        <div class="ul-txt-w">
+                                            <div class="ul-txt-list">
+                                                <p class="ul-txt has-dot">손익분석 관련 업무지원(제품, 공단단위별), 원가 계산, 재경 업무(회계·세무·재무)</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="con-list-box">
+                                        <p class="f-head">기획/전략</p>
+                                        <div class="ul-txt-w">
+                                            <div class="ul-txt-list">
+                                                <p class="ul-txt has-dot">경영관리 체계 정립, 리더십·직원역량개발, 미래비전 및 중장기 전략 수립</p>
                                             </div>
                                         </div>
                                     </div>
@@ -204,7 +224,7 @@
                 <div class="cont-sec scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
-                            <p class="f-title3">상주기술지도 신청 안내</p>
+                            <p class="f-title3">경영컨설팅 신청 안내</p>
                         </div>
                         <div class="sec-con-area">
                             <div class="graphic-sec">
@@ -230,7 +250,7 @@
                                     <div class="step-list">
                                         <p class="step-num">STEP 04</p>
                                         <div class="step-info">
-                                            <p class="step-con">상주기술지도 부품사선정</p>
+                                            <p class="step-con">상주경영컨설팅 부품사선정</p>
                                         </div>
                                     </div>
                                 </div>
@@ -240,7 +260,10 @@
                                         <div class="img" style="background-image: url('/common/images/img-apply-btn-bg.jpg');"></div>
                                     </div>
                                     <div class="txt-area">
-                                        <p class="txt f-head">상주기술지도 신청은 온라인으로만 접수받으며, 절차에 따라 항목을 입력하시면 신청이 완료됩니다. <br>이후 담당자가 연락하여, 초도 방문 후 상주기술지도 부품사를 선정하게 됩니다.</p>
+                                        <p class="txt f-head">
+                                            상주경영컨설팅 신청은 온라인으로만 접수받으며, 절차에 따라 항목을 입력하시면 신청이 완료됩니다.
+                                            <br/>이후 담당자가 연락하여, 초도 방문 후 상주경영컨설팅 부품사를 선정하게 됩니다.
+                                        </p>
                                     </div>
                                     <div class="btn-wrap">
                                         <a class="btn-solid small white-bg techApplication" data-authCd="${loginMap.authCd}" <c:if test="${empty loginMap}">href="/login"</c:if>><span>신청하기</span></a>
@@ -249,7 +272,7 @@
 
                                 <div class="divide-flex-box download">
                                     <div class="left">
-                                        <p class="f-body2">상주기술지도 신청 시 회사소개서(자율 양식)와 개선활동 추진계획서가 필수로 첨부되어야 합니다.</p>
+                                        <p class="f-body2">상주경영컨설팅 신청 시 회사소개서(자율 양식)와 개선활동 추진계획서가 필수로 첨부되어야 합니다.</p>
                                         <p class="f-caption2">* 개선활동 추진계획서는 다운로드 후 양식에 맞게 작성 후 첨부 부탁드립니다.</p>
                                     </div>
                                     <div class="right has-button">
@@ -265,7 +288,7 @@
                 <div class="cont-sec scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
-                            <p class="f-title3">기술지도 Q&A 이용안내</p>
+                            <p class="f-title3">경영컨설팅 Q&A 이용안내</p>
                         </div>
                         <div class="sec-con-area">
                             <div class="graphic-sec">
@@ -274,7 +297,10 @@
                                         <div class="img" style="background-image: url('/common/images/img-inquiry-btn-bg.jpg');"></div>
                                     </div>
                                     <div class="txt-area">
-                                        <p class="txt f-head">기술지도 신청 관련 도움을 드리기 위해 Q&A 게시판을 운영하고 있습니다. <br>질문을 남겨주시면 빠른 시일 내에 답변드리겠습니다.</p>
+                                        <p class="txt f-head">
+                                            경영컨설팅 관련 도움을 드리기 위해 Q&A 게시판을 운영하고 있습니다.
+                                            <br/>질문을 남겨주시면 빠른 시일 내에 답변드리겠습니다.
+                                        </p>
                                     </div>
                                     <div class="btn-wrap">
                                         <a class="btn-solid small white-bg" href="javascript:"><span>신청 문의하기</span></a>
@@ -287,7 +313,7 @@
                 <div class="cont-sec scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
-                            <p class="f-title3"><span class="menu-name">기술지도 전문위원 소개</span> &#40;<span class="item-count">${rtnDto.totalCount}</span>명&#41;</p>
+                            <p class="f-title3"><span class="menu-name">경영컨설팅 자문위원 소개</span> &#40;<span class="item-count">${rtnDto.totalCount}</span>명&#41;</p>
                         </div>
                         <div class="sec-con-area popUp">
                             <div class="list-sec">
@@ -327,14 +353,14 @@
             <div class="accepting-fixed-area">
                 <div class="for-position">
                     <button class="open-click-area" type="button">
-                        <p class="tit">2023  상주기술지도 <span class="status">접수중</span></p>
+                        <p class="tit">2023 상주경영컨설팅 <span class="status">접수중</span></p>
                         <div class="btn-text-icon plus"><span>더보기</span></div>
                     </button>
 
                     <div class="hide-area">
                         <div class="inner-con">
                             <div class="tit-area">
-                                <p class="f-title1">2023 상주기술지도 접수중 (상시접수중)</p>
+                                <p class="f-title1">2023 상주경영컨설팅 접수중 (상시접수중)</p>
                             </div>
                             <!-- <div class="con-area">
                               <div class="scroll-area">
@@ -359,4 +385,4 @@
     </div>
 </div>
 <!-- content 영역 end -->
-<jsp:include page="/WEB-INF/jsp/front/consult/CONsultingLayer.jsp"></jsp:include>
+<jsp:include page="/WEB-INF/jsp/front/cb/cbb/CBBManageConsultLayer.jsp"></jsp:include>

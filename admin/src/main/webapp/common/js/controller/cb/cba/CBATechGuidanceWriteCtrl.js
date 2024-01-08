@@ -206,6 +206,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $("#pay5StarYear").val(pay5StarYear).prop("selected", true);
             $("#tchlg5StarCd").val(tchlg5StarCd).prop("selected", true);
             $("#tchlg5StarYear").val(tchlg5StarYear).prop("selected", true);
+            $("#slsYear").val(cmpnSlsYear).prop("selected", true);
 
             $('p[name=rprsntNm]').text(rprsntNm);
             $('p[name=bsnmNo]').text(bsnmNo);
@@ -221,7 +222,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $('input[name=mjrPrdct3]').val(mjrPrdct3);
 
             $('input[name=slsPmt]').val(cmpnSlsPmt);
-            $('input[name=cmpnSlsYear]').val(cmpnSlsYear);
             $('input[name=mpleCnt]').val(cmpnMpleCnt);
             var afCmpnTelNo = cmpnTelNo.replace('-', '');
             $('input[name=telNo]').val(afCmpnTelNo);
@@ -399,7 +399,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     click : function(){
 
                         var deptCd = $(".deptCd").val();
-                        var pstnCd = $(".pstnCd").val();
+                        var pstnCd = $("#pstnCdSelect").val();
                         var ctgryCd = $(".ctgryCd").val();
                         var mainAddr = $("#mainAddr").val();
                         var cmpnTelNo = $("#cmpnTelNo").val();
@@ -414,126 +414,135 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var cbsnCd = $("input[name='cbsnCd']:checked").val();
                         var appctnTypeCd = $("input[name='appctnTypeCd']:checked").val();
                         
-                        if(!deptCd){
+                        if(!deptCd || deptCd == '선택'){
                             alert("부서를 선택해주세요.");
                             $("#deptCd").focus();
                             return false;
-                        }
-                        if(!pstnCd){
-                            alert("직급을 선택해주세요.");
-                            $("#pstnCdSelect").focus();
-                            return false;
-                        }
-                        if(!ctgryCd){
-                            alert("구분을 선택해주세요.");
-                            $("#ctgryCdSelect").focus();
-                            return false;
-                        }
-                        if(!cmpnTelNo){
-                            alert("전화번호를 입력해주세요.");
-                            $("#cmpnTelNo").focus();
-                            return false;
-                        }
-                        if(!hqZipcode){
-                            alert("주소를 입력해주세요.");
-                            $("#hqZipcode").focus();
-                            return false;
-                        }
-                        if(!sizeCdSelect){
-                            alert("규모를 선택해주세요.")
-                            $("#sizeCdSelect").focus();
-                            return false;
-                        }
-                        if(!rprsntNmTxt){
-                            alert("대표자명을 입력해주세요.")
-                            $("#rprsntNmTxt").focus();
-                            return false;
-                        }
-                        // 거래처별 매출
-                        var dlvrySize = $(".dlvryCmpnNm").length;
-                        for(var i =0; i<dlvrySize; i++){
-                            if(!$(".dlvryCmpnNm").eq(i).val()){
-                                alert("업체명을 입력해주세요.");
-                                $(".dlvryCmpnNm").eq(i).focus();
+                        }else{
+                            if(!pstnCd || pstnCd == '선택'){
+                                alert("직급을 선택해주세요.");
+                                $("#pstnCdSelect").focus();
                                 return false;
-                            }
-                        }
-                        var dlvryRateSize = $(".dlvryRate").length;
-                        for(var i =0; i<dlvryRateSize; i++){
-                            if(!$(".dlvryRate").eq(i).val()){
-                                alert("매출비중을 입력해주세요.");
-                                $(".dlvryRate").eq(i).focus();
-                                return false;
+                            }else{
+                                if(!ctgryCd){
+                                    alert("구분을 선택해주세요.");
+                                    $("#ctgryCdSelect").focus();
+                                    return false;
+                                }else{
+                                    if(!cmpnTelNo){
+                                        alert("전화번호를 입력해주세요.");
+                                        $("#cmpnTelNo").focus();
+                                        return false;
+                                    }else{
+                                        if(!hqZipcode){
+                                            alert("주소를 입력해주세요.");
+                                            $("#hqZipcode").focus();
+                                            return false;
+                                        }else{
+                                            if(!sizeCdSelect){
+                                                alert("규모를 선택해주세요.")
+                                                $("#sizeCdSelect").focus();
+                                                return false;
+                                            }else{
+                                                if(!rprsntNmTxt){
+                                                    alert("대표자명을 입력해주세요.")
+                                                    $("#rprsntNmTxt").focus();
+                                                    return false;
+                                                }else{
+                                                    // 거래처별 매출
+                                                    var dlvrySize = $(".dlvryCmpnNm").length;
+                                                    for(var i =0; i<dlvrySize; i++){
+                                                        if(!$(".dlvryCmpnNm").eq(i).val()){
+                                                            alert("업체명을 입력해주세요.");
+                                                            $(".dlvryCmpnNm").eq(i).focus();
+                                                            return false;
+                                                        }
+                                                    }
+                                                    var dlvryRateSize = $(".dlvryRate").length;
+                                                    for(var i =0; i<dlvryRateSize; i++){
+                                                        if(!$(".dlvryRate").eq(i).val()){
+                                                            alert("매출비중을 입력해주세요.");
+                                                            $(".dlvryRate").eq(i).focus();
+                                                            return false;
+                                                        }
+                                                    }
+                                                    //완성차 의존율
+                                                    var dpndnSize = $(".dpndnCmpnNm").length;
+                                                    for(var i =0; i<dpndnSize; i++){
+                                                        if(!$(".dpndnCmpnNm").eq(i).val()){
+                                                            alert("업체명을 입력해주세요.");
+                                                            $(".dpndnCmpnNm").eq(i).focus();
+                                                            return false;
+                                                        }
+                                                    }
+                                                    var dlvryRateSize = $(".dpndnRate").length;
+                                                    for(var i =0; i<dlvryRateSize; i++){
+                                                        if(!$(".dlvryRate").eq(i).val()){
+                                                            alert("매출비중을 입력해주세요.");
+                                                            $(".dlvryRate").eq(i).focus();
+                                                            return false;
+                                                        }
+                                                    }
+                                                    if(!qltyPicCnt){
+                                                        alert("품질담당인원을 입력하세요.")
+                                                        $(".qltyPicCnt").focus();
+                                                        return false;
+                                                    }else{
+                                                        if(!zipcode){
+                                                            alert("주소를 입력하세요.")
+                                                            $("#zipcode").focus();
+                                                            return false;
+                                                        }else{
+                                                            if(mainAddr == '선택'){
+                                                                alert("소재 지역을 선택하세요.");
+                                                                $("#mainAddr").focus();
+                                                                return false;
+                                                            }else{
+                                                                if(!rprsntApprvYn){
+                                                                    alert("대표자 승인여부를 선택하세요.");
+                                                                    $("input[name='rprsntApprvYn']").focus();
+                                                                    return false;
+                                                                }else{
+                                                                    if(!appctnRsnCd){
+                                                                        alert("신청사유를 선택하세요.");
+                                                                        $("input[name='appctnRsnCd']").focus();
+                                                                        return false;
+                                                                    }else{
+                                                                        if(!cbsnCd){
+                                                                            alert("업종을 선택하세요.");
+                                                                            $("input[name='cbsnCd']").focus();
+                                                                            return false;
+                                                                        }else{
+                                                                            if(!appctnTypeCd){
+                                                                                alert("신청사항을 선택하세요.");
+                                                                                $("input[name='appctnTypeCd']").focus();
+                                                                                return false;
+                                                                            }else{
+                                                                                var fileVal = $(".dropzone .dz-preview").length;
+                                                                                if(fileVal <2){
+                                                                                    if($(".dropzone .dz-preview").eq(0).length == 0){
+                                                                                        alert("첨부파일을 등록해주세요.");
+                                                                                        return false;
+                                                                                    }else if($(".dropzone .dz-preview").eq(1).length == 0){
+                                                                                        alert("첨부파일을 등록해주세요.");
+                                                                                        return false;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
 
-                        //완성차 의존율
-                        var dpndnSize = $(".dpndnCmpnNm").length;
-                        for(var i =0; i<dpndnSize; i++){
-                            if(!$(".dpndnCmpnNm").eq(i).val()){
-                                alert("업체명을 입력해주세요.");
-                                $(".dpndnCmpnNm").eq(i).focus();
-                                return false;
-                            }
-                        }
-                        var dlvryRateSize = $(".dpndnRate").length;
-                        for(var i =0; i<dlvryRateSize; i++){
-                            if(!$(".dlvryRate").eq(i).val()){
-                                alert("매출비중을 입력해주세요.");
-                                $(".dlvryRate").eq(i).focus();
-                                return false;
-                            }
-                        }
-                        if(!qltyPicCnt){
-                            alert("품질담당인원을 입력하세요.")
-                            $(".qltyPicCnt").focus();
-                            return false;
-                        }
-                        if(!zipcode){
-                            alert("주소를 입력하세요.")
-                            $("#zipcode").focus();
-                            return false;
-                        }
-                        if(mainAddr == '선택'){
-                            alert("소재 지역을 선택하세요.");
-                            $("#mainAddr").focus();
-                            return false;
-                        }
-                        if(!subAddr){
-                            alert("소재 지역을 선택하세요.");
-                            $("#subAddr").focus();
-                            return false;
-                        }
-                        if(!rprsntApprvYn){
-                            alert("대표자 승인여부를 선택하세요.");
-                            $("input[name='rprsntApprvYn']").focus();
-                            return false;
-                        }
-                        if(!appctnRsnCd){
-                            alert("신청사유를 선택하세요.");
-                            $("input[name='appctnRsnCd']").focus();
-                            return false;
-                        }
-                        if(!cbsnCd){
-                            alert("업종을 선택하세요.");
-                            $("input[name='cbsnCd']").focus();
-                            return false;
-                        }
-                        if(!appctnTypeCd){
-                            alert("신청사항을 선택하세요.");
-                            $("input[name='appctnTypeCd']").focus();
-                            return false;
-                        }
-                        var fileVal = $(".dropzone .dz-preview").length;
-                        if(fileVal <2){
-                            if($(".dropzone .dz-preview").eq(0).length == 0){
-                                alert("첨부파일을 등록해주세요.");
-                                return false;
-                            }else if($(".dropzone .dz-preview").eq(1).length == 0){
-                                alert("첨부파일을 등록해주세요.");
-                                return false;
-                            }
-                        }
 
                         var actionUrl = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update");
                         var actionMsg = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd"));
