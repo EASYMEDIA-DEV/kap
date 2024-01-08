@@ -69,7 +69,7 @@
                                     <input type="text" class="form-control" id="id" value="${registerDtl.id}" title="신청자" maxlength="50" disabled/>
                                 </div>
                                 <div class="col-sm-1">
-                                    <button type="button" id="btnPartUserModal" class="btn btn-sm btn-info">회원검색</button>
+                                    <button type="button" class="btn btn-sm btn-info btnPartUserModal">회원검색</button>
                                 </div>
                             </div>
 
@@ -1519,7 +1519,7 @@
                                                     <input type="text" class="form-control input-sm notRequired" data-name="chkCmssrNm" value="${rsumeTaskDtl[2].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <button type="button" class="btn btn-sm btn-info btnCommUserModal">위원검색</button>
+                                                    <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1629,7 +1629,7 @@
                                                     <input type="text" class="form-control input-sm notRequired" data-name="chkCmssrNm" value="${rsumeTaskDtl[3].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <button type="button" class="btn btn-sm btn-info btnCommUserModal">위원검색</button>
+                                                    <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -1958,7 +1958,7 @@
                                                     <input type="text" class="form-control input-sm notRequired" data-name="chkCmssrNm" value="${rsumeTaskDtl[6].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
-                                                    <button type="button" class="btn btn-sm btn-info btnCommUserModal">위원검색</button>
+                                                    <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -2057,7 +2057,9 @@
         </form>
 
         <%-- 부품사 회원 검색 모달 --%>
-        <jsp:include page="/WEB-INF/jsp/mngwserc/wb/WBFBPartUserModal.jsp" />
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
+        <%-- 위원 검색 모달 --%>
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtSrchLayer.jsp"></jsp:include>
 
     </div>
 </div>

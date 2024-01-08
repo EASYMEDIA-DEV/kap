@@ -16,75 +16,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     var $formObj = ctrl.obj.find("form").eq(0);
 
-    // form Object
-    var $modalObj = $(".part-modal");
-    //modalForm
-    var $modalFormObj = $modalObj.find("form").eq(0);
-
-    /* 팝업 옵션 */
-    let optVal = {
-        '1' : '아이디',
-        '2' : '이름',
-        '3' : '휴대폰번호',
-        '4' : '이메일',
-        '5' : '최종수정자',
-        '6' : '부품사명',
-        '7' : '사업자등록번호',
-    }
-
-    let fnRefresh = function() {
-        //FORM 데이터 전체 삭제
-        let pageIndex 	= $modalObj.find("#pageIndex").val();
-        let listRowSize = $modalObj.find("#listRowSize").val();
-        let pageRowSize = $modalObj.find("#pageRowSize").val();
-        let csrfKey 	= $modalObj.find("#csrfKey").val();
-        let srchLayer 	= $modalObj.find("input[name=srchLayer]").val();
-        let memCd 	= $modalObj.find("input[name=memCd]").val();
-        $modalObj.clearForm();
-        //FORM 전송 필수 데이터 삽입
-        $modalObj.find("#pageIndex").val( pageIndex );
-        $modalObj.find("#listRowSize").val( listRowSize );
-        $modalObj.find(".listRowSizeContainer").val( listRowSize );
-        $modalObj.find("#pageRowSize").val( pageRowSize );
-        $modalObj.find("#csrfKey").val( csrfKey );
-        $modalObj.find("input[name=srchLayer]").val( srchLayer );
-        $modalObj.find("input[name=memCd]").val( memCd );
-        //캘린더 초기화
-        cmmCtrl.setPeriod($modalObj.find('.datetimepicker_strtDt, .datetimepicker_endDt'), "", "", false);
-
-        //검색 로직 실행
-        $modalObj.find("#btnSearch").click();
-    }
-
-    // 목록 조회
-    var search = function (page){
-
-        if(page !== undefined){
-            $modalFormObj.find("#pageIndex").val(page);
-        }
-        cmmCtrl.listFrmAjax(function(respObj) {
-            $modalFormObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
-            //CALLBACK 처리
-            ctrl.obj.find("#listContainer").html(respObj);
-            //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            //총 건수
-            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $modalFormObj, "listContainer", "pagingContainer");
-        }, "/mngwserc/wb/selModalData", $modalFormObj, "POST", "html");
-
-    }
-
-    var selPartUserData = function (){
-        cmmCtrl.frmAjax(function(respObj) {
-            $modalObj.modal("hide");
-            /* return data input */
-            setInputValue(respObj);
-        }, "/mngwserc/wb/selModalDetail", $modalFormObj, "post", "json")
-
-    }
-
     /* 페이지 구성에 맞게 input value set (rtnData keys HTML id 값 동일 처리 필요) */
     var setInputValue = (respObj) => {
         let [rtnData, rtnDataCompList] = [respObj['rtnData'], respObj['rtnDataCompDetail'].list];
@@ -217,7 +148,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             optYear : {
                 event : {
                     change : function() {
-                        cmmCtrl.setFormData($modalFormObj);
                         selEpisdList();
                     },
                 }
@@ -225,87 +155,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             optEpisd : {
                 event : {
                     change : function() {
-                        cmmCtrl.setFormData($modalFormObj);
                         selOptnList();
                     },
-                }
-            },
-            // 회원검색 모달
-            // 회원검색 모달
-            btnPartUserModal : {
-                event : {
-                    click: function () {
-                        $modalObj.find("input[name=memCd]").val('CP');
-                        $modalObj.find("#cdList").show();
-
-                        $modalObj.find("select[data-name=f]").empty();
-                        let selOpt = ['1','2','6','7','3','4','5'];
-                        let opt = '<option value="">전체</option>';
-                        selOpt.forEach(function(el, idx) {
-                            opt += `<option value="${el}">${optVal[el]}</option>`
-                        });
-                        $modalObj.find("select[data-name=f]").append(opt);
-
-                        $modalObj.find("thead tr").empty();
-                        let tableHead = ['번호','아이디','이름','부품사명','구분'
-                            ,'규모','사업자등록번호','휴대폰번호','이메일','가입일','최종 수정자','수정 일시'];
-                        let html = '<th class="text-center"></th>';
-                        tableHead.forEach(function(el, idx) {
-                            html += `<th class="text-center">${el}</th>`;
-                        });
-                        $modalObj.find("thead tr").append(html);
-                        fnRefresh();
-                        search(1);
-                        $modalObj.modal("show");
-                    }
-                }
-            },
-            btnSearch : {
-                event: {
-                    click: function () {
-                        //검색버튼 클릭시
-                        cmmCtrl.setFormData($modalFormObj);
-                        search(1);
-                    }
-                }
-            },
-            btnModalRefresh : {
-                event: {
-                    click: function () {
-                        //FORM 데이터 전체 삭제
-                        let pageIndex 	= $modalObj.find("#pageIndex").val();
-                        let listRowSize = $modalObj.find("#listRowSize").val();
-                        let pageRowSize = $modalObj.find("#pageRowSize").val();
-                        let csrfKey 	= $modalObj.find("#csrfKey").val();
-                        let srchLayer 	= $modalObj.find("input[name=srchLayer]").val();
-                        let memCd 	= $modalObj.find("input[name=memCd]").val();
-                        $modalObj.clearForm();
-                        //FORM 전송 필수 데이터 삽입
-                        $modalObj.find("#pageIndex").val( pageIndex );
-                        $modalObj.find("#listRowSize").val( listRowSize );
-                        $modalObj.find(".listRowSizeContainer").val( listRowSize );
-                        $modalObj.find("#pageRowSize").val( pageRowSize );
-                        $modalObj.find("#csrfKey").val( csrfKey );
-                        $modalObj.find("input[name=srchLayer]").val( srchLayer );
-                        $modalObj.find("input[name=memCd]").val( memCd );
-                        //캘린더 초기화
-                        cmmCtrl.setPeriod(this, "", "", false);
-
-                        //검색 로직 실행
-                        $modalObj.find("#btnSearch").click();
-                    }
-                }
-            },
-            btnModalSelect : {
-                event: {
-                    click: function() {
-                        let trArea = $modalFormObj.find("#listContainer input[type=checkbox]:checked");
-                        if(trArea.length !== 0 || trArea != undefined){
-                            selPartUser = trArea.val();
-                            $modalFormObj.find("#selPartUser").val(selPartUser);
-                            selPartUserData();
-                        }
-                    }
                 }
             },
             searchPostCode : {
@@ -317,41 +168,26 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         classname : {
-            checkboxSingle : {
-                event : {
-                    click : function() {
-                        $modalFormObj.find('tbody').find('input[type=checkbox]').prop('checked',false);
-                        $(this).prop('checked',true);
-                    }
-                },
-            },
-            //페이징 처리
-            pageSet : {
-                event : {
-                    click : function() {
-                        //페이징 이동
-                        if( $(this).attr("value") !== "null" ){
-                            $modalFormObj.find("input[name=pageIndex]").val($(this).attr("value"));
-                            search();
-                        }
+            // 회원검색 모달
+            btnPartUserModal: {
+                event: {
+                    click: function () {
+                        $("#srchDivide").val("Y");
+                        cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                console.log(respObj);
+                                /* return data input */
+                                setInputValue(respObj);
+                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                        });
                     }
                 }
             },
-            //페이징 목록 갯수
-            listRowSizeContainer : {
-                event : {
-                    change : function(){
-                        //리스트 갯수 변경
-                        $modalFormObj.find("input[name=listRowSize]").val($(this).val());
-                        search(1);
-                    }
-                }
-            }
         },
         immediately : function() {
             //리스트 조회
             //폼 데이터 처리
-            cmmCtrl.setFormData($modalFormObj);
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
                 cmmCtrl.setDropzone(trgtObj, {
