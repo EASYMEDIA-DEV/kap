@@ -400,7 +400,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnCmtSearch: {
                 event: {
                     click: function () {
-                        console.log(1);
                         let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
                         let rsumeTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`);
                         cmmCtrl.getCmtSrchPop(function (data) {

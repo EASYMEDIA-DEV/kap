@@ -177,7 +177,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             $formObj.find('#memSeq').val(data.memSeq);
                             cmmCtrl.frmAjax(function(respObj) {
-                                console.log(respObj);
                                 /* return data input */
                                 setInputValue(respObj);
                             }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
