@@ -95,7 +95,7 @@
                             <input type="text" id="mem" class="form-control" value="${rtnMem.name}(${rtnMem.id})" title="신청자" disabled/>
                         </div>
                         <div class="col-sm-1">
-                            <button type="button" id="btnPartUserModal" class="btn btn-sm btn-info">회원검색</button>
+                            <button type="button" class="btn btn-sm btn-info btnPartUserModal">회원검색</button>
                         </div>
                     </div>
 
@@ -1054,7 +1054,7 @@
                                             <input type="text" id="picName" class="form-control notRequired" value="${rtnCmssr.name}" maxlength="50" title="점검위원" disabled/>
                                             <input type="hidden" class="notRequired" id="picCmssrSeq" name="picCmssrSeq" title="점검위원" value="${rtnPbsn[0].chkCmssrSeq}" />
                                             <input type="hidden" class="notRequired" id="chkCmssrSeq" name="pbsnDtlList[0].chkCmssrSeq" title="점검위원" value="${rtnPbsn[0].chkCmssrSeq}" />
-                                            <button type="button" id="btnCommUserModal" class="btn btn-sm btn-info" <c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if> <c:if test="${rtnDtl[0].mngSttsNm eq '미선정' || rtnDtl[0].mngSttsNm eq '선정'}">disabled</c:if>>위원검색</button>
+                                            <button type="button" class="btn btn-sm btn-info btnCmtSearch" <c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if> <c:if test="${rtnDtl[0].mngSttsNm eq '미선정' || rtnDtl[0].mngSttsNm eq '선정'}">disabled</c:if>>위원검색</button>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1785,6 +1785,9 @@
                 </div>
             </div>
         </form>
-        <jsp:include page="/WEB-INF/jsp/mngwserc/wb/WBFBPartUserModal.jsp"/>
+        <%-- 부품사 회원 검색 모달 --%>
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
+        <%-- 위원 검색 모달 --%>
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtSrchLayer.jsp"></jsp:include>
     </div>
 </div>
