@@ -360,7 +360,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	}else{
 		$(".jdgmtYn").css("display", "");
 		$(".jdgmtYn").find("input:hidden").each(function(){
-			$(this).removeClass("notRequired");
+
+			if($(this).attr("name") !="otsdExamPtcptYn"){
+				$(this).removeClass("notRequired"); //이거 문제있음 고쳐야됨 오프라인평가 체크는 없애면 안됨
+			}
+
 		});
 
 		//오프라인평가면 평가 시퀀스 사용안함
@@ -1661,13 +1665,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//오프라인평가 관련 데이터 세팅끝
 
 						//수료여부
-						debugger;
+						//debugger;
 						if(resultFlag){
 							//debugger;
-							/*cmmCtrl.jsonAjax(function(data){
+							cmmCtrl.jsonAjax(function(data){
 								alert("저장되었습니다.");
 								location.href = "./list";
-							}, actionUrl, actForm, "text");*/
+							}, actionUrl, actForm, "text");
 						}
 
 

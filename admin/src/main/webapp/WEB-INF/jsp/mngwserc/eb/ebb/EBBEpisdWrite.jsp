@@ -1427,19 +1427,28 @@
 
 </div>
 
-<jsp:include page="/WEB-INF/jsp/mngwserc/ex/exg/EXGExamUserDtlLayer.jsp"></jsp:include><!--교육 참여자 평가 응답 상세-->
+
+
+<!--설문검색-->
+<jsp:include page="/WEB-INF/jsp/mngwserc/sv/sva/SVASurveySrchLayer.jsp">
+    <jsp:param name="typeCd" value="EDU" />
+</jsp:include>
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/eba/EBACouseSrchLayer.jsp"></jsp:include><!--교육과정검색-->
 <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebf/EBFEduRoomSrchLayer.jsp"></jsp:include><!--교육장검색-->
 <jsp:include page="/WEB-INF/jsp/mngwserc/ex/exg/EXGExamListSrchLayer.jsp"></jsp:include><!--시험검색-->
 <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpc/MPCLecturerSrchLayer.jsp"></jsp:include><!--강사검색-->
-<!--설문검색-->
-<jsp:include page="/WEB-INF/jsp/mngwserc/sv/sva/SVASurveySrchLayer.jsp">
-<jsp:param name="typeCd" value="EDU" />
-</jsp:include>
 
-<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업-->
-<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBMemAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업 - 개인별 -->
-<jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBChangeEpisdLayer.jsp"></jsp:include><!-- 차수변경 레이어팝업-->
+<c:if test="${actionType eq 'update'}">
+    <jsp:include page="/WEB-INF/jsp/mngwserc/ex/exg/EXGExamUserDtlLayer.jsp"></jsp:include><!--교육 참여자 평가 응답 상세-->
+    <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업-->
+    <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBMemAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업 - 개인별 -->
+    <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBChangeEpisdLayer.jsp"></jsp:include><!-- 차수변경 레이어팝업-->
+</c:if>
+
+
+
+
+
 
 
 
