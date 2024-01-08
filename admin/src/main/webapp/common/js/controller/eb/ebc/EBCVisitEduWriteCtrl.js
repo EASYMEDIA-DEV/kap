@@ -191,8 +191,27 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }
                     }
                 }
-            }
+            },
+            telNo : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
 
+                        if (phoneLen >= 3 && phoneLen <= 6) {
+                            phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                        } else if (phoneLen > 6) {
+                            if (phoneLen == 9) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                            } else {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+            }
         },
         classname : {
             //부품사 찾기
@@ -438,11 +457,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var vstSeq = $("#vstSeq").val();
                         var memSeq = $("#memSeq").val();
                         var bfreMemSeq = $("#bfreMemSeq").val();
+                        var memId = $("#memId").val();
                         var vstRsltSeq = $("#vstRsltSeq").val();
 
                         actForm.vstSeq = vstSeq;
                         actForm.memSeq = memSeq;
                         actForm.bfreMemSeq = bfreMemSeq;
+                        actForm.id = memId;
                         actForm.vstRsltSeq = vstRsltSeq;
 
                         //신청자 정보
