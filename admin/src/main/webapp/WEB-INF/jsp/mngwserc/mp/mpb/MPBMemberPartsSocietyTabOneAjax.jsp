@@ -114,7 +114,7 @@
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">일반 전화번호</label>
         <div class="col-sm-3">
-            <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnDtl.telNo}"  oninput="this.value=this.value.replace(/[^0-9]/g, '')" />
+            <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnDtl.telNo}"  oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"/>
         </div>
     </div>
 </fieldset>
@@ -132,9 +132,9 @@
 </fieldset>
 <fieldset>
     <div class="form-group text-sm">
-        <label class="col-sm-1 control-label">생년월일</label>
+        <label class="col-sm-1 control-label">생년월일<span class="star"> *</span></label>
         <p class="col-sm-5 form-control-static">${ rtnDtl.birth}</p>
-        <label class="col-sm-1 control-label">성별</label>
+        <label class="col-sm-1 control-label">성별<span class="star"> *</span></label>
         <p class="col-sm-5 form-control-static">${rtnDtl.gndr == '1' ? '남' : '여'}</p>
     </div>
 </fieldset>
