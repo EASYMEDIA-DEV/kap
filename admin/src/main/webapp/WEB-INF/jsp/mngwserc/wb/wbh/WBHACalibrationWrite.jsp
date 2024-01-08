@@ -57,7 +57,7 @@
                                 </c:choose>
                             </div>
                             <div class="col-sm-1">
-                                <button type="button" id="btnPartUserModal" class="btn btn-sm btn-info">회원검색</button>
+                                <button type="button" class="btn btn-sm btn-info btnPartUserModal">회원검색</button>
                             </div>
                         </div>
 
@@ -887,7 +887,7 @@
             <%--<input type="hidden" class="notRequired" name="maxStage" value="${rtnInfo.maxStage}" />--%>
         </form >
         <%-- 부품사 회원 검색 모달 --%>
-        <jsp:include page="/WEB-INF/jsp/mngwserc/wb/WBFBPartUserModal.jsp" />
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
 
     </div>
 </div>
