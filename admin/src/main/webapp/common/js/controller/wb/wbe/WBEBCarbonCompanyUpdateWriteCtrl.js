@@ -13,23 +13,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // form Object
     var $formObj = jQuery("#frmData");
 
-    // form Object
-    var $modalObj = $(".part-modal");
-    var $modalObjForm = $(".part-modal").find("form").eq(0);
-
-    /* 팝업 옵션 */
-    let optVal = {
-        '1' : '아이디',
-        '2' : '이름',
-        '3' : '휴대폰번호',
-        '4' : '이메일',
-        '5' : '최종수정자',
-        '6' : '부품사명',
-        '7' : '사업자등록번호',
-    }
-
-    let selPartUser;
-
     var trnsfSearch = function (page){
         //data로 치환해주어야한다.
         cmmCtrl.setFormData($formObj);
@@ -51,101 +34,60 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         }, "./log-list.ajax", $formObj, "POST", "html");
     }
 
-
-
-
-    //사용자 목록 조회
-    var search = function (page){
-        if(page != undefined){
-            $modalObjForm.find("#pageIndex").val(page);
-        }
-        cmmCtrl.listFrmAjax(function(respObj) {
-            $modalObjForm.find("table").eq(0).find(".checkboxAll").prop("checked", false);
-            //CALLBACK 처리
-            ctrl.obj.find("#listContainer").html(respObj);
-            //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            //총 건수
-            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $modalObjForm, "listContainer", "pagingContainer");
-        }, "/mngwserc/wb/selModalData", $modalObjForm, "POST", "html");
-
-    }
-
-    var selPartUserData = function (){
-        cmmCtrl.frmAjax(function(respObj) {
-            $modalObj.modal("hide");
-            /* return data input */
-            setInputValue(respObj);
-        }, "/mngwserc/wb/selModalDetail", $modalObjForm, "post", "json")
-
-    }
-
     /* 페이지 구성에 맞게 input value set (rtnData keys HTML id 값 동일 처리 필요) */
     var setInputValue = (respObj) => {
         let [rtnData, rtnDataCompList] = [respObj['rtnData'], respObj['rtnDataCompDetail']];
-        if($("#memCd").val() == 'CP'){
-            var memId = rtnData['id'];
-            var memName = rtnData['name'];
+        var memId = rtnData['id'];
+        var memName = rtnData['name'];
 
-            $('#mem').val(memId+'('+memName+')');
+        $('#mem').val(memId+'('+memName+')');
 
-            $("#befeCtgryCd").val(rtnData['ctgryCd']);
+        $("#befeCtgryCd").val(rtnData['ctgryCd']);
 
 
-            if(rtnData['pstnCd'] == 'MEM_CD01007'){
-                $("#pstnNm").css("display", "block");
+        if(rtnData['pstnCd'] == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }
+        if(rtnData['ctgryCd'] == 'COMPANY01001'){
+            $(".companyCate1").css("display", "block");
+            $(".SQ").val("");
+            $(".companyCate2").css("display", "none");
+        }else if(rtnData['ctgryCd'] == 'COMPANY01002'){
+            $(".companyCate1").css("display", "none");
+            $(".starType").val("");
+            $(".companyCate2").css("display", "block");
+        }
+
+        $("#bsnmNoPut1").val(rtnData['bsnmNo']);
+        $("#bsnmNoPut2").val(rtnData['bsnmNo']);
+
+        // 사업자번호 변경
+        rtnData['bsnmNo'] = rtnData['bsnmNo'].slice(0,3) + '-' + rtnData['bsnmNo'].slice(3,5) + '-' + rtnData['bsnmNo'].slice(5);
+
+
+        Object.keys(rtnData).forEach((el) => {
+            if(typeof(rtnData[el]) != "object"){
+                var target = $formObj.find("[id=" + el + ']');
+                var tagName = target.prop('tagName');
+                /* SELECT || INPUT || P 태그 공통화 */
+                if(tagName === 'SELECT' || tagName === 'INPUT') target.val(rtnData[el]);
+                if(tagName === 'P') target.html(rtnData[el]);
             }
-            if(rtnData['ctgryCd'] == 'COMPANY01001'){
-                $(".companyCate1").css("display", "block");
-                $(".SQ").val("");
-                $(".companyCate2").css("display", "none");
-            }else if(rtnData['ctgryCd'] == 'COMPANY01002'){
-                $(".companyCate1").css("display", "none");
-                $(".starType").val("");
-                $(".companyCate2").css("display", "block");
-            }
+        });
 
-            $("#bsnmNoPut1").val(rtnData['bsnmNo']);
-            $("#bsnmNoPut2").val(rtnData['bsnmNo']);
-
-            // 사업자번호 변경
-            rtnData['bsnmNo'] = rtnData['bsnmNo'].slice(0,3) + '-' + rtnData['bsnmNo'].slice(3,5) + '-' + rtnData['bsnmNo'].slice(5);
-
-
-            Object.keys(rtnData).forEach((el) => {
-                if(typeof(rtnData[el]) != "object"){
-                    var target = $formObj.find("[id=" + el + ']');
-                    var tagName = target.prop('tagName');
-                    /* SELECT || INPUT || P 태그 공통화 */
-                    if(tagName === 'SELECT' || tagName === 'INPUT') target.val(rtnData[el]);
-                    if(tagName === 'P') target.html(rtnData[el]);
+        for(var i = 0; i < rtnDataCompList.list.length; i++){
+            Object.keys(rtnDataCompList.list[i]).forEach((el) => {
+                $formObj.find('#nm'+i).val(rtnDataCompList.list[i]['nm']);
+                if(rtnDataCompList.list[i]['score'] != '') {
+                    $formObj.find('#score'+i).val(rtnDataCompList.list[i]['score']);
+                }else{
+                    $formObj.find('#score'+i).val('');
                 }
+                if(rtnDataCompList.list[i]['year'] != ''){
+                    $formObj.find('#year'+i).val(rtnDataCompList.list[i]['year']);
+                }
+                $formObj.find('#crtfnCmpnNm'+i).val(rtnDataCompList.list[i]['crtfnCmpnNm']);
             });
-
-            for(var i = 0; i < rtnDataCompList.list.length; i++){
-                Object.keys(rtnDataCompList.list[i]).forEach((el) => {
-                    $formObj.find('#nm'+i).val(rtnDataCompList.list[i]['nm']);
-                    if(rtnDataCompList.list[i]['score'] != '') {
-                        $formObj.find('#score'+i).val(rtnDataCompList.list[i]['score']);
-                    }else{
-                        $formObj.find('#score'+i).val('');
-                    }
-                    if(rtnDataCompList.list[i]['year'] != ''){
-                        $formObj.find('#year'+i).val(rtnDataCompList.list[i]['year']);
-                    }
-                    $formObj.find('#crtfnCmpnNm'+i).val(rtnDataCompList.list[i]['crtfnCmpnNm']);
-                });
-            }
-        }else{
-            var memName = rtnData['name'];
-
-            $('#picName').val(memName);
-
-            $("#picCmssrSeq").val(rtnData['memSeq']);
-            $("#chkCmssrSeq").val(rtnData['memSeq']);
-
         }
 
     }
@@ -259,92 +201,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
-            //회원검색 팝업
-            btnPartUserModal : {
-                event : {
-                    click: function () {
-                        $modalObj.find("input[name=memCd]").val('CP');
-                        $modalObj.find("#cdList").show();
-
-                        $modalObj.find("select[data-name=f]").empty();
-                        let selOpt = ['1','2','6','7','3','4','5'];
-                        let opt = '<option value="">전체</option>';
-                        selOpt.forEach(function(el, idx) {
-                            opt += `<option value="${el}">${optVal[el]}</option>`
-                        });
-                        $modalObj.find("select[data-name=f]").append(opt);
-
-                        $modalObj.find("thead tr").empty();
-                        let tableHead = ['번호','아이디','이름','부품사명','구분'
-                            ,'규모','사업자등록번호','휴대폰번호','이메일','가입일','최종 수정자','수정 일시'];
-                        let html = '<th class="text-center"></th>';
-                        tableHead.forEach(function(el, idx) {
-                            html += `<th class="text-center">${el}</th>`;
-                        });
-                        $modalObj.find("thead tr").append(html);
-                        fnRefresh();
-                        search(1);
-                        $modalObj.modal("show");
-                    }
-                }
-            },
-            //위원검색 팝업
-            btnCommUserModal : {
-                event : {
-                    click: function () {
-                        $modalObj.find("input[name=memCd]").val('CS');
-                        $modalObj.find("#cdList").hide();
-
-                        $modalObj.find("select[data-name=f]").empty();
-                        let selOpt = ['1','2','3','4','5'];
-                        let opt = '<option value="">전체</option>';
-                        selOpt.forEach(function(el, idx) {
-                            opt += `<option value="${el}">${optVal[el]}</option>`
-                        });
-                        $modalObj.find("select[data-name=f]").append(opt);
-
-                        $modalObj.find("thead tr").empty();
-                        let tableHead = ['번호','이름','부품사명','부서'
-                            ,'직급','휴대폰번호','이메일','최초등록자','최초 등록일시','최종 수정자','최종 수정일시'];
-                        let html = '<th class="text-center"></th>';
-                        tableHead.forEach(function(el, idx) {
-                            html += `<th class="text-center">${el}</th>`;
-                        });
-                        $modalObj.find("thead tr").append(html);
-                        fnRefresh();
-                        search(1);
-                        $modalObj.modal("show");
-                    }
-                }
-            },
-            btnModalRefresh : {
-                event: {
-                    click: function () {
-                        fnRefresh();
-                    }
-                }
-            },
-            btnModalSelect : {
-                event: {
-                    click: function() {
-                        let trArea = $modalObjForm.find("#listContainer input[type=checkbox]:checked");
-
-                        if(trArea.length != 0 || trArea != undefined){
-                            selPartUser = trArea.val();
-                            $modalObjForm.find("#selPartUser").val(selPartUser);
-                            selPartUserData();
-                        }
-
-                    }
-                }
-            },
-            listRowSize : {
-                event : {
-                    change : function(){
-                        search(1);
-                    }
-                }
-            },
             //PDF
             appctnPdfDownload : {
                 event : {
@@ -364,6 +220,37 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         },
         //선급금 해당 여부
         classname : {
+            // 회원검색 모달
+            btnPartUserModal: {
+                event: {
+                    click: function () {
+                        $("#srchDivide").val("Y");
+                        cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                /* return data input */
+                                setInputValue(respObj);
+                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                        });
+                    }
+                }
+            },
+            // 위원검색 모달
+            btnCmtSearch: {
+                event: {
+                    click: function () {
+                        cmmCtrl.getCmtSrchPop(function (data) {
+                            var memName = data.name;
+
+                            $('#picName').val(memName);
+
+                            $("#picCmssrSeq").val(data.seq);
+                            $("#chkCmssrSeq").val(data.seq);
+                        });
+
+                    }
+                }
+            },
             pmndvPmtYn : {
                 event : {
                     change : function() {
@@ -402,9 +289,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         if($(this).closest("#trnfsPagingContainer").length > 0){
                             trnsfSearch($(this).attr("value"));
                         }
-                        if($(this).closest("#pagingContainer").length > 0){
-                            search($(this).attr("value"));
-                        }
                     }
                 }
             },
@@ -419,16 +303,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
-            //페이징 목록 갯수
-            listRowSizeContainer : {
-                event : {
-                    change : function(){
-                        //리스트 갯수 변경
-                        $modalObj.find("input[name=listRowSize]").val($(this).val());
-                        search(1);
-                    }
-                }
-            }
         },
         immediately : function() {
 
@@ -607,31 +481,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             });
         }
     };
-
-    let fnRefresh = function() {
-        //FORM 데이터 전체 삭제
-        let pageIndex 	= $modalObj.find("#pageIndex").val();
-        let listRowSize = $modalObj.find("#listRowSize").val();
-        let pageRowSize = $modalObj.find("#pageRowSize").val();
-        let csrfKey 	= $modalObj.find("#csrfKey").val();
-        let srchLayer 	= $modalObj.find("input[name=srchLayer]").val();
-        let memCd 	= $modalObj.find("input[name=memCd]").val();
-        $modalObj.clearForm();
-        //FORM 전송 필수 데이터 삽입
-        $modalObj.find("#pageIndex").val( pageIndex );
-        $modalObj.find("#listRowSize").val( listRowSize );
-        $modalObj.find(".listRowSizeContainer").val( listRowSize );
-        $modalObj.find("#pageRowSize").val( pageRowSize );
-        $modalObj.find("#csrfKey").val( csrfKey );
-        $modalObj.find("input[name=srchLayer]").val( srchLayer );
-        $modalObj.find("input[name=memCd]").val( memCd );
-        //캘린더 초기화
-        cmmCtrl.setPeriod($modalObj.find('.datetimepicker_strtDt, .datetimepicker_endDt'), "", "", false);
-
-        //검색 로직 실행
-        $modalObj.find("#btnSearch").click();
-    }
-
 
     ctrl.exec();
 
