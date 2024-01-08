@@ -159,9 +159,9 @@ define(["ezCtrl"], function(ezCtrl) {
                     click: function(){
                         var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
                         if( choiceCnt > 1){
-                            alert(msgCtrl.getMsg("fail.mp.mpd.al_024"));
-                        } else if(choiceCnt == 0){
                             alert(msgCtrl.getMsg("fail.mp.mpd.al_025"));
+                        } else if(choiceCnt == 0){
+                            alert(msgCtrl.getMsg("fail.mp.mpd.al_024"));
                         }else{
                             var clickObj = {};
                             clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();
