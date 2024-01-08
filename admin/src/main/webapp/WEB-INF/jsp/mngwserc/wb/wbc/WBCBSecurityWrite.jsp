@@ -43,7 +43,18 @@
             </fieldset>
 
 
-            <h6 class="mt0">신청자 정보</h6>
+            <br>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <div class="col-sm-5" style="margin-left: -15px">
+                        <h6 class="mt0">신청자 정보</h6>
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-5">
+                        <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                    </div>
+                </div>
+            </fieldset>
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -119,7 +130,18 @@
             </fieldset>
 
 
-            <h6 class="mt0">부품사 정보</h6>
+            <br>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <div class="col-sm-5" style="margin-left: -15px">
+                        <h6 class="mt0">부품사 정보</h6>
+                    </div>
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-5">
+                        <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                    </div>
+                </div>
+            </fieldset>
 
             <fieldset>
                 <div class="form-group text-sm">
