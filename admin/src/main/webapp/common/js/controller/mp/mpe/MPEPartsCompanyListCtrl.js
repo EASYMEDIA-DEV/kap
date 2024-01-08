@@ -38,7 +38,7 @@ define(["ezCtrl"], function(ezCtrl) {
                         var frmDataObj    = $(this).closest("form");
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
                         if (delActCnt > 0) {
-                            if(confirm("삭제 처리하겠습니끼?"))
+                            if(confirm("해당 게시물을 삭제하시겠습니까?"))
                             {
                                 //삭제 전송
                                 cmmCtrl.frmAjax(function(respObj){
