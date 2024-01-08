@@ -41,7 +41,6 @@
 						<option value="1" selected>탈퇴일</option>
 					</select>
 				</div>
-				</div>
 			</c:if>
 			<div class="form-group mr-sm">
 				<c:if test="${param.srchType eq 'wbea'}">
