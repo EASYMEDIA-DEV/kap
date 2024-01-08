@@ -25,6 +25,7 @@
             <input type="hidden" class="notRequired" id="selectCtgryCd" name="selectCtgryCd" value="${rtnInfo.selectCtgryCd}" />
             <input type="hidden" class="notRequired" id="edctnPlaceAddr" name="edctnPlaceAddr" value="${rtnInfo.edctnPlaceAddr}"/>
             <input type="hidden" id="bsnmNo" name="bsnmNo" value="${rtnInfo.appctnBsnmNo}"/>
+            <input type="hidden" id="memId" name="memId" value="${rtnInfo.id}"/>
 
             <fieldset>
                 <span class="dtl-tab" style="float:right"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>

@@ -35,7 +35,7 @@
         <div class="col-sm-3">
             <div class="input-group">
                 <input type="text" class="form-control input-sm " id="workBsnmNo" name="workBsnmNo" value="${rtnDtl.workBsnmNo}" title="사업자등록번호" maxlength="10" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')"/>
-                <span class="input-group-btn"><button type="button" style="margin-left: 1rem;" class="btn btn-default btn-sm" id="btnBsnmNo">인증</button></span>
+                <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="btnBsnmNo" style="margin-left: 1rem;">인증</button></span>
             </div>
         </div>
 
@@ -89,7 +89,9 @@
 <fieldset>
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">비밀번호</label>
-        <span class="input-group-btn" ><button type="button" style="margin-left: 1rem" class="btn btn-default btn-sm" id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button></span>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-default btn-sm"  id="btnPwdInit" data-id="${rtnDtl.id}" style="margin-left: 1rem">비밀번호 초기화</button>
+        </div>
     </div>
 </fieldset>
 <fieldset>

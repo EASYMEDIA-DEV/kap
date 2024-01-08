@@ -6,9 +6,11 @@ import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduExcelDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.*;
 import com.kap.service.dao.eb.EBCVisitEduMapper;
+import com.kap.service.dao.mp.MPAUserMapper;
 import com.kap.service.dao.mp.MPEPartsCompanyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +59,9 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
     // 부품사관리 DAO
     private final MPEPartsCompanyMapper mpePartsCompanyMapper;
 
+    // 회원관리 DAO
+    private final MPAUserMapper mpaUserMapper;
+
     // 파일 서비스
     private final COFileService cOFileService;
 
@@ -74,6 +79,9 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
     /* 방문교육 신청 이관이력 시퀀스 */
     private final EgovIdGnrService edctnVstTrnsfSeqIdgen;
+
+    /* 회원 수정이력 로그 시퀀스 */
+    private final EgovIdGnrService memModSeqIdgen;
 
     //로그인 상태값 시스템 등록
     private final COSystemLogService cOSystemLogService;
@@ -196,7 +204,22 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         }
 
         //신청자 정보 수정
-        ebcVisitEduMapper.updatePartsMemInfo(ebcVisitEduDTO);
+        MPAUserDto mpaUserDto = new MPAUserDto();
+        mpaUserDto.setRegId(cOUserDetailsDTO.getId());
+        mpaUserDto.setRegIp(cOUserDetailsDTO.getLoginIp());
+        mpaUserDto.setId(ebcVisitEduDTO.getId());
+
+        if(trnsfYn.equals("Y")) {
+            ebcVisitEduDTO.setMemSeq(ebcVisitEduDTO.getAftrMemSeq());
+            ebcVisitEduMapper.updatePartsMemInfo(ebcVisitEduDTO);
+            mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
+            mpaUserMapper.insertUserDtlHistory(mpaUserDto);
+            ebcVisitEduDTO.setMemSeq(ebcVisitEduDTO.getBfreMemSeq());
+        } else {
+            ebcVisitEduMapper.updatePartsMemInfo(ebcVisitEduDTO);
+            mpaUserDto.setModSeq(memModSeqIdgen.getNextIntegerId());
+            mpaUserMapper.insertUserDtlHistory(mpaUserDto);
+        }
 
         //부품사 정보 수정
         MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();

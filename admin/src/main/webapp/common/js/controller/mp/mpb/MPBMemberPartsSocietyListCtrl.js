@@ -125,8 +125,8 @@ define(["ezCtrl"], function(ezCtrl) {
                             $('input[name=name]').val(memName);
                             $('input[name=memId]').val(memId);
                             $('input[name=memInfo]').val(memName+"("+memId+")");
+                            $("#deptCd").val(deptCd);
                             $('input[name=deptCd]').val(deptCd);
-                            $("#deptCd").val(deptCd).prop("selected", true);
                             $('input[name=deptDtlNm]').val(deptDtlNm);
                             $('input[name=pstnCd]').val(pstnCd);
                             $('input[name=telNo]').val(telNo);

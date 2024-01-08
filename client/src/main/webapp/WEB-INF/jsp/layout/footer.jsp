@@ -11,7 +11,7 @@
 					<div class="links-box f-body2">
 						<a class="personal bold" class="active" href="/utility/privacy-policy/index">개인정보 처리방침</a>
 						<a class="terms" href="/utility/terms-of-use/index">이용약관</a>
-						<a class="email" href="javascript:">이메일무단수집거부</a>
+						<a class="email" id="showEmailCollectPopup" href="javascript:">이메일무단수집거부</a>
 						<a class="way" href="javascript:">오시는길</a>
 					</div>
 					<div class="copy-area f-caption2">
@@ -50,6 +50,14 @@
 											window.open($("#footerFamilySelect").val(), "_blank");
 										}
 									}
+
+									$(document).ready(function() {
+										// 이메일무단수집거부 팝업 열기
+										$("#showEmailCollectPopup").click(function() {
+											$(".emailCollectPopup").fadeIn();
+											$(".dimd").show();
+										});
+									});
 								</script>
 							</div>
 						</div>
@@ -82,6 +90,31 @@
 					<div class="txt-area">
 						<p class="tit">로딩 중 입니다.</p>
 						<p class="txt">잠시만 기다려주세요.</p>
+					</div>
+				</div>
+			</div>
+			<!-- 이메일무단수집거부 팝업 -->
+			<div class="layer-popup first-show emailCollectPopup" style="display: none;">
+				<div class="for-center">
+					<div class="pop-wrap">
+						<div class="pop-con-area">
+							<div class="tit-area">
+								<p class="f-large-title">이메일무단수집거부</p>
+							</div>
+							<div class="con-area">
+								<div class="scroll-area">
+									<div class="p-info-sec">
+										<div class="sec-con-area">
+											<p class="f-sub-head">본 사이트에 게시된 이메일 주소가 전자우편 수집 프로그램이나, 그 밖의 기술적 장치를
+												이용하여 무단으로 수집되는 것을 거부하며, 이를 위반 시 <span class="f-head">정보통신망법에 의해 형사처벌 됨을 유의</span>하시기 바랍니다.</p>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="user-opt-area">
+								<button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

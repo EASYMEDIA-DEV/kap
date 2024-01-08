@@ -456,6 +456,7 @@
 		  and mem_seq = #{memSeq}
 	</delete>
 
+
 	<!--
 		 쿼리명 : EBCVisitEduMapper.applyVisitEduInfo
 		 설  명 : [사용자] 방문교육 신청정보를 등록한다.
@@ -886,15 +887,12 @@
 			 , hp_no -- 신청자 핸드폰번호
 			 , email -- 신청자이메일
 			 , edctn_year -- 교육년도
-			 -- 교육일??
 			 , edctn_strt_dtm -- 교육시작일시
 			 , edctn_end_dtm -- 교육종료일시
 			 , place_bsc_addr -- 방문교육 기본주소
 			 , place_dtl_addr -- 방문교육 상세주소
-			 -- 정원??
 			 , rslt_end_yn_nm -- 실적마감여부명
 			 , cnfrmd_theme -- 확정주제
-			 -- 신청인원?
 			 , cmptn_cnt -- 수료인원
 			 , ptcpt_rate -- 참석률
 			 , edctn_place -- 교육장소
