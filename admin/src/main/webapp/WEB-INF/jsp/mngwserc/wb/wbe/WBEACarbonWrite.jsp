@@ -14,10 +14,10 @@
     <div class="card-body" data-controller="controller/wb/wbe/WBEACarbonWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>
             <c:if test="${not empty rtnDto.episdSeq }">
-                ${pageTitle} 상세/수정
+                탄소배출저감 회차 상세/수정
             </c:if>
             <c:if test="${empty rtnDto.episdSeq }">
-                ${pageTitle} 등록
+                탄소배출저감 회차 등록
             </c:if>
         </h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >

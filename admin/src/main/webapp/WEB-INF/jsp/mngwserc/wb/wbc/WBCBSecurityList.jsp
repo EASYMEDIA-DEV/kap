@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/wb/wbc/WBCBSecurityListCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>신청부품사 검색</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>보안환경구축 신청부품사 검색</h6>
         <form class="form-horizontal" name="frmSearch" method="post" action="">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
@@ -75,7 +75,7 @@
             <hr class="mt0" />
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>신청부품사 목록(총 <span id="listContainerTotCnt">0</span>건)
+                    <em class="ion-play mr-sm"></em>보안환경구축 신청부품사 목록(총 <span id="listContainerTotCnt">0</span>건)
                 </h6>
                 <div class="pull-right">
                     <select class="form-control input-sm listRowSizeContainer" >

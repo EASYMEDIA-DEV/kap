@@ -51,7 +51,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         let month = today.getMonth() + 1;  // 월
                         let date = today.getDate();  // 날짜
 
-                        var day = year+'-'+month+'-'+date;
+                        var day = year+'-'+ (("00"+month.toString()).slice(-2))+"-"+(("00"+date.toString()).slice(-2));
 
                         //차수
                         var giveRow = giveLength+1;
