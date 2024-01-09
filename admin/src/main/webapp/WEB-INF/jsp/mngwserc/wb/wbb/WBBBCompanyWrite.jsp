@@ -46,6 +46,7 @@
                 </fieldset>
             </c:if>
 
+            <div id="appctnPdfArea1">
             <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
 
             <div id="compnayDiv">
@@ -97,10 +98,10 @@
                             </div>
                         </div>
 
-                        <label class="col-sm-1 control-label">직급</label>
+                        <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="col-sm-5" style="margin-left: -15px">
-                                <select class="form-control input-sm notRequired" id="pstnCd" name="pstnCd" title="직급">
+                                <select class="form-control input-sm" id="pstnCd" name="pstnCd" title="직급">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                         <c:if test="${fn:contains(cdList.cd, 'MEM_CD010')}">
@@ -110,7 +111,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4" style="margin-left: -15px">
-                                <input type="text" style="display:none;" class="form-control " id="pstnNm" name="pstnNm" value="${userInfo.pstnNm}" title="직급 상세" maxlength="50"/>
+                                <input type="text" style="display:none;" class="form-control notRequired" id="pstnNm" name="pstnNm" value="${userInfo.pstnNm}" title="직급 상세" maxlength="50"/>
                             </div>
                         </div>
                     </div>
@@ -208,7 +209,7 @@
 
                 <fieldset>
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
+                        <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="col-sm-6" style="margin-left: -15px">
                                 <input type="text" class="form-control input-sm" id="compTel" name="compTel" value="${userInfo.compTel}" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
@@ -224,7 +225,7 @@
 
                 <fieldset>
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">주소<span class="star"> *</span></label>
+                        <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                         <div class="col-sm-11">
                             <input type="button" class="btn btn-sm btn-primary" id="searchPostCode" value="우편번호 검색"><br>
                             <br>
@@ -402,6 +403,9 @@
                     </div>
                 </fieldset>
             </c:if>
+            <%--</div>
+            <div id="appctnPdfArea2">--%>
+                <div id="appctnPdfArea2"></div>
             <c:if test="${not empty optionList}">
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>사업신청 정보</h6>
                 <c:forEach var="optnList" items="${optionList}" varStatus="status">
@@ -426,7 +430,11 @@
                     </fieldset>
                 </c:forEach>
             </c:if>
-
+            </div>
+            <div class="pull-right">
+                <br>
+                <button type="button" class="btn btn-sm btn-default" id="appctnPdfDownload">신청정보 다운로드</button>
+            </div>
             <hr />
             <c:if test="${not empty rtnInfo}">
                 <div class="panel-group" id="accParent" role="tablist">

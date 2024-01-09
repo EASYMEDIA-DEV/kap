@@ -39,14 +39,17 @@ public class WBBATransDTO extends BaseDTO {
     @Schema(title = "이전회원순번")
     private Integer bfreMemSeq;
 
-    @Schema(title = "이전회원이름")
-    private String bfreMemNm;
+    @Schema(title = "이전회원아이디", example = "")
+    private String bfreMemId;
 
-    @Schema(title = "이후회원순번")
+    @Schema(title = "이후회원순번", example = "숫자")
     private Integer aftrMemSeq;
 
-    @Schema(title = "이후회원이름")
+    @Schema(title = "이후회원명", example = "")
     private String aftrMemNm;
+
+    @Schema(title = "이후회원아이디", example = "")
+    private String aftrMemId;
 
     @Schema(title = "리스트", example = "")
     List<WBBATransDTO> list;

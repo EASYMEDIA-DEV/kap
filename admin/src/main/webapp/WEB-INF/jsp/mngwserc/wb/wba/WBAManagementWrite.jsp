@@ -323,7 +323,7 @@
         <hr />
         <div class="clearfix">
             <div class="pull-left">
-                <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
+                <button type="button" class="btn btn-sm btn-default" id="btnList" onclick="location.href='./list?${strPam}'">목록</button>
             </div>
             <div class="pull-right">
                 <c:choose>

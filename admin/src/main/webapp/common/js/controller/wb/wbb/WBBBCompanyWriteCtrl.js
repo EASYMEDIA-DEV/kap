@@ -168,6 +168,22 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
+            //PDF
+            appctnPdfDownload : {
+                event : {
+                    click : function(){
+
+                        var cmpnNm = $("#cmpnNm").val();
+                        var today = new Date();
+
+                        var date = today.getFullYear() +""+ today.getMonth()+1 +""+ today.getDate();
+
+
+                        var fileName = "신청정보_사업현황_"+ cmpnNm +"_"+ date + ".pdf";
+                        cmmCtrl.getAppctnPdfDownload(fileName);
+                    }
+                }
+            }
         },
         classname : {
             btnPartUserModal: {
@@ -279,7 +295,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             //다음 단계명 넣기
                             $('input[name=nextStageNm]').val(nextStepNm.trim());
 
-                            var beforeUser = $formDataObj.find("input[name='memSeq']").val();
+                            var beforeUser = $("#memSeq").val();
                             var afterUser = $formObj.find("input[name='memSeq']").val();
 
                             if (beforeUser != afterUser) {

@@ -185,7 +185,6 @@ public class WBCBSecurityController {
             {
                 log.debug(e.getMessage());
             }
-            e.printStackTrace();
             throw new Exception(e.getMessage());
         }
         return "mngwserc/wb/wbc/WBCBSecurityUpdateWrite.admin";

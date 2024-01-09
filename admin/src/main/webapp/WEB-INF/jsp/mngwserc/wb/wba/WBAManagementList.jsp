@@ -17,7 +17,7 @@
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="등록/수정기간" />
-                <jsp:param name="srchOption" value="등록일,수정기간" />
+                <jsp:param name="srchOption" value="등록일,수정일" />
             </jsp:include>
             <!--기간 검색 종료-->
             <fieldset class="last-child">
