@@ -51,38 +51,25 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             // 유효성 검사
             $formObj.validation({
                 after : function() {
-                    var isValid = true, editorChk = true;
+                    var chk = true;
 
-                    $formObj.find(".ckeditorRequired").each(function() {
-                        jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-                        jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
-                        jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
-                        jQuery(this).val(jQuery(this).val().split("\'").join("~!singlecomma!~"));
-                        jQuery(this).val(jQuery(this).val().split("\"").join("~!doublecomma!~"));
-
-                        var editorVal = jQuery(this).val().length;
-
-                        if (editorVal < 1)
-                        {
-                            editorChk = false;
-
-                            alert(msgCtrl.getMsg("fail.co.cog.cnts"));
-
-                            CKEDITOR.instances[jQuery(this).prop("id")].focus();
-
-                            // 에디터 최상단으로 스크롤 이동
-                            jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
-
-                            return false;
+                    jQuery.ajax({
+                        url : "./episdChk",
+                        type : "POST",
+                        timeout: 30000,
+                        data : $formObj.serializeArray(),
+                        dataType : "json",
+                        async: false,
+                        cache : false,
+                        success : function(data, status, xhr){
+                            if(data.respCnt > 0 ){
+                                alert("이미 등록된 회차가 존재합니다.");
+                                chk = false;
+                            }
                         }
                     });
 
-                    if (!editorChk)
-                    {
-                        isValid = false;
-                    }
-
-                    return isValid;
+                    return chk;
                 },
                 async : {
                     use : true,
@@ -96,12 +83,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         wbRoundMstDTO.bsnCd = ctrl.obj.find("#bsnCd").val();
                         wbRoundMstDTO.year = ctrl.obj.find("#year").val();
                         wbRoundMstDTO.episd = ctrl.obj.find("#episd").val();
+                        wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val() +" "+ctrl.obj.find("#accsStrtHour").val() +":00:00";
+                        wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":59:59";
 
-                        wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val();
-                        wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val();
 
-                        wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val();
-                        wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val();
+                        wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val() +" "+ctrl.obj.find("#bsnStrtHour").val()+":00:00";
+                        wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val() +" "+ctrl.obj.find("#bsnEndHour").val()+":59:59";
 
                         wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
 
