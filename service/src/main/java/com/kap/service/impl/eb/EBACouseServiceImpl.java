@@ -5,6 +5,7 @@ import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 import com.kap.service.*;
 import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.eb.EBACouseMapper;
@@ -372,6 +373,32 @@ public class EBACouseServiceImpl implements EBACouseService {
 		return actCnt;
 	}
 
+
+
+	/**
+	 * 현재 등록된 교육과정에 종속된 교육차수 체크
+	 */
+	@Transactional
+	public EBBPtcptDTO selectApplyEpisdList(EBBPtcptDTO eBBPtcptDTO) throws Exception
+	{
+
+		COPaginationUtil page = new COPaginationUtil();
+
+		page.setCurrentPageNo(eBBPtcptDTO.getPageIndex());
+		page.setRecordCountPerPage(eBBPtcptDTO.getListRowSize());
+
+		page.setPageSize(eBBPtcptDTO.getPageRowSize());
+
+		eBBPtcptDTO.setFirstIndex( page.getFirstRecordIndex() );
+		eBBPtcptDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+		eBBPtcptDTO.setList( eBACouseMapper.selectApplyEpisdList(eBBPtcptDTO) );
+		eBBPtcptDTO.setTotalCount( eBACouseMapper.selectApplyEpisdListCnt(eBBPtcptDTO) );
+
+
+
+		return eBBPtcptDTO;
+	}
 
 
 

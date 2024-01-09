@@ -327,6 +327,26 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "과정연계순서", example = "텍스트")
     private String cnnctCd;
 
+    @Schema(title = "회원번호", example = "숫자")
+    private Integer memSeq;
+
+    @Schema(title = "차수의 교육상태코드", example = "텍스트")
+    private String sttsCd;
+
+    @Schema(title = "교육상태코드명", example = "텍스트")
+    private String sttsCdNm;
+
+    @Schema(title = "수료여부", example = "텍스트")
+    private String cmptnYn;
+
+    @Schema(title = "참여자의 교육상태", example = "텍스트")
+    private String eduStat;
+
+    @Schema(title = "교육 참여일", example = "yyyy-mm-dd HH:mm:ss")
+    private String ptcptDtm;
+
+
+
 
     //오프라인여부
 
@@ -361,6 +381,11 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "차수변경용 차수목록 플래그", example = "Y/N")
     @Builder.Default
     private String changeListYn = "N";
+
+    @Schema(title = "마이페이지에서만 사용하는 조건절", example = "Y/N")
+    @Builder.Default
+    private String mypageYn = "N";
+
 
     private String srchLayer;
     private List<EBBPtcptDTO> ptcptList;//참여자 목록

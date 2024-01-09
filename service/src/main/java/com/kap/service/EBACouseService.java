@@ -2,6 +2,7 @@ package com.kap.service;
 
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +66,13 @@ public interface EBACouseService {
 	 * 교육과정을 삭제한다.
 	 */
 	public int deleteCouse(EBACouseDTO eBACouseDTO) throws Exception;
+
+
+	/**
+	 * 신청한 과정 목록을 호출한다.
+	 */
+	public EBBPtcptDTO selectApplyEpisdList(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
 
 
 	/**

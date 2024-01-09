@@ -127,6 +127,12 @@ public interface EBBEpisdService {
 	public EBBPtcptDTO setPtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 	/**
+	 * 교육차수 신청자 조회
+	 */
+	public EBBPtcptDTO selectPtcptDtl(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+
+	/**
 	 * 교육차수 신청자 차수변경
 	 */
 	public int changeEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception;
