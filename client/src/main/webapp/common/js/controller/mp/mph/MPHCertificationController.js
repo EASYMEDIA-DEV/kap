@@ -328,7 +328,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         var ajaxData = {
                         }
-                        jQuery("#formPasswordConfirm").serializeArray().forEach(function (field) {
+                        jQuery("#formUserSubmit").serializeArray().forEach(function (field) {
+
                             if (field.name == '_csrf') {
                                 ajaxData[field.name] = field.value;
                             }
