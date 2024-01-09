@@ -164,25 +164,26 @@
                         <th class="text-center" rowspan="3">최종 수정일시</th>
                     </tr>
                     <tr>
-                        <th class="text-center" colspan="4">부품사정보</th>
-                        <th class="text-center" colspan="9">신청내용</th>
+                        <th class="text-center" colspan="4" style="border-right: 1px solid rgba(162, 162, 162, 0.16);">부품사정보</th>
+                        <th class="text-center" colspan="6" style="border-right: 1px solid rgba(162, 162, 162, 0.16);">신청내용</th>
+                        <th class="text-center" colspan="3" style="border-right: 1px solid rgba(162, 162, 162, 0.16);">신청정보</th>
                         <th class="text-center" colspan="4">개요</th>
                     </tr>
                     <tr>
                         <th class="text-center">부품사명</th>
                         <th class="text-center">사업자등록번호</th>
-                        <th class="text-center">구분</th>
-                        <th class="text-center">규모</th>
+                        <th class="text-center" >구분</th>
+                        <th class="text-center" style="border-right: 1px solid rgba(162, 162, 162, 0.16);">규모</th>
 
                         <th class="text-center">신청일시</th>
                         <th class="text-center">신청분야</th>
                         <th class="text-center">교육희망일</th>
                         <th class="text-center">교육장소</th>
                         <th class="text-center">교육인원</th>
-                        <th class="text-center">교육시간</th>
+                        <th class="text-center" style="border-right: 1px solid rgba(162, 162, 162, 0.16);">교육시간</th>
                         <th class="text-center">이름(아이디)</th>
                         <th class="text-center">휴대폰번호</th>
-                        <th class="text-center">이메일</th>
+                        <th class="text-center" style="border-right: 1px solid rgba(162, 162, 162, 0.16);">이메일</th>
 
                         <th class="text-center">실적마감여부</th>
                         <th class="text-center">확정주제</th>

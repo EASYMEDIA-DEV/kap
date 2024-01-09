@@ -364,12 +364,12 @@
                     </when>
                     <otherwise>
                         AND (
-                        INSTR(#{q}, NAME) <![CDATA[>]]> 0 OR
-                        INSTR(#{q}, FFLTN_NM) <![CDATA[>]]> 0 OR
-                        INSTR(#{q}, DEPT_NM) <![CDATA[>]]> 0 OR
-                        INSTR(#{q}, PSTN_NM) <![CDATA[>]]> 0 OR
-                        INSTR(#{q}, HP_NO) <![CDATA[>]]> 0 OR
-                        INSTR(#{q}, EMAIL) <![CDATA[>]]> 0 OR
+                        NAME LIKE CONCAT('%', #{q}, '%') OR
+                        FFLTN_NM LIKE CONCAT('%', #{q}, '%') OR
+                        DEPT_NM LIKE CONCAT('%', #{q}, '%') OR
+                        PSTN_NM LIKE CONCAT('%', #{q}, '%') OR
+                        HP_NO LIKE CONCAT('%', #{q}, '%') OR
+                        EMAIL LIKE CONCAT('%', #{q}, '%') OR
                         INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
                         EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
                         INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR

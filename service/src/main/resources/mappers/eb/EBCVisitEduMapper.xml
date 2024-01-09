@@ -979,44 +979,44 @@
 					 , D.edctn_place -- 교육장소
 					 , E.optn_cd
 					 , E.rslt_val
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001001' THEN E.rslt_val ELSE 0 END) AS EDUCNT1 /* 회사별 수료 인원 - 완성차(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001002' THEN E.rslt_val ELSE 0 END) AS EDUCNT2 /* 회사별 수료 인원 - 1차사(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001003' THEN E.rslt_val ELSE 0 END) AS EDUCNT3 /* 회사별 수료 인원 - 2차사(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001004' THEN E.rslt_val ELSE 0 END) AS EDUCNT4 /* 회사별 수료 인원 - 기타(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002001' THEN E.rslt_val ELSE 0 END) AS FIELDCNT1 /* 분야별 수료 인원 - 품질(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002002' THEN E.rslt_val ELSE 0 END) AS FIELDCNT2 /* 분야별 수료 인원 - RnD(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002003' THEN E.rslt_val ELSE 0 END) AS FIELDCNT3 /* 분야별 수료 인원 - 생산(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002004' THEN E.rslt_val ELSE 0 END) AS FIELDCNT4 /* 분야별 수료 인원 - 구매(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002005' THEN E.rslt_val ELSE 0 END) AS FIELDCNT5 /* 분야별 수료 인원 - 경영지원(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002006' THEN E.rslt_val ELSE 0 END) AS FIELDCNT6 /* 분야별 수료 인원 - 업체평가(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002007' THEN E.rslt_val ELSE 0 END) AS FIELDCNT7 /* 분야별 수료 인원 - 안전(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002008' THEN E.rslt_val ELSE 0 END) AS FIELDCNT8 /* 분야별 수료 인원 - ESG(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002009' THEN E.rslt_val ELSE 0 END) AS FIELDCNT9 /* 분야별 수료 인원 - 기타(명) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003001' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT1 /* 직급별 수료 인원 - 대표 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003002' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT2 /* 직급별 수료 인원 - 임원 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003003' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT3 /* 직급별 수료 인원 - 부장 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003004' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT4 /* 직급별 수료 인원 - 과장/차장 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003005' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT5 /* 직급별 수료 인원 - 사원/대리 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003006' THEN E.rslt_val ELSE 0 END) AS POSITIONCNT6 /* 직급별 수료 인원 - 조장/반장(계장) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03004001' THEN E.rslt_val ELSE 0 END) AS ATTENDCNT1 /* 출석률 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03004002' THEN E.rslt_val ELSE 0 END) AS ATTENDCNT2 /* 평가점수 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005001' THEN E.rslt_val ELSE 0 END) AS SATICNT1 /* 만족도 - 종합평균 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005002' THEN E.rslt_val ELSE 0 END) AS SATICNT2 /* 만족도 - 전체(공통) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005003' THEN E.rslt_val ELSE 0 END) AS SATICNT3 /* 만족도 - 교육환경 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005004' THEN E.rslt_val ELSE 0 END) AS SATICNT4 /* 만족도 - 교육지원 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005005' THEN E.rslt_val ELSE 0 END) AS SATICNT5 /* 만족도 - 교육내용 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005006' THEN E.rslt_val ELSE 0 END) AS SATICNT6 /* 만족도 - 강사1 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005007' THEN E.rslt_val ELSE 0 END) AS SATICNT7 /* 만족도 - 강사2 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005008' THEN E.rslt_val ELSE 0 END) AS SATICNT8 /* 만족도 - 강사3 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005009' THEN E.rslt_val ELSE 0 END) AS SATICNT9 /* 만족도 - 강사4 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005010' THEN E.rslt_val ELSE 0 END) AS SATICNT10 /* 만족도 - 강사5 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005011' THEN E.rslt_val ELSE 0 END) AS SATICNT11 /* 만족도 - 강사6 */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006001' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT1 /* 강사1(시간) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006002' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT2 /* 강사2(시간) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006003' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT3 /* 강사3(시간) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006004' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT4 /* 강사4(시간) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006005' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT5 /* 강사5(시간) */
-					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006006' THEN E.rslt_val ELSE 0 END) AS EDUTIMECNT6 /* 강사6(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001001' THEN E.rslt_val ELSE "-" END) AS EDUCNT1 /* 회사별 수료 인원 - 완성차(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001002' THEN E.rslt_val ELSE "-" END) AS EDUCNT2 /* 회사별 수료 인원 - 1차사(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001003' THEN E.rslt_val ELSE "-" END) AS EDUCNT3 /* 회사별 수료 인원 - 2차사(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03001004' THEN E.rslt_val ELSE "-" END) AS EDUCNT4 /* 회사별 수료 인원 - 기타(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002001' THEN E.rslt_val ELSE "-" END) AS FIELDCNT1 /* 분야별 수료 인원 - 품질(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002002' THEN E.rslt_val ELSE "-" END) AS FIELDCNT2 /* 분야별 수료 인원 - RnD(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002003' THEN E.rslt_val ELSE "-" END) AS FIELDCNT3 /* 분야별 수료 인원 - 생산(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002004' THEN E.rslt_val ELSE "-" END) AS FIELDCNT4 /* 분야별 수료 인원 - 구매(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002005' THEN E.rslt_val ELSE "-" END) AS FIELDCNT5 /* 분야별 수료 인원 - 경영지원(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002006' THEN E.rslt_val ELSE "-" END) AS FIELDCNT6 /* 분야별 수료 인원 - 업체평가(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002007' THEN E.rslt_val ELSE "-" END) AS FIELDCNT7 /* 분야별 수료 인원 - 안전(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002008' THEN E.rslt_val ELSE "-" END) AS FIELDCNT8 /* 분야별 수료 인원 - ESG(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03002009' THEN E.rslt_val ELSE "-" END) AS FIELDCNT9 /* 분야별 수료 인원 - 기타(명) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003001' THEN E.rslt_val ELSE "-" END) AS POSITIONCNT1 /* 직급별 수료 인원 - 대표 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003002' THEN E.rslt_val ELSE "-" END) AS POSITIONCNT2 /* 직급별 수료 인원 - 임원 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003003' THEN E.rslt_val ELSE "-" END) AS POSITIONCNT3 /* 직급별 수료 인원 - 부장 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003004' THEN E.rslt_val ELSE "-" END) AS POSITIONCNT4 /* 직급별 수료 인원 - 과장/차장 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003005' THEN E.rslt_val ELSE "-" END) AS POSITIONCNT5 /* 직급별 수료 인원 - 사원/대리 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03003006' THEN E.rslt_val ELSE "-" END) AS POSITIONCNT6 /* 직급별 수료 인원 - 조장/반장(계장) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03004001' THEN E.rslt_val ELSE "-" END) AS ATTENDCNT1 /* 출석률 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03004002' THEN E.rslt_val ELSE "-" END) AS ATTENDCNT2 /* 평가점수 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005001' THEN E.rslt_val ELSE "-" END) AS SATICNT1 /* 만족도 - 종합평균 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005002' THEN E.rslt_val ELSE "-" END) AS SATICNT2 /* 만족도 - 전체(공통) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005003' THEN E.rslt_val ELSE "-" END) AS SATICNT3 /* 만족도 - 교육환경 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005004' THEN E.rslt_val ELSE "-" END) AS SATICNT4 /* 만족도 - 교육지원 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005005' THEN E.rslt_val ELSE "-" END) AS SATICNT5 /* 만족도 - 교육내용 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005006' THEN E.rslt_val ELSE "-" END) AS SATICNT6 /* 만족도 - 강사1 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005007' THEN E.rslt_val ELSE "-" END) AS SATICNT7 /* 만족도 - 강사2 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005008' THEN E.rslt_val ELSE "-" END) AS SATICNT8 /* 만족도 - 강사3 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005009' THEN E.rslt_val ELSE "-" END) AS SATICNT9 /* 만족도 - 강사4 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005010' THEN E.rslt_val ELSE "-" END) AS SATICNT10 /* 만족도 - 강사5 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03005011' THEN E.rslt_val ELSE "-" END) AS SATICNT11 /* 만족도 - 강사6 */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006001' THEN E.rslt_val ELSE "-" END) AS EDUTIMECNT1 /* 강사1(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006002' THEN E.rslt_val ELSE "-" END) AS EDUTIMECNT2 /* 강사2(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006003' THEN E.rslt_val ELSE "-" END) AS EDUTIMECNT3 /* 강사3(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006004' THEN E.rslt_val ELSE "-" END) AS EDUTIMECNT4 /* 강사4(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006005' THEN E.rslt_val ELSE "-" END) AS EDUTIMECNT5 /* 강사5(시간) */
+					 , MAX(CASE WHEN E.optn_cd ='EBC_VISIT_CD03006006' THEN E.rslt_val ELSE "-" END) AS EDUTIMECNT6 /* 강사6(시간) */
 				FROM
 					(
 						SELECT vst_seq
@@ -1175,28 +1175,22 @@
 			<if test="srchDate != null and srchDate != ''.toString() ">
 				<choose>
 					<when test="srchDate == 1">
-						<if test="dStrDt != null and dStrDt != ''.toString() ">
-							AND REG_DTM <![CDATA[ > ]]> str_to_date(#{dStrDt}, '%Y-%m-%d')
-							AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+						<if test="strtDt != null and strtDt != ''.toString() ">
+							AND REG_DTM <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+							AND REG_DTM <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
 						</if>
 					</when>
 					<when test="srchDate == 2">
-						<if test="dEndDt != null and dEndDt != ''.toString() ">
-							AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
-							AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-						</if>
+						AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+						AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
 					</when>
 					<when test="srchDate == 3">
-						<if test="dEndDt != null and dEndDt != ''.toString() ">
-							AND edctn_strt_dtm <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
-							AND edctn_strt_dtm <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-						</if>
+						AND edctn_strt_dtm <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+						AND edctn_strt_dtm <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
 					</when>
 					<when test="srchDate == 4">
-						<if test="dEndDt != null and dEndDt != ''.toString() ">
-							AND edctn_end_dtm <![CDATA[ > ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
-							AND edctn_end_dtm <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
-						</if>
+						AND edctn_end_dtm <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+						AND edctn_end_dtm <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
 					</when>
 					<otherwise>
 
@@ -1226,7 +1220,7 @@
 			</if>
 			<if test="firstRgnsCd != null and firstRgnsCd != ''.toString()">
 				AND A.edctn_place LIKE CONCAT('%', (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = #{firstRgnsCd}), '%')
-				OR A.edctn_place LIKE CONCAT('%', (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = #{scndRgnsCd}), '%')
+				AND A.edctn_place LIKE CONCAT('%', (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'ADDR_CD' AND CD = #{scndRgnsCd}), '%')
 			</if>
 			<if test="q != null and q != ''">
 				<choose>
@@ -1237,10 +1231,10 @@
 						AND A.appctn_bsnm_no LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 3">
-						AND B.name LIKE CONCAT('%', #{q}, '%')
+						AND A.edctn_place LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 4">
-						AND B.hp_no LIKE CONCAT('%', #{q}, '%')
+						AND B.name LIKE CONCAT('%', #{q}, '%')
 					</when>
 					<when test="f == 5">
 						AND B.email LIKE CONCAT('%', #{q}, '%')
