@@ -56,7 +56,7 @@ public class WBECarbonController {
             wBRoundMstSearchDTO.setExpsYn("Y");
             wBRoundMstSearchDTO.setFirstIndex(0);
             wBRoundMstSearchDTO.setRecordCountPerPage(3);
-            wBRoundMstSearchDTO.setBsnCd("INQ07005");
+            wBRoundMstSearchDTO.setBsnCd("BUSUNESS_TYPE05");
 
             //CMS
             pCOGCntsDTO.setMenuSeq(718);
@@ -152,7 +152,7 @@ public class WBECarbonController {
 
             //사업접수 하단플로팅 영역용
             WBRoundMstSearchDTO wBRoundMstSearchDTO = new WBRoundMstSearchDTO();
-            wBRoundMstSearchDTO.setBsnCd("INQ07005");
+            wBRoundMstSearchDTO.setBsnCd("BUSUNESS_TYPE05");
             modelMap.addAttribute("rtnRoundDtl", wBEACarbonListService.getRoundDtl(wBRoundMstSearchDTO));
 
         } catch (Exception e) {

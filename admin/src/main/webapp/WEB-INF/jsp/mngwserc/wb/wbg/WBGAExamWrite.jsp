@@ -16,7 +16,7 @@
             <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}" />
             <input type="hidden" class="notRequired" name="detailsKey" value="${rtnData.appctnSeq}" />
             <input type="hidden" class="notRequired" name="appctnBsnmNo" value="${userInfo.bsnmNo}"/>
-            <input type="hidden" class="notRequired" name="bsnCd" value="INQ07007"/>
+            <input type="hidden" class="notRequired" name="bsnCd" value="BUSUNESS_TYPE07"/>
 
             <h6 class="mt0"><strong>
                 <c:if test="${not empty rtnData.appctnSeq }">
