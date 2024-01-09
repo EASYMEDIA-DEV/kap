@@ -23,7 +23,7 @@
         <fieldset>
             <div class="form-group text-sm">
                 <label class="col-sm-1 control-label">비밀번호</label>
-                <span class="input-group-btn" ><button type="button" style="margin-left: 1rem" class="btn btn-default btn-sm" id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button></span>
+                <span class="input-group-btn" ><button type="button" style="margin-left: 1.3rem" class="btn btn-default btn-sm" id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button></span>
             </div>
         </fieldset>
         <fieldset>
@@ -38,7 +38,7 @@
 
                     <div class="input-group col-sm-3">
                         <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnDtl.bscAddr}" readonly placeholder="기본주소" style="width: 400px;"/><br>
-                        <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnDtl.dtlAddr}" title="우편번호" placeholder="상세주소 입력" maxlength="50" style="width: 400px; margin-top:0.5rem;"/>
+                        <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnDtl.dtlAddr}" title="상세주소" placeholder="상세주소 입력" maxlength="50" style="width: 400px; margin-top:0.5rem;"/>
                     </div>
                 </div>
             </div>

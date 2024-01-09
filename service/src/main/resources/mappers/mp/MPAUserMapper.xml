@@ -60,8 +60,8 @@
                       , MEM.WORK_BSNM_NO
                       , MEM.NTFY_SMS_RCV_YN
                       , MEM.NTFY_EMAIL_RCV_YN
-                      , CASE WHEN MST.MOD_CD ='AD' THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MEM.MOD_ID)
-                             WHEN MST.MOD_CD = 'CO' THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.MOD_ID)
+                      , CASE WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.MOD_ID) > 0 THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MEM.MOD_ID)
+                             WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.MOD_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.MOD_ID)
                               ELSE NULL END AS MOD_NAME
                       , CMPN_MST.CMPN_NM
                       , CASE WHEN CMPN_MST.SIZE_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.SIZE_CD )
@@ -164,9 +164,9 @@
                      , mem.work_bsnm_no
                      , mem.ntfy_sms_rcv_yn
                      , mem.ntfy_email_rcv_yn
-                     , CASE WHEN mst.mod_cd = 'AD' THEN (SELECT name FROM co_adm_mst WHERE id = mst.reg_id)
-                            WHEN mst.mod_cd = 'CO' THEN (SELECT name FROM co_mem_mst WHERE id = mst.reg_id)
-                             ELSE NULL end AS mod_name
+                     , case when (select count(*) from co_adm_mst where id=mem.mod_id) > 0 then (select name from co_adm_mst where id=mem.mod_id)
+                            when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where id=mem.mod_id)
+                                else null end as  mod_name
                      , cmpn_mst.cmpn_nm
                      , (SELECT cd_nm FROM  co_code_mst WHERE cd = cmpn_mst.size_cd)  AS size_cd_nm
                      , (SELECT cd_nm FROM  co_code_mst WHERE cd = cmpn_mst.ctgry_cd) AS ctgry_cd_nm
@@ -218,9 +218,9 @@
                    , mem.mem_cd
                    , mem.work_bsnm_no
                    , mem.gndr
-                   , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mst.reg_id)
-                          when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mst.reg_id)
-                            else null end as mod_name
+                   , case when (select count(*) from co_adm_mst where id=mem.mod_id) > 0 then (select name from co_adm_mst where id=mem.mod_id)
+                          when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where id=mem.mod_id)
+                            else null end as  mod_name
                    , cmpn_mst.cmpn_nm
                    , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd ) as size_cd_nm
                    , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
@@ -409,9 +409,9 @@
                      else '' end as cmssr_work_cd_nm
              , cmpn_mst.cmpn_nm
              , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
-             , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mem.mod_id)
-                    when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mem.mod_id)
-                    else null end as mod_name
+             , case when (select count(*) from co_adm_mst where id=mem.mod_id) > 0 then (select name from co_adm_mst where id=mem.mod_id)
+                    when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where id=mem.mod_id)
+                    else null end as  mod_name
              , mem.mod_id
              , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
                     when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
@@ -491,9 +491,9 @@
              , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
                     when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
                     else null end as reg_name
-             , case when mst.mod_cd ='AD' then (select name from co_adm_mst where id=mem.mod_id)
-                    when mst.mod_cd = 'CO' then (select name FROM co_mem_mst where id=mem.mod_id)
-                    else null end as mod_name
+             , case when (select count(*) from co_adm_mst where id=mem.mod_id) > 0 then (select name from co_adm_mst where id=mem.mod_id)
+                    when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where id=mem.mod_id)
+                    else null end as  mod_name
              , mst.reg_id as mod_id
              , mem.reg_id as reg_id
              , mem.pstn_nm

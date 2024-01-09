@@ -382,7 +382,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
             String formattedDate = date.format(formatter);
             DayOfWeek dayOfWeek = date.getDayOfWeek();
             String dayOfWeekStr = dayOfWeek.getDisplayName(
-                    TextStyle.FULL, Locale.getDefault()
+                    TextStyle.FULL, Locale.KOREAN
             );
             dates.add(formattedDate);
             weeks.add(dayOfWeekStr.substring(0,1));

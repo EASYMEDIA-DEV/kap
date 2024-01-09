@@ -37,13 +37,13 @@
                             </select>
                         </div>
                             <div class="input-group">
-                                <input type="text" class="monthpicker monthInit"  name="monthpicker" style="margin-left:0.8rem" />
-                                <span  style="width:20%;" class="input-group-btn" style="z-index:0;">
-                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                <input type="text" class="monthpicker monthInit form-control input-sm "  name="monthpicker" style="margin-left:0.8rem; width:50%" readonly/>
+                                <span  style="width:20%;"  class="input-group-btn" style="z-index:0;">
+                                        <button  style="margin-bottom:2.5rem ; margin-left:-7.8rem;"  type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                             <em class="ion-calendar"></em>
                                         </button>
                                     </span>
-                                <button type="button" class="btn btn-inverse btn-sm " id="btnExcelDown" style="margin-left:0.8rem">엑셀다운로드</button>
+                                <button type="button" class="btn btn-inverse btn-sm " style="margin-bottom:2.5rem ; margin-left:-8.2rem;" id="btnExcelDown" >엑셀다운로드</button>
                             </div>
 
                         <div class="pull-right">

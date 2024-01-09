@@ -22,7 +22,7 @@
                         <label class="col-sm-1 control-label">아이디<span class="star"> *</span></label>
                         <div class="col-sm-2">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm " id="id" title="아이디" name="id" placeholder="아이디 입력" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');" />
+                                <input style="width:153px" type="text" class="form-control input-sm " id="id" title="아이디" name="id" placeholder="아이디 입력" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');" />
                                 <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupId" style="margin-left:0.8rem;">중복확인</button></span>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                         <label class="col-sm-1 control-label">비밀번호<span class="star"> *</span></label>
                         <div class="col-sm-2">
                             <div class="input-group">
-                                <input type="password" class="form-control input-sm " id="pwd" title="비밀번호" name="pwd" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
+                                <input style="width:153px" type="password"   class="form-control input-sm " id="pwd" title="비밀번호" name="pwd" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
                             </div>
                             ※ 8~16자 이내 영문+숫자+특수문자 조합으로 입력해주세요.
                         </div>
@@ -46,7 +46,7 @@
                         <label class="col-sm-1 control-label">비밀번호 확인<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="input-group">
-                                <input type="password" class="form-control input-sm " id="pwdCon" title="비밀번호 확인" name="pwdCon" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
+                                <input style="width:153px" type="password" class="form-control input-sm " id="pwdCon" title="비밀번호 확인" name="pwdCon" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         <label class="col-sm-1 control-label">이름<span class="star"> *</span></label>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm " id="name" title="이름" name="name" placeholder="이름 입력" oninput="this.value=this.value.replace(/[^\wㄱ-힣]/g,'');"/>
+                                <input style="width:153px" type="text" class="form-control input-sm " id="name" title="이름" name="name" placeholder="이름 입력" oninput="this.value=this.value.replace(/[^\wㄱ-힣]/g,'');"/>
                             </div>
                         </div>
                     </div>
@@ -156,13 +156,13 @@
                     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                             <div class="input-group">
-                                <input type="text" class="form-control input-sm "id="hpNo" title="휴대폰번호" placeholder="휴대폰번호 입력" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  />
+                                <input style="width:153px" type="text" class="form-control input-sm "id="hpNo" title="휴대폰번호" placeholder="휴대폰번호 입력" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  />
                             </div>
                     </div>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="input-group" style="z-index:0;width: 220px;">
-                            <input type="text" class="form-control input-sm " id="email" title="이메일" name="email" placeholder="이메일 입력" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')"/>
+                            <input style="width:153px" type="text" class="form-control input-sm " id="email" title="이메일" name="email" placeholder="이메일 입력" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')"/>
                             <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupEmail" style="margin-left:0.8rem;">중복확인</button></span>
                         </div>
                     </div>
@@ -192,7 +192,7 @@
                         <label class="col-sm-1 control-label">주요경력<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="input-group">
-                                <textarea class="form-control input-sm" style="resize: none; border-radius:0.4rem;" rows="1" cols="20" type="text" id="cmssrMjrCarerCntn" title="주요경력" name="cmssrMjrCarerCntn" placeholder="주요경력 입력"></textarea>
+                                <textarea class="form-control input-sm" style="width:153px; resize: none; border-radius:0.4rem;" rows="1" cols="20" type="text" id="cmssrMjrCarerCntn" title="주요경력" name="cmssrMjrCarerCntn" placeholder="주요경력 입력"></textarea>
                             </div>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
                         <label class="col-sm-1 control-label">컨설팅분야</label>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <textarea  class="form-control input-sm" style="resize: none; border-radius:0.4rem ;" type="text" rows="1" cols="20" id="cmssrCnstgFldCntn" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired" placeholder="컨설팅분야 입력"></textarea>               </div>
+                                <textarea  class="form-control input-sm notRequired" style="width:153px; resize: none; border-radius:0.4rem ;" type="text" rows="1" cols="20" id="cmssrCnstgFldCntn" title="컨설팅분야" name="cmssrCnstgFldCntn" placeholder="컨설팅분야 입력"></textarea>               </div>
                         </div>
                     </div>
                 </fieldset>
