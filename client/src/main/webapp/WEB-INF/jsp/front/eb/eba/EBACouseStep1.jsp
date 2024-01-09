@@ -9,10 +9,13 @@
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
         <input type="hidden" id="edctnSeq" name="edctnSeq" value="${rtnData.edctnSeq}" />
+
         <input type="hidden" id="episdYear" name="episdYear" value="${episdDto.episdYear}" />
         <input type="hidden" id="episdOrd" name="episdOrd" value="${episdDto.episdOrd}" />
-        <input type="hidden" id="episdSeq" name="episdSeq" value="${episdDto.episdOrd}" />
+        <input type="hidden" id="episdSeq" name="episdSeq" value="${episdDto.episdSeq}" />
+
         <input type="hidden" id="stduyMthdCd" name="stduyMthdCd" value="${episdDto.stduyMthdCd}" />
+        <input type="hidden" id="ptcptBsnmNo" name="ptcptBsnmNo" value="${loginMap.bsnmNo}" />
 
 
         <input type="hidden" id="memSeq" name="memSeq" value="${loginMap.seq}" />

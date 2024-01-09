@@ -160,6 +160,9 @@ public class EBBPtcptDTO extends BaseDTO {
     private String pstnNm;
 
 
+    private List<EBBPtcptDTO> list;
+
+
     @Schema(title = "비고", example = "텍스트")
     @Builder.Default
     private String etcNm = null;

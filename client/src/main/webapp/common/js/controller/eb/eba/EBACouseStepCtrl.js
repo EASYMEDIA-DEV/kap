@@ -61,20 +61,27 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	var setPtcptInfo = function(){
 
-
-		//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
-		if(1 == 2){
-			alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
-			location.href="./detail?detailsKey="+$("#edctnSeq").val();
-		}
-
-
 		var seqObj = {};
 		seqObj.edctnSeq = $("#edctnSeq").val();
+		seqObj.detailsKey = $("#edctnSeq").val();
 		seqObj.episdYear = $("#episdYear").val();
 		seqObj.episdOrd = $("#episdOrd").val();
 		seqObj.episdSeq = $("#episdSeq").val();
+
 		seqObj.stduyMthdCd = $("#stduyMthdCd").val();//학습방식, 온라인이면 출석정보 등록 안함
+
+		//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
+		cmmCtrl.jsonAjax(function(data){
+
+			if(data != "A"){
+				alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
+				location.href="./detail?detailsKey="+$("#edctnSeq").val();
+			}
+
+			return false;
+
+		}, "/education/apply/EpisdChk", seqObj, "text")
+
 
 		//정원수 체크
 		cmmCtrl.jsonAjax(function(data){
@@ -90,19 +97,21 @@ define(["ezCtrl"], function(ezCtrl) {
 						if(rtnData.regStat == "F"){
 							alert("이미 해당 회차에 신청한 회원입니다.");
 						}else if(rtnData.regStat == "S"){
-							alert("저장되었습니다.");
+							//신청 진행
+							location.href="/education/apply/step2?detailsKey="+seqObj.edctnSeq+"&episdSeq="+seqObj.episdSeq+"&episdYear="+seqObj.episdYear+"&episdOrd="+seqObj.episdOrd;
+
 						}
 
 					}, "./setPtcptInfo", $formObj, "post", "json");
 
 					//정원초과
 				}else{
-					alert("정원이 초과되었습니다.");
+					alert("교육 가능한 인원이 초과되었습니다. ");
 					return false;
 				}
 			}
 
-		}, "/mngwserc/eb/ebb/fxnumChk", seqObj, "text")
+		}, "/education/apply/fxnumChk", seqObj, "text")
 
 
 

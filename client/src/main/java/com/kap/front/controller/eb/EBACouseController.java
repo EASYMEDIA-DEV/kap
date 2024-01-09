@@ -422,25 +422,42 @@ public class EBACouseController {
     {
         String vwUrl = "front/eb/eba/EBACouseStep2.front";
 
+        try{
+            EBBPtcptDTO eBBPtcptDTO = new EBBPtcptDTO();
+            eBBPtcptDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
 
-        //신청전
-
-        //신청후
-
-
+            eBBPtcptDTO.setEdctnSeq(Integer.parseInt(eBBEpisdDTO.getDetailsKey()));
+            eBBPtcptDTO.setEpisdOrd(eBBEpisdDTO.getEpisdOrd());
+            eBBPtcptDTO.setEpisdYear(eBBEpisdDTO.getEpisdYear());
 
 
+            //신청전
+            EBBPtcptDTO rtnPtcptDto = eBBEpisdService.selectPtcptDtl(eBBPtcptDTO);
+            //신청후
 
 
-        EBACouseDTO eBACouseDTO = new EBACouseDTO();
 
-        eBACouseDTO.setDetailsKey(eBBEpisdDTO.getDetailsKey());
-        //선택한 과정정보 호출
-        HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
 
-        EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
 
-        modelMap.addAttribute("rtnData", rtnDto);
+
+            EBACouseDTO eBACouseDTO = new EBACouseDTO();
+
+            eBACouseDTO.setDetailsKey(eBBEpisdDTO.getDetailsKey());
+            //선택한 과정정보 호출
+            HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
+
+            EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
+
+            modelMap.addAttribute("rtnPtcptDto", rtnPtcptDto);
+            modelMap.addAttribute("rtnData", rtnDto);
+        }catch (Exception e){
+
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
 
         return vwUrl;
     }
@@ -526,6 +543,63 @@ public class EBACouseController {
                 throw new Exception(e.getMessage());
             }
             return resultMap;
+        }
+
+        @Operation(summary = "교육차수 신청 전 교육 정상체크", tags = "교육차수 신청 전 교육 정상체크", description = "")
+        @PostMapping(value="/apply/EpisdChk")
+        public String selectEpisdDtlChk(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
+        {
+
+            /*
+                A : 교육대기 (이 경우에만 신청이 가능함)
+                B : 교육중
+                C : 교육완료
+                D : 폐강됨
+
+
+            */
+            String rtnStr = "";
+            HashMap<String, Object> tempDto = new HashMap<>();
+
+            try {
+
+                tempDto = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+                if(tempDto ==null || tempDto.isEmpty()){
+
+                }else if(tempDto.get("rtnData") !="" && tempDto.get("rtnData") !=null ){
+                    EBBEpisdDTO episdDto = (EBBEpisdDTO)tempDto.get("rtnData");
+
+                    //폐강
+                    if( !episdDto.getEdctnSttsCd().equals("EDCTN_STTS_CD01")   ){
+                        rtnStr = "D";
+                    }else{
+                        if(episdDto.getEdctnStatusNm().equals("교육대기")){
+                            rtnStr = "A";
+                        }
+
+                        if(episdDto.getEdctnStatusNm().equals("교육중")){
+                            rtnStr = "B";
+                        }
+
+                        if(episdDto.getEdctnStatusNm().equals("교육완료")){
+                            rtnStr = "C";
+                        }
+                    }
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return rtnStr;
         }
 
         @Operation(summary = "교육차수 신청자 정원체크", tags = "교육차수 중복체크", description = "")

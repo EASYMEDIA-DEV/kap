@@ -1,6 +1,7 @@
 package com.kap.service.dao.eb;
 
 import com.kap.core.dto.eb.eba.EBACouseDTO;
+import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -88,6 +89,17 @@ public interface EBACouseMapper {
 	 * 교육과정연계상세를 삭제한다.
 	 */
 	public int deleteEdctnRel(EBACouseDTO eBACouseDTO) throws Exception;
+
+	/**
+	 * 신청한 교육과정을 호출한다.
+	 */
+	public List<EBBPtcptDTO> selectApplyEpisdList(EBBPtcptDTO ebbPtcptDTO) throws Exception;
+
+	/**
+	 * 신청한 교육과정 갯수를 호출한다.
+	 */
+	public int selectApplyEpisdListCnt(EBBPtcptDTO ebbPtcptDTO) throws Exception;
+
 
 
 }

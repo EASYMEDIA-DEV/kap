@@ -130,7 +130,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             var isSmmryCntn = false;
             if($.trim($("input[name=posbChg]").val()) == "false"){
                 isSmmryCntn = true;
+
+                //수정가능여부가 false일경우 과정분류, 과정명, 제목, 시험개요 딤드처리
+                $("#cd").prop("disabled", true);//과정-중분류
+                $("#ctgryCd").prop("disabled", true);//과정-중분류
+                $("#nm").prop("disabled", true);
+                $("#titl").prop("disabled", true);
             }
+
+
+
+
+
+
+
+
             jQuery("textarea[id^='smmryCntn']").each(function(){
                 cmmCtrl.setEditor({
                     editor : jQuery(this).attr("id"),

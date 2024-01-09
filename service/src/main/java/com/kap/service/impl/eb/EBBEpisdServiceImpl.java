@@ -629,6 +629,23 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 	}
 
+
+	/*
+	 * 교육차수 신청자 조회
+	 * */
+	public EBBPtcptDTO selectPtcptDtl(EBBPtcptDTO eBBPtcptDTO) throws Exception
+	{
+		try{
+
+			eBBPtcptDTO = eBBEpisdMapper.selectPtcptDtl(eBBPtcptDTO);
+
+		}catch (Exception e){
+
+		}
+
+		return eBBPtcptDTO;
+	}
+
 	/*
 	 * 교육차수 차수변경
 	 * */

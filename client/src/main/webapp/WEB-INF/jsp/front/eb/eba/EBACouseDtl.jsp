@@ -469,7 +469,7 @@
                     </div>
 
                     <!-- 접수중 하단 플로팅 영역 -->
-                    <div class="accepting-fixed-area" style="display:none;">
+                    <div class="accepting-fixed-area">
                         <div class="for-position">
                             <button class="open-click-area" type="button">
                                 <p class="tit floatingEpisdOrd"><span class="status">접수중</span></p>
@@ -528,7 +528,7 @@
                                             <a class="btn-solid small gray-bg has-icon download floatingPop" data-popType="3" href="javascript:" title="안내문 다운로드"><span>안내문 다운로드</span></a>
                                         </div>
                                         <div class="btn-set">
-                                            <a class="btn-solid small black-bg" href="javascript:"><span>신청하기</span></a>
+                                            <a class="btn-solid small black-bg applyBtn" href="javascript:" style="display:none;"><span>신청하기</span></a>
                                         </div>
                                     </div>
 

@@ -67,7 +67,13 @@ define(["ezCtrl"], function(ezCtrl) {
 
 			//플로팅 배너 처리
 			if(!($("#floatingEpisdSeq").val() === undefined)){
-				$(".accepting-fixed-area").css("display", "");
+				//$(".accepting-fixed-area").css("display", "");
+				$(".applyBtn").css("display", "");
+
+
+
+
+
 				$(".edctnNm").data("episdseq", $("#floatingEpisdSeq").val());
 
 
@@ -339,7 +345,34 @@ define(["ezCtrl"], function(ezCtrl) {
 						location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
 					}
 				}
+			},
+
+			applyBtn :{
+				event:{
+					click:function(e)  {
+						var episdSeq = $(e.target).closest("div.inner-con").find("div:first").find("p.edctnNm").data("episdseq");
+
+
+						var thisSeq = $(this).data("episdseq");
+
+						$(".sec-con-area").find(".list-item").each(function(){
+
+							var thisSeq = $(this).data("episdseq");
+							if(thisSeq == episdSeq){
+
+
+								$(this).find(".applyStep").trigger("click");
+
+							}
+
+						})
+
+
+
+					}
+				}
 			}
+
 
 
 

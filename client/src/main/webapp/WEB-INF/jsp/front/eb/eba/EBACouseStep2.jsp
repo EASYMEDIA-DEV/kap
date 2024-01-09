@@ -47,14 +47,14 @@
                                 <div class="status-con-box gray-bg completed">
                                     <div class="cont-for-padding">
                                         <div class="sort-label-area"><!-- 2024-01-04 division-line 클래스 삭제 -->
-                                            <p class="label"><span>품질아카데미</span></p>
-                                            <p class="label"><span>품질학교</span></p>
+                                            <p class="label"><span>${rtnData.prntCdNm}</span></p>
+                                            <p class="label"><span>${rtnData.ctgryCdNm}</span></p>
                                         </div>
-                                        <p class="f-title1"><span class="color-sky">꼭 알아야 할 품질 기초</span><br> 교육과정 신청이 완료되었습니다.</p>
+                                        <p class="f-title1"><span class="color-sky">${rtnData.nm}</span><br> 교육과정 신청이 완료되었습니다.</p>
                                         <div class="def-list-w">
                                             <div class="def-list">
                                                 <p class="tit f-head">신청일시</p>
-                                                <p class="txt f-sub-head">2023-01-01 10:00</p>
+                                                <p class="txt f-sub-head">${kl:convertDate(rtnPtcptDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -77,7 +77,7 @@
                                 <a class="btn-solid small gray-bg" href="javascript:"><span>신청내역 보기</span></a>
                             </div>
                             <div class="btn-set">
-                                <a class="btn-solid small black-bg" href="javascript:"><span>확인</span></a>
+                                <a class="btn-solid small black-bg" href="/education/apply/detail?detailsKey=${rtnData.edctnSeq}"><span>확인</span></a>
                             </div>
                         </div>
                     </div>

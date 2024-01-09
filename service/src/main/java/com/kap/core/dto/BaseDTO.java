@@ -2,6 +2,7 @@ package com.kap.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 import com.kap.core.utility.PropertiesSiteProfileType;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
@@ -64,6 +65,7 @@ public class BaseDTO {
 
     //반환 개수
     private int respCnt = 0;
+
 
     //페이징 조회
     private int totalCount = 0;
