@@ -22,8 +22,8 @@
                 <input type="hidden" class="notRequired" name="appctnSeq" value="${rtnInfo.detailsKey}"/>
                 <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.detailsKey}"/>
                 <input type="hidden" class="notRequired" name="userLogYn" value=""/>
-                <input type="hidden" class="notRequired" name="bfreMemSeq" value=""/>
-                <input type="hidden" class="notRequired" name="aftrMemSeq" value=""/>
+                <input type="hidden" class="notRequired" name="bfreMemSeq" value="${rtnInfo.memSeq}"/>
+                <input type="hidden" class="notRequired" name="aftrMemSeq"/>
 
                 <%--<h6 class="mt0"><em class="ion-play mr-sm"></em>회차 정보</h6>
 

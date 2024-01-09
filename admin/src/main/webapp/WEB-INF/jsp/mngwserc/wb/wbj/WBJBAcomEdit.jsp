@@ -14,14 +14,14 @@
                 <input type="hidden" id="pageRowSize" name="pageRowSize" value="${rtnInfo.pageRowSize}" />
                 <input type="hidden" id="listRowSize" name="listRowSize" value="${rtnInfo.listRowSize}" />
                 <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${rtnInfo.memSeq}" />
+                <input type="text" class="notRequired" id="memSeq" name="memSeq" value="${rtnInfo.memSeq}" />
                 <input type="hidden" class="notRequired" name="id" value="${rtnInfo.id}" />
                 <input type="hidden" class="notRequired" name="bsnmNo" value="${rtnInfo.bsnmNo}" />
                 <input type="hidden" class="notRequired" name="appctnSeq" value="${rtnInfo.detailsKey}" />
                 <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.appctnSeq}" />
                 <input type="hidden" class="notRequired" name="userLogYn" value=""/>
-                <input type="hidden" class="notRequired" name="bfreMemSeq" value=""/>
-                <input type="hidden" class="notRequired" name="aftrMemSeq" value=""/>
+                <input type="text" class="notRequired" name="bfreMemSeq" value="${rtnInfo.memSeq}" />
+                <input type="text" class="notRequired" name="aftrMemSeq" value=""/>
                 <input type="hidden" class="notRequired" id="name" value="${rtnInfo.name}" />
 
                 <%--<h6 class="mt0"><em class="ion-play mr-sm"></em>회차 정보</h6>

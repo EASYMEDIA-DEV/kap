@@ -377,12 +377,12 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     use : true,
                     func : function (){
 
-                        var beforeUser = $formObj.find("input[name='memSeq']").val();
-                        var afterUser = $formDataObj.find("input[name='memSeq']").val();
+                        var beforeUser = $formObj.find("input[name='bfreMemSeq']").val();
+                        var afterUser = $formObj.find("input[name='memSeq']").val();
                         if (beforeUser != afterUser) {
-                            $formObj.find("input[name='memSeq']").val(beforeUser);
-                            $formObj.find("input[name='bfreMemSeq']").val(afterUser);
-                            $formObj.find("input[name='aftrMemSeq']").val(beforeUser);
+                            $formObj.find("input[name='memSeq']").val(afterUser);
+                            $formObj.find("input[name='bfreMemSeq']").val(beforeUser);
+                            $formObj.find("input[name='aftrMemSeq']").val(afterUser);
                             $formObj.find("input[name='userLogYn']").val('Y');
                             $formObj.find("input[name='bsnmNo']").val($formObj.find("input[name='bsnmNo']").val());
                         }
