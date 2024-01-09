@@ -76,7 +76,7 @@ public class WBJAcomController {
         modelMap.addAttribute("typeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
         modelMap.addAttribute("resultList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "5"));
         modelMap.addAttribute("rtnData", wBJBAcomListService.getRegisterCompanyList(wBJAcomSearchDTO));
-        wBJAcomSearchDTO.setBsnCd("INQ07010");
+        wBJAcomSearchDTO.setBsnCd("BUSUNESS_TYPE10");
         modelMap.addAttribute("optYearList", wBJBAcomListService.getOptYearList(wBJAcomSearchDTO));
 
         return "mngwserc/wb/wbj/WBJAcomList.admin";
@@ -90,7 +90,7 @@ public class WBJAcomController {
     {
         try
         {
-            wBJAcomSearchDTO.setBsnCd("INQ07010");
+            wBJAcomSearchDTO.setBsnCd("BUSUNESS_TYPE10");
             modelMap.addAttribute("rtnData", wBJBAcomListService.getRegisterCompanyList(wBJAcomSearchDTO));
 
         }
@@ -114,7 +114,7 @@ public class WBJAcomController {
     public String getEpisdListAjax(WBJAcomSearchDTO wBJAcomSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBJAcomSearchDTO.setBsnCd("INQ07010");
+            wBJAcomSearchDTO.setBsnCd("BUSUNESS_TYPE10");
             modelMap.addAttribute("optEpisdList", wBJBAcomListService.getOptEpisdList(wBJAcomSearchDTO));
         }
         catch (Exception e)
@@ -136,7 +136,7 @@ public class WBJAcomController {
     public String getPrizeListAjax(WBJAcomSearchDTO wBJAcomSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBJAcomSearchDTO.setBsnCd("INQ07010");
+            wBJAcomSearchDTO.setBsnCd("BUSUNESS_TYPE10");
             modelMap.addAttribute("optPrizeList", wBJBAcomListService.getOptPrizeList(wBJAcomSearchDTO));
         }
         catch (Exception e)
@@ -170,7 +170,7 @@ public class WBJAcomController {
             cdDtlList.add("CO_YEAR_CD");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-            wBJAcomSearchDTO.setBsnCd("INQ07010");
+            wBJAcomSearchDTO.setBsnCd("BUSUNESS_TYPE10");
             modelMap.addAttribute("optYearList", wBJBAcomListService.getOptYearList(wBJAcomSearchDTO));
         }
         catch (Exception e)
@@ -232,7 +232,7 @@ public class WBJAcomController {
             wBJAcomDTO.setModId( coaAdmDTO.getId() );
             wBJAcomDTO.setModIp( coaAdmDTO.getLoginIp() );
 
-            wBJAcomDTO.setBsnCd("INQ07010"); /* 자동차부품산업대상 코드 */
+            wBJAcomDTO.setBsnCd("BUSUNESS_TYPE10"); /* 자동차부품산업대상 코드 */
 
             COCodeDTO cOCodeDTO = new COCodeDTO();
             /* 자동차부품산업대상 구축 - 신청 코드 값*/
@@ -285,7 +285,7 @@ public class WBJAcomController {
             cdDtlList.add("CO_YEAR_CD");
             cdDtlList.add("BGN_REG_INF");
             cdDtlList.add("ROUND_CD");
-            wBJAcomSearchDTO.setBsnCd("INQ07010");
+            wBJAcomSearchDTO.setBsnCd("BUSUNESS_TYPE10");
 
             WBJBAcomMstDTO wBJBAcomMstDTO;
             wBJBAcomMstDTO = wBJBAcomListService.selectAppctnRsumeDtl(wBJAcomSearchDTO);
@@ -320,7 +320,7 @@ public class WBJAcomController {
             wBJAcomDTO.setModId( coaAdmDTO.getId() );
             wBJAcomDTO.setModIp( coaAdmDTO.getLoginIp() );
 
-            wBJAcomDTO.setBsnCd("INQ07010"); /* 자동차 */
+            wBJAcomDTO.setBsnCd("BUSUNESS_TYPE10"); /* 자동차 */
 
             modelMap.addAttribute("respCnt", wBJBAcomListService.updateAcom(wBJAcomDTO, wbjbAcomMstDTO, request));
         }catch (Exception e)

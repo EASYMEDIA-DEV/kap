@@ -31,7 +31,7 @@
         FROM
         (
         SELECT * FROM cx_episd_mst
-        WHERE bsn_cd = 'INQ07010'
+        WHERE bsn_cd = 'BUSUNESS_TYPE10'
         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
         INNER JOIN
         (
@@ -104,7 +104,7 @@
         FROM
         (
         SELECT * FROM cx_episd_mst
-        WHERE bsn_cd = 'INQ07010'
+        WHERE bsn_cd = 'BUSUNESS_TYPE10'
         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
         INNER JOIN
         (
@@ -963,7 +963,7 @@
     -->
     <sql id="selectAcomListWhereSql">
         <where>
-            AND BSN_CD = 'INQ07010'
+            AND BSN_CD = 'BUSUNESS_TYPE10'
             <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
                     <when test="carbonDate == 1 or carbonDate == 2">
@@ -1166,7 +1166,7 @@
                                        ON B.APPCTN_SEQ = C.APPCTN_SEQ
                             LEFT JOIN CX_APPCTN_RSUME_PRIZE_PART_DTL D
                                       ON C.RSUME_SEQ = D.RSUME_SEQ
-        WHERE A.BSN_CD = 'INQ07010'
+        WHERE A.BSN_CD = 'BUSUNESS_TYPE10'
           AND D.HGHST_WINER_YN = 'Y'
         ORDER BY A.YEAR ASC
     </select>

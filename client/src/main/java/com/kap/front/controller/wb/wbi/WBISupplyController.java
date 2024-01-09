@@ -164,7 +164,7 @@ public class WBISupplyController {
     public String insert(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request, ModelMap modelMap) throws Exception {
         try {
 
-            wBIBSupplyDTO.setBsnCd("INQ07009"); /* 공급망 */
+            wBIBSupplyDTO.setBsnCd("BUSUNESS_TYPE09"); /* 공급망 */
 
             COCodeDTO cOCodeDTO = new COCodeDTO();
             /* 스마트 공장 구축 - 신청 코드 값*/

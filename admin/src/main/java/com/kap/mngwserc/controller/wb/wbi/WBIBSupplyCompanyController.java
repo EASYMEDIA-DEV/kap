@@ -68,7 +68,7 @@ public class WBIBSupplyCompanyController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("PRO_TYPE06"); // 신청 진행상태
-            wBIBSupplySearchDTO.setBsnCd("INQ07009");
+            wBIBSupplySearchDTO.setBsnCd("BUSUNESS_TYPE09");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
             modelMap.addAttribute("optYearList", wBIBSupplyCompanyService.getOptYearList(wBIBSupplySearchDTO));
@@ -94,7 +94,7 @@ public class WBIBSupplyCompanyController {
     public String getSupplyCompanyListAjax(WBIBSupplySearchDTO wBIBSupplySearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBIBSupplySearchDTO.setBsnCd("INQ07009");
+            wBIBSupplySearchDTO.setBsnCd("BUSUNESS_TYPE09");
             modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.getSupplyCompanyList(wBIBSupplySearchDTO));
         }
         catch (Exception e)
@@ -116,7 +116,7 @@ public class WBIBSupplyCompanyController {
     public String getEpisdListAjax(WBIBSupplySearchDTO wBIBSupplySearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBIBSupplySearchDTO.setBsnCd("INQ07009");
+            wBIBSupplySearchDTO.setBsnCd("BUSUNESS_TYPE09");
             modelMap.addAttribute("optEpisdList", wBIBSupplyCompanyService.getOptEpisdList(wBIBSupplySearchDTO));
         }
         catch (Exception e)
@@ -138,7 +138,7 @@ public class WBIBSupplyCompanyController {
     public String getEpisdSeq(WBIBSupplySearchDTO wBIBSupplySearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBIBSupplySearchDTO.setBsnCd("INQ07009");
+            wBIBSupplySearchDTO.setBsnCd("BUSUNESS_TYPE09");
             // 공통코드 배열 셋팅
             modelMap.addAttribute("optnCategList", wBIBSupplyCompanyService.getEpisdSeq(wBIBSupplySearchDTO));
         }
@@ -170,7 +170,7 @@ public class WBIBSupplyCompanyController {
             cdDtlList.add("BGN_REG_INF");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-            wBIBSupplySearchDTO.setBsnCd("INQ07009");
+            wBIBSupplySearchDTO.setBsnCd("BUSUNESS_TYPE09");
             modelMap.addAttribute("optYearList", wBIBSupplyCompanyService.getOptYearList(wBIBSupplySearchDTO));
         }
         catch (Exception e)
@@ -197,7 +197,7 @@ public class WBIBSupplyCompanyController {
             wBIBSupplyDTO.setModId( coaAdmDTO.getId() );
             wBIBSupplyDTO.setModIp( coaAdmDTO.getLoginIp() );
 
-            wBIBSupplyDTO.setBsnCd("INQ07009"); /* 공급망 */
+            wBIBSupplyDTO.setBsnCd("BUSUNESS_TYPE09"); /* 공급망 */
 
             COCodeDTO cOCodeDTO = new COCodeDTO();
             /* 스마트 공장 구축 - 신청 코드 값*/
@@ -250,7 +250,7 @@ public class WBIBSupplyCompanyController {
             cdDtlList.add("CO_YEAR_CD");
             cdDtlList.add("BGN_REG_INF");
             cdDtlList.add("ROUND_CD");
-            wBIBSupplySearchDTO.setBsnCd("INQ07009");
+            wBIBSupplySearchDTO.setBsnCd("BUSUNESS_TYPE09");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             modelMap.addAttribute("rtnInfo", wBIBSupplyCompanyService.selectSupplyDtl(wBIBSupplySearchDTO));
             modelMap.addAttribute("optYearList", wBIBSupplyCompanyService.getOptYearList(wBIBSupplySearchDTO));
@@ -281,7 +281,7 @@ public class WBIBSupplyCompanyController {
             wBIBSupplyDTO.setModId( coaAdmDTO.getId() );
             wBIBSupplyDTO.setModIp( coaAdmDTO.getLoginIp() );
 
-            wBIBSupplyDTO.setBsnCd("INQ07009"); /* 스마트 공장 */
+            wBIBSupplyDTO.setBsnCd("BUSUNESS_TYPE09"); /* 스마트 공장 */
 
             modelMap.addAttribute("respCnt", wBIBSupplyCompanyService.updateSupplyCompany(wBIBSupplyDTO, wBIBSupplyMstDTO, request));
         }catch (Exception e)

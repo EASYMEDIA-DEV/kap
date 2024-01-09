@@ -54,14 +54,6 @@
                 </fieldset>--%>
                 <div id="appctnPdfArea1">
                     <fieldset>
-                        <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
-                        <div style="float:right">
-                            <button type="button" class="btn btn-sm btn-info appctnPdfDownload"
-                                    data-html2canvas-ignore="true">신청정보다운
-                            </button>
-                        </div>
-                    </fieldset>
-                    <fieldset>
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">신청자(아이디)<span class="star"> *</span></label>
                             <div class="col-sm-5" style="margin-left: -15px">
@@ -463,8 +455,14 @@
             <div id="frmDataRsumeTask">
                 <div class="container-fluid">
                     <div class="panel-group" id="accParent" role="tablist">
+                        <div class="pull-right">
+                            <button type="button" class="btn btn-sm btn-default appctnPdfDownload"
+                                    data-html2canvas-ignore="true">신청정보 다운로드
+                            </button>
+                        </div>
                         <div>
-                            <div class="text-left mb-xl"><h5>사업진행 상세</h5></div>
+                            <div class="text-left mb-xl"><h5>사업진행 상세</h5>
+                            </div>
                             <hr>
                             <h6 class="mt0"><em class="ion-play mr-sm"></em>
                                 <c:choose>

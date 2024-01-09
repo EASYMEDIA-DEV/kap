@@ -179,7 +179,7 @@ public class WBJAutoMotiveController {
     public String insert(WBJAcomDTO wBJAcomDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
 
-            wBJAcomDTO.setBsnCd("INQ07010"); /* 자동차부품산업대상 코드 */
+            wBJAcomDTO.setBsnCd("BUSUNESS_TYPE10"); /* 자동차부품산업대상 코드 */
 
             COCodeDTO cOCodeDTO = new COCodeDTO();
             /* 자동차부품산업대상 구축 - 신청 코드 값*/

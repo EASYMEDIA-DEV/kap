@@ -16,7 +16,7 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
-            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07009" />
+            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BUSUNESS_TYPE09" />
             <input type="hidden" class="notRequired" id="bfreYear" value="${rtnInfo.year}" />
             <input type="hidden" class="notRequired" id="bfreEpisd" value="${rtnDto.episd}" />
             <input type="hidden" class="notRequired" id="bfreAccsStrtDtm" value="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"/>

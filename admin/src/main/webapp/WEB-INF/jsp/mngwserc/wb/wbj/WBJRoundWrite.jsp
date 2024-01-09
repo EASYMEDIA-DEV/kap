@@ -17,7 +17,7 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.episdSeq}" />
-            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07010" />
+            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BUSUNESS_TYPE10" />
             <input type="hidden" class="notRequired" id="episd" name="episd" value="1" />
             <input type="hidden" class="notRequired" id="bfreYear" value="${rtnInfo.year}" />
             <input type="hidden" class="notRequired" id="bfrePlaceSeq" value="${rtnInfo.placeSeq}"/>

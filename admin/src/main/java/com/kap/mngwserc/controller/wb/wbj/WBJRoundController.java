@@ -209,7 +209,7 @@ public class WBJRoundController {
     public String getEpisdAjax(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBRoundMstDTO.setBsnCd("INQ07010");
+            wBRoundMstDTO.setBsnCd("BUSUNESS_TYPE10");
             modelMap.addAttribute("optEpisdCnt", wBJARoundListService.roundCnt(wBRoundMstDTO));
         }
         catch (Exception e)
