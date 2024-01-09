@@ -50,6 +50,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
+            cancelBtn : {
+                event : {
+                    click : function() {
+                        if (confirm(msgCtrl.getMsg("confirm.cancel"))) {
+                            location.href ="/my-page/main";
+                        }
+                    }
+                }
+            },
             //본인 인증
             myRegister : {
                 event : {

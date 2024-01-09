@@ -15,7 +15,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     ctrl.model = {
         id : {
             // do something...
-
+            cancelBtn : {
+                event : {
+                    click : function() {
+                        if (confirm(msgCtrl.getMsg("confirm.cancel"))) {
+                            location.href ="/my-page/main";
+                        }
+                    }
+                }
+            },
 
         },
         classname : {

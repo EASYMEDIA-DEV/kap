@@ -415,7 +415,7 @@
                     <div class="page-bot-btn-sec scroll-motion">
                         <div class="btn-wrap for-motion">
                             <div class="btn-set">
-                                <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                                <a class="btn-solid small gray-bg" href="javascript:" id="cancelBtn"><span>취소</span></a>
                             </div>
                             <div class="btn-set">
                                 <button class="btn-solid small black-bg" id="btnModify"><span>회원정보 변경</span></button>
