@@ -39,7 +39,7 @@
         <td class="text-center">${list.email}</td>
         <td class="text-center">${list.cmtModName}(${list.regId})</td>
         <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
-        <td class="text-center">${ kl:emptyHypen(list.modName)}(${ kl:emptyHypen(list.modId)})</td>
+        <td class="text-center">${kl:emptyHypen(list.modName)}${list.modId == null ? '' : '('+=list.modId+=')'} </td>
         <td class="text-center">${ kl:emptyHypen(kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-'))}</td>
       </tr>
     </c:forEach>

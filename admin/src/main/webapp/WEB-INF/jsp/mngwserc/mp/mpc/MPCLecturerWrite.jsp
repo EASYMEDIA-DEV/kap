@@ -48,7 +48,7 @@
                             <td>${rtnInfo.email}</td>
                         </tr>
                         <tr>
-                            <th scope="row" class="bg-gray-lighter">등록일</th>
+                            <th scope="row" class="bg-gray-lighter">최초 등록일시</th>
                             <td> ${kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
                         </tr>
                         </tbody>
@@ -70,7 +70,7 @@
                         <fieldset class="mt-sm">
                             <label class="col-sm-1 control-label">이름<span class="star text-danger"> *</span></label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm" id="name" name="name" value="${rtnInfo.name}" title="이름" placeholder="이름 입력" maxlength="50" oninput="this.value = this.value.replace(/[^가-힣a-zA-Z]/g, '');" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm" id="name" name="name" value="${rtnInfo.name}" title="이름" placeholder="이름 입력" maxlength="50" oninput="input.value = input.value.replace(/[^a-zA-Z가-힣]/g, '');" style="width: 220px;"/>
                             </div>
                         </fieldset>
                         <fieldset>
@@ -82,13 +82,13 @@
                         <fieldset>
                             <label class="col-sm-1 control-label">부서</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm notRequired" id="deptNm" name="deptNm" value="${rtnInfo.deptNm}" title="부서" placeholder="부서명 입력" maxlength="50" oninput="this.value = this.value.replace(/[^가-힣a-zA-Z0-9]/g, '');" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm notRequired" id="deptNm" name="deptNm" value="${rtnInfo.deptNm}" title="부서" placeholder="부서명 입력" maxlength="50" oninput="input.value = input.value.replace(/[^a-zA-Z0-9가-힣]/g, '');" style="width: 220px;"/>
                             </div>
                         </fieldset>
                         <fieldset>
                             <label class="col-sm-1 control-label">직급</label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm notRequired" id="pstnNm" name="pstnNm" value="${rtnInfo.pstnNm}" title="직급" placeholder="직급명 입력" maxlength="50" oninput="this.value = this.value.replace(/[^가-힣a-zA-Z0-9]/g, '');" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm notRequired" id="pstnNm" name="pstnNm" value="${rtnInfo.pstnNm}" title="직급" placeholder="직급명 입력" maxlength="50" oninput="input.value = input.value.replace(/[^a-zA-Z0-9가-힣]/g, '');" style="width: 220px;"/>
                             </div>
                         </fieldset>
                         <fieldset>
@@ -106,7 +106,7 @@
                         <fieldset class="form-inline">
                             <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnInfo.email}" name="email" maxlength="50" placeholder="이메일 주소 입력" oninput="this.value = this.value.replace(/[^a-zA-Z0-9!@#$%^&*()-=_+[\]{}|;:',.<>/?`~]/g, '');" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnInfo.email}" name="email" maxlength="50" placeholder="이메일 주소 입력" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')" style="width: 220px;"/>
                                 <button type="button" class="btn btn-default btn-sm" id="dupEmail" >중복확인</button>
                             </div>
                         </fieldset>

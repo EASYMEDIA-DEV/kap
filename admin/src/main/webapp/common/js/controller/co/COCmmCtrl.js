@@ -1820,10 +1820,12 @@ var cmmCtrl = (function(){
 		var atRegex = /[^@]+@[^@]+/; //@ 체크
 		var atDupRegex = /.*@.*@.*/; //@ 2개 이상 체크
 		var spaceRegex = /\s/; //공백 체크
+		var commaRegex = /\./;
 		let multiRegex = /[&=＇,+<>()]+|(\.{2,})/; //& = , ' + , 포함 경우
 		let lastRegex = /[0-9!@#$%^&*()_+{}\[\]:;<>,.?\\|`~-]+$/;
 		return atRegex.test(email) &&
 			      !atDupRegex.test(email) &&
+					commaRegex.test(splitEmail[1]) &&
 				  !spaceRegex.test(email) &&
 				  !multiRegex.test(email) &&
 			      !lastRegex.test(email) &&

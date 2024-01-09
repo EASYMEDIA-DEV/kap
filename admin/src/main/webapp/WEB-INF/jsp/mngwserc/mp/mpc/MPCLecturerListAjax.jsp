@@ -45,7 +45,14 @@
                 </td>
                 <td class="text-center">${list.hpNo}</td>
                 <td class="text-center">${list.email}</td>
-                <td class="text-center">${list.regName}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${ not empty list.regName }">
+                            ${list.regName}(${list.regId})
+                        </c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
                 <td class="text-center">${kl:emptyHypen(kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-'))}</td>
                 <td class="text-center">
                     <c:choose>
