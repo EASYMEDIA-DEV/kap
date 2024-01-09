@@ -41,11 +41,23 @@ public class WBAManageInsertDTO  extends BaseDTO {
     @Schema(title = "관리자회차메뉴 순번")
     private Integer admEpisdMenuSeq;
 
+    @Schema(title = "관리자회차상위메뉴 순번")
+    private String admEpisdMenuParntSeq;
+
+    @Schema(title = "관리자회차상위 메뉴명")
+    private String admEpisdMenuParntName;
+
     @Schema(title = "관리자회차메뉴명")
     private String admEpisdMenuName;
 
     @Schema(title = "관리자신청메뉴 순번")
     private Integer admAppctnMenuSeq;
+
+    @Schema(title = "관리자신청상위 메뉴 순번")
+    private String admAppctnMenuParntSeq;
+    
+    @Schema(title = "관리자신청상위 메뉴명")
+    private String admAppctnMenuParntName;
 
     @Schema(title = "관리자신청메뉴명")
     private String admAppctnMenuName;

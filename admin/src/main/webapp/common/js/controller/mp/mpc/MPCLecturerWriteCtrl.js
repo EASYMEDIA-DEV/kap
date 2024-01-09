@@ -73,18 +73,24 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
             dupEmail : {
                 event : {
                     click : function() {
-                        if(ctrl.obj.find("#email").val()) {
-                            cmmCtrl.frmAjax(function(respObj) {
-                                if(respObj.dupChk == 'Y') {
-                                    dupEmailChk = true;
-                                    alert(msgCtrl.getMsg("fail.mp.mpa.al_008"));
-                                } else {
-                                    dupEmailChk = false;
-                                    alert(msgCtrl.getMsg("fail.mp.mpa.al_007"));
-                                }
-                            }, "/mngwserc/mp/mpc/dup-email", $formObj, "POST", "json",'',false);
-                        } else {
+                        if (!$("input[name='email']").val() == "") {
+                            if(cmmCtrl.getEmailChk($("input[name='email']").val())) {
+                                cmmCtrl.frmAjax(function(respObj) {
+                                    if(respObj.dupChk == 'Y') {
+                                        dupEmailChk = true;
+                                        alert(msgCtrl.getMsg("fail.mp.mpa.al_008"));
+                                    } else {
+                                        dupEmailChk = false;
+                                        alert(msgCtrl.getMsg("fail.mp.mpa.al_007"));
+                                    }
+                                }, "/mngwserc/mp/mpc/dup-email", $formObj, "POST", "json",'',false);
+                            } else {
+                                alert(msgCtrl.getMsg("fail.mp.mpa.al_017"));
+                                return false;
+                            }
+                        }  else {
                             alert(msgCtrl.getMsg("fail.mp.mpa.al_006"));
+                            return false;
                         }
                     }
                 }

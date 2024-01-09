@@ -372,7 +372,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 $("input:checkbox[id='samePlaceBtn']").prop("checked", true);
             }
 
-            $('#ctgryCd').focus(function() {
+            /*$('#ctgryCd').focus(function() {
                 prevVal = $(this).val();
             }).change(function(){
                 if($(this).val() == 'COMPANY01003' || $(this).val() == 'COMPANY01004'){
@@ -380,7 +380,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     $(this).val(prevVal);
                     return false;
                 }
-            });
+            });*/
 
             var scndRgnsCd = $("#scndRgnsCd").data("scndRgnsCd");
             $("#scndRgnsCd").val(scndRgnsCd).prop("selected", true);

@@ -50,7 +50,7 @@
         FROM CX_EPISD_MST A
         JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
         JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-        WHERE BSN_CD = 'INQ07008'
+        WHERE BSN_CD = 'BUSUNESS_TYPE08'
         GROUP BY APPCTN_SEQ
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
         <include refid="selectCarbonListwhereSql" />
@@ -103,7 +103,7 @@
         FROM CX_EPISD_MST A
         JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
         JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-        WHERE BSN_CD = 'INQ07008'
+        WHERE BSN_CD = 'BUSUNESS_TYPE08'
         GROUP BY APPCTN_SEQ
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
         <include refid="selectCarbonListwhereSql" />
@@ -119,7 +119,7 @@
     -->
     <sql id="selectCarbonListwhereSql">
         <where>
-            AND BSN_CD = 'INQ07008'
+            AND BSN_CD = 'BUSUNESS_TYPE08'
             <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
                     <when test="carbonDate == 1">
@@ -179,7 +179,7 @@
             VALID_SEQ
              ,STND_SLS_PMT
         FROM CX_APPCTN_VALID_MST
-        WHERE BSN_CD = 'INQ07008'
+        WHERE BSN_CD = 'BUSUNESS_TYPE08'
     </select>
 
     <!--
@@ -196,7 +196,7 @@
              ,B.OPTN_ORD
         FROM CX_APPCTN_VALID_MST A
                  JOIN CX_APPCTN_VALID_OPTN_DTL B ON A.VALID_SEQ = B.VALID_SEQ
-        WHERE BSN_CD = 'INQ07008'
+        WHERE BSN_CD = 'BUSUNESS_TYPE08'
     </select>
 
     <!--
@@ -219,7 +219,7 @@
         VALUES
             (
                 #{validSeq}
-            ,'INQ07008'
+            ,'BUSUNESS_TYPE08'
             ,#{stndSlsPmt}
             ,#{regId}
             ,#{regIp}
@@ -242,7 +242,7 @@
           ,MOD_ID = #{modId}
           ,MOD_IP = #{modIp}
           ,MOD_DTM = NOW()
-        WHERE BSN_CD = 'INQ07008'
+        WHERE BSN_CD = 'BUSUNESS_TYPE08'
     </update>
 
     <!--
@@ -299,7 +299,7 @@
         SELECT /* WBHACalibrationMapper.selectYearDtl */
             DISTINCT(YEAR(YEAR)) AS YEAR
         FROM CX_EPISD_MST
-        WHERE BSN_CD = 'INQ07008'
+        WHERE BSN_CD = 'BUSUNESS_TYPE08'
         ORDER BY YEAR ASC
     </select>
 
@@ -1289,7 +1289,7 @@
         FROM CX_EPISD_MST A
         JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
         JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-        WHERE BSN_CD = 'INQ07008'
+        WHERE BSN_CD = 'BUSUNESS_TYPE08'
         GROUP BY APPCTN_SEQ
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
         WHERE (ORD.RSUME_ORD != 1 OR MNG_STTS_CD != 'PRO_TYPE07001_02_001')
@@ -1328,7 +1328,7 @@
                      ELSE 3
                      END AS DATE_ORD
                  FROM CX_EPISD_MST A
-                 WHERE       BSN_CD = 'INQ07008' AND EXPS_YN = 'Y'
+                 WHERE       BSN_CD = 'BUSUNESS_TYPE08' AND EXPS_YN = 'Y'
              ) A
         WHERE DATE_ORD = 1
         ORDER BY ACCS_STRT_DTM, BSN_STRT_DTM ASC
@@ -1346,7 +1346,7 @@
         SELECT /* WBHACalibrationMapper.getApplyCount */ COUNT(*)
         FROM (SELECT EPISD_SEQ
               FROM cx_episd_mst
-              WHERE BSN_CD = 'INQ07008' AND YEAR = #{year}) cem
+              WHERE BSN_CD = 'BUSUNESS_TYPE08' AND YEAR = #{year}) cem
         JOIN cx_appctn_mst cam ON cem.EPISD_SEQ = cam.episd_seq AND cam.mem_seq = #{memSeq}
     </select>
 

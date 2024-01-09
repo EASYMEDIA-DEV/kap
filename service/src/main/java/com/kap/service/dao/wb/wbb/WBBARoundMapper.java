@@ -78,4 +78,19 @@ public interface WBBARoundMapper {
      * 회차 신청여부 조회
      */
     public int getApplyCount(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 회차 삭제
+     */
+    public int getAppctnCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 회차 리스트 삭제
+     */
+    public int deleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 회차 중복 체크
+     */
+    public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 }

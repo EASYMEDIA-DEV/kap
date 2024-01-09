@@ -364,48 +364,52 @@
                 </div>
             </fieldset>
             <fieldset>
-                <label class="col-sm-1 control-label">과제명<span class="star"> *</span></label>
-                <div class="col-sm-5">
-                    <div class="col-sm-6" style="margin-left: -15px">
-                        <select class="form-control input-sm" id="optAsigt" name="taskCd" title="과제명">
-                            <option value="">선택</option>
-                        </select>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">과제명<span class="star"> *</span></label>
+                    <div class="col-sm-5">
+                        <div class="col-sm-6" style="margin-left: -15px">
+                            <select class="form-control input-sm" id="optAsigt" name="taskCd" title="과제명">
+                                <option value="">선택</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <label class="col-sm-1 control-label">사업 유형<span class="star"> *</span></label>
-                <div class="col-sm-5">
-                    <div class="col-sm-6" style="margin-left: -15px">
-                        <select class="form-control input-sm " id="optBsin" name="bsnTypeCd" title="사업 유형">
-                            <option value="">선택</option>
-                        </select>
+                    <label class="col-sm-1 control-label">사업 유형<span class="star"> *</span></label>
+                    <div class="col-sm-5">
+                        <div class="col-sm-6" style="margin-left: -15px">
+                            <select class="form-control input-sm " id="optBsin" name="bsnTypeCd" title="사업 유형">
+                                <option value="">선택</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </fieldset>
             <fieldset>
-                <label class="col-sm-1 control-label">스마트화 현재 수준<span class="star"> *</span></label>
-                <div class="col-sm-5">
-                    <div class="col-sm-6" style="margin-left: -15px">
-                        <select class="form-control input-sm" name="smtfnPrsntCd" title="스마트화 현재 수준">
-                            <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
-                                <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
-                                    <option value="${cdList.cd}">${cdList.cdNm}</option>
-                                </c:if>
-                            </c:forEach>
-                        </select>
+                    <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">스마트화 현재 수준<span class="star"> *</span></label>
+                    <div class="col-sm-5">
+                        <div class="col-sm-6" style="margin-left: -15px">
+                            <select class="form-control input-sm" name="smtfnPrsntCd" title="스마트화 현재 수준">
+                                <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
+                                    <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
+                                        <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <label class="col-sm-1 control-label">스마트화 목표 수준<span class="star"> *</span></label>
-                <div class="col-sm-5">
-                    <div class="col-sm-6" style="margin-left: -15px">
-                        <select class="form-control input-sm " name="smtfnTrgtCd">
-                            <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
-                                <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
-                                    <option value="${cdList.cd}">${cdList.cdNm}</option>
-                                </c:if>
-                            </c:forEach>
-                        </select>
+                    <label class="col-sm-1 control-label">스마트화 목표 수준<span class="star"> *</span></label>
+                    <div class="col-sm-5">
+                        <div class="col-sm-6" style="margin-left: -15px">
+                            <select class="form-control input-sm " name="smtfnTrgtCd">
+                                <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
+                                    <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
+                                        <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </fieldset>

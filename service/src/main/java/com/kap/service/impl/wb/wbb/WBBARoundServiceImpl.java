@@ -213,4 +213,37 @@ public class WBBARoundServiceImpl implements WBBARoundService {
 
         return rtnCode;
     }
+
+    /**
+     * 회차 매핑 여부 확인
+     */
+    public int getAppctnCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBBARoundMapper.getAppctnCnt(wBRoundMstDTO);
+
+        wBRoundMstDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 회차 삭제
+     */
+    public int deleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception {
+
+        int respCnt = wBBARoundMapper.deleteList(wBRoundMstDTO);
+
+        return respCnt;
+    }
+
+    /**
+     * 회차 중복 체크
+     */
+    public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception {
+
+        int respCnt = wBBARoundMapper.episdChk(wBRoundMstDTO);
+        return respCnt;
+    }
 }

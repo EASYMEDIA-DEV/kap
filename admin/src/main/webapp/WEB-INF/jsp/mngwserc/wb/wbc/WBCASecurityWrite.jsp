@@ -23,7 +23,7 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
-            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07003" />
+            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BUSUNESS_TYPE03" />
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -207,6 +207,7 @@
             </fieldset>
 
             <c:if test="${not empty rtnDto.detailsKey}">
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                 <fieldset></fieldset>
                 <fieldset>
                     <div class="form-group text-sm">
@@ -215,7 +216,7 @@
                             <p class="form-control-static">${rtnDto.regName} (${rtnDto.regId})</p>
                         </div>
                         <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최초 등록일</label>
+                        <label class="col-sm-1 control-label">최초 등록일시</label>
                         <div class="col-sm-4">
                             <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</p>
                         </div>
@@ -239,7 +240,7 @@
                             </p>
                         </div>
                         <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최종 수정일</label>
+                        <label class="col-sm-1 control-label">최종 수정일시</label>
                         <div class="col-sm-4">
                             <p class="form-control-static">
                                 <c:choose>

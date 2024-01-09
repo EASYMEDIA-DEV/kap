@@ -65,4 +65,19 @@ public interface WBBARoundService {
      * 신청가능여부 코드를 조회한다.
      */
     public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 회차 삭제
+     */
+    public int getAppctnCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 회차 리스트 삭제
+     */
+    public int deleteList(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 회차 중복 체크
+     */
+    public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 }

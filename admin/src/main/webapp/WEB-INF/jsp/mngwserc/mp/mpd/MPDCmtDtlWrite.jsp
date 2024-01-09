@@ -147,9 +147,9 @@
                             </select>
                         </div>
                         <div class="pull-right ml-sm input-group">
-                            <input type="text" class="monthpicker monthInit"  name="monthpicker" />
+                            <input style="width:60%; float:right;" type="text" class="monthpicker monthInit form-control input-sm"  name="monthpicker" readonly/>
                             <span  style="width:20%;" class="input-group-btn" style="z-index:0;">
-                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                        <button style="margin-bottom:2.5rem ; padding-bottom:0.7rem" type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                             <em class="ion-calendar"></em>
                                         </button>
                                     </span>
@@ -209,7 +209,7 @@
             </tr>
             <tr>
                 <th scope="row" class="bg-gray-lighter">최종 수정자</th>
-                <td>${kl:emptyHypen(rtnInfo.modName)}(${kl:emptyHypen(rtnInfo.modId)})</td>
+                <td>${kl:emptyHypen(rtnInfo.modName)}${rtnInfo.modId == null ? '' : '('+=rtnInfo.modId+=')'} </td>
                 <th scope="row" class="bg-gray-lighter">최종 수정일시 </th>
                 <td>${ kl:emptyHypen(kl:convertDate(rtnInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-'))}</td>
             </tr>

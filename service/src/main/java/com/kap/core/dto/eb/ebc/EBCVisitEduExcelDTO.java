@@ -211,124 +211,124 @@ public class EBCVisitEduExcelDTO extends BaseDTO {
     private Integer optnOrd;
 
     // 회사별 수료 인원
-    @Schema(title = "완성차", example = "숫자")
-    private Integer educnt1;
+    @Schema(title = "완성차", example = "")
+    private String educnt1;
 
-    @Schema(title = "1차사", example = "숫자")
-    private Integer educnt2;
+    @Schema(title = "1차사", example = "")
+    private String educnt2;
 
-    @Schema(title = "2차사", example = "숫자")
-    private Integer educnt3;
+    @Schema(title = "2차사", example = "")
+    private String educnt3;
 
-    @Schema(title = "기타", example = "숫자")
-    private Integer educnt4;
+    @Schema(title = "기타", example = "")
+    private String educnt4;
 
     // 분야별 수료 인원
-    @Schema(title = "품질", example = "숫자")
-    private Integer fieldcnt1;
+    @Schema(title = "품질", example = "")
+    private String fieldcnt1;
 
-    @Schema(title = "RnD", example = "숫자")
-    private Integer fieldcnt2;
+    @Schema(title = "RnD", example = "")
+    private String fieldcnt2;
 
-    @Schema(title = "생산", example = "숫자")
-    private Integer fieldcnt3;
+    @Schema(title = "생산", example = "")
+    private String fieldcnt3;
 
-    @Schema(title = "구매", example = "숫자")
-    private Integer fieldcnt4;
+    @Schema(title = "구매", example = "")
+    private String fieldcnt4;
 
-    @Schema(title = "경영지원", example = "숫자")
-    private Integer fieldcnt5;
+    @Schema(title = "경영지원", example = "")
+    private String fieldcnt5;
 
-    @Schema(title = "업체평가", example = "숫자")
-    private Integer fieldcnt6;
+    @Schema(title = "업체평가", example = "")
+    private String fieldcnt6;
 
-    @Schema(title = "안전", example = "숫자")
-    private Integer fieldcnt7;
+    @Schema(title = "안전", example = "")
+    private String fieldcnt7;
 
-    @Schema(title = "ESG", example = "숫자")
-    private Integer fieldcnt8;
+    @Schema(title = "ESG", example = "")
+    private String fieldcnt8;
 
-    @Schema(title = "기타", example = "숫자")
-    private Integer fieldcnt9;
+    @Schema(title = "기타", example = "")
+    private String fieldcnt9;
 
     // 직급별 수료 인원
-    @Schema(title = "대표", example = "숫자")
-    private Integer positioncnt1;
+    @Schema(title = "대표", example = "")
+    private String positioncnt1;
 
-    @Schema(title = "임원", example = "숫자")
-    private Integer positioncnt2;
+    @Schema(title = "임원", example = "")
+    private String positioncnt2;
 
-    @Schema(title = "부장", example = "숫자")
-    private Integer positioncnt3;
+    @Schema(title = "부장", example = "")
+    private String positioncnt3;
 
-    @Schema(title = "과장/차장", example = "숫자")
-    private Integer positioncnt4;
+    @Schema(title = "과장/차장", example = "")
+    private String positioncnt4;
 
-    @Schema(title = "사원/대리", example = "숫자")
-    private Integer positioncnt5;
+    @Schema(title = "사원/대리", example = "")
+    private String positioncnt5;
 
-    @Schema(title = "조장/반장", example = "숫자")
-    private Integer positioncnt6;
+    @Schema(title = "조장/반장", example = "")
+    private String positioncnt6;
 
     // 출석/평가
-    @Schema(title = "출석률", example = "숫자")
-    private Integer attendcnt1;
+    @Schema(title = "출석률", example = "")
+    private String attendcnt1;
 
-    @Schema(title = "평가점수", example = "숫자")
-    private Integer attendcnt2;
+    @Schema(title = "평가점수", example = "")
+    private String attendcnt2;
 
     // 만족도
-    @Schema(title = "종합평균", example = "숫자")
-    private Integer saticnt1;
+    @Schema(title = "종합평균", example = "")
+    private String saticnt1;
 
-    @Schema(title = "전체(공통)", example = "숫자")
-    private Integer saticnt2;
+    @Schema(title = "전체(공통)", example = "")
+    private String saticnt2;
 
-    @Schema(title = "교육환경", example = "숫자")
-    private Integer saticnt3;
+    @Schema(title = "교육환경", example = "")
+    private String saticnt3;
 
-    @Schema(title = "교육지원", example = "숫자")
-    private Integer saticnt4;
+    @Schema(title = "교육지원", example = "")
+    private String saticnt4;
 
-    @Schema(title = "교육내용", example = "숫자")
-    private Integer saticnt5;
+    @Schema(title = "교육내용", example = "")
+    private String saticnt5;
 
-    @Schema(title = "강사1", example = "숫자")
-    private Integer saticnt6;
+    @Schema(title = "강사1", example = "")
+    private String saticnt6;
 
-    @Schema(title = "강사2", example = "숫자")
-    private Integer saticnt7;
+    @Schema(title = "강사2", example = "")
+    private String saticnt7;
 
-    @Schema(title = "강사3", example = "숫자")
-    private Integer saticnt8;
+    @Schema(title = "강사3", example = "")
+    private String saticnt8;
 
-    @Schema(title = "강사4", example = "숫자")
-    private Integer saticnt9;
+    @Schema(title = "강사4", example = "")
+    private String saticnt9;
 
-    @Schema(title = "강사5", example = "숫자")
-    private Integer saticnt10;
+    @Schema(title = "강사5", example = "")
+    private String saticnt10;
 
-    @Schema(title = "강사6", example = "숫자")
-    private Integer saticnt11;
+    @Schema(title = "강사6", example = "")
+    private String saticnt11;
 
     // 교육시간
-    @Schema(title = "강사1(시간)", example = "숫자")
-    private Integer edutimecnt1;
+    @Schema(title = "강사1(시간)", example = "")
+    private String edutimecnt1;
 
-    @Schema(title = "강사2(시간)", example = "숫자")
-    private Integer edutimecnt2;
+    @Schema(title = "강사2(시간)", example = "")
+    private String edutimecnt2;
 
-    @Schema(title = "강사3(시간)", example = "숫자")
-    private Integer edutimecnt3;
+    @Schema(title = "강사3(시간)", example = "")
+    private String edutimecnt3;
 
-    @Schema(title = "강사4(시간)", example = "숫자")
-    private Integer edutimecnt4;
+    @Schema(title = "강사4(시간)", example = "")
+    private String edutimecnt4;
 
-    @Schema(title = "강사5(시간)", example = "숫자")
-    private Integer edutimecnt5;
+    @Schema(title = "강사5(시간)", example = "")
+    private String edutimecnt5;
 
-    @Schema(title = "강사6(시간)", example = "숫자")
-    private Integer edutimecnt6;
+    @Schema(title = "강사6(시간)", example = "")
+    private String edutimecnt6;
 
     @Schema(title = "조회 리스트", example = "")
     private List<EBCVisitEduExcelDTO> list;

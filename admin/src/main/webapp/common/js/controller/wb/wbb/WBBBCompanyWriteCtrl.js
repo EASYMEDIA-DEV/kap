@@ -57,6 +57,10 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             target.find('#year').val(compList['year']);
             target.find('#crtfnCmpnNm').val(compList['crtfnCmpnNm']);
         });
+
+        if(rtnData['pstnCd'] == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }
     }
 
     /* 회차 검색 Ajax */
@@ -150,6 +154,20 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
+            pstnCd : {
+                event : {
+                    change : function() {
+                        var pstnCd = $(this).val();
+
+                        if(pstnCd == 'MEM_CD01007'){
+                            $("#pstnNm").css("display", "block");
+                        }else{
+                            $("#pstnNm").val("");
+                            $("#pstnNm").css("display", "none");
+                        }
+                    }
+                }
+            },
         },
         classname : {
             btnPartUserModal: {
@@ -219,6 +237,14 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     fileFieldNm : trgtObj.data("fileFieldNm")
                 })
             });
+
+            var pstnCd = $('#pstnCd').val();
+            if(pstnCd =='MEM_CD01007'){
+                $("#pstnNm").css("display", "block");
+            }else{
+                $("#pstnNm").val("");
+                $("#pstnNm").css("display", "none");
+            }
 
             if ($formObj.find('input[name=detailsKey]').val()) {
                 trnsfSearch(1);

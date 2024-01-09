@@ -3,8 +3,14 @@
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid" data-controller="controller/co/COFormCtrl controller/wb/wba/WBAManagementWriteCtrl">
     <div class="card-body">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
-        <h7 class="mt0"><em class="ion-android-arrow-dropright mr-sm"></em>${pageTitle} 기본정보</h7>
+        <h7 class="mt0"><em class="ion-android-arrow-dropright mr-sm"></em>
+            <c:if test="${not empty rtnData.bsnCd }">
+                사업생성관리 상세/수정
+            </c:if>
+            <c:if test="${empty rtnData.bsnCd }">
+                사업생성관리 등록
+            </c:if>
+        </h7>
         <hr >
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -39,7 +45,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">관리자 메뉴(회차관리)<span class="star"> *</span></label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" id="admEpisdMenuName" value="${rtnDto.admEpisdMenuName}" readonly title="관리자 메뉴(회차관리)" readonly style="width: 350px;"/>
+                        <input type="text" class="form-control input-sm" id="admEpisdMenuName" value="<c:if test="${not empty rtnDto}">${rtnDto.admEpisdMenuParntName}(${rtnDto.admEpisdMenuName})</c:if>" readonly title="관리자 메뉴(회차관리)" readonly style="width: 350px;"/>
                         <input type="hidden" class="notRequired" name="admEpisdMenuSeq" id="admEpisdMenuSeq" value="${rtnDto.admEpisdMenuSeq}"/>
                     </div>
                     <div class="col-sm-8">
@@ -49,9 +55,9 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">관리자 메뉴(신청업체관리)<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">관리자 메뉴(신청부품사관리)<span class="star"> *</span></label>
                     <div class="col-sm-3">
-                        <input type="text" class="form-control input-sm" id="admAppctnMenuName" value="${rtnDto.admAppctnMenuName}" readonly title="관리자 메뉴(신청업체관리)" readonly style="width: 350px;"/>
+                        <input type="text" class="form-control input-sm" id="admAppctnMenuName" value="<c:if test="${not empty rtnDto}">${rtnDto.admAppctnMenuParntName}(${rtnDto.admAppctnMenuName})</c:if>" readonly title="관리자 메뉴(신청부품사관리)" readonly style="width: 350px;"/>
                         <input type="hidden" class="form-control input-sm" name="admAppctnMenuSeq" id="admAppctnMenuSeq" value="${rtnDto.admAppctnMenuSeq}"/>
                     </div>
                     <div class="col-sm-8">
@@ -60,7 +66,14 @@
                 </div>
             </fieldset>
 
-            <h7 class="mt0"><em class="ion-android-arrow-dropright mr-sm"></em>사업단계 등록</h7>
+            <h7 class="mt0"><em class="ion-android-arrow-dropright mr-sm"></em>
+                <c:if test="${not empty rtnData.bsnCd }">
+                    사업단계 상세/수정
+                </c:if>
+                <c:if test="${empty rtnData.bsnCd }">
+                    사업단계 등록
+                </c:if>
+            </h7>
             <fieldset class="last-child mb0">
                 <div class="form-group text-sm stepListContainer" data-controller="controller/wb/wba/WBAStepMakeCtrl" style="display:none;">
                     <c:choose>

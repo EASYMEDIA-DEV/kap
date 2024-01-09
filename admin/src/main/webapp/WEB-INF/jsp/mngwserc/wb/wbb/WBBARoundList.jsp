@@ -99,6 +99,12 @@
                 <table class="table table-hover table-striped" >
                     <thead>
                     <tr>
+                        <th class="text-center">
+                            <label class="checkbox-inline c-checkbox">
+                                <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
+                                <span class="ion-checkmark-round"></span>
+                            </label>
+                        </th>
                         <th class="text-center">번호</th>
                         <th class="text-center">사업연도</th>
                         <th class="text-center">회차</th>
@@ -117,6 +123,9 @@
                 </table>
                 <div class="pull-right mr-sm">
                     <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
+                </div>
+                <div class="pull-left mr-sm">
+                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteList">선택삭제</button>
                 </div>
                 <!-- 페이징 버튼 -->
                 <div id="pagingContainer"/>

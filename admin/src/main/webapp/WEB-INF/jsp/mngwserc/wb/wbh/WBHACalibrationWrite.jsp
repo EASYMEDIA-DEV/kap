@@ -16,7 +16,7 @@
             <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}" />
             <input type="hidden" class="notRequired" name="detailsKey" value="${rtnData.appctnSeq}" />
             <input type="hidden" class="notRequired" name="appctnBsnmNo" value="${userInfo.bsnmNo}"/>
-            <input type="hidden" class="notRequired" name="bsnCd" value="INQ07008"/>
+            <input type="hidden" class="notRequired" name="bsnCd" value="BUSUNESS_TYPE08"/>
 
 
             <h6 class="mt0"><strong>
@@ -509,7 +509,7 @@
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">신청자 상태 값</label>
+                                            <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
                                                     ${rtnData.applyList[0].appctnSttsNm}
                                             </div>
@@ -642,7 +642,7 @@
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">신청자 상태 값</label>
+                                            <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
                                                     ${rtnData.applyList[1].appctnSttsNm}
                                             </div>
@@ -745,7 +745,7 @@
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">신청자 상태 값</label>
+                                            <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
                                                     ${rtnData.applyList[2].appctnSttsNm}
                                             </div>

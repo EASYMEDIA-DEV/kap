@@ -92,7 +92,7 @@ public class WBBARoundController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("ROUND_CD");
-
+            cdDtlList.add("SYSTEM_HOUR");
 
             modelMap.addAttribute("classTypeList", cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
             modelMap.addAttribute("rtnYear", wBBARoundService.selectYearDtl(wBRoundMstSearchDTO));
@@ -140,8 +140,8 @@ public class WBBARoundController {
     public WBRoundMstDTO roundUpdate(@Valid @RequestBody WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception {
         try {
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBRoundMstDTO.setRegId(cOUserDetailsDTO.getId());
-            wBRoundMstDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+            wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
+            wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
             wBBARoundService.updateRound(wBRoundMstDTO, request);
         } catch (Exception e) {
@@ -168,6 +168,69 @@ public class WBBARoundController {
             modelMap.addAttribute("respCnt", wBBARoundService.deleteRound(wBRoundMstDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 회차 매핑 여부 확인
+     */
+    @PostMapping(value="/getAppctnCnt")
+    public String getAppctnCnt(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBBARoundService.getAppctnCnt(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 회차 리스트 삭제
+     */
+    @PostMapping(value="/deleteList")
+    public String deleteList(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBBARoundService.deleteList(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 회차 중복 체크
+     */
+    @PostMapping(value="/episdChk")
+    public String episdChk(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBBARoundService.episdChk(wBRoundMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());

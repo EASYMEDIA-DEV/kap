@@ -18,7 +18,7 @@
             <input type="hidden" id="bsnNo" name="bsnCd" value="${bsnCd}" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                <jsp:param name="srchText" value="기간" />
+                <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchType" value="wbbb" />
             </jsp:include>
             <!--기간 검색 종료-->
@@ -91,6 +91,13 @@
                     <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
                 </h6>
                 <div class="pull-right">
+                    <select class="form-control input-sm listRowSizeContainer" >
+                        <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                            <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                        </jsp:include>
+                    </select>
+                </div>
+                <div class="pull-right">
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
                 </div>
             </div>
@@ -131,10 +138,10 @@
             </div>
             <!--리스트 종료 -->
             <div class="pull-left">
-                <button type="button" class="btn btn-danger btn-sm mb-sm" id="deleteBtn">삭제</button>
+                <button type="button" class="btn btn-danger btn-sm mb-sm" id="deleteBtn">선택 삭제</button>
             </div>
             <div class="pull-right">
-                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">관리자 등록</button>
+                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
             </div>
         </form>
     </div>

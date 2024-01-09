@@ -27,7 +27,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">연도<span class="star"> *</span></label>
-                    <div class="col-sm-11">
+                    <div class="col-sm-1">
                         <select class="form-control input-sm" id="year" name="year">
                             <c:forEach begin="${year}" end="${todayYear+3}" var="result" step="1">
                                 <option value="${result}" <c:if test="${rtnDto.year eq result}">selected</c:if><c:if test="${empty rtnDto and todayYear eq result}">selected</c:if>>${result}</option>
@@ -39,7 +39,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">회차<span class="star"> *</span></label>
-                    <div class="col-sm-11">
+                    <div class="col-sm-1">
                         <select class="form-control input-sm" id="episd" name="episd">
                             <c:forEach var="cdList" items="${classTypeList.ROUND_CD}" varStatus="status">
                                 <option value="${cdList.cdNm}" <c:if test="${rtnDto.episd eq cdList.cdNm}">selected</c:if> >${cdList.cdNm}</option>
@@ -58,10 +58,18 @@
                                        value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if><c:if test="${empty rtnDto}">${today}</c:if>"
                                        title="접수 시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
                                 <span class="input-group-btn" style="z-index:0;">
-                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                    <em class="ion-calendar"></em>
-                                                                </button>
-                                                            </span>
+                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                        <em class="ion-calendar"></em>
+                                    </button>
+                                </span>
+                                <select class="form-control input-sm" id="accsStrtHour" name="accsStrtHour" title="접수 시작일">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${classTypeList.SYSTEM_HOUR}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                    </c:forEach>
+                                </select>
+
+
                                 <span class="input-group-addon bg-white b0">~</span>
                                 <input type="text" class="form-control input-sm datetimepicker_endDt" id="accsEndDtm" name="accsEndDtm"
                                        value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if><c:if test="${empty rtnDto}">${today}</c:if>"
@@ -71,6 +79,12 @@
                                         <em class="ion-calendar"></em>
                                     </button>
                                 </span>
+                                <select class="form-control input-sm" id="accsEndHour" name="accsEndHour" title="접수 종료일">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${classTypeList.SYSTEM_HOUR}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -86,10 +100,17 @@
                                        value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if><c:if test="${empty rtnDto}">${today}</c:if>"
                                        title="사업기간 시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
                                 <span class="input-group-btn" style="z-index:0;">
-                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                    <em class="ion-calendar"></em>
-                                                                </button>
-                                                            </span>
+                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                        <em class="ion-calendar"></em>
+                                    </button>
+                                </span>
+                                <select class="form-control input-sm" id="bsnStrtHour" name="bsnStrtHour" title="사업기간 시작일">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${classTypeList.SYSTEM_HOUR}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                    </c:forEach>
+                                </select>
+
                                 <span class="input-group-addon bg-white b0">~</span>
                                 <input type="text" class="form-control input-sm datetimepicker_endDt" id="bsnEndDtm" name="bsnEndDtm"
                                        value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.bsnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if><c:if test="${empty rtnDto}">${today}</c:if>"
@@ -99,6 +120,12 @@
                                         <em class="ion-calendar"></em>
                                     </button>
                                 </span>
+                                <select class="form-control input-sm" id="bsnEndHour" name="bsnEndHour" title="사업기간 종료일">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${classTypeList.SYSTEM_HOUR}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -131,6 +158,7 @@
                 </div>
             </fieldset>
             <c:if test="${not empty rtnDto.episdSeq}">
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                 <fieldset></fieldset>
                 <fieldset>
                     <div class="form-group text-sm">
@@ -139,7 +167,7 @@
                             <p class="form-control-static">${rtnDto.regName} (${rtnDto.regId})</p>
                         </div>
                         <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최초 등록일</label>
+                        <label class="col-sm-1 control-label">최초 등록일시</label>
                         <div class="col-sm-4">
                             <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</p>
                         </div>
@@ -163,7 +191,7 @@
                             </p>
                         </div>
                         <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최종 수정일</label>
+                        <label class="col-sm-1 control-label">최종 수정일시</label>
                         <div class="col-sm-4">
                             <p class="form-control-static">
                                 <c:choose>

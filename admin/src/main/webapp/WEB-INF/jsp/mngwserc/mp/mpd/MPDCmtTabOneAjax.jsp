@@ -19,7 +19,7 @@
 <fieldset>
     <div class="form-group text-sm">
         <label class="col-sm-1 control-label">비밀번호</label>
-        <span class="input-group-btn" ><button type="button" style="margin-left: 1rem" class="btn btn-default btn-sm" id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button></span>
+        <span class="input-group-btn" ><button type="button" style="margin-left: 1.3rem" class="btn btn-default btn-sm" id="btnPwdInit" data-id="${rtnDtl.id}" >비밀번호 초기화</button></span>
     </div>
 </fieldset>
 
@@ -172,7 +172,7 @@
         <label class="col-sm-1 control-label">컨설팅분야</label>
         <div class="col-sm-3">
             <div class="input-group">
-                <textarea  class="form-control input-sm" style="resize: none; border-radius:0.4rem ;" type="text" rows="1" cols="20" id="cmssrCnstgFldCntn" title="주요경력" name="cmssrCnstgFldCntn" class="notRequired" placeholder="컨설팅분야 입력">${rtnDtl.cmssrCnstgFldCntn}</textarea>               </div>
+                <textarea  class="form-control input-sm notRequired" style="resize: none; border-radius:0.4rem ;" type="text" rows="1" cols="20" id="cmssrCnstgFldCntn" title="컨설팅분야" name="cmssrCnstgFldCntn"  placeholder="컨설팅분야 입력">${rtnDtl.cmssrCnstgFldCntn}</textarea>               </div>
         </div>
     </div>
 </fieldset>

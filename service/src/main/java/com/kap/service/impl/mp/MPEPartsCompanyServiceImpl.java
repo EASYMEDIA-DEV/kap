@@ -314,9 +314,17 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
     public void excelDownload(MPEPartsCompanyDTO mpePartsCompanyDTO, HttpServletResponse response) throws Exception{
 
         XSSFWorkbook workbook = new XSSFWorkbook();
+
+        // 폰트 설정
+        Font font = workbook.createFont();
+        font.setFontHeightInPoints((short) 8);
+
         XSSFCellStyle style_header = workbook.createCellStyle();
         XSSFCellStyle style_body = workbook.createCellStyle();
         XSSFCellStyle style_body_sqInfo = workbook.createCellStyle();
+        style_header.setFont(font);
+        style_body.setFont(font);
+        style_body_sqInfo.setFont(font);
         CreationHelper createHelper = workbook.getCreationHelper();
 
         Sheet sheet = workbook.createSheet();
@@ -647,10 +655,10 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
             // 열 크기 조정
             sheet.setColumnWidth(0, 1000); sheet.setColumnWidth(1, 2000);
             sheet.setColumnWidth(2, 6000); sheet.setColumnWidth(3, 4000);
-            sheet.setColumnWidth(4, 1200); sheet.setColumnWidth(5, 2400);
+            sheet.setColumnWidth(4, 1600); sheet.setColumnWidth(5, 2400);
             sheet.setColumnWidth(6, 4000); sheet.setColumnWidth(7, 3000);
             sheet.setColumnWidth(8, 2400); sheet.setColumnWidth(9, 4000);
-            sheet.setColumnWidth(10, 4000); sheet.setColumnWidth(11, 10000);
+            sheet.setColumnWidth(10, 4000); sheet.setColumnWidth(11, 11000);
             sheet.setColumnWidth(12, 2000); sheet.setColumnWidth(13, 10000);
             sheet.setColumnWidth(14, 5000); sheet.setColumnWidth(15, 5000);
             sheet.setColumnWidth(16, 5000); sheet.setColumnWidth(17, 10000);

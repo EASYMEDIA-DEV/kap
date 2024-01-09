@@ -1079,7 +1079,7 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                     String regId = COUserDetailsHelperService.getAuthenticatedUser().getId();
                     String regIp = CONetworkUtil.getMyIPaddress(request);
 
-                    wbhaApplyMstDTO.setBsnCd("INQ07008");
+                    wbhaApplyMstDTO.setBsnCd("BUSUNESS_TYPE08");
                     wbhaApplyMstDTO.setYear(wbhaCalibrationSearchDTO.getYear());
                     WBRoundMstSearchDTO round = wbhaCalibrationMapper.getExisdDtl(wbhaApplyMstDTO);
 
@@ -1197,7 +1197,7 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         WBHAApplyMstDTO wbhaApplyMstDTO = new WBHAApplyMstDTO();
         Calendar cal = Calendar.getInstance();
         wbhaApplyMstDTO.setYear(String.valueOf(cal.get(Calendar.YEAR)));
-        wbhaApplyMstDTO.setBsnCd("INQ07008");
+        wbhaApplyMstDTO.setBsnCd("BUSUNESS_TYPE08");
         WBRoundMstSearchDTO round = wbhaCalibrationMapper.getExisdDtl(wbhaApplyMstDTO);
 
         wbhaCalibrationSearchDTO.setEpisdSeq(round.getEpisdSeq());

@@ -198,6 +198,9 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title="파일순번" , example = "1")
     private Integer cmssrPhotoFileSeq;
 
+    @Schema(title="파일 웹 경로" , example = "")
+    private String webPath;
+
     @Schema(title="경력내용" , example = "경력내용")
     private String cmssrMjrCarerCntn;
 

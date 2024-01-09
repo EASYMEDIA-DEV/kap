@@ -30,7 +30,10 @@ define(["ezCtrl", "controller/co/COMenuCtrl"], function(ezCtrl, menuCtrl) {
                 if (menuInfo.userUrl) {
                     alert('이미 사용 중인 메뉴입니다.');
                     return false;
-                } else {
+                }else if(menuInfo.dpth < 5 ){
+                    alert('사업명을 선택해주세요.');
+                    return false;
+                }else {
                     $('#userMenuSeq').val(menuInfo.menuSeq);
                     $('#userMenuName').val(menuInfo.menuNm);
 
@@ -40,7 +43,10 @@ define(["ezCtrl", "controller/co/COMenuCtrl"], function(ezCtrl, menuCtrl) {
                   if (menuInfo.admUrl) {
                       alert('이미 사용 중인 메뉴입니다.');
                       return false;
-                  } else {
+                  }else if(menuInfo.dpth < 4 ){
+                      alert('사업명의 하위 메뉴를 선택해주세요.');
+                      return false;
+                  }else {
                       $('#admEpisdMenuSeq').val(menuInfo.menuSeq);
                       $('#admEpisdMenuName').val(menuInfo.parntName+"("+menuInfo.menuNm+")");
 

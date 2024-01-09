@@ -56,7 +56,7 @@ public class WBCSrcurityController {
             wBRoundMstSearchDTO.setExpsYn("Y");
             wBRoundMstSearchDTO.setFirstIndex(0);
             wBRoundMstSearchDTO.setRecordCountPerPage(3);
-            wBRoundMstSearchDTO.setBsnCd("INQ07003");
+            wBRoundMstSearchDTO.setBsnCd("BUSUNESS_TYPE03");
 
             //CMS
             pCOGCntsDTO.setMenuSeq(716);
@@ -152,7 +152,7 @@ public class WBCSrcurityController {
 
             //사업접수 하단플로팅 영역용
             WBRoundMstSearchDTO wBRoundMstSearchDTO = new WBRoundMstSearchDTO();
-            wBRoundMstSearchDTO.setBsnCd("INQ07003");
+            wBRoundMstSearchDTO.setBsnCd("BUSUNESS_TYPE03");
             modelMap.addAttribute("rtnRoundDtl", wBCASecurityListService.getRoundDtl(wBRoundMstSearchDTO));
 
         } catch (Exception e) {
