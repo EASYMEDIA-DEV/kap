@@ -41,6 +41,7 @@ var mainScript = (function(){
     mainKVFn: function(){
       // 메인 kv
       if($(".main-kv-sec").length){        
+        $(".slide-control-area .pagination-w .total-page").html($(".main-kv-sec .roll-swiper-area .list").length);
         $(".main-kv-sec").height(window.innerHeight);
         $(".main-kv-sec .roll-swiper-area .list:first-child").addClass("hide-motion");
 
@@ -99,7 +100,8 @@ var mainScript = (function(){
                 slideNum = 0;
               }
             }
-  
+            
+            $(".slide-control-area .pagination-w .cur-page").html(slideNum + 1);
             slideMoveFn();
           }
         });
@@ -128,19 +130,20 @@ var mainScript = (function(){
             }else{
               slideNum = $(".main-kv-sec .roll-swiper-area .list").length - 1;
             }
+            $(".slide-control-area .pagination-w .cur-page").html(slideNum + 1);
             slideMoveFn();
           }
         });
 
         // 오른쪽 이동 버튼
         $(".main-kv-sec .slide-control-area .move-control .swiper-button-next").on("click", function(){
-          
           if(isMoving == false){
             if(slideNum < $(".main-kv-sec .roll-swiper-area .list").length - 1){
               slideNum += 1;
             }else{
               slideNum = 0;
             }
+            $(".slide-control-area .pagination-w .cur-page").html(slideNum + 1);
             slideMoveFn();
           }
         });
@@ -292,7 +295,10 @@ var mainScript = (function(){
     swiperFn: function(){
       // [공통 - 교육/세미나] swiper
       //mainTrainingInitFn();
-      trainingPCFn();
+
+      if($(location).attr('host').indexOf("html") > -1 || $(location).attr('host').indexOf("eznet1") > -1){ //  퍼블 worklist에서만 동작하게 예외처리
+        trainingPCFn();
+      }
 
       
       // 상생사업 swiper

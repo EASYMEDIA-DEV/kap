@@ -31,6 +31,7 @@ import java.util.HashMap;
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
  *   2023.11.20  장두석         최초 생성
+ *   2024.01.05  이옥정         사용자에서 재단소식 리스트 가져올때 건수를 1건으로 예외 처리 추가
  * </pre>
  */
 @Slf4j
@@ -63,7 +64,12 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
         page.setPageSize(pBDBCompanyNewsDTO.getPageRowSize());
 
         pBDBCompanyNewsDTO.setFirstIndex(page.getFirstRecordIndex());
-        pBDBCompanyNewsDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        // 사용자 노출 갯수 조건문 추가
+        if(pBDBCompanyNewsDTO.getSiteGubun().equals("front")) {
+            pBDBCompanyNewsDTO.setRecordCountPerPage(1);
+        }else{
+            pBDBCompanyNewsDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
 
         pBDBCompanyNewsDTO.setTotalCount(bDBCompanyNewsMapper.getCompanyNewsListTotCnt(pBDBCompanyNewsDTO));
         pBDBCompanyNewsDTO.setList(bDBCompanyNewsMapper.selectCompanyNewsList(pBDBCompanyNewsDTO));

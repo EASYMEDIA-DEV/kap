@@ -78,4 +78,13 @@ public class BDBCompanyNewsDTO extends BaseDTO {
     @Schema(title = "모바일 썸네일 리스트")
     @Hidden
     private List<COFileDTO> moThumbList;
+
+    @Schema(title = "파일 경로")
+    private String webPath;
+
+    @Schema(title = "파일설명")
+    private String fileDsc;
+
+    @Schema(title = "디바이스구분")
+    private String deviceGubun;
 }

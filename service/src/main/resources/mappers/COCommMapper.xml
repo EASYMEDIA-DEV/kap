@@ -96,6 +96,7 @@
       수정일      수정자       수정내용
     ==========   ========   ==============
     2023.11.16    이옥정       최초생성
+    2024.01.05    이옥정       중요공지 조건문에 상시 조건문 추가
     -->
     <select id="getHeaderNtfyList" resultType="COFrontHeaderNtfyDTO">
         select /* COCommMapper.getHeaderNtfyList */
@@ -104,7 +105,8 @@
              , reg_dtm
              , exps_strt_dtm
         from bd_ntfy_mst
-        where exps_yn = 'Y' and exps_strt_dtm <![CDATA[ <= ]]> (now()) and exps_end_dtm <![CDATA[ >= ]]> (now())
+        where exps_yn = 'Y'
+          and ( IFNULL(odtm_yn, 'N') = 'Y' OR exps_strt_dtm <![CDATA[ <= ]]> (now()) and exps_end_dtm <![CDATA[ >= ]]> (now()))
         order by reg_dtm desc
         limit 0, 3
     </select>

@@ -7,20 +7,23 @@
      수정일     수정자     수정내용
     ==========  ======  ==============
     2023.11.20  장두석     최초 생성
+    2024.01.05   이옥정    사용자 노출을 위한 예외 조건문 추가
     -->
     <select id="selectNoticeList" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
         SELECT /* BDANoticeMapper.selectNoticeList */
             NTFY_SEQ
             , TITL
             , READ_CNT
+            , REG_DTM
+            <if test='siteGubun != "front"'>
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
             , REG_IP
-            , REG_DTM
             , MOD_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
             , MOD_IP
             , MOD_DTM
+            </if>
             , EXPS_YN
         FROM
             BD_NTFY_MST A
@@ -163,8 +166,12 @@
       수정일      수정자       수정내용
     ==========   ========   ==============
     2023.11.20    장두석       최초생성
+    2024.01.05   이옥정    사용자 노출을 위한 예외 조건문 추가
     -->
     <sql id="selectNoticeListwhereSql">
+        <if test='siteGubun == "front"'>
+            AND EXPS_YN = 'Y'
+        </if>
         <if test="strtDt != null and strtDt != ''">
             <choose>
                 <when test="srchDate == 1">

@@ -31,6 +31,7 @@ import java.util.HashMap;
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
  *   2023.11.20  장두석         최초 생성
+ *   2024.01.05  이옥정         사용자에서 FAQ 리스트 가져올때 건수를 3건만 가져오므로 예외 처리 추가
  * </pre>
  */
 @Slf4j
@@ -63,7 +64,13 @@ public class BDCFaqServiceImpl implements BDCFaqService {
         page.setPageSize(pBDCFaqDTO.getPageRowSize());
 
         pBDCFaqDTO.setFirstIndex(page.getFirstRecordIndex());
-        pBDCFaqDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        // 사용자 노출 갯수 조건문 추가
+        if(pBDCFaqDTO.getSiteGubun().equals("front")) {
+            pBDCFaqDTO.setRecordCountPerPage(3);
+        }else{
+            pBDCFaqDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
 
         pBDCFaqDTO.setTotalCount(bDCFaqMapper.getFaqListTotCnt(pBDCFaqDTO));
         pBDCFaqDTO.setList(bDCFaqMapper.selectFaqList(pBDCFaqDTO));

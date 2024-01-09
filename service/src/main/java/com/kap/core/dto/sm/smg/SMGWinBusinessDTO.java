@@ -72,4 +72,10 @@ public class SMGWinBusinessDTO extends BaseDTO {
     @Schema(title = "노출순서 구분")
     @Hidden
     private String sortType;
+
+    @Schema(title = "파일 경로")
+    private String webPath;
+
+    @Schema(title = "파일설명")
+    private String fileDsc;
 }

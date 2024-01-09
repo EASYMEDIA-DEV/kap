@@ -11,7 +11,7 @@
 		    	</footer>
 			</main>
     	</div>
-    	
+
     	<!-- Settings template-->
     	<div class="modal-settings modal modal-right fade" tabindex="-1" role="dialog">
      		<div class="modal-dialog modal-lg">

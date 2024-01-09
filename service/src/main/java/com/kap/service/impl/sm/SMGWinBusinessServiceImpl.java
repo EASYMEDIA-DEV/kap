@@ -31,6 +31,7 @@ import java.util.HashMap;
  *    ==========    ==============    =============================
  *    2023.11.14		임서화				   최초 생성
  *    2023.11.22        장두석                  최신화
+ *    2024.01.05        이옥정           상생사업 목록 가져올때 사용자 메인에서는 조회해오는 건수를 10건에서 20건으로 변경
  * </pre>
  */
 @Slf4j
@@ -60,7 +61,12 @@ public class SMGWinBusinessServiceImpl implements SMGWinBusinessService {
         page.setPageSize(pSMGWinBusinessDTO.getPageRowSize());
 
         pSMGWinBusinessDTO.setFirstIndex(page.getFirstRecordIndex());
-        pSMGWinBusinessDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        // 사용자 노출 갯수 조건문 추가
+        if(pSMGWinBusinessDTO.getSiteGubun().equals("front")) {
+            pSMGWinBusinessDTO.setRecordCountPerPage(20);
+        }else{
+            pSMGWinBusinessDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
 
         pSMGWinBusinessDTO.setTotalCount(sMGWinBusinessMapper.selectWinBusinessTotCnt(pSMGWinBusinessDTO));
         pSMGWinBusinessDTO.setList(sMGWinBusinessMapper.selectWinBusinessList(pSMGWinBusinessDTO));

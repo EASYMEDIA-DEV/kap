@@ -29,7 +29,7 @@ import java.util.HashMap;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.09.21		구은희				   최초 생성
- * </pre>
+ *    2024.01.05        이옥정           사용자에서 메인 팝업 리스트 가져올때 건수를 6건으로 예외 처리 추가
  */
 
 @Slf4j
@@ -59,6 +59,7 @@ public class SMCMnPopServiceImpl implements SMCMnPopService {
 
         smcMnPopDTO.setFirstIndex( page.getFirstRecordIndex() );
 
+        // 사용자 노출 갯수 조건문 추가
         if(smcMnPopDTO.getSiteGubun().equals("front")) {
             smcMnPopDTO.setRecordCountPerPage(6);
         }else{

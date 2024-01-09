@@ -158,6 +158,10 @@
 .main-kv-sec .slide-control-area .swiper-pagination {font-family: "Pretendard_Medium", sans-serif; color: #fff; font-size: 16rem;}
 .main-kv-sec .slide-control-area .swiper-pagination-current {margin-right: 4rem;}
 .main-kv-sec .slide-control-area .swiper-pagination-total {margin-left: 4rem;}
+.main-kv-sec .slide-control-area .pagination-w {display: flex;}
+.main-kv-sec .slide-control-area .pagination-w .page-num {position: relative; font-family: "Pretendard_Medium"; font-size: 16rem; color: #fff; line-height: 160%; letter-spacing: -0.32rem;}
+.main-kv-sec .slide-control-area .pagination-w .page-num:first-child::after {content: '/'; display: block; position: absolute; right: -9rem; top: 0;}
+.main-kv-sec .slide-control-area .pagination-w .page-num:last-child {margin-left: 14rem;}
 
 .main-kv-sec .scroll-down {position: absolute; right: 430rem; bottom: 56rem; z-index: 2; opacity:0;}
 .main-kv-sec .scroll-down .txt {position:relative; display: flex; align-items: center; color: #F5F6F7; font-size: max(16rem, 14px); line-height: 160%; letter-spacing: -0.32rem;}
@@ -189,6 +193,8 @@
   .main-kv-sec .slide-control-area .swiper-pagination {font-family: "Pretendard_Regular", sans-serif; font-size: 14rem;}
   .main-kv-sec .slide-control-area .swiper-button-prev {display: none;}
   .main-kv-sec .slide-control-area .swiper-button-next {display: none;}
+  .main-kv-sec .slide-control-area .pagination-w .page-num {font-size: 14rem;}
+  .main-kv-sec .slide-control-area .pagination-w .page-num:last-child {margin-left: 13rem;}
 
   .main-kv-sec .scroll-down {display: none;}
 }
@@ -251,8 +257,8 @@
 .biz-tab-area .consulting-sec .field-list-w .for-set {display: flex; justify-content: center; align-items: center; max-width: 1134rem;}
 .biz-tab-area .consulting-sec .field-list-w .field-list {position:relative; padding: 60rem; background-color: #fff;}
 .biz-tab-area .consulting-sec .field-list-w .field-list:last-child:before {content: ''; display:block; position: absolute; left: 0; top:50%; margin-top: -101rem; width:1px; height: 202rem; background-color: #DFE1E4;}
-.biz-tab-area .consulting-sec .field-list-w .field-list .tit {font-family: "Pretendard_SemiBold", sans-serif; color: #06161E; font-size: max(18rem, 16px); line-height: 155%; letter-spacing: -0.36rem;}
-.biz-tab-area .consulting-sec .field-list-w .field-list .txt {margin: 30rem 0 40rem; font-family: "Pretendard_Bold", sans-serif; color: #06161E; font-size: max(24rem, 18px); line-height: 150%; letter-spacing: -0.48rem;}
+.biz-tab-area .consulting-sec .field-list-w .field-list .tit {font-size: max(18rem, 16px); font-family: "Pretendard_Regular", sans-serif; color: #06161E; line-height: 155%; letter-spacing: -.02em;}
+.biz-tab-area .consulting-sec .field-list-w .field-list .txt {margin: 24rem 0 40rem; font-family: "Pretendard_Bold", sans-serif; color: #06161E; font-size: max(24rem, 18px); line-height: 150%; letter-spacing: -0.48rem;}
 
 @media all and (max-width: 1023px) {
   .biz-tab-area .consulting-sec .field-list-w {margin: 0 auto; padding: 0; width: calc(100% - 40rem); background: none;}
@@ -262,7 +268,7 @@
   .biz-tab-area .consulting-sec .field-list-w .field-list .thumbnail-img img {width: 100%;}
   .biz-tab-area .consulting-sec .field-list-w .field-list:last-child:before {display: none;}
   .biz-tab-area .consulting-sec .field-list-w .field-list .title-area {margin-top: 12rem;}
-  .biz-tab-area .consulting-sec .field-list-w .field-list .tit {font-family: "Pretendard_SemiBold", sans-serif; font-size: 15rem; line-height: 170%; letter-spacing: -0.3rem;}
+  .biz-tab-area .consulting-sec .field-list-w .field-list .tit {font-size: 15rem; font-family: "Pretendard_SemiBold", sans-serif; color: #06161E; line-height: 170%; letter-spacing: -.02em;}
   .biz-tab-area .consulting-sec .field-list-w .field-list .txt {margin-top: 4rem; margin-bottom: 0; font-family: "Pretendard_Regular", sans-serif; font-size: 13rem; color: #697278; line-height: 165%; letter-spacing: -0.26rem;}
   .biz-tab-area .consulting-sec .field-list-w .field-list .btn-wrap {display: none;}
 }
@@ -294,6 +300,7 @@
 .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .biz-list .title-area .tit {position: relative; top: 11rem; font-family: "Pretendard_Bold", sans-serif; color: #06161E; font-size: max(24rem, 15px); line-height: 150%; letter-spacing: -0.48rem; overflow: hidden;}
 .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .biz-list .hide-area {position: relative; margin-top: 0; padding-top: 0; padding-bottom: 32rem; background-color: #fff;}
 .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .biz-list .hide-area .txt {position:relative; color: #06161E; font-size: max(16rem, 12px); line-height: 160%; letter-spacing: -0.32rem; opacity: 0; transition: opacity .3s ease; overflow: hidden;}
+.biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .biz-list .hide-area .txt .inner-motion {display: -webkit-box; word-wrap: break-word; -webkit-line-clamp: 2; -webkit-box-orient: vertical; text-overflow: ellipsis; overflow: hidden;}
 .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .biz-list .btn-wrap {margin-top: 40rem; overflow: hidden;}
 .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .biz-list .inner-motion {position: relative; display: inline-block;}
 .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .biz-list:last-child::after {content: ''; display:block; position: absolute; right: 0; bottom: 1px; width: 370rem; height: 1px; background-color: #ECEEEF; opacity: 1; transition: opacity .3s ease;}
@@ -303,10 +310,13 @@
 .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-button-next {left: auto; right: 0; top: auto; bottom: -79rem; margin-top: 0;}
 .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-pagination {display: none;}
 
+.biz-tab-area .coexisting-sec .coexisting-swiper-w:not(:has(.swiper-slide:nth-child(2))) .swiper-button-prev {display: none;}
+.biz-tab-area .coexisting-sec .coexisting-swiper-w:not(:has(.swiper-slide:nth-child(2))) .swiper-button-next {display: none;}
+
 @media all and (max-width: 1023px) {
   .biz-tab-area .coexisting-sec .for-motion {display:block; width: 100%;}
   .biz-tab-area .coexisting-sec .coexisting-swiper-w {padding-bottom: 56rem; width: 100%; min-height: unset;}
-  .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide {position: static; display: grid; row-gap: 32rem; column-gap: 10rem; grid-template-columns: 1fr 1fr; padding-left: 0; padding: 0 20rem; height: auto;}
+  .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide {position: static; display: grid !important; row-gap: 32rem; column-gap: 10rem; grid-template-columns: 1fr 1fr; padding-left: 0; padding: 0 20rem; height: auto;}
   .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .thumbnail-img {position:relative; width:100%; height: 170rem;}
   .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .thumbnail-img img {width: 100%; height: 100%; object-fit: cover; opacity: 1 !important;}
   .biz-tab-area .coexisting-sec .coexisting-swiper-w .swiper-slide .biz-list {padding: 0; width: 170rem;}
@@ -403,7 +413,7 @@
 .main-popup .pop-wrap {display:block; padding: 0; height: auto; width: auto; min-width: 440rem; max-width: 880rem; background-color: #fff;}
 .main-popup .pop-wrap .swiper-slide {width: 440rem; height: 100%; overflow: hidden;}
 .main-popup .pop-wrap .swiper-slide .click-area {display:block;}
-.main-popup .pop-wrap .swiper-slide .click-area img {width: 100%;}
+.main-popup .pop-wrap .swiper-slide .click-area img {width: 100%; height: auto;}
 .main-popup .pop-wrap .swiper-slide .click-area .pop-txt-con {padding: 30rem; max-height: 460rem; overflow-y: auto; font-size: 16rem; line-height: 160%; letter-spacing: -0.32rem;}
 .main-popup .pop-wrap .swiper-slide .click-area .pop-txt-con img {margin: 20rem 0;}
 .main-popup .pop-wrap .swiper-slide .click-area .pop-txt-con img:first-child {margin-top: 0;}

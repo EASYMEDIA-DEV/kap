@@ -31,11 +31,14 @@
 			<c:otherwise>${scheme}://${serverName}${serverPort}/common/images/img-main-kv-03.jpg</c:otherwise>
 		</c:choose>
 	</c:set>
+	<c:set var="now" value="<%=new java.util.Date()%>" />
+	<c:set var="curtDt"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
+	<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="yyyyMMddHHmmss" /></c:set>
 	<meta property="og:image" content="${ogImage}" id="og-image-value"/>
 	<link rel="stylesheet" href="/common/css/swiper.css" />
 	<link rel="stylesheet" href="/common/css/fonts.css" />
-	<link rel="stylesheet" href="/common/css/common.css" />
-	<link rel="stylesheet" href="/common/css/main.css" />
+	<link rel="stylesheet" href="/common/css/common.css?bust=${sysDate}" />
+	<link rel="stylesheet" href="/common/css/main.css?bust=${sysDate}" />
 	<link rel="stylesheet" href="/common/css/style.css" />
 	<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="/common/js/gsap.min.js"></script>
@@ -46,9 +49,7 @@
 	<script type="text/javascript" src="/common/js/bezier-easing.min.js"></script>
 	<script type="text/javascript" src="/common/js/jquery.cookies.js"></script>
 	<script type="text/javascript" src="/common/js/script.js"></script>
-	<c:set var="now" value="<%=new java.util.Date()%>" />
-	<c:set var="curtDt"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
-	<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="yyyyMMddHHmmss" /></c:set>
+
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="/common/js/kakao.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f90d438f5adb45f1893d7ca237eaac27&libraries=services,clusterer,drawing"></script>
@@ -63,7 +64,7 @@
 
 		<c:when test="${ servletPath eq '/' }">
 			<script type="text/javascript" src="/common/js/hammer.min.js"></script>
-			<script type="text/javascript" src="/common/js/main.js"></script>
+			<script type="text/javascript" src="/common/js/main.js?bust=${sysDate}"></script>
 			<c:set var="wrapClass" value="main" />
 		</c:when>
 		<c:when test="${ fn:startsWith(servletPath, '/my-page/') }">

@@ -20,6 +20,8 @@ var msgCtrl = (function(){
 			sqCertiApply : "SQ평가원 자격증을 신청하시겠습니까?",
 			backChk : "이전으로 돌아가시면 현재 입력된 정보는 초기화됩니다\n" + "계속하시겠습니까?",
 			cancleBtn : "현재 입력된 정보는 초기화됩니다. 계속하시겠습니까?\n",
+			//메인 뉴스레터 신청
+			newsletterBtn : "뉴스레터를 신청하시겠습니까?",
 		},
 		success : {
 			cre : "생성되었습니다.",
@@ -49,6 +51,7 @@ var msgCtrl = (function(){
 				}
 			},
 			sqCertiApply : "자격증 신청이 완료되었습니다.",
+			newsletterSuc : "구독신청이 완료되었습니다.",
 		},
 		fail : {
 			act : "문제가 발생하여 진행이 중단됩니다. 잠시 후 다시 시도 바랍니다.",
@@ -151,6 +154,12 @@ var msgCtrl = (function(){
 				length: "첨부하는 파일명의 길이는 20자로 제한합니다.",
 				size: "첨부파일은 최대 100M까지만 등록가능합니다.",
 				no_size:"비어있는 파일은 등록할 수 없습니다.",
+			}
+			,newsletter : {
+				agree : "소식 및 관련 정보 수신을 동의해주세요.",
+				notEmail : "이메일을 입력하세요.",
+				emailCheck : "이메일 형태를 확인해주세요.",
+				registeredEmail : "이미 구독중인 이메일주소입니다."
 			}
 		}
 	};
