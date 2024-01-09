@@ -629,7 +629,7 @@
         )
         VALUES
         (
-            #{bsnCd},
+            #{bsnmNo},
             #{cbsnSeq},
             #{nm},
             #{score},

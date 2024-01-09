@@ -190,6 +190,29 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                     }
                 }
             }
+        } else {
+            List<WBCompanyDetailMstDTO> sqInfoList = wBFBRegisterDTO.getSqInfoList();
+            if(sqInfoList != null ) {
+                for(WBCompanyDetailMstDTO wBCompanyDetailMstDTO : sqInfoList) {
+                    wBCompanyDetailMstDTO.setBsnmNo(wBFBRegisterDTO.getBsnmNo());
+                    wBCompanyDetailMstDTO.setNm(null);
+                    wBCompanyDetailMstDTO.setScore(null);
+                    wBCompanyDetailMstDTO.setYear(null);
+                    wBCompanyDetailMstDTO.setCrtfnCmpnNm(null);
+                    if(!Objects.nonNull(wBCompanyDetailMstDTO.getCbsnSeq())){
+                        /* cbsnSeq is null */
+                        wBCompanyDetailMstDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
+                        wBCompanyDetailMstDTO.setRegId(wBFBRegisterDTO.getRegId());
+                        wBCompanyDetailMstDTO.setRegIp(wBFBRegisterDTO.getRegIp());
+                        respCnt = wBFBRegisterCompanyMapper.insCmpnCbsnDtl(wBCompanyDetailMstDTO);
+                    } else {
+                        /* cbsnSeq is not null */
+                        wBCompanyDetailMstDTO.setModId(wBFBRegisterDTO.getModId());
+                        wBCompanyDetailMstDTO.setModIp(wBFBRegisterDTO.getModIp());
+                        respCnt = wBFBRegisterCompanyMapper.updCmpnCbsnDtl(wBCompanyDetailMstDTO);
+                    }
+                }
+            }
         }
 
         /* 회사 업종상세 Update */
@@ -341,20 +364,45 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         /* 파일 상세 */
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBFBRegisterDTO.getFileList());
 
+        /* 구분 값에 따른 분기 */
         if(wBFBRegisterDTO.getCtgryCd().equals("COMPANY01002")) {
-            wBFBRegisterDTO.setQlty5starCd("");
-            wBFBRegisterDTO.setQlty5starYear("");
-            wBFBRegisterDTO.setPay5starCd("");
-            wBFBRegisterDTO.setPay5starYear("");
-            wBFBRegisterDTO.setTchlg5starCd("");
-            wBFBRegisterDTO.setTchlg5starYear("");
-        } else {
+            wBFBRegisterDTO.setQlty5starCd(null);
+            wBFBRegisterDTO.setQlty5starYear(null);
+            wBFBRegisterDTO.setPay5starCd(null);
+            wBFBRegisterDTO.setPay5starYear(null);
+            wBFBRegisterDTO.setTchlg5starCd(null);
+            wBFBRegisterDTO.setTchlg5starYear(null);
+
             /* 회사 상세 Update or Insert */
             List<WBCompanyDetailMstDTO> sqInfoList = wBFBRegisterDTO.getSqInfoList();
             if(sqInfoList != null ) {
                 for(WBCompanyDetailMstDTO wBCompanyDetailMstDTO : sqInfoList) {
                     wBCompanyDetailMstDTO.setBsnmNo(wBFBRegisterDTO.getBsnmNo());
-                    if(wBCompanyDetailMstDTO.getCbsnSeq() != null){
+                    if(!Objects.nonNull(wBCompanyDetailMstDTO.getCbsnSeq())){
+                        /* cbsnSeq is null */
+                        wBCompanyDetailMstDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
+                        wBCompanyDetailMstDTO.setRegId(wBFBRegisterDTO.getRegId());
+                        wBCompanyDetailMstDTO.setRegIp(wBFBRegisterDTO.getRegIp());
+                        respCnt = wBFBRegisterCompanyMapper.insCmpnCbsnDtl(wBCompanyDetailMstDTO);
+                    } else {
+                        /* cbsnSeq is not null */
+                        wBCompanyDetailMstDTO.setModId(wBFBRegisterDTO.getModId());
+                        wBCompanyDetailMstDTO.setModIp(wBFBRegisterDTO.getModIp());
+                        respCnt = wBFBRegisterCompanyMapper.updCmpnCbsnDtl(wBCompanyDetailMstDTO);
+                    }
+                }
+            }
+        } else {
+            List<WBCompanyDetailMstDTO> sqInfoList = wBFBRegisterDTO.getSqInfoList();
+            System.err.println(sqInfoList);
+            if(sqInfoList != null ) {
+                for(WBCompanyDetailMstDTO wBCompanyDetailMstDTO : sqInfoList) {
+                    wBCompanyDetailMstDTO.setBsnmNo(wBFBRegisterDTO.getBsnmNo());
+                    wBCompanyDetailMstDTO.setNm(null);
+                    wBCompanyDetailMstDTO.setScore(null);
+                    wBCompanyDetailMstDTO.setYear(null);
+                    wBCompanyDetailMstDTO.setCrtfnCmpnNm(null);
+                    if(!Objects.nonNull(wBCompanyDetailMstDTO.getCbsnSeq())){
                         /* cbsnSeq is null */
                         wBCompanyDetailMstDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
                         wBCompanyDetailMstDTO.setRegId(wBFBRegisterDTO.getRegId());

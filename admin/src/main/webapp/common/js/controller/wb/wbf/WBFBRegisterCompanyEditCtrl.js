@@ -145,21 +145,12 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         if( value != "null" && value != ""){
             if(value == 'COMPANY01001') {
                 fieldSQ.hide();
-                fieldSQ.find("input,select").prop('disabled', true);
                 fieldStart.show();
-                fieldStart.find("input,select").prop('disabled', false);
             }
             if(value == 'COMPANY01002') {
                 fieldSQ.show();
-                fieldSQ.find("input,select").prop('disabled', false);
                 fieldStart.hide();
-                fieldStart.find("input,select").prop('disabled', true);
             }
-        } else {
-            fieldSQ.hide();
-            fieldSQ.find("input,select").prop('disabled', true);
-            fieldStart.hide();
-            fieldStart.find("input,select").prop('disabled', true);
         }
     }
 
