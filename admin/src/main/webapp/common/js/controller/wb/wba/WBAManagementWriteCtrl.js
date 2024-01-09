@@ -50,6 +50,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "controller/co/COMenuCtrl"], function(
                         fn_menu_layer_pop('user');
                         menuCtrl.setJstree(false, false, { "topNode" : ctrl.obj.data("pageNo"), "d" : "5", "isMenu" :"Y" , "sub" : "615", "menuGubun" : "user"});
                         $('#menuType').val("userMenu");
+                        $('#treeName').html("사용자 메뉴 선택");
                     }
                 }
             },
@@ -59,6 +60,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "controller/co/COMenuCtrl"], function(
                         fn_menu_layer_pop('admin');
                         menuCtrl.setJstree(false, false, { "topNode" : "1", "d" : "5", "sub" : "597", "menuGubun" : "admin"});
                         $('#menuType').val("adminMenuChoice");
+                        $('#treeName').html("관리자 메뉴 선택");
                     }
                 }
             },
@@ -68,6 +70,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "controller/co/COMenuCtrl"], function(
                         fn_menu_layer_pop('admin');
                         menuCtrl.setJstree(false, false, { "topNode" : "1", "d" : "5", "sub" : "597", "menuGubun" : "admin"});
                         $('#menuType').val("adminMenuCompany");
+                        $('#treeName').html("관리자 메뉴 선택");
                     }
                 }
             }

@@ -9,10 +9,10 @@
 							${list.manageName}
 					</a>
 				</td>
-				<td class="text-center">${ list.regName}</td>
-				<td class="text-center">${ list.regDtm}</td>
-				<td class="text-center">${ list.modName}</td>
-				<td class="text-center">${ list.modDtm}</td>
+				<td class="text-center">${kl:nameMasking(list.regName)}(${kl:idMasking(list.regId)})</td>
+				<td class="text-center">${ kl:convertDate( list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</td>
+				<td class="text-center">${kl:nameMasking(list.modName)}(${kl:idMasking(list.modId)})</td>
+				<td class="text-center">${ kl:convertDate( list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</td>
 			</tr>
 		</c:forEach>
 	</c:when>

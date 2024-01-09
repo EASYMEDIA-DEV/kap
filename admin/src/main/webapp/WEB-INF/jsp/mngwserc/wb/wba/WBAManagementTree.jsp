@@ -2,10 +2,10 @@
 
 <div class="modal fade wbaTreeLayer" tabindex="-1" role="dialog" data-controller="controller/wb/wba/WBAManagementTreeCtrl">
     <input type="hidden" id="menuType">
-    <div class="modal-dialog modal-lg modal-center" role="document" style="width:1500px;">
+    <div class="modal-dialog modal-lg modal-center" role="document" style="width:1000px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" > 사용자 메뉴 선택
+                <h5 class="modal-title"> <p id="treeName">관리자 메뉴 선택</p>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
