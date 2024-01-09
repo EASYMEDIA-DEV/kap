@@ -34,6 +34,54 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
+            //선택 삭제 버튼
+            btnDel : {
+                event : {
+                    click : function() {
+                        var frmDataObj    = $(this).closest("form");
+                        var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
+                        var delType = frmDataObj.data("delType");
+                        if (delActCnt > 0)
+                        {
+                            var isOk = true;
+
+                            if(isOk){
+                                if(confirm("선택한 게시물을 삭제하시겠습니까?"))
+                                {
+                                    //삭제 전송
+                                    cmmCtrl.frmAjax(function(respObj){
+                                        if(respObj != undefined && respObj.respCnt > 0){
+                                            var msg = msgCtrl.getMsg("success.del.target.none");
+                                            if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
+                                                msg = msgCtrl.getMsg("success.del.target." + delType);
+                                            }
+                                            alert(msg);
+                                            $formObj.find("#btnSearch").click();
+                                        }
+                                        else{
+                                            alert(msgCtrl.getMsg("fail.act"));
+                                        }
+                                    }, "./delete", frmDataObj, "POST", "json");
+                                }
+                            }
+
+                        }
+                        else
+                        {
+                            if(typeof delType!= "undefined")
+                            {
+                                alert(msgCtrl.getMsg("fail.del.target." + frmDataObj.data("delType")));
+                            }
+                            else
+                            {
+                                alert("삭제할 게시물을 선택해주세요.");
+                            }
+
+                            return;
+                        }
+                    }
+                }
+            },
             //검색버튼 클릭시
             btnSearch : {
                 event : {

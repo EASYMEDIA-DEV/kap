@@ -2,6 +2,7 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COStringUtil;
+import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebb.EBBBdgetDTO;
@@ -205,6 +206,9 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 			pEBINonMemberDTO.setThnlFileSeq(thnlFileSeqMap.get("thnlFileSeq")); //썸네일
 		}
 
+		pEBINonMemberDTO.setPcStduyCntn(COWebUtil.clearXSSMinimum(pEBINonMemberDTO.getPcStduyCntn()));
+		pEBINonMemberDTO.setMblStduyCntn(COWebUtil.clearXSSMinimum(pEBINonMemberDTO.getMblStduyCntn()));
+
 		//비회원 교육 과정 등록
 		respCnt = eBINonMemberMapper.insertNonMember(pEBINonMemberDTO);
 
@@ -274,6 +278,9 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 			HashMap<String, Integer> thnlFileSeqMap = cOFileService.setFileInfo(pEBINonMemberDTO.getPcThumbList());
 			pEBINonMemberDTO.setThnlFileSeq(thnlFileSeqMap.get("thnlFileSeq")); //썸네일
 		}
+
+		pEBINonMemberDTO.setPcStduyCntn(COWebUtil.clearXSSMinimum(pEBINonMemberDTO.getPcStduyCntn()));
+		pEBINonMemberDTO.setMblStduyCntn(COWebUtil.clearXSSMinimum(pEBINonMemberDTO.getMblStduyCntn()));
 
 		//비회원 교육 과정 수정
 		respCnt = eBINonMemberMapper.updateNonMember(pEBINonMemberDTO);

@@ -17,7 +17,7 @@
 			<!--기간 검색 시작-->
 			<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 				<jsp:param name="srchText" value="기간검색" />
-				<jsp:param name="srchOption" value="교육기간,접수기간,등록일,수정일" />
+				<jsp:param name="srchOption" value="교육기간,접수기간,신청일,수정일" />
 				<jsp:param name="srchType" value="edctn" />
 			</jsp:include>
 			<!--기간 검색 종료-->
@@ -181,27 +181,27 @@
 								<br />
 							</c:if>
 							<c:choose>
-								<c:when test="${fn:contains(cdList.cd, '01')}">
+								<%--<c:when test="${fn:contains(cdList.cd, '01')}">
 									<c:set var="cdName" value="선발"/>
-								</c:when>
+								</c:when>--%>
 								<c:when test="${fn:contains(cdList.cd, '02')}">
 									<c:set var="cdName" value="신청취소"/>
 								</c:when>
-								<c:when test="${fn:contains(cdList.cd, '03')}">
+								<%--<c:when test="${fn:contains(cdList.cd, '03')}">
 									<c:set var="cdName" value="신청양도"/>
-								</c:when>
+								</c:when>--%>
 								<c:when test="${fn:contains(cdList.cd, '04')}">
 									<c:set var="cdName" value="선발대기"/>
 								</c:when>
 								<c:when test="${fn:contains(cdList.cd, '05')}">
 									<c:set var="cdName" value="미선발"/>
 								</c:when>
-								<c:when test="${fn:contains(cdList.cd, '06')}">
+								<%--<c:when test="${fn:contains(cdList.cd, '06')}">
 									<c:set var="cdName" value="교육취소"/>
 								</c:when>
 								<c:otherwise>
 									<c:set var="cdName" value="알 수 없음"/>
-								</c:otherwise>
+								</c:otherwise>--%>
 							</c:choose>
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxSingle" name="choiceCtgryCd" data-name="choiceCtgryCdList" value="${cdList.cd}" />
@@ -282,9 +282,9 @@
 							<th class="text-center" rowspan="2">회차</th>
 							<th class="text-center" rowspan="2">업종</th>
 							<th class="text-center" rowspan="2">부품사명</th>
+							<th class="text-center" rowspan="2">사업자등록번호</th>
 							<th class="text-center" rowspan="2">구분</th>
 							<th class="text-center" rowspan="2">규모</th>
-							<th class="text-center" rowspan="2">사업자등록번호</th>
 							<th class="text-center" rowspan="2">지역</th>
 							<th class="text-center" colspan="4">신청자정보</th>
 							<th class="text-center" rowspan="2">신청일시</th>

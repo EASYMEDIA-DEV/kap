@@ -374,8 +374,7 @@
 		UPDATE  /*EBHEduApplicantMapper.updateUser*/
 			CO_MEM_MST
 		SET
-			EMAIL = #{email}
-			, DEPT_CD = #{deptCd}
+			DEPT_CD = #{deptCd}
 			, DEPT_DTL_NM = #{deptDtlNm}
 			, PSTN_CD = #{pstnCd}
 			<choose>
@@ -405,7 +404,8 @@
 		UPDATE  /*EBHEduApplicantMapper.updateCmpn*/
 			CP_CMPN_MST
 		SET
-			CTGRY_CD = #{ctgryCd}
+			RPRSNT_NM = #{rprsntNm}
+			, CTGRY_CD = #{ctgryCd}
 			, SIZE_CD = #{sizeCd}
 			, STBSM_DT = #{stbsmDt}
 			, TEL_NO = #{telNo}

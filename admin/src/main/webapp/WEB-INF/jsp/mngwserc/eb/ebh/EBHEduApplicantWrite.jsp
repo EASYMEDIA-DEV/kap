@@ -29,7 +29,7 @@
             <br />
             <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm"></em>과정정보</h7>
             <hr />
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">과정 분류<span class="star"> *</span></label>
                     <div class="col-sm-9" style="padding-top: 7px">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">과정명<span class="star"> *</span></label>
                     <div class="col-sm-9" style="padding-top: 7px">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">학습 방식<span class="star"> *</span></label>
                     <div class="col-sm-4" style="padding-top: 7px">
@@ -62,19 +62,19 @@
             <br />
             <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm"></em>회차 정보</h7>
             <hr />
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">회차<span class="star"> *</span></label>
                     <div class="col-sm-4" style="padding-top: 7px">
                         ${rtnDto.episdOrd}회차
                     </div>
-                    <label class="col-sm-1 control-label">업종<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">업종</label>
                     <div class="col-sm-4" style="padding-top: 7px">
-                        ${rtnDto.cbsnNm}
+                        ${not empty rtnDto.cbsnNm ? rtnDto.cbsnNm : '-'}
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">접수기간<span class="star"> *</span></label>
                     <div class="col-sm-4" style="padding-top: 7px">
@@ -90,7 +90,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">강사<span class="star"> *</span></label>
                     <div class="col-sm-9" style="padding-top: 7px">
@@ -100,7 +100,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">정원<span class="star"> *</span></label>
                     <div class="col-sm-4" style="padding-top: 7px">
@@ -112,7 +112,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">문의담당자<span class="star"> *</span></label>
                     <div class="col-sm-9" style="padding-top: 7px">
@@ -120,7 +120,7 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">교육장소<span class="star"> *</span></label>
                     <div class="col-sm-9" style="padding-top: 7px">
@@ -133,7 +133,7 @@
             <br />
             <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm"></em>신청자 정보</h7>
             <hr />
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청자(아이디)<span class="star"> *</span></label>
                     <div class="col-sm-4" style="padding-top: 7px">
@@ -141,11 +141,12 @@
                     </div>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" value="${rtnDto.email}" id="email" name="email" title="이메일" maxlength="50" />
+<%--                        <input type="text" class="form-control input-sm" value="${rtnDto.email}" id="email" name="email" title="이메일" maxlength="50" />--%>
+                        ${rtnDto.email}
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
                     <div class="col-sm-4">
@@ -185,15 +186,15 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                     <div class="col-sm-4" style="padding-top: 7px">
                         ${ rtnDto.hpNo }
                     </div>
-                    <label class="col-sm-1 control-label">일반 전화번호<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" value="${rtnDto.telNo}" id="telNo" name="telNo" title="일반 전화번호" maxlength="50" />
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.telNo}" id="telNo" name="telNo" title="일반 전화번호" maxlength="50" />
                     </div>
                 </div>
             </fieldset>
@@ -202,20 +203,36 @@
             <br />
             <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm"></em>부품사 정보</h7>
             <hr />
-            <fieldset class="mb-lg">
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
+                    <div class="col-sm-5" style="padding-top: 7px">
+                        ${ kl:bsnmNoConvert(rtnDto.ptcptBsnmNo) }
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">부품사명<span class="star"> *</span></label>
-                    <div class="col-sm-9" style="padding-top: 7px">
+                    <div class="col-sm-5" style="padding-top: 7px">
                         ${ rtnDto.cmpnNm }
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">대표자명<span class="star"> *</span></label>
+                    <div class="col-sm-4" style="padding-top: 7px">
+                        <input type="text" class="form-control input-sm" value="${ rtnDto.rprsntNm }" id="rprsntNm" name="rprsntNm" title="대표자명" maxlength="50" placeholder="대표자명 입력" style="width: 200px;" />
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">구분<span class="star"> *</span></label>
                     <div class="col-sm-4">
                         <div class="row">
-                            <div class="col-sm-5 pr0">
+                            <div class="col-sm-3 pr0">
                                 <select class="form-control input-sm" data-name="partsCtgryCd" name="partsCtgryCd" id="partsCtgryCd" title="구분">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
@@ -230,7 +247,7 @@
                     <label class="col-sm-1 control-label">규모<span class="star"> *</span></label>
                     <div class="col-sm-4">
                         <div class="row">
-                            <div class="col-sm-5 pr0">
+                            <div class="col-sm-3 pr0">
                                 <select class="form-control input-sm" data-name="sizeCd" id="sizeCd" name="sizeCd" title="규모">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
@@ -244,14 +261,14 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">대표자명<span class="star"> *</span></label>
-                    <div class="col-sm-4" style="padding-top: 7px">
-                        ${ rtnDto.rprsntNm }
+                    <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control input-sm" value="${rtnDto.cmpnTelNo}" id="cmpnTelNo" name="cmpnTelNo" title="회사 전화번호" maxlength="50" placeholder="회사 전화번호 입력" style="width: 120px;" />
                     </div>
                     <label class="col-sm-1 control-label">설립일자<span class="star"> *</span></label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="input-group">
                             <input type="text" class="form-control input-sm datetimepicker_input" style="width:100px;" id="stbsmDt" name="stbsmDt" data-name="stbsmDt" value="${not empty rtnDto.stbsmDt ? kl:convertDate(rtnDto.stbsmDt, 'yyyyMMdd', 'yyyy-MM-dd', '') : today}" title="설립일자" readonly onclick="cmmCtrl.initCalendar(this);"/>
                             <span class="input-group-btn" style="z-index:0; width: auto;">
@@ -263,41 +280,40 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" value="${rtnDto.cmpnTelNo}" id="cmpnTelNo" name="cmpnTelNo" title="회사 전화번호" maxlength="50" />
-                    </div>
-                    <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
-                    <div class="col-sm-4" style="padding-top: 7px">
-                        ${ kl:bsnmNoConvert(rtnDto.ptcptBsnmNo) }
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset class="mb-lg">
+
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                     <div class="col-sm-9">
-                        <div style="display: flex; gap: 10px;">
-                            <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnDto.zipcode}" readonly placeholder="우편번호" style="width: 95px;" title="우편번호">
-                            <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색"><br>
-
+                        <div>
+                            <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색">
                         </div>
                         <br>
-                        <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnDto.bscAddr}" readonly placeholder="기본주소" style="width: 295px;" title="기본주소" style="width: 400px;">
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnDto.zipcode}" readonly placeholder="우편번호" style="width: 95px;" title="우편번호">
+                            <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${rtnDto.bscAddr}" readonly placeholder="기본주소" style="width: 295px;" title="기본주소" style="width: 400px;">
+                        </div>
                         <br>
-                        <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnDto.dtlAddr}" placeholder="상세주소" maxlength="50" title="상세주소" style="width: 400px;">
+                        <input type="text" class="form-control input-sm" id="dtlAddr" name="dtlAddr" value="${rtnDto.dtlAddr}" placeholder="상세주소 입력" maxlength="50" title="상세주소" style="width: 400px;">
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
-                <div class="form-group text-sm">
+            <fieldset>
+                <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">매출액(연도)</label>
                     <div class="col-sm-4">
-                        <div class="row">
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.slsPmt}" id="slsPmt" name="slsPmt" title="매출액" maxlength="50" placeholder="매출액 입력" oninput="this.value=this.value.replace(/[^0-9]/g, '')" style="width: 150px;" />
+                        억원
+                        <select class="form-control input-sm notRequired" data-name="slsYear" name="slsYear" title="연도">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.slsYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
+                            </c:forEach>
+                        </select>
+                        년
+                        <%--<div class="row">
                             <div class="col-sm-5 pr0">
-                                <input type="text" class="form-control input-sm notRequired" value="${rtnDto.slsPmt}" id="slsPmt" name="slsPmt" title="매출액" maxlength="50" />
+                                <input type="text" class="form-control input-sm notRequired" value="${rtnDto.slsPmt}" id="slsPmt" name="slsPmt" title="매출액" maxlength="50" placeholder="매출액 입력" style="width: 150px;" />
                             </div>
                             <div class="col-sm-1 pr0" style="padding-top: 7px">억원</div>
                             <div class="col-sm-5 pr0">
@@ -309,18 +325,24 @@
                                 </select>
                             </div>
                             <div class="col-sm-1 pr0" style="padding-top: 7px">년</div>
-                        </div>
+                        </div>--%>
                     </div>
                     <label class="col-sm-1 control-label">직원수</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.mpleCnt}" id="mpleCnt" name="mpleCnt" title="직원수" maxlength="50" />
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.mpleCnt}" id="mpleCnt" name="mpleCnt" title="직원수" placeholder="직원스 입력" maxlength="50" />
+                        명
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="mb-lg">
-                <div class="form-group text-sm">
+            <fieldset>
+                <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">주생산품</label>
-                    <div class="col-sm-3">
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.mjrPrdct1}" id="mjrPrdct1" name="mjrPrdct1" title="주생산품1" maxlength="50" placeholder="주생산품(1) 입력" />
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.mjrPrdct2}" id="mjrPrdct2" name="mjrPrdct2" title="주생산품2" maxlength="50" placeholder="주생산품(2) 입력" />
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.mjrPrdct3}" id="mjrPrdct3" name="mjrPrdct3" title="주생산품3" maxlength="50" placeholder="주생산품(2) 입력" />
+                    </div>
+                    <%--<div class="col-sm-3">
                         <input type="text" class="form-control input-sm notRequired" value="${rtnDto.mjrPrdct1}" id="mjrPrdct1" name="mjrPrdct1" title="주생산품1" maxlength="50" />
                     </div>
                     <div class="col-sm-3">
@@ -328,90 +350,69 @@
                     </div>
                     <div class="col-sm-3">
                         <input type="text" class="form-control input-sm notRequired" value="${rtnDto.mjrPrdct3}" id="mjrPrdct3" name="mjrPrdct3" title="주생산품3" maxlength="50" />
-                    </div>
+                    </div>--%>
                 </div>
             </fieldset>
             <fieldset class="mb-lg starInfo" <c:if test="${ rtnDto.partsCtgryCd eq 'COMPANY01002'}">style="display: none"</c:if>>
-                <div class="form-group text-sm">
+                <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">품질5스타</label>
-                    <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm notRequired" data-name="qlty5StarCd" name="qlty5StarCd" title="품질5스타 코드">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                        <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY03')}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnData.qlty5StarCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm notRequired" data-name="qlty5StarYear" name="qlty5StarYear" title="납입5스타 연도">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnData.qlty5StarYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-1 pr0" style="padding-top: 7px">년</div>
-                        </div>
+                    <div class="col-sm-5">
+                        <select class="form-control input-sm notRequired" data-name="qlty5StarCd" name="qlty5StarCd" title="품질5스타 코드">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY03')}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.qlty5StarCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <select class="form-control input-sm notRequired" data-name="qlty5StarYear" name="qlty5StarYear" title="품질5스타 연도" style="width: 100px;">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnData.qlty5StarYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                 </div>
             </fieldset>
             <fieldset class="mb-lg starInfo" <c:if test="${ rtnDto.partsCtgryCd eq 'COMPANY01002'}">style="display: none"</c:if>>
-                <div class="form-group text-sm">
+                <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">납입5스타</label>
-                    <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm notRequired" data-name="pay5StarCd" name="pay5StarCd" title="납입5스타 코드">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                        <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY03')}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnData.pay5StarCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm notRequired" data-name="pay5StarYear" name="pay5StarYear" title="납입5스타 연도">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnData.pay5StarYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-1 pr0" style="padding-top: 7px">년</div>
-                        </div>
+                    <div class="col-sm-5">
+                        <select class="form-control input-sm notRequired" data-name="pay5StarCd" name="pay5StarCd" title="납입5스타 코드">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY03')}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.pay5StarCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <select class="form-control input-sm notRequired" data-name="pay5StarYear" name="pay5StarYear" title="납입5스타 연도" style="width: 100px;">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnData.pay5StarYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                 </div>
             </fieldset>
             <fieldset class="mb-lg starInfo" <c:if test="${ rtnDto.partsCtgryCd eq 'COMPANY01002'}">style="display: none"</c:if>>
-                <div class="form-group text-sm">
+                <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">기술5스타</label>
-                    <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm notRequired" data-name="tchlg5StarCd" name="tchlg5StarCd" title="기술5스타 코드">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                        <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY03')}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnData.tchlg5StarCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm notRequired" data-name="tchlg5StarYear" name="tchlg5StarYear" title="기술5스타 연도">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnData.tchlg5StarYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-1 pr0" style="padding-top: 7px">년</div>
-                        </div>
+                    <div class="col-sm-5">
+                        <select class="form-control input-sm notRequired" data-name="tchlg5StarCd" name="tchlg5StarCd" title="기술5스타 코드">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY03')}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.tchlg5StarCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <select class="form-control input-sm notRequired" data-name="tchlg5StarYear" name="tchlg5StarYear" title="기술5스타 연도" style="width: 100px;">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnData.tchlg5StarYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                 </div>
             </fieldset>
@@ -450,7 +451,7 @@
             <br />
             <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm"></em>GPC 아이디</h7>
             <hr />
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">GPC 아이디<span class="star"> *</span></label>
                     <div class="col-sm-9" style="padding-top: 7px">
@@ -463,7 +464,7 @@
             <br />
             <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm"></em>선발상태</h7>
             <hr />
-            <fieldset class="mb-lg">
+            <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">선발상태<span class="star"> *</span></label>
                     <div class="col-sm-2">
@@ -538,7 +539,7 @@
                     <tbody>
                         <tr>
                             <th>최종 수정자</th>
-                            <td>${not empty rtnDto.modName ? rtnDto.modName : '-'}</td>
+                            <td>${not empty rtnDto.modName ? rtnDto.modName += '(' += rtnDto.modId += ')' : '-'}</td>
                             <th>최종 수정일시</th>
                             <td>${not empty rtnDto.modDtm ? kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') : '-'}</td>
                         </tr>

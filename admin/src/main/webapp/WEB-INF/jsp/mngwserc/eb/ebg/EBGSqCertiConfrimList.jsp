@@ -146,9 +146,9 @@
 								<th class="text-center" rowspan="2">자격증상태</th>
 								<th class="text-center" rowspan="2">SQ평가원</br>구분</th>
 								<th class="text-center" rowspan="2">부품사명</th>
+								<th class="text-center" rowspan="2">사업자등록번호</th>
 								<th class="text-center" rowspan="2">구분</th>
 								<th class="text-center" rowspan="2">규모</th>
-								<th class="text-center" rowspan="2">사업자등록번호</th>
 								<th class="text-center" colspan="3">신청자정보</th>
 								<th class="text-center" rowspan="2">취득일시</th>
 								<th class="text-center" rowspan="2">만료 예정일</th>

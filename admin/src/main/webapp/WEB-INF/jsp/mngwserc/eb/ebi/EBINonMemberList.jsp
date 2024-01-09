@@ -154,8 +154,8 @@
 									<select class="form-control input-sm" data-name="f">
 										<option value="">전체</option>
 										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>과정명</option>
-										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>최초등록자</option>
-										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>최종수정자</option>
+										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>최초 등록자</option>
+										<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>최종 수정자</option>
 									</select>
 								</div>
 								<div class="col-sm-9 pr0">

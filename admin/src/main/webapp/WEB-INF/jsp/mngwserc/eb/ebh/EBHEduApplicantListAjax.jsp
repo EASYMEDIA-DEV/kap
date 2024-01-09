@@ -25,16 +25,16 @@
                 <td class="text-center">${ list.episdOrd }회차</td>
                 <td class="text-center">${ list.cbsnNm }</td>
                 <td class="text-center">${ list.cmpnNm }</td>
+                <td class="text-center">${ kl:bsnmNoConvert(list.ptcptBsnmNo) }</td>
                 <td class="text-center">${ list.cmpnCateNm }</td>
                 <td class="text-center">${ list.sizeNm }</td>
-                <td class="text-center">${ kl:bsnmNoConvert(list.ptcptBsnmNo) }</td>
                 <td class="text-center">${ list.addr }</td>
-                <td class="text-center">${ list.name }<br/>(${ list.id }}</td>
+                <td class="text-center">${ kl:nameMasking(list.name) }<br/>(${ kl:idMasking(list.id) }}</td>
                 <td class="text-center">${ list.gpcId }</td>
                 <%--<td class="text-center">${ kl:phoneMasking(list.hpNo) }</td>--%>
-                <td class="text-center">${ list.hpNo }</td>
+                <td class="text-center">${ kl:phoneMasking(list.hpNo) }</td>
                 <%--<td class="text-center">${ kl:emailMasking(list.email) }</td>--%>
-                <td class="text-center">${ list.email }</td>
+                <td class="text-center">${ kl:emailMasking(list.email) }</td>
                 <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>
                 <td class="text-center">${ empty list.modName ? '-' : list.modName += '<br/>(' += list.modId += ')' }</td>
                 <td class="text-center">${ empty list.modDtm ? '-' : kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>

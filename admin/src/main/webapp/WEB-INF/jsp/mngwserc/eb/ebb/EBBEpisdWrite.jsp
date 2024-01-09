@@ -303,13 +303,13 @@
                                                         ${isttrList.size() - status.index}
                                                     </td>
                                                     <td class="text-center">
-                                                            ${list.name} - 이름
+                                                            ${list.name}
                                                     </td>
                                                     <td class="text-center">
-                                                            ${list.ffltnNm} - 소속
+                                                            ${list.ffltnNm}
                                                     </td>
                                                     <td class="text-center">
-                                                            ${list.spclCntn} - 약력
+                                                            ${list.spclCntn}
                                                     </td>
                                                     <td class="text-center">
                                                         <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>

@@ -230,7 +230,11 @@ define(["ezCtrl"], function(ezCtrl) {
             btnStts : {
                 event : {
                     click : function() {
-                        if(isChecked("선발할 게시물을 선택해주세요.")) {
+                        // 선발/미선발 메시지 분류
+                        var sttsVal = $(this).data("sttsVal");
+                        var alrMsg = sttsVal == "Y" ? "선발할 게시물을 선택해주세요." : "미선발할 게시물을 선택해주세요.";
+
+                        if(isChecked(alrMsg)) {
                             // 체크된 체크박스의 data-stts-cd 값들을 배열로 추출
                             var checkedValues = $("input:checkbox[name='delValueList']:checked").map(function() {
                                 return $(this).data('stts-cd');
@@ -258,8 +262,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                 return false;
                             }
 
-                            // 선발/미선발 버튼 분류
-                            var sttsVal = $(this).data("sttsVal");
+                            // 선발/미선발 메시지 분류
                             var conMsg = sttsVal == "Y" ? "선택한 회원을 선발하시겠습니까?" : "선택한 회원을 미선발하시겠습니까?";
 
                             if(confirm(conMsg)) {

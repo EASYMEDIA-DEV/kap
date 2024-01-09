@@ -49,7 +49,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">대표번호<span class="star"> *</span></label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control input-sm" id="rprsntTelNo" name="rprsntTelNo" value="${rtnDto.rprsntTelNo}" title="대표번호" maxlength="50" placeholder="대표번호 입력" />
+                        <input type="text" class="form-control input-sm" id="rprsntTelNo" name="rprsntTelNo" value="${rtnDto.rprsntTelNo}" title="대표번호" maxlength="11" placeholder="대표번호 입력" oninput="this.value=this.value.replace(/[^0-9-]/g, '')" />
                     </div>
                 </div>
             </fieldset>
@@ -86,14 +86,12 @@
                                 <th>최초 등록일시</th>
                                 <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                             </tr>
-                            <c:if test="${ not empty rtnDto.modDtm }">
                             <tr>
                                 <th>최종 수정자</th>
                                 <td>${not empty rtnDto.modName ? rtnDto.modName += '(' += rtnDto.modId += ')' : '-'}</td>
                                 <th>최종 수정일시</th>
                                 <td>${not empty rtnDto.modDtm ? kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') : '-'}</td>
                             </tr>
-                            </c:if>
                         </tbody>
                     </table>
                 </div>

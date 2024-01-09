@@ -128,9 +128,9 @@
 								<th class="text-center" rowspan="2">년도</th>
 								<th class="text-center" rowspan="2">회차</th>
 								<th class="text-center" rowspan="2">부품사명</th>
+								<th class="text-center" rowspan="2">사업자등록번호</th>
 								<th class="text-center" rowspan="2">구분</th>
 								<th class="text-center" rowspan="2">규모</th>
-								<th class="text-center" rowspan="2">사업자등록번호</th>
 								<th class="text-center" colspan="4">신청자정보</th>
 								<th class="text-center" rowspan="2">신청일시</th>
 								<th class="text-center" rowspan="2">최종 수정자</th>

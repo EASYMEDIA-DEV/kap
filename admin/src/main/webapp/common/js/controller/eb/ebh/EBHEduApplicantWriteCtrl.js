@@ -85,9 +85,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $(".starInfo").css('display', 'block');
                             $(".sqInfo").css('display', 'none');
                         }
-                        else {
+                        else if(selectPartsCtgry == "COMPANY01002") {
                             $(".starInfo").css('display', 'none');
                             $(".sqInfo").css('display', 'block');
+                        }
+                        else {
+                            $(".starInfo").css('display', 'none');
+                            $(".sqInfo").css('display', 'none');
                         }
                     }
                 }

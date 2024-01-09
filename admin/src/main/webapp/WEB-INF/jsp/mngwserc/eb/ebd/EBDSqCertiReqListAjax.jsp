@@ -18,9 +18,9 @@
                 <td class="text-center" >${ list.episdYear }</td>
                 <td class="text-center" >${ list.episdOrd }회차</td>
                 <td class="text-center" >${ list.cmpnNm }</td>
+                <td class="text-center" >${ list.bsnmNo }</td>
                 <td class="text-center" >${ list.ctgryNm }</td>
                 <td class="text-center" >${ list.sizeNm }</td>
-                <td class="text-center" >${ list.bsnmNo }</td>
                 <td class="text-center" >${ list.name }</br>(${kl:idMasking(list.id)})</td>
                 <td class="text-center" >${ list.gpcId }</td>
                 <td class="text-center" >${ kl:phoneMasking(list.hpNo) }</td>

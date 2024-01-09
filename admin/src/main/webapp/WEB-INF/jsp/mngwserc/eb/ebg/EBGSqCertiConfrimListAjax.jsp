@@ -16,9 +16,9 @@
                 </td>
                 <td class="text-center" >${ list.examCdNm }</td>
                 <td class="text-center" >${ list.cmpnNm }</td>
+                <td class="text-center" >${ list.bsnmNo }</td>
                 <td class="text-center" >${ list.ctgryNm }</td>
                 <td class="text-center" >${ list.sizeNm }</td>
-                <td class="text-center" >${ list.bsnmNo }</td>
                 <td class="text-center srchListView" >
                     <a href="javascript:" class="listView"  data-details-key="${list.examAppctnSeq}">
                         ${ list.name }</br>(${kl:idMasking(list.id)})
