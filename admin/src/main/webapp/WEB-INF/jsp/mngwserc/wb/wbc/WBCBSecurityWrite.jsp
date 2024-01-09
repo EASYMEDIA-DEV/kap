@@ -461,6 +461,6 @@
                 </div>
             </div>
         </form>
-        <jsp:include page="/WEB-INF/jsp/mngwserc/wb/WBFBPartUserModal.jsp"/>
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
     </div>
 </div>

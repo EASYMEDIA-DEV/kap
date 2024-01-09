@@ -430,7 +430,7 @@
              ,A.TEL_NO
              ,B.CMPN_NM
         FROM CO_MEM_MST A
-        JOIN CP_CMPN_MST B ON A.WORK_BSNM_NO = B.BSNM_NO
+        LEFT JOIN CP_CMPN_MST B ON A.WORK_BSNM_NO = B.BSNM_NO
         WHERE MEM_SEQ = #{memSeq}
     </select>
 

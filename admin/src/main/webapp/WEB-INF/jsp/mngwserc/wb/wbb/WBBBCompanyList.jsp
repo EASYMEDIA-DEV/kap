@@ -91,6 +91,13 @@
                     <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
                 </h6>
                 <div class="pull-right">
+                    <select class="form-control input-sm listRowSizeContainer" >
+                        <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                            <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                        </jsp:include>
+                    </select>
+                </div>
+                <div class="pull-right">
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
                 </div>
             </div>

@@ -138,26 +138,25 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
+        },
+        classname : {
             // 회원검색 모달
             btnPartUserModal: {
                 event: {
                     click: function () {
                         $("#srchDivide").val("Y");
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
-                            cmmCtrl.frmAjax(function (respObj) {
-                                $formObj.find('#memSeq').val(data.memSeq);
-                                cmmCtrl.frmAjax(function(respObj) {
-                                    /* return data input */
-                                    setInputValue(respObj);
-                                }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
-                            }, "/mngwserc/wb/partUserChk", $formObj, "post", "json");
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                /* return data input */
+                                setInputValue(respObj);
+                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }
                 }
             },
             classType : {
             },
-
         },
         immediately : function() {
             //리스트 조회
