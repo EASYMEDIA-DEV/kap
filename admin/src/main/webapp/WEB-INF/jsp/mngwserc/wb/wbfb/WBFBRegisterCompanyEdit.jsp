@@ -479,62 +479,66 @@
                         </div>
                     </fieldset>
                     <fieldset>
-                        <label class="col-sm-1 control-label">과제명<span class="star"> *</span></label>
-                        <div class="col-sm-5">
-                            <div class="col-sm-6" style="margin-left: -15px">
-                                <select class="form-control input-sm" id="optAsigt" name="taskCd" title="과제명">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${rtnBasicData.roundMstDTO.asigtList}" varStatus="status">
-                                        <option value="${cdList.bsnOptnSeq}" <c:if test="${registerDtl.taskCd eq cdList.bsnOptnSeq}" >selected</c:if>>
-                                                ${cdList.optnNm}
-                                        </option>
-                                    </c:forEach>
-                                </select>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">과제명<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <div class="col-sm-6" style="margin-left: -15px">
+                                    <select class="form-control input-sm" id="optAsigt" name="taskCd" title="과제명">
+                                        <option value="">선택</option>
+                                        <c:forEach var="cdList" items="${rtnBasicData.roundMstDTO.asigtList}" varStatus="status">
+                                            <option value="${cdList.bsnOptnSeq}" <c:if test="${registerDtl.taskCd eq cdList.bsnOptnSeq}" >selected</c:if>>
+                                                    ${cdList.optnNm}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <label class="col-sm-1 control-label">사업 유형<span class="star"> *</span></label>
-                        <div class="col-sm-5">
-                            <div class="col-sm-6" style="margin-left: -15px">
-                                <select class="form-control input-sm " id="optBsin" name="bsnTypeCd" title="사업 유형">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${rtnBasicData.roundMstDTO.bsinList}" varStatus="status">
-                                        <option value="${cdList.bsnOptnSeq}" <c:if test="${registerDtl.bsnTypeCd eq cdList.bsnOptnSeq}" >selected</c:if>>
-                                                ${cdList.optnNm}
-                                        </option>
-                                    </c:forEach>
-                                </select>
+                            <label class="col-sm-1 control-label">사업 유형<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <div class="col-sm-6" style="margin-left: -15px">
+                                    <select class="form-control input-sm " id="optBsin" name="bsnTypeCd" title="사업 유형">
+                                        <option value="">선택</option>
+                                        <c:forEach var="cdList" items="${rtnBasicData.roundMstDTO.bsinList}" varStatus="status">
+                                            <option value="${cdList.bsnOptnSeq}" <c:if test="${registerDtl.bsnTypeCd eq cdList.bsnOptnSeq}" >selected</c:if>>
+                                                    ${cdList.optnNm}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
                     <fieldset>
-                        <label class="col-sm-1 control-label">스마트화 현재 수준<span class="star"> *</span></label>
-                        <div class="col-sm-5">
-                            <div class="col-sm-6" style="margin-left: -15px">
-                                <select class="form-control input-sm" name="smtfnPrsntCd" title="스마트화 현재 수준">
-                                    <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
-                                        <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
-                                            <option value="${cdList.cd}" <c:if test="${registerDtl.smtfnPrsntCd eq cdList.cd}" >selected</c:if>>
-                                                    ${cdList.cdNm}
-                                            </option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">스마트화 현재 수준<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <div class="col-sm-6" style="margin-left: -15px">
+                                    <select class="form-control input-sm" name="smtfnPrsntCd" title="스마트화 현재 수준">
+                                        <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
+                                            <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
+                                                <option value="${cdList.cd}" <c:if test="${registerDtl.smtfnPrsntCd eq cdList.cd}" >selected</c:if>>
+                                                        ${cdList.cdNm}
+                                                </option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <label class="col-sm-1 control-label">스마트화 목표 수준<span class="star"> *</span></label>
-                        <div class="col-sm-5">
-                            <div class="col-sm-6" style="margin-left: -15px">
-                                <select class="form-control input-sm " name="smtfnTrgtCd">
-                                    <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
-                                        <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
-                                            <option value="${cdList.cd}" <c:if test="${registerDtl.smtfnTrgtCd eq cdList.cd}" >selected</c:if>>
-                                                    ${cdList.cdNm}
-                                            </option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
+                            <label class="col-sm-1 control-label">스마트화 목표 수준<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <div class="col-sm-6" style="margin-left: -15px">
+                                    <select class="form-control input-sm " name="smtfnTrgtCd">
+                                        <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
+                                            <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
+                                                <option value="${cdList.cd}" <c:if test="${registerDtl.smtfnTrgtCd eq cdList.cd}" >selected</c:if>>
+                                                        ${cdList.cdNm}
+                                                </option>
+                                            </c:if>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
@@ -543,15 +547,17 @@
 
                     <h6 class="mt0"><em class="ion-play mr-sm"></em>선급금 해당 여부</h6>
                     <fieldset>
-                        <label class="col-sm-1 control-label">선급금 해당 여부<span class="star"> *</span></label>
-                        <div class="col-sm-5">
-                            <div class="col-sm-3">
-                                <input type="radio" id="applicable" class="pmndvPmtYn" name="pmndvPmtYn" value="Y" <c:if test="${registerDtl.pmndvPmtYn eq 'Y'}" >checked</c:if>/>
-                                <label for="applicable">해당</label>
-                            </div>
-                            <div class="col-sm-3">
-                                <input type="radio" id="notApplicable" class="pmndvPmtYn" name="pmndvPmtYn" value="N" <c:if test="${registerDtl.pmndvPmtYn eq 'N' or empty registerDtl.pmndvPmtYn }" >checked</c:if>/>
-                                <label for="notApplicable">미해당</label>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">선급금 해당 여부<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <div class="col-sm-3">
+                                    <input type="radio" id="applicable" class="pmndvPmtYn" name="pmndvPmtYn" value="Y" <c:if test="${registerDtl.pmndvPmtYn eq 'Y'}" >checked</c:if>/>
+                                    <label for="applicable">해당</label>
+                                </div>
+                                <div class="col-sm-3">
+                                    <input type="radio" id="notApplicable" class="pmndvPmtYn" name="pmndvPmtYn" value="N" <c:if test="${registerDtl.pmndvPmtYn eq 'N' or empty registerDtl.pmndvPmtYn }" >checked</c:if>/>
+                                    <label for="notApplicable">미해당</label>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
