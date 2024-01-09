@@ -31,6 +31,7 @@
              , DTL_ADDR
              , NTFY_SMS_RCV_YN
              , NTFY_EMAIL_RCV_YN
+             , WEB_PATH
              , CMSSR_TYPE_CD
              , CMSSR_TYPE_CD_NM
              , CMSSR_CBSN_CD
@@ -75,6 +76,7 @@
                       , MEM.ZIPCODE
                       , MEM.BSC_ADDR
                       , MEM.DTL_ADDR
+                      , (SELECT WEB_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = MEM.CMSSR_PHOTO_FILE_SEQ AND USE_YN = 'Y') AS WEB_PATH
                       , MEM.CMSSR_TYPE_CD
                       , CASE WHEN MEM.CMSSR_TYPE_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_TYPE_CD )
                               ELSE '' END as CMSSR_TYPE_CD_NM
@@ -229,6 +231,7 @@
                    , mem.zipcode
                    , mem.bsc_addr
                    , mem.dtl_addr
+                    , (SELECT WEB_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = MEM.CMSSR_PHOTO_FILE_SEQ AND USE_YN = 'Y') AS WEB_PATH
                    , mem.cmssr_type_cd
                    , case when mem.cmssr_type_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_type_cd )
                            else '' end as cmssr_type_cd_nm
@@ -313,6 +316,9 @@
                     ma.cmssr_work_cd = #{cmssrWorkList}
                 </foreach>
                 )
+            </if>
+            <if test="cmssrCbsnCd != null and cmssrCbsnCd != ''.toString()">
+                and ma.cmssr_cbsn_cd = #{cmssrCbsnCd}
             </if>
             <if test="srchLayer == 'Y'.toString() "> /* 회원검색 레이어일 경우 특정 부품사의 회원들만 조회되도록 */
                 <if test="workBsnmNo != null and workBsnmNo != ''.toString() ">
@@ -466,6 +472,8 @@
              , mem.mem_cd
              , mem.cmssr_type_cd
              , mem.cmssr_cbsn_cd
+             , case when mem.cmssr_cbsn_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.cmssr_cbsn_cd )
+                    else '' end as cmssr_cbsn_cd_nm
              , mem.cmssr_work_cd
              , mem.cmssr_mplmn_dt
              , mem.cmssr_rsgnt_dt
