@@ -1034,6 +1034,24 @@ var cmmCtrl = (function(){
 		});
 	}
 
+	var fn_email_validation_chk = function (email) {
+		let splitEmail = email.toString().split("@");
+		var atRegex = /[^@]+@[^@]+/; //@ 체크
+		var atDupRegex = /.*@.*@.*/; //@ 2개 이상 체크
+		var spaceRegex = /\s/; //공백 체크
+		var commaRegex = /\./;
+		let multiRegex = /[&=＇,+<>()]+|(\.{2,})/; //& = , ' + , 포함 경우
+		let lastRegex = /[0-9!@#$%^&*()_+{}\[\]:;<>,.?\\|`~-]+$/;
+		return atRegex.test(email) &&
+			!atDupRegex.test(email) &&
+			commaRegex.test(splitEmail[1]) &&
+			!spaceRegex.test(email) &&
+			!multiRegex.test(email) &&
+			!lastRegex.test(email) &&
+			splitEmail[0].length < 64 &&
+			splitEmail[1].length < 255
+	}
+
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1060,5 +1078,9 @@ var cmmCtrl = (function(){
 
 		//json형식의 데이터를 문자열로 변환 후 자바 컨트롤러에서 @RequestBody BaseDTO baseDto 로 받는다
 		jsonAjax : fn_json_ajax_data,
+
+		// 이메일_체크
+		getEmailChk : fn_email_validation_chk,
+
 	}
 }());

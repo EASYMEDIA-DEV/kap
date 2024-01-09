@@ -159,6 +159,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         }
 
                         $("#email").val($("#email-first").val()+"@"+$("#emailAddr").val());
+
+                        if(cmmCtrl.getEmailChk($("#email").val())) {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_023"));
+                            return false;
+                        }
+
                         $("#email-auth").val($("#email-first").val()+"@"+$("#emailAddr").val());
 
 

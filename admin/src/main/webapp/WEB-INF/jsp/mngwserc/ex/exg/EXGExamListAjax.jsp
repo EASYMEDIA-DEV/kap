@@ -24,9 +24,9 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td class="text-center" >${ kl:emptyHypen(list.regName)}(${ kl:emptyHypen(list.regId)}</td>
+                <td class="text-center">${kl:emptyHypen(list.regName)}${list.regId == null ? '' : '('+=list.regId+=')'} </td>
                 <td class="text-center" data-reg-dtm="${list.regDtm}">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
-                <td class="text-center" >${ kl:emptyHypen(list.modName) }(${ kl:emptyHypen(list.modId) })</td>
+                <td class="text-center">${kl:emptyHypen(list.modName)}${list.modId == null ? '' : '('+=list.modId+=')'} </td>
                 <td class="text-center" data-list-dtm="${list.modDtm}">${ kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                 <td class="text-center" data-exps-yn="${list.expsYn}">${ list.expsYn eq 'Y' ? '노출' : '미노출' }</td>
             </tr>
