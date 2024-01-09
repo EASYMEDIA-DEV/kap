@@ -205,7 +205,7 @@
                                 <c:when test="${ not empty loginMap}">
                                     <p class="user-tit f-title1"><span>${loginMap.name}</span>님 <br/>안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
                                     <div class="pc btn-wrap">
-                                        <a class="btn-text-icon black-arrow" href="/my-page/member/certification" title="링크 이동"><span>정보수정</span></a>
+                                        <a class="btn-text-icon black-arrow" href="/my-page/member/intrduction/certification" title="링크 이동"><span>정보수정</span></a>
                                         <a class="btn-text-icon black-arrow" href="/my-page/logout" title="링크 이동"><span>로그아웃</span></a>
                                     </div>
                                 </c:when>
