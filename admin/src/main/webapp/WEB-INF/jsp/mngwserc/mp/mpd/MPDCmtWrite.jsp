@@ -191,23 +191,20 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">주요경력<span class="star"> *</span></label>
                         <div class="col-sm-5">
-                            <div class="input-group">
-                                <textarea class="form-control input-sm" style="width:153px; resize: none; border-radius:0.4rem;" rows="1" cols="20" type="text" id="cmssrMjrCarerCntn" title="주요경력" name="cmssrMjrCarerCntn" placeholder="주요경력 입력"></textarea>
-                            </div>
+                            <textarea class="form-control input-sm " id="cmssrMjrCarerCntn" rows="5" name="cmssrMjrCarerCntn" maxlength="500" title="주요경력" placeholder="주요경력 입력" ></textarea>
                         </div>
                     </div>
-
                 </fieldset>
 
                 <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">컨설팅분야</label>
-                        <div class="col-sm-3">
-                            <div class="input-group">
-                                <textarea  class="form-control input-sm notRequired" style="width:153px; resize: none; border-radius:0.4rem ;" type="text" rows="1" cols="20" id="cmssrCnstgFldCntn" title="컨설팅분야" name="cmssrCnstgFldCntn" placeholder="컨설팅분야 입력"></textarea>               </div>
+                        <div class="col-sm-5">
+                            <textarea class="form-control input-sm notRequired" id="cmssrCnstgFldCntn" rows="5" name="cmssrCnstgFldCntn" maxlength="500" title="컨설팅분야" placeholder="컨설팅분야 입력" ></textarea>
                         </div>
                     </div>
                 </fieldset>
+
                 <fieldset class="last-child">
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">주요경력/컨설팅분야 화면노출여부<span class="star"> *</span></label>
