@@ -140,49 +140,37 @@
                         ${ rtnDto.name }(${ rtnDto.id })
                     </div>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="padding-top: 7px">
 <%--                        <input type="text" class="form-control input-sm" value="${rtnDto.email}" id="email" name="email" title="이메일" maxlength="50" />--%>
                         ${rtnDto.email}
                     </div>
                 </div>
             </fieldset>
             <fieldset>
-                <div class="form-group text-sm">
+                <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm" data-name="deptCd" id="deptCd" name="deptCd" title="부서">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                                        <c:if test="${fn:contains(cdList.cd, 'MEM_CD02') and fn:length(cdList.cd) > 8}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnData.deptCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-5 pr0">
-                                <input type="text" class="form-control input-sm" value="${rtnDto.deptDtlNm}" id="deptDtlNm" name="deptDtlNm" title="부서 상세" maxlength="50" />
-                            </div>
-                        </div>
+                        <select class="form-control input-sm" data-name="deptCd" id="deptCd" name="deptCd" title="부서" style="width: 200px;">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                <c:if test="${fn:contains(cdList.cd, 'MEM_CD02') and fn:length(cdList.cd) > 8}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.deptCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <input type="text" class="form-control input-sm" value="${rtnDto.deptDtlNm}" id="deptDtlNm" name="deptDtlNm" title="부서 상세" maxlength="50" style="width: 200px;" />
                     </div>
                     <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-6 pr0">
-                                <select class="form-control input-sm" data-name="pstnCd" id="pstnCd" name="pstnCd" title="직급">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                                        <c:if test="${fn:contains(cdList.cd, 'MEM_CD01') and fn:length(cdList.cd) > 8}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnData.pstnCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-5 pr0" <c:if test="${not rtnDto.pstnNm}">style="display: none"</c:if> id="pstnNmChk">
-                                <input type="text" class="form-control input-sm notRequired" value="${rtnDto.pstnNm}" id="pstnNm" name="pstnNm" title="직급 상세" maxlength="50" />
-                            </div>
-                        </div>
+                        <select class="form-control input-sm" data-name="pstnCd" id="pstnCd" name="pstnCd" title="직급" style="width: 200px;">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                <c:if test="${fn:contains(cdList.cd, 'MEM_CD01') and fn:length(cdList.cd) > 8}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.pstnCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.pstnNm}" id="pstnNm" name="pstnNm" title="직급 상세" maxlength="50" style="width: 200px; display: none;" />
                     </div>
                 </div>
             </fieldset>
@@ -194,7 +182,7 @@
                     </div>
                     <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.telNo}" id="telNo" name="telNo" title="일반 전화번호" maxlength="50" />
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.telNo}" id="telNo" name="telNo" title="일반 전화번호" maxlength="50" placeholder="일반 전화번호 입력" style="width: 200px;" />
                     </div>
                 </div>
             </fieldset>
@@ -222,7 +210,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">대표자명<span class="star"> *</span></label>
-                    <div class="col-sm-4" style="padding-top: 7px">
+                    <div class="col-sm-4">
                         <input type="text" class="form-control input-sm" value="${ rtnDto.rprsntNm }" id="rprsntNm" name="rprsntNm" title="대표자명" maxlength="50" placeholder="대표자명 입력" style="width: 200px;" />
                     </div>
                 </div>
@@ -231,33 +219,25 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">구분<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-3 pr0">
-                                <select class="form-control input-sm" data-name="partsCtgryCd" name="partsCtgryCd" id="partsCtgryCd" title="구분">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                        <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnData.partsCtgryCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
+                        <select class="form-control input-sm" data-name="partsCtgryCd" name="partsCtgryCd" id="partsCtgryCd" title="구분" style="width: 130px;">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.partsCtgryCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
                     </div>
                     <label class="col-sm-1 control-label">규모<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-3 pr0">
-                                <select class="form-control input-sm" data-name="sizeCd" id="sizeCd" name="sizeCd" title="규모">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                        <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY02')}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnData.sizeCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                        </c:if>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
+                        <select class="form-control input-sm" data-name="sizeCd" id="sizeCd" name="sizeCd" title="규모" style="width: 130px;">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY02')}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnData.sizeCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
                     </div>
                 </div>
             </fieldset>
@@ -265,7 +245,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" value="${rtnDto.cmpnTelNo}" id="cmpnTelNo" name="cmpnTelNo" title="회사 전화번호" maxlength="50" placeholder="회사 전화번호 입력" style="width: 120px;" />
+                        <input type="text" class="form-control input-sm" value="${rtnDto.cmpnTelNo}" id="cmpnTelNo" name="cmpnTelNo" title="회사 전화번호" maxlength="50" placeholder="회사 전화번호 입력" style="width: 130px;" />
                     </div>
                     <label class="col-sm-1 control-label">설립일자<span class="star"> *</span></label>
                     <div class="col-sm-3">
@@ -311,25 +291,10 @@
                             </c:forEach>
                         </select>
                         년
-                        <%--<div class="row">
-                            <div class="col-sm-5 pr0">
-                                <input type="text" class="form-control input-sm notRequired" value="${rtnDto.slsPmt}" id="slsPmt" name="slsPmt" title="매출액" maxlength="50" placeholder="매출액 입력" style="width: 150px;" />
-                            </div>
-                            <div class="col-sm-1 pr0" style="padding-top: 7px">억원</div>
-                            <div class="col-sm-5 pr0">
-                                <select class="form-control input-sm notRequired" data-name="slsYear" name="slsYear" title="연도">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.slsYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-1 pr0" style="padding-top: 7px">년</div>
-                        </div>--%>
                     </div>
                     <label class="col-sm-1 control-label">직원수</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.mpleCnt}" id="mpleCnt" name="mpleCnt" title="직원수" placeholder="직원스 입력" maxlength="50" />
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.mpleCnt}" id="mpleCnt" name="mpleCnt" title="직원수" placeholder="직원수 입력" maxlength="50" />
                         명
                     </div>
                 </div>
@@ -366,11 +331,12 @@
                             </c:forEach>
                         </select>
                         <select class="form-control input-sm notRequired" data-name="qlty5StarYear" name="qlty5StarYear" title="품질5스타 연도" style="width: 100px;">
-                            <option value="">선택</option>
+                            <option value="">연도선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                 <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnData.qlty5StarYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
                             </c:forEach>
                         </select>
+                        년
                     </div>
                 </div>
             </fieldset>
@@ -387,11 +353,12 @@
                             </c:forEach>
                         </select>
                         <select class="form-control input-sm notRequired" data-name="pay5StarYear" name="pay5StarYear" title="납입5스타 연도" style="width: 100px;">
-                            <option value="">선택</option>
+                            <option value="">연도선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                 <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnData.pay5StarYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
                             </c:forEach>
                         </select>
+                        년
                     </div>
                 </div>
             </fieldset>
@@ -408,41 +375,32 @@
                             </c:forEach>
                         </select>
                         <select class="form-control input-sm notRequired" data-name="tchlg5StarYear" name="tchlg5StarYear" title="기술5스타 연도" style="width: 100px;">
-                            <option value="">선택</option>
+                            <option value="">연도선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                 <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnData.tchlg5StarYear, 'yyyy-MM-dd', 'yyyy', '-') eq cdList.cd}">selected</c:if>>${cdList.cd}</option>
                             </c:forEach>
                         </select>
+                        년
                     </div>
                 </div>
             </fieldset>
             <fieldset class="mb-lg sqInfo" <c:if test="${ rtnDto.partsCtgryCd eq 'COMPANY01001'}">style="display: none"</c:if>>
-                <div class="form-group text-sm">
+                <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">SQ 정보</label>
-                    <div class="col-sm-9">
-                        <c:forEach var="sqData" varStatus="status" begin="0" end="2">
-                            <div class="row">
-                                <input type="hidden" class="notRequired" name="sqInfoList${ status.count }" value="${rtnDto.sqList[status.index].cbsnSeq}" />
-                                <div class="col-sm-3 pr0">
-                                    <input type="text" class="form-control input-sm notRequired" value="${rtnDto.sqList[status.index].nm}" name="sqInfoList${ status.count }" title="SQ 업종명" maxlength="50" />
-                                </div>
-                                <div class="col-sm-3 pr0">
-                                    <input type="text" class="form-control input-sm notRequired sqScore" value="${rtnDto.sqList[status.index].score}" name="sqInfoList${ status.count }" title="SQ 점수" maxlength="50" />
-                                </div>
-                                <div class="col-sm-3 pr0">
-                                    <select class="form-control input-sm notRequired" data-name="sqInfoList${ status.count }" name="sqInfoList${ status.count }" title="SQ 평가년도">
-                                        <option value="">선택</option>
-                                        <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                            <option value="${cdList.cd}" <c:if test="${rtnDto.sqList[status.index].year eq cdList.cd}">selected</c:if>>${cdList.cd}년</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="col-sm-3 pr0">
-                                    <input type="text" class="form-control input-sm notRequired" value="${rtnDto.sqList[status.index].crtfnCmpnNm}" name="sqInfoList${ status.count }" title="SQ 인증 주관사명" maxlength="50" />
-                                </div>
-                            </div>
-                            <c:if test="${ not status.last }"><br /></c:if>
-                        </c:forEach>
+                    <div class="col-sm-5">
+                    <c:forEach var="sqData" varStatus="status" begin="0" end="2">
+                        <input type="hidden" class="notRequired" name="sqInfoList${ status.count }" value="${rtnDto.sqList[status.index].cbsnSeq}" />
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.sqList[status.index].nm}" name="sqInfoList${ status.count }" title="SQ 업종명" maxlength="50" placeholder="SQ업종" />
+                        <input type="text" class="form-control input-sm notRequired sqScore" value="${rtnDto.sqList[status.index].score}" name="sqInfoList${ status.count }" title="SQ 점수" maxlength="50" placeholder="SQ점수" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                        <select class="form-control input-sm notRequired" data-name="sqInfoList${ status.count }" name="sqInfoList${ status.count }" title="SQ 평가년도">
+                            <option value="">연도선택</option>
+                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                <option value="${cdList.cd}" <c:if test="${rtnDto.sqList[status.index].year eq cdList.cd}">selected</c:if>>${cdList.cd}년</option>
+                            </c:forEach>
+                        </select>
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.sqList[status.index].crtfnCmpnNm}" name="sqInfoList${ status.count }" title="SQ 인증 주관사명" maxlength="50" placeholder="SQ인증주관사" />
+                        <c:if test="${ not status.last }"><br /></c:if>
+                    </c:forEach>
                     </div>
                 </div>
             </fieldset>

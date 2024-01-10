@@ -68,18 +68,20 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset id="qaDrop">
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">첨부파일</label>
-                    <div class="col-sm-10 col-md-11">
-                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="QA 첨부파일">
+            <c:if test="${ not empty rtnQaInfo.fileSeq }">
+                <fieldset id="qaDrop">
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">첨부파일</label>
+                        <div class="col-sm-10 col-md-11">
+                            <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                            <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="QA 첨부파일">
 
+                            </div>
                         </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
+            </c:if>
         </form>
 
         <h6 class="mt-lg"><em class="ion-play mr-sm"></em>문의답변</h6>
@@ -110,25 +112,27 @@
                     </div>
                 </div>
             </fieldset>
-            <fieldset id="rplyDrop">
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">첨부파일</label>
-                    <div class="col-sm-10 col-md-11">
-                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone attachFile notRequired" data-file-field-nm="rplyFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="답변 첨부파일">
-                            <div class="dz-default dz-message">
-                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+            <c:if test="${ not empty rtnQaInfo.rplyFileSeq }">
+                <fieldset id="rplyDrop">
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">첨부파일</label>
+                        <div class="col-sm-10 col-md-11">
+                            <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                            <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                            <div class="dropzone attachFile notRequired" data-file-field-nm="rplyFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="답변 첨부파일">
+                                <div class="dz-default dz-message">
+                                    <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                </div>
                             </div>
+                            <c:if test="${rtnQaInfo.rsumeCd ne 'ACK'}">
+                            <p class="text-bold mt">
+                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
+                            </p>
+                            </c:if>
                         </div>
-                        <c:if test="${rtnQaInfo.rsumeCd ne 'ACK'}">
-                        <p class="text-bold mt">
-                            ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
-                        </p>
-                        </c:if>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
+            </c:if>
             <c:if test="${rtnQaInfo.rsumeCd ne 'ACK'}">
             <hr />
             <div>
@@ -154,9 +158,9 @@
                     <tbody>
                     <tr>
                         <th>최종 수정자</th>
-                        <td>${rtnQaInfo.modName}(${ rtnQaInfo.modId })</td>
+                        <td>${ empty rtnQaInfo.modName ? '-' : rtnQaInfo.modName += '(' += rtnQaInfo.modId += ')' }</td>
                         <th>최종 수정일시</th>
-                        <td>${ kl:convertDate(rtnQaInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                        <td>${ empty rtnQaInfo.modDtm ? '-' : kl:convertDate(rtnQaInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>
                     </tr>
                     </tbody>
                 </table>

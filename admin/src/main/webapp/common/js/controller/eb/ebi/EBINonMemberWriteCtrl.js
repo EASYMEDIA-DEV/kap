@@ -597,7 +597,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		classname : {
 
 			//학습 대상 1개만 선택 가능하도록 처리
-			cntCheck : {
+			/*cntCheck : {
 				event : {
 					click : function() {
 						var thisVal = $(this).val();
@@ -612,7 +612,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						}
 					}
 				}
-			},
+			},*/
 
 			classType : {
 				event : {
@@ -770,6 +770,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				event : {
 					click : function(){
 						cmmCtrl.getLecturerLayerPop(function(data){
+
+							//두번호출 방지
+							if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+								return false;
+							}
+
 							if(data.choiceCnt  == 0){
 								alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));
 							}else{
@@ -1017,10 +1023,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var edctnEndHour = $("#edctnEndHour").val();
 
 						var accsStrtDtm = accsStrtDt+" "+accsStrtHour+":00:00";
-						var accsEndDtm = accsEndDt+" "+accsEndHour+":59:59";
+						// var accsEndDtm = accsEndDt+" "+accsEndHour+":59:59";
+						var accsEndDtm = accsEndDt+" "+accsEndHour+":00:00";
 
 						var edctnStrtDtm = edctnStrtDt+" "+edctnStrtHour+":00:00";
-						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":59:59";
+						// var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":59:59";
+						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":00:00";
 
 						actForm.edctnSeq = $("#edctnSeq").val();//교육순번
 
@@ -1077,7 +1085,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 						}
 
-						var checkedCount = $("input[name='targetCd']:checked").length;
+						/*var checkedCount = $("input[name='targetCd']:checked").length;
 						if(checkedCount < 4) {
 							alert("학습 대상은 기타 항목을 제외한 각 항목 별로 1개씩 선택해주세요");
 							$(".cntCheck").focus();
@@ -1087,7 +1095,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							alert("학습 대상의 각 항목 별로 1개씩만 선택해주세요");
 							$(".cntCheck").focus();
 							return false;
-						}
+						}*/
 
 						actForm.ctgryCd = ctgryCd;//과정분류
 						actForm.nm = nm;//과정명

@@ -185,10 +185,10 @@
 						</select>
 					</div>
 					<div class="pull-right">
+						<button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcel">엑셀다운로드</button>
 						<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnEdDelete">선택삭제</button>
 						<button type="button" class="btn btn-default btn-sm mb-sm" id="btnCopy">복사</button>
 						<button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-						<button type="button" class="btn btn-info btn-sm mb-sm" id="btnExcel">엑셀 다운로드</button>
 					</div>
 				</div>
 				<!--VUE 영역 시작 -->

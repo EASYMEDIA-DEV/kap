@@ -77,7 +77,7 @@
             , RPLY.QA_RPLY_SEQ
             , RPLY.CNTN AS RPLY_CNTN
             , RPLY.FILE_SEQ AS RPLY_FILE_SEQ
-            , (SELECT NAME FROM CO_ADM_MST WHERE ADM_SEQ = A.INIT_CHK_ADM_SEQ) AS MOD_NAME
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = RPLY.REG_ID) AS MOD_NAME
             , RPLY.REG_DTM AS MOD_DTM
             , RPLY.REG_ID AS MOD_ID
         </if>
