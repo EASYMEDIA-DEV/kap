@@ -17,12 +17,12 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
             <input type="hidden" class="notRequired" id="delValueList" name="delValueList" value="${rtnDto.episdSeq}" />
-            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BUSUNESS_TYPE06" />
+            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BNS06" />
 
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">연도<span class="star"> *</span></label>
-                    <div class="col-sm-11">
+                    <div class="col-sm-1">
                         <select class="form-control input-sm" id="year" name="year">
                             <c:forEach begin="${year}" end="${todayYear+3}" var="result" step="1">
                                 <option value="${result}" <c:if test="${rtnDto.year eq result}">selected</c:if><c:if test="${empty rtnDto and todayYear eq result}">selected</c:if>>${result}</option>
@@ -34,7 +34,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">회차<span class="star"> *</span></label>
-                    <div class="col-sm-11">
+                    <div class="col-sm-1">
                         <select class="form-control input-sm" id="episd" name="episd">
                             <c:forEach var="cdList" items="${classTypeList.ROUND_CD}" varStatus="status">
                                 <option value="${cdList.cdNm}" <c:if test="${rtnDto.episd eq cdList.cdNm}">selected</c:if> >${cdList.cdNm}</option>
