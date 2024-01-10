@@ -23,7 +23,7 @@
                                     <option value="${cdList.cd}" <c:if test="${rtnDto.prntCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                 </c:forEach>
                             </select>
-                            <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="과정분류-중분류" data-ctgrycd="${rtnDto.ctgryCd}" >
+                            <select style="width:95px;" class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="과정분류-중분류" data-ctgrycd="${rtnDto.ctgryCd}" >
                                 <option value="">선택</option>
                             </select>
 <%--                            <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="권한" data-ctgrycd="${rtnDto.ctgryCd}">--%>
