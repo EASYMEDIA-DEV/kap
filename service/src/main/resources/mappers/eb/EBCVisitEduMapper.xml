@@ -110,15 +110,57 @@
     -->
 	<select id="selectVisitEduCnt" parameterType="EBCVisitEduDTO" resultType="java.lang.Integer">
 		SELECT /*EBCVisitEduMapper.selectVisitEduCnt*/
-			count(A.vst_seq)
-		FROM ev_edctn_vst_mst A
-		LEFT JOIN co_mem_mst B
+			COUNT(A.vst_seq) -- 방문순번
+		FROM
+		(
+			SELECT vst_seq
+				, mem_seq
+				, appctn_bsnm_no
+				, appctn_fld_cd
+				, hope_dt
+				, ptcpt_cnt
+				, ptcpt_hh
+				, edctn_place
+				, edctn_stts_cd
+				, reg_dtm
+				, mod_id
+				, mod_dtm
+			FROM ev_edctn_vst_mst
+		)A
+		LEFT JOIN
+		(
+			SELECT mem_seq
+				, name
+				, id
+				, hp_no
+				, email
+			FROM co_mem_mst
+		)B
 		ON A.mem_seq = B.mem_seq
-		LEFT JOIN cp_cmpn_mst C
+		LEFT JOIN
+		(
+		SELECT bsnm_no
+			, cmpn_nm
+			, ctgry_cd
+			, size_cd
+		FROM cp_cmpn_mst
+		)C
 		ON A.appctn_bsnm_no = C.bsnm_no
-		LEFT JOIN ev_edctn_vst_rslt_dtl D
+		LEFT JOIN
+		(
+		SELECT vst_rslt_seq
+			, vst_seq
+			, mem_seq
+			, cnfrmd_theme
+			, cmptn_cnt
+			, edctn_strt_dtm
+			, edctn_end_dtm
+			, rslt_end_yn
+		FROM ev_edctn_vst_rslt_dtl
+		)D
 		ON A.vst_seq = D.vst_seq
 		AND A.mem_seq = D.mem_seq
+		<include refid="selectVisitEduListwhereSql" />
 	</select>
 
 	<!--

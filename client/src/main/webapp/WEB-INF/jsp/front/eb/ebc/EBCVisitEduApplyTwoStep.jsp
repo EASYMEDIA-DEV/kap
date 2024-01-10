@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div id="wrap" data-controller="controller/eb/EBCVisitEduCtrl">
-    <form class="form-horizontal" id="frmData" name="frmData" method="post" >
+    <form id="frmData" name="frmData" enctype="multipart/form-data">
         <!-- CSRF KEY -->
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${rtnInfo.memSeq}" />
@@ -9,17 +9,9 @@
         <input type="hidden" class="notRequired" id="bscAddr" name="bscAddr" value="${rtnInfo.bscAddr}" />
         <input type="hidden" class="notRequired" id="dtlAddr" name="dtlAddr" value="${rtnInfo.dtlAddr}" />
         <input type="hidden" class="notRequired" id="edctnPlaceAddr" name="edctnPlaceAddr" value="${rtnInfo.edctnPlaceAddr}" />
+       <%-- <input type="hidden" class="notRequired" id="appctnTypeCdList" name="appctnTypeCdList" value="" />--%>
 
         <div class="cont-wrap">
-            <!--
-              신청 페이지: apply-page 클래스 추가
-              그 외 페이지: basic-page 클래스 추가
-            -->
-            <!--
-              교육 사업: edu-biz
-              컨실팅 사업: consult-biz
-              상생 사업: coexisting-biz
-            -->
             <div class="sub-top-vis-area apply-page consult-biz">
                 <div class="page-tit-area">
                     <p class="page-tit f-xlarge-title"><span class="for-move">방문교육신청</span></p>
@@ -163,13 +155,8 @@
                                                 <div class="data-line-w">
                                                     <div class="data-line">
                                                         <div class="form-group">
-                                                            <div class="form-input calendar">
-                                                                <input type="text" class="form-control input-sm datetimepicker_strtDt" id="hopeDt" name="hopeDt" value="${kl:convertDate(rtnInfo.hopeDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="설립일자" />
-                                                                <span class="input-group-btn" style="z-index:0;">
-                                                                    <button type="button" class="btn btn-inverse input-sm" onclick="jQuery(this).parent().prev().focus();">
-                                                                        <em class="ion-calendar"></em>
-                                                                    </button>
-                                                                </span>
+                                                            <div class="form-input calendar" onclick="jQuery(this).parent().prev().focus();">
+                                                                <input type="text" class="form-control input-sm datetimepicker_strtDt" id="hopeDt" name="hopeDt" value="" title="설립일자" />
                                                             </div>
                                                         </div>
                                                     </div>

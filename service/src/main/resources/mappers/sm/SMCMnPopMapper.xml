@@ -383,7 +383,7 @@
                     </when>
                     <otherwise>
                         AND (
-                            INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
+                            TITL LIKE CONCAT('%', #{q}, '%') OR
                             INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
                             EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
                             INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
