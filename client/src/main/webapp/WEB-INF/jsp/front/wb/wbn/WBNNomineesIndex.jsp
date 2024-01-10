@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div class="cont-wrap" data-controller="controller/wb/wbj/WBJAutoMotiveCtrl">
+<div class="cont-wrap" data-controller="controller/wb/wbj/WBJAutoMotiveCtrl ">
+    <c:set var="FCWinData" value="${FuCarData.winnerlist}"/>
     <!--
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
@@ -93,159 +94,103 @@
                                     </c:if>
                                 </c:forEach>
                             </div>
+
                             <div class="tab-con">
-                                <div class="cont-sec">
-                                    <div class="sec-tit-area">
-                                        <p class="f-title3">2023</p>
-                                    </div>
-                                    <div class="sec-con-area">
-                                        <div class="table-sec">
-                                            <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                                <table class="basic-table">
-                                                    <caption>신청자 기본 정보</caption>
-                                                    <colgroup>
-                                                        <col style="width: 140rem;">
-                                                        <col style="width: 120rem;">
-                                                        <col style="width: 140rem;">
-                                                        <col style="width: 188rem;">
-                                                        <col style="width: 140rem;">
-                                                        <col style="width: 365rem;">
-                                                    </colgroup>
-                                                    <thead>
-                                                    <tr>
-                                                        <th>시상부문</th>
-                                                        <th>참여구분</th>
-                                                        <th>이름</th>
-                                                        <th>학교</th>
-                                                        <th>주제</th>
-                                                        <th>세부 내용</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td rowspan="2" class="t-align-center">대상</td>
-                                                        <td rowspan="2" class="t-align-center">팀</td>
-                                                        <td class="t-align-center">홍길동</td>
-                                                        <td rowspan="2" class="t-align-center">자동차대학교</td>
-                                                        <td rowspan="2" class="t-align-center">미래</td>
-                                                        <td rowspan="2" class="t-align-center">자동차산업 전통기술과 미래기술과의 공존</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center bdr">김길동</td><!-- @ bdr 클래스 추기 시, border-right 생성 -->
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center">최우수상</td>
-                                                        <td class="t-align-center">개인</td>
-                                                        <td class="t-align-center">만길동</td>
-                                                        <td class="t-align-center">모빌리티대학교</td>
-                                                        <td class="t-align-center">인문학</td>
-                                                        <td class="t-align-center">자동차 기술의 정치학</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="3" class="t-align-center">우수상</td>
-                                                        <td rowspan="3" class="t-align-center">팀</td>
-                                                        <td class="t-align-center">북길동</td>
-                                                        <td rowspan="2" class="t-align-center">한국대학교</td>
-                                                        <td rowspan="3" class="t-align-center">미래</td>
-                                                        <td rowspan="3" class="t-align-center">자동차 실내공간의 미래</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center bdr">동길동</td><!-- @ bdr 클래스 추기 시, border-right 생성 -->
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center">이길동</td>
-                                                        <td class="t-align-center bdr">이지대학교</td><!-- @ bdr 클래스 추기 시, border-right 생성 -->
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center">장려상</td>
-                                                        <td class="t-align-center">개인</td>
-                                                        <td class="t-align-center">동길동</td>
-                                                        <td class="t-align-center">한국대학교</td>
-                                                        <td class="t-align-center">공존</td>
-                                                        <td class="t-align-center">전기차만이 대안인가</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
+                                <c:forEach var="FcYear" items="${FCWinData}" varStatus="outerStatus">
+                                    <c:if test="${outerStatus.first or FcYear.year ne FCWinData[outerStatus.index - 1].year}">
+                                        <div class="cont-sec">
+                                            <div class="sec-tit-area">
+                                                <p class="f-title3 ">${FcYear.year}</p>
+                                            </div>
+                                            <div class="sec-con-area">
+                                                <div class="table-sec">
+                                                    <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                                        <table class="basic-table">
+                                                            <caption>신청자 기본 정보</caption>
+                                                            <colgroup>
+                                                                <col style="width: 140rem;">
+                                                                <col style="width: 120rem;">
+                                                                <col style="width: 140rem;">
+                                                                <col style="width: 188rem;">
+                                                                <col style="width: 140rem;">
+                                                                <col style="width: 365rem;">
+                                                            </colgroup>
+                                                            <thead>
+                                                            <tr>
+                                                                <th>시상부문</th>
+                                                                <th>참여구분</th>
+                                                                <th>이름</th>
+                                                                <th>학교</th>
+                                                                <th>주제</th>
+                                                                <th>세부 내용</th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <c:forEach var="item" items="${FCWinData}" varStatus="index" >
+                                                                <c:if test="${FcYear.year eq item.year}">
+                                                                    <c:set var="partName" value='${fn:split(item.partName, ",")}'/>
+                                                                    <c:set var="partSchlNm" value='${fn:split(item.partSchlNm, ",")}'/>
+                                                                    <c:choose>
+                                                                        <c:when test="${item.ptcptType eq '팀'}">
+                                                                            <tr>
+                                                                                <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.wdcrmCd}</td>
+                                                                                <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.ptcptType}</td>
+                                                                                <td class="t-align-center">${item.rdName}</td>
+                                                                                <c:choose>
+                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0] && item.rdSchlNm eq partSchlNm[1]}">
+                                                                                        <td rowspan="3" class="t-align-center">${item.rdSchlNm}</td>
+                                                                                    </c:when>
+                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0] || item.rdSchlNm eq partSchlNm[1]}">
+                                                                                        <td rowspan="2" class="t-align-center">${item.rdSchlNm}</td>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <td rowspan="1" class="t-align-center">${item.rdSchlNm}</td>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+                                                                                <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.themeCd}</td>
+                                                                                <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.dtlCntn}</td>
+                                                                            </tr>
+                                                                            <c:forEach items="${partName}" varStatus="partStatus">
+                                                                                <c:choose>
+                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0] && item.rdSchlNm eq partSchlNm[1]}">
+                                                                                        <tr>
+                                                                                            <td class="t-align-center bdr" >${partName[partStatus.index]}</td>
+                                                                                        </tr>
+                                                                                    </c:when>
+                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0]}">
+                                                                                        <tr>
+                                                                                            <td class="t-align-center bdr" >${partName[partStatus.index]}</td>
+                                                                                            <td class="t-align-center bdr partSchlNm" >${partSchlNm[partStatus.index]}</td>
+                                                                                        </tr>
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        <tr>
+                                                                                            <td class="t-align-center" >${partName[partStatus.index]}</td>
+                                                                                            <td class="t-align-center bdr partSchlNm" >${partSchlNm[partStatus.index]}</td>
+                                                                                        </tr>
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+                                                                            </c:forEach>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <td class="t-align-center">${item.wdcrmCd}</td>
+                                                                            <td class="t-align-center">${item.ptcptType}</td>
+                                                                            <td class="t-align-center">${item.rdName}</td>
+                                                                            <td class="t-align-center">${item.rdSchlNm}</td>
+                                                                            <td class="t-align-center">${item.themeCd}</td>
+                                                                            <td class="t-align-center">${item.dtlCntn}</td>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="cont-sec">
-                                    <div class="sec-tit-area">
-                                        <p class="f-title3">2022</p>
-                                    </div>
-                                    <div class="sec-con-area">
-                                        <div class="table-sec">
-                                            <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                                <table class="basic-table">
-                                                    <caption>신청자 기본 정보</caption>
-                                                    <colgroup>
-                                                        <col style="width: 140rem;">
-                                                        <col style="width: 120rem;">
-                                                        <col style="width: 140rem;">
-                                                        <col style="width: 188rem;">
-                                                        <col style="width: 140rem;">
-                                                        <col style="width: 365rem;">
-                                                    </colgroup>
-                                                    <thead>
-                                                    <tr>
-                                                        <th>시상부문</th>
-                                                        <th>참여구분</th>
-                                                        <th>이름</th>
-                                                        <th>학교</th>
-                                                        <th>주제</th>
-                                                        <th>세부 내용</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    <tr>
-                                                        <td rowspan="2" class="t-align-center">대상</td>
-                                                        <td rowspan="2" class="t-align-center">팀</td>
-                                                        <td class="t-align-center">홍길동</td>
-                                                        <td rowspan="2" class="t-align-center">자동차대학교</td>
-                                                        <td rowspan="2" class="t-align-center">미래</td>
-                                                        <td rowspan="2" class="t-align-center">자동차산업 전통기술과 미래기술과의 공존</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center bdr">김길동</td><!-- @ bdr 클래스 추기 시, border-right 생성 -->
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center">최우수상</td>
-                                                        <td class="t-align-center">개인</td>
-                                                        <td class="t-align-center">만길동</td>
-                                                        <td class="t-align-center">모빌리티대학교</td>
-                                                        <td class="t-align-center">인문학</td>
-                                                        <td class="t-align-center">자동차 기술의 정치학</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td rowspan="3" class="t-align-center">우수상</td>
-                                                        <td rowspan="3" class="t-align-center">팀</td>
-                                                        <td class="t-align-center">북길동</td>
-                                                        <td rowspan="2" class="t-align-center">한국대학교</td>
-                                                        <td rowspan="3" class="t-align-center">미래</td>
-                                                        <td rowspan="3" class="t-align-center">자동차 실내공간의 미래</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center bdr">동길동</td><!-- @ bdr 클래스 추기 시, border-right 생성 -->
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center">이길동</td>
-                                                        <td class="t-align-center bdr">이지대학교</td><!-- @ bdr 클래스 추기 시, border-right 생성 -->
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="t-align-center">장려상</td>
-                                                        <td class="t-align-center">개인</td>
-                                                        <td class="t-align-center">동길동</td>
-                                                        <td class="t-align-center">한국대학교</td>
-                                                        <td class="t-align-center">공존</td>
-                                                        <td class="t-align-center">전기차만이 대안인가</td>
-                                                    </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                    </c:if>
+                                </c:forEach>
                             </div>
                         </div>
                     </div>

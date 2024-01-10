@@ -167,6 +167,38 @@
     </select>
 
     <!--
+     쿼리명 : WBKAFutureCarContestListMapper.getRoundDtl
+     설  명 : 최신 회차 상세 조회
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2024.01.03  민윤기     최초 생성
+-->
+    <select id="getRoundDtl" parameterType="wBRoundMstSearchDTO" resultType="wBRoundMstSearchDTO">
+        SELECT /* WBBARoundMapper.getRoundDtl */ *
+        FROM (
+                 SELECT
+                     EPISD_SEQ
+                      ,BSN_CD
+                      ,YEAR
+                      ,EPISD
+                      ,ACCS_STRT_DTM
+                      ,ACCS_END_DTM
+                      ,BSN_STRT_DTM
+                      ,BSN_END_DTM
+                      ,EXPS_YN
+                      , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
+                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+                     ELSE 3
+                     END AS DATE_ORD
+                 FROM CX_EPISD_MST A
+                 WHERE BSN_CD = 'INQ07011' AND EXPS_YN = 'Y'
+             ) A
+        WHERE DATE_ORD = 1
+        ORDER BY ACCS_STRT_DTM, BSN_STRT_DTM ASC
+            LIMIT 1
+    </select>
+
+    <!--
      쿼리명 : WBKAFutureCarContest.selectPrizeList
      설  명 : 포상금/포상종류 조회
      수정일     수정자     수정내용

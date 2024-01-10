@@ -57,6 +57,7 @@ public class WBIASupplyListController {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("STATE_TYPE");
+        cdDtlList.add("SYSTEM_HOUR");
 
         modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
         modelMap.addAttribute("rtnData", wBIASupplyListService.selectSupplyList(wBRoundMstSearchDTO));
@@ -99,6 +100,7 @@ public class WBIASupplyListController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("ROUND_CD");
+            cdDtlList.add("SYSTEM_HOUR");
 
             modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 

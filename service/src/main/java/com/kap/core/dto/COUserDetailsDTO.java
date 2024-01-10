@@ -49,6 +49,11 @@ public class COUserDetailsDTO extends  BaseDTO{
     @Schema(title="로그인 객체 로그인 세션 ID")
     private String conSessionId;
 
+    @Schema(title="로그인 객체 성별")
+    private String gender;
+    @Schema(title="로그인 객체 생년월일")
+    private String birthdate;
+    
     /** 관리자 객체 시작 **/
     @Schema(title="로그인 객체 권한 코드")
     private String authCd;

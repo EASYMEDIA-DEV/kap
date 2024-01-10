@@ -76,5 +76,8 @@ public interface WBKAFutureCarContestListMapper {
      */
     public List<WBPlaceMstDTO> selectPlaceList(WBFutureCarContestMstDTO wBFutureCarContestMstDTO) throws Exception;
 
-
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }

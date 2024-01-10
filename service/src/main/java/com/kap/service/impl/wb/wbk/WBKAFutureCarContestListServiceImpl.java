@@ -1,12 +1,18 @@
 package com.kap.service.impl.wb.wbk;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
+import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestMstDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestSearchDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbk.WBPrizeMstDTO;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBKAFutureCarContestListService;
+import com.kap.service.dao.sm.SMJFormMapper;
+import com.kap.service.dao.wb.wbb.WBBARoundMapper;
 import com.kap.service.dao.wb.wbk.WBKAFutureCarContestListMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +29,10 @@ public class WBKAFutureCarContestListServiceImpl implements WBKAFutureCarContest
 
     //Mapper
     private final WBKAFutureCarContestListMapper wBKAFutureCarContestListMapper;
+
+    private final SMJFormMapper sMJFormMapper;
+
+    private final WBBARoundMapper wBBARoundMapper;
 
     /* 회차관리 마스터 시퀀스 */
     private final EgovIdGnrService cxEpisdSeqIdgen;
@@ -160,6 +170,66 @@ public class WBKAFutureCarContestListServiceImpl implements WBKAFutureCarContest
 
         return wBKAFutureCarContestListMapper.selectYearDtl(wBFutureCarContestSearchDTO);
     }
-    
-    
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        // 최신 회차
+        wBRoundMstSearchDTO = wBKAFutureCarContestListMapper.getRoundDtl(wBRoundMstSearchDTO);
+
+        // 양식
+        if (wBRoundMstSearchDTO != null) {
+            //wBRoundMstSearchDTO.setStageOrd(1);
+            SMJFormDTO smjFormDTO = new SMJFormDTO();
+            smjFormDTO.setTypeCd("BUSINESS02");
+            //그외 사업의 경우 양식관리 파일정보를 가져와야함.
+            SMJFormDTO optionList = sMJFormMapper.selectFormDtl(smjFormDTO);
+            wBRoundMstSearchDTO.setFileSeq(optionList.getFtreCarAppctnFileSeq());
+        }
+
+        return wBRoundMstSearchDTO;
+    }
+
+    /**
+     * 신청자 공모전 신청 여부 확인
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        int rtnCode = 0;
+
+        COUserDetailsDTO cOUserDetailsDTO = null;
+
+        if (!COUserDetailsHelperService.isAuthenticated())
+        {
+            //비로그인 코드 999
+            rtnCode = 999;
+        }
+        else
+        {
+            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+
+                if ("CS".equals(cOUserDetailsDTO.getAuthCd())) {
+                    //위원인 경우 150
+                    rtnCode = 150;
+               } else{
+                wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                int cnt = wBBARoundMapper.getApplyCount(wBRoundMstSearchDTO);
+
+                if (cnt > 0) {
+                    //신청여부 존재 코드 300
+                    rtnCode = 300;
+                } else {
+                    //신청가능 코드 200
+                    rtnCode = 200;
+                }
+
+            }
+        }
+
+        return rtnCode;
+    }
+
 }

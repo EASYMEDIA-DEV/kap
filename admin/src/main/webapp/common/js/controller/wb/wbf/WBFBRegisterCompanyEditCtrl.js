@@ -438,18 +438,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 after : function() {
                     var isValid = true;
 
-                    let nowSpprtCd = $sendFormData.find('input[type=hidden][name=nowSpprtCd]').val();
                     let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
-
-                    let dropzoneSpprt = $dataSpprt.find(`[data-sttsCd=${nowSpprtCd}]`).find(".dropzone");
-                    if(dropzoneSpprt.length > 0) {
-                        dropzoneSpprt.each(function(idx, el) {
-                            if($(el).find('.dz-preview').length < 1) {
-                                isValid = false;
-                            }
-                        });
-                    }
-
                     let dropzoneTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`).find(".dropzone");
                     if(dropzoneTask.length > 0) {
                         dropzoneTask.each(function(idx, el) {

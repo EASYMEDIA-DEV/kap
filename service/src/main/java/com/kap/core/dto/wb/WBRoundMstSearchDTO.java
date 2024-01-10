@@ -84,4 +84,8 @@ public class WBRoundMstSearchDTO extends BaseDTO {
 
     @Schema(title = "양식 관리 파일 리스트")
     private List<SMJFormDTO> smjList;
+
+    @Schema(title = "파일 시퀀스")
+    private Integer fileSeq;
+
 }

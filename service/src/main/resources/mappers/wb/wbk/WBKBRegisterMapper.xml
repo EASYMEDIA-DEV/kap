@@ -934,6 +934,90 @@
 
     </delete>
 
+    <!--
+         쿼리명 : WBKBRegisterMapper.getApplyDtl
+         설  명 : 신청자 정보조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  민윤기     최초 생성
+    -->
+    <select id="getApplyDtl" parameterType="wBKBRegisterDTO" resultType="wBKBRegisterDTO">
+        SELECT /* WBKBRegisterMapper.getApplyDtl */
+            APPCTN_SEQ,
+            EPISD_SEQ,
+            MEM_SEQ,
+            APPCTN_BSNM_NO,
+            REG_DTM,
+            (select name from co_mem_mst where mem_seq = 57 ) NAME
+        FROM CX_APPCTN_MST A
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
+    </select>
+
+
+    <!--
+         쿼리명 : WBKBRegisterMapper.selectWinerList
+         설  명 : 미래차공모전 역대 수상자 리스트
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  민윤기     최초 생성
+    -->
+    <select id="selectWinerList" parameterType="wBKBRegisterDTO">
+        SELECT  /* WBKBRegisterMapper.selectWinerList */
+            A.YEAR,
+            D.RSUME_SEQ,
+            (SELECT CD_NM FROM CO_CODE_MST
+             WHERE CD = D.WDCRM_CD) AS WDCRM_CD,
+            (SELECT CD_NM FROM CO_CODE_MST
+             WHERE CD = D.PTCPT_TYPE) AS PTCPT_TYPE,
+            D.NAME AS RD_NAME,
+            (
+                SELECT GROUP_CONCAT(NAME ORDER BY
+										 CASE
+											WHEN SCHL_NM = D.SCHL_NM THEN 0
+											ELSE 1
+										 END,
+                                            NAME
+                                                SEPARATOR ','
+                                    ) AS COMBINED_NAME
+                FROM
+                    CX_APPCTN_RSUME_PRIZE_CAR_TMMBR_DTL
+                WHERE
+                    RSUME_SEQ = C.RSUME_SEQ
+                GROUP BY
+                    RSUME_SEQ
+            )AS PART_NAME,
+            D.SCHL_NM AS RDSCHL_NM,
+            (
+                SELECT GROUP_CONCAT(SCHL_NM ORDER BY
+                                            CASE
+                                                WHEN SCHL_NM = D.SCHL_NM THEN 0
+                                                ELSE 1
+                                            END,
+                                                NAME
+                                                    SEPARATOR ','
+                                    ) AS COMBINED_NAME
+                FROM
+                    CX_APPCTN_RSUME_PRIZE_CAR_TMMBR_DTL
+                WHERE
+                    RSUME_SEQ = C.RSUME_SEQ
+                GROUP BY
+                    RSUME_SEQ
+            )AS PARTSCHL_NM,
+            (SELECT CD_NM FROM CO_CODE_MST
+             WHERE CD =  D.THEME_CD) AS THEME_CD,
+            D.DTL_CNTN
+        FROM  (
+                  SELECT * FROM CX_EPISD_MST
+                  WHERE BSN_CD = 'INQ07011'
+              ) A
+                  INNER JOIN CX_APPCTN_MST B ON B.EPISD_SEQ = A.EPISD_SEQ
+                  INNER JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+                  INNER JOIN CX_APPCTN_RSUME_PRIZE_CAR_DTL D ON C.RSUME_SEQ = D.RSUME_SEQ
+        WHERE D.HGHST_WINER_YN = "Y"
+        GROUP BY C.RSUME_SEQ
+        ORDER BY A.YEAR DESC , D.WDCRM_CD ASC;
+    </select>
+
 </mapper>
 
 

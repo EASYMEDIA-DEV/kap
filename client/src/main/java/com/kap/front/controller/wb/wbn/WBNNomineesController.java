@@ -1,6 +1,7 @@
 package com.kap.front.controller.wb.wbn;
 
 import com.kap.core.dto.wb.wbj.WBJAcomDTO;
+import com.kap.core.dto.wb.wbk.WBKBRegisterDTO;
 import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,6 +40,7 @@ public class WBNNomineesController {
      * 서비스
      **/
     public final WBJBAcomListService wBJBAcomListService;
+    public final WBKBRegisterService wBKBRegisterService;
     public final COGCntsService pCOGCntsService;
     public final COCodeService cOCodeService;
 
@@ -47,11 +49,11 @@ public class WBNNomineesController {
      * 메인
      */
     @GetMapping(value = "/content")
-    public String getMnagementIndex(WBJAcomDTO wBJAcomDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+    public String getMnagementIndex(WBJAcomDTO wBJAcomDTO, WBKBRegisterDTO wBKBRegisterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbn/WBNNomineesIndex.front";
         try {
             modelMap.addAttribute("rtnData", wBJBAcomListService.selectWinerList(wBJAcomDTO));
-            System.err.println("rtnData    ::   " + wBJBAcomListService.selectWinerList(wBJAcomDTO));
+            modelMap.addAttribute("FuCarData", wBKBRegisterService.selectWinerList(wBKBRegisterDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
