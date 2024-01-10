@@ -248,11 +248,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 wbRoundMstDTO.year = ctrl.obj.find("#year").val();
                                 wbRoundMstDTO.episd = ctrl.obj.find("#episd").val();
 
-                                wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val();
-                                wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val();
+                                wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val() + ' 00:00:00';
+                                wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val()+ ' 23:59:59';
 
-                                wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val();
-                                wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val();
+                                wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val() + ' 00:00:00';
+                                wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val()+ ' 23:59:59';
 
                                 wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
 
@@ -260,8 +260,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                                 $(".giveText").each(function(index, data){
                                     var wBOrderMstDto = {};
-                                    wBOrderMstDto.strtDt = $("input[name=giveStrtDtList]").eq(index).val();
-                                    wBOrderMstDto.endDt = $("input[name=giveEndDtList]").eq(index).val();
+                                    wBOrderMstDto.strtDt = $("input[name=giveStrtDtList]").eq(index).val() + ' 00:00:00';
+                                    wBOrderMstDto.endDt = $("input[name=giveEndDtList]").eq(index).val() + ' 23:59:59';
                                     wBOrderMstDto.giveOrd = $("input[name=giveOrd]").eq(index).val();
 
                                     wbRoundMstDTO.giveList.push(wBOrderMstDto);

@@ -415,7 +415,7 @@
                         <input type="button" class="btn btn-sm" id="searchPostCode2" value="우편번호 검색"><br>
                         <br>
                         <div style="display: flex; gap: 10px;">
-                            <input type="text" class="form-control input-sm" id="zipcode2" name="pbsnZipcode" value="" readonly placeholder="구축사업장 우편번호" style="width: 95px;" title="주소">
+                            <input type="text" class="form-control input-sm" id="zipcode2" name="pbsnZipcode" value="" readonly placeholder="우편번호" style="width: 95px;" title="주소">
                             <input type="text" class="form-control input-sm" id="bscAddr2" name="pbsnbscAddr" value="" readonly placeholder="구축사업장 기본주소" style="width: 295px;" title="주소">
                         </div>
                         <br>

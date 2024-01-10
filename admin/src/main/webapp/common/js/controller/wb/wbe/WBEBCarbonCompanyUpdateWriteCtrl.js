@@ -60,9 +60,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
         $("#bsnmNoPut1").val(rtnData['bsnmNo']);
         $("#bsnmNoPut2").val(rtnData['bsnmNo']);
+        $("#bsnmNo").val(rtnData['bsnmNo']);
 
         // 사업자번호 변경
-        rtnData['bsnmNo'] = rtnData['bsnmNo'].slice(0,3) + '-' + rtnData['bsnmNo'].slice(3,5) + '-' + rtnData['bsnmNo'].slice(5);
+        rtnData['bsnm'] = rtnData['bsnmNo'].slice(0,3) + '-' + rtnData['bsnmNo'].slice(3,5) + '-' + rtnData['bsnmNo'].slice(5);
 
 
         Object.keys(rtnData).forEach((el) => {
@@ -257,9 +258,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         if($(this).val() == 'Y'){
                             $("#ab1").css('height' , '100%');
                             $("#ab1").addClass('in');
+                            $("#pmndv").prop('href','#ab1');
                         }else{
                             $("#ab1").css('height' , '0px');
                             $("#ab1").removeClass('in');
+
+                            $("#pmndv").prop('href','');
                         }
                     }
                 }
@@ -362,6 +366,19 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             }else{
                 $(".rtrnRsnCntn").attr('disabled',true);
                 $(".rtrnRsnCntn").css("display", "none");
+            }
+
+            var pmndvPmtYn = $("input[name='pmndvPmtYn']:checked").val();
+
+            if(pmndvPmtYn == 'Y'){
+                $("#ab1").css('height' , '100%');
+                $("#ab1").addClass('in');
+                $("#pmndv").prop('href','#ab1');
+            }else{
+                $("#ab1").css('height' , '0px');
+                $("#ab1").removeClass('in');
+
+                $("#pmndv").prop('href','');
             }
 
             // 유효성 검사

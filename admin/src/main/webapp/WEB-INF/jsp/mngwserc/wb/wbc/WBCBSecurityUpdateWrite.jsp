@@ -258,7 +258,8 @@
                     <div class="col-sm-5">
                         <input type="hidden" id="bsnmNoPut1" name="appctnBsnmNo" title="사업자등록 번호" value="${rtnCompany.bsnmNo}" />
                         <input type="hidden" id="bsnmNoPut2" name="companyDtl.bsnmNo" title="사업자등록 번호" value="${rtnCompany.bsnmNo}" />
-                        <p class="form-control-static" id="bsnmNo">${fn:substring(rtnCompany.bsnmNo,0,3) } - ${fn:substring(rtnCompany.bsnmNo,3,5) } - ${fn:substring(rtnCompany.bsnmNo,5, 10) }</p>
+                        <input type="hidden" id="bsnmNo" class="notRequired" value="${rtnCompany.bsnmNo}" />
+                        <p class="form-control-static" id="bsnm">${fn:substring(rtnCompany.bsnmNo,0,3) } - ${fn:substring(rtnCompany.bsnmNo,3,5) } - ${fn:substring(rtnCompany.bsnmNo,5, 10) }</p>
                     </div>
                 </div>
             </fieldset>
@@ -424,8 +425,8 @@
                         <table class="table table-hover table-striped" >
                             <thead>
                             <tr>
-                                <th class="text-center">이전 신청지</th>
-                                <th class="text-center">변경 신청지</th>
+                                <th class="text-center">이전 신청자</th>
+                                <th class="text-center">변경 신청자</th>
                                 <th class="text-center">변경일 / 변경자</th>
                             </tr>
                             </thead>

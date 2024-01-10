@@ -35,6 +35,10 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         $formObj.find(`input[type=hidden][name=id]`).val(rtnData['id']);
         $formObj.find(`input[type=hidden][name=bsnmNo]`).val(dataBsnmNo);
 
+        if(rtnData['pstnCd'] == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }
+
         /* 사용자_회사 정보 */
         Object.keys(rtnData).forEach((el) => {
             if(typeof(rtnData[el]) != "object"){
@@ -47,6 +51,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 }
             }
         });
+
+        $("#bsnmNo").val(dataBsnmNo);
 
         ctgryVal = $('#ctgryCd').val();
 
@@ -185,6 +191,20 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
+            pstnCd : {
+                event : {
+                    change : function() {
+                        var pstnCd = $(this).val();
+
+                        if(pstnCd =='MEM_CD01007'){
+                            $("#pstnNm").css("display", "block");
+                        }else{
+                            $("#pstnNm").val("");
+                            $("#pstnNm").css("display", "none");
+                        }
+                    }
+                }
+            },
             //PDF
             appctnPdfDownload : {
                 event : {
@@ -297,6 +317,14 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 $('#fieldSQ').hide();
             } else if ($('#ctgryCd').val() == "COMPANY01002") {
                 $('#fieldStart').hide();
+            }
+
+            var pstnCd = $('#pstnCd').val();
+            if(pstnCd =='MEM_CD01007'){
+                $("#pstnNm").css("display", "block");
+            }else{
+                $("#pstnNm").val("");
+                $("#pstnNm").css("display", "none");
             }
 
             equipmentInitHtml = $("#equipmentHtml").html();

@@ -103,7 +103,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4" style="margin-left: -15px">
-                                <input type="text" class="form-control " id="pstnNm" name="pstnNm" value="${userInfo.pstnNm}" title="직급 상세" maxlength="50"/>
+                                <input type="text" style="display: none;" class="form-control " id="pstnNm" name="pstnNm" value="${userInfo.pstnNm}" title="직급 상세" maxlength="50"/>
                             </div>
                         </div>
                     </div>
@@ -224,7 +224,8 @@
 
                         <label class="col-sm-1 control-label">사업자등록<br/>번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="bsnmNo" title="재직 회사사업자번호">${userInfo.bsnmNo}</p>
+                            <p class="form-control-static" id="bsnm" title="재직 회사사업자번호">${fn:substring(userInfo.bsnmNo,0,3) } - ${fn:substring(userInfo.bsnmNo,3,5) } - ${fn:substring(userInfo.bsnmNo,5, 10) }</p>
+                            <input type="hidden" id="bsnmNo" class="notRequired" value="${userInfo.bsnmNo}">
                         </div>
                     </div>
                 </fieldset>
