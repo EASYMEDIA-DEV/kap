@@ -344,10 +344,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         wbRoundMstDTO.bsnCd = ctrl.obj.find("#bsnCd").val();
                         wbRoundMstDTO.year = ctrl.obj.find("#year").val();
                         wbRoundMstDTO.episd = ctrl.obj.find("#episd").val();
-                        wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val();
-                        wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val();
-                        wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val();
-                        wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val();
+
+                        wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val() +" "+ctrl.obj.find("#accsStrtHour").val() +":00:00";
+                        wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":59:59";
+                        wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val() +" "+ctrl.obj.find("#bsnStrtHour").val()+":00:00";
+                        wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val() +" "+ctrl.obj.find("#bsnEndHour").val()+":59:59";
+
                         wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
 
                         wbRoundMstDTO.giveList = new Array();
