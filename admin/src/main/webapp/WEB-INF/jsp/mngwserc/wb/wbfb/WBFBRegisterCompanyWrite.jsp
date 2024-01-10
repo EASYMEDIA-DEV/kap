@@ -82,7 +82,7 @@
                     <label class="col-sm-1 control-label">직급</label>
                     <div class="col-sm-5">
                         <div class="col-sm-5" style="margin-left: -15px">
-                            <select class="form-control input-sm notRequired" id="pstnCd" name="pstnCd" title="직급">
+                            <select class="form-control input-sm" id="pstnCd" name="pstnCd" title="직급">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                     <c:if test="${fn:contains(cdList.cd, 'MEM_CD010')}">
