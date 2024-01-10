@@ -34,28 +34,30 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             let option = options[valType];
             /* 기존 구조 Count */
             let structLength = (option['target'].find('[data-order]').length + 1);
-            /* text */
-            let text = option['text'] + ' ' + structLength;
+            if(structLength <= 10) {
+                /* text */
+                let text = option['text'] + ' ' + structLength;
 
-            let html = '<div class="form-group text-sm" >';
-            html += '<fieldset></fieldset>';
-            html += '<label class="col-sm-1 control-label">' + text + '<span class="star"> *</span></label>';
-            html += '<div class="col-sm-5">';
-            html += '<div class="col-sm-6">';
-            html += '<input type="text" ' +
-                'class="form-control input-sm ' + (valType+'-txt') + '" ' +
-                'data-order="' + structLength + '" ' +
-                'value="" title="' +
-                text + '" maxLength="50" placeholder="' + text + '">';
-            html += '</div>'
-            html += '<div class="col-sm-6">'
-            html += '<button type="button" class="btn btn-info ' + option['btnName'] + '">+</button> '
-            html += '<button type="button" class="btn btn-danger btnDelete">-</button>'
-            html += '</div>'
-            html += '</div>'
-            html += '</div>'
+                let html = '<div class="form-group text-sm" >';
+                html += '<fieldset></fieldset>';
+                html += '<label class="col-sm-1 control-label">' + text + '<span class="star"> *</span></label>';
+                html += '<div class="col-sm-5">';
+                html += '<div class="col-sm-6">';
+                html += '<input type="text" ' +
+                    'class="form-control input-sm ' + (valType+'-txt') + '" ' +
+                    'data-order="' + structLength + '" ' +
+                    'value="" title="' +
+                    text + '" maxLength="50" placeholder="' + text + '">';
+                html += '</div>'
+                html += '<div class="col-sm-6">'
+                html += '<button type="button" class="btn btn-info ' + option['btnName'] + '">+</button> '
+                html += '<button type="button" class="btn btn-danger btnDelete">-</button>'
+                html += '</div>'
+                html += '</div>'
+                html += '</div>'
 
-            option['target'].append(html);
+                option['target'].append(html);
+            }
         }
 
         const resetOption = (colsId) => {

@@ -69,7 +69,7 @@ public class WBFBRegisterCompanyController {
     public String getRegisterCompanyListPage(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BUSUNESS_TYPE06");
+            wBFBRegisterSearchDTO.setBsnCd("BNS06");
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
@@ -96,7 +96,7 @@ public class WBFBRegisterCompanyController {
     public String getRegisterCompanyListAjax(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BUSUNESS_TYPE06");
+            wBFBRegisterSearchDTO.setBsnCd("BNS06");
             modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getRegisterCompanyList(wBFBRegisterSearchDTO));
         }
         catch (Exception e)
@@ -118,7 +118,7 @@ public class WBFBRegisterCompanyController {
     public String getEpisdListAjax(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BUSUNESS_TYPE06");
+            wBFBRegisterSearchDTO.setBsnCd("BNS06");
             modelMap.addAttribute("optEpisdList", wBFBRegisterCompanyService.getOptEpisdList(wBFBRegisterSearchDTO));
         }
         catch (Exception e)
@@ -140,7 +140,7 @@ public class WBFBRegisterCompanyController {
     public String getOptnListAjax(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BUSUNESS_TYPE06");
+            wBFBRegisterSearchDTO.setBsnCd("BNS06");
             // 공통코드 배열 셋팅
             modelMap.addAttribute("optnCategList", wBFBRegisterCompanyService.getOptnList(wBFBRegisterSearchDTO));
         }
@@ -162,7 +162,7 @@ public class WBFBRegisterCompanyController {
     public String getRegisterCompanyWritePage(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BUSUNESS_TYPE06");
+            wBFBRegisterSearchDTO.setBsnCd("BNS06");
 
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -201,7 +201,7 @@ public class WBFBRegisterCompanyController {
             wBFBRegisterDTO.setModId( coaAdmDTO.getId() );
             wBFBRegisterDTO.setModIp( coaAdmDTO.getLoginIp() );
 
-            wBFBRegisterDTO.setBsnCd("BUSUNESS_TYPE06"); /* 스마트 공장 */
+            wBFBRegisterDTO.setBsnCd("BNS06"); /* 스마트 공장 */
             modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.putRegisterCompany(wBFBRegisterDTO));
         }catch (Exception e)
         {
@@ -224,7 +224,7 @@ public class WBFBRegisterCompanyController {
     {
         try {
 
-            wBFBRegisterSearchDTO.setBsnCd("BUSUNESS_TYPE06"); /* 스마트 공장 */
+            wBFBRegisterSearchDTO.setBsnCd("BNS06"); /* 스마트 공장 */
             wBFBRegisterSearchDTO.setAppctnSeq(Integer.parseInt(detailsKey));
 
             // 공통코드 배열 셋팅
@@ -285,7 +285,7 @@ public class WBFBRegisterCompanyController {
     {
         try {
 
-            wBFBRegisterDTO.setBsnCd("BUSUNESS_TYPE06"); /* 스마트 공장 */
+            wBFBRegisterDTO.setBsnCd("BNS06"); /* 스마트 공장 */
             modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getBsnmNoCheck(wBFBRegisterDTO));
         }
         catch (Exception e)
@@ -308,7 +308,7 @@ public class WBFBRegisterCompanyController {
         try {
 
             COUserDetailsDTO coaAdmDTO = (COUserDetailsDTO) COUserDetailsHelperService.getAuthenticatedUser();
-            wBFBRegisterDTO.setBsnCd("BUSUNESS_TYPE06"); /* 스마트 공장 */
+            wBFBRegisterDTO.setBsnCd("BNS06"); /* 스마트 공장 */
 
             wBFBRegisterDTO.setRegId( coaAdmDTO.getId() );
             wBFBRegisterDTO.setRegIp( coaAdmDTO.getLoginIp() );
@@ -361,7 +361,7 @@ public class WBFBRegisterCompanyController {
     {
         try
         {
-            wBFBRegisterSearchDTO.setBsnCd("BUSUNESS_TYPE06");
+            wBFBRegisterSearchDTO.setBsnCd("BNS06");
             //엑셀 생성
             wBFBRegisterCompanyService.excelDownload(wBFBRegisterCompanyService.getRegisterCompanyList(wBFBRegisterSearchDTO), response);
         }

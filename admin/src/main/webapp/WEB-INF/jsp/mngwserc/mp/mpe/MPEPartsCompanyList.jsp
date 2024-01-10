@@ -130,8 +130,8 @@
                         <th class="text-center">회사 전화번호</th>
                         <th class="text-center">최초 등록자</th>
                         <th class="text-center">최초 등록일시</th>
-                        <th class="text-center">최초 수정자</th>
-                        <th class="text-center">최초 수정일시</th>
+                        <th class="text-center">최종 수정자</th>
+                        <th class="text-center">최종 수정일시</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

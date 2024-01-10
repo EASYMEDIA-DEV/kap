@@ -105,7 +105,7 @@
                             <label class="col-sm-1 control-label">직급</label>
                             <div class="col-sm-5">
                                 <div class="col-sm-5" style="margin-left: -15px">
-                                    <select class="form-control input-sm notRequired" id="pstnCd" name="pstnCd" title="직급">
+                                    <select class="form-control input-sm" id="pstnCd" name="pstnCd" title="직급">
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                             <c:if test="${fn:contains(cdList.cd, 'MEM_CD010')}">
@@ -133,7 +133,7 @@
                             </div>
                             <label class="col-sm-1 control-label">일반 전화번호</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="${registerDtl.telNo}" title="전화번호" maxlength="50"/>
+                                <input type="text" class="form-control notRequired" id="telNo" name="telNo" value="${registerDtl.telNo}" title="전화번호" maxlength="50"/>
                             </div>
                         </div>
                     </fieldset>

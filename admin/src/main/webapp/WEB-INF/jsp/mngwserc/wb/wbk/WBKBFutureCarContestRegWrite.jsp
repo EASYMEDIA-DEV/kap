@@ -24,7 +24,7 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.appctnSeq}" />
-            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07011" />
+            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BNS11" />
             <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="" />
             <input type="hidden" class="notRequired" name="id" value="" />
             <input type="hidden" class="notRequired" id="rsumeSeq" name="rsumeSeq" value="${rtnDto.rsumeSeq}" />
@@ -167,9 +167,9 @@
                     </div>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-6" style="margin-left: -15px">
-                            <select class="form-control input-sm">
-                                <c:forEach items="${grdCd}" var="grdCd" step="1">
-                                    <option value="${grdCd.cd}" <c:if test="${rtnDto.rdGrdCd eq grdCd}">selected</c:if>>${grdCd.cdNm}</option>
+                            <select class="form-control input-sm" name="rdGrdCd">
+                                <c:forEach items="${grdCd}" var="grdCd" step="1" >
+                                    <option value="${grdCd.cd}" <c:if test="${rtnDto.rdGrdCd eq grdCd.cd}">selected</c:if>>${grdCd.cdNm}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -765,6 +765,7 @@
                 <input type="hidden" class="notRequired" name="mngSttsCd" value="" />
                 <%--<input type="hidden" class="notRequired"  name="fileSeq" value="${rtnDto.fileSeq}" title="첨부파일유형"/>--%>
                 <input type="hidden" class="notRequired" id="fisrtFileSeq" name="fisrtFileSeq" value="${rtnDto.fisrtFileSeq}" />
+                <input type="hidden" class="notRequired" id="lastFileSeq" name="lastFileSeq" value="${rtnDto.lastFileSeq}" />
                 <input type="hidden" class="notRequired" id="lastFileSeq" name="lastFileSeq" value="${rtnDto.lastFileSeq}" />
 
 

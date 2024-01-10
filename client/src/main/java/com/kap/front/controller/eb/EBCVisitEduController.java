@@ -18,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -194,14 +195,14 @@ public class EBCVisitEduController {
      *
      */
     @PostMapping(value="/apply/insert")
-    public String applyVisitEduInfo(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception
     {
         try{
             ebcVisitEduDTO.setEdctnSttsCd("EBC_VISIT_CD02001"); // 교육상태 코드를 '신청'으로 지정
             ebcVisitEduDTO.setRegId(COUserDetailsHelperService.getAuthenticatedUser().getId());
             ebcVisitEduDTO.setRegIp(COUserDetailsHelperService.getAuthenticatedUser().getLoginIp());
 
-            int respCnt = ebcVisitEduService.applyVisitEduInfo(ebcVisitEduDTO);
+            int respCnt = ebcVisitEduService.applyVisitEduInfo(ebcVisitEduDTO, multiRequest);
             modelMap.addAttribute("respCnt", respCnt);
 
             // 방문신청여부 세션값에 저장

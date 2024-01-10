@@ -98,7 +98,7 @@
     <div class="form-group text-sm form-inline">
         <label class="col-sm-1 control-label">주소<span class="star"> *</span></label>
         <div class="col-sm-5">
-            <div class="input-group">
+            <div class="input-group" style="display: table;">
                 <input type="text" class="form-control input-sm" id="zipcode" title="우편번호" name="zipcode" readonly  value="${rtnDtl.zipcode}"/>
                 <span class="input-group-btn" ><button type="button" style="margin-left: 1rem ; margin-top:-0.8rem;" class="btn btn-default btn-sm" id="searchPostCode" >우편번호 검색</button></span>
                 <br>

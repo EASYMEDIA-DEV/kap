@@ -71,7 +71,7 @@
                     <label class="col-sm-1 control-label">직급</label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <select class="form-control input-sm notRequired" id="pstnCdSelect" name="pstnCd" title="직급" >
+                            <select class="form-control input-sm" id="pstnCdSelect" name="pstnCd" title="직급" >
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                     <c:if test="${fn:contains(cdList, 'MEM_CD01') and cdList.cd ne 'MEM_CD01'}">
@@ -723,7 +723,7 @@
                                 <label class="col-sm-1 control-label">수료인원(명)</label>
                                 <div class="col-sm-10 form-inline">
                                     <fmt:formatNumber var="formatPtcptRate" value="${rtnInfo.ptcptRate * 100}" pattern="##0" />
-                                    <input type="text" class="form-control input-sm " id="cmptnCnt" name="cmptnCnt" value="${rtnInfo.cmptnCnt}" title="수료인원" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 220px;"/>
+                                    <input type="text" class="form-control input-sm " id="cmptnCnt" name="cmptnCnt" value="${rtnInfo.cmptnCnt}" title="수료인원" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 220px;"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -751,7 +751,7 @@
                         </c:forEach>
                         <label class="col-sm-1 control-label mt-sm">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03001">
-                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="3" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                         </div>
                     </c:forEach>
                 </div>
@@ -769,7 +769,7 @@
                         </c:forEach>
                         <label class="col-sm-1 control-label mt-sm">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03002">
-                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="3" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                         </div>
                     </c:forEach>
                 </div>
@@ -787,7 +787,7 @@
                         </c:forEach>
                         <label class="col-sm-1 control-label mt-sm">${cdList.cdNm}</label>
                         <div class="col-sm-2 cnt-list" data-rslt-type-cd="EBC_VISIT_CD03003">
-                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                            <input type="text" class="form-control input-sm mt-sm notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="3" placeholder="${cdList.cdNm} 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
                         </div>
                     </c:forEach>
                 </div>

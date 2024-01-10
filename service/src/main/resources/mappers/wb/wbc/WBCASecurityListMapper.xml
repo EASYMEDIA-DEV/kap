@@ -165,7 +165,7 @@
     -->
     <sql id="selectCarbonListwhereSql">
         <where>
-            AND BSN_CD = 'BUSUNESS_TYPE03'
+            AND BSN_CD = 'BSN03'
             <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
                     <when test="carbonDate == 1">
@@ -477,7 +477,7 @@
     <select id="episdChk" parameterType="wBRoundMstSearchDTO" resultType="java.lang.Integer">
         SELECT COUNT(*)
         FROM CX_EPISD_MST
-        WHERE BSN_CD = 'BUSUNESS_TYPE03'
+        WHERE BSN_CD = 'BSN03'
         AND YEAR = #{year}
         AND EPISD = #{episd}
         <if test="detailsKey != null and detailsKey != ''.toString() ">

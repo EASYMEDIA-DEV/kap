@@ -11,9 +11,56 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
     var ctrl = new ezCtrl.controller(exports.controller);
 
     // form Object
-    var $formObj = ctrl.obj.find("frmData");
+    var $formObj = ctrl.obj.find("form").eq(0);
     var width = 500; //팝업의 너비
     var height = 600; //팝업의 높이
+
+    // 파일 체크
+    var extnCheck = function(obj, extns, maxSize)
+    {
+        var fileObj = jQuery(obj).val(), isFile = true;
+        var fileId = obj.id;
+
+        if (!fileObj)
+        {
+            isFile = false;
+        }
+        else
+        {
+            var file;
+            file = obj.files[0];
+
+            var fileExtn = file.name.split(".").pop();
+
+            if (extns.indexOf(fileExtn.toLowerCase()) < 0) {
+                //파일확장자 체크
+                $('#'+fileId).val("");
+                $('#'+fileId).closest(".form-group").find('.empty-txt').text("");
+                alert('첨부 가능한 파일 확장자가 아닙니다.');
+
+                isFile = false;
+            } else {
+                //파일용량 체크
+                if (typeof obj.files != "undefined")
+                {
+                    var fileSize = file.size;
+                    var maxFileSize = maxSize * 1024 * 1024;
+
+                    if (fileSize > maxFileSize)
+                    {
+                        $('#'+fileId).val("");
+                        $('#'+fileId).closest(".form-group").find('.empty-txt').text("");
+                        alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
+                        isFile = false;
+                    }
+                }
+            }
+
+            if (isFile) {
+                $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
+            }
+        }
+    };
 
     var textCntCheck = function (id) {
         var content = $(this).val();
@@ -148,45 +195,6 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             applyCompleteBtn : {
                 event : {
                     click : function () {
-                        // controller에 json으로 넘길 form값
-                        var actForm = {};
-
-                        var memSeq = $("#memSeq").val();
-                        var appctnBsnmNo = $("#appctnBsnmNo").val();
-                        var appctnRsn = $("#appctnRsn").val();
-                        var appctnFldCd = $("#appctnFldCd").val();
-                        var appctnThemeCntn = $("#appctnThemeCntn").val();
-                        var hopeDt = $("#hopeDt").val();
-                        var placeZipcode = $("#placeZipcode").val();
-                        var placeBscAddr = $("#placeBscAddr").val();
-                        var placeDtlAddr = $("#placeDtlAddr").val();
-                        var edctnPlaceAddr = $("#edctnPlaceAddr").val();
-                        var ptcptTrgtCntn = $("#ptcptTrgtCntn").val();
-                        var ptcptCnt = $("#ptcptCnt").val();
-                        var ptcptHh = $("#ptcptHh").val();
-                        var itrdcFileSeq = $("#itrdcFileSeq").val();
-
-                        actForm.memSeq = memSeq;
-                        actForm.appctnBsnmNo = appctnBsnmNo;
-                        actForm.appctnRsn = appctnRsn;
-                        actForm.appctnFldCd = appctnFldCd;
-                        actForm.appctnThemeCntn = appctnThemeCntn;
-                        actForm.hopeDt = hopeDt;
-                        actForm.placeZipcode = placeZipcode;
-                        actForm.placeBscAddr = placeBscAddr;
-                        actForm.placeDtlAddr = placeDtlAddr;
-                        actForm.edctnPlaceAddr = edctnPlaceAddr;
-                        actForm.ptcptTrgtCntn = ptcptTrgtCntn;
-                        actForm.ptcptCnt = ptcptCnt;
-                        actForm.ptcptHh = ptcptHh;
-                        actForm.itrdcFileSeq = itrdcFileSeq;
-
-                        var appctnTypeCdList = new Array();
-                        $(".checkBoxArea input[type='checkbox']:checked").each(function(){
-                            appctnTypeCdList.push($(this).val());
-                        });
-                        actForm.appctnTypeCdList = appctnTypeCdList;
-
                         if ($("#appctnRsn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_003"));
                             return false;
@@ -197,8 +205,13 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                             return false;
                         }
 
-                        // ㄴ 체크 박스 선택 확인도 추가하기
+                        /*var checkedValues = [];
 
+                        $('input[name="appctnTypeCdList"]:checked').each(function() {
+                            checkedValues.push($(this).val());
+                        });
+                        $('#appctnTypeCdList').val(checkedValues);*/
+                        // alert(checkedValues);
                         if($("#appctnThemeCntn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_005"));
                             return false;
@@ -228,27 +241,18 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                             alert(msgCtrl.getMsg("fail.eb.input.al_010"));
                             return false;
                         }
-
-                        if($("#itrdcFile").val() == '') {
-                            alert(msgCtrl.getMsg("fail.eb.input.al_011"));
-                            return false;
-                        }
-
-                        cmmCtrl.jsonAjax(function(data){
-                            location.href = "./complete";
-                        }, "./insert", actForm, "text");
+                        // controller에 json으로 넘길 form값
+                        cmmCtrl.fileFrm(function(data){
+                            //콜백함수. 페이지 이동
+                           location.href = "./complete";
+                        }, "./insert", $formObj, "json");
                     }
                 }
             },
-            //파일 삭제
-            delFile : {
+            searchFile : {
                 event : {
-                    click: function () {
-                        $(".delFile").remove();
-                        $("#emptyFile").show();
-                        $("#showFile").hide();
-                        $("#fileNm").text("");
-                        $("#file").removeClass("attached");
+                    change : function() {
+                        extnCheck(this, "jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip", 50);
                     }
                 }
             }
@@ -279,42 +283,6 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                 }
 
                 $("input[name=edctnPlaceAddr]").val(edctnPlaceAddr);
-            });
-
-            //파일 설정
-            $("input[type=file]").fileUpload({
-                loading:true,
-                sync:true
-            },function(data){
-                alert('test')
-                //해당 input file 객체에 data(tempFileData) 응답 값이 저장
-                if(data != undefined && data.length > 0){
-                    ctrl.obj.find(".file-list-area .empty-txt").text(data[0].orgnFileNm);
-                }
-            });
-
-            // 유효성 검사
-            $formObj.validation({
-                after : function() {
-                    var isValid = true
-
-                    jQuery(".dropzone").not(".notRequired").each(function(i){
-                        if (jQuery(this).children(".dz-preview").length == 0)
-                        {
-                            alert(jQuery(this).data("titl") + "를 첨부해주세요.");
-                            jQuery(this)[0].scrollIntoView();
-                            isValid = false;
-                            return false;
-                        }
-                    });
-
-                    return isValid;
-                },
-                async : {
-                    use : true,
-                    func : function () {
-                    }
-                }
             });
         }
     };

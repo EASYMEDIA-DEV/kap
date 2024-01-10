@@ -2,12 +2,14 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COStringUtil;
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduExcelDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
 import com.kap.service.dao.eb.EBCVisitEduMapper;
 import com.kap.service.dao.mp.MPAUserMapper;
@@ -20,14 +22,14 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * <pre>
@@ -85,6 +87,9 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
     //로그인 상태값 시스템 등록
     private final COSystemLogService cOSystemLogService;
+
+    //파일 업로드 유틸
+    private final COFileUtil cOFileUtil;
 
     COStringUtil stringUtil;
 
@@ -760,13 +765,30 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
     }
 
     /**
-     * 방문교육 신청정보를 등록
+     * 방문교육 신청정보 등록
      */
-    public int applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
+    public int applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO, MultipartHttpServletRequest multiRequest) throws Exception {
         ebcVisitEduDTO.setVstSeq(edctnVstMstSeqIdgen.getNextIntegerId());
         //신청분야 상세 insert
         ebcVisitEduMapper.insertAppctnType(ebcVisitEduDTO);
+
+        // 회사소개서 파일 넣기
+        List<COFileDTO> rtnList = null;
+        Map<String, MultipartFile> files = multiRequest.getFileMap();
+        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+        MultipartFile file;
+
+        rtnList = cOFileUtil.parseFileInf(files, "", 1, "", "file", 0);
+
+        List<COFileDTO> fileList = new ArrayList();
+        rtnList.get(0).setStatus("success");
+        rtnList.get(0).setFieldNm("fileSeq");
+        fileList.add(rtnList.get(0));
+
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+        ebcVisitEduDTO.setItrdcFileSeq(fileSeqMap.get("fileSeq"));
         return ebcVisitEduMapper.applyVisitEduInfo(ebcVisitEduDTO);
+
     }
 
     /**

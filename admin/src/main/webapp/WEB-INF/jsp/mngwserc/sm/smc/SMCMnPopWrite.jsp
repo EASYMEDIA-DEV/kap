@@ -134,13 +134,14 @@
                             <div class="col-sm-10 col-md-11">
                                 <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="5242880" />
+                                <spring:eval var="imageSize" expression="@environment.getProperty('app.file.mainPopPcSize')" />
                                 <div class="dropzone attachFile <c:if test="${rtnDto.tagCd eq 'html'}">notRequired</c:if>" data-file-field-nm="fileSeq" data-file-extn="${imgExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ 1920 X 1080 / 파일 확장자(${imageExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
+                                    ※ ${imageSize} / 파일 확장자(${imageExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하) / 최대 개수 (1개)
                                 </p>
                             </div>
                         </div>
@@ -161,13 +162,14 @@
                             <div class="col-sm-10 col-md-11">
                                 <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
                                 <spring:eval var="atchUploadMaxSize" expression="5242880" />
+                                <spring:eval var="imageSize" expression="@environment.getProperty('app.file.mainPopMblSize')" />
                                 <div class="dropzone attachFile <c:if test="${rtnDto.tagCd eq 'html'}">notRequired</c:if>" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지">
                                     <div class="dz-default dz-message">
                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ 1920 X 1080 / 파일 확장자(${imageExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}"/>MB 이하) / 최대 개수 (1개)
+                                    ※ ${imageSize} / 파일 확장자(${imageExtns}) / 최대용량 (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}"/>MB 이하) / 최대 개수 (1개)
                                 </p>
                             </div>
                         </div>
