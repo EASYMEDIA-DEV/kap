@@ -93,7 +93,7 @@ define(["ezCtrl"], function(ezCtrl) {
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
                         var delType = frmDataObj.data("delType");
                         if (delActCnt > 0) {
-                            if(confirm(msgCtrl.getMsg("confirm.del")))
+                            if(confirm("선택한 게시물을 삭제하시겠습니까?"))
                             {
                                 //삭제 전송
                                 cmmCtrl.frmAjax(function(respObj){
@@ -110,6 +110,8 @@ define(["ezCtrl"], function(ezCtrl) {
                                     }
                                 }, "./delete", frmDataObj, "POST", "json");
                             }
+                        }else{
+                            alert('삭제할 게시물을 선택해주세요.');
                         }
                     }
                 }

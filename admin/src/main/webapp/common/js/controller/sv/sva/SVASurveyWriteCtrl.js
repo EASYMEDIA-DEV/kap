@@ -34,7 +34,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     .end()
                     .find('select option:eq(0)').prop("selected",true)
                     .end()
-                    .find('input[type=checkbox]').prop("checked",false)
+                    .find('input[type=checkbox]').prop("checked",true)
                     .end()
                     .find('.delQuestion').hide()
                     .end()
@@ -128,6 +128,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // set model
     ctrl.model = {
         id : {
+            btnSubmit : {
+                event : {
+                    click : function() {
+
+                        $formObj.find(".ckeditorRequired").each(function() {
+                            $('input[name=hiddenTextArea]').val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
+                        });
+
+                        $formObj.submit();
+                    }
+                }
+            },
         },
         classname : {
             typeCd : {
@@ -138,6 +150,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             return;
                         }else{
                             getCate($(this).val());
+                        }
+                    }
+                }
+            },
+            surveyNextNumChk : {
+                event : {
+                    keyup : function() {
+                        if(/[^,0123456789-]/g.test($(this).val())){
+                            $(this).val("");
                         }
                     }
                 }
@@ -154,7 +175,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .end()
                             .find('select option:eq(0)').prop("selected",true)
                             .end()
-                            .find('input[type=checkbox]').prop("checked",false)
+                            .find('input[type=checkbox]').prop("checked",true)
                             .end()
                             .find('.delQuestion').show()
                             .end()
@@ -202,7 +223,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .end()
                             .find('select option:eq(0)').prop("selected",true)
                             .end()
-                            .find('input[type=checkbox]').prop("checked",false)
+                            .find('input[type=checkbox]').prop("checked",true)
                             .end()
                             .find(".addSubQuestion").hide()
                             .end()
@@ -596,29 +617,29 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
             // 유효성 검사
             $formObj.validation({
-                after : function() {
-                    var isValid = true, editorChk = true;
-                    $formObj.find(".ckeditorRequired").each(function() {
-                        jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-                        var editorVal = jQuery(this).val().length;
-                        if (editorVal < 1)
-                        {
-                            editorChk = false;
-                            alert("설문내용을 입력해주세요.");
-                            CKEDITOR.instances[jQuery(this).prop("id")].focus();
-                            // 에디터 최상단으로 스크롤 이동
-                            jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
-                            return false;
-                        }
-                    });
-
-                    if (!editorChk)
-                    {
-                        isValid = false;
-                    }
-
-                    return isValid;
-                },
+                // after : function() {
+                //     var isValid = true, editorChk = true;
+                //     $formObj.find(".ckeditorRequired").each(function() {
+                //         jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
+                //         var editorVal = jQuery(this).val().length;
+                //         if (editorVal < 1)
+                //         {
+                //             editorChk = false;
+                //             alert("설문내용을 입력해주세요.");
+                //             CKEDITOR.instances[jQuery(this).prop("id")].focus();
+                //             // 에디터 최상단으로 스크롤 이동
+                //             jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
+                //             return false;
+                //         }
+                //     });
+                //
+                //     if (!editorChk)
+                //     {
+                //         isValid = false;
+                //     }
+                //
+                //     return isValid;
+                // },
                 async : {
                     use : true,
                     func : function (){
@@ -664,6 +685,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         });
 
                         cmmCtrl.jsonAjax(function(data){
+                           alert('저장되었습니다.');
                            location.replace("./list");
                         }, actionUrl, svMst, "text")
                     }

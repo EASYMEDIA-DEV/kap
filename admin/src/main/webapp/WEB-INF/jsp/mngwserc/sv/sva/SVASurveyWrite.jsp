@@ -30,12 +30,12 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" maxlength="200" title="제목" placeholder="제목 입력하세요." />
+                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" maxlength="50" title="제목" placeholder="제목을 입력하세요." />
                     </div>
                 </div>
             </fieldset>
             <fieldset>
-                <div class="form-group form-inline">
+                <div class="form-group form-inline text-sm">
                     <label class="col-sm-1 control-label">예상 응답시간<span class="star"> *</span></label>
                     <div class="col-sm-10">
                         <select class="form-control input-sm wd-sm" name="rspnMm" id="rspnMm" title="예상 응답시간">
@@ -54,6 +54,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">설문개요<span class="star"> *</span></label>
                     <div class="col-sm-11">
+                        <input type="hidden" name="hiddenTextArea" title="설문개요">
                         <textarea class="form-control notRequired ckeditorRequired" id="cntn" name="cntn" title="설문개요">${rtnDto.cntn}</textarea>
                     </div>
                 </div>
@@ -134,19 +135,19 @@
                                                         <c:choose>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST01'}">
                                                                 <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
-                                                                <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
+                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST02'}">
                                                                 <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
-                                                                <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
+                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
                                                                 <input type="text" class="form-control input-sm notRequired answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
-                                                                <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
+                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
                                                                 <input type="text" class="form-control input-sm answer <c:if test="${!(exmplStatus.first || exmplStatus.last)}">notRequired</c:if>" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="라벨" placeholder="라벨명을 입력해주세요." style="width:80%" <c:if test="${!(exmplStatus.first || exmplStatus.last)}">disabled</c:if>/>
-                                                                <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
+                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
                                                             </c:when>
                                                         </c:choose>
                                                     </td>
@@ -219,7 +220,7 @@
                                             <th>응답<span class="star"> *</span></th>
                                             <td class="form-inline">
                                                 <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
-                                                <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
+                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-inverse addAnswer" >+</button>
@@ -235,8 +236,28 @@
             </c:choose>
 
 
+            <hr />
+            <div class="clearfix">
+                <div class="pull-left">
+                    <button type="button" class="btn btn-sm btn-default" onclick="if(confirm('목록으로 이동 시 입력한 값이 초기화 처리됩니다. 이동하시겠습니까?')){location.href='./list?${strPam}'}">목록</button>
+                </div>
+                <div class="pull-right">
+                    <c:choose>
+                        <c:when test="${ not empty rtnDto}">
+                            <c:if test="${rtnDto.posbChg ne 'false'}">
+                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                            </c:if>
+                            <button type="button" class="btn btn-sm btn-success" id="btnSubmit">저장</button>
+                        </c:when>
+                        <c:otherwise>
+                            <button type="button" class="btn btn-sm btn-success" id="btnSubmit">저장</button>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
 
             <c:if test="${not empty rtnDto}">
+                <h5 class="ml mb-xl"><em class="ion-play mr-sm"></em>등록/수정이력</h5>
                 <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">최초 등록자</label>
@@ -244,9 +265,9 @@
                             <p class="form-control-static">${rtnDto.regName} (${rtnDto.regId})</p>
                         </div>
                         <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최초 등록일</label>
+                        <label class="col-sm-1 control-label">최초 등록일시</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</p>
+                            <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
                         </div>
                     </div>
                 </fieldset>
@@ -267,12 +288,12 @@
                             </p>
                         </div>
                         <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최종 수정일</label>
+                        <label class="col-sm-1 control-label">최종 수정일시</label>
                         <div class="col-sm-4">
                             <p class="form-control-static">
                                 <c:choose>
                                     <c:when test="${modFlag}">
-                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}
+                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                     </c:when>
                                     <c:otherwise>
                                         -
@@ -283,25 +304,6 @@
                     </div>
                 </fieldset>
             </c:if>
-            <hr />
-            <div class="clearfix">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
-                </div>
-                <div class="pull-right">
-                    <c:choose>
-                        <c:when test="${ not empty rtnDto}">
-                            <c:if test="${rtnDto.posbChg ne 'false'}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                            </c:if>
-                            <button type="submit" class="btn btn-sm btn-success">수정</button>
-                        </c:when>
-                        <c:otherwise>
-                            <button type="submit" class="btn btn-sm btn-success">등록</button>
-                        </c:otherwise>
-                    </c:choose>
-                </div>
-            </div>
         </form>
     </div>
 </div>

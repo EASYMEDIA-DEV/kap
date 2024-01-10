@@ -24,9 +24,9 @@
                     </c:choose>
 
                 </td>
-                <td class="text-center" >${ list.regName }</td>
+                <td class="text-center" >${ list.regName }(${ list.regId })</td>
                 <td class="text-center" data-reg-dtm="${list.regDtm}">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
-                <td class="text-center" >${ list.modName }</td>
+                <td class="text-center" >${ list.modName }(${ list.modId })</td>
                 <td class="text-center" data-list-dtm="${list.modDtm}">${ kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                 <td class="text-center" data-use-yn="${list.expsYn}">${ list.expsYn eq 'Y' ? '노출' : '미노출' }</td>
             </tr>
@@ -35,7 +35,7 @@
     <c:otherwise>
         <tr data-total-count="0">
             <td colspan="11" class="text-center">
-                등록된 데이터가 없습니다.
+                검색결과가 없습니다.<br> (등록된 데이터가 없습니다)
             </td>
         </tr>
     </c:otherwise>

@@ -475,11 +475,13 @@
 			 ,exps_yn
 			 ,msr_stnd_cd
 			 ,msr_yn
+			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.reg_id) AS REG_NAME
 			 ,reg_id
 			 ,reg_dtm
+			 , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.mod_id) AS MOD_NAME
 			 ,mod_id
 			 ,mod_dtm
-		from sv_mst
+		from sv_mst A
 		where srv_seq = #{detailsKey}
 	</select>
 
