@@ -2,6 +2,7 @@ package com.kap.service;
 
 import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -20,6 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.11.20		구은희				   최초 생성
+ *    2024.01.05        이옥정                  뉴스레터 이메일 중복 검사 추가
+ *    2024.01.08        이옥정                  뉴스레터 등록 추가
  * </pre>
  */
 public interface MPHNewsLetterService {
@@ -33,5 +36,21 @@ public interface MPHNewsLetterService {
      * 엑셀 생성
      */
     public void excelDownload(MPHNewsLetterDTO mphNewsLetterDTO, HttpServletResponse response) throws Exception;
+
+    /**
+     * 뉴스레터 이메일 중복 검사
+     * @param mphNewsLetterDTO
+     * @return
+     * @throws Exception
+     */
+    int selectDupEmail(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception;
+
+    /**
+     * 뉴스레터 등록
+     * @param mphNewsLetterDTO
+     * @return
+     * @throws Exception
+     */
+    public int insertNewsletter(MPHNewsLetterDTO mphNewsLetterDTO, HttpServletRequest request) throws Exception;
 
 }

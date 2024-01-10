@@ -42,7 +42,7 @@
         <fieldset>
         <div class="form-group text-sm">
           <label class="col-sm-1 control-label">신청분야</label>
-          <div class="col-sm-5">
+          <div class="col-sm-5 pl0">
             <div class="col-sm-3 pr0">
               <select class="form-control input-sm" name="appctnFidCd">
                 <option value="">선택</option>
@@ -57,7 +57,7 @@
       <fieldset>
         <div class="form-group text-sm">
           <label class="col-sm-1 control-label">진행상태</label>
-          <div class="col-sm-5">
+          <div class="col-sm-5 pl0">
             <div class="col-sm-3 pr0">
               <select class="form-control input-sm" name="rsumeSttsCd">
                 <option value="">선택</option>
@@ -152,9 +152,9 @@
             <th class="text-center">랩업일</th>
             <th class="text-center">랩업자료</th>
             <th class="text-center">신청일</th>
-            <th class="text-center">최초 등록자(아이디)</th>
+            <th class="text-center">최초 등록자</th>
             <th class="text-center">최초 등록일시</th>
-            <th class="text-center">최종 수정자(아이디)</th>
+            <th class="text-center">최종 수정자</th>
             <th class="text-center">최종 수정일시</th>
           </tr>
           </thead>
