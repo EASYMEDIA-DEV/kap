@@ -394,7 +394,6 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             }
         } else {
             List<WBCompanyDetailMstDTO> sqInfoList = wBFBRegisterDTO.getSqInfoList();
-            System.err.println(sqInfoList);
             if(sqInfoList != null ) {
                 for(WBCompanyDetailMstDTO wBCompanyDetailMstDTO : sqInfoList) {
                     wBCompanyDetailMstDTO.setBsnmNo(wBFBRegisterDTO.getBsnmNo());

@@ -56,7 +56,7 @@ public class WBFASmartRoundServiceImpl implements WBFASmartRoundService {
      *   신청부품사 목록 List Get
      */
     public WBRoundMstSearchDTO selRoundList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
-        wBRoundMstSearchDTO.setBsnCd("INQ07006");
+        wBRoundMstSearchDTO.setBsnCd("BUSUNESS_TYPE06");
 
         COPaginationUtil page = new COPaginationUtil();
 
