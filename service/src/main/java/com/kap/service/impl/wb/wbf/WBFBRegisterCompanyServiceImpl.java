@@ -250,16 +250,20 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         respCnt = wBFBRegisterCompanyMapper.putAppctnRsumeDtl(wBFBRegisterDTO);
 
         /* 상생신청파일 상세 */
+        WBFBRsumeTaskDtlDTO rsumeTaskDTO = wBFBRegisterDTO.getRsumeTaskDtl();
+        List<WBRsumeFileDtlDTO> fileList = rsumeTaskDTO.getAppctnFileInfo();
+
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBFBRegisterDTO.getFileList());
-        WBRsumeFileDtlDTO fileInfo = WBRsumeFileDtlDTO.builder()
-                .rsumeSeq(wBFBRegisterDTO.getRsumeSeq())
-                .rsumeOrd(wBFBRegisterDTO.getRsumeOrd())
-                .fileCd("ATTACH_FILE_TYPE01")
-                .fileSeq(fileSeqMap.get("appctnFileSeq"))
-                .regId(wBFBRegisterDTO.getRegId())
-                .regIp(wBFBRegisterDTO.getRegIp())
-                .build();
-        wBFBRegisterCompanyMapper.putAppctnFileDtl(fileInfo);
+        for(int fileIdx=0; fileIdx< fileList.size(); fileIdx++) {
+            WBRsumeFileDtlDTO fileInfo = fileList.get(fileIdx);
+            fileInfo.setRsumeSeq(wBFBRegisterDTO.getRsumeSeq());
+            fileInfo.setRsumeOrd(wBFBRegisterDTO.getRsumeOrd());
+            fileInfo.setFileCd(fileInfo.getType()); /*파일타입*/
+            fileInfo.setFileSeq(fileSeqMap.get(fileInfo.getSeqNm())); /*파일 시퀀스*/
+            fileInfo.setRegId(wBFBRegisterDTO.getRegId());
+            fileInfo.setRegIp(wBFBRegisterDTO.getRegIp());
+            wBFBRegisterCompanyMapper.putAppctnFileDtl(fileInfo);
+        }
 
         /* 상생신청 스마트 상세 */
         wBFBRegisterDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen);

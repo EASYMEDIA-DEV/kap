@@ -369,7 +369,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnPartUserModal: {
                 event: {
                     click: function () {
-                        $("#srchDivide").val("Y");
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             cmmCtrl.frmAjax(function (respObj) {
                                 $formObj.find('#memSeq').val(data.memSeq);
