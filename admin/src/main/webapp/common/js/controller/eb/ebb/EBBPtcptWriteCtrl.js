@@ -70,14 +70,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 		},
 		immediately : function() {
 
-
 			jQuery(".CodeMirror").find("textarea").addClass("notRequired");
 
 			// 유효성 검사
 			$formObj.validation({
 				after : function() {
 					var isValid = true, editorChk = true;
-
+/*
 					$formObj.find(".ckeditorRequired").each(function() {
 						jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
 						jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
@@ -100,7 +99,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 							return false;
 						}
-					});
+					});*/
+
+					if($("#memSeq").val() == ""){
+						alert("회원을 선택해주세요.");
+						isValid = false;
+						return false;
+					}
+
+					//교육장소가 gpc일 경우에만 출력하고 체크함
+					if($("#gpcId").val() == "") {
+						alert("GPC아이디를 입력해주세요.");
+						isValid = false;
+						return false;
+					}
+
 
 					if (!editorChk)
 					{
@@ -123,12 +136,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						seqObj.episdOrd = $("#episdOrd").val();
 						seqObj.episdSeq = $("#episdSeq").val();
 						seqObj.stduyMthdCd = $("#stduyMthdCd").val();//학습방식, 온라인이면 출석정보 등록 안함
-
-
-						if($("#memSeq").val() == ""){
-							alert("회원을 선택해주세요.");
-							return false;
-						}
 
 						//정원수 체크
 						cmmCtrl.jsonAjax(function(data){

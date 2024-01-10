@@ -162,18 +162,22 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 								for(var i=0; i<trObjList.length;i++){
 									var relForm = $(".exmplContainer").clone(true);
 									 var rObj = trObjList[i];
-									relForm.find("span.nm").text(rObj.nm);
+									relForm.find("span.nm").text("▣ " + rObj.nm);
 									relForm.find("input.cloneHidden").prop("name", "edctnRel"+edctnRelStatus).val(rObj.edctnSeq);
 
 
 									//다중등록할때 시퀀스 체크해서 중복값이면 패스함
-									var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 append목록에 추가하지 않는다.
+									var passYn = false;//이 값이 true가 되면 이미 목록에 있으므로 append목록에 추가하지 않는다.
 									$(".relField").find("input:hidden").each(function(){
 										if($(this).val() == rObj.edctnSeq) passYn = true;
 									});
 
 									if(!passYn){
 										$(".relForm"+edctnRelStatus).append(relForm.html());
+										$(".ebbEpisdCouseSrchLayer").find(".close").click();
+									}else{
+										alert("이미 등록된 과정입니다.");
+										break;
 									}
 
 								}
@@ -182,7 +186,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							//선택한 교육과정이 단건일경우
 							}else{
 								var relForm = $(".exmplContainer").clone(true);
-								relForm.find("span.nm").text(data.nm);
+								relForm.find("span.nm").text("▣ " + data.nm);
 								relForm.find("input.cloneHidden").prop("name", "edctnRel"+edctnRelStatus).val(data.edctnSeq);
 
 								//다중등록할때 시퀀스 체크해서 중복값이면 패스함
@@ -191,11 +195,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 									if($(this).val() == data.edctnSeq) {
 										alert("이미 등록된 과정입니다.");
 										passYn = true;
+
 									}
 								});
 
 								if(!passYn){
 									$(".relForm"+edctnRelStatus).append(relForm.html());
+									$(".ebbEpisdCouseSrchLayer").find(".close").click();
 								}
 
 

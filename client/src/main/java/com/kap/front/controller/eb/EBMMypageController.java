@@ -1,9 +1,7 @@
-package com.kap.front.controller.co;
+package com.kap.front.controller.eb;
 
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.EBACouseService;
 import com.kap.service.EBBEpisdService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,28 +14,31 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * <pre>
- * 마이페이지 서브 메인 페이지
+ * 메인 페이지
  * </pre>
- * @ClassName		: COMypageController.java
- * @Description		: 마이페이지 서브 메인 페이지
+ * @ClassName		: COMainController.java
+ * @Description		: 메인 페이지
  * @see
  * @Modification Information
  * <pre>
  *	     since		  author	            description
  *    ==========    ==========    ==============================
- * 	  2023.01.09	  김학규	             최초 생성
+ * 	  2023.11.17	  이옥정	             최초 생성
  * </pre>
  */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-public class COMypageController
+public class EBMMypageController
 {
 
     /** 서비스 **/
     public final EBBEpisdService eBBEpisdService;
 
-    @GetMapping("/my-page/main")
+    /**
+     * 교육/세미나 사업 신청내역 목록
+     */
+    @GetMapping("/my-page/edu-apply")
     public String getMainPage(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try{
@@ -107,4 +108,9 @@ public class COMypageController
 
         return rtnView;
     }
+
+
+
+
+
 }

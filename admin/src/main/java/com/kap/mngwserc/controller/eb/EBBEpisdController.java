@@ -408,6 +408,7 @@ public class EBBEpisdController {
     {
         try
         {
+
             modelMap.addAttribute("rtnData", eBBEpisdService.setPtcptList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
         }

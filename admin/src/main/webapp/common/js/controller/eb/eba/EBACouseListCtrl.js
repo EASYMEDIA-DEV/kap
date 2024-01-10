@@ -331,8 +331,54 @@ define(["ezCtrl"], function(ezCtrl) {
 								clickObj.choiceCnt = choiceCnt;
 							}
 
-							ctrl.obj.trigger("choice", [clickObj])
-							ctrl.obj.find(".close").click();
+							var passYn = "S";//S:등록가능, F:이미있음, M:현재 수정중인 과정   이 값이 true가 되면 이미 목록에 있으므로 append목록에 추가하지 않는다.
+
+
+								//다중
+								if(clickObj.trObjList != null){
+
+									var trObjList= clickObj.trObjList;
+									for(var i=0; i<trObjList.length;i++){
+										var rObj = trObjList[i];
+
+										//다중등록할때 시퀀스 체크해서 중복값이면 패스함
+
+										$(".relField").find("input:hidden").each(function(){
+											if($(this).val() == rObj.edctnSeq && passYn != "F" && passYn != "M") passYn = "F";
+
+											if($(this).val() == $("#detailsKey").val() && passYn != "F" && passYn != "M") passYn = "M";
+										});
+
+										if(passYn =="F" || passYn =="M"){
+											break;
+										}
+									}
+
+								//단건
+								}else{
+
+									$(".relField").find("input:hidden").each(function(){
+										if($(this).val() == clickObj.edctnSeq && passYn != "F" && passYn != "M" ) {
+											passYn = "F";
+										}
+									});
+									if(clickObj.edctnSeq== $("#detailsKey").val() && passYn != "F" && passYn != "M") passYn = "M";
+
+								}
+
+
+							if(passYn == "F"){
+								alert("이미 등록된 과정입니다.");
+								return false;
+							}else if(passYn == "M"){
+								alert("현재 수정중인 과정은 선택할 수 없습니다.");
+								return false;
+							}else{
+								ctrl.obj.trigger("choice", [clickObj])
+								ctrl.obj.find(".close").click();
+							}
+
+
 						}
 					}
 				}

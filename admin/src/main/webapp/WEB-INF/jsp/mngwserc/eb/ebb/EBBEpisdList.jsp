@@ -23,8 +23,8 @@
 				<!--기간 검색 시작-->
 				<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 					<jsp:param name="srchText" value="등록/수정기간" />
-					<jsp:param name="srchOption" value="등록일,수정일,접수기간,교육기간" />
-					<jsp:param name="srchType" value="edctn" />
+					<jsp:param name="srchOption" value="교육기간,접수기간, 등록일,수정일" />
+					<jsp:param name="srchType" value="episd" />
 				</jsp:include>
 
 
@@ -282,10 +282,10 @@
 						</select>
 					</div>
 					<div class="pull-right">
+						<button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcel">엑셀다운로드</button>
 						<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnEdDelete">선택삭제</button>
 						<button type="button" class="btn btn-default btn-sm mb-sm" id="btnCopy">복사</button>
 						<button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-						<button type="button" class="btn btn-info btn-sm mb-sm" id="btnExcel">엑셀 다운로드</button>
 					</div>
 				</div>
 				<!--VUE 영역 시작 -->

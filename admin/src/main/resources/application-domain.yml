@@ -4,6 +4,7 @@ domain:
   port: 9011
 server:
   port: 9012
+  max-http-header-size: 40MB
   ssl:
     enabled: true
     key-store-type: PKCS12
