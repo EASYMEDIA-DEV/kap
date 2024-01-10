@@ -30,7 +30,7 @@
                     FROM
                         (
                             SELECT * FROM cx_episd_mst
-                            WHERE bsn_cd = 'BUSUNESS_TYPE09'
+                            WHERE bsn_cd = 'BNS09'
                         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
                         INNER JOIN
                         (
@@ -72,7 +72,7 @@
                         FROM
                             (
                             SELECT * FROM cx_episd_mst
-                            WHERE bsn_cd = 'BUSUNESS_TYPE09'
+                            WHERE bsn_cd = 'BNS09'
                             ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
                             INNER JOIN
                             (

@@ -137,7 +137,7 @@
     -->
     <sql id="selectSupplyListwhereSql">
         <where>
-            AND BSN_CD = 'BUSUNESS_TYPE09'
+            AND BSN_CD = 'BNS09'
             <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
                     <when test="carbonDate == 1">
@@ -385,7 +385,7 @@
                      ELSE 3
                      END AS DATE_ORD
                  FROM CX_EPISD_MST A
-                 WHERE BSN_CD = 'BUSUNESS_TYPE09' AND EXPS_YN = 'Y'
+                 WHERE BSN_CD = 'BNS09' AND EXPS_YN = 'Y'
              ) A
         WHERE DATE_ORD = 1
         ORDER BY ACCS_STRT_DTM, BSN_STRT_DTM ASC

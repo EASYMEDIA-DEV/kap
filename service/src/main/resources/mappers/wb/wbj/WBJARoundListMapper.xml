@@ -197,7 +197,7 @@
                     </otherwise>
                 </choose>
             </if>
-        AND BSN_CD = 'BUSUNESS_TYPE10'
+        AND BSN_CD = 'BNS10'
         </where>
     </sql>
 
@@ -526,7 +526,7 @@
         SELECT /* WBJARoundListMapper.selectEpisdDtl */
             *
         FROM CX_EPISD_MST
-        WHERE BSN_CD = 'BUSUNESS_TYPE10'
+        WHERE BSN_CD = 'BNS10'
         AND EXPS_YN = 'Y'
         AND YEAR = CURDATE()
         AND ACCS_END_DTM <![CDATA[ > ]]> NOW()
