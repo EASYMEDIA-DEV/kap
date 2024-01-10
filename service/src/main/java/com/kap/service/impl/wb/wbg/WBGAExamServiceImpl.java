@@ -1093,7 +1093,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                 String regId = COUserDetailsHelperService.getAuthenticatedUser().getId();
                 String regIp = CONetworkUtil.getMyIPaddress(request);
 
-                wbgaApplyMstDTO.setBsnCd("BUSUNESS_TYPE07");
+                wbgaApplyMstDTO.setBsnCd("BNS07");
                 wbgaApplyMstDTO.setYear(wbgaExamSearchDTO.getYear());
                 WBRoundMstSearchDTO round = wBGAExamMapper.getExisdDtl(wbgaApplyMstDTO);
 
@@ -1211,7 +1211,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
         WBGAApplyMstDTO wbgaApplyMstDTO = new WBGAApplyMstDTO();
         Calendar cal = Calendar.getInstance();
         wbgaApplyMstDTO.setYear(String.valueOf(cal.get(Calendar.YEAR)));
-        wbgaApplyMstDTO.setBsnCd("BUSUNESS_TYPE07");
+        wbgaApplyMstDTO.setBsnCd("BNS07");
         WBRoundMstSearchDTO round = wBGAExamMapper.getExisdDtl(wbgaApplyMstDTO);
 
         wbgaExamSearchDTO.setEpisdSeq(round.getEpisdSeq());
