@@ -48,7 +48,7 @@
                     <tr>
                         <th scope="row" class="bg-gray-lighter">가입일</th>
                         <td> ${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
-                        <th scope="row" class="bg-gray-lighter">최종접속일</th>
+                        <th scope="row" class="bg-gray-lighter">최종 접속일</th>
                         <td>${ kl:convertDate(rtnInfo.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                     </tr>
                     </tbody>
