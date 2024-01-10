@@ -230,7 +230,7 @@ public class WBIASupplyListController {
     public String getEpisdAjax(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBRoundMstDTO.setBsnCd("BUSUNESS_TYPE09");
+            wBRoundMstDTO.setBsnCd("BNS09");
             modelMap.addAttribute("optEpisdCnt", wBIASupplyListService.roundCnt(wBRoundMstDTO));
         }
         catch (Exception e)
