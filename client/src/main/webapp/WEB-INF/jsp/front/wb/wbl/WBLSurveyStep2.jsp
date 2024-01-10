@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <!-- content 영역 start -->
-<div class="cont-wrap" data-controller="controller/wb/wbl/WBLSurveyStep2Ctrl">
+<div class="cont-wrap" data-controller="controller/wb/wbl/WBLSurveyStep2Ctrl" >
     <div class="inner">
         <div class="sub-top-vis-area">
             <div class="page-tit-area t-align-center">
