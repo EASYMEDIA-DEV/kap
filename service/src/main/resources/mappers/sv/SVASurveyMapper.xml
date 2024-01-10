@@ -573,6 +573,7 @@
 			cd_id
 			 , cd
 			 , cd_nm
+			 , parent_cd_nm
 			 , qstn_seq
 			 , ctgry_cd
 			 , srv_type_cd
@@ -590,6 +591,7 @@
 					 cd_id
 					  , cd
 					  , cd_nm
+				      , (select cd_nm from co_code_mst where cd_id = 'SURVEY_TYPE' and cd = left(a.cd,5)) as parent_cd_nm
 					  , b.qstn_seq
 					  , b.ctgry_cd
 					  , b.srv_type_cd
@@ -606,7 +608,15 @@
 				 FROM
 					 co_code_mst a left join (select * from sv_qstn_dtl where srv_seq = #{detailsKey} AND ctgry_cd !='EDU05') b on a.cd = b.ctgry_cd
 					, (select @rownum:=0, @grp:='') r
-				 WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd}
+					<choose>
+						<when test="siteGubun == 'admin'">
+							WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd}
+						</when>
+						<otherwise>
+							WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 3 AND LEFT(CD,3) = #{typeCd}
+						</otherwise>
+					</choose>
+
 				 ORDER BY
 					 lft_val , qstn_ord
 			 ) T
@@ -916,7 +926,7 @@
 	</insert>
 
 	<select id="selectSurveyScore" statementType="CALLABLE" parameterType="SVASurveyRspnScoreDTO">
-		{call sp_survey_score(#{srvType} , #{targetSeq}, '' , '' , '' , '' , '')}
-		</select>
+		{call sp_survey_score(#{srvType} , #{targetSeq}, #{ptcptName} , #{ptcptTelno} , #{ptcptPstn}  , #{regId} , #{regIp})}
+	</select>
 
 </mapper>

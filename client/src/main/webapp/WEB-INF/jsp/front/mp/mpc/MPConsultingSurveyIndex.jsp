@@ -11,7 +11,7 @@
 
         <div class="inner-con-box evaluation"><!-- evaluation: 평가하기 대기 페이지 -->
             <div class="cont-for-padding">
-                <p class="f-title1">${rtnData.bsnYear} 상주${rtnData.cnstgNm}</p>
+                <p class="f-title1">${rtnData.bsnYear} 상주${rtnData.cnstgNm} </p>
                 <div class="sort-label-area">
                     <p class="label"><span>${rtnData.cnstgNm}</span></p>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="btn-wrap">
                     <div class="btn-set">
                         <a class="btn-solid small gray-bg" href="javascript:"><span>신청내역 상세</span></a>
-                        <a class="btn-solid small black-bg" href="javascript:"><span>참여하기</span></a>
+                        <a class="btn-solid small black-bg" href="./surveyStep2?detailsKey=${rtnData.cnstgSeq}"><span>참여하기</span></a>
                     </div>
                     <div class="btn-set">
                     </div>

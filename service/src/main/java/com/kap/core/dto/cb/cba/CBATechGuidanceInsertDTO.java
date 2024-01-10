@@ -282,6 +282,10 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String srvEndDtm;
     @Schema(title = "설문종료일자")
     private String typeNm;
+    @Schema(title = "문항수", example = "숫자")
+    private Integer qstnCnt;
+    @Schema(title = "응답수", example = "숫자")
+    private Integer rspnCnt;
 
     // 이관 이력 리스트
     List<CBATechGuidanceInsertDTO> trsfGuidanceList;

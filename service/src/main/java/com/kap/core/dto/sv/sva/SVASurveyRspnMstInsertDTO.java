@@ -57,6 +57,15 @@ public class SVASurveyRspnMstInsertDTO extends BaseDTO {
     @Schema(title = "이메일")
     private String email;
 
+    @Schema(title = "참여이름")
+    private String ptcptName;
+    @Schema(title = "참여전화번호")
+    private String ptcptTelno;
+    @Schema(title = "참여직급")
+    private String ptcptPstn;
+    @Schema(title = "참여이메일")
+    private String ptcptEmail;
+
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
     @Schema(title = "등록일시", example = "yyyy-MM-dd hh:mm:ss")
