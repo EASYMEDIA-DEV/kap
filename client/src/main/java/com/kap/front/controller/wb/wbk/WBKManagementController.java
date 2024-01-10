@@ -169,7 +169,7 @@ public class WBKManagementController {
             System.err.println("공모전 신청 완료!");
 
             /* 신청자 최초 상태값 - 접수완료 */
-            wBKBRegisterDTO.setBsnCd("INQ07011");
+            wBKBRegisterDTO.setBsnCd("BNS11");
             wBKBRegisterDTO.setRsumeOrd(1);
             wBKBRegisterDTO.setAppctnSttsCd("WBKB_REG_FRT001");
 

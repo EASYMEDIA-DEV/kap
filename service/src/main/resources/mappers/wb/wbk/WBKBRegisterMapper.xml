@@ -26,7 +26,7 @@
         FROM
             (
             SELECT * FROM cx_episd_mst
-            WHERE bsn_cd = 'INQ07011'
+            WHERE bsn_cd = 'BNS11'
             ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
             INNER JOIN(
                 SELECT
@@ -98,7 +98,7 @@
         FROM
             (
             SELECT * FROM cx_episd_mst
-            WHERE bsn_cd = 'INQ07011'
+            WHERE bsn_cd = 'BNS11'
             ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
             INNER JOIN cx_appctn_rsume_dtl C on C.appctn_seq = B.appctn_seq
             INNER JOIN cx_appctn_rsume_prize_car_dtl D on D.rsume_seq = C.rsume_seq
@@ -175,7 +175,7 @@
         FROM
         (
             SELECT * FROM cx_episd_mst
-            WHERE bsn_cd = 'INQ07011'
+            WHERE bsn_cd = 'BNS11'
         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
         INNER JOIN(
             SELECT
@@ -1008,7 +1008,7 @@
             D.DTL_CNTN
         FROM  (
                   SELECT * FROM CX_EPISD_MST
-                  WHERE BSN_CD = 'INQ07011'
+                  WHERE BSN_CD = 'BNS11'
               ) A
                   INNER JOIN CX_APPCTN_MST B ON B.EPISD_SEQ = A.EPISD_SEQ
                   INNER JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ

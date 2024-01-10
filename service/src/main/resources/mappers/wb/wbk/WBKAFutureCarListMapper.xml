@@ -26,7 +26,7 @@
                 (
                 SELECT *
                 FROM cx_episd_mst
-                WHERE bsn_cd = 'INQ07011'
+                WHERE bsn_cd = 'BNS11'
                 )B
                 INNER JOIN cx_appctn_mst C on C.episd_seq = b.episd_seq
                 WHERE C.episd_seq = a.episd_seq
@@ -37,7 +37,7 @@
                 (
                 SELECT *
                 FROM cx_episd_mst
-                WHERE bsn_cd = 'INQ07011'
+                WHERE bsn_cd = 'BNS11'
                 )B
                 inner join cx_appctn_mst C on C.episd_seq = b.episd_seq
                 inner join cx_appctn_rsume_dtl D on D.appctn_seq = C.appctn_seq
@@ -151,7 +151,7 @@
 					(
 					SELECT *
 					FROM cx_episd_mst
-					WHERE bsn_cd = 'INQ07011'
+					WHERE bsn_cd = 'BNS11'
 					)B
 					INNER JOIN cx_appctn_mst C on C.episd_seq = b.episd_seq
 					WHERE C.episd_seq = a.episd_seq
@@ -191,7 +191,7 @@
                      ELSE 3
                      END AS DATE_ORD
                  FROM CX_EPISD_MST A
-                 WHERE BSN_CD = 'INQ07011' AND EXPS_YN = 'Y'
+                 WHERE BSN_CD = 'BNS11' AND EXPS_YN = 'Y'
              ) A
         WHERE DATE_ORD = 1
         ORDER BY ACCS_STRT_DTM, BSN_STRT_DTM ASC
@@ -248,7 +248,7 @@
     -->
     <sql id="selectFutureCarContestListwhereSql">
         <where>
-            AND BSN_CD = 'INQ07011'
+            AND BSN_CD = 'BNS11'
             <if test="futureCarContestDate != null and futureCarContestDate != ''.toString() ">
                 <choose>
                     <when test="futureCarContestDate == 1">
