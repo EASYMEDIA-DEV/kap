@@ -173,13 +173,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         wbRoundMstDTO.year = $("#year").val()
                         wbRoundMstDTO.episd = $("#episd").val()
 
-                        wbRoundMstDTO.accsStrtDtm = $("#accsStrtDtm").val()
-                        wbRoundMstDTO.accsEndDtm = $("#accsEndDtm").val()
+                        wbRoundMstDTO.accsStrtDtm = $("#accsStrtDtm").val() + " " + $("#accsStrtHour").val() +":00:00"
+                        wbRoundMstDTO.accsEndDtm = $("#accsEndDtm").val() +" " + $("#accsEndHour").val()+":59:59";
 
                         wbRoundMstDTO.placeSeq = $("#placeSeq").val()
 
-                        wbRoundMstDTO.bsnStrtDtm = $("#bsnStrtDtm").val()
-                        wbRoundMstDTO.bsnEndDtm = $("#bsnEndDtm").val()
+                        wbRoundMstDTO.bsnStrtDtm = $("#bsnStrtDtm").val() + " " + $("#bsnStrtHour").val()+":00:00";
+                        wbRoundMstDTO.bsnEndDtm = $("#bsnEndDtm").val() + " " + $("#bsnEndHour").val()+":59:59";
 
                         wbRoundMstDTO.expsYn = $(":input:radio[name=expsYn]:checked").val();
 

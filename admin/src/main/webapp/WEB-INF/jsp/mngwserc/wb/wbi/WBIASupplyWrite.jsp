@@ -12,7 +12,17 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/wb/wbi/WBIASupplyWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
+        <h6 class="mt0">
+            <em class="ion-play mr-sm"></em>
+            <c:if test="${not empty rtnDto.episdSeq }">
+                공급망 회차 상세/수정
+            </c:if>
+            <c:if test="${empty rtnDto.episdSeq }">
+                공급망 회차 등록
+            </c:if>
+        </h6>
+
+
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
@@ -57,10 +67,17 @@
                                        value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if><c:if test="${empty rtnDto}">${today}</c:if>"
                                        title="접수 시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
                                 <span class="input-group-btn" style="z-index:0;">
-                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                    <em class="ion-calendar"></em>
-                                                                </button>
-                                                            </span>
+                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                        <em class="ion-calendar"></em>
+                                    </button>
+                                </span>
+                                <select class="form-control input-sm" id="accsStrtHour" name="accsStrtHour" title="접수 시작일">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${classTypeList.SYSTEM_HOUR}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                    </c:forEach>
+                                </select>
+
                                 <span class="input-group-addon bg-white b0">~</span>
                                 <input type="text" class="form-control input-sm datetimepicker_endDt" id="accsEndDtm" name="accsEndDtm"
                                        value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if><c:if test="${empty rtnDto}">${today}</c:if>"
@@ -70,6 +87,12 @@
                                         <em class="ion-calendar"></em>
                                     </button>
                                 </span>
+                                <select class="form-control input-sm" id="accsEndHour" name="accsEndHour" title="접수 종료일">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${classTypeList.SYSTEM_HOUR}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
                     </div>

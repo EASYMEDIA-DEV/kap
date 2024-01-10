@@ -61,6 +61,7 @@ public class WBJRoundController {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("STATE_TYPE");
+        cdDtlList.add("SYSTEM_HOUR");
 
         modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
         modelMap.addAttribute("rtnData", wBJARoundListService.selectRoundList(wBRoundMstSearchDTO));
@@ -104,7 +105,9 @@ public class WBJRoundController {
             // 코드 set
             cdDtlList.add("MNGCNSLT_DIS");
             cdDtlList.add("MNGCNSLT_REW");
+            cdDtlList.add("SYSTEM_HOUR");
 
+            modelMap.addAttribute("classTypeList", cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
             modelMap.addAttribute("cdList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 
             modelMap.addAttribute("rtnYear", wBJARoundListService.selectYearDtl(wBRoundMstSearchDTO));

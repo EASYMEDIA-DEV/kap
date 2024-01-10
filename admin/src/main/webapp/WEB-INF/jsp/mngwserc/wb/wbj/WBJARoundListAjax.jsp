@@ -18,8 +18,8 @@
                 <td class="text-center">
                     <a href="javascript:" class="listView"  data-details-key="${list.episdSeq}">${list.year}</a>
                 </td>
-                <td class="text-center">${ kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
-                <td class="text-center">${ kl:convertDate(list.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</td>
+                <td class="text-center">${ kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ ${ kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                <td class="text-center">${ kl:convertDate(list.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                 <td class="text-center">${list.dateState}</td>
                 <td class="text-center">${not empty list.nomCnt ? list.nomCnt : "-"}</td>
                 <td class="text-center">${not empty list.regCnt ? list.regCnt : "-"}</td>
