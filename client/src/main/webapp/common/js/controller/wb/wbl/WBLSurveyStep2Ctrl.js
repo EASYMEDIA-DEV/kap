@@ -54,12 +54,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                         if (nextNo != ''){
                             surveyList.find(".survey-list-inner:not(:eq(0)) input:radio").prop('checked',false).hide();
-
                             surveyList.find('.survey-list-inner:not(:eq(0))').hide();
-                            var nextNoSplit = nextNo.split(',');
-                            $(nextNoSplit).each(function(i){
-                                surveyList.find('.'+nextNoSplit[i]).show();
-                            });
+
+                            if (nextNo.indexOf(',') > 0){
+                                var nextNoSplit = nextNo.split(',');
+                                $(nextNoSplit).each(function(i){
+                                    surveyList.find('.'+nextNoSplit[i]).show();
+                                });
+                            }else{
+                                surveyList.find('.'+nextNo).show();
+                            }
                         }
                     }
                 }

@@ -103,12 +103,12 @@
                                                     </c:when>
                                                     <c:when test="${qstnList.srvTypeCd eq 'QST03'}">    <!--주관식단답-->
                                                         <div class="form-input w-full exmplList">
-                                                            <input type="text" placeholder="답변을 작성해주세요." class="${notRequired} answer" name="answer${qstnList.qstnSeq}" title="${qstnList.qstnNm}">
+                                                            <input type="text" placeholder="답변을 작성해주세요." class="${notRequired} answer" name="answer${qstnList.qstnSeq}" title="${qstnList.qstnNm}" data-next-no ="">
                                                         </div>
                                                     </c:when>
                                                     <c:when test="${qstnList.srvTypeCd eq 'QST04'}">    <!--주관식서술-->
                                                         <div class="form-textarea exmplList">
-                                                            <textarea name="answer${qstnList.qstnSeq}" class="${notRequired} answer" id="" cols="" rows="" placeholder="답변을 작성해주세요." title="${qstnList.qstnNm}"></textarea>
+                                                            <textarea name="answer${qstnList.qstnSeq}" class="${notRequired} answer" id="" cols="" rows="" placeholder="답변을 작성해주세요." title="${qstnList.qstnNm}" data-next-no =""></textarea>
                                                             <div class="check-byte">
                                                                 <p class="txt"><span class="current-byte">0</span>자</p>
                                                                 <p class="txt"><span class="max-byte">2,000</span>자</p>
