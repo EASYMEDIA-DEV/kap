@@ -1,8 +1,13 @@
 package com.kap.service;
 
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
+import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomDTO;
 import com.kap.core.dto.wb.wbk.WBKBRegisterDTO;
 import com.kap.core.dto.wb.wbk.WBKBRegisterSearchDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -14,7 +19,7 @@ import java.util.List;
  *
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
- *   2023.11.16  김동현         최초 생성
+ *   2023.11.16  민윤기         최초 생성
  * </pre>
  */
 public interface WBKBRegisterService {
@@ -71,4 +76,20 @@ public interface WBKBRegisterService {
      *  미래차 공모전 신청 상세조회
      */
     public WBKBRegisterDTO selectFutureCarConRegDtl(WBKBRegisterSearchDTO wBKBRegisterSearchDTO) throws Exception;
+
+    /**
+     * 신청자를 등록한다.
+     * @return
+     */
+    public int insertApply(WBKBRegisterDTO wBKBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
+     *   신청자 정보 조회
+     */
+    public WBKBRegisterDTO getApplyDtl(WBKBRegisterDTO wBKBRegisterDTO) throws Exception;
+
+    /**
+     * 공모전 수상자
+     */
+    public WBKBRegisterDTO selectWinerList(WBKBRegisterDTO wBKBRegisterDTO) throws Exception;
 }

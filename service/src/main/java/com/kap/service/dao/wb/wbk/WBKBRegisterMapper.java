@@ -2,8 +2,10 @@ package com.kap.service.dao.wb.wbk;
 
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import com.kap.core.dto.wb.WBRoundOptnMstDTO;
+import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomDTO;
 import com.kap.core.dto.wb.wbk.*;
 
 import java.util.List;
@@ -245,5 +247,15 @@ public interface WBKBRegisterMapper {
     public int deleteCarRegAppctnFileDtl(WBKBRegisterDTO wBKBRegisterDTO);
     public int deleteCarRegAppctnDtl(WBKBRegisterDTO wBKBRegisterDTO);
     public int deleteCarRegAppctnTmmbrDtl(WBKBRegisterDTO wBKBRegisterDTO);
+
+    /**
+     * 신청자 정보조회
+     */
+    public WBKBRegisterDTO getApplyDtl(WBKBRegisterDTO wBKBRegisterDTO) throws Exception;
+
+    /**
+     * 공모전 수상자
+     */
+    public List<WBKBRegisterDTO> selectWinerList(WBKBRegisterDTO wBKBRegisterDTO);
 
 }

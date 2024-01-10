@@ -1,15 +1,25 @@
 package com.kap.service.impl.wb.wbk;
 
+import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COStringUtil;
+import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
+import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomDTO;
 import com.kap.core.dto.wb.wbk.*;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
+import com.kap.service.dao.wb.wbb.WBBARoundMapper;
 import com.kap.service.dao.wb.wbf.WBFBRegisterCompanyMapper;
 import com.kap.service.dao.wb.wbk.WBKBRegisterMapper;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +30,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
@@ -52,12 +66,14 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
 
     /* Mapper */
     private final WBKBRegisterMapper wBKBRegisterMapper;
+    private final WBBARoundMapper wBBARoundMapper;
 
     private final COSystemLogService cOSystemLogService;
 
 
 
     //파일 서비스
+    private final COFileUtil cOFileUtil;
     private final COFileService cOFileService;
 
     //파일 업로드 위치
@@ -302,7 +318,8 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
 
             /* 기존 스텝 상태 변경 및 다음 스텝 추가 */
             wBKBRegisterMapper.updRsumeStep(wBKBRsumeDTO); // 기존 스텝 상태변경
-            if(wBKBRegisterDTO.getMngSttsCd().equals("WBKB_REG_LRT002")  && wBKBRsumeDTO.getRsumeOrd() < 3) {
+
+            if(wBKBRegisterDTO.getMngSttsCd().equals("WBKB_REG_LRT002") && wBKBRsumeDTO.getRsumeOrd() < 3) {
                 wBKBRsumeDTO.setAppctnSttsCd("WBKB_REG_FRT001");
                 wBKBRegisterMapper.insertRsumeStep(wBKBRsumeDTO); // 다음 스탭 추가
             }
@@ -585,4 +602,147 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
         return wBKBRegisterDTO;
     }
 
+    /**
+     *  사용자에서 신청자를 등록.
+     */
+    @Transactional
+    public int insertApply(WBKBRegisterDTO wBKBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+
+        int rtnCnt = 0;
+
+        try {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+            //기존 신청자인지 확인,,,
+            WBRoundMstSearchDTO wBRoundMstSearchDTO = new WBRoundMstSearchDTO();
+            wBRoundMstSearchDTO.setEpisdSeq(Integer.parseInt(wBKBRegisterDTO.getEpisdSeq()));
+            wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+
+            rtnCnt = wBBARoundMapper.getApplyCount(wBRoundMstSearchDTO);
+
+            if (rtnCnt > 0) {
+                //기존 신청이력 존재
+                rtnCnt = 999;
+            } else {
+                //마스터 생성
+                String regId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+                String regIp = CONetworkUtil.getMyIPaddress(request);
+
+                /* 상생신청 마스터 */
+                int firstAppctnMstIdgen = cxAppctnMstSeqIdgen.getNextIntegerId();
+                wBKBRegisterDTO.setAppctnSeq(firstAppctnMstIdgen); /* 신청순번 */
+                wBKBRegisterDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                wBKBRegisterDTO.setRegId( regId );
+                wBKBRegisterDTO.setRegIp( regIp );
+
+                rtnCnt = wBKBRegisterMapper.putAppctnMst(wBKBRegisterDTO);
+                System.err.println("사용자 신청 신청 마스터 카운트" + rtnCnt);
+                if (rtnCnt > 0) {
+
+                    /* 상생신청 상세 */
+                    int firstAppctnRsumeDtlIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
+                    wBKBRegisterDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen); /* 진행순번 */
+                    /* 스마트 신청 상태 코드 */
+                    wBKBRegisterDTO.setAppctnSttsCd("WBKB_REG_FRT001");
+                    rtnCnt *= wBKBRegisterMapper.putAppctnRsumeDtl(wBKBRegisterDTO);
+
+                    //신청파일 넣기
+                    List<COFileDTO> rtnList = null;
+                    Map<String, MultipartFile> files = multiRequest.getFileMap();
+                    Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+                    MultipartFile file;
+                    int atchFileCnt = 0;
+
+                    while (itr.hasNext()) {
+                        Map.Entry<String, MultipartFile> entry = itr.next();
+                        file = entry.getValue();
+
+                        if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                            atchFileCnt++;
+                        }
+                    }
+
+                    if (!files.isEmpty()) {
+                        rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                        for (int i = 0; i < rtnList.size() ; i++) {
+
+                            List<COFileDTO> fileList = new ArrayList();
+                            rtnList.get(i).setStatus("success");
+                            rtnList.get(i).setFieldNm("fileSeq");
+                            fileList.add(rtnList.get(i));
+
+                            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                            wBKBRegisterDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+
+                            wBKBRegisterMapper.putAppctnFileDtl(wBKBRegisterDTO);
+                        }
+                    }
+
+                    /* 상생신청 참여자 상세 */
+                    rtnCnt = wBKBRegisterMapper.putAppctnRsumeTaskDtl(wBKBRegisterDTO);
+
+                    // 참여자
+                    if(wBKBRegisterDTO.getPartList() != null && !wBKBRegisterDTO.getPartList().isEmpty()) {
+                        WBKBRegPartDTO wBKBRegPartDTO = new WBKBRegPartDTO();
+                        wBKBRegPartDTO.setRsumeSeq(wBKBRegisterDTO.getRsumeSeq());
+                        wBKBRegPartDTO.setModId(wBKBRegisterDTO.getModId());
+                        wBKBRegPartDTO.setModIp(wBKBRegisterDTO.getModIp());
+
+                        for (int i = 0; i < wBKBRegisterDTO.getPartList().size(); i++) {
+
+                            int firstEpisdGiveSeqIdgen = cxAppctnMstSeqIdgen.getNextIntegerId();
+
+                            //wBKBRegPartDTO.setRsumeSeq(firstEpisdGiveSeqIdgen);
+                            wBKBRegPartDTO.setTmmbrSeq(firstEpisdGiveSeqIdgen);
+                            wBKBRegPartDTO.setName(wBKBRegisterDTO.getPartList().get(i).getName());
+                            wBKBRegPartDTO.setHpNo(wBKBRegisterDTO.getPartList().get(i).getHpNo());
+                            wBKBRegPartDTO.setEmail(wBKBRegisterDTO.getPartList().get(i).getEmail());
+                            wBKBRegPartDTO.setSchlNm(wBKBRegisterDTO.getPartList().get(i).getSchlNm());
+                            wBKBRegPartDTO.setGrd(wBKBRegisterDTO.getPartList().get(i).getGrd());
+                            wBKBRegPartDTO.setGrdCd(wBKBRegisterDTO.getPartList().get(i).getGrdCd());
+                            wBKBRegPartDTO.setRegId(wBKBRegisterDTO.getRegIp());
+                            wBKBRegPartDTO.setRegId(wBKBRegisterDTO.getRegId());
+
+                            rtnCnt = wBKBRegisterMapper.putPartDtl(wBKBRegPartDTO);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rtnCnt;
+    }
+
+    public WBKBRegisterDTO getApplyDtl(WBKBRegisterDTO wBKBRegisterDTO) throws Exception {
+
+        COUserDetailsDTO cOUserDetailsDTO = null;
+        cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+        wBKBRegisterDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+
+        wBKBRegisterDTO = wBKBRegisterMapper.getApplyDtl(wBKBRegisterDTO);
+
+        return wBKBRegisterDTO;
+    }
+
+    /**
+     *  공모전 수상자
+     */
+    public WBKBRegisterDTO selectWinerList(WBKBRegisterDTO wBKBRegisterDTO) throws Exception{
+
+        List<WBKBRegisterDTO> getWinnerLists = wBKBRegisterMapper.selectWinerList(wBKBRegisterDTO);
+        wBKBRegisterDTO.setWinnerlist(getWinnerLists);
+
+        return wBKBRegisterDTO;
+
+    }
+
 }
+
+
+
+
+

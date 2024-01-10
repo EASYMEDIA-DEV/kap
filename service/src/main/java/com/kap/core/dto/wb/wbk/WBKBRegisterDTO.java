@@ -26,7 +26,7 @@ public class WBKBRegisterDTO extends BaseDTO {
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
     @Schema(title = "사업년도", example = "YYYY")
-    private String year;
+    private Integer year;
     @Schema(title = "회차", example = "1")
     private String episd;
 
@@ -35,7 +35,7 @@ public class WBKBRegisterDTO extends BaseDTO {
     private Integer appctnSeq;
     /* 신청자 정보 */
     @Schema(title = "회원 순번", example = "")
-    private String memSeq;
+    private Integer memSeq;
     @Schema(title = "신청자 이름", example = "")
     private String name;
     @Schema(title = "신청자 ID", example = "")
@@ -147,4 +147,7 @@ public class WBKBRegisterDTO extends BaseDTO {
 
     @Schema(title = "스텝 파일 리스트")
     private List<String> appctnSeqs;
+
+    @Schema(title = "수상자 리스트")
+    private List<WBKBRegisterDTO> winnerlist;
 }
