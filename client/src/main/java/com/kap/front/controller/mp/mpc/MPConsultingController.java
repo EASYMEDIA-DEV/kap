@@ -1,20 +1,28 @@
 package com.kap.front.controller.mp.mpc;
 
+import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
-import com.kap.service.CBATechGuidanceService;
-import com.kap.service.CBBManageConsultService;
-import com.kap.service.COCodeService;
-import com.kap.service.COUserDetailsHelperService;
+import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
+import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
+import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
+import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
+import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,6 +56,7 @@ public class MPConsultingController {
     private final CBATechGuidanceService cBATechGuidanceService;
     private final CBBManageConsultService cBBManageConsultService;
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
+    private final SVASurveyService sVSurveyService;
 
     /**
      *  목록
@@ -144,5 +153,137 @@ public class MPConsultingController {
             return detailList;
         }
     }
+
+
+    /**
+     * 설문step2
+     */
+    @GetMapping(value="/surveyStep2")
+    public String getSurveyStep2(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "front/mp/mpc/MPConsultingSurveyStep2.front";
+        try{
+
+            CBATechGuidanceInsertDTO rtnData = cBATechGuidanceService.selectTechGuidanceDtlCheck(cBATechGuidanceInsertDTO);
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+
+            if (Integer.toString(cOLoginUserDTO.getSeq()).equals(rtnData.getMemSeq())){
+
+                if (rtnData.getRspnCnt() > 0 ){
+                    modelMap.addAttribute("msg", "이미 제출한 설문입니다.");
+                    modelMap.addAttribute("url", "/");
+                    vwUrl = "front/COBlank.error";
+                }else{
+                    SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
+                    sVASurveyDTO.setDetailsKey(cBATechGuidanceInsertDTO.getDetailsKey());
+
+                    sVASurveyDTO.setTypeCd("CON");
+                    SVASurveyMstInsertDTO sVASurveyMstInsertDTO = sVSurveyService.selectSurveyTypeConDtl(sVASurveyDTO);
+
+                    if (sVASurveyMstInsertDTO != null){
+                        modelMap.addAttribute("rtnData", rtnData);
+                        modelMap.addAttribute("rtnSurveyData", sVASurveyMstInsertDTO);
+                    }else{
+                        modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                        modelMap.addAttribute("url", "/");
+                        vwUrl = "front/COBlank.error";
+                    }
+                }
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return vwUrl;
+    }
+
+    @Operation(summary = "응답 등록", tags = "", description = "응답 마스터, 응답 상세")
+    @PostMapping(value="/insert")
+    public String insertSurveyList(@Valid @RequestBody SVASurveyRspnMstInsertDTO sVASurveyRspnMstDTO, HttpServletRequest request , ModelMap modelMap) throws Exception
+    {
+        try
+        {
+
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            String regIp = CONetworkUtil.getMyIPaddress(request);
+            String regId = cOLoginUserDTO.getId();
+
+            sVASurveyRspnMstDTO.setRegId(regId);
+            sVASurveyRspnMstDTO.setName(sVASurveyRspnMstDTO.getPtcptName());
+            sVASurveyRspnMstDTO.setEmail(sVASurveyRspnMstDTO.getPtcptEmail());
+            int respCnt = sVSurveyService.insertSurveyRspnList(sVASurveyRspnMstDTO, request);
+
+            if (respCnt > 0){
+
+
+                SVASurveyRspnScoreDTO sVASurveyRspnScoreDTO = new SVASurveyRspnScoreDTO();
+                sVASurveyRspnScoreDTO.setSrvType("CON");
+                sVASurveyRspnScoreDTO.setPtcptName(sVASurveyRspnMstDTO.getPtcptName());
+                sVASurveyRspnScoreDTO.setPtcptTelno(sVASurveyRspnMstDTO.getPtcptTelno());
+                sVASurveyRspnScoreDTO.setPtcptPstn(sVASurveyRspnMstDTO.getPtcptPstn());
+                sVASurveyRspnScoreDTO.setTargetSeq(sVASurveyRspnMstDTO.getRfncSeq());
+                sVASurveyRspnScoreDTO.setRegId(regId);
+                sVASurveyRspnScoreDTO.setRegIp(regIp);
+
+                sVSurveyService.selectSurveyScore(sVASurveyRspnScoreDTO);
+
+            }
+
+            modelMap.addAttribute("respCnt", respCnt);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 설문step2
+     */
+    @GetMapping(value="/surveyStep3")
+    public String getSurveyStep3(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "";
+        try
+        {
+            CBATechGuidanceInsertDTO rtnData = cBATechGuidanceService.selectTechGuidanceDtlCheck(cBATechGuidanceInsertDTO);
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            if (Integer.toString(cOLoginUserDTO.getSeq()).equals(rtnData.getMemSeq())){
+                vwUrl = "front/mp/mpc/MPConsultingSurveyStep3.front";
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return vwUrl;
+    }
+
 }
 

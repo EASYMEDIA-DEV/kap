@@ -133,7 +133,7 @@
                             </div>
                             <label class="col-sm-1 control-label">일반 전화번호</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="${registerDtl.telNo}" title="전화번호" maxlength="50"/>
+                                <input type="text" class="form-control notRequired" id="telNo" name="telNo" value="${registerDtl.telNo}" title="전화번호" maxlength="50"/>
                             </div>
                         </div>
                     </fieldset>

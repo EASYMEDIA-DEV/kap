@@ -776,5 +776,18 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         return actCnt;
     }
 
+
+    /**
+     * 컨설팅 기술 지도 상세 조회
+     */
+    public CBATechGuidanceInsertDTO selectTechGuidanceDtlCheck(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
+
+        if (!"".equals(pCBATechGuidanceInsertDTO.getDetailsKey()))
+        {
+            pCBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectTechGuidanceDtlCheck(pCBATechGuidanceInsertDTO);
+        }
+
+        return pCBATechGuidanceInsertDTO;
+    }
 }
 

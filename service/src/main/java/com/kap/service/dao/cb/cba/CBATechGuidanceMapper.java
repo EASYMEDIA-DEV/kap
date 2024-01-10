@@ -228,5 +228,10 @@ public interface CBATechGuidanceMapper {
      */
     public List<CBATechGuidanceInsertDTO> selectMemSeqAppctnMst(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
+    /**
+     * 컨설팅 설문 유효성 확인
+     */
+    public CBATechGuidanceInsertDTO selectTechGuidanceDtlCheck(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
 
 }

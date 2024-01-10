@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/wb/wbf/WBFARoundListCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>스마트공장구축 회차 검색</h6>
         <form class="form-horizontal" id="frmSearch" name="frmSearch" method="post" action="" data-del-type="account">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
@@ -23,7 +23,7 @@
 
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">구분</label>
+                    <label class="col-sm-1 control-label">진행상태</label>
                     <div class="col-sm-8">
                         <label class="checkbox-inline c-checkbox">
                             <input type="checkbox" class="checkboxAll" />
@@ -40,18 +40,18 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">규모</label>
-                    <div class="col-sm-5">
+                    <label class="col-sm-1 control-label">노출여부</label>
+                    <div class="col-sm-11">
                         <label class="checkbox-inline c-checkbox">
                             <input type="checkbox" class="checkboxAll" />
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="sizeCdList" value="Y" <c:if test="${fn:contains(rtnData.expsYn, 'Y')}">checked</c:if>/>
+                            <input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="Y" <c:if test="${fn:contains(rtnData.expsYn, 'Y')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 노출
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="sizeCdList" value="N" <c:if test="${fn:contains(rtnData.expsYn, 'N')}">checked</c:if>/>
+                            <input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="N"  <c:if test="${fn:contains(rtnData.expsYn, 'N')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 미노출
                         </label>
                     </div>
@@ -86,7 +86,7 @@
 
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+                    <em class="ion-play mr-sm"></em>스마트공장구축 회차 목록 (총 <span id="listContainerTotCnt">0</span> 건)
                 </h6>
                 <div class="pull-right ml-sm">
                     <select class="form-control input-sm listRowSizeContainer" >

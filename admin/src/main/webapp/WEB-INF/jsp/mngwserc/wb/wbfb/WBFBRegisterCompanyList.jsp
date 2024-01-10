@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/wb/wbf/WBFBRegisterCompanyListCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>스마트공장구축 신청부품사 검색</h6>
         <form class="form-horizontal" id="frmSearch" name="frmSearch" method="post" action="" data-del-type="account">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
@@ -20,29 +20,9 @@
                 <jsp:param name="srchOption" value="등록일,수정일" />
             </jsp:include>
             <!--기간 검색 종료-->
-
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">구분</label>
-                    <div class="col-sm-11">
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxAll" />
-                            <span class="ion-checkmark-round"></span> 전체
-                        </label>
-                        <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                            <c:if test="${fn:contains(cdList, 'PRO_TYPE0200')}">
-                                <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
-                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
-                                </label>
-                            </c:if>
-                        </c:forEach>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">구분</label>
+                    <label class="col-sm-1 control-label">사업회차</label>
                     <div class="col-sm-5">
                         <div class="row">
                             <div class="col-sm-3">
@@ -59,6 +39,25 @@
                                 </select>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">진행상태</label>
+                    <div class="col-sm-11">
+                        <label class="checkbox-inline c-checkbox">
+                            <input type="checkbox" class="checkboxAll" />
+                            <span class="ion-checkmark-round"></span> 전체
+                        </label>
+                        <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                            <c:if test="${fn:contains(cdList, 'PRO_TYPE0200')}">
+                                <label class="checkbox-inline c-checkbox">
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                </label>
+                            </c:if>
+                        </c:forEach>
                     </div>
                 </div>
             </fieldset>
@@ -94,7 +93,7 @@
 
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+                    <em class="ion-play mr-sm"></em>스마트공장구축 신청부품사 목록 (총 <span id="listContainerTotCnt">0</span> 건)
                 </h6>
                 <div class="pull-right">
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>

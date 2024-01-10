@@ -70,5 +70,10 @@ public interface CBATechGuidanceService {
      */
     void excelDownload(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, HttpServletResponse response) throws Exception;
 
+    /**
+     * 컨설팅 설문 유효성 확인
+     */
+    public CBATechGuidanceInsertDTO selectTechGuidanceDtlCheck(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
 
 }

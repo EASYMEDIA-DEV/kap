@@ -13,45 +13,45 @@
         SELECT /* WBFASmartRoundMapper.selectSmartRoundList */
         *
         FROM (
-        SELECT
-        EPISD_SEQ
-        ,BSN_CD
-        ,YEAR
-        ,EPISD
-        ,ACCS_STRT_DTM
-        ,ACCS_END_DTM
-        ,BSN_STRT_DTM
-        ,BSN_END_DTM
-        , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
-        WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
-        WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
-        WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
-        ELSE '사업종료'
-        END AS DATE_STATE
-        , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 'STATE01'
-        WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 'STATE02'
-        WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN 'STATE03'
-        WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
-        ELSE 'STATE05'
-        END AS DATE_STATE_CD
-        ,CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수대기'
-        WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
-        ELSE '마감'
-        END AS ACCT_STATUS
-        , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
-        WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
-        ELSE 3
-        END AS DATE_ORD
-        , DATEDIFF(ACCS_END_DTM,NOW()) AS D_DAY
-        ,EXPS_YN
-        ,REG_ID
-        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
-        ,REG_DTM
-        ,MOD_ID
-        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
-        ,MOD_DTM
-        FROM CX_EPISD_MST A
-        WHERE BSN_CD = #{bsnCd}
+            SELECT
+            EPISD_SEQ
+            ,BSN_CD
+            ,YEAR
+            ,EPISD
+            ,ACCS_STRT_DTM
+            ,ACCS_END_DTM
+            ,BSN_STRT_DTM
+            ,BSN_END_DTM
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+            ELSE '사업종료'
+            END AS DATE_STATE
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 'STATE01'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 'STATE02'
+            WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN 'STATE03'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
+            ELSE 'STATE05'
+            END AS DATE_STATE_CD
+            ,CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수대기'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            ELSE '마감'
+            END AS ACCT_STATUS
+            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+            ELSE 3
+            END AS DATE_ORD
+            , DATEDIFF(ACCS_END_DTM,NOW()) AS D_DAY
+            ,EXPS_YN
+            ,REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            ,REG_DTM
+            ,MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            ,MOD_DTM
+            FROM CX_EPISD_MST A
+            WHERE BSN_CD = #{bsnCd}
         ) A
         <include refid="selectListwhereSql" />
         ORDER BY A.REG_DTM DESC

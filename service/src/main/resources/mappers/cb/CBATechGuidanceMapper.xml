@@ -1431,4 +1431,29 @@
         FROM CP_CNSTG_APPCTN_MST A WHERE APPCTN_MEM_SEQ = #{memSeq}
     </select>
 
+
+    <!--
+         쿼리명 : CBATechGuidanceMapper.selectTechGuidanceDtlCheck
+         설  명 :  컨설팅 기술 관리 상세 조회(설문 유효성)
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.08   박준희      최초 생성
+    -->
+    <select id="selectTechGuidanceDtlCheck" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
+        SELECT /* CBATechGuidanceMapper.selectTechGuidanceDtlCheck */
+            A.CNSTG_SEQ,
+            B.MEM_SEQ,
+            B.NAME,
+            B.TEL_NO,
+            B.PSTN_NM,
+            B.EMAIL,
+            C.SRV_SEQ,
+            (SELECT COUNT(SRV_SEQ) FROM SV_QSTN_DTL WHERE SRV_SEQ = C.SRV_SEQ) AS QSTN_CNT,
+            (SELECT COUNT(SRV_RSPN_SEQ) FROM SV_RSPN_MST WHERE SRV_SEQ = C.SRV_SEQ AND RFNC_SEQ = A.CNSTG_SEQ AND RFNC_CD = 'CON') AS RSPN_CNT
+        FROM
+            CP_CNSTG_APPCTN_MST A
+            LEFT JOIN  CO_MEM_MST B ON A.APPCTN_MEM_SEQ = B.MEM_SEQ
+            LEFT JOIN CP_CNSTG_RSUME_MST C ON A.CNSTG_SEQ = C.CNSTG_SEQ
+        WHERE A.CNSTG_SEQ = #{detailsKey}
+    </select>
 </mapper>

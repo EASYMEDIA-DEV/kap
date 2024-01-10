@@ -108,7 +108,10 @@ public class SVASurveyQstnDtlDTO extends BaseDTO  {
     private String cd;
     //코드명
     private String cdNm;
+    //상위코드명
+    private String parentCdNm;
 
+        
     @Schema(title = "설문응답순번", example = "숫자")
     private Integer srvRspnSeq;
 

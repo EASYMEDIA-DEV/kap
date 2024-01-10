@@ -4,7 +4,7 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/wb/wbi/WBIBSupplyCompanyWriteCtrl controller/co/COFormCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>관리자 등록</h6><hr>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>등록</h6><hr>
 
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
