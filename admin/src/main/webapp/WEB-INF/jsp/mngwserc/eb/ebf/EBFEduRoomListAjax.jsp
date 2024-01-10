@@ -5,7 +5,7 @@
       <tr data-total-count="${rtnData.totalCount}" data-srch-edu-room-layer="${eduRoomDto.srchLayer}">
         <td class="text-center">
           <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" value="${list.placeSeq}" name="delValueList" class="checkboxSingle notRequired" data-place-seq="${list.placeSeq}"/><%--체크박스--%>
+            <input type="checkbox" value="${list.placeSeq}" name="delValueList" class="placeCheckboxSingle notRequired" data-place-seq="${list.placeSeq}"/><%--체크박스--%>
             <span class="ion-checkmark-round"></span>
           </label>
         </td>

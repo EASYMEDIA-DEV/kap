@@ -181,27 +181,27 @@
 								<br />
 							</c:if>
 							<c:choose>
-								<%--<c:when test="${fn:contains(cdList.cd, '01')}">
+								<c:when test="${fn:contains(cdList.cd, '01')}">
 									<c:set var="cdName" value="선발"/>
-								</c:when>--%>
+								</c:when>
 								<c:when test="${fn:contains(cdList.cd, '02')}">
 									<c:set var="cdName" value="신청취소"/>
 								</c:when>
-								<%--<c:when test="${fn:contains(cdList.cd, '03')}">
+								<c:when test="${fn:contains(cdList.cd, '03')}">
 									<c:set var="cdName" value="신청양도"/>
-								</c:when>--%>
+								</c:when>
 								<c:when test="${fn:contains(cdList.cd, '04')}">
 									<c:set var="cdName" value="선발대기"/>
 								</c:when>
 								<c:when test="${fn:contains(cdList.cd, '05')}">
 									<c:set var="cdName" value="미선발"/>
 								</c:when>
-								<%--<c:when test="${fn:contains(cdList.cd, '06')}">
+								<c:when test="${fn:contains(cdList.cd, '06')}">
 									<c:set var="cdName" value="교육취소"/>
 								</c:when>
 								<c:otherwise>
 									<c:set var="cdName" value="알 수 없음"/>
-								</c:otherwise>--%>
+								</c:otherwise>
 							</c:choose>
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxSingle" name="choiceCtgryCd" data-name="choiceCtgryCdList" value="${cdList.cd}" />
@@ -225,7 +225,7 @@
 									<option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>회원 연락처</option>
 									<option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>회원 이메일</option>
 									<option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>부품사명</option>
-									<option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>사업자 등록번호</option>
+									<option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>사업자등록번호</option>
 									<option value="7" <c:if test="${rtnData.f eq '7'}">selected</c:if>>최종 수정자</option>
 									<option value="8" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최종 수정일시</option>
 								</select>

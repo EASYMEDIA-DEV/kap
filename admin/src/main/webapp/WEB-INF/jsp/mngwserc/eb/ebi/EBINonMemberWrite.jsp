@@ -376,7 +376,7 @@
                                                                     </c:if>
                                                                 </c:if>
                                                             </c:forEach>
-                                                            <input type="checkbox" class="checkboxSingle notRequired cntCheck" value="${targetList.cd}" name="targetCd" title="학습 대상 - ${prtName}"  <c:if test="${tempChk eq 'Y'}">checked</c:if> />
+                                                            <input type="checkbox" class="checkboxSingle notRequired" value="${targetList.cd}" name="targetCd" title="학습 대상 - ${prtName}"  <c:if test="${tempChk eq 'Y'}">checked</c:if> />
                                                             <span class="ion-checkmark-round"></span> ${targetList.cdNm}
                                                         </label>
                                                     </c:if>
@@ -706,7 +706,7 @@
                         </fieldset>
                         <fieldset>
                             <div class="form-group text-sm">
-                                <label class="col-sm-1 control-label">협력기관</label>
+                                <label class="col-sm-1 control-label">협력기관<span class="star"> *</span></label>
                                 <div class="col-sm-11">
                                     <div class="row" style="margin-bottom: 20px;">
                                         <div class="form-group text-sm">
@@ -718,7 +718,7 @@
                                                 </button>
                                             </div>
                                             <div class="col-sm-6">
-                                                <label class="col-sm-1 control-label">지출금액</label>
+                                                <label class="col-sm-1 control-label">지출금액<span class="star"> *</span></label>
                                                 <div class="col-sm-4 form-inline">
                                                     <input type="text" class="form-control input-sm numberChk notRequired" id="expnsPmt" name="expnsPmt" value="${rtnDto.expnsPmt}" title="지출금액" maxlength="50" placeholder="지출금액" style=width:250px;"/>
                                                 </div>

@@ -55,10 +55,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         $("#pstnNm").val("");
 
                         if(selectPstn == "MEM_CD01007") {
-                            $("#pstnNmChk").css('display', 'block');
+                            $("#pstnNm").css('display', 'inline-block');
                         }
                         else {
-                            $("#pstnNmChk").css('display', 'none');
+                            $("#pstnNm").css('display', 'none');
                         }
                     }
                 }

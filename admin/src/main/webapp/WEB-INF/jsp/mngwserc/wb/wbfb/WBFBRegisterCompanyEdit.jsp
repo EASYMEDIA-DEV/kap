@@ -24,7 +24,7 @@
                 <input type="hidden" class="notRequired" name="memSeq" value="${registerDtl.memSeq}" />
                 <input type="hidden" class="notRequired" name="id" value="${registerDtl.id}" />
                 <%-- 변형 전 사업자번호 --%>
-                <input type="hidden" class="notRequired" name="bsnmNo" value="${registerDtl.bsnmNo}" />
+                <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${registerDtl.bsnmNo}" />
                 <input type="hidden" class="notRequired" name="appctnSeq" value="${rtnBasicData.appctnSeq}" />
 
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>회차 정보</h6>

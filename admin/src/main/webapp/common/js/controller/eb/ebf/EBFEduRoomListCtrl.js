@@ -1,4 +1,4 @@
-define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
+define(["ezCtrl"], function(ezCtrl) {
 
     "use strict";
 
@@ -168,13 +168,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
-            checkboxSingle : {
+            placeCheckboxSingle : {
                 event : {
                     click : function() {
                         //상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxAll이 변경됨
                         var trgtObj = $(this).closest("div");
-                        var allCbxCnt = trgtObj.find(".checkboxSingle").length;
-                        var selCbxCnt = trgtObj.find(".checkboxSingle:checked").length;
+                        var allCbxCnt = trgtObj.find(".placeCheckboxSingle").length;
+                        var selCbxCnt = trgtObj.find(".placeCheckboxSingle:checked").length;
                         if (allCbxCnt == selCbxCnt)
                         {
                             trgtObj.find(".checkboxAll").prop("checked", true);
@@ -193,7 +193,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
             //폼 데이터 처리
             // cmmCtrl.setFormData($formObj);
-            codeSelect();
+            // codeSelect();
             //레이어 팝업에서 호출 할 수 있다.
             if($formObj.find("input[name=srchPartsComLayer]").size() == 0){
                 search($formObj.find("input[name=pageIndex]").val());

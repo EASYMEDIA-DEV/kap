@@ -29,7 +29,7 @@
                         </label>
                         <c:forEach var="cdList" items="${cdDtlList.ED_CITY_CODE}" varStatus="status">
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="rgnsCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.rgnsCdList, cdList.cd)}">checked</c:if> />
+                            <input type="checkbox" class="placeCheckboxSingle" data-name="rgnsCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.rgnsCdList, cdList.cd)}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                         </label>
                         </c:forEach>

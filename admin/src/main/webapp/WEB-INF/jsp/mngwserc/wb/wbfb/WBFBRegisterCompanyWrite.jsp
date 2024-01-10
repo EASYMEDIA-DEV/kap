@@ -416,12 +416,71 @@
 
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">사업신청서<span class="star"> *</span></label>
-                    <input type="hidden" class="notRequired" name="fileCd" value="ATTACH_FILE_TYPE01" title="첨부파일유형"/>
+                    <label class="col-sm-1 control-label">신청서<span class="star"> *</span></label>
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                         <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <div class="dropzone attachFile " data-file-field-nm="appctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="사업신청서">
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile1" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="신청서">
+                            <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE01">
+                            <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].seqNm" value="rsumeTaskFile1">
+                            <div class="dz-default dz-message">
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                            </div>
+                        </div>
+                        <p class="text-bold mt">
+                            ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">보안서약서<span class="star"> *</span></label>
+                    <div class="col-sm-10 col-md-11">
+                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile2" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="보안서약서">
+                            <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].type" value="ATTACH_FILE_TYPE02">
+                            <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].seqNm" value="rsumeTaskFile2">
+                            <div class="dz-default dz-message">
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                            </div>
+                        </div>
+                        <p class="text-bold mt">
+                            ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">중소기업확인서<span class="star"> *</span></label>
+                    <div class="col-sm-10 col-md-11">
+                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="중소기업확인서">
+                            <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].type" value="ATTACH_FILE_TYPE03">
+                            <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].seqNm" value="rsumeTaskFile3">
+                            <div class="dz-default dz-message">
+                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                            </div>
+                        </div>
+                        <p class="text-bold mt">
+                            ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">사업자등록증<span class="star"> *</span></label>
+                    <div class="col-sm-10 col-md-11">
+                        <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                        <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="사업자등록증">
+                            <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].type" value="ATTACH_FILE_TYPE04">
+                            <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].seqNm" value="rsumeTaskFile4">
+                            <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="4" data-fileType='ATTACH_FILE_TYPE04' name="rsumeTaskFile4" value="${rsumeTaskFile4}">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>
