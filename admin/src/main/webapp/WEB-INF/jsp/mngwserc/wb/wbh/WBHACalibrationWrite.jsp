@@ -13,7 +13,7 @@
             <input type="hidden" id="pageRowSize" name="pageRowSize" value="${rtnInfo.pageRowSize}" />
             <input type="hidden" id="listRowSize" name="listRowSize" value="${rtnInfo.listRowSize}" />
             <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${userInfo.memSeq}" />
-            <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}" />
+            <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${userInfo.bsnmNo}" />
             <input type="hidden" class="notRequired" name="detailsKey" value="${rtnData.appctnSeq}" />
             <input type="hidden" class="notRequired" name="appctnBsnmNo" value="${userInfo.bsnmNo}"/>
             <input type="hidden" class="notRequired" name="bsnCd" value="BNS08"/>
