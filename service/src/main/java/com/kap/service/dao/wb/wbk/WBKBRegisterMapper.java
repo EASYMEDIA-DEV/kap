@@ -44,6 +44,12 @@ public interface WBKBRegisterMapper {
 
     /**
      *  List Page
+     *  신청팀 서류심사 결과 목록 get
+     */
+    public WBKBRegisterSearchDTO getRegisterDocResultList(WBKBRegisterSearchDTO wBKBRegisterSearchDTO);
+
+    /**
+     *  List Page
      *  신청팀 1차 심사 결과 목록 get
      */
     public WBKBRegisterSearchDTO getRegisterFirstResultList(WBKBRegisterSearchDTO wBKBRegisterSearchDTO);
