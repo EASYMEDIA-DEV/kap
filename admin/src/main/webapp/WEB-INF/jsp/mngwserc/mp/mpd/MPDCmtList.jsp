@@ -81,6 +81,7 @@
                                     <option value="">전체</option>
                                     <option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>아이디</option>
                                     <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>이름</option>
+                                    <option value="9" <c:if test="${rtnData.f eq '9'}">selected</c:if>>업종/분야</option>
                                     <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>휴대폰번호</option>
                                     <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>이메일</option>
                                     <option value="8" <c:if test="${rtnData.f eq '8'}">selected</c:if>>최초 등록자</option>
