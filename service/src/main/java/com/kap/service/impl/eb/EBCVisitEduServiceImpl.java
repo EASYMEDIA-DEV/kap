@@ -29,6 +29,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -555,8 +557,19 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         for(EBCVisitEduExcelDTO dto: list){
             row = sheet.createRow(rowNum++);
             cell = row.createCell(0); cell.setCellValue(dto.getEdctnSttsName()); cell.setCellStyle(style_body);//교육상태
-            cell = row.createCell(1); cell.setCellValue(dto.getModName() + "(" + dto.getModId() + ")"); cell.setCellStyle(style_body);//최종수정자
-            cell = row.createCell(2); cell.setCellValue(dto.getModDtm().substring(0, dto.getModDtm().lastIndexOf(":"))); cell.setCellStyle(style_body);//최종수정일시
+
+            if (dto.getModName() == null) {
+                cell = row.createCell(1); cell.setCellValue("-"); cell.setCellStyle(style_body);
+            } else {
+                cell = row.createCell(1); cell.setCellValue(dto.getModName() + "(" + dto.getModId() + ")"); cell.setCellStyle(style_body);//최종수정자
+            }
+
+            if (dto.getModDtm() == null) {
+                cell = row.createCell(2); cell.setCellValue("-"); cell.setCellStyle(style_body);
+            } else {
+                cell = row.createCell(2); cell.setCellValue(dto.getModDtm().substring(0, dto.getModDtm().lastIndexOf(":"))); cell.setCellStyle(style_body);//최종수정일시
+            }
+
             cell = row.createCell(3); cell.setCellValue(dto.getRegDtm().substring(0, dto.getRegDtm().lastIndexOf(":"))); cell.setCellStyle(style_body);//신청일시
             cell = row.createCell(4); cell.setCellValue(dto.getCmpnNm()); cell.setCellStyle(style_body);//부품사명
             cell = row.createCell(5); cell.setCellValue(dto.getCtgryName()); cell.setCellStyle(style_body);//구분
@@ -585,11 +598,29 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
             cell = row.createCell(16); cell.setCellValue("방문교육"); cell.setCellStyle(style_body);//과정명
             cell = row.createCell(17); cell.setCellValue("집체교육"); cell.setCellStyle(style_body);//학습방식
             cell = row.createCell(18); cell.setCellValue(dto.getEdctnYear()); cell.setCellStyle(style_body);//년도
-            cell = row.createCell(19); cell.setCellValue("교육종료일-교육시작일???"); cell.setCellStyle(style_body);//교육일
-            cell = row.createCell(20); cell.setCellValue(dto.getEdctnStrtDtm().substring(0, dto.getEdctnStrtDtm().lastIndexOf(":"))
-                    + "~" + dto.getEdctnEndDtm().substring(0, dto.getEdctnEndDtm().lastIndexOf(":"))); cell.setCellStyle(style_body);//교육기간
+
+            if(dto.getEdctnStrtDtm() == null) {
+                cell = row.createCell(19); cell.setCellValue("-"); cell.setCellStyle(style_body);
+                cell = row.createCell(20); cell.setCellValue("-"); cell.setCellStyle(style_body);
+            } else {
+
+                String originStrtDtm = dto.getEdctnStrtDtm();
+                String originEndDtm = dto.getEdctnEndDtm();
+
+                // 문자열을 LocalDateTime으로 변환
+                LocalDateTime strtDtm = LocalDateTime.parse(originStrtDtm, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                LocalDateTime endDtm = LocalDateTime.parse(originEndDtm, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+                // 두 날짜 사이의 일자 차이 계산
+                long daysDifference = ChronoUnit.DAYS.between(strtDtm, endDtm);
+
+                cell = row.createCell(19); cell.setCellValue(daysDifference); cell.setCellStyle(style_body);//교육일
+                cell = row.createCell(20); cell.setCellValue(dto.getEdctnStrtDtm().substring(0, dto.getEdctnStrtDtm().lastIndexOf(":"))
+                        + "~" + dto.getEdctnEndDtm().substring(0, dto.getEdctnEndDtm().lastIndexOf(":"))); cell.setCellStyle(style_body);//교육기간
+            }
+
             cell = row.createCell(21); cell.setCellValue(dto.getEdctnPlace()); cell.setCellStyle(style_body);//교육장소
-            cell = row.createCell(22); cell.setCellValue("정원??? "); cell.setCellStyle(style_body);//정원(명)
+            cell = row.createCell(22); cell.setCellValue("-"); cell.setCellStyle(style_body);//정원(명)
 
             ebcVisitEduExcelDTO.setVstSeq(dto.getVstSeq());
             EBCVisitEduExcelDTO isttrDto = selectIsttrExcelList(ebcVisitEduExcelDTO);
@@ -622,7 +653,12 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
             cell = row.createCell(30); cell.setCellValue(dto.getCnfrmdTheme()); cell.setCellStyle(style_body);//확정주제
             cell = row.createCell(31); cell.setCellValue(dto.getPtcptCnt()); cell.setCellStyle(style_body);//신청인원(명)
             cell = row.createCell(32); cell.setCellValue(dto.getCmptnCnt()); cell.setCellStyle(style_body);//수료인원(명)
-            cell = row.createCell(33); cell.setCellValue(dto.getPtcptRate()); cell.setCellStyle(style_body);//참석률(%)
+
+            if(dto.getPtcptRate() == null) {
+                cell = row.createCell(33); cell.setCellValue("-"); cell.setCellStyle(style_body);
+            } else {
+                cell = row.createCell(33); cell.setCellValue(dto.getPtcptRate() * 100); cell.setCellStyle(style_body);//참석률(%)
+            }
 
             cell = row.createCell(34); cell.setCellValue(dto.getEducnt1()); cell.setCellStyle(style_body);//완성차(명)
             cell = row.createCell(35); cell.setCellValue(dto.getEducnt2()); cell.setCellStyle(style_body);//1차사(명)
@@ -676,7 +712,7 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
             sheet.setColumnWidth(22, 1800); sheet.setColumnWidth(23, 2000);
             sheet.setColumnWidth(24, 2000); sheet.setColumnWidth(25, 2000);
             sheet.setColumnWidth(26, 2000); sheet.setColumnWidth(27, 2000);
-            sheet.setColumnWidth(28, 2000); sheet.setColumnWidth(29, 2400);
+            sheet.setColumnWidth(28, 2000); sheet.setColumnWidth(29, 2500);
             sheet.setColumnWidth(30, 6000); sheet.setColumnWidth(31, 2200);
             sheet.setColumnWidth(32, 2200); sheet.setColumnWidth(33, 2200);
             sheet.setColumnWidth(34, 2200); sheet.setColumnWidth(35, 2200);

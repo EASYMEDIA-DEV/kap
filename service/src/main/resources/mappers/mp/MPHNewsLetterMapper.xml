@@ -64,4 +64,42 @@
             </if>
         </where>
     </sql>
+
+    <!--
+        쿼리명 : mphNewsLetterMapper.selectDupEmail
+        설  명 : 뉴스레터 이메일 중복 검사
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.01.05    이옥정       최초생성
+    -->
+    <select id="selectDupEmail" parameterType="MPHNewsLetterDTO" resultType="java.lang.Integer">
+        select  /* mphNewsLetterMapper.selectDupEmail */
+            count(*) resp_cnt
+        from co_nwslt_mst
+        where 1=1
+        and email=#{email}
+    </select>
+
+    <!--
+         쿼리명 : mphNewsLetterMapper.insertNewsletter
+         설  명 : 뉴스레터 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.08    이옥정       최초생성
+    -->
+    <insert id="insertNewsletter" parameterType="MPHNewsLetterDTO">
+        insert /* mphNewsLetterMapper.insertNewsletter */ into co_nwslt_mst
+        (
+          email,
+         reg_ip,
+         reg_dtm
+        )
+        values
+            (
+                #{email}
+                , #{regIp}
+                , now()
+            )
+    </insert>
+
 </mapper>

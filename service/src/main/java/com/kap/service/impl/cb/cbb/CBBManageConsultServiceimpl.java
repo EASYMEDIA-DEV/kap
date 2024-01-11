@@ -218,6 +218,8 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         pCBBManageConsultInsertDTO.setImpvmFileSeq(fileSeqMap.get("impvmFileSeq"));
         pCBBManageConsultInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
 
+        pCBBManageConsultInsertDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo().replaceAll("-", ""));
+
         // 신청 회원 정보
         updateMngConMemberInfo(pCBBManageConsultInsertDTO);
 
@@ -436,7 +438,8 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         pCBBManageConsultInsertDTO.setRegId(pCBBManageConsultInsertDTO.getRegId());
 
         pCBBManageConsultInsertDTO.setCnstgSeq(Integer.valueOf(pCBBManageConsultInsertDTO.getDetailsKey()));
-
+        pCBBManageConsultInsertDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo().replaceAll("-", ""));
+        
         // 신청 회원 정보
         updateMngConMemberInfo(pCBBManageConsultInsertDTO);
 

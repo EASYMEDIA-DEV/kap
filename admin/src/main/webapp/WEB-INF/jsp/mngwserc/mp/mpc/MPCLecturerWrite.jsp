@@ -107,7 +107,7 @@
                         <fieldset class="form-inline">
                             <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnInfo.email}" name="email" maxlength="50" placeholder="이메일 주소 입력" oninput="this.value=this.value.replace(/[^a-zA-Z0-9~!@#$%^&*()_+|<>?:{}.]/gi,'');" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm"  title="이메일" id="email" value="${rtnInfo.email}" name="email" maxlength="50" placeholder="이메일 주소 입력" style="width: 220px;"/>
                                 <button type="button" class="btn btn-default btn-sm" id="dupEmail" >중복확인</button>
                             </div>
                         </fieldset>

@@ -48,7 +48,7 @@
           </c:choose>
         </td>
         <td class="text-center">${ list.appctnDt }</td>                                            <%--신청일--%>
-        <td class="text-center">${ list.regName }(${ list.regId })</td>                            <%--최초 등록자(아이디)--%>
+        <td class="text-center">${ empty list.regName ? list.regAdmName : list.regName }(${ list.regId })</td>                            <%--최초 등록자(아이디)--%>
         <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '-')}</td>           <%--최초 등록일시--%>
         <td class="text-center">    <%--최종 수정자(아이디)--%>
             <c:choose>
@@ -56,7 +56,7 @@
                 -
               </c:when>
               <c:otherwise>
-                ${ list.modName }(${ list.modId })
+                ${ empty list.modName ? list.modAdmName : list.modName  }(${ list.modId })
               </c:otherwise>
             </c:choose>
         </td>

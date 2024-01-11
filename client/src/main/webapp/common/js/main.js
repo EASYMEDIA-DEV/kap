@@ -286,7 +286,9 @@ var mainScript = (function(){
         mainPopupIndicatorChk();
 
         // [공통 - 교육/세미나] swiper
-        mainTrainingInitFn();
+        if($(location).attr('host').indexOf("html") > -1 || $(location).attr('host').indexOf("eznet1") > -1){ //  퍼블 worklist에서만 동작하게 예외처리
+          mainTrainingInitFn();
+        }
 
         // 상생사업 swiper
         coexistingSwperInitFn();

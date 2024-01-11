@@ -199,6 +199,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("impvmFileSeq"));
         pCBATechGuidanceInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
 
+        pCBATechGuidanceInsertDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replaceAll("-", ""));
+
         // 신청 회원 정보
         updateTechMemberInfo(pCBATechGuidanceInsertDTO);
 
@@ -420,6 +422,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         pCBATechGuidanceupUpdateDTO.setRegId(pCBATechGuidanceInsertDTO.getRegId());
 
         pCBATechGuidanceInsertDTO.setCnstgSeq(Integer.valueOf(pCBATechGuidanceInsertDTO.getDetailsKey()));
+
+        pCBATechGuidanceInsertDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replaceAll("-", ""));
 
         // 부품사 회원 정보 수정
         updateTechMemberInfo(pCBATechGuidanceInsertDTO);

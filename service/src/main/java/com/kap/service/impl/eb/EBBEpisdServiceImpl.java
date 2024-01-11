@@ -47,6 +47,7 @@ import java.util.List;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.11.01		김학규				   최초 생성
+ *    2024.01.09		이옥정		  메인에서 호출시 리스트 갯수를 24개로 처리
  * </pre>
  */
 @Slf4j
@@ -101,7 +102,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		if(eBBEpisdDTO.getSiteGubun().equals("front")){
 
 			eBBEpisdDTO.setTotalCount( eBBFrontEpisdMapper.selectFrontCouseListCnt(eBBEpisdDTO) );
-			eBBEpisdDTO.setPageRowSize(9);
+			// 2024-01-09 메인에서 호출시 리스트 갯수를 24개로 처리
+			if(eBBEpisdDTO.getMainYn().equals("Y")){
+				eBBEpisdDTO.setPageRowSize(24);
+			}else {
+				eBBEpisdDTO.setPageRowSize(9);
+			}
 			int recordCountPerPage = (eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize();
 
 			eBBEpisdDTO.setFirstIndex(0);

@@ -104,4 +104,9 @@ public class CBBManageConsultListDTO extends BaseDTO {
     private String mjrPrdct2;
     @Schema(title = "주생산품3")
     private String mjrPrdct3;
+
+    @Schema(title = "등록자이름(관리자용)")
+    private String regAdmName;
+    @Schema(title = "수정자이름(관리자용)")
+    private String modAdmName;
 }

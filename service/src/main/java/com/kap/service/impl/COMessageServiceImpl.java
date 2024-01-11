@@ -38,10 +38,10 @@ public class COMessageServiceImpl implements COMessageService {
 	/* 발신자 이메일 */
 	@Value("${app.mail.senderMail}")
 	private String senderMail;
-	/* 발신자 이메일 */
+	/* SMS 발신번호 */
 	@Value("${app.mail.senderHp}")
 	private String senderHp;
-	/* 발신자 이메일 */
+	/* 발신자 이메일 이름 */
 	@Value("${app.mail.sender_name}")
 	private String sender_name;
 	/* directsend id */

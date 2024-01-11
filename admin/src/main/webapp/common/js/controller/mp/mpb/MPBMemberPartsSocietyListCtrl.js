@@ -126,6 +126,9 @@ define(["ezCtrl"], function(ezCtrl) {
                             $('input[name=memId]').val(memId);
                             $('input[name=memInfo]').val(memName+"("+memId+")");
                             $("#deptCd").val(deptCd);
+                            if(pstnCd == 'MEM_CD01007'){
+                                $(".pstnCdInput").show();
+                            }
                             $('input[name=deptCd]').val(deptCd);
                             $('input[name=deptDtlNm]').val(deptDtlNm);
                             $('input[name=pstnCd]').val(pstnCd);

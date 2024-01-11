@@ -107,13 +107,13 @@ public class EBCVisitEduExcelDTO extends BaseDTO {
     private String edctnPlaceAddr;
 
     @Schema(title = "교육인원", example = "")
-    private Integer ptcptCnt;
+    private String ptcptCnt;
 
     @Schema(title = "교육시간코드", example = "")
     private String ptcptHh;
 
     @Schema(title = "교육시간", example = "숫자")
-    private Integer ptcptHhNum;
+    private String ptcptHhNum;
 
     @Schema(title = "등록ID", example = "")
     private String regId;
@@ -171,7 +171,7 @@ public class EBCVisitEduExcelDTO extends BaseDTO {
     private String edctnSttsName;
 
     @Schema(title = "교육년도", example = "숫자")
-    private Integer edctnYear;
+    private String edctnYear;
 
     @Schema(title = "교육시작일시", example = "yyyy-MM-dd hh:mm:ss")
     private String edctnStrtDtm;
@@ -183,13 +183,13 @@ public class EBCVisitEduExcelDTO extends BaseDTO {
     private String edctnPlace;
 
     @Schema(title = "수료인원", example = "숫자")
-    private Integer cmptnCnt;
+    private String cmptnCnt;
 
     @Schema(title = "참석률", example = "")
     private Double ptcptRate;
 
     @Schema(title = "실적마감여부", example = "Y")
-    private Character rsltEndYn;
+    private String rsltEndYn;
 
     @Schema(title = "실적마감여부명", example = "")
     private String rsltEndYnNm;
