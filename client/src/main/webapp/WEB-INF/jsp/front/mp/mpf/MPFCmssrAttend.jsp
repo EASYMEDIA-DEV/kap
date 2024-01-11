@@ -54,35 +54,35 @@
                                     <div class="time-card-box-w">
                                         <div class="time-card">
                                             <p class="card-title">출근</p>
-                                            <p class="day-count  <c:if test="${rtnData.atndnCnt eq 0 }">zero</c:if>" > ${rtnData.atndnCnt}</p>
+                                            <p class="day-count  <c:if test="${rtnData.atndnCnt eq 0 || rtnData.atndnCnt == null}">zero</c:if>" > ${rtnData.atndnCnt == null ? '0' : rtnData.atndnCnt}</p>
                                         </div>
                                         <div class="time-card">
                                             <p class="card-title">재택</p>
-                                            <p class="day-count  <c:if test="${rtnData.homeCnt eq 0 }">zero</c:if>" > ${rtnData.homeCnt}</p>
+                                            <p class="day-count  <c:if test="${rtnData.homeCnt eq 0 || rtnData.homeCnt == null}">zero</c:if>" > ${rtnData.homeCnt == null ? '0' :rtnData.homeCnt}</p>
 
                                         </div>
                                         <div class="time-card">
                                             <p class="card-title">연차</p>
-                                            <p class="day-count  <c:if test="${rtnData.annualCnt eq 0 }">zero</c:if>" > ${rtnData.annualCnt}</p>
+                                            <p class="day-count  <c:if test="${rtnData.annualCnt eq 0 || rtnData.annualCnt == null }">zero</c:if>" > ${rtnData.annualCnt == null ? '0' :rtnData.annualCnt}</p>
 
                                         </div>
                                         <div class="time-card">
                                             <p class="card-title">출장 </p>
                                             <div class="biz-trip-w">
                                                 <div class="biz-trip-list">
-                                                    <p class="day-count  <c:if test="${rtnData.cnstgCnt eq 0 }">zero</c:if>" > ${rtnData.cnstgCnt}</p>
+                                                    <p class="day-count  <c:if test="${rtnData.cnstgCnt eq 0 || rtnData.cnstgCnt == null}">zero</c:if>" > ${rtnData.cnstgCnt == null ? '0' :rtnData.cnstgCnt}</p>
                                                     <p class="info-txt">지도</p>
                                                 </div>
                                                 <div class="biz-trip-list">
-                                                    <p class="day-count  <c:if test="${rtnData.lectureCnt eq 0 }">zero</c:if>" > ${rtnData.lectureCnt}</p>
+                                                    <p class="day-count  <c:if test="${rtnData.lectureCnt eq 0 || rtnData.lectureCnt == null}">zero</c:if>" > ${rtnData.lectureCnt == null ? '0' :rtnData.lectureCnt}</p>
                                                     <p class="info-txt">강의</p>
                                                 </div>
                                                 <div class="biz-trip-list">
-                                                    <p class="day-count  <c:if test="${rtnData.cpcptyDvlpmCnt eq 0 }">zero</c:if>" > ${rtnData.cpcptyDvlpmCnt}</p>
+                                                    <p class="day-count  <c:if test="${rtnData.cpcptyDvlpmCnt eq 0 || rtnData.cpcptyDvlpmCnt == null}">zero</c:if>" > ${rtnData.cpcptyDvlpmCnt == null ? '0' :rtnData.cpcptyDvlpmCnt}</p>
                                                     <p class="info-txt">역량개발</p>
                                                 </div>
                                                 <div class="biz-trip-list">
-                                                    <p class="day-count  <c:if test="${rtnData.etcCnt eq 0 }">zero</c:if>" > ${rtnData.etcCnt}</p>
+                                                    <p class="day-count  <c:if test="${rtnData.etcCnt eq 0 || rtnData.etcCnt == null}">zero</c:if>" > ${rtnData.etcCnt == null ? '0' :rtnData.etcCnt}</p>
                                                     <p class="info-txt">기타</p>
                                                 </div>
                                             </div>

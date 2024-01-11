@@ -5,7 +5,6 @@
 
 	<c:if test="${ not empty parntMenuList and (fn:length(parntMenuList) >= 2 or fn:indexOf(servletPath, '/my-page/') > -1)}">
 
-
 		<c:set var="parntMenu" value="${ parntMenuList[1] }" />
 
 		<c:if test="${ parntMenu.gnbYn eq 'Y' or fn:indexOf(servletPath, '/my-page/') > -1 }">
@@ -25,7 +24,12 @@
 												</c:if>
 											</c:forEach>
 
-											<a class="btn-two-depth ${fn:length(menu2.children) eq 0 || childrenGnbYn eq 'N' ? ' single-menu ' : ''} ${ parntMenuList[1].menuSeq eq menu2.attr.treeid ? 'active' : ''}" href="${ empty menu2.attr.link or fn:length(menu2.children) > 0 ? 'javascript:' : menu2.attr.link }"><span>${ menu2.data}</span></a>
+											<c:if test="${menu2.data eq '근태 체크' && loginMap.authCd eq 'CS'}">
+												<a class="btn-two-depth ${fn:length(menu2.children) eq 0 || childrenGnbYn eq 'N' ? ' single-menu ' : ''} ${ parntMenuList[1].menuSeq eq menu2.attr.treeid ? 'active' : ''}" href="${ empty menu2.attr.link or fn:length(menu2.children) > 0 ? 'javascript:' : menu2.attr.link }"><span>${ menu2.data}</span></a>
+											</c:if>
+											<c:if test="${menu2.data ne '근태 체크'}">
+												<a class="btn-two-depth ${fn:length(menu2.children) eq 0 || childrenGnbYn eq 'N' ? ' single-menu ' : ''} ${ parntMenuList[1].menuSeq eq menu2.attr.treeid ? 'active' : ''}" href="${ empty menu2.attr.link or fn:length(menu2.children) > 0 ? 'javascript:' : menu2.attr.link }"><span>${ menu2.data}</span></a>
+											</c:if>
 											<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
 												<div class="three-depth-wrap">
 													<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
