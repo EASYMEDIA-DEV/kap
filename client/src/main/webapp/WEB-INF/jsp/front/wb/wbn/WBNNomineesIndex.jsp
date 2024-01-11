@@ -157,10 +157,12 @@
                                                                                             <td class="t-align-center bdr" >${partName[partStatus.index]}</td>
                                                                                         </tr>
                                                                                     </c:when>
-                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0]}">
+                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0] && item.rdSchlNm ne partSchlNm[1]}">
                                                                                         <tr>
                                                                                             <td class="t-align-center bdr" >${partName[partStatus.index]}</td>
-                                                                                            <td class="t-align-center bdr partSchlNm" >${partSchlNm[partStatus.index]}</td>
+                                                                                            <c:if test="${ partStatus.index ne 0 }">
+                                                                                                <td class="t-align-center bdr partSchlNm" >${partSchlNm[1]}</td>
+                                                                                            </c:if>
                                                                                         </tr>
                                                                                     </c:when>
                                                                                     <c:otherwise>
