@@ -29,6 +29,11 @@ public interface MPBCoexistenceService {
     public MPBBnsSearchDTO selectApplyList(MPBBnsSearchDTO mpbBnsSearchDTO, String type) throws Exception;
 
     /**
+     *   마이페이지 상생 사업 신청내역 목록 count
+     */
+    public int selectApplyCount(MPBBnsSearchDTO mpbBnsSearchDTO, String type) throws Exception;
+
+    /**
      *   마이페이지 공통 상생 사업여부
      */
     public String getBusinessYn(MPBBnsSearchDTO mpbBnsSearchDTO) throws Exception;

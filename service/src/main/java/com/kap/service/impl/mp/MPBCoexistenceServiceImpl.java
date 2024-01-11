@@ -67,6 +67,14 @@ public class MPBCoexistenceServiceImpl implements MPBCoexistenceService {
     }
 
     /**
+     *   마이페이지 상생 사업 신청내역 count
+     */
+    public int selectApplyCount(MPBBnsSearchDTO mpbBnsSearchDTO, String type) throws Exception
+    {
+        return mpbCoexistenceMapper.selectApplyCount(mpbBnsSearchDTO);
+    }
+
+    /**
      *   마이페이지 공통 상생 사업여부
      */
     public String getBusinessYn(MPBBnsSearchDTO mpbBnsSearchDTO) throws Exception
