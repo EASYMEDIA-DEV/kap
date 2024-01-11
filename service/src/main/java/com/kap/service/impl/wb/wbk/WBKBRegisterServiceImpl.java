@@ -133,6 +133,7 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
         for(int listIdx=0; listIdx < getMainLists.size(); listIdx++) {
             WBKBRegisterSearchDTO MainList = getMainLists.get(listIdx);
             WBKBRegisterSearchDTO SubList = wBKBRegisterMapper.getRegisterCompanySubList(MainList);
+            WBKBRegisterSearchDTO DocResult = wBKBRegisterMapper.getRegisterDocResultList(MainList);
             WBKBRegisterSearchDTO FirstResult = wBKBRegisterMapper.getRegisterFirstResultList(MainList);
             WBKBRegisterSearchDTO FinalResult = wBKBRegisterMapper.getRegisterFinalResultList(MainList);
 
@@ -141,6 +142,10 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
                 MainList.setHpNo(SubList.getHpNo());
                 MainList.setEmail(SubList.getEmail());
 
+                if (DocResult != null ) {
+                    MainList.setDocResultCd(DocResult.getDocResultCd());
+                    MainList.setDocResultNm(DocResult.getDocResultNm());
+                }
                 if (FirstResult != null ) {
                     MainList.setFResultCd(FirstResult.getFResultCd());
                     MainList.setFResultNm(FirstResult.getFResultNm());

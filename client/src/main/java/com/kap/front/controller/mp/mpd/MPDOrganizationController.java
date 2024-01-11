@@ -21,7 +21,7 @@ import java.util.List;
  * </pre>
  *
  * @ClassName		: MPAUserController.java
- * @Description		: 위원 관리를 위한 Controller
+ * @Description		: 재단조직을 위한 Controller
  * @author 장두석
  * @since 2024.01.05
  * @version 1.0

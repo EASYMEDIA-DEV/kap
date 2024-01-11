@@ -192,7 +192,7 @@
     </div>
 
     <div class="dtl-tab">
-        <h5>수정이력</h5>
+        <h5>등록/수정이력</h5>
         <table class="table">
             <colgroup>
                 <col style="width:10%;">

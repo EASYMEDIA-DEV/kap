@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.mp.MPBCoexistenceMapper">
+    <!--
+         쿼리명 : MPBCoexistenceMapper.selectApplyList
+         설  명 : 상생사업 신청 리스트
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.08  김태훈     최초 생성
+    -->
+    <select id="selectApplyList" parameterType="mpbBnsSearchDTO" resultType="mpbBnsSearchDTO">
+        SELECT /*WBBBCompanyMapper.getRegisterCompanyList*/ *
+            FROM ( SELECT
+                    TMP.* ,
+                    ( SELECT
+                        ( CASE WHEN
+                            (SELECT COUNT(*) FROM co_code_mst WHERE CD_ID = 'BM_CODE' AND CD  = bsn_cd) > 0
+                            THEN rsume_stts_cd
+                            ELSE (SELECT cd_nm FROM co_code_mst WHERE cd = rsume_stts_cd) END )
+                        FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_Cd_Nm,
+                    (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsnNm,
+                    ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_cd,
+                    ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd,
+                    ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_cd,
+                    ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_chng_dtm,
+                    ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_chng_dtm,
+                    ( SELECT CD_NM FROM co_code_mst WHERE cd_seq = ( SELECT PARNT_SEQ FROM co_code_mst WHERE CD_ID = 'win_Business' AND CD = bsn_Cd )) title
+        FROM (
+                SELECT YEAR(A.year) as year, A.episd, A.bsn_strt_Dtm, A.bsn_end_dtm, A.bsn_cd,
+                    B.appctn_seq, B.sbrdn_bsnm_no, B.adm_memo, B.reg_id, B.reg_dtm, B.mod_id, B.mod_dtm,
+                    (SELECT NAME FROM CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NAME,
+                    (SELECT NAME FROM CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME,
+                    C.*,
+                    (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
+                    (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm,
+                    (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd
+                FROM
+                (
+                    SELECT * FROM cx_episd_mst
+                    WHERE EXPS_YN = 'Y'
+                ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND B.MEM_SEQ = #{memSeq}
+                INNER JOIN
+                (
+                    SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
+                    ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
+                    FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+                ) C /* 회원-회사 JOIN 테이블 */
+                ON C.mem_seq = B.mem_seq
+            ) TMP
+        ) COMPANY_INFO
+        <include refid="selectCompanyListwhereSql" />
+        ORDER BY appctn_stts_chng_dtm DESC, mng_stts_chng_dtm DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : MPBCoexistenceMapper.selectApplyCount
+         설  명 : 상생사업 총 갯수
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.08  김태훈     최초 생성
+    -->
+    <select id="selectApplyCount" parameterType="mpbBnsSearchDTO" resultType="java.lang.Integer">
+        SELECT /*MPBCoexistenceMapper.selectApplyCount*/ count(*)
+        FROM (  SELECT
+                    YEAR(A.year) as year, A.episd, A.bsn_strt_Dtm, A.bsn_end_dtm, A.bsn_cd, B.adm_memo,
+                    B.appctn_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm, B.mod_id, B.mod_dtm,
+                    C.*
+                FROM
+                (
+                    SELECT * FROM cx_episd_mst
+                    WHERE EXPS_YN = 'Y'
+                ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND B.MEM_SEQ = #{memSeq}
+                    INNER JOIN
+                (
+                    SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
+                    ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
+                    FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+                ) C /* 회원-회사 JOIN 테이블 */
+                ON C.mem_seq = B.mem_seq
+            ) TMP
+        <include refid="selectCompanyListwhereSql" />
+    </select>
+
+    <!--
+         쿼리명 : MPBCoexistenceMapper.getBusinessYn
+         설  명 : 공통 상생 사업여부
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.10  김태훈     최초 생성
+    -->
+    <select id="getBusinessYn" parameterType="mpbBnsSearchDTO" resultType="java.lang.String">
+        SELECT
+            CASE WHEN cd = #{bsnCd}
+                     THEN 'Y' ELSE 'N' END businessYn
+        FROM
+            co_code_mst
+        WHERE CD_ID = 'BM_CODE' AND cd = #{bsnCd}
+    </select>
+
+    <!--
+         쿼리명 : MPBCoexistenceMapper.getBusinessYn
+         설  명 : 공통 상생 사업여부
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.10  김태훈     최초 생성
+    -->
+    <select id="getBsnDetail" parameterType="mpbBnsSearchDTO" resultType="mpbBnsSearchDTO">
+        SELECT
+            TMP.*,
+            appctn_stts_cd,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsnNm,
+            ( CASE WHEN
+                    (SELECT COUNT(*) FROM co_code_mst WHERE CD_ID = 'BM_CODE' AND CD  = bsn_cd) > 0
+                       THEN rsume_stts_cd
+                   ELSE (SELECT cd_nm FROM co_code_mst WHERE cd = rsume_stts_cd) END ) rsume_stts_Cd_Nm,
+            ( SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd ) appctn_stts_cd_Nm
+        FROM (
+                 SELECT
+                     BSN_CD,
+                     APPCTN_SEQ,
+                     YEAR(year) as YEAR,
+                     EPISD,
+                     BSN_STRT_DTM,
+                     BSN_END_DTM,
+                     ( SELECT CD_NM FROM co_code_mst WHERE cd_seq = ( SELECT PARNT_SEQ FROM co_code_mst WHERE CD_ID = 'win_Business' AND CD = B.bsn_Cd )) title,
+                     ( SELECT MAX(RSUME_ORD) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_ORD,
+                     ( SELECT MAX(RSUME_SEQ) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_SEQ,
+                     A.REG_DTM
+                 FROM
+                     cx_appctn_mst A
+                     JOIN cx_episd_mst B ON A.episd_seq = B.episd_seq AND A.appctn_seq = #{appctnSeq} ) TMP
+                 JOIN cx_appctn_rsume_dtl C ON TMP.APPCTN_SEQ = C.APPCTN_SEQ AND TMP.RSUME_ORD = C.RSUME_ORD
+
+    </select>
+
+    <!--
+         쿼리명 : MPBCoexistenceMapper.getCompanyInfo
+         설  명 : 부품사관리 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="getCompanyInfo" parameterType="mpbBnsSearchDTO" resultType="mpbCompanyDTO">
+        SELECT /* MPBCoexistenceMapper.getCompanyInfo */
+            A.BSNM_NO
+             , A.CMPN_NM
+             , A.RPRSNT_NM
+             , A.CTGRY_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_NM
+             , A.SIZE_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_NM
+             , A.STBSM_DT
+             , A.TEL_NO AS COMP_TEL
+             , A.ZIPCODE
+             , A.BSC_ADDR
+             , A.DTL_ADDR
+             , A.SLS_PMT
+             , A.SLS_YEAR
+             , A.MPLE_CNT
+             , A.MJR_PRDCT_1
+             , A.MJR_PRDCT_2
+             , A.MJR_PRDCT_3
+             , A.QLTY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(A.QLTY_5_STAR_CD,'')) AS QLTY_5_STAR_NM
+             , A.QLTY_5_STAR_YEAR
+             , A.PAY_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(A.PAY_5_STAR_CD,'')) AS PAY_5_STAR_NM
+             , A.PAY_5_STAR_YEAR
+             , A.TCHLG_5_STAR_CD
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(A.TCHLG_5_STAR_CD,'')) AS TCHLG_5_STAR_NM
+             , A.TCHLG_5_STAR_YEAR
+             , (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) ID
+             , (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) NAME
+             , (SELECT EMAIL FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) EMAIL
+             , (SELECT DEPT_CD FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) DEPT_CD
+             , (SELECT DEPT_DTL_NM FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) DEPT_DTL_NM
+             , (SELECT PSTN_CD FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) PSTN_CD
+             , (SELECT PSTN_NM FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) PSTN_NM
+             , (SELECT HP_NO FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) HP_NO
+             , (SELECT TEL_NO FROM CO_MEM_MST WHERE MEM_SEQ = #{memSeq}) TEL_NO
+        FROM CP_CMPN_MST A
+        WHERE A.BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : MPBCoexistenceMapper.getUserInfo
+         설  명 : 부품사관리 상세 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="selectSqList" parameterType="mpbBnsSearchDTO" resultType="mpbCompanyDTO">
+        SELECT /* MPBCoexistenceMapper.selectSqList */
+            CBSN_SEQ
+             , NM
+             , SCORE
+             , YEAR
+             , CRTFN_CMPN_NM
+        FROM CP_CMPN_CBSN_DTL
+        WHERE BSNM_NO = #{bsnmNo}
+    </select>
+    <!--
+		쿼리명 : selectCompanyListwhereSql
+		설  명 : 게시판 관리 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.24    김태훈       최초생성
+    -->
+    <sql id="selectCompanyListwhereSql">
+        <where>
+            <if test="carbonDate != null and carbonDate != ''.toString() ">
+                <choose>
+                    <when test="carbonDate == 1">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <when test="carbonDate == 2">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d', INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                    <when test="carbonDate == 3">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND MOD_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                        </if>
+                    </when>
+                </choose>
+            </if>
+
+            <if test="ctgryCdList != null and ctgryCdList.size() > 0">
+                AND RSUME_STTS_CD IN
+                <foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="(" close=")" separator=",">
+                    #{ctgryCdList}
+                </foreach>
+            </if>
+            <if test="year != null and year != ''.toString()">
+                AND YEAR = #{year}
+            </if>
+            <if test="episd != null and episd != ''.toString()">
+                AND EPISD = #{episd}
+            </if>
+            <if test="q != null and q != ''.toString() ">
+                AND (
+                CMPN_NM LIKE CONCAT('%', #{q}, '%')
+                OR
+                HP_NO LIKE CONCAT('%', #{q}, '%')
+                OR
+                BSNM_NO LIKE CONCAT('%', #{q}, '%')
+                OR
+                NAME LIKE CONCAT('%', #{q}, '%')
+                OR
+                REG_ID LIKE CONCAT('%', #{q}, '%')
+                )
+            </if>
+        </where>
+    </sql>
+</mapper>

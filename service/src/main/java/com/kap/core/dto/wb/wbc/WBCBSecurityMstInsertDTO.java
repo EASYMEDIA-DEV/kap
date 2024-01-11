@@ -54,6 +54,9 @@ public class WBCBSecurityMstInsertDTO extends BaseDTO {
     @Schema(title = "이관순번", example = "")
     private Integer transfSeq;
 
+    @Schema(title = "사업자번호", example = "")
+    private String bsnmNo;
+    
     @Schema(title = "신청자사업번호", example = "")
     private String appctnBsnmNo;
 

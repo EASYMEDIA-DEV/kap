@@ -1,6 +1,7 @@
 package com.kap.service;
 
 
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyTrnsfDTO;
@@ -72,5 +73,10 @@ public interface WBEBCarbonCompanyService {
      * 사용자 신청 등록
      */
     public int carbonUserInsert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO) throws Exception;
 
 }

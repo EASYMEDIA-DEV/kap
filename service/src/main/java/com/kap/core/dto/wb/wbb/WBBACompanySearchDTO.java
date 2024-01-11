@@ -29,7 +29,13 @@ public class WBBACompanySearchDTO extends BaseDTO {
     private Integer episdSeq;
     @Schema(title = "단계명", example = "")
     private String stageNm;
-
+    @Schema(title = "사업시작일시", example = "yyyy-MM-dd")
+    private String bsnStrtDtm;
+    @Schema(title = "사업종료일시", example = "yyyy-MM-dd")
+    private String bsnEndDtm;
+    @Schema(title = "사업명", example = "")
+    private String title;
+    
     /* List Data */
     @Schema(title = "사업년도", example = "YYYY")
     private String year;
@@ -99,6 +105,8 @@ public class WBBACompanySearchDTO extends BaseDTO {
     private String appctnSttsChngDtm;
     @Schema(title = "관리상태변경일시", example = "yyyy-MM-dd")
     private String mngSttsChngDtm;
+    @Schema(title = "관리자메모", example = "")
+    private String admMemo;
     @Schema(title = "수정ID", example = "")
     private String modId;
     @Schema(title = "수정일시", example = "yyyy-MM-dd")

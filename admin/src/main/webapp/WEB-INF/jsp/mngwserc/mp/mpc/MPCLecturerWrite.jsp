@@ -49,7 +49,7 @@
                         </tr>
                         <tr>
                             <th scope="row" class="bg-gray-lighter">최초 등록일시</th>
-                            <td> ${kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
+                            <td> ${kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                         </tr>
                         </tbody>
                     </table>

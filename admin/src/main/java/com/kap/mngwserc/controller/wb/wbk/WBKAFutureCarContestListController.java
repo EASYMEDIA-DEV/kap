@@ -4,10 +4,12 @@ package com.kap.mngwserc.controller.wb.wbk;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestMstDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.WBFBRegisterCompanyService;
 import com.kap.service.WBKAFutureCarContestListService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -23,12 +25,12 @@ import java.util.ArrayList;
 
 /**
  * <pre>
- * 탄소배출저감 회차관리를 위한 Controller
+ * 미래차공모전 회차관리를 위한 Controller
  * </pre>
  *
  * @ClassName		: WBKAFutureCarContestListController.java
  * @Description		: 미래차공모전 회차관리를 위한 Controller
- * @author 김대성
+ * @author
  * @since 2023.11.08
  * @version 1.0
  * @see
@@ -36,7 +38,7 @@ import java.util.ArrayList;
  * <pre>
  * 		since			author				  description
  *    ==========    ==============    =============================
- *    2023.11.08		김대성				   최초 생성
+ *    2023.11.08		민윤기				   최초 생성
  * </pre>
  *
  */
@@ -48,6 +50,8 @@ public class WBKAFutureCarContestListController {
 
     /** 1서비스 **/
     public final WBKAFutureCarContestListService wbkaFutureCarContestListService;
+    public final WBFBRegisterCompanyService wBFBRegisterCompanyService;
+
     public final COCodeService cOCodeService;
 
     /**
@@ -70,7 +74,7 @@ public class WBKAFutureCarContestListController {
     }
 
     /**
-     * 탄소배출저감 회차 목록을 조회한다.
+     * 미래차공모전 회차 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
     public String getFutureCarContestListPageAjax( WBFutureCarContestSearchDTO wBFutureCarContestSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -93,7 +97,7 @@ public class WBKAFutureCarContestListController {
     }
 
     /**
-     * 탄소배출저감 회차 상세 페이지
+     * 미래차공모전 회차 상세 페이지
      */
     @RequestMapping(value = "/write")
     public String getCarbonWritePage(WBFutureCarContestSearchDTO wBFutureCarContestSearchDTO, ModelMap modelMap
@@ -130,6 +134,28 @@ public class WBKAFutureCarContestListController {
             e.printStackTrace();
         }
         return "mngwserc/wb/wbk/WBKAFutureCarContestWrite.admin";
+    }
+
+    /**
+     * 선택 연도 값에 따른
+     * 회차 SELECT Ajax
+     */
+    @PostMapping(value="/getEplisds")
+    public String getEpisdListAjax(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
+    {
+        try {
+            wBFBRegisterSearchDTO.setBsnCd("BNS11");
+            modelMap.addAttribute("optEpisdList", wBFBRegisterCompanyService.getOptEpisdList(wBFBRegisterSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
     }
 
     /**

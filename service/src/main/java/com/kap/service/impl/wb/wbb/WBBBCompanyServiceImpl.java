@@ -4,7 +4,9 @@ import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.mp.mpb.MPBBnsSearchDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import com.kap.core.dto.wb.wbb.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -73,8 +75,6 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
     //부품사관리 시퀀스
     private final EgovIdGnrService mpePartsCompanyDtlIdgen;
 
-
-    //파일 서비스
     /**
      *   신청부품사 목록 List Get
      */
@@ -155,7 +155,6 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         wbbCompanyDTO.setSqInfoList(sqList);
         wbbCompanyDTO.setMemSeq(wbbaCompanySearchDTO.getMemSeq());
         
-        //
         return wbbCompanyDTO;
     }
 
@@ -861,5 +860,98 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         wbbCompanySearchDTO = wbbbCompanyMapper.getApplyDtl(wbbCompanySearchDTO);
 
         return wbbCompanySearchDTO;
+    }
+
+    /**
+     * 부품사 신청자를 수정한다.
+     */
+    @Transactional
+    public int updateInfo(WBBAApplyDtlDTO wbbaApplyDtlDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+
+        int rtnCnt = 0;
+
+        try {
+            //마스터 생성
+            String modId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+            String modIp = CONetworkUtil.getMyIPaddress(request);
+
+            //상생신청진행 상태 업데이트
+            //관리자상태에 따라 분기처리해야함
+            wbbaApplyDtlDTO.setRegId(modId);
+            wbbaApplyDtlDTO.setRegIp(modIp);
+            wbbaApplyDtlDTO.setModId(modId);
+            wbbaApplyDtlDTO.setModIp(modIp);
+
+            wbbbCompanyMapper.deleteFileInfo(wbbaApplyDtlDTO);
+
+            //신청파일 넣기
+            List<COFileDTO> rtnList = null;
+            Map<String, MultipartFile> files = multiRequest.getFileMap();
+            Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+            MultipartFile file;
+            int atchFileCnt = 0;
+
+            while (itr.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = itr.next();
+                file = entry.getValue();
+
+                if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                    atchFileCnt++;
+                }
+            }
+
+            if (!files.isEmpty()) {
+                List<WBBAApplyDtlDTO> optinList = null;
+                rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                if (rtnList.size() > 0) {
+                    WBBACompanySearchDTO wbbaCompanySearchDTO = new WBBACompanySearchDTO();
+                    int stageSeq = 0;
+
+                    wbbaCompanySearchDTO.setBsnCd(wbbaApplyDtlDTO.getBsnCd());
+                    List<WBBAApplyDtlDTO> stepDtlList = wbbbCompanyMapper.selectStepDtlList(wbbaCompanySearchDTO);
+
+                    for (WBBAApplyDtlDTO dtlDTO :  stepDtlList) {
+                        if (dtlDTO.getStageOrd() == wbbaApplyDtlDTO.getRsumeOrd()) {
+                            stageSeq = dtlDTO.getStageSeq();
+                        }
+                    }
+                    optinList = wbbbCompanyMapper.selectOptnList(stageSeq);
+                }
+
+                for (int i = 0; i < rtnList.size() ; i++) {
+
+                    List<COFileDTO> fileList = new ArrayList();
+                    rtnList.get(i).setStatus("success");
+                    rtnList.get(i).setFieldNm("fileSeq");
+                    fileList.add(rtnList.get(i));
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                    wbbaApplyDtlDTO.setSbmsnSeq(fileApplyIdgen.getNextIntegerId());
+                    wbbaApplyDtlDTO.setOptnSeq(optinList.get(i).getOptnSeq());
+                    wbbaApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+
+                    wbbbCompanyMapper.insertFileInfo(wbbaApplyDtlDTO);
+                }
+            }
+
+            if ("PRO_TYPE04_2_1".equals(wbbaApplyDtlDTO.getAppctnSttsCd())) {
+                //접수전 사용자->접수완료, 관리자 -> 미확인
+                wbbaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_2");
+                wbbaApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2");
+
+                wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
+                wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
+            } else if ("PRO_TYPE04_2_3".equals(wbbaApplyDtlDTO.getAppctnSttsCd())) {
+                //보완요청 사용자->보완완료, 관리자 -> 미확인
+                wbbaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_4");
+                wbbaApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2");
+                wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rtnCnt;
     }
 }

@@ -22,7 +22,7 @@
                         <label class="col-sm-1 control-label">아이디<span class="star"> *</span></label>
                         <div class="col-sm-2">
                             <div class="input-group">
-                                <input style="width:153px" type="text" class="form-control input-sm " id="id" title="아이디" name="id" placeholder="아이디 입력" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');" />
+                                <input style="width:225px" type="text" class="form-control input-sm " id="id" title="아이디" name="id" placeholder="아이디 입력" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');" />
                                 <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupId" style="margin-left:0.8rem;">중복확인</button></span>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                         <label class="col-sm-1 control-label">비밀번호<span class="star"> *</span></label>
                         <div class="col-sm-2">
                             <div class="input-group">
-                                <input style="width:153px" type="password"   class="form-control input-sm " id="pwd" title="비밀번호" name="pwd" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
+                                <input style="width:225px" type="password"   class="form-control input-sm " id="pwd" title="비밀번호" name="pwd" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
                             </div>
                             ※ 8~16자 이내 영문+숫자+특수문자 조합으로 입력해주세요.
                         </div>
@@ -46,7 +46,7 @@
                         <label class="col-sm-1 control-label">비밀번호 확인<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="input-group">
-                                <input style="width:153px" type="password" class="form-control input-sm " id="pwdCon" title="비밀번호 확인" name="pwdCon" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
+                                <input style="width:225px" type="password" class="form-control input-sm " id="pwdCon" title="비밀번호 확인" name="pwdCon" maxlength="16" placeholder="비밀번호 확인 입력" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');"/>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         <label class="col-sm-1 control-label">이름<span class="star"> *</span></label>
                         <div class="col-sm-3">
                             <div class="input-group">
-                                <input style="width:153px" type="text" class="form-control input-sm " id="name" title="이름" name="name" placeholder="이름 입력" oninput="this.value=this.value.replace(/[^\wㄱ-힣]/g,'');"/>
+                                <input style="width:225px" type="text" class="form-control input-sm " id="name" title="이름" name="name" placeholder="이름 입력" oninput="this.value=this.value.replace(/[^\wㄱ-힣]/g,'');"/>
                             </div>
                         </div>
                     </div>
@@ -85,7 +85,7 @@
                         <label class="cmssrCdDiv col-sm-1 control-label">업종/분야<span class="star"> *</span></label>
                         <div class="cmssrCdDiv col-sm-5">
                             <div class="input-group">
-                                <select class="form-control input-sm notRequired"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종분야" style="width:auto; display:inline-block;" >
+                                <select class="form-control input-sm notRequired"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종/분야" style="width:auto; display:inline-block;" >
                                     <option value="">선택</option>
                                 </select>
                             </div>
@@ -156,13 +156,13 @@
                     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                             <div class="input-group">
-                                <input style="width:153px" type="text" class="form-control input-sm "id="hpNo" title="휴대폰번호" placeholder="휴대폰번호 입력" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  />
+                                <input style="width:225px" type="text" class="form-control input-sm "id="hpNo" title="휴대폰번호" placeholder="휴대폰번호 입력" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  />
                             </div>
                     </div>
                     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="input-group" style="z-index:0;width: 220px;">
-                            <input style="width:153px" type="text" class="form-control input-sm " id="email" title="이메일" name="email" placeholder="이메일 입력" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')"/>
+                            <input style="width:225px" type="text" class="form-control input-sm " id="email" title="이메일" name="email" placeholder="이메일 입력" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')"/>
                             <span class="input-group-btn"><button type="button" class="btn btn-default btn-sm" id="dupEmail" style="margin-left:0.8rem;">중복확인</button></span>
                         </div>
                     </div>
@@ -175,7 +175,7 @@
                         <div class="col-sm-10 col-md-11">
                             <spring:eval var="imgExtns" expression="@environment.getProperty('app.file.imgExtns')" />
                             <spring:eval var="atchUploadMaxSize" expression="5242880" />
-                            <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${imgType}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지">
+                            <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${imgType}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지" title="사진" name="dropzone">
                                 <div class="dz-default dz-message">
                                     <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                 </div>

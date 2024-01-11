@@ -117,6 +117,9 @@ public class WBKBRegisterSearchDTO extends BaseDTO {
     @Schema(title = "시상 코드 리스트")
     private List wdcrmCdList;
 
+    @Schema(title = "서류결과 코드 리스트")
+    private List docResultCdList;
+
     @Schema(title = "1차결과 코드 리스트")
     private List fResultCdList;
 
@@ -130,6 +133,9 @@ public class WBKBRegisterSearchDTO extends BaseDTO {
     @Schema(title = "시상부문 코드")
     private String wdcrmCd;
 
+    @Schema(title = "서류심사결과")
+    private String docResultNm;
+
     @Schema(title = "1차결과")
     private String fResultNm;
 
@@ -138,6 +144,9 @@ public class WBKBRegisterSearchDTO extends BaseDTO {
 
     @Schema(title = "1차결과")
     private String fResultCd;
+
+    @Schema(title = "서류심사결과")
+    private String docResultCd;
 
     @Schema(title = "최종결과")
     private String lResultCd;

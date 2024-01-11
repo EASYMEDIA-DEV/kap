@@ -53,7 +53,7 @@
         <label class="cmssrCdDiv col-sm-1 control-label">업종/분야<span class="star"> *</span></label>
         <div class="cmssrCdDiv col-sm-5">
             <div class="input-group">
-                <select class="form-control input-sm notRequired"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종분야" style="width:auto; display:inline-block;" >
+                <select class="form-control input-sm notRequired"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종/분야" style="width:auto; display:inline-block;" >
                     <option value="">선택</option>
                 </select>
             </div>
@@ -123,13 +123,13 @@
     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
     <div class="col-sm-5">
             <div class="input-group">
-                <input type="text" class="form-control input-sm "id="hpNo"  value="${rtnDtl.hpNo}" title="휴대폰번호" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  placeholder="휴대폰번호 입력"/>
+                <input style="width:220px" type="text" class="form-control input-sm "id="hpNo"  value="${rtnDtl.hpNo}" title="휴대폰번호" name="hpNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"  placeholder="휴대폰번호 입력"/>
             </div>
     </div>
     <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
     <div class="col-sm-5">
         <div class="input-group" style="z-index:0;width: 220px;">
-            <input type="text" class="form-control input-sm " id="email" title="이메일" name="email" value="${rtnDtl.email}" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')" placeholder="이메일 입력"/>
+            <input style="width:220px" type="text" class="form-control input-sm " id="email" title="이메일" name="email" value="${rtnDtl.email}" maxlength="50" oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')" placeholder="이메일 입력"/>
             <span class="input-group-btn"><button type="button" style="margin-left: 1rem;" class="btn btn-default btn-sm" id="dupEmail">중복확인</button></span>
         </div>
     </div>

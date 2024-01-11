@@ -43,6 +43,14 @@
 				</div>
 			</c:if>
 			<div class="form-group mr-sm">
+				<c:if test="${param.srchType eq 'wbba'}">
+					<select class="form-control input-sm" data-name="carbonDate">
+						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>접수기간</option>
+						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>사업기간</option>
+						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최초 등록일시</option>
+						<option value="4" <c:if test="${rtnData.carbonDate eq '4'}">selected</c:if>>최종 수정일시</option>
+					</select>
+				</c:if>
 				<c:if test="${param.srchType eq 'wbea'}">
 					<select class="form-control input-sm" data-name="carbonDate">
 						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>접수기간</option>
@@ -94,7 +102,7 @@
 						<c:when test="${param.srchType eq 'defaultBoard'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
-						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' }">
+						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:otherwise>
@@ -114,7 +122,7 @@
 						<c:when test="${param.srchType eq 'defaultBoard'}">
 							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
-						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' }">
+						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a'}">
 							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${kl:convertDate(kl:addDay(today, '+180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:otherwise>

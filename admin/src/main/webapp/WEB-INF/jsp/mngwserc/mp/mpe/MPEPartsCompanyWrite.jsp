@@ -98,19 +98,16 @@
                                     </div>
                                 </div>
                                 <label class="col-sm-1 control-label">설립일자<span class="star"> *</span></label>
-                                <div class="col-sm-5">
-                                    <div class="col-sm-3" style="margin-left: -15px">
+                                <div class="col-sm-2 mr-sm" style="width:11%">
                                         <div class="input-group">
                                             <input type="text" class="form-control input-sm datetimepicker_strtDt" id="stbsmDt" name="stbsmDt"
-                                                   <c:if test="${not empty rtnInfo.stbsmDt}"> value="${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"  </c:if>
-                                                   <c:if test="${empty rtnInfo.stbsmDt}">value="${kl:convertDate(kl:addDay(today, '0'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" </c:if>
+                                                   value="${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"
                                                    readonly title="설립일자" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse input-sm" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
                                                 </button>
                                             </span>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -335,7 +332,7 @@
                                     <tr>
                                         <th>최초 등록자</th>
                                         <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
-                                        <th>최초 작성일</th>
+                                        <th>최초 등록일시</th>
                                         <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                                     </tr>
                                     <tr>
@@ -348,7 +345,7 @@
                                                 <c:otherwise>-</c:otherwise>
                                             </c:choose>
                                         </td>
-                                        <th>최종 수정일</th>
+                                        <th>최종 수정일시</th>
                                         <td>
                                             <c:choose>
                                                 <c:when test="${ not empty rtnDto.modDtm }">

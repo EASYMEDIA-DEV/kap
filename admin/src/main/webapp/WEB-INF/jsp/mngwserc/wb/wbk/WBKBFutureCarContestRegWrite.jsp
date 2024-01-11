@@ -24,7 +24,7 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.appctnSeq}" />
-            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BNS11" />
+            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="INQ07011" />
             <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="" />
             <input type="hidden" class="notRequired" name="id" value="" />
             <input type="hidden" class="notRequired" id="rsumeSeq" name="rsumeSeq" value="${rtnDto.rsumeSeq}" />
@@ -741,7 +741,7 @@
                     <c:choose>
                         <c:when test="${ not empty rtnInfo}">
                             <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                            <button type="submit" class="btn btn-sm btn-success">수정</button>
+                            <button type="submit" class="btn btn-sm btn-success">저장</button>
                         </c:when>
                         <c:otherwise>
                             <button type="submit" class="btn btn-sm btn-success">저장</button>

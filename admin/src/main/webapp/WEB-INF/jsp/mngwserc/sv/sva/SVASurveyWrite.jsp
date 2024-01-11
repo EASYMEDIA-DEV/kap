@@ -30,7 +30,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" maxlength="50" title="제목" placeholder="제목을 입력하세요." />
+                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" maxlength="50" title="제목" placeholder="제목을 입력해주세요." />
                     </div>
                 </div>
             </fieldset>

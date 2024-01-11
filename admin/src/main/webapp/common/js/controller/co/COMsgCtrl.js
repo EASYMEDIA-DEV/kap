@@ -289,6 +289,7 @@ var msgCtrl = (function(){
 				mpe : {
 					notSrchPartsCom: "부품사를 선택해주세요.",
 					notSrchPartsCom1: "부품사를 1개만 선택해주세요.",
+					al_001 : "이미 등록된 사업자등록번호입니다.",
 				}
 			},
 			eb : {

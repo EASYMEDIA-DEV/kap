@@ -617,6 +617,69 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
             // 유효성 검사
             $formObj.validation({
+                after: function(){
+                    var isValid = true
+
+                    $(".surveyNextNumChk").each(function(){
+                        if ($(this).val() !="" && $(this).attr("disabled") != "disabled") {
+
+                            var thisObj = $(this);
+                            var filedset = $(this).closest('fieldset');
+                            var surveyType = filedset.data('survey-type');
+                            var qstnOrd = filedset.find("input[name=qstn_ord]").val();
+                            var nextNo = $(this).val();
+                            var regex = /^([0-9]{1,2}-?[0-9]{1,2})$/;
+
+                            var dpthText = "";
+                            $("."+surveyType+"questionTxt").each(function(){
+                                var surveyTypefiledset = $(this).closest('fieldset');
+                                var dpth = surveyTypefiledset.find('input[name=dpth]').val();
+                                var parntQstnOrd = surveyTypefiledset.find("input[name=parnt_qstn_ord]").val();
+                                if (dpth==2 && qstnOrd == parntQstnOrd){
+                                    dpthText = dpthText+","+$(this).text().replace('└질문','');
+                                }
+                            });
+
+                            if (nextNo.indexOf(',') > 0){
+                                var nextNoSplit = nextNo.split(',');
+                                $(nextNoSplit).each(function(i){
+                                    if (!regex.test(nextNoSplit[i])) {
+                                        isValid = false;
+                                        alert("하위번호 형식이 맞지않습니다.");
+                                        thisObj.focus();
+                                        return false;
+                                    }
+                                    if(dpthText.indexOf(nextNoSplit[i]) == -1){
+                                        isValid = false;
+                                        alert("하위번호에 매칭되는 하위문항이 없습니다.");
+                                        thisObj.focus();
+                                        return false;
+                                    }
+                                });
+                            }else{
+                                if (!regex.test(nextNo)) {
+                                    isValid = false;
+                                    alert("하위번호 형식이 맞지않습니다.");
+                                    thisObj.focus();
+                                    return false;
+                                }
+
+                                if(dpthText.indexOf(nextNo) == -1){
+                                    isValid = false;
+                                    alert("하위번호에 매칭되는 하위문항이 없습니다.");
+                                    thisObj.focus();
+                                    return false;
+                                }
+                            }
+                        }
+                    })
+
+                    $formObj.find(".ckeditorRequired").each(function() {
+                        jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
+                    });
+                    return isValid;
+
+                },
                 // after : function() {
                 //     var isValid = true, editorChk = true;
                 //     $formObj.find(".ckeditorRequired").each(function() {

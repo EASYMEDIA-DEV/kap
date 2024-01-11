@@ -90,6 +90,9 @@ public class WBBAApplyDtlDTO extends BaseDTO {
     @Schema(title = "파일순번")
     private Integer fileSeq;
 
+    @Schema(title = "파일명")
+    private String fileNm;
+
     @Schema(title = "상생단계 상세 리스트")
     private WBBAApplyDtlDTO applyDtl;
 

@@ -252,6 +252,18 @@
                             )
                         </if>
                     </when>
+                    <when test="carbonDate == 3">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND REG_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        </if>
+                    </when>
+                    <when test="carbonDate == 4">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        </if>
+                    </when>
                 </choose>
             </if>
 

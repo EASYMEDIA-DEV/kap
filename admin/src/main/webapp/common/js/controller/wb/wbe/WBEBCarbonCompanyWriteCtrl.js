@@ -215,6 +215,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         wBEBCarbonCompanyMstInsertDTO.pbsnDtlList = new Array();
                         wBEBCarbonCompanyMstInsertDTO.fileList = new Array();
 
+                        cmmCtrl.frmAjax(function(respObj){
+                            if(respObj != undefined && respObj.respCnt > 0){
+                                alert("이미 해당 회차에 신청한 부품사입니다.");
+                                return;
+                            }
+                        }, "./getBsnmNoCnt", $formObj, "POST", "json");
+
                         //mem
                         var mPAUserDto = {}; // 회원
                         mPAUserDto.memSeq = ctrl.obj.find("#memSeq").val();

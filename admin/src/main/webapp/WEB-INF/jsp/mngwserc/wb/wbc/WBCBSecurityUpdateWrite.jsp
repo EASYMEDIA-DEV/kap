@@ -82,7 +82,9 @@
                     </div>
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-5">
-                        <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        <div class="pull-right">
+                            <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -168,7 +170,9 @@
                         </div>
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-5">
-                            <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                            <div class="pull-right">
+                                <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                            </div>
                         </div>
                     </div>
                 </fieldset>
@@ -254,10 +258,10 @@
                         </div>
                     </div>
 
-                    <label class="col-sm-1 control-label">사업자등록 번호<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <input type="hidden" id="bsnmNoPut1" name="appctnBsnmNo" title="사업자등록 번호" value="${rtnCompany.bsnmNo}" />
-                        <input type="hidden" id="bsnmNoPut2" name="companyDtl.bsnmNo" title="사업자등록 번호" value="${rtnCompany.bsnmNo}" />
+                        <input type="hidden" id="bsnmNoPut1" name="appctnBsnmNo" title="사업자등록번호" value="${rtnCompany.bsnmNo}" />
+                        <input type="hidden" id="bsnmNoPut2" name="companyDtl.bsnmNo" title="사업자등록번호" value="${rtnCompany.bsnmNo}" />
                         <input type="hidden" id="bsnmNo" class="notRequired" value="${rtnCompany.bsnmNo}" />
                         <p class="form-control-static" id="bsnm">${fn:substring(rtnCompany.bsnmNo,0,3) } - ${fn:substring(rtnCompany.bsnmNo,3,5) } - ${fn:substring(rtnCompany.bsnmNo,5, 10) }</p>
                     </div>
@@ -1083,7 +1087,6 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd1" name="rsumeDtlList[0].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if>>
-                                                            <option value="">선택</option>
                                                             <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01001_02')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rtnDtl[0].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
