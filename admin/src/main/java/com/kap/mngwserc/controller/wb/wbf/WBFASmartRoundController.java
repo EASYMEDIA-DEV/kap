@@ -71,7 +71,7 @@ public class WBFASmartRoundController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbfa/WBFASmartRoundList.admin";
+        return "mngwserc/wb/wbf/WBFASmartRoundList.admin";
     }
 
     /**
@@ -90,7 +90,7 @@ public class WBFASmartRoundController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbfa/WBFASmartRoundListAjax";
+        return "mngwserc/wb/wbf/WBFASmartRoundListAjax";
     }
 
     /**
@@ -124,7 +124,7 @@ public class WBFASmartRoundController {
             }
             e.printStackTrace();
         }
-        return "mngwserc/wb/wbfa/WBFASmartRoundWrite.admin";
+        return "mngwserc/wb/wbf/WBFASmartRoundWrite.admin";
     }
 
     /**

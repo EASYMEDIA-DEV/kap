@@ -78,7 +78,7 @@ public class EBMMypageController
     /**
      * 교육과정 목록을 조회한다.
      */
-    @RequestMapping(value = "/my-page/main/select")
+    @RequestMapping(value = "/my-page/edu-apply/select")
     public String getCousePageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
 
