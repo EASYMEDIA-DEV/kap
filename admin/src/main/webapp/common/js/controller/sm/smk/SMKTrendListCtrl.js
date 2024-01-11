@@ -71,7 +71,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
                         if(sortType != null) {
 
-                            //if(sortType == 'UP' && $("pageIndex").val() == '1' && btn.parents('tr').prev().length == 0) {
                             if(sortType == 'UP' && btn.parents('tr').prev().length == 0) {
                                 alert(msgCtrl.getMsg("fail.sm.sort.notMoveUp"));
                                 return false;
@@ -87,13 +86,14 @@ define(["ezCtrl"], function(ezCtrl) {
                                 sortType : sortType
                             }
 
-                            console.log(JSON.stringify(ajaxData, null, 2));
-
                             $("#frmSearch").serializeArray().forEach(function(field) {
-                                if (field.name != 'seq') {
+                                if (field.name != 'trndSeq') {
                                     ajaxData[field.name] = field.value;
                                 }
                             });
+
+                            console.log(JSON.stringify(ajaxData, null, 2));
+                            debugger;
 
                             $.ajax({
                                 type: "post",

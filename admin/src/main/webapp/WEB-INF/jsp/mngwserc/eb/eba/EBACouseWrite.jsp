@@ -44,6 +44,18 @@
                             </select>
                         </div>
                     </div>
+
+                    <label class="col-sm-1 control-label">GPC 교육여부<span class="star"> *</span></label>
+                    <div class="col-sm-2" style="margin-left: -15px">
+                        <div class="col-sm-1">
+                            <select class="form-control input-sm wd-sm" name="gpcYn" id="gpcYn" title="GPC 교육여부">
+                                <option value="">선택</option>
+                                <option value="Y" <c:if test="${rtnDto.gpcYn eq 'Y'}">selected</c:if>>해당</option>
+                                <option value="N" <c:if test="${rtnDto.gpcYn eq 'N'}">selected</c:if>>미해당</option>
+                            </select>
+                        </div>
+                    </div>
+
                 </div>
 
             </fieldset>

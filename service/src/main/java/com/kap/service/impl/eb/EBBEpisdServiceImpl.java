@@ -360,6 +360,41 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	}
 
 	/**
+	 * 마이페이지 - 최근1년간 신청내역 호출(교육사업)
+	 */
+	public int selectMypageEduCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception{
+		int eduCnt = eBBFrontEpisdMapper.selectMypageEduCnt(eBBEpisdDTO);
+
+		return eduCnt;
+	}
+
+	/**
+	 *  마이페이지 - 교육/세미나 사입 신청내역
+	 */
+	public EBBEpisdDTO selectMypageEduList(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+
+		COPaginationUtil page = new COPaginationUtil();
+
+
+		page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
+		page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
+
+		page.setPageSize(eBBEpisdDTO.getPageRowSize());
+
+		eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
+		eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+
+		eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectMypageEduList(eBBEpisdDTO) );
+		int totcnt = eBBFrontEpisdMapper.selectMypageEduListCnt(eBBEpisdDTO).size();
+		eBBEpisdDTO.setTotalCount( totcnt );
+
+
+		return eBBEpisdDTO;
+	}
+
+	/**
 	 * 교육차수를  등록한다.
 	 */
 	public int insertEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception
@@ -731,7 +766,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		String getEdctnStrtDtm= eBBPtcptDTO.getEdctnStrtDtm();
 		String getEdctnEndDtm= eBBPtcptDTO.getEdctnEndDtm();
-
+		System.out.println("@ getEdctnStrtDtm = " + getEdctnStrtDtm);
+		System.out.println("@ getEdctnEndDtm = " + getEdctnEndDtm);
 		// 시작 날짜와 종료 날짜 설정
 		String startDateString = getEdctnStrtDtm.substring(0, 10);
 		String endDateString = getEdctnEndDtm.substring(0, 10);

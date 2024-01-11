@@ -198,6 +198,7 @@
 			      , lcns_cnnct_cd
 				  , (select cd_nm from co_code_mst where cd=a.lcns_cnnct_cd) as lcns_cnnct_cd_nm
 				  , thnl_file_seq
+				  , gpc_yn
 				  , reg_id
 				  , (select name from co_adm_mst where id = a.reg_id) as reg_name
 				  , reg_dtm
@@ -279,6 +280,7 @@
 			, mbl_stduy_cntn
 			, lcns_cnnct_cd
 			, thnl_file_seq
+			, gpc_yn
 			, exps_yn
 			, reg_id
 			, reg_ip
@@ -313,6 +315,7 @@
 		, #{mblStduyCntn}
 		, #{lcnsCnnctCd}
 		, #{thnlFileSeq}
+		, #{gpcYn}
 		, #{expsYn}
 		, #{regId}
 		, #{regIp}
@@ -340,7 +343,7 @@
 			, stduy_trgt_cntn = #{stduyTrgtCntn}
 			, stduy_mthd_cd = #{stduyMthdCd}
 			, cmptn_stnd_cd = #{cmptnStndCd}
-
+			, gpc_yn = #{gpcYn}
 
 			<if test='jdgmtYn =="Y" '>
 				, cmptn_Jdgmt_Cd = #{cmptnJdgmtCd}

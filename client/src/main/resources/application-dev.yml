@@ -22,6 +22,6 @@ app:
     #파일 업로드 크기
     max-size: 41943040
     #템플릿 경로
-    template-file-path: /home/app/kap/client/webapps/WEB-INF/template/
+    template-file-path: /home/app/kap/admin/webapps/WEB-INF/template/
 
 #    template-file-path: D:\kap-git\admin\src\main\webapp\WEB-INF\template\

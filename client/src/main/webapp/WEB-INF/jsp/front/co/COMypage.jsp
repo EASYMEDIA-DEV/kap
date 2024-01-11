@@ -37,11 +37,11 @@
                                 <div class="menu-head">
                                     <div class="log-menu">
                                         <p class="user-tit f-title1">
-                                            반갑습니다. <span>홍길동</span> 님
-                                            <br/>현재 학습중인 과정이 <span>1개</span> 있습니다.
+                                            반갑습니다. <span>${loginMap.name}</span> 님
+                                            <br/>현재 학습중인 과정이 <span class="userEduCnt">0개</span> 있습니다.
                                         </p>
                                         <div class="pc btn-wrap">
-                                            <a class="btn-text-icon black-arrow" href="javascript:" title="링크 이동"><span>정보수정</span></a>
+                                            <a class="btn-text-icon black-arrow" href="/my-page/member/intrduction/certification" title="링크 이동"><span>정보수정</span></a>
                                         </div>
                                     </div>
                                     <div class="loginfo-wrap">
@@ -52,11 +52,11 @@
                                                 <ul class="counts">
                                                     <li class="count">
                                                         <span class="f-sub-head">교육사업</span>
-                                                        <a class="f-title1" href="javascript:">5</a>
+                                                        <a class="f-title1" href="javascript:">${eduYearCnt}</a>
                                                     </li>
                                                     <li class="count">
                                                         <span class="f-sub-head">컨설팅사업</span>
-                                                        <a class="f-title1" href="javascript:">21</a>
+                                                        <a class="f-title1" href="javascript:">${CoeYearCnt}</a>
                                                     </li>
                                                     <li class="count">
                                                         <span class="f-sub-head">상생사업</span>
@@ -77,7 +77,7 @@
                                                 <a class="btn-solid small gray-bg" href="javascript:"><span>1:1 문의</span></a>
                                             </div>
                                         </div>
-                                        <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">2023.01.01 10:00</span></p>
+                                        <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ empty list.regDtm ? '-' : kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +85,7 @@
                         <div class="cont-sec scroll-motion">
                             <div class="for-motion">
                                 <div class="sec-tit-area">
-                                    <p class="f-title3">학습중인 과정 (<span class="item-count">1</span>개)</p>
+                                    <p class="f-title3">학습중인 과정 (<span class="item-count">0</span>개)</p>
                                 </div>
                                 <div class="sec-con-area">
                                     <div class="trainings-list-w" id="listContainer">
