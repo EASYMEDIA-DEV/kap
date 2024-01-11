@@ -69,7 +69,7 @@ public class MPBCoexistenceServiceImpl implements MPBCoexistenceService {
     /**
      *   마이페이지 상생 사업 신청내역 count
      */
-    public int selectApplyCount(MPBBnsSearchDTO mpbBnsSearchDTO, String type) throws Exception
+    public int selectApplyCount(MPBBnsSearchDTO mpbBnsSearchDTO) throws Exception
     {
         return mpbCoexistenceMapper.selectApplyCount(mpbBnsSearchDTO);
     }
