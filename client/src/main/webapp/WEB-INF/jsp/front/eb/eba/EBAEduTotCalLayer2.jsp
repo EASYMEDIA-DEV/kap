@@ -386,10 +386,8 @@
 <form class="form-horizontal" name="frmEduTotCalSearch" method="post" action="" data-del-type="none">
     <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
     <!-- 페이징 버튼 사이즈 -->
-    <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
-    <!-- 페이징 버튼 사이즈 -->
-    <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
-    <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+    <input type="hidden" id="pageRowSize" name="pageRowSize" value="10" />
+    <input type="hidden" id="listRowSize" name="listRowSize" value="10" />
     <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="hidden" id="episdSeq" name="episdSeq" value="" />
 
