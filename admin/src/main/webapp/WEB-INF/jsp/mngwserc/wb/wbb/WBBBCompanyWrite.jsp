@@ -481,7 +481,6 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm notRequired mngStatus" name="mngSttsCd" value="${item.mngSttsCd}" title="관리자 상태값" style="width:auto;">
-                                                            <option value="">선택</option>
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}">
                                                                 <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE04_1_')}">
                                                                     <option value="${cdList.cd}"  <c:if test="${item.applyDtl.mngSttsCd eq cdList.cd}">selected</c:if>>

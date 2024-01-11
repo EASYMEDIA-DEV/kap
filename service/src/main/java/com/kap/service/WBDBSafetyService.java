@@ -2,6 +2,7 @@ package com.kap.service;
 
 
 
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBCompanyDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetySearchDTO;
@@ -73,5 +74,10 @@ public interface WBDBSafetyService {
      * 사용자 신청 등록
      */
     public int carbonUserInsert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO) throws Exception;
 
 }

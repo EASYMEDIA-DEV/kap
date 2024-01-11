@@ -1015,4 +1015,19 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
         return respCnt;
     }
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO) throws Exception {
+
+        int respCnt = 0;
+
+        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
+        respCnt = wBEBCarbonCompanyMapper.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+
+        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
 }

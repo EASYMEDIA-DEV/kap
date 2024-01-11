@@ -1208,14 +1208,14 @@
     </select>
 
     <!--
-         쿼리명 : WBCBSecurityMapper.getCompanyInfo
+         쿼리명 : WBDBSafetyMapper.getCompanyInfo
          설  명 : 부품사관리 상세 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.24  김대성     최초 생성
     -->
     <select id="getCompanyInfo" parameterType="wBDBSafetySearchDTO" resultType="wBDBCompanyDTO">
-        SELECT /* WBCBSecurityMapper.getCompanyInfo */
+        SELECT /* WBDBSafetyMapper.getCompanyInfo */
             A.BSNM_NO
              , A.CMPN_NM
              , A.RPRSNT_NM
@@ -1257,14 +1257,14 @@
     </select>
 
     <!--
-         쿼리명 : WBCBSecurityMapper.getUserInfo
+         쿼리명 : WBDBSafetyMapper.getUserInfo
          설  명 : 부품사관리 상세 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.24  김대성     최초 생성
     -->
     <select id="selectSqList" parameterType="wBDBSafetySearchDTO" resultType="wBDBCompanyDTO">
-        SELECT /* WBCBSecurityMapper.selectSqList */
+        SELECT /* WBDBSafetyMapper.selectSqList */
             CBSN_SEQ
              , NM
              , SCORE
@@ -1272,6 +1272,20 @@
              , CRTFN_CMPN_NM
         FROM CP_CMPN_CBSN_DTL
         WHERE BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : WBDBSafetyMapper.getAppctnCnt
+         설  명 : 사업자번호 매핑 여부 확인
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="getBsnmNoCnt" parameterType="wBDBSafetyMstInsertDTO" resultType="java.lang.Integer">
+        SELECT /* WBDBSafetyMapper.getBsnmNoCnt*/ COUNT(*)
+        FROM CX_APPCTN_MST
+        WHERE EPISD_SEQ = #{episdSeq}
+          AND APPCTN_BSNM_NO = #{bsnmNo}
     </select>
 
 </mapper>

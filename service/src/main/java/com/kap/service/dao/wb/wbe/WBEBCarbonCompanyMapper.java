@@ -3,6 +3,7 @@ package com.kap.service.dao.wb.wbe;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
 import com.kap.core.dto.wb.wbc.WBCBCompanyDtlDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbe.*;
 
@@ -222,5 +223,10 @@ public interface WBEBCarbonCompanyMapper {
      * 부품사 SQ 정보를 조회한다.
      */
     public List<WBEBCompanyDtlDTO> selectSqList(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO);
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO) throws Exception;
 
 }

@@ -1,6 +1,7 @@
 package com.kap.service.dao.wb.wbc;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbc.*;
 
 import java.util.List;
@@ -219,5 +220,10 @@ public interface WBCBSecurityMapper {
      * 부품사 SQ 정보를 조회한다.
      */
     public List<WBCBCompanyDtlDTO> selectSqList(WBCBSecuritySearchDTO wBCBSecuritySearchDTO);
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
 
 }

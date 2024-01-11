@@ -245,7 +245,7 @@
                             <p class="form-control-static">
                                 <c:choose>
                                     <c:when test="${modFlag}">
-                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}
+                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                     </c:when>
                                     <c:otherwise>
                                         -

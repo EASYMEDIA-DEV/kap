@@ -2,6 +2,7 @@ package com.kap.mngwserc.controller.wb.wbd;
 
 
 
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetySearchDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetyTrnsfDTO;
@@ -319,5 +320,26 @@ public class WBDBSafetyController {
             }
             throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getBsnmNoCnt")
+    public String getBsnmNoCnt(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBDBSafetyService.getBsnmNoCnt(wBDBSafetyMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
     }
 }

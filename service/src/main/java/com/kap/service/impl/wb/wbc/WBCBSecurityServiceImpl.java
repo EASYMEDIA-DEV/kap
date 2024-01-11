@@ -3,6 +3,7 @@ package com.kap.service.impl.wb.wbc;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbc.*;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -1008,6 +1009,22 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecuritySpprtDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             wBCBSecurityMapper.insertAppctnSpprt(wBCBSecuritySpprtDTO);
         }
+
+        wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception {
+
+        int respCnt = 0;
+
+        wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
+        respCnt = wBCBSecurityMapper.getBsnmNoCnt(wBCBSecurityMstInsertDTO);
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 
