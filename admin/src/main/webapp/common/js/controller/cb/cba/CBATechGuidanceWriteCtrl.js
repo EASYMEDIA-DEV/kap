@@ -209,7 +209,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $("#slsYear").val(cmpnSlsYear).prop("selected", true);
 
             $('p[name=rprsntNm]').text(rprsntNm);
-            $('p[name=bsnmNo]').text(bsnmNo);
+            $("#bsnmNo").val(bsnmNo);
             $('p[name=cmpnNm]').text(cmpnNm);
             $('input[name=zipcode]').val(zipcode);
             $('input[name=bscAddr]').val(bscAddr);
@@ -224,7 +224,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $('input[name=slsPmt]').val(cmpnSlsPmt);
             $('input[name=mpleCnt]').val(cmpnMpleCnt);
             var afCmpnTelNo = cmpnTelNo.replace('-', '');
-            $('input[name=telNo]').val(afCmpnTelNo);
+            $('input[name=cmpnTelNo]').val(afCmpnTelNo);
 
             $('input[name=cmpnNfrmlNm]').val(cmpnNfrmlNm);
             $('input[name=cmpnCd]').val(cmpnCd);
@@ -358,21 +358,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
-            allSelector : {
-                event : {
-                    click : function(){
-                        var cdVal = $(this).children("input[name='appctnTypeCd']").val();
-                        if (cdVal == "TEC_GUIDE_APPCTN00") {
-                            if($(this).children("input[name='appctnTypeCd']").is(":checked"))
-                            {
-                                $("input[name=appctnTypeCd]").prop("checked", true);
-                            }else{
-                                $("input[name=appctnTypeCd]").prop("checked", false);
-                            }
-                        }
-                    }
-                }
-            },
             bfJdgmtRslt : {
                 event : {
                     click : function(){
@@ -402,6 +387,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var pstnCd = $("#pstnCdSelect").val();
                         var ctgryCd = $(".ctgryCd").val();
                         var mainAddr = $("#mainAddr").val();
+                        var subAddr = $("#subAddr").val();
                         var cmpnTelNo = $("#cmpnTelNo").val();
                         var hqZipcode = $("#hqZipcode").val();
                         var sizeCdSelect = $("#sizeCdSelect").val();
@@ -429,24 +415,24 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                     $("#ctgryCdSelect").focus();
                                     return false;
                                 }else{
-                                    if(!cmpnTelNo){
-                                        alert("전화번호를 입력해주세요.");
-                                        $("#cmpnTelNo").focus();
+                                    if(!sizeCdSelect){
+                                        alert("규모를 선택해주세요.")
+                                        $("#sizeCdSelect").focus();
                                         return false;
                                     }else{
-                                        if(!hqZipcode){
-                                            alert("주소를 입력해주세요.");
-                                            $("#hqZipcode").focus();
+                                        if(!rprsntNmTxt){
+                                            alert("대표자명을 입력해주세요.")
+                                            $("#rprsntNmTxt").focus();
                                             return false;
                                         }else{
-                                            if(!sizeCdSelect){
-                                                alert("규모를 선택해주세요.")
-                                                $("#sizeCdSelect").focus();
+                                            if(!cmpnTelNo){
+                                                alert("전화번호를 입력해주세요.");
+                                                $("#cmpnTelNo").focus();
                                                 return false;
                                             }else{
-                                                if(!rprsntNmTxt){
-                                                    alert("대표자명을 입력해주세요.")
-                                                    $("#rprsntNmTxt").focus();
+                                                if(!hqZipcode){
+                                                    alert("주소를 입력해주세요.");
+                                                    $("#hqZipcode").focus();
                                                     return false;
                                                 }else{
                                                     // 거래처별 매출
@@ -498,34 +484,44 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                                                 $("#mainAddr").focus();
                                                                 return false;
                                                             }else{
-                                                                if(!rprsntApprvYn){
-                                                                    alert("대표자 승인여부를 선택하세요.");
-                                                                    $("input[name='rprsntApprvYn']").focus();
+                                                                if(subAddr == ''){
+                                                                    alert("소재 지역을 선택하세요.");
+                                                                    $("#subAddr").focus();
                                                                     return false;
                                                                 }else{
-                                                                    if(!appctnRsnCd){
-                                                                        alert("신청사유를 선택하세요.");
-                                                                        $("input[name='appctnRsnCd']").focus();
+                                                                    if(!rprsntApprvYn){
+                                                                        alert("대표자 승인여부를 선택하세요.");
+                                                                        $("input[name='rprsntApprvYn']").focus();
                                                                         return false;
                                                                     }else{
-                                                                        if(!cbsnCd){
-                                                                            alert("업종을 선택하세요.");
-                                                                            $("input[name='cbsnCd']").focus();
+                                                                        if(!appctnRsnCd){
+                                                                            alert("신청사유를 선택하세요.");
+                                                                            $("input[name='appctnRsnCd']").focus();
                                                                             return false;
                                                                         }else{
-                                                                            if(!appctnTypeCd){
-                                                                                alert("신청사항을 선택하세요.");
-                                                                                $("input[name='appctnTypeCd']").focus();
+                                                                            if(!cbsnCd){
+                                                                                alert("업종을 선택하세요.");
+                                                                                $("input[name='cbsnCd']").focus();
+                                                                                return false;
+                                                                            }else if(cbsnCd == 'TEC_GUIDE_INDUS01'){
+                                                                                alert("업종을 입력해주세요.");
+                                                                                $("input[name='etcNm']").focus();
                                                                                 return false;
                                                                             }else{
-                                                                                var fileVal = $(".dropzone .dz-preview").length;
-                                                                                if(fileVal <2){
-                                                                                    if($(".dropzone .dz-preview").eq(0).length == 0){
-                                                                                        alert("첨부파일을 등록해주세요.");
-                                                                                        return false;
-                                                                                    }else if($(".dropzone .dz-preview").eq(1).length == 0){
-                                                                                        alert("첨부파일을 등록해주세요.");
-                                                                                        return false;
+                                                                                if(!appctnTypeCd){
+                                                                                    alert("신청사항을 선택하세요.");
+                                                                                    $("input[name='appctnTypeCd']").focus();
+                                                                                    return false;
+                                                                                }else{
+                                                                                    var fileVal = $(".dropzone .dz-preview").length;
+                                                                                    if(fileVal <2) {
+                                                                                        if ($(".dropzone .dz-preview").eq(0).length == 0) {
+                                                                                            alert("첨부파일을 등록해주세요.");
+                                                                                            return false;
+                                                                                        } else if ($(".dropzone .dz-preview").eq(1).length == 0) {
+                                                                                            alert("첨부파일을 등록해주세요.");
+                                                                                            return false;
+                                                                                        }
                                                                                     }
                                                                                 }
                                                                             }
@@ -857,7 +853,43 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
                     }
                 }
-            }
+            }, //리스트 전체 체크박스 선택시
+            checkboxAll : {
+                event : {
+                    click : function() {
+                        //상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxSingle가 변경됨
+                        var trgtArr = $(this).closest("div").find(".checkboxSingle");
+                        if (trgtArr.length > 0)
+                        {
+                            var isChecked = false;
+                            if($(this).is(":checked"))
+                            {
+                                isChecked = true;
+                            }
+                            $.each(trgtArr, function(){
+                                $(this).prop("checked", isChecked);
+                            })
+                        }
+                    }
+                }
+            },checkboxSingle : {
+                event : {
+                    click : function() {
+                        //상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxAll이 변경됨
+                        var trgtObj = $(this).closest("div");
+                        var allCbxCnt = trgtObj.find(".checkboxSingle").length;
+                        var selCbxCnt = trgtObj.find(".checkboxSingle:checked").length;
+                        if (allCbxCnt == selCbxCnt)
+                        {
+                            trgtObj.find(".checkboxAll").prop("checked", true);
+                        }
+                        else
+                        {
+                            trgtObj.find(".checkboxAll").prop("checked", false);
+                        }
+                    }
+                }
+            },
         },
         immediately: function () {
             changeStts(); // 진행상태 변경
