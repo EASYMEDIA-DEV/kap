@@ -285,6 +285,7 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
 
         /* 상생신청파일 삭제 */
         respCnt *= wBIBSupplyCompanyMapper.delAppctnFileDtl(wBIBSupplyDTO);
+        respCnt *= wBIBSupplyCompanyMapper.delFileDtl(wBIBSupplyDTO);
         /* 상생신청파일 상세 */
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBIBSupplyDTO.getFileList());
         wBIBSupplyDTO.setFileSeq(fileSeqMap.get("fileSeq")); /* 파일 시퀀스 */
