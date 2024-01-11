@@ -901,15 +901,15 @@
         ==========   ======    ==============
         2023.12.18   구은희       최초생성
     -->
-	<select id="selectExcelList" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduExcelDTO">
+	<select id="selectExcelList" parameterType="EBCVisitEduExcelDTO" resultType="EBCVisitEduExcelDTO">
 		select /*EBCVisitEduMapper.selectExcelList*/
 			vst_seq -- 방문순번
 			 , mem_seq -- 회원순번
 			 , edctn_stts_cd -- 교육상태코드
 			 , edctn_stts_name -- 교육상태명
 			 , mod_id -- 최종수정자 id
-			 , mod_name -- 최종수정자 이름
-			 , mod_dtm-- 최종수정일시
+			 , mod_name-- 최종수정자 이름
+			 , mod_dtm -- 최종수정일시
 			 , reg_dtm -- 신청일시
 			 , cmpn_nm -- 부품사명
 			 , ctgry_cd -- 부품사구분코드
@@ -928,16 +928,16 @@
 			 , id -- 신청자 아이디
 			 , hp_no -- 신청자 핸드폰번호
 			 , email -- 신청자이메일
-			 , edctn_year -- 교육년도
+			 , IFNULL(edctn_year, "-") AS edctn_year -- 교육년도
 			 , edctn_strt_dtm -- 교육시작일시
 			 , edctn_end_dtm -- 교육종료일시
 			 , place_bsc_addr -- 방문교육 기본주소
 			 , place_dtl_addr -- 방문교육 상세주소
-			 , rslt_end_yn_nm -- 실적마감여부명
-			 , cnfrmd_theme -- 확정주제
-			 , cmptn_cnt -- 수료인원
+			 , IFNULL(rslt_end_yn_nm, "-") AS rslt_end_yn_nm -- 실적마감여부명
+			 , IFNULL(cnfrmd_theme, "-") AS cnfrmd_theme -- 확정주제
+			 , IFNULL(cmptn_cnt, "-") AS cmptn_cnt -- 수료인원
 			 , ptcpt_rate -- 참석률
-			 , edctn_place -- 교육장소
+			 , IFNULL(edctn_place, "-") AS edctn_place -- 교육장소
 			 , EDUCNT1 /* 회사별 수료 인원 - 완성차(명) */
 			 , EDUCNT2 /* 회사별 수료 인원 - 1차사(명) */
 			 , EDUCNT3 /* 회사별 수료 인원 - 2차사(명) */
