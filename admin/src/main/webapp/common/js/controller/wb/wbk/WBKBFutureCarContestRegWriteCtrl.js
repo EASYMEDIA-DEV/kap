@@ -127,6 +127,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         else
         {
             alert(msgCtrl.getMsg("fail.act"));
+            location.href = "./list";
         }
     };
 
@@ -351,10 +352,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $("#ptcptType").val("WBK_PTN02");
                         }
 
-                        //수상 파악
-                        if($("#mngSttsCd3").val("WBKB_REG_LRT001")){
-                            $("#hghstWinerYn").val("Y");
-                        }
 
                         if (checkStepUpdate != 1){
                             if ($formObj.find(".dropzone").size() > 0) {

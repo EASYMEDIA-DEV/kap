@@ -247,6 +247,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         if($("#mngSttsCd3").val() == "WBKB_REG_LRT001"){//수상시
                             $('select[name="wdcrmCd"]').prop("disabled", false);
                             $('select[name="wdcrmCd"]').removeClass("notRequired");
+                            $("input[name='hghstWinerYn']").val("N");
                             $('#rsumeFrm input[name="appctnSttsCd"]').val("WBKB_REG_FRT002")
                             $('#rsumeFrm input[name="mngSttsCd"]').val("WBKB_REG_LRT001")
                             $(".rqWdcrmCd").show();

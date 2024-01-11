@@ -155,6 +155,7 @@
              , RSUME_SEQ
              , OPTN_SEQ
              , FILE_SEQ
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.FILE_SEQ) AS FILE_NM
              , (SELECT OPTN_NM FROM CX_OPTN_DTL B WHERE B.OPTN_SEQ = A.OPTN_SEQ) OPTN_NM
              , REG_ID
              , REG_IP
@@ -676,7 +677,9 @@
             <if test='siteGubun != "front"'>
                 MNG_STTS_CHNG_DTM = NOW(),
             </if>
-            RTRN_RSN_CNTN = #{rtrnRsnCntn},
+            <if test='siteGubun != "front"'>
+                RTRN_RSN_CNTN = #{rtrnRsnCntn},
+            </if>
             MOD_ID = #{modId},
             MOD_IP = #{modIp},
             MOD_DTM = NOW()

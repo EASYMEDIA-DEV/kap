@@ -328,7 +328,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             $("#equipmentHtml").empty();
 
             if($.trim($("input[name=detailsKey]").val()) == ""){
-                $('.nextHtml').next().html(equipmentInitHtml);
+                $('.nextHtml').append(equipmentInitHtml);
                 $(".deleteLow").remove();
             }
 

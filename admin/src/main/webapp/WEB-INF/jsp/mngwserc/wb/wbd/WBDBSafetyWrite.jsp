@@ -51,7 +51,9 @@
                     </div>
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-5">
-                        <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        <div class="pull-right">
+                            <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -138,7 +140,9 @@
                     </div>
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-5">
-                        <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        <div class="pull-right">
+                            <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -224,7 +228,7 @@
                         </div>
                     </div>
 
-                    <label class="col-sm-1 control-label">사업자등록 번호<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <input type="hidden" id="bsnmNoPut" name="bsnmNo" value="" />
                         <p class="form-control-static" id="bsnmNo"></p>

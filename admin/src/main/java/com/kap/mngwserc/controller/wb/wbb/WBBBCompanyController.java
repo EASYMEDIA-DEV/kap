@@ -76,7 +76,7 @@ public class WBBBCompanyController {
     @RequestMapping(value = "/select")
     public String getCompanyListPageAjax(WBBACompanySearchDTO wbbCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
-           modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyList(wbbCompanySearchDTO));
+            modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyList(wbbCompanySearchDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -187,7 +187,7 @@ public class WBBBCompanyController {
         }
         catch (Exception e)
         {
-           if (log.isDebugEnabled())
+            if (log.isDebugEnabled())
             {
                 log.debug(e.getMessage());
             }

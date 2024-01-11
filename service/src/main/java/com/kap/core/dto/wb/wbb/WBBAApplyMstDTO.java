@@ -85,6 +85,12 @@ public class  WBBAApplyMstDTO extends BaseDTO {
     @Schema(title = "관리자 상태명")
     private String mngSttsNm;
 
+    @Schema(title = "사용자 상태코드")
+    private String appctnSttsCd;
+
+    @Schema(title = "사용자 상태명")
+    private String appctnSttsNm;
+
     @Schema(title = "반려사유내용")
     private String rtrnRsnCntn;
 
@@ -108,6 +114,9 @@ public class  WBBAApplyMstDTO extends BaseDTO {
 
     @Schema(title = "사용자이관정보")
     private WBBATransDTO wbbTransDTO;
+
+    @Schema(title = "재귀DTO")
+    private WBBAApplyMstDTO wbbaApplyMstDTO;
 }
 
 
