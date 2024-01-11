@@ -295,7 +295,7 @@
                     <c:choose>
                         <c:when test="${ not empty rtnDto.examSeq}">
                             <button type="button" class="btn btn-sm btn-danger" id="btn_delete" style="${ kl:decode(rtnDto.posbChg, false, 'display:none;', '') }" >삭제</button>
-                            <button type="submit" class="btn btn-sm btn-success">수정</button>
+                            <button type="submit" class="btn btn-sm btn-success">저장</button>
                         </c:when>
                         <c:otherwise>
                             <button type="submit" class="btn btn-sm btn-success">등록</button>
