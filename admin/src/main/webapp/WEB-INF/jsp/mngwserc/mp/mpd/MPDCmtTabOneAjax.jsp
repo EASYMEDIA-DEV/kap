@@ -53,7 +53,7 @@
         <label class="cmssrCdDiv col-sm-1 control-label">업종/분야<span class="star"> *</span></label>
         <div class="cmssrCdDiv col-sm-5">
             <div class="input-group">
-                <select class="form-control input-sm notRequired"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종분야" style="width:auto; display:inline-block;" >
+                <select class="form-control input-sm notRequired"  id="cmssrCbsnCd" name="cmssrCbsnCd" title="업종/분야" style="width:auto; display:inline-block;" >
                     <option value="">선택</option>
                 </select>
             </div>

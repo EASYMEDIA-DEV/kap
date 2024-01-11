@@ -17,7 +17,7 @@
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
-                <jsp:param name="srchType" value="wbea" />
+                <jsp:param name="srchType" value="wbba" />
             </jsp:include>
             <fieldset>
                 <div class="form-group text-sm">
