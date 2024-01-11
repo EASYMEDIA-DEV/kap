@@ -9,7 +9,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
-    console.log(ctrl)
     var $formObj = jQuery("#frmData");
 
     //설문지 html
@@ -71,9 +70,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             btnExamWrite :{
                 event :{
                     click: function(){
-                        console.log("1");
 
-                        console.log(examInitHtml);
                         ctrl.obj.append(examInitHtml);
                         // .examList의 마지막 자식 요소(.examQstnNm)를 선택하고 텍스트 설정
                         ctrl.obj.find(".examList").last().find(".examQstnNm").text("시상종류/참여자");
@@ -101,9 +98,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             },
         },
         immediately : function() {
+            var hasRegCli = $("#btn_delete").val();
 
             examInitHtml = ctrl.obj.find(".examHtmlTemplage").html();
-            console.log(examInitHtml)
             ctrl.obj.find(".examHtmlTemplage").remove();
             if($.trim($("input[name=detailsKey]").val()) == "" || $(".examList").size()==0 ){
                 var writeHtml = ctrl.obj.append(examInitHtml);
@@ -136,16 +133,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             });
 
             $("#btn_delete").click(function () {
-
-                var hasRegCli = $("#btn_delete").val();
-                if(hasRegCli > 0){
-                    alert("신청정보가 존재하여 삭제할 수 없습니다.");
-                }else{
-                    if (confirm(msgCtrl.getMsg("confirm.del"))) {
-                        cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+                if (confirm(msgCtrl.getMsg("confirm.del"))) {
+                    if (hasRegCli > 0) {
+                        alert("신청정보가 존재하여 삭제할 수 없습니다.");
+                    } else {
+                        if (confirm(msgCtrl.getMsg("confirm.del"))) {
+                            cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+                        }
                     }
                 }
-
             });
 
             jQuery(".CodeMirror").find("textarea").addClass("notRequired");
@@ -195,6 +191,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 async : {
                     use : true,
                     func : function (){
+
                         var actionUrl = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update" );
                         var actionMsg = ( $.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
@@ -226,10 +223,42 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                             WBFutureCarContestMstDTO.prizeList.push(WBPrizeMstDTO);
                         })
-                        cmmCtrl.jsonAjax(function(data){
-                            alert(actionMsg);
-                            location.href = "./list";
-                        }, actionUrl, WBFutureCarContestMstDTO, "text")
+
+
+
+
+                        cmmCtrl.frmAjax(function(respObj) {
+                            var yearChk =  $("#yearChk").val();
+                            var episdCnt = respObj.optEpisdList[0];
+
+                            var expsYnChk = $("#expsYnChk").val();
+                            var expsYn = $(":radio[name=expsYn]:checked").val()
+
+                            if(actionUrl.indexOf('update') != -1 ){ // 업데이트 시
+                                if(episdCnt >= 1 && yearChk != $("#year").val() ){
+                                    alert("이미 등록된 회차입니다.");
+                                }else {
+                                    if( hasRegCli > 0 && expsYn == expsYnChk){
+                                        alert("신청정보가 존재하여 수정할 수 없습니다.");
+                                    } else {
+                                        cmmCtrl.jsonAjax(function (data) {
+                                            alert(actionMsg);
+                                            location.href = "./list";
+                                        }, actionUrl, WBFutureCarContestMstDTO, "text");
+                                    }
+                                }
+                            }else{ // 등록 시
+                                if(episdCnt >= 1){
+                                    alert("이미 등록된 회차입니다.");
+                                }else{
+                                    cmmCtrl.jsonAjax(function(data){
+                                        alert(actionMsg);
+                                        location.href = "./list";
+                                    }, actionUrl, WBFutureCarContestMstDTO, "text")
+                                }
+                            }
+                        }, "/mngwserc/wb/wbka/getEplisds", $formObj, "post", "json")
+
                     }
                 },
                 msg : {
