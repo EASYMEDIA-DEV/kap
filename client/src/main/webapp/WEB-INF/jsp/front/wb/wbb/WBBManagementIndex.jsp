@@ -121,7 +121,19 @@
                             </div>
                             <c:if test="${rtnData.totalCount > 3}">
                                 <div class="btn-wrap add-load align-center">
-                                    <a class="btn-solid small black-line addMore" href="javascript:"><span>더보기</span><span class="item-count">(3/${rtnData.totalCount})</span></a>
+                                    <a class="btn-solid small black-line addMore" href="javascript:"><span>더보기</span>
+                                        <c:choose>
+                                            <c:when test="${rtnData.totalCount > 10}">
+                                                <c:set var="curruntCnt" value="10" />
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:set var="curruntCnt" value="${rtnData.totalCount % 10}" />
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <span class="item-count">
+                                            (${curruntCnt}/${rtnData.totalCount})
+                                        </span>
+                                    </a>
                                 </div>
                             </c:if>
                         </div>

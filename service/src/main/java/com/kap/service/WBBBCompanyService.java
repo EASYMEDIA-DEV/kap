@@ -1,9 +1,6 @@
 package com.kap.service;
 
-import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
-import com.kap.core.dto.wb.wbb.WBBATransDTO;
+import com.kap.core.dto.wb.wbb.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -108,4 +105,9 @@ public interface WBBBCompanyService {
      *   신청자 정보 조회
      */
     public WBBACompanySearchDTO getApplyDtl(WBBACompanySearchDTO wbbCompanySearchDTO) throws Exception;
+
+    /**
+     *   신청자 업데이트
+     */
+    public int updateInfo(WBBAApplyDtlDTO wbbaApplyDtlDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
 }
