@@ -38,11 +38,11 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="tagCdList" value="img" <c:if test="${fn:contains(rtnData.tagCd, 'Y')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" name="tagCd" data-name="tagCdList" value="img" <c:if test="${fn:contains(rtnData.tagCd, 'img')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 이미지
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="tagCdList" value="html" <c:if test="${fn:contains(rtnData.tagCd, 'N')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" name="tagCd" data-name="tagCdList" value="html" <c:if test="${fn:contains(rtnData.tagCd, 'html')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> HTML
                         </label>
                     </div>
@@ -57,11 +57,11 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="Y" <c:if test="${fn:contains(rtnData.expsYn, 'Y')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" name="expsYn" data-name="expsYnList" value="Y" <c:if test="${fn:contains(rtnData.expsYn, 'Y')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 노출
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="N" <c:if test="${fn:contains(rtnData.expsYn, 'N')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" name="expsYn" data-name="expsYnList" value="N" <c:if test="${fn:contains(rtnData.expsYn, 'N')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 미노출
                         </label>
                     </div>
