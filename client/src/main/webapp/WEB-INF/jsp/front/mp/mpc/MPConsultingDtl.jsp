@@ -76,32 +76,36 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cont-sec no-border scroll-motion">
-                        <div class="for-motion">
-                            <div class="sec-tit-area">
-                                <p class="f-title3">컨설팅 만족도 설문 조사</p>
-                            </div>
-                            <div class="sec-con-area">
-                                <div class="graphic-sec">
-                                    <div class="box-btn-area">
-                                        <div class="bg-area">
-                                            <div class="img" style="background-image: url('/common/images/img-assessment-btn-bg.jpg');"></div>
-                                        </div>
-                                        <div class="txt-area">
-                                            <p class="txt f-head">신청하신 컨설팅 사업에 대한 만족도 설문 조사에 참여해주세요.</p>
-                                        </div>
-                                        <div class="btn-wrap">
-                                            <a class="btn-solid small white-bg survey" data-seq="${rtnData.cnstgSeq}" href="javascript:"><span>참여하기</span></a>
+                    <c:if test="${srvCnt > 0}"> <!-- 설문 응답 가능 기간에 포함되는 설문-->
+                        <c:if test="${rspnCnt < 1 }"> <!-- 설문 조사 참여 여부 -->
+                            <div class="cont-sec no-border scroll-motion">
+                                <div class="for-motion">
+                                    <div class="sec-tit-area">
+                                        <p class="f-title3">컨설팅 만족도 설문 조사${rspnCnt}!!</p>
+                                    </div>
+                                    <div class="sec-con-area">
+                                        <div class="graphic-sec">
+                                            <div class="box-btn-area">
+                                                <div class="bg-area">
+                                                    <div class="img" style="background-image: url('/common/images/img-assessment-btn-bg.jpg');"></div>
+                                                </div>
+                                                <div class="txt-area">
+                                                    <p class="txt f-head">신청하신 컨설팅 사업에 대한 만족도 설문 조사에 참여해주세요.</p>
+                                                </div>
+                                                <div class="btn-wrap">
+                                                    <a class="btn-solid small white-bg survey" data-seq="${rtnData.cnstgSeq}" href="javascript:"><span>참여하기</span></a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </c:if>
+                    </c:if>
                     <div class="cont-sec no-border scroll-motion">
                         <div class="for-motion">
                             <div class="sec-tit-area">
-                                <p class="f-title3">신청자 기본정보</p>
+                                <p class="f-title3">신청자 기본정보 ${rtnData}</p>
                             </div>
                             <div class="sec-con-area">
                                 <div class="table-sec">
@@ -115,20 +119,20 @@
                                             <tbody>
                                             <tr>
                                                 <th>신청자</th><!-- 2023-12-12 텍스트 수정 -->
-                                                <td>홍길동</td>
+                                                <td>${rtnData.name}</td>
                                             </tr>
                                             <tr>
                                                 <th>휴대폰번호</th>
-                                                <td>010-1234-5678</td>
+                                                <td>${rtnData.hpNo}</td>
                                             </tr>
                                             <tr>
                                                 <th>이메일</th>
-                                                <td>honggil@kapkorea.org</td>
+                                                <td>${rtnData.email}</td>
                                             </tr>
                                             <!-- 2023-12-22 수정 -->
                                             <tr>
                                                 <th>일반 전화번호</th>
-                                                <td>-</td>
+                                                <td><c:if test="${not empty rtnData.telNo}">${rtnData.telNo}</c:if><c:if test="empty rtnData.telNo">-</c:if></td>
                                             </tr>
                                             <!-- // 2023-12-22 수정 -->
                                             <tr>

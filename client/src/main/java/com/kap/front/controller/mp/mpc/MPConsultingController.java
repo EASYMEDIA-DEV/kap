@@ -7,8 +7,6 @@ import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
-import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
-import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
 import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,11 +26,11 @@ import java.util.List;
 
 /**
  * <pre>
- * 홈 > 마이페이지 > SQ평가원 자격증 관리 Controller
+ * 홈 > 마이페이지 > 컨설팅 사업 신청내역 관리 Controller
  * </pre>
  *
  * @ClassName		: MPConsultingController.java
- * @Description		: SQ평가원 자격증 관리 Controller
+ * @Description		: 컨설팅 사업 신청내역 관리 Controller
  * @author 김학규
  * @since 2023.09.21
  * @version 1.0
@@ -84,20 +82,30 @@ public class MPConsultingController {
     @GetMapping(value="/detail")
     public String getConsultingDtl(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-        /*try
-        {*/
-            String appctnTypeCd = cBATechGuidanceInsertDTO.getAppctnTypeCd();
-            modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
-            /* COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
-            modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
-            modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());*/
-        /*}
+        String vwUrl = "";
+        try
+        {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            CBATechGuidanceInsertDTO tmpDto = cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO);
+            if(String.valueOf(cOUserDetailsDTO.getSeq()).equals(tmpDto.getMemSeq())){
+                CBATechGuidanceInsertDTO rtnData = cBATechGuidanceService.selectTechGuidanceDtlCheck(cBATechGuidanceInsertDTO);
+                int rspnCnt = rtnData.getRspnCnt();
+                int srvCnt = rtnData.getSrvCnt();
+                modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
+                modelMap.addAttribute("rspnCnt", rspnCnt);
+                modelMap.addAttribute("srvCnt", srvCnt);
+                vwUrl = "front/mp/mpc/MPConsultingDtl.front";
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+        }
         catch (Exception e)
         {
             throw new Exception(e.getMessage());
-        }*/
-        return "front/mp/mpc/MPConsultingDtl.front";
+        }
+        return vwUrl;
     }
 
     /**
@@ -109,7 +117,6 @@ public class MPConsultingController {
         /*try
         {*/
             modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
-            System.err.println("bsnYear::::"+cBATechGuidanceInsertDTO);
            /* COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
             modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
