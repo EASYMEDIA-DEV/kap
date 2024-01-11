@@ -143,61 +143,48 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             return false;
                         }
 
-                        let email = $("#email-first").val();
-                        let emailRegex = /^\S{0,64}$/;
-                        if(!emailRegex.test(email)) {
-                            alert(msgCtrl.getMsg("fail.mp.join.al_023"));
-                            $("#email-first").focus();
-                            return false;
-                        }
-                        let emailAddr = $("#emailAddr").val();
-
-                        let emailAddrRegex = /\./;
-                        if(!emailAddrRegex.test(emailAddr)) {
-                            alert(msgCtrl.getMsg("fail.mp.join.al_023"));
-                            return false;
-                        }
-
                         $("#email").val($("#email-first").val()+"@"+$("#emailAddr").val());
-
-                        if(cmmCtrl.getEmailChk($("#email").val())) {
-                            alert(msgCtrl.getMsg("fail.mp.join.al_023"));
-                            return false;
-                        }
-
                         $("#email-auth").val($("#email-first").val()+"@"+$("#emailAddr").val());
 
+                        if(cmmCtrl.getEmailChk($("#email").val())) {
+                            var $formObj5 = $("#formUserSubmit");
+                            cmmCtrl.frmAjax(function(respObj) {
+                                if(respObj.dupChk == 'Y') {
+                                    $("#timer").show();
+                                    $("#emailAuthChk").show();
+                                    $(".for-status-chk-email").show();
+                                    $(".authName").text("재인증");
+                                    timeSecond = 300;
+                                    $('#timer span').text(getTimeString(timeSecond));
+                                    cmmCtrl.frmAjax(function (data){
+                                        secretEmailAuth = data;
+                                    }, "/member/email-auth-number", $formObj5, "post", "json", true);
 
-                        var $formObj5 = $("#formUserSubmit");
-                        cmmCtrl.frmAjax(function(respObj) {
-                            if(respObj.dupChk == 'Y') {
-                                $("#timer").show();
-                                $("#emailAuthChk").show();
-                                $(".for-status-chk-email").show();
-                                $(".authName").text("재인증");
-                                timeSecond = 300;
-                                $('#timer span').text(getTimeString(timeSecond));
-                                cmmCtrl.frmAjax(function (data){
-                                    secretEmailAuth = data;
-                                }, "/member/email-auth-number", $formObj5, "post", "json", true);
-
-                                if (intervalVar != undefined) {
-                                    clearInterval(intervalVar);
-                                }
-
-                                intervalVar = setInterval(function() {
-                                    if (timeSecond != 0) {
-                                        timeSecond = timeSecond - 1;
-                                        $('#timer span').text(getTimeString(timeSecond));
-                                    } else {
+                                    if (intervalVar != undefined) {
                                         clearInterval(intervalVar);
-                                        intervalVar = false;
                                     }
-                                }, 1000);
-                            } else {
-                                alert(msgCtrl.getMsg("fail.mp.join.al_017"));
-                            }
-                        }, "/member/dup-email", $formObj, "POST", "json",'',false);
+
+                                    intervalVar = setInterval(function() {
+                                        if (timeSecond != 0) {
+                                            timeSecond = timeSecond - 1;
+                                            $('#timer span').text(getTimeString(timeSecond));
+                                        } else {
+                                            clearInterval(intervalVar);
+                                            intervalVar = false;
+                                        }
+                                    }, 1000);
+                                } else {
+                                    alert(msgCtrl.getMsg("fail.mp.join.al_017"));
+                                }
+                            }, "/member/dup-email", $formObj, "POST", "json",'',false);
+
+                        } else {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_023"));
+                            return false;
+                        }
+
+
+
 
                     }
                 }
