@@ -99,7 +99,8 @@ public class COMainController
             modelMap.addAttribute("noticeData", bDANoticeService.selectNoticeList(bDANoticeDTO));
             //FAQ 리스트
             modelMap.addAttribute("faqData", bDCFaqService.selectFaqList(bDCFaqDTO));
-
+            //메인여부
+            modelMap.addAttribute("mainYn", "Y");
 
             if(device.isNormal() == true || device.isTablet() == true){
                 sMBMainVslDTO.setMdCd("pc");

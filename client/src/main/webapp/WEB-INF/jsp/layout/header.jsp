@@ -60,9 +60,9 @@
 	<!--메시지 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js"></script>
 	<c:set var="servletPath" value="${requestScope['javax.servlet.forward.servlet_path']}" scope="request" />
+	<c:set var="mainYn" value="${ not empty mainYn ? mainYn : 'N'}" />
 	<c:choose>
-
-		<c:when test="${ servletPath eq '/' }">
+		<c:when test="${ mainYn eq 'Y' }">
 			<script type="text/javascript" src="/common/js/hammer.min.js"></script>
 			<script type="text/javascript" src="/common/js/main.js?bust=${sysDate}"></script>
 			<c:set var="wrapClass" value="main" />
