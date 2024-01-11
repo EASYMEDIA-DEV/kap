@@ -70,7 +70,7 @@
                         <fieldset class="mt-sm">
                             <label class="col-sm-1 control-label">이름<span class="star text-danger"> *</span></label>
                             <div class="col-sm-5">
-                                <input type="text" class="form-control input-sm" id="name" name="name" value="${rtnInfo.name}" title="이름" placeholder="이름 입력" maxlength="50" oninput="this.value = this.value.replace(/[^a-zA-Z-가-힣ㄱ-ㅎㅏ-ㅣ]/g, '');" style="width: 220px;"/>
+                                <input type="text" class="form-control input-sm" id="name" name="name" value="${rtnInfo.name}" title="이름" placeholder="이름 입력" maxlength="50" oninput="this.value = this.value.replace(/[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]/g, '');" style="width: 220px;"/>
                             </div>
                         </fieldset>
                         <fieldset>
@@ -89,7 +89,6 @@
                             <label class="col-sm-1 control-label">직급</label>
                             <div class="col-sm-5">
                                 <input type="text" class="form-control input-sm notRequired" id="pstnNm" name="pstnNm" value="${rtnInfo.pstnNm}" title="직급" placeholder="직급명 입력" maxlength="50" oninput="this.value = this.value.replace(/[^a-zA-Z0-9가-힣ㄱ-ㅎㅏ-ㅣ]/g, '');" style="width: 220px;"/>
-                            </div>
                             </div>
                         </fieldset>
                         <fieldset>
@@ -219,39 +218,39 @@
 
     <c:if test="${ not empty rtnInfo }">
         <div class="dtl-tab">
-        <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
-        <div class="table-responsive ">
-            <table class="table text-sm">
-                <tbody>
-                <tr>
-                    <th>최초 등록자</th>
-                    <td>${ rtnInfo.regName }(${ rtnInfo.regId })</td>
-                    <th>최초 등록일시</th>
-                    <td>${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
-                </tr>
-                <tr>
-                    <th>최종 수정자</th>
-                    <td>
-                        <c:choose>
-                            <c:when test="${ not empty rtnInfo.modName }">
-                                ${ rtnInfo.modName }(${ rtnInfo.modId })
-                            </c:when>
-                            <c:otherwise>-</c:otherwise>
-                        </c:choose>
-                    </td>
-                    <th>최종 수정일시</th>
-                    <td>
-                        <c:choose>
-                            <c:when test="${ not empty rtnInfo.modDtm }">
-                                ${ kl:convertDate(rtnInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                            </c:when>
-                            <c:otherwise>-</c:otherwise>
-                        </c:choose>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+            <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
+            <div class="table-responsive ">
+                <table class="table text-sm">
+                    <tbody>
+                    <tr>
+                        <th>최초 등록자</th>
+                        <td>${ rtnInfo.regName }(${ rtnInfo.regId })</td>
+                        <th>최초 등록일시</th>
+                        <td>${ kl:convertDate(rtnInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                    </tr>
+                    <tr>
+                        <th>최종 수정자</th>
+                        <td>
+                            <c:choose>
+                                <c:when test="${ not empty rtnInfo.modName }">
+                                    ${ rtnInfo.modName }(${ rtnInfo.modId })
+                                </c:when>
+                                <c:otherwise>-</c:otherwise>
+                            </c:choose>
+                        </td>
+                        <th>최종 수정일시</th>
+                        <td>
+                            <c:choose>
+                                <c:when test="${ not empty rtnInfo.modDtm }">
+                                    ${ kl:convertDate(rtnInfo.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                </c:when>
+                                <c:otherwise>-</c:otherwise>
+                            </c:choose>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </c:if>
 </div>
