@@ -139,7 +139,7 @@
                 <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteList">선택삭제</button>
             </div>
             <div class="pull-right">
-                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">관리자 등록</button>
+                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
             </div>
         </form>
     </div>
