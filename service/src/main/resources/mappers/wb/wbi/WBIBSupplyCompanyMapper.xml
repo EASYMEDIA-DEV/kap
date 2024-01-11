@@ -450,13 +450,16 @@
             (SELECT MNG_STTS_CD FROM CX_APPCTN_RSUME_DTL WHERE APPCTN_SEQ = A.APPCTN_SEQ) AS MNG_STTS_CD,
             (SELECT MNG_STTS_CHNG_DTM FROM CX_APPCTN_RSUME_DTL WHERE APPCTN_SEQ = A.APPCTN_SEQ) AS MNG_STTS_CHNG_DTM,
             (SELECT rtrn_rsn_cntn FROM CX_APPCTN_RSUME_DTL WHERE APPCTN_SEQ = A.APPCTN_SEQ) AS rtrn_rsn_cntn,
-            (SELECT FILE_SEQ FROM CX_APPCTN_FILE_DTL WHERE APPCTN_SEQ = A.APPCTN_SEQ) AS APPCTN_SEQ
+            (SELECT FILE_SEQ FROM CX_APPCTN_FILE_DTL WHERE APPCTN_SEQ = A.APPCTN_SEQ) AS APPCTN_SEQ,
+            (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = F.FILE_SEQ) AS FILE_NM
         FROM CX_APPCTN_MST A INNER JOIN CP_CMPN_MST B
                                         ON A.APPCTN_BSNM_NO = B.BSNM_NO
                              INNER JOIN CO_MEM_MST C
                                         ON A.MEM_SEQ = C.MEM_SEQ
                              INNER JOIN CX_EPISD_MST D
                                         ON A.EPISD_SEQ = D.EPISD_SEQ
+                             INNER JOIN CX_APPCTN_FILE_DTL F
+                                        ON A.APPCTN_SEQ = F.APPCTN_SEQ
         WHERE A.APPCTN_SEQ = #{detailsKey}
     </select>
 
@@ -655,6 +658,18 @@
     <delete id="delAppctnFileDtl" parameterType="wBIBSupplyDTO">
         DELETE FROM CX_APPCTN_FILE_DTL
         WHERE APPCTN_SEQ = #{appctnSeq}
+    </delete>
+
+    <!--
+        쿼리명 : WBIBSupplyCompanyMapper.delFileDtl
+        설  명 : 회사 마스터 delete
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2023.11.30  오병호     최초 생성
+   -->
+    <delete id="delFileDtl" parameterType="wBIBSupplyDTO">
+        delete from co_file_dtl
+        where file_seq = #{fileSeq}
     </delete>
 
     <!--
