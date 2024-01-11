@@ -36,7 +36,9 @@
                     </div>
                     <label class="col-sm-2 control-label"></label>
                     <div class="col-sm-5">
-                        <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        <div class="pull-right">
+                            <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                        </div>
                     </div>
                 </div>
             </fieldset>
@@ -133,7 +135,9 @@
                         </div>
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-5">
-                            <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                            <div class="pull-right">
+                                <p class="control-static"><span class="star"> *</span> 표시는 필수 기재 항목입니다.</p>
+                            </div>
                         </div>
                     </div>
                 </fieldset>
