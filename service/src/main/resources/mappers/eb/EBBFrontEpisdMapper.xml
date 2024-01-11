@@ -442,6 +442,1016 @@
 
 
 
+	<!--
+            쿼리명 : EBBFrontEpisdMapper.selectMypageEduCnt
+            설  명 : 마이페이지 사업신청내역 조회(최근 1년)
+              수정일      수정자       수정내용
+            ==========   ========   ==============
+            2023.11.15    김학규       최초생성
+	-->
+	<select id="selectMypageEduCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		SELECT /*EBBEpisdMapper.selectEpisdList*/
+			COUNT(*)
+
+		FROM (SELECT
+				  b.edctn_seq
+				   , a.episd_seq
+				   , b.ctgry_cd
+				   , a.cbsn_cd
+				   , (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
+				   , (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
+				   , b.nm
+				   , b.stduy_mthd_cd
+				   , (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
+				   , b.stduy_dd_cd
+				   , (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) as stduy_dd_cd_nm
+				   , b.stduy_time_cd
+				   , (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm
+				   , a.episd_year
+				   , a.episd_ord
+				   , a.accs_strt_dtm
+				   , a.accs_end_dtm
+				   , a.edctn_strt_dtm
+				   , a.edctn_end_dtm
+				   , a.edctn_stts_cd
+				   , (SELECT min(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS min_isttr_seq
+				   , (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
+				   , a.fxnum_cnt
+				   , a.fxnum_impsb_yn
+				   , (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
+				   , a.rcrmt_mthd_cd
+				   , (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
+				   , a.pic_nm
+				   , a.pic_email
+				   , a.pic_tel_no
+				   , a.edctn_ntctn_file_seq
+				   , a.place_seq
+				   , c.nm as place_nm
+				   , c.bsc_addr
+				   , c.dtl_addr
+				   , c.zipcode
+				   , c.rprsnt_tel_no
+				   , a.bdget_expns_yn
+				   , a.reg_id
+				   , (select name from co_adm_mst where id = a.reg_id) as reg_name
+				   , a.reg_dtm
+				   , a.mod_id
+				   , (select name from co_adm_mst where id = a.reg_id) as mod_name
+				   , a.mod_dtm
+				   , a.exps_yn
+				   , a.edctn_cmpltn_yn
+
+				   , stts_cd
+				   , (select cd_nm from co_code_mst where cd=d.stts_cd) as stts_cd_nm
+				   , cmptn_yn
+				   , cmptn_dtm
+				   , mem_seq
+				   , ptcpt_dtm
+				   , (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+
+			  FROM ed_edctn_episd_mst a
+					   LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+					   LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
+
+					   LEFT JOIN (SELECT
+									  episd_seq
+									   , mem_seq
+									   , stts_cd
+									   , cmptn_yn
+									   , cmptn_dtm
+									   , reg_dtm as ptcpt_dtm
+								  FROM ep_edctn_ptcpt_mst) d ON d.episd_seq = a.episd_seq
+			 ) AA
+
+		WHERE  MEM_SEQ = #{memSeq}
+		AND STTS_CD != 'EDU_STTS_CD02'
+		AND PTCPT_DTM > date_add(now(), INTERVAL -12 month)
+
+
+	</select>
+
+	<!--
+            쿼리명 : EBBFrontEpisdMapper.selectMypageEduList
+            설  명 : 마이페이지 교육 세미나 사업 신청내역
+              수정일      수정자       수정내용
+            ==========   ========   ==============
+            2023.11.15    김학규       최초생성
+	-->
+	<select id="selectMypageEduList" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
+		SELECT /*EBBEpisdMapper.selectEpisdList*/
+		'E' as eduGubun
+		, edctn_seq
+		, episd_seq
+		, episd_year
+		, episd_ord
+		, parnt_seq
+		, (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
+		, ctgry_cd
+		, ctgry_cd_nm
+		, cbsn_cd
+		, (select cd_nm from co_code_mst WHERE cd = aa.cbsn_cd) as cbsn_cd_nm
+		, nm
+		, stduy_mthd_cd
+		, stduy_mthd_cd_nm
+		, stduy_dd_cd
+		, stduy_dd_cd_nm
+		, stduy_time_cd
+		, stduy_time_cd_nm
+		, episd_year
+		, episd_ord
+		, DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
+		, accs_strt_dtm
+		, accs_end_dtm
+		, case
+			when NOW() <![CDATA[<]]> accs_strt_dtm then '접수대기'
+			when NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm then '접수중'
+			when NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt <![CDATA[>=]]> fxnum_cnt) then '마감'
+		END  AS accs_status_nm
+		, case
+			when NOW()  <![CDATA[<]]>  accs_strt_dtm then '2'
+			when NOW()  <![CDATA[>]]> accs_strt_dtm AND NOW()  <![CDATA[<]]>   accs_end_dtm then '1'
+			when NOW()  <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt  <![CDATA[>=]]> fxnum_cnt) then '3'
+		END  AS accs_status_order
+		, edctn_strt_dtm
+		, edctn_end_dtm
+		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+		case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+				when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+				when NOW() <![CDATA[>]]> edctn_end_dtm then '교육완료'
+		end
+		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+		END  AS edctn_status_nm
+		, (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
+		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst WHERE isttr_seq in (SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq = aa.edctn_seq AND episd_ord = aa.episd_ord AND episd_year = aa.episd_year )) AS isttr_group_name
+		, (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
+		, case when isttr_cnt <![CDATA[<=]]> 1 then ''
+			when isttr_cnt <![CDATA[>]]> 1 then isttr_cnt-1
+		END isttr_out_cnt
+		, fxnum_cnt
+		, fxnum_impsb_yn
+		, accs_cnt
+		, rcrmt_mthd_cd
+		, rcrmt_mthd_cd_nm
+		, pic_nm
+		, pic_email
+		, pic_tel_no
+		, edctn_ntctn_file_seq
+		, (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = aa.edctn_ntctn_file_seq) AS file_ord
+		, place_seq
+		, place_nm
+		, bsc_addr
+		, dtl_addr
+		, zipcode
+		, rprsnt_tel_no
+		, bdget_expns_yn
+		, case bdget_expns_yn
+			when 'Y' then '마감'
+			when 'N' then '미마감'
+			when 'C' then '교육취소'
+		end bdget_expns_nm
+		, reg_id
+		, reg_name
+		, reg_dtm
+		, mod_id
+		, mod_name
+		, mod_dtm
+		, exps_yn
+		, edctn_cmpltn_yn
+
+		, stts_cd
+		, CASE STTS_CD
+			WHEN 'EDU_STTS_CD01' THEN '선발'
+			WHEN 'EDU_STTS_CD02' THEN '신청취소'
+			WHEN 'EDU_STTS_CD03' THEN '신청양도'
+			WHEN 'EDU_STTS_CD04' THEN '선발대기'
+			WHEN 'EDU_STTS_CD05' THEN '미선발'
+			WHEN 'EDU_STTS_CD06' THEN '교육취소'
+			ELSE '알 수 없음'
+		END AS stts_cd_nm
+		, cmptn_yn
+		, cmptn_dtm
+		, mem_seq
+		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+					case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+					case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+							when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
+							when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
+					end
+					when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+					when stts_cd = 'EDU_STTS_CD06' then '교육취소'
+				end
+			when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+		end edu_stat
+		, ptcpt_dtm
+		, web_path
+
+		FROM (SELECT
+					b.edctn_seq
+					, a.episd_seq
+					, b.ctgry_cd
+					, a.cbsn_cd
+					, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
+					, (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
+					, b.nm
+					, b.stduy_mthd_cd
+					, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
+					, b.stduy_dd_cd
+					, (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) as stduy_dd_cd_nm
+					, b.stduy_time_cd
+					, (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm
+					, a.episd_year
+					, a.episd_ord
+					, a.accs_strt_dtm
+					, a.accs_end_dtm
+					, a.edctn_strt_dtm
+					, a.edctn_end_dtm
+					, a.edctn_stts_cd
+					, (SELECT min(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS min_isttr_seq
+					, (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
+					, a.fxnum_cnt
+					, a.fxnum_impsb_yn
+					, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
+					, a.rcrmt_mthd_cd
+					, (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
+					, a.pic_nm
+					, a.pic_email
+					, a.pic_tel_no
+					, a.edctn_ntctn_file_seq
+					, a.place_seq
+
+					, c.nm as place_nm
+					, c.bsc_addr
+					, c.dtl_addr
+					, c.zipcode
+					, c.rprsnt_tel_no
+					, a.bdget_expns_yn
+					, a.reg_id
+					, (select name from co_adm_mst where id = a.reg_id) as reg_name
+					, a.reg_dtm
+					, a.mod_id
+					, (select name from co_adm_mst where id = a.reg_id) as mod_name
+					, a.mod_dtm
+					, a.exps_yn
+					, a.edctn_cmpltn_yn
+					, stts_cd
+					, (select cd_nm from co_code_mst where cd=d.stts_cd) as stts_cd_nm
+					, cmptn_yn
+					, cmptn_dtm
+					, mem_seq
+					, ptcpt_dtm
+					, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+		FROM ed_edctn_episd_mst a
+		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
+		LEFT JOIN (SELECT
+							episd_seq
+							, mem_seq
+							, stts_cd
+							, cmptn_yn
+							, cmptn_dtm
+							, reg_dtm as ptcpt_dtm
+						FROM ep_edctn_ptcpt_mst) d ON d.episd_seq = a.episd_seq
+		) AA
+
+		<include refid="selectMypageEduListWhereSql" />
+
+		UNION ALL
+
+		SELECT
+			'V' as eduGubun
+			, "" AS  edctn_seq
+			,  "" AS episd_seq
+			,  edctn_year AS episd_year
+			,  "" AS episd_ord
+			,  "" AS parnt_seq
+			,  "" AS prnt_cd_nm
+			,  "" AS ctgry_cd
+			,  appctn_fld_name AS ctgry_cd_nm
+			,  "" AS cbsn_cd
+			,  "" AS cbsn_cd_nm
+			,  "방문교육" AS nm
+			,  "STDUY_MTHD01" AS stduy_mthd_cd
+			,  "집체교육" AS stduy_mthd_cd_nm
+			,  "" AS stduy_dd_cd
+			,  "" AS stduy_dd_cd_nm
+			,  ptcpt_hh AS stduy_time_cd
+			,  ptcpt_hh_num AS stduy_time_cd_nm
+			,  "" AS episd_year
+			,  "" AS episd_ord
+			,  "" AS accs_order_day
+			,  "" AS accs_strt_dtm
+			,  "" AS accs_end_dtm
+			,  "" AS accs_status_nm
+			,  "" AS accs_status_order
+			,  edctn_strt_dtm
+			,  edctn_end_dtm
+			, "알 수 없음" AS edctn_status_nm
+			,  "" AS isttr_name
+			,  isttr_group_name
+			,  "" AS ffltn_nm
+			, case when isttr_cnt <![CDATA[<=]]> 1 then ''
+						when isttr_cnt <![CDATA[>]]> 1 then isttr_cnt-1
+				END AS isttr_out_cnt
+			,  "" AS fxnum_cnt
+			,  "" AS fxnum_impsb_yn
+			,  "" AS accs_cnt
+			,  "" AS rcrmt_mthd_cd
+			,  "" AS rcrmt_mthd_cd_nm
+			,  "" AS pic_nm
+			,  "" AS pic_email
+			,  "" AS pic_tel_no
+			,  "" AS edctn_ntctn_file_seq
+			,  "" AS file_ord
+			,  "" AS place_seq
+			,  edctn_place_addr AS place_nm
+			,  place_bsc_addr AS bsc_addr
+			,  place_dtl_addr AS dtl_addr
+			,  place_zipcode AS zipcode
+			,  "" AS rprsnt_tel_no
+			,  "" AS bdget_expns_yn
+			,  "" AS bdget_expns_nm
+			,  reg_id
+			,  name AS reg_name
+			,  reg_dtm
+			,  mod_id
+			,  mod_name
+			,  mod_dtm
+			,  "" AS exps_yn
+			,  "" AS edctn_cmpltn_yn
+			,  "" AS stts_cd
+			,  "" AS stts_cd_nm
+			,  "" AS cmptn_yn
+			,  "" AS cmptn_dtm
+			,  mem_seq
+			,  CASE edctn_stts_cd
+				WHEN 'EBC_VISIT_CD02001' THEN '신청'
+				WHEN 'EBC_VISIT_CD02002' THEN '협의중'
+				WHEN 'EBC_VISIT_CD02003' THEN '교육완료'
+				WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
+				END AS edu_stat
+			,  "" AS ptcpt_dtm
+			,  "" AS web_path
+
+		from
+		(
+		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
+			A.vst_seq -- 방문순번
+			, A.mem_seq -- 회원순번
+			, A.appctn_bsnm_no -- 신청당시 사업자등록번호
+			, A.appctn_fld_cd -- 신청분야 코드
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.appctn_fld_cd) AS appctn_fld_name -- 신청분야명
+			, A.hope_dt -- 교육희망일
+			, A.ptcpt_cnt -- 교육인원
+			, A.ptcpt_hh -- 교육시간
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.ptcpt_hh) AS ptcpt_hh_num
+			, A.appctn_theme_cntn -- 신청주제내용
+			, A.appctn_rsn -- 신청사유
+			, A.place_zipcode -- 방문교육 우편주소
+			, A.place_bsc_addr -- 방문교육 기본주소
+			, A.place_dtl_addr -- 방문교육 상세주소
+			, A.edctn_place AS edctn_place_addr -- 교육장소 hidden값
+			, A.ptcpt_trgt_cntn -- 참여대상내용
+			, A.itrdc_file_seq -- 소개파일순번
+			, A.edctn_stts_cd -- 교육상태코드
+			, A.reg_id -- 신청자아이디
+			, A.reg_dtm -- 방문교육신청일시
+			, A.mod_id -- 최종수정자
+			, A.mod_ip  -- 최종수정자
+			, (select name from co_adm_mst where id = A.mod_id) as mod_name
+			, A.mod_dtm -- 최종수정일시
+			, B.name-- 신청자이름
+			, B.id -- 신청자 아이디
+			, B.hp_no -- 신청자 핸드폰번호
+			, B.email -- 신청자이메일
+			, B.tel_no
+			, B.dept_cd
+			, B.dept_dtl_nm
+			, B.pstn_cd
+			, B.pstn_nm AS dept_cd_nm
+			, C.cmpn_nm
+			, C.rprsnt_nm
+			, C.cmpn_cd
+			, C.ctgry_cd
+			, C.size_cd
+			, C.stbsm_dt
+			, C.tel_no AS cmpn_tel_no
+			, C.zipcode
+			, C.bsc_addr
+			, C.dtl_addr
+			, C.sls_pmt
+			, C.sls_year
+			, C.mple_cnt
+			, C.mjr_prdct_1
+			, C.mjr_prdct_2
+			, C.mjr_prdct_3
+			, C.qlty_5_star_cd
+			, C.qlty_5_star_year
+			, C.pay_5_star_cd
+			, C.pay_5_star_year
+			, C.tchlg_5_star_cd
+			, C.tchlg_5_star_year
+			, D.vst_rslt_seq -- 방문결과순번
+			, D.cnfrmd_theme -- 확정주제
+			, D.edctn_strt_dtm -- 교육시작일시
+			, D.edctn_end_dtm -- 교육종료일시
+			, D.cmptn_cnt -- 수료인원
+			, D.edctn_year -- 교육년도
+			, D.edctn_place -- 교육장소
+			, D.ptcpt_rate -- 참석률
+			, D.lctr_file_seq -- 강의파일순번
+			, D.etc_matls_file_seq -- 기타자료파일순번
+			, (select COUNT(a.isttr_seq) from ev_edctn_isttr_rel a, cp_isttr_mst b where 1=1 and a.isttr_seq = b.isttr_seq and a.vst_seq = A.vst_seq and	a.vst_rslt_seq = D.vst_rslt_seq and a.isttr_seq = b.isttr_seq) as isttr_cnt
+			, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst a WHERE a.isttr_seq in (SELECT isttr_seq FROM ev_edctn_isttr_rel b WHERE b.vst_seq = A.vst_seq AND b.vst_rslt_seq = D.vst_rslt_seq)) AS isttr_group_name
+		FROM
+		(
+		SELECT vst_seq
+			, mem_seq
+			, appctn_bsnm_no
+			, appctn_fld_cd
+			, appctn_theme_cntn -- 신청주제내용
+			, appctn_rsn -- 신청사유
+			, hope_dt
+			, place_zipcode
+			, place_bsc_addr
+			, place_dtl_addr
+			, edctn_place -- 교육장소 hidden값
+			, ptcpt_trgt_cntn -- 참여대상내용
+			, ptcpt_cnt
+			, ptcpt_hh
+			, itrdc_file_seq -- 소개파일순번
+			, edctn_stts_cd
+			, reg_id
+			, reg_dtm
+			, mod_id
+			, mod_ip
+			, mod_dtm
+		FROM ev_edctn_vst_mst
+		)A
+		INNER JOIN
+		(
+		SELECT mem_seq
+			, name
+			, id
+			, hp_no
+			, tel_no
+			, email
+			, dept_cd
+			, dept_dtl_nm
+			, pstn_cd
+			, pstn_nm
+		FROM co_mem_mst
+		)B
+		ON A.mem_seq = B.mem_seq
+		INNER JOIN
+		(
+			SELECT  bsnm_no
+			, cmpn_nm
+			, rprsnt_nm
+			, cmpn_cd
+			, ctgry_cd
+			, size_cd
+			, stbsm_dt
+			, tel_no
+			, zipcode
+			, bsc_addr
+			, dtl_addr
+			, sls_pmt
+			, sls_year
+			, mple_cnt
+			, mjr_prdct_1
+			, mjr_prdct_2
+			, mjr_prdct_3
+			, qlty_5_star_cd
+			, qlty_5_star_year
+			, pay_5_star_cd
+			, pay_5_star_year
+			, tchlg_5_star_cd
+			, tchlg_5_star_year
+			, reg_id
+			, reg_ip
+			, reg_dtm
+		FROM cp_cmpn_mst
+		)C
+		ON A.appctn_bsnm_no = C.bsnm_no
+		LEFT JOIN
+		(
+		SELECT vst_rslt_seq
+			, vst_seq
+			, mem_seq
+			, cnfrmd_theme
+			, edctn_year -- 교육년도
+			, edctn_place -- 교육장소
+			, edctn_strt_dtm -- 교육시작일시
+			, edctn_end_dtm -- 교육종료일시
+			, cmptn_cnt
+			, ptcpt_rate -- 참석률
+			, lctr_file_seq
+			, etc_matls_file_seq
+			, rslt_end_yn
+			FROM ev_edctn_vst_rslt_dtl
+		)D
+		ON A.vst_seq = D.vst_seq
+		AND A.mem_seq = D.mem_seq
+		ORDER BY
+		A.reg_dtm DESC
+		)AA
+
+		<include refid="selectMypageEduListWhereSql" />
+
+
+		limit #{firstIndex}, #{recordCountPerPage}
+
+	</select>
+
+	<!--
+		쿼리명 : selectMypageEduListWhereSql
+		설  명 : 마이페이지 - 교육/세미나 신청내역 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.01.11    김학규       최초생성
+    -->
+	<sql id="selectMypageEduListWhereSql">
+		<where>
+
+			AND MEM_SEQ = #{memSeq}
+
+			<if test="cnnctCd != null and cnnctCd != '' ">
+				AND a.edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd = #{cnnctCd})
+			</if>
+
+			<!--과정분류 검색 중분류까지 있을경우-->
+			<if test="ctgryCd != null and ctgryCd !='' ">
+				AND a.ctgry_cd = #{ctgryCd}
+			</if>
+
+			<!--과정분류 검색 - 대분류만 선택 했을경우-->
+			<if test="prntCd !=null and prntCd !='' and (ctgryCd == null or ctgryCd =='') ">
+				AND LEFT(a.ctgry_cd, 7) like concat('%', #{prntCd}, '%')
+			</if>
+
+
+			<!-- 학습방식 -->
+			<if test="stduyMthdCdList != null and stduyMthdCdList.size() > 0">
+				and (
+				<foreach collection="stduyMthdCdList" item="stduyMthdCdList" index="index" open="" close="" separator=" or ">
+					stduy_mthd_cd = #{stduyMthdCdList}
+				</foreach>
+				)
+			</if>
+			<!-- 접수상태 -->
+			<if test="accsStatusOrderList != null and accsStatusOrderList.size() > 0">
+				and (
+				<foreach collection="accsStatusOrderList" item="accsStatusOrderList" index="index" open="" close="" separator=" or ">
+					accs_status_order = #{accsStatusOrderList}
+				</foreach>
+				)
+
+			</if>
+			<!-- 키워드 -->
+			<if test="q != null and q !='' ">
+				and (nm like concat('%', #{q}, '%')) or (place_nm like concat('%', #{q}, '%'))
+			</if>
+
+
+			<!-- 기간검색 -->
+
+		</where>
+	</sql>
+
+	<!--
+            쿼리명 : EBBFrontEpisdMapper.selectMypageEduListCnt
+            설  명 : 마이페이지 교육 세미나 사업 신청내역
+              수정일      수정자       수정내용
+            ==========   ========   ==============
+            2023.11.15    김학규       최초생성
+	-->
+	<select id="selectMypageEduListCnt" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
+		SELECT /*EBBEpisdMapper.selectEpisdList*/
+		'E' as eduGubun
+		, edctn_seq
+		, episd_seq
+		, episd_year
+		, episd_ord
+		, parnt_seq
+		, (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
+		, ctgry_cd
+		, ctgry_cd_nm
+		, cbsn_cd
+		, (select cd_nm from co_code_mst WHERE cd = aa.cbsn_cd) as cbsn_cd_nm
+		, nm
+		, stduy_mthd_cd
+		, stduy_mthd_cd_nm
+		, stduy_dd_cd
+		, stduy_dd_cd_nm
+		, stduy_time_cd
+		, stduy_time_cd_nm
+		, episd_year
+		, episd_ord
+		, DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
+		, accs_strt_dtm
+		, accs_end_dtm
+		, case
+		when NOW() <![CDATA[<]]> accs_strt_dtm then '접수대기'
+		when NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm then '접수중'
+		when NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt <![CDATA[>=]]> fxnum_cnt) then '마감'
+		END  AS accs_status_nm
+		, case
+		when NOW()  <![CDATA[<]]>  accs_strt_dtm then '2'
+		when NOW()  <![CDATA[>]]> accs_strt_dtm AND NOW()  <![CDATA[<]]>   accs_end_dtm then '1'
+		when NOW()  <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt  <![CDATA[>=]]> fxnum_cnt) then '3'
+		END  AS accs_status_order
+		, edctn_strt_dtm
+		, edctn_end_dtm
+		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+		case when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+		when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
+		when NOW() <![CDATA[>]]> edctn_end_dtm then '교육완료'
+		end
+		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+		END  AS edctn_status_nm
+		, (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
+		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst WHERE isttr_seq in (SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq = aa.edctn_seq AND episd_ord = aa.episd_ord AND episd_year = aa.episd_year )) AS isttr_group_name
+		, (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
+		, case when isttr_cnt <![CDATA[<=]]> 1 then ''
+		when isttr_cnt <![CDATA[>]]> 1 then isttr_cnt-1
+		END isttr_out_cnt
+		, fxnum_cnt
+		, fxnum_impsb_yn
+		, accs_cnt
+		, rcrmt_mthd_cd
+		, rcrmt_mthd_cd_nm
+		, pic_nm
+		, pic_email
+		, pic_tel_no
+		, edctn_ntctn_file_seq
+		, (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = aa.edctn_ntctn_file_seq) AS file_ord
+		, place_seq
+		, place_nm
+		, bsc_addr
+		, dtl_addr
+		, zipcode
+		, rprsnt_tel_no
+		, bdget_expns_yn
+		, case bdget_expns_yn
+		when 'Y' then '마감'
+		when 'N' then '미마감'
+		when 'C' then '교육취소'
+		end bdget_expns_nm
+		, reg_id
+		, reg_name
+		, reg_dtm
+		, mod_id
+		, mod_name
+		, mod_dtm
+		, exps_yn
+		, edctn_cmpltn_yn
+
+		, stts_cd
+		, CASE STTS_CD
+		WHEN 'EDU_STTS_CD01' THEN '선발'
+		WHEN 'EDU_STTS_CD02' THEN '신청취소'
+		WHEN 'EDU_STTS_CD03' THEN '신청양도'
+		WHEN 'EDU_STTS_CD04' THEN '선발대기'
+		WHEN 'EDU_STTS_CD05' THEN '미선발'
+		WHEN 'EDU_STTS_CD06' THEN '교육취소'
+		ELSE '알 수 없음'
+		END AS stts_cd_nm
+		, cmptn_yn
+		, cmptn_dtm
+		, mem_seq
+		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+		case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+		case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+		when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
+		when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
+		end
+		when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+		when stts_cd = 'EDU_STTS_CD06' then '교육취소'
+		end
+		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+		end edu_stat
+		, ptcpt_dtm
+		, web_path
+
+		FROM (SELECT
+		b.edctn_seq
+		, a.episd_seq
+		, b.ctgry_cd
+		, a.cbsn_cd
+		, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
+		, (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
+		, b.nm
+		, b.stduy_mthd_cd
+		, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
+		, b.stduy_dd_cd
+		, (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) as stduy_dd_cd_nm
+		, b.stduy_time_cd
+		, (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm
+		, a.episd_year
+		, a.episd_ord
+		, a.accs_strt_dtm
+		, a.accs_end_dtm
+		, a.edctn_strt_dtm
+		, a.edctn_end_dtm
+		, a.edctn_stts_cd
+		, (SELECT min(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS min_isttr_seq
+		, (SELECT COUNT(isttr_seq) FROM ed_edctn_isttr_rel c WHERE a.edctn_seq = c.edctn_seq AND a.episd_year = c.episd_year AND a.episd_ord = c.episd_ord) AS isttr_cnt
+		, a.fxnum_cnt
+		, a.fxnum_impsb_yn
+		, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
+		, a.rcrmt_mthd_cd
+		, (select cd_nm from co_code_mst where cd=a.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
+		, a.pic_nm
+		, a.pic_email
+		, a.pic_tel_no
+		, a.edctn_ntctn_file_seq
+		, a.place_seq
+
+		, c.nm as place_nm
+		, c.bsc_addr
+		, c.dtl_addr
+		, c.zipcode
+		, c.rprsnt_tel_no
+		, a.bdget_expns_yn
+		, a.reg_id
+		, (select name from co_adm_mst where id = a.reg_id) as reg_name
+		, a.reg_dtm
+		, a.mod_id
+		, (select name from co_adm_mst where id = a.reg_id) as mod_name
+		, a.mod_dtm
+		, a.exps_yn
+		, a.edctn_cmpltn_yn
+		, stts_cd
+		, (select cd_nm from co_code_mst where cd=d.stts_cd) as stts_cd_nm
+		, cmptn_yn
+		, cmptn_dtm
+		, mem_seq
+		, ptcpt_dtm
+		, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+		FROM ed_edctn_episd_mst a
+		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
+		LEFT JOIN (SELECT
+		episd_seq
+		, mem_seq
+		, stts_cd
+		, cmptn_yn
+		, cmptn_dtm
+		, reg_dtm as ptcpt_dtm
+		FROM ep_edctn_ptcpt_mst) d ON d.episd_seq = a.episd_seq
+		) AA
+
+		<include refid="selectMypageEduListWhereSql" />
+
+		UNION ALL
+
+		SELECT
+		'V' as edu_gubun
+		, "" AS  edctn_seq
+		,  "" AS episd_seq
+		,  edctn_year AS episd_year
+		,  "" AS episd_ord
+		,  "" AS parnt_seq
+		,  "" AS prnt_cd_nm
+		,  "" AS ctgry_cd
+		,  appctn_fld_name AS ctgry_cd_nm
+		,  "" AS cbsn_cd
+		,  "" AS cbsn_cd_nm
+		,  "방문교육" AS nm
+		,  "STDUY_MTHD01" AS stduy_mthd_cd
+		,  "집체교육" AS stduy_mthd_cd_nm
+		,  "" AS stduy_dd_cd
+		,  "" AS stduy_dd_cd_nm
+		,  ptcpt_hh AS stduy_time_cd
+		,  ptcpt_hh_num AS stduy_time_cd_nm
+		,  "" AS episd_year
+		,  "" AS episd_ord
+		,  "" AS accs_order_day
+		,  "" AS accs_strt_dtm
+		,  "" AS accs_end_dtm
+		,  "" AS accs_status_nm
+		,  "" AS accs_status_order
+		,  edctn_strt_dtm
+		,  edctn_end_dtm
+		, "알 수 없음" AS edctn_status_nm
+		,  "" AS isttr_name
+		,  isttr_group_name
+		,  "" AS ffltn_nm
+		, case when isttr_cnt <![CDATA[<=]]> 1 then ''
+		when isttr_cnt <![CDATA[>]]> 1 then isttr_cnt-1
+		END AS isttr_out_cnt
+		,  "" AS fxnum_cnt
+		,  "" AS fxnum_impsb_yn
+		,  "" AS accs_cnt
+		,  "" AS rcrmt_mthd_cd
+		,  "" AS rcrmt_mthd_cd_nm
+		,  "" AS pic_nm
+		,  "" AS pic_email
+		,  "" AS pic_tel_no
+		,  "" AS edctn_ntctn_file_seq
+		,  "" AS file_ord
+		,  "" AS place_seq
+		,  edctn_place_addr AS place_nm
+		,  place_bsc_addr AS bsc_addr
+		,  place_dtl_addr AS dtl_addr
+		,  place_zipcode AS zipcode
+		,  "" AS rprsnt_tel_no
+		,  "" AS bdget_expns_yn
+		,  "" AS bdget_expns_nm
+		,  reg_id
+		,  name AS reg_name
+		,  reg_dtm
+		,  mod_id
+		,  mod_name
+		,  mod_dtm
+		,  "" AS exps_yn
+		,  "" AS edctn_cmpltn_yn
+		,  "" AS stts_cd
+		,  "" AS stts_cd_nm
+		,  "" AS cmptn_yn
+		,  "" AS cmptn_dtm
+		,  mem_seq
+		,  CASE edctn_stts_cd
+		WHEN 'EBC_VISIT_CD02001' THEN '신청'
+		WHEN 'EBC_VISIT_CD02002' THEN '협의중'
+		WHEN 'EBC_VISIT_CD02003' THEN '교육완료'
+		WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
+		END AS edu_stat
+		,  "" AS ptcpt_dtm
+		,  "" AS web_path
+
+		from
+		(
+		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
+		A.vst_seq -- 방문순번
+		, A.mem_seq -- 회원순번
+		, A.appctn_bsnm_no -- 신청당시 사업자등록번호
+		, A.appctn_fld_cd -- 신청분야 코드
+		, (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.appctn_fld_cd) AS appctn_fld_name -- 신청분야명
+		, A.hope_dt -- 교육희망일
+		, A.ptcpt_cnt -- 교육인원
+		, A.ptcpt_hh -- 교육시간
+		, (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'EBC_VISIT_CD' AND CD = A.ptcpt_hh) AS ptcpt_hh_num
+		, A.appctn_theme_cntn -- 신청주제내용
+		, A.appctn_rsn -- 신청사유
+		, A.place_zipcode -- 방문교육 우편주소
+		, A.place_bsc_addr -- 방문교육 기본주소
+		, A.place_dtl_addr -- 방문교육 상세주소
+		, A.edctn_place AS edctn_place_addr -- 교육장소 hidden값
+		, A.ptcpt_trgt_cntn -- 참여대상내용
+		, A.itrdc_file_seq -- 소개파일순번
+		, A.edctn_stts_cd -- 교육상태코드
+		, A.reg_id -- 신청자아이디
+		, A.reg_dtm -- 방문교육신청일시
+		, A.mod_id -- 최종수정자
+		, A.mod_ip  -- 최종수정자
+		, (select name from co_adm_mst where id = A.mod_id) as mod_name
+		, A.mod_dtm -- 최종수정일시
+		, B.name-- 신청자이름
+		, B.id -- 신청자 아이디
+		, B.hp_no -- 신청자 핸드폰번호
+		, B.email -- 신청자이메일
+		, B.tel_no
+		, B.dept_cd
+		, B.dept_dtl_nm
+		, B.pstn_cd
+		, B.pstn_nm AS dept_cd_nm
+		, C.cmpn_nm
+		, C.rprsnt_nm
+		, C.cmpn_cd
+		, C.ctgry_cd
+		, C.size_cd
+		, C.stbsm_dt
+		, C.tel_no AS cmpn_tel_no
+		, C.zipcode
+		, C.bsc_addr
+		, C.dtl_addr
+		, C.sls_pmt
+		, C.sls_year
+		, C.mple_cnt
+		, C.mjr_prdct_1
+		, C.mjr_prdct_2
+		, C.mjr_prdct_3
+		, C.qlty_5_star_cd
+		, C.qlty_5_star_year
+		, C.pay_5_star_cd
+		, C.pay_5_star_year
+		, C.tchlg_5_star_cd
+		, C.tchlg_5_star_year
+		, D.vst_rslt_seq -- 방문결과순번
+		, D.cnfrmd_theme -- 확정주제
+		, D.edctn_strt_dtm -- 교육시작일시
+		, D.edctn_end_dtm -- 교육종료일시
+		, D.cmptn_cnt -- 수료인원
+		, D.edctn_year -- 교육년도
+		, D.edctn_place -- 교육장소
+		, D.ptcpt_rate -- 참석률
+		, D.lctr_file_seq -- 강의파일순번
+		, D.etc_matls_file_seq -- 기타자료파일순번
+		, (select COUNT(a.isttr_seq) from ev_edctn_isttr_rel a, cp_isttr_mst b where 1=1 and a.isttr_seq = b.isttr_seq and a.vst_seq = A.vst_seq and	a.vst_rslt_seq = D.vst_rslt_seq and a.isttr_seq = b.isttr_seq) as isttr_cnt
+		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst a WHERE a.isttr_seq in (SELECT isttr_seq FROM ev_edctn_isttr_rel b WHERE b.vst_seq = A.vst_seq AND b.vst_rslt_seq = D.vst_rslt_seq)) AS isttr_group_name
+		FROM
+		(
+		SELECT vst_seq
+		, mem_seq
+		, appctn_bsnm_no
+		, appctn_fld_cd
+		, appctn_theme_cntn -- 신청주제내용
+		, appctn_rsn -- 신청사유
+		, hope_dt
+		, place_zipcode
+		, place_bsc_addr
+		, place_dtl_addr
+		, edctn_place -- 교육장소 hidden값
+		, ptcpt_trgt_cntn -- 참여대상내용
+		, ptcpt_cnt
+		, ptcpt_hh
+		, itrdc_file_seq -- 소개파일순번
+		, edctn_stts_cd
+		, reg_id
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm
+		FROM ev_edctn_vst_mst
+		)A
+		INNER JOIN
+		(
+		SELECT mem_seq
+		, name
+		, id
+		, hp_no
+		, tel_no
+		, email
+		, dept_cd
+		, dept_dtl_nm
+		, pstn_cd
+		, pstn_nm
+		FROM co_mem_mst
+		)B
+		ON A.mem_seq = B.mem_seq
+		INNER JOIN
+		(
+		SELECT  bsnm_no
+		, cmpn_nm
+		, rprsnt_nm
+		, cmpn_cd
+		, ctgry_cd
+		, size_cd
+		, stbsm_dt
+		, tel_no
+		, zipcode
+		, bsc_addr
+		, dtl_addr
+		, sls_pmt
+		, sls_year
+		, mple_cnt
+		, mjr_prdct_1
+		, mjr_prdct_2
+		, mjr_prdct_3
+		, qlty_5_star_cd
+		, qlty_5_star_year
+		, pay_5_star_cd
+		, pay_5_star_year
+		, tchlg_5_star_cd
+		, tchlg_5_star_year
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		FROM cp_cmpn_mst
+		)C
+		ON A.appctn_bsnm_no = C.bsnm_no
+		LEFT JOIN
+		(
+		SELECT vst_rslt_seq
+		, vst_seq
+		, mem_seq
+		, cnfrmd_theme
+		, edctn_year -- 교육년도
+		, edctn_place -- 교육장소
+		, edctn_strt_dtm -- 교육시작일시
+		, edctn_end_dtm -- 교육종료일시
+		, cmptn_cnt
+		, ptcpt_rate -- 참석률
+		, lctr_file_seq
+		, etc_matls_file_seq
+		, rslt_end_yn
+		FROM ev_edctn_vst_rslt_dtl
+		)D
+		ON A.vst_seq = D.vst_seq
+		AND A.mem_seq = D.mem_seq
+		ORDER BY
+		A.reg_dtm DESC
+		)AA
+
+		<include refid="selectMypageEduListWhereSql" />
+
+
+	</select>
+
+
+
+
 </mapper>
 
 

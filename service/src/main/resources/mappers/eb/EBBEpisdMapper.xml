@@ -334,6 +334,7 @@
 			</if>
 
 			<if test='mypageYn == "Y".toString() '>
+				AND (edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   edctn_end_dtm)
 				AND MEM_SEQ = #{memSeq}
 			</if>
 
