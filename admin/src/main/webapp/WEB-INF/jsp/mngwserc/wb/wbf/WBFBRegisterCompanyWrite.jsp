@@ -92,7 +92,7 @@
                             </select>
                         </div>
                         <div class="col-sm-4" style="margin-left: -15px">
-                            <input type="text" class="form-control notRequired" id="pstnNm" name="pstnNm" value="" title="직급 상세" maxlength="50"/>
+                            <input type="text" class="form-control notRequired" style="display:none;" id="pstnNm" name="pstnNm" value="" title="직급 상세" maxlength="50"/>
                         </div>
                     </div>
                 </div>

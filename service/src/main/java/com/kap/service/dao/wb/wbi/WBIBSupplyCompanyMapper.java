@@ -83,6 +83,12 @@ public interface WBIBSupplyCompanyMapper {
 
     /**
      *  Write Page
+     *  신청부품사 등록 - 신청 파일 업데이트
+     */
+    public int delFileDtl(WBIBSupplyDTO wBIBSupplyDTO);
+
+    /**
+     *  Write Page
      *  신청부품사 등록 - 신청 상세
      */
     public int putAppctnRsumeDtl(WBIBSupplyDTO wBIBSupplyDTO);

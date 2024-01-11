@@ -18,6 +18,8 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -59,8 +61,16 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
 
         int respCnt = 0;
 
+        //신청시간 년도 구하기
+        Date now = new Date();
+        SimpleDateFormat yyyy = new SimpleDateFormat("yyyy");
+
+        wBRoundMstDTO.setYear(Integer.valueOf(yyyy.format(now)));
+
         int firstEpisdSeqIdgen = cxEpisdSeqIdgen.getNextIntegerId();
         wBRoundMstDTO.setEpisdSeq(firstEpisdSeqIdgen);
+        wBRoundMstDTO.setBsnStrtDtm(wBRoundMstDTO.getYear()+"-01-01 00:00:00");
+        wBRoundMstDTO.setBsnEndDtm(wBRoundMstDTO.getYear()+"-12-31 23:59:59");
 
         respCnt = wBIASupplyListMapper.insertSupply(wBRoundMstDTO);
 

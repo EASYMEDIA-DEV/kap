@@ -27,6 +27,7 @@
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </td>
+                <td class="text-center">${ kl:decode(list.docResultNm, "", "접수완료" , list.docResultNm) }</td>
                 <td class="text-center">${ kl:decode(list.FResultNm, "", "접수전" , list.FResultNm) }</td>
                 <td class="text-center">
                     <c:choose>

@@ -175,6 +175,7 @@
                         <th class="text-center">참여구분</th>
                         <th class="text-center">주제</th>
                         <th class="text-center">시상부문</th>
+                        <th class="text-center">서류심사</th>
                         <th class="text-center">1차결과</th>
                         <th class="text-center">최종결과</th>
                         <th class="text-center">핸드폰번호</th>
