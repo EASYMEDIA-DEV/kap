@@ -1,14 +1,15 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="yyyy.MM.dd" /></c:set>
 <div class="container-fluid">
     <div class="card-body ">
         <div class="card-deck">
             <div class="card" style="background-color:#e9e9e9;">
                 <div class="card-body">
-                    <h5 class="card-title"><strong>김태훈</strong> 님[최고관리자] 환영합니다. </h5>
-                    <p class="card-text">최근 로그인 일시 : 2023.01.01 10:00</p>
+                    <h5 class="card-title"><strong>${sessionScope.loginMap.name}</strong> 님[${sessionScope.loginMap.authNm}] 환영합니다. </h5>
+                    <p class="card-text">최근 로그인 일시 : ${kl:convertDate(sessionScope.loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')} </p>
                     <p class="card-text">&nbsp;</p>
-                    <p class="card-text"><button type="button" class="btn btn-sm btn-inverse">정보수정</button></p>
+                    <p class="card-text"><button type="button" class="btn btn-sm btn-inverse" onclick="location.href='/mngwserc/co/coz/profile'">정보수정</button></p>
                 </div>
             </div>
         </div>
@@ -19,7 +20,7 @@
             <div class="card-deck">
                 <div class="card" style="height:300px;">
                     <div class="card-body">
-                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : 2023.11.14</small></p>
+                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : ${sysDate}</small></p>
                         <p class="card-text">&nbsp;</p>
                         <p class="card-text"><strong>접수중</strong><span style="float:right;"><strong>5</strong>건</span></p>
                         <p class="card-text"><strong>접수대기</strong><span style="float:right;"><strong>5</strong>건</span></p>
@@ -33,7 +34,7 @@
             <div class="card-deck">
                 <div class="card" style="height:300px;">
                     <div class="card-body">
-                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : 2023.11.14</small></p>
+                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : ${sysDate}</small></p>
                         <h6 class="card-title"><strong>기술지도</strong></h6>
                         <p class="card-text"><strong>신청</strong><span style="float:right;"><strong>5</strong>건</span></p>
                         <p class="card-text"><strong>지도중</strong><span style="float:right;"><strong>5</strong>건</span></p>
@@ -68,7 +69,7 @@
             <div class="card-deck">
                 <div class="card" style="height:335px;">
                     <div class="card-body">
-                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : 2023.11.14</small></p>
+                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : ${sysDate}</small></p>
                         <p class="card-text">&nbsp;</p>
                         <p class="card-text"><strong>접수대기</strong><span style="float:right;"><strong>5</strong>건</span></p>
                         <p class="card-text"><strong>접수완료</strong><span style="float:right;"><strong>5</strong>건</span></p>
@@ -81,7 +82,7 @@
             <div class="card-deck">
                 <div class="card" >
                     <div class="card-body">
-                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : 2023.11.14</small></p>
+                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : ${sysDate}</small></p>
                         <p class="card-text">&nbsp;</p>
                         <p class="card-text"><strong>신규가입</strong><span style="float:right;"><strong>15</strong></span></p>
                         <p class="card-text"><strong>탈퇴</strong><span style="float:right;"><strong>5</strong></span></p>
@@ -92,7 +93,7 @@
             <div class="card-deck">
                 <div class="card">
                     <div class="card-body">
-                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : 2023.11.14</small></p>
+                        <p class="card-text"><small class="text-muted" style="float:right;">기준일 : ${sysDate}</small></p>
                         <p class="card-text">&nbsp;</p>
                         <p class="card-text"><strong>신규가입</strong><span style="float:right;"><strong>15</strong></span></p>
                         <p class="card-text"><strong>탈퇴</strong><span style="float:right;"><strong>5</strong></span></p>

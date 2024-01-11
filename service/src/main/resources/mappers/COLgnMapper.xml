@@ -52,6 +52,7 @@
 			, email
 			, hp_no
 			, allw_ip
+			, last_lgn_dtm
 		from
 			co_adm_mst a
 		where 1=1
