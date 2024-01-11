@@ -127,6 +127,15 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }
     }
 
+    let fnpstnNmShow = function(pstnCd) {
+        if(pstnCd == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }else{
+            $("#pstnNm").val("");
+            $("#pstnNm").css("display", "none");
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -155,6 +164,14 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 event : {
                     click : function() {
                         cmmCtrl.searchPostCode(width, height,"zipCode","bscAddr","dtlAddr");
+                    }
+                }
+            },
+            pstnCd : {
+                event : {
+                    change : function() {
+                        var pstnCd = $(this).val();
+                        fnpstnNmShow(pstnCd);
                     }
                 }
             },
