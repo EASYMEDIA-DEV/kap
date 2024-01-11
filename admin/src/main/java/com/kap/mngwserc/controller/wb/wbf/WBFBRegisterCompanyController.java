@@ -86,7 +86,7 @@ public class WBFBRegisterCompanyController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbfb/WBFBRegisterCompanyList.admin";
+        return "mngwserc/wb/wbf/WBFBRegisterCompanyList.admin";
     }
 
     /**
@@ -107,7 +107,7 @@ public class WBFBRegisterCompanyController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbfb/WBFBRegisterCompanyListAjax";
+        return "mngwserc/wb/wbf/WBFBRegisterCompanyListAjax";
     }
 
     /**
@@ -185,7 +185,7 @@ public class WBFBRegisterCompanyController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbfb/WBFBRegisterCompanyWrite.admin";
+        return "mngwserc/wb/wbf/WBFBRegisterCompanyWrite.admin";
     }
 
     @PostMapping(value="/insert")
@@ -253,7 +253,7 @@ public class WBFBRegisterCompanyController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbfb/WBFBRegisterCompanyEdit.admin";
+        return "mngwserc/wb/wbf/WBFBRegisterCompanyEdit.admin";
     }
     /**
      * 컨설팅 이관 내역을 조회한다.
@@ -274,7 +274,7 @@ public class WBFBRegisterCompanyController {
             }
             throw new Exception(e.getMessage());
         }
-        return "mngwserc/wb/wbfb/WBFBRegisterCompanyTrsfListAjax";
+        return "mngwserc/wb/wbf/WBFBRegisterCompanyTrsfListAjax";
     }
 
     /**
