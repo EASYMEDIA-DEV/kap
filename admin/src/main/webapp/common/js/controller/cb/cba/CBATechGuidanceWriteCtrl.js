@@ -461,9 +461,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                                             return false;
                                                         }
                                                     }
-                                                    var dlvryRateSize = $(".dpndnRate").length;
-                                                    for(var i =0; i<dlvryRateSize; i++){
-                                                        if(!$(".dlvryRate").eq(i).val()){
+                                                    var dpndnRateSize = $(".dpndnRate").length;
+                                                    for(var i =0; i<dpndnRateSize; i++){
+                                                        if(!$(".dpndnRate").eq(i).val()){
                                                             alert("매출비중을 입력해주세요.");
                                                             $(".dlvryRate").eq(i).focus();
                                                             return false;
@@ -584,15 +584,19 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         $("#rprsntNm").val(rprsntNmTxt);
                         $("#cbsnCd").val(cbsnCd);
 
-
-                        if ($formObj.find(".dropzone").size() > 0) {
-                            cmmCtrl.fileFrmAjax(function (data) {
-                                //콜백함수. 페이지 이동
-                                if (data.respCnt > 0) {
-                                    alert(actionMsg);
-                                    location.replace("./list");
-                                }
-                            }, actionUrl, $formObj, "json");
+                        var gubun = $("#submit").text();
+                        if(confirm(gubun+"하시겠습니까?")){
+                            if ($formObj.find(".dropzone").size() > 0) {
+                                cmmCtrl.fileFrmAjax(function (data) {
+                                    //콜백함수. 페이지 이동
+                                    if (data.respCnt > 0) {
+                                        alert(actionMsg);
+                                        location.replace("./list");
+                                    }
+                                }, actionUrl, $formObj, "json");
+                            }
+                        }else{
+                            return false;
                         }
 
                     }
@@ -823,7 +827,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             appctnPdfDownload : {
                 event : {
                     click : function(){
-                        var fileName = "TechGuide.pdf";
+                        var cmpnNmText = $("#cmpnNmText").text();
+                        var date = new Date();
+                        var year = date.getFullYear();
+                        var month = ("0" + (1 + date.getMonth())).slice(-2);
+                        var day = ("0" + date.getDate()).slice(-2);
+                        var fullDay = year + month + day;
+
+                        var fileName = "기술지도 사업현황_"+cmpnNmText+"_"+fullDay+".pdf";
                         cmmCtrl.getAppctnPdfDownload(fileName);
                     }
                 }

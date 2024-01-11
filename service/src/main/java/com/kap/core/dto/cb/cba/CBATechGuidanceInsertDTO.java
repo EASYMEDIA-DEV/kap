@@ -287,6 +287,9 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     @Schema(title = "응답수", example = "숫자")
     private Integer rspnCnt;
 
+    @Schema(title = "설문 가능 기간에 걸리는 설문 갯수", example = "숫자")
+    private Integer srvCnt;
+
     // 이관 이력 리스트
     List<CBATechGuidanceInsertDTO> trsfGuidanceList;
     // 만족도 상세

@@ -233,5 +233,9 @@ public interface CBATechGuidanceMapper {
      */
     public CBATechGuidanceInsertDTO selectTechGuidanceDtlCheck(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
+    /**
+     * 최근 1년 간 신청한 컨설팅 내역 조회
+     */
+    public int selectYearConsultingCount(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
 }

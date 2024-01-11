@@ -1186,10 +1186,18 @@
             A.ADM_MEMO,
             A.REG_DTM,
             A.REG_ID,
-            (SELECT NAME CO_MEM_MST WHERE ID = A.REG_ID) AS REG_NAME,
+            CASE
+                WHEN (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) IS NULL
+                THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=A.REG_ID)
+                ELSE (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID)
+                END AS REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-            (SELECT NAME CO_MEM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            CASE
+                WHEN (SELECT NAME FROM CO_MEM_MST WHERE ID=B.MOD_ID) IS NULL
+                    THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=B.MOD_ID)
+                ELSE (SELECT NAME FROM CO_MEM_MST WHERE ID=B.MOD_ID)
+                END AS MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1

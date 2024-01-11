@@ -284,10 +284,18 @@
             A.ADM_MEMO,
             A.REG_DTM,
             A.REG_ID,
-            (SELECT NAME FROM CO_MEM_MST WHERE ID = A.REG_ID) REG_NAME,
+            CASE
+                WHEN (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) IS NULL
+                    THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=A.REG_ID)
+                ELSE (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID)
+                END AS REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-            (SELECT NAME CO_MEM_MST WHERE ID = B.MOD_ID) AS MOD_NAME
+            CASE
+                WHEN (SELECT NAME FROM CO_MEM_MST WHERE ID=B.MOD_ID) IS NULL
+                    THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=B.MOD_ID)
+                ELSE (SELECT NAME FROM CO_MEM_MST WHERE ID=B.MOD_ID)
+                END AS MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
@@ -1209,7 +1217,7 @@
     ==========   ======    ==============
     2023.12.14   이옥정       최초생성
     -->
-    <delete id="deleteManageConsult" parameterType="CBBManageConsultSearchDTO">
+    <delete id="deleteManageConsult" parameterType="CBATechGuidanceInsertDTO">
         DELETE /* CBATechGuidanceMapper.deleteManageConsult */
         FROM
             CP_CNSTG_APPCTN_MST
@@ -1232,7 +1240,7 @@
         ==========   ======    ==============
         2023.12.15   이옥정       최초생성
     -->
-    <delete id="deleteConsultRsumeMst" parameterType="CBBManageConsultSearchDTO">
+    <delete id="deleteConsultRsumeMst" parameterType="CBATechGuidanceInsertDTO">
         DELETE /* CBATechGuidanceMapper.deleteConsultRsumeMst */
         FROM
             CP_CNSTG_RSUME_MST
@@ -1255,7 +1263,7 @@
         ==========   ======    ==============
         2023.12.15   이옥정       최초생성
     -->
-    <delete id="deleteConsultPicDtl" parameterType="CBBManageConsultSearchDTO">
+    <delete id="deleteConsultPicDtl" parameterType="CBATechGuidanceInsertDTO">
         DELETE /* CBATechGuidanceMapper.deleteConsultPicDtl */
         FROM
             CP_CNSTG_PIC_DTL
@@ -1278,7 +1286,7 @@
         ==========   ======    ==============
         2023.12.15   이옥정       최초생성
     -->
-    <delete id="deleteConsultCbsnDtl" parameterType="CBBManageConsultSearchDTO">
+    <delete id="deleteConsultCbsnDtl" parameterType="CBATechGuidanceInsertDTO">
         DELETE /* CBATechGuidanceMapper.deleteConsultCbsnDtl */
         FROM
             CP_CNSTG_CBSN_DTL
@@ -1301,7 +1309,7 @@
         ==========   ======    ==============
         2023.12.15   이옥정       최초생성
     -->
-    <delete id="deleteConsultDlvryDtl" parameterType="CBBManageConsultSearchDTO">
+    <delete id="deleteConsultDlvryDtl" parameterType="CBATechGuidanceInsertDTO">
         DELETE /* CBATechGuidanceMapper.deleteConsultDlvryDtl */
         FROM
             CP_CNSTG_DLVRY_DTL
@@ -1324,7 +1332,7 @@
         ==========   ======    ==============
         2023.12.15   이옥정       최초생성
     -->
-    <delete id="deleteConsultDpndnDtl" parameterType="CBBManageConsultSearchDTO">
+    <delete id="deleteConsultDpndnDtl" parameterType="CBATechGuidanceInsertDTO">
         DELETE /* CBATechGuidanceMapper.deleteConsultDpndnDtl */
         FROM
             CP_CNSTG_DPNDN_DTL
@@ -1347,7 +1355,7 @@
         ==========   ======    ==============
         2023.12.15   이옥정       최초생성
     -->
-    <delete id="deleteConsultAppctnTypeDtl" parameterType="CBBManageConsultSearchDTO">
+    <delete id="deleteConsultAppctnTypeDtl" parameterType="CBATechGuidanceInsertDTO">
         DELETE /* CBATechGuidanceMapper.deleteConsultAppctnTypeDtl */
         FROM
             CP_CNSTG_APPCTN_TYPE_DTL
@@ -1370,7 +1378,7 @@
         ==========   ======    ==============
         2023.12.15   이옥정       최초생성
     -->
-    <delete id="deleteConsultSrvRsltDtl" parameterType="CBBManageConsultSearchDTO">
+    <delete id="deleteConsultSrvRsltDtl" parameterType="CBATechGuidanceInsertDTO">
         DELETE /* CBATechGuidanceMapper.deleteConsultSrvRsltDtl */
         FROM
             CP_CNSTG_SRV_RSLT_DTL
@@ -1393,7 +1401,7 @@
         ==========   ======    ==============
         2023.12.15   이옥정       최초생성
     -->
-    <delete id="deleteConsultAppctnTrnsfDtl" parameterType="CBBManageConsultSearchDTO">
+    <delete id="deleteConsultAppctnTrnsfDtl" parameterType="CBATechGuidanceInsertDTO">
         DELETE /* CBATechGuidanceMapper.deleteConsultAppctnTrnsfDtl */
         FROM
             CP_CNSTG_APPCTN_TRNSF_DTL
@@ -1448,12 +1456,34 @@
             B.PSTN_NM,
             B.EMAIL,
             C.SRV_SEQ,
-            (SELECT COUNT(SRV_SEQ) FROM SV_QSTN_DTL WHERE SRV_SEQ = C.SRV_SEQ) AS QSTN_CNT,
-            (SELECT COUNT(SRV_RSPN_SEQ) FROM SV_RSPN_MST WHERE SRV_SEQ = C.SRV_SEQ AND RFNC_SEQ = A.CNSTG_SEQ AND RFNC_CD = 'CON') AS RSPN_CNT
+            (SELECT COUNT(SRV_SEQ) FROM SV_QSTN_DTL WHERE SRV_SEQ = C.SRV_SEQ) AS QSTN_CNT /* 문항수 */,
+            (SELECT COUNT(SRV_RSPN_SEQ) FROM SV_RSPN_MST WHERE SRV_SEQ = C.SRV_SEQ AND RFNC_SEQ = A.CNSTG_SEQ AND RFNC_CD = 'CON') AS RSPN_CNT,
+            (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ AND (SRV_STRT_DTM  <![CDATA[<]]>  NOW() AND SRV_END_DTM <![CDATA[>=]]> NOW())) AS SRV_CNT,
+            D.RSPN_MM /* 응답 시간 */,
+            D.CNTN /* 내용 */
         FROM
             CP_CNSTG_APPCTN_MST A
-            LEFT JOIN  CO_MEM_MST B ON A.APPCTN_MEM_SEQ = B.MEM_SEQ
+            LEFT JOIN CO_MEM_MST B ON A.APPCTN_MEM_SEQ = B.MEM_SEQ
             LEFT JOIN CP_CNSTG_RSUME_MST C ON A.CNSTG_SEQ = C.CNSTG_SEQ
+            LEFT JOIN SV_MST D ON C.SRV_SEQ = D.SRV_SEQ
         WHERE A.CNSTG_SEQ = #{detailsKey}
     </select>
+
+    <!--
+      쿼리명 : CBATechGuidanceMapper.selectYearConsultingCount
+      설  명 :  최근 1년 간 신청한 컨설팅 내역 조회
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2024.01.11   임서화      최초 생성
+ -->
+    <select id="selectYearConsultingCount" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
+        SELECT
+            COUNT()
+        FROM
+            CP_CNSTG_APPCTN_MST A
+        WHERE
+            APPCTN_MEM_SEQ = (SELECT MEM_SEQ FROM CO_MEM_MST ID=#{memSeq})
+            AND PTCPT_DTM > DATE_ADD(NOW(), INTERVAL -12 MONTH)
+    </select>
+
 </mapper>

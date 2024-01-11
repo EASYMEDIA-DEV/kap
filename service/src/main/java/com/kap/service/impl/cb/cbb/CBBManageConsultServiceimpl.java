@@ -358,6 +358,14 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         String[] dlvryCmpnNm =  pCBBManageConsultInsertDTO.getDlvryCmpnNm().split(",");
         String[] dlvryRate = pCBBManageConsultInsertDTO.getDlvryRate().split(",");
         HashMap cnstgDlyvMap = new HashMap();
+
+        CBBManageConsultSearchDTO cBBManageConsultSearchDTO = new CBBManageConsultSearchDTO();
+        List delValueList = new ArrayList();
+        delValueList.add(pCBBManageConsultInsertDTO.getCnstgSeq());
+        cBBManageConsultSearchDTO.setDelValueList(delValueList);
+
+        cBBManageConsultMapper.deleteConsultDlvryDtl(cBBManageConsultSearchDTO);
+
         for(int i=0; i < dlvryCmpnNm.length; i++) {
             cnstgDlyvMap.put("cnstgSeq", pCBBManageConsultInsertDTO.getCnstgSeq());
             cnstgDlyvMap.put("cmpnDlvrySeq",dlvrySeqIdgen.getNextIntegerId());
@@ -366,18 +374,17 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             cnstgDlyvMap.put("regId", pCBBManageConsultInsertDTO.getRegId());
             cnstgDlyvMap.put("regIp", pCBBManageConsultInsertDTO.getRegIp());
 
-            List dlvryInfoList = cBBManageConsultMapper.selectCnstgDlvryInfo(pCBBManageConsultInsertDTO.getCnstgSeq());
-            if(dlvryInfoList.size() > 0){
-                cBBManageConsultMapper.updateCnstgDlvryInfo(cnstgDlyvMap);
-            }else{
-                cBBManageConsultMapper.insertCnstgDlvryInfo(cnstgDlyvMap);
-            }
+
+            cBBManageConsultMapper.insertCnstgDlvryInfo(cnstgDlyvMap);
 
         }
         // 완성차 의존율 상세 정보 등록 있으면 수정
         String[] dpbdnCmpnNm =  pCBBManageConsultInsertDTO.getDpndnCmpnNm().split(",");
         String[] dpbdnRate = pCBBManageConsultInsertDTO.getDpndnRate().split(",");
         HashMap dpndnMap = new HashMap();
+
+        cBBManageConsultMapper.deleteConsultDpndnDtl(cBBManageConsultSearchDTO);
+
         for(int i=0; i < dpbdnCmpnNm.length; i++){
             dpndnMap.put("cnstgSeq",pCBBManageConsultInsertDTO.getCnstgSeq());
             dpndnMap.put("dpndnSeq",dpndnSeqIdgen.getNextIntegerId());
@@ -386,12 +393,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             dpndnMap.put("regId", pCBBManageConsultInsertDTO.getRegId());
             dpndnMap.put("regIp", pCBBManageConsultInsertDTO.getRegIp());
 
-            List dpndnInfoList = cBBManageConsultMapper.selectCnstgDpndnInfo(pCBBManageConsultInsertDTO.getCnstgSeq());
-            if(dpndnInfoList.size() > 0){
-                cBBManageConsultMapper.updateCnstgDpndnInfo(dpndnMap);
-            }else{
-                cBBManageConsultMapper.insertCnstgDpndnInfo(dpndnMap);
-            }
+            cBBManageConsultMapper.insertCnstgDpndnInfo(dpndnMap);
         }
 
     }

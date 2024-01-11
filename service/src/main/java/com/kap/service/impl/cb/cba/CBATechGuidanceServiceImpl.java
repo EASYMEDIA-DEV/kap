@@ -335,6 +335,12 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         String[] dlvryCmpnNm =  pCBATechGuidanceInsertDTO.getDlvryCmpnNm().split(",");
         String[] dlvryRate = pCBATechGuidanceInsertDTO.getDlvryRate().split(",");
         HashMap cnstgDlyvMap = new HashMap();
+
+        List delValueList = new ArrayList();
+        delValueList.add(pCBATechGuidanceInsertDTO.getCnstgSeq());
+        pCBATechGuidanceInsertDTO.setDelValueList(delValueList);
+        cBATechGuidanceMapper.deleteConsultDlvryDtl(pCBATechGuidanceInsertDTO);
+
         for(int i=0; i < dlvryCmpnNm.length; i++) {
             cnstgDlyvMap.put("cnstgSeq", pCBATechGuidanceInsertDTO.getCnstgSeq());
             cnstgDlyvMap.put("cmpnDlvrySeq",dlvrySeqIdgen.getNextIntegerId());
@@ -343,17 +349,14 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             cnstgDlyvMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
             cnstgDlyvMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
 
-            List dlvryInfoList = cBATechGuidanceMapper.selectCnstgDlvryInfo(pCBATechGuidanceInsertDTO.getCnstgSeq());
-            if(dlvryInfoList.size() > 0){
-                cBATechGuidanceMapper.updateCnstgDlvryInfo(cnstgDlyvMap);
-            }else{
-                cBATechGuidanceMapper.insertCnstgDlvryInfo(cnstgDlyvMap);
-            }
+            cBATechGuidanceMapper.insertCnstgDlvryInfo(cnstgDlyvMap);
 
         }
         // 완성차 의존율 상세 정보 등록 있으면 수정
         String[] dpbdnCmpnNm =  pCBATechGuidanceInsertDTO.getDpndnCmpnNm().split(",");
         String[] dpbdnRate = pCBATechGuidanceInsertDTO.getDpndnRate().split(",");
+
+        cBATechGuidanceMapper.deleteConsultDpndnDtl(pCBATechGuidanceInsertDTO);
         HashMap dpndnMap = new HashMap();
         for(int i=0; i < dpbdnCmpnNm.length; i++){
             dpndnMap.put("cnstgSeq",pCBATechGuidanceInsertDTO.getCnstgSeq());
@@ -363,12 +366,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             dpndnMap.put("regId", pCBATechGuidanceInsertDTO.getRegId());
             dpndnMap.put("regIp", pCBATechGuidanceInsertDTO.getRegIp());
 
-            List dpndnInfoList = cBATechGuidanceMapper.selectCnstgDpndnInfo(pCBATechGuidanceInsertDTO.getCnstgSeq());
-            if(dpndnInfoList.size() > 0){
-                cBATechGuidanceMapper.updateCnstgDpndnInfo(dpndnMap);
-            }else{
-                cBATechGuidanceMapper.insertCnstgDpndnInfo(dpndnMap);
-            }
+            cBATechGuidanceMapper.insertCnstgDpndnInfo(dpndnMap);
         }
         // 부품사 업종 상세 등록 있으면 수정
         HashMap cbsnCdMap = new HashMap();
