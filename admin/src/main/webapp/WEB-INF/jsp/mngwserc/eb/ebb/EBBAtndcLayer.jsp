@@ -177,7 +177,7 @@
                         </div>
 
                         <div class="pull-right">
-                            <button type="button" class="btn btn-info btn-sm mb-sm" id="btnExcel">엑셀 다운로드</button>
+                            <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcel">엑셀다운로드</button>
                         </div>
 
                     </div>

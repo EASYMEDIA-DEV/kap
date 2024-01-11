@@ -48,9 +48,11 @@
             , APPCTN_DT					/* 신청일 */
             , REG_ID					/* 등록자ID */
             , REG_NAME					/* 등록자이름 */
+            , REG_ADM_NAME				/* 등록자관리자이름 */
             , REG_DTM					/* 등록일 */
             , MOD_ID					/* 수정자ID */
             , MOD_NAME					/* 수정자이름 */
+            , MOD_ADM_NAME			    /* 수정자관리자이름 */
             , MOD_DTM					/* 수정일 */
             , MJR_PRDCT_1               /* 주생산품1 */
             , MJR_PRDCT_2               /* 주생산품2 */
@@ -95,9 +97,11 @@
                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM
                 , CP_MST.REG_ID
                 , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
+                , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.REG_ID) REG_ADM_NAME
                 , CP_MST.REG_DTM
                 , CP_MST.MOD_ID
                 , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
+                , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_ADM_NAME
                 , CPR_MST.MOD_DTM
                 , CMPN_MST.MJR_PRDCT_1
                 , CMPN_MST.MJR_PRDCT_2
@@ -192,9 +196,11 @@
                 , APPCTN_DT /* 신청일 */
                 , REG_ID /* 등록자ID */
                 , REG_NAME /* 등록자이름 */
+                , REG_ADM_NAME	/* 등록자관리자이름 */
                 , REG_DTM /* 등록일 */
                 , MOD_ID /* 수정자ID */
                 , MOD_NAME /* 수정자이름 */
+                , MOD_ADM_NAME	/* 수정자관리자이름 */
                 , MOD_DTM /* 수정일 */
                 , MJR_PRDCT_1 /* 주생산품1 */
                 , MJR_PRDCT_2 /* 주생산품2 */
@@ -246,9 +252,11 @@
                     , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM
                     , CP_MST.REG_ID
                     , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
+                    , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.REG_ID) REG_ADM_NAME
                     , CP_MST.REG_DTM
                     , CP_MST.MOD_ID
                     , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
+                    , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_ADM_NAME
                     , CPR_MST.MOD_DTM
                     , CMPN_MST.MJR_PRDCT_1
                     , CMPN_MST.MJR_PRDCT_2

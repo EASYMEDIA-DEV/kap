@@ -55,7 +55,7 @@
 				},
 				koreanChk : {
 					className : "koreanChk",
-					regExr : "^[가-힣]+$"
+					regExr : /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g
 				},
 				dateTypeChk :{
 					className : "dateTypeChk",
@@ -78,12 +78,12 @@
 			msg : {
 				type : "alert",
 				empty : {
-					text : " 입력하세요.",
-					password : " 입력하세요.",
+					text : " 입력해주세요.",
+					password : " 입력해주세요.",
 					radio : " 선택하세요.",
 					checkbox : " 선택하세요.",
 					select : " 선택하세요.",
-					textarea : " 입력하세요.",
+					textarea : " 입력해주세요.",
 					names : {
 
 					}
@@ -924,6 +924,7 @@
 					$(this).keyup(function(event){
 						if ($(this).val() != "")
 						{
+							console.log("@@ = " + regExrs.koreanExr + " val = " + $(this).val() + "msg.koreanChk = " + msg.koreanChk);
 							Feel.Validation.method.RegExrCheck($(this), regExrs.koreanExr, msg.koreanChk, GenerateMsg);
 						}
 					});
@@ -1071,7 +1072,12 @@
 			{
 				try
 				{
-					func.beforeFunc();
+					var status = func.beforeFunc();
+					var rtnStatus = (status ||status === undefined) ? true : false;
+					if(!rtnStatus){
+						return rtnStatus;
+					}
+
 				}
 				catch(e)
 				{

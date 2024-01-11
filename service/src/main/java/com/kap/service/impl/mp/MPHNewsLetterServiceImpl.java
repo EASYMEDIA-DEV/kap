@@ -1,8 +1,10 @@
 package com.kap.service.impl.mp;
 
+import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
@@ -15,6 +17,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
@@ -37,6 +40,8 @@ import java.util.List;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.11.20		구은희				   최초 생성
+ *    2024.01.05        이옥정                  이메일 중복 검사 추가
+ *    2024.01.08        이옥정                  뉴스레터 등록 추가
  * </pre>
  */
 
@@ -178,6 +183,30 @@ public class MPHNewsLetterServiceImpl implements MPHNewsLetterService {
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+    }
+
+    /**
+     * 뉴스레터 이메일 중복 검사
+     * @param mphNewsLetterDTO
+     * @return
+     */
+    public int selectDupEmail(MPHNewsLetterDTO mphNewsLetterDTO) {
+        return mphNewsLetterMapper.selectDupEmail(mphNewsLetterDTO);
+    }
+
+    /**
+     * 뉴스레터 등록
+     * @param mphNewsLetterDTO
+     * @return
+     */
+    public int insertNewsletter(MPHNewsLetterDTO mphNewsLetterDTO, HttpServletRequest request) throws Exception{
+        int respCnt = 0;
+        String regIp = CONetworkUtil.getMyIPaddress(request);
+        mphNewsLetterDTO.setRegIp(regIp);
+        respCnt = mphNewsLetterMapper.insertNewsletter(mphNewsLetterDTO);
+        mphNewsLetterDTO.setRespCnt(respCnt);
+
+        return respCnt;
     }
 
 }

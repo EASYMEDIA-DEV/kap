@@ -214,7 +214,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">GPC 아이디<span class="star"> *</span></label>
                     <div class="col-sm-11 form-inline" style="margin-left: -15px">
-                        <input type="text" class="form-control input-sm" id="gpcId" name="gpcId" value="" title="GPC 아이디" maxlength="50" placeholder="GPC 아이디" style="max-width: 150px;"/>
+                        <input type="text" class="form-control input-sm notRequired" id="gpcId" name="gpcId" value="" title="GPC 아이디" maxlength="50" placeholder="GPC 아이디" style="max-width: 150px;"/>
 
 
                         <button type="button" class="btn btn-inverse btn-sm gpcIdSearch">

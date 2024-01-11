@@ -42,7 +42,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청업종</label>
-                    <div class="col-sm-5">
+                    <div class="col-sm-5 pl0">
                         <div class="col-sm-3 pr0">
                             <select class="form-control input-sm" name="cbsnCd">
                                 <option value="">선택</option>
@@ -59,7 +59,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">진행상태</label>
-                    <div class="col-sm-5">
+                    <div class="col-sm-5 pl0">
                         <div class="col-sm-3 pr0">
                             <select class="form-control input-sm" name="rsumeSttsCd">
                                 <option value="">선택</option>

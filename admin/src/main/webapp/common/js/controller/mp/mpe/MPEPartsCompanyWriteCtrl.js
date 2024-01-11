@@ -81,49 +81,79 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             alert(msgCtrl.getMsg("fail.mp.mpa.al_016"));
                             return;
                         } else {
-                            jQuery.ajax({
-                                url : "/mngwserc/nice/comp-chk",
-                                type : "post",
-                                data :
-                                    {
-                                        "compNum" : $("#bsnmNo").val()
-                                    },
-                                success : function(data)
-                                {
-                                    if(data.rsp_cd=='P000') {
-                                        if(data.result_cd == '01') {
-                                            if(data.comp_status == '1') {
-                                                $("#cmpnNm").val(data.comp_name);
-                                                $("#rprsntNm").val(data.representive_name);
-                                                workChk = true;
-                                            } else {
-                                                alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
-                                                $("#cmpnNm").val("");
-                                                $("#rprsntNm").val("");
-                                                $("#bsnmNo").val("");
-                                                workChk = false;
-                                            }
-                                        } else {
-                                            alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
-                                            $("#cmpnNm").val("");
-                                            $("#rprsntNm").val("");
-                                            $("#bsnmNo").val("");
-                                            workChk = false;
-                                        }
-                                    } else {
-                                        alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
-                                        $("#cmpnNm").val("");
-                                        $("#rprsntNm").val("");
-                                        $("#bsnmNo").val("");
-                                        workChk = false;
-                                    }
-                                },
-                                error : function(xhr, ajaxSettings, thrownError)
-                                {
-                                    cmmCtrl.errorAjax(xhr);
-                                    jQuery.jstree.rollback(data.rlbk);
+                            var ajaxData = {
+                                bsnmNo:  $("#bsnmNo").val()
+                            }
+
+                            jQuery("#frmData").serializeArray().forEach(function (field) {
+                                if (field.name == '_csrf') {
+                                    ajaxData[field.name] = field.value;
                                 }
                             });
+                            $.ajax({
+                                type: "post",
+                                url: './checkBsnmNo',
+                                dataType: "json",
+                                data:ajaxData,
+                                success: function (r) {
+                                    if (r.respCnt) {
+                                      alert(msgCtrl.getMsg("fail.mp.mpe.al_001"));
+                                      $("#bsnmNo").val("");
+                                      workChk = false;
+                                      return false;
+                                    } else {
+                                        jQuery.ajax({
+                                            url : "/mngwserc/nice/comp-chk",
+                                            type : "post",
+                                            data :
+                                                {
+                                                    "compNum" : $("#bsnmNo").val()
+                                                },
+                                            success : function(data)
+                                            {
+                                                if(data.rsp_cd=='P000') {
+                                                    if(data.result_cd == '01') {
+                                                        if(data.comp_status == '1') {
+                                                            $("#cmpnNm").val(data.comp_name);
+                                                            $("#rprsntNm").val(data.representive_name);
+                                                            workChk = true;
+                                                        } else {
+                                                            alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                                            $("#cmpnNm").val("");
+                                                            $("#rprsntNm").val("");
+                                                            $("#bsnmNo").val("");
+                                                            workChk = false;
+                                                        }
+                                                    } else {
+                                                        alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                                        $("#cmpnNm").val("");
+                                                        $("#rprsntNm").val("");
+                                                        $("#bsnmNo").val("");
+                                                        workChk = false;
+                                                    }
+                                                } else {
+                                                    alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                                    $("#cmpnNm").val("");
+                                                    $("#rprsntNm").val("");
+                                                    $("#bsnmNo").val("");
+                                                    workChk = false;
+                                                }
+                                            },
+                                            error : function(xhr, ajaxSettings, thrownError)
+                                            {
+                                                cmmCtrl.errorAjax(xhr);
+                                                jQuery.jstree.rollback(data.rlbk);
+                                            }
+                                        });
+                                    }
+                                },
+                                error: function (xhr, ajaxSettings, thrownError) {
+                                    alert("인증에 실패했습니다.");
+                                }
+                            });
+
+
+
                         }
                     }
                 }

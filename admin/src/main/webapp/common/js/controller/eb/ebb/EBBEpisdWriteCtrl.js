@@ -95,15 +95,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		if($("input[name='otsdExamPtcptYn']").is(":checked")){
 			//alert("평가 선택");
-			$("#examSeq").val(null).prop("disabled", false);
-			$("#examSeq").addClass("notRequired");
+			$("#examSeq").val(null).prop("disabled", true);
+			//$("#examSeq").addClass("notRequired");
 			$("input:radio[name='cmptnAutoYn']:radio[value='N']").prop("checked", true);//오프라인평가 진행시 수료자동화여부 무조건 수동 고정
 			$(".examNmForm").text("");
 			$(".jdgmtYn").find("table").addClass("table-disabled");
 		}else{
 			//alert("평가 선택 해제");
-			$("#examSeq").prop("disabled", true);
-			$("#examSeq").removeClass("notRequired");
+			$("#examSeq").prop("disabled", false);
+			//$("#examSeq").removeClass("notRequired");
 			$(".jdgmtYn").find("table").removeClass("table-disabled");
 		}
 
@@ -354,7 +354,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	if("N" == jdgmtYn){
 		$(".jdgmtYn").css("display", "none");
 		$(".jdgmtYn").find("input:hidden").each(function(){
-			$(this).addClass("notRequired");
+			//$(this).addClass("notRequired");
 		});
 		$("#examSeq").prop("disabled", true);
 	}else{
@@ -362,14 +362,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		$(".jdgmtYn").find("input:hidden").each(function(){
 
 			if($(this).attr("name") !="otsdExamPtcptYn"){
-				$(this).removeClass("notRequired"); //이거 문제있음 고쳐야됨 오프라인평가 체크는 없애면 안됨
+				//$(this).removeClass("notRequired"); //이거 문제있음 고쳐야됨 오프라인평가 체크는 없애면 안됨
 			}
 
 		});
 
 		//오프라인평가면 평가 시퀀스 사용안함
 		if($("input[name='otsdExamPtcptYn']:checked").val() =="Y"){
-			$("#examSeq").addClass("notRequired").prop("disabled", true);
+			//$("#examSeq").addClass("notRequired").prop("disabled", true);
+
+			setOtsdSelectBox();
+			$("#examSeq").prop("disabled", true);
 		}else{
 			$("#examSeq").prop("disabled", false);
 		}
@@ -875,99 +878,105 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			eduIsttrSearch : {
 				event : {
 					click : function(){
-						cmmCtrl.getLecturerLayerPop(function(data){
-							if(data.choiceCnt  == 0){
-								alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));
-							}else{
-								var name, ffltnNm, spclCntn, seq;
 
 
 
-								if(data.choiceCnt>1){
-									var trObjList = data.trObjList;
+							cmmCtrl.getLecturerLayerPop(function(data){
 
-									//현재 추가된 강사수
-									var nowRow = $("#isttrContainer").find("tr:not(.notIsttr):not(.setIsttr)").size();
+								//두번호출 방지
+								if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+									return false;
+								}
 
-									if((trObjList.length+nowRow)>6){
-										alert("강사는 6명까지만 입력 가능합니다.");
-									}else{
-
-										for(var i=0; i<trObjList.length; i++){
-											var exIsttr = $(".setIsttr").clone(true);
-											name = trObjList[i].name//이름
-											ffltnNm= trObjList[i].titl//소속
-											spclCntn= trObjList[i].spclCntn//약력(특이사항)
-											seq= trObjList[i].seq;//삭제(시퀀스값)
-
-											//다중등록할때 시퀀스 체크해서 중복값이면 패스함
-											var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 append목록에 추가하지 않는다.
-											$("#isttrContainer").find("tr").find("input:hidden").each(function(){
-												if($(this).val() == seq) passYn = true;
-											});
-
-											if(!passYn){
-												exIsttr.find("td").eq(1).text(name);
-												exIsttr.find("td").eq(2).text(ffltnNm);
-												exIsttr.find("td").eq(3).text(spclCntn);
-												exIsttr.find("input:hidden").val(seq);
-												$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
-											}
-										}
-
-									}
-
-
-
-
+								if(data.choiceCnt  == 0){
+									alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));
 								}else{
-									var exIsttr = $(".setIsttr").clone(true);
-									name = data.name//이름
-									ffltnNm = data.titl//소속
-									spclCntn = data.spclCntn//약력(특이사항)
-									seq = data.seq//삭제(시퀀스값)
+									var name, ffltnNm, spclCntn, seq;
 
-									var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 현재 동작을 취소한다.
-									$("#isttrContainer").find("tr").find("input:hidden").each(function(){
-										if($(this).val() == seq) {
-											alert("이미 추가된 강사입니다.");
-											passYn = true;
-										}
-									});
-									if(!passYn){
-										exIsttr.find("td").eq(1).text(name);
-										exIsttr.find("td").eq(2).text(ffltnNm);
-										exIsttr.find("td").eq(3).text(spclCntn);
-										exIsttr.find("input:hidden").val(seq);
-
+									if(data.choiceCnt>1){
+										var trObjList = data.trObjList;
 
 										//현재 추가된 강사수
 										var nowRow = $("#isttrContainer").find("tr:not(.notIsttr):not(.setIsttr)").size();
 
-										//앞으로 추가될 강사수
-										var nextRow = 1;
-
-										if((nextRow+nowRow)>6){
+										if((trObjList.length+nowRow)>6){
 											alert("강사는 6명까지만 입력 가능합니다.");
 										}else{
-											$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+
+											for(var i=0; i<trObjList.length; i++){
+												var exIsttr = $(".setIsttr").clone(true);
+												name = trObjList[i].name//이름
+												ffltnNm= trObjList[i].titl//소속
+												spclCntn= trObjList[i].spclCntn//약력(특이사항)
+												seq= trObjList[i].seq;//삭제(시퀀스값)
+
+												//다중등록할때 시퀀스 체크해서 중복값이면 패스함
+												var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 append목록에 추가하지 않는다.
+												$("#isttrContainer").find("tr").find("input:hidden").each(function(){
+													if($(this).val() == seq) passYn = true;
+												});
+
+												if(!passYn){
+													exIsttr.find("td").eq(1).text(name);
+													exIsttr.find("td").eq(2).text(ffltnNm);
+													exIsttr.find("td").eq(3).text(spclCntn);
+													exIsttr.find("input:hidden").val(seq);
+													$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+												}
+											}
+
 										}
 
+									}else{
+										var exIsttr = $(".setIsttr").clone(true);
+										name = data.name//이름
+										ffltnNm = data.titl//소속
+										spclCntn = data.spclCntn//약력(특이사항)
+										seq = data.seq//삭제(시퀀스값)
 
+										debugger
+										var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 현재 동작을 취소한다.
+										$("#isttrContainer").find("tr").find("input:hidden").each(function(){
+											if($(this).val() == seq) {
+												alert("이미 추가된 강사입니다.");
+												passYn = true;
+											}
+										});
+										if(!passYn){
+											exIsttr.find("td").eq(1).text(name);
+											exIsttr.find("td").eq(2).text(ffltnNm);
+											exIsttr.find("td").eq(3).text(spclCntn);
+											exIsttr.find("input:hidden").val(seq);
+
+
+											//현재 추가된 강사수
+											var nowRow = $("#isttrContainer").find("tr:not(.notIsttr):not(.setIsttr)").size();
+
+											//앞으로 추가될 강사수
+											var nextRow = 1;
+
+											if((nextRow+nowRow)>6){
+												alert("강사는 6명까지만 입력 가능합니다.");
+											}else{
+												$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+											}
+
+
+
+										}
 
 									}
 
+									$(".notIsttr").css("display", "none");
+									$(".setIsttr").css("display", "none");
 								}
 
 
+								isttrTable();
 
 
-								$(".notIsttr").css("display", "none");
-								$(".setIsttr").css("display", "none");
-							}
+							});
 
-							isttrTable();
-						});
 					}
 				}
 			},
@@ -1137,7 +1146,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			}
 
 
-
+			$(".koreanCustromChk").keyup(function(event){
+				if ($(this).val() != "")
+				{
+					var regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+					var value = $(this).val();
+					if (regexp.test(value)) {
+						alert("한글만 입력 가능합니다");
+						$(this).val("");
+						return false;
+					}
+				}
+			});
 
 
 			$excelObj.find("button.down").on('click', function(){
@@ -1248,6 +1268,74 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			});
 			// 유효성 검사
 			$formObj.validation({
+
+				before : function(e) {
+
+					if($("#edctnSeq").val() == ""){
+						alert("과정을 먼저 선택해주세요");
+						return  false;
+					}
+
+					if($("#episdYear").val() == ""){
+						alert("년도를 선택해주세요.");
+						return false;
+					}
+
+					if($("#episdOrd").val() == ""){
+						alert("회차를 선택하세요.");
+						return false;
+					}
+
+					var accsStrtDt = $("#accsStrtDt").val();
+					var accsStrtHour = $("#accsStrtHour").val();
+					var accsEndDt = $("#accsEndDt").val();
+					var accsEndHour = $("#accsEndHour").val();
+
+					var edctnStrtDt = $("#edctnStrtDt").val();
+					var edctnStrtHour = $("#edctnStrtHour").val();
+
+					var edctnEndDt = $("#edctnEndDt").val();
+					var edctnEndHour = $("#edctnEndHour").val();
+
+					var attrArray = [accsStrtDt, accsStrtHour, accsEndDt, accsEndHour, edctnStrtDt, edctnStrtHour, edctnEndDt, edctnEndHour];
+					var attrArrayText = ["접수시작일시", "접수시작시간" ,"접수종료일시" ,"접수종료시간" ,"교육시작일시" ,"교육시작시간" ,"교육종료일시" ,"교육종료시간"];
+
+					var forStatus = true;
+					for(var i=0; i<attrArray.length;i++){
+						var attr = attrArray[i];
+						if(attr == ""){
+							var returnText = (attrArrayText[i].indexOf("시간")> -1 ) ? "을 입력 해주세요" :  "를 입력 해주세요";
+							alert(attrArrayText[i] + returnText);
+							forStatus = false;
+							break;
+						}
+					}
+					if(!forStatus) return false;
+
+
+					//강사목록 유효성 체크
+					var checkList= new Array();
+					$("input[name='isttrSeq']").each(function(){
+						if($(this).val() != undefined && $(this).val() != ""){
+							var tempForm = {};
+							tempForm.edctnSeq = $("#edctnSeq").val();
+							tempForm.episdYear = $("#episdYear").val();
+							tempForm.isttrSeq = $(this).val();
+							tempForm.episdOrd = $("#episdOrd").val();
+							tempForm.episdSeq = $("#episdSeq").val();
+							checkList.push(tempForm);
+						}
+					});
+
+
+					if(checkList.length == 0){
+						alert("강사를 추가 해주세요");
+						return false
+					}
+
+
+
+				},
 				after : function() {
 					var isValid = true, editorChk = true;
 
@@ -1295,10 +1383,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//회차정보 마지막 중복체크 진행
 						$("#episdOrd").trigger("change");
 
-						if($("#edctnSeq").val() == ""){
+						/*if($("#edctnSeq").val() == ""){
 							alert("과정을 먼저 선택해주세요");
 							return  false;
-						}
+						}*/
 
 						var actForm = {};
 
@@ -1315,10 +1403,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var edctnEndHour = $("#edctnEndHour").val();
 
 						var accsStrtDtm = accsStrtDt+" "+accsStrtHour+":00:00";
-						var accsEndDtm = accsEndDt+" "+accsEndHour+":59:59";
+						//var accsEndDtm = accsEndDt+" "+accsEndHour+":59:59";
+						var accsEndDtm = accsEndDt+" "+accsEndHour+":00:00";
 
 						var edctnStrtDtm = edctnStrtDt+" "+edctnStrtHour+":00:00";
-						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":59:59";
+						//var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":59:59";
+						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":00:00";
 
 						actForm.edctnSeq = $("#edctnSeq").val();//교육순번
 
@@ -1392,16 +1482,36 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 						}
 
-						if($("#srvSeq").val() == ""){
+						if($("#srvSeq").val() == "") {
 							alert("만족도조사를 선택해주세요");
 							return false;
 						}
 
-						if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined){
+						if($("#srvStrtDtm").val() == "") {
+							alert("설문시작일시를 입력해주세요");
+							return false;
+						}
+
+
+						if($("#srvEndDtm").val() == "") {
+							alert("설문종료일시를 입력해주세요");
+							return false;
+						}
+
+						if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 							alert("평가를 선택해주세요");
 							return false;
 						}
 
+						if($("#examStrtDtm").attr("disabled") === undefined && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+							alert("시험시작일시를 선택해주세요");
+							return false;
+						}
+
+						if($("#examEndDtm").attr("disabled") === undefined && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+							alert("시험종료일시를 선택해주세요");
+							return false;
+						}
 
 
 
@@ -1665,9 +1775,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//오프라인평가 관련 데이터 세팅끝
 
 						//수료여부
-						//debugger;
 						if(resultFlag){
-							//debugger;
 							cmmCtrl.jsonAjax(function(data){
 								alert("저장되었습니다.");
 								location.href = "./list";

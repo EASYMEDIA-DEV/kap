@@ -14,7 +14,7 @@
                 <input type="hidden" id="listRowSize" name="listRowSize" value="${rtnInfo.listRowSize}" />
             </c:if>
             <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${userInfo.memSeq}" />
-            <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}" />
+            <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${userInfo.bsnmNo}" />
             <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.appctnSeq}" />
 
             <c:if test="${empty rtnInfo.appctnSeq}">

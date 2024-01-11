@@ -21,6 +21,7 @@ import java.util.List;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.11.20		구은희				   최초 생성
+ *    2024.01.05        이옥정                  이메일 중복 검사 추가
  * </pre>
  */
 @Mapper
@@ -36,4 +37,17 @@ public interface MPHNewsLetterMapper {
      */
     public int selectNewsLetterCnt(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception;
 
+    /**
+     * 이메일 중복 검사
+     * @param mphNewsLetterDTO
+     * @return
+     */
+    public int selectDupEmail(MPHNewsLetterDTO mphNewsLetterDTO);
+
+    /**
+     * 뉴스레터 등록
+     * @param mphNewsLetterDTO
+     * @return
+     */
+    public int insertNewsletter(MPHNewsLetterDTO mphNewsLetterDTO);    
 }
