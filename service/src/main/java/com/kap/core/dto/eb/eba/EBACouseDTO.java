@@ -182,6 +182,9 @@ public class EBACouseDTO extends BaseDTO {
     @Schema(title = "파일경로", example = "텍스트")
     private String webPath;
 
+    @Schema(title = "GPC여부", example = "Y/N")
+    private String gpcYn;
+
 
     //로그인세션ID
     private String lgnSsnId;

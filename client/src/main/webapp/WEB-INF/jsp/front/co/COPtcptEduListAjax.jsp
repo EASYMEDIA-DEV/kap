@@ -22,7 +22,7 @@
                                 <div class="group">
                                     <p class="index-num f-head">${list.episdOrd}회차</p>
                                     <div class="status-info-w">
-                                        <p class="box-label bigger accepting"><span>${list.eduStat}</span></p>
+                                        <p class="box-label bigger accepting eduStat"><span>${list.eduStat}</span></p>
                                     </div>
                                 </div>
                             </div>

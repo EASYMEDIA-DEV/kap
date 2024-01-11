@@ -4,7 +4,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	// set controller name
 	var exports = {
-		controller : "controller/co/COMypageCtrl"
+		controller : "controller/eb/ebm/EBMEduApplyListCtrl"
 	};
 
 	// get controller object
@@ -69,7 +69,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
-		}, "/my-page/main/select", $formObj, "GET", "html");
+		}, "/my-page/edu-apply/select", $formObj, "GET", "html");
 
 	}
 

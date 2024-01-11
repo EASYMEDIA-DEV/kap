@@ -184,6 +184,8 @@
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">교육일자</p>
                                                                     <p class="txt f-body2">${ empty episdDto.edctnStrtDtm ? '-' : kl:convertDate(episdDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~ ${ empty episdDto.edctnEndDtm ? '-' : kl:convertDate(episdDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${episdDto.stduyDdCdNm}일간)</p>
+                                                                    <input type="hidden" name="edctnStrtDtm" id="edctnStrtDtm" value="${kl:convertDate(episdDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
+                                                                    <input type="hidden" name="edctnEndDtm" id="edctnEndDtm" value="${kl:convertDate(episdDto.edctnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
                                                                 </div>
                                                             </div>
                                                             <div class="btn-wrap">
