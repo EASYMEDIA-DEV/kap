@@ -41,7 +41,15 @@ public interface EBBEpisdService {
 	public EBBEpisdDTO selectCouseChildEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
+	/**
+	 * 마이페이지 - 최근1년간 신청내역 호출(교육사업)
+	 */
+	public int selectMypageEduCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 마이페이지 - 교육/세미나 사업 신청내역
+	 */
+	public EBBEpisdDTO selectMypageEduList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
 	 * 교육차수 목록을 조회한다.(엑셀용)

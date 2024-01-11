@@ -225,6 +225,8 @@
         ,EPISD
         ,ACCS_STRT_DTM
         ,ACCS_END_DTM
+        ,BSN_STRT_DTM
+        ,BSN_END_DTM
         ,EXPS_YN
         ,REG_ID
         ,REG_IP
@@ -238,6 +240,8 @@
             ,#{episd}
             ,#{accsStrtDtm}
             ,#{accsEndDtm}
+            ,#{bsnStrtDtm}
+            ,#{bsnEndDtm}
             ,#{expsYn}
             ,#{regId}
             ,#{regIp}

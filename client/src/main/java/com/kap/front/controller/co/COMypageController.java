@@ -1,10 +1,10 @@
 package com.kap.front.controller.co;
 
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
+import com.kap.core.dto.mp.mpb.MPBBnsSearchDTO;
 import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.EBACouseService;
 import com.kap.service.EBBEpisdService;
+import com.kap.service.MPBCoexistenceService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -37,6 +37,8 @@ public class COMypageController
     /** 서비스 **/
     public final EBBEpisdService eBBEpisdService;
 
+    public final MPBCoexistenceService mpbCoexistenceService;
+
     @GetMapping("/my-page/main")
     public String getMainPage(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
@@ -50,6 +52,17 @@ public class COMypageController
 
             //학습중인 과정 호출
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
+
+
+
+            //1년간 교육/세미나 사업신청내역 호출
+            modelMap.addAttribute("eduYearCnt", eBBEpisdService.selectMypageEduCnt(eBBEpisdDTO));
+
+            //1년간 상생 사업신청내역 호출
+            MPBBnsSearchDTO mpbBnsSearchDTO = new MPBBnsSearchDTO();
+            mpbBnsSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+
+            modelMap.addAttribute("CoeYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO));
 
 
 

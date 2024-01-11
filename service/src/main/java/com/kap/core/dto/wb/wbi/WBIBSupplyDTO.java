@@ -54,6 +54,8 @@ public class WBIBSupplyDTO extends BaseDTO {
     /*상생 파일 상세*/
     @Schema(title = "파일순번", example = "숫자")
     private String fileCd;
+    @Schema(title = "파일이름", example = "숫자")
+    private String fileNm;
     @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;
 

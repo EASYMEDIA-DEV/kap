@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
-<div id="wrap" data-controller="controller/co/COMypageCtrl">
+<div id="wrap" data-controller="controller/eb/ebm/EBMEduApplyListCtrl">
     <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
         <!-- 페이징 버튼 사이즈 -->
@@ -69,11 +69,11 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-select">
-                                                                                <select id="" title="과정 1차 분류">
-                                                                                    <option value="" selected="">전체</option>
-                                                                                    <option value="">option1</option>
-                                                                                    <option value="">option2</option>
-                                                                                    <option value="">option3</option>
+                                                                                <select name="prntCd" id="prntCd" title="과정 1차 분류" class="classType">
+                                                                                    <option value="" selected>전체</option>
+                                                                                    <c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
+                                                                                        <option value="${cdList.cd}" <c:if test="${rtnDto.prntCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                                                    </c:forEach>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-select">
@@ -253,8 +253,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="trainings-list-w">
-                                        <div class="training-confirm">
+                                    <div class="trainings-list-w" id="listContainer">
+                                        <%--<div class="training-confirm">
                                             <div class="top-info">
                                                 <div class="training-view-page">
                                                     <div class="training-list">
@@ -370,7 +370,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>--%>
                                     </div>
                                     <div class="btn-wrap add-load align-center">
                                         <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>

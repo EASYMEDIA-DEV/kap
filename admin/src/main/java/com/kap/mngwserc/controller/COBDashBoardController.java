@@ -64,6 +64,7 @@ public class COBDashBoardController {
 			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 			cOAAdmDTO.setLgnSsnId(cOUserDetailsDTO.getId());
 
+
 		}
 		catch (Exception e)
 		{
