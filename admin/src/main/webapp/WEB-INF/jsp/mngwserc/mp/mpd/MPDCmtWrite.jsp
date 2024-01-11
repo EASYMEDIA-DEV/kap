@@ -175,7 +175,7 @@
                         <div class="col-sm-10 col-md-11">
                             <spring:eval var="imgExtns" expression="@environment.getProperty('app.file.imgExtns')" />
                             <spring:eval var="atchUploadMaxSize" expression="5242880" />
-                            <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${imgType}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지">
+                            <div class="dropzone attachFile" data-file-field-nm="fileSeq" data-file-extn="${imgType}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-titl="이미지" title="사진" name="dropzone">
                                 <div class="dz-default dz-message">
                                     <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                 </div>
