@@ -4,6 +4,7 @@ import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbg.WBGAApplyMstDTO;
 import com.kap.core.dto.wb.wbh.WBHAApplyMstDTO;
+import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -46,4 +47,7 @@ public class MPBBnsMstDTO extends BaseDTO {
 
     @Schema(title = "검교정", example = "")
     private WBHAApplyMstDTO wbhaApplyMstDTO;
+    
+    @Schema(title = "공급망", example = "")
+    private WBIBSupplyMstDTO wBIBSupplyMstDTO;
 }

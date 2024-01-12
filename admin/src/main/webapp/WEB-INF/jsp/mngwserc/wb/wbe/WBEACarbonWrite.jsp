@@ -23,7 +23,7 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
-            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BNS05" />
+            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BSN05" />
 
             <fieldset>
                 <div class="form-group text-sm">

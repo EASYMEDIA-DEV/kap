@@ -51,7 +51,7 @@
             FROM CX_EPISD_MST A
             JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
             JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-            WHERE BSN_CD = 'BNS05'
+            WHERE BSN_CD = 'BSN05'
             GROUP BY APPCTN_SEQ
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
         <include refid="selectCarbonListwhereSql" />
@@ -97,7 +97,7 @@
             FROM CX_EPISD_MST A
             JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
             JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-            WHERE BSN_CD = 'BNS05'
+            WHERE BSN_CD = 'BSN05'
             GROUP BY APPCTN_SEQ
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
         <include refid="selectCarbonListwhereSql" />
@@ -113,7 +113,7 @@
     -->
     <sql id="selectCarbonListwhereSql">
         <where>
-            AND BSN_CD = 'BNS05'
+            AND BSN_CD = 'BSN05'
             <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
                     <when test="carbonDate == 1">
@@ -174,7 +174,7 @@
         SELECT /* WBEBCarbonCompanyMapper.selectYearDtl */
             DISTINCT(YEAR(YEAR)) AS YEAR
         FROM CX_EPISD_MST
-        WHERE BSN_CD = 'BNS05'
+        WHERE BSN_CD = 'BSN05'
         ORDER BY YEAR ASC
     </select>
 
@@ -189,7 +189,7 @@
         SELECT /* WBEBCarbonCompanyMapper.getYearSelect */
             DISTINCT(EPISD) AS EPISD
         FROM CX_EPISD_MST
-        WHERE BSN_CD = 'BNS05'
+        WHERE BSN_CD = 'BSN05'
         AND YEAR = #{year}
         ORDER BY EPISD ASC
     </select>
@@ -205,7 +205,7 @@
         SELECT /* WBEBCarbonCompanyMapper.selectEpisdSeq */
                EPISD_SEQ
         FROM CX_EPISD_MST
-        WHERE BSN_CD = 'BNS05'
+        WHERE BSN_CD = 'BSN05'
           AND YEAR =  #{year}
           AND EPISD = #{episd}
     </select>
@@ -1193,7 +1193,7 @@
         FROM CX_EPISD_MST A
         JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
         JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-        WHERE BSN_CD = 'BNS05'
+        WHERE BSN_CD = 'BSN05'
         GROUP BY APPCTN_SEQ
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
         WHERE (ORD.RSUME_ORD != 1 OR MNG_STTS_CD != 'PRO_TYPE01001_02_001')

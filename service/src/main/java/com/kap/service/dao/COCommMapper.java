@@ -3,6 +3,7 @@ package com.kap.service.dao;
 import com.kap.core.dto.*;
 import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
+import com.kap.core.dto.sm.smk.SMKTrendDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.List;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.11.09		양현우				   최초 생성
+ *    2024.01.11        이옥정             사용자 퀵메뉴 트랜드 리스트 추가
  * </pre>
  */
 @Mapper
@@ -46,4 +48,9 @@ public interface COCommMapper {
      * 사용자 상단 공지사항
      */
     public List<COFrontHeaderNtfyDTO> getHeaderNtfyList();
+
+    /**
+     * 사용자 퀵메뉴 트랜드 리스트
+     */
+    public List<SMKTrendDTO> quickTrendList(SMKTrendDTO sMKTrendDTO);
 }

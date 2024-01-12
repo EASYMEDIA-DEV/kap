@@ -96,8 +96,14 @@ public interface WBJBAcomListMapper {
     /**
      *  Write Page
      *  사업회차 포상 기준 훈격 검색
-    */
+     */
     public List<String> getOptMrtsList(WBJAcomSearchDTO wBJAcomSearchDTO);
+
+    /**
+     *  Write Page
+     *  사업회차 포상 기준 훈격 검색
+     */
+    public List<WBJAcomSearchDTO> getFileList(WBJAcomSearchDTO wBJAcomSearchDTO);
 
     /**
      *  List Page

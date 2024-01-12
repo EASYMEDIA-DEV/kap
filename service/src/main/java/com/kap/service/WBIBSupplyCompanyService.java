@@ -4,11 +4,13 @@ import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.wb.WBPartCompanyDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -99,4 +101,9 @@ public interface WBIBSupplyCompanyService {
      * 상세 조회한다.
      */
     public MPEPartsCompanyDTO selectPartsCompanyList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     *   신청자 업데이트
+     */
+    public int updateInfo(WBIBSupplyDTO wBIBSupplyDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
 }

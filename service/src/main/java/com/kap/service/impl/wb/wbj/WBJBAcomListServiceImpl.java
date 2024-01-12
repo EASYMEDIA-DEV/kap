@@ -192,8 +192,10 @@ public class WBJBAcomListServiceImpl implements WBJBAcomListService {
         WBJAcomDTO wBJAcomDTO = wBJBAcomListMapper.selectAcomDtl(wBJAcomSearchDTO);
         List<String> optPrizeList = wBJBAcomListMapper.getOptPrizeList(wBJAcomSearchDTO);
         List<String> optMrtsList = wBJBAcomListMapper.getOptMrtsList(wBJAcomSearchDTO);
+        List<WBJAcomSearchDTO> optFileList = wBJBAcomListMapper.getFileList(wBJAcomSearchDTO);
         wBJAcomDTO.setPrizeList(optPrizeList);
         wBJAcomDTO.setMrtsList(optMrtsList);
+        wBJAcomDTO.setOptFileList(optFileList);
         /* 상생신청파일 상세 */
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBJAcomDTO.getFileList());
         wBJAcomDTO.setFileSeq(fileSeqMap.get("appctnFileSeq")); /* 파일 시퀀스 */

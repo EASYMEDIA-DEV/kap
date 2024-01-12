@@ -23,6 +23,7 @@ import java.util.List;
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
  *   2023.12.20  구은희         최초 생성
+ *   2024.01.11  이옥정         사용자 퀵메뉴 트랜드 리스트 호출을 위한 파일 경로 및 파일 설명 추가 
  * </pre>
  */
 @Getter
@@ -95,5 +96,10 @@ public class SMKTrendDTO extends BaseDTO {
 
     @Schema(title = "노출 정렬 타입", example = "UP, DOWN")
     private String sortType;
+
+    @Schema(title = "파일 경로")
+    private String webPath;
+    @Schema(title = "파일설명")
+    private String fileDsc;
 
 }

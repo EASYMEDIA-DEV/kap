@@ -69,7 +69,7 @@
 				<div class="menu-area">
 					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
 					<div class="btn-w">
-						<a class="quick-btn trend" href="javascript:"><span class="txt">TREND</span></a>
+						<a class="quick-btn trend" href="javascript:"  onclick="openPopup('trendPopup', this)"><span class="txt">TREND</span></a>
 						<a class="quick-btn edu-schedule" href="javascript:eduSchedule(this);" ><span class="txt">교육일정</span></a>
 						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
 						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
@@ -120,11 +120,79 @@
 			</div>
 		</div>
 
+		<!-- 퀵메뉴 > TREND -->
+		<div class="layer-popup full-popup trendPopup">
+			<div class="for-center">
+				<div class="pop-wrap">
+					<div class="pop-con-area">
+						<div class="tit-area">
+							<p class="f-head">TREND</p>
+						</div>
+						<div class="con-area">
+							<div class="scroll-area">
+								<div class="p-cont-sec">
+									<p class="trend-tit f-title1">기대 그 이상</p>
+									<div class="trend-swiper-area">
+										<div class="swiper-container trend-swiper">
+											<div class="swiper-wrapper">
+												<!--
+													각 사업 종류 별로, swiper-slide에 클래스 추가
+													교육사업 : education
+													상생사업 : winwin
+													컨설팅사업 : consulting
+												-->
+												<c:forEach var="list" items="${quickTrendList.list}" varStatus="status">
+													<c:set var="typeClass" value=""/>
+													<c:choose>
+														<c:when test="${list.typeCd eq 'TYPE01'}">
+															<c:set var="typeClass" value="education"/>
+														</c:when>
+														<c:when test="${list.typeCd eq 'TYPE02'}">
+															<c:set var="typeClass" value="consulting"/>
+														</c:when>
+														<c:otherwise>
+															<c:set var="typeClass" value="winwin"/>
+														</c:otherwise>
+													</c:choose>
+													<c:choose>
+														<c:when test="${not empty list.urlUrl}">
+															<a class="swiper-slide ${typeClass}" href="${list.urlUrl}">
+														</c:when>
+														<c:otherwise>
+															<a class="swiper-slide ${typeClass}" href="javascript:">
+														</c:otherwise>
+													</c:choose>
+														<div class="for-motion">
+															<div class="img-area">
+																<img src="${list.webPath}" alt="${list.fileDsc}">
+															</div>
+															<div class="txt-area">
+																<p class="label f-body2">${list.typeCdNm}</p>
+																<p class="tit f-title3">${list.titl}</p>
+																<div class="btn-wrap">
+																	<div class="btn-solid small gray-bg"><span>더 알아보기</span></div>
+																</div>
+															</div>
+														</div>
+													</a>
+												</c:forEach>
+											</div>
+										</div>
+										<div class="swiper-button-next circle-arr btn_next"></div>
+										<div class="swiper-button-prev circle-arr btn_prev"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="user-opt-area">
+							<button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- require -->
 		<script type="text/javascript" src="/common/js/lib/require.js" data-main="/common/js/site"></script>
-
-
-
 
 	</body>
 </html>

@@ -572,7 +572,7 @@
                                         <label class="col-sm-1 control-label">은행명<span class="star"> *</span></label>
                                         <div class="col-sm-10 form-inline" style="margin-left: -15px">
                                             <div class="col-sm-3">
-                                                <input type="text" class="form-control koreanChk notRequired" id="bankNm1" name="spprtList[0].bankNm" value="${rtnSpprt[0].bankNm}" title="은행명"  <c:if test="${empty rtnSpprt[0]}">disabled</c:if>/>
+                                                <input type="text" class="form-control notRequired" id="bankNm1" name="spprtList[0].bankNm" value="${rtnSpprt[0].bankNm}" title="은행명"  <c:if test="${empty rtnSpprt[0]}">disabled</c:if>/>
                                             </div>
                                         </div>
                                     </div>
@@ -802,7 +802,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">은행명</label>
                                         <div class="col-sm-5 form-inline">
-                                            <input type="text" class="form-control input-sm koreanChk notRequired" id="bankNm2" name="spprtList[1].bankNm" value="${rtnSpprt[1].bankNm}" title="은행명" maxlength="50" placeholder="은행명 입력" <c:if test="${empty rtnSpprt[1]}">disabled</c:if>/>
+                                            <input type="text" class="form-control input-sm notRequired" id="bankNm2" name="spprtList[1].bankNm" value="${rtnSpprt[1].bankNm}" title="은행명" maxlength="50" placeholder="은행명 입력" <c:if test="${empty rtnSpprt[1]}">disabled</c:if>/>
                                         </div>
                                     </div>
                                 </fieldset>

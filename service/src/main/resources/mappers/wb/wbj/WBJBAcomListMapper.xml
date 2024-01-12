@@ -31,7 +31,7 @@
         FROM
         (
         SELECT * FROM cx_episd_mst
-        WHERE bsn_cd = 'BNS10'
+        WHERE bsn_cd = 'BSN10'
         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
         INNER JOIN
         (
@@ -104,7 +104,7 @@
         FROM
         (
         SELECT * FROM cx_episd_mst
-        WHERE bsn_cd = 'BNS10'
+        WHERE bsn_cd = 'BSN10'
         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
         INNER JOIN
         (
@@ -558,7 +558,7 @@
             f.hp_no as new_hp_no,
             f.cmpn_tel_no as new_cmpn_tel_no,
             f.email as new_email,
-            f.pstn_cd as new_pstn_cd,
+            (select cd_nm from co_code_mst where cd = f.pstn_cd) new_pstn_cd,
             f.pstn_nm as new_pstn_nm,
             e.rsume_ord,
             f.mrts_cd,
@@ -963,7 +963,7 @@
     -->
     <sql id="selectAcomListWhereSql">
         <where>
-            AND BSN_CD = 'BNS10'
+            AND BSN_CD = 'BSN10'
             <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
                     <when test="carbonDate == 1 or carbonDate == 2">
@@ -1166,9 +1166,32 @@
                                        ON B.APPCTN_SEQ = C.APPCTN_SEQ
                             LEFT JOIN CX_APPCTN_RSUME_PRIZE_PART_DTL D
                                       ON C.RSUME_SEQ = D.RSUME_SEQ
-        WHERE A.BSN_CD = 'BNS10'
+        WHERE A.BSN_CD = 'BSN10'
           AND D.HGHST_WINER_YN = 'Y'
         ORDER BY A.YEAR ASC
+    </select>
+
+    <!--
+         쿼리명 : WBJBAcomMapper.getFileList
+         설  명 : 훈격 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <select id="getFileList" parameterType="wBJAcomSearchDTO" resultType="wBJAcomSearchDTO">
+        SELECT
+            A.APPCTN_SEQ
+             , A.FILE_SEQ
+             , C.FILE_ORD
+             , C.ORGN_FILE_NM AS FILE_NM
+             , C.USE_YN
+        FROM CX_APPCTN_FILE_DTL A INNER JOIN CX_APPCTN_MST B
+                                             ON A.APPCTN_SEQ = B.APPCTN_SEQ
+                                  INNER JOIN CO_FILE_DTL C
+                                             ON A.FILE_SEQ = C.FILE_SEQ
+
+        WHERE B.APPCTN_SEQ = #{detailsKey}
+        ORDER BY FILE_ORD DESC
     </select>
 </mapper>
 

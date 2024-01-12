@@ -10,10 +10,12 @@ import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
+import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBIBSupplyCompanyService;
@@ -27,16 +29,15 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * <pre>
@@ -66,6 +67,7 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
 
     //파일 서비스
     private final COFileService cOFileService;
+    private final COFileUtil cOFileUtil;
 
     //파일 업로드 위치
     @Value("${app.file.upload-path}")
@@ -81,6 +83,7 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
     /* 상생 신청 상세 시퀀스 */
     private final EgovIdGnrService cxAppctnRsumeDtlSeqIdgen;
     private final EgovIdGnrService cxAppctnTrnsfDtlIdgen;
+    private final EgovIdGnrService fileApplyIdgen;
 
     /**
      *  사업회차 연도 검색
@@ -589,5 +592,82 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         mpePartsCompanyDTO.setTotalCount(wBIBSupplyCompanyMapper.selectPartsCompanyCnt(mpePartsCompanyDTO));
 
         return mpePartsCompanyDTO;
+    }
+
+    /**
+     * 부품사 신청자를 수정한다.
+     */
+    @Transactional
+    public int updateInfo(WBIBSupplyDTO wBIBSupplyDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+
+        int rtnCnt = 0;
+        try {
+            //마스터 생성
+            String modId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+            String modIp = CONetworkUtil.getMyIPaddress(request);
+            //상생신청진행 상태 업데이트
+            //관리자상태에 따라 분기처리해야함
+            wBIBSupplyDTO.setRegId(modId);
+            wBIBSupplyDTO.setRegIp(modIp);
+            wBIBSupplyDTO.setModId(modId);
+            wBIBSupplyDTO.setModIp(modIp);
+            /* 상생신청파일 삭제 */
+            wBIBSupplyCompanyMapper.delAppctnFileDtl(wBIBSupplyDTO);
+            wBIBSupplyCompanyMapper.delFileDtl(wBIBSupplyDTO);
+
+            //신청파일 넣기
+            List<COFileDTO> rtnList = null;
+            Map<String, MultipartFile> files = multiRequest.getFileMap();
+            Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+            MultipartFile file;
+            int atchFileCnt = 0;
+
+            while (itr.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = itr.next();
+                file = entry.getValue();
+
+                if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                    atchFileCnt++;
+                }
+            }
+
+            if (!files.isEmpty()) {
+                List<WBIBSupplyDTO> optinList = null;
+                rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                if (rtnList.size() > 0) {
+                    WBIBSupplySearchDTO wBIBSupplySearchDTO = new  WBIBSupplySearchDTO();
+                    int stageSeq = 0;
+
+                    wBIBSupplySearchDTO.setBsnCd(wBIBSupplyDTO.getBsnCd());
+                }
+
+                for (int i = 0; i < rtnList.size() ; i++) {
+
+                    List<COFileDTO> fileList = new ArrayList();
+                    rtnList.get(i).setStatus("success");
+                    rtnList.get(i).setFieldNm("fileSeq");
+                    fileList.add(rtnList.get(i));
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                    wBIBSupplyDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                    wBIBSupplyDTO.setFileCd("ATTACH_FILE_TYPE01");
+                    wBIBSupplyCompanyMapper.putAppctnFileDtl(wBIBSupplyDTO);
+                }
+            }
+
+
+            if ("PRO_TYPE06001_01_002".equals(wBIBSupplyDTO.getAppctnSttsCd())) {
+                //보완요청 사용자->보완완료, 관리자 -> 미확인
+                wBIBSupplyDTO.setDetailsKey(String.valueOf(wBIBSupplyDTO.getAppctnSeq()));
+                wBIBSupplyDTO.setAppctnSttsCd("PRO_TYPE06001_01_003");
+                wBIBSupplyDTO.setMngSttsCd("PRO_TYPE06001_02_001");
+                wBIBSupplyCompanyMapper.updAppctnRsumeDtl(wBIBSupplyDTO);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rtnCnt;
     }
 }

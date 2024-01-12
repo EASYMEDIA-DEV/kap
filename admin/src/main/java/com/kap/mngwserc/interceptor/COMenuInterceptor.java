@@ -58,6 +58,14 @@ public class COMenuInterceptor implements HandlerInterceptor{
         List<COMenuDTO> driveMenuList = null;
         List<COMenuDTO> menuList = null;
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+        //대시보드 다른 드라이브에서 뒤로가기시 오류예외 처리
+        if(request.getRequestURI().indexOf("/mngwserc/co/coz/dashboard") > -1){
+            if (RequestContextHolder.getRequestAttributes().getAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION) != null){
+                RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", 47, RequestAttributes.SCOPE_SESSION);
+            }
+        }
+
         //dirve 메뉴 목록을 조회한다.
         COAAdmDTO cOAAdmDTO = new COAAdmDTO();
         cOAAdmDTO.setAuthCd( cOUserDetailsDTO.getAuthCd() );
@@ -138,11 +146,6 @@ public class COMenuInterceptor implements HandlerInterceptor{
                 break;
             }
         }
-
-        //대시보드 예외처리
-        /*if(request.getRequestURI().indexOf("/mngwserc/dashboard") > -1){
-            //pageNo = 1;
-        }*/
 
 
         // 메뉴 접근 권한

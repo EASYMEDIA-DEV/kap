@@ -111,4 +111,33 @@
         limit 0, 3
     </select>
 
+    <!--
+    쿼리명 : COCommMapper.quickTrendList
+    설  명 : 사용자 퀵메뉴 트랜드 리스트
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2024.01.11    이옥정       최초생성
+    -->
+    <select id="quickTrendList" resultType="SMKTrendDTO">
+        select /* SMKTrendMapper.selectTrendList */
+        trnd_seq
+        , type_cd
+        , (case when A.type_cd = 'TYPE01' then '교육사업'
+        when A.type_cd = 'TYPE02' then '컨설팅사업'
+        when A.type_cd = 'TYPE03' then '상생사업'
+        end)
+        AS type_cd_nm -- 카테고리명
+        , titl
+        , url_url
+        , exps_yn
+        , exps_ord
+        ,(SELECT web_path FROM CO_FILE_DTL  WHERE FILE_SEQ = A.thnl_file_seq ORDER BY FILE_ORD DESC LIMIT 1) WEB_PATH
+        ,(SELECT file_dsc FROM CO_FILE_DTL  WHERE FILE_SEQ = A.thnl_file_seq ORDER BY FILE_ORD DESC LIMIT 1) FILE_DSC
+        from sm_main_trend_mst A
+        WHERE EXPS_YN = 'Y'
+        order by
+        exps_ord desc
+        limit 0, 10
+    </select>
+
 </mapper>

@@ -1,26 +1,22 @@
 package com.kap.mngwserc.controller;
 
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COBDashBoardDTO;
 import com.kap.core.dto.COMenuDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.service.COBMenuService;
+import com.kap.service.COBDashBoardService;
+import com.kap.service.COLgnService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -47,22 +43,21 @@ import java.util.List;
 @RequestMapping(value={"/mngwserc"})
 public class COBDashBoardController {
 
+	private final COBDashBoardService cOBDashBoardService;
+
+	@Autowired
+	private COLgnService cOLgnService;
+
 	/**
 	 * 대시보드 목록 페이지
 	 */
 	@GetMapping(value="/co/coz/dashboard")
-	public String getDashBoard(ModelMap modelMap, COAAdmDTO cOAAdmDTO) throws Exception
+	public String getDashBoard(COBDashBoardDTO cOBDashBoardDTO, ModelMap modelMap, COAAdmDTO cOAAdmDTO) throws Exception
 	{
 		try
 		{
-			// 공통코드 배열 셋팅
-			ArrayList<String> cdDtlList = new ArrayList<String>();
-			// 코드 set
-			cdDtlList.add("ADMIN_AUTH_CD");
-
-			// 로그인한 계정
-			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-			cOAAdmDTO.setLgnSsnId(cOUserDetailsDTO.getId());
+			COBDashBoardDTO rtnData = cOBDashBoardService.selectDashboard(cOBDashBoardDTO);
+			modelMap.addAttribute("rtnData", rtnData);
 
 
 		}
@@ -76,6 +71,35 @@ public class COBDashBoardController {
 		}
 
 		return "mngwserc/co/CODashBoard.admin";
+	}
+
+
+	@PostMapping(value="/co/coz/dashboardAuth")
+	public String getDashBoardLink(@Valid @RequestBody COBDashBoardDTO cOBDashBoardDTO,  ModelMap modelMap) throws Exception
+	{
+		try
+		{
+
+			int driveMenuSeq = cOBDashBoardDTO.getDriveMenuSeq();
+			String moveLink = cOBDashBoardDTO.getLink();
+
+			RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", driveMenuSeq, RequestAttributes.SCOPE_SESSION);
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			cOUserDetailsDTO.setDriveMenuSeq( driveMenuSeq );
+			List<COMenuDTO> menuList = cOLgnService.getMenuList(cOUserDetailsDTO);
+			RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
+
+			modelMap.addAttribute("moveLink", moveLink);
+		}
+		catch (Exception e)
+		{
+			if (log.isDebugEnabled())
+			{
+				log.debug(e.getMessage());
+			}
+			throw new Exception(e.getMessage());
+		}
+		return "jsonView";
 	}
 
 }
