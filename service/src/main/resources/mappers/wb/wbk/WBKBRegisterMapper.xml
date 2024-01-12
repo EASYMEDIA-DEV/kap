@@ -21,6 +21,7 @@
             C.mng_stts_cd,
             (SELECT cd_nm FROM co_code_mst WHERE cd = D.ptcpt_type) as ptcpt_type_nm,
             D.wdcrm_cd,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = D.wdcrm_cd and cd != '') as wdcrm_nm,
             B.mod_id,
             B.mod_dtm
         FROM
@@ -256,6 +257,10 @@
     <select id="getRegisterFinalResultList" parameterType="wBKBRegisterSearchDTO" resultType="wBKBRegisterSearchDTO">
         SELECT /*WBKBREGISTERMAPPER.getRegisterFinalResultList*/
             mng_stts_cd AS lResultCd
+        <if test="mngSttsCd != null and mngSttsCd != ''.toString()">
+            ,(select cd_nm from co_code_mst
+             where cd = a.mng_stts_cd) AS lResultNm
+        </if>
         FROM CX_APPCTN_RSUME_DTL a
         WHERE APPCTN_SEQ = #{appctnSeq}
         AND RSUME_ORD = 3;

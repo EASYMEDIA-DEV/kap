@@ -439,18 +439,22 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(6);
-        cell.setCellValue("1차결과");
+        cell.setCellValue("서류심사");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(7);
-        cell.setCellValue("최종결과");
+        cell.setCellValue("1차결과");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(8);
-        cell.setCellValue("핸드폰번호");
+        cell.setCellValue("최종결과");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(9);
+        cell.setCellValue("핸드폰번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(10);
         cell.setCellValue("이메일");
         cell.setCellStyle(style_header);
 
@@ -462,16 +466,17 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
         cell.setCellValue("최초 수정일시");
         cell.setCellStyle(style_header);*/
 
-        cell = row.createCell(10);
+        cell = row.createCell(11);
         cell.setCellValue("최종 수정자(아이디)");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(11);
+        cell = row.createCell(12);
         cell.setCellValue("최종 수정일시");
         cell.setCellStyle(style_header);
 
         // Body
         List<WBKBRegisterSearchDTO> list = wBKBRegisterSearchDTO.getList();
+        System.err.println("list ===" + list );
         for (int i=0; i<list.size(); i++) {
             row = sheet.createRow(rowNum++);
 
@@ -506,23 +511,28 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
             cell.setCellValue(list.get(i).getWdcrmNm() == null ? "-" : list.get(i).getWdcrmNm());
             cell.setCellStyle(style_body);
 
-            //1차결과
+            //서류심사
             cell = row.createCell(6);
+            cell.setCellValue(list.get(i).getDocResultNm() == null ? "-" : list.get(i).getDocResultNm());
+            cell.setCellStyle(style_body);
+
+            //1차결과
+            cell = row.createCell(7);
             cell.setCellValue(list.get(i).getFResultNm() == null ? "-" : list.get(i).getFResultNm());
             cell.setCellStyle(style_body);
 
             //최종결과
-            cell = row.createCell(7);
+            cell = row.createCell(8);
             cell.setCellValue(list.get(i).getLResultNm() == null ? "-" : list.get(i).getLResultNm() );
             cell.setCellStyle(style_body);
 
             //핸드폰번호
-            cell = row.createCell(8);
+            cell = row.createCell(9);
             cell.setCellValue(list.get(i).getHpNo()==null ? "-" : list.get(i).getHpNo());
             cell.setCellStyle(style_body);
 
             //이메일
-            cell = row.createCell(9);
+            cell = row.createCell(10);
             cell.setCellValue(list.get(i).getEmail());
             cell.setCellStyle(style_body);
 
@@ -539,12 +549,12 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
             */
 
             //최종 수정자(아이디)
-            cell = row.createCell(10);
-            cell.setCellValue(list.get(i).getModId()==null ? "-" : list.get(i).getModName());
+            cell = row.createCell(11);
+            cell.setCellValue(list.get(i).getModId()==null ? "-" : list.get(i).getModId());
             cell.setCellStyle(style_body);
 
             //최종 수정일시
-            cell = row.createCell(11);
+            cell = row.createCell(12);
             cell.setCellValue(list.get(i).getModDtm()==null ? "-" : list.get(i).getModDtm().substring(0, list.get(i).getRegDtm().lastIndexOf(":")));
             cell.setCellStyle(style_body);
         }
