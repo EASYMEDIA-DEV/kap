@@ -5,17 +5,17 @@
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center">${ list.bsnYear}</td>
-                <td class="text-center">${ list.cnstgCdNm}</td>
-                <td class="text-center">${ list.statusNm}</td>
-                <td class="text-center">${ list.cmpnNm} </td>
-                <td class="text-center">${ kl:bsnmNoConvert(list.appctnBsnmNo)}</td>
-                <td class="text-center">${ list.ctgryCdNm}</td>
-                <td class="text-center">${ list.cmpnSizeCdNm}</td>
-                <td class="text-center">${ list.appctnFldCdNm}</td>
-                <td class="text-center">${list.rgnsCdNm} </td>
-                <td class="text-center">${list.name}</td>
-                <td class="text-center">${list.appctnDt}</td>
+                <td class="text-center">${ kl:emptyHypen(list.bsnYear)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.cnstgCdNm)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.statusNm)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.cmpnNm)} </td>
+                <td class="text-center">${ kl:emptyHypen(kl:bsnmNoConvert(list.appctnBsnmNo))}</td>
+                <td class="text-center">${ kl:emptyHypen(list.ctgryCdNm)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.cmpnSizeCdNm)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.appctnFldCdNm)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.rgnsCdNm)} </td>
+                <td class="text-center">${ kl:emptyHypen(list.name)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.appctnDt)}</td>
             </tr>
         </c:forEach>
     </c:when>

@@ -5,12 +5,12 @@
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-                <td class="text-center">${list.parntCtgryCdNm}</td>
-                <td class="text-center">${list.ctgryCdNm}</td>
-                <td class="text-center">${ list.titl}</td>
+                <td class="text-center">${ kl:emptyHypen(list.parntCtgryCdNm)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.ctgryCdNm)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.titl)}</td>
                 <td class="text-center">${ kl:convertDate(list.startInqrDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                 <td class="text-center">${ kl:convertDate(list.endInqrDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
-                <td class="text-center">${ list.inqrStts}</td>
+                <td class="text-center">${ kl:emptyHypen(list.inqrStts)}</td>
             </tr>
         </c:forEach>
     </c:when>

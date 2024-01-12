@@ -47,8 +47,11 @@ public class MPBSanDto extends BaseDTO {
     private String typeCdNm;
 
 
-    @Schema(title = "사업명", example = "사업명")
+    @Schema(title = "과제명", example = "사업명")
     private String bsnCdNm;
+
+    @Schema(title = "사업구분", example = "사업명")
+    private String menuCdNm;
 
     @Schema(title = "진행상태", example = "진행중")
     private String status;

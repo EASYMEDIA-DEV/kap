@@ -58,39 +58,39 @@ var exports = {
         }, "/mngwserc/mp/mpb/select-tab-three", $formObj, "POST", "html",'',false);
     }
 
-    /**
-     * 상생 사업 조회 및 미래차공모전 조회
-     */
-    var tabFour = function () {
 
-        //상생 사업
+
+
+    var tabFourOne = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
             ctrl.obj.find("#listContainerSan").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");
+
             //총 건수
             ctrl.obj.find("#listContainerSanTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainerSan", "pagingContainerSan");
         }, "/mngwserc/mp/mpb/select-tab-four", $formObj, "POST", "html",'',false);
+    }
 
+    var tabFourTwo = function () {
         //미래차 공모전
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
             ctrl.obj.find("#listContainerFuc").html(respObj);
             //전체 갯수
-            var totCnt = $(respObj).eq(0).data("totalCount");
-            if(totCnt > 0) {
+            var totCnt2 = $(respObj).eq(0).data("totalCount");
+            if(totCnt2 > 0) {
                 $(".futureCar").show();
             }
             //총 건수
-            ctrl.obj.find("#listContainerFucTotCnt").text(totCnt);
+            ctrl.obj.find("#listContainerFucTotCnt").text(totCnt2);
             //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "listContainerFuc", "pagingContainerFuc");
+            cmmCtrl.listPaging(totCnt2, $formObj, "listContainerFuc", "pagingContainerFuc");
         }, "/mngwserc/mp/mpa/select-tab-two", $formObj, "POST", "html",'',false);
-
     }
 
     /**
@@ -120,7 +120,8 @@ var exports = {
         tabOne();
         tabTwo();
         tabThree();
-        tabFour();
+        tabFourOne();
+        tabFourTwo();
         tabFive();
         if($("#pstnCd").val()!='MEM_CD01007') {
             $(".pstnNm").hide();
@@ -133,6 +134,7 @@ var exports = {
 
     var tabReload = function (type,page) {
 
+
         if(page != undefined){
             $formObj.find("#pageIndex").val(page);
         }
@@ -141,9 +143,14 @@ var exports = {
         } else if(type == 'bus' ) {
             tabThree();
         } else if(type == 'san' ) {
-            tabFour();
+            tabFourOne();
+            tabFourTwo();
         } else if(type == 'chat' ) {
             tabFive();
+        } else if(type =='pagingContainerSan') {
+            tabFourOne();
+        } else if(type== 'pagingContainerFuc') {
+            tabFourTwo();
         }
     }
     // set model
@@ -340,7 +347,8 @@ var exports = {
          */
         email : {
             event : {
-                input : function() {
+                input : function(e) {
+                    $(this).val(e.target.value.toLowerCase());
                     dupEmailChk = false;
                 }
             }
@@ -412,6 +420,13 @@ var exports = {
                 //페이징 이동
                 if( $(this).attr("value") != "null" ){
                     $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
+                    if($(this).parents("div")[2].id == 'pagingContainerSan') {
+                        activeTab = $(this).parents("div")[2].id;
+                    }
+                    if($(this).parents("div")[2].id == 'pagingContainerFuc') {
+                        activeTab = $(this).parents("div")[2].id;
+
+                    }
                     tabReload(activeTab);
                 }
             }
@@ -435,6 +450,15 @@ var exports = {
                 var activeTab = $('#myTabs li.active a').attr('href').substring(1);
                 //리스트 갯수 변경
                 $formObj.find("input[name=listRowSize]").val($(this).val());
+
+                if($(this).parents("div")[2].id == 'pagingContainerSan') {
+                    activeTab = $(this).parents("div")[2].id;
+                }
+                if($(this).parents("div")[2].id == 'pagingContainerFuc') {
+                    activeTab = $(this).parents("div")[2].id;
+
+                }
+
                 tabReload(activeTab,1);
             }
         }
@@ -445,7 +469,7 @@ var exports = {
         //폼 데이터 처리
         $(".futureCar").hide();
         cmmCtrl.setFormData($formObj);
-        search();
+        search(1);
 
         // 유효성 검사
         $formObj.validation({

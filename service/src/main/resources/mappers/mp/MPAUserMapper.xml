@@ -585,9 +585,7 @@
              , pstn_nm =#{pstnNm}
              , bsc_addr =#{bscAddr}
              , dtl_addr =#{dtlAddr}
-        <if test="telNo != null and telNo != ''.toString() ">
              , tel_no =#{telNo}
-        </if>
              , email =#{email}
         <if test="hpNo != null and hpNo != ''.toString() ">
              , hp_no =#{hpNo}

@@ -473,7 +473,8 @@ var exports = {
         },
         email : {
             event : {
-                input : function() {
+                input : function(e) {
+                    $(this).val(e.target.value.toLowerCase());
                     dupEmailChk = false;
                 }
             }

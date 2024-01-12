@@ -486,8 +486,10 @@
              , m1.year-- 사업년도
              , m1.episd-- 회차
              , (select cd_nm from co_code_mst where  cd=m4.optn_cd )  as type_cd_nm-- 사업구분
-             , m4.optn_nm as bsnCdNm
+--              , m4.optn_nm as bsnCdNm
              , (select cd_nm from co_code_mst where  cd=m5.rsume_stts_cd )  as status -- 진행상태
+             , (select cd_nm from co_code_mst where  cd=m1.bsn_cd )  as bsn_cd_nm-- 과제명
+             , (select menu_nm from co_menu_mst cmm where menu_seq =  (select user_menu_seq from cx_mst where bsn_cd = m1.bsn_cd) ) as menu_cd_nm -- 사업구분
              , m3.cmpn_nm -- 부품사명
              , (select cd_nm from co_code_mst where  cd=m3.ctgry_cd ) as ctgry_cd_nm -- 구분
              , (select cd_nm from co_code_mst where  cd=m3.size_cd ) as cmpn_size_cd_nm -- 규모
@@ -524,7 +526,7 @@
         2023.11.20    양현우       최초생성
     -->
     <select id="selectSanListCnt" parameterType="MPBBusDto" resultType="java.lang.Integer">
-        select count(*) /*MPBMemberPartsSocietyMapper.selectSanListCnt */
+        select count(*)
         from cx_episd_mst m1
                  inner join cx_appctn_mst m2
                             on m1.episd_seq = m2.episd_seq
@@ -532,9 +534,10 @@
                             on m2.appctn_bsnm_no  = m3.bsnm_no
                  inner join cx_episd_bsn_optn_dtl m4
                             on m1.episd_seq  = m4.episd_seq
-                 inner join cx_appctn_mst m5
+                 inner join cx_appctn_rsume_dtl m5
                             on m2.appctn_seq = m5.appctn_seq
-        where m2.mem_seq =#{detailsKey}
+        where 1 = 1
+          and m2.mem_seq =#{detailsKey}
     </select>
 
 </mapper>

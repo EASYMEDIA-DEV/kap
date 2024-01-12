@@ -65,7 +65,8 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
             },
             email : {
                 event : {
-                    input : function() {
+                    input : function(e) {
+                        $(this).val(e.target.value.toLowerCase());
                         dupEmailChk = false;
                     }
                 }
@@ -206,7 +207,7 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
 
                     //파라미터를 물고 가야함.
                     location.href = "/mngwserc/mp/mpc/excel-down?" + frmDataObj.serialize();
-
+                    $(".excel-down").modal("hide");
                 } else {
                     alert(msgCtrl.getMsg("fail.reason"));
                     return;

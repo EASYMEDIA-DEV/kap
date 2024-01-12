@@ -171,7 +171,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
                     //파라미터를 물고 가야함.
                     location.href = "./excel-down?" + frmDataObj.serialize();
-
+                    $excelObj.modal("hide");
                 } else {
                     alert(msgCtrl.getMsg("fail.reason"));
                     return;
