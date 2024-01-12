@@ -5,6 +5,7 @@ import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.WBAManagementService;
 import com.kap.service.WBBBCompanyService;
@@ -260,5 +261,26 @@ public class WBBBCompanyController {
             e.printStackTrace();
             throw new Exception(e.getMessage());
         }
+    }
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getBsnmNoCnt")
+    public String getBsnmNoCnt(WBBAApplyMstDTO wBBAApplyMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wbbbCompanyService.getBsnmNoCnt(wBBAApplyMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
     }
 }

@@ -24,26 +24,22 @@
             <!--기간 검색 종료-->
 
             <fieldset>
-                <div class="form-group text-sm">
+                <div class="form-inline text-sm">
                     <label class="col-sm-1 control-label">사업회차</label>
-                    <div class="col-sm-5">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <select class="form-control input-sm" id="optYear" name="year">
-                                    <option value="">연도 전체</option>
-                                    <c:forEach var="rtnYear" items="${rtnYear}" varStatus="status">
-                                        <option value="${rtnYear.year}">${rtnYear.year}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="col-sm-6">
-                                <select class="form-control input-sm" id="optEpisd" name="episd">
-                                    <option value="">회차 전체</option>
-                                    <c:forEach var="optEpisd" items="${optEpisdList}" varStatus="status">
-                                        <option value="${optEpisd}">${optEpisd}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
+                    <div class="col-sm-11">
+                        <div class="form-group mr-sm">
+                            <select class="form-control input-sm" id="optYear" name="year">
+                                <option value="">연도 전체</option>
+                                <c:forEach var="rtnYear" items="${rtnYear}" varStatus="status">
+                                    <option value="${rtnYear.year}">${rtnYear.year}</option>
+                                </c:forEach>
+                            </select>
+                            <select class="form-control input-sm" id="optEpisd" name="episd">
+                                <option value="">회차 전체</option>
+                                <c:forEach var="optEpisd" items="${optEpisdList}" varStatus="status">
+                                    <option value="${optEpisd}">${optEpisd}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
                 </div>

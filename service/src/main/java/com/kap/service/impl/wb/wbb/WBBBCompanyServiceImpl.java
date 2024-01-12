@@ -4,9 +4,7 @@ import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.mp.mpb.MPBBnsSearchDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import com.kap.core.dto.wb.wbb.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -953,5 +951,19 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
             e.printStackTrace();
         }
         return rtnCnt;
+    }
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBBAApplyMstDTO wBBAApplyMstDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wbbbCompanyMapper.getBsnmNoCnt(wBBAApplyMstDTO);
+
+        wBBAApplyMstDTO.setRespCnt(respCnt);
+
+        return respCnt;
     }
 }

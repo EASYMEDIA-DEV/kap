@@ -277,8 +277,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         if(mngSttsCd =='PRO_TYPE01001_02_002'){
                             $(".rtrnRsnCntn").attr('disabled',false);
+                            $(".rtrnRsnCntn").css("display", "block");
                         }else if(mngSttsCd =='PRO_TYPE01001_02_004'){
                             $(".rtrnRsnCntn").attr('disabled',false);
+                            $(".rtrnRsnCntn").css("display", "block");
                         }else{
                             $(".rtrnRsnCntn").attr('disabled',true);
                         }

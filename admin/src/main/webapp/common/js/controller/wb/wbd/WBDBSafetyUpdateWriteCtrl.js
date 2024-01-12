@@ -299,7 +299,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $(".rtrnRsnCntn").css("display", "block");
                         }else{
                             $(".rtrnRsnCntn").attr('disabled',true);
-                            $(".rtrnRsnCntn").css("display", "none");
                         }
                     }
                 }

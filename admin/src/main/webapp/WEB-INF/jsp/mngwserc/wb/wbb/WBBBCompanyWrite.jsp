@@ -431,12 +431,12 @@
                 </c:forEach>
             </c:if>
             </div>
-            <div class="pull-right">
-                <br>
-                <button type="button" class="btn btn-sm btn-default" id="appctnPdfDownload">신청정보 다운로드</button>
-            </div>
             <hr />
             <c:if test="${not empty rtnInfo}">
+                <div class="pull-right">
+                    <br>
+                    <button type="button" class="btn btn-sm btn-default" id="appctnPdfDownload">신청정보 다운로드</button>
+                </div>
                 <div class="panel-group" id="accParent" role="tablist">
                     <div>
                         <h6 class="mt0"><em class="ion-play mr-sm"></em>사업진행 상세</h6>

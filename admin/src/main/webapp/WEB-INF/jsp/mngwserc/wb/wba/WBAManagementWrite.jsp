@@ -283,7 +283,7 @@
                     <div class="col-sm-1"></div>
                     <label class="col-sm-1 control-label">최초 등록일</label>
                     <div class="col-sm-4">
-                        <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</p>
+                        <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
                     </div>
                 </div>
             </fieldset>
@@ -309,7 +309,7 @@
                         <p class="form-control-static">
                             <c:choose>
                                 <c:when test="${modFlag}">
-                                    ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}
+                                    ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                 </c:when>
                                 <c:otherwise>
                                     -

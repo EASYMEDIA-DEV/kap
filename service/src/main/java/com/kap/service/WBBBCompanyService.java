@@ -1,6 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.wb.wbb.*;
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -110,4 +111,9 @@ public interface WBBBCompanyService {
      *   신청자 업데이트
      */
     public int updateInfo(WBBAApplyDtlDTO wbbaApplyDtlDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBBAApplyMstDTO wBBAApplyMstDTO) throws Exception;
 }
