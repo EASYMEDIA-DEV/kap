@@ -43,7 +43,7 @@
                                             <em class="ion-calendar"></em>
                                         </button>
                                     </span>
-                                <button type="button" class="btn btn-inverse btn-sm " style="margin-bottom:2.5rem ; margin-left:-8.2rem;" id="btnExcelDown" >엑셀다운로드</button>
+                                <button type="button" class="btn btn-inverse btn-sm " style="margin-bottom:2.5rem ; margin-left:-7.7rem;" id="btnExcelDown" >엑셀다운로드</button>
                             </div>
 
                         <div class="pull-right">
