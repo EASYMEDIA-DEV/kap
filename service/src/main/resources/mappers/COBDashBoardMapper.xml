@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.COBDashBoardMapper">
+	<!--
+         쿼리명 : COBDashBoardMapper.getEduCnt
+         설  명 : 교육
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.12  박준희     최초 생성
+    -->
+	<select id="getEduCnt"  resultType="COBDashBoardDTO">
+		SELECT			/* COBDashBoardMapper.getEduCnt */
+			IFNULL(SUM(CASE WHEN ACCS_STATUS_NM  = '접수중' THEN  1 END), 0)AS edu_accepting
+			, IFNULL(SUM(CASE WHEN edctn_status_nm  = '교육대기' THEN  1 END), 0) AS edu_accept_waiting
+			, IFNULL(SUM(CASE WHEN edctn_status_nm  = '교육중' THEN  1 END ), 0) AS edu_accept_training
+			FROM (SELECT
+			DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
+			, accs_strt_dtm
+			, accs_end_dtm
+			, case
+			when NOW()  <![CDATA[<]]>  accs_strt_dtm then '접수대기'
+			when NOW()  >  accs_strt_dtm AND NOW()  <![CDATA[<]]>   accs_end_dtm then '접수중'
+			when NOW()  >  accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt  >=  fxnum_cnt) then '마감'
+			END  AS accs_status_nm
+			, case
+			when NOW()   <![CDATA[<]]>   accs_strt_dtm then '2'
+			when NOW()   >   accs_strt_dtm AND NOW()   <![CDATA[<]]>    accs_end_dtm then '1'
+			when NOW()   >   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   >=   fxnum_cnt) then '3'
+			END  AS accs_status_order
+			, edctn_strt_dtm
+			, edctn_end_dtm
+			, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+			case when NOW()  <![CDATA[<]]>  edctn_strt_dtm then '교육대기'
+			when NOW()  >  edctn_strt_dtm AND NOW()  <![CDATA[<]]>  edctn_end_dtm then '교육중'
+			when NOW()  >  edctn_end_dtm then '교육완료'
+			end
+			when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+			END  AS edctn_status_nm
+			FROM (SELECT
+			a.accs_strt_dtm
+			, a.accs_end_dtm
+			, a.edctn_strt_dtm
+			, a.edctn_end_dtm
+			, a.edctn_stts_cd
+			, a.fxnum_cnt
+			, a.fxnum_impsb_yn
+			, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
+			, a.reg_id
+			, (select name from co_adm_mst where id = a.reg_id) as reg_name
+			, a.reg_dtm
+			, a.mod_id
+			, (select name from co_adm_mst where id = a.reg_id) as mod_name
+			FROM ed_edctn_episd_mst a
+			LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+			LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
+			) AA
+		) TBL
+	</select>
+
+
+	<!--
+         쿼리명 : COBDashBoardMapper.getConCnt
+         설  명 : 컨설팅
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.12  박준희     최초 생성
+    -->
+	<select id="getConCnt"  resultType="COBDashBoardDTO">
+		SELECT 	/* COBDashBoardMapper.getConCnt */
+			Count(CASE WHEN a.rsume_stts_cd in ( 'MNGTECH_STATUS_01' ,'MNGTECH_STATUS_02' ,'MNGTECH_STATUS_03' ,'MNGTECH_STATUS_04' ,'MNGTECH_STATUS_05' ,'MNGTECH_STATUS_06' ,'MNGTECH_STATUS_07') THEN 1 END) AS con_tech_application,
+			Count(CASE WHEN a.rsume_stts_cd in ( 'MNGTECH_STATUS_08' ,'MNGTECH_STATUS_09' ,'MNGTECH_STATUS_10' ,'MNGTECH_STATUS_11' ,'MNGTECH_STATUS_12' ,'MNGTECH_STATUS_13') THEN 1 END) AS con_tech_training,
+			Count( CASE WHEN a.rsume_stts_cd in ( 'MNGCNSLT_STATUS01' ,'MNGCNSLT_STATUS02', 'MNGCNSLT_STATUS03' ,'MNGCNSLT_STATUS04','MNGCNSLT_STATUS05', 'MNGCNSLT_STATUS06', 'MNGCNSLT_STATUS07', 'MNGCNSLT_STATUS08') THEN 1 END) AS con_mng_application,
+			Count( CASE WHEN a.rsume_stts_cd  in ('MNGCNSLT_STATUS09' ,'MNGCNSLT_STATUS10' ,'MNGCNSLT_STATUS11' ,'MNGCNSLT_STATUS12') THEN 1 END) AS con_mng_training
+		FROM   cp_cnstg_appctn_mst a
+	</select>
+
+	<!--
+         쿼리명 : COBDashBoardMapper.getNoticeList
+         설  명 : 공지
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.12  박준희     최초 생성
+    -->
+	<select id="getNoticeList"  resultType="COBDashBoardDTO">
+		SELECT /* COBDashBoardMapper.getNoticeList */
+			NTFY_SEQ
+			 , TITL
+			 , REG_DTM
+		FROM
+			BD_NTFY_MST
+		WHERE
+			EXPS_YN = 'Y'
+		ORDER BY
+			REG_DTM DESC
+			LIMIT 5;
+	</select>
+
+	<!--
+         쿼리명 : COBDashBoardMapper.getInquiryCnt
+         설  명 : 1:1문의
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.12  박준희     최초 생성
+    -->
+	<select id="getInquiryCnt"  resultType="COBDashBoardDTO">
+
+		SELECT /* COBDashBoardMapper.getInquiryCnt */
+			IFNULL(SYS_CNT, 0) AS inquiry_application_waiting
+			, IFNULL(SYNACK_CNT, 0) AS inquiry_application_completed
+		FROM (
+				 SELECT
+					 SUM(CASE WHEN RSUME_CD = 'SYN' THEN 1 ELSE 0 END) AS SYS_CNT /* 접수 대기 */
+					  , SUM(CASE WHEN RSUME_CD = 'SYNACK' THEN 1 ELSE 0 END) AS SYNACK_CNT /* 접수 완료 */
+				 FROM
+					 BD_QA_MST A
+						 JOIN CO_MEM_MST MEM ON A.REG_ID = MEM.ID
+						 JOIN BD_QA_CTGRY_DTL CT ON A.QA_SEQ = CT.QA_SEQ
+				 WHERE
+					 DATE(A.REG_DTM) = CURDATE()
+		) AA;
+
+	</select>
+
+	<!--
+         쿼리명 : COBDashBoardMapper.getMemberCnt
+         설  명 : 회원
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.12  박준희     최초 생성
+    -->
+	<select id="getMemberCnt"  resultType="COBDashBoardDTO">
+	select /* COBDashBoardMapper.getMemberCnt */
+		    ( select count(*)
+				 from co_mem_mst a
+				 where a.mem_cd='CO'
+				   and DATE_FORMAT(a.reg_dtm , '%Y-%m-%d') = CURDATE()
+				   and a.wthdrw_yn='Y') as general_mem_join
+			 ,( select count(*)
+				from co_mem_mst a
+				where a.mem_cd='CP'
+				  and a.wthdrw_yn='Y'
+				  and DATE_FORMAT(a.reg_dtm , '%Y-%m-%d') = CURDATE()) as company_mem_join
+			 ,(select count(*)
+			   from co_mem_mst a
+						inner join co_mem_wthdrw_dtl  b
+								   on a.mem_seq  = b.mem_seq
+			   where a.wthdrw_yn ='N'
+				 and a.mem_cd = 'CO'
+				 and DATE_FORMAT(b.reg_dtm , '%Y-%m-%d') = CURDATE()) as general_mem_secession
+			 ,( select count(*)
+				from co_mem_mst a
+						 inner join co_mem_wthdrw_dtl  b
+									on a.mem_seq  = b.mem_seq
+				where a.wthdrw_yn ='N'
+				  and a.mem_cd = 'CP'
+				  and DATE_FORMAT(b.reg_dtm , '%Y-%m-%d') = CURDATE()) as company_mem_secession
+		from dual;
+	</select>
+</mapper>
