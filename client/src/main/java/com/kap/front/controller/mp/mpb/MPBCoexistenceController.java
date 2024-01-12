@@ -143,6 +143,7 @@ public class MPBCoexistenceController {
                     wBJAcomSearchDTO.setDetailsKey(String.valueOf(mpbBnsSearchDTO.getAppctnSeq()));
 
                     modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
+                    System.err.println("rtnData   :::  "  + wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
                 }
             }
 

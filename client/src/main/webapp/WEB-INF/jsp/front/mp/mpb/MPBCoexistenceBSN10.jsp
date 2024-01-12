@@ -210,15 +210,22 @@
                                                         <div class="form-group">
                                                             <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                 <c:forEach var="itemOptn" items="${rtnData.optFileList}" varStatus="status1">
-                                                                    ${rtnData.optFileList}
-                                                                    <p class="empty-txt">
-                                                                        <a href="/file/download?fileSeq=${rtnData.appctnFileSeq}&fileOrd=${rtnData.fileSeq}" download="" title="파일 다운로드"></a>
-                                                                    </p>
+                                                                    <c:if test="${itemOptn.useYn eq 'Y'}">
+                                                                        <p class="empty-txt">
+                                                                            <a href="/file/download?fileSeq=${itemOptn.fileSeq}&fileOrd=${itemOptn.fileOrd}" download="" title="파일 다운로드">${itemOptn.fileNm}</a>
+                                                                        </p>
+                                                                    </c:if>
                                                                 </c:forEach>
                                                             </div>
                                                             <!-- 2024-01-03 추가 -->
                                                             <div class="file-prev-area">
-                                                                <a href="/file/download?fileSeq=${rtnData.appctnFileSeq}&fileOrd=${rtnData.fileSeq}-1" download="" title="파일 다운로드"></a>
+                                                                <c:forEach var="itemOptn" items="${rtnData.optFileList}" varStatus="status1">
+                                                                    <c:if test="${itemOptn.useYn eq 'N'}">
+                                                                        <p class="empty-txt">
+                                                                            <a href="/file/download?fileSeq=${itemOptn.fileSeq}&fileOrd=${itemOptn.fileOrd}" download="" title="파일 다운로드">${itemOptn.fileNm}</a>
+                                                                        </p>
+                                                                    </c:if>
+                                                                </c:forEach>
                                                             </div>
                                                             <!-- 2024-01-03 추가 -->
                                                         </div>

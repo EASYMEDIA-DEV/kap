@@ -33,7 +33,11 @@ public class WBJAcomSearchDTO extends BaseDTO {
     @Schema(title = "파일순번", example = "숫자")
     private String fileCd;
     @Schema(title = "파일순번", example = "숫자")
+    private String fileNm;
+    @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;
+    @Schema(title = "파일순번", example = "숫자")
+    private Integer fileOrd;
 
     /* List Data */
     @Schema(title = "사업년도", example = "YYYY")
@@ -63,6 +67,9 @@ public class WBJAcomSearchDTO extends BaseDTO {
 
     @Schema(title = "노출 여부")
     private String expsYn;
+
+    @Schema(title = "파일 여부")
+    private String useYn;
 
     @Schema(title = "신청상태코드 명", example = "") /* 코드 값 nm */
     private String appctnSttsCdNm;
