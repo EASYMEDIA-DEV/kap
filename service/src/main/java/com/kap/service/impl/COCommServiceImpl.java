@@ -9,6 +9,7 @@ import com.kap.core.dto.*;
 import com.kap.core.dto.co.*;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.sm.smk.SMKTrendDTO;
 import com.kap.core.utility.COClassUtil;
 import com.kap.service.COCommService;
 import com.kap.service.COUserDetailsHelperService;
@@ -50,6 +51,7 @@ import java.util.*;
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
  *   2023.11.15		이옥정				   최초 생성
+ *   2024.01.11     이옥정             사용자 퀵메뉴 트랜드 리스트 추가
  * </pre>
  */
 @Slf4j
@@ -119,6 +121,14 @@ public class COCommServiceImpl implements COCommService {
      */
     public List<COFrontHeaderNtfyDTO> getHeaderNtfyList() throws Exception{
         return cOCommMapper.getHeaderNtfyList();
+    }
+
+    /**
+     * 사용자 퀸메뉴 트랜드리스트
+     */
+    public SMKTrendDTO quickTrendList(SMKTrendDTO sMKTrendDTO) throws Exception{
+        sMKTrendDTO.setList(cOCommMapper.quickTrendList(sMKTrendDTO));
+        return sMKTrendDTO;
     }
 
     @Override

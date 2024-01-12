@@ -5,6 +5,7 @@ import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COMenuDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
+import com.kap.core.dto.sm.smk.SMKTrendDTO;
 import com.kap.service.COBUserMenuService;
 import com.kap.service.COCodeService;
 import com.kap.service.COCommService;
@@ -150,6 +151,9 @@ public class COViewInterceptor implements HandlerInterceptor{
         request.setAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
         //공지사항
         request.setAttribute("headerNtfyList", cOCommService.getHeaderNtfyList());
+        // 트랜드 리스트 관련
+        SMKTrendDTO sMKTrendDTO = new SMKTrendDTO();
+        request.setAttribute("quickTrendList", cOCommService.quickTrendList(sMKTrendDTO));
 
         //과정분류 - 소분류
         COCodeDTO cOCodeDTO = new COCodeDTO();

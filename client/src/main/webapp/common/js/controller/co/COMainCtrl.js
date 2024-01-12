@@ -131,7 +131,6 @@ define(["ezCtrl"], function(ezCtrl) {
 				jQuery(".main-popup").hide();
 			}
 
-
 			jQuery(".newsletterBtn").on("click", function(){
 				var emailChkYn = 'N';
 				if(jQuery("input[name=email]").val() == ""){
