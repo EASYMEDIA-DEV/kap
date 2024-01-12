@@ -276,12 +276,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         if($(this).val() == 'Y'){
                             $("#ab1").css('height' , '100%');
                             $("#ab1").addClass('in');
-                            $("#pmndv").prop('href','#ab1');
                         }else{
                             $("#ab1").css('height' , '0px');
                             $("#ab1").removeClass('in');
-
-                            $("#pmndv").prop('href','');
                         }
                     }
                 }
@@ -403,12 +400,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             if(pmndvPmtYn == 'Y'){
                 $("#ab1").css('height' , '100%');
                 $("#ab1").addClass('in');
-                $("#pmndv").prop('href','#ab1');
             }else{
                 $("#ab1").css('height' , '0px');
                 $("#ab1").removeClass('in');
-
-                $("#pmndv").prop('href','');
             }
 
             // 유효성 검사

@@ -16,7 +16,7 @@
             <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${userInfo.bsnmNo}" />
             <input type="hidden" class="notRequired" name="detailsKey" value="${rtnData.appctnSeq}" />
             <input type="hidden" class="notRequired" name="appctnBsnmNo" value="${userInfo.bsnmNo}"/>
-            <input type="hidden" class="notRequired" name="bsnCd" value="BNS08"/>
+            <input type="hidden" class="notRequired" name="bsnCd" value="BSN08"/>
 
 
             <h6 class="mt0"><strong>
