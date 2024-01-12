@@ -124,6 +124,7 @@ public class EBACouseController {
         String rtnView = "front/eb/eba/EBACouseListAjax";
         try
         {
+            System.out.println("여기 eBBEpisdDTO= " +eBBEpisdDTO);
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
         }
@@ -376,8 +377,6 @@ public class EBACouseController {
 
             //회원 부품사정보 호출
 
-            //
-            System.out.println("@@@ episdDto= " + episdDto);
             modelMap.addAttribute("rtnData", rtnDto);
 
             modelMap.addAttribute("episdDto", episdDto.get("rtnData"));
@@ -398,13 +397,12 @@ public class EBACouseController {
 
         //교육차수 신청자를 등록한다. 등록할때 이미 회원이 있으면 취소
         EBBPtcptDTO temoDto = new EBBPtcptDTO();
-        /*try {*/
-            System.out.println("@@@ eBBPtcptDTO = " + eBBPtcptDTO);
+        try {
             temoDto = eBBEpisdService.setPtcptInfo(eBBPtcptDTO);
 
             modelMap.addAttribute("rtnData", temoDto);
 
-        /*}
+        }
         catch (Exception e)
         {
             if (log.isDebugEnabled())
@@ -412,7 +410,7 @@ public class EBACouseController {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
         return "jsonView";
     }

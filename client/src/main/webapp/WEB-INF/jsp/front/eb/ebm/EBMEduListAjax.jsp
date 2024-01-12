@@ -6,7 +6,7 @@
 
             <c:choose>
                 <c:when test="${list.eduGubun eq 'E'}">
-                    <div class="training-confirm">
+                    <div class="training-confirm episdDtl" data-episdseq="${list.episdSeq}" data-edctnseq="${list.edctnSeq}" data-episdyear="${list.episdYear}" data-episdord="${list.episdOrd}" >
                         <div class="top-info">
                             <div class="training-view-page">
                                 <div class="training-list">

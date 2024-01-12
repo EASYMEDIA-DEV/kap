@@ -373,7 +373,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	 */
 	public EBBEpisdDTO selectMypageEduList(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
-
+		/*
 		COPaginationUtil page = new COPaginationUtil();
 
 
@@ -382,13 +382,28 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		page.setPageSize(eBBEpisdDTO.getPageRowSize());
 
-		eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
-		eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+		eBBEpisdDTO.setFirstIndex(0);//더보기라서 0 고정
+		int recordCountPerPage = (eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize();
+		eBBEpisdDTO.setRecordCountPerPage( recordCountPerPage );
 
 
 		eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectMypageEduList(eBBEpisdDTO) );
 		int totcnt = eBBFrontEpisdMapper.selectMypageEduListCnt(eBBEpisdDTO).size();
-		eBBEpisdDTO.setTotalCount( totcnt );
+		eBBEpisdDTO.setTotalCount( totcnt );*/
+
+
+
+		int totcnt = eBBFrontEpisdMapper.selectMypageEduListCnt(eBBEpisdDTO).size();
+		eBBEpisdDTO.setTotalCount( totcnt  );
+
+		eBBEpisdDTO.setPageRowSize(9);
+
+		int recordCountPerPage = (eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize();
+
+		eBBEpisdDTO.setFirstIndex(0);
+		eBBEpisdDTO.setRecordCountPerPage( recordCountPerPage );
+
+		eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectMypageEduList(eBBEpisdDTO) );
 
 
 		return eBBEpisdDTO;

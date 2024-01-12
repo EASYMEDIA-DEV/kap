@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
-<div id="wrap" data-controller="controller/eb/ebm/EBMEduApplyListCtrl">
+<div id="wrap" class="mypage" data-controller="controller/eb/ebm/EBMEduApplyListCtrl">
     <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
         <!-- 페이징 버튼 사이즈 -->
@@ -40,11 +40,11 @@
                                             <p class="article-total-count f-body2">총 <span>1065</span>건</p>
                                             <div class="sort-select">
                                                 <div class="form-select txt-select">
-                                                    <select id="" title="정렬 바꾸기">
-                                                        <option value="" selected="">신청마감순</option>
-                                                        <option value="">교육일자순</option>
-                                                        <option value="">학습시간 짧은순</option>
-                                                        <option value="">학습시간 긴 순</option>
+                                                    <select id="srchOrder" name="srchOrder" title="정렬 바꾸기">
+                                                        <option value="1" selected>신청마감순</option>
+                                                        <option value="2">교육일자순</option>
+                                                        <option value="3">학습시간 짧은순</option>
+                                                        <option value="4">학습시간 긴 순</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -77,11 +77,8 @@
                                                                                 </select>
                                                                             </div>
                                                                             <div class="form-select">
-                                                                                <select id="" title="과정 2차 분류" disabled=""><!-- 1차 분류 선택 시 disabled 해제 -->
+                                                                                <select name="ctgryCd" id="ctgryCd" title="과정 2차 분류" disabled=""><!-- 1차 분류 선택 시 disabled 해제 -->
                                                                                     <option value="" selected="">전체</option>
-                                                                                    <option value="">option1</option>
-                                                                                    <option value="">option2</option>
-                                                                                    <option value="">option3</option>
                                                                                 </select>
                                                                             </div>
                                                                         </div>
@@ -97,22 +94,20 @@
                                                                 <div class="data-line-w">
                                                                     <div class="data-line">
                                                                         <div class="opt-group total-check-w">
+
                                                                             <div class="form-checkbox total-check">
-                                                                                <input type="checkbox" id="studyingWayChk1" name="studyingWayChk" checked>
-                                                                                <label for="studyingWayChk1">전체</label>
+                                                                                <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd" name="stduyMthdCd">
+                                                                                <label for="stduyMthdCd">전체</label>
                                                                             </div>
-                                                                            <div class="form-checkbox">
-                                                                                <input type="checkbox" id="studyingWayChk2" name="studyingWayChk" checked>
-                                                                                <label for="studyingWayChk2">집체교육</label>
-                                                                            </div>
-                                                                            <div class="form-checkbox">
-                                                                                <input type="checkbox" id="studyingWayChk3" name="studyingWayChk" checked>
-                                                                                <label for="studyingWayChk3">온라인교육</label>
-                                                                            </div>
-                                                                            <div class="form-checkbox">
-                                                                                <input type="checkbox" id="studyingWayChk4" name="studyingWayChk" checked>
-                                                                                <label for="studyingWayChk4">집체교육+온라인</label>
-                                                                            </div>
+
+                                                                            <c:forEach var="cdList" items="${classTypeList.STDUY_MTHD}" varStatus="status">
+                                                                                <div class="form-checkbox">
+                                                                                    <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd${status.index}" name="stduyMthdCd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.stduyMthdCd, cdList.cd)}">checked</c:if>>
+                                                                                    <label for="stduyMthdCd${status.index}">${cdList.cdNm}</label>
+                                                                                </div>
+                                                                            </c:forEach>
+
+
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -127,16 +122,16 @@
                                                                     <div class="data-line">
                                                                         <div class="opt-group total-check-w">
                                                                             <div class="form-checkbox total-check">
-                                                                                <input type="checkbox" id="completionChk1" name="completionChk" checked>
-                                                                                <label for="completionChk1">전체</label>
+                                                                                <input type="checkbox" data-name="cmptnYnList" id="cmptnYn" name="cmptnYn">
+                                                                                <label for="cmptnYn">전체</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" id="completionChk2" name="completionChk" checked>
-                                                                                <label for="completionChk2">수료</label>
+                                                                                <input type="checkbox" data-name="cmptnYnList" id="cmptnYn1" name="cmptnYn" value="Y">
+                                                                                <label for="cmptnYn1">수료</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" id="completionChk3" name="completionChk" checked>
-                                                                                <label for="completionChk3">미수료</label>
+                                                                                <input type="checkbox" data-name="cmptnYnList" id="cmptnYn2" name="cmptnYn2" value="N">
+                                                                                <label for="cmptnYn2">미수료</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -152,36 +147,40 @@
                                                                     <div class="data-line">
                                                                         <div class="opt-group total-check-w">
                                                                             <div class="form-checkbox total-check">
-                                                                                <input type="checkbox" id="eduStatusChk1" name="eduStatusChk" checked>
-                                                                                <label for="eduStatusChk1">전체</label>
+                                                                                <input type="checkbox" data-name="sttsCdList" id="sttsCd1" name="sttsCd" value="">
+                                                                                <label for="sttsCd1">전체</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" id="eduStatusChk2" name="eduStatusChk" checked>
-                                                                                <label for="eduStatusChk2">신청</label>
+                                                                                <input type="checkbox" data-name="sttsCdList" id="sttsCd2" name="sttsCd" value="신청">
+                                                                                <label for="sttsCd2">신청</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" id="eduStatusChk3" name="eduStatusChk" checked>
-                                                                                <label for="eduStatusChk3">교육대기</label>
+                                                                                <input type="checkbox" data-name="sttsCdList" id="sttsCd3" name="sttsCd" value="교육대기">
+                                                                                <label for="sttsCd3">교육대기</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" id="eduStatusChk4" name="eduStatusChk" checked>
-                                                                                <label for="eduStatusChk4">교육 중</label>
+                                                                                <input type="checkbox"data-name="sttsCdList"  id="sttsCd4" name="sttsCd" value="교육 중">
+                                                                                <label for="sttsCd4">교육 중</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" id="eduStatusChk5" name="eduStatusChk" checked>
-                                                                                <label for="eduStatusChk5">교육완료</label>
+                                                                                <input type="checkbox" data-name="sttsCdList" id="sttsCd5" name="sttsCd" value="교육완료">
+                                                                                <label for="sttsCd5">교육완료</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" id="eduStatusChk6" name="eduStatusChk" checked>
-                                                                                <label for="eduStatusChk6">신청취소</label>
+                                                                                <input type="checkbox" data-name="sttsCdList" id="sttsCd6" name="sttsCd" value="신청취소">
+                                                                                <label for="sttsCd6">신청취소</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" id="eduStatusChk7" name="eduStatusChk" checked>
-                                                                                <label for="eduStatusChk7">교육양도</label>
+                                                                                <input type="checkbox" data-name="sttsCdList" id="sttsCd7" name="sttsCd" value="교육양도">
+                                                                                <label for="sttsCd7">교육양도</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" id="eduStatusChk8" name="eduStatusChk" checked>
-                                                                                <label for="eduStatusChk8">미선발</label>
+                                                                                <input type="checkbox" data-name="sttsCdList" id="sttsCd8" name="sttsCd" value="미선발">
+                                                                                <label for="sttsCd8">미선발</label>
+                                                                            </div>
+                                                                            <div class="form-checkbox">
+                                                                                <input type="checkbox" data-name="sttsCdList" id="sttsCd9" name="sttsCd" value="협의중">
+                                                                                <label for="sttsCd9">협의중</label>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -196,7 +195,7 @@
                                                                 <div class="data-line-w">
                                                                     <div class="data-line">
                                                                         <div class="form-input srch-input w-longer">
-                                                                            <input type="text" placeholder="과정명 또는 교육장소 입력">
+                                                                            <input type="text" name="q" id="q" placeholder="과정명 또는 교육장소 입력">
                                                                             <div class="input-btn-wrap">
                                                                                 <button class="delete-btn" title="지우기" type="button"></button>
                                                                                 <button class="srch-btn" title="검색"></button>
@@ -216,22 +215,22 @@
                                                                         <div class="middle-line">
                                                                             <div class="opt-group">
                                                                                 <div class="form-radio">
-                                                                                    <input type="radio" id="searchPeriodRadio1" name="searchPeriodRadio" checked>
-                                                                                    <label for="searchPeriodRadio1">교육기간</label>
+                                                                                    <input type="radio" id="srchDate1" name="srchDate" value="1" checked>
+                                                                                    <label for="srchDate1">교육기간</label>
                                                                                 </div>
                                                                                 <div class="form-radio">
-                                                                                    <input type="radio" id="searchPeriodRadio2" name="searchPeriodRadio">
-                                                                                    <label for="searchPeriodRadio2">신청일시</label>
+                                                                                    <input type="radio" id="srchDate2" name="srchDate" value="2" >
+                                                                                    <label for="srchDate2">신청일시</label>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                         <div class="middle-line">
                                                                             <div class="form-group form-calendar">
                                                                                 <div class="form-input">
-                                                                                    <input type="text" placeholder="2023.01.01">
+                                                                                    <input type="text" placeholder="2023.01.01" name="strtDt" id="strtDt" >
                                                                                 </div>
                                                                                 <div class="form-input calendar">
-                                                                                    <input type="text" placeholder="2023.01.01">
+                                                                                    <input type="text" placeholder="2023.01.01"  name="endDt" id="endDt">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -246,135 +245,22 @@
                                                         <button class="btn-solid small gray-bg btn-role-close" type="button"><span>닫기</span><!--ㅠ-->
                                                         </button></div>
                                                     <div class="btn-set">
-                                                        <button class="btn-solid small gray-bg"><span>필터 초기화</span></button>
-                                                        <button class="btn-solid small black-bg"><span>적용</span></button>
+                                                        <button class="btn-solid small gray-bg" id="btnRefresh" type="button"><span>필터 초기화</span></button>
+                                                        <button class="btn-solid small black-bg" id="btnSearch" type="button"><span>적용</span></button>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="trainings-list-w" id="listContainer">
-                                        <%--<div class="training-confirm">
-                                            <div class="top-info">
-                                                <div class="training-view-page">
-                                                    <div class="training-list">
-                                                        <div class="img-area">
-                                                            <img src="/common/images/img-main-training-offline-01.jpg" alt="">
-                                                        </div>
-                                                        <div class="txt-area">
-                                                            <div class="top-line">
-                                                                <div class="sort-label-area">
-                                                                    <p class="label"><span>품질아카데미</span></p>
-                                                                    <p class="label"><span>품질학교</span></p>
-                                                                </div>
-                                                                <p class="training-name f-title1">꼭 알아야 할 품질 기초 두줄로 떨어질 때</p>
-                                                            </div>
-                                                            <div class="group">
-                                                                <p class="f-head">8회차</p>
-                                                                <div class="status-info-w">
-                                                                    <p class="box-label bigger waiting"><span>교육대기</span></p><!-- 2023-12-18 라벨 값 변경 -->
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="bot-info">
-                                                <div class="index-list-w">
-                                                    <div class="list-item">
-                                                        <div class="cont">
-                                                            <div class="cont-area">
-                                                                <div class="info-list-w ">
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">학습방식</p>
-                                                                        <p class="txt f-body2">집체교육</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">신청일시</p>
-                                                                        <p class="txt f-body2">2023.02.01 10:00</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">모집방식</p>
-                                                                        <p class="txt f-body2">모집 후 선발</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">선발여부</p>
-                                                                        <p class="txt f-body2">선발</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">학습시간</p>
-                                                                        <p class="txt f-body2">2일/14시간</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">교육장소</p>
-                                                                        <p class="txt f-body2">글로벌상생협력센터(GPC)(경주)</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">교육기간</p>
-                                                                        <p class="txt f-body2">2023.02.01 10:00 ~ 2023.02.03 10:00 (3일간)</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">수료여부</p>
-                                                                        <p class="txt f-body2">미수료</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="training-confirm">
-                                            <div class="top-info">
-                                                <div class="training-view-page">
-                                                    <div class="training-list">
-                                                        <div class="txt-area">
-                                                            <div class="top-line">
-                                                                <div class="sort-label-area">
-                                                                    <p class="label"><span>기술</span></p>
-                                                                </div>
-                                                                <p class="training-name f-title1">방문교육</p>
-                                                            </div>
-                                                            <div class="status-info-w">
-                                                                <p class="box-label bigger"><span>신청</span></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="bot-info">
-                                                <div class="index-list-w">
-                                                    <div class="list-item">
-                                                        <div class="cont">
-                                                            <div class="cont-area">
-                                                                <div class="info-list-w ">
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">신청일시</p>
-                                                                        <p class="txt f-body2">2023.02.01 10:00</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">교육인원</p>
-                                                                        <p class="txt f-body2">00명</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">교육희망일</p>
-                                                                        <p class="txt f-body2">2023.02.01</p>
-                                                                    </div>
-                                                                    <div class="info-list">
-                                                                        <p class="tit f-caption2">교육시간</p>
-                                                                        <p class="txt f-body2">4시간</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>--%>
+
                                     </div>
+
                                     <div class="btn-wrap add-load align-center">
-                                        <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
+                                        <a class="btn-solid small black-line pageSet" href="javascript:"><span>더보기</span><span class="item-count">(9/40)</span></a>
                                     </div>
+
+
                                 </div>
                             </div>
                         </div>

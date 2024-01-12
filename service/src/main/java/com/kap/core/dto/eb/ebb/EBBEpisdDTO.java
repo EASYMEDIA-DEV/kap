@@ -373,6 +373,12 @@ public class EBBEpisdDTO extends BaseDTO {
 
     private List<String> accsStatusOrderList;
 
+    private List<String> cmptnYnList;
+
+    private List<String> sttsCdList;
+
+
+
 
 
     private String sqnm;

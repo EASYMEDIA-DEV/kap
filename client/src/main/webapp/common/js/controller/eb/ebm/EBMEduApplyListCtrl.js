@@ -12,8 +12,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	// form Object
 	var $formObj = ctrl.obj.find("form").eq(0);
-	var $formLayerObj = ctrl.obj.find("form").eq(1);
-
 
 	// 신청한 과정 목록 조회
 	var search = function (page){
@@ -32,18 +30,19 @@ define(["ezCtrl"], function(ezCtrl) {
 			var totCnt = $("#totalCount").val();
 			//총 건수
 
-			if(totCnt <= 9 ){
+			if(totCnt <= 10 ){
 				$(".btn-wrap.add-load.align-center").remove();
 			}else{
 				var tempPage = (page === undefined || page == "") ? 1 : page;
 
 				var rtnPage = 0;
 
-				if((tempPage * 9)>totCnt){
+				if((tempPage * 10)>totCnt){
 					rtnPage = totCnt
 				}else{
-					rtnPage = (tempPage * 9);
+					rtnPage = (tempPage * 10);
 				}
+				//debugger
 
 				$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
 
@@ -52,7 +51,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			$(".article-total-count.f-body2").find("span").text(totCnt);
 
 
-			$(".item-count").text(totCnt);
+			//$(".item-count").text(totCnt);
 
 			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
 
@@ -73,10 +72,64 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	}
 
+	//과정분류 조회
+	var selectCtgryCdList = function(arg){
+
+		if($(arg).val() == "" || $(arg).val() === undefined){
+			arg = $("#ctgryCd").data("ctgrycd");
+		}
+
+		var cdMst= {};
+		cdMst.cd = $(arg).val();
+
+		cmmCtrl.jsonAjax(function(data){
+			callbackAjaxCtgryCdList(data);
+
+			//데이터가 없으면 2뎁스 사용 불가처리 함
+			if(arg == "" || arg === undefined){
+				$("#ctgryCd").attr("readonly", true).attr("disabled", true);
+			}else{
+				$("#ctgryCd").attr("readonly", false).attr("disabled", false);
+			}
+
+		}, '/education/classTypeList', cdMst, "text");
+	}
+
+	//과정분류 2뎁스 세팅
+	var callbackAjaxCtgryCdList = function(data){
+
+		var detailList = JSON.parse(data);
+		var selectHtml = "<option value=''>전체</option>";
+
+		for(var i =0; i < detailList.length; i++){
+
+			var cd = detailList[i].cd;
+			var cdNm = detailList[i].cdNm;
+
+			selectHtml += "<option value='"+cd+"' >"+cdNm+"</option>";
+		}
+
+		$("#ctgryCd option").remove();
+
+		$("#ctgryCd").append(selectHtml);
+
+		var ctgrycd = $("#ctgryCd").data("ctgrycd");
+
+		$("#ctgryCd").val(ctgrycd).prop("selected", true);//조회된 과정분류값 자동선택
+	}
+
 
 	// set model
 	ctrl.model = {
 		id : {
+			srchOrder : {
+				event : {
+					change : function(){
+						//교육신청 정렬조건 변경
+						search(1);
+					}
+				}
+			},
 			btnSearch : {
 				event : {
 					click : function() {
@@ -126,6 +179,29 @@ define(["ezCtrl"], function(ezCtrl) {
 
 		},
 		classname : {
+
+			classType : {
+				event : {
+					click : function() {
+						selectCtgryCdList(this);
+					}
+				}
+			},
+
+			episdDtl : {
+				event : {
+					click : function() {
+						var edctnSeq = $(this).data("edctnseq");
+						var episdYear = $(this).data("episdyear");
+						var episdOrd = $(this).data("episdord");
+						$(this).data("episdord");
+
+						location.href="./detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+					}
+				}
+			},
+
+
 
 			//페이징 처리
 			pageSet : {
