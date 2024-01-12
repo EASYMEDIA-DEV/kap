@@ -558,7 +558,7 @@
                             <a class="btn-solid small gray-bg btnBack" href="javascript:"><span>이전</span></a>
                         </div>
                         <div class="btn-set">
-                            <button class="btn-solid small black-bg" id="nextBtn"><span>다음</span></button>
+                            <a class="btn-solid small black-bg" id="nextBtn" href="javascript:"><span>다음</span></a>
                         </div>
                     </div>
                 </div>

@@ -348,7 +348,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     $(".cmpn_nm").text(datas.cmpnNm);
                                     $(".rprsnt_nm").text(datas.rprsntNm);
                                     $(".gubun").text(datas.ctgryNm);
-                                    $(".addr").text(datas.bscAddr+" "+datas.dtlAddr);
+                                    $(".addr").text("("+datas.zipcode+")"+" "+datas.bscAddr+" "+datas.dtlAddr);
 
                                     if($("#bsnmNosOld").val() != "") {
                                         $(".chng").hide();

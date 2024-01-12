@@ -192,7 +192,7 @@
                                         <div class="for-status-chk for-status-chk-id"><!-- 조건 충족 시 satisfy 클래스 추가 -->
                                             <div class="form-group">
                                                 <div class="form-input">
-                                                    <input type="text" placeholder="아이디 입력" class="idChk" id="id" name="mpaUserDto.id" title="아이디" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');">
+                                                    <input type="text" placeholder="아이디 입력"  id="id" name="mpaUserDto.id" title="아이디" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');">
                                                 </div>
                                                 <div class="btn-wrap">
                                                     <button class="btn-solid small gray-bg" type="button" id="dupId"><span>중복확인</span></button>
@@ -228,7 +228,7 @@
                                         <div class="form-group">
                                             <div class="for-status-chk for-status-chk2"><!-- 조건 충족 시 error 클래스 삭제 -->
                                                 <div class="form-input w-longer">
-                                                    <input type="password" placeholder="비밀번호 확인" class="pwdSetConfirm" id="passwordConfirm" name="passwordConfirm" maxlength="16" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');">
+                                                    <input type="password" placeholder="비밀번호 확인" title="비밀번호 확인" class="pwdSetConfirm" id="passwordConfirm" name="passwordConfirm" maxlength="16" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');">
                                                 </div>
                                                 <p class="error-msg">비밀번호가 일치하지 않습니다.</p>
                                             </div>
@@ -264,7 +264,7 @@
                                                     <div class="for-status-chk for-status-chk-email"><!-- 조건 충족 시 satisfy 클래스 추가 -->
                                                         <div class="form-group">
                                                             <div class="form-input w-longer">
-                                                                <input type="text" placeholder="인증번호 입력"  name="emailAuthNum" id="emailAuthNum" oninput="this.value=this.value.replace(/[^0-9]/g, '')" class="notRequired">
+                                                                <input type="text" placeholder="인증번호 입력"  name="emailAuthNum" id="emailAuthNum" oninput="this.value=this.value.replace(/[^0-9]/g, '')" class="notRequired" maxlength="6">
                                                                 <p class="unit-txt timer" id="timer" >유효시간 <span ></span></p>
                                                             </div>
                                                             <div class="btn-wrap">

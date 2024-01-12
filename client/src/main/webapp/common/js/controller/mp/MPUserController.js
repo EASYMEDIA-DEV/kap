@@ -86,8 +86,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             dupId : {
                 event : {
                     click : function() {
-                        const html = '<input type="hidden" value="" name="id" id="idSub" class="notRequired" title="아이디" />';
-                        $formObj.append(html);
+                        if($("#id").val().trim().length < 5 ) {
+                            dupIdChk = false;
+                            alert(msgCtrl.getMsg("fail.mp.join.al_038"));
+                            return false;
+                        }
                         $(".for-status-chk-id").removeClass("satisfy");
                         if($("#id").val().trim().length > 0) {
                             $("#idSub").val($("#id").val());
@@ -99,12 +102,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 } else {
                                     dupIdChk = false;
                                     alert(msgCtrl.getMsg("fail.mp.join.al_007"));
+                                    return false;
                                 }
                             }, "/member/dup-id", $formObj, "POST", "json",'',false);
 
                         } else {
                             alert(msgCtrl.getMsg("fail.mp.join.al_006"));
                         }
+                        $("#idSub").empty();
                     }
                 }
             },
@@ -129,6 +134,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $("#emailAddr").prop('readonly', false);
                         }
                         $("#emailAddr").val($(this).val());
+                        emailInit();
                     }
                 }
             },
@@ -303,6 +309,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         },
         immediately : function() {
+            const html = '<input type="hidden" value="" name="id" id="idSub" class="notRequired" title="아이디" />';
+            $formObj.append(html);
             $("#timer").hide();
             $(".for-status-chk-email").hide();
             emailSel();
