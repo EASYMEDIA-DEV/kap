@@ -106,6 +106,7 @@ public class WBDBSafetyController {
             cdDtlList.add("MEM_CD");
             cdDtlList.add("COMPANY_TYPE");
             modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
 
             cdDtlList = new ArrayList<String>();
             cdDtlList.add("ED_CITY_CODE");
@@ -162,6 +163,7 @@ public class WBDBSafetyController {
             cdDtlList.add("MEM_CD");
             cdDtlList.add("COMPANY_TYPE");
             modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
 
             cdDtlList = new ArrayList<String>();
             cdDtlList.add("ED_CITY_CODE");
