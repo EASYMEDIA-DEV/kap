@@ -30,7 +30,7 @@
                     FROM
                         (
                             SELECT * FROM cx_episd_mst
-                            WHERE bsn_cd = 'BNS09'
+                            WHERE bsn_cd = 'BSN09'
                         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
                         INNER JOIN
                         (
@@ -72,7 +72,7 @@
                         FROM
                             (
                             SELECT * FROM cx_episd_mst
-                            WHERE bsn_cd = 'BNS09'
+                            WHERE bsn_cd = 'BSN09'
                             ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
                             INNER JOIN
                             (
@@ -473,11 +473,17 @@
     <update id="updAppctnRsumeDtl" parameterType="wBIBSupplyDTO">
         UPDATE /* WBIBSupplyCompanyMapper.updAppctnRsumeDtl */ cx_appctn_rsume_dtl
         SET
-            appctn_stts_cd = #{appctnSttsCd},
-            appctn_stts_chng_dtm = now(),
-            mng_stts_cd = #{mngSttsCd},
-            mng_stts_chng_dtm = now(),
-            rtrn_rsn_cntn = #{rtrnRsnCntn},
+            APPCTN_STTS_CD = #{appctnSttsCd},
+            <if test='siteGubun != "admin"'>
+                APPCTN_STTS_CHNG_DTM = NOW(),
+            </if>
+            MNG_STTS_CD = #{mngSttsCd},
+            <if test='siteGubun != "front"'>
+                MNG_STTS_CHNG_DTM = NOW(),
+            </if>
+            <if test='siteGubun != "front"'>
+                RTRN_RSN_CNTN = #{rtrnRsnCntn},
+            </if>
             mod_id = #{modId},
             mod_ip = #{modIp},
             mod_dtm = now()

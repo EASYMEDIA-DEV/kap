@@ -130,7 +130,7 @@
                                         <p class="txt f-head">사업 신청 관련 도움을 드리기 위해 Q&A 게시판을 운영하고 있습니다.<br/>질문을 남겨주시면 빠른 시일 내에 답변드리겠습니다.</p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg" href="javascript:"><span>신청 문의하기</span></a>
+                                        <a class="btn-solid small white-bg" href="/foundation/cs/qa/index"><span>신청 문의하기</span></a>
                                     </div>
                                 </div>
                                 <p class="noti-txt f-caption2">* 다만 문의 사항이 많아 답변이 다소 늦어질 수 있으니 양해 바랍니다.</p>

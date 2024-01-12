@@ -8,6 +8,9 @@ import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
+import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
+import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
+import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
 import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * <pre>
@@ -53,6 +57,9 @@ public class MPBCoexistenceController {
     public final MPBCoexistenceService mpbCoexistenceService;
     public final WBBBCompanyService wbbbCompanyService;
     public final WBHACalibrationService wbhaCalibrationService;
+    public final WBIBSupplyCompanyService wBIBSupplyCompanyService;
+    public final WBJBAcomListService wBJBAcomListService;
+
 
     /**
      * 마이페이지 상생 사업 신청내역 목록으로 이동한다.
@@ -117,6 +124,20 @@ public class MPBCoexistenceController {
                     WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
                     wbhaCalibrationSearchDTO.setDetailsKey(String.valueOf(mpbBnsSearchDTO.getAppctnSeq()));
                     modelMap.addAttribute("rtnData", wbhaCalibrationService.selectCompanyDtl(wbhaCalibrationSearchDTO));
+                } else if ("BSN09".equals(mpbBnsSearchDTO.getBsnCd())) {
+                    //공급망
+                    WBIBSupplySearchDTO wBIBSupplySearchDTO = new WBIBSupplySearchDTO();
+                    wBIBSupplySearchDTO.setDetailsKey(String.valueOf(mpbBnsSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectSupplyDtl(wBIBSupplySearchDTO));
+                } else if ("BSN10".equals(mpbBnsSearchDTO.getBsnCd())) {
+                    //자동차부품
+                    ArrayList<String> cdDtlList = new ArrayList<String>();
+                    cdDtlList.add("MEM_CD");
+                    WBJAcomSearchDTO wBJAcomSearchDTO = new WBJAcomSearchDTO();
+                    modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+                    wBJAcomSearchDTO.setDetailsKey(String.valueOf(mpbBnsSearchDTO.getAppctnSeq()));
+
+                    modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
                 }
             }
 
@@ -179,6 +200,16 @@ public class MPBCoexistenceController {
 
                     } else if ("BSN08".equals(mpbBnsSearchDTO.getBsnCd())) {
                         //검교정
+                    } else if ("BNS09".equals(mpbBnsSearchDTO.getBsnCd())) {
+                        //공급망
+                        WBIBSupplyDTO wBIBSupplyDTO = new WBIBSupplyDTO();
+                        wBIBSupplyDTO.setBsnCd(mpbBnsSearchDTO.getBsnCd());
+                        wBIBSupplyDTO.setRsumeSeq(mpbBnsSearchDTO.getRsumeSeq());
+                        wBIBSupplyDTO.setRsumeOrd(mpbBnsSearchDTO.getRsumeOrd());
+                        wBIBSupplyDTO.setAppctnSttsCd(mpbBnsSearchDTO.getAppctnSttsCd());
+                        wBIBSupplyDTO.setAppctnSeq(mpbBnsMstDTO.getAppctnSeq());
+
+                        respCnt = wBIBSupplyCompanyService.updateInfo(wBIBSupplyDTO, multiRequest, request);
                     }
                 }
             }

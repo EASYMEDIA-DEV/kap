@@ -52,6 +52,9 @@ public class WBJAcomDTO extends BaseDTO {
     /*상생 파일 상세*/
     @Schema(title = "파일순번", example = "숫자")
     private String fileCd;
+    /*상생 파일 상세*/
+    @Schema(title = "파일이름", example = "숫자")
+    private String fileNm;
     @Schema(title = "파일순번", example = "숫자")
     private Integer fileSeq;
     @Schema(title = "파일순번", example = "숫자")
@@ -246,4 +249,6 @@ public class WBJAcomDTO extends BaseDTO {
 
     @Schema(title = "역대수상자여부")
     private String hghstWinerYn;
+
+    List<WBJAcomSearchDTO> optFileList;
 }

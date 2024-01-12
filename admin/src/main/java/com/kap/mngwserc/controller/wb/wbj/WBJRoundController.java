@@ -212,7 +212,7 @@ public class WBJRoundController {
     public String getEpisdAjax(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBRoundMstDTO.setBsnCd("BNS10");
+            wBRoundMstDTO.setBsnCd("BSN10");
             modelMap.addAttribute("optEpisdCnt", wBJARoundListService.roundCnt(wBRoundMstDTO));
         }
         catch (Exception e)
