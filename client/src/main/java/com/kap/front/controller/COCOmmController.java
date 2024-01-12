@@ -146,6 +146,11 @@ public class COCOmmController {
     public String idnttvrfctConfirm(HttpServletRequest request , ModelMap modelMap) throws Exception {
         COCNiceMyResDto cocNiceMyResDto = cOCommService.idnttvrfctConfirm(request.getParameter("enc_data"), request);
         modelMap.addAttribute("rtnData",cocNiceMyResDto);
+        log.info("*************************************");
+        log.info("ci:::::"+cocNiceMyResDto.toString());
+        log.info("ci:::::"+cocNiceMyResDto.getMobile_no());
+        log.info("*************************************");
+
 
         if(cocNiceMyResDto.getReceivedatass().getRedirectUrl().equals("no")) {
             return "/front/co/CONiceUserPopUp";
