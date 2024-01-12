@@ -458,7 +458,7 @@
 
     <!--
          쿼리명 : WBFBRegisterCompanyMapper.putAppctnRsumeDtl
-         설  명 : 회차신청 상세 Insert
+         설  명 : 회차신청 상세 Insert - 등록시
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.16  김동현     최초 생성
@@ -471,23 +471,61 @@
             appctn_seq,
             rsume_stts_cd,
             appctn_stts_cd,
+            <if test='siteGubun == "front"'>appctn_stts_chng_dtm,</if>
+            mng_stts_cd,
+            <if test='siteGubun == "admin"'>mng_stts_chng_dtm,</if>
+            reg_id,
+            reg_ip,
+            reg_dtm
+        )
+        VALUES
+            (
+                #{rsumeSeq},
+                #{rsumeOrd},
+                #{appctnSeq},
+                #{rsumeSttsCd},
+                #{appctnSttsCd},
+                <if test='siteGubun == "front"'>now(),</if>
+                #{mngSttsCd},
+                <if test='siteGubun == "admin"'>now(),</if>
+                #{regId},
+                #{regIp},
+                now()
+            )
+    </insert>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.putStepAppctnRsumeDtl
+         설  명 : 회차신청 상세 Insert - 단계 진행시
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <insert id="putStepAppctnRsumeDtl" parameterType="wBFBRegisterDTO" >
+        INSERT /* WBFBRegisterCompanyMapper.putStepAppctnRsumeDtl */ INTO cx_appctn_rsume_dtl
+        (
+            rsume_seq,
+            rsume_ord,
+            appctn_seq,
+            rsume_stts_cd,
+            appctn_stts_cd,
             mng_stts_cd,
             reg_id,
             reg_ip,
             reg_dtm
         )
         VALUES
-        (
-            #{rsumeSeq},
-            #{rsumeOrd},
-            #{appctnSeq},
-            #{rsumeSttsCd},
-            #{appctnSttsCd},
-            #{mngSttsCd},
-            #{regId},
-            #{regIp},
-            now()
-        )
+            (
+                #{rsumeSeq},
+                #{rsumeOrd},
+                #{appctnSeq},
+                #{rsumeSttsCd},
+                #{appctnSttsCd},
+                #{mngSttsCd},
+                #{regId},
+                #{regIp},
+                now()
+            )
     </insert>
 
     <!--
@@ -659,10 +697,11 @@
             ,acnt_no = #{acntNo}
             ,dpsit_nm = #{dpsitNm}
             ,appctn_stts_cd = #{appctnSttsCd}
+            <if test='siteGubun == "front"'>,appctn_stts_chng_dtm = now()</if>
             ,give_dt = #{giveDt}
             ,give_seq = #{giveSeq}
             ,mng_stts_cd = #{mngSttsCd}
-            ,mng_stts_chng_dtm = now()
+            <if test='siteGubun == "admin"'>,mng_stts_chng_dtm = now()</if>
             ,spprt_appctn_file_seq = #{spprtAppctnFileSeq}
             ,acnt_file_seq = #{acntFileSeq}
             ,bnkbk_file_seq = #{bnkbkFileSeq}
@@ -687,9 +726,10 @@
         UPDATE cx_appctn_rsume_dtl /*WBFBRegisterCompanyMapper.updRsumeDtl*/
         SET
             appctn_stts_cd = #{appctnSttsCd}
+            <if test='siteGubun == "front"'>,appctn_stts_chng_dtm = now()</if>
             ,mng_stts_cd = #{mngSttsCd}
             ,rtrn_rsn_cntn = #{rtrnRsnCntn}
-            ,mng_stts_chng_dtm = now()
+            <if test='siteGubun == "admin"'>,mng_stts_chng_dtm = now()</if>
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
             ,mod_dtm = now()

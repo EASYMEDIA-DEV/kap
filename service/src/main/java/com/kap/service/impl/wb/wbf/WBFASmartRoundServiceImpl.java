@@ -56,7 +56,7 @@ public class WBFASmartRoundServiceImpl implements WBFASmartRoundService {
      *   신청부품사 목록 List Get
      */
     public WBRoundMstSearchDTO selRoundList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
-        wBRoundMstSearchDTO.setBsnCd("BNS06");
+        wBRoundMstSearchDTO.setBsnCd("BSN06");
 
         COPaginationUtil page = new COPaginationUtil();
 
@@ -65,8 +65,10 @@ public class WBFASmartRoundServiceImpl implements WBFASmartRoundService {
 
         page.setPageSize(wBRoundMstSearchDTO.getPageRowSize());
 
-        wBRoundMstSearchDTO.setFirstIndex(page.getFirstRecordIndex());
-        wBRoundMstSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        if ("admin".equals(wBRoundMstSearchDTO.getSiteGubun())) {
+            wBRoundMstSearchDTO.setFirstIndex(page.getFirstRecordIndex());
+            wBRoundMstSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
 
         wBRoundMstSearchDTO.setList(wBFASmartRoundMapper.selectSmartRoundList(wBRoundMstSearchDTO));
         wBRoundMstSearchDTO.setTotalCount(wBFASmartRoundMapper.selectSmartRoundListTotCnt(wBRoundMstSearchDTO));

@@ -17,7 +17,7 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
             <input type="hidden" class="notRequired" id="delValueList" name="delValueList" value="${rtnDto.episdSeq}" />
-            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BNS06" />
+            <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="BSN06" />
 
             <fieldset>
                 <div class="form-group text-sm">

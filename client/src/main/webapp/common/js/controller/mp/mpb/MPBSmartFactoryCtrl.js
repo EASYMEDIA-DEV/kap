@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
     // set controller name
     var exports = {
-        controller : "controller/wb/wbf/WBFSmartFactoryCtrl"
+        controller : "controller/wb/wbf/WBFMyAPageSmartFactoryCtrl"
     };
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
@@ -80,6 +80,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         classname : {
+            btnSpprtPop : {
+                event : {
+                    click : function() {
+                        openPopup('paymentInfoManagPopup', this);
+                    }
+                }
+            },
             addMore : {
                 event : {
                     click : function() {
@@ -230,7 +237,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function(){
-            $('#firstIndex').val(addCount);
+
         }
     };
 

@@ -206,11 +206,8 @@ public class WBFBRegisterDTO extends BaseDTO {
     /* 현재 스마트상세 진행상태 */
     private String nowRsumeTaskCd;
 
-    /* 상생신청지원금 상세 DTO 고정 - 선급금지급 */
-    WBSpprtDtlDTO defaultSpprtDtl;
-
     /* 상생신청지원금 상세 DTO */
-    WBSpprtDtlDTO spprtDtl;
+    List<WBSpprtDtlDTO> spprtDtlList;
 
     /* 스마트 공장 상세 DTO */
     WBFBRsumeTaskDtlDTO rsumeTaskDtl;

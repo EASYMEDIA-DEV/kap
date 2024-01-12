@@ -161,11 +161,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         if(checkedVal === 'Y') {
             pmndvPmtViwe.css('display', 'block');
-            setDisable.show($dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03001]`));
         } else {
             pmndvPmtViwe.css('display', 'none');
-            setDisable.hide($dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03001]`));
-            setDisable.show($dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03002]`));
         }
     }
 
@@ -181,7 +178,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }
         /* All panel disable */
         let init = function() {
-            $formObj.find('.panel').not('[data-sttsCd="PRO_TYPE03001"]').each(function(idx, el) {
+            $formObj.find('.panel').not('[data-sttsCd*="PRO_TYPE03"]').each(function(idx, el) {
                 paint(el);
             });
         }
@@ -225,15 +222,19 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     let initPageSet = () => {
 
         setDisable.init();
+        let checkedVal = $formObj.find('input[name=pmndvPmtYn]:checked').val();
 
-        let nowSpprtCd = $sendFormData.find('input[type=hidden][name=nowSpprtCd]').val();
         let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
 
         /*현재 진행상태 관리자상태 값 check*/
-        $dataSpprt.find(`.panel[data-sttsCd=${nowSpprtCd}]`).find('a[role="button"]').click();
+        if(checkedVal == 'Y'){
+            $dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03001]`).find('a[role="button"]').click();
+        } else {
+            $dataSpprt.find(`.panel[data-sttsCd=PRO_TYPE03002]`).find('a[role="button"]').click();
+        }
+
         $dataRsumeTask.find(`.panel[data-sttsCd=${nowRsumeTaskCd}]`).find('a[role="button"]').click();
         /*현재 상태 panel show*/
-        setDisable.check($dataSpprt.find(`.panel[data-sttsCd=${nowSpprtCd}]`));
         setDisable.check($dataRsumeTask.find(`.panel[data-sttsCd=${nowRsumeTaskCd}]`));
 
         $formObj.find(".dropzone").each(function(){
@@ -363,6 +364,38 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
+            telNo : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+            },
         },
         classname : {
             priceVal : {
@@ -476,34 +509,22 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     use : true,
                     func : function (){
 
-                        let nowSpprtCd = $sendFormData.find('input[type=hidden][name=nowSpprtCd]').val();
                         let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
-
-                        let defaultSpprtData = $dataSpprt.find(`[data-sttsCd='PRO_TYPE03001']`);
-                        let spprtData = $dataSpprt.find(`[data-sttsCd=${nowSpprtCd}]`);
                         let rsumeTaskData = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`);
 
-                        removeComma(defaultSpprtData);
-                        removeComma(spprtData);
+                        removeComma($dataSpprt);
                         removeComma(rsumeTaskData);
 
                         /* 회차 정보 ~ 선급금 해당 여부*/
-                        $sendFormData.append($($basicData));
+                        $sendFormData.append($basicData);
 
                         /* 선급금 지급 */
-                        $sendFormData.append(defaultSpprtData);
-                        /* 현재 지급 상태 */
-                        if(nowSpprtCd != 'PRO_TYPE03001'){
-                            $sendFormData.append(spprtData);
-                        }
+                        $sendFormData.append($dataSpprt);
 
                         /* 부품사 관리 등록 */
                         $sendFormData.append(rsumeTaskData);
 
-                        /* 관리자 메모 */
-                        $sendFormData.append($('<input/>', {type: 'hidden', name: 'admMemo', value: $('textarea[name=admMemo]').val() }));
-
-                        if($formObj.find(".dropzone").size() > 0)
+                        if($sendFormData.find(".dropzone").size() > 0)
                         {
                             cmmCtrl.fileFrmAjax(function(data){
                                 //콜백함수. 페이지 이동

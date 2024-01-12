@@ -108,7 +108,7 @@
                     </div>
                     <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control notRequired" id="telNo" name="telNo" value="" title="전화번호" maxlength="50"/>
+                        <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="" title="전화번호" placeholder="전화번호 입력" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"/>
                     </div>
                 </div>
             </fieldset>
@@ -193,7 +193,7 @@
                     <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-6" style="margin-left: -15px">
-                            <input type="text" class="form-control input-sm" id="compTel" name="compTel" value="" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
+                            <input type="text" class="form-control phoneChk input-sm" id="compTel" name="compTel" value="" title="전화번호" placeholder="전화번호 입력" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"/>
                         </div>
                     </div>
 
@@ -480,7 +480,6 @@
                         <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="사업자등록증">
                             <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].type" value="ATTACH_FILE_TYPE04">
                             <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].seqNm" value="rsumeTaskFile4">
-                            <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="4" data-fileType='ATTACH_FILE_TYPE04' name="rsumeTaskFile4" value="${rsumeTaskFile4}">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                             </div>

@@ -95,6 +95,12 @@ public interface WBFBRegisterCompanyMapper {
 
     /**
      *  Write Page
+     *  신청부품사 등록 - 신청 상세
+     */
+    public int putStepAppctnRsumeDtl(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     *  Write Page
      *  신청부품사 등록 - 스마트 상세
      */
     public int putAppctnRsumeTaskDtl(WBFBRegisterDTO wBFBRegisterDTO);

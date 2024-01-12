@@ -10,9 +10,8 @@
 
         <%-- target Set - 신청자 정보 관련 DTO --%>
         <c:set var="registerDtl" value="${rtnBasicData.registerDtl}"/>
-        <c:set var="apprtDtl" value="${rtnRegisterData.spprtDtl}"/>
+        <c:set var="spprtDtl" value="${rtnRegisterData.spprtDtl}"/>
         <c:set var="rsumeTaskDtl" value="${rtnRegisterData.rsumeTaskDtl}"/>
-        <c:set var="apprtLeng" value="${fn:length(rtnRegisterData.spprtDtl)-1}"/>
         <c:set var="rsumeLeng" value="${fn:length(rtnRegisterData.rsumeTaskDtl)-1}"/>
 
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
@@ -118,7 +117,7 @@
                                 </div>
                                 <div class="col-sm-4" style="margin-left: -15px">
 
-                                    <input type="text" class="form-control notRequired" style="display:none;" id="pstnNm" name="pstnNm" value="${registerDtl.pstnNm}" title="직급 상세" maxlength="50"/>
+                                    <input type="text" class="form-control notRequired" style="display:none;"  id="pstnNm" name="pstnNm" value="${registerDtl.pstnNm}" title="직급 상세" maxlength="50"/>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +133,7 @@
                             </div>
                             <label class="col-sm-1 control-label">일반 전화번호</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control notRequired" id="telNo" name="telNo" value="${registerDtl.telNo}" title="전화번호" maxlength="50"/>
+                                <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="${registerDtl.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="전화번호"/>
                             </div>
                         </div>
                     </fieldset>
@@ -221,13 +220,13 @@
                             <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
                             <div class="col-sm-5">
                                 <div class="col-sm-6" style="margin-left: -15px">
-                                    <input type="text" class="form-control phoneChk input-sm" id="compTel" name="compTel" value="${registerDtl.compTel}" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
+                                    <input type="text" class="form-control phoneChk input-sm" id="compTel" name="compTel" value="${registerDtl.compTel}" title="전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" placeholder="전화번호 입력"/>
                                 </div>
                             </div>
 
                             <label class="col-sm-1 control-label">사업자등록<br/>번호<span class="star"> *</span></label>
                             <div class="col-sm-5">
-                                <p class="form-control-static" id="bsnmNo" title="재직 회사사업자번호">
+                                <p class="form-control-static" title="재직 회사사업자번호">
                                     ${fn:substring(registerDtl.bsnmNo, 0, 3)}
                                     -
                                     ${fn:substring(registerDtl.bsnmNo, 3, 5)}
@@ -574,7 +573,7 @@
                             </div>
                             <div id="addLow1" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
-                                    <input type="hidden" class="notRequired" name="defaultSpprtDtl.appctnSpprtSeq" value="${apprtDtl[0].appctnSpprtSeq}">
+                                    <input type="hidden" class="notRequired" name="spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[0].appctnSpprtSeq}">
 
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
@@ -582,7 +581,7 @@
                                             <label class="col-sm-2 control-label">접수일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="defaultSpprtDtl.accsDt" value="${apprtDtl[0].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="spprtDtlList[0].accsDt" value="${spprtDtl[0].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -597,7 +596,7 @@
                                             <label class="col-sm-2 control-label">정부지원금(①)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="defaultSpprtDtl.gvmntSpprtPmt" value="${apprtDtl[0].gvmntSpprtPmt}" title="정부지원금" maxlength="50" placeholder="정부지원금">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="spprtDtlList[0].gvmntSpprtPmt" value="<fmt:formatNumber value='${spprtDtl[0].gvmntSpprtPmt}' pattern='#,###'/>" title="정부지원금" maxlength="50" placeholder="정부지원금">
                                                 </div>
                                             </div>
                                         </div>
@@ -607,7 +606,7 @@
                                             <label class="col-sm-2 control-label">대기업출연금액(②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="defaultSpprtDtl.mjcmnAprncPmt" value="${apprtDtl[0].mjcmnAprncPmt}" title="대기업출연금액" maxlength="50" placeholder="대기업출연금액">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="spprtDtlList[0].mjcmnAprncPmt" value="<fmt:formatNumber value='${spprtDtl[0].mjcmnAprncPmt}' pattern='#,###'/>" title="대기업출연금액" maxlength="50" placeholder="대기업출연금액">
                                                 </div>
                                             </div>
                                         </div>
@@ -617,7 +616,7 @@
                                             <label class="col-sm-2 control-label">총금액(①+②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="defaultSpprtDtl.ttlPmt" value="${apprtDtl[0].ttlPmt}" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
+                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="spprtDtlList[0].ttlPmt" value="<fmt:formatNumber value='${spprtDtl[0].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -627,7 +626,7 @@
                                             <label class="col-sm-2 control-label">은행명</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" data-name="bankNm" name="defaultSpprtDtl.bankNm" value="${apprtDtl[0].bankNm}" title="은행명" maxlength="50" placeholder="은행명">
+                                                    <input type="text" class="form-control input-sm notRequired" data-name="bankNm" name="spprtDtlList[0].bankNm" value="${spprtDtl[0].bankNm}" title="은행명" maxlength="50" placeholder="은행명">
                                                 </div>
                                             </div>
                                         </div>
@@ -637,7 +636,7 @@
                                             <label class="col-sm-2 control-label">계좌번호</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control numberChk input-sm notRequired" name="defaultSpprtDtl.acntNo" value="${apprtDtl[0].acntNo}" title="계좌번호" maxlength="50" placeholder="계좌번호">
+                                                    <input type="text" class="form-control numberChk input-sm notRequired" name="spprtDtlList[0].acntNo" value="${spprtDtl[0].acntNo}" title="계좌번호" maxlength="50" placeholder="계좌번호">
                                                 </div>
                                             </div>
                                         </div>
@@ -647,7 +646,7 @@
                                             <label class="col-sm-2 control-label">예금주</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="defaultSpprtDtl.dpsitNm" value="${apprtDtl[0].dpsitNm}" title="예금주" maxlength="50" placeholder="예금주">
+                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtlList[0].dpsitNm" value="${spprtDtl[0].dpsitNm}" title="예금주" maxlength="50" placeholder="예금주">
                                                 </div>
                                             </div>
                                         </div>
@@ -656,8 +655,8 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <input type="hidden" class="notRequired" name="defaultSpprtDtl.appctnSttsCd" value="${apprtDtl[0].appctnSttsCd}">
-                                                <p class="form-control-static">${apprtDtl[0].appctnSttsCdNm}</p>
+                                                <input type="hidden" class="notRequired" name="spprtDtlList[0].appctnSttsCd" value="${spprtDtl[0].appctnSttsCd}">
+                                                <p class="form-control-static">${spprtDtl[0].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -665,7 +664,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${apprtDtl[0].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">${spprtDtl[0].appctnSttsChngDtm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -676,7 +675,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="defaultSpprtDtl.giveDt" value="${apprtDtl[0].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtlList[0].giveDt" value="${spprtDtl[0].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -690,10 +689,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">지급차수</label>
                                             <div class="col-sm-6 form-inline" >
-                                                <select class="form-control input-sm notRequired" data-name="giveSeq" name="defaultSpprtDtl.giveSeq" title="지급차수">
+                                                <select class="form-control input-sm notRequired" data-name="giveSeq" name="spprtDtlList[0].giveSeq" title="지급차수">
                                                     <option value="">지급차수</option>
                                                     <c:forEach var="orderList" items="${rtnBasicData.orderList}" varStatus="status">
-                                                        <option value="${orderList.giveSeq}" <c:if test="${apprtDtl[0].giveSeq eq orderList.giveSeq}" >selected</c:if> >
+                                                        <option value="${orderList.giveSeq}" <c:if test="${spprtDtl[0].giveSeq eq orderList.giveSeq}" >selected</c:if> >
                                                                 ${orderList.giveOrd} 차수
                                                         </option>
                                                     </c:forEach>
@@ -705,10 +704,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="defaultSpprtDtl.mngSttsCd" title="관리자 상태값/결과">
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtlList[0].mngSttsCd" title="관리자 상태값/결과">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE03001_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${apprtDtl[0].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                            <option value="${cdList.cd}" <c:if test="${spprtDtl[0].mngSttsCd eq cdList.cd}" >selected</c:if> >
                                                                     ${cdList.cdNm}
                                                             </option>
                                                         </c:if>
@@ -721,7 +720,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${apprtDtl[0].mngSttsChngDtm}</p>
+                                                <p class="form-control-static">${spprtDtl[0].mngSttsChngDtm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -733,7 +732,7 @@
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile1" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
-                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile1" value="${apprtDtl[0].spprtAppctnFileSeq}">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile1" value="${spprtDtl[0].spprtAppctnFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -751,7 +750,7 @@
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile2" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="계좌이체약정서">
-                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile2" value="${apprtDtl[0].acntFileSeq}">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile2" value="${spprtDtl[0].acntFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -769,7 +768,7 @@
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
-                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile3" value="${apprtDtl[0].bnkbkFileSeq}">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile3" value="${spprtDtl[0].bnkbkFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -791,14 +790,14 @@
                             </div>
                             <div id="addLow2" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
-                                    <input type="hidden" class="notRequired" name="spprtDtl.appctnSpprtSeq" value="${apprtDtl[1].appctnSpprtSeq}">
+                                    <input type="hidden" class="notRequired" name="spprtDtlList[1].appctnSpprtSeq" value="${spprtDtl[1].appctnSpprtSeq}">
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">접수일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="spprtDtl.accsDt" value="${apprtDtl[1].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="spprtDtlList[1].accsDt" value="${spprtDtl[1].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -813,7 +812,7 @@
                                             <label class="col-sm-2 control-label">정부지원금(①)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="spprtDtl.gvmntSpprtPmt" value="<fmt:formatNumber value='${apprtDtl[1].gvmntSpprtPmt}' pattern='#,###'/>" title="정부지원금" maxlength="50" placeholder="정부지원금">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="spprtDtlList[1].gvmntSpprtPmt" value="<fmt:formatNumber value='${spprtDtl[1].gvmntSpprtPmt}' pattern='#,###'/>" title="정부지원금" maxlength="50" placeholder="정부지원금">
                                                 </div>
                                             </div>
                                         </div>
@@ -823,7 +822,7 @@
                                             <label class="col-sm-2 control-label">대기업출연금액(②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="spprtDtl.mjcmnAprncPmt" value="<fmt:formatNumber value='${apprtDtl[1].mjcmnAprncPmt}' pattern='#,###'/>" title="정부지원금" maxlength="50" placeholder="대기업출연금액">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="spprtDtlList[1].mjcmnAprncPmt" value="<fmt:formatNumber value='${spprtDtl[1].mjcmnAprncPmt}' pattern='#,###'/>" title="정부지원금" maxlength="50" placeholder="대기업출연금액">
                                                 </div>
                                             </div>
                                         </div>
@@ -833,7 +832,7 @@
                                             <label class="col-sm-2 control-label">총금액(①+②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="spprtDtl.ttlPmt" value="<fmt:formatNumber value='${apprtDtl[1].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
+                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="spprtDtlList[1].ttlPmt" value="<fmt:formatNumber value='${spprtDtl[1].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -843,7 +842,7 @@
                                             <label class="col-sm-2 control-label">은행명</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.bankNm" value="${apprtDtl[1].bankNm}" title="은행명" maxlength="50" placeholder="은행명">
+                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtlList[1].bankNm" value="${spprtDtl[1].bankNm}" title="은행명" maxlength="50" placeholder="은행명">
                                                 </div>
                                             </div>
                                         </div>
@@ -853,7 +852,7 @@
                                             <label class="col-sm-2 control-label">계좌번호</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm numberChk notRequired" name="spprtDtl.acntNo" value="${apprtDtl[1].acntNo}" title="계좌번호" maxlength="50" placeholder="계좌번호">
+                                                    <input type="text" class="form-control input-sm numberChk notRequired" name="spprtDtlList[1].acntNo" value="${spprtDtl[1].acntNo}" title="계좌번호" maxlength="50" placeholder="계좌번호">
                                                 </div>
                                             </div>
                                         </div>
@@ -863,7 +862,7 @@
                                             <label class="col-sm-2 control-label">예금주</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtl.dpsitNm" value="${apprtDtl[1].dpsitNm}" title="예금주" maxlength="50" placeholder="예금주">
+                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtlList[1].dpsitNm" value="${spprtDtl[1].dpsitNm}" title="예금주" maxlength="50" placeholder="예금주">
                                                 </div>
                                             </div>
                                         </div>
@@ -872,8 +871,8 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnSttsCd" value="${apprtDtl[1].appctnSttsCd}">
-                                                <p class="form-control-static">${apprtDtl[1].appctnSttsCdNm}</p>
+                                                <input type="hidden" class="notRequired" name="spprtDtlList[1].appctnSttsCd" value="${spprtDtl[1].appctnSttsCd}">
+                                                <p class="form-control-static">${spprtDtl[1].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -881,7 +880,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${apprtDtl[1].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">${spprtDtl[1].appctnSttsChngDtm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -892,7 +891,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtl.giveDt" value="${apprtDtl[1].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtlList[1].giveDt" value="${spprtDtl[1].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -906,10 +905,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">지급차수</label>
                                             <div class="col-sm-6 form-inline" >
-                                                <select class="form-control input-sm notRequired" id="giveSeq" data-name="giveSeq" name="spprtDtl.giveSeq" title="지급차수">
+                                                <select class="form-control input-sm notRequired" id="giveSeq" data-name="giveSeq" name="spprtDtlList[1].giveSeq" title="지급차수">
                                                     <option value="">지급차수</option>
                                                     <c:forEach var="orderList" items="${rtnBasicData.orderList}" varStatus="status">
-                                                        <option value="${orderList.giveSeq}" <c:if test="${apprtDtl[1].giveSeq eq orderList.giveSeq}" >selected</c:if> >
+                                                        <option value="${orderList.giveSeq}" <c:if test="${spprtDtl[1].giveSeq eq orderList.giveSeq}" >selected</c:if> >
                                                                 ${orderList.giveOrd} 차수
                                                         </option>
                                                     </c:forEach>
@@ -921,10 +920,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtl.mngSttsCd" title="관리자 상태값/결과">
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtlList[1].mngSttsCd" title="관리자 상태값/결과">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE03002_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${apprtDtl[1].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                            <option value="${cdList.cd}" <c:if test="${spprtDtl[1].mngSttsCd eq cdList.cd}" >selected</c:if> >
                                                                     ${cdList.cdNm}
                                                             </option>
                                                         </c:if>
@@ -937,7 +936,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" data-name="mngSttsChngDtm">${apprtDtl[1].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" data-name="mngSttsChngDtm">${spprtDtl[1].mngSttsChngDtm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -949,7 +948,7 @@
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
-                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile4" value="${apprtDtl[1].spprtAppctnFileSeq}">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile4" value="${spprtDtl[1].spprtAppctnFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -967,7 +966,7 @@
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile5" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="계좌이체약정서">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile5" value="${apprtDtl[1].acntFileSeq}">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile5" value="${spprtDtl[1].acntFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -985,7 +984,7 @@
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile6" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile6" value="${apprtDtl[1].bnkbkFileSeq}">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile6" value="${spprtDtl[1].bnkbkFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1007,14 +1006,14 @@
                             </div>
                             <div id="addLow3" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
-                                    <input type="hidden" class="notRequired" name="spprtDtl.appctnSpprtSeq" value="${apprtDtl[2].appctnSpprtSeq}">
+                                    <input type="hidden" class="notRequired" name="spprtDtlList[2].appctnSpprtSeq" value="${spprtDtl[2].appctnSpprtSeq}">
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">접수일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="spprtDtl.accsDt" value="${apprtDtl[2].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="spprtDtlList[2].accsDt" value="${spprtDtl[2].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1029,7 +1028,7 @@
                                             <label class="col-sm-2 control-label">수수료</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="cmssnPmt" name="spprtDtl.cmssnPmt" value="<fmt:formatNumber value='${apprtDtl[2].cmssnPmt}' pattern='#,###'/>" title="수수료" maxlength="50" placeholder="수수료">
+                                                    <input type="text" class="form-control input-sm comma notRequired" name="spprtDtlList[2].cmssnPmt" value="<fmt:formatNumber value='${spprtDtl[2].cmssnPmt}' pattern='#,###'/>" title="수수료" maxlength="50" placeholder="수수료">
                                                 </div>
                                             </div>
                                         </div>
@@ -1038,8 +1037,8 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <input type="hidden" class="notRequired" name="spprtDtl.appctnSttsCd" value="${apprtDtl[2].appctnSttsCd}">
-                                                <p class="form-control-static">${apprtDtl[2].appctnSttsCdNm}</p>
+                                                <input type="hidden" class="notRequired" name="spprtDtlList[2].appctnSttsCd" value="${spprtDtl[2].appctnSttsCd}">
+                                                <p class="form-control-static">${spprtDtl[2].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1047,7 +1046,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${apprtDtl[2].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">${spprtDtl[2].appctnSttsChngDtm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1058,7 +1057,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtl.giveDt" value="${apprtDtl[2].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtlList[2].giveDt" value="${spprtDtl[2].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1072,11 +1071,11 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">지급차수</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="giveSeq" name="spprtDtl.giveSeq" title="지급차수">
+                                                <select class="form-control input-sm notRequired" data-name="giveSeq" name="spprtDtlList[2].giveSeq" title="지급차수">
                                                     <option value="">지급차수</option>
 
                                                     <c:forEach var="orderList" items="${rtnBasicData.orderList}" varStatus="status">
-                                                        <option value="${orderList.giveSeq}" <c:if test="${apprtDtl[2].giveSeq eq orderList.giveSeq}" >selected</c:if> >
+                                                        <option value="${orderList.giveSeq}" <c:if test="${spprtDtl[2].giveSeq eq orderList.giveSeq}" >selected</c:if> >
                                                                 ${orderList.giveOrd} 차수
                                                         </option>
                                                     </c:forEach>
@@ -1088,11 +1087,11 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtl.mngSttsCd" title="관리자 상태값/결과">
+                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtlList[2].mngSttsCd" title="관리자 상태값/결과">
 
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE03003_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${apprtDtl[2].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                            <option value="${cdList.cd}" <c:if test="${spprtDtl[2].mngSttsCd eq cdList.cd}" >selected</c:if> >
                                                                     ${cdList.cdNm}
                                                             </option>
                                                         </c:if>
@@ -1105,7 +1104,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${apprtDtl[2].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >${spprtDtl[2].mngSttsChngDtm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1117,7 +1116,7 @@
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile7" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile7" value="${apprtDtl[2].spprtAppctnFileSeq}">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile7" value="${spprtDtl[2].spprtAppctnFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1135,7 +1134,7 @@
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile8" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="기술임치증">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile8" value="${apprtDtl[2].tchlgLseFileSeq}">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile8" value="${spprtDtl[2].tchlgLseFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1153,7 +1152,7 @@
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile9" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="임치료 납입 영수증">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile9" value="${apprtDtl[2].lsePayFileSeq}">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile9" value="${spprtDtl[2].lsePayFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -2059,7 +2058,6 @@
 
 
         <form id="sendForm" style="display: none">
-            <input type="hidden" class="notRequired" name="nowSpprtCd" value="${apprtDtl[apprtLeng].giveType}" />
             <input type="hidden" class="notRequired" name="nowRsumeTaskCd" value="${rsumeTaskDtl[rsumeLeng].rsumeSttsCd}" />
         </form>
 

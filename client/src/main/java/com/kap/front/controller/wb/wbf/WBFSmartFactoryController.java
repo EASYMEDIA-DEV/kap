@@ -70,12 +70,12 @@ public class WBFSmartFactoryController {
     public String getMnagementIndex(WBRoundMstSearchDTO wBRoundMstSearchDTO, COGCntsDTO pCOGCntsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbf/WBFSmartFactoryIndex.front";
         try {
-            wBRoundMstSearchDTO.setBsnCd("BNS06");
+            wBRoundMstSearchDTO.setBsnCd("BSN06");
 
-            /*wBRoundMstSearchDTO.setOrdFlag(1);
+            /*wBRoundMstSearchDTO.setOrdFlag(1);*/
             wBRoundMstSearchDTO.setExpsYn("Y");
             wBRoundMstSearchDTO.setFirstIndex(0);
-            wBRoundMstSearchDTO.setRecordCountPerPage(3);*/
+            wBRoundMstSearchDTO.setRecordCountPerPage(3);
 
             /*스마트공장구축 CMS 메뉴 코드*/
             modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, "719", "N"));
@@ -104,7 +104,7 @@ public class WBFSmartFactoryController {
     @RequestMapping(value = "/addRoundMore")
     public String addRoundMore(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap) throws Exception {
         try {
-            wBRoundMstSearchDTO.setBsnCd("BNS06");
+            wBRoundMstSearchDTO.setBsnCd("BSN06");
             modelMap.addAttribute("rtnData", wBFASmartRoundService.selRoundList(wBRoundMstSearchDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
@@ -121,7 +121,7 @@ public class WBFSmartFactoryController {
     @RequestMapping(value = "/applyChecked")
     public String applyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap) throws Exception {
         try {
-            wBRoundMstSearchDTO.setBsnCd("BNS06");
+            wBRoundMstSearchDTO.setBsnCd("BSN06");
             modelMap.addAttribute("resultCode", wBFASmartRoundService.getApplyChecked(wBRoundMstSearchDTO));
 
         } catch (Exception e) {
@@ -140,7 +140,7 @@ public class WBFSmartFactoryController {
     public String getStep1Page(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbf/WBFSmartFactoryStep1.front";
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BNS06");
+            wBFBRegisterSearchDTO.setBsnCd("BSN06");
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
@@ -167,7 +167,7 @@ public class WBFSmartFactoryController {
         String vwUrl = "front/wb/wbf/WBFSmartFactoryStep2.front";
         try {
             /* 회차 정보 */
-            wbRoundMstSearchDTO.setBsnCd("BNS06");
+            wbRoundMstSearchDTO.setBsnCd("BSN06");
             wbRoundMstSearchDTO.setDetailsKey(wbRoundMstSearchDTO.getEpisdSeq().toString());
             modelMap.addAttribute("rtnData", wBFASmartRoundService.selRoundDetail(wbRoundMstSearchDTO));
 
@@ -195,7 +195,7 @@ public class WBFSmartFactoryController {
     @RequestMapping(value = "/insert")
     public String insert(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         try {
-            wBFBRegisterDTO.setBsnCd("BNS06");
+            wBFBRegisterDTO.setBsnCd("BSN06");
             modelMap.addAttribute("actCnt", wBFBRegisterCompanyService.insertApply(wBFBRegisterDTO, multiRequest, request));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
@@ -215,7 +215,7 @@ public class WBFSmartFactoryController {
     public String getCompletePage(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbf/WBFSmartFactoryComplete.front";
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BNS06");
+            wBFBRegisterSearchDTO.setBsnCd("BSN06");
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());

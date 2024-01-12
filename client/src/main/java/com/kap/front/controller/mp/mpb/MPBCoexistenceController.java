@@ -112,6 +112,11 @@ public class MPBCoexistenceController {
             } else {
                 if ("코드".equals(mpbBnsSearchDTO.getBsnCd())) {
 
+                } else if ("BSN06".equals(mpbBnsSearchDTO.getBsnCd())) {
+                    //스마트공장
+                    WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
+                    wbhaCalibrationSearchDTO.setDetailsKey(String.valueOf(mpbBnsSearchDTO.getAppctnSeq()));
+                    
                 } else if ("BSN08".equals(mpbBnsSearchDTO.getBsnCd())) {
                     //검교정
                     WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
