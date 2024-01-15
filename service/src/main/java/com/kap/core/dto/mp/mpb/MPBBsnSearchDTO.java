@@ -104,4 +104,7 @@ public class MPBBsnSearchDTO extends BaseDTO {
 
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
+
+    @Schema(title = "자동차 훈격 코드", example = "")
+    private String mrtsCd;
 }

@@ -114,7 +114,8 @@
                     (SELECT COUNT(*) FROM co_code_mst WHERE CD_ID = 'BM_CODE' AND CD  = bsn_cd) > 0
                        THEN rsume_stts_cd
                    ELSE (SELECT cd_nm FROM co_code_mst WHERE cd = rsume_stts_cd) END ) rsume_stts_Cd_Nm,
-            ( SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd ) appctn_stts_cd_Nm
+            ( SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd ) appctn_stts_cd_Nm,
+            (SELECT mrts_cd FROM CX_APPCTN_RSUME_PRIZE_PART_DTL prize WHERE prize.RSUME_SEQ = TMP.RSUME_SEQ_MIN AND prize.RSUME_ORD = RSUME_ORD_MIN ) mrts_cd
         FROM (
                  SELECT
                      BSN_CD,
@@ -125,7 +126,9 @@
                      BSN_END_DTM,
                      ( SELECT CD_NM FROM co_code_mst WHERE cd_seq = ( SELECT PARNT_SEQ FROM co_code_mst WHERE CD_ID = 'win_Business' AND CD = B.bsn_Cd )) title,
                      ( SELECT MAX(RSUME_ORD) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_ORD,
+                     ( SELECT MIN(RSUME_ORD) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_ORD_MIN,
                      ( SELECT MAX(RSUME_SEQ) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_SEQ,
+                     ( SELECT MIN(RSUME_SEQ) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_SEQ_MIN,
                      A.REG_DTM
                  FROM
                      cx_appctn_mst A

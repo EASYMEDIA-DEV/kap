@@ -516,7 +516,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4" style="margin-left: -15px">
-                                <input type="text" class="form-control "  value="${rtnInfo.newPstnNm}"  name="newPstnNm" title="직급 상세" maxlength="50"/>
+                                <input type="text" class="form-control notRequired"  value="${rtnInfo.newPstnNm}"  name="newPstnNm" title="직급 상세" maxlength="50"/>
                             </div>
                         </div>
                     </div>
@@ -542,17 +542,17 @@
                         <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                         <div class="col-sm-2">
                             <input type="text" class="form-control phoneChk input-sm" name="newHpNo" value="${rtnInfo.newHpNo}" title="휴대폰번호" placeholder="휴대폰번호 입력" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="14">
-
                         </div>
                     </div>
-                </fieldset><fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control phoneChk input-sm" name="newCmpnTelNo" value="${rtnInfo.newCmpnTelNo}" title="회사 전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" placeholder="회사전화번호 입력">
+                </fieldset>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control phoneChk input-sm" name="newCmpnTelNo" value="${rtnInfo.newCmpnTelNo}" title="회사 전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" placeholder="회사전화번호 입력">
+                        </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
                 <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>

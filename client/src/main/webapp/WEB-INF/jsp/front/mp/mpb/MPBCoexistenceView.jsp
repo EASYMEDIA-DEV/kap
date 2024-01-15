@@ -44,9 +44,26 @@
                                 <div class="flex">
                                     <p class="f-title1">${rtnBsnData.year} ${rtnBsnData.episd}차 ${rtnBsnData.bsnNm}</p>
                                     <div class="group">
-                                        <p class="index-num f-head">${rtnBsnData.rsumeSttsCdNm}</p>
                                         <div class="status-info-w">
-                                            <p class="box-label bigger ${classType}"><span>${rtnBsnData.appctnSttsCdNm}</span></p>
+                                            <c:choose>
+                                                <c:when test="${rtnBsnData.mrtsCd eq null}">
+                                                    <p class="index-num f-head">${rtnBsnData.rsumeSttsCdNm}</p>
+                                                    <p class="box-label bigger ${classType}"><span>${rtnBsnData.appctnSttsCdNm}</span></p>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:choose>
+                                                        <c:when test="${rtnBsnData.mrtsCd eq 'MNGCNSLT_DIS01'}">
+                                                            <p class="box-label bigger complete"><span>장관상</span></p>
+                                                        </c:when>
+                                                        <c:when test="${rtnBsnData.mrtsCd eq 'MNGCNSLT_DIS02'}">
+                                                            <p class="box-label bigger complete"><span>이사장</span></p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <p class="box-label bigger complete"><span>회장상</span></p>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>
