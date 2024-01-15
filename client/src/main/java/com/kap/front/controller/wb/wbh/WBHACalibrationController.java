@@ -63,10 +63,11 @@ public class WBHACalibrationController {
             modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, "722", "N"));
             modelMap.addAttribute("rtnRoundDtl", wbhaCalibrationService.getRoundDtl(wbhaCalibrationSearchDTO));
         } catch (Exception e) {
-            if (log.isDebugEnabled()) {
+            /*if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
-            throw new Exception(e.getMessage());
+            throw new Exception(e.getMessage());*/
+            e.printStackTrace();
         }
 
         return vwUrl;
@@ -81,11 +82,10 @@ public class WBHACalibrationController {
             modelMap.addAttribute("resultCode", wbhaCalibrationService.getApplyChecked(wbhaCalibrationSearchDTO));
 
         } catch (Exception e) {
-            /*if (log.isDebugEnabled()) {
+            if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
-            throw new Exception(e.getMessage());*/
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
         return "jsonView";
     }

@@ -8,7 +8,7 @@
         ==========  ======  ==============
         2024.01.08  김태훈     최초 생성
     -->
-    <select id="selectApplyList" parameterType="mpbBnsSearchDTO" resultType="mpbBnsSearchDTO">
+    <select id="selectApplyList" parameterType="mpbBsnSearchDTO" resultType="mpbBsnSearchDTO">
         SELECT /*WBBBCompanyMapper.getRegisterCompanyList*/ *
             FROM ( SELECT
                     TMP.* ,
@@ -60,7 +60,7 @@
         ==========  ======  ==============
         2024.01.08  김태훈     최초 생성
     -->
-    <select id="selectApplyCount" parameterType="mpbBnsSearchDTO" resultType="java.lang.Integer">
+    <select id="selectApplyCount" parameterType="mpbBsnSearchDTO" resultType="java.lang.Integer">
         SELECT /*MPBCoexistenceMapper.selectApplyCount*/ count(*)
         FROM (  SELECT
                     YEAR(A.year) as year, A.episd, A.bsn_strt_Dtm, A.bsn_end_dtm, A.bsn_cd, B.adm_memo,
@@ -89,7 +89,7 @@
         ==========  ======  ==============
         2024.01.10  김태훈     최초 생성
     -->
-    <select id="getBusinessYn" parameterType="mpbBnsSearchDTO" resultType="java.lang.String">
+    <select id="getBusinessYn" parameterType="mpbBsnSearchDTO" resultType="java.lang.String">
         SELECT
             CASE WHEN cd = #{bsnCd}
                      THEN 'Y' ELSE 'N' END businessYn
@@ -105,7 +105,7 @@
         ==========  ======  ==============
         2024.01.10  김태훈     최초 생성
     -->
-    <select id="getBsnDetail" parameterType="mpbBnsSearchDTO" resultType="mpbBnsSearchDTO">
+    <select id="getBsnDetail" parameterType="mpbBsnSearchDTO" resultType="mpbBsnSearchDTO">
         SELECT
             TMP.*,
             appctn_stts_cd,
@@ -141,7 +141,7 @@
         ==========  ======  ==============
         2023.11.24  김태훈     최초 생성
     -->
-    <select id="getCompanyInfo" parameterType="mpbBnsSearchDTO" resultType="mpbCompanyDTO">
+    <select id="getCompanyInfo" parameterType="mpbBsnSearchDTO" resultType="mpbCompanyDTO">
         SELECT /* MPBCoexistenceMapper.getCompanyInfo */
             A.BSNM_NO
              , A.CMPN_NM
@@ -190,7 +190,7 @@
         ==========  ======  ==============
         2023.11.24  김태훈     최초 생성
     -->
-    <select id="selectSqList" parameterType="mpbBnsSearchDTO" resultType="mpbCompanyDTO">
+    <select id="selectSqList" parameterType="mpbBsnSearchDTO" resultType="mpbCompanyDTO">
         SELECT /* MPBCoexistenceMapper.selectSqList */
             CBSN_SEQ
              , NM
