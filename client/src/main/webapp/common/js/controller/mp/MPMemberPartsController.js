@@ -1,4 +1,4 @@
-define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
+define(["ezCtrl"], function(ezCtrl) {
 
     "use strict";
 
@@ -30,40 +30,47 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         }
     }
 
-    function validationCmpn() {
+    function validationCmpn(event) {
         if(!bsnmChk) {
             alert(msgCtrl.getMsg("fail.mp.join.al_036"));
+            event.preventDefault();
             return false;
         }
         if($("#bsnmNo").val().trim() =='' || $("#bsnmNo").val() == undefined) {
             alert(msgCtrl.getMsg("fail.mp.join.al_018"));
             $("#bsnmNo").focus();
+            event.preventDefault();
             return false;
         }
         if(!bsnmOldNewChk) {
             if ($("#ctgryCd").val().trim() == '' || $("#ctgryCd").val() == undefined ) {
                 alert(msgCtrl.getMsg("fail.mp.join.al_027"));
                 $("#ctgryCd").focus();
+                event.preventDefault();
                 return false;
             }
             if($(".rprsnt_nm").val().trim() =='' || $(".rprsnt_nm").val() == undefined) {
                 alert(msgCtrl.getMsg("fail.mp.join.al_037"));
                 $(".rprsnt_nm").focus();
+                event.preventDefault();
                 return false;
             }
             if ($("#sizeCd").val().trim() == '' || $("#sizeCd").val() == undefined) {
                 alert(msgCtrl.getMsg("fail.mp.join.al_028"));
                 $("#sizeCd").focus();
+                event.preventDefault();
                 return false;
             }
             if ($("#stbsmDt").val().trim() == '' || $("#stbsmDt").val() == undefined || $("#stbsmDt").val().length != 10) {
                 alert(msgCtrl.getMsg("fail.mp.join.al_029"));
                 $("#stbsmDt").focus();
+                event.preventDefault();
                 return false;
             }
             if($("#telNo").val().trim() == '' || $("#telNo").val() == undefined) {
                 alert(msgCtrl.getMsg("fail.mp.join.al_030"));
                 $("#telNo").focus();
+                event.preventDefault();
                 return false;
             }
             if ($("#zipcode").val().trim() == '' || $("#zipcode").val() == undefined ||
@@ -71,6 +78,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $("#dtlAddr").val().trim() == '' || $("#dtlAddr").val() == undefined) {
                 alert(msgCtrl.getMsg("fail.mp.join.al_031"));
                 $("#dtlAddr").focus();
+                event.preventDefault();
                 return false;
             }
         }
@@ -137,8 +145,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             },
             nextBtn : {
                 event : {
-                    click : function() {
-                        if(validationCmpn()) {
+                    click : function(event) {
+                        if(validationCmpn(event)) {
                             let targetPage = "/member/mp-user-join";
                             document.getElementById("formNextSubmit").action = targetPage; // form의 action 속성 변경
                             document.getElementById("formNextSubmit").submit(); // form 제출

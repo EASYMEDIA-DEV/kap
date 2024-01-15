@@ -41,10 +41,10 @@
                 <div class="cont-for-padding">
                     <p class="f-title1"><span class="color-sky">회원가입</span> 이<br> 완료되었습니다.</p>
                     <p class="detail-txt">자동차부품산업진흥재단 회원이 되신 것을 진심으로 축하드립니다. <br>로그인 후 다양한 서비스를 이용하실 수 있습니다.</p>
-                    <div class="info-area">
-                        <div class="info-list">
-                            <p class="tit">회원가입 완료일</p>
-                            <p class="txt" id="nowDate" >${rtnData.regDtm}</p>
+                    <div class="def-list-w">
+                        <div class="def-list">
+                            <p class="tit f-head">회원가입 완료일</p>
+                            <p class="txt f-sub-head" id="nowDate" >${kl:convertDate(rtnData.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
                         </div>
                     </div>
                 </div>

@@ -13,7 +13,6 @@
           </td>
         </c:if>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
-          <!-- 문법 -->
         <c:if test="${rtnData.srchLayer eq 'Y'}">
           <td class="text-center srchListView">
               ${list.id}
@@ -35,8 +34,18 @@
         <td class="text-center">${list.sizeCdNm}</td>
         <td class="text-center">${list.deptCdNm} ${list.deptDtlNm == '' ? '' : '('+=list.deptDtlNm+=')'} </td>
         <td class="text-center">${list.pstnCdNm}</td>
-        <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
-        <td class="text-center">${kl:emailMasking(list.email)}</td>
+
+        <c:if test="${rtnData.srchLayer eq 'Y'}">
+          <td class="text-center">${list.hpNo}</td>
+          <td class="text-center">${list.email}</td>
+        </c:if>
+        <c:if test="${rtnData.srchLayer ne 'Y'}">
+          <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
+          <td class="text-center">${kl:emailMasking(list.email)}</td>
+        </c:if>
+
+
+
         <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
         <td class="text-center">${kl:emptyHypen(list.modName)}(${list.modId})</td>
         <td class="text-center">${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>

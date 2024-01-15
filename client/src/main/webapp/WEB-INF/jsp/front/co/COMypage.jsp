@@ -29,7 +29,6 @@
                 <!--LNB 시작-->
                 <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
 
-
                 <div class="right-con-area">
                     <div class="cont-sec-w">
                         <div class="cont-sec no-border scroll-motion">
@@ -77,7 +76,7 @@
                                                 <a class="btn-solid small gray-bg" href="javascript:"><span>1:1 문의</span></a>
                                             </div>
                                         </div>
-                                        <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ empty list.regDtm ? '-' : kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</span></p>
+                                        <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ empty loginMap.regDtm ? '-' : kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</span></p>
                                     </div>
                                 </div>
                             </div>
