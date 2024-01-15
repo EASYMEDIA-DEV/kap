@@ -156,7 +156,9 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         var clickObj = {};
                         var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
-                        if(choiceCnt > 1){
+                        if(choiceCnt == 0) {
+                            alert("설문을 선택해주세요.");
+                        }else if(choiceCnt > 1){
                             alert(msgCtrl.getMsg("fail.sv.sva.notSrchServey1"));
                         }else{
                             clickObj.seq = ctrl.obj.find("input[name=delValueList]:checked").val();//설문 조사 번호
