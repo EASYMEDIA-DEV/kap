@@ -107,7 +107,7 @@
                     <div class="col-sm-3"></div>
                     <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control notRequired" id="telNo" name="telNo" value="" title="전화번호" maxlength="50"/>
+                        <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="" title="전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11"/>
                     </div>
                 </div>
             </fieldset>
@@ -191,7 +191,7 @@
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
-                            <input type="text" class="form-control input-sm" id="compTel" name="compTel" value="" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
+                            <input type="text" class="form-control phoneChk input-sm" id="compTel" name="compTel" value="" title="전화번호"oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" placeholder="전화번호 입력"/>
                         </div>
                     </div>
 
@@ -375,7 +375,8 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">휴대폰번호</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control input-sm same notRequired" id="rcmndHpNo" name="rcmndHpNo" value="" title="휴대폰번호"  placeholder="휴대폰번호 입력">
+                        <input type="text" class="form-control phoneChk input-sm same notRequired" id="rcmndHpNo" name="rcmndHpNo" value="" title="휴대폰번호"  placeholder="휴대폰번호 입력"
+                               oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="14">
                     </div>
                 </div>
             </fieldset>
@@ -494,14 +495,14 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control input-sm" name="newHpNo" value="" title="휴대폰번호" placeholder="휴대폰번호 입력">
+                        <input type="text" class="form-control phoneChk input-sm" name="newHpNo" value="" title="휴대폰번호" placeholder="휴대폰번호 입력" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="14">
                     </div>
                 </div>
             </fieldset><fieldset>
             <div class="form-group text-sm">
                 <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                 <div class="col-sm-2">
-                    <input type="text" class="form-control input-sm" name="newCmpnTelNo" value="" title="회사 전화번호"  placeholder="회사전화번호 입력">
+                    <input type="text" class="form-control phoneChk input-sm" name="newCmpnTelNo" value="" title="회사 전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" placeholder="회사전화번호 입력">
                 </div>
             </div>
             </fieldset>
