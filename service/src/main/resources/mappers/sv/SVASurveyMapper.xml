@@ -688,7 +688,7 @@
 						, c.ncs_yn
 						, c.qstn_ord
 						 from ed_edctn_episd_mst a
-							 inner join ed_edctn_isttr_rel b on a.episd_year= b.episd_year and a.episd_ord = b.episd_ord
+							 inner join ed_edctn_isttr_rel b on a.episd_seq= b.episd_seq
 						 inner join sv_qstn_dtl c on a.srv_seq = c.srv_seq
 						 where a.episd_seq = #{episdSeq} and a.srv_seq = #{detailsKey} and c.ctgry_cd ='EDU05'
 					 ) b on a.cd = b.ctgry_cd
