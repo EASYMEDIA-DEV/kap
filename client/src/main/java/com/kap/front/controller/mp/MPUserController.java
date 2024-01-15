@@ -14,6 +14,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -58,14 +62,15 @@ public class MPUserController {
     //코드 서비스
     private final COCodeService cOCodeService;
 
+
     /**
      * 회원가입 체크 페이지
      * @return
      * @throws Exception
      */
     @GetMapping("/join")
-    public String getMemberJoinChk() throws Exception {
-
+    public String getMemberJoinChk(HttpSession session) throws Exception {
+        session.removeAttribute("niceSession");
         return "/front/mp/MPUserJoinChk.front";
 
     }
@@ -78,7 +83,8 @@ public class MPUserController {
      * @throws Exception
      */
     @GetMapping("/verification/{type}")
-    public String getPwdFind(ModelMap modelMap, @PathVariable String type) throws Exception {
+    public String getPwdFind(ModelMap modelMap, @PathVariable String type , HttpSession session) throws Exception {
+        session.removeAttribute("niceSession");
         modelMap.addAttribute("rtnData", type);
 
         return "/front/mp/MPUserVerification.front";
@@ -93,12 +99,16 @@ public class MPUserController {
      * @throws Exception
      */
     @RequestMapping( "/agreement")
-    public String getAgreement(ModelMap modelMap, COIdFindDto coIdFindDto) throws Exception {
-        modelMap.addAttribute("data", cOUserLgnService.getIdFind(coIdFindDto));
-        modelMap.addAttribute("verificationData", coIdFindDto);
+    public String getAgreement(ModelMap modelMap, COIdFindDto coIdFindDto , HttpSession session , HttpServletResponse response) throws Exception {
+        if(session.getAttribute("niceSession")== null) {
+            authNotAllowed(response);
+        } else {
+            modelMap.addAttribute("data", cOUserLgnService.getIdFind(coIdFindDto));
+            modelMap.addAttribute("verificationData", coIdFindDto);
 
+
+        }
         return "/front/mp/MPUserAgreement.front";
-
     }
 
     /**
@@ -108,14 +118,17 @@ public class MPUserController {
      * @throws Exception
      */
     @RequestMapping("/mp-user-join")
-    public String getMemberJoin(ModelMap modelMap) throws Exception {
-        ArrayList<String> cdDtlList = new ArrayList<String>();
-        // 코드 set
-        cdDtlList.add("MEM_CD");
-        modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+    public String getMemberJoin(ModelMap modelMap , HttpSession session , HttpServletResponse response) throws Exception {
+        if(session.getAttribute("niceSession")== null) {
+            authNotAllowed(response);
+        } else {
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("MEM_CD");
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
+        }
         return "/front/mp/MPUserJoin.front";
-
     }
 
 
@@ -241,10 +254,14 @@ public class MPUserController {
      */
     @PostMapping(value="/insert")
     public String insertUser(MPJoinDto mpJoinDto ,
-                            HttpServletRequest req) throws Exception
+                            HttpServletRequest req,
+                             HttpServletResponse response,
+                             HttpSession session) throws Exception
     {
         try
-        {
+        {  if(session.getAttribute("niceSession")== null) {
+            authNotAllowed(response);
+        } else {
             MPAUserDto mpaUserDto = mpJoinDto.getMpaUserDto();
             String clientIp = getClientIp(req);
             mpaUserDto.setRegIp(clientIp);
@@ -257,11 +274,11 @@ public class MPUserController {
             mpePartsCompanyDTO.setRegIp(clientIp);
             mpePartsCompanyDTO.setModId(mpaUserDto.getId());
             mpePartsCompanyDTO.setModIp(clientIp);
-            mpaUserService.insertUser(mpaUserDto , mpePartsCompanyDTO , mpJoinDto);
+            mpaUserService.insertUser(mpaUserDto, mpePartsCompanyDTO, mpJoinDto);
 
             //이메일 발송
             COMailDTO cOMailDTO = new COMailDTO();
-            cOMailDTO.setSubject("["+siteName+"] 회원 가입 완료 안내");
+            cOMailDTO.setSubject("[" + siteName + "] 회원 가입 완료 안내");
             //인증요청일시
             //수신자 정보
             COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
@@ -276,11 +293,12 @@ public class MPUserController {
 
             receiverDto.setNote1(mpaUserDto.getName());
             receiverDto.setNote2(now_dt);
-            receiverDto.setNote3(mpaUserDto.getNtfyEmailRcvYn() =='Y' ? "동의" : "미동의");
-            receiverDto.setNote4(mpaUserDto.getNtfySmsRcvYn() =='Y' ? "동의" : "미동의");
+            receiverDto.setNote3(mpaUserDto.getNtfyEmailRcvYn() == 'Y' ? "동의" : "미동의");
+            receiverDto.setNote4(mpaUserDto.getNtfySmsRcvYn() == 'Y' ? "동의" : "미동의");
             //수신자 정보 등록
             cOMailDTO.getReceiver().add(receiverDto);
             cOMessageService.sendMail(cOMailDTO, "UserJoinSuccess.html");
+        }
 
         }
         catch (Exception e)
@@ -304,8 +322,9 @@ public class MPUserController {
      * @throws Exception
      */
     @RequestMapping(value = "/join-success" , method = RequestMethod.POST)
-    public String getMemberJoinSuccess(MPAUserDto mpaUserDto , ModelMap modelMap) throws Exception
+    public String getMemberJoinSuccess(MPAUserDto mpaUserDto , ModelMap modelMap,HttpSession session) throws Exception
     {
+        session.removeAttribute("niceSession");
         MPAUserDto mpaUserDto2 = mpaUserService.selectUserDtlId(mpaUserDto);
         modelMap.addAttribute("rtnData", mpaUserDto2);
 
@@ -320,19 +339,26 @@ public class MPUserController {
      * @throws Exception
      */
     @RequestMapping("/mp-member-parts-join")
-    public String getMemberPartsJoin(ModelMap modelMap) throws Exception
+    public String getMemberPartsJoin(ModelMap modelMap , HttpSession session , HttpServletResponse response) throws Exception
     {
-        // 공통코드 배열 셋팅
-        ArrayList<String> cdDtlList = new ArrayList<String>();
-        // 코드 set
-        cdDtlList.add("COMPANY_TYPE");
-        cdDtlList.add("CO_YEAR_CD");
+        if(session.getAttribute("niceSession") == null) {
+            authNotAllowed(response);
+        } else {
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("COMPANY_TYPE");
+            cdDtlList.add("CO_YEAR_CD");
 
-        modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+
+        }
+        // 공통코드 배열 셋팅
 
         return "/front/mp/MPMemberPartsJoin.front";
-
     }
+
+
 
     /**
      * 부품사 조회
@@ -350,6 +376,14 @@ public class MPUserController {
 
         return "jsonView";
 
+    }
+
+    //인증 체크
+    private static void authNotAllowed(HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out= response.getWriter();
+        out.println("<script>alert('인증시간이 만료 되었습니다.\\n다시 인증을 해주세요.'); window.location.href='/member/join';</script>");
+        out.flush();
     }
 
     private static String getClientIp(HttpServletRequest req) {
