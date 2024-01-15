@@ -2309,6 +2309,33 @@
 
 
 
+	<!--
+  쿼리명 : EBBEpisdMapper.selectEpisdDtlCheck
+  설  명 : 교육차수 상세를 조회한다.
+   수정일     수정자       수정내용
+ ==========   ======    ==============
+ 2024.01.15   박준희       최초생성
+ -->
+	<select id="selectEpisdDtlCheck" parameterType="EBBEpisdDTO" resultType="EBBEpisdSurveyDTO">
+		SELECT /*EBBEpisdMapper.selectEpisdDtlCheck*/
+			A.EDCTN_SEQ
+			, A.EPISD_YEAR
+			, A.EPISD_ORD
+			, A.EPISD_SEQ
+		    , A.SRV_SEQ
+			, (SELECT COUNT(SRV_SEQ) FROM SV_QSTN_DTL WHERE SRV_SEQ = B.SRV_SEQ) AS QSTN_CNT
+			, (SELECT COUNT(SRV_RSPN_SEQ) FROM SV_RSPN_MST WHERE SRV_SEQ = B.SRV_SEQ AND RFNC_SEQ = A.EPISD_SEQ AND RFNC_CD = 'EDU' AND MEM_SEQ = C.MEM_SEQ) AS RSPN_CNT
+			, B.RSPN_MM
+			, B.CNTN
+			, C.MEM_SEQ
+		FROM  ED_EDCTN_EPISD_MST A
+    	LEFT JOIN SV_MST B ON A.SRV_SEQ = B.SRV_SEQ
+		LEFT JOIN EP_EDCTN_PTCPT_MST C ON A.EPISD_SEQ = C.EPISD_SEQ
+		WHERE
+			A.EDCTN_SEQ = #{detailsKey}
+			AND A.EPISD_YEAR = #{episdYear}
+			AND A.EPISD_ORD = #{episdOrd}
+	</select>
 </mapper>
 
 

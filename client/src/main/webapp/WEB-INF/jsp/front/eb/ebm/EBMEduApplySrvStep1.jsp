@@ -64,7 +64,7 @@
                         <div class="btn-wrap">
                             <div class="btn-set">
                                 <a class="btn-solid small gray-bg" href="javascript:"><span>신청내역 상세</span></a>
-                                <a class="btn-solid small black-bg" data-srvseq="${rtnData.srvSeq}" href="javascript:"><span>참여하기</span></a>
+                                <a class="btn-solid small black-bg" href="./srvStep2?detailsKey=${rtnData.edctnSeq}&episdYear=${rtnData.episdYear}&episdOrd=${rtnData.episdOrd}"><span>참여하기</span></a>
                             </div>
                             <div class="btn-set">
                             </div>

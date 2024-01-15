@@ -612,10 +612,10 @@
 					, (select @rownum:=0, @grp:='') r
 					<choose>
 						<when test="siteGubun == 'front' and typeCd == 'CON'">
-							WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 3 AND LEFT(CD,3) = #{typeCd}
+							WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 3 AND LEFT(CD,3) = #{typeCd} AND ctgry_cd !='EDU05'
 						</when>
 						<otherwise>
-							WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd}
+							WHERE a.CD_ID = 'SURVEY_TYPE' AND a.USE_YN = 'Y' AND a.DPTH > 2 AND LEFT(CD,3) = #{typeCd} AND ctgry_cd !='EDU05'
 						</otherwise>
 					</choose>
 

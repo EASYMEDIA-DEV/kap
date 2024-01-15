@@ -1636,4 +1636,13 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 		cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
 	}
+
+	/**
+	 * 교육차수 상세를 조회한다.(설문유효성)
+	 */
+	public EBBEpisdSurveyDTO selectEpisdDtlCheck(EBBEpisdDTO eBBEpisdDTO) throws Exception {
+
+		return eBBEpisdMapper.selectEpisdDtlCheck(eBBEpisdDTO);
+	}
+
 }

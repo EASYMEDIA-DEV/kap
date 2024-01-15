@@ -1,21 +1,37 @@
 package com.kap.front.controller.eb;
 
+import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdSurveyDTO;
 import com.kap.core.dto.eb.ebb.EBBLctrDTO;
 import com.kap.core.dto.eb.ebb.EBBisttrDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
+import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
+import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBBEpisdService;
+import com.kap.service.SVASurveyService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +61,8 @@ public class EBMMypageController
 
     /** 서비스 **/
     public final EBBEpisdService eBBEpisdService;
+
+    private final SVASurveyService sVSurveyService;
 
     /**
      * 교육/세미나 사업 신청내역 목록/my-page/edu-apply/list
@@ -173,4 +191,94 @@ public class EBMMypageController
         return "front/eb/ebm/EBMEduApplySrvStep1.front";
     }
 
+
+    @GetMapping(value="/my-page/edu-apply/srvStep2")
+    public String getApplySrvStep2(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "front/eb/ebm/EBMEduApplySrvStep2.front";
+        try{
+
+            EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+
+            if (cOLoginUserDTO.getSeq() == rtnData.getMemSeq()){
+
+                if (rtnData.getRspnCnt() > 0){
+                    modelMap.addAttribute("msg", "이미 제출한 설문입니다.");
+                    modelMap.addAttribute("url", "/");
+                    vwUrl = "front/COBlank.error";
+                }else{
+                    SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
+                    sVASurveyDTO.setDetailsKey(Integer.toString(rtnData.getSrvSeq()));
+
+                    sVASurveyDTO.setTypeCd("EDU");
+                    sVASurveyDTO.setEpisdSeq(rtnData.getEpisdSeq());
+                    SVASurveyMstInsertDTO sVASurveyMstInsertDTO = sVSurveyService.selectSurveyTypeEduDtl(sVASurveyDTO);
+
+                    if (sVASurveyMstInsertDTO != null){
+                        modelMap.addAttribute("rtnData", rtnData);
+                        modelMap.addAttribute("rtnSurveyData", sVASurveyMstInsertDTO);
+                    }else{
+                        modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                        modelMap.addAttribute("url", "/");
+                        vwUrl = "front/COBlank.error";
+                    }
+                }
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return vwUrl;
+    }
+
+    @Operation(summary = "응답 등록", tags = "", description = "응답 마스터, 응답 상세")
+    @PostMapping(value="/my-page/edu-apply/insert")
+    public String insertSurveyList(@Valid @RequestBody SVASurveyRspnMstInsertDTO sVASurveyRspnMstDTO, HttpServletRequest request , ModelMap modelMap) throws Exception
+    {
+        try
+        {
+
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            String regIp = CONetworkUtil.getMyIPaddress(request);
+            String regId = cOLoginUserDTO.getId();
+
+            sVASurveyRspnMstDTO.setRegId(regId);
+            int respCnt = sVSurveyService.insertSurveyRspnList(sVASurveyRspnMstDTO, request);
+
+            if (respCnt > 0){
+
+                SVASurveyRspnScoreDTO sVASurveyRspnScoreDTO = new SVASurveyRspnScoreDTO();
+                sVASurveyRspnScoreDTO.setSrvType("EDU");
+                sVASurveyRspnScoreDTO.setTargetSeq(sVASurveyRspnMstDTO.getRfncSeq());
+                sVASurveyRspnScoreDTO.setRegId(regId);
+                sVASurveyRspnScoreDTO.setRegIp(regIp);
+
+                sVSurveyService.selectSurveyScore(sVASurveyRspnScoreDTO);
+
+            }
+
+            modelMap.addAttribute("respCnt", respCnt);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
 }
