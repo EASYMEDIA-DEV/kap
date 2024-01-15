@@ -143,14 +143,18 @@ public class COCOmmController {
      * @throws Exception
      */
     @GetMapping(value = "/nice/my-idnttvrfct-confirm")
-    public String idnttvrfctConfirm(HttpServletRequest request , ModelMap modelMap) throws Exception {
+    public String idnttvrfctConfirm(HttpServletRequest request , ModelMap modelMap , HttpSession session) throws Exception {
         COCNiceMyResDto cocNiceMyResDto = cOCommService.idnttvrfctConfirm(request.getParameter("enc_data"), request);
         modelMap.addAttribute("rtnData",cocNiceMyResDto);
+
         log.info("*************************************");
         log.info("ci:::::"+cocNiceMyResDto.toString());
         log.info("ci:::::"+cocNiceMyResDto.getMobile_no());
         log.info("*************************************");
 
+        session.setAttribute("niceSession", cocNiceMyResDto);
+        session.setMaxInactiveInterval(3*60); //TODO 양현우 506 시간 재 설정 하기
+//        session.setMaxInactiveInterval(20); //TODO 양현우 506 시간 재 설정 하기
 
         if(cocNiceMyResDto.getReceivedatass().getRedirectUrl().equals("no")) {
             return "/front/co/CONiceUserPopUp";
