@@ -370,6 +370,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     $("#btnPartsChg").hide();
                                     alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
                                 } else {
+                                    $(".f-title1").text("소속부품사(이직) 변경 정보")
                                     $("#partTypeChg").val("turnOver");
                                     $("#bsnmNo").prop('readonly', false);
                                     $("#bsnmNo").attr('disabled', false);
@@ -500,7 +501,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             alert(msgCtrl.getMsg("fail.mp.join.al_034"));
                             return false;
                         }
-                        if($(".pstnCdOld").val() =='MEM_CD01007' && $(".pstnNmOld").val() =='') {
+                        if($(".pstnCdOld").val() =='MEM_CD01007' && $(".pstnNm").val() =='') {
                             alert(msgCtrl.getMsg("fail.mp.join.al_035"));
                             return false;
                         }
@@ -509,7 +510,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                     $("#formName").val($("#name").text());
                     $("#formBirth").val($("#birth").text());
-                    $("#formGndr").val($("#gndr").text()=='남'?'1':'2');
+                    $("#formGndr").val($("#gndr").text()=='남'?'1':'0');
                     $("#formHpNo").val($("#hpNo").text());
                     $("#formEmail").val($("#emailNameNew").val() + "@" + $("#emailAddrNew").val());
                     $("#formNtfyEmailRcvYn").val($("input[name='ntfyEmailRcvYn']:checked").val())
