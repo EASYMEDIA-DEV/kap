@@ -546,13 +546,13 @@
                         </div>
                     </div>
                 </fieldset><fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
-                        <div class="col-sm-2">
-                            <input type="text" class="form-control phoneChk input-sm" name="newCmpnTelNo" value="${rtnInfo.newCmpnTelNo}" title="회사 전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" placeholder="회사전화번호 입력">
-                        </div>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control phoneChk input-sm" name="newCmpnTelNo" value="${rtnInfo.newCmpnTelNo}" title="회사 전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" placeholder="회사전화번호 입력">
                     </div>
-                </fieldset>
+                </div>
+            </fieldset>
                 <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
