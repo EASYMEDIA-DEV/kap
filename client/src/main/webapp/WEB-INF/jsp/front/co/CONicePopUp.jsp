@@ -10,7 +10,7 @@
 		<input type="hidden" id="birthdate" name="birthdate"  value="${rtnData.birthdate}"/>
 		<input type="hidden" id="gndr" name="gndr"  value="${rtnData.gender}"/>
 		<input type="hidden" id="nationalinfo" name="nationalinfo"  value="${rtnData.nationalinfo}"/>
-		<input type="hidden" id="mobile_no" name="mobile_no"  value="${rtnData.mobile_no}"/>
+		<input type="hidden" id="mobileno" name="mobileno"  value="${rtnData.mobileno}"/>
 		<input type="hidden" id="ci" name="ci"  value="${rtnData.ci}"/>
 		<input type="hidden" id="resultcode" name="resultcode"  value="${rtnData.resultcode}"/>
 		<input type="hidden" id="param1" name="param1"  value="${rtnData.receivedatass.paramsOne}"/>
@@ -25,6 +25,7 @@
 					if(document.getElementById("param2").value != document.getElementById("ci").value) {
 						alert("본인인증에 실패하였습니다.");
 					} else {
+
 						alert("본인인증에 성공하였습니다.");
 
 						window.opener.name = "nicePop";

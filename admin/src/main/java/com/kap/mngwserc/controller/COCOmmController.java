@@ -154,7 +154,7 @@ public class COCOmmController {
      * birthdate
      * gender
      * nationalinfo
-     * mobile_no
+     * mobileno
      * ci
      * 사용하고하지는 dto에 변수 추가 하기
      * @param request

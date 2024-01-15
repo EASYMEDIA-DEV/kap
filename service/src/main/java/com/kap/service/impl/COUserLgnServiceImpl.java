@@ -329,12 +329,9 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 				coIdFindDto.setBirthdate(replaceBirth.substring(0, 4) + "-" + replaceBirth.substring(4, 6) + "-" + replaceBirth.substring(6));
 		}
 
-		if(!StringUtils.isEmpty(coIdFindDto.getMobile_no())) {
-			String replaceHp = coIdFindDto.getMobile_no().replace("-", "");
-			coIdFindDto.setMobile_no(replaceHp.substring(0, 3) + "-" + replaceHp.substring(3, 7) + "-" + replaceHp.substring(7));
-		}
-		if(!StringUtils.isEmpty(coIdFindDto.getCi())) {
-			coIdFindDto.setMobile_no("");
+		if(!StringUtils.isEmpty(coIdFindDto.getMobileno())) {
+			String replaceHp = coIdFindDto.getMobileno().replace("-", "");
+			coIdFindDto.setMobileno(replaceHp.substring(0, 3) + "-" + replaceHp.substring(3, 7) + "-" + replaceHp.substring(7));
 		}
 
 

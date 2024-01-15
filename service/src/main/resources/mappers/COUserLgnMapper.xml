@@ -175,8 +175,8 @@
 		<if test="birthdate != null and birthdate != ''.toString() ">
 		  and a.birth = #{birthdate}
 		</if>
-		<if test="mobile_no != null and mobile_no != ''.toString() ">
-		  and a.hp_no =#{mobile_no}
+		<if test="mobileno != null and mobileno != ''.toString() ">
+		  and a.hp_no =#{mobileno}
 		</if>
 		<if test="email != null and email != ''.toString() ">
 			and a.email =#{email}

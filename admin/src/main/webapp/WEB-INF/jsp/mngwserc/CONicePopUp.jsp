@@ -10,7 +10,7 @@
 		<input type="hidden" id="birthdate" name="birthdate"  value="${rtnData.birthdate}"/>
 		<input type="hidden" id="gender" name="gender"  value="${rtnData.gender}"/>
 		<input type="hidden" id="nationalinfo" name="nationalinfo"  value="${rtnData.nationalinfo}"/>
-		<input type="hidden" id="mobile_no" name="mobile_no"  value="${rtnData.mobile_no}"/>
+		<input type="hidden" id="mobileno" name="mobileno"  value="${rtnData.mobileno}"/>
 		<input type="hidden" id="ci" name="ci"  value="${rtnData.ci}"/>
 	</form>
 	<script type="text/javascript">

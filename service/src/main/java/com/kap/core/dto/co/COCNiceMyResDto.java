@@ -13,7 +13,7 @@ import lombok.*;
 @Schema(title = "나이스 api 본인인증 정보 dto")
 public class COCNiceMyResDto  {
 
-    @Schema(title = "결괔도ㅡ" , example = "0000" )
+    @Schema(title = "결과코드" , example = "0000" )
     private String resultcode;
 
     @Schema(title = "요청 고유 번호(회원사에서 전달보낸 값)" , example = "REQ123" )
@@ -73,7 +73,7 @@ public class COCNiceMyResDto  {
     private String mobile_co;
 
     @Schema(title = "휴대폰번호" , example = "010123455667" )
-    private String mobile_no;
+    private String mobileno;
 
     @Schema(title = "개인 식별 코드(CI)" , example = "asd" )
     private String ci;

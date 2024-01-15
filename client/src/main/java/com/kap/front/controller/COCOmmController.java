@@ -149,7 +149,7 @@ public class COCOmmController {
 
         log.info("*************************************");
         log.info("ci:::::"+cocNiceMyResDto.toString());
-        log.info("ci:::::"+cocNiceMyResDto.getMobile_no());
+        log.info("ci:::::"+cocNiceMyResDto.getMobileno());
         log.info("*************************************");
 
         session.setAttribute("niceSession", cocNiceMyResDto);
@@ -169,7 +169,7 @@ public class COCOmmController {
      * birthdate
      * gender
      * nationalinfo
-     * mobile_no
+     * mobileno
      * ci
      * 사용하고하지는 dto에 변수 추가 하기
      * @param request

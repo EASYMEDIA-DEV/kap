@@ -15,7 +15,7 @@
 		<input type="hidden" id="birthdate" name="birthdate"  value="${rtnData.birthdate}"/>
 		<input type="hidden" id="gndr" name="gndr"  value="${rtnData.gender}"/>
 		<input type="hidden" id="nationalinfo" name="nationalinfo"  value="${rtnData.nationalinfo}"/>
-		<input type="hidden" id="mobile_no" name="mobile_no"  value="${rtnData.mobile_no}"/>
+		<input type="hidden" id="mobileno" name="mobileno"  value="${rtnData.mobileno}"/>
 		<input type="hidden" id="ci" name="ci"  value="${rtnData.ci}"/>
 		<input type="hidden" id="resultcode" name="resultcode"  value="${rtnData.resultcode}"/>
 		<input type="hidden" id="param1" name="param1"  value="${rtnData.receivedatass.paramsOne}"/>
@@ -35,7 +35,7 @@
 					opener.document.getElementById("birth").innerText = '${rtnData.birthdate.substring(0,4)}' + "-" + '${rtnData.birthdate.substring(4,6)}' + "-" + '${rtnData.birthdate.substring(6)}';
 					opener.document.getElementById("gndr").innerText = '${rtnData.gender == "1" ? "남" : "여"}';
 					// TODO 휴대폰 임의
-					opener.document.getElementById("telNo").innerText = '010-1234-5678';
+					opener.document.getElementById("telNo").innerText = '${rtnData.mobileno.substring(0,3)}'+"-"+'${rtnData.mobileno.substring(3,7)}'+"-"+'${rtnData.mobileno.substring(7)}';
 
 					if('${rtnData.receivedatass.paramsTwo}' == "compChg") {
 						var formObj = opener.$("formUserSubmit").serialize();

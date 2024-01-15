@@ -14,11 +14,8 @@
     String ntfySmsRcvYn = request.getParameter("ntfySmsRcvYn");
     String ntfyEmailRcvYn = request.getParameter("ntfyEmailRcvYn");
     String memCd = request.getParameter("param1");
-//    String hpNo = request.getParameter("mobile_no");
-    //TODO 휴대폰 번호 아직 안넘와서 임시로 세팅
-    String hpNo = "010-1234-5678";
-
-
+    String hpNo = request.getParameter("mobileno");
+    
 
     String bsnmNo = request.getParameter("bsnmNo") ;       //사업자등록번호
     String bsnmNm = request.getParameter("cmpn_nm_new");  //부품사명
