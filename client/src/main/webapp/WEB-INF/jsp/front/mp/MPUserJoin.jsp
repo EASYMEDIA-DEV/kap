@@ -15,7 +15,6 @@
     String ntfyEmailRcvYn = request.getParameter("ntfyEmailRcvYn");
     String memCd = request.getParameter("param1");
     String hpNo = request.getParameter("mobileno");
-    
 
     String bsnmNo = request.getParameter("bsnmNo") ;       //사업자등록번호
     String bsnmNm = request.getParameter("cmpn_nm_new");  //부품사명
@@ -284,7 +283,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input">
-                                                        <input type="text" class="notRequired" placeholder="일반 전화번호 입력" id="telNo" name="mpaUserDto.telNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" >
+                                                        <input type="text" class="notRequired" placeholder="일반 전화번호 입력" id="telNo" name="mpaUserDto.telNo" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" >
                                                     </div>
                                                 </div>
                                             </div>

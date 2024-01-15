@@ -153,7 +153,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input">
-                                                                <input type="text" class="form-control input-sm telNo cleanInit" id="telNo" name="telNo"   oninput="this.value=this.value.replace(/[^0-9]/g, '')"  title="회사 전화번호"/>
+                                                                <input type="text" class="form-control input-sm telNo cleanInit" id="telNo" name="telNo"   oninput="this.value=this.value.replace(/[^0-9]/g, '')"  title="회사 전화번호" maxlength="13"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -573,7 +573,7 @@
                         </div>
                     </div>
                     <div class="user-opt-area">
-                        <button class="btnClosePop btnPopClose" title="팝업 닫기" type="button"><span>닫기</span></button>
+                        <button class="btnClosePop btnPopClose btn-close" title="팝업 닫기" type="button"><span>닫기</span></button>
                     </div>
                 </div>
             </div>

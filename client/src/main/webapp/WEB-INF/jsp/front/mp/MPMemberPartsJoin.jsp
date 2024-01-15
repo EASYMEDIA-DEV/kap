@@ -32,7 +32,7 @@
     <input type="hidden" id="fndnNtfyRcvYn" name="fndnNtfyRcvYn" value="<%=fndnNtfyRcvYn%>" />
     <input type="hidden" id="ntfySmsRcvYn" name="ntfySmsRcvYn" value="<%=ntfySmsRcvYn%>" />
     <input type="hidden" id="ntfyEmailRcvYn" name="ntfyEmailRcvYn" value="<%=ntfyEmailRcvYn%>" />
-    <input type="hidden" id="hpNo" name="hpNo" value="<%=hpNo%>" />
+    <input type="hidden" id="mobileno" name="mobileno" value="<%=hpNo%>" />
     <input type="hidden" id="param1" name="param1" value="<%=memCd%>" />
     <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="hidden" id="email" name="email" class="notRequired" />

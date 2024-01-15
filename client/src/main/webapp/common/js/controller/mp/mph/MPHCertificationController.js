@@ -53,9 +53,23 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             cancelBtn : {
                 event : {
                     click : function() {
-                        if (confirm(msgCtrl.getMsg("confirm.cancel"))) {
+                        if (confirm(msgCtrl.getMsg("confirm.cancelInit"))) {
                             location.href ="/my-page/main";
                         }
+                    }
+                }
+            },
+            pwd : {
+                event : {
+                    input : function() {
+                        $(".for-status-chk1").removeClass('error');
+                    }
+                }
+            },
+            passwordConfirm : {
+                event : {
+                    input : function() {
+                        $(".for-status-chk2").removeClass('error');
                     }
                 }
             },
@@ -131,62 +145,44 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             return false;
                         }
 
-                        let email = $("#emailNameNew").val();
-                        let emailRegex = /^\S{0,64}$/;
-                        if(!emailRegex.test(email)) {
-                            alert(msgCtrl.getMsg("fail.mp.join.al_023"));
-                            $("#emailNameNew").focus();
-                            return false;
-                        }
-                        let emailAddr = $("#emailAddrNew").val();
-
-                        let emailAddrRegex = /\./;
-                        if(!emailAddrRegex.test(emailAddr)) {
-                            alert(msgCtrl.getMsg("fail.mp.join.al_023"));
-                            return false;
-                        }
-
-                        $("#email").val($("#emailNameNew").val()+"@"+$("#emailAddrNew").val());
-
-                        if(cmmCtrl.getEmailChk($("#email").val())) {
-                            alert(msgCtrl.getMsg("fail.mp.join.al_023"));
-                            return false;
-                        }
-
                         $("#email-auth").val($("#emailNameNew").val()+"@"+$("#emailAddrNew").val());
+                        if(cmmCtrl.getEmailChk($("#email-auth").val())) {
+                            var $formObj5 = $("#formUserSubmit");
+                            cmmCtrl.frmAjax(function(respObj) {
+                                if(respObj.dupChk == 'Y') {
+                                    $("#emailAuthDis").show();
+                                    $("#timer").show();
+                                    $("#emailAuthChk").show();
+                                    $(".for-status-chk-email").show();
+                                    $(".authName").text("재인증");
+                                    timeSecond = 300;
+                                    $('#timer span').text(getTimeString(timeSecond));
+                                    cmmCtrl.frmAjax(function (data){
+                                        secretEmailAuth = data;
+                                    }, "/member/email-auth-number", $formObj5, "post", "json", true);
 
-
-                        var $formObj5 = $("#formUserSubmit");
-                        cmmCtrl.frmAjax(function(respObj) {
-                            if(respObj.dupChk == 'Y') {
-                                $("#emailAuthDis").show();
-                                $("#timer").show();
-                                $("#emailAuthChk").show();
-                                $(".for-status-chk-email").show();
-                                $(".authName").text("재인증");
-                                timeSecond = 300;
-                                $('#timer span').text(getTimeString(timeSecond));
-                                cmmCtrl.frmAjax(function (data){
-                                    secretEmailAuth = data;
-                                }, "/member/email-auth-number", $formObj5, "post", "json", true);
-
-                                if (intervalVar != undefined) {
-                                    clearInterval(intervalVar);
-                                }
-                                $("#emailAuthDis").show();
-                                intervalVar = setInterval(function() {
-                                    if (timeSecond != 0) {
-                                        timeSecond = timeSecond - 1;
-                                        $('#timer span').text(getTimeString(timeSecond));
-                                    } else {
+                                    if (intervalVar != undefined) {
                                         clearInterval(intervalVar);
-                                        intervalVar = false;
                                     }
-                                }, 1000);
-                            } else {
-                                alert(msgCtrl.getMsg("fail.mp.join.al_017"));
-                            }
-                        }, "/member/dup-email", $formObj5, "POST", "json",'',false);
+                                    $("#emailAuthDis").show();
+                                    intervalVar = setInterval(function() {
+                                        if (timeSecond != 0) {
+                                            timeSecond = timeSecond - 1;
+                                            $('#timer span').text(getTimeString(timeSecond));
+                                        } else {
+                                            clearInterval(intervalVar);
+                                            intervalVar = false;
+                                        }
+                                    }, 1000);
+                                } else {
+                                    alert(msgCtrl.getMsg("fail.mp.join.al_017"));
+                                }
+                            }, "/member/dup-email", $formObj5, "POST", "json",'',false);
+                        } else {
+                            alert(msgCtrl.getMsg("fail.mp.join.al_023"));
+                            return false;
+                        }
+
 
                     }
                 }
@@ -196,16 +192,26 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             emailAuthChk : {
                 event : {
                     click : function() {
+                        console.log(secretEmailAuth);
                         if(timeSecond > 0) {
                             if($("#emailAuthNum").val() == secretEmailAuth) {
                                 emailChk = true;
                                 $("#emailAuthChk").hide();
                                 $("#timer").hide();
                                 $(".for-status-chk-email").addClass("satisfy");
+                                $("#emailNameNew").attr("disabled", true);
+                                $("#emailAddrNew").attr("disabled", true);
+                                $("#emailSelect").attr("disabled", true);
+                                $("#emailAuth").hide();
                             } else {
-                                emailChk = false;
-                                alert(msgCtrl.getMsg("fail.mp.join.al_025"));
+                                if($("#emailAuthNum").val().trim().length == 0) {
+                                    alert(msgCtrl.getMsg("fail.mp.join.al_025"));
+                                } else {
+                                    alert(msgCtrl.getMsg("fail.mp.join.al_039"));
+                                }
+
                                 $(".for-status-chk-email").removeClass("satisfy");
+                                emailChk = false;
                                 return false;
                             }
                         } else {
@@ -474,20 +480,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             return false;
                         }
                     }
-                    let email = $("emailNameNew").val();
-                    let emailRegex = /^\S{0,64}$/;
-                    if(!emailRegex.test(email)) {
-                        alert(msgCtrl.getMsg("fail.mp.join.al_023"));
-                        $("#emailNameNew").focus();
-                        return false;
-                    }
-                    let emailAddr = $("#emailAddrNew").val();
 
-                    let emailAddrRegex = /\./;
-                    if(!emailAddrRegex.test(emailAddr)) {
+
+                    if(!cmmCtrl.getEmailChk($("#emailNameNew").val()+"@"+$("#emailAddrNew").val())) {
                         alert(msgCtrl.getMsg("fail.mp.join.al_023"));
                         return false;
                     }
+
                     if(!emailChk) {
                         alert(msgCtrl.getMsg("fail.mp.join.al_015"));
                         return false;
