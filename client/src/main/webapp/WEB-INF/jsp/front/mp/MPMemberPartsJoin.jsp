@@ -17,7 +17,8 @@
     String memCd = request.getParameter("param1");
 //    String hpNo = request.getParameter("mobile_no");
     //TODO 휴대폰 번호 아직 안넘와서 임시로 세팅
-    String hpNo = request.getParameter("mobile_no") ? == null :"010-1234-5678";
+//    String hpNo = request.getParameter("mobile_no") ? == null :"010-1234-5678";
+    String hpNo = "010-1234-5678";
 
 %>
 
