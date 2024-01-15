@@ -1003,15 +1003,8 @@
         </div>
     </div>
 
-
-    <div class="scroll-gauge">
-        <div class="bar"></div>
-    </div>
-
-    <div class="dimd"></div>
-
     <!-- intro -->
-    <div class="intro-motion" >
+    <div class="intro-motion" style="display: none;">
         <div class="viedeo-area">
             <div class="for-masking">
                 <video src="/common/videos/intro.mp4" id="introVideo" muted preload="auto" autoplay playsinline></video>

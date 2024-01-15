@@ -127,11 +127,13 @@ var commonScript = (function(){
       }
       $(".accordion-st .acco-click-area").off().on("click", function(e){
         if($(e.target).parents(".form-checkbox").size() == 0){
-          $(this).parents(".list-item").siblings().removeClass("active").find(".acco-hide-area").stop(true, true).slideUp(300);
-          if(!$(this).parents(".list-item").hasClass("active")){
-            $(this).parents(".list-item").addClass("active").find(".acco-hide-area").stop(true, true).slideDown(300);
-          }else{
-            $(this).parents(".list-item").removeClass("active").find(".acco-hide-area").stop(true, true).slideUp(300);
+          if($(this).parents(".list-item").find(".acco-hide-area").length > 0){
+            $(this).parents(".list-item").siblings().removeClass("active").find(".acco-hide-area").stop(true, true).slideUp(300);
+            if(!$(this).parents(".list-item").hasClass("active")){
+              $(this).parents(".list-item").addClass("active").find(".acco-hide-area").stop(true, true).slideDown(300);
+            }else{
+              $(this).parents(".list-item").removeClass("active").find(".acco-hide-area").stop(true, true).slideUp(300);
+            }
           }
         }
       });
