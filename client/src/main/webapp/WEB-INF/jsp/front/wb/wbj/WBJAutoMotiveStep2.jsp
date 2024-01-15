@@ -253,7 +253,7 @@
                     <div class="data-line">
                       <div class="form-group">
                         <div class="form-select">
-                          <select id="" name="newPstnCd" title="직급 선택">
+                          <select class="form-control input-sm" id="" name="newPstnCd" title="직급 선택">
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                               <c:if test="${fn:contains(cdList.cd, 'MEM_CD010')}">
@@ -263,7 +263,7 @@
                           </select>
                         </div>
                         <div class="form-input">
-                          <input type="text" name="newPstnNm" placeholder="직급 입력">
+                          <input class="notRequired" type="text" name="newPstnNm" placeholder="직급 입력">
                         </div>
                       </div>
                     </div>
@@ -314,7 +314,7 @@
                     <div class="data-line">
                       <div class="form-group">
                         <div class="form-input">
-                          <input type="number" name="newHpNo" placeholder="휴대폰번호 입력">
+                          <input type="text" class="phoneChk" name="newHpNo" placeholder="휴대폰번호 입력" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="14">
                         </div>
                       </div>
                     </div>
@@ -330,7 +330,7 @@
                     <div class="data-line">
                       <div class="form-group">
                         <div class="form-input">
-                          <input type="number" name="newCmpnTelNo" placeholder="회사 전화번호 입력">
+                          <input type="text" class="phoneChk" name="newCmpnTelNo" placeholder="회사 전화번호 입력" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="14">
                         </div>
                       </div>
                     </div>

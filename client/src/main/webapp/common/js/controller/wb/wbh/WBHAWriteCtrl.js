@@ -67,7 +67,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             $(this).val(100);
                             $(this).parents('.amount-div').find('.plus').addClass("disabled");
                             $(this).parents('.amount-div').find('.minus').removeClass("disabled");
-                        } else if (cnt < 0) {
+                        } else if (cnt <= 0) {
                             alert('최소 수량은 1개까지 입력가능합니다.');
                             $(this).val(1);
                             $(this).parents('.amount-div').find('.plus').removeClass("disabled");

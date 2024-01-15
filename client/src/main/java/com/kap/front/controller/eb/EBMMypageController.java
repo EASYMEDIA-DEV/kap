@@ -2,6 +2,9 @@ package com.kap.front.controller.eb;
 
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBLctrDTO;
+import com.kap.core.dto.eb.ebb.EBBisttrDTO;
+import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBBEpisdService;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * <pre>
@@ -45,7 +50,7 @@ public class EBMMypageController
      * 교육/세미나 사업 신청내역 목록/my-page/edu-apply/list
      */
     @GetMapping("/my-page/edu-apply/list")
-    public String getMainPage(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getApplyList(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try{
 
@@ -100,7 +105,7 @@ public class EBMMypageController
         String rtnView = "front/eb/ebm/EBMEduListAjax";
         try
         {
-            System.out.println("여기");
+            System.out.println("여기 eBBEpisdDTO= " +eBBEpisdDTO);
             //교육 사업 신청내역 조회
             eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
 
@@ -118,6 +123,54 @@ public class EBMMypageController
         }
 
         return rtnView;
+    }
+
+    /**
+     * 교육/세미나 사업 신청내역 상세/my-page/edu-apply/detail
+     */
+    @GetMapping("/my-page/edu-apply/detail")
+    public String getApplyDetail(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+
+        eBBEpisdDTO.setMypageYn("Y");
+        eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+        HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+        EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
+        EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");//교육장 정보
+        List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
+        List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
+
+
+
+
+        modelMap.addAttribute("rtnData", rtnDto);
+        modelMap.addAttribute("roomDto", roomDto);
+        modelMap.addAttribute("lctrDtoList", lctrDtoList);
+        modelMap.addAttribute("isttrList", isttrList);
+
+
+        return "front/eb/ebm/EBMEduApplyDtl.front";
+    }
+
+    /**
+     * 교육/세미나 사업 신청내역 상세/my-page/edu-apply/detail
+     */
+    @GetMapping("/my-page/edu-apply/srvStep1")
+    public String getApplySrvStep1(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+
+        eBBEpisdDTO.setMypageYn("Y");
+        eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+        HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+        EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
+
+
+        modelMap.addAttribute("rtnData", rtnDto);
+
+
+        return "front/eb/ebm/EBMEduApplySrvStep1.front";
     }
 
 }

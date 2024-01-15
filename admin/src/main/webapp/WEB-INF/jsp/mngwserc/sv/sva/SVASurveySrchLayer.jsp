@@ -93,10 +93,10 @@
                             <thead>
                             <tr>
                                 <th class="text-center">
-                                    <label class="checkbox-inline c-checkbox">
-                                        <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />
-                                        <span class="ion-checkmark-round"></span>
-                                    </label>
+<%--                                    <label class="checkbox-inline c-checkbox">--%>
+<%--                                        <input type="checkbox" class="checkboxAll notRequired" title="전체선택" />--%>
+<%--                                        <span class="ion-checkmark-round"></span>--%>
+<%--                                    </label>--%>
                                 </th>
                                 <th class="text-center">번호</th>
                                 <th class="text-center">설문유형</th>

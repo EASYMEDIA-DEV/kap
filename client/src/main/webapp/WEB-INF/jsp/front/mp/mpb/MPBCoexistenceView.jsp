@@ -26,14 +26,44 @@
                         <div class="sec-tit-area">
                             <p class="f-title3">${rtnBsnData.title}</p><!-- 2023-12-22 텍스트 수정 -->
                         </div>
+                        <c:choose>
+                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '부적합' || rtnBsnData.appctnSttsCdNm eq '미선정' || rtnBsnData.appctnSttsCdNm eq '사용자취소'
+                                     || rtnBsnData.appctnSttsCdNm eq '보완요청' || rtnBsnData.appctnSttsCdNm eq '탈락'}">
+                                <c:set var="classType" value="arr" />
+                            </c:when>
+                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수전'}">
+                                <c:set var="classType"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="classType" value="accepting" />
+                            </c:otherwise>
+                        </c:choose>
+
                         <div class="sec-con-area">
                             <div class="gray-bg-sec">
                                 <div class="flex">
                                     <p class="f-title1">${rtnBsnData.year} ${rtnBsnData.episd}차 ${rtnBsnData.bsnNm}</p>
                                     <div class="group">
-                                        <p class="index-num f-head">${rtnBsnData.rsumeSttsCdNm}</p>
                                         <div class="status-info-w">
-                                            <p class="box-label bigger accepting"><span>${rtnBsnData.appctnSttsCdNm}</span></p>
+                                            <c:choose>
+                                                <c:when test="${rtnBsnData.mrtsCd eq null}">
+                                                    <p class="index-num f-head">${rtnBsnData.rsumeSttsCdNm}</p>
+                                                    <p class="box-label bigger ${classType}"><span>${rtnBsnData.appctnSttsCdNm}</span></p>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <c:choose>
+                                                        <c:when test="${rtnBsnData.mrtsCd eq 'MNGCNSLT_DIS01'}">
+                                                            <p class="box-label bigger complete"><span>장관상</span></p>
+                                                        </c:when>
+                                                        <c:when test="${rtnBsnData.mrtsCd eq 'MNGCNSLT_DIS02'}">
+                                                            <p class="box-label bigger complete"><span>이사장</span></p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <p class="box-label bigger complete"><span>회장상</span></p>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:otherwise>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>

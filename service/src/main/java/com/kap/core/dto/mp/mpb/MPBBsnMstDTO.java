@@ -31,7 +31,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MPBBnsMstDTO extends BaseDTO {
+public class MPBBsnMstDTO extends BaseDTO {
 
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
@@ -46,7 +46,7 @@ public class MPBBnsMstDTO extends BaseDTO {
     private WBGAApplyMstDTO wbgaApplyMstDTO;
 
     @Schema(title = "검교정", example = "")
-    private WBHAApplyMstDTO wbhaApplyMstDTO;
+    private WBHAApplyMstDTO equiment;
     
     @Schema(title = "공급망", example = "")
     private WBIBSupplyMstDTO wBIBSupplyMstDTO;

@@ -670,6 +670,35 @@
 		     , expns_pmt
 			 , exps_yn
 			 , edctn_cmpltn_yn
+			<if test=' mypageYn == "Y".toString() '>
+				, stts_cd
+				, CASE STTS_CD
+				WHEN 'EDU_STTS_CD01' THEN '선발'
+				WHEN 'EDU_STTS_CD02' THEN '신청취소'
+				WHEN 'EDU_STTS_CD03' THEN '신청양도'
+				WHEN 'EDU_STTS_CD04' THEN '선발대기'
+				WHEN 'EDU_STTS_CD05' THEN '미선발'
+				WHEN 'EDU_STTS_CD06' THEN '교육취소'
+				ELSE '알 수 없음'
+				END AS stts_cd_nm
+				, cmptn_yn
+				, cmptn_dtm
+				, mem_seq
+				, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+				case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+				case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+				when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
+				when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
+				end
+				when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+				when stts_cd = 'EDU_STTS_CD06' then '교육취소'
+				end
+
+				when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+				end edu_stat
+				, ptcpt_dtm
+				, web_path
+			</if>
 		FROM (SELECT
 				  b.edctn_seq
 		           , a.episd_seq
@@ -732,12 +761,38 @@
 		           , a.expns_pmt
 				   , a.exps_yn
 				   , a.edctn_cmpltn_yn
+					<if test=' mypageYn == "Y".toString() '>
+						, stts_cd
+						, (select cd_nm from co_code_mst where cd=d.stts_cd) as stts_cd_nm
+						, cmptn_yn
+						, cmptn_dtm
+						, mem_seq
+						, ptcpt_dtm
+						, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+					</if>
 			  FROM ed_edctn_episd_mst a
-					   LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq) AA
+					   LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+						<if test=' mypageYn == "Y".toString() '>
+							LEFT JOIN (SELECT
+							episd_seq
+							, mem_seq
+							, stts_cd
+							, cmptn_yn
+							, cmptn_dtm
+							, reg_dtm as ptcpt_dtm
+							FROM ep_edctn_ptcpt_mst) d ON d.episd_seq = a.episd_seq
+						</if>
+			  ) AA
+
 		where
 			edctn_seq = #{detailsKey}
 			and episd_year = #{episdYear}
 		    and episd_ord = #{episdOrd}
+
+			<if test='mypageYn == "Y".toString() '>
+				/*AND (edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   edctn_end_dtm)*/
+				AND MEM_SEQ = #{memSeq}
+			</if>
 	</select>
 
 	<!--

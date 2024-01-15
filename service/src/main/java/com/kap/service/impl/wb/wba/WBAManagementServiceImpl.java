@@ -137,7 +137,7 @@ public class WBAManagementServiceImpl implements WBAManagementService {
         COMenuDTO coMenuDTO = new COMenuDTO();
         //사용자 메뉴
         coMenuDTO.setMenuSeq(wbaManageInsertDTO.getUserMenuSeq());
-        coMenuDTO.setUserUrl("/win-business/"+wbaManageInsertDTO.getBsnCd());
+        coMenuDTO.setUserUrl("/coexistence/business/"+wbaManageInsertDTO.getBsnCd()+"/content");
         coMenuDTO.setAdmUrl("/mngwserc/contentsid/"+wbaManageInsertDTO.getBsnCd());
         cOBUserMenuMapper.updateMenuUrl(coMenuDTO);
 
@@ -229,7 +229,7 @@ public class WBAManagementServiceImpl implements WBAManagementService {
         COMenuDTO coMenuDTO = new COMenuDTO();
         //사용자 메뉴
         coMenuDTO.setMenuSeq(wbaManageInsertDTO.getUserMenuSeq());
-        coMenuDTO.setUserUrl("/win-business/"+wbaManageInsertDTO.getBsnCd());
+        coMenuDTO.setUserUrl("/coexistence/business/"+wbaManageInsertDTO.getBsnCd()+"/content");
         coMenuDTO.setAdmUrl("/mngwserc/contentsid/"+wbaManageInsertDTO.getBsnCd());
         cOBUserMenuMapper.updateMenuUrl(coMenuDTO);
 

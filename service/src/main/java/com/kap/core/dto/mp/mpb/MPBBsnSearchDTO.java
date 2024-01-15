@@ -29,7 +29,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MPBBnsSearchDTO extends BaseDTO {
+public class MPBBsnSearchDTO extends BaseDTO {
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
     @Schema(title = "사업코드명", example = "")
@@ -96,7 +96,7 @@ public class MPBBnsSearchDTO extends BaseDTO {
     private String offerBsnmNo;
 
     @Schema(title = "검색 리스트", example = "")
-    List<MPBBnsSearchDTO> list;
+    List<MPBBsnSearchDTO> list;
 
     /* 검색 관련 코드 */
     @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")
@@ -104,4 +104,7 @@ public class MPBBnsSearchDTO extends BaseDTO {
 
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
+
+    @Schema(title = "자동차 훈격 코드", example = "")
+    private String mrtsCd;
 }

@@ -27,7 +27,7 @@
 											<c:if test="${menu2.data eq '근태 체크' && loginMap.authCd eq 'CS'}">
 												<a class="btn-two-depth ${fn:length(menu2.children) eq 0 || childrenGnbYn eq 'N' ? ' single-menu ' : ''} ${ parntMenuList[1].menuSeq eq menu2.attr.treeid ? 'active' : ''}" href="${ empty menu2.attr.link or fn:length(menu2.children) > 0 ? 'javascript:' : menu2.attr.link }"><span>${ menu2.data}</span></a>
 											</c:if>
-											<c:if test="${menu2.data ne '근태 체크'}">
+											<c:if test="${menu2.data ne '근태 체크'  && loginMap.authCd ne 'CS'}">
 												<a class="btn-two-depth ${fn:length(menu2.children) eq 0 || childrenGnbYn eq 'N' ? ' single-menu ' : ''} ${ parntMenuList[1].menuSeq eq menu2.attr.treeid ? 'active' : ''}" href="${ empty menu2.attr.link or fn:length(menu2.children) > 0 ? 'javascript:' : menu2.attr.link }"><span>${ menu2.data}</span></a>
 											</c:if>
 											<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">

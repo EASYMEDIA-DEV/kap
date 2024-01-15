@@ -348,6 +348,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$("#day-id").focus();
 						return false;
 					}
+					if($("#day-id").val() >= 32) {
+						alert(msgCtrl.getMsg("fail.co.login.find.day"));
+						$("#day-id").focus();
+						return false;
+					}
 					if($("#hpNo").val().length != 13) {
 						alert(msgCtrl.getMsg("fail.co.login.find.hp"));
 						$("#hpNo").focus();

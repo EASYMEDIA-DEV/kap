@@ -58,7 +58,7 @@
                             <label class="col-sm-1 control-label">신청자(아이디)<span class="star"> *</span></label>
                             <div class="col-sm-5" style="margin-left: -15px">
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" id="" value="${rtnInfo.name}(${rtnInfo.id})"
+                                    <input type="text" class="form-control" id="nameAndId" value="${rtnInfo.name}(${rtnInfo.id})"
                                            title="신청자" maxlength="50" disabled/>
                                 </div>
                                 <div class="col-sm-1">
@@ -128,8 +128,7 @@
                             </div>
                             <label class="col-sm-1 control-label">일반 전화번호</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control notRequired" id="telNo" name="telNo"
-                                       value="${rtnInfo.telNo}" title="전화번호" maxlength="50"/>
+                                <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" title="전화번호"/>
                             </div>
                         </div>
                     </fieldset>
@@ -219,8 +218,8 @@
                             <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                             <div class="col-sm-5">
                                 <div class="col-sm-6" style="margin-left: -15px">
-                                    <input type="text" class="form-control input-sm" id="compTel" name="compTel"
-                                           value="${rtnInfo.telNo}" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
+                                    <input type="text" class="form-control phoneChk notRequired" id="compTel" name="compTel" value="${rtnInfo.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" title="전화번호" placeholder="전화번호 입력"/>
+
                                 </div>
                             </div>
 

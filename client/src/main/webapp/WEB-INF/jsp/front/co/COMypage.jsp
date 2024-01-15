@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
-<div id="wrap" data-controller="controller/co/COMypageCtrl">
+<div id="wrap" class="mypage" data-controller="controller/co/COMypageCtrl">
     <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
         <!-- 페이징 버튼 사이즈 -->
@@ -28,7 +28,6 @@
 
                 <!--LNB 시작-->
                 <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
-
 
                 <div class="right-con-area">
                     <div class="cont-sec-w">
@@ -77,7 +76,7 @@
                                                 <a class="btn-solid small gray-bg" href="javascript:"><span>1:1 문의</span></a>
                                             </div>
                                         </div>
-                                        <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ empty list.regDtm ? '-' : kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</span></p>
+                                        <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ empty loginMap.regDtm ? '-' : kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</span></p>
                                     </div>
                                 </div>
                             </div>

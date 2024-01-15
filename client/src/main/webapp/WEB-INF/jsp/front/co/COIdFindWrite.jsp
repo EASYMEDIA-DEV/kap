@@ -65,7 +65,7 @@
                                         <div class="data-line">
                                             <div class="form-group form-birth">
                                                 <div class="form-input">
-                                                    <input type="text" id="year-id" name="year" title="년도" class="onlyNumber" placeholder="YYYY" value="" maxlength="4">
+                                                    <input type="text" id="year-id" name="year" title="연도" class="onlyNumber" placeholder="YYYY" value="" maxlength="4">
                                                 </div>
                                                 <div class="form-input">
                                                     <input type="text" id="month-id" name="month" title="월" class="onlyNumber" placeholder="MM" value="" maxlength="2">
@@ -87,7 +87,7 @@
                                         <div class="data-line">
                                             <div class="form-group">
                                                 <div class="form-input w-longer">
-                                                    <input class="hpNo" id="hpNo" name="mobile_no" title="휴대폰 번호" type="text" placeholder="휴대폰번호 입력" maxlength="13">
+                                                    <input class="hpNo" id="hpNo" name="mobileno" title="휴대폰 번호" type="text" placeholder="휴대폰번호 입력" maxlength="13">
                                                 </div>
                                             </div>
                                             <div class="noti-txt-w">
@@ -140,7 +140,7 @@
                                         <div class="data-line">
                                             <div class="form-group form-birth">
                                                 <div class="form-input">
-                                                    <input type="text" id="year-email" name="year" title="년도" class="onlyNumber" placeholder="YYYY" value="" maxlength="4">
+                                                    <input type="text" id="year-email" name="year" title="연도" class="onlyNumber" placeholder="YYYY" value="" maxlength="4">
                                                 </div>
                                                 <div class="form-input">
                                                     <input type="text" id="month-email" name="month" title="월" class="onlyNumber" placeholder="MM" value="" maxlength="2">

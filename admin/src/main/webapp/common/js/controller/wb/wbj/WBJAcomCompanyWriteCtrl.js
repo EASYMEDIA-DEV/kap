@@ -21,7 +21,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         /* 사업자번호 변경 */
         let dataBsnmNo = rtnData['bsnmNo'];
         rtnData['bsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
-
+        rtnData['nameAndId'] = `${rtnData['name']}(${rtnData['id']})`;
         $formObj.find(`input[type=hidden][name=id]`).val(rtnData['id']);
         $formObj.find(`input[type=hidden][name=bsnmNo]`).val(dataBsnmNo);
         /* 사용자_회사 정보 */
@@ -169,7 +169,39 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         }
                     }
                 }
-            }
+            },
+            telNo : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+            },
         },
         classname : {
             // 회원검색 모달

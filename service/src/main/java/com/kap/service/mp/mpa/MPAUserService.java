@@ -152,4 +152,7 @@ public interface MPAUserService {
      * @throws Exception
      */
     MPAUserDto selectUserDtlId(MPAUserDto mpaUserDto) throws Exception;
+
+
+    int selectCiCnt(MPAUserDto mpaUserDto) throws Exception;
 }

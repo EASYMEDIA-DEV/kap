@@ -48,6 +48,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            pwd : {
+                event : {
+                    input : function() {
+                        $(".for-status-chk1").removeClass('error');
+                    }
+                }
+            },
+            passwordConfirm : {
+                event : {
+                    input : function() {
+                        $(".for-status-chk2").removeClass('error');
+                    }
+                }
+            },
+
 
             //약관 -> 회원정보 이동 시  다음 페이지 이동 시
             nextPageOne : {
@@ -86,7 +101,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             dupId : {
                 event : {
                     click : function() {
-                        if($("#id").val().trim().length < 5 ) {
+                        if($("#id").val().trim().length == 0 ) {
+                            dupIdChk = false;
+                            alert(msgCtrl.getMsg("fail.mp.join.al_006"));
+                            return false;
+                        }
+                        if($("#id").val().trim().length < 5 && $("#id").val().trim().length != 0 ) {
                             dupIdChk = false;
                             alert(msgCtrl.getMsg("fail.mp.join.al_038"));
                             return false;
@@ -94,6 +114,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         $(".for-status-chk-id").removeClass("satisfy");
                         if($("#id").val().trim().length > 0) {
                             $("#idSub").val($("#id").val());
+                            var regex = /[a-zA-Z]/;
+                            if(!regex.test($("#id").val())) {
+                                dupIdChk = false;
+                                alert(msgCtrl.getMsg("fail.mp.join.al_038"));
+                                return false;
+                            }
                             cmmCtrl.frmAjax(function(respObj) {
                                 if(respObj.dupChk == 'Y') {
                                     dupIdChk = true;
@@ -154,6 +180,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                         if(cmmCtrl.getEmailChk($("#email").val())) {
                             var $formObj5 = $("#formUserSubmit");
+                            $(".for-status-chk-email").removeClass("satisfy");
                             cmmCtrl.frmAjax(function(respObj) {
                                 if(respObj.dupChk == 'Y') {
                                     $("#timer").show();
@@ -201,13 +228,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                  event : {
                      click : function() {
                          if(timeSecond > 0) {
+
                             if($("#emailAuthNum").val() == secretEmailAuth) {
                                 EmailChk = true;
                                 $("#emailAuthChk").hide();
                                 $("#timer").hide();
+                                $("#email-first").attr("disabled",true);
+                                $("#emailAddr").attr("disabled",true);
+                                $("#emailSelect").attr("disabled",true);
+                                $("#emailAuth").hide();
+                                $("#emailAuthNum").attr("disabled",true);
                                 $(".for-status-chk-email").addClass("satisfy");
                             } else {
-                                alert(msgCtrl.getMsg("fail.mp.join.al_025"));
+                                if($("#emailAuthNum").val().trim().length == 0) {
+                                    alert(msgCtrl.getMsg("fail.mp.join.al_025"));
+                                } else {
+                                    alert(msgCtrl.getMsg("fail.mp.join.al_039"));
+                                }
+
                                 $(".for-status-chk-email").removeClass("satisfy");
                                 EmailChk = false;
                                 return false;
@@ -385,10 +423,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     use : true,
 
                     func : function (){
-                        cmmCtrl.frmAjax(function(respObj) {
-                            $("#joinId").val($("#id").val());
-                            document.getElementById("formSuccess").submit();
-                        }, "/member/insert", $formObj, "POST", "json",'',false);
+                        if (confirm(msgCtrl.getMsg("confirm.userReg"))) {
+                            cmmCtrl.frmAjax(function(respObj) {
+                                $("#joinId").val($("#id").val());
+                                document.getElementById("formSuccess").submit();
+                            }, "/member/insert", $formObj, "POST", "json",'',false);
+
+                        }
                     }
                 }
             });

@@ -939,7 +939,6 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                 wbbaApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2");
 
                 wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
-                wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
             } else if ("PRO_TYPE04_2_3".equals(wbbaApplyDtlDTO.getAppctnSttsCd())) {
                 //보완요청 사용자->보완완료, 관리자 -> 미확인
                 wbbaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_4");

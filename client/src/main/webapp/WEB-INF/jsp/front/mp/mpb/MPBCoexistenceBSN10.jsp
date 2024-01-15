@@ -116,7 +116,7 @@
                                     <p class="title f-body2">직급</p>
                                 </div>
                                 <div class="td">
-                                    <p class="txt f-body1">${rtnData.newPstnCd}</p>
+                                    <p class="txt f-body1">${rtnData.userPstnNm}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -173,7 +173,7 @@
             <div class="sec-con-area">
                 <div class="article-sec">
                     <div class="article-list-w accordion-st"><!-- accordion-st : 아코디언 스타일 -->
-                        <div class="list-item active"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
+                        <div class="list-item <c:if test="${rtnData.appctnSttsCd ne 'PRO_TYPE05001_01_003'}" >active </c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                             <form name="frmData" id="frmData">
                                 <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                 <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
@@ -210,15 +210,22 @@
                                                         <div class="form-group">
                                                             <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                 <c:forEach var="itemOptn" items="${rtnData.optFileList}" varStatus="status1">
-                                                                    ${rtnData.optFileList}
-                                                                    <p class="empty-txt">
-                                                                        <a href="/file/download?fileSeq=${rtnData.appctnFileSeq}&fileOrd=${rtnData.fileSeq}" download="" title="파일 다운로드"></a>
-                                                                    </p>
+                                                                    <c:if test="${itemOptn.useYn eq 'Y'}">
+                                                                        <p class="empty-txt">
+                                                                            <a href="/file/download?fileSeq=${itemOptn.fileSeq}&fileOrd=${itemOptn.fileOrd}" download="" title="파일 다운로드">${itemOptn.fileNm}</a>
+                                                                        </p>
+                                                                    </c:if>
                                                                 </c:forEach>
                                                             </div>
                                                             <!-- 2024-01-03 추가 -->
                                                             <div class="file-prev-area">
-                                                                <a href="/file/download?fileSeq=${rtnData.appctnFileSeq}&fileOrd=${rtnData.fileSeq}-1" download="" title="파일 다운로드"></a>
+                                                                <c:forEach var="itemOptn" items="${rtnData.optFileList}" varStatus="status1">
+                                                                    <c:if test="${itemOptn.useYn eq 'N'}">
+                                                                        <p class="empty-txt">
+                                                                            <a href="/file/download?fileSeq=${itemOptn.fileSeq}&fileOrd=${itemOptn.fileOrd}" download="" title="파일 다운로드">${itemOptn.fileNm}</a>
+                                                                        </p>
+                                                                    </c:if>
+                                                                </c:forEach>
                                                             </div>
                                                             <!-- 2024-01-03 추가 -->
                                                         </div>
@@ -229,6 +236,36 @@
                                     </div>
                                 </div>
                             </form>
+                            <div class="list-item <c:if test="${rtnData.appctnSttsCd eq 'PRO_TYPE05001_01_003'}" >active </c:if>">
+                                <a class="acco-click-area" href="javascript:">
+                                    <div class="txt-box">
+                                        <p class="tit f-head">최종 심사</p>
+                                    </div>
+                                    <p class="box-label bigger">
+                                        <span>
+                                            <c:forEach var="item" items="${rtnAppctnRsume.applyList}" varStatus="status">
+                                                <c:choose>
+                                                    <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_001'}">
+                                                        결과대기
+                                                    </c:when>
+                                                    <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_002'}">
+                                                        사용자취소
+                                                    </c:when>
+                                                    <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_003'}">
+                                                        탈락
+                                                    </c:when>
+                                                    <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_004'}">
+                                                        수상
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        결과대기
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </span>
+                                    </p>
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

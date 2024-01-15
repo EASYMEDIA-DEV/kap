@@ -553,6 +553,7 @@
            and mem_seq not in(#{detailsKey})
         </if>
            and email=#{email}
+           and wthdrw_yn ='Y'
     </select>
 
     <!--

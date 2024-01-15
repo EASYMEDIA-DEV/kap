@@ -44,7 +44,7 @@
                                     <div class="data-line">
                                         <div class="form-group">
                                             <div class="form-input password">
-                                                <input type="password" placeholder="비밀번호를 입력해주세요." id="password" name="password" maxlength="16" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');">
+                                                <input type="password" placeholder="비밀번호를 입력해주세요." id="password" name="password" maxlength="16" title="비밀번호" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣<c:out value="&<>:;?\'\""/>]/g,'');">
                                             </div>
                                         </div>
                                     </div>

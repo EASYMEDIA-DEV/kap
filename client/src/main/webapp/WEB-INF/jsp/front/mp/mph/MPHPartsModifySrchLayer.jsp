@@ -8,7 +8,7 @@
             <div class="pop-wrap">
                 <div class="pop-con-area">
                     <div class="tit-area">
-                        <p class="f-title1">부품사회원 전환 정보</p>
+                        <p class="f-title1">부품사 정보 변경</p>
                     </div>
                     <div class="con-area">
                         <div class="scroll-area">
@@ -153,7 +153,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input">
-                                                                <input type="text" class="form-control input-sm telNo cleanInit" id="telNo" name="telNo"   oninput="this.value=this.value.replace(/[^0-9]/g, '')"  title="회사 전화번호"/>
+                                                                <input type="text" class="form-control input-sm telNo cleanInit" id="telNo" name="telNo"   oninput="this.value=this.value.replace(/[^0-9]/g, '')"  title="회사 전화번호" maxlength="13"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -573,7 +573,7 @@
                         </div>
                     </div>
                     <div class="user-opt-area">
-                        <button class="btnClosePop btnPopClose" title="팝업 닫기" type="button"><span>닫기</span></button>
+                        <button class="btnClosePop btnPopClose btn-close" title="팝업 닫기" type="button"><span>닫기</span></button>
                     </div>
                 </div>
             </div>

@@ -37,9 +37,19 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(cOAuthenticInterceptor()).addPathPatterns("/education/visit/apply/**")
                 .order(1);
 
+        //상생 로그인체크
+        registry.addInterceptor(cOAuthenticInterceptor()).addPathPatterns("/coexistence/**")
+                .excludePathPatterns("/coexistence/**/**/content")
+                .excludePathPatterns("/coexistence/**/content")
+                .excludePathPatterns("/coexistence/**/applyChecked")
+                .excludePathPatterns("/coexistence/**/**/applyChecked")
+                .excludePathPatterns("/coexistence/survey/**")
+                .order(1);
+
         //web, mbl jsp(header, footer)
         registry.addInterceptor(cOViewInterceptor()).addPathPatterns("/**").order(2)
                 .excludePathPatterns("/**/*.*")
+                .excludePathPatterns("/**/**/*.*")
                 .excludePathPatterns("/my-page/sq-license/complete/insert")
                 .excludePathPatterns("/file/upload")
                 .excludePathPatterns("/error");

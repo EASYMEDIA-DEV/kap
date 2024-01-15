@@ -15,9 +15,8 @@
     String ntfySmsRcvYn = request.getParameter("ntfySmsRcvYn");
     String ntfyEmailRcvYn = request.getParameter("ntfyEmailRcvYn");
     String memCd = request.getParameter("param1");
-//    String hpNo = request.getParameter("mobile_no");
-    //TODO 휴대폰 번호 아직 안넘와서 임시로 세팅
-    String hpNo = "010-1234-5678";
+    String hpNo = request.getParameter("mobileno");
+
 
 %>
 
@@ -33,7 +32,7 @@
     <input type="hidden" id="fndnNtfyRcvYn" name="fndnNtfyRcvYn" value="<%=fndnNtfyRcvYn%>" />
     <input type="hidden" id="ntfySmsRcvYn" name="ntfySmsRcvYn" value="<%=ntfySmsRcvYn%>" />
     <input type="hidden" id="ntfyEmailRcvYn" name="ntfyEmailRcvYn" value="<%=ntfyEmailRcvYn%>" />
-    <input type="hidden" id="hpNo" name="hpNo" value="<%=hpNo%>" />
+    <input type="hidden" id="mobileno" name="mobileno" value="<%=hpNo%>" />
     <input type="hidden" id="param1" name="param1" value="<%=memCd%>" />
     <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="hidden" id="email" name="email" class="notRequired" />
@@ -558,7 +557,7 @@
                             <a class="btn-solid small gray-bg btnBack" href="javascript:"><span>이전</span></a>
                         </div>
                         <div class="btn-set">
-                            <a class="btn-solid small black-bg" id="nextBtn" href="javascript:"><span>다음</span></a>
+                            <button class="btn-solid small black-bg" id="nextBtn" ><span>다음</span></button>
                         </div>
                     </div>
                 </div>

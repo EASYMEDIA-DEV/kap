@@ -151,7 +151,22 @@
                                 </c:if>
                             </div>
                             <div class="btn-set">
-                                <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
+                                <c:choose>
+                                    <c:when test="${list.accsStatusOrder eq 1}"><!--접수중-->
+                                        <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
+                                    </c:when>
+                                    <c:when test="${list.accsStatusOrder eq 2}"><!--접수대기-->
+                                        <a class="btn-solid small black-bg disabled" href="javascript:" ><span>접수대기</span></a>
+                                    </c:when>
+                                    <c:when test="${list.accsStatusOrder eq 3}"><!--마감-->
+                                        <a class="btn-solid small black-bg disabled" href="javascript:" ><span>마감</span></a>
+                                    </c:when>
+                                    <c:otherwise>
+
+                                    </c:otherwise>
+
+                                </c:choose>
+
                             </div>
                         </div>
                     </div>

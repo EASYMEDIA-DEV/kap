@@ -20,7 +20,7 @@
         }
     }
 
-    if('${data}' != '') {
+    if('${data}' != 0) {
         alert("이미 가입된 회원입니다. 로그인 페이지로 이동합니다.");
         location.href = "/login";
     }
@@ -32,7 +32,7 @@
     <form name="formNextOne" id="formNextOne"  method="get"  >
             <input type="hidden" id="name" name="name" value="${verificationData.name}">
             <input type="hidden" id="birthdate" name="birthdate" value="${verificationData.birthdate}">
-            <input type="hidden" id="mobile_no" name="mobile_no" value="${verificationData.mobile_no}">
+            <input type="hidden" id="mobileno" name="mobileno" value="${verificationData.mobileno}">
             <input type="hidden" id="ci" name="ci" value="${verificationData.ci}">
             <input type="hidden" id="param1" name="param1" value="${verificationData.param1}">
             <input type="hidden" id="gndr" name="gndr" value="${verificationData.gndr}">

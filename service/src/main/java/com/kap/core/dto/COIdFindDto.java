@@ -46,7 +46,7 @@ public class COIdFindDto extends BaseDTO  {
 
 
     @Schema(title = "휴대폰번호", example = "010-1234-4567")
-    private String mobile_no;
+    private String mobileno;
 
     @Schema(title = "타입", example = "1")
     private String types;
