@@ -199,7 +199,7 @@
 
                     <label class="col-sm-1 control-label">사업자등록<br/>번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <p class="form-control-static" id="bsnmNo" title="재직 회사사업자번호"></p>
+                        <p class="form-control-static" id="changeBsnmNo" title="재직 회사사업자번호"></p>
                     </div>
                 </div>
             </fieldset>

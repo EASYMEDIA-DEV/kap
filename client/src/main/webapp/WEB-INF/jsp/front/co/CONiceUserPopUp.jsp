@@ -34,8 +34,7 @@
 					opener.document.getElementById("name").innerText = '${rtnData.name}';
 					opener.document.getElementById("birth").innerText = '${rtnData.birthdate.substring(0,4)}' + "-" + '${rtnData.birthdate.substring(4,6)}' + "-" + '${rtnData.birthdate.substring(6)}';
 					opener.document.getElementById("gndr").innerText = '${rtnData.gender == "1" ? "남" : "여"}';
-					// TODO 휴대폰 임의
-					opener.document.getElementById("telNo").innerText = '${rtnData.mobileno.substring(0,3)}'+"-"+'${rtnData.mobileno.substring(3,7)}'+"-"+'${rtnData.mobileno.substring(7)}';
+					opener.document.getElementById("hpNo").innerText = '${rtnData.mobileno.substring(0,3)}'+"-"+'${rtnData.mobileno.substring(3,7)}'+"-"+'${rtnData.mobileno.substring(7)}';
 
 					if('${rtnData.receivedatass.paramsTwo}' == "compChg") {
 						var formObj = opener.$("formUserSubmit").serialize();

@@ -1,7 +1,7 @@
 package com.kap.front.controller.co;
 
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.core.dto.mp.mpb.MPBBnsSearchDTO;
+import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBBEpisdService;
 import com.kap.service.MPBCoexistenceService;
@@ -59,7 +59,7 @@ public class COMypageController
             modelMap.addAttribute("eduYearCnt", eBBEpisdService.selectMypageEduCnt(eBBEpisdDTO));
 
             //1년간 상생 사업신청내역 호출
-            MPBBnsSearchDTO mpbBnsSearchDTO = new MPBBnsSearchDTO();
+            MPBBsnSearchDTO mpbBnsSearchDTO = new MPBBsnSearchDTO();
             mpbBnsSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
 
             modelMap.addAttribute("CoeYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO));

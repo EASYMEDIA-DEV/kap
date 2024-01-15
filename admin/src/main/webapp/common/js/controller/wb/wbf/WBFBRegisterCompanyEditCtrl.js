@@ -29,12 +29,11 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         /* 사업자번호 변경 */
         let dataBsnmNo = rtnData['bsnmNo'];
-        rtnData['bsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
+        rtnData['changeBsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
 
         /* Input Hidden Tag Value  */
         $($basicData).find(`input[type=hidden][name=memSeq]`).val(rtnData['memSeq']);
         $($basicData).find(`input[type=hidden][name=id]`).val(rtnData['id']);
-        $($basicData).find(`input[type=hidden][name=bsnmNo]`).val(dataBsnmNo);
 
         /* id(name) 구조 */
         rtnData['nameAndId'] = `${rtnData['name']}(${rtnData['id']})`;
@@ -426,6 +425,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                     cmmCtrl.frmAjax(function(respObj) {
                                         /* return data input */
                                         setInputValue(respObj);
+                                        fnpstnNmShow();
                                     }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                                 } else {
                                     alert("이관 이력이 있는 회원은 선택이 불가합니다.");

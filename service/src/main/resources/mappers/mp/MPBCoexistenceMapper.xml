@@ -8,7 +8,7 @@
         ==========  ======  ==============
         2024.01.08  김태훈     최초 생성
     -->
-    <select id="selectApplyList" parameterType="mpbBnsSearchDTO" resultType="mpbBnsSearchDTO">
+    <select id="selectApplyList" parameterType="mpbBsnSearchDTO" resultType="mpbBsnSearchDTO">
         SELECT /*WBBBCompanyMapper.getRegisterCompanyList*/ *
             FROM ( SELECT
                     TMP.* ,
@@ -60,7 +60,7 @@
         ==========  ======  ==============
         2024.01.08  김태훈     최초 생성
     -->
-    <select id="selectApplyCount" parameterType="mpbBnsSearchDTO" resultType="java.lang.Integer">
+    <select id="selectApplyCount" parameterType="mpbBsnSearchDTO" resultType="java.lang.Integer">
         SELECT /*MPBCoexistenceMapper.selectApplyCount*/ count(*)
         FROM (  SELECT
                     YEAR(A.year) as year, A.episd, A.bsn_strt_Dtm, A.bsn_end_dtm, A.bsn_cd, B.adm_memo,
@@ -89,7 +89,7 @@
         ==========  ======  ==============
         2024.01.10  김태훈     최초 생성
     -->
-    <select id="getBusinessYn" parameterType="mpbBnsSearchDTO" resultType="java.lang.String">
+    <select id="getBusinessYn" parameterType="mpbBsnSearchDTO" resultType="java.lang.String">
         SELECT
             CASE WHEN cd = #{bsnCd}
                      THEN 'Y' ELSE 'N' END businessYn
@@ -105,7 +105,7 @@
         ==========  ======  ==============
         2024.01.10  김태훈     최초 생성
     -->
-    <select id="getBsnDetail" parameterType="mpbBnsSearchDTO" resultType="mpbBnsSearchDTO">
+    <select id="getBsnDetail" parameterType="mpbBsnSearchDTO" resultType="mpbBsnSearchDTO">
         SELECT
             TMP.*,
             appctn_stts_cd,
@@ -114,7 +114,8 @@
                     (SELECT COUNT(*) FROM co_code_mst WHERE CD_ID = 'BM_CODE' AND CD  = bsn_cd) > 0
                        THEN rsume_stts_cd
                    ELSE (SELECT cd_nm FROM co_code_mst WHERE cd = rsume_stts_cd) END ) rsume_stts_Cd_Nm,
-            ( SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd ) appctn_stts_cd_Nm
+            ( SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd ) appctn_stts_cd_Nm,
+            (SELECT mrts_cd FROM CX_APPCTN_RSUME_PRIZE_PART_DTL prize WHERE prize.RSUME_SEQ = TMP.RSUME_SEQ_MIN AND prize.RSUME_ORD = RSUME_ORD_MIN ) mrts_cd
         FROM (
                  SELECT
                      BSN_CD,
@@ -125,7 +126,9 @@
                      BSN_END_DTM,
                      ( SELECT CD_NM FROM co_code_mst WHERE cd_seq = ( SELECT PARNT_SEQ FROM co_code_mst WHERE CD_ID = 'win_Business' AND CD = B.bsn_Cd )) title,
                      ( SELECT MAX(RSUME_ORD) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_ORD,
+                     ( SELECT MIN(RSUME_ORD) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_ORD_MIN,
                      ( SELECT MAX(RSUME_SEQ) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_SEQ,
+                     ( SELECT MIN(RSUME_SEQ) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_SEQ_MIN,
                      A.REG_DTM
                  FROM
                      cx_appctn_mst A
@@ -141,7 +144,7 @@
         ==========  ======  ==============
         2023.11.24  김태훈     최초 생성
     -->
-    <select id="getCompanyInfo" parameterType="mpbBnsSearchDTO" resultType="mpbCompanyDTO">
+    <select id="getCompanyInfo" parameterType="mpbBsnSearchDTO" resultType="mpbCompanyDTO">
         SELECT /* MPBCoexistenceMapper.getCompanyInfo */
             A.BSNM_NO
              , A.CMPN_NM
@@ -190,7 +193,7 @@
         ==========  ======  ==============
         2023.11.24  김태훈     최초 생성
     -->
-    <select id="selectSqList" parameterType="mpbBnsSearchDTO" resultType="mpbCompanyDTO">
+    <select id="selectSqList" parameterType="mpbBsnSearchDTO" resultType="mpbCompanyDTO">
         SELECT /* MPBCoexistenceMapper.selectSqList */
             CBSN_SEQ
              , NM

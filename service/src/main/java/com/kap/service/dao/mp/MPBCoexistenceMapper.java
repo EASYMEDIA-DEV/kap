@@ -1,6 +1,6 @@
 package com.kap.service.dao.mp;
 
-import com.kap.core.dto.mp.mpb.MPBBnsSearchDTO;
+import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
 import com.kap.core.dto.mp.mpb.MPBCompanyDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -32,31 +32,31 @@ public interface MPBCoexistenceMapper {
      *  List Page
      *  마이페이지 상생 사업 신청내역 List
      */
-    public List<MPBBnsSearchDTO> selectApplyList(MPBBnsSearchDTO mpbBnsSearchDTO);
+    public List<MPBBsnSearchDTO> selectApplyList(MPBBsnSearchDTO mpbBnsSearchDTO);
 
     /**
      *  List Page
      *  마이페이지 상생 사업 신청내역 Count
      */
-    public int selectApplyCount(MPBBnsSearchDTO mpbBnsSearchDTO);
+    public int selectApplyCount(MPBBsnSearchDTO mpbBnsSearchDTO);
 
     /**
      *  마이페이지 공통 상생 사업여부
      */
-    public String getBusinessYn(MPBBnsSearchDTO mpbBnsSearchDTO);
+    public String getBusinessYn(MPBBsnSearchDTO mpbBnsSearchDTO);
 
     /**
      *  마이페이지 상생 사업 상세
      */
-    public MPBBnsSearchDTO getBsnDetail(MPBBnsSearchDTO mpbBnsSearchDTO);
+    public MPBBsnSearchDTO getBsnDetail(MPBBsnSearchDTO mpbBnsSearchDTO);
 
     /**
      * 부품사 정보를 조회한다.
      */
-    public MPBCompanyDTO getCompanyInfo(MPBBnsSearchDTO mpbBnsSearchDTO);
+    public MPBCompanyDTO getCompanyInfo(MPBBsnSearchDTO mpbBnsSearchDTO);
 
     /**
      * 부품사 SQ 정보를 조회한다.
      */
-    public List<MPBCompanyDTO> selectSqList(MPBBnsSearchDTO mpbBnsSearchDTO);
+    public List<MPBCompanyDTO> selectSqList(MPBBsnSearchDTO mpbBnsSearchDTO);
 }

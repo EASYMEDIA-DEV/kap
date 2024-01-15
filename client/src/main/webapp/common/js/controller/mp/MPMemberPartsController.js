@@ -31,14 +31,15 @@ define(["ezCtrl"], function(ezCtrl) {
     }
 
     function validationCmpn(event) {
-        if(!bsnmChk) {
-            alert(msgCtrl.getMsg("fail.mp.join.al_036"));
-            event.preventDefault();
-            return false;
-        }
+
         if($("#bsnmNo").val().trim() =='' || $("#bsnmNo").val() == undefined) {
             alert(msgCtrl.getMsg("fail.mp.join.al_018"));
             $("#bsnmNo").focus();
+            event.preventDefault();
+            return false;
+        }
+        if(!bsnmChk) {
+            alert(msgCtrl.getMsg("fail.mp.join.al_036"));
             event.preventDefault();
             return false;
         }
@@ -115,11 +116,17 @@ define(["ezCtrl"], function(ezCtrl) {
         id : {
             bsnmNo : {
                 event : {
-                    click : function() {
+                    input : function() {
                         bsnmChk = false;
                         $(".for-status-chk2").removeClass('satisfy');
                         $(".cmpn_nm_new").val('');
                         $(".rprsnt_nm").val('');
+                        $(".old").hide();
+                        $(".new").show();
+                        $(".cmpn_nm").text("");
+                        $(".rprsnt_nm").text("");
+                        $(".gubun").text("");
+                        $(".addr").text("");
 
                     }
                 }

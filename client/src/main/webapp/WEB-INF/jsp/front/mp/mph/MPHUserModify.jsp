@@ -126,7 +126,7 @@
                                     <div class="data-enter-form">
                                         <div class="row">
                                             <div class="th">
-                                                <p class="title f-head">아이디</p>
+                                                <p class="title f-head">아이디<span class="essential-mark color-sky">*</span></p>
                                             </div>
                                             <div class="td">
                                                 <p class="data-txt">${rtnDtl.id}</p>
@@ -194,7 +194,7 @@
                                                             <div class="for-status-chk for-status-chk-email"><!-- 조건 충족 시 satisfy 클래스 추가 -->
                                                                 <div class="form-group">
                                                                     <div class="form-input w-longer">
-                                                                        <input type="text" class="notRequired" placeholder="인증번호 입력" oninput="this.value=this.value.replace(/[^0-9]/g, '')">
+                                                                        <input type="text" class="notRequired" placeholder="인증번호 입력" oninput="this.value=this.value.replace(/[^0-9]/g, '')" id="emailAuthNum">
                                                                         <p class="unit-txt timer" id="timer">유효시간 <span></span></p>
                                                                     </div>
                                                                     <div class="btn-wrap">
@@ -218,7 +218,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input">
-                                                                <input type="text" placeholder="일반 전화번호 입력" oninput="this.value=this.value.replace(/[^0-9]/gi,'');" value="${rtnDtl.telNo}" name="mpaUserDto.telNo" title="전화번호" class="notRequired" id="telNoInput">
+                                                                <input type="text" placeholder="일반 전화번호 입력" oninput="this.value=this.value.replace(/[^0-9]/gi,'');" value="${rtnDtl.telNo}" name="mpaUserDto.telNo" title="전화번호" class="notRequired" id="telNoInput" maxlength="13">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -401,6 +401,14 @@
                                             <div class="list-txt">
                                                 <p class="tit">구분</p>
                                                 <p class="txt ctgryNm">${rtnDtl.ctgryCdNm}</p>
+                                            </div>
+                                            <div class="list-txt">
+                                                <p class="tit">주소</p>
+                                                <p class="txt addrNm">${rtnDtl.cmpnBscAddr}  ${rtnDtl.cmpnDtlAddr}</p>
+                                            </div>
+                                            <div class="list-txt">
+                                                <p class="tit">주소</p>
+                                                <p class="txt addrNm">${rtnDtl.cmpnBscAddr}  ${rtnDtl.cmpnDtlAddr}</p>
                                             </div>
                                             <div class="list-txt">
                                                 <p class="tit">주소</p>

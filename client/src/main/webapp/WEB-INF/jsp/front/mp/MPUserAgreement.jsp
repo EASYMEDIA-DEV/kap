@@ -20,7 +20,7 @@
         }
     }
 
-    if('${data}' != '') {
+    if('${data}' != 0) {
         alert("이미 가입된 회원입니다. 로그인 페이지로 이동합니다.");
         location.href = "/login";
     }

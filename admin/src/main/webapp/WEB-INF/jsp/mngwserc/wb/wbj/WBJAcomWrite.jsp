@@ -470,7 +470,7 @@
                             </select>
                         </div>
                         <div class="col-sm-4" style="margin-left: -15px">
-                            <input type="text" class="form-control" name="newPstnNm" title="직급 상세" maxlength="50"/>
+                            <input type="text" class="form-control notRequired" name="newPstnNm" title="직급 상세" maxlength="50"/>
                         </div>
                     </div>
                 </div>

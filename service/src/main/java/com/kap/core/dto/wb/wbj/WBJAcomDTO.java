@@ -180,6 +180,8 @@ public class WBJAcomDTO extends BaseDTO {
     private String deptNm;
     @Schema(title = "포상자 직급 코드", example = "")
     private String newPstnCd;
+    @Schema(title = "포상자 직급 이름", example = "")
+    private String userPstnNm;
     @Schema(title = "포상자 직급 상세", example = "")
     private String newPstnNm;
     @Schema(title = "포상자 나이", example = "")

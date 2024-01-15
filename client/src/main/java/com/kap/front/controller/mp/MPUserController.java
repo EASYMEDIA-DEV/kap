@@ -104,6 +104,9 @@ public class MPUserController {
             authNotAllowed(response);
         } else {
             modelMap.addAttribute("data", cOUserLgnService.getIdFind(coIdFindDto));
+            MPAUserDto mpaUserDto = new MPAUserDto();
+            mpaUserDto.setCi(coIdFindDto.getCi());
+            modelMap.addAttribute("data", mpaUserService.selectCiCnt(mpaUserDto));
             modelMap.addAttribute("verificationData", coIdFindDto);
 
 
