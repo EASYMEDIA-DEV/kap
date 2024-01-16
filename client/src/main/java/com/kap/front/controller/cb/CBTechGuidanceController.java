@@ -1,6 +1,8 @@
 package com.kap.front.controller.cb;
 
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.CBATechGuidanceService;
@@ -93,6 +95,25 @@ public class CBTechGuidanceController {
         return url;
     }
 
+    @PostMapping("/insert")
+    public String insertConsultInfoApplicationPage(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, ModelMap modelMap, @PathVariable("type") String type) throws Exception {
+        /*try {*/
+            System.err.println("pCBATechGuidanceInsertDTO:::"+pCBATechGuidanceInsertDTO);
+            if(type.equals("tech")){
+                modelMap.addAttribute("actCnt", cBATechGuidanceService.insertTechGuidance(pCBATechGuidanceInsertDTO));
+            }else{
+                modelMap.addAttribute("actCnt", cBBManageConsultService.insertManageConsult(pCBBManageConsultInsertDTO));
+            }
+
+        /*}catch(Exception e){
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+*/
+        return "jsonView";
+    }
     @GetMapping("/consInfoAppl")
     public String getConsultInfoApplicationPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
         String url = "";

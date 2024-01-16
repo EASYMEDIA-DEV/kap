@@ -82,6 +82,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
     @Value("${app.file.videoExtns}")
     private String videoExtns;
+    private CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO;
 
     /**
      * 컨설팅 기술 지도 목록 조회
@@ -106,6 +107,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
      * 컨설팅 기술 지도 상세 조회
      */
     public CBATechGuidanceInsertDTO selectTechGuidanceDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
+        this.pCBATechGuidanceInsertDTO = pCBATechGuidanceInsertDTO;
         MPEPartsCompanyDTO companyInfo = new MPEPartsCompanyDTO();
 
         if (!"".equals(pCBATechGuidanceInsertDTO.getDetailsKey()))
@@ -119,7 +121,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                 pCBATechGuidanceInsertDTO.setCmpnNm(companyInfo.getList().get(i).getCmpnNm());
                 pCBATechGuidanceInsertDTO.setRprsntNm(companyInfo.getList().get(i).getRprsntNm());
                 pCBATechGuidanceInsertDTO.setStbsmDt(companyInfo.getList().get(i).getStbsmDt());
-                pCBATechGuidanceInsertDTO.setTelNo(companyInfo.getList().get(i).getTelNo());
                 pCBATechGuidanceInsertDTO.setCtgryCd(companyInfo.getList().get(i).getCtgryCd());
                 pCBATechGuidanceInsertDTO.setBscAddr(companyInfo.getList().get(i).getBscAddr());
                 pCBATechGuidanceInsertDTO.setDtlAddr(companyInfo.getList().get(i).getDtlAddr());
@@ -177,6 +178,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             for(int i=0; i<appctnTypeInfo.size(); i++){
                 CBATechGuidanceInsertDTO appctnDto = new CBATechGuidanceInsertDTO();
                 appctnDto.setAppctnTypeCd(appctnTypeInfo.get(i).getAppctnTypeCd());
+                appctnDto.setAppctnTypeNm(appctnTypeInfo.get(i).getAppctnTypeNm());
                 appctnTypeList.add(appctnDto);
             }
             pCBATechGuidanceInsertDTO.setAppctnTypeList(appctnTypeList);
@@ -242,8 +244,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
      * 부품사 정보 수정
      */
     void updateTechCompanyInfo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
-
-        System.err.println("pCBATechGuidanceInsertDTO:::"+pCBATechGuidanceInsertDTO);
 
         MPEPartsCompanyDTO mPEPartsCompanyDTO = new MPEPartsCompanyDTO();
         mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replace("-", ""));
