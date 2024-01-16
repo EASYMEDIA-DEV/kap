@@ -114,8 +114,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="th">
-                                            <p class="title f-head">스마트화 <br class="only-pc">현재 수준<span
-                                                    class="essential-mark color-sky">*</span></p>
+                                            <p class="title f-head">스마트화 <br class="only-pc">현재 수준<span class="essential-mark color-sky">*</span></p>
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">

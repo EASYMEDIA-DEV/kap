@@ -15,10 +15,10 @@
         <h6 class="mt0">
             <em class="ion-play mr-sm"></em>
             <c:if test="${not empty rtnDto.episdSeq }">
-                공급망 회차 상세/수정
+                공급망안정화기금 회차 상세/수정
             </c:if>
             <c:if test="${empty rtnDto.episdSeq }">
-                공급망 회차 등록
+                공급망안정화기금 회차 등록
             </c:if>
         </h6>
 

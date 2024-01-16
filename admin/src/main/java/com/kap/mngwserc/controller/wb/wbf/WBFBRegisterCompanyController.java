@@ -19,13 +19,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -281,12 +279,13 @@ public class WBFBRegisterCompanyController {
      * Edit 페이지 - 부품사 등록 사업자등록번호 인증
      */
     @PostMapping(value = "/getBsnmNoCheck")
-    public String getBsnmNoCheck(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap) throws Exception
+    @ResponseBody
+    public WBFBRegisterSearchDTO getBsnmNoCheck(@Valid @RequestBody WBFBRegisterSearchDTO wBFBRegisterSearchDTO, HttpServletRequest request) throws Exception
     {
         try {
 
-            wBFBRegisterDTO.setBsnCd("BSN06"); /* 스마트 공장 */
-            modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getBsnmNoCheck(wBFBRegisterDTO));
+            wBFBRegisterSearchDTO.setBsnCd("BSN06"); /* 스마트 공장 */
+            wBFBRegisterSearchDTO = wBFBRegisterCompanyService.getBsnmNoCheck(wBFBRegisterSearchDTO);
         }
         catch (Exception e)
         {
@@ -296,7 +295,7 @@ public class WBFBRegisterCompanyController {
             }
             throw new Exception(e.getMessage());
         }
-        return "jsonView";
+        return wBFBRegisterSearchDTO;
     }
 
     /**
