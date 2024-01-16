@@ -122,7 +122,6 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
                 pCBBManageConsultInsertDTO.setCmpnNm(companyInfo.getList().get(i).getCmpnNm());
                 pCBBManageConsultInsertDTO.setRprsntNm(companyInfo.getList().get(i).getRprsntNm());
                 pCBBManageConsultInsertDTO.setStbsmDt(companyInfo.getList().get(i).getStbsmDt());
-                pCBBManageConsultInsertDTO.setTelNo(companyInfo.getList().get(i).getTelNo());
                 pCBBManageConsultInsertDTO.setCtgryCd(companyInfo.getList().get(i).getCtgryCd());
                 pCBBManageConsultInsertDTO.setBscAddr(companyInfo.getList().get(i).getBscAddr());
                 pCBBManageConsultInsertDTO.setDtlAddr(companyInfo.getList().get(i).getDtlAddr());
@@ -174,15 +173,6 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
                 dpndnInfoList.add(dpndnDto);
             }
             pCBBManageConsultInsertDTO.setDpndCmpnList(dpndnInfoList);
-
-            List<CBBManageConsultInsertDTO> appctnTypeInfo = cBBManageConsultMapper.selectCnstgAppctnType(cnstgSeq);
-            List appctnTypeList = new ArrayList();
-            for(int i=0; i<appctnTypeInfo.size(); i++){
-                CBBManageConsultInsertDTO appctnDto = new CBBManageConsultInsertDTO();
-                appctnDto.setAppctnTypeCd(appctnTypeInfo.get(i).getAppctnTypeCd());
-                appctnTypeList.add(appctnDto);
-            }
-            pCBBManageConsultInsertDTO.setAppctnTypeList(appctnTypeList);
 
             List<CBBManageConsultInsertDTO> picInfo = cBBManageConsultMapper.selectCnstgPicInfo(cnstgSeq);
             List picInfoList = new ArrayList();
@@ -492,14 +482,10 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         cBBManageConsultMapper.deleteConsultAppctnTrnsfDtl(cBBManageConsultSearchDTO);
         // 만족도 결과 상세 테이블 삭제
         cBBManageConsultMapper.deleteConsultSrvRsltDtl(cBBManageConsultSearchDTO);
-        // 신청분야 상세 테이블 삭제 (경영컨설팅에서는 안씀)
-        //cBBManageConsultMapper.deleteConsultAppctnTypeDtl(cBBManageConsultSearchDTO);
         // 완성차의존율 상세 테이블 삭제
         cBBManageConsultMapper.deleteConsultDpndnDtl(cBBManageConsultSearchDTO);
         // 고객사비율 상세 테이블 삭제
         cBBManageConsultMapper.deleteConsultDlvryDtl(cBBManageConsultSearchDTO);
-        // 부품사 업종 상세 테이블 삭제 (경영컨설팅에서는 안씀)
-        //cBBManageConsultMapper.deleteConsultCbsnDtl(cBBManageConsultSearchDTO);
         // 담당임원 테이블 삭제
         cBBManageConsultMapper.deleteConsultPicDtl(cBBManageConsultSearchDTO);
         // 진행마스터 테이블 삭제

@@ -11,16 +11,16 @@
                 </td>
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>                                           <%--번호--%>
                 <td class="text-center">${ list.bsnYear }</td>                                                                                     <%--사업연도--%>
-                <td class="text-center">${ list.rsumeSttsNm }</td>                                                                                <%--진행상태--%>
+                <td class="text-center">${ list.rsumeSttsNm }</td>                                                                                 <%--진행상태--%>
                 <td class="text-center"><a href="javascript:" class="listView" data-details-key="${list.cnstgSeq}">${ list.cmpnNm }</a></td>       <%--부품사명--%>
-                <td class="text-center">${ list.appctnBsnmNo }</td>                                                                                <%--사업자등록번호--%>
+                <td class="text-center">${kl:bsnmNoConvert(list.appctnBsnmNo)}</td>                                                                <%--사업자등록번호--%>
                 <td class="text-center">${ list.ctgryNm }</td>                                                                                     <%--구분--%>
                 <td class="text-center">${ list.sizeNm }</td>                                                                                      <%--규모--%>
                 <td class="text-center">${ list.slsPmt }</td>                                                                                      <%--매출액(억원)--%>
                 <td class="text-center">${ list.mpleCnt }</td>                                                                                     <%--직원수--%>
                 <td class="text-center">${ list.cbsnNm }</td>                                                                                      <%--신청업종--%>
                 <td class="text-center">${ list.firstRgnsNm } ${ list.scndRgnsNm }</td>                                                            <%--신청소재지--%>
-                <td class="text-center">${ empty list.crtfnCmpnNm ? '-' : list.crtfnCmpnNm}</td>                                                                                <%--SQ 인증 주관사--%>
+                <td class="text-center">${ empty list.crtfnCmpnNm ? '-' : list.crtfnCmpnNm}</td>                                                   <%--SQ 인증 주관사--%>
                 <td class="text-center">${ empty list.vstDt ? '-' : list.vstDt }</td>                                                              <%--방문일--%>
                 <td class="text-center">${ empty list.cmssrNm ? '-' : list.cmssrNm}</td>                                                           <%--담당위원--%>
                 <td class="text-center">${ empty list.vstCnt ? '-' : list.vstCnt}</td>                                                             <%--방문횟수--%>

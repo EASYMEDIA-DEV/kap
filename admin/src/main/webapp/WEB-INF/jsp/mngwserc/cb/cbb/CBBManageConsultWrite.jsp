@@ -73,7 +73,7 @@
                                 <option>선택</option>
                                 <c:forEach var="memCd" items="${cdDtlList.MEM_CD}" varStatus="status">
                                     <c:if test="${fn:contains(memCd.cd,'CD02')  && memCd.cd ne 'MEM_CD02'}">
-                                        <option value="${memCd.cd}"<c:if test="${rtnDto.deptCd eq memCd.cdNm}">selected</c:if>>${memCd.cdNm}</option>
+                                        <option value="${memCd.cd}"<c:if test="${rtnDto.deptCd eq memCd.cd}">selected</c:if>>${memCd.cdNm}</option>
                                     </c:if>
                                 </c:forEach>
                             </select>
@@ -110,7 +110,7 @@
                     </div>
                     <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-2">
-                        <input type="text" class="form-control input-sm notRequired"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호" placeholder="일반 전화번호 입력"/>
+                        <input type="text" class="form-control input-sm notRequired telRex"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호" placeholder="일반 전화번호 입력"/>
                     </div>
                 </div>
             </fieldset>
@@ -191,7 +191,7 @@
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
-                            <input type="text" class="form-control input-sm" id="cmpnTelNo" name="cmpnTelNo"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${rtnDto.cmpnTelNo}" title="전화번호" placeholder="회사 전화번호 입력"/>
+                            <input type="text" class="form-control input-sm telRex cmssrCmpnTelNo" id="cmpnTelNo" name="cmpnTelNo"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${rtnDto.cmpnTelNo}" title="전화번호" placeholder="회사 전화번호 입력"/>
                         </div>
                     </div>
                     <label class="col-sm-1 control-label">사업자등록번호<span class="star">*</span></label>
@@ -226,8 +226,8 @@
                         &nbsp;억원&nbsp;
                         <select class="form-control input-sm notRequired" id="slsYear" name="slsYear">
                             <option value="">선택</option>
-                            <c:forEach var="cdList" items="${classCityTypeList.CO_YEAR_CD}" varStatus="status">
-                                <option value="${cdList.cd}" <c:if test="${rtnDto.episd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                <option value="${cdList.cd}" <c:if test="${rtnDto.slsYear eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                             </c:forEach>
                         </select>
                         &nbsp;년&nbsp;
@@ -235,6 +235,7 @@
                     <label class="col-sm-1 control-label">직원수</label>
                     <div class="col-sm-5">
                         <input type="text" class="form-control input-sm numberChk notRequired" id="mpleCnt" name="mpleCnt" value="${rtnDto.mpleCnt}" title="직원수" maxlength="50" placeholder="직원수 입력"/>
+                        명
                     </div>
                 </div>
             </fieldset>
@@ -421,7 +422,7 @@
                         </div>
                         <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control input-sm cmssrCmpnTelNo" name="cmssrCmpnTelNo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" title="회사전화번호" value="${picInfoLIst.cmssrCmpnTelNo}"  placeholder="회사 전화번호 입력"/>
+                            <input type="text" class="form-control input-sm telRex" name="cmssrCmpnTelNo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" title="회사전화번호" value="${picInfoLIst.cmssrCmpnTelNo}"  placeholder="회사 전화번호 입력"/>
                         </div>
                     </div>
                 </fieldset>
@@ -631,36 +632,36 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">해외의존율<span class="star"> *</span></label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm frgnDpndnRate" name="frgnDpndnRate" value="${rtnDto.frgnDpndnRate}" placeholder="의존율 입력" title="비율" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <div class="col-sm-4 form-inline">
+                        <input type="text" class="form-control input-sm frgnDpndnRate" name="frgnDpndnRate" value="${rtnDto.frgnDpndnRate}" placeholder="의존율 입력" title="비율" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;%
                     </div>
                     <label class="col-sm-1 control-label">전체 매출액<span class="star"> *</span></label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm ttlSlsPmt" name="ttlSlsPmt" value="${rtnDto.ttlSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <div class="col-sm-4 form-inline">
+                        <input type="text" class="form-control input-sm ttlSlsPmt" name="ttlSlsPmt" value="${rtnDto.ttlSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">국내 매출액<span class="star"> *</span></label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm dmstcSlsPmt" name="dmstcSlsPmt" value="${rtnDto.dmstcSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <div class="col-sm-4 form-inline">
+                        <input type="text" class="form-control input-sm dmstcSlsPmt" name="dmstcSlsPmt" value="${rtnDto.dmstcSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                     <label class="col-sm-1 control-label">해외 매출액<span class="star"> *</span></label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm frgnSlsPmt" name="frgnSlsPmt" value="${rtnDto.frgnSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <div class="col-sm-4 form-inline">
+                        <input type="text" class="form-control input-sm frgnSlsPmt" name="frgnSlsPmt" value="${rtnDto.frgnSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                 </div>
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">자동차부품 매출액<span class="star"> *</span></label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm carPartSlsPmt" name="carPartSlsPmt" value="${rtnDto.carPartSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <div class="col-sm-4 form-inline">
+                        <input type="text" class="form-control input-sm carPartSlsPmt" name="carPartSlsPmt" value="${rtnDto.carPartSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                     <label class="col-sm-1 control-label">자동차 부품 외 매출액<span class="star"> *</span></label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm carPartXcludSlsPmt" name="carPartXcludSlsPmt" value="${rtnDto.carPartXcludSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>
+                    <div class="col-sm-4 form-inline">
+                        <input type="text" class="form-control input-sm carPartXcludSlsPmt" name="carPartXcludSlsPmt" value="${rtnDto.carPartXcludSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                 </div>
             </fieldset>
@@ -668,7 +669,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">공장주소<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="button" class="btn btn-sm searchPostCode factAddr" data-html2canvas-ignore="true" id="hqAddr" value="우편번호 검색">
+                        <input type="button" class="btn btn-sm searchPostCode factAddr" data-html2canvas-ignore="true" value="우편번호 검색">
                         <label class="checkbox-inline c-checkbox">
                             <c:set var="cmpnAddrSameYn" value="${kl:nvl(rtnDto.cmpnAddrSameYn, 'N')}" />
                             <input type="checkbox" class="notRequired addrSame"  name="cmpnAddrSameYn" value="${cmpnAddrSameYn}"<c:if test="${cmpnAddrSameYn eq 'Y'}">checked</c:if> title="주소 동일 여부"/>
@@ -1416,12 +1417,14 @@
                             <th scope="row" class="bg-gray-lighter">최종 수정자</th>
                             <td><c:if test="${not empty rtnDto.modName}">${rtnDto.modName}(${rtnDto.modId})</c:if><c:if test="${empty rtnDto.modName}">-</c:if></td>
                             <th scope="row" class="bg-gray-lighter">최종 수정일시 </th>
-                            <c:choose>
-                                <c:when test="${not empty rtnDto.modDtm}">
-                                    <td>${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
-                                </c:when>
-                                <c:otherwise>-</c:otherwise>
-                            </c:choose>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${ not empty rtnDto.modDtm }">
+                                        ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                    </c:when>
+                                    <c:otherwise>-</c:otherwise>
+                                </c:choose>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -1602,14 +1605,7 @@
                         <button type="button" class="btn btn-sm btn-default" id="btnList">목록</button>
                     </div>
                     <div class="pull-right">
-                        <c:choose>
-                            <c:when test="${not empty rtnDto}">
-                                <div class="btn btn-sm btn-success" id="submit">수정</div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="btn btn-sm btn-success" id="submit">등록</div>
-                            </c:otherwise>
-                        </c:choose>
+                        <div class="btn btn-sm btn-success" id="submit">저장</div>
                     </div>
                 </div>
             </form>

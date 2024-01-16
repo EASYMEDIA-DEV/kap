@@ -60,6 +60,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String id;
     @Schema(title = "신청자 부서 코드")
     private String deptCd;
+    @Schema(title = "신청자 부서 이름")
+    private String deptNm;
     @Schema(title = "신청자 부서명")
     private String deptDtlNm;
     @Schema(title = "신청자 직급")
@@ -286,7 +288,10 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private Integer qstnCnt;
     @Schema(title = "응답수", example = "숫자")
     private Integer rspnCnt;
-
+    @Schema(title = "예상 응답시간", example = "숫자")
+    private Integer rspnMm;
+    @Schema(title = "설문 문구")
+    private String cntn;
     @Schema(title = "설문 가능 기간에 걸리는 설문 갯수", example = "숫자")
     private Integer srvCnt;
 
