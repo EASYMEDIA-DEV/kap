@@ -425,13 +425,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             }else if($(this).val() == "PRO_TYPE01001_02_004"){
                                 $(this).next().val("PRO_TYPE01001_01_004");
                             }else if($(this).val() == "PRO_TYPE01001_02_005"){
-                                $(this).next().val("PRO_TYPE01002_01_003");
+                                $(this).next().val("PRO_TYPE01001_01_005");
                             }
 
-                            else if($(this).val() == "PRO_TYPE01002_01_003"){
-                                $(this).next().val("PRO_TYPE01001_02_002");
+                            else if($(this).val() == "PRO_TYPE01002_02_002"){
+                                $(this).next().val("PRO_TYPE01002_01_003");
                             }else if($(this).val() == "PRO_TYPE01002_02_004"){
-                                $(this).next().val("PRO_TYPE01001_01_005");
+                                $(this).next().val("PRO_TYPE01002_01_005");
                             }else if($(this).val() == "PRO_TYPE01002_02_005"){
                                 $(this).next().val("PRO_TYPE01002_01_006");
                             }

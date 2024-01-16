@@ -616,12 +616,14 @@
         UPDATE /* WBCBSecurityMapper.updateAppctnMst */ CX_APPCTN_MST
         SET
             EPISD_SEQ =  #{episdSeq}
-            ,MEM_SEQ =  #{memSeq}
-            ,APPCTN_BSNM_NO = #{appctnBsnmNo}
-            ,PIC_CMSSR_SEQ = #{picCmssrSeq}
+            <if test='siteGubun != "front"'>
+                ,MEM_SEQ =  #{memSeq}
+                ,APPCTN_BSNM_NO = #{appctnBsnmNo}
+                ,PIC_CMSSR_SEQ = #{picCmssrSeq}
+                ,PMNDV_PMT_YN =  #{pmndvPmtYn}
+                ,ADM_MEMO =  #{admMemo}
+            </if>
             ,SBRDN_BSNM_NO = #{sbrdnBsnmNo}
-            ,PMNDV_PMT_YN =  #{pmndvPmtYn}
-            ,ADM_MEMO =  #{admMemo}
             ,MOD_ID = #{modId}
             ,MOD_IP = #{modId}
             ,MOD_DTM = NOW()
@@ -639,14 +641,19 @@
         UPDATE /* WBCBSecurityMapper.updateAppctnDtl */ CX_APPCTN_RSUME_DTL
         SET
             MNG_STTS_CD = #{mngSttsCd}
+            <if test='siteGubun != "front"'>
             ,MNG_STTS_CHNG_DTM = NOW()
+            ,MOD_ID = #{modId}
+            ,MOD_IP = #{modIp}
+            ,MOD_DTM = NOW()
+            </if>
+            <if test='siteGubun != "admin"'>
+            ,APPCTN_STTS_CHNG_DTM = NOW()
+            </if>
             ,RTRN_RSN_CNTN = #{rtrnRsnCntn}
             <if test="appctnSttsCd != null and appctnSttsCd != ''.toString() ">
             ,APPCTN_STTS_CD = #{appctnSttsCd}
             </if>
-            ,MOD_ID = #{modId}
-            ,MOD_IP = #{modIp}
-            ,MOD_DTM = NOW()
         WHERE RSUME_SEQ = #{rsumeSeq}
           AND RSUME_ORD = #{rsumeOrd}
           AND APPCTN_SEQ = #{appctnSeq}
@@ -1082,6 +1089,7 @@
              ,A.RSUME_ORD
              ,A.FILE_CD
              ,A.FILE_SEQ
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.FILE_SEQ) AS FILE_NM
         FROM CX_APPCTN_RSUME_FILE_DTL A
          JOIN CX_APPCTN_RSUME_DTL B ON A.RSUME_SEQ = B.RSUME_SEQ AND A.RSUME_ORD = B.RSUME_ORD
         WHERE B.APPCTN_SEQ = #{detailsKey}

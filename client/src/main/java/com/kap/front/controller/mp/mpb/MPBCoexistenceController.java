@@ -6,6 +6,8 @@ import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
@@ -56,6 +58,7 @@ public class MPBCoexistenceController {
     public final WBHACalibrationService wbhaCalibrationService;
     public final WBIBSupplyCompanyService wBIBSupplyCompanyService;
     public final WBJBAcomListService wBJBAcomListService;
+    public final WBCBSecurityService wBCBSecurityService;
 
 
     /**
@@ -141,6 +144,11 @@ public class MPBCoexistenceController {
 
                     modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
                     modelMap.addAttribute("rtnAppctnRsume", wBJBAcomListService.selectAppctnRsumeDtl(wBJAcomSearchDTO));
+                } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+                    wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
                 }
             }
 
@@ -213,6 +221,11 @@ public class MPBCoexistenceController {
                         wBIBSupplyDTO.setAppctnSeq(mpbBsnMstDTO.getAppctnSeq());
 
                         respCnt = wBIBSupplyCompanyService.updateInfo(wBIBSupplyDTO, multiRequest, request);
+                    } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO = mpbBsnMstDTO.getWBCBSecurityMstInsertDTO();
+
+                        respCnt = wBCBSecurityService.carbonUserUpdate(wBCBSecurityMstInsertDTO, multiRequest, request);
                     }
                 }
             }
@@ -226,6 +239,7 @@ public class MPBCoexistenceController {
             {
                 log.debug(e.getMessage());
             }
+            e.printStackTrace();
             throw new Exception(e.getMessage());
 
         }
