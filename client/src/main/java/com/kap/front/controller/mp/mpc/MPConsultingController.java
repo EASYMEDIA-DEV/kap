@@ -3,6 +3,8 @@ package com.kap.front.controller.mp.mpc;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
@@ -53,6 +55,7 @@ public class MPConsultingController {
     /** 서비스 **/
     private final CBATechGuidanceService cBATechGuidanceService;
     private final CBBManageConsultService cBBManageConsultService;
+    private final MPEPartsCompanyService mPEPartsCompanyService;
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
     private final SVASurveyService sVSurveyService;
 
@@ -83,28 +86,50 @@ public class MPConsultingController {
     public String getConsultingDtl(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         String vwUrl = "";
-        try
-        {
+        /*try
+        {*/
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             CBATechGuidanceInsertDTO tmpDto = cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO);
+
             if(String.valueOf(cOUserDetailsDTO.getSeq()).equals(tmpDto.getMemSeq())){
                 CBATechGuidanceInsertDTO rtnData = cBATechGuidanceService.selectTechGuidanceDtlCheck(cBATechGuidanceInsertDTO);
                 int rspnCnt = rtnData.getRspnCnt();
                 int srvCnt = rtnData.getSrvCnt();
-                modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
+                cBATechGuidanceInsertDTO.setMemSeq(rtnData.getMemSeq());
+
+                MPEPartsCompanyDTO mPEPartsCompanyDTO = new MPEPartsCompanyDTO();
+                mPEPartsCompanyDTO.setBsnmNo(tmpDto.getBsnmNo().replace("-", ""));
+
+                if(tmpDto.getCtgryCd().equals("COMPANY01001")){
+
+                    modelMap.addAttribute("cmpnInfo", mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO));
+                }else{
+                    modelMap.addAttribute("cmpnInfo", mPEPartsCompanyService.selectPartsComSQInfo(mPEPartsCompanyDTO));
+                }
+
+                if(tmpDto.getCnstgCd().equals("CONSULT_GB01")){
+                    modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
+                    modelMap.addAttribute("appctnTypeList", tmpDto.getAppctnTypeList());
+                }else{
+                    CBBManageConsultInsertDTO cBBManageConsultInsertDTO = new CBBManageConsultInsertDTO();
+                    cBBManageConsultInsertDTO.setBsnmNo(cBATechGuidanceInsertDTO.getBsnmNo());
+                    modelMap.addAttribute("rtnData", cBBManageConsultService.selectManageConsultDtl(cBBManageConsultInsertDTO));
+                }
                 modelMap.addAttribute("rspnCnt", rspnCnt);
                 modelMap.addAttribute("srvCnt", srvCnt);
+
                 vwUrl = "front/mp/mpc/MPConsultingDtl.front";
+
             }else{
                 modelMap.addAttribute("msg", "잘못된 접근입니다.");
                 modelMap.addAttribute("url", "/");
                 vwUrl = "front/COBlank.error";
             }
-        }
+       /* }
         catch (Exception e)
         {
             throw new Exception(e.getMessage());
-        }
+        }*/
         return vwUrl;
     }
 
@@ -117,6 +142,7 @@ public class MPConsultingController {
         /*try
         {*/
             modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
+            modelMap.addAttribute("survInfo", cBATechGuidanceService.selectTechGuidanceDtlCheck(cBATechGuidanceInsertDTO));
            /* COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
             modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
