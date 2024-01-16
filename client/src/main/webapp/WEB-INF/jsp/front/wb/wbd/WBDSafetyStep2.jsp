@@ -57,7 +57,7 @@
                       <div class="data-line">
                         <div class="form-group">
                           <div class="form-input">
-                            <input type="text" name="sbrdnBsnmNo" name="sbrdnBsnmNo" placeholder="종된사업장번호 입력" maxlength="4">
+                            <input type="text" name="sbrdnBsnmNo" placeholder="종된사업장번호 입력" maxlength="4">
                           </div>
                         </div>
                         <div class="noti-txt-w">

@@ -1,10 +1,14 @@
 package com.kap.service.impl.wb.wbc;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
+import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbc.*;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBCBSecurityService;
@@ -16,15 +20,15 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -51,6 +55,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
     private final EgovIdGnrService cxAppctnTrnsfDtlIdgen;
     
     //파일 서비스
+    private final COFileUtil cOFileUtil;
     private final COFileService cOFileService;
 
     /**
@@ -1011,6 +1016,108 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         }
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 사용자 신청 수정
+     */
+    public int carbonUserUpdate(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+
+        int respCnt = 0;
+
+        int maxRsumeOrd = wBCBSecurityMstInsertDTO.getMaxRsumeOrd();
+        int rsumeOrd = maxRsumeOrd - 1;
+
+        COUserDetailsDTO coaAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        wBCBSecurityMstInsertDTO.setModId(coaAdmDTO.getId());
+        wBCBSecurityMstInsertDTO.setModIp(coaAdmDTO.getLoginIp());
+
+        //신청 MST ○
+        respCnt = wBCBSecurityMapper.updateAppctnMst(wBCBSecurityMstInsertDTO);
+
+        //신청 DTL ○
+        WBCBSecurityDtlDTO wBCBSecurityDtlDTO = new WBCBSecurityDtlDTO();
+
+        wBCBSecurityDtlDTO = wBCBSecurityMstInsertDTO.getRsumeDtlList().get(0);
+
+        wBCBSecurityDtlDTO.setAppctnSeq(wBCBSecurityMstInsertDTO.getAppctnSeq());
+        wBCBSecurityDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
+        wBCBSecurityDtlDTO.setRsumeOrd(maxRsumeOrd);
+        wBCBSecurityDtlDTO.setModId(coaAdmDTO.getId());
+        wBCBSecurityDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+
+        wBCBSecurityMapper.updateAppctnDtl(wBCBSecurityDtlDTO);
+
+        WBCBSecurityPbsnDtlDTO wBCBSecurityPbsnDtlDTO = new WBCBSecurityPbsnDtlDTO();
+        //Pbsn ○
+        wBCBSecurityPbsnDtlDTO = wBCBSecurityMstInsertDTO.getPbsnDtlList().get(0);
+
+        if(wBCBSecurityPbsnDtlDTO.getBsnPmt() == null || wBCBSecurityPbsnDtlDTO.getBsnPmt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setBsnPmt(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getBsnPlanDt() == null || wBCBSecurityPbsnDtlDTO.getBsnPlanDt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setBsnPlanDt(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getSpprtPmt() == null || wBCBSecurityPbsnDtlDTO.getSpprtPmt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setSpprtPmt(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getPhswPmt() == null || wBCBSecurityPbsnDtlDTO.getPhswPmt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setPhswPmt(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getTtlPmt() == null || wBCBSecurityPbsnDtlDTO.getTtlPmt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setTtlPmt(null);
+        }
+
+        wBCBSecurityPbsnDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
+        wBCBSecurityPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
+        wBCBSecurityPbsnDtlDTO.setModId(coaAdmDTO.getId());
+        wBCBSecurityPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+        wBCBSecurityMapper.updateAppctnPbsnDtl(wBCBSecurityPbsnDtlDTO);
+
+        //상생 신청 파일 상세
+        List<COFileDTO> rtnList = null;
+        Map<String, MultipartFile> files = multiRequest.getFileMap();
+        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+        MultipartFile file;
+        int atchFileCnt = 0;
+
+        while (itr.hasNext()) {
+            Map.Entry<String, MultipartFile> entry = itr.next();
+            file = entry.getValue();
+
+            if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                atchFileCnt++;
+            }
+        }
+
+        if (!files.isEmpty()) {
+            rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+            System.out.println("rtnList  " + rtnList);
+
+            for (int i = 0; i < rtnList.size() ; i++) {
+                List<COFileDTO> fileList = new ArrayList();
+                rtnList.get(0).setStatus("success");
+                rtnList.get(0).setFieldNm("fileSeq");
+                fileList.add(rtnList.get(0));
+                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                WBCBSecurityFileDtlDTO wBCBSecurityFileDtlDTO = new WBCBSecurityFileDtlDTO();
+
+                wBCBSecurityFileDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
+                wBCBSecurityFileDtlDTO.setRsumeOrd(maxRsumeOrd);
+                wBCBSecurityFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                wBCBSecurityFileDtlDTO.setRegId(coaAdmDTO.getId());
+                wBCBSecurityFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBCBSecurityMapper.insertAppctnFileDtl(wBCBSecurityFileDtlDTO);
+            }
+        }
+
+        wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
+
 
         return respCnt;
     }
