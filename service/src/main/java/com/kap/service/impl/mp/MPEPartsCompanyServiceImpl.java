@@ -1,6 +1,7 @@
 package com.kap.service.impl.mp;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
@@ -62,6 +63,8 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
     //로그인 상태값 시스템 등록
     private final COSystemLogService cOSystemLogService;
+
+    COStringUtil stringUtil;
 
     /**
      * 부품사 목록을 조회한다.
@@ -184,6 +187,8 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         mpePartsCompanyDTO.setModId(cOUserDetailsDTO.getId());
         mpePartsCompanyDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
+        mpePartsCompanyMapper.deletePartsComSQInfo(mpePartsCompanyDTO);
+
         List<String> sqList1 = mpePartsCompanyDTO.getSqInfoList1();
         List<String> sqList2 = mpePartsCompanyDTO.getSqInfoList2();
         List<String> sqList3 = mpePartsCompanyDTO.getSqInfoList3();
@@ -232,13 +237,8 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                     mpePartsCompanyDTO.setPay5StarYear(null);
                     mpePartsCompanyDTO.setQlty5StarYear(null);
 
-                    if (!seq.isEmpty()) {
-                        mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
-                        mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
-                    } else {
-                        mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
-                        mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
-                    }
+                    mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
+                    mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
                 }
                 index += 1;
             }
@@ -485,25 +485,17 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
             //부품사코드
             cell = row.createCell(6);
-            cell.setCellValue(list.get(i).getCmpnCd() == null ? "-" : list.get(i).getCmpnCd());
+            cell.setCellValue(COStringUtil.nvl(list.get(i).getCmpnCd(), "-"));
             cell.setCellStyle(style_body);
 
             //매출액(억원)
             cell = row.createCell(7);
-            if (list.get(i).getSlsPmt() == null) {
-                cell.setCellValue("-");
-            } else {
-                cell.setCellValue(list.get(i).getSlsPmt());
-            }
+            cell.setCellValue(COStringUtil.nvl(String.valueOf(list.get(i).getSlsPmt()), "-"));
             cell.setCellStyle(style_body);
 
             //직원수
             cell = row.createCell(8);
-            if (list.get(i).getSlsPmt() == null) {
-                cell.setCellValue("-");
-            } else {
-                cell.setCellValue(list.get(i).getMpleCnt());
-            }
+            cell.setCellValue(COStringUtil.nvl(String.valueOf(list.get(i).getMpleCnt()), "-"));
             cell.setCellStyle(style_body);
 
             //설립일자
@@ -513,7 +505,7 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
             //회사 전화번호
             cell = row.createCell(10);
-            cell.setCellValue(list.get(i).getTelNo());
+            cell.setCellValue(COStringUtil.nvl(list.get(i).getTelNo(), "-"));
             cell.setCellStyle(style_body);
 
             //본사주소
@@ -611,11 +603,6 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                     if ("null".equals(score)) { score = ""; }
                     if ("null".equals(crtfnCmpnNm)) { crtfnCmpnNm = ""; }
 
-                    System.err.println("nm: " + nm);
-                    System.err.println("score: " + score);
-                    System.err.println("year: " + year);
-                    System.err.println("crtfnCmpnNm: " + crtfnCmpnNm);
-
                     sqInfo = nm + "/" + score + "/" + year + "년/" + crtfnCmpnNm;
 
                     if (index == 1) {
@@ -629,9 +616,6 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                 }
 
             }
-            System.err.println("sqInfo1::::" + sqInfo1);
-            System.err.println("sqInfo2::::" + sqInfo2);
-            System.err.println("sqInfo3::::" + sqInfo3);
 
             //SQ 정보
             Cell sqCell = row.createCell(17);

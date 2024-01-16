@@ -23,7 +23,7 @@
                     <label class="col-sm-1 control-label">전체 교육 일정</label>
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="52428800" />
+                        <spring:eval var="atchUploadMaxSize" expression="104857600" />
                         <div class="dropzone attachFile notRequired" data-file-field-nm="ttlEdctnFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="전체교육일정">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>

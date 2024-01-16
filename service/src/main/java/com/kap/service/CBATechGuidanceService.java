@@ -4,6 +4,7 @@ import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -38,7 +39,7 @@ public interface CBATechGuidanceService {
     /**
      * 컨설팅 기술 지도 관리 등록
      */
-    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception;
 
     /**
      * 컨설팅 기술 지도 관리 삭제

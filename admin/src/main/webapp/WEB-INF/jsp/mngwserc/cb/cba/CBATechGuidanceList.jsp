@@ -154,9 +154,9 @@
                         <th class="text-center">랩업일</th>
                         <th class="text-center">랩업자료</th>
                         <th class="text-center">신청일</th>
-                        <th class="text-center">최초 등록자(아이디)</th>
+                        <th class="text-center">최초 등록자</th>
                         <th class="text-center">최초 등록일시</th>
-                        <th class="text-center">최종 수정자(아이디)</th>
+                        <th class="text-center">최종 수정자</th>
                         <th class="text-center">최종 수정일시</th>
                     </tr>
                     </thead>
@@ -193,7 +193,7 @@
             </div>
             <div class="modal-footer row">
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary down mt">다운로드</button>
+                    <button type="button" class="btn btn-primary down mt">저장</button>
                 </div>
             </div>
         </div>

@@ -57,12 +57,14 @@
             <hr />
             <div class="clearfix">
                 <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
+                    <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
+                    <c:if test="${ not empty rtnInfo }">
+                        <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                    </c:if>
                 </div>
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnInfo}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
                             <button type="submit" class="btn btn-sm btn-success" >저장</button>
                         </c:when>
                         <c:otherwise>
@@ -71,36 +73,22 @@
                     </c:choose>
                 </div>
             </div>
-            <c:if test="${ not empty rtnInfo }">
-                <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+            <c:if test="${ not empty rtnDto }">
+                <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                 <div class="table-responsive ">
                     <table class="table text-sm">
                         <tbody>
                         <tr>
                             <th>최초 등록자</th>
-                            <td>${ rtnDto.regName }</td>
-                            <th>최초 작성일</th>
+                            <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
+                            <th>최초 등록일시</th>
                             <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                         </tr>
                         <tr>
                             <th>최종 수정자</th>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${ not empty rtnDto.modName }">
-                                        ${ rtnDto.modName }
-                                    </c:when>
-                                    <c:otherwise>-</c:otherwise>
-                                </c:choose>
-                            </td>
-                            <th>최종 수정일</th>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${ not empty rtnDto.modDtm }">
-                                        ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                                    </c:when>
-                                    <c:otherwise>-</c:otherwise>
-                                </c:choose>
-                            </td>
+                            <td>${ empty rtnDto.modName ? '-' : rtnDto.modName += '(' += rtnDto.modId += ')' }</td>
+                            <th>최종 수정일시</th>
+                            <td>${ kl:decode(rtnDto.modDtm, "", "-", kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
                         </tr>
                         </tbody>
                     </table>

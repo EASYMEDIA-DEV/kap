@@ -183,7 +183,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }
         /* 현재 진행 단계 관리자상태 값 확인 후 show/hide */
         let optCheck = function(panel) {
-            let select = $(panel).find('select[data-name=mngSttsCd]');
+            let select = $(panel).find('.mngSttsCd');
             let optLeng = select.find('option').length;
             let lastOpt = select.find('option').eq(optLeng-1).val();
             let selopt = select.find('option:selected').val();
@@ -248,14 +248,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         searchTrnsfList(1);
 
-        /* datetimepicker init */
-        let date = new Date();
-        let dateVal = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
-        $('input[class*=datetimepicker]').each(function(idx, el) {
-            if($(el).val() == '') {
-                $(el).val(dateVal);
-            }
-        })
     }
 
 
@@ -271,8 +263,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             totalPrice += price;
         });
 
-        if(panelBody.find('input[data-name=ttlPmt]') != undefined){
-            panelBody.find(`input[data-name=ttlPmt]`).val(totalPrice.toLocaleString('ko-KR'));
+        if(panelBody.find('.ttlPmt') != undefined){
+            panelBody.find('.ttlPmt').val(totalPrice.toLocaleString('ko-KR'));
         }
     }
 
@@ -300,14 +292,20 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             bsnmNoAuth :{
                 event : {
                     click : function() {
-                        cmmCtrl.frmAjax(function(respObj) {
-                            if(respObj.rtnData.cmpnCount == 0){
-                                $dataRsumeTask.find('input[data-name="offerCmpnNm"]').val('');
-                                alert('공급기업 사업자등록번호 확인해주세요.');
-                            } else {
-                                $dataRsumeTask.find('input[data-name="offerCmpnNm"]').val(respObj.rtnData.cmpnNm);
-                            }
-                        }, "/mngwserc/wb/wbfb/getBsnmNoCheck", $formObj, "post", "json")
+                        if($('#offerBsnmNo').val() != '') {
+                            var wBFBRegisterSearchDTO = {}
+                            wBFBRegisterSearchDTO.offerBsnmNo = $('#offerBsnmNo').val();
+                            cmmCtrl.jsonAjax(function(respObj) {
+                                var rtnData = JSON.parse(respObj);
+
+                                if(rtnData.cmpnCount == 0){
+                                    $dataRsumeTask.find('#offerCmpnNm').val('');
+                                    alert('공급기업 사업자등록번호 확인해주세요.');
+                                } else {
+                                    $dataRsumeTask.find('#offerCmpnNm').val(rtnData.cmpnNm);
+                                }
+                            }, "/mngwserc/wb/wbfb/getBsnmNoCheck", wBFBRegisterSearchDTO, "text")
+                        }
                     }
                 }
             },
@@ -337,7 +335,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             searchPostCode : {
                 event : {
                     click : function() {
-                        cmmCtrl.searchPostCode(width, height,"zipCode","bscAddr","dtlAddr");
+                        cmmCtrl.searchPostCode(width, height,"zipcode","bscAddr","dtlAddr");
                     }
                 }
             },
@@ -443,8 +441,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
                         let rsumeTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`);
                         cmmCtrl.getCmtSrchPop(function (data) {
-                            rsumeTask.find('input[data-name=chkCmssrSeq]').val(data.seq);
-                            rsumeTask.find('input[data-name=chkCmssrNm]').val(data.name);
+                            rsumeTask.find('.chkCmssrSeq').val(data.seq);
+                            rsumeTask.find('.chkCmssrNm').val(data.name);
                         });
 
                     }

@@ -62,7 +62,7 @@ public class WBPartCompanyDTO extends BaseDTO {
     private String telNo;
 
     @Schema(title = "우편변호")
-    private String zipCode;
+    private String zipcode;
 
     @Schema(title = "기본주소")
     private String bscAddr;

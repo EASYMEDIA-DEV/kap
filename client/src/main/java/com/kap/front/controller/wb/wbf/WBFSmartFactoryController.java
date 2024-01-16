@@ -49,17 +49,17 @@ public class WBFSmartFactoryController {
      * 서비스
      **/
     /* 회차 관리 */
-    private final WBFASmartRoundService wBFASmartRoundService;
+    public final WBFASmartRoundService wBFASmartRoundService;
     /* 부품사 관리*/
-    private final WBFBRegisterCompanyService wBFBRegisterCompanyService;
+    public final WBFBRegisterCompanyService wBFBRegisterCompanyService;
     /* CMS */
-    private final COGCntsService pCOGCntsService;
+    public final COGCntsService pCOGCntsService;
     /* 양식 파일 */
-    private final SMJFormService smjFormService;
+    public final SMJFormService smjFormService;
     /* 부품사 검색 */
-    private final WBPartCompanyService wBPartCompanyService;
+    public final WBPartCompanyService wBPartCompanyService;
     /* 파일 공통 */
-    private final COFileService cOFileService;
+    public final COFileService cOFileService;
     /* 공통 코드 service DI */
     private final COCodeService cOCodeService;
 
