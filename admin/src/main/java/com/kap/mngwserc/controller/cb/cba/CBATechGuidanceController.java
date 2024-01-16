@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -153,13 +154,13 @@ public class CBATechGuidanceController {
      * 컨설팅 사업 기술 지도 등록
      */
     @RequestMapping(value = "/insert", method= RequestMethod.POST)
-    public String insertTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
+    public String insertTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, MultipartHttpServletRequest multiRequest, ModelMap modelMap) throws Exception {
        /* try {*/
             COUserDetailsDTO cOUserDetailsDTO =COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBATechGuidanceInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
-            modelMap.addAttribute("respCnt", cBATechGuidanceService.insertTechGuidance(cBATechGuidanceInsertDTO));
+            modelMap.addAttribute("respCnt", cBATechGuidanceService.insertTechGuidance(cBATechGuidanceInsertDTO, multiRequest));
        /* } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());

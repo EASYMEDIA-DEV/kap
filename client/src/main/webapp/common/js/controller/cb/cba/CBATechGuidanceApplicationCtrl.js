@@ -61,12 +61,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             $("#dtlAddr").text("("+coInfo.list[0].zipcode+")"+coInfo.list[0].dtlAddr);
             $("#slsPmt").text(coInfo.list[0].slsPmt+"억 원"+" ("+coInfo.list[0].slsYear+"년)");
             $("#mpleCnt").text(coInfo.list[0].mpleCnt+"명");
-            $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1);
 
-            if(coInfo.list[0].mjrPrdct2){
-                $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1+" ② "+coInfo.list[0].mjrPrdct2);
-                if(coInfo.list[0].mjrPrdct3){
-                    $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1+" ② "+coInfo.list[0].mjrPrdct2+" ③ "+coInfo.list[0].mjrPrdct3);
+            if(coInfo.list[0].mjrPrdct1 != '' || coInfo.list[0].mjrPrdct1 != null){
+
+                $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1);
+
+                if(coInfo.list[0].mjrPrdct2){
+                    $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1+" ② "+coInfo.list[0].mjrPrdct2);
+                    if(coInfo.list[0].mjrPrdct3){
+                        $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1+" ② "+coInfo.list[0].mjrPrdct2+" ③ "+coInfo.list[0].mjrPrdct3);
+                    }
                 }
             }
         }, './checkPartsCompany', info, "text");
