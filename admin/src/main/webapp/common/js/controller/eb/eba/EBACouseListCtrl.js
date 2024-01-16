@@ -231,6 +231,12 @@ define(["ezCtrl"], function(ezCtrl) {
 							$(".cdListContainer").find("input:checkbox").prop("checked", false);
 						}
 
+						$(".detailCdList").find('input[type=checkbox]').prop("checked",false);
+						if($(".detailCdList").find('input[type=checkbox]').is(":visible")){
+							$(".detailCdList").find('input[type=checkbox]').each(function(){
+								$(this).prop("checked",true);
+							})
+						}
 					}
 				}
 			},
@@ -389,6 +395,14 @@ define(["ezCtrl"], function(ezCtrl) {
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);
 			search();
+
+			var searchInput = $("#btnSearch").closest('fieldset').find('input:text');
+			searchInput.on('keypress', function(e){
+				if (e.keyCode == 13){
+					$formObj.find("#btnSearch").click();
+				}
+			})
+
 
 			$excelObj.find("button.down").on('click', function(){
 				var rsn = $excelObj.find("#rsn").val().trim();
