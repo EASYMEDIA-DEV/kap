@@ -32,7 +32,11 @@
             <form class="form-horizontal" id="frmData" name="frmData" method="post" >
                 <input type="hidden" name="srvSeq" value="${rtnData.srvSeq}">
                 <input type="hidden" name="rfncCd" value="EDU">
-                <input type="hidden" value="${rtnData.episdSeq}" name="rtnSeq" >
+                <input type="hidden" value="${rtnData.episdSeq}" name="rfncSeq" >
+                <input type="hidden" value="${rtnData.memSeq}" name="rtnMemSeq">
+                <input type="hidden" value="${rtnData.episdYear}" name="episdYear">
+                <input type="hidden" value="${rtnData.episdOrd}" name="episdOrd">
+                <input type="hidden" value="${rtnData.edctnSeq}" name="edctnSeq">
 
                 <div class="survey-form">
                 <div class="cont-sec-w">
@@ -91,8 +95,8 @@
                                                         <div class="opt-group verticality"><!-- verticality : 아래로 떨어지는 -->
                                                             <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
                                                                 <div class="form-radio exmplList">
-                                                                    <input type="radio" class="${notRequired} answer" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="${qstnList.qstnNm}" data-next-no ="${exmplList.nextNo}">
-                                                                    <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplNm}</label>
+                                                                    <input type="radio" class="${notRequired} answer" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}${qstnList.isttrSeq}" name="answer${qstnList.qstnSeq}${qstnList.isttrSeq}" value="${exmplList.exmplSeq}" title="${qstnList.qstnNm}" data-next-no ="${exmplList.nextNo}">
+                                                                    <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}${qstnList.isttrSeq}">${exmplList.exmplNm}</label>
                                                                 </div>
                                                             </c:forEach>
                                                         </div>
@@ -101,8 +105,8 @@
                                                         <div class="opt-group verticality"><!-- verticality : 아래로 떨어지는 -->
                                                             <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
                                                                 <div class="form-checkbox exmplList">
-                                                                    <input type="checkbox" class="${notRequired} answer" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="${qstnList.qstnNm}" data-next-no ="${exmplList.nextNo}">
-                                                                    <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplNm}</label>
+                                                                    <input type="checkbox" class="${notRequired} answer" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}${qstnList.isttrSeq}" name="answer${qstnList.qstnSeq}${qstnList.isttrSeq}" value="${exmplList.exmplSeq}" title="${qstnList.qstnNm}" data-next-no ="${exmplList.nextNo}">
+                                                                    <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}${qstnList.isttrSeq}">${exmplList.exmplNm}</label>
                                                                 </div>
                                                             </c:forEach>
                                                         </div>
@@ -126,8 +130,8 @@
                                                             <div class="criterion-list-w">
                                                                 <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
                                                                     <div class="form-radio exmplList">
-                                                                        <input type="radio" id="criterionOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" class="${notRequired} answer" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="${qstnList.qstnNm}" data-next-no ="${exmplList.nextNo}">
-                                                                        <label for="criterionOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplOrd}</label>
+                                                                        <input type="radio" id="criterionOption${qstnList.qstnOrd}-${exmplList.exmplOrd}${qstnList.isttrSeq}" class="${notRequired} answer" name="answer${qstnList.qstnSeq}${qstnList.isttrSeq}" value="${exmplList.exmplSeq}" title="${qstnList.qstnNm}" data-next-no ="${exmplList.nextNo}">
+                                                                        <label for="criterionOption${qstnList.qstnOrd}-${exmplList.exmplOrd}${qstnList.isttrSeq}">${exmplList.exmplOrd}</label>
                                                                     </div>
                                                                     <c:if test="${exmplStatus.first}">
                                                                         <c:set var="firstText" value="${exmplList.exmplNm}"/>

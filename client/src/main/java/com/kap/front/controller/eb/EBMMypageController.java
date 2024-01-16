@@ -281,4 +281,36 @@ public class EBMMypageController
         }
         return "jsonView";
     }
+
+    /**
+     * 설문step3
+     */
+    @GetMapping(value="/my-page/edu-apply/srvStep3")
+    public String getApplySrvStep3(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "";
+        try
+        {
+            EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            if (cOLoginUserDTO.getSeq() == rtnData.getMemSeq()){
+                vwUrl = "front/eb/ebm/EBMEduApplySrvStep3.front";
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return vwUrl;
+    }
 }
