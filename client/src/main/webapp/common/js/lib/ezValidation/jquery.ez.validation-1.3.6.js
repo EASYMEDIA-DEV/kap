@@ -41,6 +41,18 @@
 					min : 2,
 					max : 4
 				},
+				yearChk : {
+					className : "yearChk",
+					max : 4
+				},
+				monthChk : {
+					className : "monthChk",
+					max : 12
+				},
+				dayChk : {
+					className : "dayChk",
+					max : 31
+				},
 				mobileNumChk : {
 					className : "mobileChk",
 					regExr : "^([0]{1}[0-9]{2})-([1-9]{1}[0-9]{2,3})-([0-9]{4})$"
@@ -78,12 +90,12 @@
 			msg : {
 				type : "alert",
 				empty : {
-					text : " 입력하세요.",
-					password : " 입력하세요.",
-					radio : " 선택하세요.",
-					checkbox : " 선택하세요.",
-					select : " 선택하세요.",
-					textarea : " 입력하세요.",
+					text : " 입력해주세요.",
+					password : " 입력해주세요.",
+					radio : " 선택해주세요.",
+					checkbox : " 선택해주세요.",
+					select : " 선택해주세요.",
+					textarea : " 입력해주세요.",
 					names : {
 						
 					}
@@ -94,6 +106,9 @@
 				emailChk : "이메일 주소를 확인해주세요.",
 				numberChk : "숫자만 입력가능합니다.",
 				lengthLimitChk : "길이가 조건에 맞지 않습니다.",
+				yearChk : "년을 정확히 입력해주세요.",
+				monthChk : "월을 정확히 입력해주세요.",
+				dayChk : "일을 정확히 입력해주세요.",
 				mobileNumChk : "휴대폰번호는 010-1234-5678 형식으로 입력되어야 합니다.",
 				phoneNumChk : "연락처는 02(010)-1234-5678 또는 15XX-XXXX 형식으로 입력되어야 합니다.",
 				englishChk : "영문만 입력하실 수 있습니다.",
@@ -537,7 +552,8 @@
 			dateTypeExr : "",
 			urlExr : "",
 			nameExr : "",
-			ipExr : ""
+			ipExr : "",
+
 		};
 
 		var rtnFunc;
@@ -558,6 +574,9 @@
 			numberChk : "",
 			floatChk : "",
 			lengthLimitChk : "",
+			yearChk : "",
+			monthChk : "",
+			dayChk : "",
 			mobileNumChk : "",
 			phoneNumChk : "",
 			englishChk : "",
@@ -612,6 +631,9 @@
 		msg.numberChk = settings.msg.numberChk;
 		msg.floatChk = settings.msg.floatChk;
 		msg.lengthLimitChk = settings.msg.lengthLimitChk + "(" + settings.validateType.lengthLimitChk.min + "자리)";
+		msg.yearChk = settings.msg.yearChk;
+		msg.monthChk = settings.msg.monthChk ;
+		msg.dayChk = settings.msg.dayChk;
 		msg.mobileNumChk = settings.msg.mobileNumChk;
 		msg.phoneNumChk = settings.msg.phoneNumChk;
 		msg.englishChk = settings.msg.englishChk;
@@ -1025,6 +1047,16 @@
 			LengthLimitChk : function(obj, lengthInfo, msg){
 				Feel.Validation.method.LengthCheck(obj, lengthInfo, msg, GenerateMsg);
 			},
+			yearChk : function(obj, msg){
+				console.log(msg);
+				if ($.trim(obj.val()).length != 4) GenerateMsg(obj, msg);
+			},
+			monthChk : function(obj, msg){
+				if ($.trim(obj.val())  >= 13) GenerateMsg(obj, msg);
+			},
+			dayChk : function(obj, msg){
+				if ($.trim(obj.val()) >= 32) GenerateMsg(obj, msg);
+			},
 			CommonChk : function(obj, regexr, msg){
 				if (NotRequiredCheck(obj, true)) Feel.Validation.method.RegExrCheck(obj, regexr, msg, GenerateMsg);
 			}
@@ -1113,6 +1145,9 @@
 								if (isOk && $(this).hasClass(settings.validateType.numberChk.className)) validationType.CommonChk($(this), regExrs.numberExr, msg.numberChk);
 								if (isOk && $(this).hasClass(settings.validateType.floatChk.className)) validationType.CommonChk($(this), regExrs.floatExr, msg.floatChk);
 								if (isOk && $(this).hasClass(settings.validateType.lengthLimitChk.className)) validationType.LengthLimitChk($(this), settings.validateType.lengthLimitChk, msg.lengthLimitChk);
+								if (isOk && $(this).hasClass(settings.validateType.yearChk.className)) validationType.yearChk($(this), msg.yearChk);
+								if (isOk && $(this).hasClass(settings.validateType.monthChk.className)) validationType.monthChk($(this), msg.monthChk);
+								if (isOk && $(this).hasClass(settings.validateType.dayChk.className)) validationType.dayChk($(this), msg.dayChk);
 								if (isOk && $(this).hasClass(settings.validateType.mobileNumChk.className)) validationType.CommonChk($(this), regExrs.mobileExr, msg.mobileNumChk);
 								if (isOk && $(this).hasClass(settings.validateType.phoneNumChk.className)) validationType.CommonChk($(this), regExrs.phoneExr, msg.phoneNumChk);
 								if (isOk && $(this).hasClass(settings.validateType.englishChk.className)) validationType.CommonChk($(this), regExrs.englishExr, msg.englishChk);

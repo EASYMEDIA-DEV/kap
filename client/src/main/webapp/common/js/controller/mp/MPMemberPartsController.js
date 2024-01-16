@@ -184,6 +184,19 @@ define(["ezCtrl"], function(ezCtrl) {
                 }
             },
 
+            pstnCdOld : {
+                event : {
+                    change : function() {
+                        $(".pstnNmOld").val('');
+                        if($("#pstnCdOld").val()!='MEM_CD01007') {
+                            $(".pstnNmDisOld").hide();
+                        } else {
+                            $(".pstnNmDisOld").show();
+                        }
+                    }
+                }
+            },
+
         },
         classname : {
             // do something...
@@ -206,6 +219,7 @@ define(["ezCtrl"], function(ezCtrl) {
                             $(".for-status-chk").removeClass("satisfy");
                             $(".switchingMemberPopup").css('display','none');
                             $(".dimd").css('display','none');
+                            $(".dimd").removeClass("dimd");
                             $("body").removeClass("stop-scroll");
                         }
                     }
@@ -216,7 +230,8 @@ define(["ezCtrl"], function(ezCtrl) {
             btnSave : {
                 event : {
                     click : function () {
-                        if(validationCmpn()) {
+                        let popChk = true;
+                        if(validationCmpn(event)) {
                             if (!bsnmOldNewChk) {
                                 if($("#bsnmNosOld").val() == "") {
 
@@ -256,24 +271,40 @@ define(["ezCtrl"], function(ezCtrl) {
                                 $(".rprsntNm").text($(".rprsnt_nm").val());
                                 $(".ctgryNm").text($("#ctgryCd").val()=='COMPANY01001' ? '1차' : '2차');
                                 $(".addrNm").text($("#bscAddr").val() + " " + $("#dtlAddr").val());
+                                $(".buseo").text()
+                                $(".gikgub").text();
                                 $(".cmpnNm").val($(".cmpn_nm_new").val());
                                 $(".rprsntNm").val($(".rprsnt_nm").val());
                                 $(".deptCd").val($("#deptCd").val());
                                 $(".deptDtlNm").val($("#deptDtlNm").val());
                                 $(".pstnNm").val($(".pstnNm").val());
                                 $(".pstnCd").val($("#pstnCd").val());
+
+                                let buseonDtl = $("#deptDtlNmOld").val() == "" ? '' : "(" + $("#deptDtlNm").val() +")";
+                                $(".buseo").text($("#deptCd option:selected").text() +" " + buseonDtl);
+                                let gikgubDtl = $("#pstnCd option:selected").text() == '기타' ? "(" + $(".pstnNm").val() +")" : '';
+                                $(".gikgub").text($("#pstnCd option:selected").text() + " " + gikgubDtl);
+
+
                             } else {
                                 //old
+
+                                let buseonDtl = $("#deptDtlNmOld").val() == "" ? '' : "(" + $("#deptDtlNmOld").val() +")";
+                                $(".buseo").text($("#deptCdOld option:selected").text() +" " + buseonDtl);
+                                let gikgubDtl = $("#pstnCdOld option:selected").text() == '기타' ? "(" + $(".pstnNmOld").val() +")" : '';
+                                $(".gikgub").text($("#pstnCdOld option:selected").text() + " " + gikgubDtl);
+
                                 $(".cmpnNm").text($(".cmpn_nm").text());
                                 $(".rprsntNm").text($(".rsNm").text());
                                 $(".ctgryNm").text($(".gubun ").text());
                                 $(".addrNm").text($(".addr").text());
                                 $(".cmpnNm").val($(".cmpn_nm").text());
                                 $(".rprsntNm").val($(".rsNm").text());
-                                $(".deptCd").val($("#deptCdOld").val());
-                                $(".deptDtlNm").val($("#deptDtlNmOld").val());
-                                $(".pstnNm").val($(".pstnNmOld").val());
-                                $(".pstnCd").val($("#pstnCdOld").val());
+                                // $(".deptCd").val($("#deptCdOld").val());
+                                // $(".deptCdPar").val($("#deptCdOld").val());
+                                // $(".deptDtlNm").val($("#deptDtlNmOld").val());
+                                // $(".pstnNm").val($(".pstnNmOld").val());
+                                // $(".pstnCd").val($("#pstnCdOld").val());
                             }
                             $("#btnParts span").text("부품사정보 변경");
                             //form 데이터 넣기
@@ -312,28 +343,34 @@ define(["ezCtrl"], function(ezCtrl) {
                                 if (confirm(msgCtrl.getMsg("confirm.sve"))) {
                                     var $formObj5 = $("#formUserSubmit");
                                     cmmCtrl.frmAjax(function(respObj) {
+                                        popChk = true;
                                         alert(msgCtrl.getMsg("success.upd2"));
+
                                         // location.reload();
                                     }, "/my-page/member/intrduction/update-company", $formObj5, "POST", "json",'',false);
+                                } else {
+                                    popChk = false;
                                 }
                             } else if($("#bsnmNosOld").val() != "" && $("#partTypeChg").val()=="turnOver"){
                                 //이직 시
-                                $(".partDtl").show();
                                 if(confirm(msgCtrl.getMsg("confirm.sve"))) {
                                     cmmCtrl.niceCertification("no&"+$("#ci").val()+"&compChg");
-                                  }
+                                    popChk = true;
+                                  } else {
+                                    popChk = false;
+                                }
 
                             } else {
                                 //신규 등록 시
                                 $(".partDtl").show()
                             }
 
-
-                            $(".switchingMemberPopup").css('display', 'none');
-                            $(".dimd").css('display', 'none');
-                            $("body").removeClass("stop-scroll");
-                            $(".for-status-chk").removeClass("satisfy");
-
+                            if(popChk) {
+                                $(".switchingMemberPopup").css('display', 'none');
+                                $(".dimd").css('display', 'none');
+                                $("body").removeClass("stop-scroll");
+                                $(".for-status-chk").removeClass("satisfy");
+                            }
 
                         }
                     }
@@ -455,7 +492,9 @@ define(["ezCtrl"], function(ezCtrl) {
                             if (phoneLen > 3 && phoneLen <= 7) {
                                 phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
                             } else if (phoneLen > 7) {
-                                if (phoneLen == 10) {
+                                if(phoneLen == 8) {
+                                    phoneNumber = phoneNumber.replace(/(\d{4})(\d+)/, '$1-$2');
+                                }else if (phoneLen == 10) {
                                     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
                                 } else {
                                     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');

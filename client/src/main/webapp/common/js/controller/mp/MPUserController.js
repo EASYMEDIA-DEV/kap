@@ -31,9 +31,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         EmailChk = false;
         $(".for-status-chk-email").hide();
         $(".for-status-chk-email").removeClass("satisfy");
+        $("#emailAuth").show();
         $(".authName").text("인증");
         $("#emailAuthChk").show();
         $("#timer").show();
+        $("#emailAuthNum").attr("disabled",false);
+        $("#emailAuthNum").val("");
+
     }
 
     // set model
@@ -233,9 +237,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 EmailChk = true;
                                 $("#emailAuthChk").hide();
                                 $("#timer").hide();
-                                $("#email-first").attr("disabled",true);
-                                $("#emailAddr").attr("disabled",true);
-                                $("#emailSelect").attr("disabled",true);
                                 $("#emailAuth").hide();
                                 $("#emailAuthNum").attr("disabled",true);
                                 $(".for-status-chk-email").addClass("satisfy");
@@ -281,7 +282,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             if (phoneLen > 3 && phoneLen <= 7) {
                                 phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
                             } else if (phoneLen > 7) {
-                                if (phoneLen == 10) {
+                                if(phoneLen == 8) {
+                                    phoneNumber = phoneNumber.replace(/(\d{4})(\d+)/, '$1-$2');
+                                }else if (phoneLen == 10) {
                                     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
                                 } else {
                                     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
