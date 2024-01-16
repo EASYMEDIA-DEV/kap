@@ -32,7 +32,8 @@
                     <label class="col-sm-1 control-label">첨부파일</label>
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                        <%--<spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />--%>
+                        <spring:eval var="atchUploadMaxSize" expression="52428800" />
                         <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="PC 첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
@@ -78,15 +79,15 @@
                     <table class="table text-sm">
                         <tbody>
                             <tr>
-                                <th>최초 작성자</th>
+                                <th>최초 등록자</th>
                                 <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
-                                <th>최초 작성일</th>
+                                <th>최초 등록일시</th>
                                 <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                             </tr>
                             <tr>
                                 <th>최종 수정자</th>
                                 <td>${ empty rtnDto.modName ? '-' : rtnDto.modName += '(' += rtnDto.modId += ')' }</td>
-                                <th>최종 수정일</th>
+                                <th>최종 수정일시</th>
                                 <td>${ kl:decode(rtnDto.modDtm, "", "-", kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
                             </tr>
                         </tbody>
