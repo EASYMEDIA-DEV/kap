@@ -139,19 +139,19 @@ public class MPConsultingController {
     @GetMapping(value="/surveyIndex")
     public String getConsultingSurveyIndex(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
-        /*try
-        {*/
+        try
+        {
             modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
             modelMap.addAttribute("survInfo", cBATechGuidanceService.selectTechGuidanceDtlCheck(cBATechGuidanceInsertDTO));
-           /* COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
             modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
-            modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());*/
-        /*}
+            modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());
+        }
         catch (Exception e)
         {
             throw new Exception(e.getMessage());
-        }*/
+        }
         return "front/mp/mpc/MPConsultingSurveyIndex.front";
     }
 

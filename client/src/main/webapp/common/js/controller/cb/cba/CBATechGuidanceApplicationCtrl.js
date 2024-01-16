@@ -15,10 +15,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         info.bsnmNo = data;
         cmmCtrl.jsonAjax(function (data) {
             var coInfo = JSON.parse(data)
+            console.log(coInfo)
             $("#cmpnNm").text(coInfo.list[0].cmpnNm);
             $("#rprsntNm").text(coInfo.list[0].rprsntNm);
             $("#ctgryNm").text(coInfo.list[0].ctgryNm);
             $("#sizeNm").text(coInfo.list[0].sizeNm);
+            $("#sizeCd").val(coInfo.list[0].sizeCd);
 
             var ctgryCd = coInfo.list[0].ctgryCd;
             if(ctgryCd == "COMPANY01002"){
@@ -85,7 +87,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             consInfoAppl : {
                 event : {
                     click : function(){
-                        location.href= "./consInfoAppl?bsnmNo="+$("#bsnmNo").val();
+                        location.href= "./consInfoAppl?bsnmNo="+$("#bsnmNo").val()+"&sizeCd="+$("#sizeCd").val();
                     }
                 }
             }

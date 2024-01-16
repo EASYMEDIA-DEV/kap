@@ -114,6 +114,7 @@
                             <div class="table-sec">
                                 <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                                     <input type="hidden" id="bsnmNo" value="${loginMap.bsnmNo}" >
+                                    <input type="hidden" id="sizeCd" value="" >
                                     <table class="basic-table">
                                         <caption>소속 부품사 기본정보</caption>
                                         <colgroup>

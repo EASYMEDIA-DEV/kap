@@ -9,7 +9,6 @@ import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
-import com.kap.core.dto.wb.WBRsumeFileDtlDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
@@ -224,8 +223,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             MultipartFile file;
             int atchFileCnt = 0;
 
-            System.err.println("files:::" + files);
-
             while (itr.hasNext()) {
                 Map.Entry<String, MultipartFile> entry = itr.next();
                 file = entry.getValue();
@@ -247,27 +244,15 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                     fileList.add(rtnList.get(i));
 
                     HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
-
-                    System.err.println("fileSeqMap:::"+fileSeqMap);
-
-                    WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
-                    if (i == 0) {
-                        fileInfo.setFileCd("ATTACH_FILE_TYPE01");
-                    } else if (i == 1) {
-                        fileInfo.setFileCd("ATTACH_FILE_TYPE02");
-                    } else if (i == 2) {
-                        fileInfo.setFileCd("ATTACH_FILE_TYPE03");
-                    } else if (i == 3) {
-                        fileInfo.setFileCd("ATTACH_FILE_TYPE04");
+                    if(i==0){
+                        pCBATechGuidanceInsertDTO.setItrdcFileSeq(fileSeqMap.get("fileSeq"));
+                    }else{
+                        pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("fileSeq"));
                     }
-                    fileInfo.setFileSeq(fileSeqMap.get("fileSeq"));
-
-                    //cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO);
                 }
             }
         }
-
-        //pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO));
+        pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO));
         return pCBATechGuidanceInsertDTO.getRespCnt();
     }
 

@@ -334,6 +334,10 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                             return false;
                         }else{
                             cmmCtrl.fileFrm(function(data){
+                                var appctnDt = $("#appctnDt").val();
+                                var bsnmNo = $("#bsnmNo").val();
+                                var cbsnCd = $(".cbsnCd").val();
+                                //?appctnDt="+appctnDt+"&bsnmNo="+bsnmNo+"&cbsnCd="+cbsnCd+"&"
                                 //콜백함수. 페이지 이동
                                 location.replace("./complete");
                             }, "./insert", $formObj, "json");

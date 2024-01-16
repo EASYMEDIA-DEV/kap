@@ -102,11 +102,12 @@ public class CBTechGuidanceController {
     @PostMapping("/insert")
     public String insertConsultInfoApplicationPage(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest, ModelMap modelMap, @PathVariable("type") String type) throws Exception {
         /*try {*/
-            System.err.println("pCBATechGuidanceInsertDTO:::"+pCBATechGuidanceInsertDTO);
 
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+
             pCBATechGuidanceInsertDTO.setRegId(cOLoginUserDTO.getId());
             pCBATechGuidanceInsertDTO.setRegIp(cOLoginUserDTO.getLoginIp());
+            pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOLoginUserDTO.getSeq()));
 
             if(type.equals("tech")){
                 modelMap.addAttribute("actCnt", cBATechGuidanceService.insertTechGuidance(pCBATechGuidanceInsertDTO, multiRequest));
@@ -124,24 +125,33 @@ public class CBTechGuidanceController {
         return "jsonView";
     }
     @GetMapping("/consInfoAppl")
-    public String getConsultInfoApplicationPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
+    public String getConsultInfoApplicationPage(ModelMap modelMap, @PathVariable("type") String type) throws Exception {
         String url = "";
 
         try {
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            System.err.println("pCBATechGuidanceInsertDTO:::"+cOLoginUserDTO);
 
-            if(type.equals("tech")){
-                url = "front/cb/cba/CBATechGuidanceWrite.front";
+            if(cOLoginUserDTO != null){
+
+                if(type.equals("tech")){
+                    url = "front/cb/cba/CBATechGuidanceWrite.front";
+                }else{
+                    url = "front/cb/cbb/CBBManageConsultWrite.front";
+                }
+
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("ADDR_CD"); // 소재지 코드
+                cdDtlList.add("APPCTN_RSN_CD"); // 신청사유 코드
+                cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
+                cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
             }else{
-                url = "front/cb/cbb/CBBManageConsultWrite.front";
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                url = "front/COBlank.error";
             }
-
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            cdDtlList.add("ADDR_CD"); // 소재지 코드
-            cdDtlList.add("APPCTN_RSN_CD"); // 신청사유 코드
-            cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
-            cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-
         }catch(Exception e){
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -154,7 +164,6 @@ public class CBTechGuidanceController {
     @GetMapping("/complete")
     public String getConsultInfoCompletePage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
         String url = "";
-
         try {
             if(type.equals("tech")){
                 url = "front/cb/cba/CBATechGuidanceComplete.front";

@@ -4,6 +4,7 @@
 <c:set var="date"><fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
 <%
   String bsnmNo = request.getParameter("bsnmNo");
+  String sizeCd = request.getParameter("sizeCd");
 %>
 <div class="cont-wrap" data-controller="controller/cb/cba/CBATechGuidanceWriteCtrl">
 
@@ -59,6 +60,7 @@
         <form id="frmData" name="frmData" method="post" enctype="multipart/form-data">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="bsnmNo" name="bsnmNo" value="<%=bsnmNo%>">
+            <input type="hidden" class="sizeCd" name="sizeCd" value="<%=sizeCd%>">
             <input type="hidden" class="ctgryCd" name="ctgryCd" value="">
             <input type="hidden" class="appctnDt" name="appctnDt" value="${date}">
             <div class="right-con-area">
@@ -145,7 +147,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="text" class="notRequired telRex" name="faxNo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="FAX 입력">
+                                                            <input type="text" class="notRequired telRex" name="faxNo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="13" placeholder="FAX 입력">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -358,7 +360,7 @@
                                                             <p class="empty-txt">선택된 파일 없음</p>
                                                         </div>
                                                         <div class="file-btn-area">
-                                                            <input type="file" class="searchFile" name="atchFile1" id="searchFile" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip">
+                                                            <input type="file" class="searchFile" name="atchFile" id="searchFile" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip">
                                                             <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                         </div>
                                                     </div>
@@ -411,7 +413,7 @@
                 <div class="page-bot-btn-sec scroll-motion">
                     <div class="btn-wrap for-motion">
                         <div class="btn-set">
-                            <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                            <a class="btn-solid small gray-bg" href="./index"><span>취소</span></a>
                         </div>
                         <div class="btn-set">
                             <a class="btn-solid small black-bg submit" href="javascript:"><span>신청하기</span></a>

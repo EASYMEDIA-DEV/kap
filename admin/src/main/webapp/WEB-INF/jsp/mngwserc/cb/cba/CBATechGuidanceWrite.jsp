@@ -537,7 +537,7 @@
                     </div>
                     <label class="col-sm-1 control-label">FAX</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired telRex" name="faxNo" value="${rtnDto.faxNo}" title="FAX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="FAX 입력"/>
+                        <input type="text" class="form-control input-sm notRequired telRex" name="faxNo" value="${rtnDto.faxNo}" title="FAX" maxlength="13" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="FAX 입력"/>
                     </div>
                 </div>
             </fieldset>
