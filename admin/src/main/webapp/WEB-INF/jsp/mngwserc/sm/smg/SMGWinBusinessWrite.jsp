@@ -85,15 +85,15 @@
                     <table class="table text-sm">
                         <tbody>
                         <tr>
-                            <th>최초 작성자</th>
+                            <th>최초 등록자</th>
                             <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
-                            <th>최초 작성일</th>
+                            <th>최초 등록일시</th>
                             <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                         </tr>
                         <tr>
                             <th>최종 수정자</th>
                             <td>${ empty rtnDto.modName ? '-' : rtnDto.modName += '(' += rtnDto.modId += ')' }</td>
-                            <th>최종 수정일</th>
+                            <th>최종 수정일시</th>
                             <td>${ kl:decode(rtnDto.modDtm, "", "-", kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
                         </tr>
                         </tbody>

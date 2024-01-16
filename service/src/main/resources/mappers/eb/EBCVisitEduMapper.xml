@@ -901,7 +901,7 @@
         ==========   ======    ==============
         2023.12.18   구은희       최초생성
     -->
-	<select id="selectExcelList" parameterType="EBCVisitEduExcelDTO" resultType="EBCVisitEduExcelDTO">
+	<select id="selectExcelList" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduExcelDTO">
 		select /*EBCVisitEduMapper.selectExcelList*/
 			vst_seq -- 방문순번
 			 , mem_seq -- 회원순번

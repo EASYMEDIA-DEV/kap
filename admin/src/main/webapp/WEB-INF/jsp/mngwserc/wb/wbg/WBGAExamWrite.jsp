@@ -241,7 +241,7 @@
                             <input type="button" class="btn btn-sm btn-primary" id="searchPostCode" value="우편번호 검색"><br>
                             <br>
                             <div style="display: flex; gap: 10px;">
-                                <input type="text" class="form-control input-sm" id="zipCode" name="zipcode" value="${userInfo.zipcode}" readonly placeholder="우편번호" style="width: 95px;" title="주소">
+                                <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${userInfo.zipcode}" readonly placeholder="우편번호" style="width: 95px;" title="주소">
                                 <input type="text" class="form-control input-sm" id="bscAddr" name="bscAddr" value="${userInfo.bscAddr}" readonly placeholder="기본주소" style="width: 295px;" title="주소">
                             </div>
                             <br>

@@ -45,23 +45,26 @@
             </fieldset>
             <hr />
             <div class="clearfix">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
-                </div>
                 <div class="pull-right">
                     <button type="submit" class="btn btn-sm btn-success">저장</button>
                 </div>
             </div>
-            <c:if test="${ not empty rtnInfo }">
-                <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
-                <div class="table-responsive ">
-                    <table class="table text-sm">
-                        <tbody>
+            <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
+            <div class="table-responsive ">
+                <table class="table text-sm">
+                    <tbody>
                         <tr>
                             <th>최초 등록자</th>
-                            <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${ not empty rtnDto.regName }">
+                                        ${ rtnDto.regName }(${ rtnDto.regId })
+                                    </c:when>
+                                    <c:otherwise>-</c:otherwise>
+                                </c:choose>
+                            </td>
                             <th>최초 등록일시</th>
-                            <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                            <td>${ kl:emptyHypen(kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')) }</td>
                         </tr>
                         <tr>
                             <th>최종 수정자</th>
@@ -75,18 +78,12 @@
                             </td>
                             <th>최종 수정일시</th>
                             <td>
-                                <c:choose>
-                                    <c:when test="${ not empty rtnDto.modDtm }">
-                                        ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                                    </c:when>
-                                    <c:otherwise>-</c:otherwise>
-                                </c:choose>
+                                ${ kl:emptyHypen(kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')) }
                             </td>
                         </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </c:if>
-        </form>
+                    </tbody>
+                </table>
+            </div>
+       </form>
     </div>
 </div>

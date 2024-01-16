@@ -232,7 +232,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input">
-                                                                <input type="number" id="ptcptCnt" name="ptcptCnt" value="" placeholder="인원수 입력">
+                                                                <input type="number" id="ptcptCnt" name="ptcptCnt" value="" maxlength="3" oninput="this.value=this.value.replace(/[^0-9]/g, '')" placeholder="인원수 입력">
                                                                 <p class="unit-txt">명</p>
                                                             </div>
                                                         </div>
@@ -254,7 +254,7 @@
                                                                     <c:forEach var="cdList" items="${cdDtlList.EBC_VISIT_CD}" varStatus="status">
                                                                         <c:if test="${cdList.cd ne 'EBC_VISIT_CD04' and fn:contains(cdList, 'EBC_VISIT_CD04')}">
                                                                             <option value="${cdList.cd}" <c:if test="${rtnInfo.ptcptHh eq cdList.cd}">selected</c:if>>
-                                                                                    ${cdList.cdNm}
+                                                                                    ${cdList.cdNm}시간
                                                                             </option>
                                                                         </c:if>
                                                                     </c:forEach>

@@ -124,6 +124,13 @@ define(["ezCtrl"], function(ezCtrl) {
                             $(".cdListContainer").find("input:checkbox").prop("checked", false);
                         }
 
+                        $(".detailCdList").find('input[type=checkbox]').prop("checked",false);
+                        if($(".detailCdList").find('input[type=checkbox]').is(":visible")){
+                            $(".detailCdList").find('input[type=checkbox]').each(function(){
+                                $(this).prop("checked",true);
+                            })
+                        }
+
                     }
                 }
             },
@@ -308,6 +315,14 @@ define(["ezCtrl"], function(ezCtrl) {
             //리스트 조회
             // cmmCtrl.setFormData($formObj);
             search();
+
+            var searchInput = $("#btnSearch").closest('fieldset').find('input:text');
+            searchInput.on('keypress', function(e){
+                if (e.keyCode == 13){
+                    $formObj.find("#btnSearch").click();
+                }
+            })
+
         }
     };
 
