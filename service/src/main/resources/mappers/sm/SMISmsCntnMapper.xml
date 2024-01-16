@@ -86,7 +86,10 @@
         SELECT /* SMISmsCntnMapper.selectSmsCodeDupCheck */
             COUNT(SMS_CNTN_CD)
         FROM SM_SMS_CNTN_MST A
-        WHERE SMS_CNTN_SEQ NOT IN(#{smsCntnSeq})
+        WHERE 1=1
+        <if test="smsCntnSeq != null and smsCntnSeq != ''">
+          AND SMS_CNTN_SEQ NOT IN(#{smsCntnSeq})
+        </if>
           AND SMS_CNTN_CD = #{smsCntnCd}
     </select>
 

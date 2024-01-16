@@ -331,8 +331,8 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
     /**
      *  사업자등록번호 Check
      */
-    public WBFBRegisterSearchDTO getBsnmNoCheck(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
-        return wBFBRegisterCompanyMapper.getBsnmNoCheck(wBFBRegisterDTO.getRsumeTaskDtl().getOfferBsnmNo());
+    public WBFBRegisterSearchDTO getBsnmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception {
+        return wBFBRegisterCompanyMapper.getBsnmNoCheck(wBFBRegisterSearchDTO.getOfferBsnmNo());
     }
 
     /**

@@ -17,7 +17,7 @@
                     </a>
                 </td>
                 <td class="text-center">${list.regName}(${list.regId})</td>
-                <td class="text-center">${list.regDtm}</td>
+                <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${ not empty list.modId }">
@@ -29,7 +29,7 @@
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${ not empty list.modDtm }">
-                            ${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}
+                            ${kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                         </c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>

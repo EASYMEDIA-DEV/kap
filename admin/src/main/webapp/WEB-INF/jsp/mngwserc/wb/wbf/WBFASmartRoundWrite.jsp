@@ -12,7 +12,7 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/wb/wbf/WBFARoundWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 회차 <c:if test="${empty rtnDto}">등록</c:if><c:if test="${not empty rtnDto}">상세/수정</c:if> </h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
@@ -159,7 +159,7 @@
                         <div class="form-inline text-sm give-row">
                             <label class="col-sm-1 control-label">지급차수<span class="star"> *</span></label>
                             <div class="col-sm-11">
-                                <div class="inline giveText"> 1차수</div>
+                                <div class="inline giveText" style="padding-right: 1vw;"> 1차수</div>
                                 <div class="form-group mr-sm">
                                     <div class="input-group">
                                         <input type="text" class="form-control input-sm datetimepicker_strtDt" name="giveStrtDtList"
@@ -193,7 +193,7 @@
                                 <c:if test="${status.index ne 0 }"><label class="col-sm-1 control-label"></label></c:if>
                                 <div class="col-sm-11">
                                     <c:if test="${status.index ne 0 }"><fieldset></fieldset></c:if>
-                                    <div class="inline giveText"> ${status.index +1 }차수</div>
+                                    <div class="inline giveText" style="padding-right: 1vw;"> ${status.index +1 }차수</div>
                                     <div class="form-group mr-sm">
                                         <div class="input-group">
                                             <input type="text" class="form-control input-sm datetimepicker_strtDt" name="giveStrtDtList"
@@ -311,7 +311,7 @@
                         <div class="col-sm-1"></div>
                         <label class="col-sm-1 control-label">최초 등록일시</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</p>
+                            <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</p>
                         </div>
                     </div>
                 </fieldset>
@@ -338,7 +338,7 @@
                             <p class="form-control-static">
                                 <c:choose>
                                     <c:when test="${modFlag}">
-                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}
+                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}
                                     </c:when>
                                     <c:otherwise>
                                         -

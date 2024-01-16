@@ -69,7 +69,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             searchPostCode : {
                 event : {
                     click : function() {
-                        cmmCtrl.searchPostCode(500,600,"zipCode","bscAddr","dtlAddr");
+                        cmmCtrl.searchPostCode(500,600,"zipcode","bscAddr","dtlAddr");
                     }
                 }
             },
@@ -250,7 +250,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         wBEBCompanyDTO.sizeCd = ctrl.obj.find("#sizeCd").val();
                         wBEBCompanyDTO.stbsmDt = ctrl.obj.find("#stbsmDt").val();
                         wBEBCompanyDTO.telNo = $("input[name=telNo]").eq(1).val();
-                        wBEBCompanyDTO.zipcode = ctrl.obj.find("#zipCode").val();
+                        wBEBCompanyDTO.zipcode = ctrl.obj.find("#zipcode").val();
                         wBEBCompanyDTO.bscAddr = ctrl.obj.find("#bscAddr").val();
                         wBEBCompanyDTO.dtlAddr = ctrl.obj.find("#dtlAddr").val();
 

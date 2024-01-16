@@ -27,9 +27,6 @@
 
             <hr />
             <div class="clearfix">
-                <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" onclick="location.href='./list?${strPam}'">목록</button>
-                </div>
                 <div class="pull-right">
                     <button type="submit" class="btn btn-sm btn-success">저장</button>
                 </div>

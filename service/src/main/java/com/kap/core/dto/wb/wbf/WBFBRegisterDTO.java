@@ -112,6 +112,8 @@ public class WBFBRegisterDTO extends BaseDTO {
     private String pstnCd;
     @Schema(title = "직급 상세명", example = "")
     private String pstnNm;
+    @Schema(title = "사업자등록번호", example = "")
+    private String workBsnmNo;
 
     /* 회사 정보*/
     @Schema(title = "사업자등록번호", example = "")

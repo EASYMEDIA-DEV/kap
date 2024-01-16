@@ -113,14 +113,14 @@
     </select>
 
     <!--
-         쿼리명 : WBBBCompanyMapper.getCompanyInfo
+         쿼리명 : WBFBRegisterCompanyMapper.getCompanyInfo
          설  명 : 부품사 정보 get
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.24  김동현     최초 생성
     -->
     <select id="getCompanyInfo" parameterType="WBFBRegisterSearchDTO" resultType="WBFBRegisterDTO">
-        SELECT /* WBBBCompanyMapper.getCompanyInfo */
+        SELECT /* WBFBRegisterCompanyMapper.getCompanyInfo */
             A.BSNM_NO
              , A.CMPN_NM
              , A.RPRSNT_NM
@@ -219,6 +219,11 @@
         SELECT INFO.*
             ,(SELECT give_ord FROM cx_episd_give_dtl WHERE give_seq = INFO.give_seq) as give_ord
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = INFO.appctn_stts_cd) as appctn_stts_cd_nm
+            ,(SELECT orgn_file_nm FROM co_file_dtl A WHERE A.file_seq = INFO.spprt_appctn_file_seq AND A.use_yn ='Y') as spprt_appctn_file_nm
+            ,(SELECT orgn_file_nm FROM co_file_dtl A WHERE A.file_seq = INFO.acnt_file_seq AND A.use_yn ='Y') as acnt_file_nm
+            ,(SELECT orgn_file_nm FROM co_file_dtl A WHERE A.file_seq = INFO.bnkbk_file_seq AND A.use_yn ='Y') as bnkbk_file_nm
+            ,(SELECT orgn_file_nm FROM co_file_dtl A WHERE A.file_seq = INFO.tchlg_lse_file_seq AND A.use_yn ='Y') as tchlg_lse_file_nm
+            ,(SELECT orgn_file_nm FROM co_file_dtl A WHERE A.file_seq = INFO.lse_pay_file_seq AND A.use_yn ='Y') as lse_pay_file_nm
             ,DATE_FORMAT(INFO.accs_dt, '%m/%d') AS accs_dt_fmt
             ,DATE_FORMAT(INFO.give_dt, '%m/%d') AS give_dt_fmt
         FROM(
@@ -283,9 +288,19 @@
         2023.11.16  김동현     최초 생성
     -->
     <select id="getDtlFileList" parameterType="WBFBRsumeTaskDtlDTO">
-        SELECT rsume_seq, rsume_ord, file_cd, file_seq /*WBFBRegisterCompanyMapper.getRsumeTaskDtlFileList*/
-        FROM cx_appctn_rsume_file_dtl
-        WHERE rsume_seq = #{rsumeSeq}
+        SELECT
+            *
+            ,(SELECT file_ord FROM co_file_dtl A WHERE A.file_seq = INFO.file_seq AND A.use_yn ='Y') as file_ord
+            ,(SELECT orgn_file_nm FROM co_file_dtl A WHERE A.file_seq = INFO.file_seq AND A.use_yn ='Y') as orgn_file_nm
+        FROM (
+            SELECT /*WBFBRegisterCompanyMapper.getRsumeTaskDtlFileList*/
+               rsume_seq
+               ,rsume_ord
+               ,file_cd
+               ,file_seq
+            FROM cx_appctn_rsume_file_dtl
+            WHERE rsume_seq = #{rsumeSeq}
+        ) INFO;
     </select>
 
     <!--

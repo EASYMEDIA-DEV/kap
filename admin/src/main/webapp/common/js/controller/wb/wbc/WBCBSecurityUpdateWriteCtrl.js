@@ -98,7 +98,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             searchPostCode : {
                 event : {
                     click : function() {
-                        cmmCtrl.searchPostCode(500,600,"zipCode","bscAddr","dtlAddr");
+                        cmmCtrl.searchPostCode(500,600,"zipcode","bscAddr","dtlAddr");
                     }
                 }
             },

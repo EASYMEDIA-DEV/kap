@@ -1,8 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<c:set var="date" value="<%=new java.util.Date( )%>" />
 <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
-<c:set var="startId" value="strtDt" />
-<c:set var="endId" value="endDt" />
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/wb/wbf/WBFBRegisterCompanyEditCtrl controller/co/COFormCtrl">
@@ -581,7 +580,7 @@
                                             <label class="col-sm-2 control-label">접수일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="spprtDtlList[0].accsDt" value="${spprtDtl[0].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[0].accsDt" value="${empty spprtDtl[0].accsDt ? today : spprtDtl[0].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -616,7 +615,7 @@
                                             <label class="col-sm-2 control-label">총금액(①+②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="spprtDtlList[0].ttlPmt" value="<fmt:formatNumber value='${spprtDtl[0].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
+                                                    <input type="text" class="form-control input-sm comma notRequired ttlPmt" name="spprtDtlList[0].ttlPmt" value="<fmt:formatNumber value='${spprtDtl[0].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -626,7 +625,7 @@
                                             <label class="col-sm-2 control-label">은행명</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" data-name="bankNm" name="spprtDtlList[0].bankNm" value="${spprtDtl[0].bankNm}" title="은행명" maxlength="50" placeholder="은행명">
+                                                    <input type="text" class="form-control input-sm notRequired" name="spprtDtlList[0].bankNm" value="${spprtDtl[0].bankNm}" title="은행명" maxlength="50" placeholder="은행명">
                                                 </div>
                                             </div>
                                         </div>
@@ -675,7 +674,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtlList[0].giveDt" value="${spprtDtl[0].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[0].giveDt" value="${empty spprtDtl[0].giveDt ? today : spprtDtl[0].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -689,7 +688,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">지급차수</label>
                                             <div class="col-sm-6 form-inline" >
-                                                <select class="form-control input-sm notRequired" data-name="giveSeq" name="spprtDtlList[0].giveSeq" title="지급차수">
+                                                <select class="form-control input-sm notRequired" name="spprtDtlList[0].giveSeq" title="지급차수">
                                                     <option value="">지급차수</option>
                                                     <c:forEach var="orderList" items="${rtnBasicData.orderList}" varStatus="status">
                                                         <option value="${orderList.giveSeq}" <c:if test="${spprtDtl[0].giveSeq eq orderList.giveSeq}" >selected</c:if> >
@@ -704,7 +703,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtlList[0].mngSttsCd" title="관리자 상태값/결과">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="spprtDtlList[0].mngSttsCd" title="관리자 상태값/결과">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE03001_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${spprtDtl[0].mngSttsCd eq cdList.cd}" >selected</c:if> >
@@ -797,7 +796,7 @@
                                             <label class="col-sm-2 control-label">접수일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="spprtDtlList[1].accsDt" value="${spprtDtl[1].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[1].accsDt" value="${empty spprtDtl[1].accsDt ? today : spprtDtl[1].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -832,7 +831,7 @@
                                             <label class="col-sm-2 control-label">총금액(①+②)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="spprtDtlList[1].ttlPmt" value="<fmt:formatNumber value='${spprtDtl[1].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
+                                                    <input type="text" class="form-control input-sm comma notRequired ttlPmt" name="spprtDtlList[1].ttlPmt" value="<fmt:formatNumber value='${spprtDtl[1].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -891,7 +890,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtlList[1].giveDt" value="${spprtDtl[1].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[1].giveDt" value="${empty spprtDtl[1].giveDt ? today : spprtDtl[1].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -905,7 +904,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">지급차수</label>
                                             <div class="col-sm-6 form-inline" >
-                                                <select class="form-control input-sm notRequired" id="giveSeq" data-name="giveSeq" name="spprtDtlList[1].giveSeq" title="지급차수">
+                                                <select class="form-control input-sm notRequired" id="giveSeq" name="spprtDtlList[1].giveSeq" title="지급차수">
                                                     <option value="">지급차수</option>
                                                     <c:forEach var="orderList" items="${rtnBasicData.orderList}" varStatus="status">
                                                         <option value="${orderList.giveSeq}" <c:if test="${spprtDtl[1].giveSeq eq orderList.giveSeq}" >selected</c:if> >
@@ -920,7 +919,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtlList[1].mngSttsCd" title="관리자 상태값/결과">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="spprtDtlList[1].mngSttsCd" title="관리자 상태값/결과">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE03002_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${spprtDtl[1].mngSttsCd eq cdList.cd}" >selected</c:if> >
@@ -936,7 +935,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" data-name="mngSttsChngDtm">${spprtDtl[1].mngSttsChngDtm}</p>
+                                                <p class="form-control-static">${spprtDtl[1].mngSttsChngDtm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1013,7 +1012,7 @@
                                             <label class="col-sm-2 control-label">접수일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="accsDt" name="spprtDtlList[2].accsDt" value="${spprtDtl[2].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[2].accsDt" value="${empty spprtDtl[2].accsDt ? today : spprtDtl[2].accsDt}" title="접수일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1057,7 +1056,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="giveDt" name="spprtDtlList[2].giveDt" value="${spprtDtl[2].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[2].giveDt" value="${empty spprtDtl[2].giveDt ? today : spprtDtl[2].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1071,7 +1070,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">지급차수</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="giveSeq" name="spprtDtlList[2].giveSeq" title="지급차수">
+                                                <select class="form-control input-sm notRequired" name="spprtDtlList[2].giveSeq" title="지급차수">
                                                     <option value="">지급차수</option>
 
                                                     <c:forEach var="orderList" items="${rtnBasicData.orderList}" varStatus="status">
@@ -1087,7 +1086,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="spprtDtlList[2].mngSttsCd" title="관리자 상태값/결과">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="spprtDtlList[2].mngSttsCd" title="관리자 상태값/결과">
 
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE03003_02_')}">
@@ -1238,7 +1237,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[0].mngSttsCd eq cdList.cd}">selected</c:if> >
@@ -1372,8 +1371,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">공급기업명</label>
                                             <div class="col-sm-6 form-inline">
-                                                <input type="hidden" class="notRequired" data-name="offerCmpnNm" name="rsumeTaskDtl.offerCmpnNm" value="${rsumeTaskDtl[1].offerCmpnNm}" />
-                                                <input type="text" class="form-control input-sm notRequired" data-name="offerCmpnNm" value="${rsumeTaskDtl[1].offerCmpnNm}" title="공급기업명" maxlength="50" placeholder="공급기업명" disabled>
+                                                <input type="text" class="form-control input-sm notRequired" id="offerCmpnNm" name="rsumeTaskDtl.offerCmpnNm" value="${rsumeTaskDtl[1].offerCmpnNm}" title="공급기업명" maxlength="50" placeholder="공급기업명" readonly>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1382,7 +1380,7 @@
                                             <label class="col-sm-2 control-label">공급기업 사업자등록번호</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" data-name="offerBsnmNo" name="rsumeTaskDtl.offerBsnmNo" value="${rsumeTaskDtl[1].offerBsnmNo}" title="공급기업 사업자등록번호" maxlength="50" placeholder="공급기업 사업자등록번호">
+                                                    <input type="text" class="form-control input-sm notRequired" id="offerBsnmNo" name="rsumeTaskDtl.offerBsnmNo" value="${rsumeTaskDtl[1].offerBsnmNo}" title="공급기업 사업자등록번호" maxlength="50" placeholder="공급기업 사업자등록번호">
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" id="bsnmNoAuth" class="btn btn-sm btn-info">인증</button>
@@ -1425,7 +1423,7 @@
                                             <label class="col-sm-2 control-label">총 사업비</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlBsnPmt" name="rsumeTaskDtl.ttlBsnPmt" value="${rsumeTaskDtl[1].ttlBsnPmt}" title="총 사업비" maxlength="50" placeholder="총 사업비">
+                                                    <input type="text" class="form-control input-sm comma notRequired" name="rsumeTaskDtl.ttlBsnPmt" value="${rsumeTaskDtl[1].ttlBsnPmt}" title="총 사업비" maxlength="50" placeholder="총 사업비">
                                                 </div>
                                             </div>
                                         </div>
@@ -1461,7 +1459,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE02002_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[1].mngSttsCd eq cdList.cdNm}">selected</c:if> >
@@ -1493,8 +1491,8 @@
                             </div>
                             <div id="accEx3" class="panel-collapse collapse " role="tabpanel">
                                 <div class="panel-body">
-                                    <input type="hidden" class="notRequired" data-name="rsumeSeq" name="rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[2].rsumeSeq}">
-                                    <input type="hidden" class="notRequired" data-name="rsumeOrd" name="rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[2].rsumeOrd}">
+                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[2].rsumeSeq}">
+                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[2].rsumeOrd}">
 
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
@@ -1521,8 +1519,8 @@
                                             <label class="col-sm-2 control-label">점검위원</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired" data-name="chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[2].chkCmssrSeq}">
-                                                    <input type="text" class="form-control input-sm notRequired" data-name="chkCmssrNm" value="${rsumeTaskDtl[2].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                    <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[2].chkCmssrSeq}">
+                                                    <input type="text" class="form-control input-sm notRequired" value="${rsumeTaskDtl[2].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
@@ -1535,7 +1533,7 @@
                                             <label class="col-sm-2 control-label">점검계획일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkPlanDt" name="rsumeTaskDtl.chkPlanDt" value="${rsumeTaskDtl[2].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkPlanDt" value="${empty rsumeTaskDtl[2].chkPlanDt ? today : rsumeTaskDtl[2].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -1550,7 +1548,7 @@
                                             <label class="col-sm-2 control-label">점검실시일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkImplmnDt" name="rsumeTaskDtl.chkImplmnDt" value="${rsumeTaskDtl[2].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkImplmnDt" value="${empty rsumeTaskDtl[2].chkImplmnDt ? today : rsumeTaskDtl[2].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -1572,7 +1570,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE02003_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[2].mngSttsCd eq cdList.cd}">selected</c:if> >
@@ -1603,8 +1601,8 @@
                             </div>
                             <div id="accEx4" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
-                                    <input type="hidden" class="notRequired" data-name="rsumeSeq" name="rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[3].rsumeSeq}">
-                                    <input type="hidden" class="notRequired" data-name="rsumeOrd" name="rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[3].rsumeOrd}">
+                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[3].rsumeSeq}">
+                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[3].rsumeOrd}">
 
                                     <h6 class="mt0">신청자</h6>
                                     <fieldset>
@@ -1631,8 +1629,8 @@
                                             <label class="col-sm-2 control-label">점검위원</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired" data-name="chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[3].chkCmssrSeq}" />
-                                                    <input type="text" class="form-control input-sm notRequired" data-name="chkCmssrNm" value="${rsumeTaskDtl[3].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                    <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[3].chkCmssrSeq}" />
+                                                    <input type="text" class="form-control input-sm notRequired" value="${rsumeTaskDtl[3].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
@@ -1645,7 +1643,7 @@
                                             <label class="col-sm-2 control-label">점검계획일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkPlanDt" name="rsumeTaskDtl.chkPlanDt" value="${rsumeTaskDtl[3].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkPlanDt" value="${empty rsumeTaskDtl[3].chkPlanDt ? today : rsumeTaskDtl[3].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1660,7 +1658,7 @@
                                             <label class="col-sm-2 control-label">점검실시일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkImplmnDt" name="rsumeTaskDtl.chkImplmnDt" value="${rsumeTaskDtl[3].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkImplmnDt" value="${empty rsumeTaskDtl[3].chkImplmnDt ? today : rsumeTaskDtl[3].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1674,7 +1672,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[3].mngSttsCd eq cdList.cdNm}" >selected</c:if> >
@@ -1690,7 +1688,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" data-name="mngSttsChngDtm" >${rsumeTaskDtl[3].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >${rsumeTaskDtl[3].mngSttsChngDtm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1743,7 +1741,7 @@
                                             <label class="col-sm-2 control-label">의뢰일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="rqstDt" name="rsumeTaskDtl.rqstDt" value="${rsumeTaskDtl[4].rqstDt}" title="의뢰일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.rqstDt" value="${empty rsumeTaskDtl[4].rqstDt ? today : rsumeTaskDtl[4].rqstDt}" title="의뢰일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1758,7 +1756,7 @@
                                             <label class="col-sm-2 control-label">회신일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="rplyDt" name="rsumeTaskDtl.rplyDt" value="${rsumeTaskDtl[4].rplyDt}" title="회신일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.rplyDt" value="${empty rsumeTaskDtl[4].rplyDt ? today : rsumeTaskDtl[4].rplyDt}" title="회신일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1803,7 +1801,7 @@
                                             <label class="col-sm-2 control-label">총금액(①+②+③)</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma notRequired" data-name="ttlPmt" name="rsumeTaskDtl.ttlPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[4].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
+                                                    <input type="text" class="form-control input-sm comma notRequired ttlPmt" name="rsumeTaskDtl.ttlPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[4].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -1812,7 +1810,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[4].mngSttsCd eq cdList.cd}" >selected</c:if> >
@@ -1872,7 +1870,7 @@
                                             <label class="col-sm-2 control-label">협약일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="agrmtDt" name="rsumeTaskDtl.agrmtDt" value="${rsumeTaskDtl[5].agrmtDt}"  title="협약일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.agrmtDt" value="${empty rsumeTaskDtl[5].agrmtDt ? today : rsumeTaskDtl[5].agrmtDt}"  title="협약일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1887,7 +1885,7 @@
                                             <label class="col-sm-2 control-label">기간</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="agrmtTermDt" name="rsumeTaskDtl.agrmtTermDt" value="${rsumeTaskDtl[5].agrmtTermDt}" title="기간" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.agrmtTermDt" value="${empty rsumeTaskDtl[5].agrmtTermDt ? today : rsumeTaskDtl[5].agrmtTermDt}" title="기간" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1901,7 +1899,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" name="rsumeTaskDtl.mngSttsCd" data-name="mngSttsCd" title="관리자 상태값">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE02006_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[5].mngSttsCd eq cdList.cd}" >selected</c:if> >
@@ -1917,7 +1915,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" data-name="mngSttsChngDtm" >${rsumeTaskDtl[5].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >${rsumeTaskDtl[5].mngSttsChngDtm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1941,7 +1939,7 @@
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
                                                 <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[6].appctnSttsCd}">
-                                                <p class="form-control-static" data-name="appctnSttsCdNm">${rsumeTaskDtl[6].appctnSttsCdNm}</p>
+                                                <p class="form-control-static" >${rsumeTaskDtl[6].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1960,8 +1958,8 @@
                                             <label class="col-sm-2 control-label">점검위원</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired" data-name="chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[6].chkCmssrSeq}" />
-                                                    <input type="text" class="form-control input-sm notRequired" data-name="chkCmssrNm" value="${rsumeTaskDtl[6].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                    <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[6].chkCmssrSeq}" />
+                                                    <input type="text" class="form-control input-sm notRequired" value="${rsumeTaskDtl[6].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
@@ -1974,7 +1972,7 @@
                                             <label class="col-sm-2 control-label">점검계획일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkPlanDt" name="rsumeTaskDtl.chkPlanDt" value="${rsumeTaskDtl[6].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkPlanDt" value="${empty rsumeTaskDtl[6].chkPlanDt ? today : rsumeTaskDtl[6].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -1989,7 +1987,7 @@
                                             <label class="col-sm-2 control-label">점검실시일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" data-name="chkImplmnDt" name="rsumeTaskDtl.chkImplmnDt" value="${rsumeTaskDtl[6].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkImplmnDt" value="${empty rsumeTaskDtl[6].chkImplmnDt ? today : rsumeTaskDtl[6].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -2003,7 +2001,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">스마트화 수준확인</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.smtfnPrsntCd notRequired" data-name="smtfnPrsntCd" title="스마트화 현재 수준">
+                                                <select class="form-control input-sm" name="rsumeTaskDtl.smtfnPrsntCd notRequired" title="스마트화 현재 수준">
                                                     <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[6].smtfnPrsntCd eq cdList.cd}" >selected</c:if> >
@@ -2019,7 +2017,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" data-name="mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[6].mngSttsCd eq cdList.cd}" >selected</c:if> >
