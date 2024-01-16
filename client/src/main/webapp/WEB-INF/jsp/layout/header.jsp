@@ -40,6 +40,7 @@
 	<link rel="stylesheet" href="/common/css/common.css?bust=${sysDate}" />
 	<link rel="stylesheet" href="/common/css/main.css?bust=${sysDate}" />
 	<link rel="stylesheet" href="/common/css/style.css" />
+	<link rel="stylesheet" href="/common/js/lib/datetimepicker/jquery.datetimepicker.css" />
 	<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script>
 	<script type="text/javascript" src="/common/js/gsap.min.js"></script>
 	<script type="text/javascript" src="/common/js/ScrollTrigger.min.js"></script>
@@ -49,6 +50,7 @@
 	<script type="text/javascript" src="/common/js/bezier-easing.min.js"></script>
 	<script type="text/javascript" src="/common/js/jquery.cookies.js"></script>
 	<script type="text/javascript" src="/common/js/script.js"></script>
+	<script type="text/javascript" src="/common/js/lib/datetimepicker/jquery.datetimepicker.js"></script>
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="/common/js/kakao.js"></script>

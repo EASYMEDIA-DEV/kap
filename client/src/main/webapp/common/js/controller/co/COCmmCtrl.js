@@ -497,6 +497,7 @@ var cmmCtrl = (function(){
 
 	/* 달력 초기화 */
 	var fn_init_calendar = function(obj) {
+
 		$(obj).parent().parent().find("input").each(function(index) {
 			if ($.trim($(this).val()) == "") {
 				// max, min date 설정 및 값 초기화
@@ -1052,6 +1053,64 @@ var cmmCtrl = (function(){
 			splitEmail[1].length < 255
 	}
 
+	var fn_set_calendar = function(){
+
+		jQuery.datetimepicker.setLocale("ko");
+
+		// 게시기간(일자) Start -----
+		$.each(jQuery(".datetimepicker_strtDt"), function(i, obj){
+			jQuery(obj).datetimepicker({
+				timepicker : false,
+				format : "Y.m.d",
+				defaultDate : "",
+				defaultTime : "00:00",
+				scrollInput : false,
+				scrollMonth : false,
+				scrollTime : false,
+				todayButton: false,
+				onSelectDate : function(selectedDate, selectedObj) {
+					var strtDt   = selectedDate;
+					var endDtObj = selectedObj.find(".datetimepicker_endDt");
+					var endDt	 = new Date(endDtObj.val());
+
+					if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
+					{
+						endDtObj.val(selectedObj.val());
+					}
+
+					endDtObj.datetimepicker("setOptions", { minDate : strtDt, value : endDtObj.val() });
+
+					selectedObj.blur();
+				}
+			});
+		});
+
+
+		$.each(jQuery(".datetimepicker_endDt"), function(i, obj){
+			jQuery(obj).datetimepicker({
+				timepicker : false,
+				format : "Y.m.d",
+				defaultDate : "",
+				defaultTime : "00:00",
+				scrollMonth : false,
+				scrollTime : false,
+				todayButton: false,
+				onSelectDate : function(selectedDate, selectedObj) {
+					var strtDtObj = selectedObj.find(".datetimepicker_strtDt");
+					var strtDt    = new Date(strtDtObj.val());
+					var endDt     = selectedDate;
+
+					if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
+					{
+						strtDtObj.val(selectedObj.val());
+					}
+
+					selectedObj.blur();
+				}
+			});
+		});
+	}
+
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1075,6 +1134,7 @@ var cmmCtrl = (function(){
 		initCalendar: fn_init_calendar,
 		niceCertification : fn_nice_certification,
 		searchPostCode : fn_postData,
+		setCalendar: fn_set_calendar,
 
 		//json형식의 데이터를 문자열로 변환 후 자바 컨트롤러에서 @RequestBody BaseDTO baseDto 로 받는다
 		jsonAjax : fn_json_ajax_data,

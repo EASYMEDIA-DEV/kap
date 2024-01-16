@@ -129,7 +129,7 @@
                                                                             <input type="text" class="datetimepicker_strtDt" onclick="cmmCtrl.initCalendar(this);" placeholder="2023.01.01">
                                                                         </div>
                                                                         <div class="form-input calendar">
-                                                                            <input type="text" placeholder="2023.01.01">
+                                                                            <input type="text" class="datetimepicker_endDt" onclick="cmmCtrl.initCalendar(this);"  placeholder="2023.01.01">
                                                                         </div>
                                                                     </div>
                                                                 </div>
