@@ -29,8 +29,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 
 /**
@@ -607,14 +605,14 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
                 String originStrtDtm = dto.getEdctnStrtDtm();
                 String originEndDtm = dto.getEdctnEndDtm();
 
-                // 문자열을 LocalDateTime으로 변환
-                LocalDateTime strtDtm = LocalDateTime.parse(originStrtDtm, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-                LocalDateTime endDtm = LocalDateTime.parse(originEndDtm, java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                Date strtDtm = dateFormat.parse(originStrtDtm);
+                Date endDtm = dateFormat.parse(originEndDtm);
 
-                // 두 날짜 사이의 일자 차이 계산
-                long daysDifference = ChronoUnit.DAYS.between(strtDtm, endDtm);
+                long timeDiff = endDtm.getTime() - strtDtm.getTime();
+                long daysDiff = timeDiff / (1000 * 60 * 60 * 24);
 
-                cell = row.createCell(19); cell.setCellValue(daysDifference); cell.setCellStyle(style_body);//교육일
+                cell = row.createCell(19); cell.setCellValue(daysDiff + 1); cell.setCellStyle(style_body);//교육일
                 cell = row.createCell(20); cell.setCellValue(dto.getEdctnStrtDtm().substring(0, dto.getEdctnStrtDtm().lastIndexOf(":"))
                         + "~" + dto.getEdctnEndDtm().substring(0, dto.getEdctnEndDtm().lastIndexOf(":"))); cell.setCellStyle(style_body);//교육기간
             }
