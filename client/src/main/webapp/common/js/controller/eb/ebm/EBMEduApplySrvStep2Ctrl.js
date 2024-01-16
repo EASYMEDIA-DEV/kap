@@ -53,19 +53,27 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				event : {
 					click : function() {
 						var surveyList = $(this).closest('.survey-list');
+						var surveyListInner = $(this).closest('.survey-list-inner');
+
 						var nextNo = $(this).data("next-no");
+						var dpth = surveyListInner.find("input[name=dpth]").val()
+						if (dpth != 2){
+
+						surveyList.find(".survey-list-inner:not(:eq(0)) input").prop('checked',false);
+						surveyList.find('.survey-list-inner:not(:eq(0))').hide();
+						surveyList.find('.survey-list-inner:not(:eq(0))').find('.answer').addClass("notRequired");
+						}
 
 						if (nextNo != ''){
-							surveyList.find(".survey-list-inner:not(:eq(0)) input:radio").prop('checked',false).hide();
-							surveyList.find('.survey-list-inner:not(:eq(0))').hide();
-
 							if (nextNo.indexOf(',') > 0){
 								var nextNoSplit = nextNo.split(',');
 								$(nextNoSplit).each(function(i){
 									surveyList.find('.'+nextNoSplit[i]).show();
+									surveyList.find('.'+nextNoSplit[i]).find('.answer').removeClass("notRequired");
 								});
 							}else{
 								surveyList.find('.'+nextNo).show();
+								surveyList.find('.'+nextNo).find('.answer').removeClass("notRequired");
 							}
 						}
 					}
@@ -86,6 +94,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						svRepnMst.srvSeq = $formObj.find("input[name=srvSeq]").val();
 						svRepnMst.rfncCd = $formObj.find("input[name=rfncCd]").val();
 						svRepnMst.rfncSeq = $formObj.find("input[name=rfncSeq]").val();
+						svRepnMst.memSeq = $formObj.find("input[name=rtnMemSeq]").val();
 
 						svRepnMst.svSurveyQstnRspnDtlList = new Array();
 
@@ -94,7 +103,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							var $surveyListObj = $(this);
 							svQstnDtl.srvTypeCd = $surveyListObj.find("input[name=srvTypeCd]").val();
 							svQstnDtl.qstnSeq = $surveyListObj.find("input[name=qstnSeq]").val();
-							svQstnDtl.isttrSeq = $surveyListObj.find("input[name=isttrSeq]").val();
+							var isttrSeq = $surveyListObj.find("input[name=isttrSeq]").val();
 
 							if ($(this).find(".exmplList").size() > 0 ) {
 								svQstnDtl.svSurveyExmplRspnDtlList = new Array();
@@ -108,6 +117,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 									}
 
 									if (typeof svExmplDtl.exmplSeq != 'undefined' || typeof svExmplDtl.sbjctRply != 'undefined'){
+										svExmplDtl.isttrSeq = isttrSeq;
 										svQstnDtl.svSurveyExmplRspnDtlList.push(svExmplDtl);
 									}
 								});
@@ -117,7 +127,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						});
 
 						cmmCtrl.jsonAjax(function(data){
-							location.href = "./step3"
+							location.href = "./srvStep3?detailsKey="+$formObj.find("input[name=edctnSeq]").val()+"&episdYear="+$formObj.find("input[name=episdYear]").val()+"&episdOrd="+$formObj.find("input[name=episdOrd]").val()
 						}, actionUrl, svRepnMst, "text")
 					}
 				}

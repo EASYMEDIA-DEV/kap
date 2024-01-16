@@ -370,6 +370,7 @@
                                                 <div class="data-line-w">
                                                     <c:forEach var="i" begin="1" end="3">
                                                         <div class="data-line sqCount data-line${i} lastindex${i}" style="display:none;">
+                                                            <div class="inner-line">
                                                             <div class="form-group">
                                                                 <div class="form-input w-shorter">
                                                                     <input type="text" class="notRequired cleanInit " placeholder="SQ 업종입력"  id="nm${i}" name="sqInfoList${i}">
@@ -385,6 +386,8 @@
                                                                     </select>
                                                                 </div>
                                                             </div>
+                                                            </div>
+                                                            <div class="inner-line">
                                                             <div class="form-group">
                                                                 <div class="form-input w-shorter">
                                                                     <input type="text" class="notRequired cleanInit" placeholder="SQ 점수입력" id="score${i}" name="sqInfoList${i}"   oninput="this.value=this.value.replace(/[^0-9.]/g, '')" >
@@ -394,6 +397,7 @@
                                                                 </div>
                                                                 <div class="btn-wrap btn-add-line lastBtnIndex${i}">
                                                                 </div>
+                                                            </div>
                                                             </div>
                                                         </div>
                                                     </c:forEach>

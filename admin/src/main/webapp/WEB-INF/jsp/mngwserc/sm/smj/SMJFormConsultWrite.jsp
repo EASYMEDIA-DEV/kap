@@ -24,7 +24,7 @@
                     <label class="col-sm-1 control-label">개선활동 추진계획서</label>
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="52428800" />
+                        <spring:eval var="atchUploadMaxSize" expression="104857600" />
                         <div class="dropzone attachFile notRequired" data-file-field-nm="tchgdFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
@@ -42,7 +42,7 @@
                     <label class="col-sm-1 control-label">개선활동 추진계획서</label>
                     <div class="col-sm-10 col-md-11">
                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="52428800" />
+                        <spring:eval var="atchUploadMaxSize" expression="104857600" />
                         <div class="dropzone attachFile notRequired" data-file-field-nm="mngmntFileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="PC 첨부파일">
                             <div class="dz-default dz-message">
                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>

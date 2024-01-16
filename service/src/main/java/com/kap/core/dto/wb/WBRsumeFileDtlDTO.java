@@ -38,6 +38,11 @@ public class WBRsumeFileDtlDTO extends BaseDTO {
     @Schema(title = "수정일시", example = "")
     private String modDtm;
 
+    @Schema(title = "파일순번", example = "")
+    private Integer fileOrd;
+    @Schema(title = "수정일시", example = "")
+    private String orgnFileNm;
+
     /* hidden 파일 유형 Type 코드 값 */
     private String type;
     /* hidden 파일  시퀀스 Key */

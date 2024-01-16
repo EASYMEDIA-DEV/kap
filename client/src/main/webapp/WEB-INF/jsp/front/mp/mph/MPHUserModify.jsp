@@ -218,7 +218,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input">
-                                                                <input type="text" placeholder="일반 전화번호 입력" oninput="this.value=this.value.replace(/[^0-9]/gi,'');" value="${rtnDtl.telNo}" name="mpaUserDto.telNo" title="전화번호" class="notRequired" id="telNoInput" maxlength="13">
+                                                                <input type="text" placeholder="일반 전화번호 입력" oninput="this.value=this.value.replace(/[^0-9]/gi,'');" value="${rtnDtl.telNo}" name="mpaUserDto.telNo" title="전화번호" class="notRequired " id="telNoInput" maxlength="13">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -314,7 +314,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-select">
-                                                                <select title="부서" class="notRequired deptCd deptCdOld">
+                                                                <select title="부서" class="notRequired deptCd deptCdOld deptCdPar">
                                                                     <option value="" selected>선택</option>
                                                                     <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status" >
                                                                         <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
@@ -407,12 +407,12 @@
                                                 <p class="txt addrNm">${rtnDtl.cmpnBscAddr}  ${rtnDtl.cmpnDtlAddr}</p>
                                             </div>
                                             <div class="list-txt">
-                                                <p class="tit">주소</p>
-                                                <p class="txt addrNm">${rtnDtl.cmpnBscAddr}  ${rtnDtl.cmpnDtlAddr}</p>
+                                                <p class="tit">부서</p>
+                                                <p class="txt  buseo"></p>
                                             </div>
                                             <div class="list-txt">
-                                                <p class="tit">주소</p>
-                                                <p class="txt addrNm">${rtnDtl.cmpnBscAddr}  ${rtnDtl.cmpnDtlAddr}</p>
+                                                <p class="tit">직급</p>
+                                                <p class="txt  gikgub"></p>
                                             </div>
                                         </div>
                                     </div>

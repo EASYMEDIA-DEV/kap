@@ -12,7 +12,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
     // form Object
     var $formObj = jQuery("#frmData");
-
     var dupCodeChk = true;
 
     // set model

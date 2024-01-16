@@ -122,7 +122,9 @@ var exports = {
                             if (phoneLen > 3 && phoneLen <= 7) {
                                 phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
                             } else if (phoneLen > 7) {
-                                if (phoneLen == 10) {
+                                if(phoneLen == 8) {
+                                    phoneNumber = phoneNumber.replace(/(\d{4})(\d+)/, '$1-$2');
+                                }else if (phoneLen == 10) {
                                     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
                                 } else {
                                     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');

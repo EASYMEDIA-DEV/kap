@@ -68,7 +68,7 @@
                             <input type="text" class="form-control input-sm" id="deptDtlNm" name="deptDtlNm" value="${rtnInfo.deptDtlNm}" title="부서상세명" maxlength="50"/>
                         </div>
                     </div>
-                    <label class="col-sm-1 control-label">직급</label>
+                    <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
                             <select class="form-control input-sm" id="pstnCdSelect" name="pstnCd" title="직급" >
@@ -83,7 +83,7 @@
                             </select>
                         </div>
                         <div class="col-sm-4 pstnCdInput" style="margin-left: -15px; <c:if test="${rtnInfo.pstnCd ne 'MEM_CD01007'}">display: none;</c:if>">
-                            <input type="text" class="form-control input-sm notRequired" id="deptCdNm" name="deptCdNm" value="${rtnInfo.deptCdNm}" title="직급상세명" maxlength="50"/>
+                            <input type="text" class="form-control input-sm notRequired" id="deptCdNm" name="deptCdNm" value="${rtnInfo.deptCdNm}" title="직급" maxlength="50"/>
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                     </div>
                     <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-1">
-                        <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" maxlength="50"/>
+                        <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11"/>
                     </div>
                 </div>
             </fieldset>

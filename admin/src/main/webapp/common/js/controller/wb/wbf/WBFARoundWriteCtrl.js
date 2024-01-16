@@ -144,8 +144,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         rowItem += '<label class="col-sm-1 control-label"></label>';
                         rowItem += '<div class="col-sm-11">';
                         rowItem += '<fieldset></fieldset>';
-                        rowItem += '<div class="inline giveText">' +giveRow + '차수</div>';
-                        rowItem += ' ';
+                        rowItem += '<div class="inline giveText" style="padding-right: 1vw;">' +giveRow + '차수</div>';
                         rowItem += '<div class="form-group mr-sm">';
                         rowItem += '<div class="input-group">';
                         rowItem += '<input type="text" class="form-control input-sm datetimepicker_strtDt" name="giveStrtDtList" value=\"'+day+'\" title="시작일" readonly onclick="cmmCtrl.initCalendar(this)"/>';

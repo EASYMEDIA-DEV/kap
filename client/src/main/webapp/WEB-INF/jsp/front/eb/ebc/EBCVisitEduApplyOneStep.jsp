@@ -1,15 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div id="wrap" data-controller="controller/eb/EBCVisitEduCtrl">
     <div class="cont-wrap">
-        <!--
-          신청 페이지: apply-page 클래스 추가
-          그 외 페이지: basic-page 클래스 추가
-        -->
-        <!--
-          교육 사업: edu-biz
-          컨실팅 사업: consult-biz
-          상생 사업: coexisting-biz
-        -->
         <div class="sub-top-vis-area apply-page consult-biz">
             <div class="page-tit-area">
                 <p class="page-tit f-xlarge-title"><span class="for-move">방문교육신청</span></p>
@@ -91,10 +82,17 @@
                                                 <td>${applicantInfo.name}</td>
                                             </tr>
                                             <tr>
-                                                <th>이메일</th>
-                                                <td>${applicantInfo.email}</td>
+                                                <th>휴대폰번호</th>
+                                                <td>${kl:emptyHypen(applicantInfo.hpNo)}</td>
                                             </tr>
-
+                                            <tr>
+                                                <th>이메일</th>
+                                                <td>${kl:emptyHypen(applicantInfo.email)}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>일반 전화번호</th>
+                                                <td>${kl:emptyHypen(applicantInfo.telNo)}</td>
+                                            </tr>
                                             <tr>
                                                 <th>부서</th>
                                                 <td>${applicantInfo.deptCdNm}(${applicantInfo.deptDtlNm})</td>
@@ -102,14 +100,6 @@
                                             <tr>
                                                 <th>직급</th>
                                                 <td>${applicantInfo.pstnNm}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>휴대폰번호</th>
-                                                <td>${applicantInfo.hpNo}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>전화번호</th>
-                                                <td>${applicantInfo.telNo}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -136,39 +126,40 @@
                                                 <col style="width: 820rem;">
                                             </colgroup>
                                             <tbody>
-
+                                            <tr>
+                                                <th>사업자등록번호</th>
+                                                <td>${kl:bsnmNoConvert(rtnInfo.bsnmNo)}</td>
+                                            </tr>
                                             <tr>
                                                 <th>부품사명</th>
                                                 <td>${rtnInfo.cmpnNm}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>구분</th>
-                                                <td>${rtnInfo.ctgryNm}</td>
                                             </tr>
                                             <tr>
                                                 <th>대표자명</th>
                                                 <td>${rtnInfo.rprsntNm}</td>
                                             </tr>
                                             <tr>
-                                                <th>설립일자</th>
-                                                <td>${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>전화번호</th>
-                                                <td>${rtnInfo.telNo}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>사업자등록번호</th>
-                                                <td>${kl:bsnmNoConvert(rtnInfo.bsnmNo)}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>본사주소</th>
-                                                <td>(${rtnInfo.zipcode}) ${rtnInfo.bscAddr} ${rtnInfo.dtlAddr}</td>
+                                                <th>구분</th>
+                                                <td>${rtnInfo.ctgryNm}</td>
                                             </tr>
                                             <tr>
                                                 <th>규모</th>
                                                 <td>${rtnInfo.sizeNm}</td>
                                             </tr>
+                                            <tr>
+                                                <th>설립일자</th>
+                                                <td>${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>회사 전화번호</th>
+                                                <td>${kl:emptyHypen(rtnInfo.telNo)}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>본사주소</th>
+                                                <td>(${rtnInfo.zipcode}) ${rtnInfo.bscAddr} ${rtnInfo.dtlAddr}</td>
+                                            </tr>
+
                                             <tr>
                                                 <th>매출액</th>
                                                 <td>${rtnInfo.slsPmt}억 원(${rtnInfo.slsYear}년)</td>

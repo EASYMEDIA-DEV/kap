@@ -65,13 +65,13 @@
                                         <div class="data-line">
                                             <div class="form-group form-birth">
                                                 <div class="form-input">
-                                                    <input type="text" id="year-id" name="year" title="연도" class="onlyNumber" placeholder="YYYY" value="" maxlength="4">
+                                                    <input type="text" id="year-id" name="year" title="연도" class="yearChk onlyNumber" placeholder="YYYY" value="" maxlength="4">
                                                 </div>
                                                 <div class="form-input">
-                                                    <input type="text" id="month-id" name="month" title="월" class="onlyNumber" placeholder="MM" value="" maxlength="2">
+                                                    <input type="text" id="month-id" name="month" title="월" class="monthChk onlyNumber" placeholder="MM" value="" maxlength="2">
                                                 </div>
                                                 <div class="form-input">
-                                                    <input type="text" id="day-id" name="day" title="일" class="onlyNumber" placeholder="DD" value="" maxlength="2">
+                                                    <input type="text" id="day-id" name="day" title="일" class="dayChk onlyNumber" placeholder="DD" value="" maxlength="2">
                                                 </div>
                                             </div>
                                         </div>
@@ -140,13 +140,13 @@
                                         <div class="data-line">
                                             <div class="form-group form-birth">
                                                 <div class="form-input">
-                                                    <input type="text" id="year-email" name="year" title="연도" class="onlyNumber" placeholder="YYYY" value="" maxlength="4">
+                                                    <input type="text" id="year-email" name="year" title="연도" class="yearChk onlyNumber" placeholder="YYYY" value="" maxlength="4">
                                                 </div>
                                                 <div class="form-input">
-                                                    <input type="text" id="month-email" name="month" title="월" class="onlyNumber" placeholder="MM" value="" maxlength="2">
+                                                    <input type="text" id="month-email" name="month" title="월" class="monthChk onlyNumber" placeholder="MM" value="" maxlength="2">
                                                 </div>
                                                 <div class="form-input">
-                                                    <input type="text" id="day-email" name="day" title="일" class="onlyNumber" placeholder="DD" value="" maxlength="2">
+                                                    <input type="text" id="day-email" name="day" title="일" class="dayChk onlyNumber" placeholder="DD" value="" maxlength="2">
                                                 </div>
                                             </div>
                                         </div>

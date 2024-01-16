@@ -78,6 +78,7 @@
 							cache : false,
 							success : function(data, status, xhr){
 								alert("저장 되었습니다.");
+								$(".partDtl").show();
 							},
 							error : function(data, status, xhr){
 								alert("오류가 발생했습니다.");
