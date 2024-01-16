@@ -6,6 +6,9 @@ define(["ezCtrl"], function(ezCtrl) {
     };
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
+    var chilCnt = $(".infoCard").length; // 위원 카드 수
+    var pageCnt = 1; // 페이지 카운트
+    var page = (chilCnt/2); // 더보기 페이지
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
@@ -30,6 +33,24 @@ define(["ezCtrl"], function(ezCtrl) {
                         location.href="./surveyIndex?detailsKey="+conSeq;
                     }
                 }
+            },
+            moreBtn : {
+                event : {
+                    click : function(){
+                        pageCnt = pageCnt+1; // 더보기 누를 때마다 1씩 증가
+                        var openCnt = $(".open").length // 보이는 게시물
+                        var closeCnt = $(".close").length; // 숨겨진 게시물
+                        if(pageCnt <= page){
+                            $(".infoCard").slice(openCnt+1,openCnt+10).show();
+                            $(".infoCard").slice(openCnt+1,openCnt+10).removeClass("open");
+                            $(".infoCard").slice(openCnt+1,openCnt+10).addClass("open");
+                            $(".cntText").text(openCnt+2 +"/"+ chilCnt);
+                        }else{
+                            $(".close").show();
+                            $(".moreBtn").hide();
+                        }
+                    }
+                }
             }
         },
         immediately : function() {
@@ -46,6 +67,23 @@ define(["ezCtrl"], function(ezCtrl) {
                     }, "./appctnType", data, "json")
                 }
             })
+
+            // 신청내역 확인에서 신청사항에서 마지막 '/' 삭제
+            var appctnType = $("#appctnType").text();
+            if(appctnType != '' || appctnType != 'undefined'){
+                $("#appctnType").text($("#appctnType").text().slice(0, -1));
+            }
+            // 더보기 버튼
+            if(chilCnt > 3){
+                $(".infoCard").slice(2,chilCnt).hide();
+                $(".infoCard").slice(2,chilCnt).removeClass("open");
+                $(".infoCard").slice(2,chilCnt).addClass("close");
+                var openCnt = $(".open").length // 보이는 게시물
+                var closeCnt = $(".close").length; // 숨겨진 게시물
+                $(".cntText").text(openCnt +"/"+ chilCnt);
+            }else{
+                $(".moreBtn").hide();
+            }
         }
     };
 
