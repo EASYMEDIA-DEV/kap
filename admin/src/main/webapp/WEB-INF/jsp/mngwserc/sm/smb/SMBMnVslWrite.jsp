@@ -103,7 +103,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" maxlength="200" title="제목" placeholder="제목 입력하세요." />
+                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" maxlength="200" title="제목" placeholder="제목을 입력해주세요." />
                     </div>
                 </div>
             </fieldset>
@@ -111,12 +111,12 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">Main Copy</label>
                     <div class="col-sm-5">
-                        <textarea class="form-control input-sm notRequired" id="mnCopy" name="mnCopy" maxlength="500" title="Main Copy" placeholder="Main Copy를 입력하세요." >${rtnDto.mnCopy}</textarea>
+                        <textarea class="form-control input-sm notRequired" id="mnCopy" name="mnCopy" maxlength="500" title="Main Copy" placeholder="메인 카피를 입력하세요." >${rtnDto.mnCopy}</textarea>
                     </div>
                     <div class="col-sm-1"></div>
                     <label class="col-sm-1 control-label">HEX</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" id="mnHexCd" name="mnHexCd" value="${rtnDto.mnHexCd}" maxlength="6" title="HEX" placeholder="HEX 입력하세요." onkeyup="this.value=this.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g,'');"/>
+                        <input type="text" class="form-control input-sm notRequired" id="mnHexCd" name="mnHexCd" value="${rtnDto.mnHexCd}" maxlength="6" title="HEX" placeholder="#123456" onkeyup="this.value=this.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g,'');"/>
                     </div>
                 </div>
             </fieldset>
@@ -124,12 +124,12 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">Sub Copy</label>
                     <div class="col-sm-5">
-                        <textarea class="form-control input-sm notRequired" id="subCopy" name="subCopy" maxlength="500" title="Sub Copy" placeholder="Sub Copy를 입력하세요.">${rtnDto.subCopy}</textarea>
+                        <textarea class="form-control input-sm notRequired" id="subCopy" name="subCopy" maxlength="500" title="Sub Copy" placeholder="서브 카피를 입력하세요.">${rtnDto.subCopy}</textarea>
                     </div>
                     <div class="col-sm-1"></div>
                     <label class="col-sm-1 control-label">HEX</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" id="subHexCd" name="subHexCd" value="${rtnDto.subHexCd}" maxlength="6" title="HEX" placeholder="HEX 입력하세요." onkeyup="this.value=this.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g,'');" />
+                        <input type="text" class="form-control input-sm notRequired" id="subHexCd" name="subHexCd" value="${rtnDto.subHexCd}" maxlength="6" title="HEX" placeholder="#123456" onkeyup="this.value=this.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g,'');" />
                     </div>
                 </div>
             </fieldset>
