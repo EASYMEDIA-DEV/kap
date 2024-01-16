@@ -16,6 +16,7 @@
              , TMNCS_CNTN
              , PSNIF_CNTN
              , OFFER_CNTN
+             , MKT_RCV_AGMNT_CNTN
              , REG_ID
              , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
              , REG_IP
@@ -29,7 +30,7 @@
         WHERE 1=1
         ORDER BY
             MEM_TRMS_SEQ DESC
-        LIMIT 1
+            LIMIT 1
     </select>
 
     <!--
@@ -43,18 +44,20 @@
         INSERT /* SMDCMemTrmsMapper.insertMemTrms */ INTO SM_MEM_TRMS_MST
         (
             MEM_TRMS_SEQ
-            , TMNCS_CNTN
-            , PSNIF_CNTN
-            , OFFER_CNTN
-            , REG_ID
-            , REG_IP
-            , REG_DTM
+        , TMNCS_CNTN
+        , PSNIF_CNTN
+        , OFFER_CNTN
+        , MKT_RCV_AGMNT_CNTN
+        , REG_ID
+        , REG_IP
+        , REG_DTM
         )
         VALUES
             (
-            #{memTrmsSeq}
+                #{memTrmsSeq}
             , #{tmncsCntn}
             , #{psnifCntn}
+            , #{offerCntn}
             , #{offerCntn}
             , #{regId}
             , #{regIp}

@@ -45,6 +45,10 @@ public class SMDCMemTrmsDTO extends BaseDTO {
     @SaxFilter
     private String offerCntn;
 
+    // 마케팅정보수신동의
+    @SaxFilter
+    private String mktRcvAgmntCntn;
+
     // 등록ID
     private String regId;
 

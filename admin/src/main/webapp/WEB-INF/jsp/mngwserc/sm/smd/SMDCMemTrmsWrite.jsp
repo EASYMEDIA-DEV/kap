@@ -30,7 +30,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control notRequired ckeditorRequired" id="psnifCntn" name="psnifCntn" title="내용" data-type="${pageGb}">${rtnDto.psnifCntn}</textarea>
+                        <textarea class="form-control notRequired ckeditorRequired" id="psnifCntn" name="psnifCntn" title="개인정보 수집 및 이용동의" data-type="${pageGb}">${rtnDto.psnifCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
@@ -39,7 +39,16 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control notRequired ckeditorRequired" id="offerCntn" name="offerCntn" title="내용" data-type="${pageGb}">${rtnDto.offerCntn}</textarea>
+                        <textarea class="form-control notRequired ckeditorRequired" id="offerCntn" name="offerCntn" title="제3자 정보 제공 동의" data-type="${pageGb}">${rtnDto.offerCntn}</textarea>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <h6 style="margin-left: 88px; font-size: 13px;"><em class="ion-play mr-sm"></em> 마케팅정보수신동의 약관</h6>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
+                    <div class="col-sm-11">
+                        <textarea class="form-control notRequired ckeditorRequired" id="mktRcvAgmntCntn" name="mktRcvAgmntCntn" title="내용" data-type="${pageGb}">${rtnDto.offerCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
@@ -53,37 +62,37 @@
             <div class="table-responsive ">
                 <table class="table text-sm">
                     <tbody>
-                        <tr>
-                            <th>최초 등록자</th>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${ not empty rtnDto.regName }">
-                                        ${ rtnDto.regName }(${ rtnDto.regId })
-                                    </c:when>
-                                    <c:otherwise>-</c:otherwise>
-                                </c:choose>
-                            </td>
-                            <th>최초 등록일시</th>
-                            <td>${ kl:emptyHypen(kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')) }</td>
-                        </tr>
-                        <tr>
-                            <th>최종 수정자</th>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${ not empty rtnDto.modName }">
-                                        ${ rtnDto.modName }(${ rtnDto.modId })
-                                    </c:when>
-                                    <c:otherwise>-</c:otherwise>
-                                </c:choose>
-                            </td>
-                            <th>최종 수정일시</th>
-                            <td>
-                                ${ kl:emptyHypen(kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')) }
-                            </td>
-                        </tr>
+                    <tr>
+                        <th>최초 등록자</th>
+                        <td>
+                            <c:choose>
+                                <c:when test="${ not empty rtnDto.regName }">
+                                    ${ rtnDto.regName }(${ rtnDto.regId })
+                                </c:when>
+                                <c:otherwise>-</c:otherwise>
+                            </c:choose>
+                        </td>
+                        <th>최초 등록일시</th>
+                        <td>${ kl:emptyHypen(kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')) }</td>
+                    </tr>
+                    <tr>
+                        <th>최종 수정자</th>
+                        <td>
+                            <c:choose>
+                                <c:when test="${ not empty rtnDto.modName }">
+                                    ${ rtnDto.modName }(${ rtnDto.modId })
+                                </c:when>
+                                <c:otherwise>-</c:otherwise>
+                            </c:choose>
+                        </td>
+                        <th>최종 수정일시</th>
+                        <td>
+                            ${ kl:emptyHypen(kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')) }
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
-       </form>
+        </form>
     </div>
 </div>

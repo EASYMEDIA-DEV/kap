@@ -50,7 +50,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
 
             $("#btn_delete").click(function () {
-                if (confirm(msgCtrl.getMsg("confirm.selDel"))) {
+                if (confirm(msgCtrl.getMsg("confirm.del"))) {
                     cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
                 }
 
