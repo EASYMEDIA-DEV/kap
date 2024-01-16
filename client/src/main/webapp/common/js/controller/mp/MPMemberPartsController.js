@@ -275,10 +275,10 @@ define(["ezCtrl"], function(ezCtrl) {
                                 $(".gikgub").text();
                                 $(".cmpnNm").val($(".cmpn_nm_new").val());
                                 $(".rprsntNm").val($(".rprsnt_nm").val());
-                                $(".deptCd").val($("#deptCd").val());
-                                $(".deptDtlNm").val($("#deptDtlNm").val());
-                                $(".pstnNm").val($(".pstnNm").val());
-                                $(".pstnCd").val($("#pstnCd").val());
+                                $("#formDeptCd").val($("#deptCd").val());
+                                $("#formDeptDtlNm").val($("#deptDtlNm").val());
+                                $("#formpstnNm").val($(".pstnNm").val());
+                                $("#formPstnCd").val($("#pstnCd").val());
 
                                 let buseonDtl = $("#deptDtlNmOld").val() == "" ? '' : "(" + $("#deptDtlNm").val() +")";
                                 $(".buseo").text($("#deptCd option:selected").text() +" " + buseonDtl);
@@ -300,11 +300,11 @@ define(["ezCtrl"], function(ezCtrl) {
                                 $(".addrNm").text($(".addr").text());
                                 $(".cmpnNm").val($(".cmpn_nm").text());
                                 $(".rprsntNm").val($(".rsNm").text());
-                                // $(".deptCd").val($("#deptCdOld").val());
-                                // $(".deptCdPar").val($("#deptCdOld").val());
-                                // $(".deptDtlNm").val($("#deptDtlNmOld").val());
-                                // $(".pstnNm").val($(".pstnNmOld").val());
-                                // $(".pstnCd").val($("#pstnCdOld").val());
+                                $(".deptCd").val($("#deptCdOld").val());
+                                $(".deptCdPar").val($("#deptCdOld").val());
+                                $(".deptDtlNm").val($("#deptDtlNmOld").val());
+                                $(".pstnNm").val($(".pstnNmOld").val());
+                                $(".pstnCd").val($("#pstnCdOld").val());
                             }
                             $("#btnParts span").text("부품사정보 변경");
                             //form 데이터 넣기
