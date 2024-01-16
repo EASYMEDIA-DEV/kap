@@ -9,7 +9,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
-    var chilCnt = $("#infoCard").children("a").length; // 위원 카드 수
+    var chilCnt = $(".infoCard").children("a").length; // 위원 카드 수
     var pageCnt = 1; // 페이지 카운트
     var page = (chilCnt/9); // 더보기 페이지
     // set model

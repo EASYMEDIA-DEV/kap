@@ -100,7 +100,7 @@
                 , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
                 , CP_MST.REG_DTM
                 , CP_MST.MOD_ID
-                , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
+                , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
                 , CPR_MST.MOD_DTM
             FROM
                 CP_CNSTG_APPCTN_MST CP_MST
@@ -217,7 +217,7 @@
             , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
            , CP_MST.REG_DTM
            , CPR_MST.MOD_ID
-           , (SELECT NAME FROM CO_MEM_MST WHERE ID = CPR_MST.MOD_ID) MOD_NAME
+           , (SELECT NAME FROM CO_ADM_MST WHERE ID = CPR_MST.MOD_ID) MOD_NAME
            , CPR_MST.MOD_DTM
             FROM
                 CP_CNSTG_APPCTN_MST CP_MST
@@ -257,9 +257,12 @@
             A.FCTRY_DTL_ADDR,
             A.QLTY_PIC_CNT,
             A.FAX_NO,
+            (SELECT TEL_NO FROM CP_CMPN_MST WHERE BSNM_NO = A.APPCTN_BSNM_NO) CMPN_TEL_NO,
             A.RPRSNT_APPRV_YN,
             A.FIRST_RGNS_CD,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.FIRST_RGNS_CD) FIRST_RGNS_NM,
             A.SCND_RGNS_CD,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.SCND_RGNS_CD) SCND_RGNS_NM,
             A.APPCTN_RSN_CD,
             A.APPCTN_FLD_CD,
             A.ITRDC_FILE_SEQ,
@@ -271,6 +274,7 @@
             B.EMAIL,
             B.TEL_NO,
             B.DEPT_CD,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = DEPT_CD) DEPT_NM,
             B.DEPT_DTL_NM,
             B.PSTN_CD,
             B.PSTN_NM,
@@ -291,11 +295,7 @@
                 END AS REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-            CASE
-                WHEN (SELECT NAME FROM CO_MEM_MST WHERE ID=B.MOD_ID) IS NULL
-                    THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=B.MOD_ID)
-                ELSE (SELECT NAME FROM CO_MEM_MST WHERE ID=B.MOD_ID)
-                END AS MOD_NAME
+            (SELECT NAME FROM CO_ADM_MST WHERE ID=B.MOD_ID) AS MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
@@ -1425,7 +1425,7 @@
         2024.01.02   임서화       최초생성
     -->
     <select id="selectMemSeqAppctnMst" parameterType="CBATechGuidanceInsertDTO">
-        SELECT
+        SELECT /*CBATechGuidanceMapper.selectMemSeqAppctnMst*/
             CNSTG_SEQ,
             CNSTG_CD,
             (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) CNSTG_NM,
@@ -1456,6 +1456,7 @@
             B.PSTN_NM,
             B.EMAIL,
             C.SRV_SEQ,
+            (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = C.CMSSR_SEQ) AS CMSSR_NM,
             (SELECT COUNT(SRV_SEQ) FROM SV_QSTN_DTL WHERE SRV_SEQ = C.SRV_SEQ) AS QSTN_CNT /* 문항수 */,
             (SELECT COUNT(SRV_RSPN_SEQ) FROM SV_RSPN_MST WHERE SRV_SEQ = C.SRV_SEQ AND RFNC_SEQ = A.CNSTG_SEQ AND RFNC_CD = 'CON') AS RSPN_CNT,
             (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ AND (SRV_STRT_DTM  <![CDATA[<]]>  NOW() AND SRV_END_DTM <![CDATA[>=]]> NOW())) AS SRV_CNT,

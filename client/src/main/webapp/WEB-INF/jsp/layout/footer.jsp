@@ -170,7 +170,14 @@
 																<p class="label f-body2">${list.typeCdNm}</p>
 																<p class="tit f-title3">${list.titl}</p>
 																<div class="btn-wrap">
-																	<div class="btn-solid small gray-bg"><span>더 알아보기</span></div>
+																	<c:choose>
+																		<c:when test="${typeClass eq 'education'}">
+																			<div class="btn-solid small gray-bg"><span>더 알아보기</span></div>
+																		</c:when>
+																		<c:otherwise>
+																			<div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
+																		</c:otherwise>
+																	</c:choose>
 																</div>
 															</div>
 														</div>

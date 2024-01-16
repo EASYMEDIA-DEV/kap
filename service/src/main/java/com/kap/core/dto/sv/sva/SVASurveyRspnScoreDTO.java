@@ -43,12 +43,19 @@ public class SVASurveyRspnScoreDTO extends BaseDTO {
     private String srvType;
 
     @Schema(title = "참여이름")
-    private String ptcptName;
+    @Builder.Default
+    private String ptcptName = "";
+
     @Schema(title = "참여전화번호")
-    private String ptcptTelno;
+    @Builder.Default
+    private String ptcptTelno = "";
+
     @Schema(title = "참여직급")
-    private String ptcptPstn;
+    @Builder.Default
+    private String ptcptPstn = "";
+
     @Schema(title = "참여이메일")
-    private String ptcptEmail;
+    @Builder.Default
+    private String ptcptEmail = "";
 
 }

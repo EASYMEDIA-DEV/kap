@@ -1,10 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.core.dto.eb.ebb.EBBEpisdExcelDTO;
-import com.kap.core.dto.eb.ebb.EBBLctrDTO;
-import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
+import com.kap.core.dto.eb.ebb.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -156,6 +153,11 @@ public interface EBBEpisdService {
 	 */
 	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+
+	/**
+	 * 교육차수 상세를 조회한다.(설문유효성)
+	 */
+	public EBBEpisdSurveyDTO selectEpisdDtlCheck(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
 }

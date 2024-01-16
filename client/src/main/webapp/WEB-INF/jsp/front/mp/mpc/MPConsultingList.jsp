@@ -19,9 +19,9 @@
         <!--LNB 시작-->
         <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
         <!--LNB 종료-->
-        <div class="right-con-area">
+        <div class="right-con-area" data-controller="controller/mp/mpc/MPConsultingListCtrl">
             <div class="cont-sec-w">
-                <div class="cont-sec no-border scroll-motion" data-controller="controller/mp/mpc/MPConsultingListCtrl">
+                <div class="cont-sec no-border scroll-motion">
                     <div class="for-motion">
                         <div class="sec-con-area">
                             <div class="info-head">
@@ -131,7 +131,7 @@
                             <c:choose>
                                 <c:when test="${not empty rtnData }">
                                 <c:forEach var="appctnList" items="${rtnData}" varStatus="status">
-                                    <div class="trainings-list-w">
+                                    <div class="trainings-list-w infoCard open">
                                         <div class="training-confirm">
                                             <div class="top-info">
                                                 <div class="training-view-page">
@@ -182,7 +182,7 @@
                                                                 </div>
                                                             </c:when>
                                                             <c:when test="${appctnList.cnstgCd eq 'CONSULT_GB02'}">
-                                                                <div class="txt-area">
+                                                                <div class="txt-area open">
                                                                     <input type="hidden" name="cnstgSeq" class="cnstgSeq" value="${appctnList.cnstgSeq}">
                                                                     <div class="top-line">
                                                                         <div class="sort-label-area">
@@ -243,8 +243,8 @@
                                         </div>
                                     </div>
                                 </c:forEach>
-                                <div class="btn-wrap add-load align-center">
-                                    <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
+                                <div class="btn-wrap add-load align-center moreBtn">
+                                    <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count cntText"></span></a>
                                 </div>
                             </c:when>
                             <c:otherwise>
@@ -258,7 +258,6 @@
                                 </div>
                             </c:otherwise>
                         </c:choose>
-                        </div>
                     </div>
                 </div>
             </div>

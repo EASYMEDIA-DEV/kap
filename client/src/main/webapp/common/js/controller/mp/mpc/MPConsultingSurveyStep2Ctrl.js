@@ -94,19 +94,27 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         var surveyList = $(this).closest('.survey-list');
+                        var surveyListInner = $(this).closest('.survey-list-inner');
+
                         var nextNo = $(this).data("next-no");
+                        var dpth = surveyListInner.find("input[name=dpth]").val()
+                        if (dpth != 2){
+
+                            surveyList.find(".survey-list-inner:not(:eq(0)) input").prop('checked',false);
+                            surveyList.find('.survey-list-inner:not(:eq(0))').hide();
+                            surveyList.find('.survey-list-inner:not(:eq(0))').find('.answer').addClass("notRequired");
+                        }
 
                         if (nextNo != ''){
-                            surveyList.find(".survey-list-inner:not(:eq(0)) input:radio").prop('checked',false).hide();
-                            surveyList.find('.survey-list-inner:not(:eq(0))').hide();
-
                             if (nextNo.indexOf(',') > 0){
                                 var nextNoSplit = nextNo.split(',');
                                 $(nextNoSplit).each(function(i){
                                     surveyList.find('.'+nextNoSplit[i]).show();
+                                    surveyList.find('.'+nextNoSplit[i]).find('.answer').removeClass("notRequired");
                                 });
                             }else{
                                 surveyList.find('.'+nextNo).show();
+                                surveyList.find('.'+nextNo).find('.answer').removeClass("notRequired");
                             }
                         }
                     }

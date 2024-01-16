@@ -52,7 +52,6 @@
             , REG_DTM					/* 등록일 */
             , MOD_ID					/* 수정자ID */
             , MOD_NAME					/* 수정자이름 */
-            , MOD_ADM_NAME			    /* 수정자관리자이름 */
             , MOD_DTM					/* 수정일 */
             , MJR_PRDCT_1               /* 주생산품1 */
             , MJR_PRDCT_2               /* 주생산품2 */
@@ -100,8 +99,7 @@
                 , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.REG_ID) REG_ADM_NAME
                 , CP_MST.REG_DTM
                 , CP_MST.MOD_ID
-                , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
-                , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_ADM_NAME
+                , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
                 , CPR_MST.MOD_DTM
                 , CMPN_MST.MJR_PRDCT_1
                 , CMPN_MST.MJR_PRDCT_2
@@ -200,7 +198,6 @@
                 , REG_DTM /* 등록일 */
                 , MOD_ID /* 수정자ID */
                 , MOD_NAME /* 수정자이름 */
-                , MOD_ADM_NAME	/* 수정자관리자이름 */
                 , MOD_DTM /* 수정일 */
                 , MJR_PRDCT_1 /* 주생산품1 */
                 , MJR_PRDCT_2 /* 주생산품2 */
@@ -255,8 +252,7 @@
                     , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.REG_ID) REG_ADM_NAME
                     , CP_MST.REG_DTM
                     , CP_MST.MOD_ID
-                    , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
-                    , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_ADM_NAME
+                    , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
                     , CPR_MST.MOD_DTM
                     , CMPN_MST.MJR_PRDCT_1
                     , CMPN_MST.MJR_PRDCT_2
@@ -677,26 +673,6 @@
             CP_CNSTG_DPNDN_DTL
         WHERE
             CNSTG_SEQ =  #{cnstgSeq}
-    </select>
-
-    <!--
-     쿼리명 : CBBManageConsultMapper.selectCnstgAppctnType
-     설  명 :  신청 분야 상세
-      수정일     수정자       수정내용
-    ==========   ======    ==============
-    2023.11.14   임서화      최초생성
-    -->
-    <select id="selectCnstgAppctnType" parameterType="java.util.HashMap" resultType="CBBManageConsultInsertDTO">
-        SELECT /* CBBManageConsultMapper.selectCmpnCbsnInfoCnt */
-            CNSTG_SEQ,
-            CD AS APPCTN_TYPE_CD,
-            REG_ID,
-            REG_IP,
-            REG_DTM
-        FROM
-            CP_CNSTG_APPCTN_TYPE_DTL
-        WHERE 1=1
-          AND CNSTG_SEQ = #{cnstgSeq}
     </select>
 
     <!--
@@ -1173,6 +1149,7 @@
             B.HP_NO,
             B.EMAIL,
             B.TEL_NO,
+            (SELECT TEL_NO FROM CP_CMPN_MST WHERE BSNM_NO = A.APPCTN_BSNM_NO) CMPN_TEL_NO,
             B.DEPT_CD,
             B.DEPT_DTL_NM,
             B.PSTN_CD,
@@ -1193,11 +1170,7 @@
                 END AS REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-            CASE
-                WHEN (SELECT NAME FROM CO_MEM_MST WHERE ID=B.MOD_ID) IS NULL
-                    THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=B.MOD_ID)
-                ELSE (SELECT NAME FROM CO_MEM_MST WHERE ID=B.MOD_ID)
-                END AS MOD_NAME
+            (SELECT NAME FROM CO_ADM_MST WHERE ID=B.MOD_ID) MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1

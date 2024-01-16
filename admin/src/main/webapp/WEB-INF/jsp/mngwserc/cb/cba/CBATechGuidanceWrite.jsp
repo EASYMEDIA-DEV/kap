@@ -107,7 +107,7 @@
                         </div>
                         <label class="col-sm-1 control-label">일반 전화번호</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control input-sm notRequired"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호" placeholder="일반 전화번호 입력"/>
+                            <input type="text" class="form-control input-sm notRequired telRex"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호" placeholder="일반 전화번호 입력"/>
                         </div>
                     </div>
                 </fieldset>
@@ -188,7 +188,7 @@
                         <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="col-sm-3" style="margin-left: -15px">
-                                <input type="text" class="form-control input-sm" id="cmpnTelNo" name="cmpnTelNo"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${rtnDto.cmpnTelNo}" title="전화번호" placeholder="회사 전화번호 입력"/>
+                                <input type="text" class="form-control input-sm telRex" id="cmpnTelNo" name="cmpnTelNo"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${rtnDto.cmpnTelNo}" title="전화번호" placeholder="회사 전화번호 입력"/>
                             </div>
                         </div>
                         <label class="col-sm-1 control-label">사업자등록번호<span class="star">*</span></label>
@@ -232,6 +232,7 @@
                         <label class="col-sm-1 control-label">직원수</label>
                         <div class="col-sm-5">
                             <input type="text" class="form-control input-sm numberChk notRequired" id="mpleCnt" name="mpleCnt" value="${rtnDto.mpleCnt}" title="직원수" maxlength="50" placeholder="직원수 입력"/>
+                            명
                         </div>
                     </div>
                 </fieldset>
@@ -536,7 +537,7 @@
                     </div>
                     <label class="col-sm-1 control-label">FAX</label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control input-sm notRequired" name="faxNo" value="${rtnDto.faxNo}" title="FAX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="FAX 입력"/>
+                        <input type="text" class="form-control input-sm notRequired telRex" name="faxNo" value="${rtnDto.faxNo}" title="FAX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="FAX 입력"/>
                     </div>
                 </div>
             </fieldset>
@@ -544,7 +545,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">지도요청 공장주소<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="button" class="btn btn-sm searchPostCode factAddr" data-html2canvas-ignore="true" id="hqAddr" value="우편번호 검색">
+                        <input type="button" class="btn btn-sm searchPostCode factAddr" data-html2canvas-ignore="true" value="우편번호 검색">
                         <label class="checkbox-inline c-checkbox">
                             <c:set var="cmpnAddrSameYn" value="${kl:nvl(rtnDto.cmpnAddrSameYn, 'N')}" />
                             <input type="checkbox" class="notRequired addrSame"  name="cmpnAddrSameYn" value="${cmpnAddrSameYn}"<c:if test="${cmpnAddrSameYn eq 'Y'}">checked</c:if> title="주소 동일 여부"/>
@@ -723,7 +724,7 @@
                     <label class="col-sm-1 control-label">관리자 메모</label>
                     <div class="col-sm-11">
                         <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" title="관리자메모" placeholder="관리자 메모 입력" maxlength="500">${rtnDto.admMemo}</textarea>
-                        <span style="float: right">저장 시간 ${rtnDto.modDtm}.</span>
+                        <span style="float: right">저장 시간 <c:if test="${ not empty rtnDto.modDtm }">${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.modDtm}">-</c:if></span>
                     </div>
                 </div>
             </fieldset>
@@ -900,17 +901,17 @@
                                         개선율
                                     </div>
                                 </div>
-                                <div class="form-group text-sm fltyImpvmRate">
+                                <div class="form-group text-sm form-inline fltyImpvmRate">
                                     <label class="col-sm-1 control-label">공정불량개선율</label>
-                                    <div class="col-sm-2">
-                                        <input type="number" class="form-control input-sm notRequired fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="" title="불량개션이전율" placeholder="개선 전 불량률 입력"/>
-                                    </div><label class="inline-form control-label">ppm</label>
-                                    <div class="col-sm-2">
-                                        <input type="number" class="form-control input-sm notRequired fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="" title="불량개션이후율" placeholder="개선 후 불량률 입력"/>
-                                    </div><label class="inline-form control-label">ppm</label>
-                                    <div class="col-sm-2">
-                                        <input type="number" class="form-control input-sm notRequired fltyImpvmRate" name="fltyImpvmRate" value="0" title="불량개션율" readonly="readonly" placeholder="0"/>
-                                    </div><label class="inline-form control-label">%</label>
+                                    <div class="col-sm-3">
+                                        <input type="number" class="form-control input-sm notRequired fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="" title="불량개션이전율" placeholder="개선 전 불량률 입력"/>&nbsp;ppm
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" class="form-control input-sm notRequired fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="" title="불량개션이후율" placeholder="개선 후 불량률 입력"/>&nbsp;ppm
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input type="number" class="form-control input-sm notRequired fltyImpvmRate" name="fltyImpvmRate" value="0" title="불량개션율" readonly="readonly" placeholder="0"/>&nbsp;%
+                                    </div>
                                 </div>
                             </fieldset>
                             <fieldset>
@@ -1199,17 +1200,17 @@
                                             개선율
                                         </div>
                                     </div>
-                                    <div class="form-group text-sm fltyImpvmRate">
+                                    <div class="form-group text-sm form-inline fltyImpvmRate">
                                         <label class="col-sm-1 control-label">공정불량개선율</label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control input-sm notRequired fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="${rsumeList.fltyImpvmBfreRate}" title="불량개션이전율" placeholder="개선 전 불량률 입력"/>
-                                        </div><label class="col-sm-1 control-label">ppm</label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control input-sm notRequired fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="${rsumeList.fltyImpvmAftrRate}" title="불량개션이후율" placeholder="개선 후 불량률 입력"/>
-                                        </div><label class="col-sm-1 control-label">ppm</label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control input-sm notRequired fltyImpvmRate" name="fltyImpvmRate" value="<c:if test="${not empty rsumeList.fltyImpvmRate}">${rsumeList.fltyImpvmRate}</c:if><c:if test="${empty rsumeList.fltyImpvmRate}">0</c:if>" title="불량개션율" readonly="readonly" placeholder="0"/>
-                                        </div><label class="col-sm-1 control-label">%</label>
+                                        <div class="col-sm-3 form-inline">
+                                            <input type="number" class="form-control input-sm fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="${rsumeList.fltyImpvmBfreRate}" title="불량개션이전율" placeholder="개선 전 불량률 입력"/>&nbsp;ppm
+                                        </div>
+                                        <div class="col-sm-3 form-inline">
+                                            <input type="number" class="form-control input-sm fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="${rsumeList.fltyImpvmAftrRate}" title="불량개션이후율" placeholder="개선 후 불량률 입력"/>&nbsp;ppm
+                                        </div>
+                                        <div class="col-sm-3 form-inline">
+                                            <input type="number" class="form-control input-sm fltyImpvmRate" name="fltyImpvmRate" value="<c:if test="${not empty rsumeList.fltyImpvmRate}">${rsumeList.fltyImpvmRate}</c:if><c:if test="${empty rsumeList.fltyImpvmRate}">0</c:if>" title="불량개션율" readonly="readonly" placeholder="0"/>&nbsp;%
+                                        </div>
                                     </div>
                                 </fieldset>
                                 <fieldset>
@@ -1359,12 +1360,14 @@
                             <th scope="row" class="bg-gray-lighter">최종 수정자</th>
                             <td><c:if test="${not empty rtnDto.modId}">${rtnDto.modName}(${rtnDto.modId})</c:if><c:if test="${empty rtnDto.modId}">-</c:if></td>
                             <th scope="row" class="bg-gray-lighter">최종 수정일시</th>
-                            <c:choose>
-                                <c:when test="${not empty rtnDto.modDtm}">
-                                    <td>${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</td>
-                                </c:when>
-                                <c:otherwise>-</c:otherwise>
-                            </c:choose>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${ not empty rtnDto.modDtm }">
+                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                    </c:when>
+                                    <c:otherwise>-</c:otherwise>
+                                </c:choose>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -1545,14 +1548,7 @@
                         <button type="button" class="btn btn-sm btn-default" id="btnList">목록</button>
                     </div>
                     <div class="pull-right">
-                        <c:choose>
-                            <c:when test="${not empty rtnDto}">
-                                <div class="btn btn-sm btn-success" id="submit">수정</div>
-                            </c:when>
-                            <c:otherwise>
-                                <div class="btn btn-sm btn-success" id="submit">등록</div>
-                            </c:otherwise>
-                        </c:choose>
+                        <div class="btn btn-sm btn-success" id="submit">저장</div>
                     </div>
                 </div>
             </form>

@@ -21,7 +21,7 @@
         <!--LNB 종료-->
         <div class="right-con-area">
                 <div class="cont-sec-w">
-                    <div class="cont-sec no-border scroll-motion" >
+                    <div class="cont-sec no-border scroll-motion">
                         <div class="for-motion">
                             <div class="sec-tit-area">
                                 <p class="f-title3"></p>
@@ -81,7 +81,7 @@
                             <div class="cont-sec no-border scroll-motion">
                                 <div class="for-motion">
                                     <div class="sec-tit-area">
-                                        <p class="f-title3">컨설팅 만족도 설문 조사${rspnCnt}!!</p>
+                                        <p class="f-title3">컨설팅 만족도 설문 조사</p>
                                     </div>
                                     <div class="sec-con-area">
                                         <div class="graphic-sec">
@@ -105,7 +105,7 @@
                     <div class="cont-sec no-border scroll-motion">
                         <div class="for-motion">
                             <div class="sec-tit-area">
-                                <p class="f-title3">신청자 기본정보 ${rtnData}</p>
+                                <p class="f-title3">신청자 기본정보 </p>
                             </div>
                             <div class="sec-con-area">
                                 <div class="table-sec">
@@ -137,11 +137,11 @@
                                             <!-- // 2023-12-22 수정 -->
                                             <tr>
                                                 <th>부서</th>
-                                                <td>품질(품질기술지원팀)</td>
+                                                <td>${rtnData.deptNm}(${rtnData.deptDtlNm})</td>
                                             </tr>
                                             <tr>
                                                 <th>직급</th>
-                                                <td>과장</td>
+                                                <td>${rtnData.pstnNm}</td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -167,68 +167,114 @@
                                             <tbody>
                                             <tr>
                                                 <th>사업자등록번호</th>
-                                                <td>123-45-67890</td>
+                                                <td>${rtnData.bsnmNo}</td>
                                             </tr>
                                             <tr>
                                                 <th>부품사명</th>
-                                                <td>에이테크</td>
+                                                <td>${rtnData.cmpnNm}</td>
                                             </tr>
                                             <tr>
                                                 <th>대표자명</th>
-                                                <td>홍상직</td>
+                                                <td>${rtnData.rprsntNm}</td>
                                             </tr>
                                             <tr>
                                                 <th>구분</th>
-                                                <td>1차</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${rtnData.ctgryCd eq 'COMPANY01001'}">1차</c:when>
+                                                        <c:when test="${rtnData.ctgryCd eq 'COMPANY01002'}">2차</c:when>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>규모</th>
-                                                <td>중소기업</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${rtnData.sizeCd eq 'COMPANY02001'}">대기업</c:when>
+                                                        <c:when test="${rtnData.sizeCd eq 'COMPANY02002'}">중견기업</c:when>
+                                                        <c:when test="${rtnData.sizeCd eq 'COMPANY02003'}">중소기업</c:when>
+                                                        <c:otherwise>기타</c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>설립일자</th>
-                                                <td>2002-07-15</td>
+                                                <td>${rtnData.stbsmDt}</td>
                                             </tr>
                                             <tr>
                                                 <th>회사 전화번호</th>
-                                                <td>031-1234-5678</td>
+                                                <td>${rtnData.cmpnTelNo}</td>
                                             </tr>
                                             <tr>
                                                 <th>본사주소</th>
-                                                <td>(04365) 서울 용산구 원효로 74 현대자동차원효로 사옥 5층</td>
+                                                <td>(${rtnData.zipcode}) ${rtnData.bscAddr} ${rtnData.dtlAddr}</td>
                                             </tr>
                                             <tr>
                                                 <th>매출액</th>
-                                                <td>100억 원(2022년)</td>
+                                                <td>${rtnData.slsPmt}(${rtnData.slsYear})</td>
                                             </tr>
                                             <tr>
                                                 <th>직원수</th>
-                                                <td>50명</td>
+                                                <td>${rtnData.mpleCnt}</td>
                                             </tr>
                                             <tr>
                                                 <th>주생산품</th>
-                                                <td>① 알루미늄 실린더 ② 섀시</td>
-                                            </tr>
-                                            <tr>
-                                                <th>품질5스타</th>
-                                                <td>★★★★★ / 2022년</td>
-                                            </tr>
-                                            <tr>
-                                                <th>납입5스타</th>
-                                                <td>★★★ / 2018년</td>
-                                            </tr>
-                                            <tr>
-                                                <th>기술5스타</th>
-                                                <td>-</td>
-                                            </tr>
-                                            <tr>
-                                                <th>SQ정보</th>
                                                 <td>
-                                                    <p>1. SQ1 / 2000 / 2018 년 / 와이즈랩</p>
-                                                    <p>2. SQ3 / 2000 / 2018 년 / 와이즈랩</p>
-                                                    <p>3. SQ2 / 2000 / 2018 년 / 와이즈랩</p>
+                                                    <c:if test="${not empty rtnData.mjrPrdct1}">①${rtnData.mjrPrdct1}</c:if>
+                                                    <c:if test="${not empty rtnData.mjrPrdct1}">②${rtnData.mjrPrdct2}</c:if>
+                                                    <c:if test="${not empty rtnData.mjrPrdct1}">③${rtnData.mjrPrdct3}</c:if>
                                                 </td>
                                             </tr>
+                                            <c:choose>
+                                                <c:when test="${rtnData.ctgryCd eq 'COMPANY01001'}">
+                                                    <c:forEach var="info" items="${cmpnInfo.list}" varStatus="status">
+                                                        <tr>
+                                                            <th>품질5스타</th>
+                                                            <td>
+                                                                <c:if test="${not empty info.qlty5StarCdNm}">
+                                                                    ${info.qlty5StarCdNm} / ${info.qlty5StarYear}년
+                                                                </c:if>
+                                                                <c:if test="${empty info.qlty5StarCdNm}">
+                                                                    -
+                                                                </c:if>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>납입5스타</th>
+                                                            <td>
+                                                                <c:if test="${not empty info.pay5StarCdNm}">
+                                                                    ${info.pay5StarCdNm} / ${info.pay5StarYear}년
+                                                                </c:if>
+                                                                <c:if test="${empty info.pay5StarCdNm}">
+                                                                    -
+                                                                </c:if>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>기술5스타</th>
+                                                            <td>
+                                                                <c:if test="${not empty info.tchlg5StarCdNm}">
+                                                                    ${info.tchlg5StarCdNm} / ${info.tchlg5StarYear}년
+                                                                </c:if>
+                                                                <c:if test="${empty info.tchlg5StarCdNm}">
+                                                                    -
+                                                                </c:if>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <tr>
+                                                        <th>SQ정보</th>
+                                                        <td>
+                                                            <c:forEach var="info" items="${cmpnInfo.list}" varStatus="status">
+                                                                <c:set var="i" value="${i+1}"/>
+                                                                <p>${i}. ${info.nm} / ${info.score} / ${info.year} / ${info.crtfnCmpnNm}</p>
+                                                            </c:forEach>
+                                                        </td>
+                                                    </tr>
+                                                </c:otherwise>
+                                            </c:choose>
                                             </tbody>
                                         </table>
                                     </div>
@@ -250,26 +296,19 @@
                                             </div>
                                             <div class="td">
                                                 <div class="dash-list-w">
-                                                    <div class="dash-list">
-                                                        <div class="item">
-                                                            <p class="item-title f-body2">업체명</p>
-                                                            <p class="item-txt f-head">㈜만도</p>
+                                                    <c:forEach var="dlvryList" items="${rtnData.dlvryCmpnList}" varStatus="status">
+                                                        <div class="dash-list">
+                                                            <div class="item">
+                                                                <p class="item-title f-body2">업체명</p>
+
+                                                                <p class="item-txt f-head">${dlvryList.dlvryCmpnNm}</p>
+                                                            </div>
+                                                            <div class="item">
+                                                                <p class="item-title">매출비중</p>
+                                                                <p class="item-txt f-head">${dlvryList.dlvryRate}%</p>
+                                                            </div>
                                                         </div>
-                                                        <div class="item">
-                                                            <p class="item-title">매출비중</p>
-                                                            <p class="item-txt f-head">10%</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="dash-list">
-                                                        <div class="item">
-                                                            <p class="item-title f-body2">업체명</p>
-                                                            <p class="item-txt f-head">㈜만도</p>
-                                                        </div>
-                                                        <div class="item">
-                                                            <p class="item-title">매출비중</p>
-                                                            <p class="item-txt f-head">10%</p>
-                                                        </div>
-                                                    </div>
+                                                    </c:forEach>
                                                 </div>
                                             </div>
                                         </div>
@@ -279,26 +318,18 @@
                                             </div>
                                             <div class="td">
                                                 <div class="dash-list-w">
-                                                    <div class="dash-list">
-                                                        <div class="item">
-                                                            <p class="item-title f-body2">업체명</p>
-                                                            <p class="item-txt f-head">㈜현대자동차테크놀로지비전_기아자동차테크놀로지비전</p>
+                                                    <c:forEach var="dpndList" items="${rtnData.dpndCmpnList}" varStatus="status">
+                                                        <div class="dash-list">
+                                                            <div class="item">
+                                                                <p class="item-title f-body2">업체명</p>
+                                                                <p class="item-txt f-head">${dpndList.dpndnCmpnNm}</p>
+                                                            </div>
+                                                            <div class="item">
+                                                                <p class="item-title">의존비중</p>
+                                                                <p class="item-txt f-head">${dpndList.dpndnRate}%</p>
+                                                            </div>
                                                         </div>
-                                                        <div class="item">
-                                                            <p class="item-title">의존비중</p>
-                                                            <p class="item-txt f-head">50%</p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="dash-list">
-                                                        <div class="item">
-                                                            <p class="item-title f-body2">업체명</p>
-                                                            <p class="item-txt f-head">㈜현대자동차테크놀로지비전_기아자동차테크놀로지비전</p>
-                                                        </div>
-                                                        <div class="item">
-                                                            <p class="item-title">의존비중</p>
-                                                            <p class="item-txt f-head">50%</p>
-                                                        </div>
-                                                    </div>
+                                                    </c:forEach>
                                                 </div>
                                             </div>
                                         </div>
@@ -307,7 +338,7 @@
                                                 <p class="title f-body2">품질담당 인원</p>
                                             </div>
                                             <div class="td">
-                                                <p class="txt f-body1">50 명</p>
+                                                <p class="txt f-body1">${rtnData.mpleCnt}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -315,7 +346,7 @@
                                                 <p class="title f-body2">FAX</p>
                                             </div>
                                             <div class="td">
-                                                <p class="txt f-body1">031-1234-5678</p>
+                                                <p class="txt f-body1">${rtnData.faxNo}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -324,8 +355,8 @@
                                             </div>
                                             <div class="td">
                                                 <p class="txt f-body1">
-                                                    12345 서울시 구로구 디지털로32길 28
-                                                    <br/>1201호 ㈜이지미디어
+                                                    ${rtnData.fctryZipcode} ${rtnData.fctryBscAddr}
+                                                        <br/>${rtnData.fctryDtlAddr}
                                                 </p>
                                             </div>
                                         </div>
@@ -334,7 +365,7 @@
                                                 <p class="title f-body2">소재지역</p>
                                             </div>
                                             <div class="td">
-                                                <p class="txt f-body1">서울시 구로구</p>
+                                                <p class="txt f-body1">${rtnData.firstRgnsNm} ${rtnData.scndRgnsNm}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -342,7 +373,16 @@
                                                 <p class="title f-body2">대표자 승인여부</p>
                                             </div>
                                             <div class="td">
-                                                <p class="txt f-body1">승인</p>
+                                                <p class="txt f-body1">
+                                                    <c:choose>
+                                                        <c:when test="${rtnData.rprsntApprvYn eq 'Y'}">
+                                                            승인
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            미승인
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -350,7 +390,19 @@
                                                 <p class="title f-body2">신청사유</p>
                                             </div>
                                             <div class="td">
-                                                <p class="txt f-body1">자발적신청</p>
+                                                <p class="txt f-body1">
+                                                <c:choose>
+                                                    <c:when test="${rtnData.appctnRsnCd eq 'APPCTN_RS_CD_TYPE01'}">
+                                                        자발적 신청
+                                                    </c:when>
+                                                    <c:when test="${rtnData.appctnRsnCd eq 'APPCTN_RS_CD_TYPE02'}">
+                                                        1차 부품사 권유
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        완성차 권유
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -358,7 +410,17 @@
                                                 <p class="title f-body2">업종</p>
                                             </div>
                                             <div class="td">
-                                                <p class="txt f-body1">금속분야 - 도금</p>
+                                                <p class="txt f-body1">
+                                                    <c:choose>
+                                                        <c:when test="${fn:contains(rtnData.cbsnCd,'INDUS')}">
+                                                            기타 - ${rtnData.etcNm}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:if test="${fn:contains(rtnData.cbsnCd,'METAL')}">금속분야 - ${rtnData.cbsnNm}</c:if>
+                                                            <c:if test="${fn:contains(rtnData.cbsnCd,'NON')}">비금속분야 - ${rtnData.cbsnNm}</c:if>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -366,7 +428,7 @@
                                                 <p class="title f-body2">신청사항</p>
                                             </div>
                                             <div class="td">
-                                                <p class="txt f-body1">공정관리 / 품질관리</p>
+                                                <p class="txt f-body1" id="appctnType"><c:forEach var="appctnTypeList" items="${rtnData.appctnTypeList}" varStatus="status">${appctnTypeList.appctnTypeNm}/</c:forEach></p>
                                             </div>
                                         </div>
                                     </div>
@@ -374,55 +436,51 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cont-sec no-border scroll-motion">
-                        <div class="for-motion">
-                            <div class="sec-tit-area">
-                                <p class="f-title3">컨설팅 만족도 설문조사 참여내역</p>
-                            </div>
-                            <div class="sec-con-area">
-                                <div class="gray-bg-sec">
-                                    <div class="con-list-box-w">
-                                        <div class="con-list-box">
-                                            <p class="f-head">컨설팅 만족도 설문 조사</p>
-                                            <div class="ul-txt-w info">
-                                                <div class="ul-txt-list">
-                                                    <div class="ul-txt">
-                                                        <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">-</dd></dl>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                        <p class="txt f-body1">미참여</p>
-                                    </div>
+                    <c:if test="${srvCnt > 0}"> <!-- 설문 응답 가능 기간에 포함되는 설문-->
+                        <div class="cont-sec no-border scroll-motion">
+                            <div class="for-motion">
+                                <div class="sec-tit-area">
+                                    <p class="f-title3">컨설팅 만족도 설문조사 참여내역</p>
                                 </div>
-                                <div class="gray-bg-sec">
-                                    <div class="con-list-box-w">
-                                        <div class="con-list-box">
-                                            <p class="f-head">컨설팅 만족도 설문 조사</p>
-                                            <div class="ul-txt-w info">
-                                                <div class="ul-txt-list">
-                                                    <div class="ul-txt">
-                                                        <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">2023.01.01 10:30</dd></dl>
+                                <div class="sec-con-area">
+                                    <c:forEach var="srvList" items="${rtnData.rsumeList}" varStatus="status">
+                                        <div class="gray-bg-sec">
+                                            <div class="con-list-box-w">
+                                                <div class="con-list-box">
+                                                    <p class="f-head">컨설팅 만족도 설문</p>
+                                                    <div class="ul-txt-w info">
+                                                        <div class="ul-txt-list">
+                                                            <div class="ul-txt">
+                                                                <dl><dt class="f-caption2">등록일시</dt>
+                                                                    <dd class="f-caption1">${ kl:convertDate(srvList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</dd>
+                                                                </dl>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <c:if test="${rspnCnt != 1 }"> <!-- 설문 조사 참여 여부 -->
+                                                <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                    <p class="txt f-body1">미참여</p>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${rspnCnt == 1 }">
+                                                <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                    <p class="txt f-body1">참여완료</p>
+                                                </div>
+                                            </c:if>
                                         </div>
-                                    </div>
-                                    <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                        <p class="txt f-body1">참여완료</p>
-                                    </div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                 </div>
-            <div class="page-bot-btn-sec scroll-motion">
-                <div class="btn-wrap for-motion align-right">
-                    <a class="btn-solid small black-bg" href="javascript:"><span>목록</span></a>
+                <div class="page-bot-btn-sec scroll-motion">
+                    <div class="btn-wrap for-motion align-right">
+                        <a class="btn-solid small black-bg" href="/consulting/list"><span>목록</span></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        </div>
