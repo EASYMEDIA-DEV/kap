@@ -1,5 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
+<c:set var="today" value="<%=new java.util.Date()%>" />
+<c:set var="date"><fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
 <%
   String bsnmNo = request.getParameter("bsnmNo");
 %>
@@ -57,6 +59,8 @@
         <form id="frmData" name="frmData" method="post" enctype="multipart/form-data">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="bsnmNo" name="bsnmNo" value="<%=bsnmNo%>">
+            <input type="hidden" class="ctgryCd" name="ctgryCd" value="">
+            <input type="hidden" class="appctnDt" name="appctnDt" value="${date}">
             <div class="right-con-area">
                 <div class="cont-sec-w">
                     <div class="cont-sec scroll-motion">
@@ -79,7 +83,7 @@
                                                             <input type="text" class="dlvryCmpnNm" name="dlvryCmpnNm" placeholder="업체명 입력">
                                                         </div>
                                                         <div class="form-input">
-                                                            <input type="text" class="dlvryRate" name="dlvryRate" placeholder="매출비중(%) 입력">
+                                                            <input type="number" class="dlvryRate" name="dlvryRate" placeholder="매출비중(%) 입력">
                                                         </div>
                                                         <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
                                                         <div class="btn-wrap">
@@ -103,7 +107,7 @@
                                                             <input type="text" class="dpndnCmpnNm" placeholder="업체명 입력" name="dpndnCmpnNm">
                                                         </div>
                                                         <div class="form-input">
-                                                            <input type="text" class="dpndnRate" placeholder="의존율(%) 입력" name="dpndnRate">
+                                                            <input type="number" class="dpndnRate" placeholder="의존율(%) 입력" name="dpndnRate">
                                                         </div>
                                                         <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
                                                         <div class="btn-wrap">
@@ -157,18 +161,18 @@
                                                 <div class="data-line">
                                                     <div class="middle-line">
                                                         <div class="form-checkbox">
-                                                            <input type="checkbox" id="sameAsHQChk" name="">
-                                                            <label for="sameAsHQChk">본사와 동일</label>
+                                                            <input type="checkbox" id="cmpnAddrSameYn" name="cmpnAddrSameYn" value="N">
+                                                            <label for="cmpnAddrSameYn">본사와 동일</label>
                                                         </div>
                                                     </div>
                                                     <div class="middle-line">
                                                         <div class="form-address">
                                                             <div class="form-group">
                                                                 <div class="form-input">
-                                                                    <input type="text" placeholder="우편번호" id="hqZipcode" value="" readonly>
+                                                                    <input type="text" placeholder="우편번호" id="hqZipcode" name="fctryZipcode" value="" readonly>
                                                                 </div>
                                                                 <div class="form-input w-longer">
-                                                                    <input type="text" placeholder="주소" id="hqBscAddr" value="" readonly>
+                                                                    <input type="text" placeholder="주소" id="hqBscAddr" name="fctryBscAddr" value="" readonly>
                                                                 </div>
                                                                 <div class="btn-wrap">
                                                                     <button class="btn-solid small gray-bg searchPostCode" id="hqAddr" type="button"><span>우편번호 찾기</span></button>
@@ -176,7 +180,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="form-input w-longest">
-                                                                    <input type="text" placeholder="상세주소 입력" id="hqDtlAddr" value="">
+                                                                    <input type="text" placeholder="상세주소 입력" id="hqDtlAddr" name="fctryDtlAddr" value="">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -322,10 +326,12 @@
                                                             <label for="requestChk1">전체</label>
                                                         </div>
                                                         <c:forEach var="appctnCdList" items="${cdDtlList.TEC_GUIDE_APPCTN}" varStatus="status">
-                                                            <div class="form-checkbox">
-                                                                <input type="checkbox" id="${appctnCdList.cd}" value="${appctnCdList.cd}" name="appctnTypeCd">
-                                                                <label for="${appctnCdList.cd}">${appctnCdList.cdNm}</label>
-                                                            </div>
+                                                            <c:if test="${appctnCdList.cd ne 'TEC_GUIDE_APPCTN00'}">
+                                                                <div class="form-checkbox">
+                                                                   <input type="checkbox" id="${appctnCdList.cd}" value="${appctnCdList.cd}" name="appctnTypeCd">
+                                                                   <label for="${appctnCdList.cd}">${appctnCdList.cdNm}</label>
+                                                                </div>
+                                                            </c:if>
                                                         </c:forEach>
                                                     </div>
                                                 </div>
@@ -352,7 +358,7 @@
                                                             <p class="empty-txt">선택된 파일 없음</p>
                                                         </div>
                                                         <div class="file-btn-area">
-                                                            <input type="file" class="searchFile" name="itrdcFileSeq" id="searchFile">
+                                                            <input type="file" class="searchFile" name="atchFile1" id="searchFile" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip">
                                                             <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                         </div>
                                                     </div>
@@ -365,7 +371,7 @@
                                                                 <p class="empty-txt">선택된 파일 없음</p>
                                                             </div>
                                                             <div class="file-btn-area">
-                                                                <input type="file" class="searchFile" name="impvmFileSeq" id="searchFile1">
+                                                                <input type="file" class="searchFile" name="atchFile1" id="searchFile1" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip">
                                                                 <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                             </div>
                                                             <div class="btn-wrap btn-down-wrap">

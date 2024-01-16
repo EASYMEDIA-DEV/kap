@@ -86,17 +86,24 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
-            sameAsHQChk : {
+            cmpnAddrSameYn : {
                 event : {
                     click: function(){
                         var cmpnMst = {};
-                        cmpnMst.bsnmNo = $(".bsnmNo").val().replaceAll("-", "");
-                        cmmCtrl.jsonAjax(function (data) {
-                            var info = JSON.parse(data)
-                            $("#hqZipcode").val(info.list[0].zipcode);
-                            $("#hqBscAddr").val(info.list[0].bscAddr);
-                            $("#hqDtlAddr").val(info.list[0].dtlAddr);
-                        }, './bsnmNoSearch', cmpnMst, "text");
+                        var cmpnAddrYn = $("#cmpnAddrSameYn").val();
+
+                        if(cmpnAddrYn == 'N'){
+                            $("cmpnAddrSameYn").val('Y');
+                            cmpnMst.bsnmNo = $(".bsnmNo").val().replaceAll("-", "");
+                            cmmCtrl.jsonAjax(function (data) {
+                                var info = JSON.parse(data)
+                                $("#hqZipcode").val(info.list[0].zipcode);
+                                $("#hqBscAddr").val(info.list[0].bscAddr);
+                                $("#hqDtlAddr").val(info.list[0].dtlAddr);
+                            }, './bsnmNoSearch', cmpnMst, "text");
+                        }else{
+                            $("#cmpnAddrSameYn").val('N');
+                        }
                     }
                 }
             },
@@ -326,9 +333,9 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                             $("#agreeChk").focus();
                             return false;
                         }else{
-                            cmmCtrl.fileFrmAjax(function(data){
+                            cmmCtrl.fileFrm(function(data){
                                 //콜백함수. 페이지 이동
-                                location.replace("./complet");
+                                location.replace("./complete");
                             }, "./insert", $formObj, "json");
                         }
 

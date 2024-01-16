@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -138,19 +139,19 @@ public class CBBManageConsultController {
      * 컨설팅 사업 기술 지도 등록
      */
     @RequestMapping(value = "/insert", method= RequestMethod.POST)
-    public String insertManageConsult(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, ModelMap modelMap) throws Exception {
-        /*try {*/
+    public String insertManageConsult(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest, ModelMap modelMap) throws Exception {
+        try {
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBBManageConsultInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBBManageConsultInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
-            modelMap.addAttribute("respCnt", cBBManageConsultService.insertManageConsult(cBBManageConsultInsertDTO));
-        /*} catch (Exception e) {
+            modelMap.addAttribute("respCnt", cBBManageConsultService.insertManageConsult(cBBManageConsultInsertDTO, multiRequest));
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
         return "jsonView";
     }

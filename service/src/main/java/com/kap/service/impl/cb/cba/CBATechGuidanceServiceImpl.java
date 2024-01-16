@@ -1,6 +1,7 @@
 package com.kap.service.impl.cb.cba;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
@@ -8,6 +9,8 @@ import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.wb.WBRsumeFileDtlDTO;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
 import com.kap.service.dao.mp.MPAUserMapper;
@@ -22,14 +25,14 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * <pre>
@@ -56,6 +59,7 @@ import java.util.List;
 public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
     private final COFileService cOFileService;
+    private final COFileUtil cOFileUtil;
 
     private final MPEPartsCompanyService mPEPartsCompanyService;
 
@@ -194,25 +198,76 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     /**
      * 컨설팅 기술 지도 등록
      */
-    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
+    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception {
+        String siteGubun = pCBATechGuidanceInsertDTO.getSiteGubun();
 
-        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCBATechGuidanceInsertDTO.getFileList());
-        pCBATechGuidanceInsertDTO.setItrdcFileSeq(fileSeqMap.get("itrdcFileSeq"));
-        pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("impvmFileSeq"));
         pCBATechGuidanceInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
-
         pCBATechGuidanceInsertDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replaceAll("-", ""));
-
-        // 신청 회원 정보
-        updateTechMemberInfo(pCBATechGuidanceInsertDTO);
-
-        // 부품사 정보
-        updateTechCompanyInfo(pCBATechGuidanceInsertDTO);
 
         // 컨설팅 서브 정보 수정
         updateSubTechGuidanceInfo(pCBATechGuidanceInsertDTO);
 
-        pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO));
+        if(!siteGubun.equals("front")){
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCBATechGuidanceInsertDTO.getFileList());
+            pCBATechGuidanceInsertDTO.setItrdcFileSeq(fileSeqMap.get("itrdcFileSeq"));
+            pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("impvmFileSeq"));
+
+            // 신청 회원 정보
+            updateTechMemberInfo(pCBATechGuidanceInsertDTO);
+            // 부품사 정보
+            updateTechCompanyInfo(pCBATechGuidanceInsertDTO);
+        }else if(siteGubun.equals("front")) {
+            //신청파일 넣기
+            List<COFileDTO> rtnList = null;
+            Map<String, MultipartFile> files = multiRequest.getFileMap();
+            Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+            MultipartFile file;
+            int atchFileCnt = 0;
+
+            System.err.println("files:::" + files);
+
+            while (itr.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = itr.next();
+                file = entry.getValue();
+
+                if (file.getName().indexOf("atchFile") > -1 && file.getSize() > 0) {
+                    atchFileCnt++;
+                }
+            }
+
+            if (!files.isEmpty()) {
+                rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                System.err.println(rtnList);
+                for (int i = 0; i < rtnList.size(); i++) {
+
+                    List<COFileDTO> fileList = new ArrayList();
+                    rtnList.get(i).setStatus("success");
+                    rtnList.get(i).setFieldNm("fileSeq");
+                    fileList.add(rtnList.get(i));
+
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                    System.err.println("fileSeqMap:::"+fileSeqMap);
+
+                    WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
+                    if (i == 0) {
+                        fileInfo.setFileCd("ATTACH_FILE_TYPE01");
+                    } else if (i == 1) {
+                        fileInfo.setFileCd("ATTACH_FILE_TYPE02");
+                    } else if (i == 2) {
+                        fileInfo.setFileCd("ATTACH_FILE_TYPE03");
+                    } else if (i == 3) {
+                        fileInfo.setFileCd("ATTACH_FILE_TYPE04");
+                    }
+                    fileInfo.setFileSeq(fileSeqMap.get("fileSeq"));
+
+                    //cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO);
+                }
+            }
+        }
+
+        //pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO));
         return pCBATechGuidanceInsertDTO.getRespCnt();
     }
 

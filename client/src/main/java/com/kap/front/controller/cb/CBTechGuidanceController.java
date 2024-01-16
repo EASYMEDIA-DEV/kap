@@ -1,6 +1,7 @@
 package com.kap.front.controller.cb;
 
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -16,6 +17,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -96,13 +100,18 @@ public class CBTechGuidanceController {
     }
 
     @PostMapping("/insert")
-    public String insertConsultInfoApplicationPage(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, ModelMap modelMap, @PathVariable("type") String type) throws Exception {
+    public String insertConsultInfoApplicationPage(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest, ModelMap modelMap, @PathVariable("type") String type) throws Exception {
         /*try {*/
             System.err.println("pCBATechGuidanceInsertDTO:::"+pCBATechGuidanceInsertDTO);
+
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            pCBATechGuidanceInsertDTO.setRegId(cOLoginUserDTO.getId());
+            pCBATechGuidanceInsertDTO.setRegIp(cOLoginUserDTO.getLoginIp());
+
             if(type.equals("tech")){
-                modelMap.addAttribute("actCnt", cBATechGuidanceService.insertTechGuidance(pCBATechGuidanceInsertDTO));
+                modelMap.addAttribute("actCnt", cBATechGuidanceService.insertTechGuidance(pCBATechGuidanceInsertDTO, multiRequest));
             }else{
-                modelMap.addAttribute("actCnt", cBBManageConsultService.insertManageConsult(pCBBManageConsultInsertDTO));
+                modelMap.addAttribute("actCnt", cBBManageConsultService.insertManageConsult(pCBBManageConsultInsertDTO, multiRequest));
             }
 
         /*}catch(Exception e){
@@ -133,6 +142,25 @@ public class CBTechGuidanceController {
             cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
+        }catch(Exception e){
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return url;
+    }
+    @GetMapping("/complete")
+    public String getConsultInfoCompletePage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
+        String url = "";
+
+        try {
+            if(type.equals("tech")){
+                url = "front/cb/cba/CBATechGuidanceComplete.front";
+            }else{
+                url = "front/cb/cbb/CBBManageConsultWrite.front";
+            }
         }catch(Exception e){
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());

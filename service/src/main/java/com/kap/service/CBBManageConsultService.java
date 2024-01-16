@@ -4,7 +4,7 @@ import com.kap.core.dto.cb.cbb.CBBConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultSearchDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultUpdateDTO;
-import com.kap.core.dto.eb.eba.EBACouseDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -53,7 +53,7 @@ public interface CBBManageConsultService {
     /**
      * 경영 컨설팅 관리 등록
      */
-    public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+    public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception;
 
     /**
      * 경영 컨설팅 관리 수정
