@@ -80,7 +80,7 @@ define(["ezCtrl"], function(ezCtrl) {
 							}
 
 							if(isOk){
-								if(confirm("선택한 게시물을 "+ msgCtrl.getMsg("confirm.del")))
+								if(confirm(msgCtrl.getMsg("confirm.del")))
 								{
 									//삭제 전송
 									cmmCtrl.frmAjax(function(respObj){
@@ -108,7 +108,7 @@ define(["ezCtrl"], function(ezCtrl) {
 							}
 							else
 							{
-								alert(msgCtrl.getMsg("fail.target"));
+								alert(msgCtrl.getMsg("fail.targetBoard"));
 							}
 
 							return;
