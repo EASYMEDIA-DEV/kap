@@ -198,11 +198,13 @@
              ,EXPS_YN
              ,REG_ID
              ,REG_IP
+             ,(SELECT NAME FROM CO_ADM_MST WHERE ID=INFO.REG_ID) AS REG_NAME
              ,REG_DTM
              ,MOD_ID
+             ,(SELECT NAME FROM CO_ADM_MST WHERE ID=INFO.MOD_ID) AS MOD_NAME
              ,MOD_IP
              ,MOD_DTM
-        FROM CX_EPISD_MST
+        FROM CX_EPISD_MST INFO
         WHERE EPISD_SEQ = #{detailsKey}
     </select>
 

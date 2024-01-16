@@ -79,6 +79,18 @@ public class WBSpprtDtlDTO extends BaseDTO {
     private Integer tchlgLseFileSeq;
     @Schema(title = "임차납입파일순번", example = "")
     private Integer lsePayFileSeq;
+
+    @Schema(title = "지원신청파일순번", example = "")
+    private String spprtAppctnFileNm;
+    @Schema(title = "계좌파일순번", example = "")
+    private String acntFileNm;
+    @Schema(title = "통장파일순번", example = "")
+    private String bnkbkFileNm;
+    @Schema(title = "기술임차파일순번", example = "")
+    private String tchlgLseFileNm;
+    @Schema(title = "임차납입파일순번", example = "")
+    private String lsePayFileNm;
+
     @Schema(title = "협약파일순번", example = "")
     private Integer agrmtFileSeq;
     @Schema(title = "보증보험파일순번", example = "")
