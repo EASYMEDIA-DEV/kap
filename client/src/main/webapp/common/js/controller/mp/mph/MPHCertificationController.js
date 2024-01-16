@@ -94,6 +94,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                         if($(this).val() != $("#oldEmailAddr").val()) {
                             $(".newEmailAuth").show();
+                            $(".authName").text("인증");
+                            $("#emailAuthDis").show();
+                            $("#emailAuthNum").attr("disabled",false);
+                            $("#emailAuthNum").val("");
                             emailChk = false;
                         } else {
                             $(".newEmailAuth").hide();
@@ -112,6 +116,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         if($(this).val() != $("#oldEmailName").val() || $("#emailAddrNew").val() != $("#oldEmailAddr").val()) {
                             $(".newEmailAuth").show();
                             emailChk = false;
+                            $(".authName").text("인증");
+                            $("#emailAuthDis").show();
+                            $("#emailAuthNum").attr("disabled",false);
+                            $("#emailAuthNum").val("");
                         } else {
                             $(".newEmailAuth").hide();
                             $("#emailAuthDis").hide();
@@ -127,6 +135,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         if($(this).val() != $("#oldEmailAddr").val() || $("#emailNameNew").val() !=$("#oldEmailName").val() ) {
                             $(".newEmailAuth").show();
                             emailChk = false;
+                            $(".authName").text("인증");
+                            $("#emailAuthDis").show();
+                            $("#emailAuthNum").attr("disabled",false);
+                            $("#emailAuthNum").val("");
                         } else {
                             $(".newEmailAuth").hide();
                             $("#emailAuthDis").hide();
@@ -199,9 +211,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 $("#emailAuthChk").hide();
                                 $("#timer").hide();
                                 $(".for-status-chk-email").addClass("satisfy");
-                                $("#emailNameNew").attr("disabled", true);
-                                $("#emailAddrNew").attr("disabled", true);
-                                $("#emailSelect").attr("disabled", true);
+                                $("#emailAuthNum").attr("disabled",true);
                                 $("#emailAuth").hide();
                             } else {
                                 if($("#emailAuthNum").val().trim().length == 0) {
@@ -238,7 +248,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     input : function (event) {
                         let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
                         const phoneLen = phoneNumber.length;
-
                         if (phoneNumber.startsWith('02')) {
                             if (phoneLen >= 3 && phoneLen <= 6) {
                                 phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
@@ -254,7 +263,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             if (phoneLen > 3 && phoneLen <= 7) {
                                 phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
                             } else if (phoneLen > 7) {
-                                if (phoneLen == 10) {
+                                if(phoneLen == 8) {
+                                    phoneNumber = phoneNumber.replace(/(\d{4})(\d+)/, '$1-$2');
+                                }else if (phoneLen == 10) {
                                     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
                                 } else {
                                     phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
@@ -268,7 +279,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnParts : {
                 event : {
                     click : function() {
-
+                        $(".f-title1").text("부품사정보 변경")
                         if($("#bsnmNosOld").val()!= "") {
                             $("#partTypeChg").val("chg");
                             jQuery.ajax({
@@ -284,7 +295,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     $("#bsnmNo").val(cmpn.bsnmNo);
                                     $("#bsnmNo").prop('readonly', true);
                                     $("#bsnmNo").attr('disabled', true);
-                                    $(".btnCmpnChk").hide();
+                                    // $(".btnCmpnChk").hide();
                                     $(".cmpn_nm_new").val(cmpn.cmpnNm);
                                     $(".rprsnt_nm").val(cmpn.rprsntNm);
                                     $("#ctgryCd").val(cmpn.ctgryCd);
@@ -367,14 +378,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             cache : false,
                             success : function(data, status, xhr){
                                 if(data.data.chk) {
-                                    $("#btnPartsChg").hide();
                                     alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
+                                    return false;
                                 } else {
                                     $(".f-title1").text("소속부품사(이직) 변경 정보")
                                     $("#partTypeChg").val("turnOver");
                                     $("#bsnmNo").prop('readonly', false);
                                     $("#bsnmNo").attr('disabled', false);
-                                    $(".btnCmpnChk").show();
+                                    // $(".btnCmpnChk").show();
                                     openPopup('switchingMemberPopup',this);
                                 }
                             },

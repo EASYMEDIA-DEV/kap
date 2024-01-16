@@ -102,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cont-sec">
+                    <div class="cont-sec no-border">
                         <div class="sec-tit-area">
                             <p class="f-title3">부품사 정보 입력</p>
                             <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
