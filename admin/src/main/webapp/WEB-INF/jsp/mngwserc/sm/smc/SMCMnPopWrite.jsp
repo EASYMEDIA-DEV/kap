@@ -11,7 +11,7 @@
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/sm/smc/SMCMnPopWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle}</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} ${ not empty rtnDto ? '상세/수정' : '등록'}</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnInfo.popupSeq}" />
@@ -222,11 +222,13 @@
             <div class="clearfix">
                 <div class="pull-left">
                     <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${fn:replace(fn:replace(strPam, 'tagCdList', 'tagCd'),'expsYnList', 'expsYn')}">목록</button>
+                    <c:if test="${ not empty rtnInfo }">
+                        <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
+                    </c:if>
                 </div>
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnInfo}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
                             <button type="submit" class="btn btn-sm btn-success" >저장</button>
                         </c:when>
                         <c:otherwise>
@@ -236,14 +238,14 @@
                 </div>
             </div>
             <c:if test="${ not empty rtnInfo }">
-                <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                 <div class="table-responsive ">
                     <table class="table text-sm">
                         <tbody>
                         <tr>
                             <th>최초 등록자</th>
                             <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
-                            <th>최초 작성일</th>
+                            <th>최초 등록일시</th>
                             <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                         </tr>
                         <tr>
@@ -256,7 +258,7 @@
                                     <c:otherwise>-</c:otherwise>
                                 </c:choose>
                             </td>
-                            <th>최종 수정일</th>
+                            <th>최종 수정일시</th>
                             <td>
                                 <c:choose>
                                     <c:when test="${ not empty rtnDto.modDtm }">

@@ -182,7 +182,7 @@
                     </div>
                     <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.telNo}" id="telNo" name="telNo" title="일반 전화번호" maxlength="50" placeholder="일반 전화번호 입력" style="width: 200px;" />
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.telNo}" id="telNo" name="telNo" title="일반 전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" placeholder="일반 전화번호 입력" style="width: 200px;" />
                     </div>
                 </div>
             </fieldset>

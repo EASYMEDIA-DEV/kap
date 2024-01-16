@@ -47,7 +47,6 @@
                 <div class="pull-right">
                     <c:choose>
                         <c:when test="${ not empty rtnInfo}">
-                            <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
                             <button type="submit" class="btn btn-sm btn-success" >저장</button>
                         </c:when>
                         <c:otherwise>
@@ -64,7 +63,7 @@
                         <tr>
                             <th>최초 등록자</th>
                             <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
-                            <th>최초 작성일</th>
+                            <th>최초 등록일시</th>
                             <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                         </tr>
                         <tr>
@@ -77,7 +76,7 @@
                                     <c:otherwise>-</c:otherwise>
                                 </c:choose>
                             </td>
-                            <th>최종 수정일</th>
+                            <th>최종 수정일시</th>
                             <td>
                                 <c:choose>
                                     <c:when test="${ not empty rtnDto.modDtm }">

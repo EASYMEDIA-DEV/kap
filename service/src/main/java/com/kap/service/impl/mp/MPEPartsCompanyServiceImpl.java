@@ -184,6 +184,8 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         mpePartsCompanyDTO.setModId(cOUserDetailsDTO.getId());
         mpePartsCompanyDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
+        mpePartsCompanyMapper.deletePartsComSQInfo(mpePartsCompanyDTO);
+
         List<String> sqList1 = mpePartsCompanyDTO.getSqInfoList1();
         List<String> sqList2 = mpePartsCompanyDTO.getSqInfoList2();
         List<String> sqList3 = mpePartsCompanyDTO.getSqInfoList3();
@@ -232,13 +234,8 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                     mpePartsCompanyDTO.setPay5StarYear(null);
                     mpePartsCompanyDTO.setQlty5StarYear(null);
 
-                    if (!seq.isEmpty()) {
-                        mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
-                        mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
-                    } else {
-                        mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
-                        mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
-                    }
+                    mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
+                    mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
                 }
                 index += 1;
             }
