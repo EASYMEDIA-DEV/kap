@@ -21,7 +21,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					click : function() {
 					}
 				}
-			}
+			},
 		},
 		classname : {
 
@@ -64,9 +64,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					}
 				}
 			},
-
-
-
+			gpcIdSearch : {		/*추후 gpc 연동 하시길*/
+				event : {
+					click : function() {
+						$("#gpcIdText").text("인증되었습니다.");
+					}
+				}
+			}
 		},
 		immediately : function() {
 
