@@ -650,6 +650,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						}else{
 							$("#bdget").css({"display" : "", "flex-wrap" : ""});
 						}
+
+						if ($(e.target).attr("href") == "#svResult"){
+							$(".btn-success").hide();
+						}else{
+							$(".btn-success").show();
+						}
 					}
 				}
 			},
@@ -934,7 +940,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 										spclCntn = data.spclCntn//약력(특이사항)
 										seq = data.seq//삭제(시퀀스값)
 
-										debugger
+
 										var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 현재 동작을 취소한다.
 										$("#isttrContainer").find("tr").find("input:hidden").each(function(){
 											if($(this).val() == seq) {
