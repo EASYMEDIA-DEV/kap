@@ -237,7 +237,7 @@ define([], function() {
 			};
 			
 			$(".notModel").each(function(index, obj){
-				$(obj).data("placement", "right").attr("title", "This object was not included " + ctrlName  + " area.").tooltip();
+//				$(obj).data("placement", "right").attr("title", "This object was not included " + ctrlName  + " area.").tooltip();
 			});
 		};
 
