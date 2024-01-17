@@ -300,11 +300,11 @@ define(["ezCtrl"], function(ezCtrl) {
                                 $(".addrNm").text($(".addr").text());
                                 $(".cmpnNm").val($(".cmpn_nm").text());
                                 $(".rprsntNm").val($(".rsNm").text());
-                                $(".deptCd").val($("#deptCdOld").val());
-                                $(".deptCdPar").val($("#deptCdOld").val());
-                                $(".deptDtlNm").val($("#deptDtlNmOld").val());
-                                $(".pstnNm").val($(".pstnNmOld").val());
-                                $(".pstnCd").val($("#pstnCdOld").val());
+                                // $(".deptCd").val($("#deptCdOld").val());
+                                // $(".deptCdPar").val($("#deptCdOld").val());
+                                // $(".deptDtlNm").val($(".deptDtlNm").val());
+                                // $(".pstnNm").val($(".pstnNmOld").val());
+                                // $(".pstnCd").val($("#pstnCdOld").val());
                             }
                             $("#btnParts span").text("부품사정보 변경");
                             //form 데이터 넣기
@@ -376,60 +376,145 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
+
+
             //사업자 등록 번호 인증
             btnCmpnChk : {
                 event : {
                     click : function() {
-                        //1. db를 조회 한다.
-                        if($("#bsnmNo").val() =='' || $("#bsnmNo").val() == undefined) {
-                            alert(msgCtrl.getMsg("fail.mp.join.al_018"));
-                            bsnmChk = false;
-                            return ;
-                        }
-                        jQuery.ajax({
-                            url : "/member/bsnm-select/"+$("#bsnmNo").val(),
-                            type : "get",
-                            success : function(data)
-                            {
-                                //2. 있다면 디비 정보를 조회 후 뿌려준다.
-                                if(data.rtnData.list.length >=1) {
-                                    $(".for-status-chk2").addClass('satisfy');
-                                    let datas = data.rtnData.list[0];
-                                    $(".old").show();
-                                    $(".new").hide();
-                                    $(".cmpn_nm").text(datas.cmpnNm);
-                                    $(".rprsnt_nm").text(datas.rprsntNm);
-                                    $(".gubun").text(datas.ctgryNm);
-                                    $(".addr").text("("+datas.zipcode+")"+" "+datas.bscAddr+" "+datas.dtlAddr);
+                        if($(".btnChks").text() == '부품사 정보 변경') {
+                            //1. db를 조회 한다.
+                            if($("#bsnmNo").val() =='' || $("#bsnmNo").val() == undefined) {
+                                alert(msgCtrl.getMsg("fail.mp.join.al_018"));
+                                bsnmChk = false;
+                                return ;
+                            }
+                            $(".f-title1").text("부품사 정보 변경");
+                            $("#partTypeChg").val("chg");
+                            jQuery.ajax({
+                                url : "/my-page/member/intrduction/"+$("#bsnmNosOld").val(),
+                                type : "get",
+                                data :
+                                    {
+                                    },
+                                success : function(data)
+                                {
+                                    let cmpn = data.rtnInfo;
+                                    let sqList = data.sqInfoList.list;
+                                    $("#bsnmNo").val(cmpn.bsnmNo);
+                                    $("#bsnmNo").prop('readonly', true);
+                                    $("#bsnmNo").attr('disabled', true);
+                                    // $(".btnCmpnChk").hide();
+                                    $(".cmpn_nm_new").val(cmpn.cmpnNm);
+                                    $(".rprsnt_nm").val(cmpn.rprsntNm);
+                                    $("#ctgryCd").val(cmpn.ctgryCd);
 
-                                    if($("#bsnmNosOld").val() != "") {
-                                        $(".chng").hide();
+                                    $("#sizeCd").val(cmpn.sizeCd);
+                                    $("#stbsmDt").val(cmpn.stbsmDt);
+                                    $("#telNo").val(cmpn.telNo);
+                                    $("#zipcode").val(cmpn.zipcode);
+                                    $("#bscAddr").val(cmpn.bscAddr);
+                                    $("#dtlAddr").val(cmpn.dtlAddr);
+                                    $("#slsPmt").val(cmpn.slsPmt);
+                                    $("#slsYear").val(cmpn.slsYear);
+                                    $("#mpleCnt").val(cmpn.mpleCnt);
+                                    $("#mjrPrdct1").val(cmpn.mjrPrdct1);
+                                    $("#mjrPrdct2").val(cmpn.mjrPrdct2);
+                                    $("#mjrPrdct3").val(cmpn.mjrPrdct3);
+                                    $("#qlty5StarCd").val(cmpn.qlty5StarCd);
+                                    $("#qlty5StarYear").val(cmpn.qlty5StarYear);
+                                    $("#pay5StarCd").val(cmpn.pay5StarCd);
+                                    $("#pay5StarYear").val(cmpn.pay5StarYear);
+                                    $("#tchlg5StarCd").val(cmpn.tchlg5StarCd);
+                                    $("#tchlg5StarYear").val(cmpn.tchlg5StarYear);
+
+                                    if($("#ctgryCd").val() == 'COMPANY01001') {
+                                        $(".gubunOne").show();
+                                        $(".gubunTwo").hide();
+                                    } else if($("#ctgryCd").val() == 'COMPANY01002'){
+                                        $(".gubunOne").hide();
+                                        $(".gubunTwo").show();
+
+                                        for(var i = 0 ; i < sqList.length ; i++) {
+                                            $(".lastBtnIndex" + (i+1)).empty();
+                                            $(".data-line"+(i+1)).show();
+                                            $("#nm"+(i+1)).val(sqList[i].nm);
+                                            $("#year"+(i+1)).val(sqList[i].year);
+                                            $("#score"+(i+1)).val(sqList[i].score);
+                                            $("#crtfnCmpnNm"+(i+1)).val(sqList[i].crtfnCmpnNm);
+                                        }
+                                        $(".lastBtnIndex"+sqList.length).append('<button class="btn-text-icon delete btnSqInfoMinus" type="button"><span>삭제</span></button>');
+                                        $(".lastBtnIndex"+sqList.length).append('<button class="btn-solid small gray-bg btn-add-line btnSqInfoPlus" type="button"><span>SQ 정보 추가</span></button>');
+                                    } else {
+                                        $(".gubunOne").hide();
+                                        $(".gubunTwo").hide();
                                     }
-                                    bsnmChk = true;
-                                    bsnmOldNewChk = true;
-                                } else {
-                                    bsnmOldNewChk = false;
-                                    //3. 없다면 나이스 api 호출을 한다.
-                                    $(".old").hide();
-                                    $(".new").show();
-                                    jQuery.ajax({
-                                        url : "/nice/comp-chk",
-                                        type : "post",
-                                        data :
+                                },
+                                error : function(xhr, ajaxSettings, thrownError)
+                                {
+                                    cmmCtrl.errorAjax(xhr);
+                                    jQuery.jstree.rollback(data.rlbk);
+                                }
+                            });
+
+                        } else {
+                            //1. db를 조회 한다.
+                            if($("#bsnmNo").val() =='' || $("#bsnmNo").val() == undefined) {
+                                alert(msgCtrl.getMsg("fail.mp.join.al_018"));
+                                bsnmChk = false;
+                                return ;
+                            }
+                            jQuery.ajax({
+                                url : "/member/bsnm-select/"+$("#bsnmNo").val(),
+                                type : "get",
+                                success : function(data)
+                                {
+                                    //2. 있다면 디비 정보를 조회 후 뿌려준다.
+                                    if(data.rtnData.list.length >=1) {
+                                        $(".for-status-chk2").addClass('satisfy');
+                                        let datas = data.rtnData.list[0];
+                                        $(".old").show();
+                                        $(".new").hide();
+                                        $(".cmpn_nm").text(datas.cmpnNm);
+                                        $(".rprsnt_nm").text(datas.rprsntNm);
+                                        $(".gubun").text(datas.ctgryNm);
+                                        $(".addr").text("("+datas.zipcode+")"+" "+datas.bscAddr+" "+datas.dtlAddr);
+
+                                        if($("#bsnmNosOld").val() != "") {
+                                            $(".chng").hide();
+                                        }
+                                        bsnmChk = true;
+                                        bsnmOldNewChk = true;
+                                    } else {
+                                        bsnmOldNewChk = false;
+                                        //3. 없다면 나이스 api 호출을 한다.
+                                        $(".old").hide();
+                                        $(".new").show();
+                                        jQuery.ajax({
+                                            url : "/nice/comp-chk",
+                                            type : "post",
+                                            data :
+                                                {
+                                                    "compNum" : $("#bsnmNo").val()
+                                                },
+                                            success : function(data)
                                             {
-                                                "compNum" : $("#bsnmNo").val()
-                                            },
-                                        success : function(data)
-                                        {
-                                            //4. 있다면 정보를 입력한다.
-                                            //5. 없다면 정보가 없다고 한다.
-                                            if(data.rsp_cd=='P000') {
-                                                if(data.result_cd == '01') {
-                                                    if(data.comp_status == '1') {
-                                                        $(".cmpn_nm_new").val(data.comp_name);
-                                                        $(".rprsnt_nm").val(data.representive_name);
-                                                        $(".for-status-chk2").addClass('satisfy');
-                                                        bsnmChk = true;
+                                                //4. 있다면 정보를 입력한다.
+                                                //5. 없다면 정보가 없다고 한다.
+                                                if(data.rsp_cd=='P000') {
+                                                    if(data.result_cd == '01') {
+                                                        if(data.comp_status == '1') {
+                                                            $(".cmpn_nm_new").val(data.comp_name);
+                                                            $(".rprsnt_nm").val(data.representive_name);
+                                                            $(".for-status-chk2").addClass('satisfy');
+                                                            bsnmChk = true;
+                                                        } else {
+                                                            alert(msgCtrl.getMsg("fail.mp.join.al_019"));
+                                                            $("#bsnmNo").val("");
+                                                            $(".for-status-chk2").removeClass('satisfy');
+                                                            bsnmChk = false;
+                                                            return false;
+                                                        }
                                                     } else {
                                                         alert(msgCtrl.getMsg("fail.mp.join.al_019"));
                                                         $("#bsnmNo").val("");
@@ -444,29 +529,24 @@ define(["ezCtrl"], function(ezCtrl) {
                                                     bsnmChk = false;
                                                     return false;
                                                 }
-                                            } else {
-                                                alert(msgCtrl.getMsg("fail.mp.join.al_019"));
-                                                $("#bsnmNo").val("");
-                                                $(".for-status-chk2").removeClass('satisfy');
-                                                bsnmChk = false;
-                                                return false;
+                                            },
+                                            error : function(xhr, ajaxSettings, thrownError)
+                                            {
+                                                cmmCtrl.errorAjax(xhr);
+                                                jQuery.jstree.rollback(data.rlbk);
                                             }
-                                        },
-                                        error : function(xhr, ajaxSettings, thrownError)
-                                        {
-                                            cmmCtrl.errorAjax(xhr);
-                                            jQuery.jstree.rollback(data.rlbk);
-                                        }
-                                    });
+                                        });
 
+                                    }
+                                },
+                                error : function(xhr, ajaxSettings, thrownError)
+                                {
+                                    cmmCtrl.errorAjax(xhr);
+                                    jQuery.jstree.rollback(data.rlbk);
                                 }
-                            },
-                            error : function(xhr, ajaxSettings, thrownError)
-                            {
-                                cmmCtrl.errorAjax(xhr);
-                                jQuery.jstree.rollback(data.rlbk);
-                            }
-                        });
+                            });
+                        }
+
                     }
                 }
             },

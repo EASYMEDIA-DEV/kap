@@ -8,7 +8,7 @@
             <div class="pop-wrap">
                 <div class="pop-con-area">
                     <div class="tit-area">
-                        <p class="f-title1">부품사 정보 변경</p>
+                        <p class="f-title1 btnChks">부품사 정보 변경</p>
                     </div>
                     <div class="con-area">
                         <div class="scroll-area">

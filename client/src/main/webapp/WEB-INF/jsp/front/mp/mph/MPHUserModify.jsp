@@ -406,11 +406,11 @@
                                                 <p class="tit">주소</p>
                                                 <p class="txt addrNm">${rtnDtl.cmpnBscAddr}  ${rtnDtl.cmpnDtlAddr}</p>
                                             </div>
-                                            <div class="list-txt">
+                                            <div class="list-txt" id="buseoHide">
                                                 <p class="tit">부서</p>
                                                 <p class="txt  buseo"></p>
                                             </div>
-                                            <div class="list-txt">
+                                            <div class="list-txt" id="gikHide">
                                                 <p class="tit">직급</p>
                                                 <p class="txt  gikgub"></p>
                                             </div>

@@ -24,6 +24,7 @@
 		<input type="hidden" id="param4" name="param4"  value="${rtnData.receivedatass.paramsFour}"/>
 		<input type="hidden" id="param5" name="param5"  value="${rtnData.receivedatass.paramsFive}"/>
 		<script type="text/javascript">
+
 			if('${rtnData.resultcode}' == "0000") {
 				if(document.getElementById("param1").value != document.getElementById("ci").value) {
 					alert("본인인증에 실패하였습니다.");
@@ -35,58 +36,63 @@
 					opener.document.getElementById("birth").innerText = '${rtnData.birthdate.substring(0,4)}' + "-" + '${rtnData.birthdate.substring(4,6)}' + "-" + '${rtnData.birthdate.substring(6)}';
 					opener.document.getElementById("gndr").innerText = '${rtnData.gender == "1" ? "남" : "여"}';
 					opener.document.getElementById("hpNo").innerText = '${rtnData.mobileno.substring(0,3)}'+"-"+'${rtnData.mobileno.substring(3,7)}'+"-"+'${rtnData.mobileno.substring(7)}';
-
 					if('${rtnData.receivedatass.paramsTwo}' == "compChg") {
-						var formObj = opener.$("formUserSubmit").serialize();
-						jQuery.ajax({
-							url : "/my-page/member/intrduction/update-company-chg",
-							type : "post",
-							timeout: 30000,
-							data : {
-								"bsnmNo" :opener.$("#bsnmNos").val() ,
-								"mpaUserDto.name" :opener.$("#formName").val() ,
-								"partTypeChg" :opener.$("#partTypeChg").val() ,
-								"mpePartsCompanyDTO.cmpnNm" :opener.$("#cmpnNm").val() ,
-								"mpePartsCompanyDTO.rprsntNm" :opener.$("#rprsntNm").val() ,
-								"mpePartsCompanyDTO.telNo" :opener.$("#cmpnTel").val() ,
-								"mpePartsCompanyDTO.zipcode" :opener.$("#cmpnZipcode").val() ,
-								"mpePartsCompanyDTO.bscAddr" :opener.$("#cmpnBscAddr").val() ,
-								"mpePartsCompanyDTO.dtlAddr" :opener.$("#cmpnDtlAddr").val() ,
-								"bsnmChk" :opener.$("#bsnmChk").val() ,
-								"mpePartsCompanyDTO.ctgryCd" :opener.$("#ctgryCd").val() ,
-								"mpePartsCompanyDTO.sizeCd" :opener.$("#sizeCd").val() ,
-								"mpePartsCompanyDTO.stbsmDt" :opener.$(".stbsmDt").val() ,
-								"mpePartsCompanyDTO.slsPmt" :opener.$(".slsPmt").val() ,
-								"mpePartsCompanyDTO.slsYear" :opener.$(".slsYear").val() ,
-								"mpePartsCompanyDTO.mpleCnt" :opener.$(".mpleCnt").val() ,
-								"mpePartsCompanyDTO.mjrPrdct1" :opener.$(".mjrPrdct1").val() ,
-								"mpePartsCompanyDTO.mjrPrdct2" :opener.$(".mjrPrdct2").val() ,
-								"mpePartsCompanyDTO.mjrPrdct3" :opener.$(".mjrPrdct3").val() ,
-								"mpePartsCompanyDTO.qlty5StarCd" :opener.$(".qlty5StarCd").val() ,
-								"mpePartsCompanyDTO.qlty5StarYear" :opener.$(".qlty5StarYear").val() ,
-								"mpePartsCompanyDTO.pay5StarCd" :opener.$(".pay5StarCd").val() ,
-								"mpePartsCompanyDTO.pay5StarYear" :opener.$(".pay5StarYear").val() ,
-								"mpePartsCompanyDTO.tchlg5StarCd" :opener.$(".tchlg5StarCd").val() ,
-								"mpePartsCompanyDTO.tchlg5StarYear" :opener.$(".tchlg5StarYear").val() ,
-								"mpePartsCompanyDTO.sqInfoList1" :opener.$(".sqInfoList1").val() ,
-								"mpePartsCompanyDTO.sqInfoList2" :opener.$(".sqInfoList2").val() ,
-								"mpePartsCompanyDTO.sqInfoList3" :opener.$(".sqInfoList3").val() ,
-								"_csrf": opener.$("#csrfKey").val()
-							},
-							dataType : "json",
-							async: false,
-							cache : false,
-							success : function(data, status, xhr){
-								alert("저장 되었습니다.");
-								$(".partDtl").show();
-							},
-							error : function(data, status, xhr){
-								alert("오류가 발생했습니다.");
-								return false;
-							},
-							complete : function(){
-							}
-						});
+						opener.document.getElementById("partTypeChg").value = "new";
+						opener.document.getElementById("partDtl").style.display = "block";
+						opener.document.getElementById("buseoHide").style.display = "none";
+						opener.document.getElementById("gikHide").style.display = "none";
+						// $(".partDtl").show();
+
+						// var formObj = opener.$("formUserSubmit").serialize();
+						// jQuery.ajax({
+						// 	url : "/my-page/member/intrduction/update-company-chg",
+						// 	type : "post",
+						// 	timeout: 30000,
+						// 	data : {
+						// 		"bsnmNo" :opener.$("#bsnmNos").val() ,
+						// 		"mpaUserDto.name" :opener.$("#formName").val() ,
+						// 		"partTypeChg" :opener.$("#partTypeChg").val() ,
+						// 		"mpePartsCompanyDTO.cmpnNm" :opener.$("#cmpnNm").val() ,
+						// 		"mpePartsCompanyDTO.rprsntNm" :opener.$("#rprsntNm").val() ,
+						// 		"mpePartsCompanyDTO.telNo" :opener.$("#cmpnTel").val() ,
+						// 		"mpePartsCompanyDTO.zipcode" :opener.$("#cmpnZipcode").val() ,
+						// 		"mpePartsCompanyDTO.bscAddr" :opener.$("#cmpnBscAddr").val() ,
+						// 		"mpePartsCompanyDTO.dtlAddr" :opener.$("#cmpnDtlAddr").val() ,
+						// 		"bsnmChk" :opener.$("#bsnmChk").val() ,
+						// 		"mpePartsCompanyDTO.ctgryCd" :opener.$("#ctgryCd").val() ,
+						// 		"mpePartsCompanyDTO.sizeCd" :opener.$("#sizeCd").val() ,
+						// 		"mpePartsCompanyDTO.stbsmDt" :opener.$(".stbsmDt").val() ,
+						// 		"mpePartsCompanyDTO.slsPmt" :opener.$(".slsPmt").val() ,
+						// 		"mpePartsCompanyDTO.slsYear" :opener.$(".slsYear").val() ,
+						// 		"mpePartsCompanyDTO.mpleCnt" :opener.$(".mpleCnt").val() ,
+						// 		"mpePartsCompanyDTO.mjrPrdct1" :opener.$(".mjrPrdct1").val() ,
+						// 		"mpePartsCompanyDTO.mjrPrdct2" :opener.$(".mjrPrdct2").val() ,
+						// 		"mpePartsCompanyDTO.mjrPrdct3" :opener.$(".mjrPrdct3").val() ,
+						// 		"mpePartsCompanyDTO.qlty5StarCd" :opener.$(".qlty5StarCd").val() ,
+						// 		"mpePartsCompanyDTO.qlty5StarYear" :opener.$(".qlty5StarYear").val() ,
+						// 		"mpePartsCompanyDTO.pay5StarCd" :opener.$(".pay5StarCd").val() ,
+						// 		"mpePartsCompanyDTO.pay5StarYear" :opener.$(".pay5StarYear").val() ,
+						// 		"mpePartsCompanyDTO.tchlg5StarCd" :opener.$(".tchlg5StarCd").val() ,
+						// 		"mpePartsCompanyDTO.tchlg5StarYear" :opener.$(".tchlg5StarYear").val() ,
+						// 		"mpePartsCompanyDTO.sqInfoList1" :opener.$(".sqInfoList1").val() ,
+						// 		"mpePartsCompanyDTO.sqInfoList2" :opener.$(".sqInfoList2").val() ,
+						// 		"mpePartsCompanyDTO.sqInfoList3" :opener.$(".sqInfoList3").val() ,
+						// 		"_csrf": opener.$("#csrfKey").val()
+						// 	},
+						// 	dataType : "json",
+						// 	async: false,
+						// 	cache : false,
+						// 	success : function(data, status, xhr){
+						// 		alert("저장 되었습니다.");
+						// 		$(".partDtl").show();
+						// 	},
+						// 	error : function(data, status, xhr){
+						// 		alert("오류가 발생했습니다.");
+						// 		return false;
+						// 	},
+						// 	complete : function(){
+						// 	}
+						// });
 
 					}
 				}
