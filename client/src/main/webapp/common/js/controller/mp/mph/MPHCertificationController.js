@@ -279,8 +279,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnParts : {
                 event : {
                     click : function() {
-                        $(".f-title1").text("부품사정보 변경")
                         if($("#bsnmNosOld").val()!= "") {
+                            $(".f-title1").text("부품사 정보 변경");
                             $("#partTypeChg").val("chg");
                             jQuery.ajax({
                                 url : "/my-page/member/intrduction/"+$("#bsnmNosOld").val(),
@@ -295,7 +295,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     $("#bsnmNo").val(cmpn.bsnmNo);
                                     $("#bsnmNo").prop('readonly', true);
                                     $("#bsnmNo").attr('disabled', true);
-                                    // $(".btnCmpnChk").hide();
                                     $(".cmpn_nm_new").val(cmpn.cmpnNm);
                                     $(".rprsnt_nm").val(cmpn.rprsntNm);
                                     $("#ctgryCd").val(cmpn.ctgryCd);
@@ -348,6 +347,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 }
                             });
                         } else {
+                            $(".f-title1").text("부품사회원 전환");
+                            $("#btnCmpnChk").remove("#btnCmpnChk");
+                            $("#btnCmpnChk").attr("#btnCmpnTwo");
                             $("#partTypeChg").val("new");
                         }
                         openPopup('switchingMemberPopup',this);

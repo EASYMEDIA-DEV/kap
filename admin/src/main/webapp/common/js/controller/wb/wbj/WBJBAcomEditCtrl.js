@@ -183,6 +183,24 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }, "./changeList.ajax", $formObj, "POST", "html");
     }
 
+    let fnpstnNmShow = function(pstnCd) {
+        if(pstnCd == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }else{
+            $("#pstnNm").val("");
+            $("#pstnNm").css("display", "none");
+        }
+    }
+
+    let fnNewPstnNmShow = function(pstnCd) {
+        if(pstnCd == 'MEM_CD01007'){
+            $("#newPstnNm").css("display", "block");
+        }else{
+            $("#newPstnNm").val("");
+            $("#newPstnNm").css("display", "none");
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -283,35 +301,19 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
-            telNo : {
+            pstnCd : {
                 event : {
-                    input : function (event) {
-                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
-                        const phoneLen = phoneNumber.length;
-
-                        if (phoneNumber.startsWith('02')) {
-                            if (phoneLen >= 3 && phoneLen <= 6) {
-                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
-                            } else if (phoneLen > 6) {
-                                if (phoneLen == 9) {
-                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
-                                } else {
-                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
-
-                                }
-                            }
-                        } else {
-                            if (phoneLen > 3 && phoneLen <= 7) {
-                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
-                            } else if (phoneLen > 7) {
-                                if (phoneLen == 10) {
-                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
-                                } else {
-                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
-                                }
-                            }
-                        }
-                        event.target.value = phoneNumber;
+                    change : function() {
+                        var pstnCd = $(this).val();
+                        fnpstnNmShow(pstnCd);
+                    }
+                }
+            },
+            newPstnCd : {
+                event : {
+                    change : function() {
+                        var pstnCd = $(this).val();
+                        fnNewPstnNmShow(pstnCd);
                     }
                 }
             },
@@ -327,6 +329,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
+                                fnpstnNmShow();
                             }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }
@@ -356,6 +359,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             $("#newBsnmNo").val(data.seq);
                             $("#bsnmNoNm").val(data.titl);
                             $("#ctgryNm").val(data.ctgryNm);
+                            fnNewPstnNmShow();
                         });
                     }
                 }
@@ -369,6 +373,38 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
                             trnsfSearch($(this).attr("value"));
                         }
+                    }
+                }
+            },
+            telNumber : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
                     }
                 }
             },
@@ -404,6 +440,16 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         isValid = !isValid;
                     }
 
+                    if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
+                        isValid = false;
+                        return false;
+                    }
+                    if( $("#compTel").val().length !=0 && $("#compTel").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
+                        isValid = false;
+                        return false;
+                    }
                     return isValid;
                 },
                 async : {

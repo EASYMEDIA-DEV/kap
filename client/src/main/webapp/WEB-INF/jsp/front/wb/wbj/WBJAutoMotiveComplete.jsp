@@ -72,7 +72,7 @@
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap align-center for-motion">
                     <div class="btn-set">
-                        <a class="btn-solid small black-bg" href="javascript:"><span>신청내역 보기</span></a>
+                        <a class="btn-solid small black-bg" href="/my-page/coexistence/list"><span>신청내역 보기</span></a>
                     </div>
                 </div>
             </div>
