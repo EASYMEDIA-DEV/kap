@@ -211,7 +211,7 @@ public class MPBCoexistenceController {
 
                     } else if ("BSN08".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //검교정
-                    } else if ("BNS09".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    } else if ("BSN09".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //공급망
                         WBIBSupplyDTO wBIBSupplyDTO = new WBIBSupplyDTO();
                         wBIBSupplyDTO.setBsnCd(mpbBsnSearchDTO.getBsnCd());

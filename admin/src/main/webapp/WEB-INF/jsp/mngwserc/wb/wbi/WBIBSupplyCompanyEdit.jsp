@@ -584,8 +584,7 @@
                                             <input type="hidden" class="notRequired" name="fileCd"
                                                    value="ATTACH_FILE_TYPE01" title="첨부파일유형"/>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="fileSeq"
-                                                       value="${rtnInfo.appctnSeq}">
+                                                <input type="hidden" class="notRequired" name="fileSeq" value="${rtnInfo.appctnSeq}">
                                                 <spring:eval var="fileExtns"
                                                              expression="@environment.getProperty('app.file.fileExtns')"/>
                                                 <spring:eval var="atchUploadMaxSize"
