@@ -26,7 +26,18 @@
                             <div class="btn-set">
                                 <!-- "자격증 신청 반려" 문구가 보일 경우, [자격증 보기] 버튼은 보이지 않고 [자격증 신청] 버튼만 보임 -->
                                 <c:if test="${ not empty sqCertiMst}">
-                                    <button class="btn-solid small gray-bg" type="button" id="paymentInfoViewPopupBtn"><span>자격증 보기</span></button>
+                                    <c:choose>
+                                        <c:when test="${ posibleSqCertiCnt eq 1 and loginMap.authCd eq 'CP' and ((not empty sqCertiMst and sqCertiMst.issueCd eq 'EBD_SQ_C'))}">
+                                            <button class="btn-solid small black-bg" type="button" id="paymentInfoViewPopupBtn">
+                                                <span>자격증 신청</span>
+                                            </button>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <button class="btn-solid small gray-bg" type="button" id="paymentInfoViewPopupBtn">
+                                                <span>자격증 보기</span>
+                                            </button>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </c:if>
                                 <c:if test="${ posibleSqCertiCnt eq 1 and loginMap.authCd eq 'CP' and (empty sqCertiMst)}">
                                     <button class="btn-solid small black-bg" type="button" id="paymentInfoManagPopupBtn"><span>자격증 신청</span></button>
@@ -53,39 +64,50 @@
                                 <div class="info-head no-bdr">
                                     <p class="article-total-count f-body2">총 <span id="completeListContainerTotCnt">${ educationCompleteListCnt }</span>개</p>
                                 </div>
-                                <div class="table-sec">
-                                    <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                        <table class="basic-table w864"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
-                                            <caption>회원목록</caption>
-                                            <colgroup>
-                                                <col style="width: 8%;">
-                                                <col style="width: 26%;">
-                                                <col style="width: 11%;">
-                                                <col style="width: 11%;">
-                                                <col style="width: 22%;">
-                                                <col style="width: 11%;">
-                                                <col style="width: 11%;">
-                                            </colgroup>
-                                            <thead>
-                                            <tr>
-                                                <th>번호</th>
-                                                <th>과정</th>
-                                                <th>회차</th>
-                                                <th>업종</th>
-                                                <th>교육기간</th>
-                                                <th>신청일</th>
-                                                <th>수료일</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="completeListContainer">
+                                <c:choose>
+                                    <c:when test="${ educationCompleteListCnt > 0}">
+                                        <div class="table-sec">
+                                            <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                                <table class="basic-table w864"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                                                    <caption>회원목록</caption>
+                                                    <colgroup>
+                                                        <col style="width: 8%;">
+                                                        <col style="width: 26%;">
+                                                        <col style="width: 11%;">
+                                                        <col style="width: 11%;">
+                                                        <col style="width: 22%;">
+                                                        <col style="width: 11%;">
+                                                        <col style="width: 11%;">
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th>번호</th>
+                                                        <th>과정</th>
+                                                        <th>회차</th>
+                                                        <th>업종</th>
+                                                        <th>교육기간</th>
+                                                        <th>신청일</th>
+                                                        <th>수료일</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="completeListContainer">
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="btn-wrap add-load align-center">
-                                    <a class="btn-solid small black-line " href="javascript:" id="moreCompletePagingContainer"><span>더보기</span><span class="item-count">(0/0)</span></a>
-                                </div>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap add-load align-center">
+                                            <a class="btn-solid small black-line " href="javascript:" id="moreCompletePagingContainer"><span>더보기</span><span class="item-count">(0/0)</span></a>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
+                                            <div class="txt-box">
+                                                <p class="txt f-body1">조회된 데이터가 없습니다.</p>
+                                            </div>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                     </form>
@@ -101,38 +123,50 @@
                             </div>
                             <div class="sec-con-area">
                                 <div class="info-head no-bdr">
-                                    <p class="article-total-count f-body2">총 <span id="repairListContainerTotCnt">0</span>개</p>
+                                    <p class="article-total-count f-body2">총 <span id="repairListContainerTotCnt">${repairCompleteListCnt}</span>개</p>
                                 </div>
-                                <div class="table-sec">
-                                    <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                        <table class="basic-table w864"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
-                                            <caption>회원목록</caption>
-                                            <colgroup>
-                                                <col style="width: 8%;">
-                                                <col style="width: 29%;">
-                                                <col style="width: 13%;">
-                                                <col style="width: 24%;">
-                                                <col style="width: 13%;">
-                                                <col style="width: 13%;">
-                                            </colgroup>
-                                            <thead>
-                                            <tr>
-                                                <th>번호</th>
-                                                <th>과정</th>
-                                                <th>회차</th>
-                                                <th>교육기간</th>
-                                                <th>신청일</th>
-                                                <th>수료일</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody id="repairListContainer">
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="btn-wrap add-load align-center">
-                                    <a class="btn-solid small black-line" href="javascript:" id="moreRepairPagingContainer"><span>더보기</span><span class="item-count">(0/0)</span></a>
-                                </div>
+                                <c:choose>
+                                    <c:when test="${ repairCompleteListCnt > 0 }">
+                                        <div class="table-sec">
+                                            <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                                <table class="basic-table w864"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                                                    <caption>회원목록</caption>
+                                                    <colgroup>
+                                                        <col style="width: 8%;">
+                                                        <col style="width: 29%;">
+                                                        <col style="width: 13%;">
+                                                        <col style="width: 24%;">
+                                                        <col style="width: 13%;">
+                                                        <col style="width: 13%;">
+                                                    </colgroup>
+                                                    <thead>
+                                                    <tr>
+                                                        <th>번호</th>
+                                                        <th>과정</th>
+                                                        <th>회차</th>
+                                                        <th>교육기간</th>
+                                                        <th>신청일</th>
+                                                        <th>수료일</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="repairListContainer">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="btn-wrap add-load align-center">
+                                            <a class="btn-solid small black-line" href="javascript:" id="moreRepairPagingContainer"><span>더보기</span><span class="item-count">(0/0)</span></a>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
+                                            <div class="txt-box">
+                                                <p class="txt f-body1">조회된 데이터가 없습니다.</p>
+                                            </div>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+
                             </div>
                         </div>
                     </form>
@@ -162,6 +196,7 @@
                                     <div class="noti-txt-w t-align-right">
                                         <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                     </div>
+
                                     <div class="sec-tit-area">
                                         <p class="f-head">신청자 증명사진<span class="essential-mark color-sky">*</span></p>
                                     </div>
@@ -177,7 +212,12 @@
                                                             <div class="inner-line">
                                                                 <div class="form-group">
                                                                     <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                        <p class="empty-txt">선택된 파일 없음</p>
+                                                                        <div class="file-list">
+                                                                            <p class="file-name">
+                                                                                <span class="name">선택된 파일 없음</span>
+                                                                                <span class="unit"></span>
+                                                                            </p>
+                                                                        </div>
                                                                     </div>
                                                                     <div class="file-btn-area">
                                                                         <input type="file"  id="idntfnPhotoFileSeq" title="신청자 증명사진" name="idntfnPhotoFileSeq" data-max-size="${atchUploadMaxSize}" data-accept="${imageExtns}">
@@ -187,7 +227,7 @@
                                                             </div>
                                                             <div class="inner-line">
                                                                 <div class="noti-txt-w">
-                                                                    <p class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(${imageExtns}) / 용량(최대${atchUploadMaxSize / 1024 / 1024}MB) / 최대개수(1개)</p>
+                                                                    <p class="bullet-noti-txt f-caption2">* 260X300 / 첨부 가능한 확장자(${imageExtns}) / 최대 업로드 용량(${atchUploadMaxSize / 1024 / 1024}MB) / 최대개수(1개)</p>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -197,7 +237,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div  id="paymentInfoManagPopupFrm">
+                                <div  class="p-cont-sec" id="paymentInfoManagPopupFrm">
 
                                 </div>
                             </div>
@@ -360,7 +400,7 @@
                                                         </ul>
                                                     </div>
                                                     <div class="img-con">
-                                                        <div class="img"><img src="${sqCertiMst.idntfnPhotoFileSeqUrl}" alt="이미지" class="idntfnPhotoFileSeqImage"></div>
+                                                        <div class="img"><img data-src="${sqCertiMst.idntfnPhotoFileSeqUrl}"  src="${sqCertiMst.idntfnPhotoFileSeqUrl}" alt="이미지" class="idntfnPhotoFileSeqImage"></div>
                                                         <div class="btn-wrap">
                                                             <div class="file-btn-area">
                                                                 <c:set var="fileOrd" value="${ not empty sqCertiMst and not empty sqCertiMst.fileList and fn:length(sqCertiMst.fileList) > 0 ? sqCertiMst.fileList[0].fileOrd:  ''}" />

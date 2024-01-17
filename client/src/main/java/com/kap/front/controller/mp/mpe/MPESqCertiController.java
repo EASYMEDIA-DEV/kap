@@ -91,9 +91,12 @@ public class MPESqCertiController {
             //SQ자격증 신청 버튼
             modelMap.addAttribute("posibleSqCertiCnt", eBDSqCertiReqService.getPosibleSqCertiCnt(eBDSqCertiSearchDTO));
             modelMap.addAttribute("educationCompleteListCnt", eBDSqCertiReqService.selectEducationCompleteListCnt(eBDSqCertiSearchDTO));
+            //보수 교육 갯수
+            eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT03");
+            modelMap.addAttribute("repairCompleteListCnt", eBDSqCertiReqService.selectEducationCompleteListCnt(eBDSqCertiSearchDTO));
 
-            modelMap.addAttribute("imageExtns", imageExtns);
-            modelMap.addAttribute("atchUploadMaxSize", atchUploadMaxSize);
+            modelMap.addAttribute("imageExtns", "png,jpg,jpeg");
+            modelMap.addAttribute("atchUploadMaxSize", 5*1024*1024);
 
             modelMap.addAttribute("rtnData", eBDSqCertiSearchDTO);
         }

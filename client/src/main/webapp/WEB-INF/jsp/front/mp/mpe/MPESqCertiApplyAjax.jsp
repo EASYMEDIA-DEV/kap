@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
-    <div class="p-cont-sec">
+    <div >
         <div class="sec-tit-area">
             <p class="f-head">신청자 기본정보</p>
         </div>
@@ -75,11 +75,11 @@
                                 <div class="right">
                                     <dl>
                                         <dt class="f-body2">회차</dt>
-                                        <dd class="f-body2">${ list.episdYear }년/${ list.episdSeq }회차</dd>
+                                        <dd class="f-body2">${ list.episdYear }년/${ list.episdOrd }회차</dd>
                                     </dl>
                                     <dl>
                                         <dt class="f-body2">업종</dt>
-                                        <dd class="f-body2">${ list.cbsnCdNm }</dd>
+                                        <dd class="f-body2">${ kl:nvl(list.cbsnCdNm, '-') }</dd>
                                     </dl>
                                     <dl>
                                         <dt class="f-body2">수료일시</dt>

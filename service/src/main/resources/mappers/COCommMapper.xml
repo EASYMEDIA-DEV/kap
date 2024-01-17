@@ -18,6 +18,7 @@
              , mem.dept_cd mem_dept_cd
              , mem.dept_dtl_nm mem_dept_dtl_nm
              , mem.pstn_cd mem_pstn_cd
+             , mem.pstn_nm mem_pstn_nm
              , mem.hp_no mem_hp_no
              , mem.tel_no mem_tel_no
              , cmpn.bsnm_no cmpn_bsnm_no
@@ -53,6 +54,9 @@
           , email = #{memEmail}
           , dept_dtl_nm =#{memDeptDtlNm}
           , pstn_cd =#{memPstnCd}
+            <if test="memPstnCd eq 'MEM_CD01007'">
+            , pstn_nm = #{memPstnNm}
+            </if>
           , tel_no =#{memTelNo}
           , mod_id =#{modId}
           , mod_ip =#{modIp}

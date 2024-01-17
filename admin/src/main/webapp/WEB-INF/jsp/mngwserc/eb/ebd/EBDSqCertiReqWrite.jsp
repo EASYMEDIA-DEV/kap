@@ -141,7 +141,7 @@
                     </div>
                 </div>
             </fieldset>
-            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>필수과목 수료내역</h7>
+            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>선수과목 수료내역</h7>
             <hr />
             <fieldset class="mb-lg">
                 <!--VUE 영역 시작 -->

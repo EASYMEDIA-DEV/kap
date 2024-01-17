@@ -29,7 +29,11 @@
 		, sq_mst.reg_dtm
 		, sq_mst.mod_dtm
 	    , sq_mst.mod_id
-		, (select name from co_adm_mst where id = sq_mst.mod_id) mod_name
+		, (select name from (
+		    select id, name from co_adm_mst
+			union all
+			select id, name from co_mem_mst
+		) tmp where tmp.id = sq_mst.mod_id limit 1) mod_name
 		, sq_mst.use_yn
 		, sq_mst.exam_cd
 		, (select cd_nm from co_code_mst where cd = sq_mst.exam_cd and cd_id = 'EBD_SQ_TP') exam_cd_nm
@@ -78,6 +82,12 @@
 						and sq_mst.mod_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
 					</when>
 				</choose>
+			</if>
+			<if test="episdYear != null and episdYear != ''.toString() ">
+				and ptcpt_mst.episd_year = #{episdYear}
+			</if>
+			<if test="episdOrd != null and episdOrd != ''.toString() ">
+				and ptcpt_mst.episd_ord = #{episdOrd}
 			</if>
 			<if test="endDt != null and endDt != ''.toString() ">
 				<choose>
@@ -184,7 +194,7 @@
 			, edctn_episd_mst.accs_end_dtm
 			, edctn_episd_mst.edctn_strt_dtm
 			, edctn_episd_mst.edctn_end_dtm
-			, (SELECT GROUP_CONCAT(NAME SEPARATOR ', ') FROM cp_isttr_mst WHERE exists( SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq=edctn_episd_mst.edctn_seq AND episd_year=edctn_episd_mst.episd_year AND episd_ord=edctn_episd_mst.episd_ord)) isttr_nm
+			, (select GROUP_CONCAT(name SEPARATOR ', ') FROM cp_isttr_mst WHERE isttr_seq in( SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq=ptcpt_mst.edctn_seq AND episd_year=ptcpt_mst.episd_year AND episd_ord=ptcpt_mst.episd_ord)) isttr_nm
 			, edctn_episd_mst.fxnum_cnt
 			, edctn_episd_mst.rcrmt_mthd_cd
 			, (select cd_nm from co_code_mst where cd = edctn_episd_mst.rcrmt_mthd_cd and cd_id = 'RCRMT_MTHD') rcrmt_mthd_cd_nm

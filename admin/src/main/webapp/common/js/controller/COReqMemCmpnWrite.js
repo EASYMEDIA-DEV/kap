@@ -21,6 +21,17 @@ define(["ezCtrl"], function(ezCtrl) {
                         cmmCtrl.searchPostCode(500,600,"cmpnContainerCmpnZipcode","cmpnContainerCmpnBscAddr","cmpnContainerCmpnDtlAddr");
                     }
                 }
+            },
+            memPstnCd :{
+                event : {
+                    change: function(){
+                        if($(this).val() == "MEM_CD01007"){
+                            ctrl.obj.find(".memPstnCdEtc").show();
+                        }else{
+                            ctrl.obj.find(".memPstnCdEtc").hide();
+                        }
+                    }
+                }
             }
         },
         immediately : function() {
@@ -44,6 +55,12 @@ define(["ezCtrl"], function(ezCtrl) {
                         ctrl.obj.find("select[name=memPstnCd]").append("<option value=\""+memCdList[q].cd+"\" "+(data.memPstnCd == memCdList[q].cd ? "selected" : "")+">"+memCdList[q].cdNm+"</option>")
                     }
                 }
+                //직급 기타
+                if(data.memPstnCd == "MEM_CD01007"){
+                    ctrl.obj.find(".memPstnCdEtc").show();
+                    ctrl.obj.find("input[name=memPstnNm]").val( data.memPstnNm);
+                }
+
                 ctrl.obj.find(".memHpNo").text( data.memHpNo);
                 ctrl.obj.find("input[name=memTelNo]").val( data.memTelNo );
                 //회사정보

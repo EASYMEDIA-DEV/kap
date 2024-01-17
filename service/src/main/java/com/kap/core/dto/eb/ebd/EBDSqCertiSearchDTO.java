@@ -45,6 +45,10 @@ public class EBDSqCertiSearchDTO extends BaseDTO {
     private Integer memSeq;
     @Schema(title = "조회 자격증 연계 코드")
     private String lcnsCnnctCd;
+    @Schema(title = "교육 차수 년도")
+    private String episdYear;
+    @Schema(title = "교육 차수 정렬")
+    private String episdOrd;
 
     @Schema(title = "필수과목 리스트")
     private List<EBBEpisdSqCertDTO> educationList;

@@ -65,6 +65,9 @@ public class EBDSqCertiReqController {
             // 코드 set
             cdDtlList.add("EBD_SQ");
             cdDtlList.add("COMPANY_TYPE");
+            cdDtlList.add("CO_YEAR_CD");
+            cdDtlList.add("ROUND_CD");
+
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             modelMap.addAttribute("rtnData", eBDSqCertiSearchDTO);
         }
@@ -101,7 +104,6 @@ public class EBDSqCertiReqController {
     {
         try
         {
-            log.error("eBDSqCertiSearchDTO : {}", eBDSqCertiSearchDTO);
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set

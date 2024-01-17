@@ -44,11 +44,18 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             },function(data){
                 //해당 input file 객체에 data(tempFileData) 응답 값이 저장
                 if(data != undefined && data.length > 0){
-                    if(ctrl.obj.find(".idntfnPhotoFileSeqImage").size() > 0){
+                    if(ctrl.obj.find(".idntfnPhotoFileSeqImage").size() > 0)
+                    {
                         //이미지 보여주기
                         ctrl.obj.find(".idntfnPhotoFileSeqImage").prop("src", data[0].webPath)
-                    }else{
-                    ctrl.obj.find(".file-list-area .empty-txt").text(data[0].orgnFileNm);
+                        ctrl.obj.find(".idntfnPhotoFileSeqImage").data("src", data[0].webPath)
+                    }
+                    else
+                    {
+                        var fileLen = data[0].orgnFileNm.length;
+                        var extn    = data[0].orgnFileNm.lastIndexOf(".");
+                        ctrl.obj.find(".file-list-area .file-name .name").text(data[0].orgnFileNm.substring(0, extn));
+                        ctrl.obj.find(".file-list-area .file-name .unit").text(data[0].orgnFileNm.substring(extn+1, fileLen));
                     }
                 }
             });
