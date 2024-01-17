@@ -63,6 +63,8 @@ public class WBFBRegisterDTO extends BaseDTO {
     private String smtfnPrsntCd;
     @Schema(title = "스마트화 목표코드", example = "")
     private String smtfnTrgtCd;
+    @Schema(title = "신청당시 부품사 사업자번호", example = "")
+    private String appctnBsnmNo;
     @Schema(title = "종된사업장번호", example = "")
     private String sbrdnBsnmNo;
     @Schema(title = "상세 진행상태 코드", example = "")
