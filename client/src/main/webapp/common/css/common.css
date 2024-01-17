@@ -689,12 +689,14 @@ footer .copy-area span:last-child:after {display: none;}
 .btn-solid.icon.evaluation::after {background-image: url("/common/images/icon-evaluation.svg");}
 
 /* text button */
+.btn-text {font-size: max(16rem, 14px); font-family: "Pretendard_Medium", sans-serif; color: #06161E; line-height: 160%; letter-spacing: -.02em;}
 .btn-text-icon {display: flex;}
 .btn-text-icon span {display: flex; align-items: center; position: relative; font-size: max(16rem, 14px); font-family: "Pretendard_Medium", sans-serif; color: #06161E; line-height: 160%; letter-spacing: -.02em;}
 .btn-text-icon span:after {content: ''; display: block; position:relative; left: 0; margin-left: 10rem;}
 .btn-text-icon[class*='-circle'] span:after {width:32rem; height: 32rem; background: url() no-repeat center center / 32rem auto; border-radius: 50%; transition: .3s transform;}
 .btn-text-icon[class*='-circle']:not(.x-circle):hover span:after {transform: translateX(6rem);}
 
+.btn-text.gray-txt {font-family: "Pretendard_Regular", sans-serif; color: #697278;}
 .btn-text-icon.gray-txt span {font-family: "Pretendard_Regular", sans-serif; color: #697278;}
 
 .btn-text-icon.black-circle span:after {background-color: #06161E; background-image: url("/common/images/icon-btn-circle-black.svg");}
@@ -772,6 +774,7 @@ footer .copy-area span:last-child:after {display: none;}
 @media all and (max-width: 1023px) {
   .page-bot-btn-sec {margin-top: 48rem;}
 
+  .btn-text {font-size: 13rem; line-height: 165%;}
   .btn-text-icon[class*='-circle'] span:after {width: 24rem; height: 24rem; min-width:24rem; background-size: 24rem auto;}
   .btn-text-icon span {font-size: 15rem; line-height: 155%; letter-spacing: -0.3rem;}
   .btn-text-icon span:after {margin-left: 8rem;}
@@ -1033,6 +1036,7 @@ footer .copy-area span:last-child:after {display: none;}
 @media all and (max-width: 1023px) {
   .noti-txt-w {margin-top: 6rem;}
   .noti-txt-w .bullet-noti-txt {margin-top:0;}
+  .noti-txt-w *:not(.bullet-noti-txt) + .bullet-noti-txt {margin-top: 4rem;}
   .btn-wrap + .noti-txt-w {margin-top: 12rem;}
   .article-list-w + .noti-txt-w {margin-top: 32rem;}
   .form-group + .noti-txt-w {margin-top: 8rem;}
@@ -1064,9 +1068,10 @@ footer .copy-area span:last-child:after {display: none;}
 .add-data-result .amount-result-w .amount-num-div span{margin:0 6rem 0 12rem;}
 
 .data-enter-form .row {display: flex; margin-top: 60rem;} /* default: 제목, 내용이 좌우 배치 */
+.data-enter-form .new {margin-top: 60rem;}
 .data-enter-form .row:first-child {margin-top: 0;}
 .data-enter-form .row .th {flex-shrink: 0; padding-right: 30rem; width: max(176rem, 119px);}
-.data-enter-form .row .th .title {display: flex; font-family: "Pretendard_Medium", sans-serif;/*word-wrap: break-word; word-break: break-all;*/}
+.data-enter-form .row .th .title {display: flex; /*word-wrap: break-word; word-break: break-all;*/}
 .data-enter-form .row .th .title .essential-mark {margin-left: 2rem;}
 .data-enter-form .row .td .data-title .essential-mark {margin-left: 2rem;}
 .data-enter-form .row .td {width:100%;}
@@ -1100,9 +1105,11 @@ footer .copy-area span:last-child:after {display: none;}
 @media all and (max-width: 1023px) {
   .data-enter-form .btn-solid.small {min-height: 40rem; height: 40rem;}
   .data-enter-form .row {display: block; margin-top: 48rem;}
+  .data-enter-form .new {margin-top: 48rem;}
   .data-enter-form .row.horizontally {}  /* pc에서 옆으로 나란히 배치 */
   .data-enter-form .row.horizontally .th:nth-child(3) {margin-top: 24rem;}
   .data-enter-form .row .th {width: auto; margin-bottom: 16rem; padding-right: 0;}
+  .data-enter-form .row:has(.th + .td .data-line:first-child .noti-txt-w) .th {margin-bottom: 8rem;}
   .data-enter-form .btn-line {margin-top: 16rem;} 
   .data-enter-form .btn-wrap a + a,
   .data-enter-form .btn-wrap button + button {margin-left: 10rem;}
@@ -1112,9 +1119,10 @@ footer .copy-area span:last-child:after {display: none;}
   .add-data-form .btn-wrap{margin:0 -12rem 0 0 !important;}
   .add-data-form .data-enter-form{margin-top:12rem !important;}
 
-  .data-line-w .data-line {margin-top: 32rem;}
+  .data-line-w .data-inner-line {margin-top: 24rem;}
+  .data-line-w .data-line {margin-top: 24rem;}
   .data-line-w .data-line.large-mt{margin-top:48rem;}
-  .data-line-w .data-line .data-title {margin-bottom: 16rem;}
+  .data-line-w .data-line .data-title {margin-bottom: 8rem;}
   .data-line-w .data-line .middle-line {margin-top: 16rem;}
 
   .amount-div .amount-btn{width:39rem;}
@@ -2955,6 +2963,7 @@ footer .copy-area span:last-child:after {display: none;}
   .index-list-w .list-item .available-label span::before {left: 56%; height: 30rem;}
   .index-list-w.divide {display: block;}
   .index-list-w.divide .list-item{margin:16rem 0 0 0; width:100%;}
+  .index-list-w.divide .list-item.available {margin-top: 48rem;}
   .index-list-w.divide .list-item .cont-area .info-list-w{margin:20rem 0 48rem; padding-top: 20rem;}
   .index-list-w.divide .list-item .cont-area .info-list-w .info-list {margin-top: 4rem;}
   .index-list-w.divide .list-item .top-area .group {display: flex;}
@@ -3140,6 +3149,7 @@ footer .copy-area span:last-child:after {display: none;}
   .info-head .form-input.srch-input {width: 100%; margin-top: 16rem;}
   .info-head .left .sort-select {margin-left: 18rem; padding-left: 10rem;}
   .info-head .left .sort-select::before {top: 2rem; height: 16rem;}
+  .info-head .left .sort-select .form-select.txt-select{min-height:auto;}
   .cont-sec .trainings-list-w {margin-top: 24rem;}
           /* 간격 */
           /* 기본 -> pc: 64, mobile: 32 */
@@ -3278,7 +3288,8 @@ footer .copy-area span:last-child:after {display: none;}
 .article-list-w.index-list .list-item:last-child {padding-bottom: 0;}
 .article-list-w.index-list .list-item {display: flex;}
 .article-list-w.index-list .list-item .txt-area {display: flex; align-items: center; width: 100%; min-width: 0;}
-.article-list-w.index-list .list-item .txt-area .num {flex-shrink: 0; align-self: center; width: 20rem; min-width: 20px; margin-right: 30rem; text-align: center;}
+/* .article-list-w.index-list .list-item .txt-area .num {flex: 0; align-self: center; width: 20rem; min-width: 20px; margin-right: 30rem; text-align: center;} */
+.article-list-w.index-list .list-item .txt-area .num {flex-shrink: 0; flex-grow: 0; align-self: center; width: auto; min-width: 20px; margin-right: 30rem; text-align: center;}
 .article-list-w.index-list .list-item .txt-area .training {width: 100%; min-width: 0;}
 .article-list-w.index-list .list-item .txt-area .training .dl {display: flex;}
 .article-list-w.index-list .list-item .txt-area .training .dl ~ .dl {margin-top: 8rem;}
@@ -3640,9 +3651,10 @@ footer .copy-area span:last-child:after {display: none;}
 .member-half-box .form-input {width: 100%;}
 .member-half-box .form-checkbox {margin-top: 24rem; margin-bottom: 48rem;}
 .member-half-box .btn-solid {width: 100%;}
-.member-half-box .btn-wrap:last-child {margin-top: 24rem;}
-.member-half-box .btn-wrap .btn-set:first-child .btn-text-icon {position: relative;}
-.member-half-box .btn-wrap .btn-set:first-child .btn-text-icon:last-child:before {content: ''; display: block; position: absolute; left: -12rem; top: 6rem; width: 1px; height: 14rem; background-color: #DFE1E4;}
+.member-half-box .btn-wrap:last-child {flex-wrap: wrap; margin-top: 24rem; row-gap:8rem; column-gap: 20rem;}
+.member-half-box .btn-wrap .btn-set:first-child .btn-text {position: relative;}
+.member-half-box .btn-wrap .btn-set:first-child .btn-text:last-child {margin-left: 11rem;}
+.member-half-box .btn-wrap .btn-set:first-child .btn-text:last-child:before {content: ''; pointer-events: none; display: block; position: absolute; left: -10rem; top: max(5rem, 5px); width: 1px; height: max(16rem, 14px);; background-color: #DFE1E4;}
 .member-half-box .img-area {width: 600rem; height: 400rem; clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%); transition: 1s clip-path cubic-bezier(0.62, 0, 0.43, 1);} /* initial */ /* 로그인 : 이미지 높이 400 */
 .member-half-box:has(.btn-list-w) .img-area {height: 480rem;} /* 회원가입 : 이미지 높이 480 */
 .member-half-box .img-area .img {position:relative; left: 100rem; width:100%; height: 100%; transition: left 1s cubic-bezier(0.62, 0, 0.43, 1);}
@@ -3664,8 +3676,9 @@ footer .copy-area span:last-child:after {display: none;}
   .member-half-box {display: block; margin-top: 40rem; padding: 0 24rem;}
   .member-half-box .left {width: 100%;}
   .member-half-box .right {display: none;}
-  .member-half-box .btn-wrap .btn-set:first-child .btn-text-icon{margin-right:7rem;}
-  .member-half-box .btn-wrap .btn-set:first-child .btn-text-icon:last-child:before {top: 5rem;}
+  /* .member-half-box .btn-wrap .btn-set:first-child .btn-text-icon{margin-right:7rem;} */
+  .member-half-box .btn-wrap .btn-set:first-child .btn-text:last-child {margin-left: 9rem;} 
+  .member-half-box .btn-wrap .btn-set:first-child .btn-text:last-child:before {top: 5rem; height: 12rem;}
   .member-half-box .btn-wrap:last-child {margin-top: 16rem;} 
 
   .member-half-box .btn-list-w .btn-list .f-title2 {font-family: "Pretendard_Bold", sans-serif;}
@@ -3861,6 +3874,7 @@ footer .copy-area span:last-child:after {display: none;}
 .attendance-area .option-row:has(.form-radio input:checked) {border: 1px solid #9CA1A6;}
 .attendance-area .option-row .data-enter-form .row {flex-wrap: wrap;}
 .attendance-area .option-row .data-enter-form .row ~ .row {margin-top: 40rem;}
+.attendance-area .option-row .data-enter-form .row .th .title {font-family: "Pretendard_Medium", sans-serif;}
 .attendance-area .option-row .data-enter-form .row .td {width: auto;}
 .attendance-area .option-row .data-enter-form .row .td:nth-child(2) {margin-right: 80rem;}
 .attendance-area .option-row .etc-option-w .form-input {margin-left: 31rem; margin-top: 21rem;}

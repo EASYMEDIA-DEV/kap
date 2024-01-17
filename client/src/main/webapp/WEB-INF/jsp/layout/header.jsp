@@ -47,11 +47,9 @@
 	<script type="text/javascript" src="/common/js/Draggable.min.js"></script>
 	<script type="text/javascript" src="/common/js/swiper.min.js"></script>
 	<script type="text/javascript" src="/common/js/lottie-player.js"></script>
-	<script type="text/javascript" src="/common/js/bezier-easing.min.js"></script>
 	<script type="text/javascript" src="/common/js/jquery.cookies.js"></script>
 	<script type="text/javascript" src="/common/js/script.js"></script>
 	<script type="text/javascript" src="/common/js/lib/datetimepicker/jquery.datetimepicker.js"></script>
-
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="/common/js/kakao.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f90d438f5adb45f1893d7ca237eaac27&libraries=services,clusterer,drawing"></script>
@@ -67,6 +65,7 @@
 		<c:when test="${ mainYn eq 'Y' }">
 			<script type="text/javascript" src="/common/js/hammer.min.js"></script>
 			<script type="text/javascript" src="/common/js/main.js?bust=${sysDate}"></script>
+			<script type="text/javascript" src="/common/js/bezier-easing.min.js"></script>
 			<c:set var="wrapClass" value="main" />
 		</c:when>
 		<c:when test="${ fn:startsWith(servletPath, '/my-page/') }">
