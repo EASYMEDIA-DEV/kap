@@ -735,6 +735,15 @@
                         </div>
                     </fieldset>
 
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">QR코드<span class="star text-danger"> *</span></label>
+                            <div class="col-sm-11">
+                                <button type="button" class="btn btn-default btn-sm mb-sm" id="btnQrDownload">QR 이미지 다운로드</button>
+                            </div>
+                        </div>
+                    </fieldset>
+
                     <fieldset class="last-child">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>

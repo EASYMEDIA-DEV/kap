@@ -119,6 +119,10 @@ project(":admin") {
         implementation "net.javacrumbs.shedlock:shedlock-spring:4.46.0"
         implementation "net.javacrumbs.shedlock:shedlock-provider-jdbc-template:4.46.0"
 
+        /* QR */
+        implementation group: 'com.google.zxing', name: 'javase', version: '3.5.0'
+        implementation group: 'com.google.zxing', name: 'core', version: '3.5.0'
+
 
         implementation project(':common')
         implementation project(':error')

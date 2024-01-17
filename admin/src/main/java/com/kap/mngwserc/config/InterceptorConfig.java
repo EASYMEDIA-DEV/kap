@@ -52,7 +52,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
         //API 권한 체크
         registry.addInterceptor(cOApiValidInterceptor()).addPathPatterns("/api/**")
-                .excludePathPatterns("/api/sending")
+                .excludePathPatterns("/gpc/chcekc/id")
                 .order(1);
     }
 
