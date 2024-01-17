@@ -800,18 +800,10 @@
                 <!-- 참여자 목록-->
                 <div id="accsList" class="tab-pane fade" style="flex-wrap:wrap;">
 
-                    <fieldset>
-                        <div class="form-group text-sm">
-                            <div class="col-sm-11">
-                                <h6 class="mt0"><em class="ion-play mr-sm"></em>참여자 목록</h6>
-                            </div>
-                        </div>
-                    </fieldset>
-
                     <fieldset class="ptcptField">
                         <div class="clearfix">
                             <h6 class="pull-left mt0">
-                                <em class="ion-play mr-sm"></em>교육 참여자 목록 (총 <span id="ptcptListContainerTotCnt">0</span> 건)
+                                <em class="ion-play mr-sm"></em>참여자 목록 (총 <span id="ptcptListContainerTotCnt">0</span> 건)
                             </h6>
                             <!-- 현재 페이징 번호 -->
                             <input type="hidden" id="pageIndex" name="pageIndex" class="notRequired" value="${ rtnData.pageIndex }" />
@@ -1332,6 +1324,7 @@
                 </div>
             </div>
 
+
             <hr />
             <div class="clearfix">
                 <div class="pull-left">
@@ -1349,40 +1342,54 @@
                     </c:choose>
                 </div>
             </div>
-            <c:if test="${ not empty rtnInfo }">
-                <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
-                <div class="table-responsive ">
-                    <table class="table text-sm">
-                        <tbody>
-                            <tr>
-                                <th>최초 작성자</th>
-                                <td>${ rtnDto.regName }</td>
-                                <th>최초 작성일</th>
-                                <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
-                            </tr>
-                            <tr>
-                                <th>최종 수정자</th>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${ not empty rtnDto.modName }">
-                                            ${ rtnDto.modName }
-                                        </c:when>
-                                        <c:otherwise>-</c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <th>최종 수정일</th>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${ not empty rtnDto.modDtm }">
-                                            ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                                        </c:when>
-                                        <c:otherwise>-</c:otherwise>
-                                    </c:choose>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+
+            <c:if test="${not empty rtnDto}">
+                <h5 class="ml mb-xl"><em class="ion-play mr-sm"></em>등록/수정이력</h5>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">최초 등록자</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">${rtnDto.regName} (${rtnDto.regId})</p>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <label class="col-sm-1 control-label">최초 등록일시</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
+                        </div>
+                    </div>
+                </fieldset>
+                <c:set var="modFlag" value="${not empty rtnDto.modDtm && (rtnDto.regDtm ne rtnDto.modDtm)}" />
+                <fieldset class="last-child">
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">최종 수정자</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">
+                                <c:choose>
+                                    <c:when test="${modFlag}">
+                                        ${rtnDto.modName} (${rtnDto.modId})
+                                    </c:when>
+                                    <c:otherwise>
+                                        -
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <label class="col-sm-1 control-label">최종 수정일시</label>
+                        <div class="col-sm-4">
+                            <p class="form-control-static">
+                                <c:choose>
+                                    <c:when test="${modFlag}">
+                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                    </c:when>
+                                    <c:otherwise>
+                                        -
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
             </c:if>
         </form>
 
