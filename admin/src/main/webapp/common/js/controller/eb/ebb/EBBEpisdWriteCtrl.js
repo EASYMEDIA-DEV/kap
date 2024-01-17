@@ -287,6 +287,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$("#isttrContainer").find(".notIsttr").find("td").css("display", "");
 		}
 
+
+
 	}
 	var filedSet = function(data){
 
@@ -889,10 +891,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 							cmmCtrl.getLecturerLayerPop(function(data){
 
-								//두번호출 방지
-								if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+								if(data.choiceCnt  == -1){
 									return false;
 								}
+
+								//두번호출 방지
+								// if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+								// 	return false;
+								// }
 
 								if(data.choiceCnt  == 0){
 									alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));
@@ -942,11 +948,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 										var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 현재 동작을 취소한다.
-										$("#isttrContainer").find("tr").find("input:hidden").each(function(){
-											if($(this).val() == seq) {
-												alert("이미 추가된 강사입니다.");
-												passYn = true;
-											}
+
+										$("#isttrContainer").find("tr").find("input:hidden").each(function(index){
+											 if($(this).val() == seq) {
+											 	alert("이미 추가된 강사입니다.");
+											 	passYn = true;
+											 }
+
 										});
 										if(!passYn){
 											exIsttr.find("td").eq(1).text(name);

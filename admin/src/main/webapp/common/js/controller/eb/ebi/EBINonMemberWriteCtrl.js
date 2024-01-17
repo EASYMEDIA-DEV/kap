@@ -771,10 +771,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					click : function(){
 						cmmCtrl.getLecturerLayerPop(function(data){
 
-							//두번호출 방지
-							if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+							if(data.choiceCnt  == -1){
 								return false;
 							}
+							// //두번호출 방지
+							// if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+							// 	return false;
+							// }
 
 							if(data.choiceCnt  == 0){
 								alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));

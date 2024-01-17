@@ -1620,15 +1620,22 @@ var cmmCtrl = (function(){
 	//강사 검색 매핑
 	//getPartsCompanyLayerPop(function(data){data 객체를 받아서 처리});
 	var fn_lec_layer_pop = function(fnc){
+
 		$(".mpcLecturerSrchLayer").one('show.bs.modal', function() {
 			var modal = $(this);
 			modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
 			// Add class for soft backdrop
 			$(".mpcLecturerSrchLayer").find("#btnRefresh").click();
 			$(".mpcLecturerSrchLayer").find("#btnSearch").click();
+
 		}).one('hidden.bs.modal', function() {
+
+			 var param = {};
+			 param.choiceCnt = -1;
+			 $(this).trigger("choice", param)
 			// Remove class for soft backdrop (if not will affect future modals)
 		}).one('choice', function(data, param) {
+
 			// Remove class for soft backdrop (if not will affect future modals)
 			fnc(param);
 		}).modal();

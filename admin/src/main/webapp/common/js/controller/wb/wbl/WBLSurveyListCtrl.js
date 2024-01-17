@@ -161,6 +161,10 @@ define(["ezCtrl"], function(ezCtrl) {
                 if (rsn != "") {
                     frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
 
+
+                    //파라미터를 물고 가야함.
+                    //location.href = "./excel-down?" + frmDataObj.serialize();
+
                     $.fileDownload("./excel-down?" + frmDataObj.serialize() , {
                         prepareCallback : function(url){
                             jQuery(".loadingbar").stop().fadeIn(200);
@@ -178,10 +182,7 @@ define(["ezCtrl"], function(ezCtrl) {
                     alert(msgCtrl.getMsg("fail.reason"));
                     return;
                 }
-
             });
-
-
         }
     };
     ctrl.exec();
