@@ -1251,4 +1251,35 @@
             where mem.id = #{id}
     </select>
 
+
+    <!--
+        쿼리명 : MPAUserMapper.selectCmpnRelCount
+        설  명 : 사용자 회사 관계 카운팅
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.01.17    양현우       최초생성
+-->
+    <select id="selectCmpnRelCount" parameterType="MPAUserDto" resultType="java.lang.Integer">
+        select count(*) /* MPAUserMapper.selectCmpnRelCount */
+         from co_mem_cmpn_rel
+          where mem_seq =#{memSeq}
+           and bsnm_no =#{workBsnmNo}
+    </select>
+
+    <!--
+    쿼리명 : MPAUserMapper.updateCmpnRel
+    설  명 :  사용자 회사 관계 수정
+    수정일      수정자       수정내용
+    ==========   ========   ==============
+    2024.01.17    양현우       최초생성
+-->
+    <update id="updateCmpnRel" parameterType="MPAUserDto">
+        update co_mem_cmpn_rel
+        set mod_ip = #{modIp}
+          , mod_id = #{modId}
+          , mod_dtm = now()
+        where mem_seq =#{memSeq}
+          and bsnm_no =#{workBsnmNo}
+    </update>
+
 </mapper>

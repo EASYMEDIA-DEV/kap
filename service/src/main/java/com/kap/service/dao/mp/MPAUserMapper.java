@@ -222,4 +222,19 @@ public interface MPAUserMapper {
      */
     MPAUserDto selectUserDtlId(MPAUserDto mpaUserDto);
 
+
+    /**
+     * 사용자 회사 관계 카운팅
+     * @param mpaUserDto
+     * @return
+     */
+    int selectCmpnRelCount(MPAUserDto mpaUserDto);
+
+    /**
+     * 사용자 회사 관계 수정
+     * @param mpaUserDto
+     * @return
+     */
+    void updateCmpnRel(MPAUserDto mpaUserDto);
+
 }

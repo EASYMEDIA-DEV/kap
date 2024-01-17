@@ -350,7 +350,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-input form-display" style="display:none;">
-                                                                <input type="text" placeholder="기타 직급 입력"  class="pstnNm notRequired pstnNmOld" value="${rtnDtl.pstnNm}" >
+                                                                <input type="text" placeholder="기타 직급 입력"  class="pstnNm notRequired pstnNmOld pstnNmOld2" value="${rtnDtl.pstnNm}" >
                                                             </div>
 
                                                         </div>

@@ -41,6 +41,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         } else {
             alert(msgCtrl.getMsg("fail.mp.mph.al_002"));
+            $("#password").val("");
+            $("#password").focus();
             return false;
         }
     }
@@ -423,6 +425,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             pstnCdOld : {
                 event : {
                     change : function() {
+
                         $(".pstnNmOld").val("");
                         $(".pstnCd").val($(this).val());
                         if($(this).val() == 'MEM_CD01007') {
@@ -437,7 +440,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             pstnNmOld : {
                 event : {
                     input : function() {
-                        $(".pstnNm").val($(this).val());
+                        $(".pstnNmOld").val($(this).val());
                     }
                 }
             }
@@ -514,7 +517,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             alert(msgCtrl.getMsg("fail.mp.join.al_034"));
                             return false;
                         }
-                        if($(".pstnCdOld").val() =='MEM_CD01007' && $(".pstnNm").val() =='') {
+                        if($(".pstnCdOld").val() =='MEM_CD01007' && $(".pstnNmOld2").val() =='') {
                             alert(msgCtrl.getMsg("fail.mp.join.al_035"));
                             return false;
                         }

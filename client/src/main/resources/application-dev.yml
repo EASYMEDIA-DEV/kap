@@ -19,6 +19,7 @@ app:
     fileExtns: jpg,jpeg,gif,png,bmp,mp4,webm,wmv,avi,mkv,pdf,ppt,pptx,xls,xlsx,doc,docx,dox,hwp,hwpx,txt,zip
     imageExtns: jpg,jpeg,gif,png,bmp
     videoExtns: mp4,webm,wmv,avi,mkv
+    user-domain: http://kap.easymedia.kr
     #파일 업로드 크기
     max-size: 41943040
     #템플릿 경로

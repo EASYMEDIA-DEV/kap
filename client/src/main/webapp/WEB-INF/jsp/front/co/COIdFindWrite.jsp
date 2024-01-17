@@ -87,7 +87,7 @@
                                         <div class="data-line">
                                             <div class="form-group">
                                                 <div class="form-input w-longer">
-                                                    <input class="hpNo" id="hpNo" name="mobileno" title="휴대폰 번호" type="text" placeholder="휴대폰번호 입력" maxlength="13">
+                                                    <input class="hpNo" id="hpNo" name="mobileno" title="휴대폰번호" type="text" placeholder="휴대폰번호 입력" maxlength="13">
                                                 </div>
                                             </div>
                                             <div class="noti-txt-w">

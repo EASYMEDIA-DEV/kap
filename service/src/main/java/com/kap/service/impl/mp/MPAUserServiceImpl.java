@@ -52,6 +52,7 @@ import java.util.List;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.11.09		양현우				   최초 생성
+ *    2024.01.17		양현우				   a -> b -> a 이직 시 오류 수정
  * </pre>
  */
 
@@ -318,7 +319,16 @@ public class MPAUserServiceImpl implements MPAUserService {
 
         if(mpaUserDto.getMemCd().equals("CP")) {
             if(mpJoinDto.getPartTypeChg().equals("new")) {
-                mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+                /**
+                 * 24-01-17 추가
+                 * 회사 관계 카운팅 없으면 ins 있으면 upd
+                 */
+                if(mpaUserMapper.selectCmpnRelCount(mpaUserDto) >= 1) {
+                    mpaUserMapper.updateCmpnRel(mpaUserDto);
+                } else {
+                    mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+
+                }
             }
             if(mpJoinDto.getBsnmChk().equals("false") && dupCmpnCnt == 0) {
                 mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
