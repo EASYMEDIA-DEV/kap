@@ -284,6 +284,8 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
 
                 $("input[name=edctnPlaceAddr]").val(edctnPlaceAddr);
             });
+
+            cmmCtrl.setCalendar();
         }
     };
 

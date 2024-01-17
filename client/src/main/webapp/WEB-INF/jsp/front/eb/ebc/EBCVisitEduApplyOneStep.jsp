@@ -83,15 +83,42 @@
                                             </tr>
                                             <tr>
                                                 <th>휴대폰번호</th>
-                                                <td>${kl:emptyHypen(applicantInfo.hpNo)}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty applicantInfo.hpNo}">
+                                                            ${applicantInfo.hpNo}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>이메일</th>
-                                                <td>${kl:emptyHypen(applicantInfo.email)}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty applicantInfo.email}">
+                                                            ${applicantInfo.email}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>일반 전화번호</th>
-                                                <td>${kl:emptyHypen(applicantInfo.telNo)}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty applicantInfo.telNo}">
+                                                            ${applicantInfo.telNo}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>부서</th>
@@ -152,7 +179,16 @@
                                             </tr>
                                             <tr>
                                                 <th>회사 전화번호</th>
-                                                <td>${kl:emptyHypen(rtnInfo.telNo)}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnInfo.telNo}">
+                                                            ${rtnInfo.telNo}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
 
                                             <tr>

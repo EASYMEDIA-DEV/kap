@@ -154,9 +154,9 @@
                                             <div class="td">
                                                 <div class="data-line-w">
                                                     <div class="data-line">
-                                                        <div class="form-group">
-                                                            <div class="form-input calendar" onclick="jQuery(this).parent().prev().focus();">
-                                                                <input type="text" class="form-control input-sm datetimepicker_strtDt" id="hopeDt" name="hopeDt" value="" title="설립일자" />
+                                                        <div class="form-group form-calendar">
+                                                            <div class="form-input calendar">
+                                                                <input type="text" class="datetimepicker_endDt" id="hopeDt" name="hopeDt" onclick="cmmCtrl.initCalendar(this);"  placeholder="2023.01.01">
                                                             </div>
                                                         </div>
                                                     </div>
