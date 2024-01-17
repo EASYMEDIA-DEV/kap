@@ -593,7 +593,7 @@ var exports = {
         }
         if(type == 'cun') {
             tabTwo();
-        }else if(type == 'bus' ) {
+        }else if(type == 'san' ) {
             tabThree();
         } else if(type == 'ken' ) {
             tabFour(kenChk);
@@ -769,7 +769,6 @@ var exports = {
             event : {
                 click : function() {
                     var activeTab = $('#myTabs li.active a').attr('href').substring(1);
-                    console.log(activeTab);
                     //페이징 이동
                     if( $(this).attr("value") != "null" ){
                         $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
@@ -836,14 +835,15 @@ var exports = {
                 use : true,
                 func : function (){
                     var actionUrl = "/mngwserc/mp/mpa/update";
-                    cmmCtrl.fileFrmAjax(function(data){
-                        //콜백함수. 페이지 이동
-                        if(data.respCnt > 0){
-                            alert(msgCtrl.getMsg("fail.mp.mpd.al_004"));
-                            location.replace("./list");
-                        }
-                    }, actionUrl, $formObj, "json");
-
+                    if(confirm(msgCtrl.getMsg("confirm.upd"))) {
+                        cmmCtrl.fileFrmAjax(function (data) {
+                            //콜백함수. 페이지 이동
+                            if (data.respCnt > 0) {
+                                alert(msgCtrl.getMsg("fail.mp.mpd.al_004"));
+                                location.replace("./list");
+                            }
+                        }, actionUrl, $formObj, "json");
+                    }
                 },
                 error: function(e){
                     console.log(e);

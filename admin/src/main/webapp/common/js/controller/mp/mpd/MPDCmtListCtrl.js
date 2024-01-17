@@ -355,9 +355,9 @@ define(["ezCtrl"], function(ezCtrl) {
             var totCnt = $(respObj).eq(0).data("totalCount");
             //총 건수
             $("#listContainerKenTotCnt").text(totCnt);
-            if(kenChk) {
-                $('.chkdd').remove();
-            }
+            // if(kenChk) {
+            //     $('.chkdd').remove();
+            // }
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "listContainerKen", "pagingContainerKen");
         }, "/mngwserc/mp/mpd/select-tab-four", $formObj, "POST", "html",'',false);
