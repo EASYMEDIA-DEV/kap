@@ -1550,12 +1550,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
 						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
 
-						//시험안하면 날짜 안넣어줌 에러남
-						if($("#examStrtDtm").attr("class").indexOf("notRequired") < 0){
-							actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
-							actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
-						}
-						
+						actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
+						actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
+
 
 
 

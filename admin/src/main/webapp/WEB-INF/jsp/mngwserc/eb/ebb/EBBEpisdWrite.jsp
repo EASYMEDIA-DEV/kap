@@ -659,8 +659,9 @@
 
 
                     <fieldset class="jdgmtYn" style="display:none;">
+                        ${rtnDto.examStrtDtm}
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">평가<span class="star text-danger"> *</span></label>
+                            <label class="col-sm-1 control-label">평가 <span class="star text-danger"> *</span></label>
                             <div class="col-sm-11">
                                 <button type="button" class="btn btn-inverse btn-sm eduExamSearch">
                                     평가 검색

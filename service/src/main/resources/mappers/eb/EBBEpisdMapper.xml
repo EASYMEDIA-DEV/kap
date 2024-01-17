@@ -941,8 +941,8 @@
 				, #{srvStrtDtm}
 				, #{srvEndDtm}
 				, #{examSeq}
-				,#{ examStrtDtm}
-				, #{examEndDtm}
+				, if(#{examStrtDtm}='', null , #{examStrtDtm})
+				, if(#{examEndDtm}='', null , #{examEndDtm})
 				, #{otsdExamPtcptYn}
 				, #{cprtnInsttSeq}
 				, #{cmptnAutoYn}
@@ -1202,8 +1202,8 @@
 			, exam_seq = #{examSeq}
 			, srv_strt_dtm = #{srvStrtDtm}
 			, srv_end_dtm = #{srvEndDtm}
-			, exam_strt_dtm = #{examStrtDtm}
-			, exam_end_dtm = #{examEndDtm}
+			, exam_strt_dtm = if(#{examStrtDtm}='', null , #{examStrtDtm})
+			, exam_end_dtm = if(#{examEndDtm}='', null , #{examEndDtm})
 			, cmptn_auto_yn = #{cmptnAutoYn}
 			, otsd_exam_ptcpt_yn = #{otsdExamPtcptYn}
 			, bdget_expns_yn = #{bdgetExpnsYn}
