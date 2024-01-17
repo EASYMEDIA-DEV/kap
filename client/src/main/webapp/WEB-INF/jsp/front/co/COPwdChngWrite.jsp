@@ -9,7 +9,7 @@
                         <c:when test="${ tmpLgnVO.respCd eq '1210' }">
                             <span class="for-move">임시 비밀번호 변경 안내</span>
                         </c:when>
-                        <c:when test="${ tmpLgnVO.respCd eq '1410' or tmpLgnVO.respCd eq '1510'}">
+                        <c:when test="${ tmpLgnVO.respCd eq '1400'}">
                             <span class="for-move">비밀번호 변경 안내</span>
                         </c:when>
                     </c:choose>
@@ -90,14 +90,14 @@
 
             <div class="page-bot-btn-sec">
                 <c:choose>
-                    <c:when test="${ tmpLgnVO.respCd eq '1210' or tmpLgnVO.respCd eq '1510'}">
+                    <c:when test="${ tmpLgnVO.respCd eq '1210'}">
                         <div class="btn-wrap align-center">
                             <div class="btn-set">
                                 <button type="submit" class="btn-solid small black-bg"><span>변경하기</span></button>
                             </div>
                         </div>
                     </c:when>
-                    <c:when test="${ tmpLgnVO.respCd eq '1410' }">
+                    <c:when test="${ tmpLgnVO.respCd eq '1400' }">
 
                         <div class="btn-wrap">
                             <div class="btn-set">
@@ -113,10 +113,9 @@
             </form>
         </div>
         <c:choose>
-            <c:when test="${ tmpLgnVO.respCd eq '1410' }">
+            <c:when test="${ tmpLgnVO.respCd eq '1400' }">
                 <div class="noti-txt-w">
                     <p class="bullet-noti-txt f-caption2">* 회원님의 개인정보를 안전하게 보호하기 위해 3개월 주기로 비밀번호 변경을 권장드립니다.</p>
-                    <p class="bullet-noti-txt f-caption2">* 비밀번호 변경을 원하지 않을 경우 “다음에 변경하기” 버튼을 눌러 1개월 동안 안내 받지 않을 수 있습니다.</p>
                 </div>
             </c:when>
         </c:choose>

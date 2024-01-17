@@ -280,7 +280,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                 $("#formpstnNm").val($(".pstnNm").val());
                                 $("#formPstnCd").val($("#pstnCd").val());
 
-                                let buseonDtl = $("#deptDtlNmOld").val() == "" ? '' : "(" + $("#deptDtlNm").val() +")";
+                                let buseonDtl = $("#deptDtlNmOld").val() == "" ? ' ' : "(" + $("#deptDtlNm").val() +")";
                                 $(".buseo").text($("#deptCd option:selected").text() +" " + buseonDtl);
                                 let gikgubDtl = $("#pstnCd option:selected").text() == '기타' ? "(" + $(".pstnNm").val() +")" : '';
                                 $(".gikgub").text($("#pstnCd option:selected").text() + " " + gikgubDtl);

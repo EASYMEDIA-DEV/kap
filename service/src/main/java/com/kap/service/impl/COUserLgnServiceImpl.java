@@ -135,13 +135,13 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 							String pwdChngDtm = CODateUtil.convertDate(rtnCOUserDto.getPwdChngDtm(), "yyyy-MM-dd HH:mm:ss", "yyyyMMdd", "");
 							if (CODateUtil.getDaysDiff(CODateUtil.addYearMonthDay(pwdChngDtm, 0, 0, 90), today) > 0)
 							{
-								if(rtnCOUserDto.getChngXtnsnCnt() >=3) {
-									//비밀번호 90일 변경 3회 연장 시
-									cOLoginDTO.setRespCd("1510");
-								} else {
+//								if(rtnCOUserDto.getChngXtnsnCnt() >=3) {
+//									//비밀번호 90일 변경 3회 연장 시
+//									cOLoginDTO.setRespCd("1510");
+//								} else {
 									//비밀번호 90일 변경
-									cOLoginDTO.setRespCd("1410");
-								}
+									cOLoginDTO.setRespCd("1400");
+//								}
 
 							}
 							// 접근가능 메뉴 확인
@@ -188,6 +188,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 						cOUserLgnMapper.updateLastLgnDtm(cOUserDetailsDTO);
 					}
 					cOUserDetailsDTO.setRdctUrl( cOLoginDTO.getRdctUrl() );
+					cOUserDetailsDTO.setRespCd( cOLoginDTO.getRespCd() );
         			RequestContextHolder.getRequestAttributes().setAttribute("tmpLgnMap", cOUserDetailsDTO, RequestAttributes.SCOPE_SESSION);
         		}
         		// 임시 로그인 세션을 생성한다.
