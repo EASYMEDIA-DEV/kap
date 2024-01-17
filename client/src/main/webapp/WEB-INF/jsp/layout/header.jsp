@@ -206,7 +206,7 @@
 						<div class="log-menu">
                             <c:choose>
                                 <c:when test="${ not empty loginMap}">
-                                    <p class="user-tit f-title1"><span>${loginMap.name}</span>님 <br/>안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
+                                    <p class="user-tit f-title1"><span>${loginMap.name}</span>님 안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
                                     <div class="pc btn-wrap">
                                         <a class="btn-text-icon black-arrow" href="/my-page/member/intrduction/certification" title="링크 이동"><span>정보수정</span></a>
                                         <a class="btn-text-icon black-arrow" href="/my-page/logout" title="링크 이동"><span>로그아웃</span></a>
@@ -225,6 +225,7 @@
                             <div class="loginfo-wrap">
                                 <div class="loginfo-box">
                                     <p class="info-tit f-title3">신청내역</p>
+									<span class="f-caption2">최근 1년 기준</span>
                                     <div class="info-cont">
                                         <ul class="counts">
                                             <li class="count">
