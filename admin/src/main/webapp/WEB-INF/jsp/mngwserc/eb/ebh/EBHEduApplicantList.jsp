@@ -218,7 +218,7 @@
 					<div class="col-sm-4">
 						<div class="row">
 							<div class="col-sm-3 pr0">
-								<select class="form-control input-sm" data-name="f">
+								<select class="form-control input-sm" data-name="f" style="font-size: 11px;">
 									<option value="">전체</option>
 									<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>과정명</option>
 									<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>회원 이름</option>
