@@ -1057,6 +1057,21 @@ var cmmCtrl = (function(){
 
 		jQuery.datetimepicker.setLocale("ko");
 
+		$.each(jQuery(".datetimepicker_input"), function(i, obj){
+			jQuery(obj).datetimepicker({
+				timepicker : false,
+				format : "Y-m-d",
+				defaultDate : new Date(),
+				defaultTime : "00:00",
+				scrollInput : false,
+				scrollMonth : false,
+				scrollTime : false,
+				onSelectDate : function(selectedDate, selectedObj) {
+					selectedObj.blur();
+				}
+			});
+		});
+
 		// 게시기간(일자) Start -----
 		$.each(jQuery(".datetimepicker_strtDt"), function(i, obj){
 			jQuery(obj).datetimepicker({

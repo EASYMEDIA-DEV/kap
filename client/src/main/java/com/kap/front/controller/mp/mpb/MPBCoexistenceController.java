@@ -3,11 +3,15 @@ package com.kap.front.controller.mp.mpb;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnMstDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
+import com.kap.core.dto.wb.WBSpprtDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRsumeTaskDtlDTO;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
@@ -59,6 +63,7 @@ public class MPBCoexistenceController {
     public final WBIBSupplyCompanyService wBIBSupplyCompanyService;
     public final WBJBAcomListService wBJBAcomListService;
     public final WBCBSecurityService wBCBSecurityService;
+    public final WBFBRegisterCompanyService wBFBRegisterCompanyService;
 
 
     /**
@@ -121,8 +126,17 @@ public class MPBCoexistenceController {
 
                 } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //스마트공장
-                    WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
-                    wbhaCalibrationSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    /* 스마트 상태 코드 값 */
+                    ArrayList<String> cdDtlList = new ArrayList<String>();
+                    cdDtlList.add("BGN_REG_INF");
+                    modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+                    /* 진행 단계 별 신청 정보*/
+                    WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
+                    wBFBRegisterSearchDTO.setAppctnSeq(mpbBsnSearchDTO.getAppctnSeq());
+                    modelMap.addAttribute("rtnDto", mpbBsnSearchDTO);
+                    modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getEditInfo(wBFBRegisterSearchDTO));
+                    modelMap.addAttribute("rtnRegisterData", wBFBRegisterCompanyService.getRegisterDtl(wBFBRegisterSearchDTO));
                     
                 } else if ("BSN08".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //검교정
@@ -209,6 +223,9 @@ public class MPBCoexistenceController {
                 } else {
                     if ("코드".equals(mpbBsnSearchDTO.getBsnCd())) {
 
+                    } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        WBFBRegisterDTO wBFBRegisterDTO = mpbBsnMstDTO.getWBFBRegisterDTO();
+                        respCnt = wBFBRegisterCompanyService.updInfoUser(wBFBRegisterDTO, multiRequest, request);
                     } else if ("BSN08".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //검교정
                     } else if ("BSN09".equals(mpbBsnSearchDTO.getBsnCd())) {

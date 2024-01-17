@@ -513,12 +513,12 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         /*상생신청 마스터*/
         respCnt =  wBFBRegisterCompanyMapper.updAppctnMst(wBFBRegisterDTO);
 
+        /* 과제/유형/스마트화 코드 수정 */
+        wBFBRegisterCompanyMapper.updRsumeTaskDtlSub(wBFBRegisterDTO);
+
         rsumeTaskDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
         rsumeTaskDTO.setModIp(wBFBRegisterDTO.getModIp());
         rsumeTaskDTO.setModId(wBFBRegisterDTO.getModId());
-
-        /* 과제/유형/스마트화 코드 수정 */
-        wBFBRegisterCompanyMapper.updRsumeTaskDtlSub(wBFBRegisterDTO);
 
         if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02001")){ /* 신청 */
             /* File Delect / Insert */
@@ -1402,4 +1402,169 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         return wBFBRegisterCompanyMapper.getApplyDtl(wBFBRegisterSearchDTO);
     }
 
+    public int updInfoUser(WBFBRegisterDTO wBFBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+        int respCnt = 0;
+
+        try {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            String modId = cOUserDetailsDTO.getId();
+            String modIp = CONetworkUtil.getMyIPaddress(request);
+
+            if(wBFBRegisterDTO.getRsumeSttsCd() != null && wBFBRegisterDTO.getRsumeSttsCd() != ""){
+
+                WBFBRsumeTaskDtlDTO wbfbRsumeTaskDtlDTO = wBFBRegisterDTO.getRsumeTaskDtl();
+                wbfbRsumeTaskDtlDTO.setModId(modId);
+                wbfbRsumeTaskDtlDTO.setModIp(modIp);
+
+                if(wBFBRegisterDTO.getAppctnSttsCd() == "PRO_TYPE02001") {
+                    WBFBRegisterSearchDTO wBFBRegisterSearchDTO = WBFBRegisterSearchDTO.builder()
+                            .bsnmNo(wBFBRegisterDTO.getBsnmNo())
+                            .sbrdnBsnmNo(wBFBRegisterDTO.getSbrdnBsnmNo())
+                            .build();
+
+                    int Overlap = wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
+
+                    if(Overlap > 0){
+                        respCnt = 999;
+                    } else {
+                        /* 신청 */
+                        WBFBRegisterDTO registerDTO = WBFBRegisterDTO.builder()
+                                .appctnSpprtSeq(wBFBRegisterDTO.getAppctnSeq())
+                                .taskCd(wbfbRsumeTaskDtlDTO.getTaskCd())
+                                .bsnTypeCd(wbfbRsumeTaskDtlDTO.getBsnTypeCd())
+                                .smtfnPrsntCd(wbfbRsumeTaskDtlDTO.getSmtfnPrsntCd())
+                                .smtfnTrgtCd(wbfbRsumeTaskDtlDTO.getSmtfnTrgtCd())
+                                .modId(modId)
+                                .modIp(modIp)
+                                .build();
+
+                        /* 사업, 과제, 스마트 만 수정 */
+                        wBFBRegisterCompanyMapper.updRsumeTaskDtlSub(registerDTO);
+
+                        /* 신청 파일 삭제 */
+                        wBFBRegisterCompanyMapper.delAppctnFileDtl(wbfbRsumeTaskDtlDTO);
+                        // 신청파일 등록
+                        List<COFileDTO> rtnList = null;
+                        Map<String, MultipartFile> files = multiRequest.getFileMap();
+                        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+                        MultipartFile file;
+                        int atchFileCnt = 0;
+
+                        while (itr.hasNext()) {
+                            Map.Entry<String, MultipartFile> entry = itr.next();
+                            file = entry.getValue();
+
+                            if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                                atchFileCnt++;
+                            }
+                        }
+
+                        if (!files.isEmpty()) {
+                            rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                            for (int i = 0; i < rtnList.size() ; i++) {
+
+                                List<COFileDTO> fileList = new ArrayList();
+                                rtnList.get(i).setStatus("success");
+                                rtnList.get(i).setFieldNm("fileSeq");
+                                fileList.add(rtnList.get(i));
+
+                                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                                WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
+                                fileInfo.setRsumeSeq(wBFBRegisterDTO.getRsumeSeq());
+                                fileInfo.setRsumeOrd(wBFBRegisterDTO.getRsumeOrd());
+                                if(i == 0) { fileInfo.setFileCd("ATTACH_FILE_TYPE01"); }
+                                else if(i == 1) { fileInfo.setFileCd("ATTACH_FILE_TYPE02"); }
+                                else if(i == 2) { fileInfo.setFileCd("ATTACH_FILE_TYPE03"); }
+                                else if(i == 3) { fileInfo.setFileCd("ATTACH_FILE_TYPE04"); }
+                                fileInfo.setFileSeq(fileSeqMap.get("fileSeq"));
+                                fileInfo.setRegId(modId);
+                                fileInfo.setRegIp(modIp);
+
+                                wBFBRegisterCompanyMapper.putAppctnFileDtl(fileInfo);
+
+                            }
+                        }
+                    }
+                } else if(wBFBRegisterDTO.getAppctnSttsCd() == "PRO_TYPE02002") {
+                    /* 사업계획 */
+                    wBFBRegisterCompanyMapper.updRsumeTaskDtl(wbfbRsumeTaskDtlDTO);
+                }
+            }
+
+            WBSpprtDtlDTO spprtDtl = wBFBRegisterDTO.getSpprtDtlList().get(0);
+            spprtDtl.setModId(modId);
+            spprtDtl.setModIp(modIp);
+
+            if(spprtDtl.getGiveType() != null && spprtDtl.getGiveType() != ""){
+
+                // 신청파일 등록
+                List<COFileDTO> rtnList = null;
+                Map<String, MultipartFile> files = multiRequest.getFileMap();
+                Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+                MultipartFile file;
+                int atchFileCnt = 0;
+
+                while (itr.hasNext()) {
+                    Map.Entry<String, MultipartFile> entry = itr.next();
+                    file = entry.getValue();
+
+                    if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                        atchFileCnt++;
+                    }
+                }
+
+                if (!files.isEmpty()) {
+                    rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                    for (int i = 0; i < rtnList.size() ; i++) {
+                        List<COFileDTO> fileList = new ArrayList();
+                        rtnList.get(i).setStatus("success");
+                        rtnList.get(i).setFieldNm("fileSeq");
+                        fileList.add(rtnList.get(i));
+                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                        WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
+
+                        if(spprtDtl.getGiveType() == "PRO_TYPE03001") {
+                            /* 선급금 */
+                            if(i == 0) {
+                                spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
+                            } else if (i == 1) {
+                                spprtDtl.setAcntFileSeq(fileSeqMap.get("fileSeq")); /*계좌이체약정서*/
+                            } else if (i == 2) {
+                                spprtDtl.setBnkbkFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
+                            }
+                        } else if(wBFBRegisterDTO.getAppctnSttsCd() == "PRO_TYPE03002") {
+                            /* 지원금 */
+                            if(i == 0) {
+                                spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
+                            } else if (i == 1) {
+                                spprtDtl.setAcntFileSeq(fileSeqMap.get("fileSeq")); /*계좌이체약정서*/
+                            } else if (i == 2) {
+                                spprtDtl.setBnkbkFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
+                            }
+                        } else if(wBFBRegisterDTO.getAppctnSttsCd() == "PRO_TYPE03003") {
+                            /* 기울임치 */
+                            if(i == 0) {
+                                spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
+                            } else if (i == 1) {
+                                spprtDtl.setTchlgLseFileSeq(fileSeqMap.get("fileSeq")); /*계좌이체약정서*/
+                            } else if (i == 2) {
+                                spprtDtl.setLsePayFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
+                            }
+                        }
+                    }
+                }
+
+                /* 상생신청지원금액상세 */
+                wBFBRegisterCompanyMapper.updSpprtDtl(spprtDtl);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return respCnt;
+    }
 }
