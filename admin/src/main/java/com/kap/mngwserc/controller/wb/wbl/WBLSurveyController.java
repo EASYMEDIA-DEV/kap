@@ -345,6 +345,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             wBLSurveyMstSearchDTO.setExcelYn("Y");
             //엑셀 생성
             wLSurveyService.excelDownload(wLSurveyService.selectSurveyList(wBLSurveyMstSearchDTO), response);
+
         }
         catch (Exception e)
         {
