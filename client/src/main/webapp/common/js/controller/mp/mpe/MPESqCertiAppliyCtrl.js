@@ -48,7 +48,6 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                     {
                         //이미지 보여주기
                         ctrl.obj.find(".idntfnPhotoFileSeqImage").prop("src", data[0].webPath)
-                        ctrl.obj.find(".idntfnPhotoFileSeqImage").data("src", data[0].webPath)
                     }
                     else
                     {
