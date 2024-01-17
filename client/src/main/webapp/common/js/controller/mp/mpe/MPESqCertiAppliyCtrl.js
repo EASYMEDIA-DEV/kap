@@ -55,7 +55,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                         var fileLen = data[0].orgnFileNm.length;
                         var extn    = data[0].orgnFileNm.lastIndexOf(".");
                         ctrl.obj.find(".file-list-area .file-name .name").text(data[0].orgnFileNm.substring(0, extn));
-                        ctrl.obj.find(".file-list-area .file-name .unit").text(data[0].orgnFileNm.substring(extn+1, fileLen));
+                        ctrl.obj.find(".file-list-area .file-name .unit").text(data[0].orgnFileNm.substring(extn, fileLen));
                     }
                 }
             });
