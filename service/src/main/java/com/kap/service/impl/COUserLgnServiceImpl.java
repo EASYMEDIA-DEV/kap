@@ -173,8 +173,16 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 			if (rtnCode.endsWith("00") || rtnCode.endsWith("10"))
 			{
 				cOUserDetailsDTO = cOUserLgnMapper.actionLogin(rtnCOUserDto);
+				//QR이미지 다운로드 처리
+				String episdCheck = "";
+				if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
+					episdCheck = "Y";
+				}
 				// 보안 처리 (로그인 세션 변경)
 				request.getSession().invalidate();
+				if("Y".equals(episdCheck)){
+					RequestContextHolder.getRequestAttributes().setAttribute("episdCheck", "Y", RequestAttributes.SCOPE_SESSION);
+				}
         		/// 로그인 세션을 생성한다.
         		if (rtnCode.endsWith("00"))
         		{
