@@ -140,7 +140,7 @@
                                                                         <div class="col-sm-12 pl0 pr0 mb-sm">
                                                                             <input type="hidden" class="notRequired" id="fileSeq${optnList.fileSeq}" name="fileSeq${optnList.fileSeq}" value="${optnList.fileSeq}" />
                                                                             <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                                            <spring:eval var="atchUploadMaxSize" expression="419430400" />
+                                                                            <spring:eval var="atchUploadMaxSize" expression="838860800" />
                                                                             <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq${optnList.fileSeq}" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="양식관리 첨부파일">
                                                                                 <div class="dz-default dz-message">
                                                                                     <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
@@ -183,7 +183,7 @@
                                                                     <div class="col-sm-12 pl0 pr0 mb-sm">
                                                                         <input type="hidden" class="notRequired" id="fileSeq${optnList.fileSeq}" name="fileSeq${optnList.fileSeq}" value="${optnList.fileSeq}" />
                                                                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                                        <spring:eval var="atchUploadMaxSize" expression="419430400" />
+                                                                        <spring:eval var="atchUploadMaxSize" expression="838860800" />
                                                                         <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq${optnList.fileSeq}" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="양식관리 첨부파일">
                                                                             <div class="dz-default dz-message">
                                                                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
@@ -252,7 +252,7 @@
                                                 <div class="col-sm-10 pl0 pr0">
                                                     <div class="col-sm-12 pl0 pr0 mb-sm">
                                                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                        <spring:eval var="atchUploadMaxSize" expression="419430400" />
+                                                        <spring:eval var="atchUploadMaxSize" expression="838860800" />
                                                         <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="양식관리 첨부파일">
                                                             <div class="dz-default dz-message">
                                                                 <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
