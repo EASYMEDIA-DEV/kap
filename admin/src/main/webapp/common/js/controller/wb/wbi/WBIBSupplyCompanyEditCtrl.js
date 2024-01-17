@@ -183,6 +183,15 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             cmmCtrl.listPaging(totCnt, $formObj, "changeList", "changePaging");
         }, "./changeList.ajax", $formObj, "POST", "html");
     }
+
+    let fnpstnNmShow = function(pstnCd) {
+        if(pstnCd == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }else{
+            $("#pstnNm").val("");
+            $("#pstnNm").css("display", "none");
+        }
+    }
     // set model
     ctrl.model = {
         id : {
@@ -248,35 +257,11 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
-            telNo : {
+            pstnCd : {
                 event : {
-                    input : function (event) {
-                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
-                        const phoneLen = phoneNumber.length;
-
-                        if (phoneNumber.startsWith('02')) {
-                            if (phoneLen >= 3 && phoneLen <= 6) {
-                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
-                            } else if (phoneLen > 6) {
-                                if (phoneLen == 9) {
-                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
-                                } else {
-                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
-
-                                }
-                            }
-                        } else {
-                            if (phoneLen > 3 && phoneLen <= 7) {
-                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
-                            } else if (phoneLen > 7) {
-                                if (phoneLen == 10) {
-                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
-                                } else {
-                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
-                                }
-                            }
-                        }
-                        event.target.value = phoneNumber;
+                    change : function() {
+                        var pstnCd = $(this).val();
+                        fnpstnNmShow(pstnCd);
                     }
                 }
             },
@@ -294,6 +279,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                     cmmCtrl.frmAjax(function(respObj) {
                                         /* return data input */
                                         setInputValue(respObj);
+                                        fnpstnNmShow();
                                     }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                                 } else {
                                     alert("이관 이력이 있는 회원은 선택이 불가합니다.");
@@ -347,7 +333,39 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         search(1);
                     }
                 }
-            }
+            },
+            telNumber : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+            },
         },
         immediately : function() {
             //리스트 조회
@@ -372,6 +390,17 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     if($(".dropzone .dz-preview").length < 1) {
                         alert(msgCtrl.getMsg("fail.notFileRequired"));
                         isValid = !isValid;
+                    }
+
+                    if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
+                        isValid = false;
+                        return false;
+                    }
+                    if( $("#compTel").val().length !=0 && $("#compTel").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
+                        isValid = false;
+                        return false;
                     }
 
                     return isValid;

@@ -124,7 +124,7 @@
                             </div>
                             <label class="col-sm-1 control-label">일반 전화번호</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11"/>
+                                <input type="text" class="form-control telNumber notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13"/>
                             </div>
                         </div>
                     </fieldset>
@@ -208,7 +208,7 @@
                             <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                             <div class="col-sm-5">
                                 <div class="col-sm-6" style="margin-left: -15px">
-                                    <input type="text" class="form-control phoneChk input-sm" id="compTel" name="compTel" value="${rtnInfo.telNo}" title="전화번호"oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" placeholder="전화번호 입력"/>
+                                    <input type="text" class="form-control telNumber input-sm" id="compTel" name="compTel" value="${rtnInfo.telNo}" title="전화번호"oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" placeholder="전화번호 입력"/>
                                 </div>
                             </div>
 
@@ -506,7 +506,7 @@
                         <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                         <div class="col-sm-5" style="margin-left: -15px">
                             <div class="col-sm-3">
-                                <select class="form-control input-sm notRequired" name="newPstnCd" title="직급">
+                                <select class="form-control input-sm notRequired" id="newPstnCd" name="newPstnCd" title="직급">
                                     <option value="">선택</option>
                                     <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                                         <c:if test="${fn:contains(cdList.cd, 'MEM_CD010')}">
@@ -516,7 +516,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4" style="margin-left: -15px">
-                                <input type="text" class="form-control notRequired"  value="${rtnInfo.newPstnNm}"  name="newPstnNm" title="직급 상세" maxlength="50"/>
+                                <input type="text" class="form-control notRequired"  value="${rtnInfo.newPstnNm}"  id="newPstnNm" name="newPstnNm" title="직급 상세" maxlength="50"/>
                             </div>
                         </div>
                     </div>
