@@ -638,7 +638,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			},
 
-
+			//QR다운로드
+			btnQrDownload :{
+				event:{
+					click:function(){
+						var detailsKey = ctrl.obj.find("input[name=detailsKey]").val();
+						var episdYear = ctrl.obj.find("select[name=episdYear]").val();
+						var episdOrd = ctrl.obj.find("select[name=episdOrd]").val();
+						window.open("./qr-image-download?detailsKey=" + detailsKey + "&episdYear=" + episdYear + "&episdOrd=" + episdOrd);
+					}
+				}
+			},
 
 		},
 		classname : {

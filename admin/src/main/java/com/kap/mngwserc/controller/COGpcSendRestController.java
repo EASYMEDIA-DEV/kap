@@ -49,14 +49,14 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value="/api")
+@RequestMapping(value="/gpc")
 public class COGpcSendRestController {
     /* api */
     private final RestTemplate gpcRestTemplate;
     /**
      * GPC 요청 Rest
      */
-    @GetMapping(value="/sending")
+    @GetMapping(value="/check/id")
     public Map setApi(COSampleDTO cOSampleDTO) throws Exception
     {
         //파라미터 정리
@@ -64,7 +64,7 @@ public class COGpcSendRestController {
         param.put("detailsKey", 2);
         param.put("name", "개발자");
         HttpEntity<Map> requestEntity = new HttpEntity<>(param);
-        ResponseEntity<String> res = gpcRestTemplate.exchange("/api/receive", HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<String> res = gpcRestTemplate.exchange("/api/check/id", HttpMethod.POST, requestEntity, String.class);
         String body = res.getBody();
         //요청 응답값
         Map mapData = RestTemplateUtil.readValue(body, Map.class);

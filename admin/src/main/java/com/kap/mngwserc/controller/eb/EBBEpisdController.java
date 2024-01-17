@@ -2,6 +2,13 @@ package com.kap.mngwserc.controller.eb;
 
 import com.easymedia.error.ErrorCode;
 import com.easymedia.error.exception.BusinessException;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+import com.kap.common.utility.COWebUtil;
+import com.kap.common.utility.seed.COBrowserUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
@@ -17,14 +24,21 @@ import com.kap.service.SVASurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +77,13 @@ public class EBBEpisdController {
 
     /** 평가 서비스 **/
     private final EBEExamService eBEExamService;
+
+    //파일 업로드 경로
+    @Value("${app.file.upload-path}")
+    private String imgUploadFilePath;
+    //사용자 http 경로
+    @Value("${app.user-domain}")
+    private String appUserDomain;
 
     /**
      *  교육회차관리 목록으로 이동한다.
@@ -562,6 +583,79 @@ public class EBBEpisdController {
             throw new Exception(e.getMessage());
         }
         return "mngwserc/eb/ebb/EBBMemAtndcAjax";
+    }
+
+    /**
+     * 교육 차수 QR 이미지 다운로드
+     */
+    @Operation(summary = "교육 차수 QR 이미지 다운로드.", tags = "", description = "")
+    @GetMapping(value="/qr-image-download")
+    public void getQrImageDownload(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response, HttpServletRequest request) throws Exception
+    {
+        //제목만 필요해서 강제 변경
+        eBBEpisdDTO.setSiteGubun("front");
+        HashMap rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+        String episdNm = ((EBBEpisdDTO)rtnMap.get("rtnData")).getNm();
+        String savePath = imgUploadFilePath + "upload/temp/qr";
+        String currentDt = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHH"));
+        File file = new File(savePath);
+        //파일 경로가 없으면 파일 생성
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        //QR 생성 HTTP URL
+
+        String content = appUserDomain + "/episd/qr-image-check?detailsKey="+eBBEpisdDTO.getDetailsKey()+"&episdYear="+eBBEpisdDTO.getEpisdYear()+"&episdOrd=" + eBBEpisdDTO.getEpisdOrd()+"&regDtm="+currentDt;
+        //String content = "https://192.168.0.109:9014/episd/qr-image-check?detailsKey="+eBBEpisdDTO.getDetailsKey()+"&episdYear="+eBBEpisdDTO.getEpisdYear()+"&episdOrd=" + eBBEpisdDTO.getEpisdOrd()+"&regDtm="+currentDt;
+        String fileName = "";
+        File temp = null;
+        try
+        {
+            //QR 생성
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            BitMatrix bitMatrix = qrCodeWriter.encode(content, BarcodeFormat.QR_CODE, 500, 500);
+            BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
+            //yyyyMMddHHmmss 형식의 날짜 및 시간 정보 파일명에 추가
+            fileName = episdNm + "_" + currentDt + ".png";
+            //파일 생성
+            temp = new File(savePath + "/" + fileName );
+            //ImageIO를 사용하여 파일쓰기
+            ImageIO.write(bufferedImage, "png", temp);
+        }
+        catch (IOException | WriterException e)
+        {
+            e.printStackTrace();
+        }
+        BufferedInputStream in = null;
+        BufferedOutputStream out = null;
+        long fSize = temp.length();
+        log.error("fSize : {}", fSize);
+        String userAgent = COWebUtil.removeCRLF(request.getHeader("User-Agent"));
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", COBrowserUtil.getDisposition(fileName, userAgent, "UTF-8"));
+        response.setContentLengthLong(fSize);
+        try {
+            in = new BufferedInputStream(new FileInputStream(temp));
+            out = new BufferedOutputStream(response.getOutputStream());
+            FileCopyUtils.copy(in, out);
+            out.flush();
+        }
+        catch (IOException ex) {
+            // 다음 Exception 무시 처리
+            // Connection reset by peer: socket write error
+            // EgovBasiclog.ignore("IO Exception", ex);
+            if (ex == null) {
+                log.error("IO Exception");
+            } else {
+                log.error("IO Exception", ex);
+            }
+
+        }
+        finally {
+            in.close();
+            out.close();
+            // ResourceCloseHelper.close(in, out);
+        }
     }
 
 
