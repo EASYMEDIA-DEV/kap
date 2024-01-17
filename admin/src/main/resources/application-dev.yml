@@ -21,3 +21,7 @@ app:
     max-size: 41943040
     #템플릿 경로
     template-file-path: /home/app/kap/admin/webapps/WEB-INF/template/
+    #사용자 도메인
+    user-domain: http://kap.easymedia.kr
+    #관리자 도메인
+    admin-domain: http://mng.kap.easymedia.kr
