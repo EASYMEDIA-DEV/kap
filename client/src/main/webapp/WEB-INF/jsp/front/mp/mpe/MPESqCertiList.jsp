@@ -227,7 +227,7 @@
                                                             </div>
                                                             <div class="inner-line">
                                                                 <div class="noti-txt-w">
-                                                                    <p class="bullet-noti-txt f-caption2">* 260X300 / 첨부 가능한 확장자(${imageExtns}) / 최대 업로드 용량(${atchUploadMaxSize / 1024 / 1024}MB) / 최대개수(1개)</p>
+                                                                    <p class="bullet-noti-txt f-caption2">* 260X300 / 첨부 가능한 확장자(${imageExtns}) / 최대 업로드 용량(<fmt:formatNumber type="number" maxFractionDigits="0" value="${atchUploadMaxSize / 1024 / 1024}"/>MB) / 최대개수(1개)</p>
                                                                 </div>
                                                             </div>
                                                         </div>
