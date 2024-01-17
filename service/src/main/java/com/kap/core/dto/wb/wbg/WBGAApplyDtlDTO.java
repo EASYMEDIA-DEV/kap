@@ -3,6 +3,7 @@ package com.kap.core.dto.wb.wbg;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
+import com.kap.core.dto.wb.wbh.WBHAEuipmentDTO;
 import com.kap.core.dto.wb.wbh.WBHAMsEuipmentDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -76,9 +77,21 @@ public class WBGAApplyDtlDTO extends BaseDTO {
     @Schema(title = "파일코드")
     private String fileCd;
 
+    @Schema(title = "파일이름")
+    private String fileNm;
+
+    @Schema(title = "파일코드 리스트")
+    private List<String> fileCdList;
+
     @Schema(title = "신청파일 리스트")
     private List<WBGAApplyDtlDTO> fileInfoList;
 
+    @Schema(title = "대상 장비 리스트")
+    private List<WBGAEuipmentDTO> euipmentList;
+
     @Schema(title = "계측장비 리스트")
     private List<WBGAMsEuipmentDTO> msEquipmentList;
+
+    @Schema(title = "계측장비상세")
+    private WBGAMsEuipmentDTO wbgaMsEuipmentDTO;
 }

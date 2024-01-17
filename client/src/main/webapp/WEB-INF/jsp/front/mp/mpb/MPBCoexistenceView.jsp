@@ -274,7 +274,7 @@
             </div>
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap for-motion align-right">
-                    <a class="btn-solid small black-bg" href="javascript:"><span>목록</span></a>
+                    <a class="btn-solid small black-bg" href="./list"><span>목록</span></a>
                 </div>
             </div>
         </div>

@@ -102,5 +102,5 @@ public class WBGAApplyMstDTO extends BaseDTO {
     private WBBATransDTO wbbTransDTO;
 
     @Schema(title = "계측장비상세")
-    private WBGAMsEuipmentDTO wbhaMsEuipmentDTO;
+    private WBGAMsEuipmentDTO wbgaMsEuipmentDTO;
 }

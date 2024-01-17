@@ -874,7 +874,6 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
             String modIp = CONetworkUtil.getMyIPaddress(request);
 
             //상생신청진행 상태 업데이트
-            //관리자상태에 따라 분기처리해야함
             wbbaApplyDtlDTO.setRegId(modId);
             wbbaApplyDtlDTO.setRegIp(modIp);
             wbbaApplyDtlDTO.setModId(modId);
@@ -938,14 +937,14 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                 wbbaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_2");
                 wbbaApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2");
 
-                wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
+                rtnCnt = wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
             } else if ("PRO_TYPE04_2_3".equals(wbbaApplyDtlDTO.getAppctnSttsCd())) {
                 //보완요청 사용자->보완완료, 관리자 -> 미확인
                 wbbaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_4");
                 wbbaApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2");
-                wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
+                rtnCnt = wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }

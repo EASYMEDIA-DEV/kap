@@ -669,20 +669,20 @@
     <update id="updateApplyStatus" parameterType="wbbaApplyDtlDTO">
         UPDATE /* WBBBCompanyMapper.updateApplyStatus */ CX_APPCTN_RSUME_DTL
         SET
-            APPCTN_STTS_CD = #{appctnSttsCd},
             <if test='siteGubun != "admin"'>
                 APPCTN_STTS_CHNG_DTM = NOW(),
             </if>
-            MNG_STTS_CD = #{mngSttsCd},
             <if test='siteGubun != "front"'>
                 MNG_STTS_CHNG_DTM = NOW(),
             </if>
             <if test='siteGubun != "front"'>
                 RTRN_RSN_CNTN = #{rtrnRsnCntn},
+                MOD_ID = #{modId},
+                MOD_IP = #{modIp},
+                MOD_DTM = NOW(),
             </if>
-            MOD_ID = #{modId},
-            MOD_IP = #{modIp},
-            MOD_DTM = NOW()
+            APPCTN_STTS_CD = #{appctnSttsCd},
+            MNG_STTS_CD = #{mngSttsCd}
         WHERE APPCTN_SEQ = #{appctnSeq}
         AND RSUME_SEQ = #{rsumeSeq}
         AND RSUME_ORD = #{rsumeOrd}

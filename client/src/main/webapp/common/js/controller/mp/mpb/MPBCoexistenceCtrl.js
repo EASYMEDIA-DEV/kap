@@ -50,7 +50,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function(){
-            cmmCtrl.setCalendar()
+            cmmCtrl.setCalendar();
 
         }
     };

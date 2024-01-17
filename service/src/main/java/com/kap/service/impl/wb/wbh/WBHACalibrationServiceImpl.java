@@ -788,7 +788,6 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                     wbhaCalibrationMapper.deletePartsComSQInfo(wbhaCompanyDTO);
                 }
 
-                System.out.print("wbhaCompanyDTO :: " + wbhaCompanyDTO);
                 wbhaCalibrationMapper.updatePartsCompany(wbhaCompanyDTO);
                 // 부품사 수정 End
             }
@@ -1207,5 +1206,146 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         wbhaCalibrationSearchDTO = wbhaCalibrationMapper.getApplyDtl(wbhaCalibrationSearchDTO);
 
         return wbhaCalibrationSearchDTO;
+    }
+
+    /**
+     * 사용자페이지 - 신청자를 수정한다.
+     */
+    @Transactional
+    public int updateInfo(WBHAApplyDtlDTO wbhaApplyDtlDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+
+        int rtnCnt = 0;
+
+        try {
+            //마스터 생성
+            String modId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+            String modIp = CONetworkUtil.getMyIPaddress(request);
+
+            //상생신청진행 상태 업데이트
+            wbhaApplyDtlDTO.setRegId(modId);
+            wbhaApplyDtlDTO.setRegIp(modIp);
+            wbhaApplyDtlDTO.setModId(modId);
+            wbhaApplyDtlDTO.setModIp(modIp);
+
+
+            if (wbhaApplyDtlDTO.getRsumeOrd() == 1 || wbhaApplyDtlDTO.getRsumeOrd() == 3) {
+                wbhaCalibrationMapper.deleteFileInfo(wbhaApplyDtlDTO);
+
+                //신청파일 넣기
+                List<COFileDTO> rtnList = null;
+                Map<String, MultipartFile> files = multiRequest.getFileMap();
+                Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+                MultipartFile file;
+                int atchFileCnt = 0;
+
+                while (itr.hasNext()) {
+                    Map.Entry<String, MultipartFile> entry = itr.next();
+                    file = entry.getValue();
+
+                    if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                        atchFileCnt++;
+                    }
+                }
+
+                if (!files.isEmpty()) {
+                    List<WBBAApplyDtlDTO> optinList = null;
+                    rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                    for (int i = 0; i < rtnList.size() ; i++) {
+
+                        List<COFileDTO> fileList = new ArrayList();
+                        rtnList.get(i).setStatus("success");
+                        rtnList.get(i).setFieldNm("fileSeq");
+                        fileList.add(rtnList.get(i));
+
+                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                        wbhaApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                        wbhaApplyDtlDTO.setFileCd(wbhaApplyDtlDTO.getFileCdList().get(i));
+
+                        wbhaCalibrationMapper.insertFileInfo(wbhaApplyDtlDTO);
+                    }
+                }
+            }
+
+            rtnCnt = stepUpdateUserProcess(wbhaApplyDtlDTO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rtnCnt;
+    }
+
+    public int stepUpdateUserProcess(WBHAApplyDtlDTO wbhaApplyDtlDTO) throws Exception {
+        int rsultCnt = 0;
+        if (wbhaApplyDtlDTO.getRsumeOrd() == 1) {
+
+            //신청대상장비 생성시작
+            wbhaCalibrationMapper.deleteEuipment(wbhaApplyDtlDTO);
+
+            for(int j=0; j<wbhaApplyDtlDTO.getEuipmentList().size(); j++) {
+                WBHAEuipmentDTO wbhaEuipmentDTO = new WBHAEuipmentDTO();
+                int tchlgSeq = cxAppctnTchlgSeqIdgen.getNextIntegerId();
+                wbhaEuipmentDTO.setAppctnSeq(wbhaApplyDtlDTO.getAppctnSeq());
+                wbhaEuipmentDTO.setTchlgSeq(tchlgSeq);
+                wbhaEuipmentDTO.setTchlgOrd(j+1);
+                wbhaEuipmentDTO.setTchlgNm(wbhaApplyDtlDTO.getEuipmentList().get(j).getTchlgNm());
+                wbhaEuipmentDTO.setTchlgCnt(wbhaApplyDtlDTO.getEuipmentList().get(j).getTchlgCnt());
+                wbhaEuipmentDTO.setRegId(wbhaApplyDtlDTO.getModId());
+                wbhaEuipmentDTO.setRegIp(wbhaApplyDtlDTO.getModIp());
+
+                wbhaCalibrationMapper.insertEuipment(wbhaEuipmentDTO);
+            }
+
+            if ("PRO_TYPE07001_01_002".equals(wbhaApplyDtlDTO.getAppctnSttsCd())) {
+                //보안요청 사용자 -> 보완완료 관리자-> 미확인
+                wbhaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_01_003");
+                wbhaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_02_001");
+
+                rsultCnt = wbhaCalibrationMapper.updateApplyStatus(wbhaApplyDtlDTO);
+            }
+
+        } else if (wbhaApplyDtlDTO.getRsumeOrd() == 2) {
+            WBHAMsEuipmentDTO wbhaMsEuipmentDTO = new WBHAMsEuipmentDTO();
+            wbhaMsEuipmentDTO.setRsumeSeq(wbhaApplyDtlDTO.getRsumeSeq());
+            wbhaMsEuipmentDTO.setRsumeOrd(wbhaApplyDtlDTO.getRsumeOrd());
+            wbhaMsEuipmentDTO.setClbtnExpnsPmt(wbhaApplyDtlDTO.getWbhaMsEuipmentDTO().getClbtnExpnsPmt());
+            wbhaMsEuipmentDTO.setRegId(wbhaApplyDtlDTO.getModId());
+            wbhaMsEuipmentDTO.setRegIp(wbhaApplyDtlDTO.getModIp());
+            wbhaMsEuipmentDTO.setModId(wbhaApplyDtlDTO.getModId());
+            wbhaMsEuipmentDTO.setModIp(wbhaApplyDtlDTO.getModIp());
+
+
+            if ("PRO_TYPE07001_03_001".equals(wbhaApplyDtlDTO.getAppctnSttsCd())) {
+                //접수전 사용자 -> 접수완료 관리자-> 미확인
+                wbhaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_03_002");
+                wbhaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_04_002");
+
+                wbhaCalibrationMapper.insertMsEuipment(wbhaMsEuipmentDTO);
+                rsultCnt = wbhaCalibrationMapper.updateApplyStatus(wbhaApplyDtlDTO);
+            } else if ("PRO_TYPE07001_03_003".equals(wbhaApplyDtlDTO.getAppctnSttsCd())) {
+                //보완요청 사용자 -> 보완완료 관리자-> 미확인
+                wbhaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_03_004");
+                wbhaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_04_002");
+
+                wbhaCalibrationMapper.updateMsEuipment(wbhaMsEuipmentDTO);
+                rsultCnt = wbhaCalibrationMapper.updateApplyStatus(wbhaApplyDtlDTO);
+            }
+        } else if (wbhaApplyDtlDTO.getRsumeOrd() == 3) {
+            if ("PRO_TYPE07001_05_001".equals(wbhaApplyDtlDTO.getAppctnSttsCd())) {
+                //접수전 사용자 -> 접수완료 관리자-> 미확인
+                wbhaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_05_002");
+                wbhaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_06_002");
+
+                rsultCnt = wbhaCalibrationMapper.updateApplyStatus(wbhaApplyDtlDTO);
+            } else if ("PRO_TYPE07001_05_003".equals(wbhaApplyDtlDTO.getAppctnSttsCd())) {
+                //보완요청 사용자 -> 보완완료 관리자-> 미확인
+                wbhaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_05_004");
+                wbhaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_06_002");
+
+                rsultCnt = wbhaCalibrationMapper.updateApplyStatus(wbhaApplyDtlDTO);
+            }
+        }
+
+        return rsultCnt;
     }
 }

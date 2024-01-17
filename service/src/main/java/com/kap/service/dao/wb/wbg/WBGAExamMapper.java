@@ -5,6 +5,7 @@ import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbg.*;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
+import com.kap.core.dto.wb.wbh.WBHAMsEuipmentDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -280,5 +281,10 @@ public interface WBGAExamMapper {
      * 신청자 정보조회
      */
     public WBGAExamSearchDTO getApplyDtl(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+    /**
+     * 계측장비정보 신청여부 조회
+     */
+    public int updateMsEuipment(WBGAMsEuipmentDTO wbgaMsEuipmentDTO) throws Exception;
 
 }

@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div class="cont-sec no-border scroll-motion" data-controller="controller/mp/mpb/MPBCalibrationCtrl">
+<div class="cont-sec no-border scroll-motion" data-controller="controller/mp/mpb/MPBExamCtrl">
     <div class="for-motion">
         <div class="sec-tit-area">
             <p class="f-title3">사업진행상황</p>
@@ -45,16 +45,16 @@
 
                                                     <div class="data-inner-line addEquiment">
                                                         <c:forEach var="item" items="${rtnData.euipmentList}" varStatus="status">
-                                                        <c:set var="totalTchlg" value="${totalTchlg+status.index}"/>
-                                                        <c:set var="totalTchlgCnt" value="${totalTchlgCnt+item.tchlgCnt}"/>
+                                                            <c:set var="totalTchlg" value="${totalTchlg+status.index}"/>
+                                                            <c:set var="totalTchlgCnt" value="${totalTchlgCnt+item.tchlgCnt}"/>
                                                             <div class="form-group equiment">
                                                                 <div class="form-input w-longer">
-                                                                    <input type="text" class="tchlgNm" name="equiment.euipmentList[${status.index}].tchlgNm" value="${item.tchlgNm}" placeholder="장비명 입력" maxlength="50">
+                                                                    <input type="text" class="tchlgNm" name="exam.euipmentList[${status.index}].tchlgNm" value="${item.tchlgNm}" placeholder="장비명 입력" maxlength="50">
                                                                 </div>
                                                                 <div class="amount-div">
                                                                     <button type="button" class="amount-btn <c:if test="${item.tchlgCnt == 1}">disabled</c:if> minus"><img src="/common/images/icon-add-data-minus.svg" alt=""></button><!-- 클릭 안될 때 disabled class 추가 -->
                                                                     <div class="form-input">
-                                                                        <input type="text" class="tchlgCnt numberChk" name="equiment.euipmentList[${status.index}].tchlgCnt" value="${item.tchlgCnt}" title="대상장비 수량">
+                                                                        <input type="text" class="tchlgCnt numberChk" name="exam.euipmentList[${status.index}].tchlgCnt" value="${item.tchlgCnt}" title="대상장비 수량">
                                                                     </div>
                                                                     <button type="button" class="amount-btn <c:if test="${item.tchlgCnt == 100}">disabled</c:if> plus"><img src="/common/images/icon-add-data-plus.svg" alt=""></button>
                                                                 </div>
@@ -123,7 +123,7 @@
                                                         </div>
                                                         <div class="file-btn-area">
                                                             <input type="file" name="atchFile" id="searchFile" class="searchFile">
-                                                            <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE01">
+                                                            <input type="hidden" name="exam.fileCdList" value="ATTACH_FILE_TYPE01">
                                                             <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                         </div>
                                                         <!-- 2024-01-03 추가 -->
@@ -141,7 +141,7 @@
                                                         </div>
                                                         <div class="file-btn-area">
                                                             <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
-                                                            <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE11">
+                                                            <input type="hidden" name="exam.fileCdList" value="ATTACH_FILE_TYPE11">
                                                             <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                         </div>
                                                         <!-- 2024-01-03 추가 -->
@@ -198,10 +198,10 @@
                                         <div class="td">
                                             <div class="data-line-w">
                                                 <div class="data-line">
-                                                    <p class="data-title f-body1">검교정비용<span class="essential-mark color-sky">*</span></p>
+                                                    <p class="data-title f-body1">투자금액<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" class="comma" name="equiment.wbhaMsEuipmentDTO.clbtnExpnsPmt" placeholder="투자금액 입력" value="${rtnData.applyList[1].msEquipmentList[0].clbtnExpnsPmt}">
+                                                            <input type="text" class="comma" name="exam.wbgaMsEuipmentDTO.nvstmPmt" placeholder="투자금액 입력" value="${rtnData.applyList[1].msEquipmentList[0].nvstmPmt}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -217,7 +217,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="list-item  <c:if test="${rtnData.stageOrd eq 3}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
+                    <div class="list-item <c:if test="${rtnData.stageOrd eq 3}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <form name="frmData3" id="frmData3">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <c:choose>
@@ -269,7 +269,7 @@
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" name="atchFile" id="searchFile2" class="searchFile">
-                                                                <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE14">
+                                                                <input type="hidden" name="exam.fileCdList" value="ATTACH_FILE_TYPE14">
                                                                 <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
                                                             </div>
                                                             <!-- 2024-01-03 추가 -->

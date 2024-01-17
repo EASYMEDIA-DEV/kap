@@ -90,7 +90,7 @@
         2024.01.10  김태훈     최초 생성
     -->
     <select id="getBusinessYn" parameterType="mpbBsnSearchDTO" resultType="java.lang.String">
-        SELECT
+        SELECT /*MPBCoexistenceMapper.getBusinessYn*/
             CASE WHEN cd = #{bsnCd}
                      THEN 'Y' ELSE 'N' END businessYn
         FROM
@@ -106,7 +106,7 @@
         2024.01.10  김태훈     최초 생성
     -->
     <select id="getBsnDetail" parameterType="mpbBsnSearchDTO" resultType="mpbBsnSearchDTO">
-        SELECT
+        SELECT /*MPBCoexistenceMapper.getBsnDetail*/
             TMP.*,
             appctn_stts_cd,
             (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsnNm,

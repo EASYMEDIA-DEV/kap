@@ -121,4 +121,10 @@ public interface WBGAExamService {
      *   신청자 정보 조회
      */
     public WBGAExamSearchDTO getApplyDtl(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+    /**
+     * 사용자 신청자정보를 수정한다.
+     * @return
+     */
+    public int updateInfo(WBGAApplyDtlDTO wbgaApplyDtlDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
 }
