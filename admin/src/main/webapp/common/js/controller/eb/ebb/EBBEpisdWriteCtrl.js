@@ -1517,12 +1517,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 						}
 
-						if($("#examStrtDtm").attr("disabled") === undefined && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+						if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 							alert("시험시작일시를 선택해주세요");
 							return false;
 						}
 
-						if($("#examEndDtm").attr("disabled") === undefined && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+						if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 							alert("시험종료일시를 선택해주세요");
 							return false;
 						}
