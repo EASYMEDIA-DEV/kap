@@ -158,4 +158,9 @@ public interface EBCVisitEduMapper {
 	 */
 	public EBCVisitEduDTO selectVisitEduApplyRegDtm(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
+	/**
+	 * 사용자 방문교육 신청자정보를 조회
+	 */
+	public EBCVisitEduDTO selectApplicantInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
 }

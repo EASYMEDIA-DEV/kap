@@ -102,16 +102,16 @@ public class EBCVisitEduController {
     /**
      * 방문교육 신청 1단계(기본정보) 페이지로 이동한다.
      */
-    @RequestMapping(value="/apply/one-step")
-    public String getVisitEduApplyOneStepPage(MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
+    @RequestMapping(value="/apply/step1")
+    public String getVisitEduApplyOneStepPage(MPEPartsCompanyDTO mpePartsCompanyDTO, EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         String vwUrl = "/front/eb/ebc/EBCVisitEduApplyOneStep.front";
 
         try
         {
-            mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
-            MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
-
+            ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq()); ;
+            EBCVisitEduDTO applicantDto = ebcVisitEduService.selectApplicantInfo(ebcVisitEduDTO);
+            System.err.print(applicantDto.getMemCd());
             if(applicantDto.getMemCd().equals("CP")) {
                 mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
                 MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
@@ -140,7 +140,7 @@ public class EBCVisitEduController {
     /**
      * 방문교육 신청 2단계(신청내용입력) 페이지로 이동한다.
      */
-    @RequestMapping(value="/apply/two-step")
+    @RequestMapping(value="/apply/step2")
     public String getVisitEduApplyTwoStepPage(EBCVisitEduDTO ebcVisitEduDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap) throws Exception
     {
         String vwUrl = "/front/eb/ebc/EBCVisitEduApplyTwoStep.front";
@@ -267,7 +267,7 @@ public class EBCVisitEduController {
     /**
      * 신청분야별 체크박스값 호출
      */
-    @PostMapping(value = "/apply/two-step/changeAppctnFldCd")
+    @PostMapping(value = "/apply/step2/changeAppctnFldCd")
     public String changeAppctnFldCd(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         List<COCodeDTO> detailList = null;
         try
