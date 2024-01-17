@@ -525,19 +525,25 @@
         ==========   ========   ==============
         2023.11.20    양현우       최초생성
     -->
-    <select id="selectSanListCnt" parameterType="MPBBusDto" resultType="java.lang.Integer">
+    <select id="selectSanListCnt" parameterType="MPBSanDto" resultType="java.lang.Integer">
         select count(*)
         from cx_episd_mst m1
-                 inner join cx_appctn_mst m2
-                            on m1.episd_seq = m2.episd_seq
-                 inner join cp_cmpn_mst m3
-                            on m2.appctn_bsnm_no  = m3.bsnm_no
-                 inner join cx_episd_bsn_optn_dtl m4
-                            on m1.episd_seq  = m4.episd_seq
-                 inner join cx_appctn_rsume_dtl m5
-                            on m2.appctn_seq = m5.appctn_seq
+        inner join cx_appctn_mst m2
+        on m1.episd_seq = m2.episd_seq
+        inner join cp_cmpn_mst m3
+        on m2.appctn_bsnm_no  = m3.bsnm_no
+        inner join cx_episd_bsn_optn_dtl m4
+        on m1.episd_seq  = m4.episd_seq
+        inner join cx_appctn_rsume_dtl m5
+        on m2.appctn_seq = m5.appctn_seq
         where 1 = 1
-          and m2.mem_seq =#{detailsKey}
+        <if test="chkPS == 'P'.toString() ">
+            and m2.mem_seq =#{detailsKey}
+        </if>
+        <if test="chkPS == 'S'.toString() ">
+            and m2.pic_cmssr_seq=#{detailsKey}
+        </if>
+        order by m1.episd_seq desc
     </select>
 
 </mapper>

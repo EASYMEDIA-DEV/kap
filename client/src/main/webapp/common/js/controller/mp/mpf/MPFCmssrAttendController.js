@@ -85,7 +85,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             form.append( "files", e.target.files[0] );
                             form.append( "fileSeq",  $("#fileKickSeq").val() );
                             form.append( "fileOrd", $("#fileKickOrd").val() );
-                            form.append( "__csrf", $("#csrfKeyAttend").val() );
+                            form.append( "_csrf", $("#csrfKeyAttend").val() );
                             jQuery.ajax({
                                 url : "./insert-fileUpload"
                                 , type : "POST"
@@ -101,7 +101,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 }
                                 ,error: function (jqXHR)
                                 {
-                                    alert(jqXHR.responseText);
+                                    if(jqXHR.statusText =='parsererror' || jqXHR.statusText =='error') {
+                                        alert("등록가능한 파일이 아닙니다.");
+                                        $(".delKick").remove();
+                                        $("#emptykickFile").show();
+                                        $("#showKickFile").hide();
+                                        $("#fileKickNm").text("");
+                                        $("#kickOffFile").removeClass("attached");
+                                        chgkickImage = 0;
+                                        return false;
+                                    }
                                 }
                             });
                         }
@@ -126,7 +135,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             form.append( "files", e.target.files[0] );
                             form.append( "fileSeq",  $("#fileLvlSeq").val() );
                             form.append( "fileOrd", $("#fileLvlOrd").val() );
-                            form.append( "__csrf", $("#csrfKeyAttend").val() );
+                            form.append( "_csrf", $("#csrfKeyAttend").val() );
                             jQuery.ajax({
                                 url : "./insert-fileUpload"
                                 , type : "POST"
@@ -144,7 +153,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 }
                                 ,error: function (jqXHR)
                                 {
-                                    alert(jqXHR.responseText);
+                                    if(jqXHR.statusText =='parsererror' || jqXHR.statusText =='error') {
+                                        alert("등록가능한 파일이 아닙니다.");
+                                        $(".delLvl").remove();
+                                        $("#emptyLvlFile").show();
+                                        $("#showLvlFile").hide();
+                                        $("#fileLvlNm").text("");
+                                        $("#LvlFile").removeClass("attached");
+                                        chglvlImage = 0;
+
+                                        return false;
+                                    }
                                 }
                             });
                         }
@@ -294,12 +313,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     use : true,
 
                     func : function (){
-                            cmmCtrl.frmAjax(function(respObj) {
+                        if(confirm(msgCtrl.getMsg("confirm.sve"))) {
+                            cmmCtrl.frmAjax(function (respObj) {
+
                                 alert(msgCtrl.getMsg("success.sve"));
                                 location.reload();
-                            //     document.getElementById("formWthdrwSuccess").submit();
-                            }, "./insert-attend", $formObj, "POST", "json",'',false);
-
+                                //     document.getElementById("formWthdrwSuccess").submit();
+                            }, "./insert-attend", $formObj, "POST", "json", '', false);
+                        }
 
                     }
                 }

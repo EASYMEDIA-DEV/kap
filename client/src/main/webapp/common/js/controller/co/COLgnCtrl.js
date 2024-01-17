@@ -42,10 +42,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				location.replace(data.rdctUrl);
 			}
 		}
-		// 계정차단
+		// 탈퇴 계정
 		else if (code == "1090")
 		{
-			alert(msgCtrl.getMsg("fail.co.login.block"));
+			alert(msgCtrl.getMsg("fail.co.login.wthdrwUser"));
 		}
 		// 로그인 오류
 		else if (code == "1190")
