@@ -56,7 +56,7 @@
                 </div>
             </div>
             <c:if test="${ not empty rtnInfo }">
-                <h6 class="mt"><em class="ion-play mr-sm"></em>수정이력</h6>
+                <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                 <div class="table-responsive ">
                     <table class="table text-sm">
                         <tbody>

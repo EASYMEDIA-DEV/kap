@@ -75,7 +75,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-textarea">
-                                                                <textarea id="appctnRsn" name="appctnRsn" placeholder="신청사유 입력"></textarea>
+                                                                <textarea id="appctnRsn" name="appctnRsn" placeholder="신청사유 입력" maxlength="500"></textarea>
                                                                 <div class="check-byte">
                                                                     <p class="txt" id="appctnRsnTextCnt"><span class="current-byte">0</span>자</p>
                                                                     <p class="txt"><span class="max-byte">500</span>자</p>
@@ -133,7 +133,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-textarea">
-                                                                <textarea name="" id="appctnThemeCntn" name="appctnThemeCntn" placeholder="신청주제 입력"></textarea>
+                                                                <textarea name="" id="appctnThemeCntn" name="appctnThemeCntn" placeholder="신청주제 입력" maxlength="500"></textarea>
                                                                 <div class="check-byte">
                                                                     <p class="txt" id="appctnThemeCntnTextCnt"><span class="current-byte">0</span>자</p>
                                                                     <p class="txt"><span class="max-byte">500</span>자</p>
@@ -180,7 +180,7 @@
                                                             <div class="form-address">
                                                                 <div class="form-group">
                                                                     <div class="form-input">
-                                                                        <input type="text" id="placeZipcode" name="placeZipcode" placeholder="우편번호" value="" readonly="">
+                                                                        <input type="text" id="placeZipcode" name="placeZipcode" placeholder="우편번호" value="" readonly="" >
                                                                     </div>
                                                                     <div class="form-input w-longer">
                                                                         <input type="text" id="placeBscAddr" name="placeBscAddr" placeholder="주소" value="" readonly="">
@@ -209,7 +209,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-textarea">
-                                                                <textarea id="ptcptTrgtCntn" name="ptcptTrgtCntn" placeholder="참석대상 입력"></textarea>
+                                                                <textarea id="ptcptTrgtCntn" name="ptcptTrgtCntn" placeholder="참석대상 입력" maxlength="500"></textarea>
                                                                 <div class="check-byte">
                                                                     <p class="txt" id="ptcptTrgtCntnTextCnt"><span class="current-byte">0</span>자</p>
                                                                     <p class="txt"><span class="max-byte">500</span>자</p>
@@ -232,7 +232,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input">
-                                                                <input type="number" id="ptcptCnt" name="ptcptCnt" value="" maxlength="3" oninput="this.value=this.value.replace(/[^0-9]/g, '')" placeholder="인원수 입력">
+                                                                <input type="number" id="ptcptCnt" name="ptcptCnt" value="" maxlength="3" oninput="this.value = this.value.slice(0, 3).replace(/\D/g, '')" placeholder="인원수 입력">
                                                                 <p class="unit-txt">명</p>
                                                             </div>
                                                         </div>

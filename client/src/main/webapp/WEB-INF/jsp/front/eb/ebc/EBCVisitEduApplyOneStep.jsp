@@ -126,7 +126,12 @@
                                             </tr>
                                             <tr>
                                                 <th>직급</th>
-                                                <td>${applicantInfo.pstnNm}</td>
+                                                <td>
+                                                    ${applicantInfo.pstnCdNm}
+                                                    <c:if test="${applicantInfo.pstnCd eq 'MEM_CD01007'}" >
+                                                        (${applicantInfo.pstnNm})
+                                                    </c:if>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -264,7 +269,7 @@
                             <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
                         </div>
                         <div class="btn-set">
-                            <a class="btn-solid small black-bg" href="/education/visit/apply/two-step"><span>다음</span></a>
+                            <a class="btn-solid small black-bg" href="/education/visit/apply/step2"><span>다음</span></a>
                         </div>
                     </div>
                 </div>
