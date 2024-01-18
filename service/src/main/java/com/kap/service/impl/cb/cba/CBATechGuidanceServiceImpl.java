@@ -195,60 +195,70 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     }
 
     /**
-     * 컨설팅 기술 지도 등록
+     * 컨설팅 기술 지도 등록 관리자
      */
-    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception {
-        String siteGubun = pCBATechGuidanceInsertDTO.getSiteGubun();
-
+    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
         pCBATechGuidanceInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
         pCBATechGuidanceInsertDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replaceAll("-", ""));
 
         // 컨설팅 서브 정보 수정
         updateSubTechGuidanceInfo(pCBATechGuidanceInsertDTO);
 
-        if(!siteGubun.equals("front")){
-            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCBATechGuidanceInsertDTO.getFileList());
-            pCBATechGuidanceInsertDTO.setItrdcFileSeq(fileSeqMap.get("itrdcFileSeq"));
-            pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("impvmFileSeq"));
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCBATechGuidanceInsertDTO.getFileList());
+        pCBATechGuidanceInsertDTO.setItrdcFileSeq(fileSeqMap.get("itrdcFileSeq"));
+        pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("impvmFileSeq"));
 
-            // 신청 회원 정보
-            updateTechMemberInfo(pCBATechGuidanceInsertDTO);
-            // 부품사 정보
-            updateTechCompanyInfo(pCBATechGuidanceInsertDTO);
-        }else if(siteGubun.equals("front")) {
-            //신청파일 넣기
-            List<COFileDTO> rtnList = null;
-            Map<String, MultipartFile> files = multiRequest.getFileMap();
-            Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
-            MultipartFile file;
-            int atchFileCnt = 0;
+        // 신청 회원 정보
+        updateTechMemberInfo(pCBATechGuidanceInsertDTO);
+        // 부품사 정보
+        updateTechCompanyInfo(pCBATechGuidanceInsertDTO);
 
-            while (itr.hasNext()) {
-                Map.Entry<String, MultipartFile> entry = itr.next();
-                file = entry.getValue();
+        pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO));
+        return pCBATechGuidanceInsertDTO.getRespCnt();
+    }
 
-                if (file.getName().indexOf("atchFile") > -1 && file.getSize() > 0) {
-                    atchFileCnt++;
-                }
+    /**
+     * 컨설팅 기술 지도 등록 사용자
+     */
+    public int insertUserTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception {
+        pCBATechGuidanceInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
+        pCBATechGuidanceInsertDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replaceAll("-", ""));
+
+        // 컨설팅 서브 정보 수정
+        updateSubTechGuidanceInfo(pCBATechGuidanceInsertDTO);
+
+        //신청파일 넣기
+        List<COFileDTO> rtnList = null;
+        Map<String, MultipartFile> files = multiRequest.getFileMap();
+        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+        MultipartFile file;
+        int atchFileCnt = 0;
+
+        while (itr.hasNext()) {
+            Map.Entry<String, MultipartFile> entry = itr.next();
+            file = entry.getValue();
+
+            if (file.getName().indexOf("atchFile") > -1 && file.getSize() > 0) {
+                atchFileCnt++;
             }
+        }
 
-            if (!files.isEmpty()) {
-                rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+        if (!files.isEmpty()) {
+            rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
 
-                System.err.println(rtnList);
-                for (int i = 0; i < rtnList.size(); i++) {
+            System.err.println(rtnList);
+            for (int i = 0; i < rtnList.size(); i++) {
 
-                    List<COFileDTO> fileList = new ArrayList();
-                    rtnList.get(i).setStatus("success");
-                    rtnList.get(i).setFieldNm("fileSeq");
-                    fileList.add(rtnList.get(i));
+                List<COFileDTO> fileList = new ArrayList();
+                rtnList.get(i).setStatus("success");
+                rtnList.get(i).setFieldNm("fileSeq");
+                fileList.add(rtnList.get(i));
 
-                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
-                    if(i==0){
-                        pCBATechGuidanceInsertDTO.setItrdcFileSeq(fileSeqMap.get("fileSeq"));
-                    }else{
-                        pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("fileSeq"));
-                    }
+                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                if(i==0){
+                    pCBATechGuidanceInsertDTO.setItrdcFileSeq(fileSeqMap.get("fileSeq"));
+                }else{
+                    pCBATechGuidanceInsertDTO.setImpvmFileSeq(fileSeqMap.get("fileSeq"));
                 }
             }
         }
@@ -289,22 +299,10 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replace("-", ""));
         mPEPartsCompanyDTO = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
 
-        String[] cbsnSeq = {};
-        String[] nm = {};
-        String[] score = {};
-        String[] year = {};
-        String[] crtfnCmpnNm = {};
-
         String ctgryCd = pCBATechGuidanceInsertDTO.getCtgryCd();
-        // 회사 업종 상세 등록
-        if(ctgryCd.equals("COMPANY01002")) {
-            cbsnSeq = pCBATechGuidanceInsertDTO.getCbsnSeq().split(",");
-            nm = pCBATechGuidanceInsertDTO.getNm().split(",");
-            score = pCBATechGuidanceInsertDTO.getScore().split(",");
-            year = pCBATechGuidanceInsertDTO.getYear().split(",");
-            crtfnCmpnNm = pCBATechGuidanceInsertDTO.getCrtfnCmpnNm().split(",");
-        }
+
         MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+
 
         // 1차사 - 5스타
         if(ctgryCd.equals("COMPANY01001")){
@@ -315,28 +313,31 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             mPEPartsCompanyDTO.setTchlg5StarCd(pCBATechGuidanceInsertDTO.getTchlg5StarCd());
             mPEPartsCompanyDTO.setTchlg5StarCd(pCBATechGuidanceInsertDTO.getTchlg5StarCd());
         } else if(ctgryCd.equals("COMPANY01002")){ // 2차사 - SQ 정보
-
-            HashMap cbsnCdMap = new HashMap();
-
-            for(int i=0; i < 3; i++) {
-                mpePartsCompanyDTO.setNm(nm[i]);
-                mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(cbsnSeq[i]));
-                mpePartsCompanyDTO.setScore(Integer.valueOf(score[i]));
-                mpePartsCompanyDTO.setYear(Integer.valueOf(year[i]));
-                mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmpnNm[i]);
-                mpePartsCompanyDTO.setBsnmNo(mPEPartsCompanyDTO.getBsnmNo());
-
-                int cnt = cBATechGuidanceMapper.selectCmpnCbsnInfoCnt(Integer.valueOf(cbsnSeq[i]));
-                if(cnt >= 1){
-                    mpePartsCompanyDTO.setModId(pCBATechGuidanceInsertDTO.getRegId());
-                    mpePartsCompanyDTO.setModId(pCBATechGuidanceInsertDTO.getRegIp());
-                    mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
-                }else if(cnt == 0){
-                    mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
-                    mpePartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegId());
-                    mpePartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegIp());
-                    mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
+            mpePartsCompanyMapper.deletePartsComSQInfo(mPEPartsCompanyDTO);
+            for(int i=1; i < 4; i++) {
+                mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
+                mpePartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegId());
+                mpePartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegIp());
+                if(i==1){
+                    mpePartsCompanyDTO.setNm(pCBATechGuidanceInsertDTO.getNm1());
+                    mpePartsCompanyDTO.setScore(pCBATechGuidanceInsertDTO.getScore1());
+                    mpePartsCompanyDTO.setYear(pCBATechGuidanceInsertDTO.getYear1());
+                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBATechGuidanceInsertDTO.getCrtfnCmpnNm1());
+                    mpePartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
+                }else if(i==2){
+                    mpePartsCompanyDTO.setNm(pCBATechGuidanceInsertDTO.getNm2());
+                    mpePartsCompanyDTO.setScore(pCBATechGuidanceInsertDTO.getScore2());
+                    mpePartsCompanyDTO.setYear(pCBATechGuidanceInsertDTO.getYear2());
+                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBATechGuidanceInsertDTO.getCrtfnCmpnNm2());
+                    mpePartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
+                }else{
+                    mpePartsCompanyDTO.setNm(pCBATechGuidanceInsertDTO.getNm3());
+                    mpePartsCompanyDTO.setScore(pCBATechGuidanceInsertDTO.getScore3());
+                    mpePartsCompanyDTO.setYear(pCBATechGuidanceInsertDTO.getYear3());
+                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBATechGuidanceInsertDTO.getCrtfnCmpnNm3());
+                    mpePartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
                 }
+                mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
             }
         }
         mPEPartsCompanyDTO.setModId(pCBATechGuidanceInsertDTO.getRegId());
@@ -363,7 +364,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         mPEPartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegId());
         mPEPartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegIp());
 
-        mpePartsCompanyMapper.updatePartsCompany(mPEPartsCompanyDTO);
+       mpePartsCompanyMapper.updatePartsCompany(mPEPartsCompanyDTO);
     }
 
     /**

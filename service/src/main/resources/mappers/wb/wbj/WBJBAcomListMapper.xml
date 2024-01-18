@@ -28,6 +28,8 @@
         , F.CMPN_SEQ AS BSNM_NO
         , F.NAME
         , F.HP_NO
+        , B.appctn_bsnm_no as bsnm_no
+        , (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = B.appctn_bsnm_no) as cmpn_nm
         FROM
         (
         SELECT * FROM cx_episd_mst
@@ -35,7 +37,7 @@
         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
         INNER JOIN
         (
-        SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
+        SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.ctgry_cd, b.size_cd
         FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
         ) C /* 회원-회사 JOIN 테이블 */
         ON C.mem_seq = B.mem_seq
@@ -536,7 +538,36 @@
             C.TEL_NO,
             D.YEAR,
             D.EPISD,
-            B.*,
+            B.CMPN_NM,
+            B.RPRSNT_NM,
+            B.CMPN_NFRML_NM,
+            B.CMPN_CD,
+            B.CTGRY_CD,
+            B.SIZE_CD,
+            B.STBSM_DT,
+            B.TEL_NO AS COMP_TEL,
+            B.ZIPCODE,
+            B.BSC_ADDR,
+            B.DTL_ADDR,
+            B.SLS_PMT,
+            B.SLS_YEAR,
+            B.MPLE_CNT,
+            B.MJR_PRDCT_1,
+            B.MJR_PRDCT_2,
+            B.MJR_PRDCT_3,
+            B.QLTY_5_STAR_CD,
+            B.QLTY_5_STAR_YEAR,
+            B.PAY_5_STAR_CD,
+            B.PAY_5_STAR_YEAR,
+            B.TCHLG_5_STAR_CD,
+            B.TCHLG_5_STAR_YEAR,
+            B.ADM_MEMO,
+            B.REG_ID,
+            B.REG_IP,
+            B.REG_DTM,
+            B.MOD_ID,
+            B.MOD_IP,
+            B.MOD_DTM,
             E.APPCTN_STTS_CD,
             E.APPCTN_STTS_CHNG_DTM,
             E.MNG_STTS_CD,

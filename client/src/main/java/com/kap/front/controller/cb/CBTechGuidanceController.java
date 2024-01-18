@@ -110,9 +110,9 @@ public class CBTechGuidanceController {
             pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOLoginUserDTO.getSeq()));
 
             if(type.equals("tech")){
-                modelMap.addAttribute("actCnt", cBATechGuidanceService.insertTechGuidance(pCBATechGuidanceInsertDTO, multiRequest));
+                modelMap.addAttribute("actCnt", cBATechGuidanceService.insertUserTechGuidance(pCBATechGuidanceInsertDTO, multiRequest));
             }else{
-                modelMap.addAttribute("actCnt", cBBManageConsultService.insertManageConsult(pCBBManageConsultInsertDTO, multiRequest));
+                modelMap.addAttribute("actCnt", cBBManageConsultService.insertUserManageConsult(pCBBManageConsultInsertDTO, multiRequest));
             }
 
         /*}catch(Exception e){

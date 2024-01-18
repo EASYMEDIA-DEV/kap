@@ -162,7 +162,7 @@
                             </div>
                         </div>
                         <p class="text-bold mt">
-                            ※ OOO X OOO / 파일 확장자(${imageExtns}) / 최대 용량(<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                            ※ 1920*1080 / 파일 확장자(${imageExtns}) / 최대 용량(<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
                         </p>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                             </div>
                         </div>
                         <p class="text-bold mt">
-                            ※ OOO X OOO / 파일 확장자(mp4) / 최대 용량(<fmt:formatNumber value="${20971520 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                            ※ 1920*1080 / 파일 확장자(mp4) / 최대 용량(<fmt:formatNumber value="${20971520 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
                         </p>
                     </div>
                 </div>
@@ -195,7 +195,7 @@
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ OOO X OOO / 파일 확장자(${imageExtns}) / 최대 용량(<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                                    ※ 390*675 / 파일 확장자(${imageExtns}) / 최대 용량(<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
                                 </p>
                             </div>
                         </div>
@@ -210,7 +210,7 @@
                                     </div>
                                 </div>
                                 <p class="text-bold mt">
-                                    ※ OOO X OOO / 파일 확장자(mp4) / 최대 용량(<fmt:formatNumber value="${20971520 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                                    ※ 390*675 / 파일 확장자(mp4) / 최대 용량(<fmt:formatNumber value="${20971520 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
                                 </p>
                             </div>
                         </div>

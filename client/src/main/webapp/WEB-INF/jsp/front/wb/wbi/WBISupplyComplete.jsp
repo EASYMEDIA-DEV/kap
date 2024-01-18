@@ -5,11 +5,11 @@
             <p class="page-tit f-xlarge-title"><span class="for-move">사업신청</span></p>
             <div class="apply-step-w">
                 <div class="for-move">
-                    <div class="step-list"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
+                    <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
                         <p class="step-num">1</p>
                         <p class="step-con">기본정보</p>
                     </div>
-                    <div class="step-list ">
+                    <div class="step-list completed">
                         <p class="step-num">2</p>
                         <p class="step-con">정보입력</p>
                     </div>

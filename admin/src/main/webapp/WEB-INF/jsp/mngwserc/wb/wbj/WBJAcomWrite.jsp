@@ -92,7 +92,7 @@
                             </select>
                         </div>
                         <div class="col-sm-4" style="margin-left: -15px">
-                            <input type="text" class="form-control " id="pstnNm" name="pstnNm" value="" title="직급 상세" maxlength="50"/>
+                            <input type="text" class="form-control " style="display:none;" id="pstnNm" name="pstnNm" value="" title="직급 상세" maxlength="50"/>
                         </div>
                     </div>
                 </div>
@@ -191,7 +191,7 @@
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
-                            <input type="text" class="form-control telNumber input-sm" id="compTel" name="compTel" value="" title="전화번호"oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" placeholder="전화번호 입력"/>
+                            <input type="text" class="form-control telNumber input-sm" id="compTel" name="compTel" value="" title="회사 전화번호"oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" placeholder="회사 전화번호 입력"/>
                         </div>
                     </div>
 

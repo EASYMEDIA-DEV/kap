@@ -39,6 +39,8 @@ public class CBBManageConsultSearchDTO extends BaseDTO {
     private String rsumeSttsCd;
     @Schema(title = "리스트")
     private List<CBBManageConsultListDTO> list;
+    @Schema(title = "사업번호")
+    private String bsnmNo;
 
     @Schema(title = "엑셀다운로드사유")
     private String rsn;

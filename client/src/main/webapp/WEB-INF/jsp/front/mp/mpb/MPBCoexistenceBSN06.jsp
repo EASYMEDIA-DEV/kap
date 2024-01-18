@@ -17,7 +17,7 @@
         <div class="sec-con-area">
             <div class="article-sec">
                 <div class="article-list-w accordion-st"><!-- accordion-st : 아코디언 스타일 -->
-                    <div class="list-item active <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02001'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
+                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02001'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
                                 <p class="tit f-head">신청</p>
@@ -34,8 +34,9 @@
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[0].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[0].rsumeOrd}" />
-                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[0].rsumeSttsCd}" />
+                                <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[0].rsumeSttsCd}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[0].appctnSttsCd}" />
+
                                 <div class="data-enter-form">
                                     <div class="row">
                                         <div class="th">
@@ -247,6 +248,7 @@
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.bsnCd" value="BSN06" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSttsCd" value="${rsumeTaskDtl[1].appctnSttsCd}" />
+                                <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[1].rsumeSttsCd}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[1].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[1].rsumeOrd}" />
 
@@ -262,7 +264,7 @@
                                                     <p class="data-title f-body1">공급기업명<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" placeholder="공급기업명" name="wBFBRegisterDTO.rsumeTaskDtl.offerCmpnNm" value="${rsumeTaskDtl[1].offerCmpnNm}" readonly>
+                                                            <input type="text" placeholder="공급기업명" id="offerCmpnNm" name="wBFBRegisterDTO.rsumeTaskDtl.offerCmpnNm" value="${rsumeTaskDtl[1].offerCmpnNm}" readonly>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -270,7 +272,8 @@
                                                     <p class="data-title f-body1">사업자등록번호<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" class="numberChk" name="wBFBRegisterDTO.rsumeTaskDtl.offerBsnmNo" placeholder="사업자등록번호" value="${rsumeTaskDtl[1].offerBsnmNo}">
+                                                            <input type="text" class="numberChk" id="offerBsnmNo" name="wBFBRegisterDTO.rsumeTaskDtl.offerBsnmNo" placeholder="사업자등록번호" value="${rsumeTaskDtl[1].offerBsnmNo}">
+                                                            <button type="button" class="btn-solid small gray-bg" id="bsnmNoAuth" href="javascript:void(0);"><span>인증</span></button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -278,7 +281,7 @@
                                                     <p class="data-title f-body1">담당자명<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" placeholder="담당자명" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicNm" value="${rsumeTaskDtl[1].offerPicNm}">
+                                                            <input type="text" placeholder="담당자명" id="offerPicNm" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicNm" value="${rsumeTaskDtl[1].offerPicNm}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -286,7 +289,7 @@
                                                     <p class="data-title f-body1">담당자 휴대폰<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" placeholder="담당자 휴대폰" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicHpNo" value="${rsumeTaskDtl[1].offerPicHpNo}">
+                                                            <input type="text" placeholder="담당자 휴대폰" id="offerPicHpNo" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicHpNo" value="${rsumeTaskDtl[1].offerPicHpNo}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -294,7 +297,7 @@
                                                     <p class="data-title f-body1">담당자 이메일<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" placeholder="담당자 이메일" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicEmail" value="${rsumeTaskDtl[1].offerPicEmail}">
+                                                            <input type="text" placeholder="담당자 이메일" id="offerPicEmail" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicEmail" value="${rsumeTaskDtl[1].offerPicEmail}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -302,7 +305,7 @@
                                                     <p class="data-title f-body1">총 사업비<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" placeholder="총 사업비" name="wBFBRegisterDTO.rsumeTaskDtl.ttlBsnPmt" value="${rsumeTaskDtl[1].ttlBsnPmt}" readonly>
+                                                            <input type="text" placeholder="총 사업비" id="ttlBsnPmt" class="comma" name="wBFBRegisterDTO.rsumeTaskDtl.ttlBsnPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[1].ttlBsnPmt}' pattern='#,###'/>">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -310,11 +313,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:if test="${rsumeTaskDtl[1].appctnSttsCd eq 'PRO_TYPE02002_01_003'}">
                                     <div class="btn-wrap align-right">
                                         <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
                                     </div>
-                                </c:if>
                             </form>
                         </div>
                     </div>
@@ -916,7 +917,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input">
-                                                                                        <input type="text" class="comma" name="wBFBRegisterDTO.spprtDtlList[0].cmssnPmt" placeholder="수수료 입력" value="<fmt:formatNumber value='${spprtDtl[2].cmssnPmt}' pattern='#,###'/>">
+                                                                                        <input type="text" class="comma cmssnPmt" name="wBFBRegisterDTO.spprtDtlList[0].cmssnPmt" placeholder="수수료 입력" value="<fmt:formatNumber value='${spprtDtl[2].cmssnPmt}' pattern='#,###'/>">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>

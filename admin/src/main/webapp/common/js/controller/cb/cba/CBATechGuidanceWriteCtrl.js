@@ -541,7 +541,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
 
                         var actionUrl = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update");
-                        var actionMsg = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd"));
+                        var actionMsg = msgCtrl.getMsg("success.ins");
                         var cmpnNm = $("#cmpnNmText").text();
                         var bsnmNo = $("#bsnmNoText").text();
                         var emailTxt = $("#emailTxt").text();
@@ -584,9 +584,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         $("#rprsntNm").val(rprsntNmTxt);
                         $("#cbsnCd").val(cbsnCd);
 
-                        var gubun = $("#submit").text();
-                        if(confirm(gubun+"하시겠습니까?")){
+                        if(confirm("저장하시겠습니까?")){
                             if ($formObj.find(".dropzone").size() > 0) {
+                                console.log($formObj);
                                 cmmCtrl.fileFrmAjax(function (data) {
                                     //콜백함수. 페이지 이동
                                     if (data.respCnt > 0) {
@@ -598,7 +598,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         }else{
                             return false;
                         }
-
                     }
                 }
             }

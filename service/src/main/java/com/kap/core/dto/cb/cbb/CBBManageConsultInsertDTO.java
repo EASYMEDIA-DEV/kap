@@ -133,14 +133,30 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     // SQ 정보
     @Schema(title = "SQ 업종")
     private String nm;
+    private String nm1;
+    private String nm2;
+    private String nm3;
+
     @Schema(title = "SQ업종 순번")
     private String  cbsnSeq;
+
     @Schema(title = "SQ 점수")
-    private String  score;
+    private Integer  score;
+    private Integer  score1;
+    private Integer  score2;
+    private Integer  score3;
+
     @Schema(title = "SQ 평가년도")
-    private String year;
+    private Integer year;
+    private Integer year1;
+    private Integer year2;
+    private Integer year3;
+
     @Schema(title = "인증주관사")
     private String  crtfnCmpnNm;
+    private String  crtfnCmpnNm1;
+    private String  crtfnCmpnNm2;
+    private String  crtfnCmpnNm3;
 
     // 담당 임원
     @Schema(title = "담당 임원 시퀀스")

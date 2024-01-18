@@ -282,11 +282,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 after : function() {
                     var isValid = true;
 
-                    if($(".dropzone .dz-preview").length < 1) {
-                        alert(msgCtrl.getMsg("fail.notFileRequired"));
-                        isValid = !isValid;
-                    }
-
                     if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
                         alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
                         isValid = false;
@@ -294,6 +289,12 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                     if( $("#compTel").val().length !=0 && $("#compTel").val().length < 11 ) {
                         alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
+                        isValid = false;
+                        return false;
+                    }
+
+                    if($(".dropzone .dz-preview").length < 1) {
+                        alert(msgCtrl.getMsg("fail.notFileRequired"));
                         isValid = false;
                         return false;
                     }
