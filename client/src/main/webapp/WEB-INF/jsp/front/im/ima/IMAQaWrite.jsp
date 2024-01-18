@@ -99,7 +99,7 @@
                                                                     <c:when test="${ not empty rtnData.inqSec and not empty rtnData.inqFir }">
                                                                         <c:forEach var="cdList" items="${cdDtlList.INQUIRY_TYPE}" varStatus="status">
                                                                             <c:if test="${fn:length(cdList.cd) < 6}">
-                                                                                <option value="${cdList.cd}" <c:if test="${fn:contains(cdList.cd, 'INQ09')}">selected</c:if>>${cdList.cdNm}</option>
+                                                                                <option value="${cdList.cd}" <c:if test="${fn:contains(cdList.cd, 'INQ07')}">selected</c:if>>${cdList.cdNm}</option>
                                                                             </c:if>
                                                                         </c:forEach>
                                                                     </c:when>
