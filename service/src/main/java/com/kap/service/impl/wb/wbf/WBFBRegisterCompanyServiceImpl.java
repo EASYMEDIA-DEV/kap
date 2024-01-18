@@ -458,7 +458,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 case "PRO_TYPE03001_02_004":
                     spprDTO.setAppctnSttsCd("PRO_TYPE02001_01_005"); break;
             }
-            respCnt =  wBFBRegisterCompanyMapper.updSpprtDtl(spprDTO);
+            wBFBRegisterCompanyMapper.updSpprtDtl(spprDTO);
         }
         /* 지원금지급 */
         spprDTO = wBFBRegisterDTO.getSpprtDtlList().get(1);
@@ -1410,13 +1410,14 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             String modId = cOUserDetailsDTO.getId();
             String modIp = CONetworkUtil.getMyIPaddress(request);
 
-            if(wBFBRegisterDTO.getRsumeSttsCd() != null && wBFBRegisterDTO.getRsumeSttsCd() != ""){
+            WBFBRsumeTaskDtlDTO wbfbRsumeTaskDtlDTO = wBFBRegisterDTO.getRsumeTaskDtl();
 
-                WBFBRsumeTaskDtlDTO wbfbRsumeTaskDtlDTO = wBFBRegisterDTO.getRsumeTaskDtl();
+            if(wbfbRsumeTaskDtlDTO != null && wbfbRsumeTaskDtlDTO.getRsumeSttsCd() != null){
+
                 wbfbRsumeTaskDtlDTO.setModId(modId);
                 wbfbRsumeTaskDtlDTO.setModIp(modIp);
 
-                if(wBFBRegisterDTO.getAppctnSttsCd() == "PRO_TYPE02001") {
+                if(wbfbRsumeTaskDtlDTO.getRsumeSttsCd().equals("PRO_TYPE02001")) {
                     WBFBRegisterSearchDTO wBFBRegisterSearchDTO = WBFBRegisterSearchDTO.builder()
                             .bsnmNo(wBFBRegisterDTO.getBsnmNo())
                             .sbrdnBsnmNo(wBFBRegisterDTO.getSbrdnBsnmNo())
@@ -1439,7 +1440,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                                 .build();
 
                         /* 사업, 과제, 스마트 만 수정 */
-                        wBFBRegisterCompanyMapper.updRsumeTaskDtlSub(registerDTO);
+                        respCnt = wBFBRegisterCompanyMapper.updRsumeTaskDtlSub(registerDTO);
 
                         /* 신청 파일 삭제 */
                         wBFBRegisterCompanyMapper.delAppctnFileDtl(wbfbRsumeTaskDtlDTO);
@@ -1483,21 +1484,21 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                                 fileInfo.setRegIp(modIp);
 
                                 wBFBRegisterCompanyMapper.putAppctnFileDtl(fileInfo);
-
                             }
                         }
                     }
-                } else if(wBFBRegisterDTO.getAppctnSttsCd() == "PRO_TYPE02002") {
+                } else if(wbfbRsumeTaskDtlDTO.getRsumeSttsCd().equals("PRO_TYPE02002")) {
                     /* 사업계획 */
-                    wBFBRegisterCompanyMapper.updRsumeTaskDtl(wbfbRsumeTaskDtlDTO);
+                    respCnt = wBFBRegisterCompanyMapper.updRsumeTaskDtl(wbfbRsumeTaskDtlDTO);
                 }
             }
 
-            WBSpprtDtlDTO spprtDtl = wBFBRegisterDTO.getSpprtDtlList().get(0);
-            spprtDtl.setModId(modId);
-            spprtDtl.setModIp(modIp);
+            WBSpprtDtlDTO spprtDtl = wBFBRegisterDTO.getSpprtDtlList() != null ? wBFBRegisterDTO.getSpprtDtlList().get(0) : null;
 
-            if(spprtDtl.getGiveType() != null && spprtDtl.getGiveType() != ""){
+            if(spprtDtl != null && spprtDtl.getGiveType() != null){
+
+                spprtDtl.setModId(modId);
+                spprtDtl.setModIp(modIp);
 
                 // 신청파일 등록
                 List<COFileDTO> rtnList = null;
@@ -1548,16 +1549,15 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                             if(i == 0) {
                                 spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
                             } else if (i == 1) {
-                                spprtDtl.setTchlgLseFileSeq(fileSeqMap.get("fileSeq")); /*계좌이체약정서*/
+                                spprtDtl.setTchlgLseFileSeq(fileSeqMap.get("fileSeq")); /*기술임치증*/
                             } else if (i == 2) {
-                                spprtDtl.setLsePayFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
+                                spprtDtl.setLsePayFileSeq(fileSeqMap.get("fileSeq")); /*임치료납입영수증*/
                             }
                         }
                     }
                 }
-
                 /* 상생신청지원금액상세 */
-                wBFBRegisterCompanyMapper.updSpprtDtl(spprtDtl);
+                respCnt = wBFBRegisterCompanyMapper.updSpprtDtl(spprtDtl);
             }
 
         } catch (Exception e) {
