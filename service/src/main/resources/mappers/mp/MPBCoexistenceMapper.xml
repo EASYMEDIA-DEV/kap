@@ -19,10 +19,10 @@
                 ELSE NULL END ) AS chngDtm,
                 (CASE
                     WHEN bsn_end_dtm > NOW() THEN 1
-                    WHEN appctn_stts_cd = '사용자취소' THEN 2
-                    WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 3
-                    WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 4
-                ELSE 5 END ) bsnStatus
+                    WHEN appctn_stts_cd = '사용자취소' THEN 5
+                    WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 4
+                    WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 2
+                ELSE 3 END ) bsnStatus
             FROM ( SELECT
                     TMP.* ,
                     ( SELECT
@@ -87,10 +87,10 @@
                 SELECT  INFO.*,
                      ( CASE
                         WHEN bsn_end_dtm > NOW() THEN 1
-                        WHEN appctn_stts_cd = '사용자취소' THEN 2
-                        WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 3
-                        WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 4
-                        ELSE 5 END
+                        WHEN appctn_stts_cd = '사용자취소' THEN 5
+                        WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 4
+                        WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 2
+                        ELSE 3 END
                     ) bsnStatus
                 FROM (
                         SELECT
@@ -129,7 +129,7 @@
         2024.01.10  김태훈     최초 생성
     -->
     <select id="getBusinessYn" parameterType="mpbBsnSearchDTO" resultType="java.lang.String">
-        SELECT
+        SELECT /*MPBCoexistenceMapper.getBusinessYn*/
             CASE WHEN cd = #{bsnCd}
                      THEN 'Y' ELSE 'N' END businessYn
         FROM
@@ -145,7 +145,7 @@
         2024.01.10  김태훈     최초 생성
     -->
     <select id="getBsnDetail" parameterType="mpbBsnSearchDTO" resultType="mpbBsnSearchDTO">
-        SELECT
+        SELECT /*MPBCoexistenceMapper.getBsnDetail*/
             TMP.*,
             appctn_stts_cd,
             (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsnNm,
