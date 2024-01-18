@@ -153,34 +153,37 @@ define(["ezCtrl"], function(ezCtrl) {
 
 
             $excelObj.find("button.down").on('click', function(){
-                var rsn = $excelObj.find("#rsn").val().trim();
-                var frmDataObj    = $formObj.closest("form");
+                if (confirm("저장하시겠습니까?")){
 
-                frmDataObj.find("input[name='rsn']").remove();
+                    var rsn = $excelObj.find("#rsn").val().trim();
+                    var frmDataObj    = $formObj.closest("form");
 
-                if (rsn != "") {
-                    frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+                    frmDataObj.find("input[name='rsn']").remove();
+
+                    if (rsn != "") {
+                        frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
 
 
-                    //파라미터를 물고 가야함.
-                    //location.href = "./excel-down?" + frmDataObj.serialize();
+                        //파라미터를 물고 가야함.
+                        //location.href = "./excel-down?" + frmDataObj.serialize();
 
-                    $.fileDownload("./excel-down?" + frmDataObj.serialize() , {
-                        prepareCallback : function(url){
-                            jQuery(".loadingbar").stop().fadeIn(200);
-                        },
-                        successCallback : function(url){
-                            jQuery(".loadingbar").stop().fadeOut(200);
-                            $excelObj.find("button.close").trigger('click');
-                        },
-                        failCallback : function(html,url){
-                            jQuery(".loadingbar").stop().fadeOut(200);
-                        }
-                    });
+                        $.fileDownload("./excel-down?" + frmDataObj.serialize() , {
+                            prepareCallback : function(url){
+                                jQuery(".loadingbar").stop().fadeIn(200);
+                            },
+                            successCallback : function(url){
+                                jQuery(".loadingbar").stop().fadeOut(200);
+                                $excelObj.find("button.close").trigger('click');
+                            },
+                            failCallback : function(html,url){
+                                jQuery(".loadingbar").stop().fadeOut(200);
+                            }
+                        });
 
-                } else {
-                    alert(msgCtrl.getMsg("fail.reason"));
-                    return;
+                    } else {
+                        alert(msgCtrl.getMsg("fail.reason"));
+                        return;
+                    }
                 }
             });
         }

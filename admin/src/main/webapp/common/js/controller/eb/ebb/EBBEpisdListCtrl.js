@@ -344,31 +344,31 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			})
 			$excelObj.find("button.down").on('click', function(){
-				var rsn = $excelObj.find("#rsn").val().trim();
-				var frmDataObj    = $formObj.closest("form");
+				if (confirm("저장하시겠습니까?")){
+					var rsn = $excelObj.find("#rsn").val().trim();
+					var frmDataObj    = $formObj.closest("form");
 
-				frmDataObj.find("input[name='rsn']").remove();
+					frmDataObj.find("input[name='rsn']").remove();
 
-				if (rsn != "") {
-					frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+					if (rsn != "") {
+						frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
 
-					$.fileDownload("./excel-down?" + frmDataObj.serialize() , {
-						prepareCallback : function(url){
-							jQuery(".loadingbar").stop().fadeIn(200);
-						},
-						successCallback : function(url){
-							jQuery(".loadingbar").stop().fadeOut(200);
-							$excelObj.find("button.close").trigger('click');
-						},
-						failCallback : function(html,url){
-							jQuery(".loadingbar").stop().fadeOut(200);
-						}
-					});
-
-
-				} else {
-					alert(msgCtrl.getMsg("fail.reason"));
-					return;
+							$.fileDownload("./excel-down?" + frmDataObj.serialize() , {
+								prepareCallback : function(url){
+									jQuery(".loadingbar").stop().fadeIn(200);
+								},
+								successCallback : function(url){
+									jQuery(".loadingbar").stop().fadeOut(200);
+									$excelObj.find("button.close").trigger('click');
+								},
+								failCallback : function(html,url){
+									jQuery(".loadingbar").stop().fadeOut(200);
+								}
+							});
+					} else {
+						alert(msgCtrl.getMsg("fail.reason"));
+						return;
+					}
 				}
 
 			});
