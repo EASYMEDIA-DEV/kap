@@ -121,6 +121,10 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     }
                                 } else if (data.resultCode == 100) {
                                     alert('해당 사업은 부품사 회원만 신청 가능합니다.');
+                                } else if (data.resultCode == 150) {
+                                    alert('위원회원은 해당 서비스를 이용할 수 없습니다.');
+                                } else if (data.resultCode == 190) {
+                                    alert('1,2차 부품사만 신청가능합니다.');
                                 } else if (data.resultCode == 300) {
                                     if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
                                         location.href = "/my-page/coexistence/list";

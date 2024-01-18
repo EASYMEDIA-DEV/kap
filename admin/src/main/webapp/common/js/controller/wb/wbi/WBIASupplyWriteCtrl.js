@@ -90,8 +90,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         var bfreYear = $("#bfreYear").val();
                         var bfreExpsYn = $("#bfreExpsYn").val();
-                        var bfreAccsStrtDtm = $("#bfreAccsStrtDtm").val();
-                        var bfreAccsEndDtm = $("#bfreAccsEndDtm").val();
+                        var bfreAccsStrtDtm = $("#bfreAccsStrtDtm").val() +" "+ctrl.obj.find("#accsStrtHour").val() +":00:00";
+                        var bfreAccsEndDtm = $("#bfreAccsEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":59:59";
                         var bfreEpisd = $("#bfreEpisd").val();
                         cmmCtrl.frmAjax(function(respObj) {
                             var episdCnt = respObj.optEpisdCnt[0];

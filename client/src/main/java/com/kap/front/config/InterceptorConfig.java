@@ -44,6 +44,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/coexistence/**/applyChecked")
                 .excludePathPatterns("/coexistence/**/**/applyChecked")
                 .excludePathPatterns("/coexistence/survey/**")
+                .excludePathPatterns("/coexistence/**/addRoundMore")
                 .order(1);
 
         //web, mbl jsp(header, footer)
