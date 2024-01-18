@@ -9,12 +9,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,16 +72,17 @@ public class COGpcSendRestController {
      * GPC & KAP ID 검증
      */
     @GetMapping(value="/kapedu/verifyUserId")
-    public Map GpcKapIdCheck(@RequestBody EBBPtcptDTO eBBPtcptDTO) throws Exception
+    public Map GpcKapIdCheck(@RequestParam(required = true) String gpcId,  HttpServletResponse response, HttpServletRequest request) throws Exception
     {
         //파라미터 정리
         HashMap<String, Object> param = new HashMap<String, Object>();
-        param.put("gpcUserId", eBBPtcptDTO.getGpcId());
-        //param.put("gpcUserId", "dldhrwjd");
+        param.put("gpcUserId", gpcId);
         HttpEntity<Map> requestEntity = new HttpEntity<>(param);
-        //ResponseEntity<String> res = gpcRestTemplate.exchange( endPoint + "/api/kapedu/verifyUserId.ajax", HttpMethod.POST, requestEntity, String.class);
-    ResponseEntity<String> res = gpcRestTemplate.exchange( "https://gpc.hyundai.co.kr/api/kapedu/verifyUserId.ajax", HttpMethod.POST, requestEntity, String.class);
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(endPoint + "/api/kapedu/verifyUserId.ajax")
+                .queryParam("gpcUserId", gpcId);
+        ResponseEntity<String> res = gpcRestTemplate.exchange( builder.toUriString(), HttpMethod.POST, requestEntity, String.class);
         String body = res.getBody();
+        log.error("body : {}", body);
         //요청 응답값
         Map mapData = RestTemplateUtil.readValue(body, Map.class);
         //데이터 저장
@@ -93,20 +94,21 @@ public class COGpcSendRestController {
      * GPC 관련 집체 교육 대참 요청
      */
     @GetMapping(value="/kapedu/changeEduMem")
-    public Map ChangeKapEduMem(@RequestBody EBBPtcptDTO eBBPtcptDTO) throws Exception
+    public Map ChangeKapEduMem( @RequestParam(required = true) String bfrGpcId
+                               ,@RequestParam(required = true) String aftGpcId
+                               ,@RequestParam(required = true) int kapSeq
+                               ,@RequestParam(required = true) int kapSchdSeq
+            ,EBBPtcptDTO eBBPtcptDTO, HttpServletResponse response, HttpServletRequest request) throws Exception
     {
         //파라미터 정리
         HashMap<String, Object> param = new HashMap<String, Object>();
-        //param.put("bfrGpcId", eBBPtcptDTO.getGpcId());
-        //param.put("aftGpcId", eBBPtcptDTO.getAftGpcId());
-        //param.put("kapSeq", eBBPtcptDTO.getEdctnSeq());
-        //param.put("kapSchdSeq", eBBPtcptDTO.getEpisdSeq());
-        param.put("bfrGpcId", "dldhrwjd");
-        param.put("aftGpcId", "easymedia");
-        param.put("kapSeq", "123123");
-        param.put("kapSchdSeq", "654321");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(endPoint + "/api/kapedu/changeEduMem.ajax")
+                .queryParam("bfrGpcId", bfrGpcId)
+                .queryParam("aftGpcId", aftGpcId)
+                .queryParam("kapSeq", kapSeq)
+                .queryParam("kapSchdSeq", kapSchdSeq);
         HttpEntity<Map> requestEntity = new HttpEntity<>(param);
-        ResponseEntity<String> res = gpcRestTemplate.exchange( endPoint + "/api/kapedu/changeEduMem.ajax", HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<String> res = gpcRestTemplate.exchange( builder.toUriString(), HttpMethod.POST, requestEntity, String.class);
         String body = res.getBody();
         //요청 응답값
         Map mapData = RestTemplateUtil.readValue(body, Map.class);

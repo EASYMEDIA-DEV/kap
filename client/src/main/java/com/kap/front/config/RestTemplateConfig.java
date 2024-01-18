@@ -57,7 +57,7 @@ public class RestTemplateConfig {
      */
     @Bean
     public RestTemplate gpcRestTemplate() {
-        RestTemplate build = restTemplateBuilder.rootUri(endPoint)
+        RestTemplate build = restTemplateBuilder
                 .additionalInterceptors(new RestTemplateClientHttpRequestInterceptor(cOSystemLogService, apiKey, apiSecret))
                 .setConnectTimeout(Duration.ofMinutes(3))
                 .requestFactory(() -> new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()))

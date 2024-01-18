@@ -32,7 +32,7 @@ nice :
 
 api :
   gpc:
-    end-point: https://gpc.hyundai.co.kr
+    end-point: https://gpc.hyundai.co.kr/mngwserc
     key: A5Z0A4B9B5T4
     secret: bc125IJyf96M1LTCsEq6a8PntjFn8Dpc
   kap:
@@ -110,7 +110,7 @@ app:
 
 api:
   gpc:
-    end-point: https://gpc.hyundai.co.kr
+    end-point: https://gpc.hyundai.co.kr/mngwserc
     key: A5Z0A4B9B5T4
     secret: bc125IJyf96M1LTCsEq6a8PntjFn8Dpc
   kap:

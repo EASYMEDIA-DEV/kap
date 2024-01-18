@@ -87,11 +87,12 @@ public class RestTemplateClientHttpRequestInterceptor implements ClientHttpReque
             log.error("e : {}", e.getCause());
         }
         request.getHeaders().setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        if("local, dev".contains(profile)) {
+        if("local, dev, prod".contains(profile)) {
             disableSslVerification();
         }
         final ClientHttpResponse response = execution.execute(request, body);
         final HttpStatus statusCode = response.getStatusCode();
+        log.error("statusCode : {}", statusCode);
         if(statusCode == HttpStatus.UNAUTHORIZED || statusCode == HttpStatus.FORBIDDEN){
             new Exception("접근이 거부되었습니다.");
         }
